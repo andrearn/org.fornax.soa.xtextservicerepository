@@ -1,0 +1,355 @@
+import sOABaseDsl;
+import serviceDsl;
+
+extension org::fornax::soa::servicedsl::templates::common;
+extension org::fornax::soa::servicedsl::templates::domains;
+extension org::fornax::soa::servicedsl::query::types;
+extension org::fornax::soa::servicedsl::query::services;
+extension org::fornax::soa::servicedsl::query::subdomains;
+
+
+
+boolean isLatestMatchingType (serviceDsl::Type t, Integer majorVersion, LifecycleState minState) : 
+	false;
+
+/*
+ *		Checks if type declaration is the latest version matching the following constraint
+ *		- same major version
+ *      - matches a given minimal lifecycle state
+ */
+boolean isLatestMatchingType (VersionedType t, Integer majorVersion) : 
+	(getLatestMatchingVersionedType( 
+		((SubNamespace)t.eContainer).types.typeSelect (VersionedType).select (e|e.name == t.name), 
+		majorVersion)
+	 == t) 
+	? true
+	: false;
+	
+boolean isLatestMatchingType (sOAProfileDsl::VersionedType t, Integer majorVersion) : 
+	(getLatestMatchingVersionedType( 
+		((SubNamespace)t.eContainer).types.typeSelect (sOAProfileDsl::VersionedType).select (e|e.name == t.name), 
+		majorVersion)
+	 == t) 
+	? true
+	: false;
+	
+boolean isLatestMatchingType (VersionedType t, Integer majorVersion, LifecycleState minState) : 
+	(getLatestMatchingVersionedType( 
+		((SubNamespace)t.eContainer).types.typeSelect (VersionedType).select (e|e.name == t.name), 
+		majorVersion, 
+		minState)
+	 == t) 
+	? true
+	: false;
+
+boolean isLatestMatchingType (BusinessObject t, Integer majorVersion, LifecycleState minState) : 
+	(getLatestMatchingBusinessObject( 
+		((SubNamespace)t.eContainer).types.typeSelect (BusinessObject).select (e|e.name == t.name), 
+		majorVersion, 
+		minState)
+	 == t) 
+	? true
+	: false;
+
+boolean isLatestMatchingType (Enumeration t, Integer majorVersion, LifecycleState minState) : 
+	(getLatestMatchingEnumeration( 
+		((SubNamespace)t.eContainer).types.typeSelect (Enumeration).select (e|e.name == t.name), 
+		majorVersion, 
+		minState)
+	 == t) 
+	? true
+	: false;
+
+boolean isLatestMatchingException (Exception t, Integer majorVersion, LifecycleState minState) : 
+	(getLatestMatchingException( 
+		((SubNamespace)t.eContainer).exceptions.select (e|e.name == t.name), 
+		majorVersion, 
+		minState)
+	 == t) 
+	? true
+	: false;
+
+
+private serviceDsl::Type getLatestMatchingVersionedType (List[VersionedType] types, Integer majorVersion) : 
+	types.select (e|e.version.versionMatches (majorVersion) )
+	.sortBy(e|e.version.version).last();
+
+private serviceDsl::Type getLatestMatchingVersionedType (List[VersionedType] types, Integer majorVersion, LifecycleState minState) : 
+	types.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
+	.sortBy(e|e.version.version).last();
+	
+private serviceDsl::Type getLatestMatchingBusinessObject (List[BusinessObject] types, Integer majorVersion, LifecycleState minState) : 
+	types.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
+	.sortBy(e|e.version.version).last();
+	
+private serviceDsl::Type getLatestMatchingEnumeration (List[Enumeration] types, Integer majorVersion, LifecycleState minState) : 
+	types.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
+	.sortBy(e|e.version.version).last();
+	
+private serviceDsl::Exception getLatestMatchingException (List[Exception] exceptions, Integer majorVersion, LifecycleState minState) : 
+	exceptions.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
+	.sortBy(e|e.version.version).last();
+
+
+/*
+ * 	Reference resolution
+ *	find the lastest type declaration matching
+ *  - the version constraint defined in the reference
+ */
+serviceDsl::Type getLatestMatchingType (TypeRef t) : null;
+
+serviceDsl::Type getLatestMatchingType (serviceDsl::VersionedTypeRef t) : 
+	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef))
+		.typeSelect (VersionedType).sortBy (e|e.version.version).last( );
+
+serviceDsl::Type getLatestMatchingType (serviceDsl::BusinessObjectRef t) : 
+	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef))
+		.typeSelect (BusinessObject).sortBy (e|e.version.version).last( );
+
+serviceDsl::Type getLatestMatchingType (serviceDsl::EnumTypeRef t) : 
+	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef))
+		.typeSelect (Enumeration).sortBy (e|e.version.version).last( );
+
+serviceDsl::Type getLatestMatchingType (serviceDsl::DataTypeRef t) : t.type ;
+serviceDsl::Type getLatestMatchingType (sOAProfileDsl::DataTypeRef t) : t.type ;
+
+serviceDsl::Exception getLatestMatchingException (serviceDsl::ExceptionRef t) : 
+	t.exception.getSubdomain ().exceptions.select (e|e.name == t.exception.name && t.exception.version.versionMatches (t.version))
+		.typeSelect (Exception).sortBy (e|e.version.version).last( );
+
+
+serviceDsl::Type getLatestMatchingType (TypeRef t, LifecycleState minState) : null;
+
+serviceDsl::Type getLatestMatchingType (serviceDsl::VersionedTypeRef t, LifecycleState minState) : 
+	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef) && t.type.state.matchesMinStateLevel(minState))
+		.typeSelect (VersionedType).sortBy (e|e.version.version).last( );
+
+serviceDsl::Type getLatestMatchingType (serviceDsl::BusinessObjectRef t, LifecycleState minState) : 
+	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef) && t.type.state.matchesMinStateLevel(minState))
+		.typeSelect (BusinessObject).sortBy (e|e.version.version).last( );
+
+serviceDsl::Type getLatestMatchingType (serviceDsl::EnumTypeRef t, LifecycleState minState) : 
+	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef) && t.type.state.matchesMinStateLevel(minState))
+		.typeSelect (Enumeration).sortBy (e|e.version.version).last( );
+
+serviceDsl::Type getLatestMatchingType (serviceDsl::DataTypeRef t, LifecycleState minState) : t.type ;
+
+serviceDsl::Exception getLatestMatchingException (serviceDsl::ExceptionRef t, LifecycleState minState) : 
+	t.exception.getSubdomain ().exceptions.select (e|e.name == t.exception.name && t.exception.version.versionMatches (t.version) && t.exception.state.matchesMinStateLevel(minState))
+		.typeSelect (Exception).sortBy (e|e.version.version).last( );
+
+/*
+ *	Return the XSD type name for a type reference including it's derived namespace prefix
+ */
+String getTypeNameRef (TypeRef t) : 
+	null;
+String getTypeNameRef (sOAProfileDsl::TypeRef t) : 
+	null;
+	
+String getTypeNameRef (DataTypeRef t) : 
+	t.type.getTypeNameRef();
+	
+String getTypeNameRef (sOAProfileDsl::DataTypeRef t) : 
+	t.type.getTypeNameRef();
+//	t.getLatestMatchingType () .getTypeNameRef();
+	
+String getTypeNameRef (VersionedTypeRef t) : 
+	t.type.getSubdomain() != null ?
+		(t.getOwnerSubdomain() == t.type.getSubdomain()
+		 && t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
+		 && ! Service.isInstance(t.getStatefulOwner()) ?
+			"tns" :
+			t.type.getSubdomain().getShortName() + t.type.getSubdomain().version.toMajorVersionNumber()
+		) + ":" +t.type.name
+	:
+		t.type.name;
+		
+String getTypeNameRef (sOAProfileDsl::VersionedTypeRef t) : 
+	t.type.getSubdomain() != null ?
+		(t.getOwnerSubdomain() == t.type.getSubdomain()
+		 && t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
+		?
+			"tns" :
+			t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber()
+		) + ":" +t.type.name
+	:
+		t.type.name;
+	
+String getTypeNameRef (BusinessObjectRef t) : 
+	t.type.getSubdomain() != null ?
+		(t.getOwnerSubdomain() == t.type.getSubdomain()
+		 && t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
+		 && ! Service.isInstance(t.getStatefulOwner()) ?
+			"tns" :
+			t.type.getSubdomain().getShortName() + t.type.getSubdomain().version.toMajorVersionNumber()
+		) + ":" +t.type.name
+	:
+		t.type.name;
+		
+String getTypeNameRef (EnumTypeRef t) : 
+	t.type.getSubdomain() != null ?
+		(t.getOwnerSubdomain() == t.type.getSubdomain()
+		 && t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
+		 && ! Service.isInstance(t.getStatefulOwner()) ?
+			"tns" : 
+			t.type.getSubdomain().getShortName() + t.type.getSubdomain().version.toMajorVersionNumber()
+		) + ":" +t.type.name
+	:
+		t.type.name;
+	
+String getExceptionNameRef (ExceptionRef t) : 
+	t.exception.getSubdomain() != null ?
+		(t.getOwnerSubdomain() == t.exception.getSubdomain()
+		 && t.getOwnerVersion().toMajorVersionNumber() == t.exception.version.toMajorVersionNumber()
+		 && ! Service.isInstance(t.getStatefulOwner()) ?
+			"tns" : 
+			t.exception.getSubdomain().getShortName() + t.exception.getSubdomain().version.toMajorVersionNumber()
+		) + ":" +t.exception.toTypeName()
+	:
+		t.exception.toTypeName();
+	
+
+String getTypeNameRef (TypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : null;
+String getTypeNameRef (sOAProfileDsl::TypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : null;
+
+String getTypeNameRef (DataTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currentDomNs) : 
+	t.getLatestMatchingType () .getTypeNameRef();
+
+String getTypeNameRef (sOAProfileDsl::DataTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currentDomNs) : 
+	t.getLatestMatchingType () .getTypeNameRef();
+	
+String getTypeNameRef (VersionedTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef) ?
+		"tns:" +t.type.name
+	:
+		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+	
+String getTypeNameRef (sOAProfileDsl::VersionedTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef) ?
+		"tns:" +t.type.name
+	:
+		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+	
+String getTypeNameRef (BusinessObjectRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef) ?
+		"tns:" +t.type.name
+	:
+		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+		
+String getTypeNameRef (EnumTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef) ?
+		"tns:" +t.type.name
+	:
+		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+
+String getTypeNameRef (serviceDsl::Type t) : "";
+String getTypeNameRef (sOAProfileDsl::DataType t) :
+ 	switch (t.name) {
+ 		case "attachment":	"xsd:base64Binary"
+ 		case "binary":		"xsd:hexBinary"
+ 		case "base64":		"xsd:base64Binary"
+ 		case "BigInteger":	"xsd:decimal"
+ 		case "BigDecimal":	"xsd:decimal"
+ 		case "datetime":	"xsd:dateTime"
+		default : "xsd:" + t.name
+	};
+
+String getFullTypeNameRef (serviceDsl::TypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : null;
+
+String getFullTypeNameRef (serviceDsl::DataTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currentDomNs) : 
+	t.getLatestMatchingType () .getFullTypeNameRef();
+	
+String getFullTypeNameRef (sOAProfileDsl::DataTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currentDomNs) : 
+	t.getLatestMatchingType () .getFullTypeNameRef();
+	
+String getFullTypeNameRef (VersionedTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+	t.type.getSubdomain().toNamespace() + t.type.name;
+	
+String getFullTypeNameRef (BusinessObjectRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+	t.type.getSubdomain().toNamespace() + t.type.name;
+		
+String getFullTypeNameRef (EnumTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+	t.type.getSubdomain().toNamespace() + t.type.name;
+
+String getFullTypeNameRef (serviceDsl::Type t) : "";
+String getFullTypeNameRef (DataType t) :
+ 	switch (t.name) {
+ 		case "attachment":	"xsd:base64Binary"
+ 		case "binary":		"xsd:hexBinary"
+ 		case "base64":		"xsd:base64Binary"
+ 		case "BigInteger":	"xsd:decimal"
+ 		case "BigDecimal":	"xsd:decimal"
+ 		case "datetime":	"xsd:dateTime"
+		default : "xsd:" + t.name
+	};
+ 
+
+/*
+ * Resolve the type name of weak type reference, i.e. return the type name referenced type's businessKey
+ */ 
+String getWeakRefType(TypeRef t) : t.getTypeNameRef();
+String getWeakRefType(VersionedTypeRef t) : (BusinessObject.isInstance(t.getLatestMatchingType())) ? ((BusinessObject)t.getLatestMatchingType()).properties.select(e|e.isBusinessKey).typeSelect(Attribute).get(0).type.getTypeNameRef() : t.getTypeNameRef();
+String getWeakRefType(BusinessObjectRef t) : ((BusinessObject)t.getLatestMatchingType()).properties.select(e|e.isBusinessKey).typeSelect(Attribute).get(0).type.getTypeNameRef();
+String getWeakRefKeyAttr(TypeRef t) : null;
+String getWeakRefKeyAttr(BusinessObjectRef t) : ((BusinessObject)t.getLatestMatchingType()).properties.select(e|e.isBusinessKey).typeSelect(Attribute).get(0).name;
+	
+	
+String getExceptionNameRef (ExceptionRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+	t.toNamespace() == currNs.subdomain.toNamespace() && currNs.version.toVersion().versionMatches(t.version) ?
+		"tns:" +t.exception.toTypeName()
+	:
+		t.exception.getSubdomain().getShortName() + t.exception.getSubdomain().version.toMajorVersionNumber() + ":" +t.exception.toTypeName();
+	
+	
+boolean isMany (TypeRef t) : false;
+boolean isMany (sOAProfileDsl::TypeRef t) : false;
+boolean isMany (DataTypeRef t) : t.many;
+boolean isMany (sOAProfileDsl::DataTypeRef t) : false;
+boolean isMany (BusinessObjectRef t) : false;
+boolean isMany (VersionedTypeRef t) : t.many;
+boolean isMany (sOAProfileDsl::VersionedTypeRef t) : t.many;
+
+
+String getXsdFilename (BusinessObject c) : c.getSubdomain().getFileNameFragment() + "-v" + c.version.toMajorVersionNumber() + ".xsd";
+
+
+/*
+ *	Get the namespaces a given namespace (or element declared in that namespace) imports
+ *  splitting the resultingnamespace with regard to their major versions
+ */
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (Object s) : null;
+
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (org::fornax::soa::servicedsl::VersionedDomainNamespace s) : ((SubNamespace)s.subdomain).getImportedSubdomains(); 
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (SubNamespace s) :
+	// all refs from a BO property to a BO  
+	s.types.typeSelect(BusinessObject).properties.type.typeSelect(VersionedTypeRef).getLatestMatchingType().reject(e|e==null).createVersionedDomainNamespace().
+	// all refs from a BO it's superBO  
+	union(s.types.typeSelect(BusinessObject).reject(e|e.superBusinessObject == null).superBusinessObject.getLatestMatchingType().createVersionedDomainNamespace()).
+	// all refs from exceptions to their super exceptions
+	union(s.exceptions.reject(e|e.superException == null).superException.getLatestMatchingException().createVersionedDomainNamespace());
+
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (List[TypeRef] c) : 
+	c.getLatestMatchingType().createVersionedDomainNamespace().toSet();
+	
+
+private cached String toNamespace (TypeRef t) : null;
+private cached String toNamespace (VersionedTypeRef t) : 
+	t.type.eContainer.toUnversionedNamespace()+"/"+((VersionedType)t.getLatestMatchingType()).version.toVersionPostfix() + "/";
+private cached String toNamespace (BusinessObjectRef t) : 
+	t.type.eContainer.toUnversionedNamespace()+"/"+((BusinessObject)t.getLatestMatchingType()).version.toVersionPostfix() + "/";
+private cached String toNamespace (EnumTypeRef t) : 
+	t.type.eContainer.toUnversionedNamespace()+"/"+((Enumeration)t.getLatestMatchingType()).version.toVersionPostfix() + "/";
+private cached String toNamespace (ExceptionRef t) : 
+	t.exception.eContainer.toUnversionedNamespace()+"/"+((Exception)t.getLatestMatchingException()).version.toVersionPostfix() + "/";
+
+
+String toTypeName (Exception e) :
+	e.name.endsWith("Exception") ?
+		e.name.replaceAll("Exception", "Fault")
+	: {
+		e.name.endsWith("Fault") ?
+			e.name
+		:
+			e.name + "Fault"
+	};
+	

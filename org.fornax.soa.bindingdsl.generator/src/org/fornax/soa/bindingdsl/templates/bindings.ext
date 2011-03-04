@@ -1,0 +1,48 @@
+import sOABaseDsl;
+import bindingDsl;
+import environmentDsl;
+import serviceDsl;
+
+extension org::fornax::soa::servicedsl::templates::common;
+
+boolean generatePrivateWsdlForProviderHost () : GLOBALVAR generatePrivateWsdlForProviderHost;
+  
+boolean isEligibleForEnvironment(Service svc, Environment env) :
+	switch (env.type) {
+		case EnvironmentType::Prod: {
+			(svc.state == LifecycleState::productive || 
+					svc.state == LifecycleState::deprecated) ? true : false
+		}
+		case EnvironmentType::PreProd: {
+			(svc.state == LifecycleState::productive || 
+					svc.state == LifecycleState::deprecated || 
+					svc.state == LifecycleState::test) ? true : false
+		}
+		case EnvironmentType::Test: {
+			(svc.state == LifecycleState::productive || 
+					svc.state == LifecycleState::deprecated || 
+					svc.state == LifecycleState::test) ? true : false
+		}
+		default: {
+			(svc.state != LifecycleState::retired) ? true : false
+		}
+		
+	};
+
+Binding getMostSpecificBinding (DomainBinding b, Service s) : b.serviceBinding.select(e|e.service.service == s).size > 0 ? b.serviceBinding.selectFirst(e|e.service.service == s) : b;
+List[BindingProtocol] getProviderProtocols (DomainBinding b) : b.protocol;
+List[BindingProtocol] getProviderProtocols (ServiceBinding b) : !b.providerProtocol.isEmpty ? b.providerProtocol : b.protocol;
+List[BindingProtocol] getProviderProtocols (OperationBinding b) : !b.providerProtocol.isEmpty ? b.providerProtocol : b.protocol;
+
+List[BindingProtocol] getPublisherProtocols (DomainBinding b) : b.protocol;
+List[BindingProtocol] getPublisherProtocols (ServiceBinding b) : b.protocol;
+List[BindingProtocol] getPublisherProtocols (OperationBinding b) : b.protocol;
+
+LifecycleState getMinLifecycleState (Environment env, emf::EObject o) : 
+	switch (env.type) {
+	case EnvironmentType::Dev : 	o.getOwnerMinDevState()
+	case EnvironmentType::Test	:	o.getOwnerMinTestState()
+	case EnvironmentType::PreProd :	o.getOwnerMinTestState()
+	case EnvironmentType::Prod :	o.getOwnerMinProdState()
+	default:						o.getOwnerMinDevState()
+	};

@@ -1,0 +1,21 @@
+«IMPORT org::fornax::soa::ui::wizard»
+
+«DEFINE main FOR BindingDslProjectInfo»
+«EXPAND model FOR this»
+«ENDDEFINE»
+
+«DEFINE model FOR BindingDslProjectInfo»
+«FILE "src/basictypes.binddsl"-»
+datatype int;
+datatype byte;
+datatype long;
+datatype float;
+datatype double;
+datatype string;
+datatype char;
+datatype date;
+datatype datetime;
+datatype boolean;
+datatype decimal;
+«ENDFILE»
+«ENDDEFINE»

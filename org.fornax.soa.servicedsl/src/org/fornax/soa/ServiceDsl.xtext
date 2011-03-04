@@ -1,0 +1,336 @@
+grammar org.fornax.soa.ServiceDsl with org.fornax.soa.basedsl.SOABaseDsl
+
+generate serviceDsl "http://www.fornax.org/soa/ServiceDsl"
+
+import "platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore" as profileDsl
+import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
+import "platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore" as businessDsl
+
+ServiceModel hidden(WS):
+	(imports+=Import)*
+	(orgNamespaces+=OrganizationNamespace)*
+	(types+=Type)*;
+	
+//VersionId: INT('.'INT)*;
+//
+//VersionedName hidden(): {VersionedName} QualifiedName|ID (WS)* version=VersionId;
+//
+//Import hidden(WS): 
+//	'import' importedNamespace=QualifiedNameWithWildCard ';';
+	
+OrganizationNamespace :
+	'org-namespace' name= QualifiedName ('shortname' prefix=STRING)? '{'
+		(subNamespaces+=SubNamespace)*
+	'}' ;
+
+	
+SubNamespace : DomainNamespace | InternalNamespace;
+	
+DomainNamespace hidden(WS):
+	(doc=ML_COMMENT)? 
+	'domain-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
+		'metadata' '{'
+			('domain' domain=[businessDsl::Domain] ';')?
+			(version=Version ';' )?
+			('namespace-owner' owner=STRING ';')?
+			(linkingPolicy = LinkingPolicy)?
+			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		'}'
+		(types+=Type)*
+		(services+=Service)*
+		(channels+=Channel)*
+		(exceptions+=Exception)*
+		(events+=GlobalEvent)*
+		(interalNamespaces+=InternalNamespace)*
+	'}' (WS)*;
+
+InternalNamespace hidden(WS):	
+	(doc=ML_COMMENT)? 
+	'internal-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
+		'metadata' '{'
+			(version=Version ';' )?
+			(linkingPolicy = LinkingPolicy)?
+			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		'}'
+		(types+=Type)*
+		(services+=Service)*
+		(exceptions+=Exception)*
+		(events+=GlobalEvent)*
+		(interalNamespaces+=InternalNamespace)*
+	'}' (WS)*;
+	
+LinkingPolicy :
+	'referencing-policy' '{'
+		{LinkingPolicy}
+		('minimal-development-state' minDevState = LifecycleState ';')?
+		('minimal-test-state' minTestState = LifecycleState ';')?
+		('minimal-production-state' minProdState = LifecycleState ';')?
+	'}';
+	
+Type:
+	DataType | VersionedType;
+
+VersionedType:
+	BusinessObject | Enumeration;
+		
+DataType hidden(WS):
+	(doc=ML_COMMENT)?
+	'datatype' name=ID ('extends' base=[DataType] 'scope' scope=STRING)?';' ;
+	
+BusinessObject hidden(WS):
+	(doc=ML_COMMENT)?
+	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superBusinessObject=BusinessObjectRef)? '{' 
+		'metadata' '{'
+			version=Version ';' 
+			('replaces' replaces=BusinessObjectRef ';')?
+			'lifecycle-state' state=LifecycleState ';'
+			(governanceApproval=GovernanceApproval)?
+			('retirement on' retirementDate = STRING ';')?
+			('provided-definition-URL' providedDefinitionUrl=STRING)?
+			(linkingPolicy = LinkingPolicy)?
+			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		'}'
+		(properties+=Property)*
+	'}' (WS)*;
+
+TypeRef : DataTypeRef | VersionedTypeRef;
+
+DataTypeRef hidden(WS): 
+	type=[profileDsl::DataType|QualifiedName] (many?='[]' (set?='as set')? )? ;
+
+VersionedTypeRef:
+	type=[VersionedType|QualifiedName] (many?='[]' (set?='as set')? )? versionRef=VersionRef;
+
+	 
+EnumTypeRef:
+	type=[Enumeration|QualifiedName] versionRef=VersionRef;
+
+BusinessObjectRef hidden(WS):
+	type=[BusinessObject|QualifiedName] versionRef=VersionRef;
+
+	
+Property hidden(WS):
+	Attribute | Reference;
+	
+Attribute hidden(WS):
+	(doc=ML_COMMENT)?
+	(optional?='optional')? (isBusinessKey?='business-key')? ((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? name=ID ':' type=TypeRef ';' (WS)*;
+	
+//links to a target businessObject but uses it's business-key to resolve a reference, hence it is a weak reference
+Reference hidden(WS):
+	(doc=ML_COMMENT)?
+	(optional?='optional')? (isBusinessKey?='business-key')? 'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef ';' (WS)*; 
+	
+SimpleAttribute hidden(WS):
+	(doc=ML_COMMENT)?
+	(optional?='optional')? name=ID ':' type=TypeRef ';' (WS)*;
+	
+Enumeration hidden(WS):
+	(doc=ML_COMMENT)?
+	'enum' name=ID '{'
+		'metadata' '{'
+			version=Version ';' 
+			('replaces' replaces=EnumTypeRef ';')?
+			'lifecycle-state' state=LifecycleState ';'
+			(governanceApproval=GovernanceApproval)?
+			('retirement on' retirementDate = STRING ';')?
+			('provided-definition-URL' providedDefinitionUrl=STRING)?
+			(linkingPolicy = LinkingPolicy)?
+			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		'}'
+		(literals+=EnumLiteral ';')*
+	'}';
+	
+EnumLiteral: 
+	(doc=ML_COMMENT)?
+	name=ID;
+	
+// -- Technical eternal entities
+
+
+
+Service hidden(WS):
+	(doc=ML_COMMENT)?
+	visibility=VISIBILITY 'service' name=ID '{'
+		'metadata' '{'
+			version=Version ';' 
+			'lifecycle-state' state=LifecycleState ';'
+			(governanceApproval=GovernanceApproval)?
+			'service-category' category=ServiceCategory ';'
+			'statefulness' statefulness=Statefulness ';'
+			('persistence' persistence=Persistence ';')? 
+			(
+				('service-owner' owner=STRING ';')?
+			&	('realizes function' function=[businessDsl::Function|QualifiedName] ';')?	
+			&	('provided-Contract-URL' providedContractUrl=STRING ';')? //Where can I get the sources?
+			&	('sourceURL' source=STRING ';')? //Where can I get the sources?
+			&	('docURL' docUrl=STRING ';')?
+			&	('release on' releaseDate = STRING ';')?
+			&	('retirement on' retirementDate = STRING ';')?
+			&	('replaces' replaces=ServiceRef ';')?
+			&	('messageHeader' messageHeader = MessageHeaderRef ';')?
+			&   (linkingPolicy = LinkingPolicy)?
+			)
+			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		'}'
+		(operations+=Operation)*
+	'}';
+	
+enum ServiceCategory: process | rule | activity | entity | utility;
+
+//enum LifecycleState: proposed | defined | development | test | productive | deprecated | retired;
+
+GovernanceApproval:
+	'governance-approval' '{'
+		decision=ApprovalDecision ';'
+		('justification-doc' justificationOrDocURL=STRING ';')?
+		('approval-date' approvalDate=STRING ';')? 
+		('approved-by' approvedBy=STRING ';')?
+	'}'; 
+	
+enum ApprovalDecision: no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated;
+	
+enum Statefulness: idempotent | stateless | transientState="transient-state"| stateful ;
+
+enum Persistence: none | read | write | readWrite = "read / write";
+
+ServiceRef:
+	service=[Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')?;
+	
+OperationRef:
+	operation=[Operation|QualifiedName] versionRef=VersionRef;
+	
+PropertyRef:
+	property=[Property|QualifiedName] versionRef=VersionRef;
+	
+ParameterRef:
+	param=[Parameter|QualifiedName] '->' property=[Property|QualifiedName];
+
+MessageHeaderRef:
+	header = [profileDsl::MessageHeader|QualifiedName] versionRef=VersionRef;
+
+Event:	GlobalEvent | OperationEvent;
+
+GlobalEvent:
+	'event' name=ID '{'
+		'metadata' '{'
+			version=Version ';' 
+			('replaces' replaces=EventRef ';')?
+			'lifecycle-state' state=LifecycleState ';'
+			(governanceApproval=GovernanceApproval)?
+			('retirement on' retirementDate = STRING ';')?
+			('provided-definition-URL' providedDefinitionUrl=STRING)?
+			(linkingPolicy = LinkingPolicy)?
+			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		'}'
+		(parameter+=Parameter ';')*
+	'}';
+	
+OperationEvent:
+	'event' name=ID '{'
+		('metadata' '{'
+			('provided-definition-URL' providedDefinitionUrl=STRING)?
+			(linkingPolicy = LinkingPolicy)?
+			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		'}')?
+		(parameter+=Parameter ';')*
+	'}';
+	
+EventRef:	OperationEventRef | GlobalEventRef ;
+
+OperationEventRef:
+	event=[OperationEvent|QualifiedName] versionRef=VersionRef ('subType' subType=ID)?;
+
+GlobalEventRef:
+	event=[GlobalEvent|QualifiedName] versionRef=VersionRef ('subType' subType=ID)?;
+	
+Channel:
+	'channel' name=QualifiedName ';' ;
+	
+//Version:
+//	'version' (version=VersionId) ;
+//	
+//VersionRef:
+//	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef;
+//	
+//MinVersionRef:
+//	('minVersion') minVersion=VersionId;
+//	
+//MaxVersionRef:
+//	('maxVersion') maxVersion=VersionId;
+//	
+//LowerBoundRangeVersionRef:
+//	('minVersion' '>=') minVersion=VersionId ',' ('maxVersion' '<') maxVersion=VersionId;
+//
+//MajorVersionRef:
+//	'majorVersion' majorVersion=INT;
+	
+Operation:
+	(doc=ML_COMMENT)?
+	mep=MEP name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
+		('callback-listener-for' (callbackForOperation+=OperationRef) (',' callbackForOperation+=OperationRef)*';')?
+		('publishes' '{'
+				(publishes+=PublishedEvent )+ 
+		'}')? 
+		('subscribes-to' '{'
+			(subscribes+=EventRef ';')
+		'}')? 
+		('requires' requires+=ServiceRef ';')* 
+		('statefulness' statefulness=Statefulness (updating?='updating')? ';')?
+		('can-compensate' canCompensate+=OperationRef ';')?
+		('realizes capability' capability=[businessDsl::Capability|QualifiedName] ';')?
+		('messageHeader' messageHeader = MessageHeaderRef ';')?
+		(fetchProfile+=FetchProfile)*
+	'}';
+	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. */
+
+PublishedEvent : PublishedGlobalEvent | PublishedOperationEvent;
+
+PublishedOperationEvent: 
+	publishesOpEvent = OperationEvent;
+
+PublishedGlobalEvent:
+	 publishesGlobalEvent = GlobalEventRef ';';
+	 
+Parameter:
+	(optional?='optional')? name=ID ':' type=TypeRef ','? ;
+	
+Exception:
+	(doc=ML_COMMENT)?
+	'exception' name=ID ('extends' superException=ExceptionRef)? '{' 
+		'metadata' '{'
+			version=Version ';' 
+			('replaces' replaces=ExceptionRef ';')?
+			'lifecycle-state' state=LifecycleState ';'
+			(governanceApproval=GovernanceApproval)?
+			('retirement on' retirementDate = STRING ';')?
+			('provided-definition-URL' providedDefinitionUrl=STRING)?
+			(linkingPolicy = LinkingPolicy)?
+			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		'}'
+		(properties+=SimpleAttribute)*
+	'}';
+
+ExceptionRef:
+	exception=[Exception|QualifiedName] version=VersionRef;
+	
+enum MEP : 
+	sync | async | oneway | fireForget='fire+forget'; 
+	
+enum VISIBILITY : public | domain | private; 
+
+FetchProfile:
+	'fetch-profile' (isDefault?='default')? profileName=ID fetchSpec=FetchSpec ';';
+
+FetchSpec: EagerFetch | FlatFetch;
+
+EagerFetch: 'fetches' (eagerFetchAssoc+=ParameterRef)(',' eagerFetchAssoc+=ParameterRef)*;
+
+FlatFetch: 'fetches-flat-only' {FlatFetch};
+
+//QualifiedNameWithWildCard:
+//	QualifiedName '.*'?;
+//
+//QualifiedName:
+//	ID ('.' ID)*;
+

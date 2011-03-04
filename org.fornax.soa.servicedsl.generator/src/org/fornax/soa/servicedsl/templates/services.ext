@@ -1,0 +1,42 @@
+import sOABaseDsl;
+import sOAProfileDsl;
+import serviceDsl;
+
+extension org::fornax::soa::servicedsl::templates::common;
+extension org::fornax::soa::servicedsl::templates::domains;
+extension org::fornax::soa::servicedsl::templates::types;
+
+DomainNamespace getSubdomain (serviceDsl::Service s) : DomainNamespace.isInstance (s.eContainer) ? s.eContainer : null;
+
+String toTargetNamespace (Object svc) : "";
+String toTargetNamespace (Service svc) : 
+	svc.eContainer.toUnversionedNamespace() + 
+	"/" + svc.name + "/" + svc.toVersionPostfix() + "/";
+	
+String toVersionPostfix (Service svc) :
+	svc.version != null ? svc.version.toVersionPostfix() : toDefaultVersionPostfix();
+
+String toServiceName (Service svc) : svc.name;
+String toBindingName (Service svc) : svc.toServiceName() + "SOAP";
+
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (Service svc) : 
+	svc.operations.parameters.type.select(e| VersionedTypeRef.isInstance(e)).getLatestMatchingType().reject(e|e==null).createVersionedDomainNamespace().union(
+	svc.operations.return.type.select(e| VersionedTypeRef.isInstance(e)).getLatestMatchingType().reject(e|e==null).createVersionedDomainNamespace()).union(
+	svc.operations.throws.getLatestMatchingException().reject(e|e==null).createVersionedDomainNamespace()).toSet();
+
+String getWsdlFilename(Service s) : s.eContainer.getFileNameFragment() + "-v" + s.version.toMajorVersionNumber() + ".wsdl";
+
+Service getLatestMatchingService (ServiceRef s) :
+	s.service.getSubdomain ().types.select (e|e.name == s.service.name && s.service.version.versionMatches (s.versionRef))
+		.typeSelect (Service).sortBy (e|e.version).first( );
+
+boolean isLatestMatchingService (Service s, Integer majorVersion, LifecycleState minState) : 
+	(getLatestMatchingService( ((SubNamespace)s.eContainer).services.select(e|e.name == s.name), majorVersion, minState) == s) 
+	? true
+	: false;
+		
+private serviceDsl::Type getLatestMatchingService (List[Service] canditates, Integer majorVersion, LifecycleState minState) : 
+	canditates.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel(minState)).sortBy(e|e.version).first();
+
+	
+

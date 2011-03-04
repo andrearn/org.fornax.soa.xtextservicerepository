@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.fornax.soa.servicerepo.ui"
+      label="Service Repository Feature"
+      version="1.2.0.qualifier"
+      provider-name="Fornax Platform">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.fornax.soa.bindingdsl" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.bindingdsl.ui" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.businessdsl" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.businessdsl.ui" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.environmentdsl" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.environmentdsl.ui" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.semanticsdsl" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.semanticsdsl.ui" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.servicedsl" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.servicedsl.ui" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.sladsl" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.sladsl.ui" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.solutiondsl" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.solutiondsl.ui" version="1.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.eclipse.xtext" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.builder" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.common.types" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.ui" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xpand" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtend" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.ui.shared" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.apache.log4j"/>
+   </requires>
+
+   <plugin
+         id="org.fornax.soa.servicerepo.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.fornax.soa.servicerepo"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

@@ -1,0 +1,37 @@
+grammar org.fornax.soa.basedsl.SOABaseDsl with org.eclipse.xtext.common.Terminals
+
+generate sOABaseDsl "http://www.fornax.org/soa/basedsl/SOABaseDsl"
+
+Import hidden(WS): 
+	'import' importedNamespace=QualifiedNameWithWildCard ';';
+
+VersionId hidden(WS): INT('.'INT)*;
+
+VersionedName hidden(WS): {VersionedName} QualifiedName|ID (WS)* version=VersionId;
+
+enum LifecycleState: proposed | defined | development | test | productive | deprecated | retired;
+	
+Version hidden(WS):
+	'version' (version=VersionId) ;
+	
+VersionRef hidden(WS):
+	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef;
+	
+MinVersionRef hidden(WS):
+	('minVersion') minVersion=VersionId;
+	
+MaxVersionRef hidden(WS):
+	('maxVersion') maxVersion=VersionId;
+	
+LowerBoundRangeVersionRef hidden(WS):
+	('minVersion' '>=') minVersion=VersionId ',' ('maxVersion' '<') maxVersion=VersionId;
+
+MajorVersionRef hidden(WS):
+	'majorVersion' majorVersion=INT;
+
+QualifiedNameWithWildCard hidden(WS):
+	QualifiedName '.*'?;
+
+QualifiedName hidden(WS):
+	ID ('.' ID)*;
+

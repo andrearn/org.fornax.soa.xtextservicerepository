@@ -1,0 +1,10 @@
+import sOABaseDsl;
+import serviceDsl;
+
+listSubclasses(BusinessObject this) :
+	let subclasses = this.eRootContainer.eAllContents.typeSelect(BusinessObject).select(e|e.superBusinessObject == this).name:
+		switch (subclasses.size) { 
+			case 0: "no subclasses"
+			case 1: "subclass: " + subclasses.toString(", ")
+			default: subclasses.size.toString() + " subclasses: " + subclasses.toString(", ")
+		};

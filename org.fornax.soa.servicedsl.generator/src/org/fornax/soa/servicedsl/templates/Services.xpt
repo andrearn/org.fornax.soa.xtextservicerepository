@@ -1,0 +1,53 @@
+«IMPORT sOABaseDsl»
+«IMPORT serviceDsl»;
+«IMPORT bindingDsl»;
+
+«EXTENSION org::fornax::soa::servicedsl::templates::common»
+«EXTENSION org::fornax::soa::servicedsl::templates::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::services»
+«EXTENSION org::fornax::soa::servicedsl::query::services»
+
+
+«DEFINE main (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR serviceDsl::ServiceModel-»
+	«EXPAND OrganizationNamespace (minState, profile) FOREACH this.getAllServiceModels().orgNamespaces»
+«ENDDEFINE»
+
+«DEFINE OrganizationNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR serviceDsl::OrganizationNamespace»
+	«EXPAND SubNamespace (minState, profile) FOREACH subNamespaces»
+«ENDDEFINE»
+
+«DEFINE SubNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR SubNamespace»
+	«ERROR "not a concrete type"»
+«ENDDEFINE»
+
+«DEFINE SubNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR DomainNamespace»
+	«EXPAND SubNamespace (minState, profile) FOREACH interalNamespaces»
+	«REM»«EXPAND Service (this, minState) FOREACH services.select(e|e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), minState)).select(e|e.providedContractUrl == null)»«ENDREM»
+	«EXPAND Service (this, minState, profile) FOREACH services.allLatestMajorVersions (minState).select(e|e.providedContractUrl == null)»
+	«REM»«EXPAND EventXSD::Events (this, minState) FOREACH services.select(e|e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), minState)).select(e|e.providedContractUrl == null)»«ENDREM»
+	«EXPAND BusinessObject (minState)»
+«ENDDEFINE»
+
+«DEFINE SubNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR InternalNamespace»
+	«REM»«EXPAND Subdomain FOREACH subdomains»«ENDREM»
+	«EXPAND Service (this, minState, profile) FOREACH services.allLatestMajorVersions (minState).select(e|e.providedContractUrl == null)»
+	«REM»«EXPAND EventXSD::Events (this, minState) FOREACH services.select(e|e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), minState)).select(e|e.providedContractUrl == null)»«ENDREM»
+	«EXPAND BusinessObject (minState)»
+«ENDDEFINE»
+
+«DEFINE Service (DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR Service»
+	«EXPAND WSDL::WSDL (subDom, minState, profile)-»
+«ENDDEFINE»
+«DEFINE Service (InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR Service»
+	«EXPAND WSDL::WSDL (subDom, minState, profile)-»
+«ENDDEFINE»
+
+«DEFINE BusinessObject (LifecycleState minState) FOR DomainNamespace»
+	«EXPAND XSD::XSD (minState)»
+«ENDDEFINE»
+
+«DEFINE BusinessObject (LifecycleState minState) FOR InternalNamespace»
+	«EXPAND XSD::XSD (minState)»
+«ENDDEFINE»
+
+
