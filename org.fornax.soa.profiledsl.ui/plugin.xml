@@ -14,6 +14,19 @@
             name="SOAProfileDsl Editor">
         </editor>
     </extension>
+   	<extension
+	      point = "org.eclipse.ui.newWizards">
+		 <wizard
+         category="org.fornax.soa.ui.newWizards"
+         class="org.fornax.soa.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.fornax.soa.profiledsl.ui.wizard.NewProfileDslFileWizard"
+         hasPages="true"
+         
+         id="org.fornax.soa.profiledsl.ui.wizard.NewProfileDslFileWizard"
+         name="SOA profile file">
+	       <description>Create a new SOA profile file</description>
+		   <selection class="org.eclipse.core.resources.IResource"/>
+		</wizard>
+	</extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
