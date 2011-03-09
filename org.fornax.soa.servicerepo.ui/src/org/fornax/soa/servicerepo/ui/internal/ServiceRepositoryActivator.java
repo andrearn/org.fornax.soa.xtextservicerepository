@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.fornax.soa.servicerepo.ui.ServiceRepositorySharedStateModule;
 import org.osgi.framework.BundleContext;
 
 import com.google.inject.Guice;
@@ -68,7 +68,7 @@ public class ServiceRepositoryActivator extends AbstractUIPlugin {
 	}
 
 	protected Module getSharedStateModule() {
-		return new org.eclipse.xtext.ui.shared.SharedStateModule();
+		return new ServiceRepositorySharedStateModule();
 	}
 
 }

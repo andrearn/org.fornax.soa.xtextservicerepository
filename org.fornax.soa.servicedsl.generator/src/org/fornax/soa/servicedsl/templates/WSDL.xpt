@@ -118,7 +118,7 @@
 «ENDDEFINE»
 
 «DEFINE Parameter FOR Parameter-»
-						<xsd:element name="«name»" type="«type.getTypeNameRef ()»" «IF optional»minOccurs="0" «ENDIF»«IF type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
+						<xsd:element name="«name»" type="«type.getTypeNameRef ()»" «IF optional»minOccurs="0" «ENDIF»«IF type.isMany()»maxOccurs="unbounded"«ENDIF» «IF type.isAttachment()»«EXPAND XSD::AttachmentMimeFragment FOR type»«ENDIF»></xsd:element>
 «ENDDEFINE»
 
 «DEFINE Parameter FOR sOAProfileDsl::Property-»

@@ -30,6 +30,7 @@
 <xsd:schema xmlns:tns="«toNamespace()»"
 	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS (minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
 	targetNamespace="«toNamespace()»"
 	>
 	«EXPAND ImportDeclaration FOREACH allImportedVersionedNS(minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 	
@@ -152,7 +153,7 @@
 
 «DEFINE Property(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) FOR Attribute-»
 	«IF doc != null-»
-			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" >
+			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF» >
 		    	<xsd:annotation>
 		    		<xsd:documentation>
 		    			«doc.stripCommentBraces().trim()»
@@ -160,15 +161,15 @@
 		    	</xsd:annotation>
 			</xsd:element>
 	«ELSE-»
-			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" />
+			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF» />
 	«ENDIF»
 «ENDDEFINE»
 
 «DEFINE Property(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) FOR SimpleAttribute-»
 	«IF doc == null-»
-			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" />
+			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF»/>
 	«ELSE»
-			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" >
+			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF»>
 		    	<xsd:annotation>
 		    		<xsd:documentation>
 		    			«doc.stripCommentBraces().trim()»
@@ -191,4 +192,8 @@
 
 «DEFINE EnumLiteral FOR EnumLiteral-»
     		<xsd:enumeration value="«name»"/>
+«ENDDEFINE»
+
+«DEFINE AttachmentMimeFragment FOR TypeRef-»
+xmime:expectedContentTypes="application/octet-stream"
 «ENDDEFINE»

@@ -245,12 +245,12 @@ String getTypeNameRef (EnumTypeRef t, org::fornax::soa::servicedsl::VersionedDom
 String getTypeNameRef (serviceDsl::Type t) : "";
 String getTypeNameRef (sOAProfileDsl::DataType t) :
  	switch (t.name) {
- 		case "attachment":	"xsd:base64Binary"
- 		case "binary":		"xsd:hexBinary"
- 		case "base64":		"xsd:base64Binary"
- 		case "BigInteger":	"xsd:decimal"
- 		case "BigDecimal":	"xsd:decimal"
- 		case "datetime":	"xsd:dateTime"
+ 		case "attachment":		"xsd:base64Binary"
+ 		case "binary":			"xsd:hexBinary"
+ 		case "base64Binary":	"xsd:base64Binary"
+ 		case "BigInteger":		"xsd:decimal"
+ 		case "BigDecimal":		"xsd:decimal"
+ 		case "datetime":		"xsd:dateTime"
 		default : "xsd:" + t.name
 	};
 
@@ -272,15 +272,23 @@ String getFullTypeNameRef (EnumTypeRef t, org::fornax::soa::servicedsl::Versione
 	t.type.getSubdomain().toNamespace() + t.type.name;
 
 String getFullTypeNameRef (serviceDsl::Type t) : "";
-String getFullTypeNameRef (DataType t) :
+String getFullTypeNameRef (sOAProfileDsl::DataType t) :
  	switch (t.name) {
- 		case "attachment":	"xsd:base64Binary"
- 		case "binary":		"xsd:hexBinary"
- 		case "base64":		"xsd:base64Binary"
- 		case "BigInteger":	"xsd:decimal"
- 		case "BigDecimal":	"xsd:decimal"
- 		case "datetime":	"xsd:dateTime"
+ 		case "attachment":		"xsd:base64Binary"
+ 		case "binary":			"xsd:hexBinary"
+ 		case "base64Binary":	"xsd:base64Binary"
+ 		case "BigInteger":		"xsd:decimal"
+ 		case "BigDecimal":		"xsd:decimal"
+ 		case "datetime":		"xsd:dateTime"
 		default : "xsd:" + t.name
+	};
+	
+boolean isAttachment (TypeRef t) : false;
+boolean isAttachment (DataTypeRef t) :
+	switch (t.type.name) {
+		case "base64Binary": 	true
+		case "attachment":		true
+		default:				false
 	};
  
 
