@@ -10,7 +10,7 @@
 «EXTENSION org::fornax::soa::servicedsl::query::subdomains»
 
 
-«DEFINE Events (DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR Service»
+«DEFINE Events (DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 «FILE getFileNameFragment() + "Events.xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema targetNamespace="«toTargetNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -18,7 +18,7 @@
 	xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 	«ENDFOREACH-»
 	«FOREACH getImportedSubdomains().select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
-	<xsd:import schemaLocation="«imp.getFileNameFragment()».xsd"
+	<xsd:import schemaLocation="«imp.getRegisteredUrl(registryBaseUrl)».xsd"
 		namespace="«imp.toNamespace()»"/>
 	«ENDFOREACH-»
 	

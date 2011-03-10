@@ -15,7 +15,7 @@
 	CARTRIDGE ENTRYPOINT for generation of abstract WSDLs 
 	that only define the abstract interface of a service
 «ENDREM»
-«DEFINE WSDL(DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR Service»
+«DEFINE WSDL(DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 «FILE getFileNameFragment() + ".wsdl"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 	xmlns:tns="«toTargetNamespace()»"
@@ -30,7 +30,7 @@
 		«doc.trim().stripCommentBraces()»
 	</wsdl:documentation>
 	
-	«EXPAND Types(minState, profile)-»
+	«EXPAND Types(minState, profile, registryBaseUrl)-»
 	«EXPAND Messages FOREACH operations-»
 	«EXPAND FaultMessages(operations.throws) FOREACH operations.throws.exception.name.toSet()»
 	«EXPAND PortType»
@@ -38,7 +38,7 @@
 «ENDFILE»
 «ENDDEFINE»
 
-«DEFINE WSDL(InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR Service»
+«DEFINE WSDL(InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 «FILE subDom.getFileNameFragment() + "-" + name + "-" + version.toVersionPostfix() + ".wsdl"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 	xmlns:tns="«toTargetNamespace()»"
@@ -53,7 +53,7 @@
 		«doc.trim().stripCommentBraces()»
 	</wsdl:documentation>
 	
-	«EXPAND Types(minState, profile)-»
+	«EXPAND Types(minState, profile, registryBaseUrl)-»
 	«EXPAND Messages FOREACH operations-»
 	«EXPAND FaultMessages(operations.throws) FOREACH operations.throws.exception.name.toSet()»
 	«EXPAND PortType»
@@ -61,7 +61,7 @@
 «ENDFILE»
 «ENDDEFINE»
 
-«DEFINE Types(LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR Service»
+«DEFINE Types(LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 	<wsdl:types>
 		<xsd:schema targetNamespace="«toTargetNamespace()»"
 			«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
@@ -72,11 +72,11 @@
 			«ENDFOREACH-»
 		>
 			«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
-			<xsd:import schemaLocation="«imp.getFileNameFragment()».xsd"
+			<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
 				namespace="«imp.toNamespace()»"/>
 			«ENDFOREACH-»
 			«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
-			<xsd:import schemaLocation="«headerImp.getFileNameFragment()».xsd"
+			<xsd:import schemaLocation="«headerImp.getRegisteredUrl (registryBaseUrl)».xsd"
 				namespace="«headerImp.toNamespace()»"/>
 			«ENDFOREACH-»
 			«EXPAND OperationWrapperTypes (profile) FOREACH operations»
@@ -166,8 +166,8 @@
 «ENDDEFINE»
 
 «DEFINE Binding FOR Service»
-	<wsdl:binding name="«name»SOAP«REM»cnc-sales-partner-ContactBESSOAP«ENDREM»"
-		type="tns:«name»">«REM»type="tns:cnc-sales-partner-ContactBES"«ENDREM»
+	<wsdl:binding name="«name»SOAP"
+		type="tns:«name»">
 		<soap:binding style="document"
 			transport="http://schemas.xmlsoap.org/soap/http" />
 		«EXPAND BindingOperation FOREACH operations»

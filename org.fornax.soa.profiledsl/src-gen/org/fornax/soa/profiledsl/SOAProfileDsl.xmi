@@ -32,10 +32,10 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value=";"/>
-        <elements xsi:type="xtext:Assignment" feature="messaging" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="messaging" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" feature="designRules" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="designRules" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="orgNamespaces" operator="+=">
@@ -65,11 +65,12 @@
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="messageHeaders" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
         </elements>
-        <elements xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="default-header"/>
           <elements xsi:type="xtext:Assignment" feature="defaultHeader" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.17"/>
           </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -79,15 +80,20 @@
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//DesignRules"/>
       </type>
       <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//DesignRules"/>
+          </type>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="design-rules"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="internalNamespaceRules" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" feature="typeDefPolicy" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="typeDefPolicy" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.26"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" feature="serviceDefPolicy" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="serviceDefPolicy" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.27"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>

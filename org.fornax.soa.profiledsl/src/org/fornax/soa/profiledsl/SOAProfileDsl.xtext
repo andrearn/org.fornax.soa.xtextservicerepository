@@ -9,8 +9,8 @@ SOAProfileModel hidden (WS):
 SOAProfile:
 	'soa-profile' name=ID '{'
 		'scope' scope = STRING';'
-		messaging=Messaging
-		designRules=DesignRules
+		(messaging=Messaging)?
+		(designRules=DesignRules)?
 		(orgNamespaces+=OrganizationNamespace)*
 		(namespaceRules = NamespaceRules)?
 		(scopedBasicTypes+=BasicTypes)*
@@ -20,14 +20,14 @@ SOAProfile:
 Messaging :
 	{Messaging} 'messaging' '{'
 		(messageHeaders+=MessageHeader)*
-		('default-header' defaultHeader=MessageHeaderRef)
+		('default-header' defaultHeader=MessageHeaderRef ";")?
 	'}';
 	
 DesignRules:
-	'design-rules' '{'
+	{DesignRules} 'design-rules' '{'
 		(internalNamespaceRules+=InternalNamespaceRule)*
-		typeDefPolicy=TypeDefPolicy
-		serviceDefPolicy=ServiceDefPolicy
+		(typeDefPolicy=TypeDefPolicy)?
+		(serviceDefPolicy=ServiceDefPolicy)?
 	'}';
 	
 NamespaceRules:

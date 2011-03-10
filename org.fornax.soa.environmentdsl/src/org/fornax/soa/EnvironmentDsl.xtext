@@ -11,28 +11,29 @@ EnvModel  hidden(WS):
 	
 EnvImport : EnvNsImport | EnvFileImport; 
 
-EnvNsImport :
+EnvNsImport  hidden (WS):
 	'import' importedNamespace=QualifiedNameWithWildCard ";"; 
 	
-EnvFileImport hidden(WS):
+EnvFileImport hidden (WS):
 	'import' importURI=STRING ';';
 	
 Environment :
 	'environment' name=ID 'of type' (type=EnvironmentType) '{'
 		(hosts+=Host)*
 		(servers+=Server)*
-		('default ESB' defaultESB=[ESB])? 
-		('default AppServer' defaultAppServer=[AppServer])? 
-		('default Broker' defaultBroker=[Broker])? 
+		('default' 'ESB' defaultESB=[ESB])? 
+		('default' 'Registry' defaultRegistry=[Registry])? 
+		('default' 'AppServer' defaultAppServer=[AppServer])? 
+		('default' 'Broker' defaultBroker=[Broker])? 
 	'}';
 	
 enum EnvironmentType : Prod = "Production-Environment" | PreProd="Pre-Production-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Other="Other-Environment";
 
-Server : ESB | IvyServer | AppServer | Broker | Database | SAP;
+Server  hidden (WS): ESB | Registry | ProcessServer | AppServer | Broker | Database | SAP;
 
-ESB : 
+ESB hidden (WS): 
 	'esb' name=ID '{'
-		('DSL-code' dslCode=STRING ";")?
+		('identifier' dslCode=STRING ";")?
 		('admins' admins+=[User|QualifiedName] ";")? 
 		'host' host=[Host|QualifiedName] ";"
 		('dir' home=STRING ";")?
@@ -44,10 +45,28 @@ ESB :
 		('server-version' serverVersion=STRING ';')?
 		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
 	'}';
+
+Registry  hidden (WS):
+	'registry' name=ID '{'
+		('identifier' dslCode=STRING ";")?
+		('admins' admins+=[User|QualifiedName] ";")? 
+		'host' host=[Host|QualifiedName] ";"
+		('dir' home=STRING ";")?
+		('deployDir' deployDir=STRING ";")?
+		('baseUrl' baseUrl=STRING ";")?
+		('adminUrl' adminUrl=STRING ";")?
+		('server-type' serverType=STRING ';')?
+		('server-version' serverVersion=STRING ';')?
+		('kind' kind=RegistryKind ";")?
+		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+	'}';
 	
-AppServer : 
+enum RegistryKind : UDDI | HTTP | File | Native;
+
+	
+AppServer  hidden (WS): 
 	'appserver' name=ID '{'
-		('DSL-code' dslCode=STRING ";")?
+		('identifier' dslCode=STRING ";")?
 		('admins' (admins+=[User|QualifiedName])+ ";")? 
 		'host' host=[Host|QualifiedName] ";"
 		('dir' home=STRING ";")?
@@ -61,14 +80,14 @@ AppServer :
 		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
 	'}';
 	
-JNDI : 
+JNDI  hidden (WS): 
 	(clustered?='clustered')? 'jndi' name=ID '{'
 		'jndi-url' url=STRING ';'
 	'}';
 	
-IvyServer :
-	'ivyserver'  name=ID '{'
-		('DSL-code' dslCode=STRING ";")?
+ProcessServer  hidden (WS):
+	'processserver'  name=ID '{'
+		('identifier' dslCode=STRING ";")?
 		('admins' (admins+=[User|QualifiedName])+ ";")? 
 		'host' host=[Host|QualifiedName] ";"
 		('dir' home=STRING ";")?
@@ -76,12 +95,14 @@ IvyServer :
 		('deployUser' deployUser=[User] ";")?
 		('baseUrl' baseUrl=STRING  ";")?
 		('adminUrl' adminUrl=STRING  ";")?
+		('server-type' serverType=STRING ';')?
+		('server-version' serverVersion=STRING ';')?
 		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
 	'}';
 
-Broker : 
+Broker  hidden (WS): 
 	'broker' name=ID '{'
-		('DSL-code' dslCode=STRING ";")? 
+		('identifier' dslCode=STRING ";")? 
 		('admins' (admins+=[User|QualifiedName])+ ";")? 
 		'host' host=[Host|QualifiedName] 'dir' home=STRING ";"
 		('deployDir' deployDir=STRING ";")?
@@ -92,9 +113,9 @@ Broker :
 		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
 	'}'; 
 
-Database :  
+Database  hidden (WS):  
 	'database' name=ID '{'
-		('DSL-code' dslCode=STRING ";")?
+		('identifier' dslCode=STRING ";")?
 		('admins' (admins+=[User|QualifiedName])+ ";")? 
 		'host' host=[Host|QualifiedName] ";" 
 		('dir' home=STRING ";")? 
@@ -107,9 +128,9 @@ Database :
 		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
 	'}';
 
-SAP :  
+SAP  hidden (WS):  
 	'sap' name=ID '{'
-		('DSL-code' dslCode=STRING ";")?
+		('identifier' dslCode=STRING ";")?
 		('admins' (admins+=[User|QualifiedName])+ ";")? 
 		'host' host=[Host|QualifiedName] ";" 
 		('dir' home=STRING ";")?
@@ -119,33 +140,33 @@ SAP :
 		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
 	'}';
 	
-SapClient : 
+SapClient  hidden (WS): 
 	'client' name=ID '{'
 		'client-ID' client=INT ';'
 		'owner' owner=STRING ';'
 		('accountingArea' accountingArea=STRING)?
 	'}';
 	
-DataSource :
+DataSource  hidden (WS):
 	'data-source' name=ID '{'
 		'jndi-name' jndiName=STRING ';'
 		'schema' schema=[DatabaseSchema|QualifiedName] ';'
 	'}';
 	
-enum DatabaseKind : Oracle | DB2 | MSSQL | MySQL | Postgres;
+enum DatabaseKind : Oracle | DB2 | MSSQL | MySQL | Postgres | Sybase | HyperSonic | Ingres | Adabas | Other;
 
 DatabaseSchema: 
 	'schema' name=ID 'owner' owner=STRING;
 	
-Host :
+Host  hidden (WS):
 	'host' name=ID '{'
 		'full-qualified-name' fqn=STRING 
 		('ip-address' ip=STRING)? 
-		('DHS-code' dshCode=STRING )?
+		('identifier' dshCode=STRING )?
 		('admins' admins+=[User|QualifiedName])?";"
 	'}';
 	
-User : 
+User  hidden (WS): 
 	'user' name=ID '{'
 		('firstname' firstname=STRING 'lastname' lastname=STRING ";")? 
 		'email' email=STRING ";"

@@ -34,7 +34,7 @@
 		
 		«doc.trim().stripCommentBraces()»
 	</wsdl:documentation>
-    <wsdl:import namespace="«toTargetNamespace()»" location="«getFileNameFragment()».wsdl"></wsdl:import>
+    <wsdl:import namespace="«toTargetNamespace()»" location="«this.getRegisteredUrl (domBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 	
 	«EXPAND SOAPBinding(this) FOREACH domBind.protocol.typeSelect(SOAP)-»
 	«EXPAND WsdlService(this) FOREACH domBind.protocol.typeSelect(SOAP)-»
@@ -56,7 +56,7 @@
 		
 		«doc.trim().stripCommentBraces()»
 	</wsdl:documentation>
-    <wsdl:import namespace="«toTargetNamespace()»" location="«getFileNameFragment()».wsdl"></wsdl:import>
+    <wsdl:import namespace="«toTargetNamespace()»" location="«this.getRegisteredUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 	
 	«EXPAND SOAPBinding(this) FOREACH svcBind.protocol.typeSelect(SOAP)-»
 	«EXPAND WsdlService(this) FOREACH svcBind.protocol.typeSelect(SOAP)-»

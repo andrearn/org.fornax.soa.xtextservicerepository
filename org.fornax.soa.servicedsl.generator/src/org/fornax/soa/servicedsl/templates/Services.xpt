@@ -8,46 +8,42 @@
 «EXTENSION org::fornax::soa::servicedsl::query::services»
 
 
-«DEFINE main (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR serviceDsl::ServiceModel-»
-	«EXPAND OrganizationNamespace (minState, profile) FOREACH this.getAllServiceModels().orgNamespaces»
+«DEFINE main (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR serviceDsl::ServiceModel-»
+	«EXPAND OrganizationNamespace (minState, profile, registryBaseUrl) FOREACH this.getAllServiceModels().orgNamespaces»
 «ENDDEFINE»
 
-«DEFINE OrganizationNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR serviceDsl::OrganizationNamespace»
-	«EXPAND SubNamespace (minState, profile) FOREACH subNamespaces»
+«DEFINE OrganizationNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR serviceDsl::OrganizationNamespace»
+	«EXPAND SubNamespace (minState, profile, registryBaseUrl) FOREACH subNamespaces»
 «ENDDEFINE»
 
-«DEFINE SubNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR SubNamespace»
+«DEFINE SubNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
 	«ERROR "not a concrete type"»
 «ENDDEFINE»
 
-«DEFINE SubNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR DomainNamespace»
-	«EXPAND SubNamespace (minState, profile) FOREACH interalNamespaces»
-	«REM»«EXPAND Service (this, minState) FOREACH services.select(e|e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), minState)).select(e|e.providedContractUrl == null)»«ENDREM»
-	«EXPAND Service (this, minState, profile) FOREACH services.allLatestMajorVersions (minState).select(e|e.providedContractUrl == null)»
-	«REM»«EXPAND EventXSD::Events (this, minState) FOREACH services.select(e|e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), minState)).select(e|e.providedContractUrl == null)»«ENDREM»
-	«EXPAND BusinessObject (minState)»
+«DEFINE SubNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR DomainNamespace»
+	«EXPAND SubNamespace (minState, profile, registryBaseUrl) FOREACH interalNamespaces»
+	«EXPAND Service (this, minState, profile, registryBaseUrl) FOREACH services.allLatestMajorVersions (minState).select(e|e.providedContractUrl == null)»
+	«EXPAND BusinessObject (minState, registryBaseUrl)»
 «ENDDEFINE»
 
-«DEFINE SubNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR InternalNamespace»
-	«REM»«EXPAND Subdomain FOREACH subdomains»«ENDREM»
-	«EXPAND Service (this, minState, profile) FOREACH services.allLatestMajorVersions (minState).select(e|e.providedContractUrl == null)»
-	«REM»«EXPAND EventXSD::Events (this, minState) FOREACH services.select(e|e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), minState)).select(e|e.providedContractUrl == null)»«ENDREM»
-	«EXPAND BusinessObject (minState)»
+«DEFINE SubNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR InternalNamespace»
+	«EXPAND Service (this, minState, profile, registryBaseUrl) FOREACH services.allLatestMajorVersions (minState).select(e|e.providedContractUrl == null)»
+	«EXPAND BusinessObject (minState, registryBaseUrl)»
 «ENDDEFINE»
 
-«DEFINE Service (DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR Service»
-	«EXPAND WSDL::WSDL (subDom, minState, profile)-»
+«DEFINE Service (DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
+	«EXPAND WSDL::WSDL (subDom, minState, profile, registryBaseUrl)-»
 «ENDDEFINE»
-«DEFINE Service (InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR Service»
-	«EXPAND WSDL::WSDL (subDom, minState, profile)-»
-«ENDDEFINE»
-
-«DEFINE BusinessObject (LifecycleState minState) FOR DomainNamespace»
-	«EXPAND XSD::XSD (minState)»
+«DEFINE Service (InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
+	«EXPAND WSDL::WSDL (subDom, minState, profile, registryBaseUrl)-»
 «ENDDEFINE»
 
-«DEFINE BusinessObject (LifecycleState minState) FOR InternalNamespace»
-	«EXPAND XSD::XSD (minState)»
+«DEFINE BusinessObject (LifecycleState minState, String registryBaseUrl) FOR DomainNamespace»
+	«EXPAND XSD::XSD (minState, registryBaseUrl)»
+«ENDDEFINE»
+
+«DEFINE BusinessObject (LifecycleState minState, String registryBaseUrl) FOR InternalNamespace»
+	«EXPAND XSD::XSD (minState, registryBaseUrl)»
 «ENDDEFINE»
 
 

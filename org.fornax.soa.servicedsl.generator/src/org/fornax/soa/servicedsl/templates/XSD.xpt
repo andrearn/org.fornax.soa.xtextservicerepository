@@ -12,20 +12,20 @@
 	CARTRIDGE ENTRYPOINT for generation of XSDs from namespaces. 
 	The namespace will be sliced into namespaces per major version introduced in the namespace 
 «ENDREM»
-«DEFINE XSD (String minState) FOR SubNamespace»
-	«EXPAND XSD (getStateByName (minState)) -»
+«DEFINE XSD (String minState, String registryBaseUrl) FOR SubNamespace»
+	«EXPAND XSD (getStateByName (minState), registryBaseUrl) -»
 «ENDDEFINE»
 
-«DEFINE XSD (LifecycleState minState) FOR SubNamespace»
-	«EXPAND XSDVersion(minState) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
+«DEFINE XSD (LifecycleState minState, String registryBaseUrl) FOR SubNamespace»
+	«EXPAND XSDVersion(minState, registryBaseUrl) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
 «ENDDEFINE»
 
-«DEFINE XSDForImports (LifecycleState minState) FOR SubNamespace»
-	«EXPAND XSDVersion (minState) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
+«DEFINE XSDForImports (LifecycleState minState, String registryBaseUrl) FOR SubNamespace»
+	«EXPAND XSDVersion (minState, registryBaseUrl) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
 «ENDDEFINE»
 
 
-«DEFINE XSDVersion(LifecycleState minState) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
+«DEFINE XSDVersion(LifecycleState minState, String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
 «FILE getFileNameFragment() + ".xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema xmlns:tns="«toNamespace()»"
 	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS (minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 
@@ -33,7 +33,7 @@
 	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
 	targetNamespace="«toNamespace()»"
 	>
-	«EXPAND ImportDeclaration FOREACH allImportedVersionedNS(minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 	
+	«EXPAND ImportDeclaration (registryBaseUrl) FOREACH allImportedVersionedNS(minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 	
 	«IF SubNamespace.isInstance(subdomain)-»
 		«EXPAND ComplexType(this) FOREACH ((SubNamespace) subdomain).types.typeSelect(BusinessObject).reject(e|e.state == LifecycleState::retired).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(),  minState))-»
 		«EXPAND SimpleType FOREACH ((SubNamespace) subdomain).types.typeSelect(Enumeration).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(), minState))-»
@@ -51,8 +51,8 @@
 	xmlns:«toPrefix() + version.toMajorVersionNumber()»="«toNamespace()»"
 «ENDDEFINE»
 
-«DEFINE ImportDeclaration FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
-	<xsd:import schemaLocation="«getFileNameFragment()».xsd"
+«DEFINE ImportDeclaration (String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
+	<xsd:import schemaLocation="«this.getRegisteredUrl (registryBaseUrl)».xsd"
 		namespace="«toNamespace()»"></xsd:import>
 «ENDDEFINE»
 

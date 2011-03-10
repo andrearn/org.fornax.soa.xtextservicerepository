@@ -9,22 +9,21 @@
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
 «EXTENSION org::eclipse::xtend::util::stdlib::io»
 
-«DEFINE MessageHeaderXSD FOR sOAProfileDsl::SOAProfile»
-	«EXPAND MessageHeaderXSD (this) FOREACH orgNamespaces.subNamespaces»
+«DEFINE MessageHeaderXSD (String registryBaseUrl) FOR sOAProfileDsl::SOAProfile»
+	«EXPAND MessageHeaderXSD (this, registryBaseUrl) FOREACH orgNamespaces.subNamespaces»
 «ENDDEFINE»
 
-«DEFINE MessageHeaderXSD (sOAProfileDsl::SOAProfile profile) FOR sOAProfileDsl::Namespace»
-	«info(toVersionedDomainNamespaces())»
-	«EXPAND MessageHeaderXSD (profile) FOREACH toVersionedDomainNamespaces()»
+«DEFINE MessageHeaderXSD (sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR sOAProfileDsl::Namespace»
+	«EXPAND MessageHeaderXSD (profile, registryBaseUrl) FOREACH toVersionedDomainNamespaces()»
 «ENDDEFINE»
 
-«DEFINE MessageHeaderXSD (sOAProfileDsl::SOAProfile profile) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
+«DEFINE MessageHeaderXSD (sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
 «FILE getFileNameFragment() + ".xsd"-»<xsd:schema xmlns:tns="«toNamespace()»"
 	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS ().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="«toNamespace()»"
 	>
-	«EXPAND ImportDeclaration FOREACH allImportedVersionedNS().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 	
+	«EXPAND ImportDeclaration (registryBaseUrl) FOREACH allImportedVersionedNS().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 	
 	«IF sOAProfileDsl::Namespace.isInstance(subdomain)-»
 		«EXPAND ComplexType(this) FOREACH ((sOAProfileDsl::Namespace) subdomain).types.typeSelect(sOAProfileDsl::Class).select (e|e.version.version.toMajorVersionNumber() == version.toMajorVersionNumber())-»
 		«EXPAND SimpleType FOREACH ((sOAProfileDsl::Namespace) subdomain).types.typeSelect(sOAProfileDsl::Enumeration).select (e|e.isLatestMatchingType (version.toMajorVersionNumber().asInteger() ))-»
@@ -39,8 +38,8 @@
 	xmlns:«toPrefix() + version.toMajorVersionNumber()»="«toNamespace()»"
 «ENDDEFINE»
 
-«DEFINE ImportDeclaration FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
-	<xsd:import schemaLocation="«getFileNameFragment()».xsd"
+«DEFINE ImportDeclaration (String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
+	<xsd:import schemaLocation="«getRegisteredUrl (registryBaseUrl)».xsd"
 		namespace="«toNamespace()»"></xsd:import>
 «ENDDEFINE»
 
@@ -83,7 +82,7 @@
     	</xsd:sequence>
 «ENDDEFINE»
 
-«DEFINE SimpleType FOR Enumeration»
+«DEFINE SimpleType FOR sOAProfileDsl::Enumeration»
     <xsd:simpleType name="«name»">
     	<xsd:annotation>
     		<xsd:documentation>

@@ -9,6 +9,7 @@
 «EXTENSION org::fornax::soa::servicedsl::templates::types»
 «EXTENSION org::fornax::soa::bindingdsl::templates::bindings»
 «EXTENSION org::fornax::soa::bindingdsl::templates::soapbinding»
+«EXTENSION org::eclipse::xtend::util::stdlib::io»
 
 
 
@@ -38,7 +39,7 @@
 		
 		«doc.trim().stripCommentBraces()»
 	</wsdl:documentation>
-    <wsdl:import namespace="«toTargetNamespace()»" location="«getFileNameFragment()».wsdl"></wsdl:import>
+    <wsdl:import namespace="«toTargetNamespace()»" location="«this.getRegisteredUrl (domBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 	
 	«EXPAND SOAPBinding(this) FOREACH domBind.protocol.typeSelect(SOAP)-»
 	«EXPAND WsdlService(this) FOREACH domBind.protocol.typeSelect(SOAP)-»
@@ -60,7 +61,7 @@
 		
 		«doc.trim().stripCommentBraces()»
 	</wsdl:documentation>
-    <wsdl:import namespace="«toTargetNamespace()»" location="«getFileNameFragment()».wsdl"></wsdl:import>
+    <wsdl:import namespace="«toTargetNamespace()»" location="«getRegisteredUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 	
 	«EXPAND SOAPBinding(this) FOREACH svcBind.protocol.typeSelect(SOAP)-»
 	«EXPAND WsdlService(this) FOREACH svcBind.protocol.typeSelect(SOAP)-»

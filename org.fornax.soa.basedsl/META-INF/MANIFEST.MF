@@ -5,15 +5,15 @@ Bundle-Vendor: Fornax Platform
 Bundle-Version: 1.2.0.qualifier
 Bundle-SymbolicName: org.fornax.soa.basedsl; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext,
+Require-Bundle: org.eclipse.xtext;bundle-version="1.0.2",
  org.eclipse.xtext.generator;resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
- org.eclipse.xtext.xtend;resolution:=optional,
- org.eclipse.xtext.util,
+ org.eclipse.xtext.xtend;bundle-version="1.0.2";resolution:=optional,
+ org.eclipse.xtext.util;bundle-version="1.0.2",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime

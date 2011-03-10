@@ -6,7 +6,11 @@ import serviceDsl;
 extension org::fornax::soa::servicedsl::templates::common;
 
 boolean generatePrivateWsdlForProviderHost () : GLOBALVAR generatePrivateWsdlForProviderHost;
-  
+
+String getRegistryBaseUrl (DomainBinding b) : b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
+String getRegistryBaseUrl (ServiceBinding b) : b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
+String getRegistryBaseUrl (OperationBinding b) : ((ServiceBinding)b.eContainer).environment.defaultRegistry.baseUrl.stripTrailingSlash();
+
 boolean isEligibleForEnvironment(Service svc, Environment env) :
 	switch (env.type) {
 		case EnvironmentType::Prod: {

@@ -4,6 +4,8 @@ import serviceDsl;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::eclipse::xtend::util::stdlib::io;
 
+boolean forceRelativePaths () : GLOBALVAR forceRelativePaths;
+
 String fqn (Object o) : null;
 String fqn (OrganizationNamespace s) : s.name.stripXtextEscapes();
 String fqn (sOAProfileDsl::OrganizationNamespace s) : s.name.stripXtextEscapes();
@@ -123,6 +125,54 @@ sOAProfileDsl::OrganizationNamespace getOrgNamespace (sOAProfileDsl::Namespace o
 		
 String getShortName(SubNamespace s) : s.prefix == null ? s.toPrefix() : s.prefix;
 String getShortName(sOAProfileDsl::Namespace s) : s.prefix == null ? s.toPrefix() : s.prefix;
+
+
+String getRegisteredUrl (Object o) : null;
+String getRegisteredUrl (Service s, String registryUrl) : 
+	registryUrl != null && !forceRelativePaths() ? 
+		registryUrl + "/" + s.getFileNameFragment() 
+	: 
+		s.getFileNameFragment(); 
+String getRegisteredUrl (OrganizationNamespace s, String registryUrl) : 
+	registryUrl != null && !forceRelativePaths() ? 
+		registryUrl + "/" + s.getFileNameFragment() 
+	: 
+		s.getFileNameFragment(); 
+String getRegisteredUrl (DomainNamespace s, String registryUrl) : 
+	registryUrl != null && !forceRelativePaths() ? 
+		registryUrl + "/" + s.getFileNameFragment() 
+	: 
+		s.getFileNameFragment(); 
+String getRegisteredUrl (InternalNamespace s, String registryUrl) : 
+	registryUrl != null && !forceRelativePaths() ? 
+		registryUrl + "/" + s.getFileNameFragment() 
+	: 
+		s.getFileNameFragment(); 
+String getRegisteredUrl (sOAProfileDsl::Namespace s, String registryUrl) : 
+	registryUrl != null && !forceRelativePaths() ? 
+		registryUrl + "/" + s.getFileNameFragment() 
+	: 
+		s.getFileNameFragment(); 
+String getRegisteredUrl (org::fornax::soa::servicedsl::VersionedDomainNamespace s, String registryUrl) : 
+	registryUrl != null && !forceRelativePaths() ? 
+		registryUrl + "/" +s.getFileNameFragment() 
+	: 
+		s.getFileNameFragment(); 
+
+
+String getRegisteredUrl (Object o, Void registryUrl) : null;
+String getRegisteredUrl (Service s, Void registryUrl) : 
+	s.getFileNameFragment(); 
+String getRegisteredUrl (OrganizationNamespace s, Void registryUrl) : 
+	s.getFileNameFragment(); 
+String getRegisteredUrl (DomainNamespace s, Void registryUrl) : 
+	s.getFileNameFragment(); 
+String getRegisteredUrl (InternalNamespace s, Void registryUrl) : 
+	s.getFileNameFragment(); 
+String getRegisteredUrl (sOAProfileDsl::Namespace s, Void registryUrl) : 
+	s.getFileNameFragment(); 
+String getRegisteredUrl (org::fornax::soa::servicedsl::VersionedDomainNamespace s, Void registryUrl) : 
+	s.getFileNameFragment(); 
 
 
 String getFileNameFragment (Object s) : null;
