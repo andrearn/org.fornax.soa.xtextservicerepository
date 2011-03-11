@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="bindingDsl"
+    nsURI="http://www.fornax.org/soa/BindingDsl" nsPrefix="bindingDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="BindingModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
+        eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Import"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bindings" upperBound="-1"
+        eType="#//DomainBinding" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Binding">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="environment" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="protocol" upperBound="-1"
+        eType="#//BindingProtocol" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
+        eType="#//Policy" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providerPolicies" upperBound="-1"
+        eType="#//Policy" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sla" unique="false" upperBound="-1"
+        eType="ecore:EClass ../../../../../org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore#//SLA"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="DomainBinding" eSuperTypes="#//Binding">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subNamespace" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//SubNamespace"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceBinding" upperBound="-1"
+        eType="#//ServiceBinding" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
+        eType="#//Component" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Publisher">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pubServer" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Provider">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provServer" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceBinding" eSuperTypes="#//Binding">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="#//ServiceRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providerProtocol" upperBound="-1"
+        eType="#//BindingProtocol" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" upperBound="-1"
+        eType="#//OperationBinding" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Service"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BindingProtocol"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OperationBinding">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Operation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="protocol" upperBound="-1"
+        eType="#//BindingProtocol" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providerProtocol" upperBound="-1"
+        eType="#//BindingProtocol" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
+        eType="#//Policy" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providerPolicies" upperBound="-1"
+        eType="#//Policy" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sla" unique="false" upperBound="-1"
+        eType="ecore:EClass ../../../../../org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore#//SLA"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Component">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="implements" eType="#//ServiceRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="environment" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="services" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedServices" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="protocol" upperBound="-1"
+        eType="#//BindingProtocol" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" upperBound="-1"
+        eType="#//OperationBinding" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
+        eType="#//Policy" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providerPolicies" upperBound="-1"
+        eType="#//Policy" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sla" unique="false" upperBound="-1"
+        eType="ecore:EClass ../../../../../org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore#//SLA"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="#//ImplementationType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ImplementationType">
+    <eLiterals name="BPMN" literal="BPMN"/>
+    <eLiterals name="BPMN2" value="1" literal="BPMN2"/>
+    <eLiterals name="BPEL" value="2" literal="BPEL"/>
+    <eLiterals name="WSHT" value="3" literal="WS-HT"/>
+    <eLiterals name="RuleML" value="4" literal="RuleML"/>
+    <eLiterals name="Drools" value="5" literal="Drools"/>
+    <eLiterals name="Mediation" value="6" literal="Mediation"/>
+    <eLiterals name="Java" value="7" literal="Java"/>
+    <eLiterals name="CS" value="8" literal="C#"/>
+    <eLiterals name="CPP" value="9" literal="C++"/>
+    <eLiterals name="Scala" value="10" literal="Scala"/>
+    <eLiterals name="Ruby" value="11" literal="Ruby"/>
+    <eLiterals name="PHP" value="12" literal="PHP"/>
+    <eLiterals name="WSDocLit" value="13" literal="WS-Document/Literal"/>
+    <eLiterals name="WSRPC" value="14" literal="WS-RPC/Literal"/>
+    <eLiterals name="WSRPCEnc" value="15" literal="WS-RPC/Encoded"/>
+    <eLiterals name="REST_XML" value="16" literal="REST-XML"/>
+    <eLiterals name="REST_JSON" value="17" literal="REST-JSON"/>
+    <eLiterals name="EJB" value="18" literal="EJB"/>
+    <eLiterals name="Spring" value="19" literal="Spring"/>
+    <eLiterals name="EJB2" value="20" literal="EJB2"/>
+    <eLiterals name="SAP" value="21" literal="SAP"/>
+    <eLiterals name="SAP_IDOC" value="22" literal="SAP/iDoc"/>
+    <eLiterals name="SAP_BAPI" value="23" literal="SAP/BAPI"/>
+    <eLiterals name="Corba" value="24" literal="Corba"/>
+    <eLiterals name="Shell" value="25" literal="Shell"/>
+    <eLiterals name="Siebel" value="26" literal="Siebel"/>
+    <eLiterals name="Tuxedo" value="27" literal="Tuxedo"/>
+    <eLiterals name="File" value="28" literal="File"/>
+    <eLiterals name="SQL" value="29" literal="SQL"/>
+    <eLiterals name="Ivy" value="30" literal="Ivy"/>
+    <eLiterals name="jPDL3" value="31" literal="jPDL3"/>
+    <eLiterals name="jPDL4" value="32" literal="jPDL4"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SOAP" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publisher" eType="#//Publisher"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="#//SOAPStyle"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="contextRoot" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providerContextRoot" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedWsdlUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SOAPStyle">
+    <eLiterals name="doclitwrap" literal="document/literal-wrapped"/>
+    <eLiterals name="rpclit" value="1" literal="rpc/literal"/>
+    <eLiterals name="rpcenc" value="2" literal="rpc/encoded"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SAP" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transport" eType="#//SAPTransport"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="client" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SapClient"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SAPTransport">
+    <eLiterals name="IDOC" literal="IDOC"/>
+    <eLiterals name="RFC" value="1" literal="RFC"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EJB" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publisher" eType="#//Publisher"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jndiName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HTTP" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publisher" eType="#//Publisher"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providerUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="verb" eType="#//Verb"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="REST" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publisher" eType="#//Publisher"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providerUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="verb" eType="#//Verb"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="format" eType="#//RESTFormat"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="RESTFormat">
+    <eLiterals name="JSON" literal="JSON"/>
+    <eLiterals name="XML" value="1" literal="XML"/>
+    <eLiterals name="OTHER" value="2" literal="OTHER"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="Verb">
+    <eLiterals name="create" literal="create"/>
+    <eLiterals name="retrieve" value="1" literal="retrieve"/>
+    <eLiterals name="update" value="2" literal="update"/>
+    <eLiterals name="delete" value="3" literal="delete"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="JMS" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publisher" eType="#//Publisher"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="channel" eType="#//TopicOrQueue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="jndiName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providerJndi" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TopicOrQueue">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Topic" eSuperTypes="#//TopicOrQueue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Queue" eSuperTypes="#//TopicOrQueue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SCA" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publisher" eType="#//Publisher"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="promote" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isMultipleRef" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FILE" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="accessType" eType="#//ReadWrite"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pollIntervall" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FTP" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="accessType" eType="#//ReadWrite"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="pollIntervall" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ReadWrite">
+    <eLiterals name="read" literal="read"/>
+    <eLiterals name="write" value="1" literal="write"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Policy"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogPolicy" eSuperTypes="#//Policy">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="logPolicy" eType="#//LogPolicyKind"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SecurityPolicy" eSuperTypes="#//Policy"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AuthenticationPolicy" eSuperTypes="#//SecurityPolicy">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="authTokens" upperBound="-1"
+        eType="#//AuthToken" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hashAlgorithms" upperBound="-1"
+        eType="#//HashAlgorithm" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AuthToken">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//AuthTokenKind"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="HashAlgorithm">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="useBase64" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//HashAlgKind"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="HashAlgKind">
+    <eLiterals name="MD5" literal="MD5"/>
+    <eLiterals name="SHA1" value="1" literal="SHA1"/>
+    <eLiterals name="SHA256" value="2" literal="SHA256"/>
+    <eLiterals name="PlainText" value="3" literal="PlainText"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="AuthTokenKind">
+    <eLiterals name="UsernamePassword" literal="UsernamePassword"/>
+    <eLiterals name="SAML" value="1" literal="SAML"/>
+    <eLiterals name="SAML2" value="2" literal="SAML2"/>
+    <eLiterals name="Kerberos" value="3" literal="Kerberos"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="LogPolicyKind">
+    <eLiterals name="NONE" literal="NONE"/>
+    <eLiterals name="HEADER" value="1" literal="HEADER"/>
+    <eLiterals name="ALL" value="2" literal="ALL"/>
+  </eClassifiers>
+</ecore:EPackage>

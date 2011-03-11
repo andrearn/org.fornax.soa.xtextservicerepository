@@ -1,0 +1,196 @@
+«IMPORT sOABaseDsl»
+«IMPORT serviceDsl»
+
+«EXTENSION org::fornax::soa::servicedsl::templates::common»
+«EXTENSION org::fornax::soa::servicedsl::templates::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::services»
+«EXTENSION org::fornax::soa::servicedsl::templates::types»
+«EXTENSION org::fornax::soa::servicedsl::query::headers»
+«EXTENSION org::fornax::soa::servicedsl::query::types»
+«EXTENSION org::fornax::soa::servicedsl::query::services»
+«EXTENSION org::fornax::soa::servicedsl::query::subdomains»
+
+
+«REM»
+	CARTRIDGE ENTRYPOINT for generation of abstract WSDLs 
+	that only define the abstract interface of a service
+«ENDREM»
+«DEFINE WSDL(DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
+«FILE getFileNameFragment() + ".wsdl"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="«toTargetNamespace()»"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="«name»" 
+	targetNamespace="«toTargetNamespace()»">
+	<wsdl:documentation>
+		Version «version.toVersionNumber()»
+		Lifecycle state: «state.toString()»
+		
+		«doc.trim().stripCommentBraces()»
+	</wsdl:documentation>
+	
+	«EXPAND Types(minState, profile, registryBaseUrl)-»
+	«EXPAND Messages FOREACH operations-»
+	«EXPAND FaultMessages(operations.throws) FOREACH operations.throws.exception.name.toSet()»
+	«EXPAND PortType»
+</wsdl:definitions>
+«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE WSDL(InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
+«FILE subDom.getFileNameFragment() + "-" + name + "-" + version.toVersionPostfix() + ".wsdl"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="«toTargetNamespace()»"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="«name»" 
+	targetNamespace="«toTargetNamespace()»">
+	<wsdl:documentation>
+		Version «version.toVersionNumber()»
+		Lifecycle state: «state.toString()»
+		
+		«doc.trim().stripCommentBraces()»
+	</wsdl:documentation>
+	
+	«EXPAND Types(minState, profile, registryBaseUrl)-»
+	«EXPAND Messages FOREACH operations-»
+	«EXPAND FaultMessages(operations.throws) FOREACH operations.throws.exception.name.toSet()»
+	«EXPAND PortType»
+</wsdl:definitions>
+«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE Types(LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
+	<wsdl:types>
+		<xsd:schema targetNamespace="«toTargetNamespace()»"
+			«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+			xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+			«ENDFOREACH-»
+			«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
+			xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
+			«ENDFOREACH-»
+		>
+			«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+			<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
+				namespace="«imp.toNamespace()»"/>
+			«ENDFOREACH-»
+			«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
+			<xsd:import schemaLocation="«headerImp.getRegisteredUrl (registryBaseUrl)».xsd"
+				namespace="«headerImp.toNamespace()»"/>
+			«ENDFOREACH-»
+			«EXPAND OperationWrapperTypes (profile) FOREACH operations»
+			«EXPAND OperationFaultWrapperTypes(operations.throws) FOREACH operations.throws.exception.name.toSet()»
+		</xsd:schema>
+	</wsdl:types>
+«ENDDEFINE»
+
+«DEFINE OperationWrapperTypes (sOAProfileDsl::SOAProfile profile) FOR Operation»
+			<xsd:element name="«name»">
+				<xsd:complexType>
+					<xsd:sequence>
+						«EXPAND Parameter FOR this.getBestMatchingHeader (profile)-»
+						«EXPAND Parameter FOREACH parameters-»
+						«IF	fetchProfile.size > 1-»
+						<xsd:element name="fetchProfileName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+						«ENDIF-»
+						«IF profile.operationsUseExtendableParameters()»
+						<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
+							processContents="skip"/>
+						«ENDIF»
+    				</xsd:sequence>
+    				«IF profile.operationsUseExtendableXMLAttributes()»
+					<xsd:anyAttribute namespace="##any"/>
+    				«ENDIF»
+				</xsd:complexType>
+			</xsd:element>
+			<xsd:element name="«name»Response">
+				<xsd:complexType>
+					<xsd:sequence>
+						«EXPAND Parameter FOR this.getBestMatchingHeader (profile)-»
+						«EXPAND Parameter FOREACH return-»
+						«IF profile.operationsUseExtendableParameters()»
+						<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
+							processContents="skip"/>
+						«ENDIF»
+					</xsd:sequence>
+    				«IF profile.operationsUseExtendableXMLAttributes()»
+					<xsd:anyAttribute namespace="##any"/>
+					«ENDIF»
+				</xsd:complexType>
+			</xsd:element>
+«ENDDEFINE»
+
+«DEFINE OperationFaultWrapperTypes(List[ExceptionRef] exceptions) FOR String-»
+	    	<xsd:element name="«exceptions.selectFirst(e|e.exception.name == this).exception.toTypeName()»" type="«exceptions.selectFirst(e|e.exception.name == this).getExceptionNameRef()»"/>
+«ENDDEFINE»
+
+«DEFINE Parameter FOR Parameter-»
+						<xsd:element name="«name»" type="«type.getTypeNameRef ()»" «IF optional»minOccurs="0" «ENDIF»«IF type.isMany()»maxOccurs="unbounded"«ENDIF» «IF type.isAttachment()»«EXPAND XSD::AttachmentMimeFragment FOR type»«ENDIF»></xsd:element>
+«ENDDEFINE»
+
+«DEFINE Parameter FOR sOAProfileDsl::Property-»
+						<xsd:element name="«name»" type="«type.getTypeNameRef ()»" «IF optional»minOccurs="0" «ENDIF»«IF type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
+«ENDDEFINE»
+
+«DEFINE Parameter FOR sOAProfileDsl::MessageHeader-»
+	«EXPAND Parameter FOREACH parameters-»
+«ENDDEFINE»
+
+
+«DEFINE Messages FOR Operation»
+	<wsdl:message name="«name»Request">
+		<wsdl:part element="tns:«name»" name="parameters" />
+	</wsdl:message>
+	<wsdl:message name="«name»Response">
+		<wsdl:part element="tns:«name»Response" name="parameters" />
+	</wsdl:message>
+«ENDDEFINE»
+
+«DEFINE PortType FOR Service»
+	<wsdl:portType name="«name»">
+		«EXPAND Operation FOREACH operations»
+	</wsdl:portType>
+«ENDDEFINE»
+
+«DEFINE Operation FOR Operation»
+		<wsdl:operation name="«name»">
+			<wsdl:input message="tns:«name»Request" />
+			<wsdl:output message="tns:«name»Response" />
+			«EXPAND Fault»
+		</wsdl:operation>
+«ENDDEFINE»
+
+«DEFINE FaultMessages(List[ExceptionRef] exceptions) FOR String»
+	<wsdl:message name="«exceptions.selectFirst(e|e.exception.name == this).exception.toTypeName()»">
+  		<wsdl:part name="parameters" element="tns:«exceptions.selectFirst(e|e.exception.name == this).exception.toTypeName()»"></wsdl:part>
+	</wsdl:message>
+«ENDDEFINE»
+
+«DEFINE Fault FOR Operation»
+	«FOREACH throws AS fault ITERATOR it-»
+			<wsdl:fault name="«fault.exception.toTypeName().toFirstLower()»" message="tns:«fault.exception.toTypeName()»"></wsdl:fault>
+	«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE Binding FOR Service»
+	<wsdl:binding name="«name»SOAP"
+		type="tns:«name»">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		«EXPAND BindingOperation FOREACH operations»
+	</wsdl:binding>
+«ENDDEFINE»
+
+«DEFINE BindingOperation FOR Operation»
+		<wsdl:operation name="«name»">
+			<soap:operation
+				soapAction="«eContainer.toNamespace() + name»" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
+«ENDDEFINE»

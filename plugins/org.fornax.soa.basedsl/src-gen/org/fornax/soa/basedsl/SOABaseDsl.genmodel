@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.fornax.soa.basedsl/src-gen"
+    editDirectory="/org.fornax.soa.basedsl.edit/src" editorDirectory="/org.fornax.soa.basedsl.editor/src"
+    modelPluginID="org.fornax.soa.basedsl" forceOverwrite="true" modelName="SOABaseDsl"
+    updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.basedsl.edit"
+    editorPluginID="org.fornax.soa.basedsl.editor">
+  <genPackages prefix="SOABaseDsl" basePackage="org.fornax.soa.basedsl" disposableProviderFactory="true"
+      ecorePackage="SOABaseDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOABaseDsl.ecore#//LifecycleState">
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/proposed"/>
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/defined"/>
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/development"/>
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/test"/>
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/productive"/>
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/deprecated"/>
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/retired"/>
+    </genEnums>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//Import">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Import/importedNamespace"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//VersionedName">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//VersionedName/version"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//Version">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Version/version"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//VersionRef"/>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//MinVersionRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//MinVersionRef/minVersion"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//MaxVersionRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//MaxVersionRef/maxVersion"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//LowerBoundRangeVersionRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//LowerBoundRangeVersionRef/minVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//LowerBoundRangeVersionRef/maxVersion"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//MajorVersionRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//MajorVersionRef/majorVersion"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

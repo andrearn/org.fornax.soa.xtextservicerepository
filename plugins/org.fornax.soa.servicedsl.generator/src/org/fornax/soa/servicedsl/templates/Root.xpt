@@ -1,0 +1,9 @@
+«IMPORT sOABaseDsl»
+«IMPORT serviceDsl»;
+«IMPORT bindingDsl»;
+
+«EXTENSION org::fornax::soa::servicedsl::templates::domains»
+
+«DEFINE main (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR ServiceModel-»
+	«EXPAND org::fornax::soa::servicedsl::templates::Services::main (minState, profile, registryBaseUrl)»
+«ENDDEFINE»

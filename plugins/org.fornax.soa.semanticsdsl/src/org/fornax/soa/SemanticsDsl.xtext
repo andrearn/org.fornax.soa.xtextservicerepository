@@ -1,0 +1,22 @@
+/*
+Copyright (c) 2010-2011 André Arnold and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    André Arnold 		- initial API and implementation
+*/
+grammar org.fornax.soa.SemanticsDsl with org.eclipse.xtext.common.Terminals
+
+generate semanticsDsl "http://www.fornax.org/soa/SemanticsDsl"
+
+SemanticsModel :
+	(imports+=Import)*
+	(tagDefinition+=Tag)*;
+	
+Import :
+	'import' importURI=STRING;
+	
+Tag hidden(WS): 'tag' name=ID ('extends' (extends+=[Tag])*)? ';';

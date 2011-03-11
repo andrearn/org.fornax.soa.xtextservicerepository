@@ -1,0 +1,111 @@
+import sOABaseDsl;
+import serviceDsl;
+
+String toVersionNumber (Void v) : toDefaultVersion();
+String toVersionNumber (Integer v) : v.toString();
+String toVersionNumber (String v) : v.replaceFirst("\\[", "").replaceFirst("\\]", "");
+String toVersionNumber (sOABaseDsl::Version v) : v.version;
+
+String toMajorVersionNumber (Void v) : toDefaultMajorVersion();
+String toMajorVersionNumber (Integer v) : v.toString();
+String toMajorVersionNumber (String v) : 
+	v != null && v != "" ? v.toVersionNumber().split("\\.").first() : "1";
+String toMajorVersionNumber (Version v) : 
+	v != null ? v.toVersionNumber().split("\\.").first() : "1";
+
+String toVersionPostfix (Void v) : toDefaultVersionPostfix();
+String toVersionPostfix (String v) : "v" + v.toMajorVersionNumber();
+String toVersionPostfix (Integer v) : "v" + v.toMajorVersionNumber();
+String toVersionPostfix (sOABaseDsl::Version v) : "v" + v.toMajorVersionNumber();
+
+String toDefaultVersionPostfix () : "v" + toDefaultMajorVersion ();
+String toDefaultMajorVersion () : "1";
+String toDefaultVersion () : "1.0";
+
+create Version toVersion (String v) : setVersion(v);
+
+boolean versionMatches (sOABaseDsl::Version v, VersionRef r) : false;
+boolean versionMatches (sOABaseDsl::Version v, Integer majorVer) : v.version.toVersionNumber().split("\\.").get(0) == majorVer.toString() || (v.toVersionNumber().split("\\.").get(0) == majorVer.toString());
+boolean versionMatches (sOABaseDsl::Version v, MinVersionRef r) : v.toVersionNumber() == r.minVersion.toVersionNumber() || v.toVersionNumber() > r.minVersion.toVersionNumber();
+boolean versionMatches (sOABaseDsl::Version v, MaxVersionRef r) : v.toVersionNumber() == r.maxVersion.toVersionNumber() || v.toVersionNumber() < r.maxVersion.toVersionNumber();
+boolean versionMatches (sOABaseDsl::Version v, LowerBoundRangeVersionRef r) : v.version.toVersionNumber() == r.minVersion.toVersionNumber() || (v.toVersionNumber() > r.minVersion.toVersionNumber() && v < r.maxVersion.toVersionNumber());
+boolean versionMatches (sOABaseDsl::Version v, MajorVersionRef r) : v.version.toVersionNumber().split("\\.").get(0) == r.majorVersion.toString() || (v.toVersionNumber().split("\\.").get(0) == r.majorVersion.toString());
+
+
+String versionRangeText(sOABaseDsl::VersionRef v) : "";
+String versionRangeText(sOABaseDsl::MinVersionRef v) : ">= " + v.minVersion.toVersionNumber();
+String versionRangeText(sOABaseDsl::LowerBoundRangeVersionRef v) : v.minVersion.toVersionNumber() + " to <" + v.maxVersion.toVersionNumber();
+String versionRangeText(sOABaseDsl::MaxVersionRef v) : "<= " + v.maxVersion.toVersionNumber();
+
+String stripCommentBraces(String s) : s.replaceFirst("\\/\\*", "").replaceFirst("\\*\\/","").replaceAll("\\n(\\t)+(\\s)*(\\*)+", "\n\t");
+
+boolean matchesMinStateLevel (LifecycleState state, LifecycleState minState) : 
+	switch (minState) {
+	case LifecycleState::proposed: 		(state != LifecycleState::retired ? true : false)
+	case LifecycleState::defined:		(state != LifecycleState::proposed && state != LifecycleState::retired ? true : false)
+	case LifecycleState::development:	(((state != LifecycleState::proposed && state != LifecycleState::defined)) && state != LifecycleState::retired ? true : false)
+	case LifecycleState::test:			(((state == LifecycleState::test || state == LifecycleState::productive || state == LifecycleState::deprecated) &&  state != LifecycleState::retired) ? true : false)
+	case LifecycleState::productive:	(state == LifecycleState::productive || state == LifecycleState::deprecated ? true : false)
+	case LifecycleState::deprecated:	(state == LifecycleState::deprecated ? true : false)
+	case LifecycleState::retired:		(state == LifecycleState::retired ? true : false)
+	default: false
+	};
+	
+LifecycleState getOwnerMinDevState (Object o) : LifecycleState::development;
+LifecycleState getOwnerMinDevState (SubNamespace ns) : ns.linkingPolicy.minDevState != null ? ns.linkingPolicy.minDevState : LifecycleState::development;
+LifecycleState getOwnerMinDevState (BusinessObject o) : o.linkingPolicy.minDevState != null ? o.linkingPolicy.minDevState : o.eContainer.getOwnerMinDevState();
+LifecycleState getOwnerMinDevState (serviceDsl::Enumeration o) : o.linkingPolicy.minDevState != null ? o.linkingPolicy.minDevState : o.eContainer.getOwnerMinDevState();
+LifecycleState getOwnerMinDevState (Exception o) : o.linkingPolicy.minDevState != null ? o.linkingPolicy.minDevState : o.eContainer.getOwnerMinDevState();
+LifecycleState getOwnerMinDevState (Service o) : o.linkingPolicy.minDevState != null ? o.linkingPolicy.minDevState : o.eContainer.getOwnerMinDevState();
+
+LifecycleState getOwnerMinTestState (Object o) : LifecycleState::test;
+LifecycleState getOwnerMinTestState (SubNamespace ns) : ns.linkingPolicy.minTestState != null ? ns.linkingPolicy.minTestState : LifecycleState::test;
+LifecycleState getOwnerMinTestState (BusinessObject o) : o.linkingPolicy.minTestState != null ? o.linkingPolicy.minTestState : o.eContainer.getOwnerMinTestState();
+LifecycleState getOwnerMinTestState (Enumeration o) : o.linkingPolicy.minTestState != null ? o.linkingPolicy.minTestState : o.eContainer.getOwnerMinTestState();
+LifecycleState getOwnerMinTestState (Exception o) : o.linkingPolicy.minTestState != null ? o.linkingPolicy.minTestState : o.eContainer.getOwnerMinTestState();
+LifecycleState getOwnerMinTestState (Service o) : o.linkingPolicy.minTestState != null ? o.linkingPolicy.minTestState : o.eContainer.getOwnerMinTestState();
+
+LifecycleState getOwnerMinProdState (Object o) : LifecycleState::productive;
+LifecycleState getOwnerMinProdState (SubNamespace ns) : ns.linkingPolicy.minProdState != null ? ns.linkingPolicy.minProdState : LifecycleState::productive;
+LifecycleState getOwnerMinProdState (BusinessObject o) : o.linkingPolicy.minProdState != null ? o.linkingPolicy.minProdState : o.eContainer.getOwnerMinProdState();
+LifecycleState getOwnerMinProdState (Enumeration o) : o.linkingPolicy.minProdState != null ? o.linkingPolicy.minProdState : o.eContainer.getOwnerMinProdState();
+LifecycleState getOwnerMinProdState (Exception o) : o.linkingPolicy.minProdState != null ? o.linkingPolicy.minProdState : o.eContainer.getOwnerMinProdState();
+LifecycleState getOwnerMinProdState (Service o) : o.linkingPolicy.minProdState != null ? o.linkingPolicy.minProdState : o.eContainer.getOwnerMinProdState();
+
+
+emf::EObject getStatefulOwner (emf::EObject o) : o.eContainer != null ? o.eContainer.getStatefulOwner() : null;
+emf::EObject getStatefulOwner (BusinessObject o) : o;
+emf::EObject getStatefulOwner (Enumeration o) : o;
+emf::EObject getStatefulOwner (Exception o) : o;
+emf::EObject getStatefulOwner (Service o) : o;
+
+emf::EObject getOwningType (emf::EObject o) : o.eContainer != null ? o.eContainer.getOwningType() : null;
+emf::EObject getOwningType (sOAProfileDsl::VersionedType o) : o;
+
+
+Version getOwnerVersion (emf::EObject o) : o.eContainer != null ? o.eContainer.getOwnerVersion() : null;
+Version getOwnerVersion (VersionedType o) : o.version;
+Version getOwnerVersion (sOAProfileDsl::VersionedType o) : o.version;
+Version getOwnerVersion (Exception o) : o.version;
+Version getOwnerVersion (Service o) : o.version;
+
+
+LifecycleState getOwnerState (emf::EObject o) : o.eContainer != null ? o.eContainer.getOwnerState() : null;
+LifecycleState getOwnerState (VersionedType o) : o.state;
+LifecycleState getOwnerState (Exception o) : o.state;
+LifecycleState getOwnerState (Service o) : o.state;
+
+LifecycleState getStateByName (String state) :
+	switch (state) {
+	case "proposed" : 		LifecycleState::proposed
+	case "defined" : 		LifecycleState::defined
+	case "development" : 	LifecycleState::development
+	case "test" : 			LifecycleState::test
+	case "productive" : 	LifecycleState::productive
+	case "deprecated" : 	LifecycleState::deprecated
+	case "retired" : 		LifecycleState::retired
+	default: 				LifecycleState::proposed
+	};
+
+String stripXtextEscapes (String s) : s.replaceFirst("\\^", "");
+String stripTrailingSlash (String s) : s.endsWith("/") ? s.subString(0, s.length-1) : s;

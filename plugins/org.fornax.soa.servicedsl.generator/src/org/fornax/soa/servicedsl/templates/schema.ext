@@ -1,0 +1,4 @@
+import serviceDsl;
+
+extension org::fornax::soa::servicedsl::templates::common;
+extension org::fornax::soa::servicedsl::templates::domains;

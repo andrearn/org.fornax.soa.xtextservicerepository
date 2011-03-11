@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="businessDsl"
+    nsURI="http://www.fornax.org/soa/BusinessDsl" nsPrefix="businessDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
+        eType="#//BizImport" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="organizations" upperBound="-1"
+        eType="#//Organization" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BizImport">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Organization">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bizLead" eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domains" upperBound="-1"
+        eType="#//Domain" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
+        eType="#//Member" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Domain">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="competence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="bizLead" eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="techLead" eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="svcMgmtLead" eType="#//Member"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
+        eType="ecore:EClass classpath:/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domains" upperBound="-1"
+        eType="#//Domain" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="function" upperBound="-1"
+        eType="#//Function" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
+        eType="#//Member" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Function">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="docURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
+        eType="ecore:EClass classpath:/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="capabilties" upperBound="-1"
+        eType="#//Capability" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Capability">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="title" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requires" unique="false"
+        upperBound="-1" eType="#//Function"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="docURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Member">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

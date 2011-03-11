@@ -1,0 +1,23 @@
+«IMPORT org::fornax::soa::servicerepo::ui::wizards»
+
+«DEFINE main FOR ServiceRepositoryProjectInfo»
+«EXPAND model FOR this»
+«ENDDEFINE»
+
+«DEFINE model FOR ServiceRepositoryProjectInfo»
+«FILE "src/profile.profdsl"-»
+datatype int;
+datatype byte;
+datatype long;
+datatype float;
+datatype double;
+datatype string;
+datatype char;
+datatype date;
+datatype datetime;
+datatype boolean;
+datatype decimal;
+datatype base64Binary;
+datatype binary;
+«ENDFILE»
+«ENDDEFINE»

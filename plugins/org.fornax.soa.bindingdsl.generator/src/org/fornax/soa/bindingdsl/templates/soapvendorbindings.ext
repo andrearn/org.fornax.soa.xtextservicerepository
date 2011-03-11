@@ -1,0 +1,118 @@
+import bindingDsl;
+import serviceDsl;
+import environmentDsl;
+
+extension org::fornax::soa::servicedsl::templates::common;
+extension org::fornax::soa::servicedsl::templates::domains;
+
+String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) : null;
+String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, ESB server) :
+	server.serverType != null ? (
+		switch (server.serverType.toLowerCase()) {
+		case "tomcat": 			tomcatEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "websphere":		websphereEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "webmethods":		webmethodsEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "oraclesb":		oraclesbEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "weblogic":		weblogicEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "aqualogic":		aqualogicEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "sappi":			sappiEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "sapce":			sapceEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "sapnetweaver":	sapnetweaverEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "jboss":			jbossEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "jbossesb":		jbossesbEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "mule":			muleEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "fuseesb":			fuseesbEndpoint (ctxRoot, orgNs, subNs, s, server)
+		default: 				defaultPatternEndpoint (ctxRoot, orgNs, subNs, s, server)
+		})
+	:	defaultPatternEndpoint (ctxRoot, orgNs, subNs, s, server);
+
+String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, AppServer server) :
+	server.serverType != null ? (
+		switch (server.serverType.toLowerCase()) {
+		case "tomcat": 			tomcatEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "websphere":		websphereEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "webmethods":		webmethodsEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "oraclesb":		oraclesbEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "weblogic":		weblogicEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "aqualogic":		aqualogicEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "sappi":			sappiEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "sapce":			sapceEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "sapnetweaver":	sapnetweaverEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "jboss":			jbossEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "jbossesb":		jbossesbEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "mule":			muleEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "fuseesb":			fuseesbEndpoint (ctxRoot, orgNs, subNs, s, server)
+		default: 				defaultPatternEndpoint (ctxRoot, orgNs, subNs, s, server)
+		})
+	:	defaultPatternEndpoint (ctxRoot, orgNs, subNs, s, server);
+	
+String defaultPatternEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String tomcatEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String websphereEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String webmethodsEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name + "." 
+	+ subNs.name + "." + s.name + "." + s.version.toVersionPostfix() + ":" + s.name;
+
+String oraclesbEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String weblogicEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String aqualogicEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String sappiEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String sapceEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String sapnetweaverEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String jbossEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String jbossesbEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String muleEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+
+String fuseesbEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	

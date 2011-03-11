@@ -1,0 +1,81 @@
+/*
+Copyright (c) 2010-2011 André Arnold and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    André Arnold 		- initial API and implementation
+    Krunoslav Markotic	- reviews
+    Liane Lenke			- reviews
+*/
+grammar org.fornax.soa.BusinessDsl with org.eclipse.xtext.common.Terminals
+
+generate businessDsl "http://www.fornax.org/soa/BusinessDsl"
+
+import "classpath:/org/fornax/soa/SemanticsDsl.ecore" as  semantics
+
+BusinessModel hidden(WS):
+	(imports+=BizImport)*
+	(organizations+=Organization)*;
+	
+BizImport hidden(WS):
+	'import' importURI=STRING;
+	
+Organization hidden(WS):
+	'org' name=QualifiedName '{'
+		'metadata' '{'
+			('head' bizLead=[Member|QualifiedName])?
+		'}'
+
+		(domains+=Domain)*
+		(members+=Member)*
+	'}';
+	
+Domain hidden(WS):
+	'domain' name=QualifiedName '{'
+		'metadata' '{'
+			('competence' competence=STRING)?
+			('head' bizLead=[Member|QualifiedName])?
+			('technical lead' techLead=[Member|QualifiedName])?
+			('service management lead' svcMgmtLead=[Member|QualifiedName])?
+			('tags' (tags+=[semantics::Tag])+)?
+		'}'
+
+		(domains+=Domain)*
+		(function+=Function)*
+		(members+=Member)*		
+	'}';
+	
+	
+Function hidden(WS):
+	'function' name=ID '{' 
+		'metadata' '{'
+			'title' title=STRING
+			('docURL' docURL=STRING)? 
+			('tags' (tags+=[semantics::Tag])+)?
+		'}'
+
+		(capabilties+=Capability)*
+	'}' ; 
+	
+Capability hidden(WS):
+	'capability' name=ID '{'
+		'title' title=STRING
+		('requires' (requires+=[Function|QualifiedName])+)? 
+		('docURL' docURL=STRING)? 
+	'}';
+	
+Member hidden(WS):
+	'member' name=ID '{'
+		'fullname' fullname=STRING
+		'email' email=STRING
+	'}';
+
+
+QualifiedNameWithWildCard:
+	QualifiedName '.*'?;
+
+QualifiedName:
+	ID ('.' ID)*;

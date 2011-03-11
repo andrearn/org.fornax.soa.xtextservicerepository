@@ -1,0 +1,80 @@
+/*
+Copyright (c) 2010-2011 André Arnold and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    André Arnold 		- initial API and implementation
+    Christian Schneider	- reviews
+*/
+grammar org.fornax.soa.SolutionDsl with org.fornax.soa.basedsl.SOABaseDsl
+
+generate solutionDsl "http://www.fornax.org/soa/SolutionDsl"
+
+import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
+import "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore" as serviceDsl
+import "platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore" as businessDsl
+
+Model hidden (WS):
+	(imports+=Import)*
+	(solution+=Solution)*;
+	
+Import hidden(WS): NsImport;
+	
+NsImport:
+	'import' importedNamespace=QualifiedNameWithWildCard ';';
+	
+FileImport:
+	'import' importURI=STRING ';';
+	
+	
+	
+Solution hidden(WS):
+	'solution' name=QualifiedName '{'
+		('domain' domain = [businessDsl::Domain|QualifiedName] ';')?
+		version=Version
+		(productVersion=ProductVersion)?
+		('requires' requires+=ServiceRef ';')*
+		(features+=Feature)*
+		(modules+=Module)*
+		('tags' (tags+=[semanticsDsl::Tag])+ ';')?
+	'}';
+
+Module hidden (WS):
+	'module' name=ID '{'
+		'kind' kind=ModuleKind ';'
+		('requires' requires+=ServiceRef ';')*
+		(features+=Feature)*
+		(modules+=Module)*
+		('tags' (tags+=[semanticsDsl::Tag])+ ';')?
+	'}';
+	
+enum ModuleKind : UI | BusinessLogic | Persistence | Security | Batch | OTHER;
+
+Feature hidden (WS):
+	(nonFunctional?='non-functional')? 'feature' name=ID '{'
+		('use cases' (useCase+=STRING)+ ';')?
+		('description' description=STRING ';')?
+		('functions' (function+=[businessDsl::Function|QualifiedName])+ ';')?
+		('requires' requires+=ServiceRef ';')*
+		('subscibes-to-event' (event+=EventRef)(',' event+=EventRef)* ';')?
+		(features+=Feature)*
+		('tags' (tags+=[semanticsDsl::Tag])+ ';')?
+	'}';
+	
+ServiceRef:
+	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')?;
+
+	
+Version:
+	'version' (version=VersionId) ';' ;
+	
+ProductVersion returns Version:
+	'product-version' (version=VersionId) ';' ;
+	
+EventRef:
+	event=[serviceDsl::Event|QualifiedName] versionRef=VersionRef;
+	
+	

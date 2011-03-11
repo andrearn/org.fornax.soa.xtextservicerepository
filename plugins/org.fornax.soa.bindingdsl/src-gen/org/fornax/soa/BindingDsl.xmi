@@ -1,0 +1,1508 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xtext="http://www.eclipse.org/2008/Xtext">
+  <xtext:Grammar name="org.fornax.soa.BindingDsl" usedGrammars="/1">
+    <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="bindingDsl">
+      <ePackage href="http://www.fornax.org/soa/BindingDsl#/"/>
+    </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="serviceDsl">
+      <ePackage href="http://www.fornax.org/soa/ServiceDsl#/"/>
+    </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="environmentDsl">
+      <ePackage href="http://www.fornax.org/soa/EnvironmentDsl#/"/>
+    </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="slaDsl">
+      <ePackage href="http://www.fornax.org/soa/SLADsl#/"/>
+    </metamodelDeclarations>
+    <rules xsi:type="xtext:ParserRule" name="BindingModel" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//BindingModel"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="imports" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.0"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="bindings" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Binding">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//Binding"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="DomainBinding">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//DomainBinding"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="bind namespace"/>
+        <elements xsi:type="xtext:Assignment" feature="subNamespace" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.1">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//SubNamespace"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="as"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="to"/>
+        <elements xsi:type="xtext:Keyword" value="environment"/>
+        <elements xsi:type="xtext:Assignment" feature="environment" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.2">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Environment"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="with"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="protocols"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="protocol" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="policies"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="policies" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provider-policies"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="providerPolicies" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="SLAs"/>
+          <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.3">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.3">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="serviceBinding" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="components" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Publisher">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//Publisher"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="publish on"/>
+        <elements xsi:type="xtext:Assignment" feature="pubServer" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.2">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Server"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Provider">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//Provider"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="provided on"/>
+        <elements xsi:type="xtext:Assignment" feature="provServer" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.2">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Server"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="ServiceBinding">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//ServiceBinding"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="bind service"/>
+        <elements xsi:type="xtext:Assignment" feature="service" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="to"/>
+        <elements xsi:type="xtext:Keyword" value="environment"/>
+        <elements xsi:type="xtext:Assignment" feature="environment" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.2">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Environment"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="with"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Keyword" value="protocols"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="+" feature="protocol" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provider-protocols"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="providerProtocol" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="policies"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="policies" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provider-policies"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="providerPolicies" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="SLAs"/>
+          <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.3">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.3">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="operation" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="ServiceRef">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//ServiceRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" feature="service" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.1">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Service"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="versionRef" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.5"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="BindingProtocol">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//BindingProtocol"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.15"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.16"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.17"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.13"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.25"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.26"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="OperationBinding">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//OperationBinding"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="bind op"/>
+        <elements xsi:type="xtext:Assignment" feature="operation" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.1">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Operation"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Keyword" value="protocols"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="+" feature="protocol" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provider-protocols"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="providerProtocol" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="policies"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="policies" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provider-policies"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="providerPolicies" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="SLAs"/>
+          <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.3">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.3">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Component">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//Component"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="component"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="implements"/>
+        <elements xsi:type="xtext:Assignment" feature="implements" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Keyword" value="bind to environment"/>
+        <elements xsi:type="xtext:Assignment" feature="environment" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.2">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Environment"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="provided-services"/>
+        <elements xsi:type="xtext:Assignment" feature="services" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value=","/>
+          <elements xsi:type="xtext:Assignment" feature="services" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="referenced-services"/>
+          <elements xsi:type="xtext:Assignment" feature="referencedServices" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" cardinality="*" value=","/>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="protocols"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="+" feature="protocol" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="operation" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="policies"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="policies" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provider-policies"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="providerPolicies" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="SLAs"/>
+          <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.3">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.3">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="implementation"/>
+        <elements xsi:type="xtext:Assignment" feature="implementation" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="sourceURL"/>
+          <elements xsi:type="xtext:Assignment" feature="source" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="ImplementationType">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//ImplementationType"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/BPMN"/>
+          <literal value="BPMN"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/BPMN2"/>
+          <literal value="BPMN2"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/BPEL"/>
+          <literal value="BPEL"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/WSHT"/>
+          <literal value="WS-HT"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/RuleML"/>
+          <literal value="RuleML"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Drools"/>
+          <literal value="Drools"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Mediation"/>
+          <literal value="Mediation"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Java"/>
+          <literal value="Java"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/CS"/>
+          <literal value="C#"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/CPP"/>
+          <literal value="C++"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Scala"/>
+          <literal value="Scala"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Ruby"/>
+          <literal value="Ruby"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/PHP"/>
+          <literal value="PHP"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/WSDocLit"/>
+          <literal value="WS-Document/Literal"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/WSRPC"/>
+          <literal value="WS-RPC/Literal"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/WSRPCEnc"/>
+          <literal value="WS-RPC/Encoded"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/REST_XML"/>
+          <literal value="REST-XML"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/REST_JSON"/>
+          <literal value="REST-JSON"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/EJB"/>
+          <literal value="EJB"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Spring"/>
+          <literal value="Spring"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/EJB2"/>
+          <literal value="EJB2"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/SAP"/>
+          <literal value="SAP"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/SAP_IDOC"/>
+          <literal value="SAP/iDoc"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/SAP_BAPI"/>
+          <literal value="SAP/BAPI"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Corba"/>
+          <literal value="Corba"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Shell"/>
+          <literal value="Shell"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Siebel"/>
+          <literal value="Siebel"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Tuxedo"/>
+          <literal value="Tuxedo"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/File"/>
+          <literal value="File"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/SQL"/>
+          <literal value="SQL"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/Ivy"/>
+          <literal value="Ivy"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/jPDL3"/>
+          <literal value="jPDL3"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ImplementationType/jPDL4"/>
+          <literal value="jPDL4"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="SOAP">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SOAP"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="SOAP"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SOAP"/>
+          </type>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="style"/>
+          <elements xsi:type="xtext:Assignment" feature="style" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.12"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="http-context-root"/>
+          <elements xsi:type="xtext:Assignment" feature="contextRoot" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provider-http-context-root"/>
+          <elements xsi:type="xtext:Assignment" feature="providerContextRoot" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provided-WSDL-Url"/>
+          <elements xsi:type="xtext:Assignment" feature="providedWsdlUrl" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="SOAPStyle">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//SOAPStyle"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SOAPStyle/doclitwrap"/>
+          <literal value="document/literal-wrapped"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SOAPStyle/rpclit"/>
+          <literal value="rpc/literal"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SOAPStyle/rpcenc"/>
+          <literal value="rpc/encoded"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="SAP">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SAP"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="SAP"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SAP"/>
+          </type>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="transport"/>
+          <elements xsi:type="xtext:Assignment" feature="transport" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.14"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="client"/>
+          <elements xsi:type="xtext:Assignment" feature="client" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.2">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//SapClient"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="SAPTransport">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//SAPTransport"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SAPTransport/IDOC"/>
+          <literal value="IDOC"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SAPTransport/RFC"/>
+          <literal value="RFC"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="EJB">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//EJB"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="EJB"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="jndi-name"/>
+        <elements xsi:type="xtext:Assignment" feature="jndiName" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="HTTP">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//HTTP"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="HTTP"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="url"/>
+        <elements xsi:type="xtext:Assignment" feature="url" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Keyword" value="provider-url"/>
+        <elements xsi:type="xtext:Assignment" feature="providerUrl" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Keyword" value="verb"/>
+        <elements xsi:type="xtext:Assignment" feature="verb" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.19"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="REST">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//REST"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="REST"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="url"/>
+        <elements xsi:type="xtext:Assignment" feature="url" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Keyword" value="provider-url"/>
+        <elements xsi:type="xtext:Assignment" feature="providerUrl" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Keyword" value="verb"/>
+        <elements xsi:type="xtext:Assignment" feature="verb" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.19"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Keyword" value="format"/>
+        <elements xsi:type="xtext:Assignment" feature="format" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="RESTFormat">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//RESTFormat"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//RESTFormat/JSON"/>
+          <literal value="JSON"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//RESTFormat/XML"/>
+          <literal value="XML"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//RESTFormat/OTHER"/>
+          <literal value="OTHER"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="Verb">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//Verb"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/create"/>
+          <literal value="create"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/retrieve"/>
+          <literal value="retrieve"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/update"/>
+          <literal value="update"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/delete"/>
+          <literal value="delete"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="JMS">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//JMS"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="JMS"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//JMS"/>
+          </type>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="channel" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="jndi-name"/>
+        <elements xsi:type="xtext:Assignment" feature="jndiName" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provider-jndi-name"/>
+          <elements xsi:type="xtext:Assignment" feature="providerJndi" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="TopicOrQueue">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//TopicOrQueue"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.22"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.23"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Topic">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//Topic"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="topic"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Queue">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//Queue"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="queue"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="SCA">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SCA"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="SCA"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="promote"/>
+          <elements xsi:type="xtext:Assignment" feature="promote" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="reference"/>
+          <elements xsi:type="xtext:Assignment" feature="reference" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" cardinality="?" feature="isMultipleRef" operator="?=">
+            <terminal xsi:type="xtext:Keyword" value="[]"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value=";"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="FILE">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//FILE"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="FILE"/>
+        <elements xsi:type="xtext:Assignment" feature="url" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="accessType" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.27"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="interval"/>
+          <elements xsi:type="xtext:Assignment" feature="pollIntervall" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="FTP">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//FTP"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="FTP"/>
+        <elements xsi:type="xtext:Assignment" feature="url" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="access"/>
+        <elements xsi:type="xtext:Assignment" feature="accessType" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.27"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="interval"/>
+          <elements xsi:type="xtext:Assignment" feature="pollIntervall" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="ReadWrite">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//ReadWrite"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ReadWrite/read"/>
+          <literal value="read"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ReadWrite/write"/>
+          <literal value="write"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Policy">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//Policy"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.29"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.30"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="LogPolicy">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//LogPolicy"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="logging policy"/>
+        <elements xsi:type="xtext:Assignment" feature="logPolicy" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="SecurityPolicy">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SecurityPolicy"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.31"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.37"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="AuthenticationPolicy">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//AuthenticationPolicy"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="authn policy"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="optional" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="optional"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Keyword" value="auth tokens"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="+" feature="authTokens" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.32"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+        <elements xsi:type="xtext:Keyword" value="hash algorithms"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="hashAlgorithms" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.33"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="AuthToken">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//AuthToken"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="optional" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="optional"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="kind" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="HashAlgorithm">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//HashAlgorithm"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="optional" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="optional"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="useBase64" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="Base64-encoded"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="kind" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.34"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="HashAlgKind">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//HashAlgKind"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//HashAlgKind/MD5"/>
+          <literal value="MD5"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//HashAlgKind/SHA1"/>
+          <literal value="SHA1"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//HashAlgKind/SHA256"/>
+          <literal value="SHA256"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//HashAlgKind/PlainText"/>
+          <literal value="PlainText"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="AuthorizationPolicy">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Keyword" value="authorization rolicy"/>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="SigningPolicy">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Keyword" value="signing policy"/>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="EncryptionPolicy">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Keyword" value="encryption policy"/>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="AuthTokenKind">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//AuthTokenKind"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//AuthTokenKind/UsernamePassword"/>
+          <literal value="UsernamePassword"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//AuthTokenKind/SAML"/>
+          <literal value="SAML"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//AuthTokenKind/SAML2"/>
+          <literal value="SAML2"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//AuthTokenKind/Kerberos"/>
+          <literal value="Kerberos"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="LogPolicyKind">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//LogPolicyKind"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//LogPolicyKind/NONE"/>
+          <literal value="NONE"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//LogPolicyKind/HEADER"/>
+          <literal value="HEADER"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//LogPolicyKind/ALL"/>
+          <literal value="ALL"/>
+        </elements>
+      </alternatives>
+    </rules>
+  </xtext:Grammar>
+  <xtext:Grammar name="org.fornax.soa.basedsl.SOABaseDsl" usedGrammars="/2">
+    <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="sOABaseDsl">
+      <ePackage href="http://www.fornax.org/soa/basedsl/SOABaseDsl#/"/>
+    </metamodelDeclarations>
+    <rules xsi:type="xtext:ParserRule" name="Import" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Import"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="import"/>
+        <elements xsi:type="xtext:Assignment" feature="importedNamespace" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.10"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=";"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="VersionId" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value="."/>
+          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="VersionedName" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionedName"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Action">
+            <type metamodel="/1/@metamodelDeclarations.0">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionedName"/>
+            </type>
+          </elements>
+          <elements xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+          <elements xsi:type="xtext:RuleCall" cardinality="*" rule="/2/@rules.5"/>
+          <elements xsi:type="xtext:Assignment" feature="version" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="LifecycleState">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/proposed"/>
+          <literal value="proposed"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/defined"/>
+          <literal value="defined"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/development"/>
+          <literal value="development"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/test"/>
+          <literal value="test"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/productive"/>
+          <literal value="productive"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/deprecated"/>
+          <literal value="deprecated"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/retired"/>
+          <literal value="retired"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Version" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="version"/>
+        <elements xsi:type="xtext:Assignment" feature="version" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="VersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.6"/>
+        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.7"/>
+        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.8"/>
+        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.9"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="MinVersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//MinVersionRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="minVersion"/>
+        <elements xsi:type="xtext:Assignment" feature="minVersion" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="MaxVersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//MaxVersionRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="maxVersion"/>
+        <elements xsi:type="xtext:Assignment" feature="maxVersion" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="LowerBoundRangeVersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LowerBoundRangeVersionRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="minVersion"/>
+          <elements xsi:type="xtext:Keyword" value=">="/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="minVersion" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=","/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="maxVersion"/>
+          <elements xsi:type="xtext:Keyword" value="&lt;"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="maxVersion" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="MajorVersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//MajorVersionRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="majorVersion"/>
+        <elements xsi:type="xtext:Assignment" feature="majorVersion" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="QualifiedNameWithWildCard" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+        <elements xsi:type="xtext:Keyword" cardinality="?" value=".*"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="QualifiedName" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value="."/>
+          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        </elements>
+      </alternatives>
+    </rules>
+  </xtext:Grammar>
+  <xtext:Grammar name="org.eclipse.xtext.common.Terminals" definesHiddenTokens="true" hiddenTokens="/2/@rules.5 /2/@rules.3 /2/@rules.4">
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
+      <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+    </metamodelDeclarations>
+    <rules xsi:type="xtext:TerminalRule" name="ID">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" cardinality="?" value="^"/>
+        <elements xsi:type="xtext:Alternatives">
+          <elements xsi:type="xtext:CharacterRange">
+            <left value="a"/>
+            <right value="z"/>
+          </elements>
+          <elements xsi:type="xtext:CharacterRange">
+            <left value="A"/>
+            <right value="Z"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="_"/>
+        </elements>
+        <elements xsi:type="xtext:Alternatives" cardinality="*">
+          <elements xsi:type="xtext:CharacterRange">
+            <left value="a"/>
+            <right value="z"/>
+          </elements>
+          <elements xsi:type="xtext:CharacterRange">
+            <left value="A"/>
+            <right value="Z"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="_"/>
+          <elements xsi:type="xtext:CharacterRange">
+            <left value="0"/>
+            <right value="9"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="INT">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+      </type>
+      <alternatives xsi:type="xtext:CharacterRange" cardinality="+">
+        <left value="0"/>
+        <right value="9"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="STRING">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="&quot;"/>
+          <elements xsi:type="xtext:Alternatives" cardinality="*">
+            <elements xsi:type="xtext:Group">
+              <elements xsi:type="xtext:Keyword" value="\"/>
+              <elements xsi:type="xtext:Alternatives">
+                <elements xsi:type="xtext:Keyword" value="b"/>
+                <elements xsi:type="xtext:Keyword" value="t"/>
+                <elements xsi:type="xtext:Keyword" value="n"/>
+                <elements xsi:type="xtext:Keyword" value="f"/>
+                <elements xsi:type="xtext:Keyword" value="r"/>
+                <elements xsi:type="xtext:Keyword" value="&quot;"/>
+                <elements xsi:type="xtext:Keyword" value="'"/>
+                <elements xsi:type="xtext:Keyword" value="\"/>
+              </elements>
+            </elements>
+            <elements xsi:type="xtext:NegatedToken">
+              <terminal xsi:type="xtext:Alternatives">
+                <elements xsi:type="xtext:Keyword" value="\"/>
+                <elements xsi:type="xtext:Keyword" value="&quot;"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="&quot;"/>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="'"/>
+          <elements xsi:type="xtext:Alternatives" cardinality="*">
+            <elements xsi:type="xtext:Group">
+              <elements xsi:type="xtext:Keyword" value="\"/>
+              <elements xsi:type="xtext:Alternatives">
+                <elements xsi:type="xtext:Keyword" value="b"/>
+                <elements xsi:type="xtext:Keyword" value="t"/>
+                <elements xsi:type="xtext:Keyword" value="n"/>
+                <elements xsi:type="xtext:Keyword" value="f"/>
+                <elements xsi:type="xtext:Keyword" value="r"/>
+                <elements xsi:type="xtext:Keyword" value="&quot;"/>
+                <elements xsi:type="xtext:Keyword" value="'"/>
+                <elements xsi:type="xtext:Keyword" value="\"/>
+              </elements>
+            </elements>
+            <elements xsi:type="xtext:NegatedToken">
+              <terminal xsi:type="xtext:Alternatives">
+                <elements xsi:type="xtext:Keyword" value="\"/>
+                <elements xsi:type="xtext:Keyword" value="'"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="'"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="ML_COMMENT">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="/*"/>
+        <elements xsi:type="xtext:UntilToken">
+          <terminal xsi:type="xtext:Keyword" value="*/"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="SL_COMMENT">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="//"/>
+        <elements xsi:type="xtext:NegatedToken" cardinality="*">
+          <terminal xsi:type="xtext:Alternatives">
+            <elements xsi:type="xtext:Keyword" value="&#xA;"/>
+            <elements xsi:type="xtext:Keyword" value="&#xD;"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" cardinality="?" value="&#xD;"/>
+          <elements xsi:type="xtext:Keyword" value="&#xA;"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="WS">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives" cardinality="+">
+        <elements xsi:type="xtext:Keyword" value=" "/>
+        <elements xsi:type="xtext:Keyword" value="&#x9;"/>
+        <elements xsi:type="xtext:Keyword" value="&#xD;"/>
+        <elements xsi:type="xtext:Keyword" value="&#xA;"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:TerminalRule" name="ANY_OTHER">
+      <type metamodel="/2/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+      </type>
+      <alternatives xsi:type="xtext:Wildcard"/>
+    </rules>
+  </xtext:Grammar>
+</xmi:XMI>

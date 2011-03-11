@@ -1,0 +1,15 @@
+«IMPORT serviceDsl»;
+«IMPORT bindingDsl»;
+
+«EXTENSION org::fornax::soa::servicedsl::templates::domains»
+
+«REM»
+«DEFINE main FOR ServiceModel-»
+	«EXPAND org::fornax::soa::servicedsl::templates::Services::main»
+«ENDDEFINE»
+
+«DEFINE main FOR bindingDsl::BindingModel»
+	«EXPAND main FOREACH bindings.subNamespace.eRootContainer.typeSelect (serviceDsl::ServiceModel).toSet()»	
+	«EXPAND org::fornax::soa::bindingdsl::templates::Binding::main FOR this»	
+«ENDDEFINE»
+«ENDREM»

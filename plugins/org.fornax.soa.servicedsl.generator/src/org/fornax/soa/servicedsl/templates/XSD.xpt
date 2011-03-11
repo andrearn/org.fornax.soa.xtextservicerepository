@@ -1,0 +1,207 @@
+«IMPORT sOABaseDsl»
+«IMPORT serviceDsl»
+
+«EXTENSION org::fornax::soa::servicedsl::templates::common»
+«EXTENSION org::fornax::soa::servicedsl::templates::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::types»
+«EXTENSION org::fornax::soa::servicedsl::query::types»
+«EXTENSION org::fornax::soa::servicedsl::query::subdomains»
+
+
+«REM»
+	CARTRIDGE ENTRYPOINT for generation of XSDs from namespaces. 
+	The namespace will be sliced into namespaces per major version introduced in the namespace 
+«ENDREM»
+«DEFINE XSD (String minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
+	«EXPAND XSD (getStateByName (minState), profile, registryBaseUrl) -»
+«ENDDEFINE»
+
+«DEFINE XSD (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
+	«EXPAND XSDVersion(minState, profile, registryBaseUrl) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
+«ENDDEFINE»
+
+«DEFINE XSDForImports (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
+	«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
+«ENDDEFINE»
+
+
+«DEFINE XSDVersion(LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
+«FILE getFileNameFragment() + ".xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:tns="«toNamespace()»"
+	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS (minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+	targetNamespace="«toNamespace()»"
+	>
+	«EXPAND ImportDeclaration (registryBaseUrl) FOREACH allImportedVersionedNS(minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 	
+	«IF SubNamespace.isInstance(subdomain)-»
+		«EXPAND ComplexType(this, profile) FOREACH ((SubNamespace) subdomain).types.typeSelect(BusinessObject).reject(e|e.state == LifecycleState::retired).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(),  minState))-»
+		«EXPAND SimpleType FOREACH ((SubNamespace) subdomain).types.typeSelect(Enumeration).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(), minState))-»
+		«EXPAND FaultType(this, profile) FOREACH ((SubNamespace) subdomain).exceptions.select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingException (version.toMajorVersionNumber().asInteger(), minState))-»
+	«ELSEIF OrganizationNamespace.isInstance(subdomain)-»
+		«REM»«EXPAND ComplexType FOREACH ((OrganizationNamespace) subdomain).types.typeSelect(BusinessObject)-»«ENDREM»
+	«ENDIF»
+</xsd:schema>
+
+«ENDFILE»
+«ENDDEFINE»
+
+
+«DEFINE NamespaceDeclaration FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
+	xmlns:«toPrefix() + version.toMajorVersionNumber()»="«toNamespace()»"
+«ENDDEFINE»
+
+«DEFINE ImportDeclaration (String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
+	<xsd:import schemaLocation="«this.getRegisteredUrl (registryBaseUrl)».xsd"
+		namespace="«toNamespace()»"></xsd:import>
+«ENDDEFINE»
+
+
+«DEFINE ComplexType(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR BusinessObject»
+    <xsd:complexType name="«name»">
+    	<xsd:annotation>
+    		<xsd:documentation>
+    			Version:	«version.toVersionNumber()»
+    			Lifecycle state: «state.toString()»
+				«IF doc != null-»
+				
+    			«doc.stripCommentBraces().trim()»
+				«ENDIF-»    			
+    		</xsd:documentation>
+    	</xsd:annotation>
+    	
+    	«IF superBusinessObject != null-»
+    	<xsd:complexContent>
+    		<xsd:extension base="«superBusinessObject.getTypeNameRef(currNs)»">
+		    	«EXPAND PropertySequence(currNs, profile)»
+    		</xsd:extension>
+    	</xsd:complexContent>
+    	«ELSE-»
+	    	«EXPAND PropertySequenceWithAny(currNs, profile)»
+    		«IF profile.typesUseExtendableXMLAttributes()-»
+			<xsd:anyAttribute namespace="##any"/>
+			«ENDIF»
+    	«ENDIF-»
+    </xsd:complexType>
+«ENDDEFINE»
+
+«DEFINE PropertySequenceWithAny(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR BusinessObject»
+    	<xsd:sequence>
+    		«EXPAND Property (currNs, profile) FOREACH properties-»
+    		«IF profile.typesUseExtendableProperties ()-»
+			<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
+				processContents="skip"/>
+    		«ENDIF»
+    	</xsd:sequence>
+«ENDDEFINE»
+«DEFINE PropertySequence(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR BusinessObject»
+    	<xsd:sequence>
+    		«EXPAND Property (currNs, profile) FOREACH properties-»
+    	</xsd:sequence>
+«ENDDEFINE»
+«DEFINE PropertySequenceWithAny(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR Exception»
+    	<xsd:sequence>
+    		«EXPAND Property (currNs, profile) FOREACH properties-»
+    		«IF profile.typesUseExtendableProperties ()-»
+			<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
+				processContents="skip"/>
+    		«ENDIF»
+    	</xsd:sequence>
+«ENDDEFINE»
+«DEFINE PropertySequence(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR Exception»
+    	<xsd:sequence>
+    		«EXPAND Property (currNs, profile) FOREACH properties-»
+    	</xsd:sequence>
+«ENDDEFINE»
+
+«DEFINE SimpleType FOR Enumeration»
+    <xsd:simpleType name="«name»">
+    	<xsd:annotation>
+    		<xsd:documentation>
+    			Version:	«version.toVersionNumber()»
+    			
+       		</xsd:documentation>
+    	</xsd:annotation>
+    	<xsd:restriction base="xsd:string">
+    		«EXPAND EnumLiteral FOREACH literals-»
+    	</xsd:restriction>
+    </xsd:simpleType>
+«ENDDEFINE»
+
+«DEFINE FaultType(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR Exception»
+    <xsd:complexType name="«toTypeName()»">
+    	<xsd:annotation>
+    		<xsd:documentation>
+    			Version:	«version.toVersionNumber()»
+    			Lifecycle state: «state.toString()»
+				«IF doc != null-»
+				
+    			«doc.stripCommentBraces().trim()»
+				«ENDIF-»    			
+    		</xsd:documentation>
+    	</xsd:annotation>
+    	
+    	«IF superException != null-»
+    	<xsd:complexContent>
+    		<xsd:extension base="«superException.getExceptionNameRef(currNs)»">
+		    	«EXPAND PropertySequence(currNs, profile)»
+    		</xsd:extension>
+    	</xsd:complexContent>
+    	«ELSE-»
+	    	«EXPAND PropertySequenceWithAny(currNs, profile)»
+    		«IF profile.typesUseExtendableXMLAttributes()-»
+			<xsd:anyAttribute namespace="##any"/>
+    		«ENDIF»
+    	«ENDIF-»
+    </xsd:complexType>
+«ENDDEFINE»
+
+«DEFINE Property(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR Property-»
+«ENDDEFINE»
+
+«DEFINE Property(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR Attribute-»
+	«IF doc != null-»
+			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF» >
+		    	<xsd:annotation>
+		    		<xsd:documentation>
+		    			«doc.stripCommentBraces().trim()»
+		    		</xsd:documentation>
+		    	</xsd:annotation>
+			</xsd:element>
+	«ELSE-»
+			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF» />
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE Property(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR SimpleAttribute-»
+	«IF doc == null-»
+			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF»/>
+	«ELSE»
+			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF»>
+		    	<xsd:annotation>
+		    		<xsd:documentation>
+		    			«doc.stripCommentBraces().trim()»
+		    		</xsd:documentation>
+		    	</xsd:annotation>
+			</xsd:element>
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE Property(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR Reference-»
+			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» type="«type.getWeakRefType()»" >
+		    	<xsd:annotation>
+		    		<xsd:documentation>
+		    			References an instance of type «type.getFullTypeNameRef(currNs)» using it's business-key «type.getWeakRefKeyAttr()»
+		    			«doc.stripCommentBraces().trim()»
+		    		</xsd:documentation>
+		    	</xsd:annotation>
+			</xsd:element>
+«ENDDEFINE»
+
+«DEFINE EnumLiteral FOR EnumLiteral-»
+    		<xsd:enumeration value="«name»"/>
+«ENDDEFINE»
+
+«DEFINE AttachmentMimeFragment FOR TypeRef-»
+xmime:expectedContentTypes="application/octet-stream"
+«ENDDEFINE»
