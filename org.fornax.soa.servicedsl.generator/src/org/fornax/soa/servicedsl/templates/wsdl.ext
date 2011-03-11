@@ -1,6 +1,0 @@
-import sOABaseDsl;
-import serviceDsl;
-
-extension org::fornax::soa::servicedsl::templates::domains;
-
-String toWsdlTargetNamespace (DomainNamespace s) : "http://";
