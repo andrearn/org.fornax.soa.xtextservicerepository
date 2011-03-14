@@ -29,7 +29,9 @@
 «ENDDEFINE»
 
 «DEFINE SubNamespace (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR InternalNamespace»
-	«EXPAND Service (this, minState, profile, registryBaseUrl) FOREACH services.allLatestMajorVersions (minState).select(e|e.providedContractUrl == null)»
+	«FOREACH this.toVersionedDomainNamespaces() AS verNs»
+		«EXPAND Service (this, minState, profile, registryBaseUrl) FOREACH verNs.servicesWithMinState (minState).typeSelect(Service).select(e|e.isLatestMatchingService(verNs.version.asInteger(), minState)).select(e|e.providedContractUrl == null)»
+	«ENDFOREACH»
 	«EXPAND BusinessObject (minState, profile, registryBaseUrl)»
 «ENDDEFINE»
 

@@ -204,7 +204,7 @@ cached String shorten (sOAProfileDsl::OrganizationNamespace d, sOAProfileDsl::SO
  *	Namespace splitting into VersionedDomainNamespaces
  */
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] toVersionedDomainNamespaces (Object s) : info("HOW DID I GET HERE? "+ s.metaType) -> {}.toSet();
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] toVersionedDomainNamespaces (SubNamespace s) : s.types.size > 0 ? s.types.createVersionedDomainNamespace().toSet() : {}.toSet();
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] toVersionedDomainNamespaces (SubNamespace s) : s.types.size > 0 || s.services.size > 0 || s.exceptions.size > 0? s.types.createVersionedDomainNamespace().union (s.services.createVersionedDomainNamespace()).union(s.exceptions.createVersionedDomainNamespace()) : {}.toSet();
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] toVersionedDomainNamespaces (sOAProfileDsl::Namespace s) : s.types.size > 0 ? s.types.createVersionedDomainNamespace().toSet() : {}.toSet();
 
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getAllLatestSubNamespacesByMajorVersion (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] canditates) : 

@@ -54,6 +54,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (BusinessObject)
 		.allReferencedVersionedTypes(minState).createVersionedDomainNamespace()
 	.union(s.allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
+	.union(s.allReferencedExceptions().createVersionedDomainNamespace())
 	.union(s.allExceptionsByMajorVersion (nameSpaceMajorVersion).allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
 	.union(s.allExceptionsByMajorVersion (nameSpaceMajorVersion).superException.reject(e|e == null).getLatestMatchingException().createVersionedDomainNamespace())
 	.union({s.createVersionedDomainNamespace()});

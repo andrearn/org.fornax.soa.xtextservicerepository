@@ -15,6 +15,9 @@ List[Exception] allExceptionsByMajorVersion (SubNamespace s, String majorVersion
 	
 List[Exception] allExceptionsByMajorVersion (Service s, String majorVersion) : 
 	s.getSubdomain().exceptions.select (e|e.version.version.startsWith(majorVersion));
+	
+List[Exception] allReferencedExceptions (Service s) : 
+	s.operations.throws.exception;
 
 List[Service] allLatestMajorVersions (List[Service] s, LifecycleState minState) :
 	s.version.toMajorVersionNumber ().latestServiceByMajorVersionAndMinState (s, minState);
