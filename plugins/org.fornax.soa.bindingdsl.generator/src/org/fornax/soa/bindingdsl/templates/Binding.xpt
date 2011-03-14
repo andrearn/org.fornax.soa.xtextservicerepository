@@ -11,7 +11,7 @@
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
 «EXTENSION org::eclipse::xtend::util::stdlib::io»
 
-«DEFINE main (LifecycleState minState, SOAProfile profile) FOR BindingModel»
+«DEFINE main (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR BindingModel»
 	«EXPAND Binding (minState, profile) FOREACH bindings»
 «ENDDEFINE»
 
@@ -25,7 +25,11 @@
 	«FOREACH {subNamespace}.union(subNamespace.getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
 	«EXPAND org::fornax::soa::servicedsl::templates::XSD::XSD (environment.getMinLifecycleState(ns), profile, getRegistryBaseUrl()) FOR ns»
 	«ENDFOREACH»
-	«EXPAND org::fornax::soa::servicedsl::templates::MessageHeaderXSD::MessageHeaderXSD (getRegistryBaseUrl()) FOR profile»
+	«IF forceRelativePaths()»
+	«EXPAND org::fornax::soa::servicedsl::templates::MessageHeaderXSD::MessageHeaderXSD FOR profile»
+	«ELSE»
+	«EXPAND org::fornax::soa::servicedsl::templates::MessageHeaderXSD::MessageHeaderXSD (this.getRegistryBaseUrl()) FOR profile»
+	«ENDIF»
 
 «ENDDEFINE»
 
