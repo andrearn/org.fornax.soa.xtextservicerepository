@@ -12,7 +12,7 @@ import com.google.common.collect.Lists;
 
 public class ServiceQueryHelper {
 	
-	public List<List<Service>> separateMajorVersionsAsList (List<Service> services) {
+	public static List<List<Service>> separateMajorVersionsAsList (List<Service> services) {
 		List<List<Service>> sepSvc = new ArrayList<List<Service>>();
 		List<String> majorVersions = Lists.transform(services, new Function<Service, String> (){
 
@@ -36,4 +36,5 @@ public class ServiceQueryHelper {
 		}
 		return sepSvc;
 	}
+	
 }

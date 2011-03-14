@@ -12,6 +12,7 @@ List[serviceDsl::ExceptionRef] allReferencedExceptionRefs (Service s) : s.operat
 	
 List[Exception] allExceptionsByMajorVersion (SubNamespace s, String majorVersion) : 
 	s.exceptions.select (e|e.version.version.startsWith(majorVersion));
+	
 List[Exception] allExceptionsByMajorVersion (Service s, String majorVersion) : 
 	s.getSubdomain().exceptions.select (e|e.version.version.startsWith(majorVersion));
 

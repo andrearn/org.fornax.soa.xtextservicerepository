@@ -65,7 +65,8 @@
   <eClassifiers xsi:type="ecore:EEnum" name="RegistryKind">
     <eLiterals name="UDDI" literal="UDDI"/>
     <eLiterals name="HTTP" value="1" literal="HTTP"/>
-    <eLiterals name="Native" value="2" literal="Native"/>
+    <eLiterals name="File" value="2" literal="File"/>
+    <eLiterals name="Native" value="3" literal="Native"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AppServer" eSuperTypes="#//Server">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deployDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

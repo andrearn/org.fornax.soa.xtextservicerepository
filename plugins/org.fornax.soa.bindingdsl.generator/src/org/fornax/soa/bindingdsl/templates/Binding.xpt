@@ -5,6 +5,7 @@
 
 «EXTENSION org::fornax::soa::bindingdsl::templates::bindings»
 «EXTENSION org::fornax::soa::servicedsl::templates::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::services»
 «EXTENSION org::fornax::soa::servicedsl::templates::types»
 «EXTENSION org::fornax::soa::servicedsl::query::services»
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
@@ -15,8 +16,10 @@
 «ENDDEFINE»
 
 «DEFINE Binding (LifecycleState minState, SOAProfile profile) FOR DomainBinding»
-	«FOREACH subNamespace.services.allLatestMajorVersions (minState) AS svc»
-		«EXPAND BindingByService (svc, profile) FOR this.getMostSpecificBinding(svc)»
+	«FOREACH subNamespace.toVersionedDomainNamespaces() AS verNs»
+		«FOREACH verNs.servicesWithMinState (minState).typeSelect(Service).select(e|e.isLatestMatchingService(verNs.version.asInteger(), minState)) AS svc»
+			«EXPAND BindingByService (svc, profile) FOR this.getMostSpecificBinding(svc)»
+		«ENDFOREACH»
 	«ENDFOREACH»
 	«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (environment.getMinLifecycleState(subNamespace), profile, getRegistryBaseUrl()) FOR subNamespace»
 	«FOREACH {subNamespace}.union(subNamespace.getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»

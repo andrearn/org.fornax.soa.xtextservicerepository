@@ -61,7 +61,7 @@
 		
 		«doc.trim().stripCommentBraces()»
 	</wsdl:documentation>
-    <wsdl:import namespace="«toTargetNamespace()»" location="«getRegisteredUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
+    <wsdl:import namespace="«toTargetNamespace()»" location="«this.getRegisteredUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 	
 	«EXPAND SOAPBinding(this) FOREACH svcBind.protocol.typeSelect(SOAP)-»
 	«EXPAND WsdlService(this) FOREACH svcBind.protocol.typeSelect(SOAP)-»

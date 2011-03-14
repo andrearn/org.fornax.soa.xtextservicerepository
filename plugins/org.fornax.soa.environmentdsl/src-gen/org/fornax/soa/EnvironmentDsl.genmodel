@@ -19,6 +19,7 @@
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//RegistryKind">
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//RegistryKind/UDDI"/>
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//RegistryKind/HTTP"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//RegistryKind/File"/>
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//RegistryKind/Native"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//DatabaseKind">

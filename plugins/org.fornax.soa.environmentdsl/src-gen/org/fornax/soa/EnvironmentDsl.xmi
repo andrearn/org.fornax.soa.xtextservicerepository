@@ -388,6 +388,10 @@
           <literal value="HTTP"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/EnvironmentDsl#//RegistryKind/File"/>
+          <literal value="File"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.fornax.org/soa/EnvironmentDsl#//RegistryKind/Native"/>
           <literal value="Native"/>
         </elements>
