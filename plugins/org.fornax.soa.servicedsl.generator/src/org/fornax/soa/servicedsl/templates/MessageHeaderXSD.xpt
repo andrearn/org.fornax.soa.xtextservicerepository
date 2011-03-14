@@ -17,7 +17,7 @@
 
 «DEFINE MessageHeaderXSD (String registryBaseUrl) FOR sOAProfileDsl::SOAProfile»
 «FOREACH messaging.messageHeaders AS h»
-	«EXPAND MessageHeaderXSD (this, registryBaseUrl, h) FOREACH h.parameters.type.eContainer.typeSelect(sOAProfileDsl::Namespace).toSet()»
+	«EXPAND MessageHeaderXSD (this, registryBaseUrl, h) FOREACH h.parameters.type.typeSelect(sOAProfileDsl::VersionedTypeRef).type.eContainer.typeSelect(sOAProfileDsl::Namespace).toSet()»
 «ENDFOREACH»
 «ENDDEFINE»
 
