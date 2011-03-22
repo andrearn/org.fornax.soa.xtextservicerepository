@@ -38,12 +38,16 @@
 	«EXPAND BusinessObject (minState, profile, registryBaseUrl)»
 «ENDDEFINE»
 
+
+
 «DEFINE Service (DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 	«EXPAND WSDL::WSDL (subDom, minState, profile, registryBaseUrl)-»
 «ENDDEFINE»
 «DEFINE Service (InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 	«EXPAND WSDL::WSDL (subDom, minState, profile, registryBaseUrl)-»
 «ENDDEFINE»
+
+
 
 «DEFINE BusinessObject (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR DomainNamespace»
 	«EXPAND XSD::XSD (minState, profile, registryBaseUrl)»

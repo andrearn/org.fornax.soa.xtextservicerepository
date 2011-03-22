@@ -3,14 +3,17 @@
 
 «EXTENSION org::fornax::soa::basedsl::common»
 «EXTENSION org::fornax::soa::basedsl::version::versionQualifying»
-«EXTENSION org::fornax::soa::servicedsl::templates::common»
-«EXTENSION org::fornax::soa::servicedsl::templates::domains»
-«EXTENSION org::fornax::soa::servicedsl::templates::services»
-«EXTENSION org::fornax::soa::servicedsl::templates::types»
+
+«EXTENSION org::fornax::soa::servicedsl::query::exceptions»
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
 «EXTENSION org::fornax::soa::servicedsl::query::types»
 «EXTENSION org::fornax::soa::servicedsl::query::services»
 «EXTENSION org::fornax::soa::servicedsl::query::subdomains»
+
+«EXTENSION org::fornax::soa::servicedsl::templates::common»
+«EXTENSION org::fornax::soa::servicedsl::templates::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::services»
+«EXTENSION org::fornax::soa::servicedsl::templates::types»
 
 
 «REM»

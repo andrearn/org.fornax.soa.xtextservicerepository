@@ -22,7 +22,7 @@ public class VersionedDomainNamespace {
 	
 	private List<Service> services;
 	
-	private List<Exception> exceptions;
+	private List<org.fornax.soa.serviceDsl.Exception> exceptions;
 	
 	public Object getSubdomain() {
 		return subdomain;
@@ -80,11 +80,11 @@ public class VersionedDomainNamespace {
 		this.services = services;
 	}
 
-	public List<Exception> getExceptions() {
+	public List<org.fornax.soa.serviceDsl.Exception> getExceptions() {
 		return exceptions;
 	}
 
-	public void setExceptions(List<Exception> exceptions) {
+	public void setExceptions(List<org.fornax.soa.serviceDsl.Exception> exceptions) {
 		this.exceptions = exceptions;
 	}
 

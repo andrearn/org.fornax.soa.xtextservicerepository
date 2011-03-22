@@ -125,18 +125,9 @@ boolean isLatestMatchingType (BusinessObject t, Integer majorVersion, LifecycleS
 	? true
 	: false;
 
-boolean isLatestMatchingType (Enumeration t, Integer majorVersion, LifecycleState minState) : 
+boolean isLatestMatchingType (serviceDsl::Enumeration t, Integer majorVersion, LifecycleState minState) : 
 	(getLatestMatchingEnumeration( 
 		((SubNamespace)t.eContainer).types.typeSelect (Enumeration).select (e|e.name == t.name), 
-		majorVersion, 
-		minState)
-	 == t) 
-	? true
-	: false;
-
-boolean isLatestMatchingException (Exception t, Integer majorVersion, LifecycleState minState) : 
-	(getLatestMatchingException( 
-		((SubNamespace)t.eContainer).exceptions.select (e|e.name == t.name), 
 		majorVersion, 
 		minState)
 	 == t) 
@@ -158,10 +149,6 @@ private serviceDsl::Type getLatestMatchingBusinessObject (List[BusinessObject] t
 	
 private serviceDsl::Type getLatestMatchingEnumeration (List[Enumeration] types, Integer majorVersion, LifecycleState minState) : 
 	types.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
-	.sortBy (e|e.version.version).last();
-	
-private serviceDsl::Exception getLatestMatchingException (List[Exception] exceptions, Integer majorVersion, LifecycleState minState) : 
-	exceptions.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
 	.sortBy (e|e.version.version).last();
 
 
@@ -188,10 +175,6 @@ serviceDsl::Type getLatestMatchingType (serviceDsl::DataTypeRef t) : t.type ;
 serviceDsl::Type getLatestMatchingType (sOAProfileDsl::DataTypeRef t) : t.type ;
 serviceDsl::Type getLatestMatchingType (sOAProfileDsl::AttributeDataTypeRef t) : t.type ;
 
-serviceDsl::Exception getLatestMatchingException (serviceDsl::ExceptionRef t) : 
-	t.exception.getSubdomain ().exceptions.select (e|e.name == t.exception.name && t.exception.version.versionMatches (t.version))
-		.typeSelect (Exception).sortBy (e|e.version.version).last( );
-
 
 serviceDsl::Type getLatestMatchingType (TypeRef t, LifecycleState minState) : null;
 
@@ -209,8 +192,17 @@ serviceDsl::Type getLatestMatchingType (serviceDsl::EnumTypeRef t, LifecycleStat
 
 serviceDsl::Type getLatestMatchingType (serviceDsl::DataTypeRef t, LifecycleState minState) : t.type ;
 
-serviceDsl::Exception getLatestMatchingException (serviceDsl::ExceptionRef t, LifecycleState minState) : 
-	t.exception.getSubdomain ().exceptions.select (e|e.name == t.exception.name && t.exception.version.versionMatches (t.version) && t.exception.state.matchesMinStateLevel(minState))
-		.typeSelect (Exception).sortBy (e|e.version.version).last( );
+List[org::fornax::soa::serviceDsl::Type] typesWithMinState (SubNamespace ns, LifecycleState state) :
+	ns.types.typeSelect(BusinessObject).select(e|e.state.matchesMinStateLevel (state)).
+	union (ns.types.typeSelect (Enumeration).select(e|e.state.matchesMinStateLevel (state))).
+	union (ns.types.typeSelect (DataType));
+	
+List[org::fornax::soa::serviceDsl::Type] typesWithMinState (sOAProfileDsl::Namespace ns, LifecycleState state) :
+	ns.types.typeSelect(sOAProfileDsl::VersionedType).
+	union (ns.types.typeSelect (DataType));
 
+List[org::fornax::soa::serviceDsl::Type] typesWithMinState (Object ns, LifecycleState state) : null;
+
+List[org::fornax::soa::serviceDsl::Type] typesWithMinState (org::fornax::soa::servicedsl::VersionedDomainNamespace ns, LifecycleState state) :
+	ns.subdomain.typesWithMinState (state);
 	
