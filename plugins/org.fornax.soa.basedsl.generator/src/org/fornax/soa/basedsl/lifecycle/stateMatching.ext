@@ -1,0 +1,13 @@
+import sOABaseDsl;
+
+boolean matchesMinStateLevel (LifecycleState state, LifecycleState minState) : 
+	switch (minState) {
+	case LifecycleState::proposed: 		(state != LifecycleState::retired ? true : false)
+	case LifecycleState::defined:		(state != LifecycleState::proposed && state != LifecycleState::retired ? true : false)
+	case LifecycleState::development:	(((state != LifecycleState::proposed && state != LifecycleState::defined)) && state != LifecycleState::retired ? true : false)
+	case LifecycleState::test:			(((state == LifecycleState::test || state == LifecycleState::productive || state == LifecycleState::deprecated) &&  state != LifecycleState::retired) ? true : false)
+	case LifecycleState::productive:	(state == LifecycleState::productive || state == LifecycleState::deprecated ? true : false)
+	case LifecycleState::deprecated:	(state == LifecycleState::deprecated ? true : false)
+	case LifecycleState::retired:		(state == LifecycleState::retired ? true : false)
+	default: false
+	};

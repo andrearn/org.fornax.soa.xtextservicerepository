@@ -1,6 +1,8 @@
 import sOABaseDsl;
 import serviceDsl;
 
+extension org::fornax::soa::basedsl::lifecycle::stateMatching;
+extension org::fornax::soa::basedsl::version::versionMatching;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::domains;
 extension org::fornax::soa::servicedsl::templates::types;
@@ -72,6 +74,7 @@ List[Type] allTypesByMajorVersion (Service s, String majorVersion) :
 
 VersionedType selectLatestMatchingType (VersionedTypeRef ref) :
 	ref.type;
+	
 sOAProfileDsl::VersionedType selectLatestMatchingType (sOAProfileDsl::VersionedTypeRef ref) :
 	ref.type;
 

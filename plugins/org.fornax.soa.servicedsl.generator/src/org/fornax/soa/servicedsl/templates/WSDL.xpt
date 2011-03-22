@@ -1,6 +1,8 @@
 «IMPORT sOABaseDsl»
 «IMPORT serviceDsl»
 
+«EXTENSION org::fornax::soa::basedsl::common»
+«EXTENSION org::fornax::soa::basedsl::version::versionQualifying»
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
 «EXTENSION org::fornax::soa::servicedsl::templates::domains»
 «EXTENSION org::fornax::soa::servicedsl::templates::services»

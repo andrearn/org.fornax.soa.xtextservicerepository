@@ -3,6 +3,7 @@
 «IMPORT serviceDsl»
 «IMPORT sOAProfileDsl»
 
+«EXTENSION org::fornax::soa::servicedsl::domain::splitting»
 «EXTENSION org::fornax::soa::bindingdsl::templates::bindings»
 «EXTENSION org::fornax::soa::servicedsl::templates::domains»
 «EXTENSION org::fornax::soa::servicedsl::templates::services»

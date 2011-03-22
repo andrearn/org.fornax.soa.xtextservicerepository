@@ -2,6 +2,7 @@ import bindingDsl;
 import serviceDsl;
 import environmentDsl;
 
+extension org::fornax::soa::basedsl::version::versionQualifying;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::domains;
 

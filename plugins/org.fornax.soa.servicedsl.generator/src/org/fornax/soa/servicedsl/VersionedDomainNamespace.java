@@ -1,5 +1,10 @@
 package org.fornax.soa.servicedsl;
 
+import java.util.List;
+
+import org.fornax.soa.serviceDsl.Service;
+import org.fornax.soa.serviceDsl.Type;
+
 
 public class VersionedDomainNamespace {
 
@@ -12,6 +17,12 @@ public class VersionedDomainNamespace {
 	private String shortName;
 	
 	private String version;
+	
+	private List<Type> types;
+	
+	private List<Service> services;
+	
+	private List<Exception> exceptions;
 	
 	public Object getSubdomain() {
 		return subdomain;
@@ -51,6 +62,30 @@ public class VersionedDomainNamespace {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public List<Type> getTypes() {
+		return types;
+	}
+
+	public void setTypes(List<Type> types) {
+		this.types = types;
+	}
+
+	public List<Service> getServices() {
+		return services;
+	}
+
+	public void setServices(List<Service> services) {
+		this.services = services;
+	}
+
+	public List<Exception> getExceptions() {
+		return exceptions;
+	}
+
+	public void setExceptions(List<Exception> exceptions) {
+		this.exceptions = exceptions;
 	}
 
 	@Override

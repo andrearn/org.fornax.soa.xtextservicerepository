@@ -1,11 +1,15 @@
 import sOABaseDsl;
 import serviceDsl;
 
-extension org::fornax::soa::servicedsl::templates::common;
-extension org::fornax::soa::servicedsl::templates::domains;
+extension org::fornax::soa::basedsl::lifecycle::stateMatching;
+extension org::fornax::soa::basedsl::version::versionMatching;
+extension org::fornax::soa::basedsl::version::versionQualifying;
+extension org::fornax::soa::servicedsl::domain::splitting;
 extension org::fornax::soa::servicedsl::query::types;
 extension org::fornax::soa::servicedsl::query::services;
 extension org::fornax::soa::servicedsl::query::subdomains;
+extension org::fornax::soa::servicedsl::templates::common;
+extension org::fornax::soa::servicedsl::templates::domains;
 
 
 boolean isLatestMatchingType (serviceDsl::Type t, Integer majorVersion, LifecycleState minState) : 
@@ -75,19 +79,19 @@ private serviceDsl::Type getLatestMatchingVersionedType (List[VersionedType] typ
 
 private serviceDsl::Type getLatestMatchingVersionedType (List[VersionedType] types, Integer majorVersion, LifecycleState minState) : 
 	types.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
-	.sortBy(e|e.version.version).last();
+	.sortBy (e|e.version.version).last();
 	
 private serviceDsl::Type getLatestMatchingBusinessObject (List[BusinessObject] types, Integer majorVersion, LifecycleState minState) : 
 	types.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
-	.sortBy(e|e.version.version).last();
+	.sortBy (e|e.version.version).last();
 	
 private serviceDsl::Type getLatestMatchingEnumeration (List[Enumeration] types, Integer majorVersion, LifecycleState minState) : 
 	types.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
-	.sortBy(e|e.version.version).last();
+	.sortBy (e|e.version.version).last();
 	
 private serviceDsl::Exception getLatestMatchingException (List[Exception] exceptions, Integer majorVersion, LifecycleState minState) : 
 	exceptions.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
-	.sortBy(e|e.version.version).last();
+	.sortBy (e|e.version.version).last();
 
 
 /*

@@ -1,11 +1,12 @@
 import sOABaseDsl;
 import serviceDsl;
 
+extension org::fornax::soa::servicedsl::domain::splitting;
+extension org::fornax::soa::servicedsl::query::types;
+extension org::fornax::soa::servicedsl::query::services;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::domains;
 extension org::fornax::soa::servicedsl::templates::types;
-extension org::fornax::soa::servicedsl::query::types;
-extension org::fornax::soa::servicedsl::query::services;
 
 
 SubNamespace getSubdomain (serviceDsl::Type t) : null;

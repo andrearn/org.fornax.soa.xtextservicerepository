@@ -3,6 +3,11 @@
 «IMPORT serviceDsl»
 «IMPORT environmentDsl»
 
+«EXTENSION org::fornax::soa::basedsl::common»
+«EXTENSION org::fornax::soa::basedsl::lifecycle::stateMatching»
+«EXTENSION org::fornax::soa::basedsl::version::versionQualifying»
+«EXTENSION org::fornax::soa::basedsl::version::versionMatching»
+«EXTENSION org::fornax::soa::servicedsl::query::services»
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
 «EXTENSION org::fornax::soa::servicedsl::templates::domains»
 «EXTENSION org::fornax::soa::servicedsl::templates::services»

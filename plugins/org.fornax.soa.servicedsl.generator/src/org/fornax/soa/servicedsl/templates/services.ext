@@ -2,6 +2,10 @@ import sOABaseDsl;
 import sOAProfileDsl;
 import serviceDsl;
 
+extension org::fornax::soa::basedsl::lifecycle::stateMatching;
+extension org::fornax::soa::basedsl::version::versionMatching;
+extension org::fornax::soa::basedsl::version::versionQualifying;
+extension org::fornax::soa::servicedsl::domain::splitting;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::domains;
 extension org::fornax::soa::servicedsl::templates::types;
@@ -26,17 +30,6 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomain
 
 String getWsdlFilename(Service s) : s.eContainer.getFileNameFragment() + "-v" + s.version.toMajorVersionNumber() + ".wsdl";
 
-Service getLatestMatchingService (ServiceRef s) :
-	s.service.getSubdomain ().types.select (e|e.name == s.service.name && s.service.version.versionMatches (s.versionRef))
-		.typeSelect (Service).sortBy (e|e.version).last();
-
-boolean isLatestMatchingService (Service s, Integer majorVersion, sOABaseDsl::LifecycleState minState) : 
-	(getLatestMatchingService( ((SubNamespace)s.eContainer).services.select(e|e.name == s.name), majorVersion, minState) == s) 
-	? true
-	: false;
-		
-private serviceDsl::Service getLatestMatchingService (List[Service] canditates, Integer majorVersion, sOABaseDsl::LifecycleState minState) : 
-	canditates.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel(minState)).sortBy(e|e.version).first();
 
 boolean operationsUseExtendableParameters (sOAProfileDsl::SOAProfile p) : p.designRules != null && p.designRules.serviceDefPolicy != null && p.designRules.serviceDefPolicy.extendableParameters ? true : false;		
 boolean operationsUseExtendableXMLAttributes (sOAProfileDsl::SOAProfile p) : p.designRules != null && p.designRules.serviceDefPolicy != null && p.designRules.serviceDefPolicy.extendableXMLAttributes ? true : false;		

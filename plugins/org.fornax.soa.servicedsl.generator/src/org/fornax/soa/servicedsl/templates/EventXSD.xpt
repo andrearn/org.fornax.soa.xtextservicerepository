@@ -1,13 +1,18 @@
 «IMPORT sOABaseDsl»
 «IMPORT serviceDsl»
 
+«EXTENSION org::fornax::soa::basedsl::common»
+«EXTENSION org::fornax::soa::basedsl::lifecycle::stateMatching»
+«EXTENSION org::fornax::soa::basedsl::version::versionMatching»
+«EXTENSION org::fornax::soa::basedsl::version::versionQualifying»
+«EXTENSION org::fornax::soa::servicedsl::domain::splitting»
+«EXTENSION org::fornax::soa::servicedsl::query::headers»
+«EXTENSION org::fornax::soa::servicedsl::query::types»
+«EXTENSION org::fornax::soa::servicedsl::query::subdomains»
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
 «EXTENSION org::fornax::soa::servicedsl::templates::domains»
 «EXTENSION org::fornax::soa::servicedsl::templates::services»
 «EXTENSION org::fornax::soa::servicedsl::templates::types»
-«EXTENSION org::fornax::soa::servicedsl::query::headers»
-«EXTENSION org::fornax::soa::servicedsl::query::types»
-«EXTENSION org::fornax::soa::servicedsl::query::subdomains»
 
 
 «DEFINE Events (DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»

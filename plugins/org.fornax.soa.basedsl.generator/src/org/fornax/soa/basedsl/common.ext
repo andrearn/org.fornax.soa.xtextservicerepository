@@ -1,0 +1,11 @@
+import sOABaseDsl;
+
+
+String stripCommentBraces(String s) : s.replaceFirst("\\/\\*", "").replaceFirst("\\*\\/","").replaceAll("\\n(\\t)+(\\s)*(\\*)+", "\n\t");
+
+
+String stripXtextEscapes (String s) : s.replaceFirst("\\^", "");
+
+
+String stripTrailingSlash (String s) : s.endsWith("/") ? s.subString(0, s.length-1) : s;
+

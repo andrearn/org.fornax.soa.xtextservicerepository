@@ -3,6 +3,10 @@ import bindingDsl;
 import environmentDsl;
 import serviceDsl;
 
+extension org::fornax::soa::basedsl::common;
+extension org::fornax::soa::basedsl::version::versionMatching;
+extension org::fornax::soa::basedsl::version::versionQualifying;
+extension org::fornax::soa::basedsl::lifecycle::stateMatching;
 extension org::fornax::soa::servicedsl::templates::common;
 
 boolean generatePrivateWsdlForProviderHost () : GLOBALVAR generatePrivateWsdlForProviderHost;

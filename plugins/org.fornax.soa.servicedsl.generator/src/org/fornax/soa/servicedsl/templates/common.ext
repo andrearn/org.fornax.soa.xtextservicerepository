@@ -1,35 +1,12 @@
 import sOABaseDsl;
 import serviceDsl;
 
-String toVersionNumber (Void v) : toDefaultVersion();
-String toVersionNumber (Integer v) : v.toString();
-String toVersionNumber (String v) : v.replaceFirst("\\[", "").replaceFirst("\\]", "");
-String toVersionNumber (sOABaseDsl::Version v) : v.version;
+extension org::fornax::soa::basedsl::common;
+extension org::fornax::soa::basedsl::version::versionMatching;
+extension org::fornax::soa::basedsl::version::versionQualifying;
+extension org::fornax::soa::basedsl::lifecycle::stateMatching;
 
-String toMajorVersionNumber (Void v) : toDefaultMajorVersion();
-String toMajorVersionNumber (Integer v) : v.toString();
-String toMajorVersionNumber (String v) : 
-	v != null && v != "" ? v.toVersionNumber().split("\\.").first() : "1";
-String toMajorVersionNumber (Version v) : 
-	v != null ? v.toVersionNumber().split("\\.").first() : "1";
 
-String toVersionPostfix (Void v) : toDefaultVersionPostfix();
-String toVersionPostfix (String v) : "v" + v.toMajorVersionNumber();
-String toVersionPostfix (Integer v) : "v" + v.toMajorVersionNumber();
-String toVersionPostfix (sOABaseDsl::Version v) : "v" + v.toMajorVersionNumber();
-
-String toDefaultVersionPostfix () : "v" + toDefaultMajorVersion ();
-String toDefaultMajorVersion () : "1";
-String toDefaultVersion () : "1.0";
-
-create Version toVersion (String v) : setVersion(v);
-
-boolean versionMatches (sOABaseDsl::Version v, VersionRef r) : false;
-boolean versionMatches (sOABaseDsl::Version v, Integer majorVer) : v.version.toVersionNumber().split("\\.").get(0) == majorVer.toString() || (v.toVersionNumber().split("\\.").get(0) == majorVer.toString());
-boolean versionMatches (sOABaseDsl::Version v, MinVersionRef r) : v.toVersionNumber() == r.minVersion.toVersionNumber() || v.toVersionNumber() > r.minVersion.toVersionNumber();
-boolean versionMatches (sOABaseDsl::Version v, MaxVersionRef r) : v.toVersionNumber() == r.maxVersion.toVersionNumber() || v.toVersionNumber() < r.maxVersion.toVersionNumber();
-boolean versionMatches (sOABaseDsl::Version v, LowerBoundRangeVersionRef r) : v.version.toVersionNumber() == r.minVersion.toVersionNumber() || (v.toVersionNumber() > r.minVersion.toVersionNumber() && v < r.maxVersion.toVersionNumber());
-boolean versionMatches (sOABaseDsl::Version v, MajorVersionRef r) : v.version.toVersionNumber().split("\\.").get(0) == r.majorVersion.toString() || (v.toVersionNumber().split("\\.").get(0) == r.majorVersion.toString());
 
 
 String versionRangeText(sOABaseDsl::VersionRef v) : "";
@@ -37,19 +14,6 @@ String versionRangeText(sOABaseDsl::MinVersionRef v) : ">= " + v.minVersion.toVe
 String versionRangeText(sOABaseDsl::LowerBoundRangeVersionRef v) : v.minVersion.toVersionNumber() + " to <" + v.maxVersion.toVersionNumber();
 String versionRangeText(sOABaseDsl::MaxVersionRef v) : "<= " + v.maxVersion.toVersionNumber();
 
-String stripCommentBraces(String s) : s.replaceFirst("\\/\\*", "").replaceFirst("\\*\\/","").replaceAll("\\n(\\t)+(\\s)*(\\*)+", "\n\t");
-
-boolean matchesMinStateLevel (LifecycleState state, LifecycleState minState) : 
-	switch (minState) {
-	case LifecycleState::proposed: 		(state != LifecycleState::retired ? true : false)
-	case LifecycleState::defined:		(state != LifecycleState::proposed && state != LifecycleState::retired ? true : false)
-	case LifecycleState::development:	(((state != LifecycleState::proposed && state != LifecycleState::defined)) && state != LifecycleState::retired ? true : false)
-	case LifecycleState::test:			(((state == LifecycleState::test || state == LifecycleState::productive || state == LifecycleState::deprecated) &&  state != LifecycleState::retired) ? true : false)
-	case LifecycleState::productive:	(state == LifecycleState::productive || state == LifecycleState::deprecated ? true : false)
-	case LifecycleState::deprecated:	(state == LifecycleState::deprecated ? true : false)
-	case LifecycleState::retired:		(state == LifecycleState::retired ? true : false)
-	default: false
-	};
 	
 LifecycleState getOwnerMinDevState (Object o) : LifecycleState::development;
 LifecycleState getOwnerMinDevState (SubNamespace ns) : ns.linkingPolicy.minDevState != null ? ns.linkingPolicy.minDevState : LifecycleState::development;
@@ -107,5 +71,3 @@ LifecycleState getStateByName (String state) :
 	default: 				LifecycleState::proposed
 	};
 
-String stripXtextEscapes (String s) : s.replaceFirst("\\^", "");
-String stripTrailingSlash (String s) : s.endsWith("/") ? s.subString(0, s.length-1) : s;
