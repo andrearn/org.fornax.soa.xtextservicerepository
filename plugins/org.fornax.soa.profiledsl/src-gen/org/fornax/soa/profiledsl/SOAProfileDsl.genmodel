@@ -73,21 +73,30 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//MessageHeader/extendableXMLAttributes"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//MessageHeader/parameters"/>
     </genClasses>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//AbstractProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//AbstractProperty/doc"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//AbstractProperty/optional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//AbstractProperty/name"/>
+    </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Property">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Property/doc"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Property/optional"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Property/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Property/type"/>
     </genClasses>
-    <genClasses ecoreClass="SOAProfileDsl.ecore#//TypeRef"/>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//Attribute">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Attribute/type"/>
+    </genClasses>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//TypeRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//TypeRef/many"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//TypeRef/set"/>
+    </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//VersionedTypeRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//VersionedTypeRef/type"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//VersionedTypeRef/many"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//VersionedTypeRef/set"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//VersionedTypeRef/versionRef"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//DataTypeRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//DataTypeRef/type"/>
+    </genClasses>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//AttributeDataTypeRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AttributeDataTypeRef/type"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//EnumRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//EnumRef/type"/>

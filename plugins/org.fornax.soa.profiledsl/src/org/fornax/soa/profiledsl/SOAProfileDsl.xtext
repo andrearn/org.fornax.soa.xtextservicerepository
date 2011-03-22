@@ -81,16 +81,25 @@ MessageHeader:
 	'}';
 	
 enum MEPMessageKind: REQUEST = 'request' | RESPONSE = 'response' | PUBLISH = 'publish';
+
+AbstractProperty : 
+	Property | Attribute;	
 	
 Property:
 	(doc=ML_COMMENT)? (optional?='optional')? name=ID ':' type=TypeRef ';';
-	
+
+Attribute:
+	(doc=ML_COMMENT)? (optional?='optional')? 'attr' name=ID ':' type=AttributeDataTypeRef ';';
+
 TypeRef:	DataTypeRef | VersionedTypeRef;
 
 VersionedTypeRef:
 	type=[VersionedType|QualifiedName] (many?='[]' (set?='as set')? )? versionRef=VersionRef;
 	
 DataTypeRef: 
+	type=[DataType|QualifiedName] (many?='[]' (set?='as set')? )?;
+	
+AttributeDataTypeRef: 
 	type=[DataType|QualifiedName];
 
 EnumRef: 
@@ -131,7 +140,7 @@ Class:
 			version=Version ';' 
 			('replaces' replaces=EnumRef ';')?
 		'}'
-		(properties+=Property)+
+		(properties+=AbstractProperty)+
 	'}';
 
 InternalNamespaceRule: 

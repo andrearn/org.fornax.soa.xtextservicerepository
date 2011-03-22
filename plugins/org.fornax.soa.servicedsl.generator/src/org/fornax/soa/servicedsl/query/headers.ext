@@ -48,7 +48,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
 	t.allReferencedVersionedTypes().createVersionedDomainNamespace().toSet();
 	
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (sOAProfileDsl::Class t) :
-	t.properties.type.allReferencedVersionedTypes().createVersionedDomainNamespace().toSet();
+	t.properties.typeSelect(sOAProfileDsl::Property).type.allReferencedVersionedTypes().createVersionedDomainNamespace().toSet();
 
 
 
@@ -72,9 +72,9 @@ List[sOAProfileDsl::TypeRef] allReferencedTypeRefs (sOAProfileDsl::VersionedType
 
 List[sOAProfileDsl::TypeRef] allReferencedTypeRefs (sOAProfileDsl::Class t) : 
 	t.superClass != null ? 	
-		t.properties.type.union({t.superClass})
+		t.properties.typeSelect(sOAProfileDsl::Property).type.union({t.superClass})
 		:
-		t.properties.type;
+		t.properties.typeSelect(sOAProfileDsl::Property).type;
 		
 List[sOAProfileDsl::TypeRef] allReferencedTypeRefs (sOAProfileDsl::MessageHeader t) : 
 	t.parameters.type;

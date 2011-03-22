@@ -110,18 +110,26 @@
 
 «DEFINE PropertySequenceWithAny(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile, sOAProfileDsl::MessageHeader header) FOR sOAProfileDsl::Class»
     	<xsd:sequence>
-    		«EXPAND Property (currNs, profile) FOREACH properties-»
+    		«EXPAND Property (currNs, profile) FOREACH properties.typeSelect(sOAProfileDsl::Property)-»
     		«IF header.extendableProperties-»
 			<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
 				processContents="skip"/>
     		«ENDIF»
     	</xsd:sequence>
+    	«IF !properties.typeSelect(sOAProfileDsl::Attribute).isEmpty-»
+    	
+   		«EXPAND Property (currNs, profile) FOREACH properties.typeSelect(sOAProfileDsl::Attribute)-»
+    	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE PropertySequence(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR sOAProfileDsl::Class»
     	<xsd:sequence>
-    		«EXPAND Property (currNs, profile) FOREACH properties-»
+    		«EXPAND Property (currNs, profile) FOREACH properties.typeSelect(sOAProfileDsl::Property)-»
     	</xsd:sequence>
+    	«IF !properties.typeSelect(sOAProfileDsl::Attribute).isEmpty-»
+    	
+   		«EXPAND Property (currNs, profile) FOREACH properties.typeSelect(sOAProfileDsl::Attribute)-»
+    	«ENDIF-»
 «ENDDEFINE»
 
 «DEFINE SimpleType (sOAProfileDsl::SOAProfile profile) FOR sOAProfileDsl::Enumeration»
@@ -130,6 +138,10 @@
     		<xsd:documentation>
     			Version:	«version.toVersionNumber()»
     			
+				«IF doc != null-»
+				
+    			«doc.stripCommentBraces().trim()»
+				«ENDIF-»    			
        		</xsd:documentation>
     	</xsd:annotation>
     	<xsd:restriction base="xsd:string">
@@ -150,6 +162,19 @@
 		    		</xsd:documentation>
 		    	</xsd:annotation>
 			</xsd:element>
+	«ENDIF»
+«ENDDEFINE»
+«DEFINE Property(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR sOAProfileDsl::Attribute-»
+	«IF doc == null-»
+	   	<xsd:attribute name="«name»" «IF optional»use="optional"«ENDIF» type="«type.getTypeNameRef(currNs)»" />
+	«ELSE-»		
+	   	<xsd:attribute name="«name»" «IF optional»use="optional"«ENDIF» type="«type.getTypeNameRef(currNs)»" >
+	    	<xsd:annotation>
+	    		<xsd:documentation>
+	    			«doc.stripCommentBraces().trim()»
+	    		</xsd:documentation>
+	    	</xsd:annotation>
+	   	</xsd:attribute>
 	«ENDIF»
 «ENDDEFINE»
 

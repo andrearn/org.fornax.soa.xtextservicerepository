@@ -6,6 +6,7 @@ extension org::fornax::soa::basedsl::lifecycle::stateMatching;
 extension org::fornax::soa::basedsl::version::versionMatching;
 extension org::fornax::soa::basedsl::version::versionQualifying;
 extension org::fornax::soa::servicedsl::domain::splitting;
+extension org::fornax::soa::servicedsl::query::types;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::domains;
 extension org::fornax::soa::servicedsl::templates::types;
