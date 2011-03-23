@@ -10,7 +10,11 @@ extension org::eclipse::xtend::util::stdlib::io;
 
 
 /**
- *	Namespace splitting into VersionedDomainNamespaces
+ *	Namespace splitting into VersionedDomainNamespaces. A VersionedDomainNamespace 
+ *	per major version occurring in the SubNamespace is bein created.  It contains all
+ *	BusinessObjects, Enumerations, Exceptions and Services matching that major version number.
+ *	
+ *	@author André Arnold	- initial contribution and API 
  */
 
 cached Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] toVersionedDomainNamespaces (Object s) : info("HOW DID I GET HERE? "+ s.metaType) -> {}.toSet();

@@ -16,6 +16,29 @@
 	«EXPAND Binding (minState, profile) FOREACH bindings»
 «ENDDEFINE»
 
+
+«REM»
+	ENTRYPOINT for generation of concrete and imported abstract WSDLs and their required XSDs 
+	for a given DomainBinding. The DomainBinding binds all Services in a given SubNamespace 
+	to a certain Environment.
+	
+	All Services and their required XSDs that match the minimal LifecycleState of environment
+	referenced by the DomainBinding are considered. Overrides of minimal LifecycleStates 
+	declared in SubNamespaces will be respected
+«ENDREM»
+«DEFINE Binding (SOAProfile profile) FOR DomainBinding»
+	«EXPAND Binding ( environment.getMinLifecycleState (this), profile)»
+«ENDDEFINE»
+
+
+«REM»
+	ENTRYPOINT for generation of concrete and imported abstract WSDLs and their required XSDs 
+	for a given DomainBinding. The DomainBinding binds all Services in a given SubNamespace 
+	to a certain Environment.
+	
+	All Services and their required XSDs that match the minimal given LifecycleState are 
+	considered
+«ENDREM»
 «DEFINE Binding (LifecycleState minState, SOAProfile profile) FOR DomainBinding»
 	«FOREACH subNamespace.toVersionedDomainNamespaces() AS verNs»
 		«FOREACH verNs.servicesWithMinState (minState).typeSelect(Service).select(e|e.isLatestMatchingService(verNs.version.asInteger(), minState)) AS svc»
@@ -31,12 +54,22 @@
 	«ELSE»
 	«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD (this.getRegistryBaseUrl()) FOR profile»
 	«ENDIF»
-
 «ENDDEFINE»
+
 
 «DEFINE BindingByService(Service s, SOAProfile profile) FOR Binding»
+	«ERROR "Unexpected Bining type " + metaType.name»
 «ENDDEFINE»
 
+
+«REM»
+	Generate a concrete WSDL for the given Service defining a binding to the 
+	publishing server, i.e. usually an ESB.
+	The WSDL references an abstract WSDL defining the interface / porttype.
+	
+	If generation of concrete WSDL for private services bound providing servers is enable,
+	generate a concrete WSDL for the private sevrice
+«ENDREM»
 «DEFINE BindingByService(Service s, SOAProfile profile) FOR DomainBinding»
 	«IF generatePrivateWsdlForProviderHost()»
 		«FOREACH getProviderProtocols().typeSelect(SOAP).select(e|e.providedWsdlUrl == null && e.provider != null) AS prot»
@@ -50,6 +83,15 @@
 	«ENDFOREACH»
 «ENDDEFINE»
 
+
+«REM»
+	Generate a concrete WSDL for the given Service defining a binding to the 
+	publishing server, i.e. usually an ESB.
+	The WSDL references an abstract WSDL defining the interface / porttype.
+	
+	If generation of concrete WSDL for private services bound providing servers is enable,
+	generate a concrete WSDL for the private sevrice
+«ENDREM»
 «DEFINE BindingByService(Service s, SOAProfile profile) FOR ServiceBinding»
 	«IF generatePrivateWsdlForProviderHost()»
 		«FOREACH getProviderProtocols().typeSelect(SOAP).select(e|e.providedWsdlUrl == null && e.provider != null) AS prot»
@@ -83,6 +125,39 @@
 
 «ENDDEFINE»
 
+
+«REM»
+	ENTRYPOINT for generation of XSDs for a given DomainBinding. 
+	
+	An XSD for each VersionedDomainNamespace derived from the given SubNamespace. 
+	VersionedDomainNamespaces are derived using the major version based splitting algorithm 
+	constrained by the given LifecycleState.
+	
+	All VersionedDomainNamespaces that contain VerisonedTypes or Exceptions that match 
+	the minimal LifecycleState required for the environment	referenced by the given DomainBinding 
+	are considered. Overrides of minimal LifecycleStates declared in SubNamespaces 
+	will be respected.
+	
+	If there exits no DomainBinding for the given SubNamespace any DomainBinding to the targeted
+	Environment can be chosen.
+«ENDREM»
+«DEFINE XSD (DomainBinding bind, SOAProfile profile) FOR SubNamespace»
+	«EXPAND XSD (bind.environment.getMinLifecycleState(this), bind, profile)»
+«ENDDEFINE»
+
+«REM»
+	ENTRYPOINT for generation of XSDs for a given DomainBinding. 
+	
+	An XSD for each VersionedDomainNamespace derived from the given SubNamespace 
+	by the given DomainBinding. VersionedDomainNamespaces are derived using the 
+	major version based splitting algorithm constrained by the given LifecycleState.
+
+	All VersionedDomainNamespaces that contain VerisonedTypes or Exceptions that match 
+	the given minimal LifecycleState are considered.
+	
+	If there exits no DomainBinding for the given SubNamespace any DomainBinding to the targeted
+	Environment can be chosen.
+«ENDREM»
 «DEFINE XSD (LifecycleState minState, DomainBinding bind, SOAProfile profile) FOR SubNamespace»
 	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (bind.environment.getMinLifecycleState(this), profile, bind.getRegistryBaseUrl())»
 «ENDDEFINE»

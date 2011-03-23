@@ -16,12 +16,26 @@
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
 «EXTENSION org::eclipse::xtend::util::stdlib::io»
 
+«REM»
+	CARTRIDGE ENTRYPOINT for generation message headers defined in the give SOAProfile
+
+	An XSD for each TechnicalNamespace of all parameters of all message headers defined in
+	the SOAProfile will be generated
+«ENDREM»
 «DEFINE MessageHeaderXSD FOR sOAProfileDsl::SOAProfile»
 «FOREACH messaging.messageHeaders AS h»
 	«EXPAND MessageHeaderXSD (this, h) FOREACH h.parameters.type.typeSelect(sOAProfileDsl::VersionedTypeRef).type.eContainer.typeSelect(sOAProfileDsl::TechnicalNamespace).toSet()»
 «ENDFOREACH»
 «ENDDEFINE»
 
+«REM»
+	CARTRIDGE ENTRYPOINT for generation message headers defined in the give SOAProfile
+
+	An XSD for each TechnicalNamespace of all parameters of all message headers defined in
+	the SOAProfile will be generated
+	Prefixes all imports with given registryBaseUrl. Referenced imported XSDs must be
+	available under the calculated URL
+«ENDREM»
 «DEFINE MessageHeaderXSD (String registryBaseUrl) FOR sOAProfileDsl::SOAProfile»
 «FOREACH messaging.messageHeaders AS h»
 	«EXPAND MessageHeaderXSD (this, registryBaseUrl, h) FOREACH h.parameters.type.typeSelect(sOAProfileDsl::VersionedTypeRef).type.eContainer.typeSelect(sOAProfileDsl::TechnicalNamespace).toSet()»

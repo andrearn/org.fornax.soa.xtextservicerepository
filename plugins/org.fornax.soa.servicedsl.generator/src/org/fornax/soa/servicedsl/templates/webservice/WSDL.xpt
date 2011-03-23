@@ -20,8 +20,13 @@
 
 
 «REM»
-	CARTRIDGE ENTRYPOINT for generation of abstract WSDLs 
-	that only define the abstract interface of a service
+	CARTRIDGE ENTRYPOINT for generation of abstract WSDLs
+	Abstract WSDLs only define the abstract interface of a service. The binding is declared
+	in a separate WSDL that imports this abstract WSDL
+	
+	A WSDL for each Service in the given SubNamespace matching the given minimal LifecycleState
+	will be generated. For each major version of a service WSDL is generated for the latest minor
+	version in that major version matching the minimal Lifecycle constraint is be generated
 «ENDREM»
 «DEFINE WSDL(DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 «FILE getFileNameFragment() + ".wsdl"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>

@@ -59,11 +59,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//OrganizationNamespace/prefix"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//OrganizationNamespace/subNamespaces"/>
     </genClasses>
-    <genClasses ecoreClass="SOAProfileDsl.ecore#//Namespace">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Namespace/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Namespace/prefix"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Namespace/noTrailingSlash"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Namespace/types"/>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//TechnicalNamespace">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//TechnicalNamespace/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//TechnicalNamespace/prefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//TechnicalNamespace/noTrailingSlash"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//TechnicalNamespace/types"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//MessageHeader">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//MessageHeader/name"/>

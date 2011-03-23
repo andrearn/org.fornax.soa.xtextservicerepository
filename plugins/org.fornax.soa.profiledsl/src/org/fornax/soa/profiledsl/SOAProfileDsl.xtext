@@ -58,10 +58,10 @@ BaseNamespaceAlias :
 
 OrganizationNamespace:
 	'org-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
-		(subNamespaces+=Namespace)*
+		(subNamespaces+=TechnicalNamespace)*
 	'}' ;
 	
-Namespace: 
+TechnicalNamespace: 
 	'namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
 		(types+=Type)*

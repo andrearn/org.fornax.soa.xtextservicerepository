@@ -21,14 +21,19 @@ VersionedType selectLatestMatchingType (VersionedTypeRef ref, LifecycleState min
 	ref.type.getSubdomain().types.typeSelect(VersionedType).reject(e| ! e.state.matchesMinStateLevel(minState))
 	.select (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
 	.sortBy(e|e.version.version).last();
+
 	
+	
+/*
+ *	Checks if type declaration is the latest version matching the following constraint. The function
+ *	should never be called as Type is not versioned and considered abstract
+ */
 boolean isLatestMatchingType (serviceDsl::Type t, Integer majorVersion, LifecycleState minState) : 
 	false;
 
 /*
  *		Checks if type declaration is the latest version matching the following constraint
  *		- same major version
- *      - matches a given minimal lifecycle state
  */
 boolean isLatestMatchingType (VersionedType t, Integer majorVersion) : 
 	(getLatestMatchingVersionedType( 
@@ -38,6 +43,10 @@ boolean isLatestMatchingType (VersionedType t, Integer majorVersion) :
 	? true
 	: false;
 	
+/*
+ *		Checks if type declaration is the latest version matching the following constraint
+ *		- same major version
+ */
 boolean isLatestMatchingType (sOAProfileDsl::VersionedType t, Integer majorVersion) : 
 	(getLatestMatchingVersionedType( 
 		((SubNamespace)t.eContainer).types.typeSelect (sOAProfileDsl::VersionedType).select (e|e.name == t.name), 
@@ -46,87 +55,112 @@ boolean isLatestMatchingType (sOAProfileDsl::VersionedType t, Integer majorVersi
 	? true
 	: false;
 	
+/*
+ *		Checks if type declaration is the latest version matching the following constraint
+ *		- same major version
+ *      - matches a given minimal lifecycle state
+ */
 boolean isLatestMatchingType (VersionedType t, Integer majorVersion, LifecycleState minState) : 
-	(getLatestMatchingVersionedType( 
+	(getLatestMatchingVersionedType ( 
 		((SubNamespace)t.eContainer).types.typeSelect (VersionedType).select (e|e.name == t.name), 
 		majorVersion, 
-		minState)
-	 == t) 
+		minState
+	) == t) 
 	? true
 	: false;
-
-boolean isLatestMatchingType (BusinessObject t, Integer majorVersion, LifecycleState minState) : 
-	(getLatestMatchingBusinessObject( 
-		((SubNamespace)t.eContainer).types.typeSelect (BusinessObject).select (e|e.name == t.name), 
-		majorVersion, 
-		minState)
-	 == t) 
-	? true
-	: false;
-
-boolean isLatestMatchingType (serviceDsl::Enumeration t, Integer majorVersion, LifecycleState minState) : 
-	(getLatestMatchingEnumeration( 
-		((SubNamespace)t.eContainer).types.typeSelect (Enumeration).select (e|e.name == t.name), 
-		majorVersion, 
-		minState)
-	 == t) 
-	? true
-	: false;
-
 
 private serviceDsl::Type getLatestMatchingVersionedType (List[VersionedType] types, Integer majorVersion) : 
-	types.select (e|e.version.versionMatches (majorVersion) )
-	.sortBy(e|e.version.version).last();
+	types.select (
+		e|e.version.versionMatches (majorVersion) 
+	).sortBy(e|e.version.version).last();
 
 private serviceDsl::Type getLatestMatchingVersionedType (List[VersionedType] types, Integer majorVersion, LifecycleState minState) : 
-	types.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
-	.sortBy (e|e.version.version).last();
-	
-private serviceDsl::Type getLatestMatchingBusinessObject (List[BusinessObject] types, Integer majorVersion, LifecycleState minState) : 
-	types.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
-	.sortBy (e|e.version.version).last();
-	
-private serviceDsl::Type getLatestMatchingEnumeration (List[Enumeration] types, Integer majorVersion, LifecycleState minState) : 
-	types.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
-	.sortBy (e|e.version.version).last();
+	types.select (
+		e|e.version.versionMatches (majorVersion) && 
+		e.state.matchesMinStateLevel (minState)
+	).sortBy (e|e.version.version).last();
 
 
-/*
- * 	Reference resolution
- *	find the lastest type declaration matching
- *  - the version constraint defined in the reference
+
+/**
+ * 		Type reference resolution
+ *		find the lastest type declaration matching
+ *  	- the version constraint defined in the reference
  */
 serviceDsl::Type getLatestMatchingType (TypeRef t) : null;
 
 serviceDsl::Type getLatestMatchingType (serviceDsl::VersionedTypeRef t) : 
-	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef))
-		.typeSelect (VersionedType).sortBy (e|e.version.version).last( );
+	t.type.getSubdomain ().types.
+		select (
+			e|e.name == t.type.name && 
+			t.type.version.versionMatches (t.versionRef)
+		)
+		.typeSelect (VersionedType)
+		.sortBy (e|e.version.version).last( );
 
 serviceDsl::Type getLatestMatchingType (serviceDsl::BusinessObjectRef t) : 
-	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef))
-		.typeSelect (BusinessObject).sortBy (e|e.version.version).last( );
+	t.type.getSubdomain ().types.
+		select (
+			e|e.name == t.type.name && 
+			t.type.version.versionMatches (t.versionRef)
+		)
+		.typeSelect (BusinessObject)
+		.sortBy (e|e.version.version).last( );
 
 serviceDsl::Type getLatestMatchingType (serviceDsl::EnumTypeRef t) : 
-	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef))
-		.typeSelect (Enumeration).sortBy (e|e.version.version).last( );
+	t.type.getSubdomain ().types.
+		select (
+			e|e.name == t.type.name && 
+			t.type.version.versionMatches (t.versionRef)
+		)
+		.typeSelect (Enumeration)
+		.sortBy (e|e.version.version).last( );
 
 serviceDsl::Type getLatestMatchingType (serviceDsl::DataTypeRef t) : t.type ;
+
 serviceDsl::Type getLatestMatchingType (sOAProfileDsl::DataTypeRef t) : t.type ;
+
 serviceDsl::Type getLatestMatchingType (sOAProfileDsl::AttributeDataTypeRef t) : t.type ;
 
 
+
+/**
+ * 		Reference resolution
+ *		find the lastest type declaration matching
+ *  	- the version constraint defined in the reference
+ *		- the given minimal required LifecycleState
+ */
 serviceDsl::Type getLatestMatchingType (TypeRef t, LifecycleState minState) : null;
 
 serviceDsl::Type getLatestMatchingType (serviceDsl::VersionedTypeRef t, LifecycleState minState) : 
-	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef) && t.type.state.matchesMinStateLevel(minState))
-		.typeSelect (VersionedType).sortBy (e|e.version.version).last( );
+	t.type.getSubdomain ().types.
+		select (
+			e|e.name == t.type.name && 
+			t.type.version.versionMatches (t.versionRef) && 
+			t.type.state.matchesMinStateLevel(minState)
+		)
+		.typeSelect (VersionedType)
+		.sortBy (e|e.version.version).last( );
 
 serviceDsl::Type getLatestMatchingType (serviceDsl::BusinessObjectRef t, LifecycleState minState) : 
-	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef) && t.type.state.matchesMinStateLevel(minState))
-		.typeSelect (BusinessObject).sortBy (e|e.version.version).last( );
+	t.type.getSubdomain ().types.
+		select (
+			e|e.name == t.type.name && 
+			t.type.version.versionMatches (t.versionRef) && 
+			t.type.state.matchesMinStateLevel(minState)
+		)
+		.typeSelect (BusinessObject)
+		.sortBy (e|e.version.version).last( );
 
 serviceDsl::Type getLatestMatchingType (serviceDsl::EnumTypeRef t, LifecycleState minState) : 
-	t.type.getSubdomain ().types.select (e|e.name == t.type.name && t.type.version.versionMatches (t.versionRef) && t.type.state.matchesMinStateLevel(minState))
-		.typeSelect (Enumeration).sortBy (e|e.version.version).last( );
+	t.type.getSubdomain ().types.
+		select (
+			e|e.name == t.type.name && 
+			t.type.version.versionMatches (t.versionRef) && 
+			t.type.state.matchesMinStateLevel(minState)
+		)
+		.typeSelect (Enumeration)
+		.sortBy (e|e.version.version).last( );
 
-serviceDsl::Type getLatestMatchingType (serviceDsl::DataTypeRef t, LifecycleState minState) : t.type ;
+serviceDsl::Type getLatestMatchingType (serviceDsl::DataTypeRef t, LifecycleState minState) : 
+	t.type ;

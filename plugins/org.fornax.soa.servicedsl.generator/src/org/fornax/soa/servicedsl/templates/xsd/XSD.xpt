@@ -19,21 +19,37 @@
 
 «REM»
 	CARTRIDGE ENTRYPOINT for generation of XSDs from namespaces. 
-	The namespace will be sliced into namespaces per major version introduced in the namespace 
+
+	Generate an XSD for each VersionedDomainNamespace derived from the given SubNamespace 
+	applying splitting by major version of owned VersionedTypes and Exceptions in the 
+	given minimal LifecycleState.
 «ENDREM»
 «DEFINE XSD (String minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
 	«EXPAND XSD (getStateByName (minState), profile, registryBaseUrl) -»
 «ENDDEFINE»
 
+«REM»
+	Generate an XSD for each VersionedDomainNamespace derived from the given SubNamespace 
+	applying splitting by major version of owned VersionedTypes and Exceptions in the 
+	given minimal LifecycleState.
+«ENDREM»
 «DEFINE XSD (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
 	«EXPAND XSDVersion(minState, profile, registryBaseUrl) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
 «ENDDEFINE»
 
+«REM»
+	Generate XSDs for all VersionedDomainNamespaces derived from the given SubNamespace by applying
+	the major version splitting algorithm filtered by the given minimal LifecycleState
+«ENDREM»
 «DEFINE XSDForImports (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
 	«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
 «ENDDEFINE»
 
 
+«REM»
+	Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
+	that match the given minimal LifecycleState
+«ENDREM»
 «DEFINE XSDVersion(LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
 «FILE getFileNameFragment() + ".xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema xmlns:tns="«toNamespace()»"
@@ -94,6 +110,10 @@
     </xsd:complexType>
 «ENDDEFINE»
 
+«REM»
+	Generate a sequence of elements for properties plus an additional any as placeholder for future
+	backward compatible extensions of the ComplexType / BusinessObject
+«ENDREM»
 «DEFINE PropertySequenceWithAny(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR BusinessObject»
     	<xsd:sequence>
     		«EXPAND Property (currNs, profile) FOREACH properties-»
@@ -103,11 +123,17 @@
     		«ENDIF»
     	</xsd:sequence>
 «ENDDEFINE»
+
+«REM»
+	Generate a sequence of elements for properties without a placeholder for future
+	backward compatible extensions of the ComplexType / BusinessObject
+«ENDREM»
 «DEFINE PropertySequence(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR BusinessObject»
     	<xsd:sequence>
     		«EXPAND Property (currNs, profile) FOREACH properties-»
     	</xsd:sequence>
 «ENDDEFINE»
+
 «DEFINE PropertySequenceWithAny(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR Exception»
     	<xsd:sequence>
     		«EXPAND Property (currNs, profile) FOREACH properties-»
@@ -117,6 +143,7 @@
     		«ENDIF»
     	</xsd:sequence>
 «ENDDEFINE»
+
 «DEFINE PropertySequence(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR Exception»
     	<xsd:sequence>
     		«EXPAND Property (currNs, profile) FOREACH properties-»
@@ -137,6 +164,9 @@
     </xsd:simpleType>
 «ENDDEFINE»
 
+«REM»
+	Generate a ComplexType for a given Exception
+«ENDREM»
 «DEFINE FaultType(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR serviceDsl::Exception»
     <xsd:complexType name="«toTypeName()»">
     	<xsd:annotation>
