@@ -11,8 +11,8 @@ extension org::fornax::soa::servicedsl::query::exceptions;
 extension org::fornax::soa::servicedsl::query::types;
 
 extension org::fornax::soa::servicedsl::templates::common;
-extension org::fornax::soa::servicedsl::templates::domains;
-extension org::fornax::soa::servicedsl::templates::types;
+extension org::fornax::soa::servicedsl::templates::xsd::domains;
+extension org::fornax::soa::servicedsl::templates::xsd::types;
 
 
 DomainNamespace getSubdomain (serviceDsl::Service s) : DomainNamespace.isInstance (s.eContainer) ? s.eContainer : null;
@@ -27,11 +27,6 @@ String toVersionPostfix (Service svc) :
 
 String toServiceName (Service svc) : svc.name;
 String toBindingName (Service svc) : svc.toServiceName() + "SOAP";
-
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (Service svc) : 
-	svc.operations.parameters.type.select(e| VersionedTypeRef.isInstance(e)).getLatestMatchingType().reject(e|e==null).createVersionedDomainNamespace().union(
-	svc.operations.return.type.select(e| VersionedTypeRef.isInstance(e)).getLatestMatchingType().reject(e|e==null).createVersionedDomainNamespace()).union(
-	svc.operations.throws.getLatestMatchingException().reject(e|e==null).createVersionedDomainNamespace()).toSet();
 
 String getWsdlFilename(Service s) : s.eContainer.getFileNameFragment() + "-v" + s.version.toMajorVersionNumber() + ".wsdl";
 

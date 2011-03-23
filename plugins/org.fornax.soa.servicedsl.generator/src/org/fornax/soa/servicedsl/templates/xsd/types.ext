@@ -9,10 +9,10 @@ extension org::fornax::soa::servicedsl::domain::splitting;
 extension org::fornax::soa::servicedsl::query::exceptions;
 extension org::fornax::soa::servicedsl::query::types;
 extension org::fornax::soa::servicedsl::query::services;
-extension org::fornax::soa::servicedsl::query::subdomains;
+extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 
 extension org::fornax::soa::servicedsl::templates::common;
-extension org::fornax::soa::servicedsl::templates::domains;
+extension org::fornax::soa::servicedsl::templates::xsd::domains;
 
 
 

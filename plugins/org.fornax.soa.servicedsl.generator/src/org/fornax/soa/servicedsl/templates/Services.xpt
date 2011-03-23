@@ -7,8 +7,8 @@
 «EXTENSION org::fornax::soa::servicedsl::domain::splitting»
 «EXTENSION org::fornax::soa::servicedsl::query::services»
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
-«EXTENSION org::fornax::soa::servicedsl::templates::domains»
-«EXTENSION org::fornax::soa::servicedsl::templates::services»
+«EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::webservice::services»
 
 
 «DEFINE main (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR serviceDsl::ServiceModel-»
@@ -41,20 +41,20 @@
 
 
 «DEFINE Service (DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
-	«EXPAND WSDL::WSDL (subDom, minState, profile, registryBaseUrl)-»
+	«EXPAND org::fornax::soa::servicedsl::templates::webservice::WSDL::WSDL (subDom, minState, profile, registryBaseUrl)-»
 «ENDDEFINE»
 «DEFINE Service (InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
-	«EXPAND WSDL::WSDL (subDom, minState, profile, registryBaseUrl)-»
+	«EXPAND org::fornax::soa::servicedsl::templates::webservice::WSDL::WSDL (subDom, minState, profile, registryBaseUrl)-»
 «ENDDEFINE»
 
 
 
 «DEFINE BusinessObject (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR DomainNamespace»
-	«EXPAND XSD::XSD (minState, profile, registryBaseUrl)»
+	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (minState, profile, registryBaseUrl)»
 «ENDDEFINE»
 
 «DEFINE BusinessObject (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR InternalNamespace»
-	«EXPAND XSD::XSD (minState, profile, registryBaseUrl)»
+	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (minState, profile, registryBaseUrl)»
 «ENDDEFINE»
 
 

@@ -1,7 +1,7 @@
 «IMPORT serviceDsl»;
 «IMPORT bindingDsl»;
 
-«EXTENSION org::fornax::soa::servicedsl::templates::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
 
 «REM»
 «DEFINE main FOR ServiceModel-»

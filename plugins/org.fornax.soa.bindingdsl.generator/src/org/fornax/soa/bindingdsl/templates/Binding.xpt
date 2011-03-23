@@ -5,9 +5,9 @@
 
 «EXTENSION org::fornax::soa::servicedsl::domain::splitting»
 «EXTENSION org::fornax::soa::bindingdsl::templates::bindings»
-«EXTENSION org::fornax::soa::servicedsl::templates::domains»
-«EXTENSION org::fornax::soa::servicedsl::templates::services»
-«EXTENSION org::fornax::soa::servicedsl::templates::types»
+«EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::webservice::services»
+«EXTENSION org::fornax::soa::servicedsl::templates::xsd::types»
 «EXTENSION org::fornax::soa::servicedsl::query::services»
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
 «EXTENSION org::eclipse::xtend::util::stdlib::io»
@@ -24,12 +24,12 @@
 	«ENDFOREACH»
 	«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (environment.getMinLifecycleState(subNamespace), profile, getRegistryBaseUrl()) FOR subNamespace»
 	«FOREACH {subNamespace}.union(subNamespace.getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
-	«EXPAND org::fornax::soa::servicedsl::templates::XSD::XSD (environment.getMinLifecycleState(ns), profile, getRegistryBaseUrl()) FOR ns»
+	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (environment.getMinLifecycleState(ns), profile, getRegistryBaseUrl()) FOR ns»
 	«ENDFOREACH»
 	«IF forceRelativePaths()»
-	«EXPAND org::fornax::soa::servicedsl::templates::MessageHeaderXSD::MessageHeaderXSD FOR profile»
+	«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD FOR profile»
 	«ELSE»
-	«EXPAND org::fornax::soa::servicedsl::templates::MessageHeaderXSD::MessageHeaderXSD (this.getRegistryBaseUrl()) FOR profile»
+	«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD (this.getRegistryBaseUrl()) FOR profile»
 	«ENDIF»
 
 «ENDDEFINE»
@@ -40,12 +40,12 @@
 «DEFINE BindingByService(Service s, SOAProfile profile) FOR DomainBinding»
 	«IF generatePrivateWsdlForProviderHost()»
 		«FOREACH getProviderProtocols().typeSelect(SOAP).select(e|e.providedWsdlUrl == null && e.provider != null) AS prot»
-			«EXPAND ConcreteProviderWsdl::WSDL(this, prot, profile) FOR s»
+			«EXPAND soap::ConcreteProviderWsdl::WSDL(this, prot, profile) FOR s»
 		«ENDFOREACH»
 	«ENDIF»
 	«FOREACH getPublisherProtocols().typeSelect(SOAP) AS prot»
 		«IF DomainNamespace.isInstance(subNamespace)»
-			«EXPAND ConcreteWsdl::WSDL(this, prot, profile) FOR s»
+			«EXPAND soap::ConcreteWsdl::WSDL(this, prot, profile) FOR s»
 		«ENDIF»
 	«ENDFOREACH»
 «ENDDEFINE»
@@ -53,12 +53,12 @@
 «DEFINE BindingByService(Service s, SOAProfile profile) FOR ServiceBinding»
 	«IF generatePrivateWsdlForProviderHost()»
 		«FOREACH getProviderProtocols().typeSelect(SOAP).select(e|e.providedWsdlUrl == null && e.provider != null) AS prot»
-			«EXPAND ConcreteProviderWsdl::WSDL(this, prot, profile) FOR s»
+			«EXPAND soap::ConcreteProviderWsdl::WSDL(this, prot, profile) FOR s»
 		«ENDFOREACH»
 	«ENDIF»
 	«FOREACH getPublisherProtocols().typeSelect(SOAP) AS prot»
 		«IF DomainNamespace.isInstance(((DomainBinding)eContainer).subNamespace)»
-			«EXPAND ConcreteWsdl::WSDL(this, prot, profile) FOR s»
+			«EXPAND soap::ConcreteWsdl::WSDL(this, prot, profile) FOR s»
 		«ENDIF»
 	«ENDFOREACH»
 «ENDDEFINE»
@@ -67,22 +67,22 @@
 
 	«IF generatePrivateWsdlForProviderHost()»
 		«FOREACH getProviderProtocols().typeSelect(SOAP).select(e|e.providedWsdlUrl == null && e.provider != null) AS prot»
-			«EXPAND ConcreteProviderWsdl::WSDLByServiceName(serviceNames, prot, profile) FOR this»
+			«EXPAND soap::ConcreteProviderWsdl::WSDLByServiceName(serviceNames, prot, profile) FOR this»
 		«ENDFOREACH»
 	«ENDIF»
 	«FOREACH getPublisherProtocols().typeSelect(SOAP) AS prot»
 		«IF DomainNamespace.isInstance(subNamespace)»
-			«EXPAND ConcreteWsdl::WSDLByServiceName(serviceNames, prot, profile) FOR this»
+			«EXPAND soap::ConcreteWsdl::WSDLByServiceName(serviceNames, prot, profile) FOR this»
 		«ENDIF»
 	«ENDFOREACH»
 	«FOREACH {subNamespace}.union(subNamespace.getImportedSubdomains()) AS ns» 
-	«EXPAND org::fornax::soa::servicedsl::templates::XSD::XSD (environment.getMinLifecycleState(ns), profile, getRegistryBaseUrl()) FOR ns »
+	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (environment.getMinLifecycleState(ns), profile, getRegistryBaseUrl()) FOR ns »
 	«ENDFOREACH»
 	«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (environment.getMinLifecycleState(subNamespace), profile, getRegistryBaseUrl()) FOR subNamespace»
-	«EXPAND org::fornax::soa::servicedsl::templates::MessageHeaderXSD::MessageHeaderXSD (getRegistryBaseUrl()) FOR profile»
+	«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD (getRegistryBaseUrl()) FOR profile»
 
 «ENDDEFINE»
 
 «DEFINE XSD (LifecycleState minState, DomainBinding bind, SOAProfile profile) FOR SubNamespace»
-	«EXPAND org::fornax::soa::servicedsl::templates::XSD::XSD (bind.environment.getMinLifecycleState(this), profile, bind.getRegistryBaseUrl())»
+	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (bind.environment.getMinLifecycleState(this), profile, bind.getRegistryBaseUrl())»
 «ENDDEFINE»

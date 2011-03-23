@@ -4,8 +4,8 @@ import environmentDsl;
 
 extension org::fornax::soa::basedsl::version::versionQualifying;
 extension org::fornax::soa::servicedsl::templates::common;
-extension org::fornax::soa::servicedsl::templates::domains;
-extension org::fornax::soa::bindingdsl::templates::soapvendorbindings;
+extension org::fornax::soa::servicedsl::templates::xsd::domains;
+extension org::fornax::soa::bindingdsl::templates::soap::soapvendorbindings;
 
 String getWsdlBindingStyle(bindingDsl::SOAP bind) : 
 	switch (bind.style) {

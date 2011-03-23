@@ -5,10 +5,11 @@ extension org::fornax::soa::basedsl::lifecycle::stateMatching;
 extension org::fornax::soa::basedsl::version::versionMatching;
 extension org::fornax::soa::basedsl::version::versionQualifying;
 extension org::fornax::soa::servicedsl::domain::splitting;
-extension org::fornax::soa::servicedsl::query::subdomains;
+extension org::fornax::soa::servicedsl::query::namespace::namespaceImports;
+extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 extension org::fornax::soa::servicedsl::query::types;
 extension org::fornax::soa::servicedsl::templates::common;
-extension org::fornax::soa::servicedsl::templates::domains;
+extension org::fornax::soa::servicedsl::templates::xsd::domains;
 
 sOAProfileDsl::MessageHeader getBestMatchingHeader (emf::EObject o, sOAProfileDsl::SOAProfile p ) : 
 	p.messaging.defaultHeader.header;

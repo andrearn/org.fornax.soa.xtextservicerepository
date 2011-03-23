@@ -4,7 +4,7 @@ import environmentDsl;
 
 extension org::fornax::soa::basedsl::version::versionQualifying;
 extension org::fornax::soa::servicedsl::templates::common;
-extension org::fornax::soa::servicedsl::templates::domains;
+extension org::fornax::soa::servicedsl::templates::xsd::domains;
 
 String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) : null;
 String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, ESB server) :

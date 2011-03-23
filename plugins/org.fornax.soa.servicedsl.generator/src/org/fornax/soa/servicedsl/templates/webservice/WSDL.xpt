@@ -8,12 +8,12 @@
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
 «EXTENSION org::fornax::soa::servicedsl::query::types»
 «EXTENSION org::fornax::soa::servicedsl::query::services»
-«EXTENSION org::fornax::soa::servicedsl::query::subdomains»
+«EXTENSION org::fornax::soa::servicedsl::query::namespace::namespaceImports»
 
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
-«EXTENSION org::fornax::soa::servicedsl::templates::domains»
-«EXTENSION org::fornax::soa::servicedsl::templates::services»
-«EXTENSION org::fornax::soa::servicedsl::templates::types»
+«EXTENSION org::fornax::soa::servicedsl::templates::webservice::services»
+«EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::xsd::types»
 
 
 «REM»
@@ -131,7 +131,7 @@
 «ENDDEFINE»
 
 «DEFINE Parameter FOR Parameter-»
-						<xsd:element name="«name»" type="«type.getTypeNameRef ()»" «IF optional»minOccurs="0" «ENDIF»«IF type.isMany()»maxOccurs="unbounded"«ENDIF» «IF type.isAttachment()»«EXPAND XSD::AttachmentMimeFragment FOR type»«ENDIF»></xsd:element>
+						<xsd:element name="«name»" type="«type.getTypeNameRef ()»" «IF optional»minOccurs="0" «ENDIF»«IF type.isMany()»maxOccurs="unbounded"«ENDIF» «IF type.isAttachment()»«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::AttachmentMimeFragment FOR type»«ENDIF»></xsd:element>
 «ENDDEFINE»
 
 «DEFINE Parameter FOR sOAProfileDsl::Property-»

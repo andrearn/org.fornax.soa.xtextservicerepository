@@ -4,10 +4,10 @@ import serviceDsl;
 extension org::fornax::soa::basedsl::lifecycle::stateMatching;
 extension org::fornax::soa::basedsl::version::versionMatching;
 extension org::fornax::soa::servicedsl::templates::common;
-extension org::fornax::soa::servicedsl::templates::domains;
-extension org::fornax::soa::servicedsl::templates::types;
+//extension org::fornax::soa::servicedsl::templates::domains;
+//extension org::fornax::soa::servicedsl::templates::types;
 extension org::fornax::soa::servicedsl::query::services;
-extension org::fornax::soa::servicedsl::query::subdomains;
+extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 
 
 

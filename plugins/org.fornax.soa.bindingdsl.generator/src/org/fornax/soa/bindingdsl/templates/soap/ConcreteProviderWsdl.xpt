@@ -10,11 +10,11 @@
 «EXTENSION org::fornax::soa::servicedsl::domain::splitting»
 «EXTENSION org::fornax::soa::servicedsl::query::services»
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
-«EXTENSION org::fornax::soa::servicedsl::templates::domains»
-«EXTENSION org::fornax::soa::servicedsl::templates::services»
-«EXTENSION org::fornax::soa::servicedsl::templates::types»
+«EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::webservice::services»
+«EXTENSION org::fornax::soa::servicedsl::templates::xsd::types»
 «EXTENSION org::fornax::soa::bindingdsl::templates::bindings»
-«EXTENSION org::fornax::soa::bindingdsl::templates::soapbinding»
+«EXTENSION org::fornax::soa::bindingdsl::templates::soap::soapbinding»
 «EXTENSION org::eclipse::xtend::util::stdlib::io»
 
 «DEFINE WSDL(BindingProtocol prot, sOAProfileDsl::SOAProfile profile) FOR bindingDsl::DomainBinding»

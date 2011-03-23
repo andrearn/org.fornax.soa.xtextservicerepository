@@ -5,7 +5,7 @@ extension org::fornax::soa::basedsl::common;
 extension org::fornax::soa::basedsl::version::versionMatching;
 extension org::fornax::soa::basedsl::version::versionQualifying;
 extension org::fornax::soa::servicedsl::templates::common;
-extension org::fornax::soa::servicedsl::templates::domains;
+extension org::fornax::soa::servicedsl::templates::xsd::domains;
 extension org::eclipse::xtend::util::stdlib::io;
 
 
