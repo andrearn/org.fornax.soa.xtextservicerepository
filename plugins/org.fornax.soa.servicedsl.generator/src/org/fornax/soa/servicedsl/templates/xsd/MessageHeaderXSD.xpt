@@ -8,28 +8,31 @@
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::types»
-«EXTENSION org::fornax::soa::servicedsl::query::types»
+«EXTENSION org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder»
+«EXTENSION org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder»
+«EXTENSION org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder»
+«EXTENSION org::fornax::soa::servicedsl::query::type::TypesByMajorVersion»
 «EXTENSION org::fornax::soa::servicedsl::query::namespace::subnamespaces»
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
 «EXTENSION org::eclipse::xtend::util::stdlib::io»
 
 «DEFINE MessageHeaderXSD FOR sOAProfileDsl::SOAProfile»
 «FOREACH messaging.messageHeaders AS h»
-	«EXPAND MessageHeaderXSD (this, h) FOREACH h.parameters.type.typeSelect(sOAProfileDsl::VersionedTypeRef).type.eContainer.typeSelect(sOAProfileDsl::Namespace).toSet()»
+	«EXPAND MessageHeaderXSD (this, h) FOREACH h.parameters.type.typeSelect(sOAProfileDsl::VersionedTypeRef).type.eContainer.typeSelect(sOAProfileDsl::TechnicalNamespace).toSet()»
 «ENDFOREACH»
 «ENDDEFINE»
 
 «DEFINE MessageHeaderXSD (String registryBaseUrl) FOR sOAProfileDsl::SOAProfile»
 «FOREACH messaging.messageHeaders AS h»
-	«EXPAND MessageHeaderXSD (this, registryBaseUrl, h) FOREACH h.parameters.type.typeSelect(sOAProfileDsl::VersionedTypeRef).type.eContainer.typeSelect(sOAProfileDsl::Namespace).toSet()»
+	«EXPAND MessageHeaderXSD (this, registryBaseUrl, h) FOREACH h.parameters.type.typeSelect(sOAProfileDsl::VersionedTypeRef).type.eContainer.typeSelect(sOAProfileDsl::TechnicalNamespace).toSet()»
 «ENDFOREACH»
 «ENDDEFINE»
 
-«DEFINE MessageHeaderXSD (sOAProfileDsl::SOAProfile profile, sOAProfileDsl::MessageHeader header) FOR sOAProfileDsl::Namespace»
+«DEFINE MessageHeaderXSD (sOAProfileDsl::SOAProfile profile, sOAProfileDsl::MessageHeader header) FOR sOAProfileDsl::TechnicalNamespace»
 	«EXPAND MessageHeaderXSD (profile, header) FOREACH toVersionedDomainNamespaces()»
 «ENDDEFINE»
 
-«DEFINE MessageHeaderXSD (sOAProfileDsl::SOAProfile profile, String registryBaseUrl, sOAProfileDsl::MessageHeader header) FOR sOAProfileDsl::Namespace»
+«DEFINE MessageHeaderXSD (sOAProfileDsl::SOAProfile profile, String registryBaseUrl, sOAProfileDsl::MessageHeader header) FOR sOAProfileDsl::TechnicalNamespace»
 	«EXPAND MessageHeaderXSD (profile, registryBaseUrl, header) FOREACH toVersionedDomainNamespaces()»
 «ENDDEFINE»
 
@@ -41,9 +44,9 @@
 	targetNamespace="«toNamespace()»"
 	>
 	«EXPAND ImportDeclaration FOREACH allImportedVersionedNS().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 	
-	«IF sOAProfileDsl::Namespace.isInstance(subdomain)-»
-		«EXPAND ComplexType(this, profile, header) FOREACH ((sOAProfileDsl::Namespace) subdomain).types.typeSelect(sOAProfileDsl::Class).select (e|e.version.version.toMajorVersionNumber() == version.toMajorVersionNumber())-»
-		«EXPAND SimpleType (profile) FOREACH ((sOAProfileDsl::Namespace) subdomain).types.typeSelect(sOAProfileDsl::Enumeration).select (e|e.isLatestMatchingType (version.toMajorVersionNumber().asInteger() ))-»
+	«IF sOAProfileDsl::TechnicalNamespace.isInstance(subdomain)-»
+		«EXPAND ComplexType(this, profile, header) FOREACH ((sOAProfileDsl::TechnicalNamespace) subdomain).types.typeSelect(sOAProfileDsl::Class).select (e|e.version.version.toMajorVersionNumber() == version.toMajorVersionNumber())-»
+		«EXPAND SimpleType (profile) FOREACH ((sOAProfileDsl::TechnicalNamespace) subdomain).types.typeSelect(sOAProfileDsl::Enumeration).select (e|e.isLatestMatchingType (version.toMajorVersionNumber().asInteger() ))-»
 		«REM»«EXPAND FaultType(this) FOREACH ((SubNamespace) subdomain).exceptions.select (e|e.isLatestMatchingException (version.toMajorVersionNumber().asInteger(), minState))-»«ENDREM»
 	«ENDIF»
 </xsd:schema>
@@ -57,9 +60,9 @@
 	targetNamespace="«toNamespace()»"
 	>
 	«EXPAND ImportDeclaration (registryBaseUrl) FOREACH allImportedVersionedNS().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 	
-	«IF sOAProfileDsl::Namespace.isInstance(subdomain)-»
-		«EXPAND ComplexType(this, profile, header) FOREACH ((sOAProfileDsl::Namespace) subdomain).types.typeSelect(sOAProfileDsl::Class).select (e|e.version.version.toMajorVersionNumber() == version.toMajorVersionNumber())-»
-		«EXPAND SimpleType (profile) FOREACH ((sOAProfileDsl::Namespace) subdomain).types.typeSelect(sOAProfileDsl::Enumeration).select (e|e.isLatestMatchingType (version.toMajorVersionNumber().asInteger() ))-»
+	«IF sOAProfileDsl::TechnicalNamespace.isInstance(subdomain)-»
+		«EXPAND ComplexType(this, profile, header) FOREACH ((sOAProfileDsl::TechnicalNamespace) subdomain).types.typeSelect(sOAProfileDsl::Class).select (e|e.version.version.toMajorVersionNumber() == version.toMajorVersionNumber())-»
+		«EXPAND SimpleType (profile) FOREACH ((sOAProfileDsl::TechnicalNamespace) subdomain).types.typeSelect(sOAProfileDsl::Enumeration).select (e|e.isLatestMatchingType (version.toMajorVersionNumber().asInteger() ))-»
 		«REM»«EXPAND FaultType(this) FOREACH ((SubNamespace) subdomain).exceptions.select (e|e.isLatestMatchingException (version.toMajorVersionNumber().asInteger(), minState))-»«ENDREM»
 	«ENDIF»
 </xsd:schema>

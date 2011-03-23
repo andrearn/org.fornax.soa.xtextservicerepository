@@ -4,8 +4,6 @@ import serviceDsl;
 extension org::fornax::soa::basedsl::lifecycle::stateMatching;
 extension org::fornax::soa::basedsl::version::versionMatching;
 extension org::fornax::soa::servicedsl::templates::common;
-//extension org::fornax::soa::servicedsl::templates::domains;
-//extension org::fornax::soa::servicedsl::templates::types;
 extension org::fornax::soa::servicedsl::query::services;
 extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 	
@@ -19,22 +17,35 @@ List exceptionsWithMinState (SubNamespace ns, LifecycleState state) :
 List exceptionsWithMinState (org::fornax::soa::servicedsl::VersionedDomainNamespace ns, LifecycleState state) :
 	ns.subdomain.exceptionsWithMinState (state);
 
-	
-serviceDsl::Exception getLatestMatchingException (serviceDsl::ExceptionRef t, LifecycleState minState) : 
-	t.exception.getSubdomain ().exceptions.select (e|e.name == t.exception.name && t.exception.version.versionMatches (t.version) && t.exception.state.matchesMinStateLevel(minState))
+
+/**
+ *	Find the latest minor version of the referenced Exceptiontype matching the 
+ *	version constraint in the reference and the minimal required LifecycleState 
+ */	
+serviceDsl::Exception getLatestMatchingException (serviceDsl::ExceptionRef excRef, LifecycleState minState) : 
+	excRef.exception.getSubdomain ().exceptions.select (e|e.name == excRef.exception.name && excRef.exception.version.versionMatches (excRef.version) && excRef.exception.state.matchesMinStateLevel (minState))
 		.typeSelect (Exception).sortBy (e|e.version.version).last( );
 
-serviceDsl::Exception getLatestMatchingException (serviceDsl::ExceptionRef t) : 
-	t.exception.getSubdomain ().exceptions.select (e|e.name == t.exception.name && t.exception.version.versionMatches (t.version))
+/**
+ *	Find the latest minor version of the referenced Exceptiontype matching the 
+ *	version constraint in the reference. The LifecycleState of the Exception is not considered. 
+ */	
+serviceDsl::Exception getLatestMatchingException (serviceDsl::ExceptionRef excRef) : 
+	excRef.exception.getSubdomain ().exceptions.select (e|e.name == excRef.exception.name && excRef.exception.version.versionMatches (excRef.version))
 		.typeSelect (Exception).sortBy (e|e.version.version).last( );
 
 
-boolean isLatestMatchingException (serviceDsl::Exception t, Integer majorVersion, LifecycleState minState) : 
+/**
+ *	Checks, whether the Exception is the latest minor version in a given major version
+ *  @param exc				The Exception to checked
+ *  @param majorVersion		The major version number to which minor versions should match
+ */
+boolean isLatestMatchingException (serviceDsl::Exception exc, Integer majorVersion, LifecycleState minState) : 
 	(getLatestMatchingException( 
-		((SubNamespace)t.eContainer).exceptions.select (e|e.name == t.name), 
+		((SubNamespace)exc.eContainer).exceptions.select (e|e.name == exc.name), 
 		majorVersion, 
 		minState)
-	 == t) 
+	 == exc) 
 	? true
 	: false;
 	

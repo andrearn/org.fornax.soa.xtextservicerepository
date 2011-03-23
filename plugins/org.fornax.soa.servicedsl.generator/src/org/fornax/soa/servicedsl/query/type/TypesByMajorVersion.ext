@@ -1,0 +1,18 @@
+import sOABaseDsl;
+import serviceDsl;
+
+extension org::fornax::soa::basedsl::lifecycle::stateMatching;
+extension org::fornax::soa::basedsl::version::versionMatching;
+extension org::fornax::soa::servicedsl::templates::common;
+extension org::fornax::soa::servicedsl::query::services;
+extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
+
+
+List[Type] allTypesByMajorVersion (SubNamespace s, String majorVersion) : 
+	s.types.typeSelect (VersionedType).select (t|t.version.version.startsWith(majorVersion));
+	
+List[Type] allTypesByMajorVersion (sOAProfileDsl::TechnicalNamespace s, String majorVersion) : 
+	s.types.typeSelect (sOAProfileDsl::VersionedType).select (t|t.version.version.startsWith(majorVersion));
+
+List[Type] allTypesByMajorVersion (Service s, String majorVersion) : 
+	s.getSubdomain().types.typeSelect (VersionedType).select (t|t.version.version.startsWith(majorVersion));

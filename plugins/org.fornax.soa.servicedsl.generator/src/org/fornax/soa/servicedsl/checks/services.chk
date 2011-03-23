@@ -5,7 +5,10 @@ extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::xsd::types;
 extension org::fornax::soa::servicedsl::templates::webservice::services;
 extension org::fornax::soa::servicedsl::query::services;
-extension org::fornax::soa::servicedsl::query::types;
+extension org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder;
+extension org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByMajorVersion;
 
 context BusinessObjectRef WARNING "There exists no BusinessObject " + type.name + " in the version range " + versionRef.versionRangeText():
 	 getLatestMatchingType() != null;

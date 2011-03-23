@@ -1,0 +1,22 @@
+import sOABaseDsl;
+import serviceDsl;
+
+extension org::fornax::soa::basedsl::lifecycle::stateMatching;
+extension org::fornax::soa::basedsl::version::versionMatching;
+extension org::fornax::soa::servicedsl::templates::common;
+extension org::fornax::soa::servicedsl::query::services;
+extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
+
+List[org::fornax::soa::serviceDsl::Type] typesWithMinState (SubNamespace ns, LifecycleState state) :
+	ns.types.typeSelect(BusinessObject).select(e|e.state.matchesMinStateLevel (state)).
+	union (ns.types.typeSelect (Enumeration).select(e|e.state.matchesMinStateLevel (state))).
+	union (ns.types.typeSelect (DataType));
+	
+List[org::fornax::soa::serviceDsl::Type] typesWithMinState (sOAProfileDsl::TechnicalNamespace ns, LifecycleState state) :
+	ns.types.typeSelect(sOAProfileDsl::VersionedType).
+	union (ns.types.typeSelect (DataType));
+
+List[org::fornax::soa::serviceDsl::Type] typesWithMinState (Object ns, LifecycleState state) : null;
+
+List[org::fornax::soa::serviceDsl::Type] typesWithMinState (org::fornax::soa::servicedsl::VersionedDomainNamespace ns, LifecycleState state) :
+	ns.subdomain.typesWithMinState (state);

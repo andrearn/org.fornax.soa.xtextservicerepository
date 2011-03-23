@@ -7,7 +7,9 @@ extension org::fornax::soa::basedsl::version::versionQualifying;
 extension org::fornax::soa::servicedsl::domain::splitting;
 extension org::fornax::soa::servicedsl::query::namespace::namespaceImports;
 extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
-extension org::fornax::soa::servicedsl::query::types;
+extension org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder;
+extension org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByMajorVersion;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::xsd::domains;
 
@@ -88,13 +90,13 @@ VersionedType selectLatestMatchingType (VersionedTypeRef ref) :
 	.select (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
 	.sortBy(e|e.version.version).last();
 	
-sOAProfileDsl::Namespace getSubdomain (sOAProfileDsl::VersionedType c) : sOAProfileDsl::Namespace.isInstance (c.eContainer) ? c.eContainer : null;
+sOAProfileDsl::TechnicalNamespace getSubdomain (sOAProfileDsl::VersionedType c) : sOAProfileDsl::TechnicalNamespace.isInstance (c.eContainer) ? c.eContainer : null;
 
 
 
 boolean isLatestMatchingType (sOAProfileDsl::Class t, Integer majorVersion) : 
 	(getLatestMatchingClass( 
-		((sOAProfileDsl::Namespace)t.eContainer).types.typeSelect (sOAProfileDsl::Class).select (e|e.name == t.name), 
+		((sOAProfileDsl::TechnicalNamespace)t.eContainer).types.typeSelect (sOAProfileDsl::Class).select (e|e.name == t.name), 
 		majorVersion)
 	 == t) 
 	? true

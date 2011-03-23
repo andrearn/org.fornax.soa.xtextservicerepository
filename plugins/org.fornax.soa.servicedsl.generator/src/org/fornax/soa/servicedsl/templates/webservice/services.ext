@@ -8,7 +8,6 @@ extension org::fornax::soa::basedsl::version::versionQualifying;
 
 extension org::fornax::soa::servicedsl::domain::splitting;
 extension org::fornax::soa::servicedsl::query::exceptions;
-extension org::fornax::soa::servicedsl::query::types;
 
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::xsd::domains;

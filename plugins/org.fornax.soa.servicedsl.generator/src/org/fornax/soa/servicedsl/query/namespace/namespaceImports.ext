@@ -5,11 +5,12 @@ extension org::fornax::soa::servicedsl::domain::splitting;
 extension org::fornax::soa::servicedsl::query::exceptions;
 extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 extension org::fornax::soa::servicedsl::query::services;
-extension org::fornax::soa::servicedsl::query::types;
+extension org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder;
+extension org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByMajorVersion;
 
 extension org::fornax::soa::servicedsl::templates::common;
-//extension org::fornax::soa::servicedsl::templates::domains;
-//extension org::fornax::soa::servicedsl::templates::types;
 
 
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (Service svc) : 
@@ -29,9 +30,9 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s, LifecycleState minState) : 
 	((SubNamespace)s.subdomain).allImportedVersionedNS(s.version, minState);
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s) : 
-	((sOAProfileDsl::Namespace)s.subdomain).allImportedVersionedNS(s.version);
+	((sOAProfileDsl::TechnicalNamespace)s.subdomain).allImportedVersionedNS(s.version);
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (sOAProfileDsl::Namespace s, String nameSpaceMajorVersion) :
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (sOAProfileDsl::TechnicalNamespace s, String nameSpaceMajorVersion) :
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (sOAProfileDsl::Class)
 	.allReferencedVersionedTypes().createVersionedDomainNamespace();
 

@@ -6,10 +6,13 @@ extension org::fornax::soa::basedsl::lifecycle::stateMatching;
 extension org::fornax::soa::basedsl::version::versionMatching;
 extension org::fornax::soa::basedsl::version::versionQualifying;
 extension org::fornax::soa::servicedsl::templates::common;
-//extension org::fornax::soa::servicedsl::templates::domains;
-//extension org::fornax::soa::servicedsl::templates::types;
-extension org::fornax::soa::servicedsl::query::types;
 extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
+extension org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder;
+extension org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByMajorVersion;
+
+extension org::eclipse::xtend::util::stdlib::io;
 
 
 List servicesWithMinState (Object ns, LifecycleState state) : null;
@@ -48,6 +51,5 @@ boolean isLatestMatchingService (Service s, Integer majorVersion, sOABaseDsl::Li
 	? true
 	: false;
 		
-private serviceDsl::Service getLatestMatchingService (List[Service] canditates, Integer majorVersion, sOABaseDsl::LifecycleState minState) : 
-	canditates.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel(minState)).sortBy(e|e.version).last();
-	
+private serviceDsl::Service getLatestMatchingService (List[Service] canditates, Integer majorVersion, sOABaseDsl::LifecycleState minState) :
+	canditates.select (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel(minState)).sortBy(e|e.version.version).last();

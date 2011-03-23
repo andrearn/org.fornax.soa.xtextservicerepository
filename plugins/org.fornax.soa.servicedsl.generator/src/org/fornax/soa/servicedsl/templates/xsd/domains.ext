@@ -7,7 +7,10 @@ extension org::fornax::soa::basedsl::version::versionMatching;
 extension org::fornax::soa::basedsl::version::versionQualifying;
 extension org::fornax::soa::servicedsl::query::exceptions;
 extension org::fornax::soa::servicedsl::query::services;
-extension org::fornax::soa::servicedsl::query::types;
+extension org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder;
+extension org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByMajorVersion;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::eclipse::xtend::util::stdlib::io;
 
@@ -17,7 +20,7 @@ String fqn (Object o) : null;
 String fqn (OrganizationNamespace s) : s.name.stripXtextEscapes();
 String fqn (sOAProfileDsl::OrganizationNamespace s) : s.name.stripXtextEscapes();
 String fqn (SubNamespace s) : s.getOrgNamespace().name.stripXtextEscapes() + "." + getNamespacePath({s}).name.stripXtextEscapes().toString(".");
-String fqn (sOAProfileDsl::Namespace s) : s.getOrgNamespace().name.stripXtextEscapes() + "." + getNamespacePath({s}).name.stripXtextEscapes().toString(".");
+String fqn (sOAProfileDsl::TechnicalNamespace s) : s.getOrgNamespace().name.stripXtextEscapes() + "." + getNamespacePath({s}).name.stripXtextEscapes().toString(".");
 
 
 String toNamespace (Object o) : null;
@@ -35,7 +38,7 @@ String toNamespace (SubNamespace leafDomainNamespace) : leafDomainNamespace.toUn
 	"/" + leafDomainNamespace.getVersionPostfix() + 
 	(leafDomainNamespace.hasTrailingSlash() ? "/" : "");
 
-String toNamespace (sOAProfileDsl::Namespace leafNamespace) : leafNamespace.toUnversionedNamespace() +  
+String toNamespace (sOAProfileDsl::TechnicalNamespace leafNamespace) : leafNamespace.toUnversionedNamespace() +  
 	"/" + leafNamespace.getVersionPostfix() + 
 	(leafNamespace.hasTrailingSlash() ? "/" : "");
 
@@ -45,7 +48,7 @@ String toNamespace (org::fornax::soa::servicedsl::VersionedDomainNamespace s) :
 	(s.subdomain.hasTrailingSlash() ? "/" : "");
 
 boolean hasTrailingSlash (Object o) : true;
-boolean hasTrailingSlash (sOAProfileDsl::Namespace ns) : !ns.noTrailingSlash;
+boolean hasTrailingSlash (sOAProfileDsl::TechnicalNamespace ns) : !ns.noTrailingSlash;
 
 String getVersionPostfix (Object o) : null;
 
@@ -61,7 +64,7 @@ String getVersionPostfix (DomainNamespace s) :
 	: 
 		toDefaultVersionPostfix();
 		
-String getVersionPostfix (sOAProfileDsl::Namespace s) :
+String getVersionPostfix (sOAProfileDsl::TechnicalNamespace s) :
 	toDefaultVersionPostfix();
 	
 String getVersionPostfix (org::fornax::soa::servicedsl::VersionedDomainNamespace s) :
@@ -81,7 +84,7 @@ String toUnversionedNamespace (SubNamespace leafDomainNamespace) : "http://" +
 	leafDomainNamespace.getOrgNamespace().toHostPart() + "/" + 
 	{leafDomainNamespace}.getSubNamespacePath().name.replaceAll("\\.","/").toString("/");
 
-String toUnversionedNamespace (sOAProfileDsl::Namespace leafDomainNamespace) : "http://" + 
+String toUnversionedNamespace (sOAProfileDsl::TechnicalNamespace leafDomainNamespace) : "http://" + 
 	leafDomainNamespace.getOrgNamespace().toHostPart() + "/" + 
 	{leafDomainNamespace}.getNamespacePath().name.replaceAll("\\.","/").toString("/");
 
@@ -100,13 +103,13 @@ List[SubNamespace] getSubNamespacePath (List[SubNamespace] domList) :
 	: 
 		domList.typeSelect(SubNamespace).reverse();
 
-List[sOAProfileDsl::Namespace] getNamespacePath (Object o) : {};
+List[sOAProfileDsl::TechnicalNamespace] getNamespacePath (Object o) : {};
 
-List[sOAProfileDsl::Namespace] getNamespacePath (List[sOAProfileDsl::Namespace] nsList) : 
-	sOAProfileDsl::Namespace.isInstance(nsList.last().eContainer) ? 
-		getNamespacePath (nsList.add ((sOAProfileDsl::Namespace)nsList.last().eContainer) -> nsList)
+List[sOAProfileDsl::TechnicalNamespace] getNamespacePath (List[sOAProfileDsl::TechnicalNamespace] nsList) : 
+	sOAProfileDsl::TechnicalNamespace.isInstance(nsList.last().eContainer) ? 
+		getNamespacePath (nsList.add ((sOAProfileDsl::TechnicalNamespace)nsList.last().eContainer) -> nsList)
 	: 
-		nsList.typeSelect(sOAProfileDsl::Namespace).reverse();
+		nsList.typeSelect(sOAProfileDsl::TechnicalNamespace).reverse();
 			
 OrganizationNamespace getOrgNamespace (Object o) : null;
 
@@ -124,14 +127,14 @@ OrganizationNamespace getOrgNamespace (InternalNamespace o) :
 	:
 		(o.eContainer == null ? null : getOrgNamespace ((DomainNamespace)o.eContainer));
 	
-sOAProfileDsl::OrganizationNamespace getOrgNamespace (sOAProfileDsl::Namespace o) : 
+sOAProfileDsl::OrganizationNamespace getOrgNamespace (sOAProfileDsl::TechnicalNamespace o) : 
 	sOAProfileDsl::OrganizationNamespace.isInstance(o.eContainer) ? 
 		o.eContainer
 	:
-		(o.eContainer == null ? null : getOrgNamespace ((sOAProfileDsl::Namespace)o.eContainer));
+		(o.eContainer == null ? null : getOrgNamespace ((sOAProfileDsl::TechnicalNamespace)o.eContainer));
 		
 String getShortName(SubNamespace s) : s.prefix == null ? s.toPrefix() : s.prefix;
-String getShortName(sOAProfileDsl::Namespace s) : s.prefix == null ? s.toPrefix() : s.prefix;
+String getShortName(sOAProfileDsl::TechnicalNamespace s) : s.prefix == null ? s.toPrefix() : s.prefix;
 
 
 String getRegisteredUrl (Object o) : null;
@@ -155,7 +158,7 @@ String getRegisteredUrl (InternalNamespace s, String registryUrl) :
 		registryUrl + "/" + s.getFileNameFragment() 
 	: 
 		s.getFileNameFragment(); 
-String getRegisteredUrl (sOAProfileDsl::Namespace s, String registryUrl) : 
+String getRegisteredUrl (sOAProfileDsl::TechnicalNamespace s, String registryUrl) : 
 	registryUrl != null && !forceRelativePaths() ? 
 		registryUrl + "/" + s.getFileNameFragment() 
 	: 
@@ -176,7 +179,7 @@ String getRegisteredUrl (DomainNamespace s, Void registryUrl) :
 	s.getFileNameFragment(); 
 String getRegisteredUrl (InternalNamespace s, Void registryUrl) : 
 	s.getFileNameFragment(); 
-String getRegisteredUrl (sOAProfileDsl::Namespace s, Void registryUrl) : 
+String getRegisteredUrl (sOAProfileDsl::TechnicalNamespace s, Void registryUrl) : 
 	s.getFileNameFragment(); 
 String getRegisteredUrl (org::fornax::soa::servicedsl::VersionedDomainNamespace s, Void registryUrl) : 
 	s.getFileNameFragment(); 
@@ -187,7 +190,7 @@ String getFileNameFragment (Service s) : s.eContainer.getFileNameFragment().repl
 String getFileNameFragment (OrganizationNamespace s) : s.getOrgNamespace().shorten().replaceAll("\\." , "-");
 String getFileNameFragment (DomainNamespace s) : s.getOrgNamespace().shorten().replaceAll("\\." , "-") + "-" + {s}.getSubNamespacePath().name.stripXtextEscapes().replaceAll("\\." , "-").toString("-");
 String getFileNameFragment (InternalNamespace s) : s.getOrgNamespace().shorten().replaceAll("\\." , "-") + "-" + {s}.getSubNamespacePath().name.stripXtextEscapes().replaceAll("\\." , "-").toString("-");
-String getFileNameFragment (sOAProfileDsl::Namespace s) : s.getOrgNamespace().shorten().replaceAll("\\." , "-") + "-" + {s}.getNamespacePath().name.stripXtextEscapes().replaceAll("\\." , "-").toString("-");
+String getFileNameFragment (sOAProfileDsl::TechnicalNamespace s) : s.getOrgNamespace().shorten().replaceAll("\\." , "-") + "-" + {s}.getNamespacePath().name.stripXtextEscapes().replaceAll("\\." , "-").toString("-");
 String getFileNameFragment (org::fornax::soa::servicedsl::VersionedDomainNamespace s) :
 	s.subdomain.getFileNameFragment() + "-v" + s.version.toMajorVersionNumber();
 

@@ -6,7 +6,10 @@
 
 «EXTENSION org::fornax::soa::servicedsl::query::exceptions»
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
-«EXTENSION org::fornax::soa::servicedsl::query::types»
+«EXTENSION org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder»
+«EXTENSION org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder»
+«EXTENSION org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder»
+«EXTENSION org::fornax::soa::servicedsl::query::type::TypesByMajorVersion»
 «EXTENSION org::fornax::soa::servicedsl::query::services»
 «EXTENSION org::fornax::soa::servicedsl::query::namespace::namespaceImports»
 

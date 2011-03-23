@@ -7,7 +7,10 @@
 «EXTENSION org::fornax::soa::basedsl::version::versionQualifying»
 «EXTENSION org::fornax::soa::servicedsl::domain::splitting»
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
-«EXTENSION org::fornax::soa::servicedsl::query::types»
+«EXTENSION org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder»
+«EXTENSION org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder»
+«EXTENSION org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder»
+«EXTENSION org::fornax::soa::servicedsl::query::type::TypesByMajorVersion»
 «EXTENSION org::fornax::soa::servicedsl::query::namespace::subnamespaces»
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
 «EXTENSION org::fornax::soa::servicedsl::templates::webservice::services»

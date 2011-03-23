@@ -4,21 +4,29 @@ import serviceDsl;
 extension org::fornax::soa::servicedsl::domain::splitting;
 extension org::fornax::soa::servicedsl::query::exceptions;
 extension org::fornax::soa::servicedsl::query::services;
-extension org::fornax::soa::servicedsl::query::types;
+extension org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder;
+extension org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder;
+extension org::fornax::soa::servicedsl::query::type::TypesByMajorVersion;
 
 extension org::fornax::soa::servicedsl::templates::common;
-//extension org::fornax::soa::servicedsl::templates::domains;
-//extension org::fornax::soa::servicedsl::templates::types;
 
+/**
+ *	Find the owning namespace of a type, service or exception
+ */
 
 SubNamespace getSubdomain (serviceDsl::Type t) : null;
 SubNamespace getSubdomain (serviceDsl::VersionedType c) : SubNamespace.isInstance (c.eContainer) ? c.eContainer : null;
-sOAProfileDsl::Namespace getSubdomain (sOAProfileDsl::VersionedType c) : sOAProfileDsl::Namespace.isInstance (c.eContainer) ? c.eContainer : null;
+sOAProfileDsl::TechnicalNamespace getSubdomain (sOAProfileDsl::VersionedType c) : sOAProfileDsl::TechnicalNamespace.isInstance (c.eContainer) ? c.eContainer : null;
 SubNamespace getSubdomain (serviceDsl::BusinessObject c) : SubNamespace.isInstance (c.eContainer) ? c.eContainer : null;
 SubNamespace getSubdomain (serviceDsl::Enumeration e) : SubNamespace.isInstance (e.eContainer) ? e.eContainer : null;
 SubNamespace getSubdomain (serviceDsl::Exception e) : SubNamespace.isInstance (e.eContainer) ? e.eContainer : null;
 SubNamespace getSubdomain (serviceDsl::Service s) : SubNamespace.isInstance (s.eContainer) ? s.eContainer : null;
 
+
+/**
+ *	Find the owning namespace of the owner of the type, service or exception reference
+ */
 // TODO make this safe for cases when there is no stateful owner 
 SubNamespace getOwnerSubdomain (serviceDsl::TypeRef t) : t.getStatefulOwner() != null ? t.getStatefulOwner().eContainer : null;
 SubNamespace getOwnerSubdomain (serviceDsl::VersionedTypeRef c) : c.getStatefulOwner() != null ? c.getStatefulOwner().eContainer : null;
