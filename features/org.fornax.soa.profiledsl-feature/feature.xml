@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.profiledsl"
       label="SOA Profile DSL"
-      version="1.2.0.qualifier"
+      version="1.2.1.qualifier"
       provider-name="Fornax Platform">
 
    <description>

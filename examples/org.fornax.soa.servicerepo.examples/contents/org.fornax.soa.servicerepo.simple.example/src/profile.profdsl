@@ -1,0 +1,13 @@
+datatype int;
+datatype byte;
+datatype long;
+datatype float;
+datatype double;
+datatype string;
+datatype char;
+datatype date;
+datatype datetime;
+datatype boolean;
+datatype decimal;
+datatype base64Binary;
+datatype binary;

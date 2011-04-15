@@ -1,0 +1,29 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Chapter&nbsp;1.&nbsp;Introduction</title><link href="book.css" rel="stylesheet" type="text/css"><meta content="DocBook XSL Stylesheets V1.75.2" name="generator"><style type="text/css">
+body { background-image: url('http://docbook.sourceforge.net/release/images/draft.png');
+       background-repeat: no-repeat;
+       background-position: top left;
+       /* The following properties make the watermark "fixed" on the page. */
+       /* I think that's just a bit too distracting for the reader... */
+       /* background-attachment: fixed; */
+       /* background-position: center center; */
+     }</style><link rel="home" href="index.html" title="Xtext Service Repository User Manual"><link rel="up" href="bk02.html" title="Concepts"><link rel="prev" href="bk02.html" title="Concepts"><link rel="next" href="ServiceModelingConcepts.html" title="Chapter&nbsp;2.&nbsp;Service modeling concepts"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" title="Chapter&nbsp;1.&nbsp;Introduction"><div class="titlepage"><div><div><h2 class="title"><a name="Introduction"></a>Chapter&nbsp;1.&nbsp;Introduction</h2></div></div></div><p>A service oriented architecture is build from functionality
+			captured in services. Hence, what services exist in SOA is the most
+			interesting question for a analyst, software architect or developer.
+			Service repositories are the most important tool to answer questions
+			like:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p>What services are available?</p></li><li class="listitem"><p>What is the contract of a service?</p></li><li class="listitem"><p>In what state is the service? Can I use it for production?
+				</p></li><li class="listitem"><p>What dependencies does it have?</p></li><li class="listitem"><p>...</p></li></ul></div><p>Usually a service repository will import WSDLs, XSDs and other
+			documents to describe the available services. However, WSDL is a
+			rather technical webservice related description of a service. It does
+			not define the complete formal service contract independent of the
+			technology being used. E.g. the version of a service and it&rsquo;s
+			dependencies are not defined or considered meaningful to a certain
+			technology stack.</p><p>Another issue is, that often SOA Governance will define
+			additional rules that apply to service contract. The Governance board
+			has to review every service contract whether it meets rules it has
+			defined. This is going to reduce agility in service development.
+		</p><p>Xtext Service Repository tries to resolve these issues in two
+			ways:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Use DSLs to describe formal service contracts with all required
+					details</p></li><li class="listitem"><p>Use model validators to verify formal constraints without the
+					need to involve the SOA governance board</p></li><li class="listitem"><p>Use code generation to apply technical rules implicitly, e.g.
+					all webservices use document/literal-wrapped SOAP style and schema
+					centralization</p></li></ol></div></div></body></html>

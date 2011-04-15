@@ -52,7 +52,8 @@
 
 
 «DEFINE MessageHeaderXSD (sOAProfileDsl::SOAProfile profile, sOAProfileDsl::MessageHeader header) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
-«FILE getFileNameFragment() + ".xsd"-»<xsd:schema xmlns:tns="«toNamespace()»"
+«FILE getFileNameFragment() + ".xsd"-»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:tns="«toNamespace()»"
 	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS ().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="«toNamespace()»"
@@ -68,7 +69,8 @@
 «ENDDEFINE»
 
 «DEFINE MessageHeaderXSD (sOAProfileDsl::SOAProfile profile, String registryBaseUrl, sOAProfileDsl::MessageHeader header) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
-«FILE getFileNameFragment() + ".xsd"-»<xsd:schema xmlns:tns="«toNamespace()»"
+«FILE getFileNameFragment() + ".xsd"-»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:tns="«toNamespace()»"
 	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS ().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	targetNamespace="«toNamespace()»"

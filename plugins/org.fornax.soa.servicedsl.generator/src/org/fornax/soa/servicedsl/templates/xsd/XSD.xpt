@@ -48,7 +48,7 @@
 
 «REM»
 	Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
-	that match the given minimal LifecycleState
+	that match the given minimal LifecycleState.
 «ENDREM»
 «DEFINE XSDVersion(LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
 «FILE getFileNameFragment() + ".xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -81,7 +81,14 @@
 		namespace="«toNamespace()»"></xsd:import>
 «ENDDEFINE»
 
-
+«REM»
+	Generate a ComplexType for a BusinessObject respecting the major version of the containing 
+	XSD. Hence, the same VersionedDomainNamespace as for the containing XSD must be used.
+	
+	@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
+						XSD being generated
+	@param		profile	The SOAProfile defining the governing architecture rules.
+«ENDREM»
 «DEFINE ComplexType(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR BusinessObject»
     <xsd:complexType name="«name»">
     	<xsd:annotation>
@@ -113,6 +120,10 @@
 «REM»
 	Generate a sequence of elements for properties plus an additional any as placeholder for future
 	backward compatible extensions of the ComplexType / BusinessObject
+	
+	@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
+						XSD being generated
+	@param		profile	The SOAProfile defining the governing architecture rules.
 «ENDREM»
 «DEFINE PropertySequenceWithAny(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR BusinessObject»
     	<xsd:sequence>
@@ -127,6 +138,10 @@
 «REM»
 	Generate a sequence of elements for properties without a placeholder for future
 	backward compatible extensions of the ComplexType / BusinessObject
+	
+	@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
+						XSD being generated
+	@param		profile	The SOAProfile defining the governing architecture rules.
 «ENDREM»
 «DEFINE PropertySequence(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR BusinessObject»
     	<xsd:sequence>
@@ -165,7 +180,12 @@
 «ENDDEFINE»
 
 «REM»
-	Generate a ComplexType for a given Exception
+	Generate a ComplexType for a given Exception. The ComplextType is being genereated for a containing
+	versioned XSD. Hence, the VersionedDomainNamespace on which the XSD is based is required.
+	
+	@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
+						XSD being generated
+	@param		profile	The SOAProfile defining the governing architecture rules.
 «ENDREM»
 «DEFINE FaultType(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile) FOR serviceDsl::Exception»
     <xsd:complexType name="«toTypeName()»">

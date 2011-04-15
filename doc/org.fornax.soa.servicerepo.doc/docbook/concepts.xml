@@ -1,0 +1,330 @@
+<?xml version='1.0' ?><!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
+<book>
+	<title>Concepts</title>
+	<chapter id="Introduction">
+		<title>Introduction</title>
+		<para>A service oriented architecture is build from functionality
+			captured in services. Hence, what services exist in SOA is the most
+			interesting question for a analyst, software architect or developer.
+			Service repositories are the most important tool to answer questions
+			like:</para>
+		<itemizedlist>
+			<listitem>
+				<para>What services are available?</para>
+			</listitem>
+			<listitem>
+				<para>What is the contract of a service?</para>
+			</listitem>
+			<listitem>
+				<para>In what state is the service? Can I use it for production?
+				</para>
+			</listitem>
+			<listitem>
+				<para>What dependencies does it have?</para>
+			</listitem>
+			<listitem>
+				<para>...</para>
+			</listitem>
+		</itemizedlist>
+		<para>Usually a service repository will import WSDLs, XSDs and other
+			documents to describe the available services. However, WSDL is a
+			rather technical webservice related description of a service. It does
+			not define the complete formal service contract independent of the
+			technology being used. E.g. the version of a service and it’s
+			dependencies are not defined or considered meaningful to a certain
+			technology stack.</para>
+		<para>Another issue is, that often SOA Governance will define
+			additional rules that apply to service contract. The Governance board
+			has to review every service contract whether it meets rules it has
+			defined. This is going to reduce agility in service development.
+		</para>
+		<para>Xtext Service Repository tries to resolve these issues in two
+			ways:</para>
+		<orderedlist>
+			<listitem>
+				<para>Use DSLs to describe formal service contracts with all required
+					details</para>
+			</listitem>
+			<listitem>
+				<para>Use model validators to verify formal constraints without the
+					need to involve the SOA governance board</para>
+			</listitem>
+			<listitem>
+				<para>Use code generation to apply technical rules implicitly, e.g.
+					all webservices use document/literal-wrapped SOAP style and schema
+					centralization</para>
+			</listitem>
+		</orderedlist>
+	</chapter>
+	<chapter id="ServiceModelingConcepts">
+		<title>Service modeling concepts</title>
+		<section id="Datamodel">
+			<title>The data model</title>
+			<para>The data model in a SOA approach may be separated into two
+				major parts:</para>
+			<orderedlist>
+				<listitem>
+					<para>Canonical data model</para>
+				</listitem>
+				<listitem>
+					<para>Non canonical data model</para>
+				</listitem>
+			</orderedlist>
+
+			<section id="CanonicalDataModel">
+				<title>Canonical data model</title>
+				<para>
+					The canonical data model defines data types that are
+					standardized to
+					some extent. It is the &quot;common language&quot; Whenever data
+					are exchanged between different systems, the canonical data model
+					should be used as it protects the user from frequent changes. A
+					canonical data model is scoped to a domain or subdomain. Namespace
+					that belong to the canonical data model are called
+					<emphasis role="bold">domain namespace</emphasis>
+					s.
+				</para>
+			</section>
+			<section id="NonCanonicalDataModel">
+				<title>Non canonical data model</title>
+				<para>
+					The non canonical data model defines data types that are
+					<emphasis>not</emphasis>
+					standardized. The canonical data model is the &quot;local
+					language&quot; of an application or system. Hence, it is considered
+					internal and should only be used internally by that system or
+					application. The non canonical data model enables frequent changes
+					to the data model in a &quot;safe&quot; area, that does not affect
+					other systems or applications. Namespaces that belong to the non
+					canonical data model are called
+					<emphasis role="bold">internal namespace</emphasis>
+					s
+				</para>
+			</section>
+			<section id="DomainsAndNamespaces">
+				<title>Domains and namespaces</title>
+				<para>The canonical and the non canonical datamodel are organized into domains which 
+				are reflected by namespaces. For each subdomain there exists a respective domain-namespace.
+				Domains and there subdomains are defined in the business model. Hence, domain namespaces 
+				contain the respective subdomain of the canonical datamodel and their related public services.
+				</para>
+				<para>
+				Domain namespaces are complemented by internal namespaces that contain the non canonical datamodel
+				and private services. Whatever is defined in an internal namespace should only be internally as 
+				the name suggests. Internal namespaces contain fragile API.
+				</para>
+				<example>
+					<mediaobject>
+						<imageobject role="html">
+							<imagedata align="center" fileref="images/namespaces.png"/>
+						</imageobject>
+					</mediaobject>
+				</example>
+			</section>
+		</section>
+
+		<section id="EncapsulationOfServices">
+			<title>Encapsulation of services</title>
+			<para>Often, a SOA will be built from already existing systems and
+				interfaces. However, the services already available will usually not
+				suit very well with the larger scope of an enterprise wide IT
+				architecture as they have been developed with specific usage
+				scenarios in mind.</para>
+			<para>
+				A good approach to provide more suitable services, would be to define
+				new standard service contracts which hide the technical details of the
+				service implementation provided by a certain system. The new service
+				contract would be
+				<emphasis role="bold">public</emphasis>
+				service, while the already available technical service
+				implementation will be considered
+				<emphasis role="bold">private</emphasis>
+				. This will shield consumers of the public service from rather
+				frequent changes of the technical service implementations as well as
+				their interfaces.
+				
+				<example>
+					<mediaobject>
+						<imageobject role="html">
+							<imagedata align="center" fileref="images/PublicEncapsPrivateService.png" scalefit="true"/>
+						</imageobject>
+						<caption>A public service encapsulating a private service</caption>
+					</mediaobject>
+				</example>
+
+			</para>
+		</section>
+
+
+		<section id = "ModelPerspectives">
+			<title>Perspectives in a SOA model</title>
+			In a SOA model you can take different perspectives, depending on the
+			matter of interest.
+
+			<section id = "BusinessModelPerspective">
+				<title>Business view</title>
+				<para>The business view gives a perspective on what makes up the
+					business
+					of a company. It is typically organized in
+					domains which may
+					be reflected by the company's organizational
+					structure. The business
+					model contains logical functions that are
+					available to the business
+					to build solutions from business functions.
+					Business functions are
+					best related to features that are available
+					as
+					building blocks.
+				</para>
+				<para>Business functions are realized based on so called
+					functional
+					capabilities. Functional capabilities are the lowest
+					level of IT
+					functionality visible to business analysts. A functional
+					capability
+					might be e.g. &quot;Lookup a customer by her
+					address&quot;.
+					Functional capabilities relate to service operations
+					of public
+					services in the service model.</para>
+			</section>
+
+			<section id="SolutionPerspective">
+				<title>Solutions</title>
+				<para>Solutions support the business of company. Solutions are
+					available as applications or bundles of application that solve a
+					certain problem, e.g. a customer self care solution. In SOA
+					solutions will reuse business function by using services that
+					support those business functions. Solutions are the end consumers
+					of services.</para>
+				<example>
+					<mediaobject>
+						<imageobject role="html">
+							<imagedata align="center" fileref="images/Solutions.png"/>
+						</imageobject>
+					</mediaobject>
+				</example>
+			</section>
+
+			<section id="ServiceModelPerspective">
+				<title>Service model</title>
+				<para>The service model let's you look at service contracts
+					and data types. The service model defines domain and internal namespaces, 
+					which in turn define business objects, enumerations, services and exception
+					types. </para>
+				<section>
+					<title>Versions and lifecycle states</title>
+					<para>Different consumers	of a service may require a different version of the service. Hence, several different
+						versions of a service and related business objects etc. may be deployed in the same 
+						runtime environment. Generally the latest compatible version will be used when a dependcy
+						to another service or business object is being declared. Whether a newer version is 
+						compatible to it's previous version or not is inferred from the version number increment.
+						If the major version.</para> 
+					<para>Business objects, enumerations and services are versioned by having a version number. 
+						Versionnumber may be qualified with major and minor version numbers and so seperated by dots. 
+						A namespace may declare several different versions of a service etc. Dependencies to other 
+						services and types are qualified by the name and a version constraint, that selects the latest 
+						applicable version.</para>
+					<para> Whether a certain version matches the version constraint depends also on 
+						the lifecycle states of the dependency owner and the target object of the 
+						dependency. 
+						<example>There may be a service <classname>CustomerEntityService</classname> in version <code>1.2</code> 
+							which has a service operation <methodname>getCustomer</methodname> that returns a list
+							of <classname>Customer</classname>s in the latest minor version of major version <code>1</code>.
+							Be <classname>Customer</classname> available in version <code>1.0</code> in the lifecycle state <code>productive</code>
+							, meaning it is ready for production use and let's say we have a <classname>Customer</classname> in 
+							version <code>1.1</code> that is in state <code>development</code> meaning it is ready for development 
+							purposes. In a production environment the latter version would not yet be available. Hence, in the production
+							environment the dependency to <classname>Customer</classname> in major version 1 would actually resolve to 
+							<classname>Customer</classname> version <code>1.0</code>, while in the the development environment it
+							would resolve to version <code>1.1</code>.
+						</example>
+					</para>
+				</section>
+				<section>
+					<title>Services</title>
+					<para>
+						A public service usually relates to a business
+						function in	the business model. A service provides functional capabilities
+						implemented	as service operations.</para>
+				</section>
+				
+				<section>
+					<title>Business Objects</title>
+					<para>Business objects are complex types with one ore more attributes. Attibutes have a name, 
+						a type with a version constraint if it is a business object or enumeration, an 
+						optional many cardinality and some other optional flags.</para>
+				</section>
+				
+				<section>
+					<title>Enumerations</title>
+					<para>Enumerations declare all possible values that an attribute or parameter of
+						that type may have.</para>
+				</section>
+				
+				<section>
+					<title>Exceptions</title>
+					<para>As in many programming languages, exceptions describe an unexpected 
+						behaviour or erro condition.</para>
+				</section>
+
+			</section>
+			
+			<section id="EnvironmentPerspective">
+				<title>Runtime environment</title>
+				<para>The environment defines, what makes up the IT infrastructure
+					that hosts services and solutions. Typical parts of an environment
+					are hosts, application servers, databases and so on. Typically a
+					company has a production, test and a development environment.</para>
+			</section>
+			
+			<section id="BindingPerspective">
+				<title>Service binding</title>
+				<para>The binding perspective wires services to an environment, where they are 
+					supposed to be hosted together. It defines protocols, servers hosting the services 
+					(and implicitly their endpoints) as well as assigned SLAs and policies like 
+					security policies.</para>
+				<mediaobject >
+					<imageobject role="html">
+						<imagedata align="center" fileref="images/CoreDSLs.png" scale="100"/>
+					</imageobject>
+				</mediaobject>
+					
+				<para>
+					Every binding declares what it binds from the service model to which environment. 
+					Bindings can be declared on three levels with regard to the service model:
+					<itemizedlist>
+						<listitem><classname>DomainBinding</classname> references a namespace 
+							(domain namespace or internal namespace) from service model. DomainBindings 
+							are always toplevel binding in the binding model and have name to be referable
+						</listitem>
+						<listitem><classname>ServiceBinding</classname> refers to a specific service 
+							by name and a version constraint. <classname>ServiceBindings</classname> override 
+							the definitions of the surrounding <classname>DomainBinding</classname>
+						</listitem>
+						<listitem><classname>OperationBinding</classname>s refer to a specific service 
+							operation with the fullqualified name of the operation and version constraint 
+							selecting the owning service. Definitions from a surrounding 
+							<classname>ServiceBinding</classname> will overridden.
+						</listitem>
+					</itemizedlist>
+				</para>
+				<para>The perspective supports convention over configuration
+					in that one would define a default binding configuration for a certain namespace. 
+					The defaults may the be overridden for a specific service or even a 
+					specific operation of a service.</para>
+			</section>
+			
+			<section id="SLAPerspective">
+				<title>Service level agreements</title>
+				<para>Service Level Agreement can be declared in a SLA model. Service Level Agreement declare
+					properties properties like service availability, maximum downtimes, responsible service owners
+					and so on. SLAs are generally scoped to an environment. Hence, SLAs must be assigned to a 
+					namespace or service in the binding model. As each binding is scoped to an environment, assigned
+					SLAs are implicitly scoped to the environment for which the respective binding has
+					been declared</para>
+			</section>
+		</section>
+	</chapter>
+</book>

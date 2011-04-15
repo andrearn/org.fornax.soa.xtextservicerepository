@@ -1,0 +1,40 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Chapter&nbsp;2.&nbsp;Service modeling concepts</title><link href="book.css" rel="stylesheet" type="text/css"><meta content="DocBook XSL Stylesheets V1.75.2" name="generator"><style type="text/css">
+body { background-image: url('http://docbook.sourceforge.net/release/images/draft.png');
+       background-repeat: no-repeat;
+       background-position: top left;
+       /* The following properties make the watermark "fixed" on the page. */
+       /* I think that's just a bit too distracting for the reader... */
+       /* background-attachment: fixed; */
+       /* background-position: center center; */
+     }</style><link rel="home" href="index.html" title="Xtext Service Repository User Manual"><link rel="up" href="bk02.html" title="Concepts"><link rel="prev" href="Introduction.html" title="Chapter&nbsp;1.&nbsp;Introduction"><link rel="next" href="EncapsulationOfServices.html" title="Encapsulation of services"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" title="Chapter&nbsp;2.&nbsp;Service modeling concepts"><div class="titlepage"><div><div><h2 class="title"><a name="ServiceModelingConcepts"></a>Chapter&nbsp;2.&nbsp;Service modeling concepts</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="ServiceModelingConcepts.html#Datamodel">The data model</a></span></dt><dd><dl><dt><span class="section"><a href="ServiceModelingConcepts.html#CanonicalDataModel">Canonical data model</a></span></dt><dt><span class="section"><a href="ServiceModelingConcepts.html#NonCanonicalDataModel">Non canonical data model</a></span></dt><dt><span class="section"><a href="ServiceModelingConcepts.html#DomainsAndNamespaces">Domains and namespaces</a></span></dt></dl></dd><dt><span class="section"><a href="EncapsulationOfServices.html">Encapsulation of services</a></span></dt><dt><span class="section"><a href="ModelPerspectives.html">Perspectives in a SOA model</a></span></dt><dd><dl><dt><span class="section"><a href="ModelPerspectives.html#BusinessModelPerspective">Business view</a></span></dt><dt><span class="section"><a href="ModelPerspectives.html#SolutionPerspective">Solutions</a></span></dt><dt><span class="section"><a href="ModelPerspectives.html#ServiceModelPerspective">Service model</a></span></dt><dt><span class="section"><a href="ModelPerspectives.html#EnvironmentPerspective">Runtime environment</a></span></dt><dt><span class="section"><a href="ModelPerspectives.html#BindingPerspective">Service binding</a></span></dt><dt><span class="section"><a href="ModelPerspectives.html#SLAPerspective">Service level agreements</a></span></dt></dl></dd></dl></div><div class="section" title="The data model"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="Datamodel"></a>The data model</h2></div></div></div><p>The data model in a SOA approach may be separated into two
+				major parts:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p>Canonical data model</p></li><li class="listitem"><p>Non canonical data model</p></li></ol></div><div class="section" title="Canonical data model"><div class="titlepage"><div><div><h3 class="title"><a name="CanonicalDataModel"></a>Canonical data model</h3></div></div></div><p>
+					The canonical data model defines data types that are
+					standardized to
+					some extent. It is the "common language" Whenever data
+					are exchanged between different systems, the canonical data model
+					should be used as it protects the user from frequent changes. A
+					canonical data model is scoped to a domain or subdomain. Namespace
+					that belong to the canonical data model are called
+					<span class="bold"><strong>domain namespace</strong></span>
+					s.
+				</p></div><div class="section" title="Non canonical data model"><div class="titlepage"><div><div><h3 class="title"><a name="NonCanonicalDataModel"></a>Non canonical data model</h3></div></div></div><p>
+					The non canonical data model defines data types that are
+					<span class="emphasis"><em>not</em></span>
+					standardized. The canonical data model is the "local
+					language" of an application or system. Hence, it is considered
+					internal and should only be used internally by that system or
+					application. The non canonical data model enables frequent changes
+					to the data model in a "safe" area, that does not affect
+					other systems or applications. Namespaces that belong to the non
+					canonical data model are called
+					<span class="bold"><strong>internal namespace</strong></span>
+					s
+				</p></div><div class="section" title="Domains and namespaces"><div class="titlepage"><div><div><h3 class="title"><a name="DomainsAndNamespaces"></a>Domains and namespaces</h3></div></div></div><p>The canonical and the non canonical datamodel are organized into domains which 
+				are reflected by namespaces. For each subdomain there exists a respective domain-namespace.
+				Domains and there subdomains are defined in the business model. Hence, domain namespaces 
+				contain the respective subdomain of the canonical datamodel and their related public services.
+				</p><p>
+				Domain namespaces are complemented by internal namespaces that contain the non canonical datamodel
+				and private services. Whatever is defined in an internal namespace should only be internally as 
+				the name suggests. Internal namespaces contain fragile API.
+				</p><div class="example"><a name="N10067"></a><p class="title"><b>Example&nbsp;2.1.&nbsp;</b></p><div class="example-contents"><div class="mediaobject" align="center"><img src="images/namespaces.png" align="middle"></div></div></div><br class="example-break"></div></div></div></body></html>

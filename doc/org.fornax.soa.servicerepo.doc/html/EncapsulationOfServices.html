@@ -1,0 +1,28 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Encapsulation of services</title><link href="book.css" rel="stylesheet" type="text/css"><meta content="DocBook XSL Stylesheets V1.75.2" name="generator"><style type="text/css">
+body { background-image: url('http://docbook.sourceforge.net/release/images/draft.png');
+       background-repeat: no-repeat;
+       background-position: top left;
+       /* The following properties make the watermark "fixed" on the page. */
+       /* I think that's just a bit too distracting for the reader... */
+       /* background-attachment: fixed; */
+       /* background-position: center center; */
+     }</style><link rel="home" href="index.html" title="Xtext Service Repository User Manual"><link rel="up" href="ServiceModelingConcepts.html" title="Chapter&nbsp;2.&nbsp;Service modeling concepts"><link rel="prev" href="ServiceModelingConcepts.html" title="Chapter&nbsp;2.&nbsp;Service modeling concepts"><link rel="next" href="ModelPerspectives.html" title="Perspectives in a SOA model"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="Encapsulation of services"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="EncapsulationOfServices"></a>Encapsulation of services</h2></div></div></div><p>Often, a SOA will be built from already existing systems and
+				interfaces. However, the services already available will usually not
+				suit very well with the larger scope of an enterprise wide IT
+				architecture as they have been developed with specific usage
+				scenarios in mind.</p><p>
+				A good approach to provide more suitable services, would be to define
+				new standard service contracts which hide the technical details of the
+				service implementation provided by a certain system. The new service
+				contract would be
+				<span class="bold"><strong>public</strong></span>
+				service, while the already available technical service
+				implementation will be considered
+				<span class="bold"><strong>private</strong></span>
+				. This will shield consumers of the public service from rather
+				frequent changes of the technical service implementations as well as
+				their interfaces.
+				
+				</p><div class="example"><a name="N1007E"></a><p class="title"><b>Example&nbsp;2.2.&nbsp;</b></p><div class="example-contents"><div class="mediaobject" align="center"><img src="images/PublicEncapsPrivateService.png" align="middle"><div class="caption">A public service encapsulating a private service</div></div></div></div><p><br class="example-break">
+
+			</p></div></body></html>

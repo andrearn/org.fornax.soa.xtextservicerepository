@@ -1,0 +1,101 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Perspectives in a SOA model</title><link href="book.css" rel="stylesheet" type="text/css"><meta content="DocBook XSL Stylesheets V1.75.2" name="generator"><style type="text/css">
+body { background-image: url('http://docbook.sourceforge.net/release/images/draft.png');
+       background-repeat: no-repeat;
+       background-position: top left;
+       /* The following properties make the watermark "fixed" on the page. */
+       /* I think that's just a bit too distracting for the reader... */
+       /* background-attachment: fixed; */
+       /* background-position: center center; */
+     }</style><link rel="home" href="index.html" title="Xtext Service Repository User Manual"><link rel="up" href="ServiceModelingConcepts.html" title="Chapter&nbsp;2.&nbsp;Service modeling concepts"><link rel="prev" href="EncapsulationOfServices.html" title="Encapsulation of services"><link rel="next" href="bk03.html" title="DSL Reference"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="Perspectives in a SOA model"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="ModelPerspectives"></a>Perspectives in a SOA model</h2></div></div></div>
+			In a SOA model you can take different perspectives, depending on the
+			matter of interest.
+
+			<div class="section" title="Business view"><div class="titlepage"><div><div><h3 class="title"><a name="BusinessModelPerspective"></a>Business view</h3></div></div></div><p>The business view gives a perspective on what makes up the
+					business
+					of a company. It is typically organized in
+					domains which may
+					be reflected by the company's organizational
+					structure. The business
+					model contains logical functions that are
+					available to the business
+					to build solutions from business functions.
+					Business functions are
+					best related to features that are available
+					as
+					building blocks.
+				</p><p>Business functions are realized based on so called
+					functional
+					capabilities. Functional capabilities are the lowest
+					level of IT
+					functionality visible to business analysts. A functional
+					capability
+					might be e.g. "Lookup a customer by her
+					address".
+					Functional capabilities relate to service operations
+					of public
+					services in the service model.</p></div><div class="section" title="Solutions"><div class="titlepage"><div><div><h3 class="title"><a name="SolutionPerspective"></a>Solutions</h3></div></div></div><p>Solutions support the business of company. Solutions are
+					available as applications or bundles of application that solve a
+					certain problem, e.g. a customer self care solution. In SOA
+					solutions will reuse business function by using services that
+					support those business functions. Solutions are the end consumers
+					of services.</p><div class="example"><a name="N1009C"></a><p class="title"><b>Example&nbsp;2.3.&nbsp;</b></p><div class="example-contents"><div class="mediaobject" align="center"><img src="images/Solutions.png" align="middle"></div></div></div><br class="example-break"></div><div class="section" title="Service model"><div class="titlepage"><div><div><h3 class="title"><a name="ServiceModelPerspective"></a>Service model</h3></div></div></div><p>The service model let's you look at service contracts
+					and data types. The service model defines domain and internal namespaces, 
+					which in turn define business objects, enumerations, services and exception
+					types. </p><div class="section" title="Versions and lifecycle states"><div class="titlepage"><div><div><h4 class="title"><a name="N100A9"></a>Versions and lifecycle states</h4></div></div></div><p>Different consumers	of a service may require a different version of the service. Hence, several different
+						versions of a service and related business objects etc. may be deployed in the same 
+						runtime environment. Generally the latest compatible version will be used when a dependcy
+						to another service or business object is being declared. Whether a newer version is 
+						compatible to it's previous version or not is inferred from the version number increment.
+						If the major version.</p><p>Business objects, enumerations and services are versioned by having a version number. 
+						Versionnumber may be qualified with major and minor version numbers and so seperated by dots. 
+						A namespace may declare several different versions of a service etc. Dependencies to other 
+						services and types are qualified by the name and a version constraint, that selects the latest 
+						applicable version.</p><p> Whether a certain version matches the version constraint depends also on 
+						the lifecycle states of the dependency owner and the target object of the 
+						dependency. 
+						</p><div class="example"><a name="N100B2"></a><p class="title"><b>Example&nbsp;2.4.&nbsp;</b></p><div class="example-contents">There may be a service <code class="classname">CustomerEntityService</code> in version <code class="code">1.2</code> 
+							which has a service operation <code class="methodname">getCustomer</code> that returns a list
+							of <code class="classname">Customer</code>s in the latest minor version of major version <code class="code">1</code>.
+							Be <code class="classname">Customer</code> available in version <code class="code">1.0</code> in the lifecycle state <code class="code">productive</code>
+							, meaning it is ready for production use and let's say we have a <code class="classname">Customer</code> in 
+							version <code class="code">1.1</code> that is in state <code class="code">development</code> meaning it is ready for development 
+							purposes. In a production environment the latter version would not yet be available. Hence, in the production
+							environment the dependency to <code class="classname">Customer</code> in major version 1 would actually resolve to 
+							<code class="classname">Customer</code> version <code class="code">1.0</code>, while in the the development environment it
+							would resolve to version <code class="code">1.1</code>.
+						</div></div><p><br class="example-break">
+					</p></div><div class="section" title="Services"><div class="titlepage"><div><div><h4 class="title"><a name="N100E2"></a>Services</h4></div></div></div><p>
+						A public service usually relates to a business
+						function in	the business model. A service provides functional capabilities
+						implemented	as service operations.</p></div><div class="section" title="Business Objects"><div class="titlepage"><div><div><h4 class="title"><a name="N100E7"></a>Business Objects</h4></div></div></div><p>Business objects are complex types with one ore more attributes. Attibutes have a name, 
+						a type with a version constraint if it is a business object or enumeration, an 
+						optional many cardinality and some other optional flags.</p></div><div class="section" title="Enumerations"><div class="titlepage"><div><div><h4 class="title"><a name="N100EC"></a>Enumerations</h4></div></div></div><p>Enumerations declare all possible values that an attribute or parameter of
+						that type may have.</p></div><div class="section" title="Exceptions"><div class="titlepage"><div><div><h4 class="title"><a name="N100F1"></a>Exceptions</h4></div></div></div><p>As in many programming languages, exceptions describe an unexpected 
+						behaviour or erro condition.</p></div></div><div class="section" title="Runtime environment"><div class="titlepage"><div><div><h3 class="title"><a name="EnvironmentPerspective"></a>Runtime environment</h3></div></div></div><p>The environment defines, what makes up the IT infrastructure
+					that hosts services and solutions. Typical parts of an environment
+					are hosts, application servers, databases and so on. Typically a
+					company has a production, test and a development environment.</p></div><div class="section" title="Service binding"><div class="titlepage"><div><div><h3 class="title"><a name="BindingPerspective"></a>Service binding</h3></div></div></div><p>The binding perspective wires services to an environment, where they are 
+					supposed to be hosted together. It defines protocols, servers hosting the services 
+					(and implicitly their endpoints) as well as assigned SLAs and policies like 
+					security policies.</p><div class="mediaobject" align="center"><img src="images/CoreDSLs.png" align="middle"></div><p>
+					Every binding declares what it binds from the service model to which environment. 
+					Bindings can be declared on three levels with regard to the service model:
+					</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><code class="classname">DomainBinding</code> references a namespace 
+							(domain namespace or internal namespace) from service model. DomainBindings 
+							are always toplevel binding in the binding model and have name to be referable
+						</li><li class="listitem"><code class="classname">ServiceBinding</code> refers to a specific service 
+							by name and a version constraint. <code class="classname">ServiceBindings</code> override 
+							the definitions of the surrounding <code class="classname">DomainBinding</code></li><li class="listitem"><code class="classname">OperationBinding</code>s refer to a specific service 
+							operation with the fullqualified name of the operation and version constraint 
+							selecting the owning service. Definitions from a surrounding 
+							<code class="classname">ServiceBinding</code> will overridden.
+						</li></ul></div><p>
+				</p><p>The perspective supports convention over configuration
+					in that one would define a default binding configuration for a certain namespace. 
+					The defaults may the be overridden for a specific service or even a 
+					specific operation of a service.</p></div><div class="section" title="Service level agreements"><div class="titlepage"><div><div><h3 class="title"><a name="SLAPerspective"></a>Service level agreements</h3></div></div></div><p>Service Level Agreement can be declared in a SLA model. Service Level Agreement declare
+					properties properties like service availability, maximum downtimes, responsible service owners
+					and so on. SLAs are generally scoped to an environment. Hence, SLAs must be assigned to a 
+					namespace or service in the binding model. As each binding is scoped to an environment, assigned
+					SLAs are implicitly scoped to the environment for which the respective binding has
+					been declared</p></div></div></body></html>

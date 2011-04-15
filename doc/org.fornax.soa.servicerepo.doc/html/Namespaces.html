@@ -1,0 +1,60 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Namespaces</title><link href="book.css" rel="stylesheet" type="text/css"><meta content="DocBook XSL Stylesheets V1.75.2" name="generator"><style type="text/css">
+body { background-image: url('http://docbook.sourceforge.net/release/images/draft.png');
+       background-repeat: no-repeat;
+       background-position: top left;
+       /* The following properties make the watermark "fixed" on the page. */
+       /* I think that's just a bit too distracting for the reader... */
+       /* background-attachment: fixed; */
+       /* background-position: center center; */
+     }</style><link rel="home" href="index.html" title="Xtext Service Repository User Manual"><link rel="up" href="ServiceDSL.html" title="Chapter&nbsp;1.&nbsp;Service DSL"><link rel="prev" href="ServiceDslFile.html" title="Service DSL file structure"><link rel="next" href="DataTypes.html" title="Types"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="Namespaces"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="Namespaces"></a>Namespaces</h2></div></div></div><div class="section" title="Organization Namespace"><div class="titlepage"><div><div><h3 class="title"><a name="N1013D"></a>Organization Namespace</h3></div></div></div>
+				Organization Namespaces are toplevel namespaces like <code class="code">com.example</code>. They reflect
+				a company, organization or top level unit of a company. Organization Namespaces are
+				used as host part in namespace URIs in reversed order, e.g. <code class="code">http://example.com/</code>
+				Organization Namespace should declare a short name which might be used as namespace prefix or
+				part of a file name.
+			</div><div class="section" title="Domain Namespace"><div class="titlepage"><div><div><h3 class="title"><a name="N10147"></a>Domain Namespace</h3></div></div></div>
+				A Domain Namespace contains a canonical datamodel as well as related public services for a certain 
+				logical subdomain. Usually a service DSL file declares a single Domain Namespace and no Domain Namespaces
+				are nested in that file within the declared Domain Namespace. Instead subnamespaces will be declared in
+				separate file having their namespace name prefixed with with the names of all their parnet Domain
+				Namespaces. Hence parent-child relationships of Domain Namespaces are built by apply this 
+				naming convention. Dots are used as separators.
+				<div class="example"><a name="N1014B"></a><p class="title"><b>Example&nbsp;1.1.&nbsp;</b></p><div class="example-contents"><p>
+					Be <code class="code">product</code> the top level of all subnamespace related to customers. Then 
+					<code class="code">customer.contract</code> would declare the subnamespace <code class="code">contract</code> as subnamespace
+					of <code class="code">customer</code>. If <code class="code">org.example</code> would be the top level Organization Namespace 
+					containing these Domain Namespaces, the full qualified name would be: 
+					<code class="code">org.example.customer.contract</code>. The resulting namespace URI woud look like: <code class="code">http://example.org/customer/contract</code>
+					</p><p>
+					The resp. declarations with Service DSL would look like:</p><a name="topleveldomains"></a><pre class="programlisting">
+	org-namespace com.example shortname "ex" {
+						
+		domain-namespace customer shortname "cust" {
+			metadata {
+			}
+						    
+		}
+	}
+					</pre><p>And it's subdomain:</p><a name="domainNamespaceListing"></a><pre class="programlisting">
+	org-namespace com.example shortname "ex" {
+						
+		domain-namespace customer.contract shortname "ct" {
+			metadata {
+			}
+					    
+		}
+	}
+					</pre></div></div><br class="example-break"></div><div class="section" title="Internal Namespace"><div class="titlepage"><div><div><h3 class="title"><a name="N10171"></a>Internal Namespace</h3></div></div></div><p> An internal namespace contains <a class="xref" href="Services.html#PrivateService" title="Private services">the section called &ldquo;Private services&rdquo;</a> 
+				and non canonical datamodel, i.e. internal parts of the infrastructure the may change frequently. 
+				Datatypes declared in an internal namespace are being considered noncanonical.  
+				Services defined in an internal namespace should be marked <span class="emphasis"><em>private</em></span>. An internal
+				namespace is declared like this:</p><div class="example"><a name="N1017E"></a><p class="title"><b>Example&nbsp;1.2.&nbsp;</b></p><div class="example-contents"><a name="internalNamespaceListing"></a><pre class="programlisting">
+	org-namespace com.example shortname "ex" {
+						
+		internal-namespace customer.contract.internal.backend shortname "ctback" {
+			metadata {
+			}
+						    
+		}
+	}
+					</pre></div></div><br class="example-break"></div></div></body></html>
