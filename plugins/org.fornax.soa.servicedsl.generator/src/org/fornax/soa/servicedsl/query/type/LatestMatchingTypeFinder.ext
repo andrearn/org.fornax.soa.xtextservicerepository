@@ -11,13 +11,35 @@ extension org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder
 extension org::fornax::soa::servicedsl::query::type::TypesByMajorVersion;
 
 
+VersionedType selectLatestMatchingType (AbstractVersionedTypeRef ref) : {};
+
 VersionedType selectLatestMatchingType (VersionedTypeRef ref) :
 	ref.type;
 	
+VersionedType selectLatestMatchingType (BusinessObjectRef ref) :
+	ref.type;
+	
+VersionedType selectLatestMatchingType (EnumTypeRef ref) :
+	ref.type;
+	
+
 sOAProfileDsl::VersionedType selectLatestMatchingType (sOAProfileDsl::VersionedTypeRef ref) :
 	ref.type;
 
+
+VersionedType selectLatestMatchingType (AbstractVersionedTypeRef ref, LifecycleState minState) : {};
+
 VersionedType selectLatestMatchingType (VersionedTypeRef ref, LifecycleState minState) :
+	ref.type.getSubdomain().types.typeSelect(VersionedType).reject(e| ! e.state.matchesMinStateLevel(minState))
+	.select (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
+	.sortBy(e|e.version.version).last();
+	
+VersionedType selectLatestMatchingType (BusinessObjectRef ref, LifecycleState minState) :
+	ref.type.getSubdomain().types.typeSelect(VersionedType).reject(e| ! e.state.matchesMinStateLevel(minState))
+	.select (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
+	.sortBy(e|e.version.version).last();
+
+VersionedType selectLatestMatchingType (EnumTypeRef ref, LifecycleState minState) :
 	ref.type.getSubdomain().types.typeSelect(VersionedType).reject(e| ! e.state.matchesMinStateLevel(minState))
 	.select (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
 	.sortBy(e|e.version.version).last();

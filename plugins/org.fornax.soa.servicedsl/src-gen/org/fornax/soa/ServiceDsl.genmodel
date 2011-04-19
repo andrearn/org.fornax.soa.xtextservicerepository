@@ -102,24 +102,25 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObject/replaces"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObject/properties"/>
     </genClasses>
-    <genClasses ecoreClass="ServiceDsl.ecore#//TypeRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//TypeRef/many"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//TypeRef/set"/>
-    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//TypeRef"/>
     <genClasses ecoreClass="ServiceDsl.ecore#//DataTypeRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//DataTypeRef/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//DataTypeRef/many"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//DataTypeRef/set"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//AbstractVersionedTypeRef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//AbstractVersionedTypeRef/versionRef"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//VersionedTypeRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedTypeRef/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedTypeRef/versionRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedTypeRef/many"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedTypeRef/set"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//EnumTypeRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//EnumTypeRef/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//EnumTypeRef/versionRef"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//BusinessObjectRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObjectRef/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObjectRef/versionRef"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//Property">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/doc"/>

@@ -30,7 +30,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomain
 	svc.operations.throws.getLatestMatchingException().reject(e|e==null).createVersionedDomainNamespace()).toSet();
 
 /**
- *	Calculate all dependencies of the given Service version ans LifecycleState. Dependencies must match
+ *	Calculate all dependencies of the given Service version and LifecycleState. Dependencies must match
  *	the given minimal LifecycleState
  *	@deprecated ?
  *
@@ -72,7 +72,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
  */
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (SubNamespace s, String nameSpaceMajorVersion, LifecycleState minState) :
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (BusinessObject)
-	.allReferencedVersionedTypes(minState).createVersionedDomainNamespace()
+	.allReferencedVersionedTypes (minState).createVersionedDomainNamespace()
 	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
 	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).superException.reject(e|e == null).getLatestMatchingException().createVersionedDomainNamespace());
 

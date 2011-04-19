@@ -53,7 +53,7 @@
 «DEFINE XSDVersion(LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
 «FILE getFileNameFragment() + ".xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema xmlns:tns="«toNamespace()»"
-	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS (minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 
+	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS (minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
 	targetNamespace="«toNamespace()»"
