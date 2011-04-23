@@ -38,7 +38,7 @@
 					</para>
 					<para>
 					The resp. declarations with Service DSL would look like:</para>
-					<programlisting id="topleveldomains" language="ServiceDSL" format="1">
+					<programlisting id="topleveldomains" language="service-dsl" format="1">
 	org-namespace com.example shortname "ex" {
 						
 		domain-namespace customer shortname "cust" {
@@ -49,7 +49,7 @@
 	}
 					</programlisting>
 					<para>And it's subdomain:</para>
-					<programlisting id = "domainNamespaceListing" language="ServiceDSL" format="2">
+					<programlisting id = "domainNamespaceListing" language="service-dsl" format="2">
 	org-namespace com.example shortname "ex" {
 						
 		domain-namespace customer.contract shortname "ct" {
@@ -72,7 +72,7 @@
 				Services defined in an internal namespace should be marked <emphasis>private</emphasis>. An internal
 				namespace is declared like this:</para>
 				<example>
-					<programlisting id = "internalNamespaceListing" language="ServiceDSL" format="2">
+					<programlisting id = "internalNamespaceListing" language="service-dsl" format="2">
 	org-namespace com.example shortname "ex" {
 						
 		internal-namespace customer.contract.internal.backend shortname "ctback" {
@@ -91,6 +91,31 @@
 				<title>BusinessObjects</title>
 				BusinessObject are user defined complex datatypes capturing business data. BusinessObject are versioned and have a lifecycle state. 
 				The actual data are represented by one or more properties, that have name and a datatype.
+				
+				<example>
+					<programlisting language="service-dsl" format="2">
+		businessObject AbstractProduct {
+			metadata {
+				version 1.0;
+				lifecycle-state test;
+				governance-approval {
+					yes;
+					approval-date "20.04.2011";
+					approved-by "Anna Jacobson";
+				}
+			}
+			business-key productId : string;
+			name : string;
+			price : AbstractPrice majorVersion 1;
+			category : string;
+			optional vendor : string;
+		}
+					</programlisting>
+				</example>
+				
+				<section>
+					<title>Business object meta data</title>
+				</section>
 				
 				<section id="boProperties">
 					<title>Properties</title>
@@ -113,10 +138,10 @@
 							BusinessObjects, Enumerations or DataTypes, i.e. primitive types defined in the SOAProfile. As BusinessObjects and 
 							Enumerations are versioned, the type reference of the attribute must declare a version constraint.</para>
 							<example>
-								<programlisting id="simpleTypeAttribute" language="ServiceDSL" format="2">
+								<programlisting id="simpleTypeAttribute" language="service-dsl" format="2">
 	firstname : string;
 								</programlisting>
-								<programlisting id="boTypeAttribute" language="ServiceDSL" format="2">
+								<programlisting id="boTypeAttribute" language="service-dsl" format="2">
 	contract : Contract majorVersion 1;
 								</programlisting>
 							</example> 
@@ -125,14 +150,14 @@
 							<title>Cardinality</title>
 							Properties may be marked optional by using the keyword <code>optional</code> in front of the property name.
 							<example>
-								<programlisting id="optionalAttribute" language="ServiceDSL" format="2">
+								<programlisting id="optionalAttribute" language="service-dsl" format="2">
 	optional firstname : string
 								</programlisting>
 								firstname may be left empty / null 
 							</example>
 							Properties may also have a collection type:
 							<example>
-								<programlisting id="listAttribute" language="ServiceDSL" format="2">
+								<programlisting id="listAttribute" language="service-dsl" format="2">
 	contracts : Contract [] majorVersion 1;
 								</programlisting>
 								The BusinessObject has a collection of at least one Contract in major version 1.

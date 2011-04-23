@@ -27,6 +27,7 @@
 	<property name="styles.dir" value="${current-loc}/styles" />
 	<property name="css.dir" value="${styles.dir}/css" />
 	<property name="html-css.file" value="${css.dir}/book.css" />
+	<property name="html-code-css.file" value="${css.dir}/code.css" />
 	<property name="images.dir" value="${current-loc}/docbook/images" />
 
     <target name="clean" depends="clean-temporary-artifacts" description="Cleans up generated files.">
@@ -58,6 +59,7 @@
 			</fileset>
 		</copy>
 		<copy file="${html-css.file}" todir="${basedir}/html" />
+		<copy file="${html-code-css.file}" todir="${basedir}/html" />
         <xslt force="true" style="${docbookdir}" in="${docbooksource-tmp}/manualcombined.xml" out="xslt-output.xml">
             <factory name="${xalan}" />
             <param name="manifest" expression="0"/>
