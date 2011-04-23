@@ -55,6 +55,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
 
 
 
+List[serviceDsl::VersionedType] allReferencedVersionedTypes (sOABaseDsl::AbstractType t) : {};
 List[serviceDsl::VersionedType] allReferencedVersionedTypes (serviceDsl::Type t) : {};
 
 List[sOAProfileDsl::VersionedType] allReferencedVersionedTypes (sOAProfileDsl::Type t) : {};

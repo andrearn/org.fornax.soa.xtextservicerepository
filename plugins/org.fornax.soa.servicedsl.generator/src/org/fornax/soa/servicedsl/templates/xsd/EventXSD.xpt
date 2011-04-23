@@ -25,6 +25,9 @@
 	«FOREACH getImportedSubdomains().select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
 	xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 	«ENDFOREACH-»
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
+	>
 	«FOREACH getImportedSubdomains().select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
 	<xsd:import schemaLocation="«imp.getRegisteredUrl(registryBaseUrl)».xsd"
 		namespace="«imp.toNamespace()»"/>
@@ -54,6 +57,8 @@
 	«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
 	xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
 	«ENDFOREACH-»
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
 	>
 	«FOREACH getImportedSubdomains().select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
 	<xsd:import schemaLocation="«imp.getFileNameFragment()».xsd"

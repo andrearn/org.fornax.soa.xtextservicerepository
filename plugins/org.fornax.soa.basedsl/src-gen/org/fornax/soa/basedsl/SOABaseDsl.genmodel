@@ -41,5 +41,8 @@
     <genClasses ecoreClass="SOABaseDsl.ecore#//MajorVersionRef">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//MajorVersionRef/majorVersion"/>
     </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//AbstractType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//AbstractType/name"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

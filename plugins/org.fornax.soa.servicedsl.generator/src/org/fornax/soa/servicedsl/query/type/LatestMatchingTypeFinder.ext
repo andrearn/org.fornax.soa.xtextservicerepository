@@ -10,7 +10,6 @@ extension org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder;
 extension org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder;
 extension org::fornax::soa::servicedsl::query::type::TypesByMajorVersion;
 
-
 VersionedType selectLatestMatchingType (AbstractVersionedTypeRef ref) : {};
 
 VersionedType selectLatestMatchingType (VersionedTypeRef ref) :
@@ -114,7 +113,7 @@ serviceDsl::Type getLatestMatchingType (TypeRef t) : null;
 serviceDsl::Type getLatestMatchingType (serviceDsl::VersionedTypeRef t) : 
 	t.type.getSubdomain ().types.
 		select (
-			e|e.name == t.type.name && 
+			e|e.getTypeName() == t.type.getTypeName() && 
 			t.type.version.versionMatches (t.versionRef)
 		)
 		.typeSelect (VersionedType)
@@ -123,7 +122,7 @@ serviceDsl::Type getLatestMatchingType (serviceDsl::VersionedTypeRef t) :
 serviceDsl::Type getLatestMatchingType (serviceDsl::BusinessObjectRef t) : 
 	t.type.getSubdomain ().types.
 		select (
-			e|e.name == t.type.name && 
+			e|e.getTypeName() == t.type.getTypeName() && 
 			t.type.version.versionMatches (t.versionRef)
 		)
 		.typeSelect (BusinessObject)
@@ -132,7 +131,7 @@ serviceDsl::Type getLatestMatchingType (serviceDsl::BusinessObjectRef t) :
 serviceDsl::Type getLatestMatchingType (serviceDsl::EnumTypeRef t) : 
 	t.type.getSubdomain ().types.
 		select (
-			e|e.name == t.type.name && 
+			e|e.getTypeName() == t.type.getTypeName() && 
 			t.type.version.versionMatches (t.versionRef)
 		)
 		.typeSelect (Enumeration)
@@ -157,7 +156,7 @@ serviceDsl::Type getLatestMatchingType (TypeRef t, LifecycleState minState) : nu
 serviceDsl::Type getLatestMatchingType (serviceDsl::VersionedTypeRef t, LifecycleState minState) : 
 	t.type.getSubdomain ().types.
 		select (
-			e|e.name == t.type.name && 
+			e|e.getTypeName() == t.type.getTypeName() && 
 			t.type.version.versionMatches (t.versionRef) && 
 			t.type.state.matchesMinStateLevel(minState)
 		)
@@ -167,7 +166,7 @@ serviceDsl::Type getLatestMatchingType (serviceDsl::VersionedTypeRef t, Lifecycl
 serviceDsl::Type getLatestMatchingType (serviceDsl::BusinessObjectRef t, LifecycleState minState) : 
 	t.type.getSubdomain ().types.
 		select (
-			e|e.name == t.type.name && 
+			e|e.getTypeName() == t.type.getTypeName() && 
 			t.type.version.versionMatches (t.versionRef) && 
 			t.type.state.matchesMinStateLevel(minState)
 		)
@@ -177,7 +176,7 @@ serviceDsl::Type getLatestMatchingType (serviceDsl::BusinessObjectRef t, Lifecyc
 serviceDsl::Type getLatestMatchingType (serviceDsl::EnumTypeRef t, LifecycleState minState) : 
 	t.type.getSubdomain ().types.
 		select (
-			e|e.name == t.type.name && 
+			e|e.getTypeName() == t.type.getTypeName() && 
 			t.type.version.versionMatches (t.versionRef) && 
 			t.type.state.matchesMinStateLevel(minState)
 		)
@@ -186,3 +185,7 @@ serviceDsl::Type getLatestMatchingType (serviceDsl::EnumTypeRef t, LifecycleStat
 
 serviceDsl::Type getLatestMatchingType (serviceDsl::DataTypeRef t, LifecycleState minState) : 
 	t.type ;
+
+String getTypeName (serviceDsl::Type t) : null;
+String getTypeName (serviceDsl::VersionedType t) : t.name;
+String getTypeName (sOABaseDsl::AbstractType t) :t.name;

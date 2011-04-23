@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+Syntax highlighting definition for Service DSL
+
+xslthl - XSLT Syntax Highlighting
+http://sourceforge.net/projects/xslthl/
+Copyright (C) 2005-2008 Michal Molhanec, Jirka Kosek, Michiel Hendriks
+
+This software is provided 'as-is', without any express or implied
+warranty.  In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+2. Altered source versions must be plainly marked as such, and must not be
+   misrepresented as being the original software.
+3. This notice may not be removed or altered from any source distribution.
+
+Michal Molhanec <mol1111 at users.sourceforge.net>
+Jirka Kosek <kosek at users.sourceforge.net>
+Michiel Hendriks <elmuerte at users.sourceforge.net>
+
+-->
+<highlighters>
+	<highlighter type="multiline-comment">
+		<start>/**</start>
+		<end>*/</end>
+		<style>doccomment</style>
+	</highlighter>
+	<highlighter type="multiline-comment">
+		<start>/*</start>
+		<end>*/</end>
+	</highlighter>
+	<highlighter type="oneline-comment">//</highlighter>
+	<highlighter type="string">
+		<string>"</string>
+		<escape>\</escape>
+	</highlighter>
+	<highlighter type="string">
+		<string>'</string>
+		<escape>\</escape>
+	</highlighter>
+	<highlighter type="annotation">
+		<start>@</start>
+		<valueStart>(</valueStart>
+		<valueEnd>)</valueEnd>
+	</highlighter>
+	<highlighter type="hexnumber">
+		<prefix>0x</prefix>
+		<ignoreCase />
+	</highlighter>
+	<highlighter type="number">
+		<point>.</point>
+		<exponent>e</exponent>
+		<suffix>f</suffix>
+		<suffix>d</suffix>
+		<suffix>l</suffix>
+		<ignoreCase />
+	</highlighter>
+	<highlighter type="keywords">
+		<keyword>abstract</keyword>
+		<keyword>approval-date</keyword>
+		<keyword>approved-by</keyword>
+		<keyword>async</keyword>
+		<keyword>business-key</keyword>
+		<keyword>businessObject</keyword>
+		<keyword>channel</keyword>
+		<keyword>can-compensate</keyword>
+		<keyword>domain</keyword>
+		<keyword>domain-namespace</keyword>
+		<keyword>exception</keyword>
+		<keyword>extends</keyword>
+		<keyword>fire+forget</keyword>
+		<keyword>governance-approval</keyword>
+		<keyword>internal-namespace</keyword>
+		<keyword>lifecycle-state</keyword>
+		<keyword>maxVersion</keyword>
+		<keyword>majorVersion</keyword>
+		<keyword>metadata</keyword>
+		<keyword>minVersion</keyword>
+		<keyword>no</keyword>
+		<keyword>oneway</keyword>
+		<keyword>optional</keyword>
+		<keyword>org</keyword>
+		<keyword>persistence</keyword>
+		<keyword>private</keyword>
+		<keyword>public</keyword>
+		<keyword>release on</keyword>
+		<keyword>realizes function</keyword>
+		<keyword>returns</keyword>
+		<keyword>statefulness</keyword>
+		<keyword>short</keyword>
+		<keyword>service</keyword>
+		<keyword>service-category</keyword>
+		<keyword>sync</keyword>
+		<keyword>synchronized</keyword>
+		<keyword>service-owner</keyword>
+		<keyword>throws</keyword>
+		<keyword>version</keyword>
+		<keyword>weak-ref</keyword>
+		<keyword>yes</keyword>
+	</highlighter>
+</highlighters>

@@ -9,12 +9,10 @@ extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 
 List[org::fornax::soa::serviceDsl::Type] typesWithMinState (SubNamespace ns, LifecycleState state) :
 	ns.types.typeSelect(BusinessObject).select(e|e.state.matchesMinStateLevel (state)).
-	union (ns.types.typeSelect (Enumeration).select(e|e.state.matchesMinStateLevel (state))).
-	union (ns.types.typeSelect (DataType));
+	union (ns.types.typeSelect (Enumeration).select(e|e.state.matchesMinStateLevel (state)));
 	
 List[org::fornax::soa::serviceDsl::Type] typesWithMinState (sOAProfileDsl::TechnicalNamespace ns, LifecycleState state) :
-	ns.types.typeSelect(sOAProfileDsl::VersionedType).
-	union (ns.types.typeSelect (DataType));
+	ns.types.typeSelect(sOAProfileDsl::VersionedType);
 
 List[org::fornax::soa::serviceDsl::Type] typesWithMinState (Object ns, LifecycleState state) : null;
 

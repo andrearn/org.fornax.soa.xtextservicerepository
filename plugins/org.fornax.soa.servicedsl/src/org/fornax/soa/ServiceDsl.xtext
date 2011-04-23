@@ -76,15 +76,12 @@ LinkingPolicy :
 	'}';
 	
 Type:
-	DataType | VersionedType;
+	VersionedType;
 
 VersionedType:
 	BusinessObject | Enumeration;
 		
-DataType hidden(WS):
-	(doc=ML_COMMENT)?
-	'datatype' name=ID ('extends' base=[DataType] 'scope' scope=STRING)?';' ;
-	
+
 BusinessObject hidden(WS):
 	(doc=ML_COMMENT)?
 	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superBusinessObject=BusinessObjectRef)? '{' 
@@ -193,8 +190,8 @@ GovernanceApproval:
 	'governance-approval' '{'
 		decision=ApprovalDecision ';'
 		('justification-doc' justificationOrDocURL=STRING ';')?
-		('approval-date' approvalDate=STRING ';')? 
-		('approved-by' approvedBy=STRING ';')?
+		('decision-date' approvalDate=STRING ';')? 
+		('decision-by' approvedBy=STRING ';')?
 	'}'; 
 	
 enum ApprovalDecision: no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated;

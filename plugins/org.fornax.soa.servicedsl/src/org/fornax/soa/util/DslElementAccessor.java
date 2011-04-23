@@ -15,7 +15,7 @@ public class DslElementAccessor {
 		if (candiate.eContainer() == null)
 			return candiate;
 		if (candiate instanceof BusinessObject) {
-				return candiate;
+			return candiate;
 		} else if (candiate instanceof Enumeration) {
 			return candiate;
 		} else if (candiate instanceof VersionedType) {

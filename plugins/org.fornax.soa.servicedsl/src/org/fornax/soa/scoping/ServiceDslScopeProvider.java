@@ -54,6 +54,7 @@ import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilteredMapScope;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.EventRef;
@@ -130,6 +131,7 @@ public class ServiceDslScopeProvider extends ImportedNamespaceAwareLocalScopePro
 			return scope_VersionedTypeRef_type ((VersionedTypeRef) ctx, reference);
 		} else if (reference==ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE && ctx instanceof BusinessObjectRef) {
 			return scope_BusinessObjectRef_type ((BusinessObjectRef) ctx, reference);
+		//FIXME verify this ref
 		} else if (reference==ServiceDslPackage.Literals.BUSINESS_OBJECT__SUPER_BUSINESS_OBJECT && ctx instanceof BusinessObjectRef) {
 			return scope_BusinessObjectRef_type ((BusinessObjectRef) ctx, reference);
 		} else if (reference == ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE && ctx instanceof EnumTypeRef) {
@@ -155,33 +157,33 @@ public class ServiceDslScopeProvider extends ImportedNamespaceAwareLocalScopePro
 
 	IScope scope_VersionedTypeRef_type (final VersionedTypeRef ctx, final EReference ref) {
 		final VersionRef v = ctx.getVersionRef();
-		filter = createVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		filter = createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		IScope result = getScope(ctx, ref, filter);
 		return result;
 	}
 	
 	IScope scope_BusinessObjectRef_type (final BusinessObjectRef ctx, final EReference ref) {
 		final VersionRef v = ctx.getVersionRef();
-		filter = createVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		filter = createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		IScope result = getScope(ctx, ref, filter);
 		return result;
 	}
 	
 	IScope scope_EnumTypeRef_type (EnumTypeRef ctx, final EReference ref) {
 		final VersionRef v = ctx.getVersionRef();
-		filter = createVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		filter = createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		return getScope(ctx, ref, filter);
 	}
 	
 	IScope scope_ServiceRef_service (ServiceRef ctx, final EReference ref) {
 		final VersionRef v = ctx.getVersionRef();
-		filter = createVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		filter = createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		return getScope(ctx, ref, filter);
 	}
 	
 	IScope scope_ExceptionRef_exception (ExceptionRef ctx, EReference ref) {
 		final VersionRef v = ctx.getVersion();
-		filter = createVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		filter = createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		return getScope(ctx, ref, filter);
 	}
 	

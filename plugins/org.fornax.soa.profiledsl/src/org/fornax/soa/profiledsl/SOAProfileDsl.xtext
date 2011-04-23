@@ -113,9 +113,9 @@ MessageHeaderRef:
 
 Type : DataType | VersionedType;
 
-DataType: 
+DataType hidden(WS):
 	(doc=ML_COMMENT)?
-	'datatype' name=ID ';';
+	'datatype' name=ID ('extends' base=[DataType] 'scope' scope=STRING)?';' ;
 	
 VersionedType:	Enumeration | Class;
 

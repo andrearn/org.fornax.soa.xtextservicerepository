@@ -35,4 +35,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="MajorVersionRef" eSuperTypes="#//VersionRef">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="majorVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractType">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

@@ -8,11 +8,18 @@ import org.fornax.soa.serviceDsl.Property;
 
 public class BusinessObjectQueryHelper {
 
-	public static List<Property> getAllInheritedProperties (BusinessObject bo) {
+	public static List<Property> getAllVisibleProperties (final BusinessObject bo) {
+		List<Property> props = new ArrayList<Property>();
+		props.addAll (bo.getProperties());
+		props.addAll (getAllInheritedProperties(bo));
+		return props;
+	}
+	
+	public static List<Property> getAllInheritedProperties (final BusinessObject bo) {
 		return collectAllInheritedProperties (bo, new ArrayList<Property>());
 	}
 	
-	private static List<Property> collectAllInheritedProperties (BusinessObject bo, List<Property> props) {
+	private static List<Property> collectAllInheritedProperties (final BusinessObject bo, List<Property> props) {
 		if (props == null)
 			props = new ArrayList<Property> ();
 		if  (bo.getSuperBusinessObject() != null) {

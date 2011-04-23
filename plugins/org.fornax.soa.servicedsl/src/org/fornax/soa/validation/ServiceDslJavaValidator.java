@@ -119,14 +119,15 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkWeakRefHasBusinessKey (BusinessObjectRef b) {
+	public void checkWeakRefHasBusinessKey (final BusinessObjectRef b) {
 		if (b.eContainer() instanceof Reference) {
-			List<Property> props = b.getType().getProperties();
+			List<Property> props = new ArrayList<Property>();
+			props.addAll (b.getType().getProperties());
 			props.addAll (BusinessObjectQueryHelper.getAllInheritedProperties (b.getType()));
 			
 			Iterable<Property> keys = Iterables.filter(props, new Predicate<Property> () {
 	
-				public boolean apply(Property input) {
+				public boolean apply(final Property input) {
 					// TODO Auto-generated method stub
 					return input.isIsBusinessKey();
 				}
@@ -140,14 +141,15 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 	
 	@Check
-	public void checkWeakRefHasBusinessKey (VersionedTypeRef b) {
+	public void checkWeakRefHasBusinessKey (final VersionedTypeRef b) {
 		if (b.eContainer() instanceof Reference && b.getType() instanceof BusinessObject) {
-			List<Property> props = ((BusinessObject)b.getType()).getProperties();
+			List<Property> props = new ArrayList<Property>();
+			props.addAll (((BusinessObject)b.getType()).getProperties());
 			props.addAll (BusinessObjectQueryHelper.getAllInheritedProperties ((BusinessObject) b.getType()));
 
 			Iterable<Property> keys = Iterables.filter (props, new Predicate<Property> () {
 	
-				public boolean apply(Property input) {
+				public boolean apply(final Property input) {
 					// TODO Auto-generated method stub
 					return input.isIsBusinessKey();
 				}
@@ -161,11 +163,11 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 	
 	@Check
-	public void checkWeakRefTargetDefinesOnlyOneBusinessKey (BusinessObjectRef b) {
+	public void checkWeakRefTargetDefinesOnlyOneBusinessKey (final BusinessObjectRef b) {
 		if (b.eContainer() instanceof Reference) {
 			Iterable<Property> keys = Iterables.filter(b.getType().getProperties(), new Predicate<Property> () {
 	
-				public boolean apply(Property input) {
+				public boolean apply(final Property input) {
 					// TODO Auto-generated method stub
 					return input.isIsBusinessKey();
 				}
@@ -180,11 +182,11 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 	
 	@Check
-	public void checkWeakRefTargetDefinesOnlyOneBusinessKey (VersionedTypeRef b) {
+	public void checkWeakRefTargetDefinesOnlyOneBusinessKey (final VersionedTypeRef b) {
 		if (b.eContainer() instanceof Reference && b.getType() instanceof BusinessObject) {
 			Iterable<Property> keys = Iterables.filter(((BusinessObject)b.getType()).getProperties(), new Predicate<Property> () {
 	
-				public boolean apply(Property input) {
+				public boolean apply(final Property input) {
 					// TODO Auto-generated method stub
 					return input.isIsBusinessKey();
 				}

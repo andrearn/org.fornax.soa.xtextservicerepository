@@ -114,7 +114,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Type/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Type/name"/>
     </genClasses>
-    <genClasses ecoreClass="SOAProfileDsl.ecore#//DataType"/>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//DataType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//DataType/base"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//DataType/scope"/>
+    </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//VersionedType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//VersionedType/version"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//VersionedType/replaces"/>

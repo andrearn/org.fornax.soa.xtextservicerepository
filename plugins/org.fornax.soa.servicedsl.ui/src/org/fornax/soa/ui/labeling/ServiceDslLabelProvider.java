@@ -6,13 +6,11 @@ package org.fornax.soa.ui.labeling;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
-import org.eclipse.xtext.service.AbstractGenericModule;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.basedsl.sOABaseDsl.Import;
 import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
-import org.fornax.soa.serviceDsl.DataType;
 import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
@@ -69,10 +67,6 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	String image (Enumeration ele) {
 		return "full/obj16/enum_obj.gif";
-	}
-	
-	String image (DataType ele) {
-		return "full/obj16/datatype_obj.gif";
 	}
 	
 	Object text (org.fornax.soa.serviceDsl.Exception ele) {

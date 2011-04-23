@@ -56,6 +56,8 @@
 <xsd:schema xmlns:tns="«toNamespace()»"
 	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS ().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
 	targetNamespace="«toNamespace()»"
 	>
 	«EXPAND ImportDeclaration FOREACH allImportedVersionedNS().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 	
@@ -73,6 +75,8 @@
 <xsd:schema xmlns:tns="«toNamespace()»"
 	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS ().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified"
 	targetNamespace="«toNamespace()»"
 	>
 	«EXPAND ImportDeclaration (registryBaseUrl) FOREACH allImportedVersionedNS().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 	

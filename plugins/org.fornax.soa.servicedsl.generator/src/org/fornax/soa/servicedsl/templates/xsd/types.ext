@@ -7,6 +7,7 @@ extension org::fornax::soa::basedsl::version::versionQualifying;
 
 extension org::fornax::soa::servicedsl::domain::splitting;
 extension org::fornax::soa::servicedsl::query::exceptions;
+extension org::fornax::soa::servicedsl::query::type::BusinessObjectQueries;
 extension org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder;
 extension org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder;
 extension org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder;
@@ -184,11 +185,27 @@ boolean isAttachment (DataTypeRef t) :
 /*
  * Resolve the type name of weak type reference, i.e. return the type name referenced type's businessKey
  */ 
-String getWeakRefType(TypeRef t) : t.getTypeNameRef();
-String getWeakRefType(VersionedTypeRef t) : (BusinessObject.isInstance(t.getLatestMatchingType())) ? ((BusinessObject)t.getLatestMatchingType()).properties.select(e|e.isBusinessKey).typeSelect(Attribute).get(0).type.getTypeNameRef() : t.getTypeNameRef();
-String getWeakRefType(BusinessObjectRef t) : ((BusinessObject)t.getLatestMatchingType()).properties.select(e|e.isBusinessKey).typeSelect(Attribute).get(0).type.getTypeNameRef();
-String getWeakRefKeyAttr(TypeRef t) : null;
-String getWeakRefKeyAttr(BusinessObjectRef t) : ((BusinessObject)t.getLatestMatchingType()).properties.select(e|e.isBusinessKey).typeSelect(Attribute).get(0).name;
+String getWeakRefType(serviceDsl::TypeRef t) : t.getTypeNameRef();
+String getWeakRefType(serviceDsl::VersionedTypeRef t) : (BusinessObject.isInstance(t.getLatestMatchingType())) ? ((BusinessObject)t.getLatestMatchingType()).properties.select(e|e.isBusinessKey).typeSelect(Attribute).get(0).type.getTypeNameRef() : t.getTypeNameRef();
+String getWeakRefType(serviceDsl::BusinessObjectRef t) : ((BusinessObject)t.getLatestMatchingType()).properties.select(e|e.isBusinessKey).typeSelect(Attribute).get(0).type.getTypeNameRef();
+String getWeakRefKeyAttr(serviceDsl::TypeRef t) : null;
+String getWeakRefKeyAttr(serviceDsl::BusinessObjectRef t) : ((BusinessObject)t.getLatestMatchingType()).properties.select(e|e.isBusinessKey).typeSelect(Attribute).get(0).name;
+
+String getWeakRefType(serviceDsl::TypeRef t, LifecycleState minState) : t.getTypeNameRef();
+String getWeakRefType(serviceDsl::VersionedTypeRef t, LifecycleState minState) : 
+	(BusinessObject.isInstance(t.getLatestMatchingType(minState)) && 
+	! ((BusinessObject)t.getLatestMatchingType(minState)).getAllVisibleProperties(minState).select(e|e.isBusinessKey).typeSelect(Attribute).isEmpty) ?
+ 		((BusinessObject)t.getLatestMatchingType(minState)).getAllVisibleProperties(minState).select(e|e.isBusinessKey).typeSelect(Attribute).first().type.getTypeNameRef() 
+ 	: t.getTypeNameRef();
+String getWeakRefType(serviceDsl::BusinessObjectRef t, LifecycleState minState) : 
+	! ((BusinessObject)t.getLatestMatchingType(minState)).getAllVisibleProperties(minState).select(e|e.isBusinessKey).typeSelect(Attribute).isEmpty ?
+		((BusinessObject)t.getLatestMatchingType(minState)).getAllVisibleProperties(minState).select(e|e.isBusinessKey).typeSelect(Attribute).first().type.getTypeNameRef()
+	: null;
+String getWeakRefKeyAttr(serviceDsl::TypeRef t, LifecycleState minState) : null;
+String getWeakRefKeyAttr(serviceDsl::BusinessObjectRef t, LifecycleState minState) : 
+	! ((BusinessObject)t.getLatestMatchingType(minState)).getAllVisibleProperties(minState).select(e|e.isBusinessKey).typeSelect(Attribute).isEmpty ?
+		((BusinessObject)t.getLatestMatchingType(minState)).getAllVisibleProperties(minState).select(e|e.isBusinessKey).typeSelect(Attribute).first().name
+	: null;
 	
 	
 String getExceptionNameRef (ExceptionRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 

@@ -45,3 +45,4 @@ QualifiedNameWithWildCard hidden(WS):
 QualifiedName hidden(WS):
 	ID ('.' ID)*;
 
+AbstractType: {AbstractType} name=ID;

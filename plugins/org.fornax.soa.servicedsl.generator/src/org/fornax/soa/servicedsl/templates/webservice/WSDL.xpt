@@ -83,6 +83,8 @@
 			«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
 			xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
 			«ENDFOREACH-»
+			elementFormDefault="qualified"
+			attributeFormDefault="unqualified"
 		>
 			«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
 			<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"

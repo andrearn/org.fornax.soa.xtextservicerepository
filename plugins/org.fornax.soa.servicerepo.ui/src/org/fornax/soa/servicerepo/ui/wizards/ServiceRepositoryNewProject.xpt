@@ -19,5 +19,6 @@ datatype boolean;
 datatype decimal;
 datatype base64Binary;
 datatype binary;
+datatype anyType
 «ENDFILE»
 «ENDDEFINE»

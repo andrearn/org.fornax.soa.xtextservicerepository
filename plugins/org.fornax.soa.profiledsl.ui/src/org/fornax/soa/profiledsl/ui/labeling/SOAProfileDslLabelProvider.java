@@ -5,6 +5,8 @@ package org.fornax.soa.profiledsl.ui.labeling;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
+import org.fornax.soa.profiledsl.sOAProfileDsl.DataType;
+import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader;
 
 import com.google.inject.Inject;
 
@@ -31,4 +33,12 @@ public class SOAProfileDslLabelProvider extends DefaultEObjectLabelProvider {
       return "MyModel.gif";
     }
 */
+	
+	String image (DataType ele) {
+		return "full/obj16/datatype_obj.gif";
+	}
+	
+	String image (MessageHeader ele) {
+		return "full/obj16/message_part.gif";
+	}
 }
