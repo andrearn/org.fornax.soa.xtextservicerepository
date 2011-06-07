@@ -3,6 +3,7 @@ import serviceDsl;
 import environmentDsl;
 
 extension org::fornax::soa::basedsl::version::versionQualifying;
+extension org::fornax::soa::bindingdsl::templates::bindings;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::xsd::domains;
 
@@ -11,7 +12,7 @@ String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace su
 	server.serverType != null ? (
 		switch (server.serverType.toLowerCase()) {
 		case "tomcat": 			tomcatEndpoint (ctxRoot, orgNs, subNs, s, server)
-		case "websphere":		websphereEndpoint (ctxRoot, orgNs, subNs, s, server)
+		case "websphere":		websphereSCAEndpoint (ctxRoot, orgNs, subNs, s, server)
 		case "webmethods":		webmethodsEndpoint (ctxRoot, orgNs, subNs, s, server)
 		case "oraclesb":		oraclesbEndpoint (ctxRoot, orgNs, subNs, s, server)
 		case "weblogic":		weblogicEndpoint (ctxRoot, orgNs, subNs, s, server)
@@ -58,9 +59,10 @@ String tomcatEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace
 	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 
 String websphereEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
-	ctxRoot
-	+ orgNs.name.replaceAll("\\.","/") + "/" 
-	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	subNs.toModuleName (s.version, ctxRoot) + "Web/" + s.name;
+
+String websphereSCAEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
+	subNs.toModuleName (s.version, ctxRoot) + "Web/sca/" + s.name;
 
 String webmethodsEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
 	ctxRoot

@@ -7,6 +7,7 @@ extension org::fornax::soa::basedsl::common;
 extension org::fornax::soa::basedsl::version::versionMatching;
 extension org::fornax::soa::basedsl::version::versionQualifying;
 extension org::fornax::soa::basedsl::lifecycle::stateMatching;
+extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 extension org::fornax::soa::servicedsl::templates::common;
 
 boolean generatePrivateWsdlForProviderHost () : GLOBALVAR generatePrivateWsdlForProviderHost;
@@ -54,4 +55,16 @@ LifecycleState getMinLifecycleState (Environment env, emf::EObject o) :
 	case EnvironmentType::Prod :	o.getOwnerMinProdState()
 	default:						o.getOwnerMinDevState()
 	};
+
+String toModuleName (String moduleBaseName, Version v) :
+		moduleBaseName + "." + v.toVersionPostfix();
+		
+String toModuleName (SubNamespace subNs, Version v) :
+	subNs.getOrgNamespace().prefix + "."  + subNs.name + "." + v.toVersionPostfix();
+		
+String toModuleName (SubNamespace subNs, Version v, String moduleName) :
+	moduleName != null ?
+		moduleName + "." + v.toVersionPostfix()
+	:
+		subNs.getOrgNamespace().prefix + "."  + subNs.name + "." + v.toVersionPostfix();
 	
