@@ -20,5 +20,9 @@ datatype decimal;
 datatype base64Binary;
 datatype binary;
 datatype anyType;
+
+soa-profile ExampleOrgSOA {
+	scope "Example.org";
+}
 «ENDFILE»
 «ENDDEFINE»

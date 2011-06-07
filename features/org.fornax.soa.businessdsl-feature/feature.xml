@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.businessdsl"
       label="SOA Business DSL"
-      version="1.3.0.qualifier"
+      version="1.3.1.qualifier"
       provider-name="Fornax Platform">
 
    <description url="http://www.eclipse.org/modeling/m2t">

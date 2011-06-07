@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.xtext.validation.AbstractDeclarativeValidator;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.eclipse.xtext.validation.ComposedChecks;
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
-import org.fornax.soa.basedsl.sOABaseDsl.Version;
+import org.eclipse.xtext.validation.EValidatorRegistrar;
 import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
 import org.fornax.soa.query.BusinessObjectQueryHelper;
@@ -25,13 +26,15 @@ import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceCategory;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceRef;
-import org.fornax.soa.serviceDsl.SubNamespace;
 import org.fornax.soa.serviceDsl.VISIBILITY;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
+import org.fornax.soa.servicedsl.internal.Activator;
 import org.fornax.soa.util.ReferencedStateChecker;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.internal.Lists;
 
 @ComposedChecks (validators = {
@@ -40,6 +43,9 @@ import com.google.inject.internal.Lists;
 		})
 public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 
+	@Inject
+	private Injector injector;
+	
 	// @Check
 	// public void checkTypeNameStartsWithCapital(Type type) {
 	// if (!Character.isUpperCase(type.getName().charAt(0))) {
@@ -47,6 +53,14 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	// }
 	// }
 
+
+	public void registerExtensions (EValidatorRegistrar registrar, AbstractDeclarativeValidator validator) {
+		List<EPackage> packages = getEPackages();
+		for (EPackage ePackage : packages) {
+			registrar.register(ePackage, validator);
+		}
+	}
+	
 	// Naming
 	@Check
 	public void checkServiceNameStartsWithCapital(Service s) {
