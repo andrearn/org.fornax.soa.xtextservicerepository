@@ -80,9 +80,11 @@
 			«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
 			xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 			«ENDFOREACH-»
+			«IF this.getBestMatchingHeader(profile) != null-»
 			«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
 			xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
 			«ENDFOREACH-»
+			«ENDIF-»
 			elementFormDefault="qualified"
 			attributeFormDefault="unqualified"
 		>
@@ -90,10 +92,12 @@
 			<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
 				namespace="«imp.toNamespace()»"/>
 			«ENDFOREACH-»
+			«IF this.getBestMatchingHeader(profile) != null-»
 			«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
 			<xsd:import schemaLocation="«headerImp.getRegisteredUrl (registryBaseUrl)».xsd"
 				namespace="«headerImp.toNamespace()»"/>
 			«ENDFOREACH-»
+			«ENDIF-»
 			«EXPAND OperationWrapperTypes (profile) FOREACH operations»
 			«EXPAND OperationFaultWrapperTypes(operations.throws) FOREACH operations.throws.exception.name.toSet()»
 		</xsd:schema>
@@ -104,7 +108,9 @@
 			<xsd:element name="«name»">
 				<xsd:complexType>
 					<xsd:sequence>
+						«IF this.getBestMatchingHeader(profile) != null-»
 						«EXPAND Parameter FOR this.getBestMatchingHeader (profile)-»
+						«ENDIF-»
 						«EXPAND Parameter FOREACH parameters-»
 						«IF	fetchProfile.size > 1-»
 						<xsd:element name="fetchProfileName" type="xsd:string" minOccurs="0" maxOccurs="1" />
@@ -122,7 +128,9 @@
 			<xsd:element name="«name»Response">
 				<xsd:complexType>
 					<xsd:sequence>
+						«IF this.getBestMatchingHeader(profile) != null-»
 						«EXPAND Parameter FOR this.getBestMatchingHeader (profile)-»
+						«ENDIF-»
 						«EXPAND Parameter FOREACH return-»
 						«IF profile.operationsUseExtendableParameters()»
 						<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"

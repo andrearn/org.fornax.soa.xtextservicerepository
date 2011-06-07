@@ -36,3 +36,14 @@ SubNamespace getOwnerSubdomain (serviceDsl::EnumTypeRef c) : c.getStatefulOwner(
 SubNamespace getOwnerSubdomain (serviceDsl::ExceptionRef e) : e.getStatefulOwner() != null ? e.getStatefulOwner().eContainer : null;
 SubNamespace getOwnerSubdomain (serviceDsl::ServiceRef s) : s.getStatefulOwner() != null ? s.getStatefulOwner().eContainer : null;
 
+OrganizationNamespace getOrgNamespace (emf::EObject o) :
+	o.eContainer != null ?
+		o.eContainer.getOrgNamespace()
+	:
+		(OrganizationNamespace.isInstance(o) ? o : null);
+				
+OrganizationNamespace getOrgNamespace (SubNamespace subNs) :
+	subNs.eContainer != null ?
+		subNs.eContainer.getOrgNamespace()
+	:
+		null;
