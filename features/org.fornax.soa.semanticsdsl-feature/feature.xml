@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.semanticsdsl"
       label="SOA Semantics DSL"
-      version="1.3.1.qualifier"
+      version="1.4.0.qualifier"
       provider-name="Fornax Platform">
 
    <description url="http://www.eclipse.org/modeling/m2t">

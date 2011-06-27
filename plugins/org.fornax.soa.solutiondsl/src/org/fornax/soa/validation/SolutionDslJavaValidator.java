@@ -22,7 +22,7 @@ public class SolutionDslJavaValidator extends AbstractSolutionDslJavaValidator {
 	public void checkDontCallPrivateServices (ServiceRef svc) {
 		if (svc.eContainer()  instanceof Module || svc.eContainer() instanceof Solution) {
 			if (svc.getService() != null && svc.getService().getVisibility() == VISIBILITY.PRIVATE) {
-				error ("Solutions may not call private services!", ServiceDslPackage.SERVICE_REF__SERVICE);
+				error ("Solutions may not call private services!", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
 			}
 		}
 	}
@@ -31,7 +31,7 @@ public class SolutionDslJavaValidator extends AbstractSolutionDslJavaValidator {
 	public void checkDontCallInternalServices (ServiceRef svc) {
 		if (svc.eContainer()  instanceof Module || svc.eContainer() instanceof Solution) {
 			if (svc.getService() != null && svc.getService().eContainer() instanceof InternalNamespace) {
-				error ("Solutions may not call internal services!", ServiceDslPackage.SERVICE_REF__SERVICE);
+				error ("Solutions may not call internal services!", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
 			}
 		}
 	}

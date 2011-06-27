@@ -201,4 +201,23 @@
       </markerResolutionGenerator>
    </extension>
 
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="org.fornax.soa.SolutionDsl.compare.contentViewers"
+            class="org.fornax.soa.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="soldsl">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="org.fornax.soa.SolutionDsl.compare.contentMergeViewers"
+            class="org.fornax.soa.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="soldsl" label="SolutionDsl Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="org.fornax.soa.SolutionDsl.editors.documentProviders"
+            class="org.fornax.soa.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="soldsl">
+    </provider>
+  </extension>
+
 </plugin>

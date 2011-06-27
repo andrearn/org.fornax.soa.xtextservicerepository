@@ -139,7 +139,6 @@
 
 
 
-
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
@@ -180,5 +179,24 @@
             class="org.fornax.soa.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
    </extension>
+
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="org.fornax.soa.basedsl.SOABaseDsl.compare.contentViewers"
+            class="org.fornax.soa.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="sbasedsl">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="org.fornax.soa.basedsl.SOABaseDsl.compare.contentMergeViewers"
+            class="org.fornax.soa.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="sbasedsl" label="SOABaseDsl Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="org.fornax.soa.basedsl.SOABaseDsl.editors.documentProviders"
+            class="org.fornax.soa.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="sbasedsl">
+    </provider>
+  </extension>
 
 </plugin>

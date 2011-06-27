@@ -1,0 +1,90 @@
+grammar org.fornax.soa.moduledsl.ModuleDsl with org.fornax.soa.basedsl.SOABaseDsl
+
+generate moduleDsl "http://www.fornax.org/soa/moduledsl/ModuleDsl"
+
+import "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore" as serviceDsl
+
+ModuleModel:
+	imports+=Import*
+	modules+=Module*;
+	
+Module:
+	'module' name=QualifiedName '{'
+		version=Version
+		'provides' '{'
+			providedDomainNamespaces+=DomainNamespaceRef
+			providedInternalNamespaces+=InternalNamespaceRef
+			providedServices+=ServiceRef
+		'}'
+		'excluding' '{'
+			excludedServices+=[ServiceRef]
+		'}'
+		
+	'}';
+
+DomainNamespaceRef :
+	'domain-namespace' namespace=[serviceDsl::DomainNamespace|QualifiedName];
+	
+InternalNamespaceRef :
+	'internal-namespace' namespace=[serviceDsl::InternalNamespace|QualifiedName];
+	
+ServiceRef : 
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
+/*
+module mod.bla version 1.1 {
+	provides {
+		domain-namespace bla.space {
+			default-protocols {
+				SOAP {
+					protocol-version 1.2
+				}
+			}
+			service MyServiceUS majorVersion 1 {
+				override dependencies {
+					operation myOp requires OtherService majorVersion 1
+				}
+				default-protocols {
+					EJB {
+					
+					}
+				}
+			}
+		}
+	}
+}
+
+*/
+
+//BINDING with overrides:
+/*
+bind module bla.space version 1.1 as bla.space.1.1 to environment DevEnvironment {
+	overrides {
+		protocols {
+			SOAP {
+				version 1.2
+				doc/literal
+				on WESB proxied from Tomcat
+				for {
+					domain-namespace bla.space
+				}
+			}
+			SOAP {
+				version 1.2
+				doc/literal
+				on Tomcat
+				for {
+					internal-namespace bla.space.internal
+					service OtherService majorVersion 1
+				}
+			}
+		}
+		policies {
+		}
+		SLAs { 
+		}
+;
+
+	}
+
+}
+*/

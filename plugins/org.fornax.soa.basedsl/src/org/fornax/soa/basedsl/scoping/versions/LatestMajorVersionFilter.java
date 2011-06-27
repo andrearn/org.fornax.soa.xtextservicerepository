@@ -1,12 +1,15 @@
 package org.fornax.soa.basedsl.scoping.versions;
 
-import java.util.Map;
+import java.util.Collections;
 
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 
-public class LatestMajorVersionFilter implements VersionFilter {
+public class LatestMajorVersionFilter<T> extends AbstractPredicateVersionFilter<T> {
 	
 	private String majorVersion;
 	private VersionResolver resolver;
@@ -16,20 +19,22 @@ public class LatestMajorVersionFilter implements VersionFilter {
 		this.resolver = resolver;
 	}
 
-	public Map<String, IEObjectDescription> getBestMatchByNames(
-			Iterable<IEObjectDescription> canditates) {
-		Map<String, IEObjectDescription> matches = Maps.newLinkedHashMap();
-		for (IEObjectDescription ieObjDesc : canditates) {
-			if (ieObjDesc != null && matches(ieObjDesc)) {
-				String objName = ieObjDesc.getName();
-				IEObjectDescription bestMatch = matches.get(objName);
-				if (bestMatch == null) {
-					matches.put(objName, ieObjDesc);
-				}
-				else {
-					int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
-					if (c >= 0) {
-						matches.put(objName, ieObjDesc);
+	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames(
+			Iterable<IEObjectDescription> canditates, boolean ignoreCase) {
+		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
+		if (canditates != null) {
+			for (IEObjectDescription ieObjDesc : canditates) {
+				if (ieObjDesc != null && matches(ieObjDesc)) {
+					QualifiedName objName = ieObjDesc.getName();
+					IEObjectDescription bestMatch = getCurrentBestMatch(matches, objName);
+					if (bestMatch == null) {
+						matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+					}
+					else {
+						int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
+						if (c >= 0) {
+							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+						}
 					}
 				}
 			}
@@ -51,20 +56,22 @@ public class LatestMajorVersionFilter implements VersionFilter {
 		return parts[0];
 	}
 
-	public Map<String, IEObjectDescription> getBestMatchByQualifedNames(
-			Iterable<IEObjectDescription> canditates) {
-		Map<String, IEObjectDescription> matches = Maps.newLinkedHashMap();
-		for (IEObjectDescription ieObjDesc : canditates) {
-			if (matches(ieObjDesc)) {
-				String objName = ieObjDesc.getQualifiedName();
-				IEObjectDescription bestMatch = matches.get(objName);
-				if (bestMatch == null) {
-					matches.put(objName, ieObjDesc);
-				}
-				else {
-					int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
-					if (c >= 0) {
-						matches.put(objName, ieObjDesc);
+	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifedNames(
+			Iterable<IEObjectDescription> canditates, boolean ignoreCase) {
+		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
+		if (canditates != null) {
+			for (IEObjectDescription ieObjDesc : canditates) {
+				if (matches(ieObjDesc)) {
+					QualifiedName objName = ieObjDesc.getQualifiedName();
+					IEObjectDescription bestMatch = getCurrentBestMatch(matches, objName);
+					if (bestMatch == null) {
+						matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+					}
+					else {
+						int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
+						if (c >= 0) {
+							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+						}
 					}
 				}
 			}

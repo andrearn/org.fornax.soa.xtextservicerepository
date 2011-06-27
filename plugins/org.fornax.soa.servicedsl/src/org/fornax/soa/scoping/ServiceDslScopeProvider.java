@@ -3,45 +3,24 @@
  */
 package org.fornax.soa.scoping;
 
-import static com.google.common.collect.Iterables.filter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
-import org.eclipse.xtext.naming.QualifiedName;
-import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
-import org.eclipse.xtext.resource.impl.AliasedEObjectDescription;
 import org.eclipse.xtext.scoping.IGlobalScopeProvider;
-import org.eclipse.xtext.scoping.IScope;
-import org.eclipse.xtext.scoping.Scopes;
-import org.eclipse.xtext.scoping.impl.AbstractScope;
-import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
 import org.eclipse.xtext.util.IResourceScopeCache;
-import org.eclipse.xtext.util.SimpleAttributeResolver;
-import org.eclipse.xtext.util.Tuples;
 import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
-import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
+import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvider;
+import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
 import org.fornax.soa.basedsl.scoping.versions.EContainerVersionResolver;
 import org.fornax.soa.basedsl.scoping.versions.LatestMajorVersionFilter;
@@ -52,9 +31,7 @@ import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
 import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionFilteredMapScope;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
-import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.EventRef;
@@ -70,14 +47,7 @@ import org.fornax.soa.serviceDsl.TypeRef;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 import org.fornax.soa.util.DslElementAccessor;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 /**
  * This class contains custom scoping description.
  * 
@@ -85,7 +55,7 @@ import com.google.inject.Provider;
  * on how and when to use it 
  *
  */
-public class ServiceDslScopeProvider extends ImportedNamespaceAwareLocalScopeProvider {
+public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
 	private static final Logger logger = Logger.getLogger(ServiceDslScopeProvider.class);
 
 	private VersionFilter filter;
@@ -125,106 +95,54 @@ public class ServiceDslScopeProvider extends ImportedNamespaceAwareLocalScopePro
 	}
 
 	@Override
-	public IScope getScope(EObject ctx, EReference reference) {
-		filter = VersionFilter.NULL_VERSION_FILTER;
+	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext (
+			EObject ctx, final EReference reference) {
 		if (reference==ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE && ctx instanceof VersionedTypeRef) {
-			return scope_VersionedTypeRef_type ((VersionedTypeRef) ctx, reference);
+			final VersionRef v = ((VersionedTypeRef) ctx).getVersionRef();
+			return createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		} else if (reference==ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE && ctx instanceof BusinessObjectRef) {
-			return scope_BusinessObjectRef_type ((BusinessObjectRef) ctx, reference);
+			final VersionRef v = ((BusinessObjectRef) ctx).getVersionRef();
+			return createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		//FIXME verify this ref
 		} else if (reference==ServiceDslPackage.Literals.BUSINESS_OBJECT__SUPER_BUSINESS_OBJECT && ctx instanceof BusinessObjectRef) {
-			return scope_BusinessObjectRef_type ((BusinessObjectRef) ctx, reference);
+			final VersionRef v = ((BusinessObjectRef) ctx).getVersionRef();
+			return createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		} else if (reference == ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE && ctx instanceof EnumTypeRef) {
-			return scope_EnumTypeRef_type ((EnumTypeRef) ctx, reference);
+			final VersionRef v = ((EnumTypeRef) ctx).getVersionRef();
+			return createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		} else if (reference == ServiceDslPackage.Literals.SERVICE_REF__SERVICE && ctx instanceof ServiceRef) {
-			return scope_ServiceRef_service ((ServiceRef) ctx, reference);
+			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
+			return createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		} else if (reference == ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION && ctx instanceof ExceptionRef) {
-			return scope_ExceptionRef_exception ((ExceptionRef) ctx, reference);
+			final VersionRef v = ((ExceptionRef) ctx).getVersion();
+			return createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		} else if (reference == ServiceDslPackage.Literals.GLOBAL_EVENT_REF__EVENT && ctx instanceof GlobalEventRef) {
-			return scope_EventRef_event ((EventRef) ctx, reference);
+			final VersionRef v = ((EventRef) ctx).getVersionRef();
+			return createVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		} else if (reference == ServiceDslPackage.Literals.OPERATION_EVENT_REF__EVENT && ctx instanceof OperationEventRef) {
-			return scope_EventRef_event ((EventRef) ctx, reference);
+			final VersionRef v = ((EventRef) ctx).getVersionRef();
+			return createVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		} else if (reference == ServiceDslPackage.Literals.OPERATION_REF__OPERATION && ctx instanceof OperationRef) {
-			return scope_OperationRef_operation ((OperationRef) ctx, reference);
+			final VersionRef v = ((OperationRef) ctx).getVersionRef();
+			return createEContainerVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		} else if (reference == ServiceDslPackage.Literals.PARAMETER_REF__PROPERTY && ctx instanceof ParameterRef) {
-			return scope_ParameterRef_property ((ParameterRef) ctx, reference);
+			TypeRef typeRef = ((ParameterRef) ctx).getParam().getType();
+			AbstractPredicateVersionFilter<IEObjectDescription> f = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+			if (typeRef instanceof BusinessObjectRef) 
+				f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+			else if (typeRef instanceof EnumTypeRef)
+				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+			return f;
 		} else if (reference == ServiceDslPackage.Literals.MESSAGE_HEADER_REF__HEADER && ctx instanceof MessageHeaderRef) {
-			return scope_MessageHeaderRef_header ((MessageHeaderRef) ctx, reference);
+			final VersionRef v = ((MessageHeaderRef) ctx).getVersionRef();
+			return createStateLessVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		}
-		return getScope(ctx, reference, VersionFilter.NULL_VERSION_FILTER);
-	}
-	
-
-	IScope scope_VersionedTypeRef_type (final VersionedTypeRef ctx, final EReference ref) {
-		final VersionRef v = ctx.getVersionRef();
-		filter = createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		IScope result = getScope(ctx, ref, filter);
-		return result;
-	}
-	
-	IScope scope_BusinessObjectRef_type (final BusinessObjectRef ctx, final EReference ref) {
-		final VersionRef v = ctx.getVersionRef();
-		filter = createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		IScope result = getScope(ctx, ref, filter);
-		return result;
-	}
-	
-	IScope scope_EnumTypeRef_type (EnumTypeRef ctx, final EReference ref) {
-		final VersionRef v = ctx.getVersionRef();
-		filter = createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		return getScope(ctx, ref, filter);
-	}
-	
-	IScope scope_ServiceRef_service (ServiceRef ctx, final EReference ref) {
-		final VersionRef v = ctx.getVersionRef();
-		filter = createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		return getScope(ctx, ref, filter);
-	}
-	
-	IScope scope_ExceptionRef_exception (ExceptionRef ctx, EReference ref) {
-		final VersionRef v = ctx.getVersion();
-		filter = createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		return getScope(ctx, ref, filter);
-	}
-	
-	IScope scope_EventRef_event (EventRef ctx, EReference ref) {
-		final VersionRef v = ctx.getVersionRef();
-		filter = createVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		return getScope(ctx, ref, filter);
+		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 	}
 
-	IScope scope_ExceptionRef_superException (ExceptionRef ctx, EReference ref) {
-		final VersionRef v = ctx.getVersion();
-		VersionFilter filter = createVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		return getScope(ctx, ref, filter);
-	}
-	
-	IScope scope_OperationRef_operation (OperationRef ctx, EReference ref) {
-		final VersionRef v = ctx.getVersionRef();
-		VersionFilter filter = createEContainerVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		return getScope(ctx, ref, filter);
-	}
-	
-	IScope scope_ParameterRef_property (ParameterRef ctx, EReference ref) {
-		TypeRef typeRef = ctx.getParam().getType();
-		VersionFilter f = VersionFilter.NULL_VERSION_FILTER;
-		if (typeRef instanceof BusinessObjectRef) 
-			f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		else if (typeRef instanceof EnumTypeRef)
-			f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		return getScope(ctx, ref, f);
-	}
-	
-	IScope scope_MessageHeaderRef_header(MessageHeaderRef ctx,
-			EReference ref) {
-		final VersionRef v = ctx.getVersionRef();
-		filter = createStateLessVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		return getScope(ctx, ref, filter);
-	}
-
-
-	private VersionFilter createVersionFilter(final VersionRef v, EObject owner) {
-		VersionFilter filter = VersionFilter.NULL_VERSION_FILTER;
+	@Override
+	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner) {
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 		VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
 		LifecycleStateResolver stateResolver = new ServiceDslLifecycleStateResolver (v.eResource().getResourceSet());
 		LifecycleState ownerState = stateResolver.getLifecycleState(owner);
@@ -232,32 +150,32 @@ public class ServiceDslScopeProvider extends ImportedNamespaceAwareLocalScopePro
 		LifecycleState minTestState = StateConstraintConfigurer.getMinTestState(owner);
 		LifecycleState minProdState = StateConstraintConfigurer.getMinProdState(owner);
 		if (v instanceof MajorVersionRef)
-			return new RelaxedLatestMajorVersionForOwnerStateFilter (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, minDevState, minTestState, minProdState);
+			return new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, minDevState, minTestState, minProdState);
 		if (v instanceof MaxVersionRef)
-			return new LatestMaxExclVersionFilter(verResolver, ((MaxVersionRef)v).getMaxVersion());
+			return new LatestMaxExclVersionFilter<IEObjectDescription>(verResolver, ((MaxVersionRef)v).getMaxVersion());
 		if (v instanceof MinVersionRef)
-			return new LatestMinInclVersionFilter(verResolver, ((MinVersionRef)v).getMinVersion());
+			return new LatestMinInclVersionFilter<IEObjectDescription>(verResolver, ((MinVersionRef)v).getMinVersion());
 		if (v instanceof LowerBoundRangeVersionRef)
-			return new LatestMinInclMaxExclRangeVersionFilter(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+			return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription>(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
 		return filter;
 	}
 	
-	private VersionFilter createStateLessVersionFilter(final VersionRef v, EObject owner) {
-		VersionFilter filter = VersionFilter.NULL_VERSION_FILTER;
+	private AbstractPredicateVersionFilter<IEObjectDescription> createStateLessVersionFilter(final VersionRef v, EObject owner) {
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 		VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
 		if (v instanceof MajorVersionRef)
-			return new LatestMajorVersionFilter (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString());
+			return new LatestMajorVersionFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString());
 		if (v instanceof MaxVersionRef)
-			return new LatestMaxExclVersionFilter(verResolver, ((MaxVersionRef)v).getMaxVersion());
+			return new LatestMaxExclVersionFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion());
 		if (v instanceof MinVersionRef)
-			return new LatestMinInclVersionFilter(verResolver, ((MinVersionRef)v).getMinVersion());
+			return new LatestMinInclVersionFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion());
 		if (v instanceof LowerBoundRangeVersionRef)
-			return new LatestMinInclMaxExclRangeVersionFilter(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+			return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
 		return filter;
 	}
 
-	private VersionFilter createEContainerVersionFilter(final VersionRef v, EObject owner) {
-		VersionFilter filter = VersionFilter.NULL_VERSION_FILTER;
+	private AbstractPredicateVersionFilter<IEObjectDescription> createEContainerVersionFilter(final VersionRef v, EObject owner) {
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 		VersionResolver verResolver = new EContainerVersionResolver (v.eResource().getResourceSet());
 		LifecycleStateResolver stateResolver = new ServiceDslLifecycleStateResolver (v.eResource().getResourceSet());
 		LifecycleState ownerState = stateResolver.getLifecycleState(owner);
@@ -265,246 +183,15 @@ public class ServiceDslScopeProvider extends ImportedNamespaceAwareLocalScopePro
 		LifecycleState minTestState = StateConstraintConfigurer.getMinTestState(owner);
 		LifecycleState minProdState = StateConstraintConfigurer.getMinProdState(owner);
 		if (v instanceof MajorVersionRef)
-			return new RelaxedLatestMajorVersionForOwnerStateFilter (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, minDevState, minTestState, minProdState);
+			return new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, minDevState, minTestState, minProdState);
 		if (v instanceof MaxVersionRef)
-			return new LatestMaxExclVersionFilter(verResolver, ((MaxVersionRef)v).getMaxVersion());
+			return new LatestMaxExclVersionFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion());
 		if (v instanceof MinVersionRef)
-			return new LatestMinInclVersionFilter(verResolver, ((MinVersionRef)v).getMinVersion());
+			return new LatestMinInclVersionFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion());
 		if (v instanceof LowerBoundRangeVersionRef)
-			return new LatestMinInclMaxExclRangeVersionFilter(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+			return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
 		return filter;
 	}
 
-
-
-	
-	public IScope getScope(EObject context, EReference reference, VersionFilter filter) {
-		this.filter = filter;
-		if (context == null)
-			return getGlobalScope(context, reference, filter);
-		IScope result = null;
-		if (context.eContainer() == null) {
-			// global scope
-			result = getGlobalScope(context, reference, filter);
-			result = getResourceScope(result, context, reference, filter);
-		} else {
-			// outer scope
-			result = getScope(context.eContainer(), reference, filter);
-		}
-
-		// local scope used by the import scope
-		if (hasImports(context)) {
-			IScope localElements = getLocalElements(result, context, reference, filter);
-			// imports
-			result = getImportedElements(result, localElements, context, reference, filter);
-		}
-		// local scope
-		if (nameProvider.getQualifiedName(context) != null) {
-			result = getLocalElements(result, context, reference, filter);
-		}
-		return result;
-	}
-
-	protected boolean hasImports(final EObject context) {
-		return !getImportNormalizer(context).isEmpty();
-	}
-
-	protected IScope getResourceScope(final IScope parent, final EObject context, final EReference reference, final VersionFilter filter) {
-		if (context.eResource() == null)
-			return parent;
-		return getScope(getKey(context.eResource(), reference, filter), context, parent, new Provider<Map<String, IEObjectDescription>>() {
-			public Map<String, IEObjectDescription> get() {
-				return internalGetResourceScopeMap(parent, context, reference, filter);
-			}
-		}, filter);
-	}
-
-	protected Map<String, IEObjectDescription> internalGetResourceScopeMap(IScope parent, final EObject context,
-			final EReference reference, final VersionFilter filter) {
-		Iterable<EObject> contents = new Iterable<EObject>() {
-			public Iterator<EObject> iterator() {
-				// context can be a proxy when the iterable will be queried
-				if (context.eResource() == null)
-					return Collections.<EObject> emptyList().iterator();
-				return EcoreUtil.getAllProperContents(context.eResource(), true);
-			}
-		};
-		contents = Iterables.filter(contents, typeFilter(reference.getEReferenceType()));
-		return filter.getBestMatchByNames(Scopes.scopedElementsFor(contents, nameProvider));
-	}
-
-	protected IScope getLocalElements(final IScope parent, final EObject context, final EReference reference, final VersionFilter filter) {
-		return getScope(getKey(context, reference, filter), context, parent, new Provider<Map<String, IEObjectDescription>>() {
-			public Map<String, IEObjectDescription> get() {
-				return internalGetLocalElementsMap(parent, context, reference, filter);
-			}
-		}, filter);
-	}
-
-	protected Map<String, IEObjectDescription> internalGetLocalElementsMap(final IScope parent, final EObject context,
-			final EReference reference, final VersionFilter filter) {
-		final String commonPrefix = nameProvider.getQualifiedName(context) + ".";
-
-		Iterable<EObject> contents = new Iterable<EObject>() {
-			public Iterator<EObject> iterator() {
-				return EcoreUtil.getAllProperContents(context, true);
-			}
-		};
-		// filter by type
-		contents = filter(contents, typeFilter(reference.getEReferenceType()));
-		// transform to IScopedElements
-		Function<EObject, IEObjectDescription> descriptionComputation = new Function<EObject, IEObjectDescription>() {
-			public IEObjectDescription apply(EObject from) {
-				final String fqn = nameProvider.getQualifiedName(from);
-				if (fqn == null)
-					return null;
-				String name = fqn;
-				if (fqn.startsWith(commonPrefix)) {
-					name = fqn.substring(commonPrefix.length());
-				}
-				return new EObjectDescription(name, from, Collections.<String, String> emptyMap()) {
-					@Override
-					public String getQualifiedName() {
-						return fqn;
-					}
-				};
-			}
-		};
-		Iterable<IEObjectDescription> elements = Iterables.filter(Iterables.transform(contents, descriptionComputation),
-				Predicates.notNull());
-		return filter.getBestMatchByNames(elements);
-	}
-
-	protected Object getKey(Notifier context, EReference reference) {
-		return Tuples.create(ServiceDslScopeProvider.class, context, reference);
-	}
-
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	protected Object getKey(Notifier context, EReference reference, VersionFilter filter) {
-		List elements = new ArrayList();
-		elements.add (ServiceDslScopeProvider.class);
-		elements.add (context);
-		elements.add (reference);
-		elements.add (filter);
-		return elements;
-	}
-
-	private Predicate<EObject> typeFilter(final EClass type) {
-		return new Predicate<EObject>() {
-
-			public boolean apply(EObject input) {
-				return type.isInstance(input);
-			}
-		};
-	}
-
-	protected Set<ImportNormalizer> getImportNormalizer(final EObject context) {
-		return cache.get(Tuples.pair(context, "imports"), context.eResource(), new Provider<Set<ImportNormalizer>>() {
-
-			public Set<ImportNormalizer> get() {
-				return internalGetImportNormalizers(context);
-			}
-		});
-	}
-
-	protected Set<ImportNormalizer> internalGetImportNormalizers(final EObject context) {
-		Set<ImportNormalizer> namespaceImports = Sets.newLinkedHashSet();
-		SimpleAttributeResolver<EObject, String> importResolver = SimpleAttributeResolver.newResolver(String.class,
-				"importedNamespace");
-		EList<EObject> eContents = context.eContents();
-		// iterate over imports in reverse order see https://bugs.eclipse.org/bugs/show_bug.cgi?id=317971
-		for (int i=eContents.size()-1;i>=0;i--) {
-			EObject child = eContents.get(i);
-			String value = importResolver.getValue(child);
-			if (value != null) {
-				namespaceImports.add(createImportNormalizer(value));
-			}
-			
-		}
-		return namespaceImports;
-	}
-
-	protected ImportNormalizer createImportNormalizer(final String name) {
-		return new ImportNormalizer(new QualifiedName(name));
-	}
-
-	protected IScope getImportedElements(final IScope parent, final IScope localElements, final EObject context,
-			final EReference reference, final VersionFilter filter) {
-		final Set<ImportNormalizer> normalizers = getImportNormalizer(context);
-
-		return new AbstractScope() {
-
-			@Override
-			public IEObjectDescription getContentByName(String name) {
-				for (ImportNormalizer normalizer : normalizers) {
-					String shortToLongName = normalizer.shortToLongName(name);
-					if (shortToLongName != null) {
-						IEObjectDescription element = localElements.getContentByName(shortToLongName);
-						if (element != null)
-							return new AliasedEObjectDescription(name, element);
-					}
-				}
-				return getOuterScope().getContentByName(name);
-			}
-
-			@Override
-			public IEObjectDescription getContentByEObject(EObject object) {
-				IEObjectDescription candidate = localElements.getContentByEObject(object);
-				if (candidate != null)
-					for (ImportNormalizer normalizer : normalizers) {
-						String longToShortName = normalizer.longToShortName(candidate.getQualifiedName());
-						if (longToShortName != null) {
-							IEObjectDescription element = getContentByName(longToShortName);
-							if (element != null && element.getEObjectOrProxy() == object)
-								return new AliasedEObjectDescription(longToShortName, candidate);
-						}
-					}
-				return getOuterScope().getContentByEObject(object);
-			}
-
-			@Override
-			protected Iterable<IEObjectDescription> internalGetContents() {
-				List<IEObjectDescription> importedElements = Lists.newArrayList();
-				for (IEObjectDescription desc : localElements.getAllContents()) {
-					for (ImportNormalizer normalizer : normalizers) {
-						final String newName = normalizer.longToShortName(desc.getName());
-						if (newName != null) {
-							importedElements.add(new AliasedEObjectDescription(newName, desc));
-						}
-					}
-				}
-				return importedElements;
-			}
-
-			public IScope getOuterScope() {
-				return parent;
-			}
-
-		};
-	}
-
-	protected IScope getScope(Object cacheKey, EObject eobject, IScope parentScope, Provider<Map<String, IEObjectDescription>> mapProvider, final VersionFilter filter) {
-		Map<String, IEObjectDescription> map = cache.get(cacheKey, eobject.eResource(), mapProvider);
-		return map.isEmpty() ? parentScope : createMapBasedScope(parentScope, map, filter);
-	}
-
-	protected IScope createMapBasedScope(IScope parentScope, Map<String, IEObjectDescription> map, final VersionFilter filter) {
-		return new VersionFilteredMapScope(parentScope, map, filter);
-	}
-
-	protected Map<String, IEObjectDescription> toMap(Iterable<IEObjectDescription> scopedElementsFor) {
-		return filter.getBestMatchByNames(scopedElementsFor);
-	}
-
-	
-	protected IScope getGlobalScope(final EObject context, final EReference reference, VersionFilter filter) {
-		IScope scope = IScope.NULLSCOPE;
-		if (globalScopeProvider instanceof VersionedGlobalScopeProvider) {
-			scope = ((VersionedGlobalScopeProvider)globalScopeProvider).getScope(context, reference, filter);
-		}
-		else
-			scope = globalScopeProvider.getScope(context, reference);
-		return wrap(scope);
-	}
 
 }

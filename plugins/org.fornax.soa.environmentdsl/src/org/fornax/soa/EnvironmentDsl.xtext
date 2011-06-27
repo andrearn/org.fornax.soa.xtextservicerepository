@@ -22,10 +22,10 @@ EnvModel  hidden(WS):
 EnvImport : EnvNsImport | EnvFileImport; 
 
 EnvNsImport  hidden (WS):
-	'import' importedNamespace=QualifiedNameWithWildCard ";"; 
+	'import' importedNamespace=QualifiedNameWithWildCard ; 
 	
 EnvFileImport hidden (WS):
-	'import' importURI=STRING ';';
+	'import' importURI=STRING ;
 	
 Environment :
 	'environment' name=ID 'of type' (type=EnvironmentType) '{'
@@ -43,32 +43,32 @@ Server  hidden (WS): ESB | Registry | ProcessServer | AppServer | Broker | Datab
 
 ESB hidden (WS): 
 	'esb' name=ID '{'
-		('identifier' dslCode=STRING ";")?
-		('admins' admins+=[User|QualifiedName] ";")? 
-		'host' host=[Host|QualifiedName] ";"
-		('dir' home=STRING ";")?
-		('deployDir' deployDir=STRING ";")?
-		('baseUrl' baseUrl=STRING ";")?
-		('soapUrl' soapUrl=STRING ";")?
-		('adminUrl' adminUrl=STRING ";")?
-		('server-type' serverType=STRING ';')?
-		('server-version' serverVersion=STRING ';')?
-		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		('identifier' dslCode=STRING )?
+		('admins' admins+=[User|QualifiedName] )? 
+		'host' host=[Host|QualifiedName] 
+		('dir' home=STRING )?
+		('deployDir' deployDir=STRING )?
+		('baseUrl' baseUrl=STRING )?
+		('soapUrl' soapUrl=STRING )?
+		('adminUrl' adminUrl=STRING )?
+		('server-type' serverType=STRING )?
+		('server-version' serverVersion=STRING )?
+		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
 Registry  hidden (WS):
 	'registry' name=ID '{'
-		('identifier' dslCode=STRING ";")?
-		('admins' admins+=[User|QualifiedName] ";")? 
-		'host' host=[Host|QualifiedName] ";"
-		('dir' home=STRING ";")?
-		('deployDir' deployDir=STRING ";")?
-		('baseUrl' baseUrl=STRING ";")?
-		('adminUrl' adminUrl=STRING ";")?
-		('server-type' serverType=STRING ';')?
-		('server-version' serverVersion=STRING ';')?
-		('kind' kind=RegistryKind ";")?
-		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		('identifier' dslCode=STRING )?
+		('admins' admins+=[User|QualifiedName] )? 
+		'host' host=[Host|QualifiedName] 
+		('dir' home=STRING )?
+		('deployDir' deployDir=STRING )?
+		('baseUrl' baseUrl=STRING )?
+		('adminUrl' adminUrl=STRING )?
+		('server-type' serverType=STRING )?
+		('server-version' serverVersion=STRING )?
+		('kind' kind=RegistryKind )?
+		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 	
 enum RegistryKind : UDDI | HTTP | File | Native;
@@ -76,91 +76,91 @@ enum RegistryKind : UDDI | HTTP | File | Native;
 	
 AppServer  hidden (WS): 
 	'appserver' name=ID '{'
-		('identifier' dslCode=STRING ";")?
-		('admins' (admins+=[User|QualifiedName])+ ";")? 
-		'host' host=[Host|QualifiedName] ";"
-		('dir' home=STRING ";")?
-		('deployDir' deployDir=STRING  ";")?
-		('baseUrl' baseUrl=STRING  ";")?
-		('adminUrl' adminUrl=STRING  ";")?
+		('identifier' dslCode=STRING )?
+		('admins' (admins+=[User|QualifiedName])+ )? 
+		'host' host=[Host|QualifiedName] 
+		('dir' home=STRING )?
+		('deployDir' deployDir=STRING  )?
+		('baseUrl' baseUrl=STRING  )?
+		('adminUrl' adminUrl=STRING  )?
 		(jndi=JNDI)?
 		(dataSources+=DataSource)*
-		('server-type' serverType=STRING ';')?
-		('server-version' serverVersion=STRING ';')?
-		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		('server-type' serverType=STRING )?
+		('server-version' serverVersion=STRING )?
+		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 	
 JNDI  hidden (WS): 
 	(clustered?='clustered')? 'jndi' name=ID '{'
-		'jndi-url' url=STRING ';'
+		'jndi-url' url=STRING 
 	'}';
 	
 ProcessServer  hidden (WS):
 	'processserver'  name=ID '{'
-		('identifier' dslCode=STRING ";")?
-		('admins' (admins+=[User|QualifiedName])+ ";")? 
-		'host' host=[Host|QualifiedName] ";"
-		('dir' home=STRING ";")?
-		('deployDir' deployDir=STRING  ";")?
-		('deployUser' deployUser=[User] ";")?
-		('baseUrl' baseUrl=STRING  ";")?
-		('adminUrl' adminUrl=STRING  ";")?
-		('server-type' serverType=STRING ';')?
-		('server-version' serverVersion=STRING ';')?
-		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		('identifier' dslCode=STRING )?
+		('admins' (admins+=[User|QualifiedName])+ )? 
+		'host' host=[Host|QualifiedName] 
+		('dir' home=STRING )?
+		('deployDir' deployDir=STRING  )?
+		('deployUser' deployUser=[User] )?
+		('baseUrl' baseUrl=STRING  )?
+		('adminUrl' adminUrl=STRING  )?
+		('server-type' serverType=STRING )?
+		('server-version' serverVersion=STRING )?
+		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
 Broker  hidden (WS): 
 	'broker' name=ID '{'
-		('identifier' dslCode=STRING ";")? 
-		('admins' (admins+=[User|QualifiedName])+ ";")? 
-		'host' host=[Host|QualifiedName] 'dir' home=STRING ";"
-		('deployDir' deployDir=STRING ";")?
-		('baseUrl' baseUrl=STRING ";")? 
-		('adminUrl' adminUrl=STRING ";")?
-		('server-type' serverType=STRING ';')?
-		('server-version' serverVersion=STRING ';')?
-		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		('identifier' dslCode=STRING )? 
+		('admins' (admins+=[User|QualifiedName])+ )? 
+		'host' host=[Host|QualifiedName] 'dir' home=STRING 
+		('deployDir' deployDir=STRING )?
+		('baseUrl' baseUrl=STRING )? 
+		('adminUrl' adminUrl=STRING )?
+		('server-type' serverType=STRING )?
+		('server-version' serverVersion=STRING )?
+		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}'; 
 
 Database  hidden (WS):  
 	'database' name=ID '{'
-		('identifier' dslCode=STRING ";")?
-		('admins' (admins+=[User|QualifiedName])+ ";")? 
-		'host' host=[Host|QualifiedName] ";" 
-		('dir' home=STRING ";")? 
-		('dataDir' dataDir=STRING ";")? 
-		('adminUrl' adminUrl=STRING ";" )?
-		('jdbcUrl' jdbcUrl=STRING ";")?
-		('database-type' serverType=STRING ';')?
-		('database-version' serverVersion=STRING ';')?
+		('identifier' dslCode=STRING )?
+		('admins' (admins+=[User|QualifiedName])+ )? 
+		'host' host=[Host|QualifiedName]  
+		('dir' home=STRING )? 
+		('dataDir' dataDir=STRING )? 
+		('adminUrl' adminUrl=STRING  )?
+		('jdbcUrl' jdbcUrl=STRING )?
+		('database-type' serverType=STRING )?
+		('database-version' serverVersion=STRING )?
 		('{' (schema+=DatabaseSchema)+ '}')? 
-		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
 SAP  hidden (WS):  
 	'sap' name=ID '{'
-		('identifier' dslCode=STRING ";")?
-		('admins' (admins+=[User|QualifiedName])+ ";")? 
-		'host' host=[Host|QualifiedName] ";" 
-		('dir' home=STRING ";")?
-		('dataDir' dataDir=STRING ";")?
-		('adminUrl' adminUrl=STRING ";")? 
+		('identifier' dslCode=STRING )?
+		('admins' (admins+=[User|QualifiedName])+ )? 
+		'host' host=[Host|QualifiedName]  
+		('dir' home=STRING )?
+		('dataDir' dataDir=STRING )?
+		('adminUrl' adminUrl=STRING )? 
 		('{' (client+=SapClient)+ '}')? 
-		('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 	
 SapClient  hidden (WS): 
 	'client' name=ID '{'
-		'client-ID' client=INT ';'
-		'owner' owner=STRING ';'
+		'client-ID' client=INT 
+		'owner' owner=STRING 
 		('accountingArea' accountingArea=STRING)?
 	'}';
 	
 DataSource  hidden (WS):
 	'data-source' name=ID '{'
-		'jndi-name' jndiName=STRING ';'
-		'schema' schema=[DatabaseSchema|QualifiedName] ';'
+		'jndi-name' jndiName=STRING 
+		'schema' schema=[DatabaseSchema|QualifiedName] 
 	'}';
 	
 enum DatabaseKind : Oracle | DB2 | MSSQL | MySQL | Postgres | Sybase | HyperSonic | Ingres | Adabas | Other;
@@ -173,14 +173,14 @@ Host  hidden (WS):
 		'full-qualified-name' fqn=STRING 
 		('ip-address' ip=STRING)? 
 		('identifier' dshCode=STRING )?
-		('admins' admins+=[User|QualifiedName])?";"
+		('admins' admins+=[User|QualifiedName])?
 	'}';
 	
 User  hidden (WS): 
 	'user' name=ID '{'
-		('firstname' firstname=STRING 'lastname' lastname=STRING ";")? 
-		'email' email=STRING ";"
-		('phone' phone=STRING ";")?
+		('firstname' firstname=STRING 'lastname' lastname=STRING )? 
+		'email' email=STRING 
+		('phone' phone=STRING )?
 	'}';
 	
 QualifiedNameWithWildCard:

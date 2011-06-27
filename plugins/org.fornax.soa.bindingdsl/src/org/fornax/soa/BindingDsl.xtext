@@ -35,16 +35,16 @@ DomainBinding:
 		('provider-policies' '{'
 			(providerPolicies+=Policy)*
 		'}')?
-		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* ';')?
+		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
 		(serviceBinding+=ServiceBinding)*
 		(components+=Component)*
 	'}';
 	
 Publisher:
-	'publish on' pubServer=[environmentDsl::Server|QualifiedName] ';';
+	'publish on' pubServer=[environmentDsl::Server|QualifiedName] ;
 	
 Provider:
-	'provided on' provServer = [environmentDsl::Server|QualifiedName] ';';
+	'provided on' provServer = [environmentDsl::Server|QualifiedName] ;
 	
 ServiceBinding:
 	'bind service' service=ServiceRef 'to' 'environment' environment=[environmentDsl::Environment] 'with' '{'
@@ -60,7 +60,7 @@ ServiceBinding:
 		('provider-policies' '{'
 			(providerPolicies+=Policy)*
 		'}')?
-		('SLAs' (sla+=[slaDsl::SLA|QualifiedName])(',' sla+=[slaDsl::SLA|QualifiedName])* ';')?
+		('SLAs' (sla+=[slaDsl::SLA|QualifiedName])(',' sla+=[slaDsl::SLA|QualifiedName])* )?
 		(operation+=OperationBinding)*
 	'}';
 	
@@ -85,14 +85,14 @@ OperationBinding:
 		('provider-policies' '{'
 			(providerPolicies+=Policy)*
 		'}')?
-		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* ';')?
+		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
 	'}';
 	
 Component:
 	'component' name=ID 'implements' implements=ServiceRef '{'
 		'bind to environment' environment = [environmentDsl::Environment|QualifiedName]
-		'provided-services' services+=ServiceRef (',' services+=ServiceRef)* ';'
-		('referenced-services' referencedServices+=ServiceRef (',' )* ';')?
+		'provided-services' services+=ServiceRef (',' services+=ServiceRef)* 
+		('referenced-services' referencedServices+=ServiceRef (',' )* )?
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
@@ -103,9 +103,9 @@ Component:
 		('provider-policies' '{'
 			(providerPolicies+=Policy)*
 		'}')?
-		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* ';')?
-		'implementation' implementation=ImplementationType ';'
-		('sourceURL' source=STRING ';')? //Where can I get the sources?
+		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
+		'implementation' implementation=ImplementationType 
+		('sourceURL' source=STRING )? //Where can I get the sources?
 	'}';
 
 enum ImplementationType: BPMN | BPMN2 | BPEL | WSHT='WS-HT' | RuleML | Drools | Mediation | Java | CS='C#' | CPP='C++' | Scala | Ruby | PHP | WSDocLit = 'WS-Document/Literal' | WSRPC = 'WS-RPC/Literal' | WSRPCEnc='WS-RPC/Encoded' | REST_XML='REST-XML' | REST_JSON = 'REST-JSON'| EJB | Spring | EJB2 | SAP | SAP_IDOC = 'SAP/iDoc' | SAP_BAPI = 'SAP/BAPI'| Corba | Shell | Siebel | Tuxedo | File | SQL | Ivy | jPDL3 | jPDL4;
@@ -116,10 +116,10 @@ SOAP:
 		{SOAP}
 		(publisher=Publisher)?
 		(provider=Provider)?
-		('style' style=SOAPStyle ';')?
-		('http-context-root' contextRoot = STRING ';')?
-		('provider-http-context-root' providerContextRoot = STRING ';')?
-		('provided-WSDL-Url' providedWsdlUrl = STRING ';')?
+		('style' style=SOAPStyle )?
+		('http-context-root' contextRoot = STRING )?
+		('provider-http-context-root' providerContextRoot = STRING )?
+		('provided-WSDL-Url' providedWsdlUrl = STRING )?
 	'}';
 	
 enum SOAPStyle: doclitwrap='document/literal-wrapped' | rpclit = 'rpc/literal' | rpcenc='rpc/encoded';
@@ -128,8 +128,8 @@ SAP:
 	'SAP' '{'
 		{SAP}
 		(provider=Provider)?
-		('transport' transport=SAPTransport ';')?
-		('client' client=[environmentDsl::SapClient|QualifiedName] ';')?
+		('transport' transport=SAPTransport )?
+		('client' client=[environmentDsl::SapClient|QualifiedName] )?
 	'}';
 
 enum SAPTransport: IDOC | RFC;
@@ -138,26 +138,26 @@ EJB:
 	'EJB' '{'
 		(publisher=Publisher)?
 		(provider=Provider)?
-		'jndi-name' jndiName=STRING ';'
+		'jndi-name' jndiName=STRING 
 	'}';
 	
 HTTP: 
 	'HTTP' '{' 
 		(publisher=Publisher)?
 		(provider=Provider)?
-		'url' url=STRING ';'
-		'provider-url' providerUrl=STRING  ';'
-		'verb' verb=Verb ';'
+		'url' url=STRING 
+		'provider-url' providerUrl=STRING  
+		'verb' verb=Verb 
 	'}';
 
 REST: 
 	'REST' '{' 
 		(publisher=Publisher)?
 		(provider=Provider)?
-		'url' url=STRING  ';'
-		'provider-url' providerUrl=STRING  ';'
-		'verb' verb=Verb ';'
-		'format' format=RESTFormat ';'
+		'url' url=STRING  
+		'provider-url' providerUrl=STRING  
+		'verb' verb=Verb 
+		'format' format=RESTFormat 
 	'}';
 	
 enum RESTFormat: JSON | XML | OTHER;
@@ -169,22 +169,22 @@ JMS:
 		(publisher=Publisher)?
 		(provider=Provider)?
 		(channel=TopicOrQueue)?
-		'jndi-name' jndiName=STRING ';'
-		('provider-jndi-name' providerJndi=STRING ';')?
+		'jndi-name' jndiName=STRING 
+		('provider-jndi-name' providerJndi=STRING )?
 	'}';
 	
 TopicOrQueue: Topic | Queue;
 
-Topic: 'topic' name=STRING ';';
+Topic: 'topic' name=STRING ;
 
-Queue: 'queue' name=STRING ';';
+Queue: 'queue' name=STRING ;
 	
 SCA: 
 	'SCA' name=STRING '{'
 		(publisher=Publisher)?
 		(provider=Provider)?
-		('promote' promote=STRING ';')?
-		('reference' reference=STRING (isMultipleRef?='[]')? ';')?
+		('promote' promote=STRING )?
+		('reference' reference=STRING (isMultipleRef?='[]')? )?
 	'}' ;
 
 FILE: 'FILE' url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?;
@@ -195,7 +195,7 @@ enum ReadWrite : read|write;
 
 Policy: LogPolicy | SecurityPolicy;
 
-LogPolicy: 'logging policy' logPolicy=LogPolicyKind ";";
+LogPolicy: 'logging policy' logPolicy=LogPolicyKind ;
 
 SecurityPolicy : AuthenticationPolicy | AuthorizationPolicy | SigningPolicy | EncryptionPolicy;
 
@@ -209,9 +209,9 @@ AuthenticationPolicy :
 		'}'
 	'}';
 	
-AuthToken : (optional?='optional')? kind=AuthTokenKind ';';
+AuthToken : (optional?='optional')? kind=AuthTokenKind ;
 
-HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgKind ';';
+HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgKind ;
 
 enum HashAlgKind : MD5 | SHA1 | SHA256 | PlainText;
 

@@ -139,7 +139,6 @@
 
 
 
-
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
@@ -180,5 +179,24 @@
             class="org.fornax.soa.ui.SemanticsDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
    </extension>
+
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="org.fornax.soa.SemanticsDsl.compare.contentViewers"
+            class="org.fornax.soa.ui.SemanticsDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="semdsl">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="org.fornax.soa.SemanticsDsl.compare.contentMergeViewers"
+            class="org.fornax.soa.ui.SemanticsDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="semdsl" label="SemanticsDsl Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="org.fornax.soa.SemanticsDsl.editors.documentProviders"
+            class="org.fornax.soa.ui.SemanticsDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="semdsl">
+    </provider>
+  </extension>
 
 </plugin>

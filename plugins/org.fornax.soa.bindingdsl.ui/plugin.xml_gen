@@ -139,7 +139,6 @@
 
 
 
-
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
@@ -180,6 +179,25 @@
             class="org.fornax.soa.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
    </extension>
+
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="org.fornax.soa.BindingDsl.compare.contentViewers"
+            class="org.fornax.soa.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="binddsl">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="org.fornax.soa.BindingDsl.compare.contentMergeViewers"
+            class="org.fornax.soa.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="binddsl" label="BindingDsl Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="org.fornax.soa.BindingDsl.editors.documentProviders"
+            class="org.fornax.soa.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="binddsl">
+    </provider>
+  </extension>
 
    <extension
          point="org.eclipse.ui.newWizards">

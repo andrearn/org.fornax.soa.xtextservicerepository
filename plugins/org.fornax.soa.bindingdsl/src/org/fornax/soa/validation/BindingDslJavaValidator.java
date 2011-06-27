@@ -27,11 +27,11 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 	public void checkOnlyPrivateServiceHasProvidedWSDL (SOAP soap) {
 		if (soap.getProvidedWsdlUrl() != null) {
 			if (soap.eContainer() instanceof DomainBinding) {
-				error ("SOAP may not define a provided-WSDL-Url for a domain level binding", BindingDslPackage.SOAP__PROVIDED_WSDL_URL);
+				error ("SOAP may not define a provided-WSDL-Url for a domain level binding", BindingDslPackage.Literals.SOAP__PROVIDED_WSDL_URL);
 			} else if (soap.eContainer() instanceof OperationBinding) {
-				error ("SOAP may not define a provided-WSDL-Url for a operation level binding", BindingDslPackage.SOAP__PROVIDED_WSDL_URL);
+				error ("SOAP may not define a provided-WSDL-Url for a operation level binding", BindingDslPackage.Literals.SOAP__PROVIDED_WSDL_URL);
 			} else if (soap.eContainer() instanceof ServiceBinding && ((ServiceBinding) soap.eContainer()).getService().getService().getVisibility() != VISIBILITY.PRIVATE) {
-				error ("SOAP may not define a provided-WSDL-Url for a service level binding to a non-private service", BindingDslPackage.SOAP__PROVIDED_WSDL_URL);
+				error ("SOAP may not define a provided-WSDL-Url for a service level binding to a non-private service", BindingDslPackage.Literals.SOAP__PROVIDED_WSDL_URL);
 			}
 		}
 	}
@@ -41,7 +41,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		if (prot.eContainer() instanceof Binding) {
 			Binding b = (Binding) prot.eContainer();
 			if (! b.getEnvironment().getServers().contains(prot.getPublisher().getPubServer()))
-					warning ("The referenced publishing Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.SOAP__PUBLISHER);
+					warning ("The referenced publishing Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.Literals.SOAP__PUBLISHER);
 		} 
 	}
 	@Check
@@ -49,7 +49,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		if (prot.eContainer() instanceof Binding) {
 			Binding b = (Binding) prot.eContainer();
 			if (prot.getProvider() != null && ! b.getEnvironment().getServers().contains(prot.getProvider().getProvServer()))
-					warning ("The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.SOAP__PUBLISHER);
+					warning ("The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.Literals.SOAP__PUBLISHER);
 		} 
 	}
 	@Check
@@ -57,7 +57,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		if (prot.eContainer() instanceof Binding) {
 			Binding b = (Binding) prot.eContainer();
 			if (! b.getEnvironment().getServers().contains(prot.getPublisher().getPubServer()))
-					warning ("The referenced publishing Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.SOAP__PUBLISHER);
+					warning ("The referenced publishing Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.Literals.SOAP__PUBLISHER);
 		} 
 	}
 	@Check
@@ -65,7 +65,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		if (prot.eContainer() instanceof Binding) {
 			Binding b = (Binding) prot.eContainer();
 			if (prot.getProvider() != null && ! b.getEnvironment().getServers().contains(prot.getProvider().getProvServer()))
-					warning ("The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.SOAP__PUBLISHER);
+					warning ("The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.Literals.SOAP__PUBLISHER);
 		} 
 	}
 	@Check
@@ -73,7 +73,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		if (prot.eContainer() instanceof Binding) {
 			Binding b = (Binding) prot.eContainer();
 			if (! b.getEnvironment().getServers().contains(prot.getPublisher().getPubServer()))
-					warning ("The referenced publishing Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.SOAP__PUBLISHER);
+					warning ("The referenced publishing Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.Literals.SOAP__PUBLISHER);
 		} 
 	}
 	@Check
@@ -81,7 +81,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		if (prot.eContainer() instanceof Binding) {
 			Binding b = (Binding) prot.eContainer();
 			if (prot.getProvider() != null && ! b.getEnvironment().getServers().contains(prot.getProvider().getProvServer()))
-					warning ("The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.SOAP__PUBLISHER);
+					warning ("The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.Literals.SOAP__PUBLISHER);
 		} 
 	}
 	@Check
@@ -89,7 +89,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		if (prot.eContainer() instanceof Binding) {
 			Binding b = (Binding) prot.eContainer();
 			if (! b.getEnvironment().getServers().contains(prot.getPublisher().getPubServer()))
-					warning ("The referenced publishing Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.SOAP__PUBLISHER);
+					warning ("The referenced publishing Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.Literals.SOAP__PUBLISHER);
 		} 
 	}
 	@Check
@@ -97,7 +97,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		if (prot.eContainer() instanceof Binding) {
 			Binding b = (Binding) prot.eContainer();
 			if (prot.getProvider() != null && ! b.getEnvironment().getServers().contains(prot.getProvider().getProvServer()))
-					warning ("The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.SOAP__PUBLISHER);
+					warning ("The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.Literals.SOAP__PUBLISHER);
 		} 
 	}
 	@Check
@@ -105,7 +105,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		if (prot.eContainer() instanceof Binding) {
 			Binding b = (Binding) prot.eContainer();
 			if (! b.getEnvironment().getServers().contains(prot.getPublisher().getPubServer()))
-					warning ("The referenced publishing Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.SOAP__PUBLISHER);
+					warning ("The referenced publishing Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.Literals.SOAP__PUBLISHER);
 		} 
 	}
 	@Check
@@ -113,7 +113,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		if (prot.eContainer() instanceof Binding) {
 			Binding b = (Binding) prot.eContainer();
 			if (prot.getProvider() != null && ! b.getEnvironment().getServers().contains(prot.getProvider().getProvServer()))
-					warning ("The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.SOAP__PUBLISHER);
+					warning ("The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!", BindingDslPackage.Literals.SOAP__PUBLISHER);
 		} 
 	}
 

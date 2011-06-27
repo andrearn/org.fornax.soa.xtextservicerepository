@@ -17,6 +17,7 @@ Workflow {
 		platformUri = "${runtimeProject}/.."
 		uriMap = { to = semMetaModel from = "http://www.fornax.org/soa/SemanticsDsl" }
 		registerEcoreFile = semMetaModel
+		registerGenModelFile = semGenModel
 	}
 
 	component = DirectoryCleaner {
@@ -41,7 +42,6 @@ Workflow {
 
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
-				referencedGenModels = "${semGenModel}"
 			}
 
 			// the serialization component
@@ -83,12 +83,16 @@ Workflow {
 			fragment = labeling.LabelProviderFragment {}
 
 			// outline API 
-			fragment = outline.TransformerFragment {}
-			fragment = outline.OutlineNodeAdapterFactoryFragment {}
+			fragment = outline.OutlineTreeProviderFragment {}
 			fragment = outline.QuickOutlineFragment {}
 
 			// quickfix API 
 			fragment = quickfix.QuickfixProviderFragment {}
+			
+			// provides a compare view
+			fragment = compare.CompareFragment {
+				fileExtensions = file.extensions
+			}
 
 			// content assist API  
 			fragment = contentAssist.JavaBasedContentAssistFragment {}
@@ -99,12 +103,6 @@ Workflow {
 					backtrack = true
 					classSplitting = true
 				}
-			}
-
-			// project wizard (optional) 
-			fragment = projectWizard.SimpleProjectWizardFragment {
-				generatorProjectName = "${projectName}.generator" 
-				modelFileExtension = file.extensions
 			}
 		}
 	}

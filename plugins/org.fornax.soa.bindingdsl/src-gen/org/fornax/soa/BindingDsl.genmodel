@@ -6,222 +6,222 @@
     modelPluginID="org.fornax.soa.bindingdsl" forceOverwrite="true" modelName="BindingDsl"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.bindingdsl.edit"
-    editorPluginID="org.fornax.soa.bindingdsl.editor" usedGenPackages="../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.genmodel#//serviceDsl ../../../../../org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.genmodel#//sLADsl ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.genmodel#//environmentDsl ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel#//semanticsDsl">
+    editorPluginID="org.fornax.soa.bindingdsl.editor" usedGenPackages="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.genmodel#//environmentDsl platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.genmodel#//serviceDsl platform:/resource/org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.genmodel#//sLADsl">
   <genPackages prefix="BindingDsl" basePackage="org.fornax.soa" disposableProviderFactory="true"
-      ecorePackage="BindingDsl.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//ImplementationType">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/BPMN"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/BPMN2"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/BPEL"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/WSHT"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/RuleML"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Drools"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Mediation"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Java"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/CS"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/CPP"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Scala"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Ruby"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/PHP"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/WSDocLit"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/WSRPC"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/WSRPCEnc"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/REST_XML"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/REST_JSON"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/EJB"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Spring"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/EJB2"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/SAP"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/SAP_IDOC"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/SAP_BAPI"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Corba"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Shell"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Siebel"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Tuxedo"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/File"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/SQL"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/Ivy"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/jPDL3"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ImplementationType/jPDL4"/>
+      ecorePackage="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/BPMN"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/BPMN2"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/BPEL"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/WSHT"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/RuleML"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Drools"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Mediation"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Java"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/CS"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/CPP"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Scala"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Ruby"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/PHP"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/WSDocLit"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/WSRPC"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/WSRPCEnc"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/REST_XML"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/REST_JSON"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/EJB"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Spring"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/EJB2"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/SAP"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/SAP_IDOC"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/SAP_BAPI"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Corba"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Shell"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Siebel"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Tuxedo"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/File"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/SQL"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/Ivy"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/jPDL3"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ImplementationType/jPDL4"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SOAPStyle">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SOAPStyle/doclitwrap"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SOAPStyle/rpclit"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SOAPStyle/rpcenc"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAPStyle">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAPStyle/doclitwrap"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAPStyle/rpclit"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAPStyle/rpcenc"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SAPTransport">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SAPTransport/IDOC"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SAPTransport/RFC"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SAPTransport">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SAPTransport/IDOC"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SAPTransport/RFC"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//RESTFormat">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/JSON"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/XML"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/OTHER"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//RESTFormat">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//RESTFormat/JSON"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//RESTFormat/XML"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//RESTFormat/OTHER"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//Verb">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//Verb/create"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//Verb/retrieve"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//Verb/update"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//Verb/delete"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Verb">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Verb/create"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Verb/retrieve"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Verb/update"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Verb/delete"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//ReadWrite">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ReadWrite/read"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ReadWrite/write"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ReadWrite">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ReadWrite/read"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ReadWrite/write"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//HashAlgKind">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//HashAlgKind/MD5"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//HashAlgKind/SHA1"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//HashAlgKind/SHA256"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//HashAlgKind/PlainText"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HashAlgKind">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HashAlgKind/MD5"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HashAlgKind/SHA1"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HashAlgKind/SHA256"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HashAlgKind/PlainText"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//AuthTokenKind">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/UsernamePassword"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/SAML"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/SAML2"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/Kerberos"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthTokenKind">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthTokenKind/UsernamePassword"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthTokenKind/SAML"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthTokenKind/SAML2"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthTokenKind/Kerberos"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//LogPolicyKind">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//LogPolicyKind/NONE"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//LogPolicyKind/HEADER"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//LogPolicyKind/ALL"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//LogPolicyKind">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//LogPolicyKind/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//LogPolicyKind/HEADER"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//LogPolicyKind/ALL"/>
     </genEnums>
-    <genClasses ecoreClass="BindingDsl.ecore#//BindingModel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//BindingModel/imports"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//BindingModel/bindings"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//BindingModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//BindingModel/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//BindingModel/bindings"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//Binding">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Binding/environment"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Binding/protocol"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Binding/policies"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Binding/providerPolicies"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Binding/sla"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Binding">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Binding/environment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Binding/protocol"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Binding/policies"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Binding/providerPolicies"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Binding/sla"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//DomainBinding">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//DomainBinding/subNamespace"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//DomainBinding/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//DomainBinding/serviceBinding"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//DomainBinding/components"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//DomainBinding">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//DomainBinding/subNamespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//DomainBinding/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//DomainBinding/serviceBinding"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//DomainBinding/components"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//Publisher">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Publisher/pubServer"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Publisher">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Publisher/pubServer"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//Provider">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Provider/provServer"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Provider">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Provider/provServer"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//ServiceBinding">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ServiceBinding/service"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ServiceBinding/providerProtocol"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ServiceBinding/operation"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceBinding">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceBinding/service"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceBinding/providerProtocol"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceBinding/operation"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//ServiceRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ServiceRef/service"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ServiceRef/versionRef"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceRef/service"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceRef/versionRef"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//BindingProtocol"/>
-    <genClasses ecoreClass="BindingDsl.ecore#//OperationBinding">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//OperationBinding/operation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//OperationBinding/protocol"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//OperationBinding/providerProtocol"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//OperationBinding/policies"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//OperationBinding/providerPolicies"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//OperationBinding/sla"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//BindingProtocol"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//OperationBinding">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//OperationBinding/operation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//OperationBinding/protocol"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//OperationBinding/providerProtocol"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//OperationBinding/policies"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//OperationBinding/providerPolicies"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//OperationBinding/sla"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//Component">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//Component/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Component/implements"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Component/environment"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Component/services"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Component/referencedServices"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Component/protocol"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Component/operation"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Component/policies"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Component/providerPolicies"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Component/sla"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//Component/implementation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//Component/source"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/implements"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/environment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/services"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/referencedServices"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/protocol"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/operation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/policies"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/providerPolicies"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/sla"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/implementation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Component/source"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//SOAP">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SOAP/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SOAP/provider"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/style"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/contextRoot"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/providerContextRoot"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/providedWsdlUrl"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAP">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAP/publisher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAP/provider"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAP/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAP/contextRoot"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAP/providerContextRoot"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SOAP/providedWsdlUrl"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//SAP">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SAP/provider"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SAP/transport"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SAP/client"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SAP">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SAP/provider"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SAP/transport"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SAP/client"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//EJB">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//EJB/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//EJB/provider"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//EJB/jndiName"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//EJB">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//EJB/publisher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//EJB/provider"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//EJB/jndiName"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//HTTP">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//HTTP/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//HTTP/provider"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HTTP/url"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HTTP/providerUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HTTP/verb"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HTTP">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HTTP/publisher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HTTP/provider"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HTTP/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HTTP/providerUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HTTP/verb"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//REST">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//REST/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//REST/provider"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/url"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/providerUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/verb"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/format"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//REST">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//REST/publisher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//REST/provider"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//REST/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//REST/providerUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//REST/verb"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//REST/format"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//JMS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//JMS/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//JMS/provider"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//JMS/channel"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//JMS/jndiName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//JMS/providerJndi"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//JMS">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//JMS/publisher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//JMS/provider"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//JMS/channel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//JMS/jndiName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//JMS/providerJndi"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//TopicOrQueue">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//TopicOrQueue/name"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//TopicOrQueue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//TopicOrQueue/name"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//Topic"/>
-    <genClasses ecoreClass="BindingDsl.ecore#//Queue"/>
-    <genClasses ecoreClass="BindingDsl.ecore#//SCA">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SCA/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SCA/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SCA/provider"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SCA/promote"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SCA/reference"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SCA/isMultipleRef"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Topic"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Queue"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SCA">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SCA/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SCA/publisher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SCA/provider"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SCA/promote"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SCA/reference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SCA/isMultipleRef"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//FILE">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//FILE/url"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//FILE/accessType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//FILE/pollIntervall"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//FILE">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//FILE/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//FILE/accessType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//FILE/pollIntervall"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//FTP">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//FTP/url"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//FTP/accessType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//FTP/pollIntervall"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//FTP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//FTP/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//FTP/accessType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//FTP/pollIntervall"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//Policy"/>
-    <genClasses ecoreClass="BindingDsl.ecore#//LogPolicy">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//LogPolicy/logPolicy"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Policy"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//LogPolicy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//LogPolicy/logPolicy"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//SecurityPolicy"/>
-    <genClasses ecoreClass="BindingDsl.ecore#//AuthenticationPolicy">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AuthenticationPolicy/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AuthenticationPolicy/optional"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AuthenticationPolicy/authTokens"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AuthenticationPolicy/hashAlgorithms"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SecurityPolicy"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthenticationPolicy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthenticationPolicy/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthenticationPolicy/optional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthenticationPolicy/authTokens"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthenticationPolicy/hashAlgorithms"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//AuthToken">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AuthToken/optional"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AuthToken/kind"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthToken">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthToken/optional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//AuthToken/kind"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//HashAlgorithm">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HashAlgorithm/optional"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HashAlgorithm/useBase64"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HashAlgorithm/kind"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HashAlgorithm">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HashAlgorithm/optional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HashAlgorithm/useBase64"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//HashAlgorithm/kind"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

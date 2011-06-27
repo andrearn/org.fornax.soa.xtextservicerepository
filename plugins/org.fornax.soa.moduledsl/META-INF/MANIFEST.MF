@@ -1,0 +1,33 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.fornax.soa.moduledsl
+Bundle-Vendor: Fornax Platform
+Bundle-Version: 1.4.0.qualifier
+Bundle-SymbolicName: org.fornax.soa.moduledsl; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.xtext;bundle-version="2.0.0",
+ org.eclipse.xtext.generator;bundle-version="2.0.0";resolution:=optional,
+ org.apache.commons.logging;resolution:=optional,
+ org.eclipse.emf.codegen.ecore;resolution:=optional,
+ org.eclipse.emf.mwe.utils;resolution:=optional,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ com.ibm.icu;resolution:=optional,
+ org.eclipse.xtext.xtend;resolution:=optional,
+ org.fornax.soa.basedsl;bundle-version="1.4.0",
+ org.fornax.soa.semanticsdsl;bundle-version="1.4.0",
+ org.fornax.soa.servicedsl;bundle-version="1.4.0",
+ org.eclipse.xtext.util;bundle-version="2.0.0",
+ org.eclipse.emf.ecore,
+ org.eclipse.emf.common,
+ org.antlr.runtime
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.fornax.soa.moduledsl,
+ org.fornax.soa.moduledsl.services,
+ org.fornax.soa.moduledsl.moduleDsl,
+ org.fornax.soa.moduledsl.moduleDsl.impl,
+ org.fornax.soa.moduledsl.moduleDsl.util,
+ org.fornax.soa.moduledsl.parseTreeConstruction,
+ org.fornax.soa.moduledsl.parser.antlr,
+ org.fornax.soa.moduledsl.parser.antlr.internal,
+ org.fornax.soa.moduledsl.validation

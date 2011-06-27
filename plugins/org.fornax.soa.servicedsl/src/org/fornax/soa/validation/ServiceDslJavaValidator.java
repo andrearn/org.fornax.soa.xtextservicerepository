@@ -28,14 +28,13 @@ import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceRef;
 import org.fornax.soa.serviceDsl.VISIBILITY;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
-import org.fornax.soa.servicedsl.internal.Activator;
 import org.fornax.soa.util.ReferencedStateChecker;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.inject.internal.Lists;
+import com.google.common.collect.Lists;
 
 @ComposedChecks (validators = {
 		org.fornax.soa.validation.GovernanceApprovalValidator.class,
@@ -45,7 +44,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 
 	@Inject
 	private Injector injector;
-	
+
 	// @Check
 	// public void checkTypeNameStartsWithCapital(Type type) {
 	// if (!Character.isUpperCase(type.getName().charAt(0))) {
@@ -66,7 +65,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	public void checkServiceNameStartsWithCapital(Service s) {
 		if (!Character.isUpperCase(s.getName().charAt(0))) {
 			warning("Name should start with a capital",
-					ServiceDslPackage.SERVICE__NAME);
+					ServiceDslPackage.Literals.SERVICE__NAME);
 		}
 	}
 
@@ -75,7 +74,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (s.getCategory() == ServiceCategory.ENTITY
 				&& !s.getName().endsWith("BES")) {
 			warning("The name of an entity service should end with BES",
-					ServiceDslPackage.SERVICE__NAME);
+					ServiceDslPackage.Literals.SERVICE__NAME);
 		}
 	}
 
@@ -84,7 +83,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (s.getCategory() == ServiceCategory.ACTIVITY
 				&& !s.getName().endsWith("BAS")) {
 			warning("The name of an activity service should end with BAS",
-					ServiceDslPackage.SERVICE__NAME);
+					ServiceDslPackage.Literals.SERVICE__NAME);
 		}
 	}
 
@@ -93,7 +92,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (s.getCategory() == ServiceCategory.PROCESS
 				&& !s.getName().endsWith("BPS")) {
 			warning("The name of a process service should end with BPS",
-					ServiceDslPackage.SERVICE__NAME);
+					ServiceDslPackage.Literals.SERVICE__NAME);
 		}
 	}
 
@@ -104,7 +103,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 				&& !(s.eContainer() instanceof InternalNamespace || s
 						.getVisibility() == VISIBILITY.PRIVATE)) {
 			warning("The name of a utility service should end with US",
-					ServiceDslPackage.SERVICE__NAME);
+					ServiceDslPackage.Literals.SERVICE__NAME);
 		}
 	}
 
@@ -113,7 +112,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (s.getCategory() == ServiceCategory.RULE
 				&& !s.getName().endsWith("BRS")) {
 			warning("The name of a rule service should end with BRS",
-					ServiceDslPackage.SERVICE__NAME);
+					ServiceDslPackage.Literals.SERVICE__NAME);
 		}
 	}
 
@@ -126,7 +125,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (s.getCategory() == ServiceCategory.ENTITY) {
 				if (svcRef.getService().getCategory() == ServiceCategory.PROCESS) {
 					error("Business entity services may not call business process services",
-							ServiceDslPackage.OPERATION__REQUIRES);
+							ServiceDslPackage.Literals.OPERATION__REQUIRES);
 				}
 			}
 		}
@@ -150,7 +149,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (Lists.newArrayList(keys).isEmpty())
 				error ("The target businessObject of the weak-ref defines no business-key. " +
 						"The business-key is required to represent and resolve the reference. " +
-						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.BUSINESS_OBJECT_REF__TYPE );
+						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE );
 		}
 	}
 	
@@ -172,7 +171,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (Lists.newArrayList(keys).isEmpty())
 				error ("The target businessObject of the weak-ref defines no business-key. " +
 						"The business-key is required to represent and resolve the reference. " +
-						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.BUSINESS_OBJECT_REF__TYPE );
+						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE );
 		}
 	}
 	
@@ -190,7 +189,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (Lists.newArrayList(keys).size() > 1)
 				error ("The target businessObject of the weak-ref defines more than one business-key. " +
 						"The business-key is required to represent and resolve the reference. " +
-						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.BUSINESS_OBJECT_REF__TYPE );
+						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE );
 
 		}
 	}
@@ -209,7 +208,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (Lists.newArrayList(keys).size() > 1)
 				error ("The target businessObject of the weak-ref defines more than one business-key. " +
 						"The business-key is required to represent and resolve the reference. " +
-						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.BUSINESS_OBJECT_REF__TYPE );
+						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE );
 
 		}
 	}
@@ -222,7 +221,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (s.getCategory() == ServiceCategory.ACTIVITY) {
 				if (svcRef.getService().getCategory() == ServiceCategory.PROCESS) {
 					error("Business entity services may not call business activity services",
-							ServiceDslPackage.OPERATION__REQUIRES);
+							ServiceDslPackage.Literals.OPERATION__REQUIRES);
 				}
 			}
 		}
@@ -236,7 +235,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (s.getCategory() == ServiceCategory.ACTIVITY) {
 				if (svcRef.getService().getCategory() == ServiceCategory.PROCESS) {
 					error("Business entity services may not call business rule services",
-							ServiceDslPackage.OPERATION__REQUIRES);
+							ServiceDslPackage.Literals.OPERATION__REQUIRES);
 				}
 			}
 		}
@@ -247,7 +246,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (s.getProvidedContractUrl() != null
 				&& s.getVisibility() != VISIBILITY.PRIVATE)
 			error("Only private services may provide a predefined contract such as a WSDL",
-					ServiceDslPackage.SERVICE__PROVIDED_CONTRACT_URL);
+					ServiceDslPackage.Literals.SERVICE__PROVIDED_CONTRACT_URL);
 	}
 
 	@Check
@@ -255,7 +254,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (o.getProvidedDefinitionUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
 			error("Only internal businessObjects may provide a predefined definition such as an XSD",
-					ServiceDslPackage.BUSINESS_OBJECT__PROVIDED_DEFINITION_URL);
+					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_DEFINITION_URL);
 	}
 
 	@Check
@@ -263,7 +262,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (o.getProvidedDefinitionUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
 			error("Only internal enums may provide a predefined definition such as an XSD",
-					ServiceDslPackage.ENUMERATION__PROVIDED_DEFINITION_URL);
+					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_DEFINITION_URL);
 	}
 
 	@Check
@@ -272,7 +271,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (o.getProvidedDefinitionUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
 			error("Only internal exceptions may provide a predefined definition such as an XSD or WSDL",
-					ServiceDslPackage.ENUMERATION__PROVIDED_DEFINITION_URL);
+					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_DEFINITION_URL);
 	}
 
 
@@ -284,14 +283,14 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	public void checkBusinessKeyIsMandatory(Attribute p) {
 		if (p.isIsBusinessKey() && p.isOptional())
 			error("A business-key attribute may not be optional.",
-					ServiceDslPackage.ATTRIBUTE__IS_BUSINESS_KEY);
+					ServiceDslPackage.Literals.PROPERTY__IS_BUSINESS_KEY);
 	}
 
 	@Check
 	public void checkBusinessKeyIsMandatory(Reference p) {
 		if (p.isIsBusinessKey() && p.isOptional())
 			error("A business-key weak-ref attribute may not be optional.",
-					ServiceDslPackage.REFERENCE__IS_BUSINESS_KEY);
+					ServiceDslPackage.Literals.PROPERTY__IS_BUSINESS_KEY);
 	}
 
 	private ReferencedStateChecker createStateChecker (EObject owner) {

@@ -24,55 +24,61 @@ Model hidden (WS):
 Import hidden(WS): NsImport;
 	
 NsImport:
-	'import' importedNamespace=QualifiedNameWithWildCard ';';
+	'import' importedNamespace=QualifiedNameWithWildCard ;
 	
 FileImport:
-	'import' importURI=STRING ';';
+	'import' importURI=STRING ;
 	
 	
 	
 Solution hidden(WS):
 	'solution' name=QualifiedName '{'
-		('domain' domain = [businessDsl::Domain|QualifiedName] ';')?
+		('domain' domain = [businessDsl::Domain|QualifiedName] )?
 		version=Version
 		(productVersion=ProductVersion)?
-		('requires' requires+=ServiceRef ';')*
+		('requires' requires+=ServiceRef )*
 		(features+=Feature)*
 		(modules+=Module)*
-		('tags' (tags+=[semanticsDsl::Tag])+ ';')?
+		('tags' (tags+=[semanticsDsl::Tag])+ )?
 	'}';
 
 Module hidden (WS):
 	'module' name=ID '{'
-		'kind' kind=ModuleKind ';'
-		('requires' requires+=ServiceRef ';')*
+		'kind' kind=ModuleKind 
+		('requires' requires+=ServiceRef )*
 		(features+=Feature)*
 		(modules+=Module)*
-		('tags' (tags+=[semanticsDsl::Tag])+ ';')?
+		('tags' (tags+=[semanticsDsl::Tag])+ )?
 	'}';
 	
 enum ModuleKind : UI | BusinessLogic | Persistence | Security | Batch | OTHER;
 
 Feature hidden (WS):
 	(nonFunctional?='non-functional')? 'feature' name=ID '{'
-		('use cases' (useCase+=STRING)+ ';')?
-		('description' description=STRING ';')?
-		('functions' (function+=[businessDsl::Function|QualifiedName])+ ';')?
-		('requires' requires+=ServiceRef ';')*
-		('subscibes-to-event' (event+=EventRef)(',' event+=EventRef)* ';')?
+		('use cases' (useCase+=STRING)+ )?
+		('description' description=STRING )?
+		('uses capabilities' '{'
+			(usesCapabilities+=CapabilityRef)+ 
+		'}')?
+		('requires' requires+=ServiceRef )*
+		('subscibes-to-event' (event+=EventRef)(',' event+=EventRef)* )?
 		(features+=Feature)*
-		('tags' (tags+=[semanticsDsl::Tag])+ ';')?
+		('tags' (tags+=[semanticsDsl::Tag])+ )?
 	'}';
 	
 ServiceRef:
 	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')?;
 
 	
+CapabilityRef:
+	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
+
+	
 Version:
-	'version' (version=VersionId) ';' ;
+	'version' (version=VersionId)  ;
 	
 ProductVersion returns Version:
-	'product-version' (version=VersionId) ';' ;
+	'product-version' (version=VersionId)  ;
 	
 EventRef:
 	event=[serviceDsl::Event|QualifiedName] versionRef=VersionRef;

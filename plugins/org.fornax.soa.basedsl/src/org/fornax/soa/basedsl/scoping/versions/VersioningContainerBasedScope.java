@@ -1,113 +1,54 @@
 package org.fornax.soa.basedsl.scoping.versions;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.Collections;
 
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.xtext.resource.IContainer;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.eclipse.xtext.resource.IResourceDescription;
+import org.eclipse.xtext.resource.ISelectable;
 import org.eclipse.xtext.scoping.IScope;
-import org.eclipse.xtext.scoping.impl.ContainerBasedScope;
+import org.eclipse.xtext.scoping.impl.SelectableBasedScope;
 
-import com.google.common.collect.Lists;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Multimap;
 
-public class VersioningContainerBasedScope extends ContainerBasedScope {
+public class VersioningContainerBasedScope extends SelectableBasedScope {
 	
-	private final IScope outer;
-	private final EReference reference;
-	private final IContainer container;
-	private final VersionFilter filter;
-
-	public VersioningContainerBasedScope(IScope outer, EReference reference, IContainer container, VersionFilter filter) {
-		super(outer, reference, container);
-		this.outer = outer;
-		this.reference = reference;
-		this.container = container;
-		this.filter = filter;
+	public static IScope createScope(IScope outer, ISelectable selectable, EClass type, boolean ignoreCase) {
+		return createScope(outer, selectable, null, type, ignoreCase);
 	}
-
+	
+	public static IScope createScope(IScope outer, ISelectable selectable, Predicate<IEObjectDescription> filter, EClass type, boolean ignoreCase) {
+		if (selectable == null || selectable.isEmpty())
+			return outer;
+		return new VersioningContainerBasedScope(outer, selectable, filter, type, ignoreCase);
+	}
+	
+	protected VersioningContainerBasedScope (IScope outer, ISelectable selectable, Predicate<IEObjectDescription> filter, EClass type, boolean ignoreCase) {
+		super(outer, selectable, filter, type, ignoreCase);
+	}
+	
 	@Override
-	public Iterable<IEObjectDescription> internalGetContents() {
-		return container.findAllEObjects(reference.getEReferenceType());
-	}
-
-	@Override
-	public IEObjectDescription getContentByName(String name) {
-		Iterable<IEObjectDescription> allDescriptions = findAllEObjectsByName(name);
-		Iterator<IEObjectDescription> iter = allDescriptions.iterator();
-		List <IEObjectDescription> result = new ArrayList<IEObjectDescription>();
-		while (iter.hasNext()) {
-			if (getOuterScope() != NULLSCOPE) {
-				IEObjectDescription ieDesc = getOuterScope().getContentByName(name);
-				if (ieDesc != null)
-					result.add(ieDesc);
-			}
-			IEObjectDescription firstDesc = iter.next();
-			if (firstDesc != null)
-				result.add(firstDesc);
+	protected Iterable<IEObjectDescription> getLocalElementsByName(final QualifiedName name) {
+		if (getFilter() instanceof AbstractPredicateVersionFilter && !(getFilter() instanceof NullVersionFilter)) {
+			Iterable<IEObjectDescription> localElementsByName = super.getLocalElementsByName (name);
+			Multimap<QualifiedName, IEObjectDescription> descriptions = ((AbstractPredicateVersionFilter<IEObjectDescription>) getFilter()).getBestMatchByNames (localElementsByName, isIgnoreCase());
+			if (isIgnoreCase()) 
+				return descriptions.get (name.toLowerCase());
+			else
+				return descriptions.get (name);
+		} else {
+			return super.getLocalElementsByName (name);
 		}
-		if (!result.isEmpty())
-			return filter.getBestMatchByNames(result).get(name);
-		return filter.getBestMatchByNames (Arrays.asList(getOuterScope().getContentByName(name))).get (name);
-	}
-
-	protected Iterable<IEObjectDescription> findAllEObjectsByName(String name) {
-		List<IEObjectDescription> allDesc = Lists.newArrayList(container.findAllEObjects(reference.getEReferenceType(), name));
-		return allDesc;
-	}
-
-	@Override
-	public IEObjectDescription getContentByEObject(EObject object) {
-		URI resourceURI = EcoreUtil.getURI(object).trimFragment();
-		IResourceDescription description = container.getResourceDescription(resourceURI);
-		if (description != null) {
-			Iterable<IEObjectDescription> allDescriptions = description.getExportedObjectsForEObject(object);
-			Iterator<IEObjectDescription> iter = allDescriptions.iterator();
-			boolean hadNext = false;
-			while (iter.hasNext()) {
-				hadNext = true;
-				IEObjectDescription result = iter.next();
-				if (isValidForEObject(result))
-					return result;
-			}
-			if (hadNext)
-				return null;
-		}
-		return getOuterScope().getContentByEObject(object);
-	}
-
-	private boolean isValidForEObject(IEObjectDescription result) {
-		Iterable<IEObjectDescription> allDescriptionsByName = findAllEObjectsByName(result.getName());
-		Iterator<IEObjectDescription> iter = allDescriptionsByName.iterator();
-		IEObjectDescription inverted = null;
-		while (iter.hasNext()) {
-			if (inverted != null)
-				return false;
-			inverted = iter.next();
-		}
-		return inverted != null && inverted.getEObjectURI().equals(result.getEObjectURI());
 	}
 	
-	public VersioningContainerBasedScope getFiltered (VersionFilter verFilter) {
-		return new VersioningContainerBasedScope(getOuterScope(), getReference(), container, verFilter);
-	}
-
-	public IScope getOuterScope() {
-		return outer;
-	}
-	
-	protected IContainer getContainer() {
-		return container;
-	}
-	
-	protected EReference getReference() {
-		return reference;
+	protected Iterable<IEObjectDescription> filterLocalElements(Iterable<IEObjectDescription> unfiltered) {
+		if (getFilter() != null) {
+			Iterable<IEObjectDescription> result = Iterables.filter(unfiltered, getFilter());
+			return result;
+		}
+		return unfiltered;
 	}
 
 }

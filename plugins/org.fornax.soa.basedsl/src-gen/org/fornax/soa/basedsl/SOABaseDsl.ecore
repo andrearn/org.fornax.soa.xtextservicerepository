@@ -22,17 +22,17 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VersionRef"/>
-  <eClassifiers xsi:type="ecore:EClass" name="MinVersionRef" eSuperTypes="#//VersionRef">
+  <eClassifiers xsi:type="ecore:EClass" name="MinVersionRef" eSuperTypes="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="minVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MaxVersionRef" eSuperTypes="#//VersionRef">
+  <eClassifiers xsi:type="ecore:EClass" name="MaxVersionRef" eSuperTypes="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LowerBoundRangeVersionRef" eSuperTypes="#//VersionRef">
+  <eClassifiers xsi:type="ecore:EClass" name="LowerBoundRangeVersionRef" eSuperTypes="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="minVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MajorVersionRef" eSuperTypes="#//VersionRef">
+  <eClassifiers xsi:type="ecore:EClass" name="MajorVersionRef" eSuperTypes="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="majorVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AbstractType">

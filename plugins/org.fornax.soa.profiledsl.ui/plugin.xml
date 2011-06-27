@@ -194,4 +194,23 @@
       </markerResolutionGenerator>
    </extension>
 
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="org.fornax.soa.profiledsl.SOAProfileDsl.compare.contentViewers"
+            class="org.fornax.soa.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="profdsl">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="org.fornax.soa.profiledsl.SOAProfileDsl.compare.contentMergeViewers"
+            class="org.fornax.soa.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="profdsl" label="SOAProfileDsl Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="org.fornax.soa.profiledsl.SOAProfileDsl.editors.documentProviders"
+            class="org.fornax.soa.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="profdsl">
+    </provider>
+  </extension>
+
 </plugin>

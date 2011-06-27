@@ -139,7 +139,6 @@
 
 
 
-
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
@@ -181,16 +180,23 @@
       </markerResolutionGenerator>
    </extension>
 
-   <extension
-         point="org.eclipse.ui.newWizards">
-      <wizard
-            category="org.eclipse.xtext.projectwiz"
-            class="org.fornax.soa.ui.SLADslExecutableExtensionFactory:org.fornax.soa.ui.wizard.SLADslNewProjectWizard"
-            icon="icons/editor.gif"
-            id="org.fornax.soa.ui.wizard.SLADslNewProjectWizard"
-            name="SLADsl Project"
-            project="true">
-      </wizard>
-   </extension>
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="org.fornax.soa.SLADsl.compare.contentViewers"
+            class="org.fornax.soa.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="sladsl">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="org.fornax.soa.SLADsl.compare.contentMergeViewers"
+            class="org.fornax.soa.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="sladsl" label="SLADsl Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="org.fornax.soa.SLADsl.editors.documentProviders"
+            class="org.fornax.soa.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="sladsl">
+    </provider>
+  </extension>
 
 </plugin>

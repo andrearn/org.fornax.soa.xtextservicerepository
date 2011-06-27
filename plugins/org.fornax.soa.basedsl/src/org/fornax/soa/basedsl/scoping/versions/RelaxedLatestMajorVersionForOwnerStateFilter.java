@@ -1,11 +1,15 @@
 package org.fornax.soa.basedsl.scoping.versions;
 
+import java.util.Collections;
 import java.util.Map;
 
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 
+import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Maps;
+import com.google.common.collect.Multimap;
 
 /**
  * A filter of potential references in scope matching the version constraint and
@@ -16,7 +20,7 @@ import com.google.common.collect.Maps;
  * @author aarnold
  * 
  */
-public class RelaxedLatestMajorVersionForOwnerStateFilter implements VersionFilter {
+public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateVersionFilter<T> {
 	
 	private String majorVersion;
 	private VersionResolver resolver;
@@ -26,7 +30,7 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter implements VersionFilt
 	private LifecycleState minProdLifecycleState;
 	private LifecycleStateResolver stateResolver;
 	
-	public RelaxedLatestMajorVersionForOwnerStateFilter(VersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState, LifecycleState minDevLifecycleState, LifecycleState minTestLifecycleState, LifecycleState minProdLifecycleState) {
+	public RelaxedLatestMajorVersionForOwnerStateFilter (VersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState, LifecycleState minDevLifecycleState, LifecycleState minTestLifecycleState, LifecycleState minProdLifecycleState) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
 		this.ownerLifecycleState = ownerLifecycleState;
@@ -36,35 +40,37 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter implements VersionFilt
 		this.stateResolver = stateResolver;
 	}
 
-	public Map<String, IEObjectDescription> getBestMatchByNames(
-			Iterable<IEObjectDescription> canditates) {
-		Map<String, IEObjectDescription> matches = Maps.newLinkedHashMap();
-		Map<String, IEObjectDescription> versionMatches = Maps.newLinkedHashMap();
-		for (IEObjectDescription ieObjDesc : canditates) {
-			if (ieObjDesc != null && matches(ieObjDesc)) {
-				String objName = ieObjDesc.getName();
-				IEObjectDescription bestMatch = matches.get(objName);
-				if (bestMatch == null) {
-					if (stateMatches(ieObjDesc))
-						matches.put(objName, ieObjDesc);
-					else
-						versionMatches.put(objName, ieObjDesc);
-				}
-				else {
-					int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
-					if (c >= 0) {
+	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames (
+			Iterable<IEObjectDescription> canditates, boolean ignoreCase) {
+		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
+		if (canditates != null) {
+			Multimap<QualifiedName, IEObjectDescription> versionMatches = LinkedHashMultimap.create(5,2);
+			for (IEObjectDescription ieObjDesc : canditates) {
+				if (ieObjDesc != null && matches(ieObjDesc)) {
+					QualifiedName objName = ieObjDesc.getName();
+					IEObjectDescription bestMatch = getCurrentBestMatch (matches, objName);
+					if (bestMatch == null) {
 						if (stateMatches(ieObjDesc))
-							matches.put(objName, ieObjDesc);
-						else {
-							versionMatches.put(objName, ieObjDesc);
+							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+						else
+							versionMatches.replaceValues(objName, Collections.singleton (ieObjDesc));
+					}
+					else {
+						int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
+						if (c >= 0) {
+							if (stateMatches(ieObjDesc))
+								matches.replaceValues(objName, Collections.singleton (ieObjDesc));
+							else {
+								versionMatches.replaceValues(objName, Collections.singleton (ieObjDesc));
+							}
 						}
 					}
 				}
 			}
-		}
-		for (String relaxedCandName : versionMatches.keySet()) {
-			if (!matches.containsKey(relaxedCandName))
-				matches.put(relaxedCandName, versionMatches.get(relaxedCandName));
+			for (QualifiedName relaxedCandName : versionMatches.keySet()) {
+				if (!matches.containsKey(relaxedCandName))
+					matches.replaceValues (relaxedCandName, Collections.singleton (getCurrentBestMatch (versionMatches, relaxedCandName)));
+			}
 		}
 		return matches;
 	}
@@ -105,20 +111,22 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter implements VersionFilt
 		return parts[0];
 	}
 
-	public Map<String, IEObjectDescription> getBestMatchByQualifedNames(
-			Iterable<IEObjectDescription> canditates) {
-		Map<String, IEObjectDescription> matches = Maps.newLinkedHashMap();
-		for (IEObjectDescription ieObjDesc : canditates) {
-			if (matches(ieObjDesc)) {
-				String objName = ieObjDesc.getQualifiedName();
-				IEObjectDescription bestMatch = matches.get(objName);
-				if (bestMatch == null) {
-					matches.put(objName, ieObjDesc);
-				}
-				else {
-					int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
-					if (c >= 0) {
-						matches.put(objName, ieObjDesc);
+	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifedNames(
+			Iterable<IEObjectDescription> canditates, boolean ignoreCase) {
+		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
+		if (canditates != null) {
+			for (IEObjectDescription ieObjDesc : canditates) {
+				if (matches(ieObjDesc)) {
+					QualifiedName objName = ieObjDesc.getQualifiedName();
+					IEObjectDescription bestMatch = getCurrentBestMatch (matches, objName);
+					if (bestMatch == null) {
+						matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+					}
+					else {
+						int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
+						if (c >= 0) {
+							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+						}
 					}
 				}
 			}

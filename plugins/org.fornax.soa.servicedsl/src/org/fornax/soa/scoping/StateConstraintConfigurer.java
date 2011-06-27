@@ -13,7 +13,10 @@ public class StateConstraintConfigurer {
 	public static LifecycleState getMinDevState (EObject o) {
 		if (o instanceof SubNamespace) {
 			SubNamespace ns = (SubNamespace)o;
-			return ns.getLinkingPolicy().getMinDevState();
+			if (ns.getLinkingPolicy() != null)
+				return ns.getLinkingPolicy().getMinDevState();
+			else
+				return LifecycleState.DEVELOPMENT;
 		}
 		o = DslElementAccessor.INSTANCE.getVersionedOwner(o);
 		if (o instanceof BusinessObject) {
@@ -49,7 +52,10 @@ public class StateConstraintConfigurer {
 	
 	public static LifecycleState getMinTestState (EObject o) {
 		if (o instanceof SubNamespace)
-			return ((SubNamespace)o).getLinkingPolicy().getMinTestState();
+			if (((SubNamespace)o).getLinkingPolicy() != null)
+				return ((SubNamespace)o).getLinkingPolicy().getMinTestState();
+			else
+				return LifecycleState.TEST;
 		o = DslElementAccessor.INSTANCE.getVersionedOwner(o);
 		if (o instanceof BusinessObject) {
 			BusinessObject bo = (BusinessObject)o;
@@ -84,7 +90,10 @@ public class StateConstraintConfigurer {
 	
 	public static LifecycleState getMinProdState (EObject o) {
 		if (o instanceof SubNamespace)
-			return ((SubNamespace)o).getLinkingPolicy().getMinProdState();
+			if (((SubNamespace)o).getLinkingPolicy() != null)
+				return ((SubNamespace)o).getLinkingPolicy().getMinProdState();
+			else
+				return LifecycleState.PRODUCTIVE;
 		o = DslElementAccessor.INSTANCE.getVersionedOwner(o);
 		if (o instanceof BusinessObject) {
 			BusinessObject bo = (BusinessObject)o;

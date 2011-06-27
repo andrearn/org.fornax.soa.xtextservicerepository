@@ -19,7 +19,7 @@ SOAProfileModel hidden (WS):
 	
 SOAProfile:
 	'soa-profile' name=ID '{'
-		'scope' scope = STRING';'
+		'scope' scope = STRING
 		(messaging=Messaging)?
 		(designRules=DesignRules)?
 		(orgNamespaces+=OrganizationNamespace)*
@@ -31,7 +31,7 @@ SOAProfile:
 Messaging :
 	{Messaging} 'messaging' '{'
 		(messageHeaders+=MessageHeader)*
-		('default-header' defaultHeader=MessageHeaderRef ";")?
+		('default-header' defaultHeader=MessageHeaderRef )?
 	'}';
 	
 DesignRules:
@@ -54,7 +54,7 @@ BasicTypes:
 	'}';
 	
 BaseNamespaceAlias :
-	'shorten' baseNamespaceFragment=QualifiedName 'to' shortenedBaseNamespaceFragment=QualifiedName ';';
+	'shorten' baseNamespaceFragment=QualifiedName 'to' shortenedBaseNamespaceFragment=QualifiedName ;
 
 OrganizationNamespace:
 	'org-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
@@ -71,10 +71,10 @@ TechnicalNamespace:
 MessageHeader:
 	'message-headers' name=QualifiedName '{'
 		'meta-data' '{'
-			version=Version ';'
-			'for' (exchanges+=MEPMessageKind) (',' exchanges+=MEPMessageKind)* ';'
-			(extendableProperties?='extendable-properties' ';')?
-			(extendableXMLAttributes?='extendable-XML-attributes' ';')?
+			version=Version 
+			'for' (exchanges+=MEPMessageKind) (',' exchanges+=MEPMessageKind)* 
+			(extendableProperties?='extendable-properties' )?
+			(extendableXMLAttributes?='extendable-XML-attributes' )?
 		'}'
 		
 		(parameters+=Property)+
@@ -86,10 +86,10 @@ AbstractProperty :
 	Property | Attribute;	
 	
 Property:
-	(doc=ML_COMMENT)? (optional?='optional')? name=ID ':' type=TypeRef ';';
+	(doc=ML_COMMENT)? (optional?='optional')? name=ID ':' type=TypeRef ;
 
 Attribute:
-	(doc=ML_COMMENT)? (optional?='optional')? 'attr' name=ID ':' type=AttributeDataTypeRef ';';
+	(doc=ML_COMMENT)? (optional?='optional')? 'attr' name=ID ':' type=AttributeDataTypeRef ;
 
 TypeRef:	DataTypeRef | VersionedTypeRef;
 
@@ -115,7 +115,7 @@ Type : DataType | VersionedType;
 
 DataType hidden(WS):
 	(doc=ML_COMMENT)?
-	'datatype' name=ID ('extends' base=[DataType] 'scope' scope=STRING)?';' ;
+	'datatype' name=ID ('extends' base=[DataType] 'scope' scope=STRING)? ;
 	
 VersionedType:	Enumeration | Class;
 
@@ -123,10 +123,10 @@ Enumeration:
 	(doc=ML_COMMENT)?
 	'enum' name=ID '{'
 		'metadata' '{'
-			version=Version ';' 
-			('replaces' replaces=EnumRef ';')?
+			version=Version  
+			('replaces' replaces=EnumRef )?
 		'}'
-		(literals+=EnumLiteral ';')*
+		(literals+=EnumLiteral )*
 	'}';
 
 EnumLiteral: 
@@ -137,16 +137,16 @@ Class:
 	(doc=ML_COMMENT)?
 	'class' name=ID ('extends' superClass=ClassRef)? '{'
 		'metadata' '{'
-			version=Version ';' 
-			('replaces' replaces=EnumRef ';')?
+			version=Version  
+			('replaces' replaces=EnumRef )?
 		'}'
 		(properties+=AbstractProperty)+
 	'}';
 
 InternalNamespaceRule: 
 	'internal-namespace-rule' name=ID '{'
-		'internal-qualifier' internalNsQualifierPolicy = InternalNsQualifierPolicy ';' 
-		('qualifying-name' qualifyingName = ID ';')?
+		'internal-qualifier' internalNsQualifierPolicy = InternalNsQualifierPolicy  
+		('qualifying-name' qualifyingName = ID )?
 	'}';
 	
 enum InternalNsQualifierPolicy:
@@ -159,19 +159,19 @@ enum InternalNsQualifierPolicy:
 TypeDefPolicy: 
 	{TypeDefPolicy}
 	'types' '{'
-		(extendableProperties?='extendable-properties' ';')?
-		(extendableXMLAttributes?='extendable-XML-attributes' ';')?
-		(allowEnums?='allow-enums' ';')?
-		(allowInheritance?='allow-inheritance' ';')?
-		(allowPolymorphism?='allow-polymorphism' ';')?
+		(extendableProperties?='extendable-properties' )?
+		(extendableXMLAttributes?='extendable-XML-attributes' )?
+		(allowEnums?='allow-enums' )?
+		(allowInheritance?='allow-inheritance' )?
+		(allowPolymorphism?='allow-polymorphism' )?
 	'}';
 	
 ServiceDefPolicy:
 	{ServiceDefPolicy}
 	'services' '{'
 		'operations' '{'
-			(extendableParameters?='extendable-parameters' ';')?
-			(extendableXMLAttributes?='extendable-XML-attributes' ';')?
-			(allowPolymorphism?='allow-polymorphism' ';')?
+			(extendableParameters?='extendable-parameters' )?
+			(extendableXMLAttributes?='extendable-XML-attributes' )?
+			(allowPolymorphism?='allow-polymorphism' )?
 		'}'
 	'}';

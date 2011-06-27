@@ -36,12 +36,6 @@ public class BusinessDslFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getSvcMgmtLeadAssignment_8_1());
 		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getTechLeadAssignment_7_1());
 		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getTagsAssignment_9_1());
-		c.setLinewrap(1, 1, 1).after(f.getFunctionAccess().getDocURLAssignment_7_1());
-		c.setLinewrap(1, 1, 1).after(f.getFunctionAccess().getTagsAssignment_8_1());
-		c.setLinewrap(1, 1, 1).after(f.getFunctionAccess().getTitleAssignment_6());
-		c.setLinewrap(1, 1, 1).after(f.getCapabilityAccess().getDocURLAssignment_6_1());
-		c.setLinewrap(1, 1, 1).after(f.getCapabilityAccess().getRequiresAssignment_5_1());
-		c.setLinewrap(1, 1, 1).after(f.getCapabilityAccess().getTitleAssignment_4());
 
 		for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("{", "}")) {
 			c.setIndentationIncrement().after(pair.getFirst());

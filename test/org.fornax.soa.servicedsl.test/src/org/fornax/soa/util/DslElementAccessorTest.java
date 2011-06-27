@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
-import org.fornax.soa.serviceDsl.DataType;
+import org.fornax.soa.profiledsl.sOAProfileDsl.DataType;
 import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.EagerFetch;

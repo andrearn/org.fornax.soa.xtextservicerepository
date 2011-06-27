@@ -139,7 +139,6 @@
 
 
 
-
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
@@ -181,16 +180,23 @@
       </markerResolutionGenerator>
    </extension>
 
-   <extension
-         point="org.eclipse.ui.newWizards">
-      <wizard
-            category="org.eclipse.xtext.projectwiz"
-            class="org.fornax.soa.ui.SolutionDslExecutableExtensionFactory:org.fornax.soa.ui.wizard.SolutionDslNewProjectWizard"
-            icon="icons/editor.gif"
-            id="org.fornax.soa.ui.wizard.SolutionDslNewProjectWizard"
-            name="SolutionDsl Project"
-            project="true">
-      </wizard>
-   </extension>
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="org.fornax.soa.SolutionDsl.compare.contentViewers"
+            class="org.fornax.soa.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="soldsl">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="org.fornax.soa.SolutionDsl.compare.contentMergeViewers"
+            class="org.fornax.soa.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="soldsl" label="SolutionDsl Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="org.fornax.soa.SolutionDsl.editors.documentProviders"
+            class="org.fornax.soa.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="soldsl">
+    </provider>
+  </extension>
 
 </plugin>

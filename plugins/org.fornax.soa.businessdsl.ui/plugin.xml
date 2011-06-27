@@ -201,4 +201,23 @@
       </markerResolutionGenerator>
    </extension>
 
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="org.fornax.soa.BusinessDsl.compare.contentViewers"
+            class="org.fornax.soa.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="bizdsl">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="org.fornax.soa.BusinessDsl.compare.contentMergeViewers"
+            class="org.fornax.soa.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="bizdsl" label="BusinessDsl Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="org.fornax.soa.BusinessDsl.editors.documentProviders"
+            class="org.fornax.soa.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="bizdsl">
+    </provider>
+  </extension>
+
 </plugin>

@@ -38,11 +38,11 @@ DomainNamespace hidden(WS):
 	(doc=ML_COMMENT)? 
 	'domain-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		'metadata' '{'
-			('domain' domain=[businessDsl::Domain] ';')?
-			(version=Version ';' )?
-			('namespace-owner' owner=STRING ';')?
+			('domain' domain=[businessDsl::Domain])?
+			(version=Version  )?
+			('namespace-owner' owner=STRING)?
 			(linkingPolicy = LinkingPolicy)?
-			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+			('tags' (tags+=[semanticsDsl::Tag])+)*
 		'}'
 		(types+=Type)*
 		(services+=Service)*
@@ -56,9 +56,9 @@ InternalNamespace hidden(WS):
 	(doc=ML_COMMENT)? 
 	'internal-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		'metadata' '{'
-			(version=Version ';' )?
+			(version=Version)?
 			(linkingPolicy = LinkingPolicy)?
-			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+			('tags' (tags+=[semanticsDsl::Tag])+)*
 		'}'
 		(types+=Type)*
 		(services+=Service)*
@@ -69,10 +69,9 @@ InternalNamespace hidden(WS):
 	
 LinkingPolicy :
 	'referencing-policy' '{'
-		{LinkingPolicy}
-		('minimal-development-state' minDevState = LifecycleState ';')?
-		('minimal-test-state' minTestState = LifecycleState ';')?
-		('minimal-production-state' minProdState = LifecycleState ';')?
+		'minimal-development-state' minDevState = LifecycleState 
+		'minimal-test-state' minTestState = LifecycleState
+		'minimal-production-state' minProdState = LifecycleState
 	'}';
 	
 Type:
@@ -86,14 +85,14 @@ BusinessObject hidden(WS):
 	(doc=ML_COMMENT)?
 	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superBusinessObject=BusinessObjectRef)? '{' 
 		'metadata' '{'
-			version=Version ';' 
-			('replaces' replaces=BusinessObjectRef ';')?
-			'lifecycle-state' state=LifecycleState ';'
+			version=Version 
+			('replaces' replaces=BusinessObjectRef)?
+			'lifecycle-state' state=LifecycleState
 			(governanceApproval=GovernanceApproval)?
-			('retirement on' retirementDate = STRING ';')?
+			('retirement on' retirementDate = STRING)?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
 			(linkingPolicy = LinkingPolicy)?
-			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+			('tags' (tags+=[semanticsDsl::Tag])+)*
 		'}'
 		(properties+=Property)*
 	'}' (WS)*;
@@ -121,31 +120,31 @@ Property hidden(WS):
 	
 Attribute hidden(WS):
 	(doc=ML_COMMENT)?
-	(optional?='optional')? (isBusinessKey?='business-key')? ((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? name=ID ':' type=TypeRef ';' (WS)*;
+	(optional?='optional')? (isBusinessKey?='business-key')? ((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? name=ID ':' type=TypeRef  (WS)*;
 	
 //links to a target businessObject but uses it's business-key to resolve a reference, hence it is a weak reference
 Reference hidden(WS):
 	(doc=ML_COMMENT)?
-	(optional?='optional')? (isBusinessKey?='business-key')? 'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef ';' (WS)*; 
+	(optional?='optional')? (isBusinessKey?='business-key')? 'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef  (WS)*; 
 	
 SimpleAttribute hidden(WS):
 	(doc=ML_COMMENT)?
-	(optional?='optional')? name=ID ':' type=TypeRef ';' (WS)*;
+	(optional?='optional')? name=ID ':' type=TypeRef  (WS)*;
 	
 Enumeration hidden(WS):
 	(doc=ML_COMMENT)?
 	'enum' name=ID '{'
 		'metadata' '{'
-			version=Version ';' 
-			('replaces' replaces=EnumTypeRef ';')?
-			'lifecycle-state' state=LifecycleState ';'
+			version=Version  
+			('replaces' replaces=EnumTypeRef )?
+			'lifecycle-state' state=LifecycleState 
 			(governanceApproval=GovernanceApproval)?
-			('retirement on' retirementDate = STRING ';')?
+			('retirement on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
 			(linkingPolicy = LinkingPolicy)?
-			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
-		(literals+=EnumLiteral ';')*
+		(literals+=EnumLiteral )*
 	'}';
 	
 EnumLiteral: 
@@ -160,25 +159,26 @@ Service hidden(WS):
 	(doc=ML_COMMENT)?
 	visibility=VISIBILITY 'service' name=ID '{'
 		'metadata' '{'
-			version=Version ';' 
-			'lifecycle-state' state=LifecycleState ';'
+			version=Version  
+			'lifecycle-state' state=LifecycleState 
 			(governanceApproval=GovernanceApproval)?
-			'service-category' category=ServiceCategory ';'
-			'statefulness' statefulness=Statefulness ';'
-			('persistence' persistence=Persistence ';')? 
+			'service-category' category=ServiceCategory 
+			'statefulness' statefulness=Statefulness 
+			('persistence' persistence=Persistence )? 
 			(
-				('service-owner' owner=STRING ';')?
-			&	('realizes function' function=[businessDsl::Function|QualifiedName] ';')?	
-			&	('provided-Contract-URL' providedContractUrl=STRING ';')? //Where can I get the sources?
-			&	('sourceURL' source=STRING ';')? //Where can I get the sources?
-			&	('docURL' docUrl=STRING ';')?
-			&	('release on' releaseDate = STRING ';')?
-			&	('retirement on' retirementDate = STRING ';')?
-			&	('replaces' replaces=ServiceRef ';')?
-			&	('messageHeader' messageHeader = MessageHeaderRef ';')?
+				('service-owner' owner=STRING )?
+			&	('realizes capabilty' (realizedCapabilies+=CapabilityRef)+ )?	
+			&	('supports capabilty' (supportedCapabilies+=CapabilityRef)+ )?	
+			&	('provided-Contract-URL' providedContractUrl=STRING )? //Where can I get the sources?
+			&	('sourceURL' source=STRING )? //Where can I get the sources?
+			&	('docURL' docUrl=STRING )?
+			&	('release on' releaseDate = STRING )?
+			&	('retirement on' retirementDate = STRING )?
+			&	('replaces' replaces=ServiceRef )?
+			&	('messageHeader' messageHeader = MessageHeaderRef )?
 			&   (linkingPolicy = LinkingPolicy)?
 			)
-			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(operations+=Operation)*
 	'}';
@@ -188,10 +188,10 @@ enum ServiceCategory: process | rule | activity | entity | utility;
 
 GovernanceApproval:
 	'governance-approval' '{'
-		decision=ApprovalDecision ';'
-		('justification-doc' justificationOrDocURL=STRING ';')?
-		('decision-date' approvalDate=STRING ';')? 
-		('decision-by' approvedBy=STRING ';')?
+		decision=ApprovalDecision 
+		('justification-doc' justificationOrDocURL=STRING )?
+		('decision-date' approvalDate=STRING )? 
+		('decision-by' approvedBy=STRING )?
 	'}'; 
 	
 enum ApprovalDecision: no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated;
@@ -214,22 +214,25 @@ ParameterRef:
 
 MessageHeaderRef:
 	header = [profileDsl::MessageHeader|QualifiedName] versionRef=VersionRef;
+	
+CapabilityRef:
+	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
 
 Event:	GlobalEvent | OperationEvent;
 
 GlobalEvent:
 	'event' name=ID '{'
 		'metadata' '{'
-			version=Version ';' 
-			('replaces' replaces=EventRef ';')?
-			'lifecycle-state' state=LifecycleState ';'
+			version=Version  
+			('replaces' replaces=EventRef )?
+			'lifecycle-state' state=LifecycleState 
 			(governanceApproval=GovernanceApproval)?
-			('retirement on' retirementDate = STRING ';')?
+			('retirement on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
 			(linkingPolicy = LinkingPolicy)?
-			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
-		(parameter+=Parameter ';')*
+		(parameter+=Parameter )*
 	'}';
 	
 OperationEvent:
@@ -237,9 +240,9 @@ OperationEvent:
 		('metadata' '{'
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
 			(linkingPolicy = LinkingPolicy)?
-			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}')?
-		(parameter+=Parameter ';')*
+		(parameter+=Parameter )*
 	'}';
 	
 EventRef:	OperationEventRef | GlobalEventRef ;
@@ -251,24 +254,23 @@ GlobalEventRef:
 	event=[GlobalEvent|QualifiedName] versionRef=VersionRef ('subType' subType=ID)?;
 	
 Channel:
-	'channel' name=QualifiedName ';' ;
+	'channel' name=QualifiedName  ;
 	
 	
 Operation:
 	(doc=ML_COMMENT)?
 	mep=MEP name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
-		('callback-listener-for' (callbackForOperation+=OperationRef) (',' callbackForOperation+=OperationRef)*';')?
+		('callback-listener-for' (callbackForOperation+=OperationRef) (',' callbackForOperation+=OperationRef)*)?
 		('publishes' '{'
 				(publishes+=PublishedEvent )+ 
 		'}')? 
 		('subscribes-to' '{'
-			(subscribes+=EventRef ';')
+			(subscribes+=EventRef )
 		'}')? 
-		('requires' requires+=ServiceRef ';')* 
-		('statefulness' statefulness=Statefulness (updating?='updating')? ';')?
-		('can-compensate' canCompensate+=OperationRef ';')?
-		('realizes capability' capability=[businessDsl::Capability|QualifiedName] ';')?
-		('messageHeader' messageHeader = MessageHeaderRef ';')?
+		('requires' requires+=ServiceRef )* 
+		('statefulness' statefulness=Statefulness (updating?='updating')? )?
+		('can-compensate' canCompensate+=OperationRef )?
+		('messageHeader' messageHeader = MessageHeaderRef )?
 		(fetchProfile+=FetchProfile)*
 	'}';
 	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
@@ -279,7 +281,7 @@ PublishedOperationEvent:
 	publishesOpEvent = OperationEvent;
 
 PublishedGlobalEvent:
-	 publishesGlobalEvent = GlobalEventRef ';';
+	 publishesGlobalEvent = GlobalEventRef ;
 	 
 Parameter:
 	(optional?='optional')? name=ID ':' type=TypeRef ','? ;
@@ -288,14 +290,14 @@ Exception:
 	(doc=ML_COMMENT)?
 	'exception' name=ID ('extends' superException=ExceptionRef)? '{' 
 		'metadata' '{'
-			version=Version ';' 
-			('replaces' replaces=ExceptionRef ';')?
-			'lifecycle-state' state=LifecycleState ';'
+			version=Version  
+			('replaces' replaces=ExceptionRef )?
+			'lifecycle-state' state=LifecycleState 
 			(governanceApproval=GovernanceApproval)?
-			('retirement on' retirementDate = STRING ';')?
+			('retirement on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
 			(linkingPolicy = LinkingPolicy)?
-			('tags' (tags+=[semanticsDsl::Tag])+ ';')*
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(properties+=SimpleAttribute)*
 	'}';
@@ -309,7 +311,7 @@ enum MEP :
 enum VISIBILITY : public | domain | private; 
 
 FetchProfile:
-	'fetch-profile' (isDefault?='default')? profileName=ID fetchSpec=FetchSpec ';';
+	'fetch-profile' (isDefault?='default')? profileName=ID fetchSpec=FetchSpec ;
 
 FetchSpec: EagerFetch | FlatFetch;
 

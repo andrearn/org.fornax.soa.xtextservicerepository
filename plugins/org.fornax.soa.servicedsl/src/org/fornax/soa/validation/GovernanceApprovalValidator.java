@@ -1,11 +1,12 @@
 package org.fornax.soa.validation;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.validation.AbstractDeclarativeValidator;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.validation.Check;
 import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
+import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType;
 import org.fornax.soa.query.VersionedObjectQueryHelper;
 import org.fornax.soa.serviceDsl.ApprovalDecision;
 import org.fornax.soa.serviceDsl.BusinessObject;
@@ -16,9 +17,11 @@ import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.util.ReferencedStateChecker;
 
-public class GovernanceApprovalValidator extends AbstractDeclarativeValidator {
+public class GovernanceApprovalValidator extends AbstractServiceDslJavaValidator {
 
+	
 	// Governance approvals ...
+	
 	@Check
 	public void checkPublicTmpToleratedServiceShouldHaveApproval(
 			GovernanceApproval g) {
@@ -34,7 +37,7 @@ public class GovernanceApprovalValidator extends AbstractDeclarativeValidator {
 					+ " "
 					+ VersionedObjectQueryHelper.getObjectVersion(g).getVersion()
 					+ " + needs to be reviewed. A decision on governance approval shoud be made soon.",
-					ServiceDslPackage.GOVERNANCE_APPROVAL__DECISION);
+					ServiceDslPackage.Literals.GOVERNANCE_APPROVAL__DECISION);
 	}
 
 	@Check
@@ -52,7 +55,7 @@ public class GovernanceApprovalValidator extends AbstractDeclarativeValidator {
 					+ " "
 					+ VersionedObjectQueryHelper.getObjectVersion(g).getVersion()
 					+ " needs to be reviewed and possibly redesigned. A decision on governance approval shoud be made soon.",
-					ServiceDslPackage.GOVERNANCE_APPROVAL__DECISION);
+					ServiceDslPackage.Literals.GOVERNANCE_APPROVAL__DECISION);
 	}
 
 	@Check
@@ -72,7 +75,7 @@ public class GovernanceApprovalValidator extends AbstractDeclarativeValidator {
 					+ " "
 					+ VersionedObjectQueryHelper.getObjectVersion(g).getVersion()
 					+ " is being tolerated. A justification is required for that.",
-					ServiceDslPackage.GOVERNANCE_APPROVAL);
+					getFeatureForGovernanceApproval (g));
 	}
 
 	@Check
@@ -88,7 +91,7 @@ public class GovernanceApprovalValidator extends AbstractDeclarativeValidator {
 					+ " "
 					+ VersionedObjectQueryHelper.getObjectVersion(g).getVersion()
 					+ " may not be productive without governance approval. It must at least be tolerated",
-					ServiceDslPackage.APPROVAL_DECISION);
+					ServiceDslPackage.Literals.GOVERNANCE_APPROVAL__DECISION);
 	}
 
 	@Check
@@ -98,16 +101,29 @@ public class GovernanceApprovalValidator extends AbstractDeclarativeValidator {
 				&& (g.getApprovalDate() == null || "".equals(g
 						.getApprovalDate())))
 			warning("Please provide the date of the governance decision!",
-					ServiceDslPackage.GOVERNANCE_APPROVAL);
+					getFeatureForGovernanceApproval (g));
 	}
 
 	@Check
 	public void checkApprovedServiceHasBy(GovernanceApproval g) {
 		if (g.eContainer().eContainer() instanceof DomainNamespace
 				&& g.getDecision() != ApprovalDecision.NO
-				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy())))
+				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
 			warning("Please state who made the governance decision!",
-					ServiceDslPackage.GOVERNANCE_APPROVAL);
+					getFeatureForGovernanceApproval (g));
+		}
+	}
+	
+	private EStructuralFeature getFeatureForGovernanceApproval (GovernanceApproval g) {
+		if (g.eContainer() instanceof VersionedType)
+			return ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL;
+		else if (g.eContainer() instanceof Service)
+			return ServiceDslPackage.Literals.SERVICE__GOVERNANCE_APPROVAL;
+		else if (g.eContainer() instanceof org.fornax.soa.serviceDsl.Exception)
+			return ServiceDslPackage.Literals.EXCEPTION__GOVERNANCE_APPROVAL;
+		else
+			return null;
+		
 	}
 
 	@Check
@@ -116,7 +132,7 @@ public class GovernanceApprovalValidator extends AbstractDeclarativeValidator {
 				&& o.getState() != LifecycleState.PROPOSED
 				&& o.getGovernanceApproval() == null)
 			error("The state of the governance-approval for a canonical businessObject must be declared!",
-					ServiceDslPackage.BUSINESS_OBJECT);
+					ServiceDslPackage.Literals.VERSIONED_TYPE__STATE);
 	}
 
 	@Check
@@ -125,7 +141,7 @@ public class GovernanceApprovalValidator extends AbstractDeclarativeValidator {
 				&& e.getState() != LifecycleState.PROPOSED
 				&& e.getGovernanceApproval() == null)
 			error("The state of the governance-approval for a canonical enum must be declared!",
-					ServiceDslPackage.ENUMERATION);
+					ServiceDslPackage.Literals.VERSIONED_TYPE__STATE);
 	}
 
 	@Check
@@ -134,7 +150,7 @@ public class GovernanceApprovalValidator extends AbstractDeclarativeValidator {
 				&& ex.getState() != LifecycleState.PROPOSED
 				&& ex.getGovernanceApproval() == null)
 			error("The state of the governance-approval for a canonical exception must be declared!",
-					ServiceDslPackage.EXCEPTION);
+					ServiceDslPackage.Literals.VERSIONED_TYPE__STATE);
 	}
 
 	@Check
@@ -143,7 +159,7 @@ public class GovernanceApprovalValidator extends AbstractDeclarativeValidator {
 				&& s.getState() != LifecycleState.PROPOSED
 				&& s.getGovernanceApproval() == null)
 			error("The state of the governance-approval for a public service must be declared!",
-					ServiceDslPackage.SERVICE);
+					ServiceDslPackage.Literals.VERSIONED_TYPE__STATE);
 	}
 
 	private ReferencedStateChecker createStateChecker (EObject owner) {

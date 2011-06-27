@@ -26,12 +26,16 @@ Workflow {
 		platformUri = "${runtimeProject}/.."
 		uriMap = { to = baseMetaModel from = "http://www.fornax.org/soa/basedsl/SOABaseDsl" }
 		registerEcoreFile = baseMetaModel
+		registerGenModelFile  = baseGenModel
 		uriMap = { to = profMetaModel from = "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" }
 		registerEcoreFile = profMetaModel
+		registerGenModelFile = profGenModel
 		uriMap = { to = semMetaModel from = "http://www.fornax.org/soa/SemanticsDsl" }
 		registerEcoreFile = semMetaModel
+		registerGenModelFile = semGenModel
 		uriMap = { to = bizMetaModel from = "http://www.fornax.org/soa/BusinessDsl" }
 		registerEcoreFile = bizMetaModel
+		registerGenModelFile = bizGenModel
 	}
 
 	component = DirectoryCleaner {
@@ -56,7 +60,6 @@ Workflow {
 
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
-				referencedGenModels = "${baseGenModel}, ${profGenModel}, ${semGenModel}, ${bizGenModel}"
 			}
 
 			// the serialization component
@@ -99,12 +102,16 @@ Workflow {
 			fragment = labeling.LabelProviderFragment {}
 
 			// outline API 
-			fragment = outline.TransformerFragment {}
-			fragment = outline.OutlineNodeAdapterFactoryFragment {}
+			fragment = outline.OutlineTreeProviderFragment {}
 			fragment = outline.QuickOutlineFragment {}
 
 			// quickfix API 
 			fragment = quickfix.QuickfixProviderFragment {}
+			
+			// provides a compare view
+			fragment = compare.CompareFragment {
+				fileExtensions = file.extensions
+			}
 
 			// content assist API  
 			fragment = contentAssist.JavaBasedContentAssistFragment {}

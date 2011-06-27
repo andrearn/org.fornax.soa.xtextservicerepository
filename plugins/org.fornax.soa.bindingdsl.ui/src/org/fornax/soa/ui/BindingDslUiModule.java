@@ -4,8 +4,6 @@
 package org.fornax.soa.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.eclipse.xtext.ui.editor.outline.transformer.ISemanticModelTransformer;
-import org.fornax.soa.ui.outline.BindingDslTransformer;
 
 /**
  * Use this class to register components to be used within the IDE.

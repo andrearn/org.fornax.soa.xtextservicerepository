@@ -1,55 +1,28 @@
 package org.fornax.soa.basedsl.scoping.versions;
 
-import java.util.List;
-import java.util.Map;
-
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
-import org.eclipse.xtext.scoping.impl.AbstractScope;
+import org.eclipse.xtext.scoping.impl.MultimapBasedScope;
 
-public class VersionFilteredMapScope extends AbstractScope {
-	private IScope parent;
-	private VersionFilter filter;
-	private Map<String, IEObjectDescription> descriptions ;
+import com.google.common.collect.Multimap;
+
+public class VersionFilteredMapScope extends MultimapBasedScope {
 	
-	public VersionFilteredMapScope(IScope parent, Map<String, IEObjectDescription> descriptions) {
-		this.parent = parent;
-		this.descriptions = descriptions;
-		this.filter = VersionFilter.NULL_VERSION_FILTER;
+	public static IScope createScope (IScope parent, Iterable<IEObjectDescription> descriptions, boolean ignoreCase, AbstractPredicateVersionFilter <IEObjectDescription> versionFilter) {
+		Multimap<QualifiedName, IEObjectDescription> map = versionFilter.getBestMatchByNames (descriptions, ignoreCase);
+		if (map == null || map.isEmpty()) {
+			return parent;
+		}
+		return new VersionFilteredMapScope (parent, map, ignoreCase);
 	}
-	public VersionFilteredMapScope(IScope parent, Map<String, IEObjectDescription> descriptions, VersionFilter filter) {
-		this.parent = parent;
-		this.descriptions = descriptions;
-		this.filter = filter;
+	
+	public static IScope createScope (IScope parent, Iterable<IEObjectDescription> descriptions, AbstractPredicateVersionFilter <IEObjectDescription> versionFilter) {
+		return createScope(parent, descriptions, false, versionFilter);
 	}
-	public VersionFilteredMapScope(IScope parent, List<IEObjectDescription> descriptions, VersionFilter filter) {
-		this.parent = parent;
-		this.descriptions = filter.getBestMatchByNames(descriptions);
-		this.filter = filter;
-	}
-
-	@Override
-	protected Iterable<IEObjectDescription> internalGetContents() {
-		return descriptions.values();
-	}
-
-	@Override
-	public IEObjectDescription getContentByName(String name) {
-		IEObjectDescription ieObjectDescription = getContentByNameImpl(name);
-		return ieObjectDescription!=null ? ieObjectDescription : parent.getContentByName(name);
-	}
-
-	protected IEObjectDescription getContentByNameImpl(String name) {
-		return descriptions.get(name);
-	}
-
-	public IScope getOuterScope() {
-		return parent;
-	}
-
-	@Override
-	public String toString() {
-		return "contains "+descriptions.size()+" elements";
+	
+	protected VersionFilteredMapScope (IScope parent, Multimap<QualifiedName, IEObjectDescription> elements, boolean ignoreCase) {
+		super(parent, elements, ignoreCase);
 	}
 
 }

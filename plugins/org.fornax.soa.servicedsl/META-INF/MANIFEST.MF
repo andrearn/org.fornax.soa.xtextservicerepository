@@ -2,25 +2,25 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.servicedsl
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.3.1.qualifier
+Bundle-Version: 1.4.0.qualifier
 Bundle-SymbolicName: org.fornax.soa.servicedsl;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="1.0.2",
- org.eclipse.xtext.generator;resolution:=optional,
+Require-Bundle: org.eclipse.xtext;bundle-version="2.0.0",
+ org.eclipse.xtext.generator;bundle-version="2.0.0";resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
  org.eclipse.xtext.xtend;bundle-version="1.0.2";resolution:=optional,
- org.eclipse.xtext.util;bundle-version="1.0.2",
+ org.eclipse.xtext.util;bundle-version="2.0.0",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.fornax.soa.semanticsdsl;bundle-version="1.2.0",
- org.fornax.soa.businessdsl;bundle-version="1.2.0",
- org.fornax.soa.basedsl;bundle-version="1.2.0",
- org.fornax.soa.profiledsl;bundle-version="1.2.0",
+ org.fornax.soa.semanticsdsl;bundle-version="1.4.0",
+ org.fornax.soa.businessdsl;bundle-version="1.4.0",
+ org.fornax.soa.basedsl;bundle-version="1.4.0",
+ org.fornax.soa.profiledsl;bundle-version="1.4.0",
  org.eclipse.osgi,
  org.eclipse.equinox.registry;bundle-version="3.5.0"
 Import-Package: org.apache.log4j
