@@ -5,16 +5,11 @@
     nsURI="http://www.fornax.org/soa/SolutionDsl" nsPrefix="solutionDsl">
   <eClassifiers xsi:type="ecore:EClass" name="Model">
     <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Import"
+        eType="ecore:EClass platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Import"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="solution" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Solution"
         containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Import" eSuperTypes="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Import"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NsImport" eSuperTypes="platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Import"/>
-  <eClassifiers xsi:type="ecore:EClass" name="FileImport">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Solution">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

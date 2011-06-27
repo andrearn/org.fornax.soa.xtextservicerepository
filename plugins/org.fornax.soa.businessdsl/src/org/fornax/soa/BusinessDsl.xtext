@@ -62,9 +62,9 @@ BusinessFunction hidden(WS):
 			('tags' (tags+=[semantics::Tag])+)?
 		'}'
 
-		'uses' '{'
-			(capabilties+=CapabilityRef)*
-		'}'
+		('uses' '{'
+			(capabilties+=CapabilityRef)+
+		'}')?
 	'}' ; 
 	
 /**

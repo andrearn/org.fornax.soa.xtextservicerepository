@@ -21,15 +21,6 @@ Model hidden (WS):
 	(imports+=Import)*
 	(solution+=Solution)*;
 	
-Import hidden(WS): NsImport;
-	
-NsImport:
-	'import' importedNamespace=QualifiedNameWithWildCard ;
-	
-FileImport:
-	'import' importURI=STRING ;
-	
-	
 	
 Solution hidden(WS):
 	'solution' name=QualifiedName '{'
