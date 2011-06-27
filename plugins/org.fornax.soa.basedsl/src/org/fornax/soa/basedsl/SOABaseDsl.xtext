@@ -13,7 +13,7 @@ grammar org.fornax.soa.basedsl.SOABaseDsl with org.eclipse.xtext.common.Terminal
 generate sOABaseDsl "http://www.fornax.org/soa/basedsl/SOABaseDsl"
 
 Import hidden(WS): 
-	'import' importedNamespace=QualifiedNameWithWildCard ';';
+	'import' importedNamespace=QualifiedNameWithWildCard;
 
 VersionId hidden(WS): INT('.'INT)*;
 
