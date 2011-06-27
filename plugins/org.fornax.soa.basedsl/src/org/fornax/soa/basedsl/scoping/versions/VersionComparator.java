@@ -6,6 +6,12 @@ public class VersionComparator {
 	
 	
 	public static int compare (String v1, String v2) {
+		if (v1!=null && v2 == null)
+			return 1;
+		if (v1==null && v2 != null)
+			return -1;
+		if (v1==null && v2==null)
+			return 0;
 		if (v1.equals(v2)) {
 			return 0;
 		}
@@ -28,6 +34,10 @@ public class VersionComparator {
 	}
 	
 	public static int compare (IEObjectDescription eObjDesc1, IEObjectDescription eObjDesc2, VersionResolver resolver) {
+		if (eObjDesc1 == null && eObjDesc2 != null)
+			return -1;
+		if (eObjDesc1 != null && eObjDesc2 == null)
+			return 1;
 		return compare (resolver.getVersion(eObjDesc1), resolver.getVersion(eObjDesc2));
 	}
 
