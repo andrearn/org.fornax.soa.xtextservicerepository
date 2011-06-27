@@ -75,8 +75,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="shortDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="automationLevel" unique="false"
-        upperBound="-1" eType="ecore:EEnum platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//CapabilityAutomationLevel"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="businessValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Member"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="docURL" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -91,9 +89,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SimpleCapability" eSuperTypes="platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Capability"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleCapability" eSuperTypes="platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Capability">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="automationLevel" eType="ecore:EEnum platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//CapabilityAutomationLevel"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CapabilityVariant" eSuperTypes="platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Capability">
     <eStructuralFeatures xsi:type="ecore:EReference" name="basedOnCapabilty" eType="ecore:EClass platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Capability"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="automationLevel" unique="false"
+        upperBound="-1" eType="ecore:EEnum platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//CapabilityAutomationLevel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="additions" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//CapabilityVariation"
         containment="true"/>

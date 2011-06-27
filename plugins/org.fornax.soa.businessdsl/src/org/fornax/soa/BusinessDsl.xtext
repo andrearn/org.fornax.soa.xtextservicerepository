@@ -31,7 +31,7 @@ Organization hidden(WS):
 			('competence' competence=STRING)?
 			('head' bizLead=[Member|QualifiedName])?
 		'}'
-		(businessFunctions+=BusinessFunction)
+		(businessFunctions+=BusinessFunction)*
 		(subOrganizations+=[Organization|QualifiedName])*
 		(members+=Member)*
 	'}';
@@ -96,7 +96,7 @@ SimpleCapability hidden(WS):
 		version=Version
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
-		'automation-level' automationLevel+=CapabilityAutomationLevel
+		'automation-level' automationLevel=CapabilityAutomationLevel
 		('business-value' businessValue=STRING)
 		('owner' owner=[Member|QualifiedName])?
 		('docURL' docURL=STRING)? 
