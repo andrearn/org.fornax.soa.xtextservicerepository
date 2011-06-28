@@ -3,7 +3,16 @@
  */
 package org.fornax.soa.scoping;
 
-import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
+import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvider;
+import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
+import org.fornax.soa.businessDsl.BusinessDslPackage;
+import org.fornax.soa.businessDsl.CapabilityRef;
+import org.fornax.soa.businessdsl.metamodel.BusinessDslMetamodelAccess;
+
 
 /**
  * This class contains custom scoping description.
@@ -12,6 +21,18 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
  * on how and when to use it 
  *
  */
-public class BusinessDslScopeProvider extends AbstractDeclarativeScopeProvider {
+public class BusinessDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
+
+	
+	@Override
+	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
+			EObject ctx, EReference reference) {
+		if (reference==BusinessDslPackage.Literals.CAPABILITY_REF__VERSION_REF && ctx instanceof CapabilityRef) {
+			final VersionRef v = ((CapabilityRef) ctx).getVersionRef();
+			return createVersionFilter (v, BusinessDslMetamodelAccess.INSTANCE.getVersionedOwner(ctx));
+		}
+
+		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+	}
 
 }

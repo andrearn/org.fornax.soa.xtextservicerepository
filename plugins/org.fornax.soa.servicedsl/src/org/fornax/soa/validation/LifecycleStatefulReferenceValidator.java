@@ -20,6 +20,7 @@ import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.ExceptionRef;
+import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceRef;
@@ -96,7 +97,10 @@ public class LifecycleStatefulReferenceValidator extends AbstractServiceDslJavaV
 		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(verTypeRef);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {
 			if (!createStateChecker(owner).stateMatches(verTypeRef.getType().getState()))
-				error("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
+				if (verTypeRef.eContainer() instanceof Reference)
+					warning ("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
+				else
+					error ("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
 		}
 	}
 	@Check
@@ -104,7 +108,10 @@ public class LifecycleStatefulReferenceValidator extends AbstractServiceDslJavaV
 		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(boRef);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {
 			if (!createStateChecker(owner).stateMatches(((BusinessObject)boRef.getType()).getState()))
-				error("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
+				if (boRef.eContainer() instanceof Reference)
+					warning ("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
+				else
+					error("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
 		}
 	}
 
@@ -113,7 +120,10 @@ public class LifecycleStatefulReferenceValidator extends AbstractServiceDslJavaV
 		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(enumRef);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {
 			if (!createStateChecker(owner).stateMatches(((Enumeration)enumRef.getType()).getState()))
-				error("An enum with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
+				if (enumRef.eContainer() instanceof Reference)
+					warning("An enum with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
+				else
+					error("An enum with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
 		}
 	}
 

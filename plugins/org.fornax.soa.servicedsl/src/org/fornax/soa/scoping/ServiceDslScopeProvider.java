@@ -33,6 +33,7 @@ import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
+import org.fornax.soa.serviceDsl.CapabilityRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.EventRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
@@ -136,7 +137,11 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		} else if (reference == ServiceDslPackage.Literals.MESSAGE_HEADER_REF__HEADER && ctx instanceof MessageHeaderRef) {
 			final VersionRef v = ((MessageHeaderRef) ctx).getVersionRef();
 			return createStateLessVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		} else if (reference==ServiceDslPackage.Literals.CAPABILITY_REF__VERSION_REF && ctx instanceof CapabilityRef) {
+			final VersionRef v = ((CapabilityRef) ctx).getVersionRef();
+			return createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		}
+
 		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 	}
 
