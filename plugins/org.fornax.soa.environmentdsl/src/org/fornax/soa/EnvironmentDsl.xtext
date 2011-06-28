@@ -53,6 +53,11 @@ ESB hidden (WS):
 		('adminUrl' adminUrl=STRING )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
@@ -68,6 +73,11 @@ Registry  hidden (WS):
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
 		('kind' kind=RegistryKind )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 	
@@ -87,6 +97,11 @@ AppServer  hidden (WS):
 		(dataSources+=DataSource)*
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 	
@@ -107,6 +122,11 @@ ProcessServer  hidden (WS):
 		('adminUrl' adminUrl=STRING  )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
@@ -120,6 +140,11 @@ Broker  hidden (WS):
 		('adminUrl' adminUrl=STRING )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}'; 
 
@@ -163,11 +188,171 @@ DataSource  hidden (WS):
 		'schema' schema=[DatabaseSchema|QualifiedName] 
 	'}';
 	
+	
 enum DatabaseKind : Oracle | DB2 | MSSQL | MySQL | Postgres | Sybase | HyperSonic | Ingres | Adabas | Other;
 
 DatabaseSchema: 
 	'schema' name=ID 'owner' owner=STRING;
+
+
+Connector:
+	SOAPHTTP | SOAPJMS | REST | EJB | JMS | AMQP | IIOP | RMI | RFC | FTP | IMAP | POP3 | SMTP | HTTP | TCP
+;
+
+SOAPHTTP:
+	{SOAPHTTP}
+	'SOAP/HTTP' '{'
+		('versions' (version+=STRING)+)?
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+		('context-root' contextRoot=STRING)?
+		('implementation' implementation=STRING)?
+	'}';
+
+SOAPJMS:
+	'SOAP/JMS' '{'
+		('versions' (version+=STRING)+)?
+		'port' port=INT
+		('security-protocol' securityProtocol=SecurityProtocol)?
+		connectionSpec=JCAConnectionSpec
+		('implementation' implementation=STRING)?
+	'}';
+
+REST:
+	{REST}
+	'REST' '{'
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+		('context-root' contextRoot=STRING)?
+	'}';
+
+EJB:
+	{EJB}
+	'EJB' '{'
+		('versions' (version+=STRING)+)?
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+	'}'
+;
+
+IIOP:
+	{IIOP}
+	'IIOP' '{'
+		('versions' (version+=STRING)+)?
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+		(connectionSpec=JCAConnectionSpec)?
+	'}'
+;
+
+RMI:
+	{RMI}
+	'RMI' '{'
+		('versions' (version+=STRING)+)?
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+		(connectionSpec=JCAConnectionSpec)?
+	'}'
+;
+
+Tuxedo:
+	{Tuxedo}
+	'Tuxedo' '{'
+		('versions' (version+=STRING)+)?
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+	'}'
+;
+
+JMS:
+	'JMS' '{'
+		('versions' (version+=STRING)+)?
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+		connectionSpec=JCAConnectionSpec
+		('implementation' implementation=STRING)?
+	'}';
+
+AMQP:
+	{AMQP}
+	'AMQP' '{'
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+		(connectionSpec=JCAConnectionSpec)?
+		('implementation' implementation=STRING)?
+	'}'
+;
+
+RFC: 
+	{RFC}
+	'RFC' '{'
+		('port' port=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+		(connectionSpec=JCAConnectionSpec)?
+	'}';
+
+FTP:
+	{FTP}
+	'FTP' '{'
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+	'}';
+
+IMAP:
+	{IMAP}
+	'IMAP' '{'
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+	'}';
+
+POP3:
+	{POP3}
+	'POP3' '{'
+		('port' port=INT)?
+		('secured-port' securedPort=INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+	'}';
+
+JCAConnectionSpec:
+	'JCA-connection-spec' '{'
+		'connection-factory-JNDI-name' connectionFactoryJNDI = STRING
+		('connection-factory-class' connectionFactoryClass = STRING)?
+	'}';
+
+SMTP:
+	{SMTP}
+	'SMTP' '{'
+		('port' port=INT)?
+		('secured-port' securedPort = INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+	'}';
+
+HTTP:
+	{HTTP}
+	'HTTP' '{'
+		('port' port=INT)?
+		('secured-port' securedPort = INT)?
+		('security-protocol' securityProtocol=SecurityProtocol)?
+		('context-root' contextRoot = STRING)?
+	'}';
+
+TCP:
+	'TCP' '{'
+		'port' port = INT
+		('security-protocol' securityProtocol=SecurityProtocol)?
+	'}';
 	
+		
 Host  hidden (WS):
 	'host' name=ID '{'
 		'full-qualified-name' fqn=STRING 
@@ -182,6 +367,8 @@ User  hidden (WS):
 		'email' email=STRING 
 		('phone' phone=STRING )?
 	'}';
+	
+enum SecurityProtocol: NONE | SSLv2 | SSLv3 | TLS;
 	
 QualifiedNameWithWildCard:
 	QualifiedName '.*'?;

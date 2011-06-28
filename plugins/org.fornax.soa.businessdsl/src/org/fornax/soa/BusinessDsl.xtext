@@ -57,7 +57,8 @@ Domain hidden(WS):
 BusinessFunction hidden(WS):
 	'business-function' name=ID '{' 
 		'metadata' '{'
-			'title' title=STRING
+			'short-description' shortDescription=STRING
+			('description' description=STRING)?
 			('docURL' docURL=STRING)? 
 			('tags' (tags+=[semantics::Tag])+)?
 		'}'
@@ -72,7 +73,7 @@ BusinessFunction hidden(WS):
  */
 CapabilityGroup :
 	'capability-group' name=ID '{'
-		description = STRING
+		'description' description = STRING
 		(capabilities+=Capability)*
 		(capabilityGroups+=CapabilityGroup)*
 	'}'
@@ -183,9 +184,7 @@ Input:
  * The outcome of a capability
  */
 Outcome:
-	'outcome' '{'
-		description=STRING
-	'}'
+	'outcome' description=STRING
 ;
 
 	

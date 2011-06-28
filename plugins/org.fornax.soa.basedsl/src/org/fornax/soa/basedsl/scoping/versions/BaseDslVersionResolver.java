@@ -25,7 +25,7 @@ public class BaseDslVersionResolver implements VersionResolver {
 		final EStructuralFeature verFeature1 = o.eClass()
 				.getEStructuralFeature(VERSION_ATTR_NAME);
 		if (verFeature1 != null && o.eIsSet(verFeature1)) {
-			Object verObj = o.eGet(verFeature1);
+			Object verObj = o.eGet (verFeature1, true);
 			if (verObj instanceof Version) {
 				String v = ((Version) verObj).getVersion();
 				return v;

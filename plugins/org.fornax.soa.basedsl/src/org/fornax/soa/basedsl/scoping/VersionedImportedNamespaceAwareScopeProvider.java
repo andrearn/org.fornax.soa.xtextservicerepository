@@ -6,6 +6,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.ISelectable;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
+import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
@@ -13,11 +14,11 @@ import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.FixedVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMajorVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilteredMapScope;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.basedsl.scoping.versions.VersioningContainerBasedScope;
@@ -56,6 +57,8 @@ public abstract class VersionedImportedNamespaceAwareScopeProvider extends Impor
 			return new LatestMinInclVersionFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion());
 		if (v instanceof LowerBoundRangeVersionRef)
 			return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+		if (v instanceof FixedVersionRef)
+			return new FixedVersionFilter<IEObjectDescription> (verResolver, ((FixedVersionRef)v).getFixedVersion());
 		return filter;
 	}
 	

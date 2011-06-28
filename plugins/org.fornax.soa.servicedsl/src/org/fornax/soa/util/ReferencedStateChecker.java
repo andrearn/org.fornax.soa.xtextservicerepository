@@ -21,8 +21,14 @@ public class ReferencedStateChecker {
 	}
 	
 	public boolean stateMatches (LifecycleState state) {
+		if (ownerLifecycleState == null) {
+			return true;
+		}
 		if (ownerLifecycleState == LifecycleState.RETIRED) {
 			return true;
+		}
+		if (ownerLifecycleState == LifecycleState.RETIRED) {
+				return true;
 		} else if (ownerLifecycleState == LifecycleState.DEFINED && state != LifecycleState.RETIRED) {
 			return LifecycleStateComparator.compare(ownerLifecycleState, state) >= 0 || LifecycleStateComparator.compare(minDevLifecycleState, state) >= 0;
 		} else if (ownerLifecycleState == LifecycleState.DEVELOPMENT && state != LifecycleState.RETIRED) {

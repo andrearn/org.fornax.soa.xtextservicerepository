@@ -44,7 +44,8 @@
     </genClasses>
     <genClasses ecoreClass="platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BusinessFunction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BusinessFunction/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BusinessFunction/title"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BusinessFunction/shortDescription"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BusinessFunction/description"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BusinessFunction/docURL"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BusinessFunction/tags"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BusinessFunction/capabilties"/>

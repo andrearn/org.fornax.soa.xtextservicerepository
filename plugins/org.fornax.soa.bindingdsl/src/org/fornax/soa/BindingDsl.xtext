@@ -14,18 +14,19 @@ grammar org.fornax.soa.BindingDsl with org.fornax.soa.basedsl.SOABaseDsl
 generate bindingDsl "http://www.fornax.org/soa/BindingDsl"
 
 import "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore" as serviceDsl
+import "platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore" as moduleDsl
 import "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore" as environmentDsl
 import "platform:/resource/org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore" as slaDsl
 
 BindingModel hidden(WS):
 	(imports+=Import)*
-	(bindings+=DomainBinding)*;
+	(bindings+=Binding)*;
 
 
-Binding: DomainBinding | ServiceBinding ;
+Binding: DomainBinding | ModuleBinding | ServiceBinding ;
 
 DomainBinding: 
-	'bind namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment] 'with' '{'
+	'bind namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment] '{'
 		('protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}')?
@@ -47,7 +48,7 @@ Provider:
 	'provided on' provServer = [environmentDsl::Server|QualifiedName] ;
 	
 ServiceBinding:
-	'bind service' service=ServiceRef 'to' 'environment' environment=[environmentDsl::Environment] 'with' '{'
+	'bind service' service=ServiceRef 'to' 'environment' (environment=[environmentDsl::Environment])? '{'
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
@@ -88,6 +89,62 @@ OperationBinding:
 		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
 	'}';
 	
+ModuleBinding:
+	'bind-module' module=ModuleRef 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment|QualifiedName] '{'
+		('protocols' '{'
+			(protocol+=BindingProtocol)+
+		'}')?
+		('policies' '{'
+			(policies+=Policy)*
+		'}')?
+		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
+		(protocolSpecs+=ProtocolSpec)*
+		(policySpecs+=PolicySpec)*
+		(slaSpecs+=SLASpec)*
+	'}'
+;
+
+ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
+
+ProtocolSpec:
+	DomainProtocolSpec | ServiceProtocolSpec
+;
+
+DomainProtocolSpec:
+		'protocols' 'for' 'namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] '{'
+			(protocol+=BindingProtocol)+
+		'}';
+
+ServiceProtocolSpec:
+		'protocols' 'for' 'service' service=ServiceRef '{'
+			(protocol+=BindingProtocol)+
+		'}';
+
+
+PolicySpec: DomainPolicySpec | ServicePolicySpec;
+
+DomainPolicySpec:
+	'policies' 'for' 'namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] '{'
+		(policies+=Policy)+
+	'}'
+;
+
+ServicePolicySpec:
+	'policies' 'for' 'service' service=ServiceRef '{'
+		(policies+=Policy)+
+	'}'
+;
+
+SLASpec: DomainSLASpec | ServiceSLASpec;
+
+DomainSLASpec:
+	'SLAs' 'for' 'namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])*
+;
+
+ServiceSLASpec:
+	'SLAs' 'for' 'service' service=ServiceRef (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])*
+;
+
 Component:
 	'component' name=ID 'implements' implements=ServiceRef '{'
 		'bind to environment' environment = [environmentDsl::Environment|QualifiedName]

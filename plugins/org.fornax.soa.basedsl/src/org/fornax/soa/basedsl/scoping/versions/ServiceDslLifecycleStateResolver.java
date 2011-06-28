@@ -38,8 +38,8 @@ public class ServiceDslLifecycleStateResolver implements LifecycleStateResolver 
 	public LifecycleState getLifecycleState(EObject o) {
 		final EStructuralFeature stateFeature = o.eClass()
 				.getEStructuralFeature(STATE_ATTR_NAME);
-		if (stateFeature != null && o.eIsSet(stateFeature)) {
-			Object stateObj = o.eGet(stateFeature);
+		if (stateFeature != null) {
+			Object stateObj = o.eGet (stateFeature, true);
 			if (stateObj instanceof LifecycleState) {
 				return (LifecycleState) stateObj;
 			}

@@ -29,7 +29,7 @@ public class EContainerVersionResolver implements VersionResolver {
 		EStructuralFeature verFeature1 = o.eClass()
 				.getEStructuralFeature(VERSION_ATTR_NAME);
 		if (o.eIsSet(verFeature1)) {
-			Object verObj = o.eGet (verFeature1);
+			Object verObj = o.eGet (verFeature1, true);
 			if (verObj instanceof Version) {
 				String v = ((Version) verObj).getVersion();
 				return v;

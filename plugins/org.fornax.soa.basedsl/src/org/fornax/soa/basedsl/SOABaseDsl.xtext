@@ -25,7 +25,7 @@ Version hidden(WS):
 	'version' (version=VersionId) ;
 	
 VersionRef hidden(WS):
-	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef;
+	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
 	
 MinVersionRef hidden(WS):
 	('minVersion') minVersion=VersionId;
@@ -38,6 +38,9 @@ LowerBoundRangeVersionRef hidden(WS):
 
 MajorVersionRef hidden(WS):
 	'majorVersion' majorVersion=INT;
+	
+FixedVersionRef hidden(WS):
+	'fixedVersion' fixedVersion=VersionId;
 
 QualifiedNameWithWildCard hidden(WS):
 	QualifiedName '.*'?;

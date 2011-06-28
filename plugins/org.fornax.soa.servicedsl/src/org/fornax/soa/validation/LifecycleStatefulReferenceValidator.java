@@ -166,7 +166,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractServiceDslJavaV
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {
 			if (LifecycleStateComparator.compare(ownerState, boRef.getType().getState()) < 0)
-				warning("A " + getObjectTypeName(boRef.getType())+ " with a lower lifecycle-state is being referenced. You should review the referenced businessObject and adjust it's lifecycle-state.", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
+				warning("A " + getObjectTypeName(boRef.getType())+ " with a lower lifecycle-state is being referenced. You should review the referenced businessObject and adjust it's lifecycle-state.", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
 		}
 	}
 

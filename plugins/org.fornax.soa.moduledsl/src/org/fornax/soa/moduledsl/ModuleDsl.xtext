@@ -11,6 +11,7 @@ ModuleModel:
 Module:
 	'module' name=QualifiedName '{'
 		version=Version
+		'lifecycle-state' state=LifecycleState
 		'provides' '{'
 			providedDomainNamespaces+=DomainNamespaceRef
 			providedInternalNamespaces+=InternalNamespaceRef
