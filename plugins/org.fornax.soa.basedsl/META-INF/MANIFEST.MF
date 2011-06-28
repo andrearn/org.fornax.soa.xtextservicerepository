@@ -21,6 +21,7 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.basedsl,
  org.fornax.soa.basedsl.formatting,
+ org.fornax.soa.basedsl.metamodel,
  org.fornax.soa.basedsl.parseTreeConstruction,
  org.fornax.soa.basedsl.parser.antlr,
  org.fornax.soa.basedsl.parser.antlr.internal,
@@ -28,6 +29,6 @@ Export-Package: org.fornax.soa.basedsl,
  org.fornax.soa.basedsl.sOABaseDsl.impl,
  org.fornax.soa.basedsl.sOABaseDsl.util,
  org.fornax.soa.basedsl.scoping,
+ org.fornax.soa.basedsl.scoping.versions,
  org.fornax.soa.basedsl.services,
- org.fornax.soa.basedsl.validation,
- org.fornax.soa.basedsl.scoping.versions
+ org.fornax.soa.basedsl.validation

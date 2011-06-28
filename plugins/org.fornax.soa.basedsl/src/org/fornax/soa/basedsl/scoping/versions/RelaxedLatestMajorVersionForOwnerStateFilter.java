@@ -85,7 +85,9 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 	
 	public boolean stateMatches (IEObjectDescription description) {
 		final LifecycleState state = stateResolver.getLifecycleState(description);
-		if (ownerLifecycleState == LifecycleState.RETIRED) {
+		if (state == null && ownerLifecycleState != null) {
+			return true;
+		} else if (ownerLifecycleState == LifecycleState.RETIRED) {
 			return true;
 		} else if (ownerLifecycleState == LifecycleState.DEFINED && state != LifecycleState.RETIRED) {
 			return LifecycleStateComparator.compare(ownerLifecycleState, state) >= 0 || LifecycleStateComparator.compare(minDevLifecycleState, state) >= 0;
@@ -102,6 +104,7 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 		} else {
 			return false;
 		}
+		
 	}
 	
 

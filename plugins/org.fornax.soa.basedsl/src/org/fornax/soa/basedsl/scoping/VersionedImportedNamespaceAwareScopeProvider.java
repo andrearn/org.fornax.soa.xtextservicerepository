@@ -27,6 +27,7 @@ public abstract class VersionedImportedNamespaceAwareScopeProvider extends Impor
 	protected IScope getLocalElementsScope(IScope parent, final EObject context,
 			final EReference reference) {
 		IScope unfilteredScope = super.getLocalElementsScope(parent, context, reference);
+		//FIXME check for subsequent NPE
 		return VersionFilteredMapScope.createScope (parent, unfilteredScope.getAllElements(), isIgnoreCase(), getVersionFilterFromContext (context, reference));
 	}
 	
