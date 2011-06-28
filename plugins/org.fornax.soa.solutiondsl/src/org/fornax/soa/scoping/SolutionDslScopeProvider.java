@@ -52,6 +52,7 @@ import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilteredMapScope;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
+import org.fornax.soa.solutionDsl.CapabilityRef;
 import org.fornax.soa.solutionDsl.EventRef;
 import org.fornax.soa.solutionDsl.ServiceRef;
 import org.fornax.soa.solutionDsl.SolutionDslPackage;
@@ -124,6 +125,10 @@ public class SolutionDslScopeProvider extends VersionedImportedNamespaceAwareSco
 			return createVersionFilter(v, ctx);
 		}
 		if (reference == ServiceDslPackage.Literals.OPERATION_EVENT_REF__EVENT && ctx instanceof EventRef) {
+			final VersionRef v = ((EventRef) ctx).getVersionRef();
+			return createVersionFilter(v, ctx);
+		}
+		if (reference == SolutionDslPackage.Literals.CAPABILITY_REF__VERSION_REF && ctx instanceof CapabilityRef) {
 			final VersionRef v = ((EventRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);
 		}
