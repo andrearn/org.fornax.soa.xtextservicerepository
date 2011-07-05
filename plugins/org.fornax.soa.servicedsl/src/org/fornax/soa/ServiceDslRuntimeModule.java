@@ -14,4 +14,8 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 		return VersionedGlobalScopeProvider.class;
 	}
 
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	public Class<? extends org.fornax.soa.validation.ServiceDslJavaValidator> bindServiceDslJavaValidator() {
+		return org.fornax.soa.validation.ServiceDslJavaValidator.class;
+	}
 }
+

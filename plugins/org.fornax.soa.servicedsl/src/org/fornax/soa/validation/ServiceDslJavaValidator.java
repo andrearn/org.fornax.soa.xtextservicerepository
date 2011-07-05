@@ -141,7 +141,6 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			Iterable<Property> keys = Iterables.filter(props, new Predicate<Property> () {
 	
 				public boolean apply(final Property input) {
-					// TODO Auto-generated method stub
 					return input.isIsBusinessKey();
 				}
 				
@@ -163,7 +162,6 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			Iterable<Property> keys = Iterables.filter (props, new Predicate<Property> () {
 	
 				public boolean apply(final Property input) {
-					// TODO Auto-generated method stub
 					return input.isIsBusinessKey();
 				}
 				
@@ -171,7 +169,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (Lists.newArrayList(keys).isEmpty())
 				error ("The target businessObject of the weak-ref defines no business-key. " +
 						"The business-key is required to represent and resolve the reference. " +
-						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE );
+						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE );
 		}
 	}
 	
@@ -208,7 +206,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (Lists.newArrayList(keys).size() > 1)
 				error ("The target businessObject of the weak-ref defines more than one business-key. " +
 						"The business-key is required to represent and resolve the reference. " +
-						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE );
+						"Remove the weak-ref qualifier or define a single business-key in the target businessObject", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE );
 
 		}
 	}

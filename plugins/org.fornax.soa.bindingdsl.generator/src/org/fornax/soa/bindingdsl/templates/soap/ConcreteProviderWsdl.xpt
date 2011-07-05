@@ -70,6 +70,28 @@
 «ENDFILE»
 «ENDDEFINE»
 
+«DEFINE WSDL(ModuleBinding modBind, BindingProtocol prot, sOAProfileDsl::SOAProfile profile) FOR Service»
+«FILE getConcreteWsdlFileNameFragment("Private") + ".wsdl"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="«toTargetNamespace()»"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="«name»" 
+	targetNamespace="«toTargetNamespace()»">
+	<wsdl:documentation>
+		Version «version.toVersionNumber()»
+		Lifecycle state: «state.toString()»
+		
+		«doc.trim().stripCommentBraces()»
+	</wsdl:documentation>
+    <wsdl:import namespace="«toTargetNamespace()»" location="«this.getRegisteredUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
+	
+	«EXPAND SOAPBinding(this) FOR prot-»
+	«EXPAND WsdlService(this, modBind.provider.provServer, modBind) FOR prot-»
+</wsdl:definitions>
+«ENDFILE»
+«ENDDEFINE»
+
 «DEFINE SOAPBinding(Service svc) FOR SOAP»
 	<wsdl:binding name="«svc.toBindingName(this)»"
 		type="tns:«svc.name»">
@@ -97,6 +119,15 @@
 		<wsdl:port binding="tns:«svc.toBindingName(this)»"
 			name="«svc.toPortName(this)»">
 			<soap:address location="«svc.getProviderEndpointAddress((DomainBinding)eContainer)»" />
+		</wsdl:port>
+	</wsdl:service>
+«ENDDEFINE»
+
+«DEFINE WsdlService(Service svc, Server server, ModuleBinding bind) FOR SOAP»
+	<wsdl:service name="«svc.name»">
+		<wsdl:port binding="tns:«svc.toBindingName(this)»"
+			name="«svc.toPortName(this)»Public">
+			<soap:address location="«svc.getServerEndpoint(server, this, bind.module.module)»" />
 		</wsdl:port>
 	</wsdl:service>
 «ENDDEFINE»

@@ -3,6 +3,19 @@
 
 <plugin>
 
+   	<extension
+	      point = "org.eclipse.ui.newWizards">
+		 <wizard
+         category="org.fornax.soa.ui.newWizards"
+         class="org.fornax.soa.ui.SemanticDslExecutableExtensionFactory:org.fornax.soa.semanticsdsl.ui.wizard.NewSemanticsDslFileWizard"
+         hasPages="true"
+         
+         id="org.fornax.soa.semanticsdsl.ui.wizard.NewSemanticsDslFileWizard"
+         name="Semantics DSL file">
+	       <description>Create a new Semantics DSL file</description>
+		   <selection class="org.eclipse.core.resources.IResource"/>
+		</wizard>
+	</extension>
     <extension
             point="org.eclipse.ui.editors">
         <editor

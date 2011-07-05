@@ -15,6 +15,7 @@ boolean generatePrivateWsdlForProviderHost () : GLOBALVAR generatePrivateWsdlFor
 String getRegistryBaseUrl (DomainBinding b) : b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
 String getRegistryBaseUrl (ServiceBinding b) : b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
 String getRegistryBaseUrl (OperationBinding b) : ((ServiceBinding)b.eContainer).environment.defaultRegistry.baseUrl.stripTrailingSlash();
+String getRegistryBaseUrl (ModuleBinding b) : b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
 
 boolean isEligibleForEnvironment(Service svc, Environment env) :
 	switch (env.type) {
@@ -67,4 +68,8 @@ String toModuleName (SubNamespace subNs, Version v, String moduleName) :
 		moduleName + "." + v.toVersionPostfix()
 	:
 		subNs.getOrgNamespace().prefix + "."  + subNs.name + "." + v.toVersionPostfix();
+
+boolean isPublicEndpoint (Service s, Server server) : false;
+boolean isPublicEndpoint (Service s, AppServer server) : false;
+boolean isPublicEndpoint (Service s, ESB server) : s.visibility == VISIBILITY::public;
 	

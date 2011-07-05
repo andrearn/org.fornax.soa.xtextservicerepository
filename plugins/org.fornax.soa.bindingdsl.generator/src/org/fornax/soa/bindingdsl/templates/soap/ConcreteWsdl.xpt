@@ -24,6 +24,10 @@
 	«ENDIF»
 «ENDDEFINE»
 
+«DEFINE WSDL(Service svc, SOAP prot, sOAProfileDsl::SOAProfile profile) FOR bindingDsl::ModuleBinding»
+	«EXPAND WSDL(this, prot, profile) FOR svc»
+«ENDDEFINE»
+
 «DEFINE WSDLByServiceName(List[String] serviceNames, BindingProtocol prot, sOAProfileDsl::SOAProfile profile) FOR bindingDsl::DomainBinding»
 	«IF DomainNamespace.isInstance(subNamespace)»
 		«EXPAND WSDL(this, prot, profile) FOREACH subNamespace.services.select(e|serviceNames.contains(e.name) && e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), environment.getMinLifecycleState(e)))»
@@ -52,7 +56,7 @@
 «ENDFILE»
 «ENDDEFINE»
 
-«DEFINE WSDL(ServiceBinding svcBind, BindingProtocol prot, sOAProfileDsl::SOAProfile profile) FOR Service»
+«DEFINE WSDL(ServiceBinding svcBind, SOAP prot, sOAProfileDsl::SOAProfile profile) FOR Service»
 «FILE getConcreteWsdlFileNameFragment("Public") + ".wsdl"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 	xmlns:tns="«toTargetNamespace()»"
@@ -70,6 +74,28 @@
 	
 	«EXPAND SOAPBinding(this) FOREACH svcBind.protocol.typeSelect(SOAP)-»
 	«EXPAND WsdlService(this) FOREACH svcBind.protocol.typeSelect(SOAP)-»
+</wsdl:definitions>
+«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE WSDL(ModuleBinding modBind, BindingProtocol prot, sOAProfileDsl::SOAProfile profile) FOR Service»
+«FILE getConcreteWsdlFileNameFragment("Public") + ".wsdl"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="«toTargetNamespace()»"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	name="«name»" 
+	targetNamespace="«toTargetNamespace()»">
+	<wsdl:documentation>
+		Version «version.toVersionNumber()»
+		Lifecycle state: «state.toString()»
+		
+		«doc.trim().stripCommentBraces()»
+	</wsdl:documentation>
+    <wsdl:import namespace="«toTargetNamespace()»" location="«this.getRegisteredUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
+	
+	«EXPAND SOAPBinding(this) FOR prot-»
+	«EXPAND WsdlService(this, modBind.provider.provServer, modBind) FOR prot-»
 </wsdl:definitions>
 «ENDFILE»
 «ENDDEFINE»
@@ -101,6 +127,15 @@
 		<wsdl:port binding="tns:«svc.toBindingName(this)»"
 			name="«svc.toPortName(this)»Public">
 			<soap:address location="«svc.getPublisherEndpointAddress((DomainBinding)eContainer)»" />
+		</wsdl:port>
+	</wsdl:service>
+«ENDDEFINE»
+
+«DEFINE WsdlService(Service svc, Server server, ModuleBinding bind) FOR SOAP»
+	<wsdl:service name="«svc.name»">
+		<wsdl:port binding="tns:«svc.toBindingName(this)»"
+			name="«svc.toPortName(this)»Public">
+			<soap:address location="«svc.getServerEndpoint(server, this, bind.module.module)»" />
 		</wsdl:port>
 	</wsdl:service>
 «ENDDEFINE»

@@ -91,54 +91,31 @@ OperationBinding:
 	
 ModuleBinding:
 	'bind-module' module=ModuleRef 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment|QualifiedName] '{'
-		('protocols' '{'
+		provider=Provider
+		('default-protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}')?
-		('policies' '{'
+		('default-policies' '{'
 			(policies+=Policy)*
 		'}')?
-		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
-		(protocolSpecs+=ProtocolSpec)*
-		(policySpecs+=PolicySpec)*
-		(slaSpecs+=SLASpec)*
+		('default-SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
+		(protocolSpecs+=ServiceProtocolSpec)*
+		(policySpecs+=ServicePolicySpec)*
+		(slaSpecs+=ServiceSLASpec)*
 	'}'
 ;
 
 ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
-
-ProtocolSpec:
-	DomainProtocolSpec | ServiceProtocolSpec
-;
-
-DomainProtocolSpec:
-		'protocols' 'for' 'namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] '{'
-			(protocol+=BindingProtocol)+
-		'}';
 
 ServiceProtocolSpec:
 		'protocols' 'for' 'service' service=ServiceRef '{'
 			(protocol+=BindingProtocol)+
 		'}';
 
-
-PolicySpec: DomainPolicySpec | ServicePolicySpec;
-
-DomainPolicySpec:
-	'policies' 'for' 'namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] '{'
-		(policies+=Policy)+
-	'}'
-;
-
 ServicePolicySpec:
 	'policies' 'for' 'service' service=ServiceRef '{'
 		(policies+=Policy)+
 	'}'
-;
-
-SLASpec: DomainSLASpec | ServiceSLASpec;
-
-DomainSLASpec:
-	'SLAs' 'for' 'namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])*
 ;
 
 ServiceSLASpec:

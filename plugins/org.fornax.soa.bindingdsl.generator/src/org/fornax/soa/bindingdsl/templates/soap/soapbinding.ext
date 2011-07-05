@@ -1,8 +1,11 @@
 import bindingDsl;
 import serviceDsl;
 import environmentDsl;
+import moduleDsl;
 
 extension org::fornax::soa::basedsl::version::versionQualifying;
+extension org::fornax::soa::environmentdsl::generator::endpoints;
+extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::xsd::domains;
 extension org::fornax::soa::bindingdsl::templates::soap::soapvendorbindings;
@@ -130,6 +133,14 @@ private String getPortNamePostfix(bindingDsl::SOAP p) :
 	case SOAPStyle::rpcenc: "SOAPRPCEnc"
 	default : "SOAP"	
 	};
+	
+	
+String getServerEndpoint(Service s, Server server, BindingProtocol prot, Module mod) : 
+	server.getSOAPHttpEndpointUrl() + "/"
+	+ getEndpoint (mod, s.getOrgNamespace(), s.getSubdomain(), s, server);
+
+
+
 
 	
 	

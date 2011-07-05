@@ -167,8 +167,8 @@ Service hidden(WS):
 			('persistence' persistence=Persistence )? 
 			(
 				('service-owner' owner=STRING )?
-			&	('realizes capabilty' (realizedCapabilies+=CapabilityRef)+ )?	
-			&	('supports capabilty' (supportedCapabilies+=CapabilityRef)+ )?	
+			&	('realizes capabilty' '{'(realizedCapabilies+=CapabilityRef)+ '}')?	
+			&	('supports capabilty' '{'(supportedCapabilies+=CapabilityRef)+ '}')?	
 			&	('provided-Contract-URL' providedContractUrl=STRING )? //Where can I get the sources?
 			&	('sourceURL' source=STRING )? //Where can I get the sources?
 			&	('docURL' docUrl=STRING )?
@@ -272,6 +272,8 @@ Operation:
 		('can-compensate' canCompensate+=OperationRef )?
 		('messageHeader' messageHeader = MessageHeaderRef )?
 		(fetchProfile+=FetchProfile)*
+		('realizes capabilty' '{'(realizedCapabilies+=CapabilityRef)+ '}')?	
+		('supports capabilty' '{'(supportedCapabilies+=CapabilityRef)+ '}')?	
 	'}';
 	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
 

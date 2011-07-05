@@ -4,13 +4,18 @@
 «IMPORT sOAProfileDsl»
 
 «EXTENSION org::fornax::soa::servicedsl::domain::splitting»
+«EXTENSION org::fornax::soa::bindingdsl::queries::services::serviceQueries»
 «EXTENSION org::fornax::soa::bindingdsl::templates::bindings»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
 «EXTENSION org::fornax::soa::servicedsl::templates::webservice::services»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::types»
 «EXTENSION org::fornax::soa::servicedsl::query::services»
 «EXTENSION org::fornax::soa::servicedsl::query::headers»
+
 «EXTENSION org::eclipse::xtend::util::stdlib::io»
+
+«EXTENSION org::fornax::soa::moduledsl::query::serviceQueries»
+«EXTENSION org::fornax::soa::moduledsl::query::namespaceQueries»
 
 «DEFINE main (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR BindingModel»
 	«EXPAND Binding (minState, profile) FOREACH bindings»
@@ -105,6 +110,49 @@
 	«ENDFOREACH»
 «ENDDEFINE»
 
+«REM»
+	ENTRYPOINT for generation of concrete and imported abstract WSDLs and their required XSDs 
+	for a given ModuleBinding. The ModuleBinding binds all Services provided by the module 
+	to a certain Environment.
+	
+	All Services and their required XSDs that match the minimal given LifecycleState are 
+	considered
+«ENDREM»
+«DEFINE Binding (SOAProfile profile) FOR ModuleBinding»
+	«FOREACH module.module.providedServices AS provSvc»
+		«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
+			«EXPAND BindingByService (svc, profile) FOR this»
+			«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
+			«FOREACH {svc.getSubdomain()}.union(svc.getSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
+				«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR ns»
+			«ENDFOREACH»
+			«IF forceRelativePaths()»
+				«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD FOR profile»
+			«ELSE»
+				«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD (this.getRegistryBaseUrl()) FOR profile»
+			«ENDIF»
+		«ENDLET»
+	«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE BindingByService(Service s, SOAProfile profile) FOR ModuleBinding»
+	«FOREACH protocolSpecs.select(e|e.service.service == s) AS protSpec-»
+		«FOREACH protSpec.protocol AS prot-»
+			«IF SOAP.isInstance(prot)-»
+			«info("SOAP")»
+				«LET (SOAP)prot AS soapProt-»
+					«IF s.isPublicEndpoint (provider.provServer)-»
+						«EXPAND soap::ConcreteWsdl::WSDL(this, prot, profile) FOR s»
+					«ELSE-»
+						«EXPAND soap::ConcretePrivateWsdl::WSDL(this, prot, profile) FOR s»
+					«ENDIF»
+				«ENDLET»
+			«ENDIF»
+		«ENDFOREACH»
+	«ENDFOREACH»
+«ENDDEFINE»
+
+
 «DEFINE BindingByServiceName(List[String] serviceNames, SOAProfile profile) FOR DomainBinding»
 
 	«IF generatePrivateWsdlForProviderHost()»
@@ -124,6 +172,8 @@
 	«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD (getRegistryBaseUrl()) FOR profile»
 
 «ENDDEFINE»
+
+
 
 
 «REM»

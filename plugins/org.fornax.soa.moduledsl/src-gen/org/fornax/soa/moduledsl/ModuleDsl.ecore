@@ -15,27 +15,30 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Version"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="providedDomainNamespaces"
-        upperBound="-1" eType="ecore:EClass platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//DomainNamespaceRef"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="providedInternalNamespaces"
-        upperBound="-1" eType="ecore:EClass platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//InternalNamespaceRef"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="ecore:EEnum platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="owner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assemblyType" eType="ecore:EEnum platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assemblyTypeDetails" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="providedServices" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ServiceRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="excludedServices" unique="false"
-        upperBound="-1" eType="ecore:EClass platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ServiceRef"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DomainNamespaceRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="ecore:EClass platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//DomainNamespace"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InternalNamespaceRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="ecore:EClass platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//InternalNamespace"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ServiceRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Service"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="AssemblyType">
+    <eLiterals name="OTHER" literal="OTHER"/>
+    <eLiterals name="JAR" value="1" literal="JAR"/>
+    <eLiterals name="WAR" value="2" literal="WAR"/>
+    <eLiterals name="EAR" value="3" literal="EAR"/>
+    <eLiterals name="OSGi" value="4" literal="OSGi"/>
+    <eLiterals name="SCAComposite" value="5" literal="SCA-Composite"/>
+    <eLiterals name="SCA_EAR" value="6" literal="SCA-EAR"/>
+    <eLiterals name="WebMethods" value="7" literal="WebMethods"/>
+    <eLiterals name="dotNet" value="8" literal=".Net"/>
+    <eLiterals name="ZIP" value="9" literal="ZIP"/>
+    <eLiterals name="DLL" value="10" literal="DLL"/>
   </eClassifiers>
 </ecore:EPackage>

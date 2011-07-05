@@ -1,0 +1,17 @@
+«IMPORT serviceDsl»
+«IMPORT bindingDsl»
+«IMPORT environmentDsl»
+«IMPORT moduleDsl»
+
+
+
+«DEFINE Export FOR bindingDsl::BindingProtocol»
+«ENDDEFINE»
+
+
+«DEFINE Export FOR bindingDsl::SOAP»
+«ENDDEFINE»
+
+
+«DEFINE Export FOR bindingDsl::SCA»
+«ENDDEFINE»

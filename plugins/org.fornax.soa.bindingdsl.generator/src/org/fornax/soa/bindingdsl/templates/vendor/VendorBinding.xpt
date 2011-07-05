@@ -1,0 +1,20 @@
+«IMPORT serviceDsl»
+«IMPORT bindingDsl»
+«IMPORT environmentDsl»
+«IMPORT moduleDsl»
+
+«DEFINE ServiceVendorBinding (ModuleBinding modBind, ServiceProtocolSpec protSpec) FOR Service»
+	«IF modBind.module.module.assemblyType == AssemblyType::SCA_EAR»
+		«IF ESB.isInstance(modBind.provider.provServer)»
+			«LET (ESB)modBind.provider.provServer AS esb»
+				«IF esb.serverType != null»
+					«IF esb.serverType.toLowerCase().contains("processserver") || 
+						esb.serverType.toLowerCase().contains("wesb")
+					»
+						«EXPAND org::fornax::soa::bindingdsl::templates::vendor::ibm::SCAExport::Export FOREACH protSpec.protocol»
+					«ENDIF»
+				«ENDIF»
+			«ENDLET»
+		«ENDIF»
+	«ENDIF»
+«ENDDEFINE»

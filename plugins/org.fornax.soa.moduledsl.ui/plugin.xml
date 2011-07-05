@@ -3,6 +3,19 @@
 
 <plugin>
 
+   	<extension
+	      point = "org.eclipse.ui.newWizards">
+		 <wizard
+         category="org.fornax.soa.ui.newWizards"
+         class="org.fornax.soa.moduledsl.ui.ModuleDslExecutableExtensionFactory:org.fornax.soa.moduledsl.ui.wizard.NewModuleDslFileWizard"
+         hasPages="true"
+         
+         id="org.fornax.soa.moduledsl.ui.wizard.NewModuleDslFileWizard"
+         name="Module DSL file">
+	       <description>Create a new Module DSL file</description>
+		   <selection class="org.eclipse.core.resources.IResource"/>
+		</wizard>
+	</extension>
     <extension
             point="org.eclipse.ui.editors">
         <editor

@@ -9,32 +9,28 @@ ModuleModel:
 	modules+=Module*;
 	
 Module:
-	'module' name=QualifiedName '{'
-		version=Version
-		'lifecycle-state' state=LifecycleState
+	'module' name = QualifiedName '{'
+		version = Version
+		'lifecycle-state' state = LifecycleState
+		('owner' owner = STRING)?
+		('assembly-type' assemblyType = AssemblyType)?
+		('assembly-type-details' assemblyTypeDetails = STRING)?
 		'provides' '{'
-			providedDomainNamespaces+=DomainNamespaceRef
-			providedInternalNamespaces+=InternalNamespaceRef
-			providedServices+=ServiceRef
-		'}'
-		'excluding' '{'
-			excludedServices+=[ServiceRef]
-		'}'
-		
+			(providedServices += ServiceRef)*
+		'}'		
 	'}';
-
-DomainNamespaceRef :
-	'domain-namespace' namespace=[serviceDsl::DomainNamespace|QualifiedName];
 	
-InternalNamespaceRef :
-	'internal-namespace' namespace=[serviceDsl::InternalNamespace|QualifiedName];
-	
-ServiceRef : 
+ServiceRef: 
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
+	
+enum AssemblyType:
+	OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL
+;
 /*
-module mod.bla version 1.1 {
+module mod.bla  {
+	version 1.1
+	lifecycle-state development
 	provides {
-		domain-namespace bla.space {
 			default-protocols {
 				SOAP {
 					protocol-version 1.2
@@ -50,7 +46,6 @@ module mod.bla version 1.1 {
 					}
 				}
 			}
-		}
 	}
 }
 

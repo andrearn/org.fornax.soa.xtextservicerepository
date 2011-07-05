@@ -81,14 +81,16 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ModuleRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Provider"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="protocolSpecs" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ProtocolSpec"
+        eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceProtocolSpec"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="policySpecs" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//PolicySpec"
+        eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServicePolicySpec"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="slaSpecs" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SLASpec"
+        eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceSLASpec"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModuleRef">
@@ -96,40 +98,25 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProtocolSpec">
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceProtocolSpec">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceRef"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="protocol" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//BindingProtocol"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DomainProtocolSpec" eSuperTypes="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ProtocolSpec">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subNamespace" eType="ecore:EClass platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//SubNamespace"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ServiceProtocolSpec" eSuperTypes="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ProtocolSpec">
+  <eClassifiers xsi:type="ecore:EClass" name="ServicePolicySpec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceRef"
         containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PolicySpec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Policy"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DomainPolicySpec" eSuperTypes="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//PolicySpec">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subNamespace" eType="ecore:EClass platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//SubNamespace"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ServicePolicySpec" eSuperTypes="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//PolicySpec">
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceSLASpec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceRef"
         containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SLASpec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="sla" unique="false" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore#//SLA"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DomainSLASpec" eSuperTypes="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SLASpec">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subNamespace" eType="ecore:EClass platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//SubNamespace"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ServiceSLASpec" eSuperTypes="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//SLASpec">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceRef"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Component">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

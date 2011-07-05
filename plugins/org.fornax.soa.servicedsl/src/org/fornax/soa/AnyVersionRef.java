@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 
+@Deprecated
 public class AnyVersionRef implements VersionRef {
 	
 	public final static VersionRef INSTANCE = new AnyVersionRef();

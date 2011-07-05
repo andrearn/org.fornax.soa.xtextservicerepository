@@ -19,4 +19,4 @@ SemanticsModel :
 Import :
 	'import' importURI=STRING;
 	
-Tag hidden(WS): 'tag' name=ID ('extends' (extends+=[Tag])*)? ';';
+Tag hidden(WS): 'tag' name=ID ('extends' (extends+=[Tag])*)?;

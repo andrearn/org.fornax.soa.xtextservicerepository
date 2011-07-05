@@ -48,17 +48,19 @@ public abstract class VersionedImportedNamespaceAwareScopeProvider extends Impor
 
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner) {
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
-		VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
-		if (v instanceof MajorVersionRef)
-			return new LatestMajorVersionFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString());
-		if (v instanceof MaxVersionRef)
-			return new LatestMaxExclVersionFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion());
-		if (v instanceof MinVersionRef)
-			return new LatestMinInclVersionFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion());
-		if (v instanceof LowerBoundRangeVersionRef)
-			return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
-		if (v instanceof FixedVersionRef)
-			return new FixedVersionFilter<IEObjectDescription> (verResolver, ((FixedVersionRef)v).getFixedVersion());
+		if (v != null) {
+			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
+			if (v instanceof MajorVersionRef)
+				return new LatestMajorVersionFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString());
+			if (v instanceof MaxVersionRef)
+				return new LatestMaxExclVersionFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion());
+			if (v instanceof MinVersionRef)
+				return new LatestMinInclVersionFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion());
+			if (v instanceof LowerBoundRangeVersionRef)
+				return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+			if (v instanceof FixedVersionRef)
+				return new FixedVersionFilter<IEObjectDescription> (verResolver, ((FixedVersionRef)v).getFixedVersion());
+		}
 		return filter;
 	}
 	

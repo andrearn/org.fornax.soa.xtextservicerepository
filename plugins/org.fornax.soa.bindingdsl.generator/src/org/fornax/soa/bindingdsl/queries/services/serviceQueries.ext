@@ -1,0 +1,22 @@
+import sOABaseDsl;
+import serviceDsl;
+import environmentDsl;
+
+extension org::fornax::soa::basedsl::lifecycle::stateMatching;
+extension org::fornax::soa::basedsl::version::versionMatching;
+extension org::fornax::soa::basedsl::version::versionQualifying;
+extension org::fornax::soa::moduledsl::query::namespaceQueries;
+extension org::fornax::soa::moduledsl::query::serviceQueries;
+extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
+extension org::fornax::soa::servicedsl::query::services;
+
+Service latestServiceInEnvironment (moduleDsl::ServiceRef svcRef, Environment env) :
+	svcRef.getLatestMatchingServiceMod (svcRef.service.getSubdomain().minStateByEnvironment(env));
+	
+LifecycleState minStateByEnvironment (SubNamespace ns, Environment env) : 
+	switch (env.type) {
+		case EnvironmentType::Dev: (ns.linkingPolicy != null ? ns.linkingPolicy.minDevState : LifecycleState::development)
+		case EnvironmentType::Test: (ns.linkingPolicy != null? ns.linkingPolicy.minTestState : LifecycleState::test)
+		case EnvironmentType::Prod: (ns.linkingPolicy != null ? ns.linkingPolicy.minProdState : LifecycleState::productive)
+		default: LifecycleState::productive
+	};
