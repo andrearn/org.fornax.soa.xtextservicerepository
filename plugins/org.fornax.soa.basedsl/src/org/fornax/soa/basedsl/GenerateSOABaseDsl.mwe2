@@ -98,6 +98,8 @@ Workflow {
 				}
 				
 			}
+			
+			fragment = refactoring.RefactorElementNameFragment {}
 
 			// project wizard (optional) 
 			// fragment = projectWizard.SimpleProjectWizardFragment {

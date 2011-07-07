@@ -54,9 +54,9 @@ public class ServiceDslFormatter extends AbstractDeclarativeFormatter {
 		for (Keyword returnsKw : f.findKeywords("returns")) {
 			c.setLinewrap(1).before(returnsKw);
 		}
-		c.setIndentationIncrement().before(f.getOperationAccess().getReturnAssignment_7_1());
-		c.setIndentationDecrement().after(f.getOperationAccess().getReturnAssignment_7_1());
-		c.setIndentationIncrement().before(f.getOperationAccess().getThrowsAssignment_8_1());
-		c.setIndentationDecrement().after(f.getOperationAccess().getThrowsAssignment_8_1());
+		c.setIndentationIncrement().before(f.getOperationAccess().getReturnAssignment_8_1());
+		c.setIndentationDecrement().after(f.getOperationAccess().getReturnAssignment_8_1());
+		c.setIndentationIncrement().before(f.getOperationAccess().getThrowsAssignment_9_1());
+		c.setIndentationDecrement().after(f.getOperationAccess().getThrowsAssignment_9_1());
 	}
 }

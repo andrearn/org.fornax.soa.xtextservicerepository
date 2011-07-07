@@ -18,6 +18,8 @@ Module:
 		'provides' '{'
 			(providedServices += ServiceRef)*
 		'}'		
+		('source-location' source=STRING )? //Where can I get the sources?
+		('revision-tag' revisionTag=STRING )? //Tag in VCS
 	'}';
 	
 ServiceRef: 

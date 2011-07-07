@@ -31,11 +31,11 @@ public class BusinessDslFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(1, 1, 1).after(f.getBizImportRule());
 		c.setLinewrap(1, 2, 3).after(f.getDomainRule());
 		c.setLinewrap(1, 1, 1).after(f.getMemberRule());
-		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getBizLeadAssignment_6_1());
-		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getCompetenceAssignment_5_1());
-		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getSvcMgmtLeadAssignment_8_1());
-		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getTechLeadAssignment_7_1());
-		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getTagsAssignment_9_1());
+		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getBizLeadAssignment_4_1());
+		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getCompetenceAssignment_3_1());
+		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getSvcMgmtLeadAssignment_6_1());
+		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getTechLeadAssignment_5_1());
+		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getTagsAssignment_7_1());
 
 		for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("{", "}")) {
 			c.setIndentationIncrement().after(pair.getFirst());

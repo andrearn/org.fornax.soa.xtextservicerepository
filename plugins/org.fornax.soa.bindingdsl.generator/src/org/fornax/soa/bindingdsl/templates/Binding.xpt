@@ -110,6 +110,34 @@
 	«ENDFOREACH»
 «ENDDEFINE»
 
+
+
+«REM»
+	ENTRYPOINT for generation of concrete and imported abstract WSDLs and their required XSDs 
+	for all ModuleBindings to an Environment with the given name. The ModuleBinding binds all 
+	Services provided by the module	to a certain Environment.
+	
+	All Services and their required XSDs that match the minimal given LifecycleState are 
+	considered
+«ENDREM»
+«DEFINE BindModulesToEnvorinment (SOAProfile profile, String targetEnvironmentName) FOR List[ModuleBinding]»
+	«FOREACH this.select(e|e.environment.name==targetEnvironmentName) AS modBind»
+		«FOREACH modBind.module.module.providedServices AS provSvc»
+			«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
+				«EXPAND BindingByService (svc, profile) FOR modBind»
+				«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
+				«FOREACH {svc.getSubdomain()}.union(svc.getSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
+					«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR ns»
+				«ENDFOREACH»
+				«IF forceRelativePaths()»
+					«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD FOR profile»
+				«ELSE»
+					«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD (modBind.getRegistryBaseUrl()) FOR profile»
+				«ENDIF»
+			«ENDLET»
+		«ENDFOREACH»
+	«ENDFOREACH»
+«ENDDEFINE»
 «REM»
 	ENTRYPOINT for generation of concrete and imported abstract WSDLs and their required XSDs 
 	for a given ModuleBinding. The ModuleBinding binds all Services provided by the module 

@@ -44,8 +44,6 @@
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Keyword" value="metadata"/>
-        <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="competence"/>
           <elements xsi:type="xtext:Assignment" feature="competence" operator="=">
@@ -63,7 +61,6 @@
             </terminal>
           </elements>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="}"/>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="businessFunctions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
         </elements>
@@ -91,8 +88,6 @@
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Keyword" value="metadata"/>
-        <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="competence"/>
           <elements xsi:type="xtext:Assignment" feature="competence" operator="=">
@@ -111,7 +106,7 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="technical lead"/>
+          <elements xsi:type="xtext:Keyword" value="technical-lead"/>
           <elements xsi:type="xtext:Assignment" feature="techLead" operator="=">
             <terminal xsi:type="xtext:CrossReference">
               <type metamodel="/0/@metamodelDeclarations.0">
@@ -122,7 +117,7 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="service management lead"/>
+          <elements xsi:type="xtext:Keyword" value="service-management-lead"/>
           <elements xsi:type="xtext:Assignment" feature="svcMgmtLead" operator="=">
             <terminal xsi:type="xtext:CrossReference">
               <type metamodel="/0/@metamodelDeclarations.0">
@@ -143,7 +138,6 @@
             </terminal>
           </elements>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="}"/>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="domains" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
@@ -166,8 +160,6 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Keyword" value="metadata"/>
-        <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Keyword" value="short-description"/>
         <elements xsi:type="xtext:Assignment" feature="shortDescription" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
@@ -175,6 +167,12 @@
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="description"/>
           <elements xsi:type="xtext:Assignment" feature="description" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="responsible"/>
+          <elements xsi:type="xtext:Assignment" feature="responsible" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
           </elements>
         </elements>
@@ -195,9 +193,8 @@
             </terminal>
           </elements>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="}"/>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="uses"/>
+          <elements xsi:type="xtext:Keyword" value="uses-capability"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
           <elements xsi:type="xtext:Assignment" cardinality="+" feature="capabilties" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>

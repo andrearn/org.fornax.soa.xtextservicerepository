@@ -92,7 +92,13 @@ Workflow {
 			fragment = contentAssist.JavaBasedContentAssistFragment {}
 
 			// generates a more lightweight Antlr parser and lexer tailored for content assist  
-			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {}
+			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
+//				options = {
+//					backtrack = true
+//				}
+			}
+
+			fragment = refactoring.RefactorElementNameFragment {}
 
 			// project wizard (optional) 
 			// fragment = projectWizard.SimpleProjectWizardFragment {

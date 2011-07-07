@@ -45,6 +45,17 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="profile"/>
+          <elements xsi:type="xtext:Assignment" feature="profile" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.1">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//SOAProfile"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+            </terminal>
+          </elements>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="subNamespaces" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
         </elements>
@@ -201,7 +212,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//LinkingPolicy"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="referencing-policy"/>
+        <elements xsi:type="xtext:Keyword" value="deployment-policy"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Keyword" value="minimal-development-state"/>
         <elements xsi:type="xtext:Assignment" feature="minDevState" operator="=">
@@ -428,6 +439,9 @@
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="doc" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.3"/>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="deprecated" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="deprecated"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="optional" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="optional"/>
         </elements>
@@ -463,6 +477,9 @@
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="doc" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.3"/>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="deprecated" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="deprecated"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="optional" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="optional"/>
         </elements>
@@ -490,6 +507,9 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="doc" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="deprecated" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="deprecated"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="optional" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="optional"/>
@@ -575,6 +595,9 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="doc" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="deprecated" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="deprecated"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
@@ -1141,6 +1164,9 @@
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="doc" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.3"/>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="deprecated" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="deprecated"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" feature="mep" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.47"/>
         </elements>
@@ -1300,7 +1326,6 @@
         <elements xsi:type="xtext:Assignment" feature="type" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" cardinality="?" value=","/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Exception">

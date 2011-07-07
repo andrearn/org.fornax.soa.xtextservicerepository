@@ -28,10 +28,10 @@ ServiceModel hidden(WS):
 
 OrganizationNamespace :
 	'org-namespace' name= QualifiedName ('shortname' prefix=STRING)? '{'
+		('profile' profile = [profileDsl::SOAProfile|QualifiedName])?
 		(subNamespaces+=SubNamespace)*
 	'}' ;
 
-	
 SubNamespace : DomainNamespace | InternalNamespace;
 	
 DomainNamespace hidden(WS):
@@ -68,7 +68,7 @@ InternalNamespace hidden(WS):
 	'}' (WS)*;
 	
 LinkingPolicy :
-	'referencing-policy' '{'
+	'deployment-policy' '{'
 		'minimal-development-state' minDevState = LifecycleState 
 		'minimal-test-state' minTestState = LifecycleState
 		'minimal-production-state' minProdState = LifecycleState
@@ -120,16 +120,16 @@ Property hidden(WS):
 	
 Attribute hidden(WS):
 	(doc=ML_COMMENT)?
-	(optional?='optional')? (isBusinessKey?='business-key')? ((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? name=ID ':' type=TypeRef  (WS)*;
+	(deprecated?='deprecated')? (optional?='optional')? (isBusinessKey?='business-key')? ((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? name=ID ':' type=TypeRef  (WS)*;
 	
 //links to a target businessObject but uses it's business-key to resolve a reference, hence it is a weak reference
 Reference hidden(WS):
 	(doc=ML_COMMENT)?
-	(optional?='optional')? (isBusinessKey?='business-key')? 'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef  (WS)*; 
+	(deprecated?='deprecated')? (optional?='optional')? (isBusinessKey?='business-key')? 'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef  (WS)*; 
 	
 SimpleAttribute hidden(WS):
 	(doc=ML_COMMENT)?
-	(optional?='optional')? name=ID ':' type=TypeRef  (WS)*;
+	(deprecated?='deprecated')? (optional?='optional')? name=ID ':' type=TypeRef  (WS)*;
 	
 Enumeration hidden(WS):
 	(doc=ML_COMMENT)?
@@ -149,7 +149,7 @@ Enumeration hidden(WS):
 	
 EnumLiteral: 
 	(doc=ML_COMMENT)?
-	name=ID;
+	(deprecated?='deprecated')? name=ID;
 	
 // -- Technical eternal entities
 
@@ -259,7 +259,7 @@ Channel:
 	
 Operation:
 	(doc=ML_COMMENT)?
-	mep=MEP name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
+	(deprecated?='deprecated')? mep=MEP name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
 		('callback-listener-for' (callbackForOperation+=OperationRef) (',' callbackForOperation+=OperationRef)*)?
 		('publishes' '{'
 				(publishes+=PublishedEvent )+ 
@@ -286,7 +286,7 @@ PublishedGlobalEvent:
 	 publishesGlobalEvent = GlobalEventRef ;
 	 
 Parameter:
-	(optional?='optional')? name=ID ':' type=TypeRef ','? ;
+	(optional?='optional')? name=ID ':' type=TypeRef ;
 	
 Exception:
 	(doc=ML_COMMENT)?
@@ -309,7 +309,12 @@ ExceptionRef:
 	
 enum MEP : 
 	sync | async | oneway | fireForget='fire+forget'; 
-	
+
+/**
+ * public:	usable by anyone, potentially remotely available
+ * domain:	usable by all services in the same namespace or a subnamespace, potentially remotely available
+ * private:	for internal use only
+ */	
 enum VISIBILITY : public | domain | private; 
 
 FetchProfile:

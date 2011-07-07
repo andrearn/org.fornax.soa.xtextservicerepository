@@ -104,6 +104,8 @@ Workflow {
 					classSplitting = true
 				}
 			}
+
+			fragment = refactoring.RefactorElementNameFragment {}
 		}
 	}
 }

@@ -27,10 +27,8 @@ BizImport hidden(WS):
 	
 Organization hidden(WS):
 	'org' name=QualifiedName '{'
-		'metadata' '{'
-			('competence' competence=STRING)?
-			('head' bizLead=[Member|QualifiedName])?
-		'}'
+		('competence' competence=STRING)?
+		('head' bizLead=[Member|QualifiedName])?
 		(businessFunctions+=BusinessFunction)*
 		(subOrganizations+=[Organization|QualifiedName])*
 		(members+=Member)*
@@ -38,13 +36,11 @@ Organization hidden(WS):
 	
 Domain hidden(WS):
 	'domain' name=QualifiedName '{'
-		'metadata' '{'
-			('competence' competence=STRING)?
-			('head' bizLead=[Member|QualifiedName])?
-			('technical lead' techLead=[Member|QualifiedName])?
-			('service management lead' svcMgmtLead=[Member|QualifiedName])?
-			('tags' (tags+=[semantics::Tag])+)?
-		'}'
+		('competence' competence=STRING)?
+		('head' bizLead=[Member|QualifiedName])?
+		('technical-lead' techLead=[Member|QualifiedName])?
+		('service-management-lead' svcMgmtLead=[Member|QualifiedName])?
+		('tags' (tags+=[semantics::Tag])+)?
 
 		(domains+=Domain)*
 		(capabilityGroups+=CapabilityGroup)*
@@ -56,14 +52,13 @@ Domain hidden(WS):
  */
 BusinessFunction hidden(WS):
 	'business-function' name=ID '{' 
-		'metadata' '{'
-			'short-description' shortDescription=STRING
-			('description' description=STRING)?
-			('docURL' docURL=STRING)? 
-			('tags' (tags+=[semantics::Tag])+)?
-		'}'
+		'short-description' shortDescription=STRING
+		('description' description=STRING)?
+		('responsible' responsible = STRING)?
+		('docURL' docURL=STRING)? 
+		('tags' (tags+=[semantics::Tag])+)?
 
-		('uses' '{'
+		('uses-capability' '{'
 			(capabilties+=CapabilityRef)+
 		'}')?
 	'}' ; 

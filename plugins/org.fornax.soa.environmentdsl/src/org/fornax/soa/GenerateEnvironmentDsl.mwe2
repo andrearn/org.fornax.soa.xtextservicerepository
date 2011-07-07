@@ -101,6 +101,9 @@ Workflow {
 					backtrack = true
 				}
 			}
+
+			fragment = refactoring.RefactorElementNameFragment {}
+
 		}
 	}
 }

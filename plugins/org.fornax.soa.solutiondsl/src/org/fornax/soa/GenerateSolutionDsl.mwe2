@@ -122,6 +122,8 @@ Workflow {
 				}
 			}
 
+			fragment = refactoring.RefactorElementNameFragment {}
+
 		}
 	}
 }
