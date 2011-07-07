@@ -50,7 +50,7 @@
 	Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
 	that match the given minimal LifecycleState.
 «ENDREM»
-«DEFINE XSDVersion(LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
+«DEFINE XSDVersion (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
 «FILE getFileNameFragment() + ".xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema xmlns:tns="«toNamespace()»"
 	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS (minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 
@@ -62,9 +62,9 @@
 	>
 	«EXPAND ImportDeclaration (registryBaseUrl) FOREACH allImportedVersionedNS(minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 	
 	«IF SubNamespace.isInstance(subdomain)-»
-		«EXPAND ComplexType(this, profile, minState) FOREACH types.typeSelect(BusinessObject).reject(e|e.state == LifecycleState::retired).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(),  minState))-»
-		«EXPAND SimpleType(minState) FOREACH types.typeSelect(Enumeration).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(), minState))-»
-		«EXPAND FaultType(this, profile, minState) FOREACH exceptions.typeSelect(serviceDsl::Exception).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingException (version.toMajorVersionNumber().asInteger(), minState))-»
+		«EXPAND ComplexType (this, profile, minState) FOREACH types.typeSelect(BusinessObject).reject(e|e.state == LifecycleState::retired).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(),  minState))-»
+		«EXPAND SimpleType (minState) FOREACH types.typeSelect(Enumeration).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(), minState))-»
+		«EXPAND FaultType (this, profile, minState) FOREACH exceptions.typeSelect(serviceDsl::Exception).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingException (version.toMajorVersionNumber().asInteger(), minState))-»
 	«ELSEIF OrganizationNamespace.isInstance(subdomain)-»
 		«REM»«EXPAND ComplexType FOREACH ((OrganizationNamespace) subdomain).types.typeSelect(BusinessObject)-»«ENDREM»
 	«ENDIF»

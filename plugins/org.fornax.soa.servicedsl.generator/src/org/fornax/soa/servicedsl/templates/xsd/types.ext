@@ -18,6 +18,7 @@ extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::xsd::domains;
 
+extension org::eclipse::xtend::util::stdlib::io;
 
 
 /*
@@ -44,7 +45,7 @@ String getTypeNameRef (VersionedTypeRef t) :
 		 && t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 		 && ! Service.isInstance(t.getStatefulOwner()) ?
 			"tns" :
-			t.type.getSubdomain().getShortName() + t.type.getSubdomain().version.toMajorVersionNumber()
+			t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber()
 		) + ":" +t.type.name
 	:
 		t.type.name;
@@ -66,7 +67,7 @@ String getTypeNameRef (BusinessObjectRef t) :
 		 && t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 		 && ! Service.isInstance(t.getStatefulOwner()) ?
 			"tns" :
-			t.type.getSubdomain().getShortName() + t.type.getSubdomain().version.toMajorVersionNumber()
+			t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber()
 		) + ":" +t.type.name
 	:
 		t.type.name;
@@ -77,7 +78,7 @@ String getTypeNameRef (EnumTypeRef t) :
 		 && t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 		 && ! Service.isInstance(t.getStatefulOwner()) ?
 			"tns" : 
-			t.type.getSubdomain().getShortName() + t.type.getSubdomain().version.toMajorVersionNumber()
+			t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber()
 		) + ":" +t.type.name
 	:
 		t.type.name;
@@ -88,7 +89,7 @@ String getExceptionNameRef (ExceptionRef t) :
 		 && t.getOwnerVersion().toMajorVersionNumber() == t.exception.version.toMajorVersionNumber()
 		 && ! Service.isInstance(t.getStatefulOwner()) ?
 			"tns" : 
-			t.exception.getSubdomain().getShortName() + t.exception.getSubdomain().version.toMajorVersionNumber()
+			t.exception.getSubdomain().getShortName() + t.exception.version.toMajorVersionNumber()
 		) + ":" +t.exception.toTypeName()
 	:
 		t.exception.toTypeName();
@@ -119,7 +120,7 @@ String getTypeNameRef (sOAProfileDsl::VersionedTypeRef t, org::fornax::soa::serv
 		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
 	
 String getTypeNameRef (BusinessObjectRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
-	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef) ?
+	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()?
 		"tns:" +t.type.name
 	:
 		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
