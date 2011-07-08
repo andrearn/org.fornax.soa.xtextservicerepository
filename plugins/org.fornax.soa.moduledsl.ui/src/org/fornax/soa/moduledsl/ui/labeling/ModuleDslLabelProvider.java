@@ -4,7 +4,11 @@
 package org.fornax.soa.moduledsl.ui.labeling;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
+import org.fornax.soa.basedsl.ui.labeling.SOABaseDslLabelHelper;
+import org.fornax.soa.moduledsl.moduleDsl.Module;
+import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
 
 import com.google.inject.Inject;
 
@@ -31,4 +35,17 @@ public class ModuleDslLabelProvider extends DefaultEObjectLabelProvider {
       return "MyModel.gif";
     }
 */
+	Object text(Module mod) {
+		StyledString name = new StyledString(mod.getName());
+		StyledString versionAndState  = new StyledString(" " + mod.getVersion().getVersion(), StyledString.DECORATIONS_STYLER);
+		name.append(versionAndState);
+		return name;
+	}
+	
+	Object text(ServiceRef s) {
+		StyledString name = new StyledString(s.getService().getName());
+		StyledString versionAndState  = new StyledString(" " + SOABaseDslLabelHelper.getVersionConstraint (s.getVersionRef()), StyledString.DECORATIONS_STYLER);
+		name.append(versionAndState);
+		return name;
+	}
 }

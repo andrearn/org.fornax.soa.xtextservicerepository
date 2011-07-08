@@ -5,6 +5,9 @@ package org.fornax.soa.ui.labeling;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
+import org.fornax.soa.basedsl.ui.labeling.SOABaseDslLabelHelper;
+import org.fornax.soa.businessDsl.CapabilityRef;
+import org.fornax.soa.businessDsl.CapabilityVariation;
 
 import com.google.inject.Inject;
 
@@ -31,4 +34,13 @@ public class BusinessDslLabelProvider extends DefaultEObjectLabelProvider {
       return "MyModel.gif";
     }
 */
+	
+	String text(CapabilityVariation var) {
+		return "~ " + var.getVarying().getCapability().getName() + SOABaseDslLabelHelper.getVersionConstraint (var.getVarying().getVersionRef());
+	}
+	
+	String text (CapabilityRef ref) {
+		return "-> " + ref.getCapability().getName() + SOABaseDslLabelHelper.getVersionConstraint(ref.getVersionRef());
+	}
+	
 }

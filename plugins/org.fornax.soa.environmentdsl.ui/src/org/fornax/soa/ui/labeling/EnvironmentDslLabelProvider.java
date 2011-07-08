@@ -7,11 +7,18 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.environmentDsl.AppServer;
 import org.fornax.soa.environmentDsl.Database;
+import org.fornax.soa.environmentDsl.EJB;
 import org.fornax.soa.environmentDsl.ESB;
 import org.fornax.soa.environmentDsl.EnvImport;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.environmentDsl.Host;
+import org.fornax.soa.environmentDsl.JMS;
+import org.fornax.soa.environmentDsl.REST;
+import org.fornax.soa.environmentDsl.RFC;
 import org.fornax.soa.environmentDsl.SAP;
+import org.fornax.soa.environmentDsl.SOAPHTTP;
+import org.fornax.soa.environmentDsl.SOAPJMS;
+import org.fornax.soa.environmentDsl.TCP;
 
 import com.google.inject.Inject;
 
@@ -39,6 +46,34 @@ public class EnvironmentDslLabelProvider extends DefaultEObjectLabelProvider {
     }
 */
 
+	String text (SOAPHTTP con) {
+		return "=> SOAP / HTTP";
+	}
+	
+	String text (SOAPJMS con) {
+		return "=> SOAP / JMS";
+	}
+	
+	String text (REST con) {
+		return "=> REST";
+	}
+	
+	String text (EJB con) {
+		return "=> EJB";
+	}
+	
+	String text (JMS con) {
+		return "=> JMS";
+	}
+	
+	String text (RFC con) {
+		return "=> SAP RFC";
+	}
+	
+	String text (TCP con) {
+		return "=> TCP";
+	}
+	
 	String image (EnvImport ele) {
 		return "full/obj16/imp_obj.gif";
 	}

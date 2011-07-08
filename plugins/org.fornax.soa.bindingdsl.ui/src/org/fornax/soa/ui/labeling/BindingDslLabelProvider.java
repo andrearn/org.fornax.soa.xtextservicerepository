@@ -5,22 +5,19 @@ package org.fornax.soa.ui.labeling;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
+import org.fornax.soa.basedsl.ui.labeling.SOABaseDslLabelHelper;
 import org.fornax.soa.bindingDsl.BindingProtocol;
 import org.fornax.soa.bindingDsl.DomainBinding;
 import org.fornax.soa.bindingDsl.EJB;
+import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.bindingDsl.SAP;
 import org.fornax.soa.bindingDsl.SOAP;
 import org.fornax.soa.bindingDsl.ServiceBinding;
+import org.fornax.soa.bindingDsl.ServiceProtocolSpec;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.environmentDsl.Server;
-import org.fornax.soa.sLADsl.SLA;
 import org.fornax.soa.serviceDsl.DomainNamespace;
-import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
-import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
-import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
-import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.serviceDsl.SubNamespace;
-import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.util.BindingDslHelper;
 
 import com.google.inject.Inject;
@@ -58,7 +55,15 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text (ServiceBinding ele) {
-		return ele.getService().getService().getName() + " " + getVersion(ele.getService().getVersionRef());
+		return ele.getService().getService().getName() + " " + SOABaseDslLabelHelper.getVersionConstraint(ele.getService().getVersionRef());
+	}
+	
+	String text (ModuleBinding m) {
+		return m.getModule().getModule().getName() + " -> " + m.getEnvironment().getName();
+	}
+	
+	String text (ServiceProtocolSpec prot) {
+		return prot.getService().getService().getName() + " -> ...";
 	}
 	
 	String text (org.fornax.soa.sLADsl.SLA ele) {
@@ -122,21 +127,6 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 		return label.toString();
 	}
 	
-	private String getVersion (VersionRef verRef) {
-		if (verRef instanceof MajorVersionRef)
-			return "" + ((MajorVersionRef)verRef).getMajorVersion();
-		if (verRef instanceof MaxVersionRef)
-			return "<" + ((MaxVersionRef)verRef).getMaxVersion();
-		if (verRef instanceof MinVersionRef)
-			return ">=" + ((MinVersionRef)verRef).getMinVersion();
-		if (verRef instanceof LowerBoundRangeVersionRef) {
-			LowerBoundRangeVersionRef ref = (LowerBoundRangeVersionRef)verRef;
-			return (ref.getMinVersion() +".."+ref.getMaxVersion());
-		}
-		return "";
-	}
-	
-
 	
 	String image (ServiceBinding ele) {
 		return "full/obj16/invoke.gif";
