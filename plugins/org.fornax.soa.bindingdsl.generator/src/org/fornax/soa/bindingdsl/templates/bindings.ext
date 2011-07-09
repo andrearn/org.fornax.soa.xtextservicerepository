@@ -12,9 +12,10 @@ extension org::fornax::soa::servicedsl::templates::common;
 
 boolean generatePrivateWsdlForProviderHost () : GLOBALVAR generatePrivateWsdlForProviderHost;
 
+String getRegistryBaseUrl (emf::EObject o) : null;
 String getRegistryBaseUrl (DomainBinding b) : b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
-String getRegistryBaseUrl (ServiceBinding b) : b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
-String getRegistryBaseUrl (OperationBinding b) : ((ServiceBinding)b.eContainer).environment.defaultRegistry.baseUrl.stripTrailingSlash();
+String getRegistryBaseUrl (ServiceBinding b) : b.eContainer.getRegistryBaseUrl();
+String getRegistryBaseUrl (OperationBinding b) : b.eContainer.getRegistryBaseUrl();
 String getRegistryBaseUrl (ModuleBinding b) : b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
 
 boolean isEligibleForEnvironment(Service svc, Environment env) :
@@ -72,4 +73,8 @@ String toModuleName (SubNamespace subNs, Version v, String moduleName) :
 boolean isPublicEndpoint (Service s, Server server) : false;
 boolean isPublicEndpoint (Service s, AppServer server) : false;
 boolean isPublicEndpoint (Service s, ESB server) : s.visibility == VISIBILITY::public;
-	
+
+Binding getMostSpecificBinding (ModuleBinding modBind, Service svc) :
+	!modBind.serviceBindings.select(e|e.service.service == svc).isEmpty ? 
+		modBind.serviceBindings.selectFirst(e|e.service.service == svc)
+	: modBind;

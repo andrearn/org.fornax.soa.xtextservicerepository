@@ -13,7 +13,6 @@ import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.bindingDsl.SAP;
 import org.fornax.soa.bindingDsl.SOAP;
 import org.fornax.soa.bindingDsl.ServiceBinding;
-import org.fornax.soa.bindingDsl.ServiceProtocolSpec;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.environmentDsl.Server;
 import org.fornax.soa.serviceDsl.DomainNamespace;
@@ -60,10 +59,6 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	String text (ModuleBinding m) {
 		return m.getModule().getModule().getName() + " -> " + m.getEnvironment().getName();
-	}
-	
-	String text (ServiceProtocolSpec prot) {
-		return prot.getService().getService().getName() + " -> ...";
 	}
 	
 	String text (org.fornax.soa.sLADsl.SLA ele) {

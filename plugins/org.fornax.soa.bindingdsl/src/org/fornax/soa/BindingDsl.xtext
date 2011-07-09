@@ -48,20 +48,15 @@ Provider:
 	'provided on' provServer = [environmentDsl::Server|QualifiedName] ;
 	
 ServiceBinding:
-	'bind service' service=ServiceRef 'to' 'environment' (environment=[environmentDsl::Environment])? '{'
+	'bind-service' service=ServiceRef '{'
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
-		('provider-protocols' '{'
-			(providerProtocol+=BindingProtocol)+
-		'}')?
 		('policies' '{'
 			(policies+=Policy)*
 		'}')?
-		('provider-policies' '{'
-			(providerPolicies+=Policy)*
-		'}')?
 		('SLAs' (sla+=[slaDsl::SLA|QualifiedName])(',' sla+=[slaDsl::SLA|QualifiedName])* )?
+		('references-module' referencedModule = ModuleRef)?
 		(operation+=OperationBinding)*
 	'}';
 	
@@ -73,7 +68,7 @@ ServiceRef:
 BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP;
 
 OperationBinding: 
-	'bind op' operation=[serviceDsl::Operation|QualifiedName] '{' 
+	'bind-operation' operation=[serviceDsl::Operation|QualifiedName] '{' 
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
@@ -99,28 +94,11 @@ ModuleBinding:
 			(policies+=Policy)*
 		'}')?
 		('default-SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
-		(protocolSpecs+=ServiceProtocolSpec)*
-		(policySpecs+=ServicePolicySpec)*
-		(slaSpecs+=ServiceSLASpec)*
+		(serviceBindings+=ServiceBinding)*
 	'}'
 ;
 
 ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
-
-ServiceProtocolSpec:
-		'protocols' 'for' 'service' service=ServiceRef '{'
-			(protocol+=BindingProtocol)+
-		'}';
-
-ServicePolicySpec:
-	'policies' 'for' 'service' service=ServiceRef '{'
-		(policies+=Policy)+
-	'}'
-;
-
-ServiceSLASpec:
-	'SLAs' 'for' 'service' service=ServiceRef (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])*
-;
 
 Component:
 	'component' name=ID 'implements' implements=ServiceRef '{'

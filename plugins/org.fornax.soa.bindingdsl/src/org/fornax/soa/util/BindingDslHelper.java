@@ -1,8 +1,10 @@
 package org.fornax.soa.util;
 
 import org.eclipse.emf.ecore.EObject;
+import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingProtocol;
 import org.fornax.soa.bindingDsl.DomainBinding;
+import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.bindingDsl.OperationBinding;
 import org.fornax.soa.bindingDsl.ServiceBinding;
 import org.fornax.soa.environmentDsl.Environment;
@@ -12,12 +14,26 @@ public class BindingDslHelper {
 
 	public static Environment getEnvironment (BindingProtocol prot) {
 		EObject o = prot.eContainer();
-		if (o instanceof DomainBinding)
-			return ((DomainBinding)o).getEnvironment();
-		if (o instanceof ServiceBinding)
-			return ((ServiceBinding)o).getEnvironment();
-		if (o instanceof OperationBinding)
-			return ((ServiceBinding)o.eContainer()).getEnvironment();
+		if (o instanceof Binding)
+			return getEnvironment((Binding)o);
+		return null;
+	}
+
+	public static Environment getEnvironment (Binding bind) {
+		if (bind instanceof DomainBinding)
+			return ((DomainBinding)bind).getEnvironment();
+		if (bind instanceof ServiceBinding)
+			if (((ServiceBinding)bind).eContainer() instanceof DomainBinding)
+				return ((DomainBinding)((ServiceBinding)bind).eContainer()).getEnvironment();
+			else if (((ServiceBinding)bind).eContainer() instanceof ModuleBinding)
+				return ((ModuleBinding)((ServiceBinding)bind).eContainer()).getEnvironment();
+		if (bind instanceof ModuleBinding)
+			return ((ModuleBinding)bind).getEnvironment();
+		if (bind instanceof OperationBinding)
+			if (((ServiceBinding)bind).eContainer() instanceof DomainBinding)
+				return ((DomainBinding)((ServiceBinding)bind).eContainer().eContainer()).getEnvironment();
+			else if (((ServiceBinding)bind).eContainer() instanceof ModuleBinding)
+				return ((ModuleBinding)((ServiceBinding)bind).eContainer().eContainer()).getEnvironment();
 		return null;
 	}
 	

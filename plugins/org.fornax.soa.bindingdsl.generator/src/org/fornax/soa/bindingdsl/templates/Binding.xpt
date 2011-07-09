@@ -124,7 +124,7 @@
 	«FOREACH this.select(e|e.environment.name==targetEnvironmentName) AS modBind»
 		«FOREACH modBind.module.module.providedServices AS provSvc»
 			«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
-				«EXPAND BindingByService (svc, profile) FOR modBind»
+				«EXPAND BindingByService (svc, modBind.getMostSpecificBinding (svc), profile) FOR modBind»
 				«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
 				«FOREACH {svc.getSubdomain()}.union(svc.getSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
 					«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR ns»
@@ -149,7 +149,7 @@
 «DEFINE Binding (SOAProfile profile) FOR ModuleBinding»
 	«FOREACH module.module.providedServices AS provSvc»
 		«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
-			«EXPAND BindingByService (svc, profile) FOR this»
+			«EXPAND BindingByService (svc, this.getMostSpecificBinding (svc), profile) FOR this»
 			«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
 			«FOREACH {svc.getSubdomain()}.union(svc.getSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
 				«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR ns»
@@ -163,20 +163,18 @@
 	«ENDFOREACH»
 «ENDDEFINE»
 
-«DEFINE BindingByService(Service s, SOAProfile profile) FOR ModuleBinding»
-	«FOREACH protocolSpecs.select(e|e.service.service == s) AS protSpec-»
-		«FOREACH protSpec.protocol AS prot-»
-			«IF SOAP.isInstance(prot)-»
-			«info("SOAP")»
-				«LET (SOAP)prot AS soapProt-»
-					«IF s.isPublicEndpoint (provider.provServer)-»
-						«EXPAND soap::ConcreteWsdl::WSDL(this, prot, profile) FOR s»
-					«ELSE-»
-						«EXPAND soap::ConcretePrivateWsdl::WSDL(this, prot, profile) FOR s»
-					«ENDIF»
-				«ENDLET»
-			«ENDIF»
-		«ENDFOREACH»
+«DEFINE BindingByService(Service s, Binding specificBinding, SOAProfile profile) FOR ModuleBinding»
+	«FOREACH specificBinding.protocol AS prot-»
+		«IF SOAP.isInstance(prot)-»
+		«info("SOAP")»
+			«LET (SOAP)prot AS soapProt-»
+				«IF s.isPublicEndpoint (provider.provServer)-»
+					«EXPAND soap::ConcreteWsdl::WSDL(this, prot, profile) FOR s»
+				«ELSE-»
+					«EXPAND soap::ConcretePrivateWsdl::WSDL(this, prot, profile) FOR s»
+				«ENDIF»
+			«ENDLET»
+		«ENDIF»
 	«ENDFOREACH»
 «ENDDEFINE»
 

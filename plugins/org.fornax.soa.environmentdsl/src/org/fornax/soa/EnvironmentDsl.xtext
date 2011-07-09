@@ -39,7 +39,7 @@ Environment :
 	
 enum EnvironmentType : Prod = "Production-Environment" | PreProd="Pre-Production-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Other="Other-Environment";
 
-Server  hidden (WS): ESB | Registry | ProcessServer | AppServer | Broker | Database | SAP;
+Server  hidden (WS): ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP;
 
 ESB hidden (WS): 
 	'esb' name=ID '{'
@@ -56,6 +56,11 @@ ESB hidden (WS):
 		(
 			'connectors' '{'
 				(connectors+=Connector)+
+			'}'
+		)?
+		(
+			'registries' '{'
+				(registries+=RegistryService)+
 			'}'
 		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
@@ -83,6 +88,46 @@ Registry  hidden (WS):
 	
 enum RegistryKind : UDDI | HTTP | File | Native;
 
+RegistryService: JNDIRegistry | COSNamingRegistry | RMIRegistry | IOR | UDDIRegistry;
+
+JNDIRegistry: 
+	'jndi' '{'
+		'port' port = INT
+		('secure-port' securePort = INT)?
+		'jndi-url' url=STRING 
+		('InitialContextFactory' initialContextFactory = STRING)?
+		(clustered?='clustered')?
+	'}'
+;
+
+COSNamingRegistry:
+	'COS-Naming' '{'
+		'port' port = INT
+		('secure-port' securePort = INT)?
+		(clustered?='clustered')?
+	'}'
+;
+
+RMIRegistry:
+	'RMI-Registry' '{'
+		'port' port = INT
+		('secure-port' securePort = INT)?
+	'}'
+;
+
+IOR:
+	'Corba-IOR' '{'
+		'port' port = INT
+		('secure-port' securePort = INT)?
+	'}'
+;
+
+UDDIRegistry:
+	'UDDI' '{'
+		'url' url = STRING
+		('secure-url' secureUrl = STRING)?
+	'}'
+;
 	
 AppServer  hidden (WS): 
 	'appserver' name=ID '{'
@@ -93,8 +138,30 @@ AppServer  hidden (WS):
 		('deployDir' deployDir=STRING  )?
 		('baseUrl' baseUrl=STRING  )?
 		('adminUrl' adminUrl=STRING  )?
-		(jndi=JNDI)?
 		(dataSources+=DataSource)*
+		('server-type' serverType=STRING )?
+		('server-version' serverVersion=STRING )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
+		(
+			'registries' '{'
+				(registries+=RegistryService)+
+			'}'
+		)?
+		('tags' (tags+=[semanticsDsl::Tag])+ )*
+	'}';
+
+WebServer  hidden (WS): 
+	'webserver' name=ID '{'
+		('identifier' dslCode=STRING )?
+		('admins' (admins+=[User|QualifiedName])+ )? 
+		'host' host=[Host|QualifiedName] 
+		('dir' home=STRING )?
+		('deployDir' deployDir=STRING  )?
+		('baseUrl' baseUrl=STRING  )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
 		(
@@ -105,10 +172,6 @@ AppServer  hidden (WS):
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 	
-JNDI  hidden (WS): 
-	(clustered?='clustered')? 'jndi' name=ID '{'
-		'jndi-url' url=STRING 
-	'}';
 	
 ProcessServer  hidden (WS):
 	'processserver'  name=ID '{'
@@ -127,6 +190,11 @@ ProcessServer  hidden (WS):
 				(connectors+=Connector)+
 			'}'
 		)?
+		(
+			'registries' '{'
+				(registries+=RegistryService)+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
@@ -143,6 +211,11 @@ Broker  hidden (WS):
 		(
 			'connectors' '{'
 				(connectors+=Connector)+
+			'}'
+		)?
+		(
+			'registries' '{'
+				(registries+=RegistryService)+
 			'}'
 		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
@@ -189,7 +262,7 @@ DataSource  hidden (WS):
 	'}';
 	
 	
-enum DatabaseKind : Oracle | DB2 | MSSQL | MySQL | Postgres | Sybase | HyperSonic | Ingres | Adabas | Other;
+enum DatabaseKind : Other | Oracle | DB2 | MSSQL | MySQL | Postgres | Sybase | HyperSonic | Ingres | Adabas | Derby | MongoDB | Hadoop | CouchDB | Neo4J;
 
 DatabaseSchema: 
 	'schema' name=ID 'owner' owner=STRING;
@@ -368,7 +441,7 @@ User  hidden (WS):
 		('phone' phone=STRING )?
 	'}';
 	
-enum SecurityProtocol: NONE | SSLv2 | SSLv3 | TLS;
+enum SecurityProtocol: NONE | SSLv2 | SSLv3 | TLS | IPSec;
 	
 QualifiedNameWithWildCard:
 	QualifiedName '.*'?;
