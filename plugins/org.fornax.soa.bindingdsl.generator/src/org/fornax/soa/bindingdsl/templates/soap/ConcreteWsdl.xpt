@@ -126,7 +126,7 @@
 	<wsdl:service name="«svc.name»">
 		<wsdl:port binding="tns:«svc.toBindingName(this)»"
 			name="«svc.toPortName(this)»Public">
-			<soap:address location="«svc.getPublisherEndpointAddress((DomainBinding)eContainer)»" />
+			<soap:address location="«svc.getPublisherEndpointAddress ((DomainBinding)eContainer)»" />
 		</wsdl:port>
 	</wsdl:service>
 «ENDDEFINE»
@@ -135,7 +135,7 @@
 	<wsdl:service name="«svc.name»">
 		<wsdl:port binding="tns:«svc.toBindingName(this)»"
 			name="«svc.toPortName(this)»Public">
-			<soap:address location="«svc.getServerEndpoint(server, this, bind.module.module)»" />
+			<soap:address location="«svc.getServerEndpoint (server, this, bind.module.module)»" />
 		</wsdl:port>
 	</wsdl:service>
 «ENDDEFINE»

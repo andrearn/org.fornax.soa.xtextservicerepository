@@ -38,7 +38,7 @@
 			has to review every service contract, whether it meets the compliance rules, it has
 			defined. This is going to reduce the agility in service development.
 		</para>
-		<para>Xtext Service Repository tries to resolve these issues in two
+		<para>Xtext Service Repository resolves these issues in two
 			ways:</para>
 		<orderedlist>
 			<listitem>
@@ -169,25 +169,17 @@
 					domains which may
 					be reflected by the company's organizational
 					structure. The business
-					model contains logical functions that are
-					available to the business
+					model also defines business functions that are
+					supported by the organization or certain organizational roles.
 					to build solutions from business functions.
-					Business functions are
-					best related to features that are available
-					as
-					building blocks.
 				</para>
-				<para>Business functions are realized based on so called
-					functional
-					capabilities. Functional capabilities are the lowest
-					level of IT
-					functionality visible to business analysts. A functional
-					capability
-					might be e.g. &quot;Lookup a customer by her
+				<para>Business capabilities are used to define what can be done in the
+					business sense. They can be compared to use cases, yet they do not
+					define actors as they are designed for reuse 
+					A business capability might be e.g. &quot;Lookup a customer by her
 					address&quot;.
-					Functional capabilities relate to service operations
-					of public
-					services in the service model.</para>
+					Business capabilities relate to services or service operations
+					defined in the service model.</para>
 			</section>
 
 			<section id="SolutionPerspective">
@@ -270,6 +262,10 @@
 				</section>
 
 			</section>
+			<section id="ModulePerspective">
+				<title>Modules</title>
+				<para>Modules assemble services into modules. The module has a unique version number.</para>
+			</section>
 			
 			<section id="EnvironmentPerspective">
 				<title>Runtime environment</title>
@@ -293,8 +289,14 @@
 					
 				<para>
 					Every binding declares what it binds from the service model to which environment. 
-					Bindings can be declared on three levels with regard to the service model:
+					Bindings can be declared on several levels with regard to the service model:
 					<itemizedlist>
+						<listitem><classname>ModuleBinding</classname> refers to a module to be bound to a given
+							environment. Hence, the services provided by the referenced module will be bound to the 
+							given environment using the defined default protocols defined for the whole module in
+							the ModuleBinding definition. Alternatively the defaults can be overridden defining 
+							<classname>ServiceBindings</classname> 
+						</listitem>
 						<listitem><classname>DomainBinding</classname> references a namespace 
 							(domain namespace or internal namespace) from service model. DomainBindings 
 							are always toplevel binding in the binding model and have name to be referable

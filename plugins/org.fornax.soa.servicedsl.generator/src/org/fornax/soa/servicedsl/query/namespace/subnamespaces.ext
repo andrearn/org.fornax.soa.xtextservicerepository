@@ -47,3 +47,5 @@ OrganizationNamespace getOrgNamespace (SubNamespace subNs) :
 		subNs.eContainer.getOrgNamespace()
 	:
 		null;
+		
+create List[org::fornax::soa::servicedsl::VersionedDomainNamespace] visitedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace ns) : (List[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}; 

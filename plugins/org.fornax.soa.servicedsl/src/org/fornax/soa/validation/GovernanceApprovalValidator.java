@@ -60,8 +60,9 @@ public class GovernanceApprovalValidator extends AbstractServiceDslJavaValidator
 
 	@Check
 	public void checkPublicToleratedServiceNeedsJustification(
-			GovernanceApproval g) {
-		if (g.eContainer().eContainer() instanceof DomainNamespace
+			Service s) {
+		GovernanceApproval g = s.getGovernanceApproval();
+		if (s.eContainer() instanceof DomainNamespace
 				&& (g.getDecision() == ApprovalDecision.TEMPORARILY_TOLERATED || g
 						.getDecision() == ApprovalDecision.TOLERATED)
 				&& (g.getJustificationOrDocURL() == null || g
@@ -75,7 +76,7 @@ public class GovernanceApprovalValidator extends AbstractServiceDslJavaValidator
 					+ " "
 					+ VersionedObjectQueryHelper.getObjectVersion(g).getVersion()
 					+ " is being tolerated. A justification is required for that.",
-					getFeatureForGovernanceApproval (g));
+					ServiceDslPackage.Literals.SERVICE__GOVERNANCE_APPROVAL);
 	}
 
 	@Check
@@ -95,35 +96,25 @@ public class GovernanceApprovalValidator extends AbstractServiceDslJavaValidator
 	}
 
 	@Check
-	public void checkApprovedServiceHasDate(GovernanceApproval g) {
-		if (g.eContainer().eContainer() instanceof DomainNamespace
+	public void checkApprovedServiceHasDate(Service s) {
+		GovernanceApproval g = s.getGovernanceApproval();
+		if (s.eContainer() instanceof DomainNamespace
 				&& g.getDecision() != ApprovalDecision.NO
 				&& (g.getApprovalDate() == null || "".equals(g
 						.getApprovalDate())))
 			warning("Please provide the date of the governance decision!",
-					getFeatureForGovernanceApproval (g));
+					ServiceDslPackage.Literals.SERVICE__GOVERNANCE_APPROVAL);
 	}
 
 	@Check
-	public void checkApprovedServiceHasBy(GovernanceApproval g) {
+	public void checkApprovedServiceHasBy(Service s) {
+		GovernanceApproval g = s.getGovernanceApproval();
 		if (g.eContainer().eContainer() instanceof DomainNamespace
 				&& g.getDecision() != ApprovalDecision.NO
 				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
 			warning("Please state who made the governance decision!",
-					getFeatureForGovernanceApproval (g));
+					ServiceDslPackage.Literals.SERVICE__GOVERNANCE_APPROVAL);
 		}
-	}
-	
-	private EStructuralFeature getFeatureForGovernanceApproval (GovernanceApproval g) {
-		if (g.eContainer() instanceof VersionedType)
-			return ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL;
-		else if (g.eContainer() instanceof Service)
-			return ServiceDslPackage.Literals.SERVICE__GOVERNANCE_APPROVAL;
-		else if (g.eContainer() instanceof org.fornax.soa.serviceDsl.Exception)
-			return ServiceDslPackage.Literals.EXCEPTION__GOVERNANCE_APPROVAL;
-		else
-			return null;
-		
 	}
 
 	@Check

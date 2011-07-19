@@ -12,6 +12,7 @@
 «EXTENSION org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder»
 «EXTENSION org::fornax::soa::servicedsl::query::type::TypesByMajorVersion»
 «EXTENSION org::fornax::soa::servicedsl::query::namespace::namespaceImports»
+«EXTENSION org::fornax::soa::servicedsl::query::namespace::subnamespaces»
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::types»
@@ -42,7 +43,9 @@
 	the major version splitting algorithm filtered by the given minimal LifecycleState
 «ENDREM»
 «DEFINE XSDForImports (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
-	«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
+	«FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion() AS imp»
+		«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOR imp -»
+	«ENDFOREACH»
 «ENDDEFINE»
 
 
@@ -54,6 +57,7 @@
 «FILE getFileNameFragment() + ".xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema xmlns:tns="«toNamespace()»"
 	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS (minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 
+	xmlns="«toNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
 	elementFormDefault="qualified"
@@ -131,7 +135,7 @@
     	<xsd:sequence>
     		«EXPAND Property (currNs, profile, minState) FOREACH properties-»
     		«IF profile.typesUseExtendableProperties ()-»
-			<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
+			<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
 				processContents="skip"/>
     		«ENDIF»
     	</xsd:sequence>
@@ -155,7 +159,7 @@
     	<xsd:sequence>
     		«EXPAND Property (currNs, profile, minState) FOREACH properties-»
     		«IF profile.typesUseExtendableProperties ()-»
-			<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
+			<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
 				processContents="skip"/>
     		«ENDIF»
     	</xsd:sequence>

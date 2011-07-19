@@ -108,25 +108,32 @@ String getTypeNameRef (sOAProfileDsl::AttributeDataTypeRef t, org::fornax::soa::
 	t.getLatestMatchingType () .getTypeNameRef();
 	
 String getTypeNameRef (VersionedTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
-	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef) ?
+	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
+		&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
+		&& ! Service.isInstance(t.getStatefulOwner()) ?
 		"tns:" +t.type.name
 	:
 		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
 	
 String getTypeNameRef (sOAProfileDsl::VersionedTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
-	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef) ?
+	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
+		&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()?
 		"tns:" +t.type.name
 	:
 		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
 	
 String getTypeNameRef (BusinessObjectRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
-	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()?
+	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()
+		&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
+		&& ! Service.isInstance(t.getStatefulOwner()) ?
 		"tns:" +t.type.name
 	:
 		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
 		
 String getTypeNameRef (EnumTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
-	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef) ?
+	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
+		&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
+		&& ! Service.isInstance(t.getStatefulOwner()) ?
 		"tns:" +t.type.name
 	:
 		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
@@ -139,6 +146,7 @@ String getTypeNameRef (sOAProfileDsl::DataType t) :
  		case "base64Binary":	"xsd:base64Binary"
  		case "BigInteger":		"xsd:decimal"
  		case "BigDecimal":		"xsd:decimal"
+ 		case "char":			"xsd:string"
  		case "datetime":		"xsd:dateTime"
  		case "Object":			"xsd:anyType"
 		default : "xsd:" + t.name
@@ -169,6 +177,7 @@ String getFullTypeNameRef (sOAProfileDsl::DataType t) :
  		case "base64Binary":	"xsd:base64Binary"
  		case "BigInteger":		"xsd:decimal"
  		case "BigDecimal":		"xsd:decimal"
+ 		case "char":			"xsd:string"
  		case "datetime":		"xsd:dateTime"
  		case "Object":			"xsd:anyType"
 		default : "xsd:" + t.name
@@ -261,12 +270,12 @@ private cached String toNamespace (ExceptionRef t) :
 String toTypeName (Exception e) :
 	e.name.endsWith("Exception") ?
 		e.name.replaceAll("Exception", "Fault")
-	: {
+	: (
 		e.name.endsWith("Fault") ?
 			e.name
 		:
 			e.name + "Fault"
-	};
+	);
 
 
 boolean typesUseExtendableXMLAttributes (sOAProfileDsl::SOAProfile p) : p.designRules != null && p.designRules.typeDefPolicy != null && p.designRules.typeDefPolicy.extendableXMLAttributes ? true : false;

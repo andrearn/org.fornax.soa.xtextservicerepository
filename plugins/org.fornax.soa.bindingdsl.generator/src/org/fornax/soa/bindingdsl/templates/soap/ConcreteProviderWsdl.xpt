@@ -84,7 +84,7 @@
 		
 		«doc.trim().stripCommentBraces()»
 	</wsdl:documentation>
-    <wsdl:import namespace="«toTargetNamespace()»" location="«this.getRegisteredUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
+    <wsdl:import namespace="«toTargetNamespace()»" location="«this.getRegisteredUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 	
 	«EXPAND SOAPBinding(this) FOR prot-»
 	«EXPAND WsdlService(this, modBind.provider.provServer, modBind) FOR prot-»
