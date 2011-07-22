@@ -6,6 +6,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.ISelectable;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
+import org.eclipse.xtext.scoping.impl.ScopeBasedSelectable;
 import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
@@ -19,6 +20,8 @@ import org.fornax.soa.basedsl.scoping.versions.LatestMajorVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.NullVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilteredMapScope;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.basedsl.scoping.versions.VersioningContainerBasedScope;
@@ -27,9 +30,13 @@ public abstract class VersionedImportedNamespaceAwareScopeProvider extends Impor
 	
 	protected IScope getLocalElementsScope(IScope parent, final EObject context,
 			final EReference reference) {
-		IScope unfilteredScope = super.getLocalElementsScope(parent, context, reference);
+		IScope result = super.getLocalElementsScope(parent, context, reference);
+		VersionFilter<IEObjectDescription> versionFilter = getVersionFilterFromContext (context, reference);
 		//FIXME check for subsequent NPE
-		return VersionFilteredMapScope.createScope (parent, unfilteredScope.getAllElements(), isIgnoreCase(), getVersionFilterFromContext (context, reference));
+		if (versionFilter instanceof NullVersionFilter)
+			return result;
+		else
+			return VersionFilteredMapScope.createScope (result, result.getAllElements(), isIgnoreCase(), getVersionFilterFromContext (context, reference));
 	}
 	
 	protected IScope getResourceScope(final IScope parent, final EObject context, final EReference reference) {

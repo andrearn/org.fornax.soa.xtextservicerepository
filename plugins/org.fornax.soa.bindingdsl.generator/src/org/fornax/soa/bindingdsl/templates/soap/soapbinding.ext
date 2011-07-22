@@ -8,6 +8,7 @@ extension org::fornax::soa::environmentdsl::generator::endpoints;
 extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 extension org::fornax::soa::servicedsl::templates::common;
 extension org::fornax::soa::servicedsl::templates::xsd::domains;
+extension org::fornax::soa::bindingdsl::templates::bindings;
 extension org::fornax::soa::bindingdsl::templates::soap::soapvendorbindings;
 
 String getWsdlBindingStyle(bindingDsl::SOAP bind) : 
@@ -19,6 +20,7 @@ String getWsdlBindingStyle(bindingDsl::SOAP bind) :
 	
 String getSoapEncoding(SOAP bind) : 
 	switch (bind.style) {
+	case SOAPStyle::rpcenc: "encoded"
 	default : "literal"	
 	};
 	
@@ -126,6 +128,7 @@ String getDefaultAppServerEndpointAddress(serviceDsl::Service s, bindingDsl::Dom
 	
 String toBindingName (Service s, bindingDsl::SOAP p) : s.name + p.getPortNamePostfix();
 String toPortName (Service s, bindingDsl::SOAP p) : s.name + p.getPortNamePostfix();
+String toScopedPortName (Service s, bindingDsl::SOAP p) : s.toPortName(p) + s.getServiceVisibilityName ();
 
 private String getPortNamePostfix(bindingDsl::SOAP p) : 
 	switch (p.style) {
@@ -135,9 +138,9 @@ private String getPortNamePostfix(bindingDsl::SOAP p) :
 	};
 	
 	
-String getServerEndpoint(Service s, Server server, BindingProtocol prot, Module mod) : 
+String getServerEndpoint(Service s, environmentDsl::Server server, BindingProtocol prot, moduleDsl::Module mod) : 
 	server.getSOAPHttpEndpointUrl() + "/"
-	+ getEndpoint (mod, s.getOrgNamespace(), s.getSubdomain(), s, server);
+	+ mod.getEndpoint (s.getOrgNamespace(), s.getSubdomain(), s, server);
 
 
 

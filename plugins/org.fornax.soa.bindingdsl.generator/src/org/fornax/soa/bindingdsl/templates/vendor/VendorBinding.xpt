@@ -3,6 +3,7 @@
 «IMPORT environmentDsl»
 «IMPORT moduleDsl»
 
+«REM»
 «DEFINE ServiceVendorBinding (ModuleBinding modBind, ServiceProtocolSpec protSpec) FOR Service»
 	«IF modBind.module.module.assemblyType == AssemblyType::SCA_EAR»
 		«IF ESB.isInstance(modBind.provider.provServer)»
@@ -18,3 +19,4 @@
 		«ENDIF»
 	«ENDIF»
 «ENDDEFINE»
+«ENDREM»

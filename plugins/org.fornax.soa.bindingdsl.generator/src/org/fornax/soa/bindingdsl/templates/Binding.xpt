@@ -208,6 +208,9 @@
 
 
 
+«DEFINE XSD (environmentDsl::Environment env, SOAProfile profile) FOR SubNamespace»
+	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (env.getMinLifecycleState(this), profile, env.getRegistryBaseUrl())»
+«ENDDEFINE»
 «REM»
 	ENTRYPOINT for generation of XSDs for a given DomainBinding. 
 	

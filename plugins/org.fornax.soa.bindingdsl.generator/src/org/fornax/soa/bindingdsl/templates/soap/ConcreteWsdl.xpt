@@ -114,18 +114,18 @@
 			<soap:operation
 				soapAction="«eContainer.toTargetNamespace()»«name»" />
 			<wsdl:input>
-				<soap:body use="literal" />
+				<soap:body use="«protocol.getSoapEncoding()»" />
 			</wsdl:input>
 			<wsdl:output>
-				<soap:body use="literal" />
+				<soap:body use="«protocol.getSoapEncoding()»" />
 			</wsdl:output>
 		</wsdl:operation>
 «ENDDEFINE»
 
 «DEFINE WsdlService(Service svc) FOR SOAP»
 	<wsdl:service name="«svc.name»">
-		<wsdl:port binding="tns:«svc.toBindingName(this)»"
-			name="«svc.toPortName(this)»Public">
+		<wsdl:port binding="tns:«svc.toBindingName (this)»"
+			name="«svc.toScopedPortName (this)»">
 			<soap:address location="«svc.getPublisherEndpointAddress ((DomainBinding)eContainer)»" />
 		</wsdl:port>
 	</wsdl:service>
@@ -133,8 +133,8 @@
 
 «DEFINE WsdlService(Service svc, Server server, ModuleBinding bind) FOR SOAP»
 	<wsdl:service name="«svc.name»">
-		<wsdl:port binding="tns:«svc.toBindingName(this)»"
-			name="«svc.toPortName(this)»Public">
+		<wsdl:port binding="tns:«svc.toBindingName (this)»"
+			name="«svc.toScopedPortName (this)»">
 			<soap:address location="«svc.getServerEndpoint (server, this, bind.module.module)»" />
 		</wsdl:port>
 	</wsdl:service>

@@ -102,10 +102,14 @@ String tomcatEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace
 	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 
 String websphereEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
-	subNs.toModuleName (s.version, ctxRoot) + "Web/" + s.name;
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","/") + "/" 
+	+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 
 String websphereSCAEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
-	subNs.toModuleName (s.version, ctxRoot) + "Web/sca/" + s.name;
+	ctxRoot
+	+ orgNs.name.replaceAll("\\.","_") + "_" 
+	+ subNs.name.replaceAll("\\.","_") +"_" + s.name + "_" + s.version.toVersionPostfix();
 
 String webmethodsEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
 	ctxRoot
@@ -166,8 +170,8 @@ String fuseesbEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespac
 	
 String getCtxRootByAssemblyType (Module mod, String serverType) :
 	switch (mod.assemblyType) {
-		case AssemblyType::SCA_EAR: mod.name + "Web/sca"
+		case AssemblyType::SCA_EAR: mod.name + "Web/sca/"
 		case AssemblyType::WebMethods: ""
-		default: mod.name
+		default: mod.name + "/"
 	};
 	

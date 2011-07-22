@@ -17,6 +17,7 @@ String getRegistryBaseUrl (DomainBinding b) : b.environment.defaultRegistry.base
 String getRegistryBaseUrl (ServiceBinding b) : b.eContainer.getRegistryBaseUrl();
 String getRegistryBaseUrl (OperationBinding b) : b.eContainer.getRegistryBaseUrl();
 String getRegistryBaseUrl (ModuleBinding b) : b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
+String getRegistryBaseUrl (Environment env) : env.defaultRegistry.baseUrl.stripTrailingSlash();
 
 boolean isEligibleForEnvironment(Service svc, Environment env) :
 	switch (env.type) {
@@ -78,3 +79,10 @@ Binding getMostSpecificBinding (ModuleBinding modBind, Service svc) :
 	!modBind.serviceBindings.select(e|e.service.service == svc).isEmpty ? 
 		modBind.serviceBindings.selectFirst(e|e.service.service == svc)
 	: modBind;
+	
+String getServiceVisibilityName (Service s) :
+	switch (s.visibility) {
+	case VISIBILITY::public : "Public"
+	case VISIBILITY::domain : "Domain"
+	default: "Private"
+	};

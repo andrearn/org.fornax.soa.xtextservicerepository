@@ -112,9 +112,11 @@
 						«EXPAND Parameter FOR this.getBestMatchingHeader (profile)-»
 						«ENDIF-»
 						«EXPAND Parameter FOREACH parameters-»
+						«REM»
 						«IF	fetchProfile.size > 1-»
 						<xsd:element name="fetchProfileName" type="xsd:string" minOccurs="0" maxOccurs="1" />
 						«ENDIF-»
+						«ENDREM»
 						«IF profile.operationsUseExtendableParameters()»
 						<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
 							processContents="skip"/>

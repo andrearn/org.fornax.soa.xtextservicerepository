@@ -215,6 +215,7 @@ cached String shorten (sOAProfileDsl::OrganizationNamespace d, sOAProfileDsl::SO
  * 	XML Namespace prefixes / aliases
  */
 String toPrefix(Object o) : "tns";
+String toPrefix(OrganizationNamespace o) : o.prefix != null ? o.prefix : o.name.replaceAll("\\.", "_");
 String toPrefix(SubNamespace s) : (s.prefix != null ? s.prefix : getSubNamespacePath({s}).name.subString(0,1).toString(""));
 
 String toPrefix(org::fornax::soa::servicedsl::VersionedDomainNamespace s) : s.shortName != null ? s.shortName : getSubNamespacePath({s.subdomain}).name.subString(0,1).toString("");
