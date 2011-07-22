@@ -16,24 +16,16 @@ body { background-image: url('http://docbook.sourceforge.net/release/images/draf
 					domains which may
 					be reflected by the company's organizational
 					structure. The business
-					model contains logical functions that are
-					available to the business
+					model also defines business functions that are
+					supported by the organization or certain organizational roles.
 					to build solutions from business functions.
-					Business functions are
-					best related to features that are available
-					as
-					building blocks.
-				</p><p>Business functions are realized based on so called
-					functional
-					capabilities. Functional capabilities are the lowest
-					level of IT
-					functionality visible to business analysts. A functional
-					capability
-					might be e.g. "Lookup a customer by her
+				</p><p>Business capabilities are used to define what can be done in the
+					business sense. They can be compared to use cases, yet they do not
+					define actors as they are designed for reuse 
+					A business capability might be e.g. "Lookup a customer by her
 					address".
-					Functional capabilities relate to service operations
-					of public
-					services in the service model.</p></div><div class="section" title="Solutions"><div class="titlepage"><div><div><h3 class="title"><a name="SolutionPerspective"></a>Solutions</h3></div></div></div><p>Solutions support the business of company. Solutions are
+					Business capabilities relate to services or service operations
+					defined in the service model.</p></div><div class="section" title="Solutions"><div class="titlepage"><div><div><h3 class="title"><a name="SolutionPerspective"></a>Solutions</h3></div></div></div><p>Solutions support the business of company. Solutions are
 					available as applications or bundles of application that solve a
 					certain problem, e.g. a customer self care solution. In SOA
 					solutions will reuse business function by using services that
@@ -71,7 +63,7 @@ body { background-image: url('http://docbook.sourceforge.net/release/images/draf
 						a type with a version constraint if it is a business object or enumeration, an 
 						optional many cardinality and some other optional flags.</p></div><div class="section" title="Enumerations"><div class="titlepage"><div><div><h4 class="title"><a name="N100EC"></a>Enumerations</h4></div></div></div><p>Enumerations declare all possible values that an attribute or parameter of
 						that type may have.</p></div><div class="section" title="Exceptions"><div class="titlepage"><div><div><h4 class="title"><a name="N100F1"></a>Exceptions</h4></div></div></div><p>As in many programming languages, exceptions describe an unexpected 
-						behaviour or erro condition.</p></div></div><div class="section" title="Runtime environment"><div class="titlepage"><div><div><h3 class="title"><a name="EnvironmentPerspective"></a>Runtime environment</h3></div></div></div><p>The environment defines, what makes up the IT infrastructure
+						behaviour or erro condition.</p></div></div><div class="section" title="Modules"><div class="titlepage"><div><div><h3 class="title"><a name="ModulePerspective"></a>Modules</h3></div></div></div><p>Modules assemble services into modules. The module has a unique version number.</p></div><div class="section" title="Runtime environment"><div class="titlepage"><div><div><h3 class="title"><a name="EnvironmentPerspective"></a>Runtime environment</h3></div></div></div><p>The environment defines, what makes up the IT infrastructure
 					that hosts services and solutions. Typical parts of an environment
 					are hosts, application servers, databases and so on. Typically a
 					company has a production, test and a development environment.</p></div><div class="section" title="Service binding"><div class="titlepage"><div><div><h3 class="title"><a name="BindingPerspective"></a>Service binding</h3></div></div></div><p>The binding perspective wires services to an environment, where they are 
@@ -79,8 +71,12 @@ body { background-image: url('http://docbook.sourceforge.net/release/images/draf
 					(and implicitly their endpoints) as well as assigned SLAs and policies like 
 					security policies.</p><div class="mediaobject" align="center"><img src="images/CoreDSLs.png" align="middle"></div><p>
 					Every binding declares what it binds from the service model to which environment. 
-					Bindings can be declared on three levels with regard to the service model:
-					</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><code class="classname">DomainBinding</code> references a namespace 
+					Bindings can be declared on several levels with regard to the service model:
+					</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><code class="classname">ModuleBinding</code> refers to a module to be bound to a given
+							environment. Hence, the services provided by the referenced module will be bound to the 
+							given environment using the defined default protocols defined for the whole module in
+							the ModuleBinding definition. Alternatively the defaults can be overridden defining 
+							<code class="classname">ServiceBindings</code></li><li class="listitem"><code class="classname">DomainBinding</code> references a namespace 
 							(domain namespace or internal namespace) from service model. DomainBindings 
 							are always toplevel binding in the binding model and have name to be referable
 						</li><li class="listitem"><code class="classname">ServiceBinding</code> refers to a specific service 
