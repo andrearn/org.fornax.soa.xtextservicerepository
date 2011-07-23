@@ -1,6 +1,14 @@
 <?xml version='1.0' ?><!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd">
 <book>
 	<title>DSL Reference</title>
+	<chapter id="BusinessDsl">
+		<title>Business DSL</title>
+		<para>The Business DSL defines and business capabilties and business functions as well as organizational structures
+		that implements the business function. Business capabilities can be mapped to services, service operations or 
+		features of a solution. E.g. a service may declare that it realizes a certain capability. Capabilities can be grouped 
+		into <code>capability-group</code>s and organized into <code>domain</code>s. It is also possible to define variants
+		of a capability.</para>
+	</chapter>
 	<chapter id="ServiceDSL">
 		<title>Service DSL</title>
 		<section id="ServiceDSLIntro">
@@ -8,6 +16,64 @@
 		</section>
 		<section id = "ServiceDslFile">
 			<title>Service DSL file structure</title>
+			<para>A Service DSL file defines namespace, business objects, services and exception. It has the following basic structure:
+					<programlisting id="servicedslstructure" language="service-dsl" format="1">
+	org-namespace &lt;QualifiedName&gt; shortname "&lt;String&gt;" {
+						
+		domain-namespace &lt;QualifiedName&gt; shortname "&lt;String&gt;" {
+			metadata {
+			}
+			
+			&lt; business objects and enums &gt;
+			businessObject AbstractProduct {
+				metadata {
+					version &lt; version.number&gt;
+					lifecycle-state &lt;a governance lifecycle state&gt;
+					governance-approval {
+						...
+					}
+				}
+				&lt;... attributes and weak-references ...&gt;
+			}
+			
+			
+			&lt;services ...&gt;			    
+			public service CustomerEntityService {
+				metadata {
+					version &lt; version.number&gt;
+					lifecycle-state &lt;a governance lifecycle state&gt;
+					governance-approval {
+						...
+					}
+					category entity
+					statefulness &lt; idempodent | stateless | stateful &gt;
+					persistence &lt; read | write | read/write &gt;
+				}
+				
+				// operations go here:
+				&lt; message exchange pattern: sync | async ...&gt; &lt;operationName&gt; (&lt; (optional) parameters&gt; ) 
+					returns &lt;(optional) return paramters&gt;
+					throws &lt;exceptions, ...&gt;
+				{
+					requires &lt; other version constrained service dependency&gt;
+				}
+			}
+			
+			&lt; exceptions ... &gt;
+			exception &lt;ExceptionName&gt; {
+				metadata {
+					version &lt; version.number&gt;
+					lifecycle-state &lt;a governance lifecycle state&gt;
+					governance-approval {
+						...
+					}
+				}
+				&lt; exception attributes as in business objects&gt;
+			}
+		}
+	}
+</programlisting>				
+			</para>
 		</section>
 		<section id = "Namespaces">
 			<title>Namespaces</title>
@@ -213,6 +279,9 @@
 				approval-date "20.04.2011"
 				approved-by "Anna Jacobson"
 			}
+			category entity
+			statefulness stateful
+			persistence read/write
 		}
 		
 		// operations go here:
@@ -240,5 +309,20 @@
 			<title>Exceptions</title>
 		</section>
 		
+	</chapter>
+	<chapter id="ModuleDsl">
+		<title>Module DSL</title>
+	</chapter>
+	<chapter id="EnvironmentDsl">
+		<title>Environment DSL</title>
+	</chapter>
+	<chapter id="BindingDsl">
+		<title>Binding DSL</title>
+	</chapter>
+	<chapter id="SolutionDsl">
+		<title>Solution DSL</title>
+	</chapter>
+	<chapter id="ProfileDsl">
+		<title>Profile DSL</title>
 	</chapter>
 </book>

@@ -16,12 +16,38 @@
 			</part>
 		</xi:fallback>
 	</xi:include>
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="governance.xml">
+		<xi:fallback>
+			<part id="Governance">
+				<title>SOA governance tasks</title>
+				<preface id="manual-governance">
+					<title>SOA governance tasks</title>
+					<para>
+						<emphasis>FIXME: MISSING XINCLUDE CONTENT</emphasis>
+					</para>
+				</preface>
+			</part>
+		</xi:fallback>
+	</xi:include>
 	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="langreference.xml">
 		<xi:fallback>
 			<part id="LanguageReference">
 				<title>Language Reference</title>
 				<preface id="manual-langreference">
 					<title>Language Reference</title>
+					<para>
+						<emphasis>FIXME: MISSING XINCLUDE CONTENT</emphasis>
+					</para>
+				</preface>
+			</part>
+		</xi:fallback>
+	</xi:include>
+	<xi:include xmlns:xi="http://www.w3.org/2001/XInclude" href="generatorreference.xml">
+		<xi:fallback>
+			<part id="GeneratorReference">
+				<title>Language Reference</title>
+				<preface id="generator-langreference">
+					<title>Generator Reference</title>
 					<para>
 						<emphasis>FIXME: MISSING XINCLUDE CONTENT</emphasis>
 					</para>

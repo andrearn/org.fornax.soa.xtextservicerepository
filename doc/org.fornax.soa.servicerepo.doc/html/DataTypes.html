@@ -6,11 +6,11 @@ body { background-image: url('http://docbook.sourceforge.net/release/images/draf
        /* I think that's just a bit too distracting for the reader... */
        /* background-attachment: fixed; */
        /* background-position: center center; */
-     }</style><link rel="home" href="index.html" title="Xtext Service Repository User Manual"><link rel="up" href="ServiceDSL.html" title="Chapter&nbsp;1.&nbsp;Service DSL"><link rel="prev" href="Namespaces.html" title="Namespaces"><link rel="next" href="Services.html" title="Services"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="Types"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="DataTypes"></a>Types</h2></div></div></div><div class="section" title="BusinessObjects"><div class="titlepage"><div><div><h3 class="title"><a name="N1019F"></a>BusinessObjects</h3></div></div></div>
+     }</style><link rel="home" href="index.html" title="Xtext Service Repository User Manual"><link rel="up" href="ServiceDSL.html" title="Chapter&nbsp;2.&nbsp;Service DSL"><link rel="prev" href="Namespaces.html" title="Namespaces"><link rel="next" href="Services.html" title="Services"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="section" title="Types"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="DataTypes"></a>Types</h2></div></div></div><div class="section" title="BusinessObjects"><div class="titlepage"><div><div><h3 class="title"><a name="N101B7"></a>BusinessObjects</h3></div></div></div>
 				BusinessObject are user defined complex datatypes capturing business data. BusinessObject are versioned and have a lifecycle state. 
 				The actual data are represented by one or more properties, that have name and a datatype.
 				
-				<div class="example"><a name="N101A3"></a><p class="title"><b>Example&nbsp;1.3.&nbsp;</b></p><div class="example-contents"><pre class="programlisting">
+				<div class="example"><a name="N101BB"></a><p class="title"><b>Example&nbsp;2.3.&nbsp;</b></p><div class="example-contents"><pre class="programlisting">
 		businessObject AbstractProduct {
 			metadata {
 				version 1.0
@@ -27,27 +27,27 @@ body { background-image: url('http://docbook.sourceforge.net/release/images/draf
 			category : string
 			optional vendor : string
 		}
-					</pre></div></div><br class="example-break"><div class="section" title="Business object meta data"><div class="titlepage"><div><div><h4 class="title"><a name="N101A8"></a>Business object meta data</h4></div></div></div></div><div class="section" title="Properties"><div class="titlepage"><div><div><h4 class="title"><a name="boProperties"></a>Properties</h4></div></div></div><p>Properties may be of one of the following types:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+					</pre></div></div><br class="example-break"><div class="section" title="Business object meta data"><div class="titlepage"><div><div><h4 class="title"><a name="N101C0"></a>Business object meta data</h4></div></div></div></div><div class="section" title="Properties"><div class="titlepage"><div><div><h4 class="title"><a name="boProperties"></a>Properties</h4></div></div></div><p>Properties may be of one of the following types:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 						Attributes - Attributes are the basic kind of property. The referenced type is being fully resolved, i.e. an 
 						instance being transferred contains all properties of the referenced type. 
 						</li><li class="listitem">
 						Weak references - Contrary to an attribute a weak reference does not resolve to the properties of a referenced type. 
-						Instead the businesskey of the referenced type is being used. Weak references are prefixed by the keyword "weak-ref"</li></ul></div><div class="section" title="Common features of Properties"><div class="titlepage"><div><div><h5 class="title"><a name="N101B6"></a>Common features of Properties</h5></div></div></div><div class="section" title="Property name and type"><div class="titlepage"><div><div><h6 class="title"><a name="N101B9"></a>Property name and type</h6></div></div></div><p>Each property has a name and a type. The name and the type are separated by <code class="code">:</code>. Types may be
+						Instead the businesskey of the referenced type is being used. Weak references are prefixed by the keyword "weak-ref"</li></ul></div><div class="section" title="Common features of Properties"><div class="titlepage"><div><div><h5 class="title"><a name="N101CE"></a>Common features of Properties</h5></div></div></div><div class="section" title="Property name and type"><div class="titlepage"><div><div><h6 class="title"><a name="N101D1"></a>Property name and type</h6></div></div></div><p>Each property has a name and a type. The name and the type are separated by <code class="code">:</code>. Types may be
 							BusinessObjects, Enumerations or DataTypes, i.e. primitive types defined in the SOAProfile. As BusinessObjects and 
-							Enumerations are versioned, the type reference of the attribute must declare a version constraint.</p><div class="example"><a name="N101C1"></a><p class="title"><b>Example&nbsp;1.4.&nbsp;</b></p><div class="example-contents"><a name="simpleTypeAttribute"></a><pre class="programlisting">
+							Enumerations are versioned, the type reference of the attribute must declare a version constraint.</p><div class="example"><a name="N101D9"></a><p class="title"><b>Example&nbsp;2.4.&nbsp;</b></p><div class="example-contents"><a name="simpleTypeAttribute"></a><pre class="programlisting">
 	firstname : string
 								</pre><a name="boTypeAttribute"></a><pre class="programlisting">
 	contract : Contract majorVersion 1
-								</pre></div></div><br class="example-break"></div><div class="section" title="Cardinality"><div class="titlepage"><div><div><h6 class="title"><a name="N101CC"></a>Cardinality</h6></div></div></div>
+								</pre></div></div><br class="example-break"></div><div class="section" title="Cardinality"><div class="titlepage"><div><div><h6 class="title"><a name="N101E4"></a>Cardinality</h6></div></div></div>
 							Properties may be marked optional by using the keyword <code class="code">optional</code> in front of the property name.
-							<div class="example"><a name="N101D3"></a><p class="title"><b>Example&nbsp;1.5.&nbsp;</b></p><div class="example-contents"><a name="optionalAttribute"></a><pre class="programlisting">
+							<div class="example"><a name="N101EB"></a><p class="title"><b>Example&nbsp;2.5.&nbsp;</b></p><div class="example-contents"><a name="optionalAttribute"></a><pre class="programlisting">
 	optional firstname : string
 								</pre>
 								firstname may be left empty / null 
 							</div></div><br class="example-break">
 							Properties may also have a collection type:
-							<div class="example"><a name="N101DB"></a><p class="title"><b>Example&nbsp;1.6.&nbsp;</b></p><div class="example-contents"><a name="listAttribute"></a><pre class="programlisting">
+							<div class="example"><a name="N101F3"></a><p class="title"><b>Example&nbsp;2.6.&nbsp;</b></p><div class="example-contents"><a name="listAttribute"></a><pre class="programlisting">
 	contracts : Contract [] majorVersion 1
 								</pre>
 								The BusinessObject has a collection of at least one Contract in major version 1.
-							</div></div><br class="example-break"></div></div></div></div><div class="section" title="Enumerations"><div class="titlepage"><div><div><h3 class="title"><a name="N101E2"></a>Enumerations</h3></div></div></div></div></div></body></html>
+							</div></div><br class="example-break"></div></div></div></div><div class="section" title="Enumerations"><div class="titlepage"><div><div><h3 class="title"><a name="N101FA"></a>Enumerations</h3></div></div></div></div></div></body></html>
