@@ -1,5 +1,7 @@
 package org.fornax.soa.basedsl.scoping.versions;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -44,7 +46,10 @@ public class VersionFilteringScope extends FilteringScope {
 	@Override
 	public IEObjectDescription getSingleElement(QualifiedName name) {
 		Iterable<IEObjectDescription> elements = getElements (name);
-		return Lists.newArrayList(filter.getBestMatchByNames (elements, ignoreCase).values()).get(0) ;
+		List<IEObjectDescription> ieDesc = Lists.newArrayList (filter.getBestMatchByNames (elements, ignoreCase).values());
+		if (ieDesc.isEmpty())
+			return null;
+		return ieDesc.get (0);
 	}
 
 }

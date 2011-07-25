@@ -1,0 +1,73 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Chapter&nbsp;5.&nbsp;Environment DSL</title><link href="book.css" rel="stylesheet" type="text/css"><meta content="DocBook XSL Stylesheets V1.75.2" name="generator"><style type="text/css">
+body { background-image: url('http://docbook.sourceforge.net/release/images/draft.png');
+       background-repeat: no-repeat;
+       background-position: top left;
+       /* The following properties make the watermark "fixed" on the page. */
+       /* I think that's just a bit too distracting for the reader... */
+       /* background-attachment: fixed; */
+       /* background-position: center center; */
+     }</style><link rel="home" href="index.html" title="Xtext Service Repository User Manual"><link rel="up" href="bk04.html" title="DSL Reference"><link rel="prev" href="ModuleDsl.html" title="Chapter&nbsp;4.&nbsp;Module DSL"><link rel="next" href="BindingDsl.html" title="Chapter&nbsp;6.&nbsp;Binding DSL"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" title="Chapter&nbsp;5.&nbsp;Environment DSL"><div class="titlepage"><div><div><h2 class="title"><a name="EnvironmentDsl"></a>Chapter&nbsp;5.&nbsp;Environment DSL</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="EnvironmentDsl.html#langDefEnv">Defining environments</a></span></dt></dl></div><div class="section" title="Defining environments"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="langDefEnv"></a>Defining environments</h2></div></div></div><p>The environment defines which servers on are available and where they are hosted. Environments have a unique name and a type
+			such as <code class="code">development</code>, <code class="code">test</code> or <code class="code">production</code>. To create a new environment create a 
+			new <code class="code">Environment DSL file</code>. A new file wizard is available for that. Then define an environment as i this example:
+			</p><div class="example"><a name="N1051C"></a><p class="title"><b>Example&nbsp;5.1.&nbsp;</b></p><div class="example-contents"><pre class="programlisting">
+	environment CoreDevelopment of type Development-Environment {
+		host as4000 {
+			full-qualified-name "as4000.company.com"
+		}
+		host as4200 {
+			full-qualified-name "as4000.company.com"
+		}
+		host as4350 {
+			full-qualified-name "as4350.company.com"
+		}
+		appserver as4350Tomcat {
+			identifier "tomcat.as4350.core.dev"
+			host as4350
+			baseUrl "http://as4350.company.com:8080"
+			connectors {
+				HTTP {
+					port 8080
+					secured-port 8443
+				}
+				SOAPHTTP {
+					port 8080
+					secured-port 8443
+					context-root "ws"
+				}
+			}
+		}
+		
+		esb DevESB {
+			identifier "esb.as4200.core.dev"
+			host localhost
+			adminUrl "https://as4200.company.com:9443/ibm/console"
+			server-type "websphere"
+			server-version "7.5"
+			connectors {
+				SOAP/HTTP {
+					port 9080
+					secured-port 9443
+					security-protocol SSLv3
+					implementation "IBM"
+				}
+			}
+		}
+		
+		registry reg {
+			identifier "simplereg.as4000.core"
+			host as4000 
+			
+			baseUrl "http://registry.company.com"
+			
+			server-type "Apache"
+			server-version "2.2"
+			kind HTTP
+		}
+	}</pre></div></div><br class="example-break"><p>In this example three hosts <code class="code">as4000</code> <code class="code">as4200</code> and <code class="code">as4350</code> have set up in the
+			development environment named <code class="code">CoreDevelopment</code>. On host <code class="code">as4000</code> an Apache has been installed
+			having the identifier <code class="code">simplereg.as4000.core</code> in the Definitive Software Library whithin the Configuration
+			Database. On host <code class="code">as4350</code> a tomcat has been installed, that offers HTTP on port 8080 and HTTPS on port 8443
+			as outlined in the <code class="code">connectors</code> section. The tomcat also offers a SOAP interface on the same ports, while all
+			SOAP service will be available under the context root <code class="code">ws</code>. Finally an ESB has been installed on host 4200, that 
+			also offer SOAP on port 9080. The connectors are implicitely referenced from the binding when having the same type as 
+			the <code class="code">BindingProtocol</code> defined for a service or module in the binding of them to this environment.</p></div></div></body></html>

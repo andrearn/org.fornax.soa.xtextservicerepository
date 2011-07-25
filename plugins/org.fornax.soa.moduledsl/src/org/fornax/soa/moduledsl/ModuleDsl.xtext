@@ -23,7 +23,7 @@ Module:
 	'}';
 	
 ServiceRef: 
-	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;comedia euskirchen
 	
 enum AssemblyType:
 	OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL

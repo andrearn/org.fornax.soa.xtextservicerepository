@@ -1,0 +1,25 @@
+<html><head><META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>Chapter&nbsp;6.&nbsp;Binding DSL</title><link href="book.css" rel="stylesheet" type="text/css"><meta content="DocBook XSL Stylesheets V1.75.2" name="generator"><style type="text/css">
+body { background-image: url('http://docbook.sourceforge.net/release/images/draft.png');
+       background-repeat: no-repeat;
+       background-position: top left;
+       /* The following properties make the watermark "fixed" on the page. */
+       /* I think that's just a bit too distracting for the reader... */
+       /* background-attachment: fixed; */
+       /* background-position: center center; */
+     }</style><link rel="home" href="index.html" title="Xtext Service Repository User Manual"><link rel="up" href="bk04.html" title="DSL Reference"><link rel="prev" href="EnvironmentDsl.html" title="Chapter&nbsp;5.&nbsp;Environment DSL"><link rel="next" href="SolutionDsl.html" title="Chapter&nbsp;7.&nbsp;Solution DSL"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" title="Chapter&nbsp;6.&nbsp;Binding DSL"><div class="titlepage"><div><div><h2 class="title"><a name="BindingDsl"></a>Chapter&nbsp;6.&nbsp;Binding DSL</h2></div></div></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="BindingDsl.html#langDefBind">Defining bindings</a></span></dt></dl></div><div class="section" title="Defining bindings"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="langDefBind"></a>Defining bindings</h2></div></div></div><p>The binding creates the link between services / modules and a target environment where they get deployed. Hence they are
+			bound to that environment. Consequently a binding would be defined for each environment where the services / modules are deployed. 
+			The following example shows how a binding can be defined for a module to a target environment.</p><div class="example"><a name="N1054B"></a><p class="title"><b>Example&nbsp;6.1.&nbsp;</b></p><div class="example-contents"><pre class="programlisting">
+	import CoreDevelopment
+	
+	bind-module com.company.shop.invoicing fixedVersion 1.4.3 as com.company.shop.invoicing.dev to environment CoreDevelopment {
+		provided on DevESB
+		default-protocols {
+			SOAP {
+				style document/literal-wrapped
+			}
+		}
+	}</pre></div></div><br class="example-break"><p>The module <code class="code">com.company.shop.invoicing</code> in version <code class="code">1.4.3</code> is  bound to the development environment named
+			<code class="code">CoreDevelopment</code>. The binding has the name <code class="code">com.company.shop.invoicing.dev</code> to be easily referrable from
+			code generators. The binding definition ist pretty simple by stating, that the module will bde deployed to the ESB <code class="code">DevESB</code>
+			in the target environment. All services provided by the module will be offered as SOAP services using the document / literal-wrapped style.
+			Note that the <code class="code">BindingProtocol</code> <code class="code">SOAP</code> links to the <code class="code">SOAPHTTP connector of the ESB</code></p><p>Bindings are declared in <code class="code">Binding DSL file</code>s. A wizard is available to create new <code class="code">Binding DSL</code> files.</p></div></div></body></html>
