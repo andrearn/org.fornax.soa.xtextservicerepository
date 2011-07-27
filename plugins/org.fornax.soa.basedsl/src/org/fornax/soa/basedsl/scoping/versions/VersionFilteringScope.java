@@ -1,5 +1,6 @@
 package org.fornax.soa.basedsl.scoping.versions;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -40,16 +41,16 @@ public class VersionFilteringScope extends FilteringScope {
 
 	@Override
 	public IEObjectDescription getSingleElement(EObject object) {
-		return getSingleElement(object);
+		Iterable<IEObjectDescription> elements = getElements(object);
+		List<IEObjectDescription> ieDesc = Lists.newArrayList (filter.getBestMatchByNames (elements, ignoreCase).values());
+		return getFirst (ieDesc);
 	}
 
 	@Override
 	public IEObjectDescription getSingleElement(QualifiedName name) {
 		Iterable<IEObjectDescription> elements = getElements (name);
 		List<IEObjectDescription> ieDesc = Lists.newArrayList (filter.getBestMatchByNames (elements, ignoreCase).values());
-		if (ieDesc.isEmpty())
-			return null;
-		return ieDesc.get (0);
+		return getFirst (ieDesc);
 	}
 
 }
