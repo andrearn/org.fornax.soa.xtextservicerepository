@@ -19,4 +19,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.basedsl.ui.contentassist,
  org.fornax.soa.basedsl.ui.contentassist.antlr,
  org.fornax.soa.basedsl.ui.labeling
-Bundle-Activator: org.fornax.soa.basedsl.ui.internal.SOABaseDslActivator
+Bundle-Activator: org.fornax.soa.basedsl.ui.internal.CustomSOABaseDslActivator

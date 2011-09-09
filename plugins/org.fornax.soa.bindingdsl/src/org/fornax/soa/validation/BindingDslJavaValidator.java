@@ -18,12 +18,6 @@ import org.fornax.soa.util.BindingDslHelper;
 
 public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 
-//	@Check
-//	public void checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.getName().charAt(0))) {
-//			warning("Name should start with a capital", MyDslPackage.GREETING__NAME);
-//		}
-//	}
 	@Check
 	public void checkOnlyPrivateServiceHasProvidedWSDL (SOAP soap) {
 		if (soap.getProvidedWsdlUrl() != null) {

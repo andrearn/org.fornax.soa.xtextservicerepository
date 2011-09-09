@@ -1,0 +1,7 @@
+import serviceDsl;
+import sOABaseDsl;
+
+process (LinkingPolicy pol) : 
+	pol.setMinDevState(LifecycleState::development) ->
+	pol.setMinTestState(LifecycleState::test) ->
+	pol.setMinProdState(LifecycleState::productive);

@@ -1,13 +1,33 @@
 package org.fornax.soa.validation;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.xtext.validation.ComposedChecks;
+import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
+import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
+
+import com.google.inject.Inject;
  
 
-public class SemanticsDslJavaValidator extends AbstractSemanticsDslJavaValidator {
+@ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class, org.eclipse.xtext.validation.NamesAreUniqueValidator.class})
+public class SemanticsDslJavaValidator extends AbstractPluggableDeclarativeValidator {
 
-//	@Check
-//	public void checkTypeNameStartsWithCapital(Type type) {
-//		if (!Character.isUpperCase(type.getName().charAt(0))) {
-//			warning("Name should start with a capital", MyDslPackage.TYPE__NAME);
-//		}
-//	}
+	@Inject
+	protected IPluggableValidatorProvider validatorProvider;
+
+	@Override
+	protected List<EPackage> getEPackages() {
+	    List<EPackage> result = new ArrayList<EPackage>();
+	    result.add(org.fornax.soa.semanticsDsl.SemanticsDslPackage.eINSTANCE);
+		return result;
+	}
+	
+	@Override
+	protected Set<AbstractPluggableDeclarativeValidator> getRegisteredValidators () {
+		 return validatorProvider.getValidators();
+	}
 
 }

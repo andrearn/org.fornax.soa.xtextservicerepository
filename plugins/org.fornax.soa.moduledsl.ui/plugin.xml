@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="ModuleDSLValidator" name="Pluggable Module DSL validator" schema="schema/ModuleDSLValidator.exsd"/>
 
    	<extension
 	      point = "org.eclipse.ui.newWizards">

@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="EnvironmentDSLValidator" name="Pluggable Environment DSL validator" schema="schema/EnvironmentDSLValidator.exsd"/>
 
 
 	<extension

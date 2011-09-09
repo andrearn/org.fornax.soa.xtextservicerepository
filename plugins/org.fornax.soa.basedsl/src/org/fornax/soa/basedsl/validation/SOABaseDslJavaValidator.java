@@ -1,13 +1,31 @@
 package org.fornax.soa.basedsl.validation;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
+import org.eclipse.emf.ecore.EPackage;
+
+import com.google.inject.Inject;
  
 
-public class SOABaseDslJavaValidator extends AbstractSOABaseDslJavaValidator {
+public class SOABaseDslJavaValidator extends AbstractPluggableDeclarativeValidator {
+	
+	@Inject
+	protected IPluggableValidatorProvider validatorProvider;
 
-//	@Check
-//	public void checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.getName().charAt(0))) {
-//			warning("Name should start with a capital", MyDslPackage.GREETING__NAME);
-//		}
-//	}
+
+	@Override
+	protected List<EPackage> getEPackages() {
+	    List<EPackage> result = new ArrayList<EPackage>();
+	    result.add(org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslPackage.eINSTANCE);
+		return result;
+	}
+
+
+	@Override
+	protected Set<AbstractPluggableDeclarativeValidator> getRegisteredValidators () {
+		 return validatorProvider.getValidators();
+	}
 
 }

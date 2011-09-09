@@ -19,8 +19,9 @@ Require-Bundle: org.fornax.soa.environmentdsl;bundle-version="1.4.1";visibility:
  org.eclipse.xtend,
  org.eclipse.xpand,
  org.eclipse.jdt.ui;bundle-version="3.5.1",
- org.eclipse.compare
+ org.eclipse.compare,
+ org.fornax.soa.basedsl;bundle-version="1.4.1"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.ui.contentassist.antlr
-Bundle-Activator: org.fornax.soa.ui.internal.EnvironmentDslActivator
+Bundle-Activator: org.fornax.soa.ui.internal.CustomEnvironmentDslActivator

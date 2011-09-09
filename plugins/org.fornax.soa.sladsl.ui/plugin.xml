@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="SLADSLValidator" name="Pluggable SLA DSL validator" schema="schema/SLADSLValidator.exsd"/>
 
 	<extension
          point="org.eclipse.team.core.fileTypes">

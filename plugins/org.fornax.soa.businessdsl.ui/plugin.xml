@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="BusinessDSLValidator" name="Pluggable Business DSL validator" schema="schema/BusinessDSLValidator.exsd"/>
 
 	<extension
          point="org.eclipse.team.core.fileTypes">

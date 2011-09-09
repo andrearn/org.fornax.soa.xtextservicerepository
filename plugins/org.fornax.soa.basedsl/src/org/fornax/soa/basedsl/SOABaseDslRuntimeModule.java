@@ -3,9 +3,17 @@
  */
 package org.fornax.soa.basedsl;
 
+import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
+import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 public class SOABaseDslRuntimeModule extends org.fornax.soa.basedsl.AbstractSOABaseDslRuntimeModule {
+
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
+	public Class<? extends IPluggableValidatorProvider> bindIPluggableValidatorProvider () {
+		return ReflectivePluggableValidatorProvider.class;
+	}
 
 }

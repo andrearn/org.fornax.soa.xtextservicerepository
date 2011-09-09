@@ -4,6 +4,8 @@
 package org.fornax.soa.profiledsl;
 
 import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
+import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
+import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -12,6 +14,11 @@ public class SOAProfileDslRuntimeModule extends org.fornax.soa.profiledsl.Abstra
 
 	public Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
 		return VersionedGlobalScopeProvider.class;
+	}
+
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
+	public Class<? extends IPluggableValidatorProvider> bindIPluggableValidatorProvider () {
+		return ReflectivePluggableValidatorProvider.class;
 	}
 
 }

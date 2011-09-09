@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="BindingDSLValidator" name="Binding DSL validator" schema="schema/BindingDSLValidator.exsd"/>
 
 	<extension
          point="org.eclipse.team.core.fileTypes">

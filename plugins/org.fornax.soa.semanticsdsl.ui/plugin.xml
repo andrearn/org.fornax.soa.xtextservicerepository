@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="SemanticsDSLValidator" name="Pluggable Semantics DSL validator" schema="schema/SemanticsDSLValidator.exsd"/>
 
    	<extension
 	      point = "org.eclipse.ui.newWizards">

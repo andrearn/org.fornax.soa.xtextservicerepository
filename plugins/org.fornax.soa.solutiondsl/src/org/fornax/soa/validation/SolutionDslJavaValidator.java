@@ -11,13 +11,6 @@ import org.fornax.soa.solutionDsl.Solution;
 
 public class SolutionDslJavaValidator extends AbstractSolutionDslJavaValidator {
 
-//	@Check
-//	public void checkTypeNameStartsWithCapital(Type type) {
-//		if (!Character.isUpperCase(type.getName().charAt(0))) {
-//			warning("Name should start with a capital", MyDslPackage.TYPE__NAME);
-//		}
-//	}
-	
 	@Check
 	public void checkDontCallPrivateServices (ServiceRef svc) {
 		if (svc.eContainer()  instanceof Module || svc.eContainer() instanceof Solution) {

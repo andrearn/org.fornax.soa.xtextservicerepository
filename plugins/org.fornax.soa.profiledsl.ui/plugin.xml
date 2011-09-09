@@ -2,6 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
+   <extension-point id="SOAProfileDSLValidator" name="Pluggable SOA Profile DSL validator" schema="schema/SOAProfileDSLValidator.exsd"/>
 
     <extension
             point="org.eclipse.ui.editors">

@@ -29,4 +29,4 @@ Require-Bundle: org.fornax.soa.bindingdsl;bundle-version="1.4.1";visibility:=ree
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.ui.contentassist.antlr
-Bundle-Activator: org.fornax.soa.ui.internal.BindingDslActivator
+Bundle-Activator: org.fornax.soa.ui.internal.CustomBindingDslActivator
