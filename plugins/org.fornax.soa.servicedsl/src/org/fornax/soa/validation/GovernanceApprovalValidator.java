@@ -1,11 +1,16 @@
 package org.fornax.soa.validation;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.validation.Check;
 import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
+import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType;
 import org.fornax.soa.query.VersionedObjectQueryHelper;
 import org.fornax.soa.serviceDsl.ApprovalDecision;
@@ -17,8 +22,15 @@ import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.util.ReferencedStateChecker;
 
-public class GovernanceApprovalValidator extends AbstractServiceDslJavaValidator {
+public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeValidator {
 
+
+	@Override
+	protected List<EPackage> getEPackages() {
+	    List<EPackage> result = new ArrayList<EPackage>();
+	    result.add(org.fornax.soa.serviceDsl.ServiceDslPackage.eINSTANCE);
+		return result;
+	}
 	
 	// Governance approvals ...
 	
@@ -105,6 +117,36 @@ public class GovernanceApprovalValidator extends AbstractServiceDslJavaValidator
 			warning("Please provide the date of the governance decision!",
 					ServiceDslPackage.Literals.SERVICE__GOVERNANCE_APPROVAL);
 	}
+	@Check
+	public void checkApprovedServiceHasDate(BusinessObject bo) {
+		GovernanceApproval g = bo.getGovernanceApproval();
+		if (bo.eContainer() instanceof DomainNamespace
+				&& g.getDecision() != ApprovalDecision.NO
+				&& (g.getApprovalDate() == null || "".equals(g
+						.getApprovalDate())))
+			warning("Please provide the date of the governance decision!",
+					ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL);
+	}
+	@Check
+	public void checkApprovedServiceHasDate(Enumeration e) {
+		GovernanceApproval g = e.getGovernanceApproval();
+		if (e.eContainer() instanceof DomainNamespace
+				&& g.getDecision() != ApprovalDecision.NO
+				&& (g.getApprovalDate() == null || "".equals(g
+						.getApprovalDate())))
+			warning("Please provide the date of the governance decision!",
+					ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL);
+	}
+	@Check
+	public void checkApprovedServiceHasDate(org.fornax.soa.serviceDsl.Exception ex) {
+		GovernanceApproval g = ex.getGovernanceApproval();
+		if (ex.eContainer() instanceof DomainNamespace
+				&& g.getDecision() != ApprovalDecision.NO
+				&& (g.getApprovalDate() == null || "".equals(g
+						.getApprovalDate())))
+			warning("Please provide the date of the governance decision!",
+					ServiceDslPackage.Literals.EXCEPTION__GOVERNANCE_APPROVAL);
+	}
 
 	@Check
 	public void checkApprovedServiceHasBy(Service s) {
@@ -114,6 +156,39 @@ public class GovernanceApprovalValidator extends AbstractServiceDslJavaValidator
 				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
 			warning("Please state who made the governance decision!",
 					ServiceDslPackage.Literals.SERVICE__GOVERNANCE_APPROVAL);
+		}
+	}
+	
+	@Check
+	public void checkApprovedServiceHasBy(BusinessObject bo) {
+		GovernanceApproval g = bo.getGovernanceApproval();
+		if (g.eContainer().eContainer() instanceof DomainNamespace
+				&& g.getDecision() != ApprovalDecision.NO
+				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
+			warning("Please state who made the governance decision!",
+					ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL);
+		}
+	}
+	
+	@Check
+	public void checkApprovedServiceHasBy(org.fornax.soa.serviceDsl.Exception ex) {
+		GovernanceApproval g = ex.getGovernanceApproval();
+		if (g.eContainer().eContainer() instanceof DomainNamespace
+				&& g.getDecision() != ApprovalDecision.NO
+				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
+			warning("Please state who made the governance decision!",
+					ServiceDslPackage.Literals.EXCEPTION__GOVERNANCE_APPROVAL);
+		}
+	}
+	
+	@Check
+	public void checkApprovedServiceHasBy(Enumeration e) {
+		GovernanceApproval g = e.getGovernanceApproval();
+		if (g.eContainer().eContainer() instanceof DomainNamespace
+				&& g.getDecision() != ApprovalDecision.NO
+				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
+			warning("Please state who made the governance decision!",
+					ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL);
 		}
 	}
 

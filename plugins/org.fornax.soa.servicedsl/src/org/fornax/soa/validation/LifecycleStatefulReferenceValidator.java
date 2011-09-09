@@ -13,6 +13,7 @@ import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.basedsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
+import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.query.VersionedObjectQueryHelper;
 import org.fornax.soa.search.ReferenceSearch;
 import org.fornax.soa.serviceDsl.BusinessObject;
@@ -31,7 +32,15 @@ import org.fornax.soa.util.ReferencedStateChecker;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 
-public class LifecycleStatefulReferenceValidator extends AbstractServiceDslJavaValidator {
+public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclarativeValidator {
+
+
+	@Override
+	protected List<EPackage> getEPackages() {
+	    List<EPackage> result = new ArrayList<EPackage>();
+	    result.add(org.fornax.soa.serviceDsl.ServiceDslPackage.eINSTANCE);
+		return result;
+	}
 
 	@Check
 	public void checkDoesNotRefRetiredService(ServiceRef svcRef) {

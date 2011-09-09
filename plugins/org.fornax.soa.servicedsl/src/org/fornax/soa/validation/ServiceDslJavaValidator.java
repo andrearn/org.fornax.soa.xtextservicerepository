@@ -1,17 +1,21 @@
 package org.fornax.soa.validation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.AbstractDeclarativeValidator;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
-import org.eclipse.xtext.validation.ComposedChecks;
 import org.eclipse.xtext.validation.EValidatorRegistrar;
 import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
+import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
+import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
+import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.query.BusinessObjectQueryHelper;
 import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
@@ -32,25 +36,28 @@ import org.fornax.soa.util.ReferencedStateChecker;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.google.common.collect.Lists;
 
-@ComposedChecks (validators = {
+@PluggableChecks (validators = {
 		org.fornax.soa.validation.GovernanceApprovalValidator.class,
 		org.fornax.soa.validation.LifecycleStatefulReferenceValidator.class
 		})
-public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
+public class ServiceDslJavaValidator extends AbstractPluggableDeclarativeValidator {
 
 	@Inject
 	private Injector injector;
+	
+	@Inject
+	private IPluggableValidatorProvider validatorProvider;
 
-	// @Check
-	// public void checkTypeNameStartsWithCapital(Type type) {
-	// if (!Character.isUpperCase(type.getName().charAt(0))) {
-	// warning("Name should start with a capital", MyDslPackage.TYPE__NAME);
-	// }
-	// }
+	@Override
+	protected List<EPackage> getEPackages() {
+	    List<EPackage> result = new ArrayList<EPackage>();
+	    result.add(org.fornax.soa.serviceDsl.ServiceDslPackage.eINSTANCE);
+		return result;
+	}
 
 
 	public void registerExtensions (EValidatorRegistrar registrar, AbstractDeclarativeValidator validator) {
@@ -60,17 +67,23 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		}
 	}
 	
+
+	@Override
+	protected Set<AbstractPluggableDeclarativeValidator> getRegisteredValidators () {
+		 return validatorProvider.getValidators();
+	}
+	
 	// Naming
-	@Check
-	public void checkServiceNameStartsWithCapital(Service s) {
+//	@Check
+	public void checkServiceNameStartsWithCapital (Service s) {
 		if (!Character.isUpperCase(s.getName().charAt(0))) {
 			warning("Name should start with a capital",
 					ServiceDslPackage.Literals.SERVICE__NAME);
 		}
 	}
 
-	@Check
-	public void checkEntityServiceNameEndsWithBES(Service s) {
+//	@Check
+	public void checkEntityServiceNameEndsWithBES (Service s) {
 		if (s.getCategory() == ServiceCategory.ENTITY
 				&& !s.getName().endsWith("BES")) {
 			warning("The name of an entity service should end with BES",
@@ -79,7 +92,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkActivityServiceNameEndsWithBAS(Service s) {
+	public void checkActivityServiceNameEndsWithBAS (Service s) {
 		if (s.getCategory() == ServiceCategory.ACTIVITY
 				&& !s.getName().endsWith("BAS")) {
 			warning("The name of an activity service should end with BAS",
@@ -88,7 +101,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkProcessServiceNameEndsWithBPS(Service s) {
+	public void checkProcessServiceNameEndsWithBPS (Service s) {
 		if (s.getCategory() == ServiceCategory.PROCESS
 				&& !s.getName().endsWith("BPS")) {
 			warning("The name of a process service should end with BPS",
@@ -97,7 +110,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkUtilityServiceNameEndsWithUS(Service s) {
+	public void checkUtilityServiceNameEndsWithUS (Service s) {
 		if (s.getCategory() == ServiceCategory.UTILITY
 				&& !s.getName().endsWith("US")
 				&& !(s.eContainer() instanceof InternalNamespace || s
@@ -108,7 +121,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkRuleServiceNameEndsWithBRS(Service s) {
+	public void checkRuleServiceNameEndsWithBRS (Service s) {
 		if (s.getCategory() == ServiceCategory.RULE
 				&& !s.getName().endsWith("BRS")) {
 			warning("The name of a rule service should end with BRS",
@@ -118,7 +131,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 
 	// Call semantics
 	@Check(CheckType.NORMAL)
-	public void checkEntityServicesDontCallProcessServices(ServiceRef svcRef) {
+	public void checkEntityServicesDontCallProcessServices (ServiceRef svcRef) {
 		EObject o = svcRef.eContainer().eContainer();
 		if (o instanceof Service) {
 			Service s = (Service) svcRef.eContainer().eContainer();
@@ -212,7 +225,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check(CheckType.NORMAL)
-	public void checkEntityServicesDontCallActivityServices(ServiceRef svcRef) {
+	public void checkEntityServicesDontCallActivityServices (ServiceRef svcRef) {
 		EObject o = svcRef.eContainer().eContainer();
 		if (o instanceof Service) {
 			Service s = (Service) o;
@@ -226,7 +239,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check(CheckType.NORMAL)
-	public void checkEntityServicesDontCallRuleServices(ServiceRef svcRef) {
+	public void checkEntityServicesDontCallRuleServices (ServiceRef svcRef) {
 		EObject o = svcRef.eContainer().eContainer();
 		if (o instanceof Service) {
 			Service s = (Service) svcRef.eContainer().eContainer();
@@ -240,7 +253,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkProvidedContractOnPrivateServiceOnly(Service s) {
+	public void checkProvidedContractOnPrivateServiceOnly (Service s) {
 		if (s.getProvidedContractUrl() != null
 				&& s.getVisibility() != VISIBILITY.PRIVATE)
 			error("Only private services may provide a predefined contract such as a WSDL",
@@ -248,7 +261,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkProvidedDefOnInternalBOOnly(BusinessObject o) {
+	public void checkProvidedDefOnInternalBOOnly (BusinessObject o) {
 		if (o.getProvidedDefinitionUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
 			error("Only internal businessObjects may provide a predefined definition such as an XSD",
@@ -256,7 +269,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkProvidedDefOnInternalEnumOnly(Enumeration o) {
+	public void checkProvidedDefOnInternalEnumOnly (Enumeration o) {
 		if (o.getProvidedDefinitionUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
 			error("Only internal enums may provide a predefined definition such as an XSD",
@@ -264,7 +277,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkProvidedDefOnInternalEnumOnly(
+	public void checkProvidedDefOnInternalEnumOnly (
 			org.fornax.soa.serviceDsl.Exception o) {
 		if (o.getProvidedDefinitionUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
@@ -278,14 +291,14 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	
 	// Consistency
 	@Check
-	public void checkBusinessKeyIsMandatory(Attribute p) {
+	public void checkBusinessKeyIsMandatory (Attribute p) {
 		if (p.isIsBusinessKey() && p.isOptional())
 			error("A business-key attribute may not be optional.",
 					ServiceDslPackage.Literals.PROPERTY__IS_BUSINESS_KEY);
 	}
 
 	@Check
-	public void checkBusinessKeyIsMandatory(Reference p) {
+	public void checkBusinessKeyIsMandatory (Reference p) {
 		if (p.isIsBusinessKey() && p.isOptional())
 			error("A business-key weak-ref attribute may not be optional.",
 					ServiceDslPackage.Literals.PROPERTY__IS_BUSINESS_KEY);

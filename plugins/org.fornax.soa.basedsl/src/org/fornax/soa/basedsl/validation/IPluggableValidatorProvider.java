@@ -1,12 +1,15 @@
 package org.fornax.soa.basedsl.validation;
 
 import java.util.Collection;
-
-import org.eclipse.xtext.validation.AbstractDeclarativeValidator;
+import java.util.Set;
 
 
 public interface IPluggableValidatorProvider {
 	
-	public Collection<Class<AbstractDeclarativeValidator>> getValidators ();
+	public void initFromClassNames (Collection<String> validatorClassNames);
+
+	public void setValidators (Collection<AbstractPluggableDeclarativeValidator> validators);
+	
+	public Set<AbstractPluggableDeclarativeValidator> getValidators ();
 
 }

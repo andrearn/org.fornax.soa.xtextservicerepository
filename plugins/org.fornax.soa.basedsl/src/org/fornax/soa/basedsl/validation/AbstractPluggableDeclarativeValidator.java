@@ -139,8 +139,14 @@ public class AbstractPluggableDeclarativeValidator extends AbstractInjectableVal
 		this.messageAcceptor = this;
 	}
 	
+	/**
+	 * Override to register other {@link AbstractPluggableDeclarativeValidator}s
+	 * @return
+	 */
 	protected Set<AbstractPluggableDeclarativeValidator> getRegisteredValidators () {
-		return new HashSet<AbstractPluggableDeclarativeValidator>();
+		Set<AbstractPluggableDeclarativeValidator> regValidators = new HashSet<AbstractPluggableDeclarativeValidator>();
+		regValidators.add(this);
+		return regValidators;
 	}
 
 	protected List<MethodWrapper> collectMethods(Class<? extends AbstractPluggableDeclarativeValidator> clazz) {
@@ -148,7 +154,7 @@ public class AbstractPluggableDeclarativeValidator extends AbstractInjectableVal
 		Set<Class<?>> visitedClasses = new HashSet<Class<?>>(4);
 		collectMethods(this, clazz, visitedClasses, checkMethods);
 		for (AbstractPluggableDeclarativeValidator validator : getRegisteredValidators()) {
-			collectMethods(this, validator.getClass(), visitedClasses, checkMethods);
+			collectMethods (validator, validator.getClass(), visitedClasses, checkMethods);
 		}
 		return checkMethods;
 	}
@@ -164,7 +170,7 @@ public class AbstractPluggableDeclarativeValidator extends AbstractInjectableVal
 			PluggableChecks checks = k.getAnnotation(PluggableChecks.class);
 			if (checks != null) {
 				for (Class<? extends AbstractPluggableDeclarativeValidator> external : checks.validators())
-					collectMethods(null, external, visitedClasses, result);
+					collectMethods (null, external, visitedClasses, result);
 			}
 			k = getPluggableSuperClass(k);
 		}

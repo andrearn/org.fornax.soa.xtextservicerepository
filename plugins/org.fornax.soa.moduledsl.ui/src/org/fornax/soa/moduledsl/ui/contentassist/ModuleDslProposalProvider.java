@@ -3,10 +3,29 @@
 */
 package org.fornax.soa.moduledsl.ui.contentassist;
 
-import org.fornax.soa.moduledsl.ui.contentassist.AbstractModuleDslProposalProvider;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.scoping.IScopeProvider;
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+
+import com.google.inject.Inject;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
 public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider {
 
+	@Inject
+	private IScopeProvider scopeProvider;
+
+	public void completeServiceRef_VersionRef(EObject model,  
+			  Assignment assignment,  
+			  ContentAssistContext context,  
+			  ICompletionProposalAcceptor acceptor) {
+	}
+	
+	private void getServiceCanditates () {
+		
+	}
 }
