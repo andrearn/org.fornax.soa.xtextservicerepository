@@ -213,6 +213,31 @@
 	«ENDFOREACH»
 «ENDDEFINE»
 
+«DEFINE Binding (SOAProfile profile, boolean noDeps, boolean includeSubNamespaces) FOR ModuleBinding»
+	«FOREACH module.module.providedServices AS provSvc»
+		«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
+			«IF svc != null»
+				«EXPAND BindingByService (svc, this.getMostSpecificBinding (svc), profile) FOR this»
+				«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
+				«IF noDeps-»
+					«FOREACH {svc.getSubdomain()} AS ns»
+						«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl(), nodeps, includeSubNamespaces) FOR ns»
+					«ENDFOREACH»
+				«ELSE»
+					«FOREACH {svc.getSubdomain()}.union(svc.getSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
+						«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl(), nodeps, includeSubNamespaces) FOR ns»
+					«ENDFOREACH»
+					«IF forceRelativePaths()»
+						«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD FOR profile»
+					«ELSE»
+						«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD (this.getRegistryBaseUrl()) FOR profile»
+					«ENDIF»
+				«ENDIF»
+			«ENDIF»
+		«ENDLET»
+	«ENDFOREACH»
+«ENDDEFINE»
+
 «DEFINE BindingByService(Service s, Binding specificBinding, SOAProfile profile) FOR ModuleBinding»
 	«FOREACH specificBinding.protocol AS prot-»
 		«IF SOAP.isInstance(prot)-»
