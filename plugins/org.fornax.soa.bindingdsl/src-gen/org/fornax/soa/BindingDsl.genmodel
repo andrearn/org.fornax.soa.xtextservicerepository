@@ -117,7 +117,9 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceRef/service"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//ServiceRef/versionRef"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//BindingProtocol"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//BindingProtocol">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//BindingProtocol/qualifier"/>
+    </genClasses>
     <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//OperationBinding">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//OperationBinding/operation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//OperationBinding/protocol"/>
@@ -193,6 +195,7 @@
     </genClasses>
     <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//TopicOrQueue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//TopicOrQueue/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//TopicOrQueue/qualifier"/>
     </genClasses>
     <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Topic"/>
     <genClasses ecoreClass="platform:/resource/org.fornax.soa.bindingdsl/src-gen/org/fornax/soa/BindingDsl.ecore#//Queue"/>

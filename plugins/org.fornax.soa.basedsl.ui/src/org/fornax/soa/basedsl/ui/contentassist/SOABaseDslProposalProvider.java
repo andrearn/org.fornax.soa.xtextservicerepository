@@ -3,10 +3,26 @@
 */
 package org.fornax.soa.basedsl.ui.contentassist;
 
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.fornax.soa.basedsl.ui.contentassist.AbstractSOABaseDslProposalProvider;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
 public class SOABaseDslProposalProvider extends AbstractSOABaseDslProposalProvider {
+
+	public void complete_QualifiedName(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		super.complete_QualifiedName(model, ruleCall, context, acceptor);
+		String proposal = "qualified.name";
+		acceptor.accept(createCompletionProposal(proposal , context));
+	}
+
+	public void complete_VersionId(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		super.complete_VersionId(model, ruleCall, context, acceptor);
+		String proposal = "0.0.0";
+		acceptor.accept(createCompletionProposal(proposal , context));
+	}
 
 }

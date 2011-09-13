@@ -9,25 +9,40 @@ ModuleModel:
 	modules+=Module*;
 	
 Module:
-	'module' name = QualifiedName '{'
+	(external?='external')? 'module' name = QualifiedName '{'
 		version = Version
 		'lifecycle-state' state = LifecycleState
 		('owner' owner = STRING)?
 		('assembly-type' assemblyType = AssemblyType)?
 		('assembly-type-details' assemblyTypeDetails = STRING)?
-		'provides' '{'
-			(providedServices += ServiceRef)*
-		'}'		
+		
+		('provides' '{'
+			(providedServices += ServiceRef)+
+		'}')?
+		('uses' '{'
+			(usedServices += ImportServiceRef)+
+		'}')?
+			
 		('source-location' source=STRING )? //Where can I get the sources?
 		('revision-tag' revisionTag=STRING )? //Tag in VCS
 	'}';
 	
 ServiceRef: 
-	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;comedia euskirchen
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
+	
+ImportServiceRef:
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 'from' module=ModuleRef (qualifier=Qualifier)?
+;
+
+ModuleRef:
+	module=[Module|QualifiedName] version=VersionRef
+;
 	
 enum AssemblyType:
 	OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL
 ;
+
+
 /*
 module mod.bla  {
 	version 1.1

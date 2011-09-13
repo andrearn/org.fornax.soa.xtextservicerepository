@@ -657,6 +657,9 @@
             <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SOAP"/>
           </type>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
@@ -721,6 +724,9 @@
             <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SAP"/>
           </type>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
         </elements>
@@ -766,6 +772,9 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="EJB"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
@@ -786,6 +795,9 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="HTTP"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
@@ -814,6 +826,9 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="REST"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
@@ -893,6 +908,9 @@
             <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//JMS"/>
           </type>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
@@ -933,6 +951,9 @@
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Queue">
@@ -943,6 +964,9 @@
         <elements xsi:type="xtext:Keyword" value="queue"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
         </elements>
       </alternatives>
     </rules>
@@ -956,6 +980,9 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
@@ -986,6 +1013,9 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="FILE"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" feature="url" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
@@ -1006,6 +1036,9 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="FTP"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" feature="url" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
@@ -1399,6 +1432,17 @@
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:Keyword" value="."/>
           <elements xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Qualifier">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="qualifier"/>
+        <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
       </alternatives>
     </rules>

@@ -12,3 +12,7 @@ extension org::fornax::soa::moduledsl::query::namespaceQueries;
 
 Service getLatestMatchingServiceMod (moduleDsl::ServiceRef s, sOABaseDsl::LifecycleState minState) :
 	s.service.getSubdomain().services.select(e|e.name == s.service.name && e.version.versionMatches (s.versionRef) && e.state.matchesMinStateLevel(minState)).sortBy(e|e.version.version).last();
+
+Service getLatestMatchingServiceMod (moduleDsl::ImportServiceRef s, sOABaseDsl::LifecycleState minState) :
+	s.service.getSubdomain().services.select(e|e.name == s.service.name && e.version.versionMatches (s.versionRef) && e.state.matchesMinStateLevel(minState)).sortBy(e|e.version.version).last();
+	

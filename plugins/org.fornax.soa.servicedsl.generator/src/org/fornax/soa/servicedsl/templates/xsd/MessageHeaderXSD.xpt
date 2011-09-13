@@ -56,6 +56,7 @@
 <xsd:schema xmlns:tns="«toNamespace()»"
 	«EXPAND NamespaceDeclaration FOREACH allImportedVersionedNS ().reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 	elementFormDefault="qualified"
 	attributeFormDefault="unqualified"
 	targetNamespace="«toNamespace()»"
@@ -135,7 +136,7 @@
     	<xsd:sequence>
     		«EXPAND Property (currNs, profile) FOREACH properties.typeSelect(sOAProfileDsl::Property)-»
     		«IF header.extendableProperties-»
-			<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
+			<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
 				processContents="skip"/>
     		«ENDIF»
     	</xsd:sequence>

@@ -60,6 +60,7 @@
 	xmlns="«toNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 	elementFormDefault="qualified"
 	attributeFormDefault="unqualified"
 	targetNamespace="«toNamespace()»"
@@ -75,6 +76,7 @@
 </xsd:schema>
 
 «ENDFILE»
+«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())»
 «ENDDEFINE»
 
 

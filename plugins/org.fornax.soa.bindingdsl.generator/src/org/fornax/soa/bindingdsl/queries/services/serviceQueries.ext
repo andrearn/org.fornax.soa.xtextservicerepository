@@ -12,6 +12,9 @@ extension org::fornax::soa::servicedsl::query::services;
 
 Service latestServiceInEnvironment (moduleDsl::ServiceRef svcRef, Environment env) :
 	svcRef.getLatestMatchingServiceMod (svcRef.service.getSubdomain().minStateByEnvironment(env));
+
+Service latestServiceInEnvironment (moduleDsl::ImportServiceRef svcRef, Environment env) :
+	svcRef.getLatestMatchingServiceMod (svcRef.service.getSubdomain().minStateByEnvironment(env));
 	
 LifecycleState minStateByEnvironment (SubNamespace ns, Environment env) : 
 	switch (env.type) {

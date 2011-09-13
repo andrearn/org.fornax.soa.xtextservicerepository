@@ -3,6 +3,8 @@
  */
 package org.fornax.soa.basedsl;
 
+import org.fornax.soa.basedsl.search.IPredicateSearch;
+import org.fornax.soa.basedsl.search.PredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
 
@@ -14,6 +16,10 @@ public class SOABaseDslRuntimeModule extends org.fornax.soa.basedsl.AbstractSOAB
 	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
 	public Class<? extends IPluggableValidatorProvider> bindIPluggableValidatorProvider () {
 		return ReflectivePluggableValidatorProvider.class;
+	}
+	
+	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
+		return PredicateSearch.class;
 	}
 
 }

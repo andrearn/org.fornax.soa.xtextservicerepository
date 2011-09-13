@@ -13,6 +13,7 @@ import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.scoping.IGlobalScopeProvider;
 import org.eclipse.xtext.util.IResourceScopeCache;
+import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
@@ -23,6 +24,7 @@ import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvid
 import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
 import org.fornax.soa.basedsl.scoping.versions.EContainerVersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.FixedVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMajorVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
@@ -179,6 +181,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				return new LatestMinInclVersionFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion());
 			if (v instanceof LowerBoundRangeVersionRef)
 				return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+			if (v instanceof FixedVersionRef)
+				return new FixedVersionFilter<IEObjectDescription>(verResolver, ((FixedVersionRef) v).getFixedVersion());
 		}
 		return filter;
 	}
@@ -200,6 +204,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				return new LatestMinInclVersionFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion());
 			if (v instanceof LowerBoundRangeVersionRef)
 				return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+			if (v instanceof FixedVersionRef)
+				return new FixedVersionFilter<IEObjectDescription>(verResolver, ((FixedVersionRef) v).getFixedVersion());
 		}
 		return filter;
 	}

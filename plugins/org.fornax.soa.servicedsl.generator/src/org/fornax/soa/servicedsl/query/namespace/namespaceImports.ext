@@ -56,6 +56,10 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
  */
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s, LifecycleState minState) : 
 	((SubNamespace)s.subdomain).allImportedVersionedNS(s.version, minState);
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s, LifecycleState minState, Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited) : 
+	! visited.contains(s) ? 
+		s.allImportedVersionedNS(minState, visited.add(s).toSet())
+	: visited;
 
 /**
  *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
@@ -64,6 +68,10 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
  */
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s) : 
 	((sOAProfileDsl::TechnicalNamespace)s.subdomain).allImportedVersionedNS(s.version);
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s, Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited) :
+	! visited.contains(s) ? 
+		s.allImportedVersionedNS(visited.add(s).toSet())
+	: visited;
 
 /**
  *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces

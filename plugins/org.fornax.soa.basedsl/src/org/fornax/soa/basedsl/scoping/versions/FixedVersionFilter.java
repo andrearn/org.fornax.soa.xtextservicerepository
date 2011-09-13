@@ -21,7 +21,7 @@ public class FixedVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 	public boolean matches(IEObjectDescription description) {
 		final String v = resolver.getVersion(description);
 		if (v != null)
-			return VersionComparator.compare(v, version) >= 0;
+			return VersionComparator.compare(v, version) == 0;
 		else
 			return true;
 	}
@@ -34,9 +34,14 @@ public class FixedVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 				if (matches(ieObjDesc)) {
 					QualifiedName objName = ieObjDesc.getName();
 					IEObjectDescription bestMatch = getCurrentBestMatch (matches, objName);
-					int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
-					if (c == 0)
+					if (bestMatch == null) {
 						matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+					}
+					else {
+						int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
+						if (c == 0)
+							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+					}
 				}
 			}
 		}

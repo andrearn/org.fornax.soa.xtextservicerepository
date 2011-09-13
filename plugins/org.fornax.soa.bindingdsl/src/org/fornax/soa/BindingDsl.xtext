@@ -126,6 +126,7 @@ enum ImplementationType: BPMN | BPMN2 | BPEL | WSHT='WS-HT' | RuleML | Drools | 
 SOAP: 
 	'SOAP' '{'
 		{SOAP}
+		(qualifier=Qualifier)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		('style' style=SOAPStyle )?
@@ -139,6 +140,7 @@ enum SOAPStyle: doclitwrap='document/literal-wrapped' | rpclit = 'rpc/literal' |
 SAP: 
 	'SAP' '{'
 		{SAP}
+		(qualifier=Qualifier)?
 		(provider=Provider)?
 		('transport' transport=SAPTransport )?
 		('client' client=[environmentDsl::SapClient|QualifiedName] )?
@@ -148,13 +150,15 @@ enum SAPTransport: IDOC | RFC;
  
 EJB: 
 	'EJB' '{'
+		(qualifier=Qualifier)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'jndi-name' jndiName=STRING 
 	'}';
 	
 HTTP: 
-	'HTTP' '{' 
+	'HTTP' '{'
+		(qualifier=Qualifier)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'url' url=STRING 
@@ -163,7 +167,8 @@ HTTP:
 	'}';
 
 REST: 
-	'REST' '{' 
+	'REST' '{'
+		(qualifier=Qualifier)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'url' url=STRING  
@@ -171,6 +176,7 @@ REST:
 		'verb' verb=Verb 
 		'format' format=RESTFormat 
 	'}';
+
 	
 enum RESTFormat: JSON | XML | OTHER;
 enum Verb: create | retrieve | update | delete;
@@ -178,6 +184,7 @@ enum Verb: create | retrieve | update | delete;
 JMS:
 	'JMS' '{'
 		{JMS}
+		(qualifier=Qualifier)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		(channel=TopicOrQueue)?
@@ -187,21 +194,22 @@ JMS:
 	
 TopicOrQueue: Topic | Queue;
 
-Topic: 'topic' name=STRING ;
+Topic: 'topic' name=STRING (qualifier=Qualifier)?;
 
-Queue: 'queue' name=STRING ;
+Queue: 'queue' name=STRING (qualifier=Qualifier)?;
 	
 SCA: 
 	'SCA' name=STRING '{'
+		(qualifier=Qualifier)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		('promote' promote=STRING )?
 		('reference' reference=STRING (isMultipleRef?='[]')? )?
 	'}' ;
 
-FILE: 'FILE' url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?;
+FILE: 'FILE' (qualifier=Qualifier)? url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?;
 
-FTP: 'FTP' url=STRING 'access' accessType=ReadWrite ('interval' pollIntervall=STRING)?;
+FTP: 'FTP' (qualifier=Qualifier)? url=STRING 'access' accessType=ReadWrite ('interval' pollIntervall=STRING)?;
 
 enum ReadWrite : read|write;
 

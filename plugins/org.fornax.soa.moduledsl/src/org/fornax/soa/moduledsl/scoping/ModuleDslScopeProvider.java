@@ -3,7 +3,15 @@
  */
 package org.fornax.soa.moduledsl.scoping;
 
-import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
+import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvider;
+import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
+import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
+import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
+import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
 
 /**
  * This class contains custom scoping description.
@@ -12,6 +20,20 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
  * on how and when to use it 
  *
  */
-public class ModuleDslScopeProvider extends AbstractDeclarativeScopeProvider {
+public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
+
+	@Override
+	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
+			EObject context, EReference reference) {
+		if (reference == ModuleDslPackage.Literals.SERVICE_REF__SERVICE && context instanceof ServiceRef) {
+			final VersionRef v = ((ServiceRef) context).getVersionRef();
+			return createVersionFilter(v, context);
+		}
+		if (reference == ModuleDslPackage.Literals.IMPORT_SERVICE_REF__SERVICE && context instanceof ImportServiceRef) {
+			final VersionRef v = ((ImportServiceRef) context).getVersionRef();
+			return createVersionFilter(v, context);
+		}
+		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+	}
 
 }

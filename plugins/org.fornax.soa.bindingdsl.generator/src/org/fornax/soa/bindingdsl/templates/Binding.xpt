@@ -4,6 +4,7 @@
 «IMPORT sOAProfileDsl»
 
 «EXTENSION org::fornax::soa::servicedsl::domain::splitting»
+«EXTENSION org::fornax::soa::bindingdsl::queries::modules::moduleQueries»
 «EXTENSION org::fornax::soa::bindingdsl::queries::services::serviceQueries»
 «EXTENSION org::fornax::soa::bindingdsl::templates::bindings»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
@@ -138,6 +139,48 @@
 						«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD (modBind.getRegistryBaseUrl()) FOR profile»
 					«ENDIF»
 				«ENDIF»
+			«ENDLET»
+		«ENDFOREACH»
+	«ENDFOREACH»
+«ENDDEFINE»
+«DEFINE BindModulesToEnvironment (SOAProfile profile, String targetEnvironmentName) FOR List[ModuleBinding]»
+	«FOREACH this.select(e|e.environment.name==targetEnvironmentName) AS modBind»
+		«FOREACH modBind.module.module.providedServices AS provSvc»
+			«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
+				«IF svc != null»
+					«EXPAND BindingByService (svc, modBind.getMostSpecificBinding (svc), profile) FOR modBind»
+					«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
+					«FOREACH {svc.getSubdomain()}.union(svc.getSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
+						«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR ns»
+					«ENDFOREACH»
+					«IF forceRelativePaths()»
+						«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD FOR profile»
+					«ELSE»
+						«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD (modBind.getRegistryBaseUrl()) FOR profile»
+					«ENDIF»
+				«ENDIF»
+			«ENDLET»
+		«ENDFOREACH»
+	«ENDFOREACH»
+«ENDDEFINE»
+«DEFINE BindImportModulesToEnvironment (SOAProfile profile, String targetEnvironmentName) FOR List[ModuleBinding]»
+	«FOREACH this.select(e|e.environment.name==targetEnvironmentName) AS modBind»
+		«FOREACH modBind.module.module.usedServices AS usedSvc»
+			«LET usedSvc.latestServiceInEnvironment (environment) AS svc-»
+				«LET this.getImportModuleBinding (usedSvc.module.module, targetEnvironmentName) AS impBind-»
+					«IF svc != null»
+						«EXPAND BindingByService (svc, impBind.getMostSpecificBinding (svc), profile) FOR impBind»
+						«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
+						«FOREACH {svc.getSubdomain()}.union(svc.getSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
+							«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR ns»
+						«ENDFOREACH»
+						«IF forceRelativePaths()»
+							«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD FOR profile»
+						«ELSE»
+							«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD (impBind.getRegistryBaseUrl()) FOR profile»
+						«ENDIF»
+					«ENDIF»
+				«ENDLET»
 			«ENDLET»
 		«ENDFOREACH»
 	«ENDFOREACH»

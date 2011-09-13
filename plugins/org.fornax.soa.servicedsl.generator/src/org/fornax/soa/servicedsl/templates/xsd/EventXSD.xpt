@@ -22,6 +22,7 @@
 «FILE getFileNameFragment() + "Events.xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema targetNamespace="«toTargetNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 	«FOREACH getImportedSubdomains().select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
 	xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 	«ENDFOREACH-»
