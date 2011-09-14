@@ -40,11 +40,19 @@
 	given minimal LifecycleState.
 «ENDREM»
 «DEFINE XSD (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
-	«EXPAND XSDVersion(minState, profile, registryBaseUrl) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
+	«FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion() AS imp»
+		«EXPAND XSDVersion(minState, profile, registryBaseUrl) FOR imp-»
+		«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH imp.allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).reject(e|e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber())»
+	«ENDFOREACH»
 «ENDDEFINE»
 
 «DEFINE XSD (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) FOR SubNamespace»
-	«EXPAND XSDVersion(minState, profile, registryBaseUrl, noDeps, includeSubNamespaces) FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()-»
+	«FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion() AS imp»
+		«EXPAND XSDVersion(minState, profile, registryBaseUrl, noDeps, includeSubNamespaces) FOR imp-»
+		«IF !noDeps-»
+			«EXPAND XSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces) FOREACH imp.allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).reject(e|e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber())»
+		«ENDIF»
+	«ENDFOREACH»
 «ENDDEFINE»
 
 «REM»
@@ -54,6 +62,7 @@
 «DEFINE XSDForImports (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
 	«FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion() AS imp»
 		«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOR imp -»
+		«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH imp.allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).reject(e|e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber())»
 	«ENDFOREACH»
 «ENDDEFINE»
 
@@ -84,7 +93,6 @@
 	«ENDIF»
 </xsd:schema>
 «ENDFILE»
-«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())»
 «ENDDEFINE»
 
 «DEFINE XSDVersion (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
@@ -109,9 +117,6 @@
 	«ENDIF»
 </xsd:schema>
 «ENDFILE»
-«IF !noDeps»
-	«EXPAND XSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces) FOREACH allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())»
-«ENDIF»
 «ENDDEFINE»
 
 
