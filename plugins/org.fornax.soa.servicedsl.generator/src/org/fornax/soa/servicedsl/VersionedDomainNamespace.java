@@ -94,9 +94,6 @@ public class VersionedDomainNamespace {
 		int result = 1;
 		result = prime * result + ((fqn == null) ? 0 : fqn.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((subdomain == null) ? 0 : subdomain.hashCode());
-		result = prime * result
-				+ ((shortName == null) ? 0 : shortName.hashCode());
 		result = prime * result + ((version == null) ? 0 : version.hashCode());
 		return result;
 	}
@@ -119,16 +116,6 @@ public class VersionedDomainNamespace {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
-			return false;
-		if (subdomain == null) {
-			if (other.subdomain != null)
-				return false;
-		} else if (!subdomain.equals(other.subdomain))
-			return false;
-		if (shortName == null) {
-			if (other.shortName != null)
-				return false;
-		} else if (!shortName.equals(other.shortName))
 			return false;
 		if (version == null) {
 			if (other.version != null)
