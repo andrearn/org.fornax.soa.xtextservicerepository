@@ -16,7 +16,7 @@
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::types»
-
+«EXTENSION org::eclipse::xtend::util::stdlib::io»
 
 «REM»
 	CARTRIDGE ENTRYPOINT for generation of XSDs from namespaces. 
@@ -42,7 +42,7 @@
 «DEFINE XSD (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
 	«FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion() AS imp»
 		«EXPAND XSDVersion(minState, profile, registryBaseUrl) FOR imp-»
-		«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH imp.allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).reject(e|e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber())»
+		«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH imp.allImportedVersionedNS (minState).reject(e|e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber())»
 	«ENDFOREACH»
 «ENDDEFINE»
 
@@ -50,7 +50,7 @@
 	«FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion() AS imp»
 		«EXPAND XSDVersion(minState, profile, registryBaseUrl, noDeps, includeSubNamespaces) FOR imp-»
 		«IF !noDeps-»
-			«EXPAND XSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces) FOREACH imp.allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).reject(e|e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber())»
+			«EXPAND XSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces) FOREACH imp.allImportedVersionedNS (minState).reject(e|e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber())»
 		«ENDIF»
 	«ENDFOREACH»
 «ENDDEFINE»
@@ -62,7 +62,7 @@
 «DEFINE XSDForImports (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
 	«FOREACH this.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion() AS imp»
 		«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOR imp -»
-		«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH imp.allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).reject(e|e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber())»
+		«EXPAND XSDVersion (minState, profile, registryBaseUrl) FOREACH imp.allImportedVersionedNS (minState).reject(e|e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber())»
 	«ENDFOREACH»
 «ENDDEFINE»
 
@@ -78,7 +78,10 @@
 	xmlns="«toNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+«REM»
 	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	jxb:version="2.0"
+«ENDREM»
 	elementFormDefault="qualified"
 	attributeFormDefault="unqualified"
 	targetNamespace="«toNamespace()»"
@@ -102,7 +105,10 @@
 	xmlns="«toNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+«REM»
 	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+	jxb:version="2.0"
+«ENDREM»
 	elementFormDefault="qualified"
 	attributeFormDefault="unqualified"
 	targetNamespace="«toNamespace()»"
@@ -141,13 +147,27 @@
     <xsd:complexType name="«name»">
     	<xsd:annotation>
     		<xsd:documentation>
-    			Version:	«version.toVersionNumber()»
-    			Lifecycle state: «state.toString()»
-				«IF doc != null-»
+<![CDATA[Version:	«version.toVersionNumber()»
+Lifecycle state: «state.toString()»
+«IF doc != null-»
 				
-    			«doc.stripCommentBraces().trim()»
-				«ENDIF-»    			
+«doc.stripCommentBraces().trim()»
+«ENDIF-» ]]>   			
     		</xsd:documentation>
+«REM»
+    		<xsd:appinfo>
+	    		<jxb:class>
+  	    			<jxb:javadoc>
+<![CDATA[Version:	«version.toVersionNumber()»
+Lifecycle state: «state.toString()»
+«IF doc != null-»
+					
+«doc.stripCommentBraces().trim()»
+«ENDIF-» ]]>   			
+    	  			</jxb:javadoc>
+	      		</jxb:class>
+      		</xsd:appinfo>
+«ENDREM» 
     	</xsd:annotation>
     	
     	«IF superBusinessObject != null-»
@@ -239,13 +259,27 @@
     <xsd:complexType name="«toTypeName()»">
     	<xsd:annotation>
     		<xsd:documentation>
-    			Version:	«version.toVersionNumber()»
-    			Lifecycle state: «state.toString()»
-				«IF doc != null-»
+<![CDATA[Version:	«version.toVersionNumber()»
+Lifecycle state: «state.toString()»
+«IF doc != null-»
 				
-    			«doc.stripCommentBraces().trim()»
-				«ENDIF-»    			
+«doc.stripCommentBraces().trim()»
+«ENDIF-» ]]>   			
     		</xsd:documentation>
+«REM»
+    		<xsd:appinfo>
+    			<jxb:class>
+      				<jxb:javadoc>
+<![CDATA[Version:	«version.toVersionNumber()»
+Lifecycle state: «state.toString()»
+«IF doc != null-»
+					
+«doc.stripCommentBraces().trim()»
+«ENDIF-» ]]>   			
+      				</jxb:javadoc>
+      			</jxb:class>
+      		</xsd:appinfo>
+«ENDREM»
     	</xsd:annotation>
     	
     	«IF superException != null-»
@@ -269,11 +303,22 @@
 «DEFINE Property(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile, LifecycleState minState) FOR Attribute-»
 	«IF doc != null-»
 			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF» >
+				«IF doc != null-»
 		    	<xsd:annotation>
 		    		<xsd:documentation>
-		    			«doc.stripCommentBraces().trim()»
+		    			<![CDATA[«doc.stripCommentBraces().trim()»]]>
 		    		</xsd:documentation>
+«REM»
+		    		<xsd:appinfo>
+			    		<jxb:property>
+			    			<jxb:javadoc>
+				    			<![CDATA[«doc.stripCommentBraces().trim()»]]>
+			    			</jxb:javadoc>
+			    		</jxb:property>
+					</xsd:appinfo>
+«ENDREM»
 		    	</xsd:annotation>
+		    	«ENDIF-»
 			</xsd:element>
 	«ELSE-»
 			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF» />
@@ -285,11 +330,22 @@
 			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF»/>
 	«ELSE»
 			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" «IF type.isAttachment()»«EXPAND AttachmentMimeFragment FOR type»«ENDIF»>
+				«IF doc != null-»
 		    	<xsd:annotation>
 		    		<xsd:documentation>
-		    			«doc.stripCommentBraces().trim()»
+		    			<![CDATA[«doc.stripCommentBraces().trim()»]]>
 		    		</xsd:documentation>
+«REM»
+		    		<xsd:appinfo>
+			    		<jxb:property>
+			    			<jxb:javadoc>
+				    			<![CDATA[«doc.stripCommentBraces().trim()»]]>
+			    			</jxb:javadoc>
+			    		</jxb:property>
+					</xsd:appinfo>
+«ENDREM»
 		    	</xsd:annotation>
+		    	«ENDIF-»
 			</xsd:element>
 	«ENDIF»
 «ENDDEFINE»
@@ -298,9 +354,21 @@
 			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» type="«type.getWeakRefType(minState)»" >
 		    	<xsd:annotation>
 		    		<xsd:documentation>
+		    			<![CDATA[
 		    			References an instance of type «type.getFullTypeNameRef(currNs)» using it's business-key «type.getWeakRefKeyAttr(minState)»
-		    			«doc.stripCommentBraces().trim()»
+						«IF doc != null-»
+		    			«doc.stripCommentBraces().trim()»]]>
+				    	«ENDIF-»
 		    		</xsd:documentation>
+«REM»
+		    		<xsd:appinfo>
+			    		<jxb:property>
+			    			<jxb:javadoc>
+				    			<![CDATA[«doc.stripCommentBraces().trim()»]]>
+			    			</jxb:javadoc>
+			    		</jxb:property>
+		    		</xsd:appinfo>
+«ENDREM»
 		    	</xsd:annotation>
 			</xsd:element>
 «ENDDEFINE»

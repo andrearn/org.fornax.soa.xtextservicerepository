@@ -34,6 +34,7 @@
 	xmlns:tns="«toTargetNamespace()»"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
 	name="«name»" 
 	targetNamespace="«toTargetNamespace()»">
 	<wsdl:documentation>
@@ -57,13 +58,16 @@
 	xmlns:tns="«toTargetNamespace()»"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+«REM»	
+	xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+«ENDREM»
 	name="«name»" 
 	targetNamespace="«toTargetNamespace()»">
 	<wsdl:documentation>
-		Version «version.toVersionNumber()»
+		<![CDATA[Version «version.toVersionNumber()»
 		Lifecycle state: «state.toString()»
 		
-		«doc.trim().stripCommentBraces()»
+		«doc.trim().stripCommentBraces()»]]>
 	</wsdl:documentation>
 	
 	«EXPAND Types(minState, profile, registryBaseUrl)-»
@@ -174,12 +178,44 @@
 
 «DEFINE PortType FOR Service»
 	<wsdl:portType name="«name»">
+		<wsdl:documentation>
+				<![CDATA[Version:	«version.toVersionNumber()»
+				Lifecycle state: «state.toString()»
+				«IF doc != null-»
+									
+				«doc.stripCommentBraces().trim()»
+				«ENDIF-» ]]>   			
+		</wsdl:documentation>
+		«REM»
+		<jaxws:class>
+			<jaxws:javadoc>
+				<![CDATA[Version:	«version.toVersionNumber()»
+				Lifecycle state: «state.toString()»
+				«IF doc != null-»
+									
+				«doc.stripCommentBraces().trim()»
+				«ENDIF-» ]]>   			
+			</jaxws:javadoc>
+		</jaxws:class>
+		«ENDREM»
 		«EXPAND Operation FOREACH operations»
 	</wsdl:portType>
 «ENDDEFINE»
 
 «DEFINE Operation FOR Operation»
 		<wsdl:operation name="«name»">
+			«IF doc != null-»
+			<wsdl:documentation>
+				<![CDATA[«doc.stripCommentBraces().trim()»]]>   			
+			</wsdl:documentation>
+			«REM»
+				<jaxws:method>
+					<jaxws:javadoc>
+						<![CDATA[«doc.stripCommentBraces().trim()»]]>   			
+					</jaxws:javadoc>
+				</jaxws:method>
+			«ENDREM»
+			«ENDIF-»
 			<wsdl:input message="tns:«name»Request" />
 			<wsdl:output message="tns:«name»Response" />
 			«EXPAND Fault»
