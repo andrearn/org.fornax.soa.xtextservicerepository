@@ -2,5 +2,5 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Xtext Service Repository Docs
 Bundle-SymbolicName: org.fornax.soa.servicerepo.doc;singleton:=true
-Bundle-Version: 1.4.1.qualifier
+Bundle-Version: 1.4.2.qualifier
 Require-Bundle: org.eclipse.help;bundle-version="3.5.0"

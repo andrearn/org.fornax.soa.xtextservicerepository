@@ -237,8 +237,11 @@ Lifecycle state: «state.toString()»
     <xsd:simpleType name="«name»">
     	<xsd:annotation>
     		<xsd:documentation>
-    			Version:	«version.toVersionNumber()»
-    			
+<![CDATA[Version:	«version.toVersionNumber()»
+ «IF doc != null-»
+				
+«doc.stripCommentBraces().trim()»
+«ENDIF-» ]]>   			   			
        		</xsd:documentation>
     	</xsd:annotation>
     	<xsd:restriction base="xsd:string">
@@ -357,8 +360,9 @@ Lifecycle state: «state.toString()»
 		    			<![CDATA[
 		    			References an instance of type «type.getFullTypeNameRef(currNs)» using it's business-key «type.getWeakRefKeyAttr(minState)»
 						«IF doc != null-»
-		    			«doc.stripCommentBraces().trim()»]]>
+		    			«doc.stripCommentBraces().trim()»
 				    	«ENDIF-»
+				    	]]>
 		    		</xsd:documentation>
 «REM»
 		    		<xsd:appinfo>

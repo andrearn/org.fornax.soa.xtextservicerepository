@@ -3,9 +3,13 @@
  */
 package org.fornax.soa;
 
+import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+
+import com.google.inject.Binder;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -23,6 +27,10 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
 	public Class<? extends IPluggableValidatorProvider> bindIPluggableValidatorProvider () {
 		return ReflectivePluggableValidatorProvider.class;
+	}
+	
+	public void configureIDefaultResourceDescriptionStrategy (Binder binder) {
+		binder.bind(IDefaultResourceDescriptionStrategy.class).to(VersionedResourceDescriptionStrategy.class);
 	}
 }
 

@@ -3,10 +3,100 @@
 */
 package org.fornax.soa.ui.contentassist;
 
-import org.fornax.soa.ui.contentassist.AbstractBindingDslProposalProvider;
+import java.util.Iterator;
+
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.ILeafNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
+import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
+import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.fornax.soa.basedsl.sOABaseDsl.Import;
+import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
+import org.fornax.soa.bindingDsl.BindingModel;
+import org.fornax.soa.bindingDsl.ModuleRef;
+import org.fornax.soa.bindingDsl.ServiceRef;
+import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
+import org.fornax.soa.serviceDsl.ServiceDslPackage;
+
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
 public class BindingDslProposalProvider extends AbstractBindingDslProposalProvider {
 
+
+	public void complete_VersionId(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		calculateVersionProposals(model, context, acceptor);
+	}
+	
+	public void complete_INT(EObject model, RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model.eContainer() instanceof MajorVersionRef)  {
+			calculateVersionProposals(model, context, acceptor);
+		} else {
+			super.complete_INT (model, ruleCall, context, acceptor);
+		}
+	}	
+
+	private void calculateVersionProposals(EObject model,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		ICompositeNode parentNode = NodeModelUtils.findActualNodeFor (model).getParent();
+		Iterable<ILeafNode> leafs = parentNode.getLeafNodes();
+		Iterable<ILeafNode> nonHidden = Iterables.filter (leafs, new Predicate<ILeafNode>() {
+
+			public boolean apply (ILeafNode node) {
+				return !node.isHidden();
+			}
+			
+		});
+		BindingModel moduleModel = (BindingModel) model.eContainer().eContainer().eContainer();
+		EList<Import> imports = moduleModel.getImports();
+		final Iterable<String> importedNamespaces = Lists.transform (imports, new Function<Import, String> () {
+
+			public String apply (Import from) {
+				return from.getImportedNamespace().replaceAll("\\.\\*", "");
+			}
+			
+		});
+		Iterator<ILeafNode> leafIt = nonHidden.iterator();
+		Iterable<String> canditateVersions = Sets.newHashSet();
+		if (model.eContainer() instanceof ModuleRef) {
+			boolean versionConstraintFound = false;
+			StringBuilder nameParts = new StringBuilder();
+			while (leafIt.hasNext() && !versionConstraintFound) {
+				ILeafNode curNode = leafIt.next();
+				if (curNode.getSemanticElement() instanceof VersionRef)
+					versionConstraintFound = true;
+				else
+					nameParts.append(curNode.getText());
+			}
+			final String moduleName = nameParts.toString().trim();
+			final String className = ModuleDslPackage.Literals.MODULE.getName();
+			canditateVersions = getCanditateVersions (moduleName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+		} else if (model.eContainer() instanceof ServiceRef) {
+			boolean versionConstraintFound = false;
+			StringBuilder nameParts = new StringBuilder();
+			while (leafIt.hasNext() && !versionConstraintFound) {
+				ILeafNode curNode = leafIt.next();
+				if (curNode.getSemanticElement() instanceof VersionRef)
+					versionConstraintFound = true;
+				else
+					nameParts.append(curNode.getText());
+			}
+			final String moduleName = nameParts.toString().trim();
+			final String className = ServiceDslPackage.Literals.SERVICE.getName();
+			canditateVersions = getCanditateVersions (moduleName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+		}
+		for (String version : canditateVersions) {
+			acceptor.accept (createCompletionProposal(version, context));
+		}
+	}
 }

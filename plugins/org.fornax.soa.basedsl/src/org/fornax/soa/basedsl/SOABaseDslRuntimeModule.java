@@ -3,10 +3,14 @@
  */
 package org.fornax.soa.basedsl;
 
+import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.search.PredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+
+import com.google.inject.Binder;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -20,6 +24,10 @@ public class SOABaseDslRuntimeModule extends org.fornax.soa.basedsl.AbstractSOAB
 	
 	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
 		return PredicateSearch.class;
+	}
+	
+	public void configureIDefaultResourceDescriptionStrategy (Binder binder) {
+		binder.bind(IDefaultResourceDescriptionStrategy.class).to(VersionedResourceDescriptionStrategy.class);
 	}
 
 }

@@ -43,7 +43,6 @@ public class LatestMinInclMaxExclRangeVersionFilter<T> extends AbstractPredicate
 	}
 
 	public boolean matches(IEObjectDescription description) {
-		// TODO Auto-generated method stub
 		final String version = resolver.getVersion(description);
 		if (version != null)
 			return (VersionComparator.compare(version, maxVersion) < 0) && (VersionComparator.compare(version, minVersion) >= 0);
