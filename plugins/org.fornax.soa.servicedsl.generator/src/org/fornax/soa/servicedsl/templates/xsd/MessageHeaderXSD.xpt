@@ -109,11 +109,12 @@
     <xsd:complexType name="«name»">
     	<xsd:annotation>
     		<xsd:documentation>
-    			Version:	«version.toVersionNumber()»
+    			<![CDATA[Version:	«version.toVersionNumber()»
 				«IF doc != null-»
 				
     			«doc.stripCommentBraces().trim()»
-				«ENDIF-»    			
+				«ENDIF-» 
+				]]>   			
     		</xsd:documentation>
     	</xsd:annotation>
     	
@@ -160,12 +161,13 @@
     <xsd:simpleType name="«name»">
     	<xsd:annotation>
     		<xsd:documentation>
-    			Version:	«version.toVersionNumber()»
+    			<![CDATA[Version:	«version.toVersionNumber()»
     			
 				«IF doc != null-»
 				
     			«doc.stripCommentBraces().trim()»
-				«ENDIF-»    			
+				«ENDIF-» 
+				]]>   			
        		</xsd:documentation>
     	</xsd:annotation>
     	<xsd:restriction base="xsd:string">
@@ -182,7 +184,7 @@
 			<xsd:element name="«name»" «IF optional»minOccurs="0"«ENDIF» «IF type.isMany()»maxOccurs="unbounded"«ENDIF» type="«type.getTypeNameRef(currNs)»" >
 		    	<xsd:annotation>
 		    		<xsd:documentation>
-		    			«doc.stripCommentBraces().trim()»
+		    			<![CDATA[«doc.stripCommentBraces().trim()»]]>
 		    		</xsd:documentation>
 		    	</xsd:annotation>
 			</xsd:element>
@@ -195,7 +197,7 @@
 	   	<xsd:attribute name="«name»" «IF optional»use="optional"«ENDIF» type="«type.getTypeNameRef(currNs)»" >
 	    	<xsd:annotation>
 	    		<xsd:documentation>
-	    			«doc.stripCommentBraces().trim()»
+	    			<![CDATA[«doc.stripCommentBraces().trim()»]]>
 	    		</xsd:documentation>
 	    	</xsd:annotation>
 	   	</xsd:attribute>

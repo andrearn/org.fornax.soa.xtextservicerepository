@@ -11,35 +11,60 @@
 «EXTENSION org::fornax::soa::servicedsl::query::type::ReferencedTypesFinder»
 «EXTENSION org::fornax::soa::servicedsl::query::type::TypesByLifecycleStateFinder»
 «EXTENSION org::fornax::soa::servicedsl::query::type::TypesByMajorVersion»
+«EXTENSION org::fornax::soa::servicedsl::query::namespace::namespaceImports»
 «EXTENSION org::fornax::soa::servicedsl::query::namespace::subnamespaces»
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
 «EXTENSION org::fornax::soa::servicedsl::templates::webservice::services»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::types»
 
+«DEFINE EventsInclSubNamespaces (List[SubNamespace] namespaces, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR String»
+	«FOREACH namespaces.select(e|e.name.startsWith (this)) AS ns»
+		«EXPAND Events (minState, profile, registryBaseUrl) FOR ns»
+	«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE Events (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR SubNamespace»
+	«EXPAND Events (this, minState, profile, registryBaseUrl) FOREACH this.services»
+«ENDDEFINE»
+
+«DEFINE Events (SubNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
+«ENDDEFINE»
 
 «DEFINE Events (DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 «FILE getFileNameFragment() + "Events.xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema targetNamespace="«toTargetNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-	«FOREACH getImportedSubdomains().select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
 	xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 	«ENDFOREACH-»
+	«IF this.getBestMatchingHeader(profile) != null-»
+		«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
+	xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
+		«ENDFOREACH-»
+	«ENDIF-»
 	elementFormDefault="qualified"
 	attributeFormDefault="unqualified"
 	>
-	«FOREACH getImportedSubdomains().select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
-	<xsd:import schemaLocation="«imp.getRegisteredUrl(registryBaseUrl)».xsd"
+	
+	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+	<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
 		namespace="«imp.toNamespace()»"/>
 	«ENDFOREACH-»
+	«IF this.getBestMatchingHeader(profile) != null-»
+		«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
+	<xsd:import schemaLocation="«headerImp.getRegisteredUrl (registryBaseUrl)».xsd"
+		namespace="«headerImp.toNamespace()»"/>
+		«ENDFOREACH-»
+	«ENDIF-»
 	
 	<xsd:annotation>
    		<xsd:documentation>
-			Version «version.toVersionNumber()»
+			<![CDATA[Version «version.toVersionNumber()»
 			Lifecycle state: «state.toString()»
 			
-			«doc.trim().stripCommentBraces()»
+			«doc.trim().stripCommentBraces()»]]>
 	   	</xsd:documentation>
    	</xsd:annotation>
 	
@@ -48,34 +73,39 @@
 «ENDFILE»
 «ENDDEFINE»
 
-«DEFINE Events (InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR Service»
+«DEFINE Events (InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 «FILE subDom.getFileNameFragment() + "-" + name + "-" + version.toVersionPostfix() + "Events.xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema targetNamespace="«toTargetNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	«FOREACH getImportedSubdomains().select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
 	xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 	«ENDFOREACH-»
-	«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
+	«IF this.getBestMatchingHeader(profile) != null-»
+		«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
 	xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
-	«ENDFOREACH-»
+		«ENDFOREACH-»
+	«ENDIF-»
 	elementFormDefault="qualified"
 	attributeFormDefault="unqualified"
 	>
-	«FOREACH getImportedSubdomains().select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
-	<xsd:import schemaLocation="«imp.getFileNameFragment()».xsd"
+	
+	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+	<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
 		namespace="«imp.toNamespace()»"/>
-		«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
-		<xsd:import schemaLocation="«headerImp.getFileNameFragment()».xsd"
-			namespace="«headerImp.toNamespace()»"/>
-		«ENDFOREACH-»
 	«ENDFOREACH-»
+	«IF this.getBestMatchingHeader(profile) != null-»
+		«FOREACH getBestMatchingHeader(profile).allImportedVersionedNS(version.toMajorVersionNumber()) AS headerImp-»
+	<xsd:import schemaLocation="«headerImp.getRegisteredUrl (registryBaseUrl)».xsd"
+		namespace="«headerImp.toNamespace()»"/>
+		«ENDFOREACH-»
+	«ENDIF-»
 	
 	<xsd:annotation>
     	<xsd:documentation>
-			Version «version.toVersionNumber()»
+			<![CDATA[Version «version.toVersionNumber()»
 			Lifecycle state: «state.toString()»
 			
-			«doc.trim().stripCommentBraces()»
+			«doc.trim().stripCommentBraces()»]]>
     	</xsd:documentation>
     </xsd:annotation>
 	
@@ -92,20 +122,22 @@
 
 
 «DEFINE OperationWrapperTypes (sOAProfileDsl::SOAProfile profile) FOR Operation»
-			<xsd:element name="«name»">
+			<xsd:element name="«name.toFirstLower()»">
 				<xsd:complexType>
 					<xsd:sequence>
-						«EXPAND Parameter FOR this.getBestMatchingHeader (profile)»
-						«EXPAND Parameter FOREACH parameters-»
-						«IF	fetchProfile.size > 1-»
-						<xsd:element name="fetchProfileName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+						«IF this.getBestMatchingHeader(profile) != null-»
+						«EXPAND Parameter FOR this.getBestMatchingHeader (profile)-»
 						«ENDIF-»
+						«EXPAND Parameter FOREACH parameters-»
     				</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
-			<xsd:element name="«name»Response">
+			<xsd:element name="«name.toFirstUpper()»Response">
 				<xsd:complexType>
 					<xsd:sequence>
+						«IF this.getBestMatchingHeader(profile) != null-»
+						«EXPAND Parameter FOR this.getBestMatchingHeader (profile)-»
+						«ENDIF-»
 						«EXPAND Parameter FOREACH return-»
 					</xsd:sequence>
 				</xsd:complexType>

@@ -194,6 +194,10 @@
 	LifecycleState derived from the given Environment and the minimal required LifecycleState 
 	of the respective Service / owning SubNamespace
 «ENDREM»
+«DEFINE Binding (List[SOAProfile] profiles, String profileName) FOR ModuleBinding»
+	«EXPAND Binding (profiles.selectFirst (e|e.name == profileName)) FOR this»
+«ENDDEFINE»
+
 «DEFINE Binding (SOAProfile profile) FOR ModuleBinding»
 	«FOREACH module.module.providedServices AS provSvc»
 		«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
@@ -275,6 +279,10 @@
 
 
 
+«DEFINE XSD (List[environmentDsl::Environment] env, String targetEnv, List[SOAProfile] profiles, String profileName) FOR SubNamespace»
+	«EXPAND XSD (env.selectFirst (e|e.name == targetEnv), profiles.selectFirst (e|e.name == profileName))»
+«ENDDEFINE»
+
 
 «DEFINE XSD (environmentDsl::Environment env, SOAProfile profile) FOR SubNamespace»
 	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (env.getMinLifecycleState(this), profile, env.getRegistryBaseUrl())»
@@ -313,4 +321,21 @@
 «ENDREM»
 «DEFINE XSD (LifecycleState minState, DomainBinding bind, SOAProfile profile) FOR SubNamespace»
 	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (bind.environment.getMinLifecycleState(this), profile, bind.getRegistryBaseUrl())»
+«ENDDEFINE»
+
+
+
+«REM»
+	Event XSDs for Services having an request and an response event for each service operation
+«ENDREM»
+«DEFINE EventsInclSubNamespaces (List[SubNamespace] namespaces, List[environmentDsl::Environment] environments, String targetEnv, List[SOAProfile] profiles, String profileName) FOR String»
+	«FOREACH namespaces.select(e|e.name.startsWith (this)) AS ns»
+		«EXPAND Events (environments, targetEnv, profiles, profileName) FOR ns»
+	«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE Events (List[environmentDsl::Environment] environments, String targetEnv, List[SOAProfile] profiles, String profileName) FOR SubNamespace»
+	«LET environments.selectFirst(e|e.name == targetEnv) AS env»
+		«EXPAND org::fornax::soa::servicedsl::templates::xsd::EventXSD::Events (env.getMinLifecycleState(this), profiles.selectFirst (e|e.name == profileName), env.getRegistryBaseUrl())»
+	«ENDLET»
 «ENDDEFINE»
