@@ -75,7 +75,27 @@ String getEndpoint (Module mod, OrganizationNamespace orgNs, SubNamespace subNs,
 	server.serverType != null ? (
 		switch (server.serverType.toLowerCase()) {
 		case "tomcat": 			tomcatEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-		case "websphere":		websphereEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "websphere":		websphereSCAEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "webmethods":		webmethodsEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "oraclesb":		oraclesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "weblogic":		weblogicEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "aqualogic":		aqualogicEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "sappi":			sappiEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "sapce":			sapceEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "sapnetweaver":	sapnetweaverEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "jboss":			jbossEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "jbossesb":		jbossesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "mule":			muleEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "fuseesb":			fuseesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		default: 				defaultPatternEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		})
+	:	defaultPatternEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server);
+
+String getEndpoint (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, ProcessServer server) :
+	server.serverType != null ? (
+		switch (server.serverType.toLowerCase()) {
+		case "tomcat": 			tomcatEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
+		case "websphere":		websphereSCAEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
 		case "webmethods":		webmethodsEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
 		case "oraclesb":		oraclesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
 		case "weblogic":		weblogicEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)

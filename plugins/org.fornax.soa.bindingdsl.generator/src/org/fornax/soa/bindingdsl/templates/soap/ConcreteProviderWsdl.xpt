@@ -126,7 +126,7 @@
 «DEFINE WsdlService(Service svc, Server server, ModuleBinding bind) FOR SOAP»
 	<wsdl:service name="«svc.name»">
 		<wsdl:port binding="tns:«svc.toBindingName(this)»"
-			name="«svc.toPortName(this)»Public">
+			name="«svc.toPortName(this)»Private">
 			<soap:address location="«svc.getServerEndpoint(server, this, bind.module.module)»" />
 		</wsdl:port>
 	</wsdl:service>
