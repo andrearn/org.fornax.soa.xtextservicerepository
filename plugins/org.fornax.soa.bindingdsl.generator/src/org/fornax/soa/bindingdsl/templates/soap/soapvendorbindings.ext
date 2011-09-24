@@ -130,7 +130,7 @@ String websphereEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamesp
 String websphereSCAEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
 	ctxRoot
 	+ orgNs.toPrefix() + "_" 
-	+ subNs.name.replaceAll("\\.","_") +"_" + s.name + "_" + s.version.toVersionPostfix();
+	+ subNs.name.replaceAll("\\.","_") +"_" + s.name + "SOAP" + s.getServiceVisibilityName() + "_" + s.version.toVersionPostfix();
 
 String webmethodsEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) :
 	ctxRoot
