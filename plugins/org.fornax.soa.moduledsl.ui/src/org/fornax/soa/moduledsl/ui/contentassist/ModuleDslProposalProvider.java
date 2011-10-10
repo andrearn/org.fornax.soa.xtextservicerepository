@@ -42,21 +42,20 @@ import com.google.common.collect.Lists;
 public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider {
 
 	public void complete_VersionId(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		calculateVersionProposals(model, context, acceptor);
-			
+		calculateVersionProposals(model, context, acceptor, false);
 	}
 	
 	public void complete_INT(EObject model, RuleCall ruleCall, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
 		if (model.eContainer() instanceof MajorVersionRef)  {
-			calculateVersionProposals(model, context, acceptor);
+			calculateVersionProposals(model, context, acceptor, true);
 		} else {
 			super.complete_INT (model, ruleCall, context, acceptor);
 		}
 	}	
 
 	private void calculateVersionProposals(EObject model,
-			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor, boolean majorVersionsOnly) {
 		ICompositeNode parentNode = NodeModelUtils.findActualNodeFor (model).getParent();
 		Iterable<ILeafNode> leafs = parentNode.getLeafNodes();
 		Iterable<ILeafNode> nonHidden = Iterables.filter (leafs, new Predicate<ILeafNode>() {
@@ -94,6 +93,11 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 			for (String version : canditateVersions) {
 				acceptor.accept (createCompletionProposal (version, context));
 			}
+		} else {
+			if (majorVersionsOnly)
+				acceptor.accept (createCompletionProposal ("1", context));
+			else
+				acceptor.accept (createCompletionProposal ("1.0", context));
 		}
 	}
 }

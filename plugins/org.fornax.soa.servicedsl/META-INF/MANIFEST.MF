@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.servicedsl
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.4.2.qualifier
+Bundle-Version: 1.4.3.qualifier
 Bundle-SymbolicName: org.fornax.soa.servicedsl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;bundle-version="2.0.0",
@@ -29,6 +29,7 @@ Export-Package: org.fornax.soa,
  org.fornax.soa.parseTreeConstruction,
  org.fornax.soa.parser.antlr,
  org.fornax.soa.parser.antlr.internal,
+ org.fornax.soa.query,
  org.fornax.soa.scoping,
  org.fornax.soa.serviceDsl,
  org.fornax.soa.serviceDsl.impl,

@@ -128,8 +128,8 @@ public class SolutionDslScopeProvider extends VersionedImportedNamespaceAwareSco
 			final VersionRef v = ((EventRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);
 		}
-		if (reference == SolutionDslPackage.Literals.CAPABILITY_REF__VERSION_REF && ctx instanceof CapabilityRef) {
-			final VersionRef v = ((EventRef) ctx).getVersionRef();
+		if (reference == SolutionDslPackage.Literals.CAPABILITY_REF__CAPABILITY && ctx instanceof CapabilityRef) {
+			final VersionRef v = ((CapabilityRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);
 		}
 		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;

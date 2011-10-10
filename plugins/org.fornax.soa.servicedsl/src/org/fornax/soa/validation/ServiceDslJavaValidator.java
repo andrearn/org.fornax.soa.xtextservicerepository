@@ -1,35 +1,31 @@
 package org.fornax.soa.validation;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.xtext.validation.AbstractDeclarativeValidator;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
-import org.eclipse.xtext.validation.EValidatorRegistrar;
 import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
-import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
-import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.PluggableChecks;
-import org.fornax.soa.query.BusinessObjectQueryHelper;
+import org.fornax.soa.query.BusinessObjectQuery;
 import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
+import org.fornax.soa.serviceDsl.EnumLiteral;
 import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.GovernanceApproval;
-import org.fornax.soa.serviceDsl.InternalNamespace;
+import org.fornax.soa.serviceDsl.Operation;
+import org.fornax.soa.serviceDsl.Parameter;
 import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceCategory;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceRef;
+import org.fornax.soa.serviceDsl.SimpleAttribute;
 import org.fornax.soa.serviceDsl.VISIBILITY;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 import org.fornax.soa.util.ReferencedStateChecker;
@@ -37,14 +33,160 @@ import org.fornax.soa.util.ReferencedStateChecker;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
 
 @PluggableChecks (validators = {
 		org.fornax.soa.validation.GovernanceApprovalValidator.class,
 		org.fornax.soa.validation.LifecycleStatefulReferenceValidator.class
 		})
 public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
+	
+	@Check 
+	public void checkNoPropertyOverrides (Property prop) {
+		if (prop.eContainer() instanceof BusinessObject) {
+			BusinessObject bo = (BusinessObject)prop.eContainer();
+			if (bo.getSuperBusinessObject() != null && bo.getSuperBusinessObject().getType() != null) {
+				final String propName = prop.getName();
+				for (BusinessObject superType : BusinessObjectQuery.getAllSuperTypes (bo, null)) {
+					Iterable<Property> props = Iterables.filter (superType.getProperties(), new Predicate<Property>() {
+			
+						public boolean apply (Property curProp) {
+							return curProp.getName().equals(propName);
+						}
+						
+					});
+					List<Property> opList = Lists.newArrayList (props);
+					if (opList.size() > 0) {
+						StringBuilder errMsg = new StringBuilder ("Property ");
+						errMsg.append (propName).append (" overrides an inherited property from ").append(superType.getName()).append(" version ").append(bo.getVersion().getVersion());
+						error (errMsg.toString(), ServiceDslPackage.Literals.PROPERTY__NAME );
+					}
+				}
+			}
+		}
+	}
+	
+	
+	@Check 
+	public void checkUniqueOperationNames (Operation op) {
+		Service svc = (Service)op.eContainer();
+		final String opName = op.getName();
+		Iterable<Operation> ops = Iterables.filter(svc.getOperations(), new Predicate<Operation>() {
+
+			public boolean apply (Operation curOp) {
+				return curOp.getName().equals(opName);
+			}
+			
+		});
+		List<Operation> opList = Lists.newArrayList(ops);
+		if (opList.size() > 1) {
+			StringBuilder errMsg = new StringBuilder ("Duplicate operation ");
+			errMsg.append(opName).append(" in service ").append(svc.getName()).append(" version ").append(svc.getVersion().getVersion());
+			error (errMsg.toString(), ServiceDslPackage.Literals.OPERATION__NAME );
+		}
+	}
+	
+	@Check 
+	public void checkUniquePropertyNames (Property prop) {
+		if (prop.eContainer() instanceof BusinessObject) {
+			BusinessObject bo = (BusinessObject)prop.eContainer();
+			final String propName = prop.getName();
+			Iterable<Property> props = Iterables.filter(bo.getProperties(), new Predicate<Property>() {
+	
+				public boolean apply (Property curProp) {
+					return curProp.getName().equals(propName);
+				}
+				
+			});
+			List<Property> opList = Lists.newArrayList(props);
+			if (opList.size() > 1) {
+				StringBuilder errMsg = new StringBuilder ("Duplicate property ");
+				errMsg.append(propName).append(" in business object ").append(bo.getName()).append(" version ").append(bo.getVersion().getVersion());
+				error (errMsg.toString(), ServiceDslPackage.Literals.PROPERTY__NAME );
+			}
+		}
+	}
+	
+	@Check 
+	public void checkUniqueEnumLiteral (EnumLiteral enumLit) {
+		if (enumLit.eContainer() instanceof Enumeration) {
+			Enumeration en = (Enumeration)enumLit.eContainer();
+			final String enumLitName = enumLit.getName();
+			Iterable<EnumLiteral> enumLiterals = Iterables.filter(en.getLiterals(), new Predicate<EnumLiteral>() {
+	
+				public boolean apply (EnumLiteral curEnum) {
+					return curEnum.getName().equals(enumLitName);
+				}
+				
+			});
+			List<EnumLiteral> opList = Lists.newArrayList(enumLiterals);
+			if (opList.size() > 1) {
+				StringBuilder errMsg = new StringBuilder ("Duplicate enum literal ");
+				errMsg.append(enumLitName).append(" in enumeration ").append(en.getName()).append(" version ").append(en.getVersion().getVersion());
+				error (errMsg.toString(), ServiceDslPackage.Literals.ENUM_LITERAL__NAME );
+			}
+		}
+		
+	}
+
+	@Check 
+	public void checkUniqueSimpleAttributeNames (SimpleAttribute prop) {
+		if (prop.eContainer() instanceof org.fornax.soa.serviceDsl.Exception) {
+			org.fornax.soa.serviceDsl.Exception exc = (org.fornax.soa.serviceDsl.Exception)prop.eContainer();
+			final String propName = prop.getName();
+			Iterable<SimpleAttribute> props = Iterables.filter(exc.getProperties(), new Predicate<SimpleAttribute>() {
+	
+				public boolean apply (SimpleAttribute curProp) {
+					return curProp.getName().equals(propName);
+				}
+				
+			});
+			List<SimpleAttribute> opList = Lists.newArrayList(props);
+			if (opList.size() > 1) {
+				StringBuilder errMsg = new StringBuilder ("Duplicate attribute ");
+				errMsg.append(propName).append(" in exception ").append(exc.getName()).append(" version ").append(exc.getVersion().getVersion());
+				error (errMsg.toString(), ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME );
+			}
+		}
+	}
+	
+	@Check 
+	public void checkUniqueParamName (Parameter param) {
+		Operation op = (Operation) param.eContainer();
+		if (param.eContainingFeature().getName().equals("parameters")) {
+			final String paramName = param.getName();
+			Iterable<Parameter> params = Iterables.filter(op.getParameters(), new Predicate<Parameter>() {
+
+				public boolean apply (Parameter curParam) {
+					return curParam.getName().equals(paramName);
+				}
+				
+			});
+			List<Parameter> paramList = Lists.newArrayList(params);
+			if (paramList.size() > 1) {
+				StringBuilder errMsg = new StringBuilder ("Duplicate parameter ");
+				errMsg.append(paramName).append (" in operation ").append (op.getName());
+				error (errMsg.toString(), ServiceDslPackage.Literals.PARAMETER__NAME );
+			}
+			
+		} else if (param.eContainingFeature().getName().equals("return")) {
+			final String paramName = param.getName();
+			Iterable<Parameter> params = Iterables.filter(op.getReturn(), new Predicate<Parameter>() {
+
+				public boolean apply (Parameter curParam) {
+					return curParam.getName().equals(paramName);
+				}
+				
+			});
+			List<Parameter> paramList = Lists.newArrayList(params);
+			if (paramList.size() > 1) {
+				StringBuilder errMsg = new StringBuilder ("Duplicate return parameter ");
+				errMsg.append(paramName).append (" in operation ").append (op.getName());
+				error (errMsg.toString(), ServiceDslPackage.Literals.PARAMETER__NAME );
+			}
+			
+		}
+	}
+	
 	
 	// Call semantics
 	@Check(CheckType.NORMAL)
@@ -54,7 +196,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			Service s = (Service) svcRef.eContainer().eContainer();
 			if (s.getCategory() == ServiceCategory.ENTITY) {
 				if (svcRef.getService().getCategory() == ServiceCategory.PROCESS) {
-					error("Business entity services may not call business process services",
+					error ("Business entity services may not call business process services",
 							ServiceDslPackage.Literals.OPERATION__REQUIRES);
 				}
 			}
@@ -66,11 +208,11 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (b.eContainer() instanceof Reference) {
 			List<Property> props = new ArrayList<Property>();
 			props.addAll (b.getType().getProperties());
-			props.addAll (BusinessObjectQueryHelper.getAllInheritedProperties (b.getType()));
+			props.addAll (BusinessObjectQuery.getAllInheritedProperties (b.getType()));
 			
 			Iterable<Property> keys = Iterables.filter(props, new Predicate<Property> () {
 	
-				public boolean apply(final Property input) {
+				public boolean apply (final Property input) {
 					return input.isIsBusinessKey();
 				}
 				
@@ -87,7 +229,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (b.eContainer() instanceof Reference && b.getType() instanceof BusinessObject) {
 			List<Property> props = new ArrayList<Property>();
 			props.addAll (((BusinessObject)b.getType()).getProperties());
-			props.addAll (BusinessObjectQueryHelper.getAllInheritedProperties ((BusinessObject) b.getType()));
+			props.addAll (BusinessObjectQuery.getAllInheritedProperties ((BusinessObject) b.getType()));
 
 			Iterable<Property> keys = Iterables.filter (props, new Predicate<Property> () {
 	

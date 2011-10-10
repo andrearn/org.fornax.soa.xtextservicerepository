@@ -20,9 +20,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BusinessModel/organizations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BusinessModel/domains"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BizImport">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//BizImport/importURI"/>
-    </genClasses>
     <genClasses ecoreClass="platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Organization">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Organization/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Organization/competence"/>

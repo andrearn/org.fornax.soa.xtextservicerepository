@@ -8,6 +8,7 @@ import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslFactory;
 import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
+import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.EagerFetch;
@@ -32,14 +33,20 @@ public class BaseServiceDslTest {
 	protected org.fornax.soa.serviceDsl.Exception ex;
 	protected BusinessObject bo1;
 	protected Attribute attrBo1;
+	protected Attribute attrBo3;
+	protected Attribute attrBo4;
 	protected DataTypeRef stringTypeRef;
 	protected BusinessObject bo2;
+	protected BusinessObject bo3;
+	protected BusinessObject bo4;
 	protected Enumeration en;
 	protected Operation op;
 	protected Parameter p;
 	protected VersionedTypeRef paramBoRef;
 	protected ParameterRef paramRef;
 	protected VersionedTypeRef bo1_2_TypeRef;
+	protected BusinessObjectRef bo1_3_SuperTypeRef;
+	protected BusinessObjectRef bo3_4_SuperTypeRef;
 	protected Attribute attr2Bos1;
 	protected LinkingPolicy pol;
 	protected LinkingPolicy svcpol;
@@ -82,6 +89,52 @@ public class BaseServiceDslTest {
 		attr2Bos1.setName("attr2Bo1");
 		attr2Bos1.setType(bo1_2_TypeRef);
 		bo1.getProperties().add(attr2Bos1);
+		
+		bo3 = dslFactory.createBusinessObject();
+		bo3.setName("TestBO1");
+		Version v3 = baseDslFactory.createVersion();
+		v3.setVersion("1.0");
+		bo3.setVersion(v3);
+		bo3.setState(LifecycleState.DEVELOPMENT);
+
+		attrBo3 = dslFactory.createAttribute();
+		attrBo3.setName("attr3");
+		DataTypeRef string3TypeRef = dslFactory.createDataTypeRef();
+		string3TypeRef.setType(stringType);
+		attrBo3.setType(string3TypeRef);
+		
+		bo3.getProperties().add(attrBo3);
+
+		attrBo4 = dslFactory.createAttribute();
+		attrBo4.setName("attr4");
+		DataTypeRef string4TypeRef = dslFactory.createDataTypeRef();
+		string4TypeRef.setType(stringType);
+		attrBo4.setType(string4TypeRef);
+		
+		bo4 = dslFactory.createBusinessObject();
+		bo4.setName("TestBO1");
+		Version v4 = baseDslFactory.createVersion();
+		v4.setVersion("1.0");
+		bo4.setVersion(v4);
+		bo4.setState(LifecycleState.DEVELOPMENT);
+		
+		bo4.getProperties().add (attrBo4);
+
+		bo1_3_SuperTypeRef = dslFactory.createBusinessObjectRef();
+		bo1_3_SuperTypeRef.setType(bo3);
+		MajorVersionRef bo3VerRef = baseDslFactory.createMajorVersionRef();
+		bo3VerRef.setMajorVersion(1);
+		bo1_3_SuperTypeRef.setVersionRef(bo3VerRef);
+
+		bo3_4_SuperTypeRef = dslFactory.createBusinessObjectRef();
+		bo3_4_SuperTypeRef.setType(bo4);
+		MajorVersionRef bo4VerRef = baseDslFactory.createMajorVersionRef();
+		bo4VerRef.setMajorVersion(1);
+		bo3_4_SuperTypeRef.setVersionRef(bo4VerRef);
+		
+		bo1.setSuperBusinessObject(bo1_3_SuperTypeRef);
+		
+		bo3.setSuperBusinessObject(bo3_4_SuperTypeRef);
 
 		s = dslFactory.createService();
 		s.setName("TestService");

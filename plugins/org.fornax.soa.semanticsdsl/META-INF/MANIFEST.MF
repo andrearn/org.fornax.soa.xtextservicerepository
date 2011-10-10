@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.semanticsdsl
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.4.2.qualifier
+Bundle-Version: 1.4.3.qualifier
 Bundle-SymbolicName: org.fornax.soa.semanticsdsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;bundle-version="2.0.0",

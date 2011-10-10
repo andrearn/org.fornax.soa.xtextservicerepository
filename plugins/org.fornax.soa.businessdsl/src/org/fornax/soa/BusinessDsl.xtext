@@ -17,14 +17,10 @@ generate businessDsl "http://www.fornax.org/soa/BusinessDsl"
 import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as  semantics
 
 BusinessModel hidden(WS):
-	(imports+=BizImport)*
+	(imports+=Import)*
 	(organizations+=Organization)*
 	(domains+=Domain)*;
-	
-	
-BizImport hidden(WS):
-	'import' importURI=STRING;
-	
+		
 Organization hidden(WS):
 	'org' name=QualifiedName '{'
 		('competence' competence=STRING)?

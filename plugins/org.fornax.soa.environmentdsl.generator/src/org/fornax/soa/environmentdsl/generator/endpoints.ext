@@ -1,7 +1,18 @@
 import environmentDsl;
 
-String getSOAPHttpEndpointUrl (Server s) : s.getSOAPHttpEndpoint() != null ? ("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString()) :  null;
-String getSecuredSOAPHttpEndpointUrl (Server s) : s.getSOAPHttpEndpoint() != null ? ("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString()) :  null;
+String getSOAPHttpEndpointUrl (Server s) : s.getSOAPHttpEndpoint() != null ? (
+	s.getSOAPHttpEndpoint().contextRoot != null ? 
+		("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString() + s.getSOAPHttpEndpoint().contextRoot)
+	:
+		("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString())
+	) :  null;
+	
+String getSecuredSOAPHttpEndpointUrl (Server s) : s.getSOAPHttpEndpoint() != null ? (
+	s.getSOAPHttpEndpoint().contextRoot != null ? 
+		("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString() + s.getSOAPHttpEndpoint().contextRoot)
+	:
+		("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString())
+	) :  null;
 
 SOAPHTTP getSOAPHttpEndpoint (Server s) : null;
 cached SOAPHTTP getSOAPHttpEndpoint (AppServer s) : s.connectors.typeSelect (SOAPHTTP).first();

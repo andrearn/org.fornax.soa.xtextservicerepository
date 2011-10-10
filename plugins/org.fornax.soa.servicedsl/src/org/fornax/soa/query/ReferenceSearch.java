@@ -1,4 +1,4 @@
-package org.fornax.soa.search;
+package org.fornax.soa.query;
 
 import java.util.ArrayList;
 import java.util.List;

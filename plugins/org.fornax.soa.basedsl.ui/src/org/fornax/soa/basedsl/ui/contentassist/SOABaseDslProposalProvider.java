@@ -3,6 +3,8 @@
 */
 package org.fornax.soa.basedsl.ui.contentassist;
 
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -10,7 +12,6 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.ui.search.IXtextEObjectSearch;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
-import org.fornax.soa.basedsl.ui.contentassist.AbstractSOABaseDslProposalProvider;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -18,6 +19,7 @@ import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
+import com.google.common.collect.Lists;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
@@ -39,11 +41,25 @@ public class SOABaseDslProposalProvider extends AbstractSOABaseDslProposalProvid
 	}
 
 	public Iterable<String> getCanditateVersions(final String canditateName, final String canditateClassName, final Iterable<String> importedNamespaces, final boolean majorVersionsOnly) {
-		Iterable<IEObjectDescription> serviceCanditates = searchEngine.findMatches(canditateName + " ", canditateClassName);
-		if (!serviceCanditates.iterator().hasNext()) {
-			serviceCanditates = Iterables.concat(serviceCanditates, searchEngine.findMatches("*." + canditateName + " ", canditateClassName));
-			serviceCanditates = Iterables.filter(serviceCanditates, new Predicate<IEObjectDescription>() {
+		Iterable<IEObjectDescription> canditates = findByNameAndEClass(canditateName, canditateClassName, importedNamespaces);
+		return extractCanditateVersions (canditates, majorVersionsOnly);
+	}
 
+	public Iterable<String> getCanditateVersions(final String canditateName, final List<String> canditateClassName, final Iterable<String> importedNamespaces, final boolean majorVersionsOnly) {
+		List<IEObjectDescription> canditates = Lists.newArrayList();
+		for (String className : canditateClassName) {
+			List<IEObjectDescription> curCanditates = Lists.newArrayList (findByNameAndEClass (canditateName, className, importedNamespaces));
+			canditates.addAll (curCanditates);
+		}
+		return extractCanditateVersions (canditates, majorVersionsOnly);
+	}
+	
+	private Iterable<IEObjectDescription> findByNameAndEClass (final String canditateName, final String canditateClassName, final Iterable<String> importedNamespaces) {
+		Iterable<IEObjectDescription> ieObjDesc = searchEngine.findMatches (canditateName + " ", canditateClassName);
+		if (!ieObjDesc.iterator().hasNext()) {
+			ieObjDesc = Iterables.concat (ieObjDesc, searchEngine.findMatches("*." + canditateName + " ", canditateClassName));
+			ieObjDesc = Iterables.filter (ieObjDesc, new Predicate<IEObjectDescription>() {
+	
 				public boolean apply(IEObjectDescription desc) {
 					for (String impName : importedNamespaces) {
 						if (desc.getName().toString().equals(impName + "." + canditateName))
@@ -53,7 +69,11 @@ public class SOABaseDslProposalProvider extends AbstractSOABaseDslProposalProvid
 				}
 			});
 		}
-		Iterable<String> versions = Iterables.transform(serviceCanditates, new Function<IEObjectDescription, String> () {
+		return ieObjDesc;
+	}
+
+	private Iterable<String> extractCanditateVersions (Iterable<IEObjectDescription> canditates, final boolean majorVersionsOnly) {
+		Iterable<String> versions = Iterables.transform (canditates, new Function<IEObjectDescription, String> () {
 	
 			public String apply(IEObjectDescription from) {
 				String version = from.getUserData (VersionedResourceDescriptionStrategy.VERSION_KEY);

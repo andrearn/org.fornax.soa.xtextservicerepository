@@ -32,9 +32,8 @@ import com.google.common.collect.Lists;
  */
 public class ServiceDslProposalProvider extends AbstractServiceDslProposalProvider {
 
-	public void complete_VersionId(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		calculateVersionProposals(model, context, acceptor, false);
-			
+	public void complete_VersionId (EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		calculateVersionProposals (model, context, acceptor, false);
 	}
 	
 	public void complete_INT(EObject model, RuleCall ruleCall, ContentAssistContext context,
@@ -48,7 +47,7 @@ public class ServiceDslProposalProvider extends AbstractServiceDslProposalProvid
 		}
 	}	
 
-	private void calculateVersionProposals(EObject model,
+	private void calculateVersionProposals (EObject model,
 			ContentAssistContext context, ICompletionProposalAcceptor acceptor, boolean majorVersionsOnly) {
 		ICompositeNode parentNode = NodeModelUtils.findActualNodeFor (model).getParent();
 		Iterable<ILeafNode> leafs = parentNode.getLeafNodes();
@@ -146,6 +145,11 @@ public class ServiceDslProposalProvider extends AbstractServiceDslProposalProvid
 				for (String version : canditateVersions) {
 					acceptor.accept (createCompletionProposal (version, context));
 				}
+			} else {
+				if (majorVersionsOnly)
+					acceptor.accept (createCompletionProposal ("1", context));
+				else
+					acceptor.accept (createCompletionProposal ("1.0", context));
 			}
 		}
 	}

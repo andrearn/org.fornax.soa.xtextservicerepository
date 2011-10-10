@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.semanticsdsl.ui
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.4.2.qualifier
+Bundle-Version: 1.4.3.qualifier
 Bundle-SymbolicName: org.fornax.soa.semanticsdsl.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.fornax.soa.semanticsdsl;bundle-version="1.4.1";visibility:=reexport,

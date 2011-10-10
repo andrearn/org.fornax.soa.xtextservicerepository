@@ -28,7 +28,7 @@ public class BusinessDslFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
 		c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
 
-		c.setLinewrap(1, 1, 1).after(f.getBizImportRule());
+		c.setLinewrap(1, 1, 1).after(f.getImportRule());
 		c.setLinewrap(1, 2, 3).after(f.getDomainRule());
 		c.setLinewrap(1, 1, 1).after(f.getMemberRule());
 		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getBizLeadAssignment_4_1());
