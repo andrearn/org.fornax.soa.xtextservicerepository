@@ -17,6 +17,11 @@
       %license
    </license>
 
+   <url>
+      <discovery label="M2T Xpand Update Site" url="http://download.eclipse.org/modeling/m2t/xpand/updates/"/>
+      <discovery label="EMFT MWE Update Site" url="http://download.eclipse.org/modeling/emft/mwe/updates/"/>
+   </url>
+
    <plugin
          id="org.fornax.soa.basedsl.generator"
          download-size="0"

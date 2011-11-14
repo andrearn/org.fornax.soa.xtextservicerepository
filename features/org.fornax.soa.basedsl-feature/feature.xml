@@ -17,6 +17,10 @@
       %license
    </license>
 
+   <url>
+      <discovery label="TMF Project Update Site" url="http://download.eclipse.org/modeling/tmf/updates/"/>
+   </url>
+
    <plugin
          id="org.fornax.soa.basedsl"
          download-size="0"
