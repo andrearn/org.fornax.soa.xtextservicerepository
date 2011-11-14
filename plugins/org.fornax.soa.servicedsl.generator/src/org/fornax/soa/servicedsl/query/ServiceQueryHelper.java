@@ -16,7 +16,6 @@ public class ServiceQueryHelper {
 		List<List<Service>> sepSvc = new ArrayList<List<Service>>();
 		List<String> majorVersions = Lists.transform(services, new Function<Service, String> (){
 
-			@Override
 			public String apply(Service from) {
 				final String v = from.getVersion().getVersion();
 				return v.substring(0, v.indexOf("."));
@@ -26,7 +25,6 @@ public class ServiceQueryHelper {
 		for (final String majorVer : majorVersions) {
 			Iterable<Service> svcByMajorVer = Iterables.filter(services, new Predicate<Service> () {
 
-				@Override
 				public boolean apply(Service input) {
 					return input.getVersion().getVersion().startsWith (majorVer);
 				}

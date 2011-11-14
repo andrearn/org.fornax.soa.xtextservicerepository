@@ -20,6 +20,11 @@ String toTargetNamespace (Object svc) : "";
 String toTargetNamespace (Service svc) : 
 	svc.eContainer.toUnversionedNamespace() + 
 	"/" + svc.name + "/" + svc.toVersionPostfix() + "/";
+
+String toWrapperTargetNamespace (Object svc) : "";
+String toWrapperTargetNamespace (Service svc) : 
+	svc.eContainer.toUnversionedNamespace() + 
+	"/" + svc.name + "/" + svc.toVersionPostfix() + "/wrapped/";
 	
 String toVersionPostfix (Service svc) :
 	svc.version != null ? svc.version.toVersionPostfix() : toDefaultVersionPostfix();
@@ -32,3 +37,13 @@ String getWsdlFilename(Service s) : s.eContainer.getFileNameFragment() + "-v" + 
 
 boolean operationsUseExtendableParameters (sOAProfileDsl::SOAProfile p) : p.designRules != null && p.designRules.serviceDefPolicy != null && p.designRules.serviceDefPolicy.extendableParameters ? true : false;		
 boolean operationsUseExtendableXMLAttributes (sOAProfileDsl::SOAProfile p) : p.designRules != null && p.designRules.serviceDefPolicy != null && p.designRules.serviceDefPolicy.extendableXMLAttributes ? true : false;		
+
+String toOperationWrapperRequestType (Operation op) : op.name.toFirstUpper();
+String toOperationWrapperResponseType (Operation op) : op.name.toFirstUpper() + "Response";
+
+String getWrappedWSDLFileName(Service s) : s.getFileNameFragment() + "Wrapped.wsdl";
+String getRegisteredOperationWrapperUrl (Service s, String registryUrl) : 
+	registryUrl != null && !forceRelativePaths() ? 
+		registryUrl + "/" + s.getWrappedWSDLFileName() 
+	: 
+		s.getWrappedWSDLFileName();

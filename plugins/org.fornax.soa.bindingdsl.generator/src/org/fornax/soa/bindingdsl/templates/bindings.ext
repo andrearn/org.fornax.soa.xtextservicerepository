@@ -19,6 +19,7 @@ String getRegistryBaseUrl (OperationBinding b) : b.eContainer.getRegistryBaseUrl
 String getRegistryBaseUrl (ModuleBinding b) : b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
 String getRegistryBaseUrl (Environment env) : env.defaultRegistry.baseUrl.stripTrailingSlash();
 
+/*
 boolean isEligibleForEnvironment(Service svc, Environment env) :
 	switch (env.type) {
 		case EnvironmentType::Prod: {
@@ -40,6 +41,7 @@ boolean isEligibleForEnvironment(Service svc, Environment env) :
 		}
 		
 	};
+*/
 
 Binding getMostSpecificBinding (DomainBinding b, Service s) : b.serviceBinding.select(e|e.service.service == s).size > 0 ? b.serviceBinding.selectFirst(e|e.service.service == s) : b;
 List[BindingProtocol] getProviderProtocols (DomainBinding b) : b.protocol;
@@ -86,3 +88,5 @@ String getServiceVisibilityName (Service s) :
 	case VISIBILITY::domain : "Domain"
 	default: "Private"
 	};
+	
+boolean isEligibleForEnvironment (Service s, Environment env) : s.state.matchesMinStateLevel (env.getMinLifecycleState(s));

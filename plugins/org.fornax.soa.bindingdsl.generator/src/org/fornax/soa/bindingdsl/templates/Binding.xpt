@@ -246,10 +246,12 @@
 	«FOREACH specificBinding.protocol AS prot-»
 		«IF SOAP.isInstance(prot)-»
 			«LET (SOAP)prot AS soapProt-»
-				«IF s.isPublicEndpoint (provider.provServer)-»
-					«EXPAND soap::ConcreteWsdl::WSDL(s, prot, profile) FOR this»
-				«ELSE-»
-					«EXPAND soap::ConcreteProviderWsdl::WSDL(this, prot, profile) FOR s»
+				«IF s.providedContractUrl == null && s.isEligibleForEnvironment (this.environment) »
+					«IF s.isPublicEndpoint (provider.provServer)-»
+						«EXPAND soap::ConcreteWsdl::WSDL(s, prot, profile) FOR this»
+					«ELSE-»
+						«EXPAND soap::ConcreteProviderWsdl::WSDL(this, prot, profile) FOR s»
+					«ENDIF»
 				«ENDIF»
 			«ENDLET»
 		«ENDIF»

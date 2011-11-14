@@ -104,7 +104,6 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 			return ele.getName();
 		}
 	}
-
 	String image (Attribute ele) {
 		return "full/obj16/field_public_obj.gif";
 	}
