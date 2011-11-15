@@ -225,11 +225,11 @@
 				«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
 				«IF noDeps-»
 					«FOREACH {svc.getSubdomain()} AS ns»
-						«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl(), nodeps, includeSubNamespaces) FOR ns»
+						«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl(), noDeps, includeSubNamespaces) FOR ns»
 					«ENDFOREACH»
 				«ELSE»
 					«FOREACH {svc.getSubdomain()}.union(svc.getSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
-						«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl(), nodeps, includeSubNamespaces) FOR ns»
+						«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl(), noDeps, includeSubNamespaces) FOR ns»
 					«ENDFOREACH»
 					«IF forceRelativePaths()»
 						«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD FOR profile»
