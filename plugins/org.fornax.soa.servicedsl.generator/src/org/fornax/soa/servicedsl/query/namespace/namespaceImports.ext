@@ -58,9 +58,13 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s, LifecycleState minState) : 
 	s.allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).toSet();
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s, LifecycleState minState, Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited) : 
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (
+	org::fornax::soa::servicedsl::VersionedDomainNamespace s, 
+	LifecycleState minState, 
+	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
+	) : 
 	! visited.contains(s) ? 
-		s.subdomain.allImportedVersionedNS(s.version, minState).allImportedVersionedNS(minState, visited.add(s).toSet())
+		s.subdomain.allImportedVersionedNS (s.version, minState).allImportedVersionedNS (minState, visited.add(s).toSet())
 	: visited;
 
 
@@ -72,9 +76,12 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s) : 
 	s.allImportedVersionedNS ((Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).toSet();
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s, Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited) :
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (
+	org::fornax::soa::servicedsl::VersionedDomainNamespace s, 
+	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
+	) :
 	! visited.contains(s) ? 
-		s.subdomain.allImportedVersionedNS(s.version).allImportedVersionedNS(visited.add(s).toSet())
+		s.subdomain.allImportedVersionedNS (s.version).allImportedVersionedNS (visited.add(s).toSet())
 	: visited;
 
 
@@ -115,3 +122,102 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
 	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
 	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).superException.reject(e|e == null).getLatestMatchingException().createVersionedDomainNamespace())
 	.union ({s.createVersionedDomainNamespace()});
+
+	
+	
+
+/*
+ *	All direct imports
+ */
+ 
+/**
+ *	Calculate all dependencies of the given Service version and LifecycleState. Dependencies must match
+ *	the given minimal LifecycleState
+ *	@deprecated ?
+ *
+ *	@param svc	The Service with it's version to calculate the imports for
+ */
+Set[SubNamespace] importedSubNamespaces (Type t, LifecycleState minState) : 
+	t.allReferencedVersionedTypes (minState).getSubdomain().toSet();
+
+
+/**
+ *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
+ *	are derived from the versioned dependencies of the given Type considering the minimal LifecycleState required by the 
+ *	given Type. The owning VersiondDomainNamespace of the found dependencies are returned.
+ */
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (Type t, LifecycleState minState) :
+	t.allReferencedVersionedTypes(minState).createVersionedDomainNamespace().toSet();
+
+
+/**
+ *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
+ *	are derived from the versioned dependencies of the given Type considering the minimal LifecycleState required by the 
+ *	given Type. The owning VersiondDomainNamespace of the found dependencies are returned.
+ */
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s, LifecycleState minState) : 
+	s.importedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).toSet();
+
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (
+	org::fornax::soa::servicedsl::VersionedDomainNamespace s, 
+	LifecycleState minState, 
+	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
+	) : 
+	s.subdomain.importedVersionedNS (s.version, minState);
+
+
+/**
+ *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
+ *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
+ *	VersionedDomainNamespace. The owning VersiondDomainNamespace of the found dependencies are returned.
+ */
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s) : 
+	s.importedVersionedNS ((Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).toSet();
+
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (
+	org::fornax::soa::servicedsl::VersionedDomainNamespace s, 
+	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
+	) :
+	s.subdomain.importedVersionedNS (s.version);
+
+
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (Object s, String nameSpaceMajorVersion, LifecycleState minState) : null;
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (Object s, String nameSpaceMajorVersion) : null;
+
+/**
+ *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
+ *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
+ *	SubNamespace matching the given major version. The owning VersiondDomainNamespace of the found dependencies are returned.
+ */
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (SubNamespace s, String nameSpaceMajorVersion, LifecycleState minState) :
+	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (BusinessObject)
+	.allReferencedVersionedTypes (minState).createVersionedDomainNamespace()
+	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
+	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).superException.reject(e|e == null).getLatestMatchingException().createVersionedDomainNamespace());
+
+/**
+ *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
+ *	are derived from the versioned dependencies of all owned VersiondTypes in the given 
+ *	TechnicalNamespace matching the given major version. The owning VersiondDomainNamespace 
+ *	of the found dependencies are returned.
+ */
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (sOAProfileDsl::TechnicalNamespace s, String nameSpaceMajorVersion) :
+	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (sOAProfileDsl::Class)
+	.allReferencedVersionedTypes().createVersionedDomainNamespace();
+
+/**
+ *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
+ *	are derived from the versioned dependencies of the given Service (versioned). The owning 
+ *	VersiondDomainNamespace of the found dependencies are returned.
+ */
+Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) :
+	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (BusinessObject)
+		.allReferencedVersionedTypes(minState).createVersionedDomainNamespace()
+	.union (s.allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
+	.union (s.allReferencedExceptions().createVersionedDomainNamespace())
+	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
+	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).superException.reject(e|e == null).getLatestMatchingException().createVersionedDomainNamespace())
+	.union ({s.createVersionedDomainNamespace()});
+
+	
+	
