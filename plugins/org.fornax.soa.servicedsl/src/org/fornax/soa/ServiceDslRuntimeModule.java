@@ -3,7 +3,9 @@
  */
 package org.fornax.soa;
 
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.fornax.soa.basedsl.documentation.DocFeatureDocumationProvider;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
