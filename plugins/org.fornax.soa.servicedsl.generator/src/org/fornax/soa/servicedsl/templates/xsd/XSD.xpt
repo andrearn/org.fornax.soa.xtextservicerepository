@@ -74,7 +74,7 @@
 «DEFINE XSDVersion (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
 «FILE getFileNameFragment() + ".xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema xmlns:tns="«toNamespace()»"
-	«EXPAND NamespaceDeclaration FOREACH importedVersionedNS (minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 
+	«EXPAND NamespaceDeclaration FOREACH importedVersionedNS (minState)-» 
 	xmlns="«toNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
@@ -86,7 +86,7 @@
 	attributeFormDefault="unqualified"
 	targetNamespace="«toNamespace()»"
 	>
-	«EXPAND ImportDeclaration (registryBaseUrl) FOREACH importedVersionedNS(minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 	
+	«EXPAND ImportDeclaration (registryBaseUrl) FOREACH importedVersionedNS(minState).reject(e|e.toNamespace() == toNamespace())-» 	
 	«IF SubNamespace.isInstance(subdomain)-»
 		«EXPAND ComplexType (this, profile, minState) FOREACH types.typeSelect(BusinessObject).reject(e|e.state == LifecycleState::retired).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(),  minState))-»
 		«EXPAND SimpleType (minState) FOREACH types.typeSelect(Enumeration).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(), minState))-»
@@ -101,7 +101,7 @@
 «DEFINE XSDVersion (LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) FOR org::fornax::soa::servicedsl::VersionedDomainNamespace»
 «FILE getFileNameFragment() + ".xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema xmlns:tns="«toNamespace()»"
-	«EXPAND NamespaceDeclaration FOREACH importedVersionedNS (minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber())-» 
+	«EXPAND NamespaceDeclaration FOREACH importedVersionedNS (minState)-» 
 	xmlns="«toNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
@@ -113,7 +113,7 @@
 	attributeFormDefault="unqualified"
 	targetNamespace="«toNamespace()»"
 	>
-	«EXPAND ImportDeclaration (registryBaseUrl) FOREACH importedVersionedNS(minState).reject(e|e.subdomain == subdomain && e.version.toMajorVersionNumber() == version.toMajorVersionNumber()).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState))-» 	
+	«EXPAND ImportDeclaration (registryBaseUrl) FOREACH importedVersionedNS(minState).reject(e|e.toNamespace() == toNamespace())-» 	
 	«IF SubNamespace.isInstance(subdomain)-»
 		«EXPAND ComplexType (this, profile, minState) FOREACH types.typeSelect(BusinessObject).reject(e|e.state == LifecycleState::retired).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(),  minState))-»
 		«EXPAND SimpleType (minState) FOREACH types.typeSelect(Enumeration).select (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (version.toMajorVersionNumber().asInteger(), minState))-»

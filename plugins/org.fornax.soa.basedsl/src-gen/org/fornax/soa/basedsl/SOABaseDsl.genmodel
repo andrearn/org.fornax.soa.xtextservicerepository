@@ -8,47 +8,47 @@
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.basedsl.edit"
     editorPluginID="org.fornax.soa.basedsl.editor">
   <genPackages prefix="SOABaseDsl" basePackage="org.fornax.soa.basedsl" disposableProviderFactory="true"
-      ecorePackage="SOABaseDsl.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOABaseDsl.ecore#//LifecycleState">
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/proposed"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/defined"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/development"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/test"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/productive"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/deprecated"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/retired"/>
+      ecorePackage="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LifecycleState">
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LifecycleState/proposed"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LifecycleState/defined"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LifecycleState/development"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LifecycleState/test"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LifecycleState/productive"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LifecycleState/deprecated"/>
+      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LifecycleState/retired"/>
     </genEnums>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//Import">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Import/importedNamespace"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Import">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Import/importedNamespace"/>
     </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//VersionedName">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//VersionedName/version"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionedName">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionedName/version"/>
     </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//Version">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Version/version"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Version">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Version/version"/>
     </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//VersionRef"/>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//MinVersionRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//MinVersionRef/minVersion"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//MinVersionRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//MinVersionRef/minVersion"/>
     </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//MaxVersionRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//MaxVersionRef/maxVersion"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//MaxVersionRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//MaxVersionRef/maxVersion"/>
     </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//LowerBoundRangeVersionRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//LowerBoundRangeVersionRef/minVersion"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//LowerBoundRangeVersionRef/maxVersion"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LowerBoundRangeVersionRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LowerBoundRangeVersionRef/minVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//LowerBoundRangeVersionRef/maxVersion"/>
     </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//MajorVersionRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//MajorVersionRef/majorVersion"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//MajorVersionRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//MajorVersionRef/majorVersion"/>
     </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//FixedVersionRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//FixedVersionRef/fixedVersion"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//FixedVersionRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//FixedVersionRef/fixedVersion"/>
     </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//Qualifier">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Qualifier/qualifierName"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Qualifier">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Qualifier/qualifierName"/>
     </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//AbstractType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//AbstractType/name"/>
+    <genClasses ecoreClass="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//AbstractType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//AbstractType/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

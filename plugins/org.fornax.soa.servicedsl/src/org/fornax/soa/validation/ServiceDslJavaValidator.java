@@ -7,6 +7,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
+import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
 import org.fornax.soa.basedsl.validation.PluggableChecks;
@@ -408,7 +409,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 					ServiceDslPackage.Literals.PROPERTY__IS_BUSINESS_KEY);
 	}
 
-	@Check(CheckType.NORMAL)
+	@Check
 	public void checkNoDirectNamespaceCycle(Property p) {
 		if (p.getType() instanceof VersionedTypeRef) {
 			final EObject ownNs = p.eContainer().eContainer();
@@ -434,6 +435,15 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 				}
 			}
 		}
+	}
+	
+	@Check 
+	void checkPropertyLessBOisAbstractOrProposal (BusinessObject bo) {
+		if (BusinessObjectQuery.getAllVisibleProperties(bo).isEmpty())
+			if (bo.getState() == LifecycleState.PROPOSED && !bo.isAbstract())
+				warning ("The businessObject " + bo.getName() + " version " + bo.getVersion().getVersion() + " has no own or inherited properties! As the businessObject is treaded as an proposal this is toleraed. However, it must have properties after leaving the proposal state or must be declared abstract!", ServiceDslPackage.Literals.VERSIONED_TYPE__NAME);
+			else if (!bo.isAbstract())
+				error ("The businessObject " + bo.getName() + " version " + bo.getVersion().getVersion() + " has no own or inherited properties! The businessObject must be declared abstract!", ServiceDslPackage.Literals.VERSIONED_TYPE__NAME);
 	}
 
 	private ReferencedStateChecker createStateChecker(EObject owner) {

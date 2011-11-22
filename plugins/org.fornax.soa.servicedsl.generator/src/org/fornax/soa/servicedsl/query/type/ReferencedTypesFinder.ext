@@ -9,6 +9,9 @@ extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 extension org::fornax::soa::servicedsl::query::type::LatestMatchingTypeFinder;
 
 
+extension org::eclipse::xtend::util::stdlib::io;
+
+
 List[serviceDsl::TypeRef] allReferencedTypeRefs (Type t) : {};
 
 List[serviceDsl::TypeRef] allReferencedTypeRefs (BusinessObject t) : 

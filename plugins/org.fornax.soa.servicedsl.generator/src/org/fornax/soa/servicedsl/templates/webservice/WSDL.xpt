@@ -81,7 +81,7 @@
 «DEFINE Types(LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 	<wsdl:types>
 		<xsd:schema targetNamespace="«toTargetNamespace()»"
-			«FOREACH importedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+			«FOREACH importedVersionedNS(version.toMajorVersionNumber(), minState) AS imp-»
 			xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 			«ENDFOREACH-»
 			«IF this.getBestMatchingHeader(profile) != null-»
@@ -92,7 +92,7 @@
 			elementFormDefault="qualified"
 			attributeFormDefault="unqualified"
 		>
-			«FOREACH importedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+			«FOREACH importedVersionedNS(version.toMajorVersionNumber(), minState) AS imp-»
 			<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
 				namespace="«imp.toNamespace()»"/>
 			«ENDFOREACH-»

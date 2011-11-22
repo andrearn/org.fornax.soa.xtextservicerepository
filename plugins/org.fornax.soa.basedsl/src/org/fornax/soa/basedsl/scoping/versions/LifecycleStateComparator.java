@@ -35,6 +35,8 @@ public class LifecycleStateComparator {
 		} else if (s1 == LifecycleState.DEPRECATED) {
 			if (s2 == LifecycleState.RETIRED)
 				return 1;
+			else if (s2 == LifecycleState.PRODUCTIVE)
+				return 0;
 			else
 				return -1;
 		} else {

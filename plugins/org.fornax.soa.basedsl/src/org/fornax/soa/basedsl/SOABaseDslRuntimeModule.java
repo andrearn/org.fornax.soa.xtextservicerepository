@@ -31,9 +31,5 @@ public class SOABaseDslRuntimeModule extends org.fornax.soa.basedsl.AbstractSOAB
 	public void configureIDefaultResourceDescriptionStrategy (Binder binder) {
 		binder.bind(IDefaultResourceDescriptionStrategy.class).to(VersionedResourceDescriptionStrategy.class);
 	}
-	
-	public void configureIEObjectDocumentationProvider (Binder binder) {
-		binder.bind(IEObjectDocumentationProvider.class).to(DocFeatureDocumationProvider.class);
-	}
 
 }

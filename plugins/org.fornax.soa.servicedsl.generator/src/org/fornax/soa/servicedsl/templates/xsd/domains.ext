@@ -82,11 +82,12 @@ String toUnversionedNamespace (sOAProfileDsl::OrganizationNamespace domain) : "h
 
 String toUnversionedNamespace (SubNamespace leafDomainNamespace) : "http://" + 
 	leafDomainNamespace.getOrgNamespace().toHostPart() + "/" + 
-	{leafDomainNamespace}.getSubNamespacePath().name.replaceAll("\\.","/").toString("/");
+	{leafDomainNamespace}.getSubNamespacePath().name.stripXtextEscapes().replaceAll("\\.","/").toString("/");
 
-String toUnversionedNamespace (sOAProfileDsl::TechnicalNamespace leafDomainNamespace) : "http://" + 
+String toUnversionedNamespace (sOAProfileDsl::TechnicalNamespace leafDomainNamespace) : 
+	"http://" + 
 	leafDomainNamespace.getOrgNamespace().toHostPart() + "/" + 
-	{leafDomainNamespace}.getNamespacePath().name.replaceAll("\\.","/").toString("/");
+	{leafDomainNamespace}.getNamespacePath().name.stripXtextEscapes().replaceAll("\\.","/").toString("/");
 
 String toUnversionedNamespace (org::fornax::soa::servicedsl::VersionedDomainNamespace s) : 
 	s.subdomain.toUnversionedNamespace();
@@ -105,6 +106,12 @@ List[SubNamespace] getSubNamespacePath (List[SubNamespace] domList) :
 
 List[sOAProfileDsl::TechnicalNamespace] getNamespacePath (Object o) : {};
 
+/*List[sOAProfileDsl::TechnicalNamespace] getNamespacePath (List[SubNamespace] nsList) : 
+	SubNamespace.isInstance(nsList.last().eContainer) ? 
+		getNamespacePath (nsList.add ((SubNamespace)nsList.last().eContainer) -> nsList)
+	: 
+		nsList.typeSelect(SubNamespace).reverse();*/
+		
 List[sOAProfileDsl::TechnicalNamespace] getNamespacePath (List[sOAProfileDsl::TechnicalNamespace] nsList) : 
 	sOAProfileDsl::TechnicalNamespace.isInstance(nsList.last().eContainer) ? 
 		getNamespacePath (nsList.add ((sOAProfileDsl::TechnicalNamespace)nsList.last().eContainer) -> nsList)

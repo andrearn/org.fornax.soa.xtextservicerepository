@@ -97,12 +97,12 @@ BusinessObject:
 		(properties+=Property)*
 	'}';
 
-TypeRef : DataTypeRef | VersionedTypeRef;
+TypeRef : DataTypeRef | AbstractVersionedTypeRef;
 
 DataTypeRef: 
 	type=[profileDsl::DataType|QualifiedName] (many?='[]' (set?='as set')? )? ;
 
-//AbstractVersionedTypeRef:  VersionedTypeRef | EnumTypeRef | BusinessObjectRef;
+AbstractVersionedTypeRef:  VersionedTypeRef | EnumTypeRef | BusinessObjectRef;
 
 VersionedTypeRef:
 	type=[VersionedType|QualifiedName] (many?='[]' (set?='as set')? )? versionRef=VersionRef;

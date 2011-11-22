@@ -163,7 +163,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS 
 	LifecycleState minState, 
 	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
 	) : 
-	s.subdomain.importedVersionedNS (s.version, minState);
+	((SubDomain)s.subdomain).importedVersionedNS (s.version, minState);
 
 
 /**
@@ -178,7 +178,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS 
 	org::fornax::soa::servicedsl::VersionedDomainNamespace s, 
 	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
 	) :
-	s.subdomain.importedVersionedNS (s.version);
+	((SubDomain)s.subdomain).importedVersionedNS (s.version);
 
 
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (Object s, String nameSpaceMajorVersion, LifecycleState minState) : null;
@@ -193,7 +193,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS 
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (BusinessObject)
 	.allReferencedVersionedTypes (minState).createVersionedDomainNamespace()
 	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
-	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).superException.reject(e|e == null).getLatestMatchingException().createVersionedDomainNamespace());
+	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).superException.reject(e|e == null).getLatestMatchingException().createVersionedDomainNamespace()).toSet();
 
 /**
  *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces

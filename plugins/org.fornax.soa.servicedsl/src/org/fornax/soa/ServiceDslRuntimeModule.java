@@ -34,5 +34,10 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 	public void configureIDefaultResourceDescriptionStrategy (Binder binder) {
 		binder.bind(IDefaultResourceDescriptionStrategy.class).to(VersionedResourceDescriptionStrategy.class);
 	}
+	
+	public void configureIEObjectDocumentationProvider (Binder binder) {
+		binder.bind(IEObjectDocumentationProvider.class).to(DocFeatureDocumationProvider.class);
+	}
+
 }
 

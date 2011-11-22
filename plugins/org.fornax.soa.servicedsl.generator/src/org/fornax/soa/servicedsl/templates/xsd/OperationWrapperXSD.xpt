@@ -36,7 +36,7 @@
 <xsd:schema targetNamespace="«toWrapperTargetNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState) AS imp-»
 	xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 	«ENDFOREACH-»
 	«IF this.getBestMatchingHeader(profile) != null-»
@@ -48,7 +48,7 @@
 	attributeFormDefault="unqualified"
 	>
 	
-	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState) AS imp-»
 	<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
 		namespace="«imp.toNamespace()»"/>
 	«ENDFOREACH-»
@@ -77,7 +77,7 @@
 «FILE subDom.getFileNameFragment() + "-" + name + "-" + version.toVersionPostfix() + "OpWrappers.xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema targetNamespace="«toWrapperTargetNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState) AS imp-»
 	xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 	«ENDFOREACH-»
 	«IF this.getBestMatchingHeader(profile) != null-»
@@ -89,7 +89,7 @@
 	attributeFormDefault="unqualified"
 	>
 	
-	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState).select(e|e.hasTypesInMinState(minState) || e.hasExceptionsInMinState(minState)) AS imp-»
+	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState) AS imp-»
 	<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
 		namespace="«imp.toNamespace()»"/>
 	«ENDFOREACH-»

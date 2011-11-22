@@ -92,6 +92,19 @@
         </page>
     </extension>
     <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="org.fornax.soa.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.fornax.soa.ServiceDsl"
+            name="ServiceDsl">
+            <keywordReference id="org.fornax.soa.ui.keyword_ServiceDsl"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
+    <extension
         point="org.eclipse.ui.keywords">
         <keyword
             id="org.fornax.soa.ui.keyword_ServiceDsl"
@@ -245,6 +258,15 @@
          </command>
       </menuContribution>
    </extension>
+   <extension point="org.eclipse.ui.preferencePages">
+	    <page
+	        category="org.fornax.soa.ServiceDsl"
+	        class="org.fornax.soa.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="org.fornax.soa.ServiceDsl.refactoring"
+	        name="Refactoring">
+	        <keywordReference id="org.fornax.soa.ui.keyword_ServiceDsl"/>
+	    </page>
+	</extension>
 
    <extension
          point="org.eclipse.ui.newWizards">

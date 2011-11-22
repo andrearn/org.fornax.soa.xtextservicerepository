@@ -3,11 +3,13 @@
  */
 package org.fornax.soa;
 
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+import org.fornax.soa.businessdsl.documentation.BusinessDslDocumentationProvider;
 
 import com.google.inject.Binder;
 
@@ -27,6 +29,10 @@ public class BusinessDslRuntimeModule extends org.fornax.soa.AbstractBusinessDsl
 	
 	public void configureIDefaultResourceDescriptionStrategy (Binder binder) {
 		binder.bind(IDefaultResourceDescriptionStrategy.class).to(VersionedResourceDescriptionStrategy.class);
+	}
+	
+	public void configureIEObjectDocumentationProvider (Binder binder) {
+		binder.bind(IEObjectDocumentationProvider.class).to(BusinessDslDocumentationProvider.class);
 	}
 
 }
