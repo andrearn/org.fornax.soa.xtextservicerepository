@@ -29,4 +29,6 @@ Export-Package: org.fornax.soa,
  org.fornax.soa.parseTreeConstruction,
  org.fornax.soa.parser.antlr,
  org.fornax.soa.parser.antlr.internal,
- org.fornax.soa.validation
+ org.fornax.soa.validation,
+ org.fornax.soa.scoping,
+ org.fornax.soa.formatting

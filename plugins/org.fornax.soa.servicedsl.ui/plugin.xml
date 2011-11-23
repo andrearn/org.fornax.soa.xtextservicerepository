@@ -173,7 +173,6 @@
 
 
 
-
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
@@ -236,7 +235,7 @@
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.fornax.soa.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RenameElementHandler"
+			class="org.fornax.soa.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.IRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
@@ -273,7 +272,6 @@
       <wizard
             category="org.eclipse.xtext.projectwiz"
             class="org.fornax.soa.ui.ServiceDslExecutableExtensionFactory:org.fornax.soa.ui.wizard.ServiceDslNewProjectWizard"
-            icon="icons/editor.gif"
             id="org.fornax.soa.ui.wizard.ServiceDslNewProjectWizard"
             name="ServiceDsl Project"
             project="true">

@@ -23,11 +23,13 @@ public class ReferenceSearch {
 		final URI eObjectTargetURI = EcoreUtil.getURI(o);
 		List<IReferenceDescription> searchResult = new ArrayList<IReferenceDescription>();
 		for (IResourceDescription resourceDescription : resourceDescriptions.getAllResourceDescriptions()) {
-			Iterable<IReferenceDescription> matchingReferenceDescriptors = Iterables.filter(resourceDescription
+			Iterable<IReferenceDescription> matchingReferenceDescriptors = Iterables.filter (resourceDescription
 					.getReferenceDescriptions(), new Predicate<IReferenceDescription>() {
+				
 				public boolean apply(IReferenceDescription input) {
-					return eObjectTargetURI.equals(input.getTargetEObjectUri());
+					return eObjectTargetURI.equals (input.getTargetEObjectUri());
 				}
+				
 			});
 			for (IReferenceDescription matchingReferenceDescription : matchingReferenceDescriptors) {
 				searchResult.add (matchingReferenceDescription);

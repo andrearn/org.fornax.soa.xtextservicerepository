@@ -6,52 +6,53 @@
     modelPluginID="org.fornax.soa.moduledsl" forceOverwrite="true" modelName="ModuleDsl"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.moduledsl.edit"
-    editorPluginID="org.fornax.soa.moduledsl.editor" usedGenPackages="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.genmodel#//serviceDsl">
+    editorPluginID="org.fornax.soa.moduledsl.editor" usedGenPackages="../../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl ../../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.genmodel#//serviceDsl">
   <genPackages prefix="ModuleDsl" basePackage="org.fornax.soa.moduledsl" disposableProviderFactory="true"
-      ecorePackage="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType">
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/OTHER"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/JAR"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/WAR"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/EAR"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/OSGi"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/SCAComposite"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/SCA_EAR"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/WebMethods"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/dotNet"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/ZIP"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//AssemblyType/DLL"/>
+      ecorePackage="ModuleDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ModuleDsl.ecore#//AssemblyType">
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/OTHER"/>
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/JAR"/>
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/WAR"/>
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/EAR"/>
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/OSGi"/>
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/SCAComposite"/>
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/SCA_EAR"/>
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/WebMethods"/>
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/dotNet"/>
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/ZIP"/>
+      <genEnumLiterals ecoreEnumLiteral="ModuleDsl.ecore#//AssemblyType/DLL"/>
     </genEnums>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ModuleModel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ModuleModel/imports"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ModuleModel/modules"/>
+    <genClasses ecoreClass="ModuleDsl.ecore#//ModuleModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ModuleModel/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ModuleModel/modules"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/external"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/version"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/state"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/owner"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/assemblyType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/assemblyTypeDetails"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/providedServices"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/usedServices"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/source"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//Module/revisionTag"/>
+    <genClasses ecoreClass="ModuleDsl.ecore#//Module">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/external"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//Module/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/state"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/owner"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/assemblyType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/assemblyTypeDetails"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/deploymentModuleName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//Module/providedServices"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//Module/usedServices"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/source"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/revisionTag"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ServiceRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ServiceRef/service"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ServiceRef/versionRef"/>
+    <genClasses ecoreClass="ModuleDsl.ecore#//ServiceRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ServiceRef/service"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ServiceRef/versionRef"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ImportServiceRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ImportServiceRef/service"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ImportServiceRef/versionRef"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ImportServiceRef/module"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ImportServiceRef/qualifier"/>
+    <genClasses ecoreClass="ModuleDsl.ecore#//ImportServiceRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/service"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/versionRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/module"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/qualifier"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ModuleRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ModuleRef/module"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore#//ModuleRef/version"/>
+    <genClasses ecoreClass="ModuleDsl.ecore#//ModuleRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ModuleRef/module"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ModuleRef/version"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

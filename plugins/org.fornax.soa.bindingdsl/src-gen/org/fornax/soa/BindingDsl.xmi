@@ -975,8 +975,13 @@
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SCA"/>
       </type>
       <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SCA"/>
+          </type>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="SCA"/>
-        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>

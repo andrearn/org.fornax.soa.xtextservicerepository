@@ -84,7 +84,7 @@ public class LifecycleStateComparatorTest {
 		assertEquals(-1, LifecycleStateComparator.compare(deprecatedState, definedState));
 		assertEquals(-1, LifecycleStateComparator.compare(deprecatedState, developmentState));
 		assertEquals(-1, LifecycleStateComparator.compare(deprecatedState, testState));
-		assertEquals(-1, LifecycleStateComparator.compare(deprecatedState, productiveState));
+		assertEquals(0, LifecycleStateComparator.compare(deprecatedState, productiveState));
 
 		assertEquals(-1, LifecycleStateComparator.compare(productiveState, proposedState));
 		assertEquals(-1, LifecycleStateComparator.compare(productiveState, definedState));

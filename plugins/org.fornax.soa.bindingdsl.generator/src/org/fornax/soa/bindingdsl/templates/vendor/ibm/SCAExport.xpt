@@ -51,5 +51,23 @@
 «ENDFILE»
 «ENDDEFINE»
 
+«DEFINE ServiceExport (ModuleBinding modBind, Service svc, sOAProfileDsl::SOAProfile profile) FOR bindingDsl::SCA»
+«FILE svc.getExportFileName (this)-»
+<?xml version="1.0" encoding="UTF-8"?>
+<scdl:export 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xmlns:jaxws="http://www.ibm.com/xmlns/prod/websphere/scdl/jaxws/6.0.0" 
+		xmlns:ns1="«svc.toTargetNamespace()»" 
+		xmlns:scdl="http://www.ibm.com/xmlns/prod/websphere/scdl/6.0.0" 
+		xmlns:wsdl="http://www.ibm.com/xmlns/prod/websphere/scdl/wsdl/6.0.0" 
+		displayName="«svc.getExportDisplayName (this)»" 
+		name="«svc.getExportName (this)»"> 
+	<interfaces>
+		<interface xsi:type="wsdl:WSDLPortType" preferredInteractionStyle="sync" portType="ns1:«svc.name»"/>
+	</interfaces>
+</scdl:export>
+«ENDFILE»
+«ENDDEFINE»
+
 «DEFINE SCAModuleExport FOR bindingDsl::SCA»
 «ENDDEFINE»

@@ -45,9 +45,11 @@ public class BaseServiceDslTest {
 	protected VersionedTypeRef paramBoRef;
 	protected ParameterRef paramRef;
 	protected VersionedTypeRef bo1_2_TypeRef;
+	protected VersionedTypeRef bo2_1_TypeRef;
 	protected BusinessObjectRef bo1_3_SuperTypeRef;
 	protected BusinessObjectRef bo3_4_SuperTypeRef;
 	protected Attribute attr2Bos1;
+	protected Attribute attr1Bos2;
 	protected LinkingPolicy pol;
 	protected LinkingPolicy svcpol;
 
@@ -75,7 +77,7 @@ public class BaseServiceDslTest {
 		bo1.getProperties().add(attrBo1);
 		
 		bo2 = dslFactory.createBusinessObject();
-		bo2.setName("TestBO1");
+		bo2.setName("TestBO2");
 		bo2.setVersion(v1);
 		bo2.setState(LifecycleState.DEFINED);
 		
@@ -84,11 +86,22 @@ public class BaseServiceDslTest {
 		MajorVersionRef verRef = baseDslFactory.createMajorVersionRef();
 		verRef.setMajorVersion(1);
 		bo1_2_TypeRef.setVersionRef(verRef);
-		
+
+		bo2_1_TypeRef = dslFactory.createVersionedTypeRef();
+		bo2_1_TypeRef.setType(bo1);
+		MajorVersionRef verRef2 = baseDslFactory.createMajorVersionRef();
+		verRef2.setMajorVersion(1);
+		bo2_1_TypeRef.setVersionRef(verRef);
+
 		attr2Bos1 = dslFactory.createAttribute();
 		attr2Bos1.setName("attr2Bo1");
 		attr2Bos1.setType(bo1_2_TypeRef);
 		bo1.getProperties().add(attr2Bos1);
+
+		attr1Bos2 = dslFactory.createAttribute();
+		attr1Bos2.setName("attr1Bo2");
+		attr1Bos2.setType(bo2_1_TypeRef);
+		bo2.getProperties().add(attr1Bos2);
 		
 		bo3 = dslFactory.createBusinessObject();
 		bo3.setName("TestBO1");

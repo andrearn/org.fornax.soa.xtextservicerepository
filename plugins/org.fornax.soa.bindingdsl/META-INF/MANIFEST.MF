@@ -33,4 +33,6 @@ Export-Package: org.fornax.soa,
  org.fornax.soa.parser.antlr.internal,
  org.fornax.soa.services,
  org.fornax.soa.util,
- org.fornax.soa.validation
+ org.fornax.soa.validation,
+ org.fornax.soa.scoping,
+ org.fornax.soa.formatting

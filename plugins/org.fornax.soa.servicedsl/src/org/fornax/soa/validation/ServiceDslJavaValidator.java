@@ -36,6 +36,7 @@ import org.fornax.soa.serviceDsl.VersionedType;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 import org.fornax.soa.util.ReferencedStateChecker;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
@@ -436,6 +437,25 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			}
 		}
 	}
+	
+//	@Check (CheckType.NORMAL)
+//	public void checkNoTransitiveNamespaceCycle(Property p) {
+//		if (p.getType() instanceof VersionedTypeRef) {
+//			VersionedType targetType = ((VersionedTypeRef) p.getType()).getType();
+//			if (targetType.eContainer().equals(p.eContainer().eContainer())) {
+//				List<VersionedType> transDeps = BusinessObjectQuery.getTransitiveDependencies (p, false, false);
+//				List<EObject> transImports = Lists.transform(transDeps, new Function<VersionedType, EObject> () {
+//		
+//					public EObject apply(VersionedType t) {
+//						return t.eContainer();
+//					}
+//					
+//				});
+//				if (transImports.contains(p.eContainer().eContainer()))
+//					warning ("The property " + p.getName() + " references a type from another namespace that leads to an import cycle.", ServiceDslPackage.Literals.PROPERTY__TYPE);
+//			}
+//		}
+//	}
 	
 	@Check 
 	void checkPropertyLessBOisAbstractOrProposal (BusinessObject bo) {

@@ -16,6 +16,7 @@
 «EXTENSION org::fornax::soa::servicedsl::templates::common»
 «EXTENSION org::fornax::soa::servicedsl::templates::webservice::services»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::domains»
+«EXTENSION org::fornax::soa::servicedsl::templates::xsd::schema»
 «EXTENSION org::fornax::soa::servicedsl::templates::xsd::types»
 
 «DEFINE OperationWrappersInclSubNamespaces (List[SubNamespace] namespaces, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR String»
@@ -32,7 +33,7 @@
 «ENDDEFINE»
 
 «DEFINE OperationWrappers (DomainNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
-«FILE getFileNameFragment() + "OpWrappers.xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+«FILE getOpWrapperXSDFileName(this)»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema targetNamespace="«toWrapperTargetNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
@@ -74,7 +75,7 @@
 «ENDDEFINE»
 
 «DEFINE OperationWrappers (InternalNamespace subDom, LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
-«FILE subDom.getFileNameFragment() + "-" + name + "-" + version.toVersionPostfix() + "OpWrappers.xsd"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+«FILE getOpWrapperXSDFileName(this)»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <xsd:schema targetNamespace="«toWrapperTargetNamespace()»"
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	«FOREACH allImportedVersionedNS(version.toMajorVersionNumber(), minState) AS imp-»

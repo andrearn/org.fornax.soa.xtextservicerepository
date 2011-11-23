@@ -5,35 +5,30 @@
     nsURI="http://www.fornax.org/soa/EnvironmentDsl" nsPrefix="environmentDsl">
   <eClassifiers xsi:type="ecore:EClass" name="EnvModel">
     <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvImport"
-        containment="true"/>
+        eType="#//EnvImport" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="users" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//User"
-        containment="true"/>
+        eType="#//User" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="environments" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"
-        containment="true"/>
+        eType="#//Environment" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EnvImport"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EnvNsImport" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvImport">
+  <eClassifiers xsi:type="ecore:EClass" name="EnvNsImport" eSuperTypes="#//EnvImport">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedNamespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EnvFileImport" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvImport">
+  <eClassifiers xsi:type="ecore:EClass" name="EnvFileImport" eSuperTypes="#//EnvImport">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Environment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EEnum platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//EnvironmentType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hosts" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Host"
-        containment="true"/>
+        eType="#//Host" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="servers" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultESB" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ESB"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultRegistry" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Registry"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultAppServer" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AppServer"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultBroker" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Broker"/>
+        eType="#//Server" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultESB" eType="#//ESB"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultRegistry" eType="#//Registry"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultAppServer" eType="#//AppServer"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultBroker" eType="#//Broker"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="EnvironmentType">
     <eLiterals name="Prod" literal="Production-Environment"/>
@@ -46,13 +41,13 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dslCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="admins" unique="false"
-        upperBound="-1" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//User"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="host" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Host"/>
+        upperBound="-1" eType="#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="host" eType="#//Host"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="home" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
+        eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ESB" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server">
+  <eClassifiers xsi:type="ecore:EClass" name="ESB" eSuperTypes="#//Server">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deployDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="soapUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -60,22 +55,19 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectors" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector"
-        containment="true"/>
+        eType="#//Connector" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="registries" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryService"
-        containment="true"/>
+        eType="#//RegistryService" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Registry" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server">
+  <eClassifiers xsi:type="ecore:EClass" name="Registry" eSuperTypes="#//Server">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deployDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="adminUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EEnum platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryKind"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//RegistryKind"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectors" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector"
-        containment="true"/>
+        eType="#//Connector" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="RegistryKind">
     <eLiterals name="UDDI" literal="UDDI"/>
@@ -84,7 +76,7 @@
     <eLiterals name="Native" value="3" literal="Native"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RegistryService"/>
-  <eClassifiers xsi:type="ecore:EClass" name="JNDIRegistry" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryService">
+  <eClassifiers xsi:type="ecore:EClass" name="JNDIRegistry" eSuperTypes="#//RegistryService">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securePort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -92,91 +84,81 @@
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="clustered" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="COSNamingRegistry" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryService">
+  <eClassifiers xsi:type="ecore:EClass" name="COSNamingRegistry" eSuperTypes="#//RegistryService">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securePort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="clustered" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RMIRegistry" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryService">
+  <eClassifiers xsi:type="ecore:EClass" name="RMIRegistry" eSuperTypes="#//RegistryService">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securePort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IOR" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryService">
+  <eClassifiers xsi:type="ecore:EClass" name="IOR" eSuperTypes="#//RegistryService">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securePort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UDDIRegistry" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryService">
+  <eClassifiers xsi:type="ecore:EClass" name="UDDIRegistry" eSuperTypes="#//RegistryService">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="secureUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AppServer" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server">
+  <eClassifiers xsi:type="ecore:EClass" name="AppServer" eSuperTypes="#//Server">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deployDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="adminUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dataSources" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DataSource"
-        containment="true"/>
+        eType="#//DataSource" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectors" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector"
-        containment="true"/>
+        eType="#//Connector" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="registries" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryService"
-        containment="true"/>
+        eType="#//RegistryService" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="WebServer" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server">
+  <eClassifiers xsi:type="ecore:EClass" name="WebServer" eSuperTypes="#//Server">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deployDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectors" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector"
-        containment="true"/>
+        eType="#//Connector" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ProcessServer" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server">
+  <eClassifiers xsi:type="ecore:EClass" name="ProcessServer" eSuperTypes="#//Server">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deployDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="deployUser" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deployUser" eType="#//User"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="adminUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectors" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector"
-        containment="true"/>
+        eType="#//Connector" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="registries" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryService"
-        containment="true"/>
+        eType="#//RegistryService" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Broker" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server">
+  <eClassifiers xsi:type="ecore:EClass" name="Broker" eSuperTypes="#//Server">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deployDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="adminUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectors" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector"
-        containment="true"/>
+        eType="#//Connector" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="registries" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryService"
-        containment="true"/>
+        eType="#//RegistryService" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Database" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server">
+  <eClassifiers xsi:type="ecore:EClass" name="Database" eSuperTypes="#//Server">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="adminUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jdbcUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="serverVersion" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="schema" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseSchema"
-        containment="true"/>
+        eType="#//DatabaseSchema" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SAP" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server">
+  <eClassifiers xsi:type="ecore:EClass" name="SAP" eSuperTypes="#//Server">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="adminUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="client" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SapClient"
-        containment="true"/>
+        eType="#//SapClient" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SapClient">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -187,7 +169,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="DataSource">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jndiName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseSchema"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="schema" eType="#//DatabaseSchema"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="DatabaseKind">
     <eLiterals name="Other" literal="Other"/>
@@ -212,43 +194,43 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="securityProtocol" eType="ecore:EEnum platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SecurityProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="securityProtocol" eType="#//SecurityProtocol"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SOAPHTTP" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="SOAPHTTP" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contextRoot" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SOAPJMS" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="SOAPJMS" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JCAConnectionSpec"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="#//JCAConnectionSpec"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="REST" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="REST" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contextRoot" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EJB" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="EJB" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IIOP" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="IIOP" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JCAConnectionSpec"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="#//JCAConnectionSpec"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RMI" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="RMI" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JCAConnectionSpec"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="#//JCAConnectionSpec"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Tuxedo">
@@ -256,33 +238,33 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="securityProtocol" eType="ecore:EEnum platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SecurityProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="securityProtocol" eType="#//SecurityProtocol"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="JMS" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="JMS" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JCAConnectionSpec"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="#//JCAConnectionSpec"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AMQP" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="AMQP" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JCAConnectionSpec"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="#//JCAConnectionSpec"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="RFC" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JCAConnectionSpec"
+  <eClassifiers xsi:type="ecore:EClass" name="RFC" eSuperTypes="#//Connector">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="#//JCAConnectionSpec"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FTP" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="FTP" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IMAP" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="IMAP" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="POP3" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="POP3" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JCAConnectionSpec">
@@ -291,21 +273,21 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectionFactoryClass"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SMTP" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="SMTP" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="HTTP" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
+  <eClassifiers xsi:type="ecore:EClass" name="HTTP" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contextRoot" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TCP" eSuperTypes="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TCP" eSuperTypes="#//Connector"/>
   <eClassifiers xsi:type="ecore:EClass" name="Host">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fqn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ip" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dshCode" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="admins" unique="false"
-        upperBound="-1" eType="ecore:EClass platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//User"/>
+        upperBound="-1" eType="#//User"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="User">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

@@ -17,6 +17,13 @@ String getExportName (Service s, SOAP prot) :
 	s.getOrgNamespace().toPrefix() + "_" + s.getSubdomain().name.replaceAll("\\.", "_") + "_" + 
 	s.name + "SOAP" + s.getServiceVisibilityName() + "_" + s.version.toVersionPostfix();
 
+String getExportName (Service s, SCA prot) : 
+	prot.promote != null ?
+		prot.promote
+	:
+		(s.getOrgNamespace().toPrefix() + "_" + s.getSubdomain().name.replaceAll("\\.", "_") + "_" + 
+		s.name + "SCA" + s.getServiceVisibilityName() + "_" + s.version.toVersionPostfix());
+
 String getExportDisplayName (Service s, BindingProtocol prot) : 
 	s.getOrgNamespace().toPrefix() + "." + s.getSubdomain().name.replaceAll("\\.", ".") + "." + 
 	s.name + s.getServiceVisibilityName() + "." + s.version.toVersionPostfix();
@@ -24,6 +31,13 @@ String getExportDisplayName (Service s, BindingProtocol prot) :
 String getExportDisplayName (Service s, SOAP prot) : 
 	s.getOrgNamespace().toPrefix() + "." + s.getSubdomain().name.replaceAll("\\.", ".") + "." + 
 	s.name + "SOAP" + s.getServiceVisibilityName() + "." + s.version.toVersionPostfix();
+
+String getExportDisplayName (Service s, SCA prot) : 
+	prot.promote != null ?
+		prot.promote
+	:
+		(s.getOrgNamespace().toPrefix() + "." + s.getSubdomain().name.replaceAll("\\.", ".") + "." + 
+		s.name + "SCA" + s.getServiceVisibilityName() + "." + s.version.toVersionPostfix());
 
 	
 String getExportFileName (Service s, BindingProtocol prot) : s.getExportName (prot) + ".export";

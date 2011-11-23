@@ -30,4 +30,6 @@ Export-Package: org.fornax.soa.moduledsl,
  org.fornax.soa.moduledsl.parseTreeConstruction,
  org.fornax.soa.moduledsl.parser.antlr,
  org.fornax.soa.moduledsl.parser.antlr.internal,
- org.fornax.soa.moduledsl.validation
+ org.fornax.soa.moduledsl.validation,
+ org.fornax.soa.moduledsl.scoping,
+ org.fornax.soa.moduledsl.formatting

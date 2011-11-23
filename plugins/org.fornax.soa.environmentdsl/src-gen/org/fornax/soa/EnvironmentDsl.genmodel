@@ -6,271 +6,271 @@
     modelPluginID="org.fornax.soa.environmentdsl" forceOverwrite="true" modelName="EnvironmentDsl"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.environmentdsl.edit"
-    editorPluginID="org.fornax.soa.environmentdsl.editor" usedGenPackages="platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel#//semanticsDsl">
+    editorPluginID="org.fornax.soa.environmentdsl.editor" usedGenPackages="../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel#//semanticsDsl">
   <genPackages prefix="EnvironmentDsl" basePackage="org.fornax.soa" disposableProviderFactory="true"
-      ecorePackage="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType">
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType/Prod"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType/PreProd"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType/Test"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType/Dev"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType/Other"/>
+      ecorePackage="EnvironmentDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//EnvironmentType">
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/Prod"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/PreProd"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/Test"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/Dev"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/Other"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryKind">
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryKind/UDDI"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryKind/HTTP"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryKind/File"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryKind/Native"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//RegistryKind">
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//RegistryKind/UDDI"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//RegistryKind/HTTP"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//RegistryKind/File"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//RegistryKind/Native"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind">
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/Other"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/Oracle"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/DB2"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/MSSQL"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/MySQL"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/Postgres"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/Sybase"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/HyperSonic"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/Ingres"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/Adabas"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/Derby"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/MongoDB"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/Hadoop"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/CouchDB"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseKind/Neo4J"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//DatabaseKind">
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Other"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Oracle"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/DB2"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/MSSQL"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/MySQL"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Postgres"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Sybase"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/HyperSonic"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Ingres"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Adabas"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Derby"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/MongoDB"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Hadoop"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/CouchDB"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Neo4J"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SecurityProtocol">
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SecurityProtocol/NONE"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SecurityProtocol/SSLv2"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SecurityProtocol/SSLv3"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SecurityProtocol/TLS"/>
-      <genEnumLiterals ecoreEnumLiteral="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SecurityProtocol/IPSec"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//SecurityProtocol">
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//SecurityProtocol/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//SecurityProtocol/SSLv2"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//SecurityProtocol/SSLv3"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//SecurityProtocol/TLS"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//SecurityProtocol/IPSec"/>
     </genEnums>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvModel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvModel/imports"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvModel/users"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvModel/environments"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//EnvModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//EnvModel/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//EnvModel/users"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//EnvModel/environments"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvImport"/>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvNsImport">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvNsImport/importedNamespace"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//EnvImport"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//EnvNsImport">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//EnvNsImport/importedNamespace"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvFileImport">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvFileImport/importURI"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//EnvFileImport">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//EnvFileImport/importURI"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment/type"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment/hosts"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment/servers"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment/defaultESB"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment/defaultRegistry"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment/defaultAppServer"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment/defaultBroker"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//Environment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Environment/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Environment/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Environment/hosts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Environment/servers"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Environment/defaultESB"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Environment/defaultRegistry"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Environment/defaultAppServer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Environment/defaultBroker"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server/dslCode"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server/admins"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server/host"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server/home"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server/tags"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//Server">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Server/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Server/dslCode"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Server/admins"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Server/host"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Server/home"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Server/tags"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ESB">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ESB/deployDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ESB/baseUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ESB/soapUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ESB/adminUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ESB/serverType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ESB/serverVersion"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ESB/connectors"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ESB/registries"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//ESB">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/deployDir"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/baseUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/soapUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/adminUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/serverType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/serverVersion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//ESB/connectors"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//ESB/registries"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Registry">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Registry/deployDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Registry/baseUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Registry/adminUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Registry/serverType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Registry/serverVersion"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Registry/kind"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Registry/connectors"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//Registry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/deployDir"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/baseUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/adminUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/serverType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/serverVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/kind"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Registry/connectors"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RegistryService"/>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JNDIRegistry">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JNDIRegistry/port"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JNDIRegistry/securePort"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JNDIRegistry/url"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JNDIRegistry/initialContextFactory"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JNDIRegistry/clustered"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//RegistryService"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//JNDIRegistry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JNDIRegistry/port"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JNDIRegistry/securePort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JNDIRegistry/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JNDIRegistry/initialContextFactory"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JNDIRegistry/clustered"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//COSNamingRegistry">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//COSNamingRegistry/port"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//COSNamingRegistry/securePort"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//COSNamingRegistry/clustered"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//COSNamingRegistry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//COSNamingRegistry/port"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//COSNamingRegistry/securePort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//COSNamingRegistry/clustered"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RMIRegistry">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RMIRegistry/port"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RMIRegistry/securePort"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//RMIRegistry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//RMIRegistry/port"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//RMIRegistry/securePort"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//IOR">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//IOR/port"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//IOR/securePort"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//IOR">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//IOR/port"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//IOR/securePort"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//UDDIRegistry">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//UDDIRegistry/url"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//UDDIRegistry/secureUrl"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//UDDIRegistry">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//UDDIRegistry/url"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//UDDIRegistry/secureUrl"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AppServer">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AppServer/deployDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AppServer/baseUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AppServer/adminUrl"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AppServer/dataSources"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AppServer/serverType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AppServer/serverVersion"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AppServer/connectors"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AppServer/registries"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//AppServer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AppServer/deployDir"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AppServer/baseUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AppServer/adminUrl"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//AppServer/dataSources"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AppServer/serverType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AppServer/serverVersion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//AppServer/connectors"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//AppServer/registries"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//WebServer">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//WebServer/deployDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//WebServer/baseUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//WebServer/serverType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//WebServer/serverVersion"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//WebServer/connectors"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//WebServer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//WebServer/deployDir"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//WebServer/baseUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//WebServer/serverType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//WebServer/serverVersion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//WebServer/connectors"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ProcessServer">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ProcessServer/deployDir"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ProcessServer/deployUser"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ProcessServer/baseUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ProcessServer/adminUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ProcessServer/serverType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ProcessServer/serverVersion"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ProcessServer/connectors"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//ProcessServer/registries"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//ProcessServer">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ProcessServer/deployDir"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//ProcessServer/deployUser"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ProcessServer/baseUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ProcessServer/adminUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ProcessServer/serverType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ProcessServer/serverVersion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//ProcessServer/connectors"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//ProcessServer/registries"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Broker">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Broker/deployDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Broker/baseUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Broker/adminUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Broker/serverType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Broker/serverVersion"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Broker/connectors"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Broker/registries"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//Broker">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Broker/deployDir"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Broker/baseUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Broker/adminUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Broker/serverType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Broker/serverVersion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Broker/connectors"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Broker/registries"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Database">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Database/dataDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Database/adminUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Database/jdbcUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Database/serverType"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Database/serverVersion"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Database/schema"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//Database">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Database/dataDir"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Database/adminUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Database/jdbcUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Database/serverType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Database/serverVersion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Database/schema"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SAP">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SAP/dataDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SAP/adminUrl"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SAP/client"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//SAP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SAP/dataDir"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SAP/adminUrl"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//SAP/client"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SapClient">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SapClient/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SapClient/client"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SapClient/owner"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SapClient/accountingArea"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//SapClient">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SapClient/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SapClient/client"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SapClient/owner"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SapClient/accountingArea"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DataSource">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DataSource/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DataSource/jndiName"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DataSource/schema"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//DataSource">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//DataSource/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//DataSource/jndiName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//DataSource/schema"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseSchema">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseSchema/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//DatabaseSchema/owner"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//DatabaseSchema">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//DatabaseSchema/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//DatabaseSchema/owner"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector/port"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector/securityProtocol"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//Connector">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/port"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/securityProtocol"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SOAPHTTP">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SOAPHTTP/version"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SOAPHTTP/securedPort"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SOAPHTTP/contextRoot"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SOAPHTTP/implementation"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//SOAPHTTP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPHTTP/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPHTTP/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPHTTP/contextRoot"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPHTTP/implementation"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SOAPJMS">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SOAPJMS/version"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SOAPJMS/connectionSpec"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SOAPJMS/implementation"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//SOAPJMS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPJMS/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//SOAPJMS/connectionSpec"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPJMS/implementation"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//REST">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//REST/securedPort"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//REST/contextRoot"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//REST">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//REST/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//REST/contextRoot"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EJB">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EJB/version"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EJB/securedPort"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//EJB">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//EJB/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//EJB/securedPort"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//IIOP">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//IIOP/version"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//IIOP/securedPort"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//IIOP/connectionSpec"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//IIOP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//IIOP/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//IIOP/securedPort"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//IIOP/connectionSpec"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RMI">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RMI/version"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RMI/securedPort"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RMI/connectionSpec"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//RMI">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//RMI/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//RMI/securedPort"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//RMI/connectionSpec"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Tuxedo">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Tuxedo/version"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Tuxedo/port"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Tuxedo/securedPort"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Tuxedo/securityProtocol"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//Tuxedo">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/port"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/securityProtocol"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JMS">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JMS/version"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JMS/securedPort"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JMS/connectionSpec"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JMS/implementation"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//JMS">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JMS/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JMS/securedPort"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//JMS/connectionSpec"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JMS/implementation"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AMQP">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AMQP/securedPort"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AMQP/connectionSpec"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//AMQP/implementation"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//AMQP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AMQP/securedPort"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//AMQP/connectionSpec"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AMQP/implementation"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RFC">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//RFC/connectionSpec"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//RFC">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//RFC/connectionSpec"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//FTP">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//FTP/securedPort"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//FTP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//FTP/securedPort"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//IMAP">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//IMAP/securedPort"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//IMAP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//IMAP/securedPort"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//POP3">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//POP3/securedPort"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//POP3">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//POP3/securedPort"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JCAConnectionSpec">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JCAConnectionSpec/connectionFactoryJNDI"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//JCAConnectionSpec/connectionFactoryClass"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//JCAConnectionSpec">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JCAConnectionSpec/connectionFactoryJNDI"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JCAConnectionSpec/connectionFactoryClass"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SMTP">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//SMTP/securedPort"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//SMTP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SMTP/securedPort"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//HTTP">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//HTTP/securedPort"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//HTTP/contextRoot"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//HTTP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//HTTP/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//HTTP/contextRoot"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//TCP"/>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Host">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Host/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Host/fqn"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Host/ip"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Host/dshCode"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Host/admins"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//TCP"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//Host">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Host/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Host/fqn"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Host/ip"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Host/dshCode"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Host/admins"/>
     </genClasses>
-    <genClasses ecoreClass="platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//User">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//User/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//User/firstname"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//User/lastname"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//User/email"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//User/phone"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//User">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//User/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//User/firstname"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//User/lastname"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//User/email"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//User/phone"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

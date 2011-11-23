@@ -20,7 +20,7 @@
 
 
 «REM»
-	CARTRIDGE ENTRYPOINT for generation of abstract WSDLs
+	CARTRIDGE ENTRYPOINT for generation of abstract wrapped  WSDLs
 	Abstract WSDLs only define the abstract interface of a service. The binding is declared
 	in a separate WSDL that imports this abstract WSDL
 	
@@ -39,12 +39,12 @@
 «EXPAND org::fornax::soa::servicedsl::templates::xsd::OperationWrapperXSD::OperationWrappers (subDom, minState, profile, registryBaseUrl) FOR this»
 «FILE getWrappedWSDLFileName()»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-	xmlns:tns="«toWrapperTargetNamespace()»"
+	xmlns:tns="«toWrapperServiceTargetNamespace()»"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 	xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
 	name="«name»" 
-	targetNamespace="«toWrapperTargetNamespace()»">
+	targetNamespace="«toWrapperServiceTargetNamespace()»">
 	<wsdl:documentation>
 		Version «version.toVersionNumber()»
 		Lifecycle state: «state.toString()»
@@ -64,14 +64,14 @@
 «EXPAND org::fornax::soa::servicedsl::templates::xsd::OperationWrapperXSD::OperationWrappers (subDom, minState, profile, registryBaseUrl) FOR this»
 «FILE subDom.getFileNameFragment() + "-" + name + "-" + version.toVersionPostfix() + "Wrapped.wsdl"»<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-	xmlns:tns="«toWrapperTargetNamespace()»"
+	xmlns:tns="«toWrapperServiceTargetNamespace()»"
 	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 «REM»	
 	xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
 «ENDREM»
 	name="«name»" 
-	targetNamespace="«toWrapperTargetNamespace()»">
+	targetNamespace="«toWrapperServiceTargetNamespace()»">
 	<wsdl:documentation>
 		<![CDATA[Version «version.toVersionNumber()»
 		Lifecycle state: «state.toString()»
@@ -89,12 +89,19 @@
 
 «DEFINE Types(LifecycleState minState, sOAProfileDsl::SOAProfile profile, String registryBaseUrl) FOR Service»
 	<wsdl:types>
-		<xsd:schema targetNamespace="«toWrapperTargetNamespace()»"
+		<xsd:schema targetNamespace="«toWrapperServiceTargetNamespace()»"
+			«FOREACH importedVersionedNS(version.toMajorVersionNumber(), minState) AS imp-»
+			xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+			«ENDFOREACH-»
 			xmlns:svc="«toWrapperTargetNamespace()»"
 			elementFormDefault="qualified"
 			attributeFormDefault="unqualified"
 		>
-			<xsd:import schemaLocation="«this.getRegisteredOperationWrapperUrl (registryBaseUrl)».xsd"
+			«FOREACH importedVersionedNS(version.toMajorVersionNumber(), minState) AS imp-»
+			<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
+				namespace="«imp.toNamespace()»"/>
+			«ENDFOREACH-»
+			<xsd:import schemaLocation="«this.getRegisteredOperationWrapperUrl (registryBaseUrl)»"
 				namespace="«toWrapperTargetNamespace()»"/>
 			«EXPAND OperationWrapperTypes (profile) FOREACH operations»
 			«EXPAND OperationFaultWrapperTypes(operations.throws) FOREACH operations.throws.exception.name.toSet()»
@@ -113,7 +120,7 @@
 			<xsd:element name="«name»Response">
 				<xsd:complexType>
 					<xsd:sequence>
-						<xsd:element name="request" type="svc:«toOperationWrapperResponseType()»"/>
+						<xsd:element name="response" type="svc:«toOperationWrapperResponseType()»"/>
 					</xsd:sequence>
 				</xsd:complexType>
 			</xsd:element>
@@ -146,7 +153,7 @@
 «ENDDEFINE»
 
 «DEFINE PortType FOR Service»
-	<wsdl:portType name="«name»">
+	<wsdl:portType name="«name»Wrapped">
 		<wsdl:documentation>
 				<![CDATA[Version:	«version.toVersionNumber()»
 				Lifecycle state: «state.toString()»

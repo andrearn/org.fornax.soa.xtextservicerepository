@@ -36,4 +36,5 @@ Export-Package: org.fornax.soa,
  org.fornax.soa.serviceDsl.util,
  org.fornax.soa.services,
  org.fornax.soa.util,
- org.fornax.soa.validation
+ org.fornax.soa.validation,
+ org.fornax.soa.formatting

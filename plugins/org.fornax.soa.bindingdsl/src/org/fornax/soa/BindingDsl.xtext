@@ -198,8 +198,9 @@ Topic: 'topic' name=STRING (qualifier=Qualifier)?;
 
 Queue: 'queue' name=STRING (qualifier=Qualifier)?;
 	
-SCA: 
-	'SCA' name=STRING '{'
+SCA:
+	{SCA} 
+	'SCA' (name=STRING)? '{'
 		(qualifier=Qualifier)?
 		(publisher=Publisher)?
 		(provider=Provider)?

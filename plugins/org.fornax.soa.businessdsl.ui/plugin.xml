@@ -92,6 +92,19 @@
         </page>
     </extension>
     <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="org.fornax.soa.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.fornax.soa.BusinessDsl"
+            name="BusinessDsl">
+            <keywordReference id="org.fornax.soa.ui.keyword_BusinessDsl"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
+    <extension
         point="org.eclipse.ui.keywords">
         <keyword
             id="org.fornax.soa.ui.keyword_BusinessDsl"
@@ -160,7 +173,6 @@
 
 
 
-
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
@@ -223,7 +235,7 @@
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.fornax.soa.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RenameElementHandler"
+			class="org.fornax.soa.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.IRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
@@ -245,5 +257,14 @@
          </command>
       </menuContribution>
    </extension>
+   <extension point="org.eclipse.ui.preferencePages">
+	    <page
+	        category="org.fornax.soa.BusinessDsl"
+	        class="org.fornax.soa.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="org.fornax.soa.BusinessDsl.refactoring"
+	        name="Refactoring">
+	        <keywordReference id="org.fornax.soa.ui.keyword_BusinessDsl"/>
+	    </page>
+	</extension>
 
 </plugin>

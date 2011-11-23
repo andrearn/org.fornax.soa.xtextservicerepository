@@ -15,6 +15,7 @@ Module:
 		('owner' owner = STRING)?
 		('assembly-type' assemblyType = AssemblyType)?
 		('assembly-type-details' assemblyTypeDetails = STRING)?
+		('deployment-module-name' deploymentModuleName = STRING)?
 		
 		('provides' '{'
 			(providedServices += ServiceRef)+

@@ -28,4 +28,6 @@ Export-Package: org.fornax.soa.profiledsl,
  org.fornax.soa.profiledsl.parseTreeConstruction,
  org.fornax.soa.profiledsl.parser.antlr,
  org.fornax.soa.profiledsl.parser.antlr.internal,
- org.fornax.soa.profiledsl.validation
+ org.fornax.soa.profiledsl.validation,
+ org.fornax.soa.profiledsl.scoping,
+ org.fornax.soa.profiledsl.formatting

@@ -5,45 +5,38 @@
     nsURI="http://www.fornax.org/soa/SolutionDsl" nsPrefix="solutionDsl">
   <eClassifiers xsi:type="ecore:EClass" name="Model">
     <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Import"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Import"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="solution" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Solution"
-        containment="true"/>
+        eType="#//Solution" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Solution">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="ecore:EClass platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Domain"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Version"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="ecore:EClass ../../../../../org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Domain"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="#//Version"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="productVersion" eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Version"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="productVersion" eType="#//Version"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//ServiceRef"
-        containment="true"/>
+        eType="#//ServiceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Feature"
-        containment="true"/>
+        eType="#//Feature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Module"
-        containment="true"/>
+        eType="#//Module" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
+        eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Module">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="ecore:EEnum platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//ModuleKind"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//ModuleKind"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//ServiceRef"
-        containment="true"/>
+        eType="#//ServiceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Feature"
-        containment="true"/>
+        eType="#//Feature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Module"
-        containment="true"/>
+        eType="#//Module" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
+        eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ModuleKind">
     <eLiterals name="UI" literal="UI"/>
@@ -60,35 +53,31 @@
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="usesCapabilities" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//CapabilityRef"
-        containment="true"/>
+        eType="#//CapabilityRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//ServiceRef"
-        containment="true"/>
+        eType="#//ServiceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="event" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//EventRef"
-        containment="true"/>
+        eType="#//EventRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/SolutionDsl.ecore#//Feature"
-        containment="true"/>
+        eType="#//Feature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
+        eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ServiceRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Service"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Service"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isResponseHandler" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CapabilityRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="capability" eType="ecore:EClass platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Capability"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="capability" eType="ecore:EClass ../../../../../org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Capability"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Version" eSuperTypes="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//Version"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Version" eSuperTypes="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"/>
   <eClassifiers xsi:type="ecore:EClass" name="EventRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="ecore:EClass platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Event"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//VersionRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Event"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

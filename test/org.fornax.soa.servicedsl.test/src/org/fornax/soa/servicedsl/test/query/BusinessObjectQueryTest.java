@@ -9,6 +9,7 @@ import java.util.List;
 import org.fornax.soa.query.BusinessObjectQuery;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.Property;
+import org.fornax.soa.serviceDsl.VersionedType;
 import org.fornax.soa.servicedsl.test.BaseServiceDslTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,6 +47,12 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 		assertTrue (superTypes.contains(bo4));
 		assertFalse(superTypes.contains(bo1));
 		assertFalse(superTypes.contains(bo2));
+	}
+	
+	@Test
+	public void testGetTransitiveDependencies () {
+		List<VersionedType> transitiveDependencies = BusinessObjectQuery.getTransitiveDependencies(attr2Bos1, false, false);
+		assertTrue(transitiveDependencies.contains(bo2));
 	}
 
 }

@@ -5,11 +5,9 @@
     nsURI="http://www.fornax.org/soa/SemanticsDsl" nsPrefix="semanticsDsl">
   <eClassifiers xsi:type="ecore:EClass" name="SemanticsModel">
     <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Import"
-        containment="true"/>
+        eType="#//Import" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tagDefinition" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"
-        containment="true"/>
+        eType="#//Tag" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Import">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -17,6 +15,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="Tag">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="extends" unique="false"
-        upperBound="-1" eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
+        upperBound="-1" eType="#//Tag"/>
   </eClassifiers>
 </ecore:EPackage>

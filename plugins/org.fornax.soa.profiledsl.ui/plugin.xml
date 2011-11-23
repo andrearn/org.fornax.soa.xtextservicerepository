@@ -85,6 +85,19 @@
         </page>
     </extension>
     <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="org.fornax.soa.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.fornax.soa.profiledsl.SOAProfileDsl"
+            name="SOAProfileDsl">
+            <keywordReference id="org.fornax.soa.profiledsl.ui.keyword_SOAProfileDsl"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
+    <extension
         point="org.eclipse.ui.keywords">
         <keyword
             id="org.fornax.soa.profiledsl.ui.keyword_SOAProfileDsl"
@@ -153,7 +166,6 @@
 
 
 
-
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
@@ -216,7 +228,7 @@
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.fornax.soa.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RenameElementHandler"
+			class="org.fornax.soa.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.IRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
@@ -238,5 +250,14 @@
          </command>
       </menuContribution>
    </extension>
+   <extension point="org.eclipse.ui.preferencePages">
+	    <page
+	        category="org.fornax.soa.profiledsl.SOAProfileDsl"
+	        class="org.fornax.soa.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="org.fornax.soa.profiledsl.SOAProfileDsl.refactoring"
+	        name="Refactoring">
+	        <keywordReference id="org.fornax.soa.profiledsl.ui.keyword_SOAProfileDsl"/>
+	    </page>
+	</extension>
 
 </plugin>
