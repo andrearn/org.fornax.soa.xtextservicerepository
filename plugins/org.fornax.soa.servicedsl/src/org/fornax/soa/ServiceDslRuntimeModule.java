@@ -6,10 +6,15 @@ package org.fornax.soa;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.documentation.DocFeatureDocumationProvider;
+import org.fornax.soa.basedsl.resource.EObjectDescriptionBuilder;
+import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
+import org.fornax.soa.basedsl.search.IPredicateSearch;
+import org.fornax.soa.basedsl.search.PredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+import org.fornax.soa.query.BusinessObjectQuery;
 
 import com.google.inject.Binder;
 
@@ -37,6 +42,20 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 	
 	public void configureIEObjectDocumentationProvider (Binder binder) {
 		binder.bind(IEObjectDocumentationProvider.class).to(DocFeatureDocumationProvider.class);
+	}
+	
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
+	public Class<org.fornax.soa.query.BusinessObjectQuery> bindBusinessObjectQuery () {
+		return BusinessObjectQuery.class;
+	}
+	
+	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
+		return PredicateSearch.class;
+	}
+	
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
+	public Class<? extends IEObjectDescriptionBuilder> bindEObjectDescriptionBuilder () {
+		return EObjectDescriptionBuilder.class;
 	}
 
 }

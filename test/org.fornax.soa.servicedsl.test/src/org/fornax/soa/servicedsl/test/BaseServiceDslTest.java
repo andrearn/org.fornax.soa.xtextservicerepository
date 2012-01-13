@@ -1,5 +1,7 @@
 package org.fornax.soa.servicedsl.test;
 
+import org.eclipse.xtext.junit.AbstractXtextTests;
+import org.fornax.soa.ServiceDslStandaloneSetup;
 import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
@@ -25,7 +27,7 @@ import org.fornax.soa.serviceDsl.ServiceDslFactory;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 import org.junit.Before;
 
-public class BaseServiceDslTest {
+public class BaseServiceDslTest extends AbstractXtextTests {
 
 	protected DomainNamespace dns;
 	protected InternalNamespace ins;
@@ -55,13 +57,16 @@ public class BaseServiceDslTest {
 
 	@Before
 	public void setUp() throws Exception {
+		super.setUp();
+		with (ServiceDslStandaloneSetup.class);
+		
 		SOABaseDslFactory baseDslFactory = SOABaseDslFactory.eINSTANCE;
 		SOAProfileDslFactory profDslFactory = SOAProfileDslFactory.eINSTANCE;
 		ServiceDslFactory dslFactory = ServiceDslFactory.eINSTANCE;
 		bo1 = dslFactory.createBusinessObject();
 		bo1.setName("TestBO1");
 		Version v1 = baseDslFactory.createVersion();
-		v1.setVersion("1.0");
+		v1.setVersion ("1.0");
 		bo1.setVersion(v1);
 		bo1.setState(LifecycleState.DEVELOPMENT);
 		
@@ -78,7 +83,10 @@ public class BaseServiceDslTest {
 		
 		bo2 = dslFactory.createBusinessObject();
 		bo2.setName("TestBO2");
-		bo2.setVersion(v1);
+		Version v2 = baseDslFactory.createVersion();
+		v2.setVersion("1.0");
+
+		bo2.setVersion(v2);
 		bo2.setState(LifecycleState.DEFINED);
 		
 		bo1_2_TypeRef = dslFactory.createVersionedTypeRef();
@@ -104,7 +112,7 @@ public class BaseServiceDslTest {
 		bo2.getProperties().add(attr1Bos2);
 		
 		bo3 = dslFactory.createBusinessObject();
-		bo3.setName("TestBO1");
+		bo3.setName("TestBO3");
 		Version v3 = baseDslFactory.createVersion();
 		v3.setVersion("1.0");
 		bo3.setVersion(v3);
@@ -125,7 +133,7 @@ public class BaseServiceDslTest {
 		attrBo4.setType(string4TypeRef);
 		
 		bo4 = dslFactory.createBusinessObject();
-		bo4.setName("TestBO1");
+		bo4.setName("TestBO4");
 		Version v4 = baseDslFactory.createVersion();
 		v4.setVersion("1.0");
 		bo4.setVersion(v4);

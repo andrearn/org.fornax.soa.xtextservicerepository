@@ -3,9 +3,9 @@
  */
 package org.fornax.soa.basedsl;
 
-import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
-import org.fornax.soa.basedsl.documentation.DocFeatureDocumationProvider;
+import org.fornax.soa.basedsl.resource.EObjectDescriptionBuilder;
+import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.search.PredicateSearch;
@@ -30,6 +30,11 @@ public class SOABaseDslRuntimeModule extends org.fornax.soa.basedsl.AbstractSOAB
 	
 	public void configureIDefaultResourceDescriptionStrategy (Binder binder) {
 		binder.bind(IDefaultResourceDescriptionStrategy.class).to(VersionedResourceDescriptionStrategy.class);
+	}
+	
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
+	public Class<? extends IEObjectDescriptionBuilder> bindEObjectDescriptionBuilder () {
+		return EObjectDescriptionBuilder.class;
 	}
 
 }

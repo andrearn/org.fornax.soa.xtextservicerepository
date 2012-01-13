@@ -7,11 +7,14 @@ Bundle-Activator: org.fornax.soa.servicedsl.test.Activator
 Bundle-Vendor: Fornax Platform
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.fornax.soa.servicedsl;bundle-version="1.0.1",
+ org.fornax.soa.servicedsl;bundle-version="1.4.4",
  org.junit;bundle-version="4.8.1",
  org.eclipse.emf.ecore;bundle-version="2.6.0",
  org.fornax.soa.basedsl;bundle-version="1.0.0",
  org.fornax.soa.profiledsl;bundle-version="1.1.0",
- com.google.collect;bundle-version="1.0.0"
+ com.google.collect;bundle-version="1.0.0",
+ org.eclipse.xtext;bundle-version="2.1.0",
+ org.eclipse.xtext.junit4,
+ org.eclipse.xtext.ui.junit;bundle-version="2.1.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
