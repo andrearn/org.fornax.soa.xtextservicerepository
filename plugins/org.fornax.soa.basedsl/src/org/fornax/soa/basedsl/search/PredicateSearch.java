@@ -22,12 +22,15 @@ public class PredicateSearch implements IPredicateSearch {
 	}
 	
 	protected Iterable<IEObjectDescription> getSearchScope() {
-		return Iterables.concat(Iterables.transform(getResourceDescriptions().getAllResourceDescriptions(),
+		return Iterables.concat (Iterables.transform (getResourceDescriptions().getAllResourceDescriptions(),
 				new Function<IResourceDescription, Iterable<IEObjectDescription>>() {
-					public Iterable<IEObjectDescription> apply(IResourceDescription from) {
+			
+					public Iterable<IEObjectDescription> apply (IResourceDescription from) {
 						return from.getExportedObjects();
 					}
-				}));
+		
+				}
+		));
 	}
 
 	public void setResourceDescriptions(IResourceDescriptions resourceDescriptions) {

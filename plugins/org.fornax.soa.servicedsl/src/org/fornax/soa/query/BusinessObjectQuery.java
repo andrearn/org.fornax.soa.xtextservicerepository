@@ -39,7 +39,7 @@ public class BusinessObjectQuery {
 	IQualifiedNameProvider nameProvider;
 	
 	@Inject
-	IPredicateSearch pericateSearch;
+	IPredicateSearch predicateSearch;
 	
 	@Inject
 	IEObjectDescriptionBuilder descriptionBuilder;
@@ -97,17 +97,17 @@ public class BusinessObjectQuery {
 		if (typeRef instanceof VersionedTypeRef) {
 			VersionedTypeRef verTypeRef 	= (VersionedTypeRef) typeRef;
 			VersionedType verType 			= verTypeRef.getType();
-			DependencyDescription depRef 	= buildDependencyDescription (prop, (BusinessObject)verType, includeInheritedProperties, includeCycleTypes, visitedDependendies, referrer);
+			DependencyDescription depRef 	= buildDependencyDescription (prop, verType, includeInheritedProperties, includeCycleTypes, visitedDependendies, referrer);
 			return depRef;
 		}
 		return null;
 	}
 	
-	public DependencyDescription buildDependencyDescription (final Property sourceProp, final BusinessObject bo, final boolean includeInheritedProperties, final boolean includeCycleTypes, List<IEObjectDescription> visitedDependendies, DependencyDescription referrer) {
+	public DependencyDescription buildDependencyDescription (final Property sourceProp, final VersionedType targetType, final boolean includeInheritedProperties, final boolean includeCycleTypes, List<IEObjectDescription> visitedDependendies, DependencyDescription referrer) {
 		final IEObjectDescription source 		= descriptionBuilder.buildDescription (sourceProp);
 		final IEObjectDescription sourceBO 		= descriptionBuilder.buildDescription (sourceProp.eContainer());
-		final IEObjectDescription target 			= descriptionBuilder.buildDescription (bo);
-		final IEObjectDescription targetContainer 	= descriptionBuilder.buildDescription (bo.eContainer());
+		final IEObjectDescription target 			= descriptionBuilder.buildDescription (targetType);
+		final IEObjectDescription targetContainer 	= descriptionBuilder.buildDescription (targetType.eContainer());
 		if (visitedDependendies == null) {
 			visitedDependendies = new ArrayList<IEObjectDescription>();
 		}
@@ -117,7 +117,6 @@ public class BusinessObjectQuery {
 		DependencyDescription dep = new DependencyDescription (source, target, targetContainer, referrer);
 		boolean targetVisited = Iterables.any (visitedDependendies, new Predicate<IEObjectDescription>() {
 
-			@Override
 			public boolean apply(IEObjectDescription input) {
 				return BaseDslEqualityHelper.isEqual(input, target);
 			}
@@ -125,10 +124,13 @@ public class BusinessObjectQuery {
 		});
 		if (!targetVisited) {
 			visitedDependendies.add (target);
-			for (Property p : bo.getProperties()) {
-				DependencyDescription propDep = getTransitiveDependencies (p, includeInheritedProperties, includeCycleTypes, visitedDependendies, dep);
-				if (propDep != null && (!propDep.isBackRef() || propDep.isBackRef() && includeCycleTypes))
-					dependencies.add (propDep);
+			if (targetType instanceof BusinessObject) {
+				BusinessObject targetBO = (BusinessObject) targetType;
+				for (Property p : targetBO.getProperties()) {
+					DependencyDescription propDep = getTransitiveDependencies (p, includeInheritedProperties, includeCycleTypes, visitedDependendies, dep);
+					if (propDep != null && (!propDep.isBackRef() || propDep.isBackRef() && includeCycleTypes))
+						dependencies.add (propDep);
+				}
 			}
 		} else {
 			dep.setBackRef (true);
@@ -139,22 +141,30 @@ public class BusinessObjectQuery {
 	}
 	
 	
-	public boolean hasTypeNSReferencesToNS (VersionedType type, SubNamespace ns) {
-		EList<Type> types = ((SubNamespace)type.eContainer()).getTypes();
-		for(Type t : types) {
-			if (t instanceof BusinessObject) {
-				BusinessObject bo = (BusinessObject)t;
-				for (Property p : bo.getProperties()) {
-					if (p.getType() instanceof VersionedTypeRef) {
-
-						EObject referencedNs = ((VersionedTypeRef)p.getType()).getType().eContainer();
-						if (ns.equals (referencedNs));
-							return true;
+	public List<QualifiedName> getOtherTypeNsRefsToNs (VersionedType type, SubNamespace ns) {
+		SubNamespace typeNs = (SubNamespace) type.eContainer();
+		QualifiedName typeNsName = nameProvider.getFullyQualifiedName (typeNs);
+		QualifiedName nsName = nameProvider.getFullyQualifiedName(ns);
+		List<QualifiedName> otherTypeNsRefs = new ArrayList<QualifiedName>();
+		if (!nsName.equals (typeNsName)) {
+			EList<Type> types = ((SubNamespace)type.eContainer()).getTypes();
+			for(Type t : types) {
+				if (t instanceof BusinessObject) {
+					BusinessObject bo = (BusinessObject)t;
+					for (Property p : bo.getProperties()) {
+						if (p.getType() instanceof VersionedTypeRef) {
+	
+							SubNamespace targetNs = (SubNamespace) ((VersionedTypeRef)p.getType()).getType().eContainer();
+							QualifiedName targetNsName = nameProvider.getFullyQualifiedName (targetNs);
+							if (nsName.equals (targetNsName)) {
+								otherTypeNsRefs.add (nameProvider.getFullyQualifiedName(p));
+							}
+						}
 					}
 				}
 			}
-		}
-		return false;
+		} 
+		return otherTypeNsRefs;
 	}
 	
 	public Map<EObject, VersionedType> getReferencedVersionedTypes (final BusinessObject bo, final boolean includeInheritedProperties) {
@@ -192,26 +202,12 @@ public class BusinessObjectQuery {
 	
 	
 	public VersionedType toVersionedType (IEObjectDescription desc, Resource res) {
-		final QualifiedName depName = desc.getName();
-		final String version = desc.getUserData (VersionedResourceDescriptionStrategy.VERSION_KEY);
-		Iterable<IEObjectDescription> objDescs = pericateSearch.search (new Predicate<IEObjectDescription>() {
-			
-			public boolean apply (IEObjectDescription canditate) {
-				return depName.equals (canditate.getQualifiedName()) && 
-						version.equals (canditate.getUserData (VersionedResourceDescriptionStrategy.VERSION_KEY));
-			}
-			
-		});
 		VersionedType verType = null;
-		if (objDescs.iterator().hasNext()) {
-			IEObjectDescription objDesc = objDescs.iterator().next();
-			//IResourceDescription resDesc = resourceDescriptions.getResourceDescription(objDesc.getEObjectURI().trimFragment());
-			EObject o = objDesc.getEObjectOrProxy();
-			if (o.eIsProxy())
-				o = EcoreUtil.resolve (o, res);
-			if (o instanceof VersionedType) {
-				verType = (VersionedType) o;
-			}
+		EObject o = desc.getEObjectOrProxy();
+		if (o.eIsProxy())
+			o = EcoreUtil.resolve (o, res);
+		if (o instanceof VersionedType) {
+			verType = (VersionedType) o;
 		}
 		return verType;
 	}

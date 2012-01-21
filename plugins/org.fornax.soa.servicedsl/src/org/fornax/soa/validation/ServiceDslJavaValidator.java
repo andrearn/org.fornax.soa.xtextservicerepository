@@ -1,12 +1,15 @@
 package org.fornax.soa.validation;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.mwe2.language.scoping.QualifiedNameProvider;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
-import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
@@ -15,7 +18,6 @@ import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
-import org.fornax.soa.basedsl.util.Pair;
 import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.query.BusinessObjectQuery;
 import org.fornax.soa.serviceDsl.Attribute;
@@ -472,23 +474,46 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			VersionedType targetType = ((VersionedTypeRef) p.getType()).getType();
 			if (!targetType.eContainer().equals (p.eContainer().eContainer())) {
 				DependencyDescription transDepsRoot = boQuery.getTransitiveDependencies (p, true, true, null, null);
-				List<DependencyDescription> cycles = new ArrayList<DependencyDescription>();
-				boolean hasImport = false;
+				boolean hasTransitImport = false;
+				boolean rootVisited = false;
 				
+				List<String> foundPaths = new ArrayList<String>();
 				for (DependencyDescription dep : transDepsRoot) {
-					VersionedType verType = boQuery.toVersionedType (dep.getTarget(), p.eResource());
-
-					if (!nameProvider.getFullyQualifiedName (p.eContainer().eContainer()).equals (dep.getContainer().getName())) {
-						hasImport = true;
-					}
-						
-					if (hasImport && boQuery.hasTypeNSReferencesToNS (verType, (SubNamespace)p.eContainer().eContainer())) {
-						cycles.add (dep);
+					if (rootVisited) {
+						VersionedType verType = boQuery.toVersionedType (dep.getTarget(), p.eResource());
+						if (verType != null) {
+							if (!nameProvider.getFullyQualifiedName (p.eContainer().eContainer()).equals (dep.getContainer().getName())) {
+								hasTransitImport = true;
+							}
+							List<QualifiedName> otherTypeNsRefersToNs = boQuery.getOtherTypeNsRefsToNs (verType, (SubNamespace)p.eContainer().eContainer());	
+							if (hasTransitImport && !otherTypeNsRefersToNs.isEmpty()) {
+								StringBuilder msg = new StringBuilder();
+								String path = getReferrerDependencyPath (dep, new StringBuilder());
+								if (!foundPaths.contains (path)) {
+									foundPaths.add (path);
+									msg.append ("The property " + p.getName() + " references a type from another namespace that leads to an import cycle via:\n");
+									msg.append (path);
+									if (otherTypeNsRefersToNs != null && !otherTypeNsRefersToNs.isEmpty()) {
+										msg.append ("\n for the following business object properties in namespace ");
+										msg.append (dep.getContainer().getName().toString());
+										msg.append (":\n");
+										Iterator<QualifiedName> otherTypeNsRefersToNsIt = otherTypeNsRefersToNs.iterator();
+										while (otherTypeNsRefersToNsIt.hasNext()) {
+											QualifiedName name = otherTypeNsRefersToNsIt.next();
+											msg.append (getPropertyShortName(name));
+											if (otherTypeNsRefersToNsIt.hasNext()) {
+												msg.append(", ");
+											}
+										}
+									}
+									warning (msg.toString(), ServiceDslPackage.Literals.PROPERTY__TYPE);
+								}
+							}
+						}
+					} else {
+						rootVisited = true;
 					}
 				}
-				
-				if (cycles.iterator().hasNext())
-					warning ("The property " + p.getName() + " references a type from another namespace that leads to an import cycle.", ServiceDslPackage.Literals.PROPERTY__TYPE);
 			}
 		}
 	}
@@ -541,6 +566,34 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			return "public";
 		else
 			return "canonical";
+	}
+	
+	private String getReferrerDependencyPath (DependencyDescription leaf, StringBuilder path) {
+		if (path == null)
+			path = new StringBuilder();
+		if (path.length() > 0) {
+			path.insert(0, " -> ");
+		}
+		path.insert(0, leaf.getTarget().getName().getLastSegment());
+		if (leaf.getReferrer() != null) {
+			getReferrerDependencyPath(leaf.getReferrer(), path);
+		}
+		return path.toString();
+	}
+	
+	private String getPropertyShortName (QualifiedName propName) {
+		StringBuilder shortName = new StringBuilder();
+		if (propName.getSegmentCount() > 2) {
+			for (int i = 0; i < propName.getSegmentCount(); i++) {
+				if (i > propName.getSegmentCount()-3) {
+					shortName.append(propName.getSegment(i));
+					if (i < propName.getSegmentCount()-1)
+						shortName.append(".");
+				}
+			}
+			return shortName.toString();
+		}
+		return propName.toString();
 	}
 
 	public void setBoQuery(BusinessObjectQuery boQuery) {

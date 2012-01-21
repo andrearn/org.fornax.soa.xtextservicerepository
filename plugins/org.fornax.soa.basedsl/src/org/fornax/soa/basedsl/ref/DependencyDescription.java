@@ -121,7 +121,6 @@ public class DependencyDescription implements Iterable<DependencyDescription> {
 
 	private class DepIterator implements Iterator<DependencyDescription> {
 		
-		private DependencyDescription next;
 		private DependencyDescription first;
 		boolean isFirst = true;
 
@@ -144,7 +143,7 @@ public class DependencyDescription implements Iterable<DependencyDescription> {
 		}
 
 		public DependencyDescription next() {
-			next = successor();
+			DependencyDescription next = successor();
 			return next;
 		}
 
