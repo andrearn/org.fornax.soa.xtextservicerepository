@@ -144,7 +144,7 @@
 	@param		profile	The SOAProfile defining the governing architecture rules.
 «ENDREM»
 «DEFINE ComplexType(org::fornax::soa::servicedsl::VersionedDomainNamespace currNs, sOAProfileDsl::SOAProfile profile, LifecycleState minState) FOR BusinessObject»
-    <xsd:complexType name="«name»">
+    <xsd:complexType name="«name»"«IF abstract» abstract="true"«ENDIF»>
     	<xsd:annotation>
     		<xsd:documentation>
 <![CDATA[Version:	«version.toVersionNumber()»
