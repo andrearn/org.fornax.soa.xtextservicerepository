@@ -3,75 +3,17 @@
  */
 package org.fornax.soa.scoping;
 
-import static com.google.common.collect.Iterables.filter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.xtext.naming.IQualifiedNameProvider;
-import org.eclipse.xtext.naming.QualifiedName;
-import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.eclipse.xtext.resource.IResourceDescription;
-import org.eclipse.xtext.resource.IResourceServiceProvider;
-import org.eclipse.xtext.resource.impl.AliasedEObjectDescription;
-import org.eclipse.xtext.scoping.IGlobalScopeProvider;
-import org.eclipse.xtext.scoping.IScope;
-import org.eclipse.xtext.scoping.Scopes;
-import org.eclipse.xtext.scoping.impl.AbstractScope;
-import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
-import org.eclipse.xtext.util.IResourceScopeCache;
-import org.eclipse.xtext.util.SimpleAttributeResolver;
-import org.eclipse.xtext.util.Tuples;
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
-import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
-import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
-import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
-import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
-import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
 import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvider;
 import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
-import org.fornax.soa.basedsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
-import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
-import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
-import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionFilteredMapScope;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.bindingDsl.BindingDslPackage;
-import org.fornax.soa.bindingDsl.DomainBinding;
-import org.fornax.soa.bindingDsl.OperationBinding;
-import org.fornax.soa.bindingDsl.ServiceBinding;
-import org.fornax.soa.environmentDsl.Environment;
-import org.fornax.soa.environmentDsl.EnvironmentType;
-import org.fornax.soa.serviceDsl.OperationRef;
+import org.fornax.soa.bindingDsl.ModuleRef;
+import org.fornax.soa.bindingDsl.ServiceRef;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
-import org.fornax.soa.serviceDsl.ServiceRef;
-
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 /**
  * This class contains custom scoping description.
@@ -83,6 +25,7 @@ import com.google.inject.Provider;
 public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
 	private static final Logger logger = Logger.getLogger(BindingDslScopeProvider.class);
 
+	/*
 	private VersionFilter filter;
 
 
@@ -119,6 +62,7 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 	public IQualifiedNameProvider getNameProvider() {
 		return nameProvider;
 	}
+	*/
 
 
 	@Override
@@ -129,6 +73,14 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			return createVersionFilter(v, ctx);
 		}
 		if (reference == ServiceDslPackage.Literals.SERVICE_REF__SERVICE && ctx instanceof ServiceRef) {
+			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
+			return createVersionFilter(v, ctx);
+		}
+		if (ctx instanceof ModuleRef) {
+			final VersionRef v = ((ModuleRef) ctx).getVersionRef();
+			return createVersionFilter(v, ctx);
+		}
+		if (ctx instanceof ServiceRef) {
 			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);
 		}
