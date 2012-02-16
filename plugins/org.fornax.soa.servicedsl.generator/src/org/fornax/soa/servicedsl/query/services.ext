@@ -1,6 +1,7 @@
 import sOABaseDsl;
 import sOAProfileDsl;
 import serviceDsl;
+import org::fornax::soa::servicedsl;
 
 extension org::fornax::soa::basedsl::lifecycle::stateMatching;
 extension org::fornax::soa::basedsl::version::versionMatching;
@@ -19,7 +20,7 @@ List servicesWithMinState (Object ns, LifecycleState state) : null;
 List servicesWithMinState (SubNamespace ns, LifecycleState state) :
 	ns.services.select (e|e.state.matchesMinStateLevel (state));
 
-List servicesWithMinState (org::fornax::soa::servicedsl::VersionedDomainNamespace ns, LifecycleState state) :
+List servicesWithMinState (VersionedDomainNamespace ns, LifecycleState state) :
 	ns.subdomain.servicesWithMinState (state);
 
 

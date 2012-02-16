@@ -21,6 +21,7 @@ import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceModel;
+import org.fornax.soa.serviceDsl.ServiceRef;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 
 import com.google.common.base.Function;
@@ -125,6 +126,24 @@ public class ServiceDslProposalProvider extends AbstractServiceDslProposalProvid
 				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
 				String className = ServiceDslPackage.Literals.ENUMERATION.getName();
 				Iterable<String> canditateVersions = getCanditateVersions (typeName, className, importedNamespaces, majorVersionsOnly);
+				for (String version : canditateVersions) {
+					acceptor.accept (createCompletionProposal (version, context));
+				}
+
+			} else if (model.eContainer() instanceof ServiceRef) {
+				ServiceRef svcRef = (ServiceRef) model.eContainer();
+				boolean versionConstraintFound = false;
+				StringBuilder nameParts = new StringBuilder();
+				while (leafIt.hasNext() && !versionConstraintFound) {
+					ILeafNode curNode = leafIt.next();
+					if (curNode.getSemanticElement() instanceof VersionRef)
+						versionConstraintFound = true;
+					else
+						nameParts.append(curNode.getText());
+				}
+				String svcName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
+				String className = ServiceDslPackage.Literals.SERVICE.getName();
+				Iterable<String> canditateVersions = getCanditateVersions (svcName, className, importedNamespaces, majorVersionsOnly);
 				for (String version : canditateVersions) {
 					acceptor.accept (createCompletionProposal (version, context));
 				}

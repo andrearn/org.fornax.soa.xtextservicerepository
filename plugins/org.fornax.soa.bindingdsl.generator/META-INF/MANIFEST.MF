@@ -18,6 +18,16 @@ Require-Bundle: org.fornax.soa.bindingdsl;bundle-version="1.4.4";visibility:=ree
  org.fornax.soa.environmentdsl;bundle-version="1.4.4",
  org.fornax.soa.profiledsl;bundle-version="1.4.4",
  org.fornax.soa.environmentdsl.generator;bundle-version="1.4.4",
- org.fornax.soa.moduledsl.generator;bundle-version="1.4.4"
+ org.fornax.soa.moduledsl.generator;bundle-version="1.4.4",
+ org.eclipse.xtext.xtend2.lib;bundle-version="2.1.1",
+ org.fornax.soa.profiledsl.generator;bundle-version="1.4.4"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.fornax.soa.bindingdsl.generator,
+ org.fornax.soa.bindingdsl.queries.modules,
+ org.fornax.soa.bindingdsl.queries.services,
+ org.fornax.soa.bindingdsl.templates,
+ org.fornax.soa.bindingdsl.templates.soap,
+ org.fornax.soa.bindingdsl.templates.vendor,
+ org.fornax.soa.bindingdsl.templates.vendor.ibm,
+ org.fornax.soa.bindingdsl.templates.wsdl

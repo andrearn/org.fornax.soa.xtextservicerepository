@@ -18,15 +18,15 @@ public class ServiceDslDescriptionLabelProvider extends DefaultDescriptionLabelP
 
 	public Object text(IEObjectDescription ele) {
 		StyledString s = new StyledString (ele.getQualifiedName().toString());
-		if (ele.getUserData(VersionedResourceDescriptionStrategy.VERSION_KEY) != null) {
+		if (ele.getUserData (VersionedResourceDescriptionStrategy.VERSION_KEY) != null) {
 			s.append(" v");
-			s.append (ele.getUserData(VersionedResourceDescriptionStrategy.VERSION_KEY));
+			s.append (ele.getUserData (VersionedResourceDescriptionStrategy.VERSION_KEY));
 		}
 		s.append (" - ");
 		s.append (ele.getEClass().getName());
 		if (ele.getUserData(VersionedResourceDescriptionStrategy.STATE_KEY) != null) {
 			s.append(" ");
-			s.append (ele.getUserData(VersionedResourceDescriptionStrategy.STATE_KEY), StyledString.DECORATIONS_STYLER);
+			s.append (ele.getUserData (VersionedResourceDescriptionStrategy.STATE_KEY), StyledString.DECORATIONS_STYLER);
 		}
 		return s;
 	}

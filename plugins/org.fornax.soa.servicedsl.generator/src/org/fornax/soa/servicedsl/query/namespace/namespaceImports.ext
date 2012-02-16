@@ -163,7 +163,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS 
 	LifecycleState minState, 
 	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
 	) : 
-	((SubDomain)s.subdomain).importedVersionedNS (s.version, minState);
+	((SubNamespace)s.subdomain).importedVersionedNS (s.version, minState);
 
 
 /**
@@ -178,7 +178,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS 
 	org::fornax::soa::servicedsl::VersionedDomainNamespace s, 
 	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
 	) :
-	((SubDomain)s.subdomain).importedVersionedNS (s.version);
+	((SubNamespace)s.subdomain).importedVersionedNS (s.version);
 
 
 Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (Object s, String nameSpaceMajorVersion, LifecycleState minState) : null;

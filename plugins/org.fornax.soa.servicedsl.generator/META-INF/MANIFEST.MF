@@ -17,10 +17,20 @@ Require-Bundle: org.fornax.soa.servicedsl;bundle-version="1.4.4";visibility:=ree
  org.fornax.soa.profiledsl;bundle-version="1.4.4",
  org.eclipse.xtend.util.stdlib,
  org.fornax.soa.basedsl;bundle-version="1.4.4",
- org.fornax.soa.basedsl.generator;bundle-version="1.4.4"
+ org.fornax.soa.basedsl.generator;bundle-version="1.4.4",
+ org.eclipse.xtext.xtend2.lib;bundle-version="2.1.1",
+ org.aopalliance;bundle-version="1.0.0",
+ org.fornax.soa.profiledsl.generator;bundle-version="1.4.4"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.servicedsl,
  org.fornax.soa.servicedsl.checks,
+ org.fornax.soa.servicedsl.domain,
+ org.fornax.soa.servicedsl.generator,
+ org.fornax.soa.servicedsl.query,
+ org.fornax.soa.servicedsl.query.namespace,
+ org.fornax.soa.servicedsl.query.type,
  org.fornax.soa.servicedsl.templates,
+ org.fornax.soa.servicedsl.templates.webservice,
+ org.fornax.soa.servicedsl.templates.xsd,
  org.fornax.soa.servicedsl.workflow

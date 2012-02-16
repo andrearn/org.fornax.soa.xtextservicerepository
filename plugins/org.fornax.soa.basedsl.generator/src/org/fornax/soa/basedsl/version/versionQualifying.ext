@@ -15,7 +15,7 @@ String toMajorVersionNumber (Version v) :
 String toVersionPostfix (Void v) : toDefaultVersionPostfix();
 String toVersionPostfix (String v) : "v" + v.toMajorVersionNumber();
 String toVersionPostfix (Integer v) : "v" + v.toMajorVersionNumber();
-String toVersionPostfix (sOABaseDsl::Version v) : "v" + v.toMajorVersionNumber();
+String toVersionPostfix (Version v) : "v" + v.toMajorVersionNumber();
 
 String toDefaultVersionPostfix () : "v" + toDefaultMajorVersion ();
 String toDefaultMajorVersion () : "1";

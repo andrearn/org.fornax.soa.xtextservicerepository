@@ -126,12 +126,12 @@
 «DEFINE BindModulesToEnvorinment (SOAProfile profile, String targetEnvironmentName) FOR List[ModuleBinding]»
 	«FOREACH this.select(e|e.environment.name==targetEnvironmentName) AS modBind»
 		«FOREACH modBind.module.module.providedServices AS provSvc»
-			«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
+			«LET provSvc.latestServiceInEnvironment (modBind.environment) AS svc-»
 				«IF svc != null»
 					«EXPAND BindingByService (svc, modBind.getMostSpecificBinding (svc), profile) FOR modBind»
-					«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
+					«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (modBind.environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
 					«FOREACH {svc.getSubdomain()}.union(svc.getSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
-						«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (environment), profile, getRegistryBaseUrl()) FOR ns»
+						«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (modBind.environment), profile, getRegistryBaseUrl()) FOR ns»
 					«ENDFOREACH»
 					«IF forceRelativePaths()»
 						«EXPAND org::fornax::soa::servicedsl::templates::xsd::MessageHeaderXSD::MessageHeaderXSD FOR profile»
