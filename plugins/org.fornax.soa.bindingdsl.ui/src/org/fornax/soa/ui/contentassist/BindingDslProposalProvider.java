@@ -57,46 +57,52 @@ public class BindingDslProposalProvider extends AbstractBindingDslProposalProvid
 			}
 			
 		});
-		BindingModel moduleModel = (BindingModel) model.eContainer().eContainer().eContainer();
-		EList<Import> imports = moduleModel.getImports();
-		final Iterable<String> importedNamespaces = Lists.transform (imports, new Function<Import, String> () {
-
-			public String apply (Import from) {
-				return from.getImportedNamespace().replaceAll("\\.\\*", "");
-			}
-			
-		});
-		Iterator<ILeafNode> leafIt = nonHidden.iterator();
-		Iterable<String> canditateVersions = Sets.newHashSet();
-		if (model.eContainer() instanceof ModuleRef) {
-			boolean versionConstraintFound = false;
-			StringBuilder nameParts = new StringBuilder();
-			while (leafIt.hasNext() && !versionConstraintFound) {
-				ILeafNode curNode = leafIt.next();
-				if (curNode.getSemanticElement() instanceof VersionRef)
-					versionConstraintFound = true;
-				else
-					nameParts.append(curNode.getText());
-			}
-			final String moduleName = nameParts.toString().trim();
-			final String className = ModuleDslPackage.Literals.MODULE.getName();
-			canditateVersions = getCanditateVersions (moduleName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
-		} else if (model.eContainer() instanceof ServiceRef) {
-			boolean versionConstraintFound = false;
-			StringBuilder nameParts = new StringBuilder();
-			while (leafIt.hasNext() && !versionConstraintFound) {
-				ILeafNode curNode = leafIt.next();
-				if (curNode.getSemanticElement() instanceof VersionRef)
-					versionConstraintFound = true;
-				else
-					nameParts.append(curNode.getText());
-			}
-			final String moduleName = nameParts.toString().trim();
-			final String className = ServiceDslPackage.Literals.SERVICE.getName();
-			canditateVersions = getCanditateVersions (moduleName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+		EObject canditateRoot = model;
+		while ( !(canditateRoot instanceof BindingModel) && model.eContainer() != null) {
+			canditateRoot = canditateRoot.eContainer();
 		}
-		for (String version : canditateVersions) {
-			acceptor.accept (createCompletionProposal(version, context));
+		if (canditateRoot instanceof BindingModel) {
+			BindingModel moduleModel = (BindingModel) canditateRoot;
+			EList<Import> imports = moduleModel.getImports();
+			final Iterable<String> importedNamespaces = Lists.transform (imports, new Function<Import, String> () {
+	
+				public String apply (Import from) {
+					return from.getImportedNamespace().replaceAll("\\.\\*", "");
+				}
+				
+			});
+			Iterator<ILeafNode> leafIt = nonHidden.iterator();
+			Iterable<String> canditateVersions = Sets.newHashSet();
+			if (model.eContainer() instanceof ModuleRef) {
+				boolean versionConstraintFound = false;
+				StringBuilder nameParts = new StringBuilder();
+				while (leafIt.hasNext() && !versionConstraintFound) {
+					ILeafNode curNode = leafIt.next();
+					if (curNode.getSemanticElement() instanceof VersionRef)
+						versionConstraintFound = true;
+					else
+						nameParts.append(curNode.getText());
+				}
+				final String moduleName = nameParts.toString().trim();
+				final String className = ModuleDslPackage.Literals.MODULE.getName();
+				canditateVersions = getCanditateVersions (moduleName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+			} else if (model.eContainer() instanceof ServiceRef) {
+				boolean versionConstraintFound = false;
+				StringBuilder nameParts = new StringBuilder();
+				while (leafIt.hasNext() && !versionConstraintFound) {
+					ILeafNode curNode = leafIt.next();
+					if (curNode.getSemanticElement() instanceof VersionRef)
+						versionConstraintFound = true;
+					else
+						nameParts.append(curNode.getText());
+				}
+				final String svcName = nameParts.toString().trim();
+				final String className = ServiceDslPackage.Literals.SERVICE.getName();
+				canditateVersions = getCanditateVersions (svcName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+			}
+			for (String version : canditateVersions) {
+				acceptor.accept (createCompletionProposal(version, context));
+			}
 		}
 	}
 }
