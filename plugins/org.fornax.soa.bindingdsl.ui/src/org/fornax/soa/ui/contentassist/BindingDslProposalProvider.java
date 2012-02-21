@@ -7,9 +7,14 @@ import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.AbstractElement;
+import org.eclipse.xtext.CrossReference;
+import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
@@ -39,7 +44,7 @@ public class BindingDslProposalProvider extends AbstractBindingDslProposalProvid
 	
 	public void complete_INT(EObject model, RuleCall ruleCall, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model.eContainer() instanceof MajorVersionRef)  {
+		if (model.eContainer() instanceof MajorVersionRef || model.eContainer() instanceof ModuleRef || model instanceof ServiceRef)  {
 			calculateVersionProposals(model, context, acceptor);
 		} else {
 			super.complete_INT (model, ruleCall, context, acceptor);
@@ -48,15 +53,6 @@ public class BindingDslProposalProvider extends AbstractBindingDslProposalProvid
 
 	private void calculateVersionProposals(EObject model,
 			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		ICompositeNode parentNode = NodeModelUtils.findActualNodeFor (model).getParent();
-		Iterable<ILeafNode> leafs = parentNode.getLeafNodes();
-		Iterable<ILeafNode> nonHidden = Iterables.filter (leafs, new Predicate<ILeafNode>() {
-
-			public boolean apply (ILeafNode node) {
-				return !node.isHidden();
-			}
-			
-		});
 		EObject canditateRoot = model;
 		while ( !(canditateRoot instanceof BindingModel) && model.eContainer() != null) {
 			canditateRoot = canditateRoot.eContainer();
@@ -71,34 +67,43 @@ public class BindingDslProposalProvider extends AbstractBindingDslProposalProvid
 				}
 				
 			});
-			Iterator<ILeafNode> leafIt = nonHidden.iterator();
 			Iterable<String> canditateVersions = Sets.newHashSet();
 			if (model.eContainer() instanceof ModuleRef) {
-				boolean versionConstraintFound = false;
-				StringBuilder nameParts = new StringBuilder();
-				while (leafIt.hasNext() && !versionConstraintFound) {
-					ILeafNode curNode = leafIt.next();
-					if (curNode.getSemanticElement() instanceof VersionRef)
-						versionConstraintFound = true;
-					else
-						nameParts.append(curNode.getText());
+				ICompositeNode moduleRefNode = NodeModelUtils.findActualNodeFor(model.eContainer());
+				INode xrefNode = moduleRefNode.getFirstChild();
+				EObject xrefGElem = xrefNode.getGrammarElement();
+				if (xrefGElem instanceof CrossReference) {
+					final String moduleName = xrefNode.getText().trim();
+					final String className = ModuleDslPackage.Literals.MODULE.getName();
+					canditateVersions = getCanditateVersions (moduleName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef || model instanceof MajorVersionRef);
 				}
-				final String moduleName = nameParts.toString().trim();
-				final String className = ModuleDslPackage.Literals.MODULE.getName();
-				canditateVersions = getCanditateVersions (moduleName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+			} else if (model instanceof ModuleRef) {
+				ICompositeNode moduleRefNode = NodeModelUtils.findActualNodeFor(model);
+				INode xrefNode = moduleRefNode.getFirstChild();
+				EObject xrefGElem = xrefNode.getGrammarElement();
+				if (xrefGElem instanceof CrossReference) {
+					final String moduleName = xrefNode.getText().trim();
+					final String className = ModuleDslPackage.Literals.MODULE.getName();
+					canditateVersions = getCanditateVersions (moduleName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+				}
 			} else if (model.eContainer() instanceof ServiceRef) {
-				boolean versionConstraintFound = false;
-				StringBuilder nameParts = new StringBuilder();
-				while (leafIt.hasNext() && !versionConstraintFound) {
-					ILeafNode curNode = leafIt.next();
-					if (curNode.getSemanticElement() instanceof VersionRef)
-						versionConstraintFound = true;
-					else
-						nameParts.append(curNode.getText());
+				ICompositeNode svcRefNode = NodeModelUtils.findActualNodeFor(model.eContainer());
+				INode xrefNode = svcRefNode.getFirstChild();
+				EObject xrefGElem = xrefNode.getGrammarElement();
+				if (xrefGElem instanceof CrossReference) {
+					final String svcName = xrefNode.getText().trim();
+					final String className = ServiceDslPackage.Literals.SERVICE.getName();
+					canditateVersions = getCanditateVersions (svcName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
 				}
-				final String svcName = nameParts.toString().trim();
-				final String className = ServiceDslPackage.Literals.SERVICE.getName();
-				canditateVersions = getCanditateVersions (svcName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+			} else if (model instanceof ServiceRef) {
+				ICompositeNode svcRefNode = NodeModelUtils.findActualNodeFor(model);
+				INode xrefNode = svcRefNode.getFirstChild();
+				EObject xrefGElem = xrefNode.getGrammarElement();
+				if (xrefGElem instanceof CrossReference) {
+					final String svcName = xrefNode.getText().trim();
+					final String className = ServiceDslPackage.Literals.SERVICE.getName();
+					canditateVersions = getCanditateVersions (svcName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+				}
 			}
 			for (String version : canditateVersions) {
 				acceptor.accept (createCompletionProposal(version, context));
