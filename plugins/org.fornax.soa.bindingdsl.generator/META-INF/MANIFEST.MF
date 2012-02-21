@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.bindingdsl.generator
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.4.4.qualifier
+Bundle-Version: 1.4.5.qualifier
 Bundle-SymbolicName: org.fornax.soa.bindingdsl.generator; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.fornax.soa.bindingdsl;bundle-version="1.4.4";visibility:=reexport,
+Require-Bundle: org.fornax.soa.bindingdsl;bundle-version="1.4.5";visibility:=reexport,
  org.eclipse.xpand;visibility:=reexport,
  org.eclipse.xtend;visibility:=reexport,
  org.eclipse.xtext;bundle-version="2.0.0";visibility:=reexport,
@@ -13,11 +13,11 @@ Require-Bundle: org.fornax.soa.bindingdsl;bundle-version="1.4.4";visibility:=ree
  org.eclipse.emf.mwe.utils;visibility:=reexport,
  org.eclipse.xtend.typesystem.emf;visibility:=reexport,
  org.eclipse.xtend.util.stdlib;bundle-version="1.0.1",
- org.fornax.soa.basedsl.generator;bundle-version="1.4.4",
- org.fornax.soa.servicedsl.generator;bundle-version="1.4.4",
- org.fornax.soa.environmentdsl;bundle-version="1.4.4",
- org.fornax.soa.profiledsl;bundle-version="1.4.4",
- org.fornax.soa.environmentdsl.generator;bundle-version="1.4.4",
- org.fornax.soa.moduledsl.generator;bundle-version="1.4.4"
+ org.fornax.soa.basedsl.generator;bundle-version="1.4.5",
+ org.fornax.soa.servicedsl.generator;bundle-version="1.4.5",
+ org.fornax.soa.environmentdsl;bundle-version="1.4.5",
+ org.fornax.soa.profiledsl;bundle-version="1.4.5",
+ org.fornax.soa.environmentdsl.generator;bundle-version="1.4.5",
+ org.fornax.soa.moduledsl.generator;bundle-version="1.4.5"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
