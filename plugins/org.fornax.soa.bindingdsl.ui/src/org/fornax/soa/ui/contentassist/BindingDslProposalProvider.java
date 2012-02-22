@@ -39,20 +39,20 @@ public class BindingDslProposalProvider extends AbstractBindingDslProposalProvid
 
 
 	public void complete_VersionId(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		calculateVersionProposals(model, context, acceptor);
+		calculateVersionProposals(model, context, acceptor, false);
 	}
 	
 	public void complete_INT(EObject model, RuleCall ruleCall, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
 		if (model.eContainer() instanceof MajorVersionRef || model.eContainer() instanceof ModuleRef || model instanceof ServiceRef)  {
-			calculateVersionProposals(model, context, acceptor);
+			calculateVersionProposals(model, context, acceptor, true);
 		} else {
 			super.complete_INT (model, ruleCall, context, acceptor);
 		}
 	}	
 
 	private void calculateVersionProposals(EObject model,
-			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor, boolean isCompleteInt) {
 		EObject canditateRoot = model;
 		while ( !(canditateRoot instanceof BindingModel) && model.eContainer() != null) {
 			canditateRoot = canditateRoot.eContainer();
@@ -102,7 +102,7 @@ public class BindingDslProposalProvider extends AbstractBindingDslProposalProvid
 				if (xrefGElem instanceof CrossReference) {
 					final String svcName = xrefNode.getText().trim();
 					final String className = ServiceDslPackage.Literals.SERVICE.getName();
-					canditateVersions = getCanditateVersions (svcName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+					canditateVersions = getCanditateVersions (svcName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef || isCompleteInt);
 				}
 			}
 			for (String version : canditateVersions) {
