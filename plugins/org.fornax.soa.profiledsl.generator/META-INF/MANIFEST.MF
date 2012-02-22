@@ -2,19 +2,19 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.profiledsl.generator
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.4.4.qualifier
+Bundle-Version: 1.4.5.qualifier
 Bundle-SymbolicName: org.fornax.soa.profiledsl.generator; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.fornax.soa.profiledsl;bundle-version="1.4.4";visibility:=reexport,
+Require-Bundle: org.fornax.soa.profiledsl;bundle-version="1.4.5";visibility:=reexport,
  org.eclipse.xpand;visibility:=reexport,
  org.eclipse.xtend;visibility:=reexport,
  org.eclipse.xtext;bundle-version="2.0.0";visibility:=reexport,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.mwe.utils;visibility:=reexport,
  org.eclipse.xtend.typesystem.emf;visibility:=reexport,
- org.fornax.soa.profiledsl;bundle-version="1.4.4",
+ org.fornax.soa.profiledsl;bundle-version="1.4.5",
  org.eclipse.xtext.xtend2.lib;bundle-version="2.1.1",
- org.fornax.soa.basedsl.generator;bundle-version="1.4.4"
+ org.fornax.soa.basedsl.generator;bundle-version="1.4.5"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.profiledsl,

@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.bindingdsl"
       label="SOA Binding DSL"
-      version="1.4.4.qualifier"
+      version="1.4.5.qualifier"
       provider-name="Fornax Platform">
 
    <description>
