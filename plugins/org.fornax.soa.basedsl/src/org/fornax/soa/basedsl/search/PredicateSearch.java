@@ -31,8 +31,20 @@ public class PredicateSearch implements IPredicateSearch {
 
 	public Iterable<IEObjectDescription> search (
 			final String searchPattern, final String typeSearchPattern, Predicate<IEObjectDescription> predicate) {
+		int allowedSearchRules = SearchPattern.RULE_BLANK_MATCH
+				| SearchPattern.RULE_CAMELCASE_MATCH
+				| SearchPattern.RULE_CASE_SENSITIVE
+				| SearchPattern.RULE_EXACT_MATCH
+				| SearchPattern.RULE_PATTERN_MATCH
+				| SearchPattern.RULE_PREFIX_MATCH;
 		return Iterables.filter (getSearchScope (),
-				getSearchPredicate (searchPattern, typeSearchPattern, predicate));
+				getSearchPredicate (searchPattern, allowedSearchRules, typeSearchPattern, predicate));
+	}
+	
+	public Iterable<IEObjectDescription> search (
+			final String searchPattern, int allowedSearchRules, final String typeSearchPattern, Predicate<IEObjectDescription> predicate) {
+		return Iterables.filter (getSearchScope (),
+				getSearchPredicate (searchPattern, allowedSearchRules, typeSearchPattern, predicate));
 	}
 	
 
@@ -52,7 +64,7 @@ public class PredicateSearch implements IPredicateSearch {
 	}
 	
 	protected Predicate<IEObjectDescription> getSearchPredicate (
-			final String stringPattern, final String typeStringPattern, final Predicate<IEObjectDescription> predicate) {
+			final String stringPattern, int allowedSearchRules, final String typeStringPattern, final Predicate<IEObjectDescription> predicate) {
 		final Collection<String> namespaceDelimiters = Sets.newHashSet (DEFAULT_NAMESPACE_DELIMITER);
 		final SearchPattern searchPattern = new SearchPattern ();
 		searchPattern.setPattern (stringPattern);

@@ -11,8 +11,16 @@ public interface IPredicateSearch {
 	public abstract Iterable<IEObjectDescription> search(
 			Predicate<IEObjectDescription> predicate);
 
-	public abstract Iterable<IEObjectDescription> search (final String searchPattern, final String typeSearchPattern, Predicate<IEObjectDescription> predicate);
+	public abstract Iterable<IEObjectDescription> search (
+			final String searchPattern, final String typeSearchPattern,
+			Predicate<IEObjectDescription> predicate);
+	
+	public abstract Iterable<IEObjectDescription> search (
+			final String searchPattern, int allowedSearchRules, final String typeSearchPattern,
+			Predicate<IEObjectDescription> predicate);
 
-	public abstract Iterable<IEObjectDescription> search (final String typeSearchPattern, Predicate<IEObjectDescription> predicate);
+	public abstract Iterable<IEObjectDescription> search (
+			final String typeSearchPattern,
+			Predicate<IEObjectDescription> predicate);
 
 }
