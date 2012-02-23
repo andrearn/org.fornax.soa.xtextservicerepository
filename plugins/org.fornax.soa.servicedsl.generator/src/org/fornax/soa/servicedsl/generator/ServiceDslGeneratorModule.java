@@ -28,6 +28,9 @@ import org.fornax.soa.servicedsl.templates.xsd.SchemaTemplateExtensions;
 import org.fornax.soa.servicedsl.templates.xsd.SchemaTypeExtensions;
 import org.fornax.soa.servicedsl.templates.xsd.XSDTemplates;
 
+import com.google.inject.Binder;
+import com.google.inject.name.Names;
+
 public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 	
 	public Class<? extends NamespaceSplitter> bindNamespaceSplitter () {
@@ -134,6 +137,21 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 	
 	public Class<? extends WSDLTemplates> bindWSDLTemplates () {
 		return WSDLTemplates.class;
+	}
+	
+	
+	public void configureForceRelativePaths (Binder binder) {
+		binder.bind (Boolean.class)
+			.annotatedWith (
+					Names.named (ServiceDSLGeneratorConstants.FORCE_RELATIVE_PATHS))
+			.toInstance (true);
+	}
+	
+	public void configureUseNestedPaths (Binder binder) {
+		binder.bind (Boolean.class)
+			.annotatedWith (
+					Names.named (ServiceDSLGeneratorConstants.USE_NESTED_PATHS))
+			.toInstance (false);
 	}
 	
 }

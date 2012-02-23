@@ -128,7 +128,7 @@ class XSDTemplates {
 			attributeFormDefault="unqualified"
 			targetNamespace="«vns.toNamespace()»"
 			>
-			«vns.importedVersionedNS(minState).filter (e|e.toNamespace() != vns.toNamespace())
+			«vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace())
 				.forEach (e|e.toImportDeclaration (registryBaseUrl))» 	
 			«IF (vns.subdomain instanceof SubNamespace)»
 				«vns.types.filter (typeof (BusinessObject)).filter (b|b.state != LifecycleState::RETIRED)

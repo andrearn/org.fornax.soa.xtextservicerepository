@@ -24,16 +24,18 @@ import org.fornax.soa.environmentDsl.AppServer
 import org.fornax.soa.serviceDsl.VISIBILITY
 import org.fornax.soa.environmentDsl.ESB
 import org.fornax.soa.basedsl.lifecycle.StateMatcher
+import com.google.inject.name.Named
 
 class BindingExtensions {
-	
-	@Inject boolean generatePrivateWsdlForProviderHost
 	
 	@Inject extension CommonStringExtensions
 	@Inject extension StateMatcher
 	@Inject extension NamespaceQuery
 	@Inject extension LifecycleQueries
 	@Inject extension VersionQualifierExtensions
+	
+	@Inject @Named ("generatePrivateWsdlForProviderHost") 
+	Boolean generatePrivateWsdlForProviderHost
 
 	def boolean generatePrivateWsdlForProviderHost () {
 		generatePrivateWsdlForProviderHost;

@@ -17,11 +17,12 @@ class DefaultBindingDslContractGenerators implements IGenerator {
 	@Inject BindingTemplates bindingTpl
 	
 	
-	@Named ("profileName") 			String profileName
-	@Named ("moduleBindingNames") 	List<String> moduleBindingNames
-	@Named ("namespacesNames") 		List<String> namespacesNames
-	@Named ("noDependencies") 		Boolean noDependencies
-	@Named ("includeSubNamespaces") Boolean includeSubNamespaces
+	@Inject @Named ("profileName") 			String profileName
+	@Inject @Named ("moduleBindingNames") 	List<String> moduleBindingNames
+	@Inject @Named ("domainBindingNames") 	List<String> domainBindingNames
+	@Inject @Named ("namespaces") 			List<String> namespaces
+	@Inject @Named ("noDependencies") 		Boolean noDependencies
+	@Inject @Named ("includeSubNamespaces") Boolean includeSubNamespaces
 	
 	override void doGenerate (Resource input, IFileSystemAccess fsa) {
 		var contentIt = input.allContents;

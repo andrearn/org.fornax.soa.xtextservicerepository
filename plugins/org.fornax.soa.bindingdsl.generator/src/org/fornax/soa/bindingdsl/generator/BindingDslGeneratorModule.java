@@ -1,5 +1,8 @@
 package org.fornax.soa.bindingdsl.generator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.fornax.soa.BindingDslRuntimeModule;
 import org.fornax.soa.bindingdsl.queries.modules.ModuleBindingResolver;
 import org.fornax.soa.bindingdsl.queries.services.BindingServiceResolver;
@@ -13,6 +16,10 @@ import org.fornax.soa.bindingdsl.templates.vendor.ibm.SCAExportExtension;
 import org.fornax.soa.bindingdsl.templates.vendor.ibm.SCAExportTemplates;
 import org.fornax.soa.bindingdsl.templates.wsdl.WrappedWSDLTemplates;
 import org.fornax.soa.servicedsl.templates.webservice.WrappedWsdlTemplates;
+
+import com.google.inject.Binder;
+import com.google.inject.TypeLiteral;
+import com.google.inject.name.Names;
 
 public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 
@@ -59,4 +66,47 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 	public Class<? extends WrappedWSDLTemplates> bindWrappedWSDLTemplates () {
 		return WrappedWSDLTemplates.class;
 	}
+	
+	public void configureModuleBindingNames (Binder binder) {
+		binder.bind (new TypeLiteral<List<String>>() {})
+			.annotatedWith (
+					Names.named (BindingDSLGeneratorConstants.MODULE_BINDING_NAMES))
+			.toInstance (new ArrayList <String>());
+	}
+
+	public void configureDomainBindingNames (Binder binder) {
+		binder.bind (new TypeLiteral<List<String>>() {})
+			.annotatedWith (
+					Names.named (BindingDSLGeneratorConstants.DOMAIN_BINDING_NAMES))
+			.toInstance (new ArrayList <String>());
+	}
+
+	public void configureNameSpaces (Binder binder) {
+		binder.bind (new TypeLiteral<List<String>>() {})
+			.annotatedWith (
+					Names.named (BindingDSLGeneratorConstants.NAME_SPACES))
+			.toInstance (new ArrayList <String>());
+	}
+	
+	public void configureNoDependencies (Binder binder) {
+		binder.bind (Boolean.class)
+			.annotatedWith (
+					Names.named (BindingDSLGeneratorConstants.NO_DEPENDENCIES))
+			.toInstance (false);
+	}
+	
+	public void configureIncludeSubNamespace (Binder binder) {
+		binder.bind (Boolean.class)
+			.annotatedWith (
+					Names.named (BindingDSLGeneratorConstants.INCLUDE_SUB_NAMESPACES))
+			.toInstance (false);
+	}
+
+	public void configureGeneratePrivateWsdlForProviderHost (Binder binder) {
+		binder.bind (Boolean.class)
+			.annotatedWith (
+					Names.named (BindingDSLGeneratorConstants.GENERATE_PRIVATE_WSDL_FOR_PROVIDER_HOST))
+			.toInstance (false);
+	}
+
 }

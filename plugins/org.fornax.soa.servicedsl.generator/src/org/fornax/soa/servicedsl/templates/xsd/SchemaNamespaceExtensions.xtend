@@ -1,6 +1,8 @@
 package org.fornax.soa.servicedsl.templates.xsd
 
 import com.google.inject.Inject
+import com.google.inject.name.Named
+import java.util.ArrayList
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.common.util.TreeIterator
@@ -19,11 +21,10 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.ServiceModel
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.VersionedDomainNamespace
-import org.fornax.soa.servicedsl.query.type.TypesByLifecycleStateFinder
-import org.fornax.soa.servicedsl.query.ServiceFinder
 import org.fornax.soa.servicedsl.query.ExceptionFinder
+import org.fornax.soa.servicedsl.query.ServiceFinder
 import org.fornax.soa.servicedsl.query.namespace.NamespaceQuery
-import java.util.ArrayList
+import org.fornax.soa.servicedsl.query.type.TypesByLifecycleStateFinder
 
 
 /*
@@ -40,9 +41,13 @@ class SchemaNamespaceExtensions {
 	@Inject extension ServiceFinder
 	@Inject extension ExceptionFinder
 	
+	@Inject @Named ("forceRelativePaths") 
+	Boolean forceRelativePaths
 	
-//boolean forceRelativePaths () : GLOBALVAR forceRelativePaths;
-
+	@Inject @Named ("useNestedPaths") 
+	Boolean useNestedPaths
+	
+	
 	def boolean forceRelativePaths () {
 		true;
 	}
