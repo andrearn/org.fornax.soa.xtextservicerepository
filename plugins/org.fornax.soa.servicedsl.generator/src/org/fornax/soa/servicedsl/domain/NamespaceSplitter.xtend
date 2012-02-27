@@ -31,7 +31,7 @@ class NamespaceSplitter {
 	@Inject extension CommonStringExtensions
 	@Inject extension SchemaTemplateExtensions
 	@Inject extension CommonTemplateExtensions
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension VersionedTypeFilter
 	
 	/* 
@@ -87,10 +87,10 @@ class NamespaceSplitter {
 	def VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (SubNamespace ns, Version v) {
 		if (ns.eContainer   instanceof SubNamespace ) {
 			name 		= (ns.eContainer as SubNamespace).name.stripXtextEscapes();
-			shortName 	= (ns.eContainer as SubNamespace).prefix.stripXtextEscapes();		
+			shortName 	= (ns.eContainer as SubNamespace)?.prefix.stripXtextEscapes();		
 		} else {
 			name 		= (ns.eContainer as OrganizationNamespace).name.stripXtextEscapes();
-			shortName 	= (ns.eContainer as OrganizationNamespace).prefix.stripXtextEscapes();
+			shortName 	= (ns.eContainer as OrganizationNamespace)?.prefix.stripXtextEscapes();
 		} 
 		subdomain 	= ns;
 		fqn 		= ns.fqn();
@@ -105,10 +105,10 @@ class NamespaceSplitter {
 	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (BusinessObject c) {
 			if (c.eContainer   instanceof SubNamespace ) {
 				name 		= (c.eContainer as SubNamespace).name.stripXtextEscapes();
-				shortName 	= (c.eContainer as SubNamespace).prefix.stripXtextEscapes();		
+				shortName 	= (c.eContainer as SubNamespace).prefix?.stripXtextEscapes();		
 			} else {
 				name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
-				shortName 	= (c.eContainer as OrganizationNamespace).prefix.stripXtextEscapes();
+				shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
 			} 
 		subdomain 	= c.eContainer;
 		fqn 		= c.eContainer.fqn();
@@ -121,10 +121,10 @@ class NamespaceSplitter {
 	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (org.fornax.soa.serviceDsl.Enumeration c) {
 		if (c.eContainer instanceof SubNamespace)  {
 			name 		= (c.eContainer as SubNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as SubNamespace).prefix.stripXtextEscapes();		
+			shortName 	= (c.eContainer as SubNamespace).prefix?.stripXtextEscapes();		
 		} else {
 			name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as OrganizationNamespace).prefix.stripXtextEscapes();
+			shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
 		}
 		subdomain 	= c.eContainer;
 		fqn 		= c.eContainer.fqn();
@@ -140,10 +140,10 @@ class NamespaceSplitter {
 	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (org.fornax.soa.serviceDsl.Exception c) {
 		if (c.eContainer instanceof SubNamespace)  {
 			name 		= (c.eContainer as SubNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as SubNamespace).prefix.stripXtextEscapes();		
+			shortName 	= (c.eContainer as SubNamespace).prefix?.stripXtextEscapes();		
 		} else {
 			name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as OrganizationNamespace).prefix.stripXtextEscapes();
+			shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
 		}
 		subdomain 	= c.eContainer;
 		fqn 		= c.eContainer.fqn();
@@ -156,10 +156,10 @@ class NamespaceSplitter {
 	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (Service c) {
 		if (c.eContainer instanceof SubNamespace)  {
 			name 		= (c.eContainer as SubNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as SubNamespace).prefix.stripXtextEscapes();		
+			shortName 	= (c.eContainer as SubNamespace).prefix?.stripXtextEscapes();		
 		} else {
 			name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as OrganizationNamespace).prefix.stripXtextEscapes();
+			shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
 		}
 		subdomain 	= c.eContainer;
 		fqn 		= c.eContainer.fqn();

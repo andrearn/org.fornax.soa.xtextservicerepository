@@ -11,136 +11,136 @@ import org.fornax.soa.basedsl.sOABaseDsl.Version
 import org.fornax.soa.serviceDsl.VersionedType
 
 class LifecycleQueries {
-	def dispatch LifecycleState getOwnerMinDevState (Object o) {
+	def dispatch LifecycleState toOwnerMinDevState (Object o) {
 		LifecycleState::DEVELOPMENT;
 	}
 
-	def dispatch LifecycleState getOwnerMinDevState (SubNamespace ns) {
-		if (ns.linkingPolicy.minDevState != null) {
+	def dispatch LifecycleState toOwnerMinDevState (SubNamespace ns) {
+		if (ns.linkingPolicy?.minDevState != null) {
 			ns.linkingPolicy.minDevState;
 		} else {
 			LifecycleState::DEVELOPMENT;
 		}
 	}
 
-	def dispatch LifecycleState getOwnerMinDevState (BusinessObject o) {
-		if (o.linkingPolicy.minDevState != null) {
+	def dispatch LifecycleState toOwnerMinDevState (BusinessObject o) {
+		if (o.linkingPolicy?.minDevState != null) {
 			o.linkingPolicy.minDevState;
 		} else {
-			o.eContainer.getOwnerMinDevState();
+			o.eContainer.toOwnerMinDevState();
 		}
 	}
 
-	def dispatch LifecycleState getOwnerMinDevState (org.fornax.soa.serviceDsl.Enumeration o) {
-		if (o.linkingPolicy.minDevState != null) {
+	def dispatch LifecycleState toOwnerMinDevState (org.fornax.soa.serviceDsl.Enumeration o) {
+		if (o.linkingPolicy?.minDevState != null) {
 			o.linkingPolicy.minDevState;
 		} else {
-			o.eContainer.getOwnerMinDevState();
+			o.eContainer.toOwnerMinDevState();
 		}
 	}
 	
-	def dispatch LifecycleState getOwnerMinDevState (org.fornax.soa.serviceDsl.Exception o) {
-		if (o.linkingPolicy.minDevState != null) {
+	def dispatch LifecycleState toOwnerMinDevState (org.fornax.soa.serviceDsl.Exception o) {
+		if (o.linkingPolicy?.minDevState != null) {
 			o.linkingPolicy.minDevState;
 		} else {
-			o.eContainer.getOwnerMinDevState();
+			o.eContainer.toOwnerMinDevState();
 		}
 		
 	}
 	
-	def dispatch LifecycleState getOwnerMinDevState (Service o) {
-		if (o.linkingPolicy.minDevState != null) {
+	def dispatch LifecycleState toOwnerMinDevState (Service o) {
+		if (o.linkingPolicy?.minDevState != null) {
 			o.linkingPolicy.minDevState;
 		} else {
-			o.eContainer.getOwnerMinDevState();
+			o.eContainer.toOwnerMinDevState();
 		}
 	}
 
-	def dispatch LifecycleState getOwnerMinTestState (Object o) {
+	def dispatch LifecycleState toOwnerMinTestState (Object o) {
 		LifecycleState::TEST;
 	}
 	
-	def LifecycleState getOwnerMinTestState (SubNamespace ns) {
-		if (ns.linkingPolicy.minTestState != null) {
+	def LifecycleState toOwnerMinTestState (SubNamespace ns) {
+		if (ns.linkingPolicy?.minTestState != null) {
 			ns.linkingPolicy.minTestState;
 		} else {
 			LifecycleState::TEST;
 		}
 	}
 
-	def dispatch LifecycleState getOwnerMinTestState (BusinessObject o) {
-		if (o.linkingPolicy.minTestState != null) {
+	def dispatch LifecycleState toOwnerMinTestState (BusinessObject o) {
+		if (o.linkingPolicy?.minTestState != null) {
 			o.linkingPolicy.minTestState;
 		} else {
-			o.eContainer.getOwnerMinTestState();
+			o.eContainer.toOwnerMinTestState();
 		}
 	}
 
-	def dispatch LifecycleState getOwnerMinTestState (Enumeration o) {
-		if (o.linkingPolicy.minTestState != null) {
+	def dispatch LifecycleState toOwnerMinTestState (Enumeration o) {
+		if (o.linkingPolicy?.minTestState != null) {
 			o.linkingPolicy.minTestState;
 		} else {
-			o.eContainer.getOwnerMinTestState();
+			o.eContainer.toOwnerMinTestState();
 		}
 	}
 
-	def dispatch LifecycleState getOwnerMinTestState (org.fornax.soa.serviceDsl.Exception o) {
-		if (o.linkingPolicy.minTestState != null) {
+	def dispatch LifecycleState toOwnerMinTestState (org.fornax.soa.serviceDsl.Exception o) {
+		if (o.linkingPolicy?.minTestState != null) {
 			o.linkingPolicy.minTestState;
 		} else {
-			o.eContainer.getOwnerMinTestState();
+			o.eContainer.toOwnerMinTestState();
 		}
 	}
 
-	def dispatch LifecycleState getOwnerMinTestState (Service o) {
-		if (o.linkingPolicy.minTestState != null) {
+	def dispatch LifecycleState toOwnerMinTestState (Service o) {
+		if (o.linkingPolicy?.minTestState != null) {
 			o.linkingPolicy.minTestState;
 		} else {
-			o.eContainer.getOwnerMinTestState();
+			o.eContainer.toOwnerMinTestState();
 		}
 	}
 
-	def dispatch LifecycleState getOwnerMinProdState (Object o) {
+	def dispatch LifecycleState toOwnerMinProdState (Object o) {
  		LifecycleState::PRODUCTIVE;
 	}
 	
-	def dispatch LifecycleState getOwnerMinProdState (SubNamespace ns) {
-		if (ns.linkingPolicy.minProdState != null) {
+	def dispatch LifecycleState toOwnerMinProdState (SubNamespace ns) {
+		if (ns.linkingPolicy?.minProdState != null) {
 			ns.linkingPolicy.minProdState;
 		} else {
 			LifecycleState::PRODUCTIVE;
 		}
 	}
 	
-	def dispatch LifecycleState getOwnerMinProdState (BusinessObject o) {
-		if (o.linkingPolicy.minProdState != null) {
+	def dispatch LifecycleState toOwnerMinProdState (BusinessObject o) {
+		if (o.linkingPolicy?.minProdState != null) {
 			o.linkingPolicy.minProdState;
 		} else {
-			o.eContainer.getOwnerMinProdState();
+			o.eContainer.toOwnerMinProdState();
 		}
 	}
 
-	def dispatch LifecycleState getOwnerMinProdState (Enumeration o) {
-		if (o.linkingPolicy.minProdState != null) {
+	def dispatch LifecycleState toOwnerMinProdState (Enumeration o) {
+		if (o.linkingPolicy?.minProdState != null) {
 			o.linkingPolicy.minProdState;
 		} else {
-			o.eContainer.getOwnerMinProdState();
+			o.eContainer.toOwnerMinProdState();
 		}
 	}
 	
-	def dispatch LifecycleState getOwnerMinProdState (org.fornax.soa.serviceDsl.Exception o) {
-		if (o.linkingPolicy.minProdState != null) {
+	def dispatch LifecycleState toOwnerMinProdState (org.fornax.soa.serviceDsl.Exception o) {
+		if (o.linkingPolicy?.minProdState != null) {
 			o.linkingPolicy.minProdState;
 		} else {
-			o.eContainer.getOwnerMinProdState();
+			o.eContainer.toOwnerMinProdState();
 		}
 	}
 	
-	def dispatch LifecycleState getOwnerMinProdState (Service o) {
-		if (o.linkingPolicy.minProdState != null) {
+	def dispatch LifecycleState toOwnerMinProdState (Service o) {
+		if (o.linkingPolicy?.minProdState != null) {
 			o.linkingPolicy.minProdState;
 		} else {
-			o.eContainer.getOwnerMinProdState();
+			o.eContainer.toOwnerMinProdState();
 		}
 	}
 
@@ -168,23 +168,6 @@ class LifecycleQueries {
 	
 	def dispatch EObject getOwningType (EObject o) {
 		o.eContainer?.getOwningType();
-	}
-
-
-	def dispatch Version getOwnerVersion (EObject o) {
-		o.eContainer?.getOwnerVersion();
-	}
-	
-	def dispatch Version getOwnerVersion (VersionedType o) {
-		o.version;
-	}
-
-	def dispatch Version getOwnerVersion (org.fornax.soa.serviceDsl.Exception o) {
-		o.version;
-	}
-	
-	def dispatch Version getOwnerVersion (Service o) {
-		o.version;
 	}
 
 

@@ -37,7 +37,7 @@ class HeaderFinder {
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceQuery
 	@Inject extension LatestMatchingTypeFinder
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension VersionedTypeFilter
 	
 	
@@ -46,7 +46,7 @@ class HeaderFinder {
 	}
 		
 	def dispatch MessageHeader findBestMatchingHeader (Operation o, SOAProfile p ) {
-		if (o.messageHeader.header != null) { 
+		if (o.messageHeader?.header != null) { 
 			o.messageHeader.header;
 		} else {
 			o.eContainer.findBestMatchingHeader (p);
@@ -54,7 +54,7 @@ class HeaderFinder {
 	}
 			
 	def dispatch MessageHeader findBestMatchingHeader (Service s, SOAProfile p ) {
-		if (s.messageHeader.header != null) { 
+		if (s.messageHeader?.header != null) { 
 			s.messageHeader.header;
 		} else {
 			p.messaging.defaultHeader.header;
