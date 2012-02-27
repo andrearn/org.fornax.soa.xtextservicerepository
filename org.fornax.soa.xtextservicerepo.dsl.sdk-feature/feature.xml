@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.fornax.soa.xtextservicerepo.dsl.sdk"
+      label="SOA Xtext Service Repository DSL SDK"
+      version="1.5.0.qualifier"
+      provider-name="Fornax Platform">
+
+   <description url="http://www.eclipse.org/modeling/m2t">
+      %description
+   </description>
+
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://download.eclipse.org/modeling/m2t/updates/"/>
+   </url>
+
+   <includes
+         id="org.fornax.soa.dslkit"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.fornax.soa.servicerepo"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.fornax.soa.servicerepo.doc"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.fornax.soa.servicerepo.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

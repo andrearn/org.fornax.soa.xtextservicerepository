@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.fornax.soa.xtextservicerepo.generators.sdk"
+      label="SOA Xtext Service Repository generators SDK"
+      version="1.5.0.qualifier"
+      provider-name="Fornax Platform">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="http://www.example.com/copyright">
+      [Enter Copyright Description here.]
+   </copyright>
+
+   <license url="http://www.example.com/license">
+      [Enter License Description here.]
+   </license>
+
+   <includes
+         id="org.fornax.soa.basedsl.generator"
+         version="0.0.0"/>
+
+   <includes
+         id="org.fornax.soa.bindingdsl.generator"
+         version="0.0.0"/>
+
+   <includes
+         id="org.fornax.soa.businessdsl.generator"
+         version="0.0.0"/>
+
+   <includes
+         id="org.fornax.soa.environmentdsl.generator"
+         version="0.0.0"/>
+
+   <includes
+         id="org.fornax.soa.moduledsl.generator"
+         version="0.0.0"/>
+
+   <includes
+         id="org.fornax.soa.profiledsl.generator"
+         version="0.0.0"/>
+
+   <includes
+         id="org.fornax.soa.semanticsdsl.generator"
+         version="0.0.0"/>
+
+   <includes
+         id="org.fornax.soa.servicedsl.generator"
+         version="0.0.0"/>
+
+   <includes
+         id="org.fornax.soa.sladsl.generator"
+         version="0.0.0"/>
+
+   <includes
+         id="org.fornax.soa.solutiondsl.generator"
+         version="0.0.0"/>
+
+</feature>
