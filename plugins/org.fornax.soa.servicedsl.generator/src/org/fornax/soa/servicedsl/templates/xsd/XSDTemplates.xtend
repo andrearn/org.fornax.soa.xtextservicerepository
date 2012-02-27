@@ -50,7 +50,7 @@ class XSDTemplates {
 	@Inject extension NamespaceImportQueries
 	@Inject extension LatestMatchingTypeFinder
 	@Inject extension ReferencedTypesFinder
-	@Inject extension ExceptionFinder
+	@Inject ExceptionFinder exceptionFinder
 
 	/*
 		CARTRIDGE ENTRYPOINT for generation of XSDs from namespaces. 
@@ -113,10 +113,18 @@ class XSDTemplates {
 		that match the given minimal LifecycleState.
 	*/
 	def dispatch toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		val imports = vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace());
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.state != LifecycleState::RETIRED)
+			.filter (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(),  minState));
+		val enums = vns.types.filter (typeof (Enumeration))
+			.filter (en|en.state.matchesMinStateLevel (minState) && en.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(), minState));
+		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
+			.filter (ex|ex.state.matchesMinStateLevel(minState) && exceptionFinder.isLatestMatchingException (ex, vns.version.toMajorVersionNumber().asInteger(), minState));
+			
 		var content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<xsd:schema xmlns:tns="«vns.toNamespace()»"
-			«vns.importedVersionedNS (minState).forEach (e|e.toNamespaceDeclaration ())» 
+			«vns.importedVersionedNS (minState).map (e|e.toNamespaceDeclaration ()).join» 
 			xmlns="«vns.toNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 			xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
@@ -128,18 +136,11 @@ class XSDTemplates {
 			attributeFormDefault="unqualified"
 			targetNamespace="«vns.toNamespace()»"
 			>
-			«vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace())
-				.forEach (e|e.toImportDeclaration (registryBaseUrl))» 	
+			«imports.map (e|e.toImportDeclaration (registryBaseUrl)).join» 	
 			«IF (vns.subdomain instanceof SubNamespace)»
-				«vns.types.filter (typeof (BusinessObject)).filter (b|b.state != LifecycleState::RETIRED)
-					.filter (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(),  minState))
-					.forEach (e|e.toComplexType (vns, profile, minState))»
-				«vns.types.filter (typeof (Enumeration))
-					.filter (en|en.state.matchesMinStateLevel (minState) && en.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(), minState))
-					.forEach (e|e.toSimpleType (minState))»
-				«vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
-					.filter (ex|ex.state.matchesMinStateLevel(minState) && ex.isLatestMatchingException (vns.version.toMajorVersionNumber().asInteger(), minState))
-					.forEach (e|e.toFaultType (vns, profile, minState))»
+				«bos.map (e|e.toComplexType (vns, profile, minState)).join»
+				«enums.map (e|e.toSimpleType (minState)).join»
+				«exceptions.map (e|e.toFaultType (vns, profile, minState)).join»
 			«ELSEIF (vns.subdomain instanceof OrganizationNamespace)»
 				«/*»«EXPAND ComplexType FOREACH ((OrganizationNamespace) subdomain).types.typeSelect(BusinessObject)-»«ENDREM*/»
 			«ENDIF»
@@ -150,10 +151,18 @@ class XSDTemplates {
 	}
 
 	def dispatch toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+		val imports = vns.importedVersionedNS(minState).filter(e|e.toNamespace() != vns.toNamespace());
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.state != LifecycleState::RETIRED)
+			.filter (e|e.state.matchesMinStateLevel (minState) && e.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(),  minState));
+		val enums = vns.types.filter (typeof (Enumeration))
+			.filter (en|en.state.matchesMinStateLevel (minState) && en.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(), minState));
+		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
+			.filter (e|e.state.matchesMinStateLevel(minState) && exceptionFinder.isLatestMatchingException (e, vns.version.toMajorVersionNumber().asInteger(), minState));
+			
 		var content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<xsd:schema xmlns:tns="«vns.toNamespace()»"
-			«vns.importedVersionedNS (minState).forEach (e|e.toNamespaceDeclaration)» 
+			«vns.importedVersionedNS (minState).map (e|e.toNamespaceDeclaration).join» 
 			xmlns="«vns.toNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 			xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
@@ -165,17 +174,11 @@ class XSDTemplates {
 			attributeFormDefault="unqualified"
 			targetNamespace="«vns.toNamespace()»"
 			>
-			«vns.importedVersionedNS(minState).filter(e|e.toNamespace() != vns.toNamespace()).forEach (e|e.toImportDeclaration (registryBaseUrl))» 	
+			«imports.map (e|e.toImportDeclaration (registryBaseUrl)).join» 	
 			«IF (vns.subdomain instanceof SubNamespace)»
-				«vns.types.filter (typeof (BusinessObject)).filter (b|b.state != LifecycleState::RETIRED)
-					.filter (e|e.state.matchesMinStateLevel (minState) && e.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(),  minState))
-					.forEach (e|e.toComplexType (vns, profile, minState))»
-				«vns.types.filter (typeof (Enumeration))
-					.filter (en|en.state.matchesMinStateLevel (minState) && en.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(), minState))
-					.forEach (e|e.toSimpleType (minState))»
-				«vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
-					.filter (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingException (vns.version.toMajorVersionNumber().asInteger(), minState))
-					.forEach (e|e.toFaultType (vns, profile, minState))»
+				«bos.map (e|e.toComplexType (vns, profile, minState)).join»
+				«enums.map (e|e.toSimpleType (minState)).join»
+				«exceptions.map (e|e.toFaultType (vns, profile, minState)).join»
 			«ELSEIF (vns.subdomain instanceof OrganizationNamespace)»
 				«/*«EXPAND ComplexType FOREACH ((OrganizationNamespace) subdomain).types.typeSelect(BusinessObject)-»*/»
 			«ENDIF»
@@ -191,7 +194,7 @@ class XSDTemplates {
 	'''
 	
 	def dispatch toImportDeclaration (VersionedDomainNamespace vns, String registryBaseUrl) '''
-		<xsd:import schemaLocation="«vns.getRegisteredUrl (registryBaseUrl)».xsd"
+		<xsd:import schemaLocation="«vns.toRegistryAssetUrl (registryBaseUrl)».xsd"
 			namespace="«vns.toNamespace()»"></xsd:import>
 	'''
 	
@@ -211,7 +214,7 @@ class XSDTemplates {
 		Lifecycle state: «bo.state.toString()»
 		«IF bo.doc != null»
 						
-			«bo.doc.stripCommentBraces().trim()»
+			«bo.doc?.stripCommentBraces()?.trim()»
 		«ENDIF» ]]>   			
 		    	</xsd:documentation>
 			«/*
@@ -222,7 +225,7 @@ class XSDTemplates {
 			Lifecycle state: «state.toString()»
 			«IF doc != null-»
 							
-			«doc.stripCommentBraces().trim()»
+			«doc?.stripCommentBraces()?.trim()»
 			«ENDIF-» ]]>   			
 		    			</jxb:javadoc>
 			    	</jxb:class>
@@ -255,7 +258,7 @@ class XSDTemplates {
 	*/
 	def dispatch toPropertySequenceWithAny(BusinessObject bo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 	    	<xsd:sequence>
-	    		«bo.properties.forEach (e|e.toProperty (currNs, profile, minState))»
+	    		«bo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 	    		«IF profile.typesUseExtendableProperties ()»
 					<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
 						processContents="skip"/>
@@ -273,13 +276,13 @@ class XSDTemplates {
 	*/
 	def dispatch toPropertySequence(BusinessObject bo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 	    	<xsd:sequence>
-	    		«bo.properties.forEach (e|e.toProperty (currNs, profile, minState))»
+	    		«bo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 	    	</xsd:sequence>
 	'''
 	
 	def dispatch toPropertySequenceWithAny (org.fornax.soa.serviceDsl.Exception ex, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 	    	<xsd:sequence>
-	    		«ex.properties.forEach (e|e.toProperty (currNs, profile, minState))»
+	    		«ex.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 	    		«IF profile.typesUseExtendableProperties ()»
 				<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
 					processContents="skip"/>
@@ -289,7 +292,7 @@ class XSDTemplates {
 	
 	def dispatch toPropertySequence(org.fornax.soa.serviceDsl.Exception ex, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 	    	<xsd:sequence>
-	    		«ex.properties.forEach (e|e.toProperty (currNs, profile, minState))»
+	    		«ex.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 	    	</xsd:sequence>
 	'''
 	
@@ -300,12 +303,12 @@ class XSDTemplates {
 					<![CDATA[Version:	«en.version.toVersionNumber()»
 					 «IF en.doc != null»
 									
-					«en.doc.stripCommentBraces().trim()»
+					«en.doc?.stripCommentBraces()?.trim()»
 					«ENDIF» ]]>   			   			
 	       		</xsd:documentation>
 	    	</xsd:annotation>
 	    	<xsd:restriction base="xsd:string">
-	    		«en.literals.forEach (e|e.toEnumLiteral())»
+	    		«en.literals.map (e|e.toEnumLiteral()).join»
 	    	</xsd:restriction>
 	    </xsd:simpleType>
 	'''
@@ -326,7 +329,7 @@ class XSDTemplates {
 				    Lifecycle state: «ex.state.toString()»
 						«IF ex.doc != null»
 	    
-							«ex.doc.stripCommentBraces().trim()»
+							«ex.doc?.stripCommentBraces()?.trim()»
 						«ENDIF» ]]>   			
 	    		</xsd:documentation>
 	«/*
@@ -337,7 +340,7 @@ class XSDTemplates {
 								Lifecycle state: «state.toString()»
 							«IF doc != null»
 												
-								«doc.stripCommentBraces().trim()»
+								«doc?.stripCommentBraces()?.trim()»
 							«ENDIF» ]]>   			
 	      				</jxb:javadoc>
 	      			</jxb:class>
@@ -369,13 +372,13 @@ class XSDTemplates {
 				«IF attr.doc != null»
 			   		<xsd:annotation>
 			   			<xsd:documentation>
-			   				<![CDATA[«attr.doc.stripCommentBraces().trim()»]]>
+			   				<![CDATA[«attr.doc?.stripCommentBraces()?.trim()»]]>
 			   			</xsd:documentation>
 	«/*
 			   			<xsd:appinfo>
 			    			<jxb:property>
 			    				<jxb:javadoc>
-				    				<![CDATA[«doc.stripCommentBraces().trim()»]]>
+				    				<![CDATA[«doc?.stripCommentBraces()?.trim()»]]>
 			    				</jxb:javadoc>
 			    			</jxb:property>
 						</xsd:appinfo>
@@ -396,13 +399,13 @@ class XSDTemplates {
 				«IF attr.doc != null»
 			   	<xsd:annotation>
 			   		<xsd:documentation>
-			   			<![CDATA[«attr.doc.stripCommentBraces().trim()»]]>
+			   			<![CDATA[«attr.doc?.stripCommentBraces()?.trim()»]]>
 			   		</xsd:documentation>
 	«/*
 			   		<xsd:appinfo>
 			    		<jxb:property>
 			    			<jxb:javadoc>
-				    			<![CDATA[«doc.stripCommentBraces().trim()»]]>
+				    			<![CDATA[«doc?.stripCommentBraces()?.trim()»]]>
 			    			</jxb:javadoc>
 			    		</jxb:property>
 					</xsd:appinfo>
@@ -420,7 +423,7 @@ class XSDTemplates {
 		   			<![CDATA[
 		   			References an instance of type «ref.type.toFullTypeNameRef(currNs)» using it's business-key «ref.type.toWeakRefKeyAttr(minState)»
 					«IF ref.doc != null»
-			   			«ref.doc.stripCommentBraces().trim()»
+			   			«ref.doc?.stripCommentBraces()?.trim()»
 			    	«ENDIF»
 			    	]]>
 			    </xsd:documentation>
@@ -428,7 +431,7 @@ class XSDTemplates {
 			    <xsd:appinfo>
 					<jxb:property>
 						<jxb:javadoc>
-				   			<![CDATA[«doc.stripCommentBraces().trim()»]]>
+				   			<![CDATA[«doc?.stripCommentBraces()?.trim()»]]>
 						</jxb:javadoc>
 					</jxb:property>
 			    </xsd:appinfo>

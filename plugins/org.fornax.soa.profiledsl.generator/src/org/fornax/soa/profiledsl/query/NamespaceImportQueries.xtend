@@ -44,7 +44,7 @@ class NamespaceImportQueries {
 		) {
 		if (! visited.contains(s) ) { 
 			visited.add(s);
-			s.namespace.allImportedVersionedNS (s.version).allImportedVersionedNS (visited).filter (typeof (VersionedTechnicalNamespace)).toSet;
+			s.namespace.allImportedVersionedNS (s.version).map (vns |vns.allImportedVersionedNS (visited)).flatten.filter (typeof (VersionedTechnicalNamespace)).toSet;
 		} else {
 			visited.filter (typeof (VersionedTechnicalNamespace)).toSet;
 		}

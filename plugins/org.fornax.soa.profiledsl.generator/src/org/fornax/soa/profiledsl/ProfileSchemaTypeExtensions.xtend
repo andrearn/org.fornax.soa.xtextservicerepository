@@ -17,13 +17,14 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 
 class ProfileSchemaTypeExtensions {
 	
-	@Inject extension CommonEObjectExtensions
-	@Inject extension VersionQualifierExtensions
 	@Inject extension TechnicalNamespaceSplitter
 	@Inject extension NamespaceQueries
 	@Inject extension ProfileSchemaNamespaceExtensions
-	@Inject extension ProfileVersionQueries
+	@Inject ProfileVersionQueries profileVersionQueries
 	@Inject extension LatestMatchingTypeFinder
+//	@Inject extension CommonEObjectExtensions
+
+	@Inject VersionQualifierExtensions versionQualifiers
 
 	def dispatch String toTypeNameRef (TypeRef t, VersionedTechnicalNamespace currNs) {
 		null;
@@ -31,6 +32,10 @@ class ProfileSchemaTypeExtensions {
 	
 	def dispatch String toTypeNameRef (DataTypeRef t, VersionedTechnicalNamespace currentDomNs) { 
 		t.findLatestMatchingType () .toTypeNameRef (currentDomNs);
+	}
+	
+	def dispatch String toTypeNameRef (DataType t, VersionedTechnicalNamespace currentDomNs) { 
+		t.toTypeNameRef ();
 	}
 		
 	def dispatch String toTypeNameRef (AttributeDataTypeRef t, VersionedTechnicalNamespace currentDomNs) { 
@@ -40,11 +45,11 @@ class ProfileSchemaTypeExtensions {
 	/*<b>TODO CHECK</b> getOwnerVersion for VersionedTypeRef!!!*/
 	def dispatch String toTypeNameRef (VersionedTypeRef t, VersionedTechnicalNamespace currNs) { 
 		if (t.type.findTechnicalNamespace().toUnversionedNamespace() == (currNs.namespace as TechnicalNamespace).toUnversionedNamespace()  
-			&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
+			&& versionQualifiers.toMajorVersionNumber(profileVersionQueries.getOwnerVersion(t)) == versionQualifiers.toMajorVersionNumber(t.type.version)
 		) {
 			"tns:" +t.type.name
 		} else {
-			t.type.findTechnicalNamespace().toShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+			t.type.findTechnicalNamespace().toShortName() + versionQualifiers.toMajorVersionNumber(t.type.version) + ":" +t.type.name;
 		}
 	}
 

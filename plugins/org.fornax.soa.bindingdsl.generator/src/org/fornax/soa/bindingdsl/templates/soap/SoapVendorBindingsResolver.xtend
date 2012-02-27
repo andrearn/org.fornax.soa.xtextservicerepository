@@ -18,7 +18,7 @@ class SoapVendorBindingsResolver {
 	
 	@Inject extension VersionQualifierExtensions
 	@Inject extension BindingExtensions
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 	
 	def dispatch String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {}
 	

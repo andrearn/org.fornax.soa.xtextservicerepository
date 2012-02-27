@@ -25,6 +25,7 @@ import org.fornax.soa.servicedsl.query.ExceptionFinder
 import org.fornax.soa.servicedsl.query.ServiceFinder
 import org.fornax.soa.servicedsl.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.query.type.TypesByLifecycleStateFinder
+import org.fornax.soa.basedsl.sOABaseDsl.Version
 
 
 /*
@@ -35,7 +36,7 @@ class SchemaNamespaceExtensions {
 	extension CommonEObjectExtensions
 
 	@Inject extension CommonStringExtensions
-	@Inject extension VersionQualifierExtensions
+	@Inject VersionQualifierExtensions versionQualifier
 	@Inject extension NamespaceQuery
 	@Inject extension TypesByLifecycleStateFinder
 	@Inject extension ServiceFinder
@@ -49,7 +50,7 @@ class SchemaNamespaceExtensions {
 	
 	
 	def boolean forceRelativePaths () {
-		true;
+		forceRelativePaths;
 	}
 	
 	def dispatch String fqn (Object o) {
@@ -60,17 +61,13 @@ class SchemaNamespaceExtensions {
 		s.name.stripXtextEscapes();
 	}
 
-	def dispatch List<TechnicalNamespace> toNamespacePath (Object o) {
-		newArrayList();
-	}
-
 	def dispatch String toUnversionedNamespace (Object o) {
 		"unknown";
 	}
 
 	def dispatch String fqn (SubNamespace s) {
 		(s.findOrgNamespace() as OrganizationNamespace).name.stripXtextEscapes() + "."
-			 + toNamespacePath(newArrayList(s)).map(n|n.name.stripXtextEscapes()).join(".");
+			 + toSubNamespacePath(newArrayList(s)).map(n|n.name.stripXtextEscapes()).join(".");
 	}
 	
 	def dispatch String toNamespace (Object o) {
@@ -114,22 +111,26 @@ class SchemaNamespaceExtensions {
 		null;
 	}
 	
+	def dispatch String toVersionPostfix (Version v) {
+		versionQualifier.toVersionPostfix(v);
+	}
+	
 	def dispatch String toVersionPostfix (OrganizationNamespace d) {
-		toDefaultVersionPostfix();
+		versionQualifier.toDefaultVersionPostfix();
 	}
 	
 	def dispatch String toVersionPostfix (DomainNamespace s) {
 		if (s.version != null && s.version.version != null ) 
-			s.version.toVersionPostfix() 
+			versionQualifier.toVersionPostfix(s.version) 
 		else
-			toDefaultVersionPostfix();
+			versionQualifier.toDefaultVersionPostfix();
 	}
 		
 	def dispatch String toVersionPostfix (VersionedDomainNamespace s) {
 		if (s.version != null) 
-			s.version.toVersionPostfix() 
+			versionQualifier.toVersionPostfix(s.version) 
 		else
-			toDefaultVersionPostfix();
+			versionQualifier.toDefaultVersionPostfix();
 	}
 
 	
@@ -164,22 +165,13 @@ class SchemaNamespaceExtensions {
 
 
 
+
 	/*List[sOAProfileDsl::TechnicalNamespace] getNamespacePath (List[SubNamespace] nsList) : 
 		SubNamespace.isInstance(nsList.last().eContainer) ? 
 			getNamespacePath (nsList.add ((SubNamespace)nsList.last().eContainer) -> nsList)
 		: 
 			nsList.typeSelect(SubNamespace).reverse();*/
 		
-	def dispatch List<TechnicalNamespace> toNamespacePath (List<TechnicalNamespace> nsList) { 
-		if (nsList.last().eContainer instanceof TechnicalNamespace) {
-			nsList.add ((nsList.toList().last().eContainer  as TechnicalNamespace));
-			toNamespacePath (nsList);
-		} else {
-			nsList.filter (typeof (TechnicalNamespace)).toList.reverse();
-		}
-			
-	}
-	
 
 		
 	def dispatch String toShortName(SubNamespace s) {
@@ -191,83 +183,76 @@ class SchemaNamespaceExtensions {
 	}
 
 
-	def dispatch String getRegisteredUrl (Service s, String registryUrl) { 
+	def dispatch String toRegistryAssetUrl (Service s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths() ) 
-			registryUrl + "/" + s.getFileNameFragment() 
+			registryUrl + "/" + s.toFileNameFragment() 
 		else
-			s.getFileNameFragment();
+			s.toFileNameFragment();
 	}
 		
-	def dispatch String getRegisteredUrl (OrganizationNamespace s, String registryUrl) { 
+	def dispatch String toRegistryAssetUrl (OrganizationNamespace s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths() ) 
-			registryUrl + "/" + s.getFileNameFragment() 
+			registryUrl + "/" + s.toFileNameFragment() 
 		else
-			s.getFileNameFragment();
+			s.toFileNameFragment();
 	}
 			
-	def dispatch String getRegisteredUrl (DomainNamespace s, String registryUrl) { 
+	def dispatch String toRegistryAssetUrl (DomainNamespace s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths() ) 
-			registryUrl + "/" + s.getFileNameFragment() 
+			registryUrl + "/" + s.toFileNameFragment() 
 		else
-			s.getFileNameFragment();
+			s.toFileNameFragment();
 	} 
 	
-	def dispatch String getRegisteredUrl (InternalNamespace s, String registryUrl) {
+	def dispatch String toRegistryAssetUrl (InternalNamespace s, String registryUrl) {
 		if (registryUrl != null && !forceRelativePaths() ) 
-			registryUrl + "/" + s.getFileNameFragment() 
+			registryUrl + "/" + s.toFileNameFragment() 
 		else
-			s.getFileNameFragment();
+			s.toFileNameFragment();
 	}
-	 
-	def dispatch String getRegisteredUrl (TechnicalNamespace s, String registryUrl) { 
+	def dispatch String toRegistryAssetUrl (VersionedDomainNamespace s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths() ) 
-			registryUrl + "/" + s.getFileNameFragment() 
+			registryUrl + "/" +s.toFileNameFragment() 
 		else
-			s.getFileNameFragment();
-	} 
-	def dispatch String getRegisteredUrl (VersionedDomainNamespace s, String registryUrl) { 
-		if (registryUrl != null && !forceRelativePaths() ) 
-			registryUrl + "/" +s.getFileNameFragment() 
-		else
-			s.getFileNameFragment(); 
+			s.toFileNameFragment(); 
 	}
 	
 	
-	def dispatch String getRegisteredUrl (Object o, Void registryUrl) {
+	def dispatch String toRegistryAssetUrl (Object o, Void registryUrl) {
 		null;
 	}
 	
-	def dispatch String getRegisteredUrl (Service s, Void registryUrl) { 
-		s.getFileNameFragment();
+	def dispatch String toRegistryAssetUrl (Service s, Void registryUrl) { 
+		s.toFileNameFragment();
 	}
 		
-	def dispatch String getRegisteredUrl (OrganizationNamespace s, Void registryUrl) { 
-		s.getFileNameFragment(); 
+	def dispatch String toRegistryAssetUrl (OrganizationNamespace s, Void registryUrl) { 
+		s.toFileNameFragment(); 
 	}
 	
-	def dispatch String getRegisteredUrl (DomainNamespace s, Void registryUrl) {
-		s.getFileNameFragment();
+	def dispatch String toRegistryAssetUrl (DomainNamespace s, Void registryUrl) {
+		s.toFileNameFragment();
 	}
 	
-	def dispatch String getRegisteredUrl (InternalNamespace s, Void registryUrl) { 
-		s.getFileNameFragment(); 
+	def dispatch String toRegistryAssetUrl (InternalNamespace s, Void registryUrl) { 
+		s.toFileNameFragment(); 
 	}
 	
-	def dispatch String getRegisteredUrl (TechnicalNamespace s, Void registryUrl) {
-		s.getFileNameFragment();
+	def dispatch String toRegistryAssetUrl (TechnicalNamespace s, Void registryUrl) {
+		s.toFileNameFragment();
 	}
 	
-	def dispatch String getRegisteredUrl (VersionedDomainNamespace s, Void registryUrl) { 
-		s.getFileNameFragment();
+	def dispatch String toRegistryAssetUrl (VersionedDomainNamespace s, Void registryUrl) { 
+		s.toFileNameFragment();
 	}
 	
 	
-	def String getFileNameFragment (Object s) {
+	def dispatch String toFileNameFragment (Object s) {
 		null;
 	}
 	
 	def dispatch String toFileNameFragment (Service s) { 
-		s.eContainer.getFileNameFragment().replaceAll("\\." , "-") + "-" + s.name.stripXtextEscapes() + "-" + s.version.toVersionPostfix();
+		s.eContainer.toFileNameFragment().replaceAll("\\." , "-") + "-" + s.name.stripXtextEscapes() + "-" + s.version.toVersionPostfix();
 	}
 	
 	def dispatch String toFileNameFragment (OrganizationNamespace s) {
@@ -286,17 +271,13 @@ class SchemaNamespaceExtensions {
 		s.findOrgNamespace().shorten().replaceAll("\\." , "-") + "-" + toSubNamespacePath (namespaces).map(n|n.name.stripXtextEscapes().replaceAll("\\." , "-")).join("-");
 	}
 	
-	def dispatch String toFileNameFragment (org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace s) {
-		s.findOrgNamespace().shorten().replaceAll("\\." , "-") + "-" + newArrayList(s).toNamespacePath().map(n|n.name.stripXtextEscapes().replaceAll("\\." , "-")).join("-");
-	}
-	
 	def dispatch String toFileNameFragment (VersionedDomainNamespace s) {
-		s.subdomain.getFileNameFragment() + "-v" + s.version.toMajorVersionNumber();
+		s.subdomain.toFileNameFragment() + "-v" + versionQualifier.toMajorVersionNumber(s.version);
 	}
 	
 	
 	def String getConcreteWsdlFileNameFragment (Service s, String endPointKind) {
-		s.eContainer.getFileNameFragment().replaceAll("\\." , "-") + "-" + s.name + endPointKind + "Port" + "-" + s.version.toVersionPostfix();
+		s.eContainer.toFileNameFragment().replaceAll("\\." , "-") + "-" + s.name + endPointKind + "Port" + "-" + s.version.toVersionPostfix();
 	}
 		
 	

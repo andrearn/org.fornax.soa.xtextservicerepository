@@ -1,7 +1,6 @@
 «IMPORT sOABaseDsl»
 «IMPORT bindingDsl»
 «IMPORT serviceDsl»
-«IMPORT sOAProfileDsl»
 
 «EXTENSION org::fornax::soa::servicedsl::domain::splitting»
 «EXTENSION org::fornax::soa::bindingdsl::queries::modules::moduleQueries»
@@ -32,7 +31,7 @@
 	referenced by the DomainBinding are considered. Overrides of minimal LifecycleStates 
 	declared in SubNamespaces will be respected
 «ENDREM»
-«DEFINE Binding (SOAProfile profile) FOR DomainBinding»
+«DEFINE Binding (sOAProfileDsl::SOAProfile profile) FOR DomainBinding»
 	«EXPAND Binding ( environment.getMinLifecycleState (this), profile)»
 «ENDDEFINE»
 
@@ -45,7 +44,7 @@
 	All Services and their required XSDs that match the minimal given LifecycleState are 
 	considered
 «ENDREM»
-«DEFINE Binding (LifecycleState minState, SOAProfile profile) FOR DomainBinding»
+«DEFINE Binding (LifecycleState minState, sOAProfileDsl::SOAProfile profile) FOR DomainBinding»
 	«FOREACH subNamespace.toVersionedDomainNamespaces() AS verNs»
 		«FOREACH verNs.servicesWithMinState (minState).typeSelect(Service).select(e|e.isLatestMatchingService(verNs.version.asInteger(), minState)) AS svc»
 			«EXPAND BindingByService (svc, profile) FOR this.getMostSpecificBinding(svc)»
@@ -63,7 +62,7 @@
 «ENDDEFINE»
 
 
-«DEFINE BindingByService(Service s, SOAProfile profile) FOR Binding»
+«DEFINE BindingByService(Service s, sOAProfileDsl::SOAProfile profile) FOR Binding»
 	«ERROR "Unexpected Bining type " + metaType.name»
 «ENDDEFINE»
 
@@ -76,7 +75,7 @@
 	If generation of concrete WSDL for private services bound providing servers is enable,
 	generate a concrete WSDL for the private sevrice
 «ENDREM»
-«DEFINE BindingByService(Service s, SOAProfile profile) FOR DomainBinding»
+«DEFINE BindingByService(Service s, sOAProfileDsl::SOAProfile profile) FOR DomainBinding»
 	«IF generatePrivateWsdlForProviderHost()»
 		«FOREACH getProviderProtocols().typeSelect(SOAP).select(e|e.providedWsdlUrl == null && e.provider != null) AS prot»
 			«EXPAND soap::ConcreteProviderWsdl::WSDL(this, prot, profile) FOR s»
@@ -98,7 +97,7 @@
 	If generation of concrete WSDL for private services bound providing servers is enable,
 	generate a concrete WSDL for the private sevrice
 «ENDREM»
-«DEFINE BindingByService(Service s, SOAProfile profile) FOR ServiceBinding»
+«DEFINE BindingByService(Service s, sOAProfileDsl::SOAProfile profile) FOR ServiceBinding»
 	«IF generatePrivateWsdlForProviderHost()»
 		«FOREACH getProviderProtocols().typeSelect(SOAP).select(e|e.providedWsdlUrl == null && e.provider != null) AS prot»
 			«EXPAND soap::ConcreteProviderWsdl::WSDL(this, prot, profile) FOR s»
@@ -123,14 +122,14 @@
 	LifecycleState derived from the given Environment and the minimal required LifecycleState 
 	of the respective Service / owning SubNamespace
 «ENDREM»
-«DEFINE BindModulesToEnvorinment (SOAProfile profile, String targetEnvironmentName) FOR List[ModuleBinding]»
+«DEFINE BindModulesToEnvorinment (sOAProfileDsl::SOAProfile profile, String targetEnvironmentName) FOR List[ModuleBinding]»
 	«FOREACH this.select(e|e.environment.name==targetEnvironmentName) AS modBind»
 		«FOREACH modBind.module.module.providedServices AS provSvc»
 			«LET provSvc.latestServiceInEnvironment (modBind.environment) AS svc-»
 				«IF svc != null»
 					«EXPAND BindingByService (svc, modBind.getMostSpecificBinding (svc), profile) FOR modBind»
-					«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (modBind.environment), profile, getRegistryBaseUrl()) FOR svc.getSubdomain()»
-					«FOREACH {svc.getSubdomain()}.union(svc.getSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
+					«EXPAND org::fornax::soa::servicedsl::templates::Services::SubNamespace (svc.getSubdomain().minStateByEnvironment (modBind.environment), profile, getRegistryBaseUrl().first()) FOR (SubNamespace)svc.getSubdomain()»
+					«FOREACH {svc.getSubdomain()}.union(((SubNamespace)svc.getSubdomain()).getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().subdomain.toSet()) AS ns»
 						«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (ns.minStateByEnvironment (modBind.environment), profile, getRegistryBaseUrl()) FOR ns»
 					«ENDFOREACH»
 					«IF forceRelativePaths()»
@@ -143,7 +142,7 @@
 		«ENDFOREACH»
 	«ENDFOREACH»
 «ENDDEFINE»
-«DEFINE BindModulesToEnvironment (SOAProfile profile, String targetEnvironmentName) FOR List[ModuleBinding]»
+«DEFINE BindModulesToEnvironment (sOAProfileDsl::SOAProfile profile, String targetEnvironmentName) FOR List[ModuleBinding]»
 	«FOREACH this.select(e|e.environment.name==targetEnvironmentName) AS modBind»
 		«FOREACH modBind.module.module.providedServices AS provSvc»
 			«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
@@ -163,7 +162,7 @@
 		«ENDFOREACH»
 	«ENDFOREACH»
 «ENDDEFINE»
-«DEFINE BindImportModulesToEnvironment (SOAProfile profile, String targetEnvironmentName) FOR List[ModuleBinding]»
+«DEFINE BindImportModulesToEnvironment (sOAProfileDsl::SOAProfile profile, String targetEnvironmentName) FOR List[ModuleBinding]»
 	«FOREACH this.select(e|e.environment.name==targetEnvironmentName) AS modBind»
 		«FOREACH modBind.module.module.usedServices AS usedSvc»
 			«LET usedSvc.latestServiceInEnvironment (environment) AS svc-»
@@ -194,11 +193,11 @@
 	LifecycleState derived from the given Environment and the minimal required LifecycleState 
 	of the respective Service / owning SubNamespace
 «ENDREM»
-«DEFINE Binding (List[SOAProfile] profiles, String profileName) FOR ModuleBinding»
+«DEFINE Binding (List[sOAProfileDsl::SOAProfile] profiles, String profileName) FOR ModuleBinding»
 	«EXPAND Binding (profiles.selectFirst (e|e.name == profileName)) FOR this»
 «ENDDEFINE»
 
-«DEFINE Binding (SOAProfile profile) FOR ModuleBinding»
+«DEFINE Binding (sOAProfileDsl::SOAProfile profile) FOR ModuleBinding»
 	«FOREACH module.module.providedServices AS provSvc»
 		«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
 			«IF svc != null»
@@ -217,7 +216,7 @@
 	«ENDFOREACH»
 «ENDDEFINE»
 
-«DEFINE Binding (SOAProfile profile, boolean noDeps, boolean includeSubNamespaces) FOR ModuleBinding»
+«DEFINE Binding (sOAProfileDsl::SOAProfile profile, boolean noDeps, boolean includeSubNamespaces) FOR ModuleBinding»
 	«FOREACH module.module.providedServices AS provSvc»
 		«LET provSvc.latestServiceInEnvironment (environment) AS svc-»
 			«IF svc != null»
@@ -242,7 +241,7 @@
 	«ENDFOREACH»
 «ENDDEFINE»
 
-«DEFINE BindingByService(Service s, Binding specificBinding, SOAProfile profile) FOR ModuleBinding»
+«DEFINE BindingByService(Service s, Binding specificBinding, sOAProfileDsl::SOAProfile profile) FOR ModuleBinding»
 	«FOREACH specificBinding.protocol AS prot-»
 		«IF SOAP.isInstance(prot)-»
 			«LET (SOAP)prot AS soapProt-»
@@ -259,7 +258,7 @@
 «ENDDEFINE»
 
 
-«DEFINE BindingByServiceName(List[String] serviceNames, SOAProfile profile) FOR DomainBinding»
+«DEFINE BindingByServiceName(List[String] serviceNames, sOAProfileDsl::SOAProfile profile) FOR DomainBinding»
 
 	«IF generatePrivateWsdlForProviderHost()»
 		«FOREACH getProviderProtocols().typeSelect(SOAP).select(e|e.providedWsdlUrl == null && e.provider != null) AS prot»
@@ -281,12 +280,12 @@
 
 
 
-«DEFINE XSD (List[environmentDsl::Environment] env, String targetEnv, List[SOAProfile] profiles, String profileName) FOR SubNamespace»
+«DEFINE XSD (List[environmentDsl::Environment] env, String targetEnv, List[sOAProfileDsl::SOAProfile] profiles, String profileName) FOR SubNamespace»
 	«EXPAND XSD (env.selectFirst (e|e.name == targetEnv), profiles.selectFirst (e|e.name == profileName))»
 «ENDDEFINE»
 
 
-«DEFINE XSD (environmentDsl::Environment env, SOAProfile profile) FOR SubNamespace»
+«DEFINE XSD (environmentDsl::Environment env, sOAProfileDsl::SOAProfile profile) FOR SubNamespace»
 	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (env.getMinLifecycleState(this), profile, env.getRegistryBaseUrl())»
 «ENDDEFINE»
 «REM»
@@ -304,7 +303,7 @@
 	If there exits no DomainBinding for the given SubNamespace any DomainBinding to the targeted
 	Environment can be chosen.
 «ENDREM»
-«DEFINE XSD (DomainBinding bind, SOAProfile profile) FOR SubNamespace»
+«DEFINE XSD (DomainBinding bind, sOAProfileDsl::SOAProfile profile) FOR SubNamespace»
 	«EXPAND XSD (bind.environment.getMinLifecycleState(this), bind, profile)»
 «ENDDEFINE»
 
@@ -321,7 +320,7 @@
 	If there exits no DomainBinding for the given SubNamespace any DomainBinding to the targeted
 	Environment can be chosen.
 «ENDREM»
-«DEFINE XSD (LifecycleState minState, DomainBinding bind, SOAProfile profile) FOR SubNamespace»
+«DEFINE XSD (LifecycleState minState, DomainBinding bind, sOAProfileDsl::SOAProfile profile) FOR SubNamespace»
 	«EXPAND org::fornax::soa::servicedsl::templates::xsd::XSD::XSD (bind.environment.getMinLifecycleState(this), profile, bind.getRegistryBaseUrl())»
 «ENDDEFINE»
 
@@ -330,13 +329,13 @@
 «REM»
 	Event XSDs for Services having an request and an response event for each service operation
 «ENDREM»
-«DEFINE EventsInclSubNamespaces (List[SubNamespace] namespaces, List[environmentDsl::Environment] environments, String targetEnv, List[SOAProfile] profiles, String profileName) FOR String»
+«DEFINE EventsInclSubNamespaces (List[SubNamespace] namespaces, List[environmentDsl::Environment] environments, String targetEnv, List[sOAProfileDsl::SOAProfile] profiles, String profileName) FOR String»
 	«FOREACH namespaces.select(e|e.name.startsWith (this)) AS ns»
 		«EXPAND Events (environments, targetEnv, profiles, profileName) FOR ns»
 	«ENDFOREACH»
 «ENDDEFINE»
 
-«DEFINE Events (List[environmentDsl::Environment] environments, String targetEnv, List[SOAProfile] profiles, String profileName) FOR SubNamespace»
+«DEFINE Events (List[environmentDsl::Environment] environments, String targetEnv, List[sOAProfileDsl::SOAProfile] profiles, String profileName) FOR SubNamespace»
 	«LET environments.selectFirst(e|e.name == targetEnv) AS env»
 		«EXPAND org::fornax::soa::servicedsl::templates::xsd::EventXSD::Events (env.getMinLifecycleState(this), profiles.selectFirst (e|e.name == profileName), env.getRegistryBaseUrl())»
 	«ENDLET»

@@ -8,13 +8,13 @@ import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef
 
 class ModuleNamespaceQuery {
 	
-	@Inject extension NamespaceQuery
+	@Inject NamespaceQuery nsQuery
 	
 	def dispatch SubNamespace findSubdomain (ServiceRef s) {
-		s.service.findSubdomain();
+		nsQuery.findSubdomain (s.service);
 	}
 	
 	def dispatch SubNamespace findSubdomain (ImportServiceRef s) {
-		s.service.findSubdomain();
+		nsQuery.findSubdomain (s.service);
 	}
 }

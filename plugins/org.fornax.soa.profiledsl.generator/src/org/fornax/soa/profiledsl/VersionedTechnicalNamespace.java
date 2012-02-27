@@ -2,11 +2,12 @@ package org.fornax.soa.profiledsl;
 
 import java.util.List;
 
+import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Type;
 
 public class VersionedTechnicalNamespace {
 
-	private Object namespace;
+	private TechnicalNamespace namespace;
 	
 	private String fqn;
 	
@@ -18,11 +19,11 @@ public class VersionedTechnicalNamespace {
 	
 	private List<Type> types;
 	
-	public Object getNamespace() {
+	public TechnicalNamespace getNamespace() {
 		return namespace;
 	}
 
-	public void setNamespace(Object namespace) {
+	public void setNamespace(TechnicalNamespace namespace) {
 		this.namespace = namespace;
 	}
 

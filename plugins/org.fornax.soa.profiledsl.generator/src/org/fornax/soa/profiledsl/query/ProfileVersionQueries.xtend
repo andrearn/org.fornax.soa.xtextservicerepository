@@ -13,6 +13,10 @@ class ProfileVersionQueries {
 	def dispatch Version getOwnerVersion (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType o) {
 		o.version;
 	}
+
+	def dispatch Version getOwnerVersion (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef o) {
+		o.type.ownerVersion;
+	}
 	
 	
 }

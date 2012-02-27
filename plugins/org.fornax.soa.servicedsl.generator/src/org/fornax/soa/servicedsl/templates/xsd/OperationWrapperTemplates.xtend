@@ -64,12 +64,12 @@ class OperationWrapperTemplates {
 			>
 			
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
-			<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
+			<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 				namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF service.findBestMatchingHeader(profile) != null»
 				«FOR headerImp : service.findBestMatchingHeader(profile).allImportedVersionedNS(service.version.toMajorVersionNumber())»
-			<xsd:import schemaLocation="«headerImp.getRegisteredUrl (registryBaseUrl)».xsd"
+			<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 				namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
 			«ENDIF»
@@ -79,7 +79,7 @@ class OperationWrapperTemplates {
 					<![CDATA[Version «service.version.toVersionNumber()»
 					Lifecycle state: «service.state.toString()»
 					
-					«service.doc.trim().stripCommentBraces()»]]>
+					«service.doc?.trim()?.stripCommentBraces()»]]>
 			   	</xsd:documentation>
 		   	</xsd:annotation>
 			
@@ -108,12 +108,12 @@ class OperationWrapperTemplates {
 			>
 			
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
-			<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
+			<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 				namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF service.findBestMatchingHeader(profile) != null»
 				«FOR headerImp : service.findBestMatchingHeader(profile).allImportedVersionedNS(service.version.toMajorVersionNumber())»
-					<xsd:import schemaLocation="«headerImp.getRegisteredUrl (registryBaseUrl)».xsd"
+					<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 						namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
 			«ENDIF»
@@ -123,7 +123,7 @@ class OperationWrapperTemplates {
 					<![CDATA[Version «service.version.toVersionNumber()»
 					Lifecycle state: «service.state.toString()»
 					
-					«service.doc.trim().stripCommentBraces()»]]>
+					«service.doc?.trim()?.stripCommentBraces()»]]>
 		    	</xsd:documentation>
 		    </xsd:annotation>
 			

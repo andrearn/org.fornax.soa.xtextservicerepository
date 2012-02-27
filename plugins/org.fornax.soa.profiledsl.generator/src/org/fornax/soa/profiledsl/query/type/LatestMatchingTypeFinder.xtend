@@ -25,8 +25,6 @@ class LatestMatchingTypeFinder {
 	def dispatch org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType selectLatestMatchingType (VersionedTypeRef ref) {
 		ref.type;
 	}
-			
-	
 
 	/*
 	 *		Checks if type declaration is the latest version matching the following constraint

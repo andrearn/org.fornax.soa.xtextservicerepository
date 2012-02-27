@@ -86,7 +86,7 @@ class NamespaceImportQueries {
 	def dispatch Set<VersionedDomainNamespace> allImportedVersionedNS (VersionedDomainNamespace s, LifecycleState minState) { 
 		s.allImportedVersionedNS (minState, (new HashSet<VersionedDomainNamespace>())).toSet();
 	}
-	
+	/* OR WAS IT HERE? */
 	def dispatch Set<VersionedDomainNamespace> allImportedVersionedNS (
 		VersionedDomainNamespace s, 
 		LifecycleState minState, 
@@ -94,7 +94,7 @@ class NamespaceImportQueries {
 		) {
 		if (! visited.contains(s) ) {
 			visited.add(s);
-			s.subdomain.allImportedVersionedNS (s.version, minState).allImportedVersionedNS (minState, visited)
+			s.subdomain.allImportedVersionedNS (s.version, minState).map (vns |vns.allImportedVersionedNS (minState, visited)).flatten.toSet;
 		} else {
 			visited;
 		}
@@ -191,11 +191,12 @@ class NamespaceImportQueries {
 		s.importedVersionedNS (minState, new HashSet<VersionedDomainNamespace>()).toSet();
 	}
 	
+			/*called this????*/
 	def dispatch Set<VersionedDomainNamespace> importedVersionedNS (
 		VersionedDomainNamespace s, 
 		LifecycleState minState, 
 		Set<VersionedDomainNamespace> visited
-		) { 
+		) {
 		(s.subdomain as SubNamespace).importedVersionedNS (s.version, minState);
 	}
 	
@@ -205,7 +206,7 @@ class NamespaceImportQueries {
 	 *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
 	 *	VersionedDomainNamespace. The owning VersiondDomainNamespace of the found dependencies are returned.
 	 */
-	def Set<VersionedDomainNamespace> importedVersionedNS (VersionedDomainNamespace s) {
+	def dispatch Set<VersionedDomainNamespace> importedVersionedNS (VersionedDomainNamespace s) {
 		s.importedVersionedNS (new HashSet<VersionedDomainNamespace>()).toSet();
 	}
 	

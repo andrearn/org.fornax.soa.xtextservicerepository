@@ -29,6 +29,10 @@ import org.fornax.soa.serviceDsl.Property
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.servicedsl.query.ExceptionFinder
 import org.fornax.soa.serviceDsl.Enumeration
+import org.fornax.soa.profiledsl.ProfileSchemaTypeExtensions
+import org.fornax.soa.profiledsl.sOAProfileDsl.DataType
+import org.fornax.soa.profiledsl.sOAProfileDsl.EnumRef
+import org.fornax.soa.profiledsl.ProfileSchemaNamespaceExtensions
 
 /* types.ext */
 class SchemaTypeExtensions {
@@ -43,6 +47,10 @@ class SchemaTypeExtensions {
 	@Inject extension LatestMatchingTypeFinder
 	@Inject extension BusinessObjectQueries
 	@Inject extension ExceptionFinder
+	
+	@Inject ProfileSchemaTypeExtensions profileSchemaTypes
+	@Inject org.fornax.soa.profiledsl.query.NamespaceQueries profileNSQueries
+	@Inject ProfileSchemaNamespaceExtensions profileSchemaNSExt
 	/*
 	 *	Return the XSD type name for a type reference including it's derived namespace prefix
 	 */
@@ -58,10 +66,13 @@ class SchemaTypeExtensions {
 		t.type.toTypeNameRef();
 	}
 	
+	def dispatch String toTypeNameRef (DataType t) {
+		profileSchemaTypes.toTypeNameRef (t);
+	}
+	
 	def dispatch String toTypeNameRef (org.fornax.soa.profiledsl.sOAProfileDsl.DataTypeRef t) {
 		t.type.toTypeNameRef();
-		
-		}
+	}
 
 	def dispatch String toTypeNameRef (org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef t) {
 		t.type.toTypeNameRef();
@@ -85,12 +96,12 @@ class SchemaTypeExtensions {
 	}
 	
 	def dispatch String toTypeNameRef (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef t) {
-		if (t.type.findSubdomain() != null) {
+		if (profileNSQueries.findTechnicalNamespace (t.type) != null) {
 			var prefix = "tns";
-			if (! (t.findOwnerSubdomain() == t.type.findSubdomain()
+			if (! (profileNSQueries.findOwnerSubdomain(t) == profileNSQueries.findTechnicalNamespace (t.type)
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber())
 			) {
-				prefix = t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber();
+				prefix = profileNSQueries.findTechnicalNamespace (t.type).toShortName() + t.type.version.toMajorVersionNumber();
 			}
 			prefix + ":" +t.type.name
 		} else {
@@ -204,15 +215,15 @@ class SchemaTypeExtensions {
 	}
 		
 	def dispatch String toFullTypeNameRef (VersionedTypeRef t, VersionedDomainNamespace currNs) { 
-		t.type.findSubdomain().toNamespace() + t.type.name;
+		t.toNamespace() + t.type.name;
 	}
 		
 	def dispatch String toFullTypeNameRef (BusinessObjectRef t, VersionedDomainNamespace currNs) { 
-		t.type.findSubdomain().toNamespace() + t.type.name;
+		t.toNamespace() + t.type.name;
 	}
 			
 	def dispatch String toFullTypeNameRef (EnumTypeRef t, VersionedDomainNamespace currNs) { 
-		t.type.findSubdomain().toNamespace() + t.type.name;
+		t.toNamespace() + t.type.name;
 	}
 	
 	def dispatch String toFullTypeNameRef (Type t) {
@@ -352,7 +363,7 @@ class SchemaTypeExtensions {
 			.map(p|p.type).filter (typeof (VersionedTypeRef))
 			.map(r|r.findLatestMatchingType()).filter (e|e!=null).map(e|e.createVersionedDomainNamespace())
 		);
-		// all refs from a BO it's superBO  
+		// all refs from a BO to it's superBO  
 		ns.addAll (s.types.filter (typeof (BusinessObject)).filter (e|e.superBusinessObject != null)
 			.map(b|b.superBusinessObject.findLatestMatchingType().createVersionedDomainNamespace()));
 		// all refs from exceptions to their super exceptions
@@ -381,16 +392,6 @@ class SchemaTypeExtensions {
 		t.exception.eContainer.toUnversionedNamespace()+"/"+(t.findLatestMatchingException() as org.fornax.soa.serviceDsl.Exception).version.toVersionPostfix() + "/";
 	}
 	
-	
-	def dispatch String toTypeName (org.fornax.soa.serviceDsl.Exception e) {
-		if (e.name.endsWith("Exception")) {
-			e.name.replaceAll("Exception", "Fault")
-		} else if (e.name.endsWith("Fault")) {
-				e.name
-		} else {
-				e.name + "Fault"
-		}
-	}
 		
 		
 }

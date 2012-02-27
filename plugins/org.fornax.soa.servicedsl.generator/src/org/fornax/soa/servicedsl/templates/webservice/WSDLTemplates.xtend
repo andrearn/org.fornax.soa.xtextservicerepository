@@ -20,6 +20,8 @@ import org.fornax.soa.servicedsl.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
 import org.fornax.soa.servicedsl.query.namespace.NamespaceImportQueries
 import org.fornax.soa.servicedsl.templates.xsd.XSDTemplates
+import org.fornax.soa.servicedsl.query.type.LatestMatchingTypeFinder
+import com.google.inject.name.Named
 
 class WSDLTemplates {
 	
@@ -27,14 +29,16 @@ class WSDLTemplates {
 
 	@Inject extension CommonStringExtensions
 	@Inject extension WsdlExtensions
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTemplateExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
-	@Inject extension VersionQualifierExtensions
 	@Inject extension HeaderFinder
 	@Inject extension NamespaceImportQueries
 	@Inject extension XSDTemplates
+	@Inject extension LatestMatchingTypeFinder
+
+	@Inject VersionQualifierExtensions versionQualifier
 	
 	
 	def dispatch toWSDL (Service s, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
@@ -49,15 +53,15 @@ class WSDLTemplates {
 			name="«s.name»" 
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
-				Version «s.version.toVersionNumber()»
+				Version «versionQualifier.toVersionNumber(s.version)»
 				Lifecycle state: «s.state.toString()»
 				
-				«s.doc.trim().stripCommentBraces()»
+				«s.doc?.trim()?.stripCommentBraces()»
 			</wsdl:documentation>
 			
 			«s.toTypes (minState, profile, registryBaseUrl)»
-			«s.operations.forEach (e|e.toMessages ())»
-			«allServiceExceptionRefs.map (t|t.exception.name).toSet().forEach (e|e.toFaultMessages (allServiceExceptionRefs.toList)) »
+			«s.operations.map (e|e.toMessages ()).join»
+			«allServiceExceptionRefs.map (t|t.exception.name).toSet().map (e|e.toFaultMessages (allServiceExceptionRefs.toList)).join »
 			«s.toPortType»
 		</wsdl:definitions>''';
 		
@@ -79,15 +83,15 @@ class WSDLTemplates {
 			name="«s.name»" 
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
-				<![CDATA[Version «s.version.toVersionNumber()»
+				<![CDATA[Version «versionQualifier.toVersionNumber(s.version)»
 				Lifecycle state: «s.state.toString()»
 				
-				«s.doc.trim().stripCommentBraces()»]]>
+				«s.doc?.trim()?.stripCommentBraces()»]]>
 			</wsdl:documentation>
 			
 			«s.toTypes (minState, profile, registryBaseUrl)»
-			«s.operations.forEach (e|e.toMessages ())»
-			«allServiceExceptionRefs.map (t|t.exception.name).toSet().forEach (e|e.toFaultMessages (allServiceExceptionRefs.toList)) »
+			«s.operations.map (e|e.toMessages ()).join»
+			«allServiceExceptionRefs.map (t|t.exception.name).toSet().map (e|e.toFaultMessages (allServiceExceptionRefs.toList)).join »
 			«s.toPortType ()»
 		</wsdl:definitions>''';
 		
@@ -99,93 +103,94 @@ class WSDLTemplates {
 	def toTypes(Service s, LifecycleState minState, SOAProfile profile, String registryBaseUrl) '''
 		<wsdl:types>
 			<xsd:schema targetNamespace="«s.toTargetNamespace()»"
-				«FOR imp : s.importedVersionedNS (s.version.toMajorVersionNumber(), minState) »
-				xmlns:«imp.toPrefix() + imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState) »
+				xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber(imp.version)»="«imp.toNamespace()»"
 				«ENDFOR»
 				«IF s.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : s.findBestMatchingHeader(profile).allImportedVersionedNS(s.version.toMajorVersionNumber())»
-				xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
+				«FOR headerImp : s.findBestMatchingHeader(profile).allImportedVersionedNS(versionQualifier.toMajorVersionNumber(s.version))»
+				xmlns:«headerImp.toPrefix()+versionQualifier.toMajorVersionNumber(headerImp.version)»="«headerImp.toNamespace()»"
 				«ENDFOR»
 				«ENDIF»
 				elementFormDefault="qualified"
 				attributeFormDefault="unqualified"
 			>
-				«FOR imp : s.importedVersionedNS (s.version.toMajorVersionNumber(), minState)»
-				<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
+				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
+				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 					namespace="«imp.toNamespace()»"/>
 				«ENDFOR»
 				«IF s.findBestMatchingHeader (profile) != null»
-				«FOR headerImp : s.findBestMatchingHeader (profile).allImportedVersionedNS (s.version.toMajorVersionNumber())»
-				<xsd:import schemaLocation="«headerImp.getRegisteredUrl (registryBaseUrl)».xsd"
+				«FOR headerImp : s.findBestMatchingHeader (profile).allImportedVersionedNS (versionQualifier.toMajorVersionNumber(s.version))»
+				<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 					namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
 				«ENDIF»
-				«s.operations.forEach (e|e.toOperationWrapperTypes (profile))»
-				«s.operations.map (o|o.throws).flatten.map(t|t.exception.name).toSet().forEach (e|e.toOperationFaultWrapperTypes (s.operations.map (o|o.throws).flatten.toList))»
+				«s.operations.map (e|e.toOperationWrapperTypes (profile)).join»
+				«s.operations.map (o|o.throws).flatten.map(t|t.exception.name).toSet().map (e|e.toOperationFaultWrapperTypes (s.operations.map (o|o.throws).flatten.toList)).join»
 			</xsd:schema>
 		</wsdl:types>
 	'''
 
 
-	def void toOperationWrapperTypes (Operation o, SOAProfile profile)  
-		'''		<xsd:element name="«o.name»">
-					<xsd:complexType>
-						<xsd:sequence>
-							«IF o.findBestMatchingHeader (profile) != null»
-							«o.findBestMatchingHeader (profile).toParameter»
-							«ENDIF»
-							«o.parameters.forEach (p|p.toParameter())»
-							«/*
-							«IF	o.fetchProfile.size > 1-»
-							<xsd:element name="fetchProfileName" type="xsd:string" minOccurs="0" maxOccurs="1" />
-							«ENDIF-»
-							*/»
-							«IF profile.operationsUseExtendableParameters()»
-							<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
-								processContents="skip"/>
-							«ENDIF»
-	    				</xsd:sequence>
-	    				«IF profile.operationsUseExtendableXMLAttributes()»
-						<xsd:anyAttribute namespace="##any"/>
-	    				«ENDIF»
-					</xsd:complexType>
-				</xsd:element>
-				<xsd:element name="«o.name»Response">
-					<xsd:complexType>
-						<xsd:sequence>
-							«IF o.findBestMatchingHeader(profile) != null»
-							«o.findBestMatchingHeader (profile).toParameter»
-							«ENDIF»
-							«o.^return.forEach(r|r.toParameter())»
-							«IF profile.operationsUseExtendableParameters()»
-							<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
-								processContents="skip"/>
-							«ENDIF»
-						</xsd:sequence>
-	    				«IF profile.operationsUseExtendableXMLAttributes()»
-						<xsd:anyAttribute namespace="##any"/>
-						«ENDIF»
-					</xsd:complexType>
-				</xsd:element>
+	def toOperationWrapperTypes (Operation o, SOAProfile profile)  
+		'''
+		<xsd:element name="«o.name»">
+			<xsd:complexType>
+				<xsd:sequence>
+					«IF o.findBestMatchingHeader (profile) != null»
+						«o.findBestMatchingHeader (profile).toParameter»
+					«ENDIF»
+					«o.parameters.map (p|p.toParameter()).join»
+					«/*
+					«IF	o.fetchProfile.size > 1-»
+					<xsd:element name="fetchProfileName" type="xsd:string" minOccurs="0" maxOccurs="1" />
+					«ENDIF-»
+					*/»
+					«IF profile.operationsUseExtendableParameters()»
+						<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
+							processContents="skip"/>
+					«ENDIF»
+	    		</xsd:sequence>
+	    		«IF profile.operationsUseExtendableXMLAttributes()»
+					<xsd:anyAttribute namespace="##any"/>
+	    		«ENDIF»
+			</xsd:complexType>
+		</xsd:element>
+		<xsd:element name="«o.name»Response">
+			<xsd:complexType>
+				<xsd:sequence>
+					«IF o.findBestMatchingHeader(profile) != null»
+						«o.findBestMatchingHeader (profile).toParameter»
+					«ENDIF»
+					«o.^return.map(r|r.toParameter()).join»
+					«IF profile.operationsUseExtendableParameters()»
+						<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
+							processContents="skip"/>
+					«ENDIF»
+				</xsd:sequence>
+	    		«IF profile.operationsUseExtendableXMLAttributes()»
+					<xsd:anyAttribute namespace="##any"/>
+				«ENDIF»
+			</xsd:complexType>
+		</xsd:element>
 		'''
 	
 	def toOperationFaultWrapperTypes(String name, List<ExceptionRef> exceptions) '''
-		    	<xsd:element name="«exceptions.findFirst (e|e.exception.name == name).exception.toTypeName()»" type="«exceptions.findFirst (e|e.exception.name == name).toExceptionNameRef()»"/>
+		<xsd:element name="«exceptions.findFirst (e|e.exception.name == name).exception.toTypeName()»" type="«exceptions.findFirst (e|e.exception.name == name).toExceptionNameRef()»"/>
 	'''
 	
 	
 	def dispatch toParameter (Parameter p) '''
-							<xsd:element name="«p.name»" type="«p.type.toTypeNameRef ()»" «IF p.optional»minOccurs="0" «ENDIF»«IF p.type.isMany()»maxOccurs="unbounded"«ENDIF» «IF p.type.isAttachment()»«p.type.toAttachmentMimeFragment»«ENDIF»></xsd:element>
+		<xsd:element name="«p.name»" type="«p.type.toTypeNameRef ()»" «IF p.optional»minOccurs="0" «ENDIF»«IF p.type.isMany()»maxOccurs="unbounded"«ENDIF» «IF p.type.isAttachment()»«p.type.toAttachmentMimeFragment»«ENDIF»></xsd:element>
 	'''
 	
 	
 	def dispatch toParameter (org.fornax.soa.profiledsl.sOAProfileDsl.Property prop) '''
-							<xsd:element name="«prop.name»" type="«prop.type.toTypeNameRef ()»" «IF prop.optional»minOccurs="0" «ENDIF»«IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
+		<xsd:element name="«prop.name»" type="«prop.type.toTypeNameRef ()»" «IF prop.optional»minOccurs="0" «ENDIF»«IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 
 	
 	def toParameter (MessageHeader header) '''
-		«header.parameters.forEach (p|p.toParameter)»
+		«header.parameters.map (p|p.toParameter).join»
 	'''
 	
 	
@@ -199,14 +204,14 @@ class WSDLTemplates {
 	'''
 	
 	
-	def void toPortType (Service s) '''
+	def toPortType (Service s) '''
 		<wsdl:portType name="«s.name»">
 			<wsdl:documentation>
-					<![CDATA[Version:	«s.version.toVersionNumber()»
+					<![CDATA[Version:	«versionQualifier.toVersionNumber(s.version)»
 					Lifecycle state: «s.state.toString()»
 					«IF s.doc != null»
 										
-					«s.doc.stripCommentBraces().trim()»
+					«s.doc?.stripCommentBraces().trim()»
 					«ENDIF» ]]>   			
 			</wsdl:documentation>
 			«/*
@@ -216,12 +221,12 @@ class WSDLTemplates {
 					Lifecycle state: «s.state.toString()»
 					«IF s.doc != null-»
 										
-					«s.doc.stripCommentBraces().trim()»
+					«s.doc?.stripCommentBraces().trim()»
 					«ENDIF-» ]]>   			
 				</jaxws:javadoc>
 			</jaxws:class>
 			*/»
-			«s.operations.forEach (e|e.toOperation ())»
+			«s.operations.map (e|e.toOperation ()).join»
 		</wsdl:portType>
 	'''
 	
@@ -230,12 +235,12 @@ class WSDLTemplates {
 			<wsdl:operation name="«o.name»">
 				«IF o.doc != null»
 				<wsdl:documentation>
-					<![CDATA[«o.doc.stripCommentBraces().trim()»]]>   			
+					<![CDATA[«o.doc?.stripCommentBraces().trim()»]]>   			
 				</wsdl:documentation>
 				«/*
 					<jaxws:method>
 						<jaxws:javadoc>
-							<![CDATA[«o.doc.stripCommentBraces().trim()»]]>   			
+							<![CDATA[«o.doc?.stripCommentBraces().trim()»]]>   			
 						</jaxws:javadoc>
 					</jaxws:method>
 				*/»
@@ -266,7 +271,7 @@ class WSDLTemplates {
 			type="tns:«s.name»">
 			<soap:binding style="document"
 				transport="http://schemas.xmlsoap.org/soap/http" />
-			«s.operations.forEach (o|o.toBindingOperation())»
+			«s.operations.map (o|o.toBindingOperation()).join»
 		</wsdl:binding>
 	'''
 	

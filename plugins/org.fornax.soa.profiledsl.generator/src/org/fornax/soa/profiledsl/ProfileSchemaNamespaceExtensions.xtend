@@ -7,11 +7,18 @@ import java.util.List
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import com.google.inject.name.Named
 
 class ProfileSchemaNamespaceExtensions {
 	
 	@Inject extension CommonStringExtensions
-	@Inject extension VersionQualifierExtensions
+	@Inject VersionQualifierExtensions versionQualifier
+	
+	@Inject @Named ("forceRelativePaths") 
+	Boolean forceRelativePaths
+	
+	@Inject @Named ("useNestedPaths") 
+	Boolean useNestedPaths
 		
 	def dispatch String fqn (org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace s) {
 		s.name.stripXtextEscapes();
@@ -20,16 +27,44 @@ class ProfileSchemaNamespaceExtensions {
 	def dispatch List<TechnicalNamespace> toNamespacePath (Object o) {
 		newArrayList();
 	}
+
+	def dispatch List<TechnicalNamespace> toNamespacePath (List<TechnicalNamespace> nsList) { 
+		if (nsList.last().eContainer instanceof TechnicalNamespace) {
+			nsList.add ((nsList.toList().last().eContainer  as TechnicalNamespace));
+			toNamespacePath (nsList);
+		} else {
+			nsList.filter (typeof (TechnicalNamespace)).toList.reverse();
+		}
+			
+	}
+	
 	
 	def dispatch String fqn (TechnicalNamespace s) {
 		(s.findOrgNamespace() as OrganizationNamespace).name.stripXtextEscapes() + "." + toNamespacePath (newArrayList(s)).map(n|n.name.stripXtextEscapes()).join(".");
 	}
 
-	/*
-	 * TODO IMPLEMENT!
-	 */
-	def dispatch String toPrefix(TechnicalNamespace o) {
-		"tns";
+	def dispatch String toPrefix(OrganizationNamespace o) {
+		if (o.prefix != null) {
+			o.prefix;
+		} else { 
+			o.name.replaceAll("\\.", "_");
+		}
+	}
+	
+	def dispatch String toPrefix (TechnicalNamespace s) {
+		if (s.prefix != null) { 
+			s.prefix;
+		} else {
+			toNamespacePath( newArrayList(s)).map(n|n.name.substring(0,1)).join("");
+		}
+	}
+	
+	def dispatch String toPrefix (VersionedTechnicalNamespace s) {
+		if (s.shortName != null) {
+			s.shortName
+		} else {
+			toNamespacePath (newArrayList (s.namespace as TechnicalNamespace)).map(n|n.name.substring(0,1)).join("");
+		}
 	}
 		
 	def dispatch String toNamespace (org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace org) { 
@@ -59,11 +94,11 @@ class ProfileSchemaNamespaceExtensions {
 	}
 		
 	def dispatch String toVersionPostfix (org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace d) {
-		toDefaultVersionPostfix();
+		versionQualifier.toDefaultVersionPostfix();
 	}
 		
 	def dispatch String toVersionPostfix (org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace s) {
-		toDefaultVersionPostfix();
+		versionQualifier.toDefaultVersionPostfix();
 	}
 	
 	def dispatch String toUnversionedNamespace (org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace domain) {
@@ -105,14 +140,40 @@ class ProfileSchemaNamespaceExtensions {
 			d.name;
 		}
 	}
+	
+	def dispatch String shorten (org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace d) {
+		d.prefix;
+	}
 
+	 
+	def dispatch String getRegisteredUrl (TechnicalNamespace s, String registryUrl) { 
+		if (registryUrl != null && !forceRelativePaths ) 
+			registryUrl + "/" + s.toFileNameFragment() 
+		else
+			s.toFileNameFragment();
+	} 
+	def dispatch String getRegisteredUrl (VersionedTechnicalNamespace s, String registryUrl) { 
+		if (registryUrl != null && !forceRelativePaths ) 
+			registryUrl + "/" +s.toFileNameFragment() 
+		else
+			s.toFileNameFragment(); 
+	}
 	
 	def dispatch String toFileNameFragment (org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace s) {
 		s.findOrgNamespace().shorten().replaceAll("\\." , "-") + "-" + newArrayList(s).toNamespacePath().map(n|n.name.stripXtextEscapes().replaceAll("\\." , "-")).join("-");
 	}
 	
-	def dispatch String shorten (org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace d) {
-		d.prefix;
+	def dispatch String toFileNameFragment (VersionedTechnicalNamespace s) {
+		s.namespace.toFileNameFragment() + "-v" + versionQualifier.toMajorVersionNumber(s.version);
+	}
+	
+	def dispatch String toNamespace (VersionedTechnicalNamespace s) { 
+		var ns = s.namespace.toUnversionedNamespace().stripXtextEscapes() + "/" + versionQualifier.toVersionPostfix(s.version); 
+		if (s.namespace.hasTrailingSlash() )  {
+			return ns + ("/"); 
+		} else {
+			return ns + "";
+		}
 	}
 	
 }

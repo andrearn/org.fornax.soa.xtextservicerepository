@@ -44,7 +44,7 @@ class BindingExtensions {
 	def dispatch String getRegistryBaseUrl (EObject o) {}
 
 	def dispatch String getRegistryBaseUrl (DomainBinding b) {
-		b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
+		b.environment.defaultRegistry?.baseUrl?.stripTrailingSlash();
 	}
 	
 	def dispatch String getRegistryBaseUrl (ServiceBinding b) {
@@ -60,7 +60,7 @@ class BindingExtensions {
 	}
 	
 	def dispatch String getRegistryBaseUrl (Environment env) {
-		env.defaultRegistry.baseUrl.stripTrailingSlash();
+		env.defaultRegistry?.baseUrl?.stripTrailingSlash();
 	}
 	
 	/*
@@ -126,11 +126,11 @@ class BindingExtensions {
 	
 	def dispatch LifecycleState getMinLifecycleState (Environment env, EObject o) {
 		switch (env.type) {
-			case EnvironmentType::DEV : 		o.getOwnerMinDevState()
-			case EnvironmentType::TEST:			o.getOwnerMinTestState()
-			case EnvironmentType::PRE_PROD :	o.getOwnerMinTestState()
-			case EnvironmentType::PROD :		o.getOwnerMinProdState()
-			default:							o.getOwnerMinDevState()
+			case EnvironmentType::DEV : 		o.toOwnerMinDevState()
+			case EnvironmentType::TEST:			o.toOwnerMinTestState()
+			case EnvironmentType::PRE_PROD :	o.toOwnerMinTestState()
+			case EnvironmentType::PROD :		o.toOwnerMinProdState()
+			default:							o.toOwnerMinDevState()
 		}
 	}
 	

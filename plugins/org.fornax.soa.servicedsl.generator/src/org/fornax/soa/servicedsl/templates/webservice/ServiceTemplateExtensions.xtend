@@ -9,8 +9,8 @@ import org.fornax.soa.servicedsl.templates.xsd.SchemaTemplateExtensions
 
 class ServiceTemplateExtensions {
 
-	@Inject extension VersionQualifierExtensions
-	@Inject extension SchemaNamespaceExtensions
+	@Inject VersionQualifierExtensions versionQualifier
+	@Inject extension org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTemplateExtensions
 	
 	def dispatch String toTargetNamespace (Object svc) {
@@ -34,9 +34,9 @@ class ServiceTemplateExtensions {
 		
 	def String toVersionPostfix (Service svc) {
 		if (svc.version != null) {
-			svc.version.toVersionPostfix();
+			versionQualifier.toVersionPostfix(svc.version);
 		} else {
-			toDefaultVersionPostfix();
+			versionQualifier.toDefaultVersionPostfix();
 		}
 	}
 	
@@ -48,7 +48,7 @@ class ServiceTemplateExtensions {
 	}
 	
 	def String getWsdlFilename(Service s) {
-		s.eContainer.getFileNameFragment() + "-v" + s.version.toMajorVersionNumber() + ".wsdl";
+		s.eContainer.toFileNameFragment() + "-v" + versionQualifier.toMajorVersionNumber(s.version) + ".wsdl";
 	}
 	
 	
@@ -69,10 +69,10 @@ class ServiceTemplateExtensions {
 	}
 	
 	def String getWrappedWSDLFileName(Service s) {
-		s.getFileNameFragment() + "Wrapped.wsdl";
+		s.toFileNameFragment() + "Wrapped.wsdl";
 	}
 	def String getWrappedFileNameFragment(Service s) {
-		s.getFileNameFragment() + "-Wrapped";
+		s.toFileNameFragment() + "-Wrapped";
 	}
 	def String getRegisteredOperationWrapperUrl (Service s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths()) {

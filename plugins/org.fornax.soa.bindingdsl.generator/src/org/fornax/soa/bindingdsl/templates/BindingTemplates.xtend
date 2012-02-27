@@ -43,7 +43,7 @@ class BindingTemplates {
 	@Inject extension StateMatcher
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension BindingServiceResolver
 	@Inject extension ModuleBindingResolver

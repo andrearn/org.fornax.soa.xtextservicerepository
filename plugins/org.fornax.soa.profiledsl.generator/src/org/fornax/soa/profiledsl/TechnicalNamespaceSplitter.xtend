@@ -55,7 +55,7 @@ class TechnicalNamespaceSplitter {
 			name 		= (c.eContainer as org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace).name.stripXtextEscapes();
 			shortName 	= (c.eContainer as org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace).prefix.stripXtextEscapes();
 		} 
-		namespace 		= c.eContainer;
+		namespace 		= c.eContainer as TechnicalNamespace;
 		fqn 			= c.eContainer.fqn();
 		version 		= c.version.toMajorVersionNumber();
 	}
@@ -70,7 +70,7 @@ class TechnicalNamespaceSplitter {
 			name 		= (c.eContainer as org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace).name.stripXtextEscapes();
 			shortName 	= (c.eContainer as org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace).prefix.stripXtextEscapes();
 		} 
-		namespace 		= c.eContainer;
+		namespace 		= c.eContainer as TechnicalNamespace;
 		fqn 			= c.eContainer.fqn();
 	}
 	

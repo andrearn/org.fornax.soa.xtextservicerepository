@@ -13,7 +13,7 @@ import org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 class SCAExportExtension {
 	
 	@Inject extension VersionQualifierExtensions
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension NamespaceQuery
 	@Inject extension BindingExtensions
 	

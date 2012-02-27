@@ -21,6 +21,7 @@ import org.fornax.soa.servicedsl.query.namespace.NamespaceImportQueries
 import org.fornax.soa.servicedsl.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.templates.webservice.WsdlExtensions
+import org.fornax.soa.servicedsl.query.type.LatestMatchingTypeFinder
 
 class EventXSDTemplates {
 	
@@ -39,6 +40,7 @@ class EventXSDTemplates {
 	@Inject extension NamespaceImportQueries
 	@Inject extension XSDTemplates
 	@Inject extension OperationWrapperTemplates
+	@Inject extension LatestMatchingTypeFinder
 	
 	
 	def dispatch toEventsInclSubNamespaces (String namespace, List<SubNamespace> namespaces, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
@@ -72,12 +74,12 @@ class EventXSDTemplates {
 			>
 			
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-				<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
+				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 					namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF svc.findBestMatchingHeader(profile) != null»
 				«FOR headerImp : svc.findBestMatchingHeader(profile).allImportedVersionedNS(svc.version.toMajorVersionNumber())»
-			<xsd:import schemaLocation="«headerImp.getRegisteredUrl (registryBaseUrl)».xsd"
+			<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 				namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
 			«ENDIF»
@@ -87,7 +89,7 @@ class EventXSDTemplates {
 					<![CDATA[Version «svc.version.toVersionNumber()»
 					Lifecycle state: «svc.state.toString()»
 					
-					«svc.doc.trim().stripCommentBraces()»]]>
+					«svc.doc?.trim()?.stripCommentBraces()»]]>
 			   	</xsd:documentation>
 		   	</xsd:annotation>
 			
@@ -116,12 +118,12 @@ class EventXSDTemplates {
 			>
 			
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-			<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
+			<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 				namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF svc.findBestMatchingHeader(profile) != null»
 				«FOR headerImp : svc.findBestMatchingHeader(profile).allImportedVersionedNS(svc.version.toMajorVersionNumber())»
-			<xsd:import schemaLocation="«headerImp.getRegisteredUrl (registryBaseUrl)».xsd"
+			<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 				namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
 			«ENDIF»
@@ -131,14 +133,14 @@ class EventXSDTemplates {
 					<![CDATA[Version «svc.version.toVersionNumber()»
 					Lifecycle state: «svc.state.toString()»
 					
-					«svc.doc.trim().stripCommentBraces()»]]>
+					«svc.doc?.trim()?.stripCommentBraces()»]]>
 		    	</xsd:documentation>
 		    </xsd:annotation>
 			
 			«svc.toEventMessages(minState, profile)»
 		</xsd:schema>
 		'''
-		val xsdFileName = subDom.getFileNameFragment() + "-" + svc.name + "-" + svc.version.toVersionPostfix() + "Events.xsd";
+		val xsdFileName = subDom.toFileNameFragment() + "-" + svc.name + "-" + svc.version.toVersionPostfix() + "Events.xsd";
 		fsa.generateFile (xsdFileName, content);
 	}
 	

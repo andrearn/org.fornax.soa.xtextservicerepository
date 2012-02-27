@@ -1,6 +1,5 @@
 package org.fornax.soa.servicedsl.query.namespace
 
-import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Enumeration
 import org.fornax.soa.serviceDsl.SubNamespace

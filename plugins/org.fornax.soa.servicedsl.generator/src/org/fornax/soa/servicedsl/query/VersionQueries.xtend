@@ -7,10 +7,19 @@ import org.fornax.soa.serviceDsl.Service
 
 class VersionQueries {
 	
+
+	def dispatch Version getOwnerVersion (EObject o) {
+		o.eContainer?.getOwnerVersion();
+	}
+	
 	def dispatch Version getOwnerVersion (VersionedType o) {
 		o.version;
 	}
 	
+	def dispatch Version getOwnerVersion (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType o) {
+		o.version;
+	}
+
 	def dispatch Version getOwnerVersion (org.fornax.soa.serviceDsl.Exception o) {
 		o.version;
 	}

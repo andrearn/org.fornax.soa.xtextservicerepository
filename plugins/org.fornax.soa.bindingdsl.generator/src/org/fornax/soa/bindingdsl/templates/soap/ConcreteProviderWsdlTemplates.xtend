@@ -22,30 +22,32 @@ import org.fornax.soa.servicedsl.query.ServiceFinder
 import org.fornax.soa.servicedsl.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.templates.xsd.SchemaTypeExtensions
+import org.fornax.soa.servicedsl.query.type.LatestMatchingTypeFinder
 
 class ConcreteProviderWsdlTemplates {
 
 	@Inject extension CommonEObjectExtensions
 	@Inject extension CommonStringExtensions
 	@Inject extension StateMatcher
-	@Inject extension VersionQualifierExtensions
 	@Inject extension BindingExtensions
 	@Inject extension EndpointResolver
 	@Inject extension ServiceFinder
 	@Inject extension SoapBindingResolver
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
+	@Inject extension LatestMatchingTypeFinder
 	
+	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IFileSystemAccess fsa
 	
 	def toWSDL(DomainBinding binding, BindingProtocol prot, SOAProfile profile) {
-		val services = binding.subNamespace.services.filter (e|e.state.matchesMinStateLevel(binding.environment.getMinLifecycleState(e)) && e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), binding.environment.getMinLifecycleState(e)));
+		val services = binding.subNamespace.services.filter (e|e.state.matchesMinStateLevel(binding.environment.getMinLifecycleState(e)) && e.isLatestMatchingService(versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e)));
 		services.forEach (s|s.toWSDL (binding, prot, profile));
 	}
 	
 	def toWSDLByServiceName(DomainBinding binding, List<String> serviceNames, BindingProtocol prot, SOAProfile profile) {
-		val services = binding.subNamespace.services.filter (e|serviceNames.contains(e.name) && e.state.matchesMinStateLevel(binding.environment.getMinLifecycleState(e)) && e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), binding.environment.getMinLifecycleState(e)));
+		val services = binding.subNamespace.services.filter (e|serviceNames.contains(e.name) && e.state.matchesMinStateLevel(binding.environment.getMinLifecycleState(e)) && e.isLatestMatchingService(versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e)));
 		services.forEach (s|s.toWSDL (binding, prot, profile)); 
 	}
 	
@@ -60,15 +62,15 @@ class ConcreteProviderWsdlTemplates {
 			name="«svc.name»" 
 			targetNamespace="«svc.toTargetNamespace()»">
 			<wsdl:documentation>
-				Version «svc.version.toVersionNumber()»
+				Version «versionQualifier.toVersionNumber(svc.version)»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc.trim().stripCommentBraces()»
+				«svc.doc?.trim()?.stripCommentBraces()»
 			</wsdl:documentation>
-		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.getRegisteredUrl (domBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
+		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (domBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 			
-			«domBind.protocol.filter (typeof (SOAP)).forEach (p|p.toSOAPBinding(svc))»
-			«domBind.protocol.filter (typeof (SOAP)).forEach (p|p.toWsdlService(svc))»
+			«domBind.protocol.filter (typeof (SOAP)).map (p|p.toSOAPBinding(svc)).join»
+			«domBind.protocol.filter (typeof (SOAP)).map (p|p.toWsdlService(svc)).join»
 		</wsdl:definitions>
 		''';
 		fsa.generateFile (wsdlFile, content);
@@ -84,15 +86,15 @@ class ConcreteProviderWsdlTemplates {
 		name="«svc.name»" 
 		targetNamespace="«svc.toTargetNamespace()»">
 		<wsdl:documentation>
-			Version «svc.version.toVersionNumber()»
+			Version «versionQualifier.toVersionNumber(svc.version)»
 			Lifecycle state: «svc.state.toString()»
 			
-			«svc.doc.trim().stripCommentBraces()»
+			«svc.doc?.trim()?.stripCommentBraces()»
 		</wsdl:documentation>
-	    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.getRegisteredUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
+	    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 		
-		«svcBind.protocol.filter (typeof (SOAP)).forEach (p|p.toSOAPBinding (svc))»
-		«svcBind.protocol.filter (typeof (SOAP)).forEach (p|p.toWsdlService (svc))»
+		«svcBind.protocol.filter (typeof (SOAP)).map (p|p.toSOAPBinding (svc)).join»
+		«svcBind.protocol.filter (typeof (SOAP)).map (p|p.toWsdlService (svc)).join»
 	</wsdl:definitions>
 	'''
 	}
@@ -107,12 +109,12 @@ class ConcreteProviderWsdlTemplates {
 			name="«svc.name»" 
 			targetNamespace="«svc.toTargetNamespace()»">
 			<wsdl:documentation>
-				Version «svc.version.toVersionNumber()»
+				Version «versionQualifier.toVersionNumber(svc.version)»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc.trim().stripCommentBraces()»
+				«svc.doc?.trim()?.stripCommentBraces()»
 			</wsdl:documentation>
-		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.getRegisteredUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
+		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 			
 			«prot.toSOAPBinding (svc)»
 			«prot.toWsdlService (svc, modBind.provider.provServer, modBind)»
@@ -128,26 +130,26 @@ class ConcreteProviderWsdlTemplates {
 			type="tns:«svc.name»">
 			<soap:binding style="«protocol.getWsdlBindingStyle()»"
 				transport="http://schemas.xmlsoap.org/soap/http" />
-			«svc.operations.forEach (o|o.toSOAPBindingOperation (protocol))»
+			«svc.operations.map (o|o.toSOAPBindingOperation (protocol)).join»
 		</wsdl:binding>
 	'''
 	
 	def toSOAPBindingOperation(Operation op, SOAP protocol) '''
-			<wsdl:operation name="«op.name»">
-				<soap:operation
-					soapAction="«op.eContainer.toTargetNamespace()»«op.name»" />
-				<wsdl:input>
-					<soap:body use="«protocol.getSoapEncoding()»" />
-				</wsdl:input>
-				<wsdl:output>
-					<soap:body use="«protocol.getSoapEncoding()»" />
-				</wsdl:output>
-				«FOR fault : op.throws»
-				<wsdl:fault name="«fault.exception.toTypeName().toFirstLower()»">
-					<soap:fault name="«fault.exception.toTypeName().toFirstLower()»" use="«protocol.getSoapEncoding()»"/>
-				</wsdl:fault>
-				«ENDFOR»
-			</wsdl:operation>
+		<wsdl:operation name="«op.name»">
+			<soap:operation
+				soapAction="«op.eContainer.toTargetNamespace()»«op.name»" />
+			<wsdl:input>
+				<soap:body use="«protocol.getSoapEncoding()»" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="«protocol.getSoapEncoding()»" />
+			</wsdl:output>
+			«FOR fault : op.throws»
+			<wsdl:fault name="«fault.exception.toTypeName().toFirstLower()»">
+				<soap:fault name="«fault.exception.toTypeName().toFirstLower()»" use="«protocol.getSoapEncoding()»"/>
+			</wsdl:fault>
+			«ENDFOR»
+		</wsdl:operation>
 	'''
 	
 	def dispatch void toWsdlService (BindingProtocol protocol, Service svc) {}
@@ -156,7 +158,7 @@ class ConcreteProviderWsdlTemplates {
 		<wsdl:service name="«svc.name»">
 			<wsdl:port binding="tns:«svc.toBindingName (protocol)»"
 				name="«svc.toPortName (protocol)»">
-				<soap:address location="«svc.getProviderEndpointAddress (protocol.eContainer as DomainBinding)»" />
+				<soap:address location="«svc.getProviderEndpointAddress (protocol.eContainer)»" />
 			</wsdl:port>
 		</wsdl:service>
 	'''

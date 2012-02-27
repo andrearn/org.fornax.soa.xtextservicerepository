@@ -40,10 +40,6 @@ class LatestMatchingTypeFinder {
 		ref.type;
 	}
 	
-	def dispatch org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType selectLatestMatchingType (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef ref) {
-		ref.type;
-	}
-	
 	def dispatch VersionedType selectLatestMatchingType (AbstractVersionedTypeRef ref, LifecycleState minState) {}
 	
 	def dispatch VersionedType selectLatestMatchingType (VersionedTypeRef ref, LifecycleState minState) {
@@ -133,6 +129,8 @@ class LatestMatchingTypeFinder {
 	 *		find the lastest type declaration matching
 	 *  	- the version constraint defined in the reference
 	 */
+	def dispatch Type findLatestMatchingType (EObject t) {
+	}
 	def dispatch Type findLatestMatchingType (TypeRef t) {
 	}
 	
@@ -160,8 +158,8 @@ class LatestMatchingTypeFinder {
 			.sortBy (e|e.version.version).last( );
 	}
 	
-	def dispatch Type findLatestMatchingType (DataTypeRef t) {
-		t.type as Type;
+	def dispatch org.fornax.soa.profiledsl.sOAProfileDsl.Type findLatestMatchingType (DataTypeRef t) {
+		t.type;
 	}
 		
 	
@@ -220,4 +218,14 @@ class LatestMatchingTypeFinder {
 	def dispatch String toTypeName (AbstractType t) {
 		t.name;
 	}	
+	
+	def dispatch String toTypeName (org.fornax.soa.serviceDsl.Exception e) {
+		if (e.name.endsWith("Exception")) {
+			e.name.replaceAll("Exception", "Fault")
+		} else if (e.name.endsWith("Fault")) {
+				e.name
+		} else {
+				e.name + "Fault"
+		}
+	}
 }

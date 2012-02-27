@@ -24,6 +24,7 @@ import org.fornax.soa.servicedsl.templates.xsd.SchemaTemplateExtensions
 import org.fornax.soa.servicedsl.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.templates.xsd.XSDTemplates
 import org.fornax.soa.profiledsl.sOAProfileDsl.Property
+import org.fornax.soa.servicedsl.query.type.LatestMatchingTypeFinder
 
 class WrappedWsdlTemplates {
 	
@@ -32,7 +33,7 @@ class WrappedWsdlTemplates {
 
 	@Inject extension CommonStringExtensions
 	@Inject extension WsdlExtensions
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTemplateExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
@@ -42,6 +43,7 @@ class WrappedWsdlTemplates {
 	@Inject extension NamespaceImportQueries
 	@Inject extension XSDTemplates
 	@Inject extension OperationWrapperTemplates
+	@Inject extension LatestMatchingTypeFinder
 	
 	
 	/*
@@ -75,7 +77,7 @@ class WrappedWsdlTemplates {
 				Version «svc.version.toVersionNumber()»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc.trim().stripCommentBraces()»
+				«svc.doc?.trim()?.stripCommentBraces()»
 			</wsdl:documentation>
 			
 			«svc.toTypes(minState, profile, registryBaseUrl)»
@@ -92,7 +94,7 @@ class WrappedWsdlTemplates {
 		val allServiceExceptionRefs = svc.operations.map (o|o.throws).flatten;
 		
 	svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);
-	val xsdFileName = subDom.getFileNameFragment() + "-" + svc.name + "-" + svc.version.toVersionPostfix() + "Wrapped.wsdl";
+	val xsdFileName = subDom.toFileNameFragment() + "-" + svc.name + "-" + svc.version.toVersionPostfix() + "Wrapped.wsdl";
 	val content = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 	<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 		xmlns:tns="«svc.toWrapperServiceTargetNamespace()»"
@@ -107,7 +109,7 @@ class WrappedWsdlTemplates {
 			<![CDATA[Version «svc.version.toVersionNumber()»
 			Lifecycle state: «svc.state.toString()»
 			
-			«svc.doc.trim().stripCommentBraces()»]]>
+			«svc.doc?.trim()?.stripCommentBraces()»]]>
 		</wsdl:documentation>
 		
 		«svc.toTypes(minState, profile, registryBaseUrl)»
@@ -129,7 +131,7 @@ class WrappedWsdlTemplates {
 				attributeFormDefault="unqualified"
 			>
 				«FOR imp : svc.importedVersionedNS(svc.version.toMajorVersionNumber(), minState) »
-				<xsd:import schemaLocation="«imp.getRegisteredUrl (registryBaseUrl)».xsd"
+				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 					namespace="«imp.toNamespace()»"/>
 				«ENDFOR»
 				<xsd:import schemaLocation="«svc.getRegisteredOperationWrapperUrl (registryBaseUrl)»"
@@ -190,7 +192,7 @@ class WrappedWsdlTemplates {
 					Lifecycle state: «svc.state.toString()»
 					«IF svc.doc != null»
 										
-					«svc.doc.stripCommentBraces().trim()»
+					«svc.doc?.stripCommentBraces()?.trim()»
 					«ENDIF» ]]>   			
 			</wsdl:documentation>
 			«/*
@@ -200,7 +202,7 @@ class WrappedWsdlTemplates {
 					Lifecycle state: «state.toString()»
 					«IF doc != null-»
 										
-					«doc.stripCommentBraces().trim()»
+					«doc?.stripCommentBraces()?.trim()»
 					«ENDIF-» ]]>   			
 				</jaxws:javadoc>
 			</jaxws:class>
@@ -213,12 +215,12 @@ class WrappedWsdlTemplates {
 			<wsdl:operation name="«op.name»">
 				«IF op.doc != null»
 				<wsdl:documentation>
-					<![CDATA[«op.doc.stripCommentBraces().trim()»]]>   			
+					<![CDATA[«op.doc?.stripCommentBraces()?.trim()»]]>   			
 				</wsdl:documentation>
 				«/*
 					<jaxws:method>
 						<jaxws:javadoc>
-							<![CDATA[«doc.stripCommentBraces().trim()»]]>   			
+							<![CDATA[«doc.stripCommentBraces()?.trim()»]]>   			
 						</jaxws:javadoc>
 					</jaxws:method>
 				*/»

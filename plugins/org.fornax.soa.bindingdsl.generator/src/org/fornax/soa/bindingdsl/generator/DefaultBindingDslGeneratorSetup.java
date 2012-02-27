@@ -2,13 +2,17 @@ package org.fornax.soa.bindingdsl.generator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.IGenerator;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
+import org.eclipse.xtext.generator.OutputConfiguration;
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
 import org.eclipse.xtext.util.Modules2;
 import org.fornax.soa.basedsl.generator.BaseDslGeneratorModule;
+import org.fornax.soa.basedsl.generator.XtextServiceRepositoryGeneratorModule;
 import org.fornax.soa.environmentdsl.generator.EnvironmentDslGeneratorModule;
 import org.fornax.soa.moduledsl.generator.ModuleDslGeneratorModule;
 import org.fornax.soa.profiledsl.generator.ProfileDslGeneratorModule;
@@ -19,6 +23,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
+import com.google.inject.internal.Maps;
 import com.google.inject.name.Names;
 
 public class DefaultBindingDslGeneratorSetup implements ISetup {
@@ -32,6 +37,7 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 	private Boolean useNestedPaths;
 	private Boolean forceRelativePaths;
 	private Boolean generatePrivateWsdlForProviderHost;
+	private String targetEnvironmentName;
 
 	public Injector createInjectorAndDoEMFRegistration() {
 		Injector injector = Guice.createInjector (Modules2.mixin (
@@ -41,6 +47,7 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 				new ModuleDslGeneratorModule (),
 				new ProfileDslGeneratorModule (), 
 				new BindingDslGeneratorModule (),
+				new XtextServiceRepositoryGeneratorModule (),
 				
 				new AbstractModule () {
 
@@ -86,6 +93,20 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.INCLUDE_SUB_NAMESPACES))
 								.toInstance (includeSubNamespaces);
+						bind (String.class)
+						.annotatedWith (
+								Names.named (BindingDSLGeneratorConstants.TARGET_ENVIRONMENT_NAME))
+						.toInstance (getTargetEnvironmentName ());
+
+						ResourceDescriptionsProvider resDescProv = new ResourceDescriptionsProvider ();
+						JavaIoFileSystemAccess fileSystemAccess = new JavaIoFileSystemAccess ();
+						OutputConfiguration out = new OutputConfiguration ("DEFAULT_OUTPUT");
+						out.setOutputDirectory ("src-gen/dev");
+						Map<String, OutputConfiguration> outputs = Maps.newHashMap ();
+						outputs.put ("DEFAULT_OUTPUT", out);
+						fileSystemAccess.setOutputConfigurations (outputs);
+						bind (IFileSystemAccess.class).toInstance (fileSystemAccess);
+						 
 						
 					}
 
@@ -125,6 +146,10 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 
 	public void addNamespaces (String namespaceName) {
 		namespaces.add (namespaceName);
+	}
+
+	public List<String> getNamespaces () {
+		return namespaces;
 	}
 
 	public Boolean getNoDependencies () {
@@ -179,8 +204,13 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 		this.generatePrivateWsdlForProviderHost = generatePrivateWsdlForProviderHost;
 	}
 
-	public List<String> getNamespaces () {
-		return namespaces;
+	public void setTargetEnvironmentName (String environmentName) {
+		this.targetEnvironmentName = environmentName;
+	}
+
+
+	public String getTargetEnvironmentName () {
+		return targetEnvironmentName;
 	}
 
 }

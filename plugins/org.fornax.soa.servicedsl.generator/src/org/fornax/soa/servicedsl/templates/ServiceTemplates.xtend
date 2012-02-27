@@ -20,7 +20,7 @@ class ServiceTemplates {
 	
 	@Inject extension CommonStringExtensions
 	@Inject extension NamespaceSplitter
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension ServiceFinder
 	@Inject extension WSDLTemplates
 	@Inject extension XSDTemplates
@@ -33,11 +33,11 @@ class ServiceTemplates {
 		orgNs.subNamespaces.forEach (n|n.toSubNamespace (minState, profile, registryBaseUrl));
 	}
 
-	def void toSubNamespace (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch void toSubNamespace (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		//ERROR "not a concrete type"
 	}
 
-	def toSubNamespace (DomainNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toSubNamespace (DomainNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		ns.interalNamespaces.forEach (n|n.toSubNamespace (minState, profile, registryBaseUrl));
 		val verNs = ns.toVersionedDomainNamespaces();
 		verNs.forEach (
@@ -50,7 +50,7 @@ class ServiceTemplates {
 		ns.toBusinessObject (minState, profile, registryBaseUrl);
 	}
 	
-	def toSubNamespace (InternalNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toSubNamespace (InternalNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val verNs = ns.toVersionedDomainNamespaces();
 		verNs.forEach (
 			v|v.servicesWithMinState (minState).filter (typeof (Service))

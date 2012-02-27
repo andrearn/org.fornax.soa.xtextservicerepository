@@ -49,7 +49,7 @@ class ReferencedTypesFinder {
 	}
 	
 	def dispatch List<TypeRef> allReferencedTypeRefs (Service s) {
-		s.operations.map(o|o.allReferencedTypeRefs()).map (e|e as TypeRef);
+		s.operations.map(o|o.allReferencedTypeRefs()).flatten.map (e|e as TypeRef).toList;
 	}
 	
 	
