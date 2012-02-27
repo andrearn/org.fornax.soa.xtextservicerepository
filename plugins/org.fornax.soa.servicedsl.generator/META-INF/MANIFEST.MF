@@ -23,8 +23,7 @@ Require-Bundle: org.fornax.soa.servicedsl;bundle-version="1.4.5";visibility:=ree
  org.fornax.soa.profiledsl.generator;bundle-version="1.4.5"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.fornax.soa.servicedsl,
- org.fornax.soa.servicedsl.checks,
+Export-Package: org.fornax.soa.servicedsl.checks,
  org.fornax.soa.servicedsl.domain,
  org.fornax.soa.servicedsl.generator,
  org.fornax.soa.servicedsl.query,
