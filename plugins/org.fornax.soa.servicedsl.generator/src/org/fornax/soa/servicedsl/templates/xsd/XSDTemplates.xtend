@@ -210,29 +210,30 @@ class XSDTemplates {
 		<xsd:complexType name="«bo.name»"«IF bo.abstract» abstract="true"«ENDIF»>
 			<xsd:annotation>
 		    	<xsd:documentation>
-		<![CDATA[Version:	«bo.version.toVersionNumber()»
-		Lifecycle state: «bo.state.toString()»
-		«IF bo.doc != null»
-						
-			«bo.doc?.stripCommentBraces()?.trim()»
-		«ENDIF» ]]>   			
-		    	</xsd:documentation>
-			«/*
-		    	<xsd:appinfo>
-			    	<jxb:class>
-		  	    		<jxb:javadoc>
-			<![CDATA[Version:	«version.toVersionNumber()»
-			Lifecycle state: «state.toString()»
-			«IF doc != null-»
-							
-			«doc?.stripCommentBraces()?.trim()»
-			«ENDIF-» ]]>   			
-		    			</jxb:javadoc>
-			    	</jxb:class>
-		      	</xsd:appinfo>
-			*/» 
-		    </xsd:annotation>
-		    
+					<![CDATA[Version:	«bo.version.toVersionNumber()»
+						Lifecycle state: «bo.state.toString()»
+						«IF bo.doc != null»
+										
+							«bo.doc?.stripCommentBraces()?.trim()»
+						«ENDIF»
+					]]>
+				</xsd:documentation>
+						«/*
+					    	<xsd:appinfo>
+						    	<jxb:class>
+					  	    		<jxb:javadoc>
+						<![CDATA[Version:	«version.toVersionNumber()»
+						Lifecycle state: «state.toString()»
+						«IF doc != null-»
+										
+						«doc?.stripCommentBraces()?.trim()»
+						«ENDIF-» ]]>   			
+					    			</jxb:javadoc>
+						    	</jxb:class>
+					      	</xsd:appinfo>
+						*/» 
+			</xsd:annotation>
+		
 		«IF bo.superBusinessObject != null»
 		    <xsd:complexContent>
 		    	<xsd:extension base="«bo.superBusinessObject.toTypeNameRef(currNs)»">
@@ -300,11 +301,13 @@ class XSDTemplates {
 	    <xsd:simpleType name="«en.name»">
 	    	<xsd:annotation>
 	    		<xsd:documentation>
-					<![CDATA[Version:	«en.version.toVersionNumber()»
-					 «IF en.doc != null»
-									
-					«en.doc?.stripCommentBraces()?.trim()»
-					«ENDIF» ]]>   			   			
+					<![CDATA[
+						Version:	«en.version.toVersionNumber()»
+						«IF en.doc != null»
+	
+							«en.doc?.stripCommentBraces()?.trim()»
+						«ENDIF» 
+					]]>
 	       		</xsd:documentation>
 	    	</xsd:annotation>
 	    	<xsd:restriction base="xsd:string">
@@ -325,8 +328,9 @@ class XSDTemplates {
 	    <xsd:complexType name="«ex.toTypeName()»">
 	    	<xsd:annotation>
 	    		<xsd:documentation>
-				    <![CDATA[Version:	«ex.version.toVersionNumber()»
-				    Lifecycle state: «ex.state.toString()»
+				    <![CDATA[
+				    	Version:			«ex.version.toVersionNumber()»
+					    Lifecycle state: 	«ex.state.toString()»
 						«IF ex.doc != null»
 	    
 							«ex.doc?.stripCommentBraces()?.trim()»
@@ -346,14 +350,14 @@ class XSDTemplates {
 	      			</jxb:class>
 	      		</xsd:appinfo>
 	*/»
-	    	</xsd:annotation>
-	    	
-	    	«IF ex.superException != null»
-	    	<xsd:complexContent>
-	    		<xsd:extension base="«ex.superException.toExceptionNameRef(currNs)»">
-			    	«ex.toPropertySequence (currNs, profile, minState)»
-	    		</xsd:extension>
-	    	</xsd:complexContent>
+			</xsd:annotation>
+
+			«IF ex.superException != null»
+		    	<xsd:complexContent>
+		    		<xsd:extension base="«ex.superException.toExceptionNameRef(currNs)»">
+				    	«ex.toPropertySequence (currNs, profile, minState)»
+		    		</xsd:extension>
+		    	</xsd:complexContent>
 	    	«ELSE»
 		    	«ex.toPropertySequenceWithAny (currNs, profile, minState)»
 	    		«IF profile.typesUseExtendableXMLAttributes()»
@@ -421,10 +425,10 @@ class XSDTemplates {
 		   	<xsd:annotation>
 		   		<xsd:documentation>
 		   			<![CDATA[
-		   			References an instance of type «ref.type.toFullTypeNameRef(currNs)» using it's business-key «ref.type.toWeakRefKeyAttr(minState)»
-					«IF ref.doc != null»
-			   			«ref.doc?.stripCommentBraces()?.trim()»
-			    	«ENDIF»
+			   			References an instance of type «ref.type.toFullTypeNameRef(currNs)» using it's business-key «ref.type.toWeakRefKeyAttr(minState)»
+						«IF ref.doc != null»
+				   			«ref.doc?.stripCommentBraces()?.trim()»
+				    	«ENDIF»
 			    	]]>
 			    </xsd:documentation>
 	«/*

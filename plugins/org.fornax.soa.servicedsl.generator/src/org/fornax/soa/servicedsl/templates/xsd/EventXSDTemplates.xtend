@@ -146,8 +146,8 @@ class EventXSDTemplates {
 	
 	
 	def dispatch toEventMessages(Service svc, LifecycleState minState, SOAProfile profile) '''
-		«svc.operations.forEach (o|o.toOperationWrapperTypes (profile))»
-		«svc.operations.map (o|o.throws).flatten.map (t|t.exception.name).toSet().forEach (o|o.toOperationFaultWrapperTypes(svc.operations.map (op|op.throws).flatten.toList()))»
+		«svc.operations.map (o|o.toOperationWrapperTypes (profile)).join»
+		«svc.operations.map (o|o.throws).flatten.map (t|t.exception.name).toSet().map (o|o.toOperationFaultWrapperTypes(svc.operations.map (op|op.throws).flatten.toList())).join»
 	'''
 	
 	
@@ -158,7 +158,7 @@ class EventXSDTemplates {
 					«IF op.findBestMatchingHeader(profile) != null»
 						«op.findBestMatchingHeader (profile).toParameter()»
 					«ENDIF»
-					«op.parameters.map (p|p.toParameter ())»
+					«op.parameters.map (p|p.toParameter ()).join»
 				</xsd:sequence>
 			</xsd:complexType>
 		</xsd:element>
@@ -168,15 +168,20 @@ class EventXSDTemplates {
 					«IF op.findBestMatchingHeader(profile) != null»
 						«op.findBestMatchingHeader (profile).toParameter ()»
 					«ENDIF»
-					«op.^return.map (r|r.toParameter ())»
+					«op.^return?.map (r|r.toParameter ()).join»
 				</xsd:sequence>
 			</xsd:complexType>
 		</xsd:element>
 	'''
 	
-	def dispatch toOperationFaultWrapperTypes(String faultName, List<ExceptionRef> exceptions) '''
-    	<xsd:element name="«exceptions.findFirst(e|e.exception.name == faultName).exception.toTypeName()»" type="«exceptions.findFirst (e|e.exception.name == faultName).toExceptionNameRef()»"/>
-	'''
+	def dispatch toOperationFaultWrapperTypes(String faultName, List<ExceptionRef> exceptions) { 
+		val exceptionRef = exceptions.findFirst(e|e.exception.name == faultName);
+		if (exceptionRef != null) {
+			'''
+	    	<xsd:element name="«exceptionRef?.exception.toTypeName()»" type="«exceptionRef?.toExceptionNameRef()»"/>
+			'''
+		}
+	}
 	
 	def dispatch toParameter (Parameter param) '''
 		<xsd:element param.name="«param.name»" type="«param.type.toTypeNameRef ()»" «IF param.optional»minOccurs="0" «ENDIF»«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
@@ -187,7 +192,7 @@ class EventXSDTemplates {
 	'''
 	
 	def dispatch toParameter (MessageHeader header) '''
-		«header.parameters.forEach (p|p.toParameter)»
+		«header.parameters.map (p|p.toParameter).join»
 	'''
 		
 }

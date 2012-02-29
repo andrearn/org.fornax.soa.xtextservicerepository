@@ -145,17 +145,17 @@ class OperationWrapperTemplates {
 				<xsd:complexType name="«op.toOperationWrapperRequestType()»">
 					<xsd:sequence>
 						«IF op.findBestMatchingHeader(profile) != null»
-						«op.findBestMatchingHeader (profile).toParameter()»
+						«op.findBestMatchingHeader (profile)?.toParameter()»
 						«ENDIF»
-						«op.parameters.forEach (p|p.toParameter())»
+						«op.parameters.map (p|p.toParameter()).join»
 	   				</xsd:sequence>
 				</xsd:complexType>
 				<xsd:complexType name="«op.toOperationWrapperResponseType()»">
 					<xsd:sequence>
 						«IF op.findBestMatchingHeader(profile) != null»
-							«op.findBestMatchingHeader (profile).toParameter()»
+							«op.findBestMatchingHeader (profile)?.toParameter()»
 						«ENDIF»
-						«op.^return.forEach (r|r.toParameter())»
+						«op.^return.map (r|r.toParameter()).join»
 					</xsd:sequence>
 				</xsd:complexType>
 	'''
@@ -169,7 +169,7 @@ class OperationWrapperTemplates {
 	'''
 	
 	def dispatch toParameter (MessageHeader header) '''
-		«header.parameters.forEach (p|p.toParameter())»
+		«header.parameters.map (p|p.toParameter()).join»
 	'''
 	
 }

@@ -87,7 +87,8 @@ class DefaultBindingDslContractGenerators implements IGenerator {
 		
 		if  (contentRoot instanceof ServiceModel) {
 			val svcModel = contentRoot as ServiceModel;
-			for (ns : svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten) {
+			val Iterable<? extends SubNamespace> subNamespaces = svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten;
+			for (ns : subNamespaces) {
 				if (namespaces.contains (nameProvider.getFullyQualifiedName (ns).toString)) {
 					compile (ns as SubNamespace, resource); 
 				}

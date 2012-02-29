@@ -1,5 +1,5 @@
 import sOABaseDsl;
-import serviceDsl;
+import moduleDsl;
 import environmentDsl;
 
 extension org::fornax::soa::basedsl::lifecycle::stateMatching;
@@ -10,13 +10,13 @@ extension org::fornax::soa::moduledsl::query::serviceQueries;
 extension org::fornax::soa::servicedsl::query::namespace::subnamespaces;
 extension org::fornax::soa::servicedsl::query::services;
 
-Service latestServiceInEnvironment (moduleDsl::ServiceRef svcRef, Environment env) :
+serviceDsl::Service latestServiceInEnvironment (ServiceRef svcRef, Environment env) :
 	svcRef.getLatestMatchingServiceMod (svcRef.service.getSubdomain().minStateByEnvironment(env));
 
-Service latestServiceInEnvironment (moduleDsl::ImportServiceRef svcRef, Environment env) :
+serviceDsl::Service latestServiceInEnvironment (ImportServiceRef svcRef, Environment env) :
 	svcRef.getLatestMatchingServiceMod (svcRef.service.getSubdomain().minStateByEnvironment(env));
 	
-LifecycleState minStateByEnvironment (SubNamespace ns, Environment env) : 
+LifecycleState minStateByEnvironment (serviceDsl::SubNamespace ns, Environment env) : 
 	switch (env.type) {
 		case EnvironmentType::Dev: (ns.linkingPolicy != null ? ns.linkingPolicy.minDevState : LifecycleState::development)
 		case EnvironmentType::Test: (ns.linkingPolicy != null? ns.linkingPolicy.minTestState : LifecycleState::test)

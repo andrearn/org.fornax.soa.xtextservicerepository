@@ -92,6 +92,8 @@
 «ENDFILE»
 «ENDDEFINE»
 
+«DEFINE SOAPBinding(Service svc) FOR BindingProtocol»
+«ENDDEFINE»
 «DEFINE SOAPBinding(Service svc) FOR SOAP»
 	<wsdl:binding name="«svc.toBindingName(this)»"
 		type="tns:«svc.name»">
@@ -119,6 +121,9 @@
 		</wsdl:operation>
 «ENDDEFINE»
 
+«DEFINE WsdlService(Service svc) FOR BindingProtocol»
+«ENDDEFINE»
+
 «DEFINE WsdlService(Service svc) FOR SOAP»
 	<wsdl:service name="«svc.name»">
 		<wsdl:port binding="tns:«svc.toBindingName(this)»"
@@ -126,6 +131,9 @@
 			<soap:address location="«svc.getProviderEndpointAddress((DomainBinding)eContainer)»" />
 		</wsdl:port>
 	</wsdl:service>
+«ENDDEFINE»
+
+«DEFINE WsdlService(Service svc, Server server, ModuleBinding bind) FOR BindingProtocol»
 «ENDDEFINE»
 
 «DEFINE WsdlService(Service svc, Server server, ModuleBinding bind) FOR SOAP»

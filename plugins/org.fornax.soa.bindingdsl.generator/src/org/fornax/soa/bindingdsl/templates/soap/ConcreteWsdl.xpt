@@ -18,17 +18,17 @@
 
 
 
-«DEFINE WSDL(BindingProtocol prot, sOAProfileDsl::SOAProfile profile) FOR bindingDsl::DomainBinding»
+«DEFINE WSDL(BindingProtocol prot, sOAProfileDsl::SOAProfile profile) FOR DomainBinding»
 	«IF DomainNamespace.isInstance(subNamespace)»
 		«EXPAND WSDL(this, prot, profile) FOREACH subNamespace.services.select(e|e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), environment.getMinLifecycleState(e)))»
 	«ENDIF»
 «ENDDEFINE»
 
-«DEFINE WSDL(Service svc, SOAP prot, sOAProfileDsl::SOAProfile profile) FOR bindingDsl::ModuleBinding»
+«DEFINE WSDL(Service svc, SOAP prot, sOAProfileDsl::SOAProfile profile) FOR ModuleBinding»
 	«EXPAND WSDL(this, prot, profile) FOR svc»
 «ENDDEFINE»
 
-«DEFINE WSDLByServiceName(List[String] serviceNames, BindingProtocol prot, sOAProfileDsl::SOAProfile profile) FOR bindingDsl::DomainBinding»
+«DEFINE WSDLByServiceName(List[String] serviceNames, BindingProtocol prot, sOAProfileDsl::SOAProfile profile) FOR DomainBinding»
 	«IF DomainNamespace.isInstance(subNamespace)»
 		«EXPAND WSDL(this, prot, profile) FOREACH subNamespace.services.select(e|serviceNames.contains(e.name) && e.isLatestMatchingService(e.version.toMajorVersionNumber().asInteger(), environment.getMinLifecycleState(e)))»
 	«ENDIF»
@@ -100,6 +100,9 @@
 «ENDFILE»
 «ENDDEFINE»
 
+«DEFINE SOAPBinding(Service svc) FOR BindingProtocol»
+«ENDDEFINE»
+
 «DEFINE SOAPBinding(Service svc) FOR SOAP»
 	<wsdl:binding name="«svc.toBindingName(this)»"
 		type="tns:«svc.name»">
@@ -134,6 +137,9 @@
 			<soap:address location="«svc.getPublisherEndpointAddress ((DomainBinding)eContainer)»" />
 		</wsdl:port>
 	</wsdl:service>
+«ENDDEFINE»
+
+«DEFINE WsdlService(Service svc, Server server, ModuleBinding bind) FOR BindingProtocol»
 «ENDDEFINE»
 
 «DEFINE WsdlService(Service svc, Server server, ModuleBinding bind) FOR SOAP»

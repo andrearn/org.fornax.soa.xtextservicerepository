@@ -111,10 +111,28 @@ String getProviderContextRoot (ServiceBinding b) :
 		"/";
 		
 Server getPublishingServer (Binding b) : 
-	b.protocol.typeSelect(SOAP).get(0).publisher.pubServer != null ? b.protocol.typeSelect(SOAP).get(0).publisher.pubServer : b.environment.defaultESB;
+	b.protocol.typeSelect(SOAP).get(0).publisher.pubServer != null ? b.protocol.typeSelect(SOAP).get(0).publisher.pubServer : null;
 	
 Server getProvidingServer (Binding b) :
+	b.protocol.typeSelect(SOAP).get(0).publisher.pubServer != null ? b.protocol.typeSelect(SOAP).get(0).publisher.pubServer : null;
+		
+Server getPublishingServer (DomainBinding b) : 
+	b.protocol.typeSelect(SOAP).get(0).publisher.pubServer != null ? b.protocol.typeSelect(SOAP).get(0).publisher.pubServer : b.environment.defaultESB;
+	
+Server getProvidingServer (DomainBinding b) :
 	b.protocol.typeSelect(SOAP).get(0).publisher.pubServer != null ? b.protocol.typeSelect(SOAP).get(0).publisher.pubServer : b.environment.defaultAppServer;
+		
+Server getPublishingServer (ModuleBinding b) : 
+	b.protocol.typeSelect(SOAP).get(0).publisher.pubServer != null ? b.protocol.typeSelect(SOAP).get(0).publisher.pubServer : b.environment.defaultESB;
+	
+Server getProvidingServer (ModuleBinding b) :
+	b.protocol.typeSelect(SOAP).get(0).publisher.pubServer != null ? b.protocol.typeSelect(SOAP).get(0).publisher.pubServer : b.environment.defaultAppServer;
+		
+Server getPublishingServer (ServiceBinding b) : 
+	b.protocol.typeSelect(SOAP).get(0).publisher.pubServer != null ? b.protocol.typeSelect(SOAP).get(0).publisher.pubServer : null;
+	
+Server getProvidingServer (ServiceBinding b) :
+	b.protocol.typeSelect(SOAP).get(0).publisher.pubServer != null ? b.protocol.typeSelect(SOAP).get(0).publisher.pubServer : null;
 	
 String getDefaultESBEndpointAddress(serviceDsl::Service s, bindingDsl::DomainBinding b) :
 	((environmentDsl::ESB)b.environment.defaultESB).baseUrl + "/" 

@@ -54,7 +54,8 @@ class SCAExportTemplates {
 	
 	def dispatch toServiceExport (SOAP protocol, ModuleBinding modBind, Service svc, SOAProfile profile) {
 		val exportFile = svc.getExportFileName (protocol);
-		val content = '''<?xml version="1.0" encoding="UTF-8"?>
+		val content = '''
+		<?xml version="1.0" encoding="UTF-8"?>
 		<scdl:export 
 				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 				xmlns:jaxws="http://www.ibm.com/xmlns/prod/websphere/scdl/jaxws/6.0.0" 
@@ -62,7 +63,8 @@ class SCAExportTemplates {
 				xmlns:scdl="http://www.ibm.com/xmlns/prod/websphere/scdl/6.0.0" 
 				xmlns:wsdl="http://www.ibm.com/xmlns/prod/websphere/scdl/wsdl/6.0.0" 
 				displayName="«svc.getExportDisplayName (protocol)»" 
-				name="«svc.getExportName (protocol)»"> 
+				name="«svc.getExportName (protocol)»"
+			> 
 			<interfaces>
 				<interface xsi:type="wsdl:WSDLPortType" preferredInteractionStyle="sync" portType="ns1:«svc.name»"/>
 			</interfaces>
@@ -75,7 +77,8 @@ class SCAExportTemplates {
 	
 	def dispatch toServiceExport (SCA protocol, ModuleBinding modBind, Service svc, SOAProfile profile) {
 		val exportFile = svc.getExportFileName (protocol);
-		val content = '''<?xml version="1.0" encoding="UTF-8"?>
+		val content = '''
+		<?xml version="1.0" encoding="UTF-8"?>
 		<scdl:export 
 				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 				xmlns:jaxws="http://www.ibm.com/xmlns/prod/websphere/scdl/jaxws/6.0.0" 
@@ -83,7 +86,8 @@ class SCAExportTemplates {
 				xmlns:scdl="http://www.ibm.com/xmlns/prod/websphere/scdl/6.0.0" 
 				xmlns:wsdl="http://www.ibm.com/xmlns/prod/websphere/scdl/wsdl/6.0.0" 
 				displayName="«svc.getExportDisplayName (protocol)»" 
-				name="«svc.getExportName (protocol)»"> 
+				name="«svc.getExportName (protocol)»"
+			> 
 			<interfaces>
 				<interface xsi:type="wsdl:WSDLPortType" preferredInteractionStyle="sync" portType="ns1:«svc.name»"/>
 			</interfaces>

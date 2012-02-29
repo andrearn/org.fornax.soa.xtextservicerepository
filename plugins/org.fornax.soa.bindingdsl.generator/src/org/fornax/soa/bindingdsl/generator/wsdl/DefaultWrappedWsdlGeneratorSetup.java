@@ -1,4 +1,4 @@
-package org.fornax.soa.bindingdsl.generator;
+package org.fornax.soa.bindingdsl.generator.wsdl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,8 @@ import org.eclipse.xtext.util.Modules2;
 import org.fornax.soa.basedsl.generator.BaseDslGeneratorModule;
 import org.fornax.soa.basedsl.generator.XtextServiceRepositoryGeneratorConstants;
 import org.fornax.soa.basedsl.generator.XtextServiceRepositoryGeneratorModule;
+import org.fornax.soa.bindingdsl.generator.BindingDSLGeneratorConstants;
+import org.fornax.soa.bindingdsl.generator.BindingDslGeneratorModule;
 import org.fornax.soa.environmentdsl.generator.EnvironmentDslGeneratorModule;
 import org.fornax.soa.moduledsl.generator.ModuleDslGeneratorModule;
 import org.fornax.soa.profiledsl.generator.ProfileDslGeneratorModule;
@@ -26,20 +28,17 @@ import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 
-public class DefaultBindingDslGeneratorSetup implements ISetup {
+public class DefaultWrappedWsdlGeneratorSetup implements ISetup {
 
 	private String profileName;
-	private List<String> moduleBindingNames = new ArrayList<String>();
-	private List<String> domainBindingNames = new ArrayList<String>();
 	private List<String> namespaces = new ArrayList<String>();
-	private Boolean noDependencies;
-	private Boolean includeSubNamespaces;
-	private Boolean useNestedPaths;
-	private Boolean forceRelativePaths;
-	private Boolean generatePrivateWsdlForProviderHost;
+	private Boolean noDependencies = false;
+	private Boolean includeSubNamespaces = false;
+	private Boolean useNestedPaths = false;
+	private Boolean forceRelativePaths = false;
 	private String targetEnvironmentName;
 
-	public Injector createInjectorAndDoEMFRegistration() {
+	public Injector createInjectorAndDoEMFRegistration () {
 		Injector injector = Guice.createInjector (Modules2.mixin (
 				new BaseDslGeneratorModule (),
 				new ServiceDslGeneratorModule (),
@@ -54,7 +53,7 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 					@Override
 					protected void configure () {
 						bind (IGenerator.class).to (
-								DefaultBindingDslContractGenerators.class);
+								DefaultWrappedWsdlGenerator.class);
 
 						bind (Boolean.class)
 								.annotatedWith (
@@ -64,23 +63,10 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 								.annotatedWith (
 										Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
 								.toInstance (useNestedPaths);
-						bind (Boolean.class)
-								.annotatedWith (
-										Names.named (BindingDSLGeneratorConstants.GENERATE_PRIVATE_WSDL_FOR_PROVIDER_HOST))
-								.toInstance (generatePrivateWsdlForProviderHost);
-
 						bind (String.class)
 								.annotatedWith (
 										Names.named (ProfileGeneratorConstants.PROFILE_NAME))
 								.toInstance (profileName);
-						bind (new TypeLiteral<List<String>>() {})
-								.annotatedWith (
-										Names.named (BindingDSLGeneratorConstants.MODULE_BINDING_NAMES))
-								.toInstance (moduleBindingNames);
-						bind (new TypeLiteral<List<String>>() {})
-								.annotatedWith (
-										Names.named (BindingDSLGeneratorConstants.DOMAIN_BINDING_NAMES))
-								.toInstance (domainBindingNames);
 						bind (new TypeLiteral<List<String>>() {})
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.NAME_SPACES))
@@ -94,9 +80,9 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 										Names.named (BindingDSLGeneratorConstants.INCLUDE_SUB_NAMESPACES))
 								.toInstance (includeSubNamespaces);
 						bind (String.class)
-								.annotatedWith (
-										Names.named (BindingDSLGeneratorConstants.TARGET_ENVIRONMENT_NAME))
-								.toInstance (getTargetEnvironmentName ());
+						.annotatedWith (
+								Names.named (BindingDSLGeneratorConstants.TARGET_ENVIRONMENT_NAME))
+						.toInstance (getTargetEnvironmentName ());
 
 						JavaIoFileSystemAccess fileSystemAccess = new JavaIoFileSystemAccess ();
 						OutputConfiguration out = new OutputConfiguration ("DEFAULT_OUTPUT");
@@ -111,8 +97,7 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 				}));
 
 		return injector;
-	}	
-	
+	}
 	
 	public String getProfileName () {
 		return profileName;
@@ -120,22 +105,6 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 
 	public void setProfileName (String profileName) {
 		this.profileName = profileName;
-	}
-
-	public List<String> getModuleBindingNames () {
-		return moduleBindingNames;
-	}
-
-	public void addModuleBindingNames (String moduleBindingName) {
-		moduleBindingNames.add (moduleBindingName);
-	}
-
-	public List<String> getDomainBindingNames () {
-		return domainBindingNames;
-	}
-
-	public void addDomainBindingNames (String domainBindingName) {
-		domainBindingNames.add (domainBindingName);
 	}
 
 	public List<String> getNamespacesNames () {
@@ -171,41 +140,21 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 		return useNestedPaths;
 	}
 
-
-
 	public void setUseNestedPaths (Boolean useNestedPaths) {
 		this.useNestedPaths = useNestedPaths;
 	}
-
-
 
 	public Boolean getForceRelativePaths () {
 		return forceRelativePaths;
 	}
 
-
-
 	public void setForceRelativePaths (Boolean forceRelativePaths) {
 		this.forceRelativePaths = forceRelativePaths;
-	}
-
-
-
-	public Boolean getGeneratePrivateWsdlForProviderHost () {
-		return generatePrivateWsdlForProviderHost;
-	}
-
-
-
-	public void setGeneratePrivateWsdlForProviderHost (
-			Boolean generatePrivateWsdlForProviderHost) {
-		this.generatePrivateWsdlForProviderHost = generatePrivateWsdlForProviderHost;
 	}
 
 	public void setTargetEnvironmentName (String environmentName) {
 		this.targetEnvironmentName = environmentName;
 	}
-
 
 	public String getTargetEnvironmentName () {
 		return targetEnvironmentName;

@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl.templates.xsd
+package org.fornax.soa.profiledsl.generator.templates
 
 import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
@@ -32,15 +32,11 @@ class MessageHeaderXSDTemplates {
 	@Inject extension CommonStringExtensions
 	@Inject extension ProfileSchemaNamespaceExtensions
 	@Inject extension ProfileSchemaTypeExtensions
-	@Inject extension SchemaTemplateExtensions
 	@Inject extension VersionQualifierExtensions
 	@Inject extension LifecycleQualifierExtensions
 	@Inject extension TechnicalNamespaceSplitter
 	@Inject extension NamespaceImportQueries
 	@Inject extension LatestMatchingTypeFinder
-	@Inject extension XSDTemplates
-
-	@Inject SchemaNamespaceExtensions schemaNSExtensions
 
 	/*
 		CARTRIDGE ENTRYPOINT for generation message headers defined in the give SOAProfile
@@ -79,14 +75,13 @@ class MessageHeaderXSDTemplates {
 		<xsd:schema xmlns:tns="«vns.toNamespace()»"
 			«vns.allImportedVersionedNS ().filter (e| !(e.namespace == vns.namespace && e.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber())).map (ns|ns.toNamespaceDeclaration).join» 
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-			xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 			elementFormDefault="qualified"
 			attributeFormDefault="unqualified"
 			targetNamespace="«vns.toNamespace()»"
 			>
 			«imports.map (ns|ns.toImportDeclaration).join»
 			«classes.map (t|t.toComplexType(vns, profile, header)).join»
-			«enumerations.map (t|t.toSimpleType (profile))»
+			«enumerations.map (t|t.toSimpleType (profile)).join»
 			«/*«EXPAND FaultType(this) FOREACH ((SubNamespace) subdomain).exceptions.select (e|e.isLatestMatchingException (version.toMajorVersionNumber().asInteger(), minState))-*/»
 		</xsd:schema>
 		'''
@@ -109,9 +104,9 @@ class MessageHeaderXSDTemplates {
 		val imports = vns.allImportedVersionedNS()
 				.filter (e| !(e.namespace == vns.namespace && e.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber()));
 		val classes = (vns.namespace as TechnicalNamespace).types.filter (typeof (org.fornax.soa.profiledsl.sOAProfileDsl.Class))
-					.filter (e|e.version.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber());
+				.filter (e|e.version.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber());
 		val enumerations = (vns.namespace as TechnicalNamespace).types.filter (typeof (Enumeration))
-					.filter (e|e.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger() ));
+				.filter (e|e.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger() ));
 
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -122,10 +117,10 @@ class MessageHeaderXSDTemplates {
 			attributeFormDefault="unqualified"
 			targetNamespace="«vns.toNamespace()»"
 			>
-		«imports.map (ns|ns.toImportDeclaration (registryBaseUrl)).join»
-		«classes.map (t|t.toComplexType (vns, profile, header)).join»
-		«enumerations.map (t|t.toSimpleType (profile)).join»
-		«/*«EXPAND FaultType(this) FOREACH ((SubNamespace) subdomain).exceptions.select (e|e.isLatestMatchingException (version.toMajorVersionNumber().asInteger(), minState))-»*/»
+			«imports.map (ns|ns.toImportDeclaration (registryBaseUrl)).join»
+			«classes.map (t|t.toComplexType (vns, profile, header)).join»
+			«enumerations.map (t|t.toSimpleType (profile)).join»
+			«/*«EXPAND FaultType(this) FOREACH ((SubNamespace) subdomain).exceptions.select (e|e.isLatestMatchingException (version.toMajorVersionNumber().asInteger(), minState))-»*/»
 		
 		</xsd:schema>
 		'''
@@ -154,20 +149,20 @@ class MessageHeaderXSDTemplates {
 	    	<xsd:annotation>
 	    		<xsd:documentation>
 	    			<![CDATA[Version:	«cls.version.toVersionNumber()»
-					«IF cls.doc != null»
-					
-	    				«cls.doc?.stripCommentBraces()?.trim()»
-					«ENDIF» 
-					]]>   			
+						«IF cls.doc != null»
+
+							«cls.doc?.stripCommentBraces()?.trim()»
+						«ENDIF» 
+	    			]]>
 	    		</xsd:documentation>
 	    	</xsd:annotation>
 	    	
 	    	«IF cls.superClass != null»
-	    	<xsd:complexContent>
-	    		<xsd:extension base="«cls.superClass.toTypeNameRef(currNs)»">
-			    	«cls.toPropertySequence (currNs, profile)»
-	    		</xsd:extension>
-	    	</xsd:complexContent>
+		    	<xsd:complexContent>
+		    		<xsd:extension base="«cls.superClass.toTypeNameRef(currNs)»">
+		    			«cls.toPropertySequence (currNs, profile)»
+		    		</xsd:extension>
+		    	</xsd:complexContent>
 	    	«ELSE»
 		    	«cls.toPropertySequenceWithAny (currNs, profile, header)»
 		    	«IF header.extendableXMLAttributes»
@@ -181,22 +176,22 @@ class MessageHeaderXSDTemplates {
     	<xsd:sequence>
     		«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
     		«IF header.extendableProperties»
-			<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
-				processContents="skip"/>
+				<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
+					processContents="skip"/>
     		«ENDIF»
     	</xsd:sequence>
     	«IF !cls.properties.filter (typeof (Attribute)).isEmpty»
-    	
-   			«cls.properties.filter (typeof (Attribute)).map (a|a.toProperty (currNs, profile)).join»
+
+			«cls.properties.filter (typeof (Attribute)).map (a|a.toProperty (currNs, profile)).join»
     	«ENDIF»
 	'''
 	
 	def dispatch toPropertySequence (org.fornax.soa.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, SOAProfile profile) '''
 		<xsd:sequence>
-	   		«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
-	    </xsd:sequence>
+			«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
+		</xsd:sequence>
 	    «IF !cls.properties.filter (typeof (Attribute)).isEmpty»
-	    
+
 	   		«cls.properties.filter (typeof (Attribute)).map (a|a.toProperty (currNs, profile)).join»
 	    «ENDIF»
 	'''
@@ -207,11 +202,11 @@ class MessageHeaderXSDTemplates {
 	    		<xsd:documentation>
 	    			<![CDATA[Version:	«enumeration.version.toVersionNumber()»
 	    			
-					«IF enumeration.doc != null»
-					
-	    			«enumeration.doc?.stripCommentBraces()?.trim()»
-					«ENDIF» 
-					]]>   			
+						«IF enumeration.doc != null»
+
+			    			«enumeration.doc?.stripCommentBraces()?.trim()»
+						«ENDIF»
+	    			]]> 
 	       		</xsd:documentation>
 	    	</xsd:annotation>
 	    	<xsd:restriction base="xsd:string">
@@ -226,11 +221,11 @@ class MessageHeaderXSDTemplates {
 			<xsd:element name="«prop.name»" «IF prop.optional»minOccurs="0"«ENDIF» «IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«prop.type.toTypeNameRef(currNs)»" />
 		«ELSE»		
 			<xsd:element name="«prop.name»" «IF prop.optional»minOccurs="0"«ENDIF» «IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«prop.type.toTypeNameRef(currNs)»" >
-		    	<xsd:annotation>
-		    		<xsd:documentation>
-		    			<![CDATA[«prop.doc?.stripCommentBraces()?.trim()»]]>
-		    		</xsd:documentation>
-		    	</xsd:annotation>
+				<xsd:annotation>
+					<xsd:documentation>
+						<![CDATA[«prop.doc?.stripCommentBraces()?.trim()»]]>
+					</xsd:documentation>
+				</xsd:annotation>
 			</xsd:element>
 		«ENDIF»
 	'''

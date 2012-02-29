@@ -25,13 +25,13 @@ import org.fornax.soa.servicedsl.query.namespace.NamespaceImportQueries
 import org.fornax.soa.servicedsl.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.templates.ServiceTemplates
 import org.fornax.soa.servicedsl.templates.xsd.EventXSDTemplates
-import org.fornax.soa.servicedsl.templates.xsd.MessageHeaderXSDTemplates
 import org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.templates.xsd.XSDTemplates
 import org.fornax.soa.bindingdsl.queries.services.BindingServiceResolver
 import org.fornax.soa.bindingdsl.queries.modules.ModuleBindingResolver
 import org.fornax.soa.environmentDsl.Environment
+import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates
 
 class BindingTemplates {
 	

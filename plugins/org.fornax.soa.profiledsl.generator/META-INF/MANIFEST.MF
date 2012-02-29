@@ -19,5 +19,6 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.profiledsl,
  org.fornax.soa.profiledsl.generator,
+ org.fornax.soa.profiledsl.generator.templates,
  org.fornax.soa.profiledsl.query,
  org.fornax.soa.profiledsl.query.type

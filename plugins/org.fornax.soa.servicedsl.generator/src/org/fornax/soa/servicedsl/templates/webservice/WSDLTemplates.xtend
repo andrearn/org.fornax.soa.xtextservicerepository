@@ -104,25 +104,25 @@ class WSDLTemplates {
 		<wsdl:types>
 			<xsd:schema targetNamespace="«s.toTargetNamespace()»"
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState) »
-				xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber(imp.version)»="«imp.toNamespace()»"
+					xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber(imp.version)»="«imp.toNamespace()»"
 				«ENDFOR»
 				«IF s.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : s.findBestMatchingHeader(profile).allImportedVersionedNS(versionQualifier.toMajorVersionNumber(s.version))»
-				xmlns:«headerImp.toPrefix()+versionQualifier.toMajorVersionNumber(headerImp.version)»="«headerImp.toNamespace()»"
-				«ENDFOR»
+					«FOR headerImp : s.findBestMatchingHeader(profile).allImportedVersionedNS(versionQualifier.toMajorVersionNumber(s.version))»
+						xmlns:«headerImp.toPrefix()+versionQualifier.toMajorVersionNumber(headerImp.version)»="«headerImp.toNamespace()»"
+					«ENDFOR»
 				«ENDIF»
 				elementFormDefault="qualified"
 				attributeFormDefault="unqualified"
 			>
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
-				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-					namespace="«imp.toNamespace()»"/>
+					<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+						namespace="«imp.toNamespace()»"/>
 				«ENDFOR»
 				«IF s.findBestMatchingHeader (profile) != null»
-				«FOR headerImp : s.findBestMatchingHeader (profile).allImportedVersionedNS (versionQualifier.toMajorVersionNumber(s.version))»
-				<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-					namespace="«headerImp.toNamespace()»"/>
-				«ENDFOR»
+					«FOR headerImp : s.findBestMatchingHeader (profile).allImportedVersionedNS (versionQualifier.toMajorVersionNumber(s.version))»
+						<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+							namespace="«headerImp.toNamespace()»"/>
+					«ENDFOR»
 				«ENDIF»
 				«s.operations.map (e|e.toOperationWrapperTypes (profile)).join»
 				«s.operations.map (o|o.throws).flatten.map(t|t.exception.name).toSet().map (e|e.toOperationFaultWrapperTypes (s.operations.map (o|o.throws).flatten.toList)).join»
@@ -131,8 +131,7 @@ class WSDLTemplates {
 	'''
 
 
-	def toOperationWrapperTypes (Operation o, SOAProfile profile)  
-		'''
+	def toOperationWrapperTypes (Operation o, SOAProfile profile)  '''
 		<xsd:element name="«o.name»">
 			<xsd:complexType>
 				<xsd:sequence>
@@ -172,7 +171,7 @@ class WSDLTemplates {
 				«ENDIF»
 			</xsd:complexType>
 		</xsd:element>
-		'''
+	'''
 	
 	def toOperationFaultWrapperTypes(String name, List<ExceptionRef> exceptions) '''
 		<xsd:element name="«exceptions.findFirst (e|e.exception.name == name).exception.toTypeName()»" type="«exceptions.findFirst (e|e.exception.name == name).toExceptionNameRef()»"/>
@@ -207,12 +206,14 @@ class WSDLTemplates {
 	def toPortType (Service s) '''
 		<wsdl:portType name="«s.name»">
 			<wsdl:documentation>
-					<![CDATA[Version:	«versionQualifier.toVersionNumber(s.version)»
-					Lifecycle state: «s.state.toString()»
-					«IF s.doc != null»
-										
-					«s.doc?.stripCommentBraces().trim()»
-					«ENDIF» ]]>   			
+					<![CDATA[
+						Version:	«versionQualifier.toVersionNumber(s.version)»
+						Lifecycle state: «s.state.toString()»
+						«IF s.doc != null»
+
+							«s.doc?.stripCommentBraces().trim()»
+						«ENDIF»
+					]]>   			
 			</wsdl:documentation>
 			«/*
 			<jaxws:class>
@@ -232,23 +233,23 @@ class WSDLTemplates {
 	
 	
 	def toOperation (Operation o) '''
-			<wsdl:operation name="«o.name»">
-				«IF o.doc != null»
-				<wsdl:documentation>
-					<![CDATA[«o.doc?.stripCommentBraces().trim()»]]>   			
-				</wsdl:documentation>
-				«/*
-					<jaxws:method>
-						<jaxws:javadoc>
-							<![CDATA[«o.doc?.stripCommentBraces().trim()»]]>   			
-						</jaxws:javadoc>
-					</jaxws:method>
-				*/»
-				«ENDIF»
-				<wsdl:input message="tns:«o.name»Request" />
-				<wsdl:output message="tns:«o.name»Response" />
-				«o.toFault()»
-			</wsdl:operation>
+		<wsdl:operation name="«o.name»">
+			«IF o.doc != null»
+			<wsdl:documentation>
+				<![CDATA[«o.doc?.stripCommentBraces().trim()»]]>   			
+			</wsdl:documentation>
+			«/*
+				<jaxws:method>
+					<jaxws:javadoc>
+						<![CDATA[«o.doc?.stripCommentBraces().trim()»]]>   			
+					</jaxws:javadoc>
+				</jaxws:method>
+			*/»
+			«ENDIF»
+			<wsdl:input message="tns:«o.name»Request" />
+			<wsdl:output message="tns:«o.name»Response" />
+			«o.toFault()»
+		</wsdl:operation>
 	'''
 	
 	
@@ -261,7 +262,7 @@ class WSDLTemplates {
 	
 	def toFault (Operation o) '''
 		«FOR fault : o.throws»
-				<wsdl:fault name="«fault.exception.toTypeName().toFirstLower()»" message="tns:«fault.exception.toTypeName()»"></wsdl:fault>
+			<wsdl:fault name="«fault.exception.toTypeName().toFirstLower()»" message="tns:«fault.exception.toTypeName()»"></wsdl:fault>
 		«ENDFOR»
 	'''
 	

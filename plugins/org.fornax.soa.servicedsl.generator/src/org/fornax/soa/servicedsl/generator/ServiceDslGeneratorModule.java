@@ -1,6 +1,7 @@
 package org.fornax.soa.servicedsl.generator;
 
 import org.fornax.soa.ServiceDslRuntimeModule;
+import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates;
 import org.fornax.soa.servicedsl.domain.NamespaceSplitter;
 import org.fornax.soa.servicedsl.query.ExceptionFinder;
 import org.fornax.soa.servicedsl.query.HeaderFinder;
@@ -21,15 +22,11 @@ import org.fornax.soa.servicedsl.templates.webservice.WSDLTemplates;
 import org.fornax.soa.servicedsl.templates.webservice.WrappedWsdlTemplates;
 import org.fornax.soa.servicedsl.templates.webservice.WsdlExtensions;
 import org.fornax.soa.servicedsl.templates.xsd.EventXSDTemplates;
-import org.fornax.soa.servicedsl.templates.xsd.MessageHeaderXSDTemplates;
 import org.fornax.soa.servicedsl.templates.xsd.OperationWrapperTemplates;
 import org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions;
 import org.fornax.soa.servicedsl.templates.xsd.SchemaTemplateExtensions;
 import org.fornax.soa.servicedsl.templates.xsd.SchemaTypeExtensions;
 import org.fornax.soa.servicedsl.templates.xsd.XSDTemplates;
-
-import com.google.inject.Binder;
-import com.google.inject.name.Names;
 
 public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 	
@@ -139,19 +136,5 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 		return WSDLTemplates.class;
 	}
 	
-	
-	public void configureForceRelativePaths (Binder binder) {
-		binder.bind (Boolean.class)
-			.annotatedWith (
-					Names.named (ServiceDSLGeneratorConstants.FORCE_RELATIVE_PATHS))
-			.toInstance (true);
-	}
-	
-	public void configureUseNestedPaths (Binder binder) {
-		binder.bind (Boolean.class)
-			.annotatedWith (
-					Names.named (ServiceDSLGeneratorConstants.USE_NESTED_PATHS))
-			.toInstance (false);
-	}
 	
 }
