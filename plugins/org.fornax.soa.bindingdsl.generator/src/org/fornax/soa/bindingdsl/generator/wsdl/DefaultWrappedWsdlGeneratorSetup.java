@@ -39,6 +39,8 @@ public class DefaultWrappedWsdlGeneratorSetup implements ISetup {
 	private String targetEnvironmentName;
 
 	public Injector createInjectorAndDoEMFRegistration () {
+		if (targetEnvironmentName == null)
+			targetEnvironmentName = ".*";
 		Injector injector = Guice.createInjector (Modules2.mixin (
 				new BaseDslGeneratorModule (),
 				new ServiceDslGeneratorModule (),
@@ -107,11 +109,7 @@ public class DefaultWrappedWsdlGeneratorSetup implements ISetup {
 		this.profileName = profileName;
 	}
 
-	public List<String> getNamespacesNames () {
-		return namespaces;
-	}
-
-	public void addNamespaces (String namespaceName) {
+	public void addNamespace (String namespaceName) {
 		namespaces.add (namespaceName);
 	}
 

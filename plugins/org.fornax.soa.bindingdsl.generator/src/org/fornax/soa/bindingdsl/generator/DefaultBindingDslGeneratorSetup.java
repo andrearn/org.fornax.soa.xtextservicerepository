@@ -40,6 +40,8 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 	private String targetEnvironmentName;
 
 	public Injector createInjectorAndDoEMFRegistration() {
+		if (targetEnvironmentName == null)
+			targetEnvironmentName = ".*";
 		Injector injector = Guice.createInjector (Modules2.mixin (
 				new BaseDslGeneratorModule (),
 				new ServiceDslGeneratorModule (),
@@ -126,7 +128,7 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 		return moduleBindingNames;
 	}
 
-	public void addModuleBindingNames (String moduleBindingName) {
+	public void addModuleBindingName (String moduleBindingName) {
 		moduleBindingNames.add (moduleBindingName);
 	}
 
@@ -134,15 +136,11 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 		return domainBindingNames;
 	}
 
-	public void addDomainBindingNames (String domainBindingName) {
+	public void addDomainBindingName (String domainBindingName) {
 		domainBindingNames.add (domainBindingName);
 	}
-
-	public List<String> getNamespacesNames () {
-		return namespaces;
-	}
-
-	public void addNamespaces (String namespaceName) {
+	
+	public void addNamespace (String namespaceName) {
 		namespaces.add (namespaceName);
 	}
 

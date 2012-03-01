@@ -17,6 +17,7 @@ import org.fornax.soa.basedsl.search.IEObjectLookup
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslFactory
 import org.fornax.soa.environmentDsl.Environment
+import java.util.regex.Pattern
 
 class DefaultWrappedWsdlGenerator implements IGenerator {
 
@@ -57,8 +58,10 @@ class DefaultWrappedWsdlGenerator implements IGenerator {
 			val svcModel = contentRoot as ServiceModel;
 			val Iterable<? extends SubNamespace> subNamespaces = svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten;
 			for (ns : subNamespaces) {
-				if (namespaces.contains (nameProvider.getFullyQualifiedName (ns).toString)) {
-					compile (ns as SubNamespace, resource); 
+				for (nsName : namespaces) {
+					if (Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString)) {
+						compile (ns as SubNamespace, resource); 
+					}
 				}
 			}
 		}

@@ -22,6 +22,7 @@ import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.basedsl.search.IEObjectLookup
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
+import java.util.regex.Pattern
 
 class IBMScaExportsGenerator implements IGenerator {
 	
@@ -72,9 +73,12 @@ class IBMScaExportsGenerator implements IGenerator {
 					val modBind = binding as ModuleBinding;
 					val module = modBind.module.module
 					val assemblyType = module.assemblyType
-					if (moduleBindingNames.contains (modBind.name) && assemblyType == AssemblyType::SCA_EAR) {
-						compile (modBind, resource);
-					
+					if ((Pattern::matches (targetEnvironmentName, modBind.environment.name))
+							&& assemblyType == AssemblyType::SCA_EAR
+					) {
+						if (moduleBindingNames.exists(bindName | Pattern::matches (bindName, modBind.name) )) {
+							compile (modBind, resource);
+						}
 					}
 				}
 			}

@@ -40,6 +40,8 @@ public class IBMScaExportsGeneratorSetup implements ISetup {
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration () {
+		if (targetEnvironmentName == null)
+			targetEnvironmentName = ".*";
 		Injector injector = Guice.createInjector (Modules2.mixin (
 				new BaseDslGeneratorModule (),
 				new ServiceDslGeneratorModule (),
@@ -112,8 +114,8 @@ public class IBMScaExportsGeneratorSetup implements ISetup {
 		return moduleBindingNames;
 	}
 
-	public void addModuleBindingNames (String moduleBindingName) {
-		moduleBindingNames.add (moduleBindingName);
+	public void addModuleBindingName (String moduleBindingName) {
+		this.moduleBindingNames.add (moduleBindingName);
 	}
 
 	public Boolean getNoDependencies () {

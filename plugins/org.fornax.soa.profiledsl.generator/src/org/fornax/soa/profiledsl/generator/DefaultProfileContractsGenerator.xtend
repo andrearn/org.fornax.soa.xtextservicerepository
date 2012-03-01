@@ -9,6 +9,7 @@ import com.google.inject.name.Named
 import com.google.inject.Inject
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions
 import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates
+import java.util.regex.Pattern
 
 class DefaultProfileContractsGenerator implements IGenerator {
 	
@@ -27,7 +28,7 @@ class DefaultProfileContractsGenerator implements IGenerator {
 		val contentRoot = resource.contents.head;
 		if (contentRoot instanceof SOAProfileModel) {
 			val profileModel = contentRoot as SOAProfileModel;
-			profileModel.profiles.findFirst(p|p.name == profileName).compile (resource);
+			profileModel.profiles.filter (p|Pattern::matches (profileName, p.name)).forEach (e|e.compile (resource));
 		}
 	}
 	

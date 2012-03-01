@@ -29,6 +29,7 @@ import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.environmentDsl.EnvironmentDslPackage
 import org.fornax.soa.bindingdsl.templates.BindingExtensions
 import org.fornax.soa.serviceDsl.SubNamespace
+import java.util.regex.Pattern
 
 class DefaultBindingDslContractGenerators implements IGenerator {
 	
@@ -78,9 +79,15 @@ class DefaultBindingDslContractGenerators implements IGenerator {
 			var profile = EcoreUtil2::resolve (profileDescriptions.head.EObjectOrProxy, resource.resourceSet) as SOAProfile;
 			for (binding : model.bindings) {
 				if (binding instanceof ModuleBinding) {
-					compile (binding as ModuleBinding, profile);
+					val modBind = binding as ModuleBinding;
+					if (moduleBindingNames.exists (modBindName | Pattern::matches (modBindName, modBind.name))) {
+						compile (modBind, profile);
+					}
 				} else if (binding instanceof DomainBinding) {
-					compile (binding as DomainBinding, profile);
+					val domBind = binding as DomainBinding;
+					if (domainBindingNames.exists(domBindName | Pattern::matches(domBindName, domBind.name))) {
+						compile (domBind, profile);
+					}
 				}
 			}
 		}
@@ -89,7 +96,7 @@ class DefaultBindingDslContractGenerators implements IGenerator {
 			val svcModel = contentRoot as ServiceModel;
 			val Iterable<? extends SubNamespace> subNamespaces = svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten;
 			for (ns : subNamespaces) {
-				if (namespaces.contains (nameProvider.getFullyQualifiedName (ns).toString)) {
+				if (namespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
 					compile (ns as SubNamespace, resource); 
 				}
 			}
