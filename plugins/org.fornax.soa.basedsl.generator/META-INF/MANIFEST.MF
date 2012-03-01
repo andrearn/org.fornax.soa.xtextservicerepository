@@ -13,7 +13,7 @@ Require-Bundle: org.fornax.soa.basedsl;bundle-version="1.4.5";visibility:=reexpo
  org.eclipse.xtend.typesystem.emf;visibility:=reexport,
  org.eclipse.xtext.xtend2.lib;bundle-version="2.0.0",
  org.junit4,
- org.aopalliance;bundle-version="1.0.0"
+ org.fornax.soa.xtextservicerepo.generator;bundle-version="1.5.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.basedsl,

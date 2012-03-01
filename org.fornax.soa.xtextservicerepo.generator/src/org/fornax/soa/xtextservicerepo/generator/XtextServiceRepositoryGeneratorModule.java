@@ -1,4 +1,4 @@
-package org.fornax.soa.basedsl.generator;
+package org.fornax.soa.xtextservicerepo.generator;
 
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;

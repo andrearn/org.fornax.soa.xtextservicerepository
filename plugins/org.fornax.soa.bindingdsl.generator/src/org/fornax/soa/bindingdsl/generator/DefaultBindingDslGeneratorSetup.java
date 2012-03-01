@@ -11,13 +11,13 @@ import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.eclipse.xtext.generator.OutputConfiguration;
 import org.eclipse.xtext.util.Modules2;
 import org.fornax.soa.basedsl.generator.BaseDslGeneratorModule;
-import org.fornax.soa.basedsl.generator.XtextServiceRepositoryGeneratorConstants;
-import org.fornax.soa.basedsl.generator.XtextServiceRepositoryGeneratorModule;
 import org.fornax.soa.environmentdsl.generator.EnvironmentDslGeneratorModule;
 import org.fornax.soa.moduledsl.generator.ModuleDslGeneratorModule;
 import org.fornax.soa.profiledsl.generator.ProfileDslGeneratorModule;
 import org.fornax.soa.profiledsl.generator.ProfileGeneratorConstants;
 import org.fornax.soa.servicedsl.generator.ServiceDslGeneratorModule;
+import org.fornax.soa.xtextservicerepo.generator.XtextServiceRepositoryGeneratorConstants;
+import org.fornax.soa.xtextservicerepo.generator.XtextServiceRepositoryGeneratorModule;
 
 import com.google.common.collect.Maps;
 import com.google.inject.AbstractModule;
