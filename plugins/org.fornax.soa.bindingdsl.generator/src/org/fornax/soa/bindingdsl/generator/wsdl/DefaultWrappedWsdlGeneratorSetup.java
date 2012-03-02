@@ -30,17 +30,15 @@ import com.google.inject.name.Names;
 
 public class DefaultWrappedWsdlGeneratorSetup implements ISetup {
 
-	private String profileName;
+	private String profileName = ".*";
 	private List<String> namespaces = new ArrayList<String>();
 	private Boolean noDependencies = false;
 	private Boolean includeSubNamespaces = false;
 	private Boolean useNestedPaths = false;
 	private Boolean forceRelativePaths = false;
-	private String targetEnvironmentName;
+	private String targetEnvironmentName = ".*";
 
 	public Injector createInjectorAndDoEMFRegistration () {
-		if (targetEnvironmentName == null)
-			targetEnvironmentName = ".*";
 		Injector injector = Guice.createInjector (Modules2.mixin (
 				new BaseDslGeneratorModule (),
 				new ServiceDslGeneratorModule (),

@@ -23,7 +23,9 @@ import org.fornax.soa.serviceDsl.Enumeration
 import org.fornax.soa.servicedsl.query.type.VersionedTypeFilter
 import org.fornax.soa.profiledsl.VersionedTechnicalNamespace
 
-/* splitting.ext */
+/* 
+ * Split SubNamespaces by major major versions of it's owned services, BOs, enums and exceptions
+ */
 class NamespaceSplitter {
 	
 	@Inject extension VersionMatcher

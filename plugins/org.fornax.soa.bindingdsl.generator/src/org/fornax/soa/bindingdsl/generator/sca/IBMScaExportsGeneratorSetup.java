@@ -36,12 +36,10 @@ public class IBMScaExportsGeneratorSetup implements ISetup {
 	private Boolean includeSubNamespaces = false;
 	private Boolean useNestedPaths = false;
 	private Boolean forceRelativePaths = false;
-	private String targetEnvironmentName;
+	private String targetEnvironmentName = ".*";
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration () {
-		if (targetEnvironmentName == null)
-			targetEnvironmentName = ".*";
 		Injector injector = Guice.createInjector (Modules2.mixin (
 				new BaseDslGeneratorModule (),
 				new ServiceDslGeneratorModule (),

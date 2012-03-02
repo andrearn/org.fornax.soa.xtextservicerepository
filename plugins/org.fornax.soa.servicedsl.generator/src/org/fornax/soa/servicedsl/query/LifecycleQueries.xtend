@@ -1,6 +1,6 @@
 package org.fornax.soa.servicedsl.query
 
-/* most of templates/common.ext */
+
 import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.BusinessObject
@@ -10,6 +10,10 @@ import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.basedsl.sOABaseDsl.Version
 import org.fornax.soa.serviceDsl.VersionedType
 
+/* 
+ * Finders for lifecycle state for of elements owning object and minimal applicable 
+ * lifecycle state in an environment type as defined in the profile or overriden by the namespace
+ */
 class LifecycleQueries {
 	def dispatch LifecycleState toOwnerMinDevState (Object o) {
 		LifecycleState::DEVELOPMENT;

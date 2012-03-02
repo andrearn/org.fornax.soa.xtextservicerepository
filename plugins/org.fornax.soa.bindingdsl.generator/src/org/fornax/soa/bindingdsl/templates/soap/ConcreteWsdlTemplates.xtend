@@ -26,8 +26,9 @@ import org.fornax.soa.servicedsl.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.query.type.LatestMatchingTypeFinder
 
 /*
- * Generate concrete WSDLs that define port, binding and service endpoint for each elegible service 
- * from a DomainBinding or ModuleBinding.
+ * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
+ * from a DomainBinding or ModuleBinding.<br/><br/>
+ * 
  * Each concrete WSDL imports the abstract WSDL of the respective service. Generation of the abstract WSDL is being 
  * delegated to the Service DSL generator.
  */
@@ -48,6 +49,10 @@ class ConcreteWsdlTemplates {
 	
 	@Inject IFileSystemAccess fsa
 	
+	/* 
+	 * Generate concrete pubplic endpoint WSDLs for services bound by a DomainBinding 
+	 * with the given protocol definition applying the supplied profile
+	 */
 	def toWSDL (DomainBinding binding, BindingProtocol prot, SOAProfile profile) {
 		if (binding.subNamespace instanceof DomainNamespace) {
 			val services = binding.subNamespace.services.filter (e|e.isLatestMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e)));
@@ -55,6 +60,10 @@ class ConcreteWsdlTemplates {
 		}
 	}
 	
+	/* 
+	 * Generate a concrete pubplic endpoint WSDL for a service bound by a ModuleBinding 
+	 * with the given protocol definition applying the supplied profile
+	 */
 	def dispatch toWSDL (ModuleBinding binding, Service svc, SOAP prot, SOAProfile profile) {
 		svc.toWSDL (binding, prot, profile);
 	}
@@ -68,7 +77,8 @@ class ConcreteWsdlTemplates {
 	
 	def dispatch toWSDL (Service svc, DomainBinding domBind, BindingProtocol prot, SOAProfile profile) {
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment ("Public") + ".wsdl";
-		val content = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		val content = '''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 			xmlns:tns="«svc.toTargetNamespace()»"
 			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
@@ -84,6 +94,7 @@ class ConcreteWsdlTemplates {
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (domBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 			
 			«domBind.protocol.filter (typeof(SOAP)).map (p|p.toSOAPBinding (svc)).join»
+
 			«domBind.protocol.filter (typeof(SOAP)).map (p|p.toWsdlService (svc)).join»
 		</wsdl:definitions>
 		''';
@@ -92,22 +103,26 @@ class ConcreteWsdlTemplates {
 	
 	def dispatch toWSDL(Service svc, ServiceBinding svcBind, SOAP prot, SOAProfile profile) {
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment("Public") + ".wsdl";
-		val content = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		val content = '''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 			xmlns:tns="«svc.toTargetNamespace()»"
 			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			name="«svc.name»" 
 			targetNamespace="«svc.toTargetNamespace()»">
+
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(svc.version)»
 				Lifecycle state: «svc.state.toString()»
 				
 				«svc.doc?.trim()?.stripCommentBraces()»
 			</wsdl:documentation>
+
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 			
 			«svcBind.protocol.filter (typeof(SOAP)).map (p|p.toSOAPBinding (svc)).join»
+
 			«svcBind.protocol.filter (typeof(SOAP)).map (p|p.toWsdlService(svc)).join»
 		</wsdl:definitions>
 		''';
@@ -116,22 +131,26 @@ class ConcreteWsdlTemplates {
 	
 	def dispatch toWSDL(Service svc, ModuleBinding modBind, BindingProtocol prot, SOAProfile profile) {
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment("Public") + ".wsdl";
-		val content ='''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		val content ='''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 			xmlns:tns="«svc.toTargetNamespace()»"
 			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			name="«svc.name»" 
 			targetNamespace="«svc.toTargetNamespace()»">
+
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(svc.version)»
 				Lifecycle state: «svc.state.toString()»
 				
 				«svc.doc?.trim()?.stripCommentBraces()»
 			</wsdl:documentation>
+
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 			
 			«prot.toSOAPBinding (svc)»
+
 			«prot.toWsdlService (svc, modBind.provider.provServer, modBind)»
 		</wsdl:definitions>
 		''';
@@ -150,6 +169,7 @@ class ConcreteWsdlTemplates {
 	'''
 	
 	def toSOAPBindingOperation (Operation op, SOAP protocol) '''
+
 		<wsdl:operation name="«op.name»">
 			<soap:operation
 				soapAction="«op.eContainer.toTargetNamespace()»«op.name»" />
@@ -160,9 +180,9 @@ class ConcreteWsdlTemplates {
 				<soap:body use="«protocol.getSoapEncoding()»" />
 			</wsdl:output>
 			«FOR fault : op.throws»
-			<wsdl:fault name="«fault.exception.toTypeName().toFirstLower()»">
-				<soap:fault name="«fault.exception.toTypeName().toFirstLower()»" use="«protocol.getSoapEncoding()»"/>
-			</wsdl:fault>
+				<wsdl:fault name="«fault.exception.toTypeName().toFirstLower()»">
+					<soap:fault name="«fault.exception.toTypeName().toFirstLower()»" use="«protocol.getSoapEncoding()»"/>
+				</wsdl:fault>
 			«ENDFOR»
 		</wsdl:operation>
 	'''

@@ -23,6 +23,9 @@ import org.fornax.soa.servicedsl.templates.xsd.XSDTemplates
 import org.fornax.soa.servicedsl.query.type.LatestMatchingTypeFinder
 import com.google.inject.name.Named
 
+/*
+ * Template class for generation of abstract WSDLs
+ */
 class WSDLTemplates {
 	
 	@Inject IFileSystemAccess fsa

@@ -18,6 +18,9 @@ import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.InternalNamespace
 
+/*
+ * Namespace lookup functions
+ */
 class NamespaceQuery {
 	
 	@Inject extension LifecycleQueries

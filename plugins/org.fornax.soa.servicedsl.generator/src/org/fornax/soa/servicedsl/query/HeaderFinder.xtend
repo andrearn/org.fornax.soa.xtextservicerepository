@@ -1,6 +1,5 @@
 package org.fornax.soa.servicedsl.query
 
-/* headers.ext */
 import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
 import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
@@ -30,6 +29,9 @@ import org.fornax.soa.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.servicedsl.query.type.VersionedTypeFilter
 
+/* 
+ * Find th most specific message header declaration to be used by a service operation
+ */
 class HeaderFinder {
 	
 	@Inject extension VersionMatcher

@@ -47,7 +47,7 @@ class ProfileSchemaNamespaceExtensions {
 		if (o.prefix != null) {
 			o.prefix;
 		} else { 
-			o.name.replaceAll("\\.", "_");
+			o.name.split("\\.").map (e|e.substring(0, 1)).join;
 		}
 	}
 	
@@ -55,7 +55,7 @@ class ProfileSchemaNamespaceExtensions {
 		if (s.prefix != null) { 
 			s.prefix;
 		} else {
-			toNamespacePath( newArrayList(s)).map(n|n.name.substring(0,1)).join("");
+			toNamespacePath( newArrayList(s)).map (n|n.name.split("\\.").map (e|e.substring(0,1)).join).join;
 		}
 	}
 	
@@ -63,11 +63,11 @@ class ProfileSchemaNamespaceExtensions {
 		if (s.shortName != null) {
 			s.shortName
 		} else {
-			toNamespacePath (newArrayList (s.namespace as TechnicalNamespace)).map(n|n.name.substring(0,1)).join("");
+			toNamespacePath (newArrayList (s.namespace)).map (n|n.name.split("\\.").map (e|e.substring(0,1)).join).join;
 		}
 	}
 		
-	def dispatch String toNamespace (org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace org) { 
+	def dispatch String toNamespace (OrganizationNamespace org) { 
 		var ns = org.toUnversionedNamespace() + "/" + org.toVersionPostfix();
 		if (org.hasTrailingSlash() ){
 			return ns + ("/"); 

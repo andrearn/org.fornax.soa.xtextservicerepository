@@ -21,9 +21,9 @@ import com.google.inject.name.Names;
 public class DefaultProfileContractsGeneratorSetup implements ISetup {
 
 	private String profileName;
-	private Boolean noDependencies;
-	private Boolean useNestedPaths;
-	private Boolean forceRelativePaths;
+	private Boolean noDependencies = false;
+	private Boolean useNestedPaths = false;
+	private Boolean forceRelativePaths = false;
 
 	@Override
 	public Injector createInjectorAndDoEMFRegistration () {

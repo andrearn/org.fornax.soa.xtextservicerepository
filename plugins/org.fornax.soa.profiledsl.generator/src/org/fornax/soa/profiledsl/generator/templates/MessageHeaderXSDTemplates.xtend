@@ -23,6 +23,9 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
 import org.fornax.soa.profiledsl.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.profiledsl.ProfileSchemaTypeExtensions
 
+/* A template class to generate an XSD for a TechnicalNamespace 
+ * declaring the complextype used by message headers
+ */
 class MessageHeaderXSDTemplates {
 
 	@Inject IFileSystemAccess fsa
@@ -39,7 +42,7 @@ class MessageHeaderXSDTemplates {
 	@Inject extension LatestMatchingTypeFinder
 
 	/*
-		CARTRIDGE ENTRYPOINT for generation message headers defined in the give SOAProfile
+		<b>CARTRIDGE ENTRYPOINT</b> for generation message headers defined in the give SOAProfile<br/><br/>
 	
 		An XSD for each TechnicalNamespace of all parameters of all message headers defined in
 		the SOAProfile will be generated
@@ -53,7 +56,7 @@ class MessageHeaderXSDTemplates {
 	}
 	
 	/*
-		CARTRIDGE ENTRYPOINT for generation message headers defined in the give SOAProfile
+		<b>CARTRIDGE ENTRYPOINT</b> for generation message headers defined in the give SOAProfile<br/><br/>
 	
 		An XSD for each TechnicalNamespace of all parameters of all message headers defined in
 		the SOAProfile will be generated
@@ -65,6 +68,35 @@ class MessageHeaderXSDTemplates {
 			h.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, registryBaseUrl, h));
 		}
 	}
+	
+	/* 
+	 * Generate a message header XSD for each header defided inthe given profile 
+	 * and for each major version of a TechnicalNamespace<br/><br/>
+	 * 
+	 * @param namespace			the TechnicalNamespace to generate XSDs for<br/>
+	 * @param profile			the Profile to be applied<br/>
+	 * @param header			the header definition of the profile to be selected for generation<br/>
+	 */
+	def dispatch toMessageHeaderXSD (TechnicalNamespace namespace, SOAProfile profile, MessageHeader header) {
+		namespace.toVersionedTechnicalNamespaces().forEach (vns|vns.toMessageHeaderXSD (profile, header));
+	}
+	
+	/* 
+	 * Generate a message header XSD for each header defided inthe given profile 
+	 * and for each major version of a TechnicalNamespace<br/><br/>
+	 * 
+	 * @param namespace			the TechnicalNamespace to generate XSDs for<br/>
+	 * @param profile			the Profile to be applied<br/>
+	 * @param registryBaseUrl	Import URLs are prefixed with the registryBaseUrl<br/>
+	 * @param header			the header definition of the profile to be selected for generation<br/>
+	 */
+	def dispatch toMessageHeaderXSD (TechnicalNamespace namespace, SOAProfile profile, String registryBaseUrl, MessageHeader header) {
+		namespace.toVersionedTechnicalNamespaces().forEach (vns|vns.toMessageHeaderXSD (profile, registryBaseUrl, header));
+	}
+	
+	/* 
+	 * Generates a message header XSD for a major version of a TechnicalNamespace
+	 */
 	def dispatch toMessageHeaderXSD (VersionedTechnicalNamespace vns, SOAProfile profile, MessageHeader header) {
 		val imports = vns.allImportedVersionedNS().filter (e| !(e.namespace == vns.namespace && e.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber()));
 		val classes = (vns.namespace as TechnicalNamespace).types.filter (typeof (org.fornax.soa.profiledsl.sOAProfileDsl.Class)).filter (e|e.version.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber());
@@ -88,14 +120,6 @@ class MessageHeaderXSDTemplates {
 		
 		val xsdFileName = vns.toFileNameFragment() + ".xsd";
 		fsa.generateFile (xsdFileName, content);
-	}
-	
-	def dispatch toMessageHeaderXSD (TechnicalNamespace namespace, SOAProfile profile, MessageHeader header) {
-		namespace.toVersionedTechnicalNamespaces().forEach (vns|vns.toMessageHeaderXSD (profile, header));
-	}
-	
-	def dispatch toMessageHeaderXSD (TechnicalNamespace namespace, SOAProfile profile, String registryBaseUrl, MessageHeader header) {
-		namespace.toVersionedTechnicalNamespaces().forEach (vns|vns.toMessageHeaderXSD (profile, registryBaseUrl, header));
 	}
 	
 	
@@ -130,63 +154,65 @@ class MessageHeaderXSDTemplates {
 	}
 	
 	
-	def dispatch toNamespaceDeclaration (VersionedTechnicalNamespace vns) '''
+	def protected dispatch toNamespaceDeclaration (VersionedTechnicalNamespace vns) '''
 		xmlns:«vns.toPrefix() + vns.version.toMajorVersionNumber()»="«vns.toNamespace()»"
 	'''
 	
-	def dispatch toImportDeclaration (VersionedTechnicalNamespace vns) '''
+	def protected dispatch toImportDeclaration (VersionedTechnicalNamespace vns) '''
 		<xsd:import schemaLocation="«vns.getRegisteredUrl (null)».xsd"
 			namespace="«vns.toNamespace()»"></xsd:import>
 	'''
-	def dispatch toImportDeclaration (VersionedTechnicalNamespace vns, String registryBaseUrl) '''
+	def protected dispatch toImportDeclaration (VersionedTechnicalNamespace vns, String registryBaseUrl) '''
 		<xsd:import schemaLocation="«vns.getRegisteredUrl (registryBaseUrl)».xsd"
 			namespace="«vns.toNamespace()»"></xsd:import>
 	'''
 	
 	
-	def dispatch toComplexType (org.fornax.soa.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, SOAProfile profile, MessageHeader header) '''
-	    <xsd:complexType name="«cls.name»">
-	    	<xsd:annotation>
-	    		<xsd:documentation>
-	    			<![CDATA[Version:	«cls.version.toVersionNumber()»
+	def protected dispatch toComplexType (org.fornax.soa.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, SOAProfile profile, MessageHeader header) '''
+
+		<xsd:complexType name="«cls.name»">
+			<xsd:annotation>
+				<xsd:documentation>
+					<![CDATA[
+						Version:	«cls.version.toVersionNumber()»
 						«IF cls.doc != null»
 
 							«cls.doc?.stripCommentBraces()?.trim()»
 						«ENDIF» 
-	    			]]>
-	    		</xsd:documentation>
-	    	</xsd:annotation>
-	    	
-	    	«IF cls.superClass != null»
-		    	<xsd:complexContent>
-		    		<xsd:extension base="«cls.superClass.toTypeNameRef(currNs)»">
-		    			«cls.toPropertySequence (currNs, profile)»
-		    		</xsd:extension>
-		    	</xsd:complexContent>
-	    	«ELSE»
-		    	«cls.toPropertySequenceWithAny (currNs, profile, header)»
-		    	«IF header.extendableXMLAttributes»
+					]]>
+				</xsd:documentation>
+			</xsd:annotation>
+
+			«IF cls.superClass != null»
+				<xsd:complexContent>
+					<xsd:extension base="«cls.superClass.toTypeNameRef(currNs)»">
+						«cls.toPropertySequence (currNs, profile)»
+					</xsd:extension>
+				</xsd:complexContent>
+			«ELSE»
+				«cls.toPropertySequenceWithAny (currNs, profile, header)»
+				«IF header.extendableXMLAttributes»
 					<xsd:anyAttribute namespace="##any"/>
-		    	«ENDIF»
-	    	«ENDIF»
-	    </xsd:complexType>
+				«ENDIF»
+			«ENDIF»
+		</xsd:complexType>
 	'''
 	
-	def dispatch toPropertySequenceWithAny (org.fornax.soa.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, SOAProfile profile, MessageHeader header) '''
-    	<xsd:sequence>
-    		«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
-    		«IF header.extendableProperties»
+	def protected dispatch toPropertySequenceWithAny (org.fornax.soa.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, SOAProfile profile, MessageHeader header) '''
+		<xsd:sequence>
+			«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
+			«IF header.extendableProperties»
 				<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
 					processContents="skip"/>
-    		«ENDIF»
-    	</xsd:sequence>
-    	«IF !cls.properties.filter (typeof (Attribute)).isEmpty»
+			«ENDIF»
+		</xsd:sequence>
+		«IF !cls.properties.filter (typeof (Attribute)).isEmpty»
 
 			«cls.properties.filter (typeof (Attribute)).map (a|a.toProperty (currNs, profile)).join»
-    	«ENDIF»
+		«ENDIF»
 	'''
 	
-	def dispatch toPropertySequence (org.fornax.soa.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, SOAProfile profile) '''
+	def protected dispatch toPropertySequence (org.fornax.soa.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, SOAProfile profile) '''
 		<xsd:sequence>
 			«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
 		</xsd:sequence>
@@ -196,7 +222,7 @@ class MessageHeaderXSDTemplates {
 	    «ENDIF»
 	'''
 	
-	def dispatch toSimpleType (Enumeration enumeration, SOAProfile profile) '''
+	def protected dispatch toSimpleType (Enumeration enumeration, SOAProfile profile) '''
 	    <xsd:simpleType name="«enumeration.name»">
 	    	<xsd:annotation>
 	    		<xsd:documentation>
@@ -216,7 +242,7 @@ class MessageHeaderXSDTemplates {
 	'''
 	
 	
-	def dispatch toProperty (Property prop, VersionedTechnicalNamespace currNs, SOAProfile profile) '''
+	def protected dispatch toProperty (Property prop, VersionedTechnicalNamespace currNs, SOAProfile profile) '''
 		«IF prop.doc == null»
 			<xsd:element name="«prop.name»" «IF prop.optional»minOccurs="0"«ENDIF» «IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«prop.type.toTypeNameRef(currNs)»" />
 		«ELSE»		
@@ -230,22 +256,22 @@ class MessageHeaderXSDTemplates {
 		«ENDIF»
 	'''
 	
-	def dispatch toProperty (Attribute attr, VersionedTechnicalNamespace currNs, SOAProfile profile) '''
+	def protected dispatch toProperty (Attribute attr, VersionedTechnicalNamespace currNs, SOAProfile profile) '''
 		«IF attr.doc == null»
 		   	<xsd:attribute name="«attr.name»" «IF attr.optional»use="optional"«ENDIF» type="«attr.type.toTypeNameRef (currNs)»" />
 		«ELSE»		
-		   	<xsd:attribute name="«attr.name»" «IF attr.optional»use="optional"«ENDIF» type="«attr.type.toTypeNameRef (currNs)»" >
-		    	<xsd:annotation>
-		    		<xsd:documentation>
-		    			<![CDATA[«attr.doc?.stripCommentBraces()?.trim()»]]>
-		    		</xsd:documentation>
-		    	</xsd:annotation>
-		   	</xsd:attribute>
+			<xsd:attribute name="«attr.name»" «IF attr.optional»use="optional"«ENDIF» type="«attr.type.toTypeNameRef (currNs)»" >
+				<xsd:annotation>
+					<xsd:documentation>
+						<![CDATA[«attr.doc?.stripCommentBraces()?.trim()»]]>
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:attribute>
 		«ENDIF»
 	'''
 	
 	
-	def dispatch toEnumLiteral (EnumLiteral enumLit, SOAProfile profile) '''
+	def protected dispatch toEnumLiteral (EnumLiteral enumLit, SOAProfile profile) '''
    		<xsd:enumeration value="«enumLit.name»"/>
 	'''
 }
