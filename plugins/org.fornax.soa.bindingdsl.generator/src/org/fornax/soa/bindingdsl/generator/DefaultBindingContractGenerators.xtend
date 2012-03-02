@@ -31,7 +31,7 @@ import org.fornax.soa.bindingdsl.templates.BindingExtensions
 import org.fornax.soa.serviceDsl.SubNamespace
 import java.util.regex.Pattern
 
-class DefaultBindingDslContractGenerators implements IGenerator {
+class DefaultBindingContractGenerators implements IGenerator {
 	
 	
 	@Inject BindingTemplates bindingTpl
@@ -70,7 +70,7 @@ class DefaultBindingDslContractGenerators implements IGenerator {
 		var contentRoot = resource.contents.head;
 		var resourceSet = resource.resourceSet;
 		resourceDescriptions.setContext (resourceSet);
-		
+
 		if (contentRoot instanceof BindingModel) {
 			var model = resource.contents.head as BindingModel;
 			var profileDescriptions = searchEngine.search (profileName, SearchPattern::RULE_EXACT_MATCH, 
@@ -80,12 +80,16 @@ class DefaultBindingDslContractGenerators implements IGenerator {
 			for (binding : model.bindings) {
 				if (binding instanceof ModuleBinding) {
 					val modBind = binding as ModuleBinding;
-					if (moduleBindingNames.exists (modBindName | Pattern::matches (modBindName, modBind.name))) {
+					if (moduleBindingNames.exists (modBindName | Pattern::matches (modBindName, modBind.name)) 
+						&& Pattern::matches (targetEnvironmentName, modBind.environment.name)
+					) {
 						compile (modBind, profile);
 					}
 				} else if (binding instanceof DomainBinding) {
 					val domBind = binding as DomainBinding;
-					if (domainBindingNames.exists(domBindName | Pattern::matches(domBindName, domBind.name))) {
+					if (domainBindingNames.exists(domBindName | Pattern::matches(domBindName, domBind.name))
+						&& Pattern::matches (targetEnvironmentName, domBind.environment.name)
+					) {
 						compile (domBind, profile);
 					}
 				}

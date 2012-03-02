@@ -26,22 +26,20 @@ import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
 
-public class DefaultBindingDslGeneratorSetup implements ISetup {
+public class DefaultBindingContractGeneratorSetup implements ISetup {
 
-	private String profileName;
+	private String profileName = ".*";
 	private List<String> moduleBindingNames = new ArrayList<String>();
 	private List<String> domainBindingNames = new ArrayList<String>();
 	private List<String> namespaces = new ArrayList<String>();
-	private Boolean noDependencies;
-	private Boolean includeSubNamespaces;
-	private Boolean useNestedPaths;
-	private Boolean forceRelativePaths;
-	private Boolean generatePrivateWsdlForProviderHost;
-	private String targetEnvironmentName;
+	private Boolean noDependencies = false;
+	private Boolean includeSubNamespaces = false;
+	private Boolean useNestedPaths = false;
+	private Boolean forceRelativePaths = false;
+	private Boolean generatePrivateWsdlForProviderHost = false;
+	private String targetEnvironmentName = ".*";
 
 	public Injector createInjectorAndDoEMFRegistration() {
-		if (targetEnvironmentName == null)
-			targetEnvironmentName = ".*";
 		Injector injector = Guice.createInjector (Modules2.mixin (
 				new BaseDslGeneratorModule (),
 				new ServiceDslGeneratorModule (),
@@ -56,7 +54,7 @@ public class DefaultBindingDslGeneratorSetup implements ISetup {
 					@Override
 					protected void configure () {
 						bind (IGenerator.class).to (
-								DefaultBindingDslContractGenerators.class);
+								DefaultBindingContractGenerators.class);
 
 						bind (Boolean.class)
 								.annotatedWith (
