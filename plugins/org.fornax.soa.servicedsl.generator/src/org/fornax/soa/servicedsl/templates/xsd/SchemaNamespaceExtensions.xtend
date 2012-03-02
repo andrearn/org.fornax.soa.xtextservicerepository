@@ -26,6 +26,7 @@ import org.fornax.soa.servicedsl.query.ServiceFinder
 import org.fornax.soa.servicedsl.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.query.type.TypesByLifecycleStateFinder
 import org.fornax.soa.basedsl.sOABaseDsl.Version
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 
 /*
@@ -48,6 +49,7 @@ class SchemaNamespaceExtensions {
 	@Inject @Named ("useNestedPaths") 
 	Boolean useNestedPaths
 	
+	@Inject IQualifiedNameProvider nameProvider
 	
 	def boolean forceRelativePaths () {
 		forceRelativePaths;
@@ -175,7 +177,7 @@ class SchemaNamespaceExtensions {
 
 		
 	def dispatch String toShortName(SubNamespace s) {
-		s?.prefix;
+		if (s.prefix == null ) s.toPrefix() else s.prefix;
 	}
 	
 	def dispatch String toShortName(TechnicalNamespace s) {
@@ -301,7 +303,7 @@ class SchemaNamespaceExtensions {
 		if (o.prefix != null) {
 			o.prefix;
 		} else { 
-			o.name.replaceAll("\\.", "_");
+			nameProvider.getFullyQualifiedName(o).segments.map (e|e.substring(0,1)).join;
 		}
 	}
 	
@@ -309,7 +311,7 @@ class SchemaNamespaceExtensions {
 		if (s.prefix != null) { 
 			s.prefix;
 		} else {
-			toSubNamespacePath( newArrayList(s)).map(n|n.name.substring(0,1)).join("");
+			nameProvider.getFullyQualifiedName(s).segments.map (e|e.substring(0,1)).join;
 		}
 	}
 	
@@ -317,7 +319,7 @@ class SchemaNamespaceExtensions {
 		if (s.shortName != null) {
 			s.shortName
 		} else {
-			toSubNamespacePath (newArrayList (s.subdomain as SubNamespace)).map(n|n.name.substring(0,1)).join("");
+			nameProvider.getFullyQualifiedName(s.subdomain as EObject).segments.map (e|e.substring(0,1)).join;
 		}
 	}
 	
