@@ -1,4 +1,0 @@
-import org::fornax::soa::solutionDsl;
-
-sortedGreetings(Model this) :
-	this.greetings.sortBy(g|g.name.toLowerCase());

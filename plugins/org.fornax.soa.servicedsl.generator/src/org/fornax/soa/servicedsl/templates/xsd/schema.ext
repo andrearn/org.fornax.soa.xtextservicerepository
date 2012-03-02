@@ -1,8 +1,0 @@
-import serviceDsl;
-import sOABaseDsl;
-
-extension org::fornax::soa::servicedsl::templates::common;
-extension org::fornax::soa::servicedsl::templates::xsd::domains;
-extension org::fornax::soa::basedsl::version::versionQualifying;
-
-String getOpWrapperXSDFileName (Service s) : s.getFileNameFragment() + "-OpWrappers.xsd";
