@@ -25,5 +25,4 @@ Export-Package: org.fornax.soa.servicedsl.domain,
  org.fornax.soa.servicedsl.query.type,
  org.fornax.soa.servicedsl.templates,
  org.fornax.soa.servicedsl.templates.webservice,
- org.fornax.soa.servicedsl.templates.xsd,
- org.fornax.soa.servicedsl.workflow
+ org.fornax.soa.servicedsl.templates.xsd
