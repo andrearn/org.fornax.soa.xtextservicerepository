@@ -18,11 +18,11 @@ Require-Bundle: org.fornax.soa.servicedsl;bundle-version="1.4.5";visibility:=ree
  org.fornax.soa.profiledsl.generator;bundle-version="1.4.5"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.fornax.soa.servicedsl.domain,
- org.fornax.soa.servicedsl.generator;uses:="org.fornax.soa",
- org.fornax.soa.servicedsl.query;uses:="org.fornax.soa.serviceDsl",
- org.fornax.soa.servicedsl.query.namespace,
- org.fornax.soa.servicedsl.query.type,
- org.fornax.soa.servicedsl.templates,
- org.fornax.soa.servicedsl.templates.webservice,
- org.fornax.soa.servicedsl.templates.xsd
+Export-Package: org.fornax.soa.servicedsl.generator,
+ org.fornax.soa.servicedsl.generator.domain,
+ org.fornax.soa.servicedsl.generator.query,
+ org.fornax.soa.servicedsl.generator.query.namespace,
+ org.fornax.soa.servicedsl.generator.query.type,
+ org.fornax.soa.servicedsl.generator.templates,
+ org.fornax.soa.servicedsl.generator.templates.webservice,
+ org.fornax.soa.servicedsl.generator.templates.xsd

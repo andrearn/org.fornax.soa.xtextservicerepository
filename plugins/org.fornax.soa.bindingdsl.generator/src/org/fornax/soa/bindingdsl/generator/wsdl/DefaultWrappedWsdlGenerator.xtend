@@ -2,8 +2,8 @@ package org.fornax.soa.bindingdsl.generator.wsdl
 
 import org.eclipse.xtext.generator.IGenerator
 import com.google.inject.Inject
-import org.fornax.soa.bindingdsl.templates.wsdl.WrappedWSDLTemplates
-import org.fornax.soa.bindingdsl.templates.BindingExtensions
+import org.fornax.soa.bindingdsl.generator.templates.wsdl.WrappedWSDLTemplates
+import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import com.google.inject.name.Named
 import java.util.List
 import org.fornax.soa.basedsl.search.IPredicateSearch

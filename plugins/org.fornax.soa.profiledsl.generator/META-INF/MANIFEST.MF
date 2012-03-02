@@ -15,8 +15,9 @@ Require-Bundle: org.fornax.soa.profiledsl;bundle-version="1.4.5";visibility:=ree
  org.fornax.soa.xtextservicerepo.generator;bundle-version="1.5.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.fornax.soa.profiledsl,
- org.fornax.soa.profiledsl.generator,
- org.fornax.soa.profiledsl.generator.templates,
- org.fornax.soa.profiledsl.query,
- org.fornax.soa.profiledsl.query.type
+Export-Package: org.fornax.soa.profiledsl.generator;uses:="org.eclipse.xtext,org.fornax.soa.profiledsl,com.google.inject",
+ org.fornax.soa.profiledsl.generator.namespace,
+ org.fornax.soa.profiledsl.generator.query,
+ org.fornax.soa.profiledsl.generator.query.type,
+ org.fornax.soa.profiledsl.generator.schema,
+ org.fornax.soa.profiledsl.generator.templates

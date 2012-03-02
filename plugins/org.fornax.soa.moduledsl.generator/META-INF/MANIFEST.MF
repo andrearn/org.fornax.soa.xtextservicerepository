@@ -17,4 +17,4 @@ Require-Bundle: org.fornax.soa.moduledsl;visibility:=reexport,
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.moduledsl.generator,
- org.fornax.soa.moduledsl.query
+ org.fornax.soa.moduledsl.generator.query

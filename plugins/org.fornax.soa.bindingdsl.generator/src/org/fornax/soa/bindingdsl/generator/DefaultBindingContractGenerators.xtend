@@ -13,7 +13,7 @@ import org.fornax.soa.basedsl.search.IPredicateSearch
 import org.fornax.soa.basedsl.search.SearchPattern
 import org.fornax.soa.bindingDsl.BindingModel
 import org.fornax.soa.bindingDsl.ModuleBinding
-import org.fornax.soa.bindingdsl.templates.BindingTemplates
+import org.fornax.soa.bindingdsl.generator.templates.BindingTemplates
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage
 import org.eclipse.xtext.EcoreUtil2
@@ -24,10 +24,10 @@ import org.eclipse.xtext.resource.SynchronizedXtextResourceSet
 import org.eclipse.xtext.resource.IResourceDescription
 import org.fornax.soa.serviceDsl.ServiceModel
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.fornax.soa.servicedsl.templates.xsd.XSDTemplates
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.environmentDsl.EnvironmentDslPackage
-import org.fornax.soa.bindingdsl.templates.BindingExtensions
+import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.serviceDsl.SubNamespace
 import java.util.regex.Pattern
 

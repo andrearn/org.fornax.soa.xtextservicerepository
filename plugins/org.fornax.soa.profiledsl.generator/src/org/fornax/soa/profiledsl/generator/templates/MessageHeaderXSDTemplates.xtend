@@ -2,15 +2,17 @@ package org.fornax.soa.profiledsl.generator.templates
 
 import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.fornax.soa.basedsl.CommonStringExtensions
-import org.fornax.soa.basedsl.lifecycle.LifecycleQualifierExtensions
-import org.fornax.soa.basedsl.lifecycle.StateMatcher
-import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.basedsl.version.VersionQualifierExtensions
-import org.fornax.soa.profiledsl.ProfileSchemaNamespaceExtensions
-import org.fornax.soa.profiledsl.TechnicalNamespaceSplitter
-import org.fornax.soa.profiledsl.VersionedTechnicalNamespace
-import org.fornax.soa.profiledsl.query.NamespaceImportQueries
+import org.fornax.soa.basedsl.generator.CommonStringExtensions
+import org.fornax.soa.basedsl.generator.lifecycle.LifecycleQualifierExtensions
+import org.fornax.soa.basedsl.generator.lifecycle.StateMatcher
+import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
+import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
+import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
+import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
+import org.fornax.soa.profiledsl.generator.query.NamespaceImportQueries
+import org.fornax.soa.profiledsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.profiledsl.sOAProfileDsl.Attribute
 import org.fornax.soa.profiledsl.sOAProfileDsl.Class
 import org.fornax.soa.profiledsl.sOAProfileDsl.EnumLiteral
@@ -20,8 +22,6 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Property
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
-import org.fornax.soa.profiledsl.query.type.LatestMatchingTypeFinder
-import org.fornax.soa.profiledsl.ProfileSchemaTypeExtensions
 
 /* A template class to generate an XSD for a TechnicalNamespace 
  * declaring the complextype used by message headers

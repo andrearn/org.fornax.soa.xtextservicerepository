@@ -3,9 +3,9 @@ package org.fornax.soa.bindingdsl.generator.sca
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
-import org.fornax.soa.bindingdsl.templates.BindingTemplates
+import org.fornax.soa.bindingdsl.generator.templates.BindingTemplates
 import com.google.inject.Inject
-import org.fornax.soa.bindingdsl.templates.BindingExtensions
+import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import com.google.inject.name.Named
 import org.fornax.soa.basedsl.search.IPredicateSearch
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions
@@ -13,8 +13,8 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import java.util.List
 import org.fornax.soa.serviceDsl.ServiceModel
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.bindingdsl.templates.vendor.ibm.SCAExportTemplates
-import org.fornax.soa.bindingdsl.templates.vendor.ibm.SCAExportExtension
+import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportTemplates
+import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportExtension
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.BindingModel
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
