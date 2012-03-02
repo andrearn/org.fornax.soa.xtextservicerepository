@@ -1,6 +1,0 @@
-import moduleDsl;
-import bindingDsl;
-import environmentDsl;
-
-ModuleBinding getImportModuleBinding (List[ModuleBinding] canditates, Module importMod, String envName) :
-	canditates.selectFirst (e|e.module == importMod && e.environment.name == envName );
