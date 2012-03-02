@@ -15,6 +15,7 @@ extension org::fornax::soa::servicedsl::templates::xsd::schema;
 extension org::fornax::soa::servicedsl::templates::xsd::types;
 
 
+SubNamespace getSubdomain (Object o) : null;
 SubNamespace getSubdomain (serviceDsl::Service s) : SubNamespace.isInstance (s.eContainer) ? s.eContainer : null;
 
 String toTargetNamespace (Object svc) : "";

@@ -1,5 +1,6 @@
 import sOABaseDsl;
 import serviceDsl;
+import org::fornax::soa::servicedsl;
 
 extension org::fornax::soa::servicedsl::domain::splitting;
 extension org::fornax::soa::servicedsl::query::exceptions;
@@ -48,4 +49,4 @@ OrganizationNamespace getOrgNamespace (SubNamespace subNs) :
 	:
 		null;
 		
-create List[org::fornax::soa::servicedsl::VersionedDomainNamespace] visitedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace ns) : (List[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}; 
+create List[VersionedDomainNamespace] visitedVersionedNS (VersionedDomainNamespace ns) : (List[VersionedDomainNamespace]) {}; 

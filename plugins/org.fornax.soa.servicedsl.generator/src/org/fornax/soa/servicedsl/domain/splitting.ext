@@ -1,5 +1,6 @@
 import sOABaseDsl;
 import serviceDsl;
+import org::fornax::soa::servicedsl;
 
 extension org::fornax::soa::basedsl::common;
 extension org::fornax::soa::basedsl::version::versionMatching;
@@ -17,21 +18,21 @@ extension org::eclipse::xtend::util::stdlib::io;
  *	@author André Arnold	- initial contribution and API 
  */
 
-cached Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] toVersionedDomainNamespaces (Object s) : info("HOW DID I GET HERE? "+ s.metaType) -> {}.toSet();
-cached Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] toVersionedDomainNamespaces (SubNamespace s) : s.types.size > 0 || s.services.size > 0 || s.exceptions.size > 0? s.types.createVersionedDomainNamespace().union (s.services.createVersionedDomainNamespace()).union(s.exceptions.createVersionedDomainNamespace()) : {}.toSet();
-cached Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] toVersionedDomainNamespaces (sOAProfileDsl::TechnicalNamespace s) : s.types.size > 0 ? s.types.createVersionedDomainNamespace().toSet() : {}.toSet();
+cached Set[VersionedDomainNamespace] toVersionedDomainNamespaces (Object s) : info("HOW DID I GET HERE? "+ s.metaType) -> {}.toSet();
+cached Set[VersionedDomainNamespace] toVersionedDomainNamespaces (SubNamespace s) : s.types.size > 0 || s.services.size > 0 || s.exceptions.size > 0? s.types.createVersionedDomainNamespace().union (s.services.createVersionedDomainNamespace()).union(s.exceptions.createVersionedDomainNamespace()) : {}.toSet();
+cached Set[VersionedDomainNamespace] toVersionedDomainNamespaces (sOAProfileDsl::TechnicalNamespace s) : s.types.size > 0 ? s.types.createVersionedDomainNamespace().toSet() : {}.toSet();
 
-cached Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getAllLatestSubNamespacesByMajorVersion (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] canditates) : 
+cached Set[VersionedDomainNamespace] getAllLatestSubNamespacesByMajorVersion (Set[VersionedDomainNamespace] canditates) : 
 	canditates.reject(e|canditates.exists(c|c.version.toMajorVersionNumber() == e.version.toMajorVersionNumber() && c.version > e.version));
 
-cached org::fornax::soa::servicedsl::VersionedDomainNamespace getLatestSubNamespaceByMajorVersion (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] canditates, int majorVer) : 
+cached VersionedDomainNamespace getLatestSubNamespaceByMajorVersion (Set[VersionedDomainNamespace] canditates, int majorVer) : 
 	canditates.select(e|e.version.toMajorVersionNumber() == majorVer).sortBy(e|e.version).reverse().toList().get(0);
 
 
-cached org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDomainNamespace(serviceDsl::Type t) : null;
+cached VersionedDomainNamespace createVersionedDomainNamespace(serviceDsl::Type t) : null;
 
 		
-create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDomainNamespace(SubNamespace ns, Version v) :
+create VersionedDomainNamespace createVersionedDomainNamespace(SubNamespace ns, Version v) :
 	SubNamespace.isInstance (ns.eContainer) ? {
 		setName (((SubNamespace)ns.eContainer).name.stripXtextEscapes()) ->
 		setShortName (((SubNamespace)ns.eContainer).prefix.stripXtextEscapes())		
@@ -48,7 +49,7 @@ create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDom
 	setServices (ns.services.select (t|t.version.matchesMajorVersion (v.version.toMajorVersionNumber()))) ->
 	setExceptions (ns.exceptions.select (t|t.version.matchesMajorVersion (v.version.toMajorVersionNumber())));
 
-create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDomainNamespace(BusinessObject c) :
+create VersionedDomainNamespace createVersionedDomainNamespace(BusinessObject c) :
 	SubNamespace.isInstance (c.eContainer) ? {
 		setName (((SubNamespace)c.eContainer).name.stripXtextEscapes()) ->
 		setShortName (((SubNamespace)c.eContainer).prefix.stripXtextEscapes())		
@@ -65,7 +66,7 @@ create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDom
 	setServices (((SubNamespace)c.eContainer).services.select (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber()))) ->
 	setExceptions (((SubNamespace)c.eContainer).exceptions.select (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())));
 
-create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDomainNamespace(sOAProfileDsl::VersionedType c) :
+create VersionedDomainNamespace createVersionedDomainNamespace(sOAProfileDsl::VersionedType c) :
 	sOAProfileDsl::TechnicalNamespace.isInstance (c.eContainer) ? {
 		setName (((sOAProfileDsl::TechnicalNamespace)c.eContainer).name.stripXtextEscapes()) ->
 		setShortName (((sOAProfileDsl::TechnicalNamespace)c.eContainer).prefix.stripXtextEscapes())		
@@ -79,7 +80,7 @@ create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDom
 	setFqn (c.eContainer.fqn())->
 	setVersion (c.version.toMajorVersionNumber());
 	
-create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDomainNamespace(Enumeration c) :
+create VersionedDomainNamespace createVersionedDomainNamespace(Enumeration c) :
 	SubNamespace.isInstance (c.eContainer) ? {
 		setName (((SubNamespace)c.eContainer).name.stripXtextEscapes()) ->
 		setShortName (((SubNamespace)c.eContainer).prefix.stripXtextEscapes())		
@@ -96,7 +97,7 @@ create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDom
 	setServices (((SubNamespace)c.eContainer).services.select (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber()))) ->
 	setExceptions (((SubNamespace)c.eContainer).exceptions.select (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())));
 
-create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDomainNamespace(Exception c) :
+create VersionedDomainNamespace createVersionedDomainNamespace(Exception c) :
 	SubNamespace.isInstance (c.eContainer) ? {
 		setName (((SubNamespace)c.eContainer).name.stripXtextEscapes()) ->
 		setShortName (((SubNamespace)c.eContainer).prefix.stripXtextEscapes())		
@@ -113,7 +114,7 @@ create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDom
 	setServices (((SubNamespace)c.eContainer).services.select (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber()))) ->
 	setExceptions (((SubNamespace)c.eContainer).exceptions.select (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())));
 
-create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDomainNamespace(Service c) :
+create VersionedDomainNamespace createVersionedDomainNamespace(Service c) :
 	SubNamespace.isInstance (c.eContainer) ? {
 		setName (((SubNamespace)c.eContainer).name.stripXtextEscapes()) ->
 		setShortName (((SubNamespace)c.eContainer).prefix.stripXtextEscapes())		
@@ -130,5 +131,5 @@ create org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDom
 	setServices (((SubNamespace)c.eContainer).services.select (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber()))) ->
 	setExceptions (((SubNamespace)c.eContainer).exceptions.select (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())));
 
-cached org::fornax::soa::servicedsl::VersionedDomainNamespace createVersionedDomainNamespace(sOAProfileDsl::Type c) : null;
+cached VersionedDomainNamespace createVersionedDomainNamespace(sOAProfileDsl::Type c) : null;
 	

@@ -1,5 +1,6 @@
 import sOABaseDsl;
 import serviceDsl;
+import org::fornax::soa::servicedsl;
 
 extension org::fornax::soa::basedsl::lifecycle::stateMatching;
 extension org::fornax::soa::basedsl::version::versionMatching;
@@ -37,20 +38,20 @@ Set[SubNamespace] allImportedSubNamespaces (Type t) :
 
 
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (serviceDsl::Type t) :
+Set[VersionedDomainNamespace] allImportedVersionedNS (serviceDsl::Type t) :
 	t.allReferencedVersionedTypes().createVersionedDomainNamespace().toSet();
 	
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s) : 
+Set[VersionedDomainNamespace] allImportedVersionedNS (VersionedDomainNamespace s) : 
 	((SubNamespace)s.subdomain).allImportedVersionedNS(s.version);
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (SubNamespace s, String nameSpaceMajorVersion) :
+Set[VersionedDomainNamespace] allImportedVersionedNS (SubNamespace s, String nameSpaceMajorVersion) :
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (sOAProfileDsl::Class)
 	.allReferencedVersionedTypes().createVersionedDomainNamespace();
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (sOAProfileDsl::MessageHeader t, String nameSpaceMajorVersion) :
+Set[VersionedDomainNamespace] allImportedVersionedNS (sOAProfileDsl::MessageHeader t, String nameSpaceMajorVersion) :
 	t.allReferencedVersionedTypes().createVersionedDomainNamespace().toSet();
 	
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (sOAProfileDsl::Class t) :
+Set[VersionedDomainNamespace] allImportedVersionedNS (sOAProfileDsl::Class t) :
 	t.properties.typeSelect(sOAProfileDsl::Property).type.allReferencedVersionedTypes().createVersionedDomainNamespace().toSet();
 
 
@@ -110,8 +111,8 @@ private sOAProfileDsl::Type getLatestMatchingClass (List[sOAProfileDsl::Class] t
 boolean isMany (sOAProfileDsl::TypeRef t) : false;
 boolean isMany (sOAProfileDsl::VersionedTypeRef t) : t.many;
 
-String getTypeNameRef (sOAProfileDsl::TypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : null;
-String getTypeNameRef (sOAProfileDsl::ClassRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+String getTypeNameRef (sOAProfileDsl::TypeRef t, VersionedDomainNamespace currNs) : null;
+String getTypeNameRef (sOAProfileDsl::ClassRef t, VersionedDomainNamespace currNs) : 
 	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef) ?
 		"tns:" +t.type.name
 	:

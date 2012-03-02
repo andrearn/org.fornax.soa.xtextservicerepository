@@ -1,5 +1,6 @@
 import sOABaseDsl;
 import serviceDsl;
+import org::fornax::soa::servicedsl;
 
 extension org::fornax::soa::basedsl::lifecycle::stateMatching;
 extension org::fornax::soa::basedsl::version::versionMatching;
@@ -95,19 +96,19 @@ String getExceptionNameRef (ExceptionRef t) :
 		t.exception.toTypeName();
 	
 
-String getTypeNameRef (TypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : null;
-String getTypeNameRef (sOAProfileDsl::TypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : null;
+String getTypeNameRef (TypeRef t, VersionedDomainNamespace currNs) : null;
+String getTypeNameRef (sOAProfileDsl::TypeRef t, VersionedDomainNamespace currNs) : null;
 
-String getTypeNameRef (DataTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currentDomNs) : 
+String getTypeNameRef (DataTypeRef t, VersionedDomainNamespace currentDomNs) : 
 	t.getLatestMatchingType () .getTypeNameRef();
 
-String getTypeNameRef (sOAProfileDsl::DataTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currentDomNs) : 
+String getTypeNameRef (sOAProfileDsl::DataTypeRef t, VersionedDomainNamespace currentDomNs) : 
 	t.getLatestMatchingType () .getTypeNameRef();
 	
-String getTypeNameRef (sOAProfileDsl::AttributeDataTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currentDomNs) : 
+String getTypeNameRef (sOAProfileDsl::AttributeDataTypeRef t, VersionedDomainNamespace currentDomNs) : 
 	t.getLatestMatchingType () .getTypeNameRef();
 	
-String getTypeNameRef (VersionedTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+String getTypeNameRef (VersionedTypeRef t, VersionedDomainNamespace currNs) : 
 	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
 		&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 		&& ! Service.isInstance(t.getStatefulOwner()) ?
@@ -115,14 +116,14 @@ String getTypeNameRef (VersionedTypeRef t, org::fornax::soa::servicedsl::Version
 	:
 		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
 	
-String getTypeNameRef (sOAProfileDsl::VersionedTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+String getTypeNameRef (sOAProfileDsl::VersionedTypeRef t, VersionedDomainNamespace currNs) : 
 	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
 		&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()?
 		"tns:" +t.type.name
 	:
 		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
 	
-String getTypeNameRef (BusinessObjectRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+String getTypeNameRef (BusinessObjectRef t, VersionedDomainNamespace currNs) : 
 	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()
 		&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 		&& ! Service.isInstance(t.getStatefulOwner()) ?
@@ -130,7 +131,7 @@ String getTypeNameRef (BusinessObjectRef t, org::fornax::soa::servicedsl::Versio
 	:
 		t.type.getSubdomain().getShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
 		
-String getTypeNameRef (EnumTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+String getTypeNameRef (EnumTypeRef t, VersionedDomainNamespace currNs) : 
 	t.type.getSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
 		&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 		&& ! Service.isInstance(t.getStatefulOwner()) ?
@@ -152,21 +153,21 @@ String getTypeNameRef (sOAProfileDsl::DataType t) :
 		default : "xsd:" + t.name
 	};
 
-String getFullTypeNameRef (serviceDsl::TypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : null;
+String getFullTypeNameRef (serviceDsl::TypeRef t, VersionedDomainNamespace currNs) : null;
 
-String getFullTypeNameRef (serviceDsl::DataTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currentDomNs) : 
+String getFullTypeNameRef (serviceDsl::DataTypeRef t, VersionedDomainNamespace currentDomNs) : 
 	t.getLatestMatchingType () .getFullTypeNameRef();
 	
-String getFullTypeNameRef (sOAProfileDsl::DataTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currentDomNs) : 
+String getFullTypeNameRef (sOAProfileDsl::DataTypeRef t, VersionedDomainNamespace currentDomNs) : 
 	t.getLatestMatchingType () .getFullTypeNameRef();
 	
-String getFullTypeNameRef (VersionedTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+String getFullTypeNameRef (VersionedTypeRef t, VersionedDomainNamespace currNs) : 
 	t.type.getSubdomain().toNamespace() + t.type.name;
 	
-String getFullTypeNameRef (BusinessObjectRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+String getFullTypeNameRef (BusinessObjectRef t, VersionedDomainNamespace currNs) : 
 	t.type.getSubdomain().toNamespace() + t.type.name;
 		
-String getFullTypeNameRef (EnumTypeRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+String getFullTypeNameRef (EnumTypeRef t, VersionedDomainNamespace currNs) : 
 	t.type.getSubdomain().toNamespace() + t.type.name;
 
 String getFullTypeNameRef (serviceDsl::Type t) : "";
@@ -218,7 +219,7 @@ String getWeakRefKeyAttr(serviceDsl::BusinessObjectRef t, LifecycleState minStat
 	: null;
 	
 	
-String getExceptionNameRef (ExceptionRef t, org::fornax::soa::servicedsl::VersionedDomainNamespace currNs) : 
+String getExceptionNameRef (ExceptionRef t, VersionedDomainNamespace currNs) : 
 	t.toNamespace() == currNs.subdomain.toNamespace() && currNs.version.toVersion().versionMatches(t.version) ?
 		"tns:" +t.exception.toTypeName()
 	:
@@ -241,10 +242,10 @@ String getXsdFilename (BusinessObject c) : c.getSubdomain().getFileNameFragment(
  *	Get the namespaces a given namespace (or element declared in that namespace) imports
  *  splitting the resultingnamespace with regard to their major versions
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (Object s) : null;
+Set[VersionedDomainNamespace] getImportedSubdomains (Object s) : null;
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (org::fornax::soa::servicedsl::VersionedDomainNamespace s) : ((SubNamespace)s.subdomain).getImportedSubdomains(); 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (SubNamespace s) :
+Set[VersionedDomainNamespace] getImportedSubdomains (VersionedDomainNamespace s) : ((SubNamespace)s.subdomain).getImportedSubdomains(); 
+Set[VersionedDomainNamespace] getImportedSubdomains (SubNamespace s) :
 	// all refs from a BO property to a BO  
 	s.types.typeSelect(BusinessObject).properties.type.typeSelect(VersionedTypeRef).getLatestMatchingType().reject(e|e==null).createVersionedDomainNamespace().
 	// all refs from a BO it's superBO  
@@ -252,7 +253,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomain
 	// all refs from exceptions to their super exceptions
 	union(s.exceptions.reject(e|e.superException == null).superException.getLatestMatchingException().createVersionedDomainNamespace());
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (List[TypeRef] c) : 
+Set[VersionedDomainNamespace] getImportedSubdomains (List[TypeRef] c) : 
 	c.getLatestMatchingType().createVersionedDomainNamespace().toSet();
 	
 

@@ -1,5 +1,6 @@
 import sOABaseDsl;
 import serviceDsl;
+import org::fornax::soa::servicedsl;
 
 extension org::fornax::soa::servicedsl::domain::splitting;
 extension org::fornax::soa::servicedsl::query::exceptions;
@@ -25,7 +26,7 @@ extension org::eclipse::xtend::util::stdlib::io;
  *
  *	@param svc	The Service with it's version to calculate the imports for
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] getImportedSubdomains (Service svc) : 
+Set[VersionedDomainNamespace] getImportedSubdomains (Service svc) : 
 	svc.operations.parameters.type.select(e| VersionedTypeRef.isInstance(e)).getLatestMatchingType().reject(e|e==null).createVersionedDomainNamespace().union(
 	svc.operations.return.type.select(e| VersionedTypeRef.isInstance(e)).getLatestMatchingType().reject(e|e==null).createVersionedDomainNamespace()).union(
 	svc.operations.throws.getLatestMatchingException().reject(e|e==null).createVersionedDomainNamespace()).toSet();
@@ -46,7 +47,7 @@ Set[SubNamespace] allImportedSubNamespaces (Type t, LifecycleState minState) :
  *	are derived from the versioned dependencies of the given Type considering the minimal LifecycleState required by the 
  *	given Type. The owning VersiondDomainNamespace of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (Type t, LifecycleState minState) :
+Set[VersionedDomainNamespace] allImportedVersionedNS (Type t, LifecycleState minState) :
 	t.allReferencedVersionedTypes(minState).createVersionedDomainNamespace().toSet();
 
 
@@ -55,13 +56,13 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
  *	are derived from the versioned dependencies of the given Type considering the minimal LifecycleState required by the 
  *	given Type. The owning VersiondDomainNamespace of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s, LifecycleState minState) : 
-	s.allImportedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).toSet();
+Set[VersionedDomainNamespace] allImportedVersionedNS (VersionedDomainNamespace s, LifecycleState minState) : 
+	s.allImportedVersionedNS (minState, (Set[VersionedDomainNamespace]) {}.toSet()).toSet();
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (
-	org::fornax::soa::servicedsl::VersionedDomainNamespace s, 
+Set[VersionedDomainNamespace] allImportedVersionedNS (
+	VersionedDomainNamespace s, 
 	LifecycleState minState, 
-	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
+	Set[VersionedDomainNamespace] visited
 	) : 
 	! visited.contains(s) ? 
 		s.subdomain.allImportedVersionedNS (s.version, minState).allImportedVersionedNS (minState, visited.add(s).toSet())
@@ -73,27 +74,27 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
  *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
  *	VersionedDomainNamespace. The owning VersiondDomainNamespace of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s) : 
-	s.allImportedVersionedNS ((Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).toSet();
+Set[VersionedDomainNamespace] allImportedVersionedNS (VersionedDomainNamespace s) : 
+	s.allImportedVersionedNS ((Set[VersionedDomainNamespace]) {}.toSet()).toSet();
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (
-	org::fornax::soa::servicedsl::VersionedDomainNamespace s, 
-	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
+Set[VersionedDomainNamespace] allImportedVersionedNS (
+	VersionedDomainNamespace s, 
+	Set[VersionedDomainNamespace] visited
 	) :
 	! visited.contains(s) ? 
 		s.subdomain.allImportedVersionedNS (s.version).allImportedVersionedNS (visited.add(s).toSet())
 	: visited;
 
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (Object s, String nameSpaceMajorVersion, LifecycleState minState) : null;
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (Object s, String nameSpaceMajorVersion) : null;
+Set[VersionedDomainNamespace] allImportedVersionedNS (Object s, String nameSpaceMajorVersion, LifecycleState minState) : null;
+Set[VersionedDomainNamespace] allImportedVersionedNS (Object s, String nameSpaceMajorVersion) : null;
 
 /**
  *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
  *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
  *	SubNamespace matching the given major version. The owning VersiondDomainNamespace of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (SubNamespace s, String nameSpaceMajorVersion, LifecycleState minState) :
+Set[VersionedDomainNamespace] allImportedVersionedNS (SubNamespace s, String nameSpaceMajorVersion, LifecycleState minState) :
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (BusinessObject)
 	.allReferencedVersionedTypes (minState).createVersionedDomainNamespace()
 	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
@@ -105,7 +106,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
  *	TechnicalNamespace matching the given major version. The owning VersiondDomainNamespace 
  *	of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (sOAProfileDsl::TechnicalNamespace s, String nameSpaceMajorVersion) :
+Set[VersionedDomainNamespace] allImportedVersionedNS (sOAProfileDsl::TechnicalNamespace s, String nameSpaceMajorVersion) :
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (sOAProfileDsl::Class)
 	.allReferencedVersionedTypes().createVersionedDomainNamespace();
 
@@ -114,7 +115,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersioned
  *	are derived from the versioned dependencies of the given Service (versioned). The owning 
  *	VersiondDomainNamespace of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] allImportedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) :
+Set[VersionedDomainNamespace] allImportedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) :
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (BusinessObject)
 		.allReferencedVersionedTypes(minState).createVersionedDomainNamespace()
 	.union (s.allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
@@ -146,7 +147,7 @@ Set[SubNamespace] importedSubNamespaces (Type t, LifecycleState minState) :
  *	are derived from the versioned dependencies of the given Type considering the minimal LifecycleState required by the 
  *	given Type. The owning VersiondDomainNamespace of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (Type t, LifecycleState minState) :
+Set[VersionedDomainNamespace] importedVersionedNS (Type t, LifecycleState minState) :
 	t.allReferencedVersionedTypes(minState).createVersionedDomainNamespace().toSet();
 
 
@@ -155,13 +156,13 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS 
  *	are derived from the versioned dependencies of the given Type considering the minimal LifecycleState required by the 
  *	given Type. The owning VersiondDomainNamespace of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s, LifecycleState minState) : 
-	s.importedVersionedNS (minState, (Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).toSet();
+Set[VersionedDomainNamespace] importedVersionedNS (VersionedDomainNamespace s, LifecycleState minState) : 
+	s.importedVersionedNS (minState, (Set[VersionedDomainNamespace]) {}.toSet()).toSet();
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (
-	org::fornax::soa::servicedsl::VersionedDomainNamespace s, 
+Set[VersionedDomainNamespace] importedVersionedNS (
+	VersionedDomainNamespace s, 
 	LifecycleState minState, 
-	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
+	Set[VersionedDomainNamespace] visited
 	) : 
 	((SubNamespace)s.subdomain).importedVersionedNS (s.version, minState);
 
@@ -171,25 +172,25 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS 
  *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
  *	VersionedDomainNamespace. The owning VersiondDomainNamespace of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (org::fornax::soa::servicedsl::VersionedDomainNamespace s) : 
-	s.importedVersionedNS ((Set[org::fornax::soa::servicedsl::VersionedDomainNamespace]) {}.toSet()).toSet();
+Set[VersionedDomainNamespace] importedVersionedNS (VersionedDomainNamespace s) : 
+	s.importedVersionedNS ((Set[VersionedDomainNamespace]) {}.toSet()).toSet();
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (
-	org::fornax::soa::servicedsl::VersionedDomainNamespace s, 
-	Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] visited
+Set[VersionedDomainNamespace] importedVersionedNS (
+	VersionedDomainNamespace s, 
+	Set[VersionedDomainNamespace] visited
 	) :
 	((SubNamespace)s.subdomain).importedVersionedNS (s.version);
 
 
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (Object s, String nameSpaceMajorVersion, LifecycleState minState) : null;
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (Object s, String nameSpaceMajorVersion) : null;
+Set[VersionedDomainNamespace] importedVersionedNS (Object s, String nameSpaceMajorVersion, LifecycleState minState) : null;
+Set[VersionedDomainNamespace] importedVersionedNS (Object s, String nameSpaceMajorVersion) : null;
 
 /**
  *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
  *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
  *	SubNamespace matching the given major version. The owning VersiondDomainNamespace of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (SubNamespace s, String nameSpaceMajorVersion, LifecycleState minState) :
+Set[VersionedDomainNamespace] importedVersionedNS (SubNamespace s, String nameSpaceMajorVersion, LifecycleState minState) :
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (BusinessObject)
 	.allReferencedVersionedTypes (minState).createVersionedDomainNamespace()
 	.union (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
@@ -201,7 +202,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS 
  *	TechnicalNamespace matching the given major version. The owning VersiondDomainNamespace 
  *	of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (sOAProfileDsl::TechnicalNamespace s, String nameSpaceMajorVersion) :
+Set[VersionedDomainNamespace] importedVersionedNS (sOAProfileDsl::TechnicalNamespace s, String nameSpaceMajorVersion) :
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (sOAProfileDsl::Class)
 	.allReferencedVersionedTypes().createVersionedDomainNamespace();
 
@@ -210,7 +211,7 @@ Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS 
  *	are derived from the versioned dependencies of the given Service (versioned). The owning 
  *	VersiondDomainNamespace of the found dependencies are returned.
  */
-Set[org::fornax::soa::servicedsl::VersionedDomainNamespace] importedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) :
+Set[VersionedDomainNamespace] importedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) :
 	s.allTypesByMajorVersion (nameSpaceMajorVersion).typeSelect (BusinessObject)
 		.allReferencedVersionedTypes(minState).createVersionedDomainNamespace()
 	.union (s.allReferencedVersionedTypes (minState).createVersionedDomainNamespace())
