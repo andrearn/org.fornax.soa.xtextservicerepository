@@ -30,6 +30,7 @@ import org.fornax.soa.environmentDsl.EnvironmentDslPackage
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.serviceDsl.SubNamespace
 import java.util.regex.Pattern
+import org.fornax.soa.basedsl.search.IEObjectLookup
 
 class DefaultBindingContractGenerators implements IGenerator {
 	
@@ -65,6 +66,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 	ResourceSetBasedResourceDescriptions resourceDescriptions
 	
 	@Inject IQualifiedNameProvider nameProvider
+	@Inject IEObjectLookup eObjectLookup
 	
 	override void doGenerate (Resource resource, IFileSystemAccess fsa) {
 		var contentRoot = resource.contents.head;
@@ -73,10 +75,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 
 		if (contentRoot instanceof BindingModel) {
 			var model = resource.contents.head as BindingModel;
-			var profileDescriptions = searchEngine.search (profileName, SearchPattern::RULE_EXACT_MATCH, 
-				SOAProfileDslPackage::eINSTANCE.SOAProfile.name, Predicates::alwaysTrue
-			);
-			var profile = EcoreUtil2::resolve (profileDescriptions.head.EObjectOrProxy, resource.resourceSet) as SOAProfile;
+			val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
 			for (binding : model.bindings) {
 				if (binding instanceof ModuleBinding) {
 					val modBind = binding as ModuleBinding;
@@ -87,7 +86,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 					}
 				} else if (binding instanceof DomainBinding) {
 					val domBind = binding as DomainBinding;
-					if (domainBindingNames.exists(domBindName | Pattern::matches(domBindName, domBind.name))
+					if (domainBindingNames.exists (domBindName | Pattern::matches(domBindName, domBind.name))
 						&& Pattern::matches (targetEnvironmentName, domBind.environment.name)
 					) {
 						compile (domBind, profile);
@@ -120,14 +119,8 @@ class DefaultBindingContractGenerators implements IGenerator {
 	}
 	
 	def protected compile (SubNamespace namespace, Resource resource) {
-		val profileDescriptions = searchEngine.search (profileName, SearchPattern::RULE_EXACT_MATCH, 
-			SOAProfileDslPackage::eINSTANCE.SOAProfile.name, Predicates::alwaysTrue
-		);
-		val profile = EcoreUtil2::resolve (profileDescriptions.head.EObjectOrProxy, resource.resourceSet) as SOAProfile;
-		val envDescriptions = searchEngine.search (targetEnvironmentName, SearchPattern::RULE_EXACT_MATCH, 
-			EnvironmentDslPackage::eINSTANCE.environment.name, Predicates::alwaysTrue
-		);
-		var env = EcoreUtil2::resolve (profileDescriptions.head.EObjectOrProxy, resource.resourceSet) as Environment;
+		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
+		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 		
 		if (env != null && profile != null) {
 			bindingTpl.toXSD (namespace, env, profile);

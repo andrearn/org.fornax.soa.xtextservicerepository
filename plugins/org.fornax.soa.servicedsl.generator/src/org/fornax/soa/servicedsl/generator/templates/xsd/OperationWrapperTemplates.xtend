@@ -17,6 +17,8 @@ import org.fornax.soa.serviceDsl.InternalNamespace
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Parameter
 import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
+import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
+import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 
 
 class OperationWrapperTemplates {
@@ -32,6 +34,8 @@ class OperationWrapperTemplates {
 	@Inject extension HeaderFinder
 	@Inject extension NamespaceImportQueries
 	@Inject extension XSDTemplates
+	
+	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
 
 	def dispatch toOperationWrappersInclSubNamespaces (String serviceName, List<SubNamespace> namespaces, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		for (ns : namespaces.filter(e|e.name.startsWith (serviceName))) {
@@ -47,16 +51,17 @@ class OperationWrapperTemplates {
 	}
 	
 	def dispatch toOperationWrappers (Service service, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		var content = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		var content = '''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<xsd:schema targetNamespace="«service.toWrapperTargetNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 			«FOR imp : service.allImportedVersionedNS (service.version.toMajorVersionNumber(), minState)»
-			xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 			«ENDFOR»
 			«IF service.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : service.findBestMatchingHeader(profile).allImportedVersionedNS(service.version.toMajorVersionNumber())»
-					xmlns:«headerImp.toPrefix() + headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
+				«FOR headerImp : service.findBestMatchingHeader (profile).allImportedVersionedNS (service.version.toMajorVersionNumber())»
+					xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp) + headerImp.version.toMajorVersionNumber()»="«profileSchemaNamespaceExt.toNamespace (headerImp)»"
 				«ENDFOR»
 			«ENDIF»
 			elementFormDefault="qualified"
@@ -64,13 +69,13 @@ class OperationWrapperTemplates {
 			>
 			
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
-			<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-				namespace="«imp.toNamespace()»"/>
+				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+					namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF service.findBestMatchingHeader(profile) != null»
 				«FOR headerImp : service.findBestMatchingHeader(profile).allImportedVersionedNS(service.version.toMajorVersionNumber())»
-			<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-				namespace="«headerImp.toNamespace()»"/>
+					<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
+						namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
 				«ENDFOR»
 			«ENDIF»
 			
@@ -100,7 +105,7 @@ class OperationWrapperTemplates {
 			«ENDFOR»
 			«IF service.findBestMatchingHeader(profile) != null»
 				«FOR headerImp : service.findBestMatchingHeader(profile).allImportedVersionedNS(service.version.toMajorVersionNumber())»
-					xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
+					xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp) + headerImp.version.toMajorVersionNumber()»="«profileSchemaNamespaceExt.toNamespace (headerImp)»"
 				«ENDFOR»
 			«ENDIF»
 			elementFormDefault="qualified"
@@ -112,9 +117,9 @@ class OperationWrapperTemplates {
 				namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF service.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : service.findBestMatchingHeader(profile).allImportedVersionedNS(service.version.toMajorVersionNumber())»
-					<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-						namespace="«headerImp.toNamespace()»"/>
+				«FOR headerImp : service.findBestMatchingHeader (profile).allImportedVersionedNS (service.version.toMajorVersionNumber())»
+					<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
+						namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
 				«ENDFOR»
 			«ENDIF»
 			
@@ -137,27 +142,27 @@ class OperationWrapperTemplates {
 	
 	
 	def dispatch toOperationWrapperMessages (Service service, LifecycleState minState, SOAProfile profile) {
-		service.operations.forEach (e|e.toConcreteOperationWrapperTypes (profile))
+		service.operations.map (e|e.toConcreteOperationWrapperTypes (profile)).join
 	}
 	
 	
 	def dispatch toConcreteOperationWrapperTypes (Operation op, SOAProfile profile) '''
-				<xsd:complexType name="«op.toOperationWrapperRequestType()»">
-					<xsd:sequence>
-						«IF op.findBestMatchingHeader(profile) != null»
-						«op.findBestMatchingHeader (profile)?.toParameter()»
-						«ENDIF»
-						«op.parameters.map (p|p.toParameter()).join»
-	   				</xsd:sequence>
-				</xsd:complexType>
-				<xsd:complexType name="«op.toOperationWrapperResponseType()»">
-					<xsd:sequence>
-						«IF op.findBestMatchingHeader(profile) != null»
-							«op.findBestMatchingHeader (profile)?.toParameter()»
-						«ENDIF»
-						«op.^return.map (r|r.toParameter()).join»
-					</xsd:sequence>
-				</xsd:complexType>
+		<xsd:complexType name="«op.toOperationWrapperRequestType()»">
+			<xsd:sequence>
+				«IF op.findBestMatchingHeader(profile) != null»
+					«op.findBestMatchingHeader (profile)?.toParameter()»
+				«ENDIF»
+				«op.parameters.map (p|p.toParameter()).join»
+			</xsd:sequence>
+		</xsd:complexType>
+		<xsd:complexType name="«op.toOperationWrapperResponseType()»">
+			<xsd:sequence>
+				«IF op.findBestMatchingHeader(profile) != null»
+					«op.findBestMatchingHeader (profile)?.toParameter()»
+				«ENDIF»
+				«op.^return.map (r|r.toParameter()).join»
+			</xsd:sequence>
+		</xsd:complexType>
 	'''
 	
 	def dispatch toParameter (Parameter param) '''

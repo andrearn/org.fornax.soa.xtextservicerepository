@@ -43,8 +43,8 @@ class ReferencedTypesFinder {
 	
 	def dispatch List<TypeRef> allReferencedTypeRefs (Operation o) {
 		var refs = new HashSet<TypeRef>();
-		refs.addAll (o.parameters.map (p|p.allReferencedTypeRefs()).filter (typeof (TypeRef)));
-		refs.addAll (o.^return.map (r|r.allReferencedTypeRefs()).filter (typeof (TypeRef)));
+		refs.addAll (o.parameters.map (p|p.allReferencedTypeRefs()).flatten.filter (typeof (TypeRef)));
+		refs.addAll (o.^return.map (r|r.allReferencedTypeRefs()).flatten.filter (typeof (TypeRef)));
 		refs.toList;
 	}
 	

@@ -240,9 +240,12 @@ class NamespaceImportQueries {
 	 *	VersiondDomainNamespace of the found dependencies are returned.
 	 */
 	def dispatch Set<VersionedDomainNamespace> importedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) {
-		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (BusinessObject))
+		var imports = new HashSet<VersionedDomainNamespace>();
+		var bos = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (BusinessObject))
 			.map (b|b.allReferencedVersionedTypes (minState)).flatten.map (e|e.createVersionedDomainNamespace()).toSet;
-		imports.addAll (s.allReferencedVersionedTypes (minState).map (e|e.createVersionedDomainNamespace()));
+		imports.addAll (bos);
+		var serviceBos = s.allReferencedVersionedTypes (minState).map (e|e.createVersionedDomainNamespace());
+		imports.addAll (serviceBos);
 		imports.addAll (s.allReferencedExceptions().map (e|e.createVersionedDomainNamespace()));
 		imports.addAll (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).map (e|e.allReferencedVersionedTypes (minState)).flatten.map(e|e.createVersionedDomainNamespace()));
 		imports.addAll (s.allExceptionsByMajorVersion (nameSpaceMajorVersion).map (e|e.superException).filterNull().map (e|e.findLatestMatchingException().createVersionedDomainNamespace()));

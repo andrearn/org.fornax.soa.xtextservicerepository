@@ -36,11 +36,11 @@ class ServiceFinder {
 	}
 	
 	def List<org.fornax.soa.serviceDsl.Exception> allExceptionsByMajorVersion (SubNamespace s, String majorVersion) {
-		s.exceptions.filter (e|e.version.version.startsWith (majorVersion)).toList;
+		s.exceptions.filter (e|e.version.version.split("\\.").head == majorVersion).toList;
 	}
 	
 	def List<org.fornax.soa.serviceDsl.Exception> allExceptionsByMajorVersion (Service s, String majorVersion)  {
-		s.findSubdomain().exceptions.filter (e|e.version.version.startsWith(majorVersion)).toList;
+		s.findSubdomain().exceptions.filter (e|e.version.version.split("\\.").head == majorVersion).toList;
 	}
 	
 	def List<org.fornax.soa.serviceDsl.Exception> allReferencedExceptions (Service s) {
@@ -52,7 +52,7 @@ class ServiceFinder {
 	}
 	
 	def Service latestServiceByMajorVersionAndMinState (String majorVersion, List<Service> s, LifecycleState minState) {
-		s.filter (e|e.version.version.startsWith (majorVersion) && e.state.matchesMinStateLevel (minState))
+		s.filter (e|e.version.version.split("\\.").head == majorVersion && e.state.matchesMinStateLevel (minState))
 			.sortBy (e|e.version.version).last();
 	}
 		

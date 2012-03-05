@@ -148,13 +148,13 @@ class ProfileSchemaNamespaceExtensions {
 	}
 
 	 
-	def dispatch String getRegisteredUrl (TechnicalNamespace s, String registryUrl) { 
+	def dispatch String toRegistryAssetUrl (TechnicalNamespace s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
 	} 
-	def dispatch String getRegisteredUrl (VersionedTechnicalNamespace s, String registryUrl) { 
+	def dispatch String toRegistryAssetUrl (VersionedTechnicalNamespace s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths ) 
 			registryUrl + "/" +s.toFileNameFragment() 
 		else

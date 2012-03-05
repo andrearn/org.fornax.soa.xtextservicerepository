@@ -146,7 +146,7 @@ class SchemaTypeExtensions {
 			 && t.getOwnerVersion().toMajorVersionNumber() == t.exception.version.toMajorVersionNumber()
 			 && ! (t.getStatefulOwner() instanceof Service))
 			) {
-				t.exception.findSubdomain().toShortName() + t.exception.version.toMajorVersionNumber()
+				prefix = t.exception.findSubdomain().toShortName() + t.exception.version.toMajorVersionNumber()
 			}
 			prefix + ":" +t.exception.toTypeName()
 		} else {

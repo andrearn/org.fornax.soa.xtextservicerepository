@@ -159,11 +159,11 @@ class MessageHeaderXSDTemplates {
 	'''
 	
 	def protected dispatch toImportDeclaration (VersionedTechnicalNamespace vns) '''
-		<xsd:import schemaLocation="«vns.getRegisteredUrl (null)».xsd"
+		<xsd:import schemaLocation="«vns.toRegistryAssetUrl (null)».xsd"
 			namespace="«vns.toNamespace()»"></xsd:import>
 	'''
 	def protected dispatch toImportDeclaration (VersionedTechnicalNamespace vns, String registryBaseUrl) '''
-		<xsd:import schemaLocation="«vns.getRegisteredUrl (registryBaseUrl)».xsd"
+		<xsd:import schemaLocation="«vns.toRegistryAssetUrl (registryBaseUrl)».xsd"
 			namespace="«vns.toNamespace()»"></xsd:import>
 	'''
 	

@@ -22,6 +22,7 @@ import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceImportQuerie
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import com.google.inject.name.Named
+import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 
 /*
  * Template class for generation of abstract WSDLs
@@ -42,6 +43,7 @@ class WSDLTemplates {
 	@Inject extension LatestMatchingTypeFinder
 
 	@Inject VersionQualifierExtensions versionQualifier
+	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
 	
 	
 	def dispatch toWSDL (Service s, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
@@ -106,12 +108,12 @@ class WSDLTemplates {
 	def toTypes(Service s, LifecycleState minState, SOAProfile profile, String registryBaseUrl) '''
 		<wsdl:types>
 			<xsd:schema targetNamespace="«s.toTargetNamespace()»"
-				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState) »
-					xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber(imp.version)»="«imp.toNamespace()»"
+				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber (s.version), minState) »
+					xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber (imp.version)»="«imp.toNamespace()»"
 				«ENDFOR»
 				«IF s.findBestMatchingHeader(profile) != null»
-					«FOR headerImp : s.findBestMatchingHeader(profile).allImportedVersionedNS(versionQualifier.toMajorVersionNumber(s.version))»
-						xmlns:«headerImp.toPrefix()+versionQualifier.toMajorVersionNumber(headerImp.version)»="«headerImp.toNamespace()»"
+					«FOR headerImp : s.findBestMatchingHeader (profile).allImportedVersionedNS(versionQualifier.toMajorVersionNumber(s.version))»
+						xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp)+versionQualifier.toMajorVersionNumber (headerImp.version)»="«profileSchemaNamespaceExt.toNamespace(headerImp)»"
 					«ENDFOR»
 				«ENDIF»
 				elementFormDefault="qualified"
@@ -119,12 +121,12 @@ class WSDLTemplates {
 			>
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
 					<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-						namespace="«imp.toNamespace()»"/>
+						namespace="«imp.toNamespace ()»"/>
 				«ENDFOR»
 				«IF s.findBestMatchingHeader (profile) != null»
 					«FOR headerImp : s.findBestMatchingHeader (profile).allImportedVersionedNS (versionQualifier.toMajorVersionNumber(s.version))»
-						<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-							namespace="«headerImp.toNamespace()»"/>
+						<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
+							namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
 					«ENDFOR»
 				«ENDIF»
 				«s.operations.map (e|e.toOperationWrapperTypes (profile)).join»
@@ -176,9 +178,13 @@ class WSDLTemplates {
 		</xsd:element>
 	'''
 	
-	def toOperationFaultWrapperTypes(String name, List<ExceptionRef> exceptions) '''
-		<xsd:element name="«exceptions.findFirst (e|e.exception.name == name).exception.toTypeName()»" type="«exceptions.findFirst (e|e.exception.name == name).toExceptionNameRef()»"/>
-	'''
+	def toOperationFaultWrapperTypes(String name, List<ExceptionRef> exceptions) {
+		val exRef = exceptions.findFirst (e|e.exception.name == name)
+		'''
+		<xsd:element name="«exRef.exception.toTypeName()»" type="«exRef.toExceptionNameRef()»"/>
+		'''
+	
+	}
 	
 	
 	def dispatch toParameter (Parameter p) '''

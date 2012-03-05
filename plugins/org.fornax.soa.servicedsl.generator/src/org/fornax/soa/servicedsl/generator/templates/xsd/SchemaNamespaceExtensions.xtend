@@ -220,7 +220,7 @@ class SchemaNamespaceExtensions {
 	}
 	
 	
-	def dispatch String toRegistryAssetUrl (Object o, Void registryUrl) {
+	def dispatch String toRegistryAssetUrl (EObject o, Void registryUrl) {
 		null;
 	}
 	
@@ -240,16 +240,12 @@ class SchemaNamespaceExtensions {
 		s.toFileNameFragment(); 
 	}
 	
-	def dispatch String toRegistryAssetUrl (TechnicalNamespace s, Void registryUrl) {
-		s.toFileNameFragment();
-	}
-	
 	def dispatch String toRegistryAssetUrl (VersionedDomainNamespace s, Void registryUrl) { 
 		s.toFileNameFragment();
 	}
 	
 	
-	def dispatch String toFileNameFragment (Object s) {
+	def dispatch String toFileNameFragment (EObject s) {
 		null;
 	}
 	

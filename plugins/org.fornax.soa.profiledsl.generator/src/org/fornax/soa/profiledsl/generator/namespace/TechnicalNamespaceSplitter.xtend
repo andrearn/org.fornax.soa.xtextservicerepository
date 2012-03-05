@@ -11,6 +11,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.Type
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
+import org.eclipse.emf.ecore.EObject
 
 class TechnicalNamespaceSplitter {
 
@@ -48,6 +49,10 @@ class TechnicalNamespaceSplitter {
 			.toList().head;
 	}
 	
+		
+	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (EObject c) {
+		
+	}
 		
 	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType c) {
 		if (c.eContainer instanceof TechnicalNamespace) {

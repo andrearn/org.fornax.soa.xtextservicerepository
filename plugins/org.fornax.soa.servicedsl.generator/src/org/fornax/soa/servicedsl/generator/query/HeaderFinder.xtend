@@ -10,7 +10,6 @@ import java.util.Set
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.VersionedDomainNamespace
 import com.google.inject.Inject
-import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
 import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.servicedsl.generator.query.type.TypesByLifecycleStateFinder
@@ -28,6 +27,11 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
+import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
+import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
+import org.fornax.soa.profiledsl.generator.query.NamespaceQueries
+import org.fornax.soa.profiledsl.generator.query.NamespaceImportQueries
+import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
 
 /* 
  * Find th most specific message header declaration to be used by a service operation
@@ -36,11 +40,15 @@ class HeaderFinder {
 	
 	@Inject extension VersionMatcher
 	@Inject extension VersionQualifierExtensions
-	@Inject extension NamespaceSplitter
-	@Inject extension NamespaceQuery
+	@Inject extension TechnicalNamespaceSplitter
+	@Inject extension NamespaceQueries
+	@Inject extension NamespaceImportQueries
 	@Inject extension LatestMatchingTypeFinder
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension VersionedTypeFilter
+	@Inject NamespaceSplitter namespaceSplitter
+	@Inject NamespaceQuery namespaceQuery
+	@Inject org.fornax.soa.servicedsl.generator.query.namespace.NamespaceImportQueries nsImportQueries
 	
 	
 	def dispatch MessageHeader findBestMatchingHeader (EObject o, SOAProfile p ) { 
@@ -59,7 +67,7 @@ class HeaderFinder {
 		if (s.messageHeader?.header != null) { 
 			s.messageHeader.header;
 		} else {
-			p.messaging.defaultHeader.header;
+			s.eContainer.findBestMatchingHeader (p);
 		}
 	}
 	
@@ -76,26 +84,29 @@ class HeaderFinder {
 	
 	
 	def dispatch Set<VersionedDomainNamespace> allImportedVersionedNS (org.fornax.soa.serviceDsl.Type t) {
-		t.allReferencedVersionedTypes().map (e|e.createVersionedDomainNamespace()).toSet();
+		t.allReferencedVersionedTypes().map (e| namespaceSplitter.createVersionedDomainNamespace(e)).toSet();
 	}
 		
 	def dispatch Set<VersionedDomainNamespace> allImportedVersionedNS (VersionedDomainNamespace s) { 
-		(s.subdomain as SubNamespace).allImportedVersionedNS(s.version);
+		nsImportQueries.allImportedVersionedNS((s.subdomain as SubNamespace), s.version);
+	}
+	def dispatch Set<VersionedTechnicalNamespace> allImportedVersionedNS (VersionedTechnicalNamespace s) { 
+		s.namespace.allImportedVersionedNS(s.version);
 	}
 	
-	def dispatch Set<VersionedDomainNamespace> allImportedVersionedNS (TechnicalNamespace s, String nameSpaceMajorVersion) {
+	def dispatch Set<VersionedTechnicalNamespace> allImportedVersionedNS (TechnicalNamespace s, String nameSpaceMajorVersion) {
 		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (org.fornax.soa.profiledsl.sOAProfileDsl.Class))
 		.map (e|e.allReferencedVersionedTypes()).flatten
-		.map (v|v.createVersionedDomainNamespace()).toSet;
+		.map (v|v.createVersionedTechnicalNamespace()).toSet;
 	}
 	
-	def dispatch Set<VersionedDomainNamespace> allImportedVersionedNS (MessageHeader t, String nameSpaceMajorVersion) {
-		t.allReferencedVersionedTypes().map (e|e.createVersionedDomainNamespace()).toSet();
+	def dispatch Set<VersionedTechnicalNamespace> allImportedVersionedNS (MessageHeader t, String nameSpaceMajorVersion) {
+		t.allReferencedVersionedTypes().map (e|e.createVersionedTechnicalNamespace()).toSet();
 	}
 		
-	def dispatch Set<VersionedDomainNamespace> allImportedVersionedNS (org.fornax.soa.profiledsl.sOAProfileDsl.Class t) {
+	def dispatch Set<VersionedTechnicalNamespace> allImportedVersionedNS (org.fornax.soa.profiledsl.sOAProfileDsl.Class t) {
 		t.properties.filter (typeof (org.fornax.soa.profiledsl.sOAProfileDsl.Property))
-			.map (p|p.type.allReferencedVersionedTypes()).flatten.map (e|e.createVersionedDomainNamespace()).toSet();
+			.map (p|p.type.allReferencedVersionedTypes()).flatten.map (e|e.createVersionedTechnicalNamespace()).toSet();
 	}
 	
 	
@@ -117,13 +128,14 @@ class HeaderFinder {
 	}
 	
 	def dispatch List<VersionedType> allReferencedVersionedTypes (org.fornax.soa.profiledsl.sOAProfileDsl.Class t) {
-		t.allReferencedTypeRefs ().filter (typeof (VersionedTypeRef)).map(e|e.selectLatestMatchingType () as VersionedType).toList;
+		val typeRefs = t.allReferencedTypeRefs ().filter (typeof (VersionedTypeRef));
+		typeRefs.map(e|e.selectLatestMatchingType () as VersionedType).toList;
 	}
 		
 	def dispatch List<VersionedType> allReferencedVersionedTypes (MessageHeader t)  { 
-		t.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (v|v.type as Type)
-			.map (e|e.allReferencedTypeRefs ()).filter (typeof (VersionedTypeRef))
-				.map (r|r.selectLatestMatchingType ()).filter (typeof (VersionedType)).toList;
+		val types = t.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (v|v.type as Type);
+		val transitiveTypeRefs = types.map (e|e.allReferencedTypeRefs ()).flatten.filter (typeof (VersionedTypeRef))
+		transitiveTypeRefs.map (r|r.selectLatestMatchingType ()).filter (typeof (VersionedType)).toList;
 	}	
 	
 	
@@ -140,12 +152,10 @@ class HeaderFinder {
 	
 	def dispatch List<TypeRef> allReferencedTypeRefs (org.fornax.soa.profiledsl.sOAProfileDsl.Class t) {
 		var reTypes = new HashSet<TypeRef>();
+		var propTypes = t.properties.filter (typeof (Property)).map (p|p.type);
+		reTypes.addAll (propTypes);
 		if (t.superClass != null) { 	
-			reTypes.addAll (t.properties.filter (typeof (Property)).map (p|p.type));
 			reTypes.add (t.superClass as TypeRef);
-			reTypes;
-		} else {
-			t.properties.filter (typeof (Property)).map (p|p.type);
 		}
 		reTypes.toList;
 	}
