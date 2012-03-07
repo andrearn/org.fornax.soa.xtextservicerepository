@@ -29,6 +29,9 @@ import org.fornax.soa.serviceDsl.EnumLiteral
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
+import com.google.inject.name.Named
+import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.eclipse.emf.ecore.EObject
 
 class XSDTemplates {
 
@@ -51,6 +54,12 @@ class XSDTemplates {
 	@Inject extension LatestMatchingTypeFinder
 	@Inject extension ReferencedTypesFinder
 	@Inject ExceptionFinder exceptionFinder
+	
+	@Inject @Named ("noDependencies") 		
+	Boolean noDependencies
+	
+	@Inject
+	IQualifiedNameProvider nameProvider
 
 	/*
 		CARTRIDGE ENTRYPOINT for generation of XSDs from namespaces. 
@@ -74,21 +83,27 @@ class XSDTemplates {
 		given minimal LifecycleState.
 	*/
 	def dispatch toXSD (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		var imports = ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion();
-		for (imp : imports) {
-			imp.toXSDVersion (minState, profile, registryBaseUrl);
-			imp.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
-				.filter (e| !(e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber()))
-				.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl));
+		var nsVersions = ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion();
+		for (nsVer : nsVersions) {
+			nsVer.toXSDVersion (minState, profile, registryBaseUrl);
+			if ( ! noDependencies ) {
+				nsVer.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
+					.filter (e| !(e.subdomain == nsVer.subdomain && e.version.toMajorVersionNumber() == nsVer.version.toMajorVersionNumber()))
+					.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl));
+			}
 		}
 	}
 	
+	/*
+	 * TODO: review for use as noDependencies flag is being injected already
+	 */
 	def dispatch toXSD (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
-		for (imp : ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()) {
-			imp.toXSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces);
+		var nsVersions = ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion();
+		for (nsVer : nsVersions) {
+			nsVer.toXSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces);
 			if ( !noDeps) {
-				imp.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
-					.filter (e|!(e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber()))
+				nsVer.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
+					.filter (e|!(e.subdomain == nsVer.subdomain && e.version.toMajorVersionNumber() == nsVer.version.toMajorVersionNumber()))
 					.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces));
 			}
 		}
@@ -99,10 +114,10 @@ class XSDTemplates {
 		the major version splitting algorithm filtered by the given minimal LifecycleState
 	*/
 	def dispatch toXSDForImports (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		for (imp : ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()) {
-			imp.toXSDVersion (minState, profile, registryBaseUrl);
-			imp.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
-				.filter(e| !(e.subdomain == imp.subdomain && e.version.toMajorVersionNumber() == imp.version.toMajorVersionNumber()))
+		for (nsVer : ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()) {
+			nsVer.toXSDVersion (minState, profile, registryBaseUrl);
+			nsVer.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
+				.filter(e| !(e.subdomain == nsVer.subdomain && e.version.toMajorVersionNumber() == nsVer.version.toMajorVersionNumber()))
 				.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl));
 		}
 	}

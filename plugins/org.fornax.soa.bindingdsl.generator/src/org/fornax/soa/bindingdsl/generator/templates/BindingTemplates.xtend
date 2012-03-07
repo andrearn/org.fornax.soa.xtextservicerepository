@@ -1,6 +1,7 @@
 package org.fornax.soa.bindingdsl.generator.templates
 
 import com.google.inject.Inject
+import com.google.inject.name.Named
 import java.util.HashSet
 import java.util.List
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
@@ -12,9 +13,13 @@ import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingDsl.ServiceBinding
+import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
+import org.fornax.soa.bindingdsl.generator.queries.modules.ModuleBindingResolver
+import org.fornax.soa.bindingdsl.generator.queries.services.BindingServiceResolver
 import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteProviderWsdlTemplates
 import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlTemplates
-import org.fornax.soa.environmentdsl.generator.EndpointResolver
+import org.fornax.soa.environmentDsl.Environment
+import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.Service
@@ -28,10 +33,6 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
-import org.fornax.soa.bindingdsl.generator.queries.services.BindingServiceResolver
-import org.fornax.soa.bindingdsl.generator.queries.modules.ModuleBindingResolver
-import org.fornax.soa.environmentDsl.Environment
-import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates
 
 class BindingTemplates {
 	
@@ -55,6 +56,10 @@ class BindingTemplates {
 	@Inject ConcreteWsdlTemplates 			concreteWsdlGenerator
 	@Inject ConcreteProviderWsdlTemplates 	concreteProviderWsdlGenerator
 	@Inject MessageHeaderXSDTemplates 		msgHeaderGenerator
+	@Inject BoundServiceLookup				serviceLookup
+	
+	@Inject @Named ("noDependencies") 		
+	Boolean noDependencies
 	
 		
 	def main (BindingModel model, LifecycleState minState, SOAProfile profile) {
@@ -71,7 +76,7 @@ class BindingTemplates {
 		referenced by the DomainBinding are considered. Overrides of minimal LifecycleStates 
 		declared in SubNamespaces will be respected
 	*/
-	def dispatch toBinding (DomainBinding binding, SOAProfile profile) {
+	def dispatch void toBinding (DomainBinding binding, SOAProfile profile) {
 		binding.toBinding ( binding.environment.getMinLifecycleState (binding), profile);
 	}
 	
@@ -84,24 +89,27 @@ class BindingTemplates {
 		All Services and their required XSDs that match the minimal given LifecycleState are 
 		considered
 	*/
-	def dispatch toBinding (DomainBinding binding, LifecycleState minState, SOAProfile profile) {
+	def dispatch void toBinding (DomainBinding binding, LifecycleState minState, SOAProfile profile) {
 		for (verNs : binding.subNamespace.toVersionedDomainNamespaces()) {
-			val services = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService(verNs.version.asInteger(), minState));
+			val services = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService (verNs.version.asInteger(), minState));
 			for (svc : services) {
 				binding.getMostSpecificBinding (svc).toBindingByService (svc, profile);
 			}
 		}
+
 		serviceGenerator.toSubNamespace (binding.subNamespace, binding.environment.getMinLifecycleState (binding.subNamespace), profile, binding.getRegistryBaseUrl());
-		val namespaces = new HashSet<SubNamespace>();
-		namespaces.add (binding.subNamespace);
-		namespaces.addAll (binding.subNamespace.getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (e|e.subdomain as SubNamespace));
-		for (ns : namespaces) {
-			xsdGenerator.toXSD (ns, binding.environment.getMinLifecycleState(ns), profile, binding.getRegistryBaseUrl());
-		}
-		if (forceRelativePaths()) {
-			msgHeaderGenerator.toMessageHeaderXSD (profile);
-		} else {
-			msgHeaderGenerator.toMessageHeaderXSD (profile, binding.getRegistryBaseUrl());
+		if (! noDependencies ) {
+			val namespaces = new HashSet<SubNamespace>();
+			namespaces.add (binding.subNamespace);
+			namespaces.addAll (binding.subNamespace.getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (e|e.subdomain as SubNamespace));
+			for (ns : namespaces) {
+				xsdGenerator.toXSD (ns, binding.environment.getMinLifecycleState(ns), profile, binding.getRegistryBaseUrl());
+			}
+			if (forceRelativePaths()) {
+				msgHeaderGenerator.toMessageHeaderXSD (profile);
+			} else {
+				msgHeaderGenerator.toMessageHeaderXSD (profile, binding.getRegistryBaseUrl());
+			}
 		}
 	}
 	
@@ -174,16 +182,19 @@ class BindingTemplates {
 				if (svc != null) {
 					modBind.toBindingByService (svc, modBind.getMostSpecificBinding (svc), profile);
 					serviceGenerator.toSubNamespace (svc.findSubdomain(), svc.findSubdomain().minStateByEnvironment (environment), profile, modBind.getRegistryBaseUrl());
-					val namespaces = new HashSet<SubNamespace>();
-					namespaces.add (svc.findSubdomain());
-					namespaces.addAll (svc.findSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (vns|vns.subdomain as SubNamespace));
-					for (ns : namespaces) {
-						xsdGenerator.toXSD (ns, ns.minStateByEnvironment (environment), profile, modBind.getRegistryBaseUrl());
-					}
-					if (forceRelativePaths()) {
-						msgHeaderGenerator.toMessageHeaderXSD (profile);
-					} else {
-						msgHeaderGenerator.toMessageHeaderXSD (profile, modBind.getRegistryBaseUrl());
+
+					if ( ! noDependencies ) {
+						val namespaces = new HashSet<SubNamespace>();
+						namespaces.add (svc.findSubdomain());
+						namespaces.addAll (svc.findSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (vns|vns.subdomain as SubNamespace));
+						for (ns : namespaces) {
+							xsdGenerator.toXSD (ns, ns.minStateByEnvironment (environment), profile, modBind.getRegistryBaseUrl());
+						}
+						if (forceRelativePaths()) {
+							msgHeaderGenerator.toMessageHeaderXSD (profile);
+						} else {
+							msgHeaderGenerator.toMessageHeaderXSD (profile, modBind.getRegistryBaseUrl());
+						}
 					}
 				}
 			}
@@ -199,22 +210,25 @@ class BindingTemplates {
 						modBind.toBindingByService (svc, modBind.getMostSpecificBinding (svc), profile);
 						serviceGenerator.toSubNamespace (svc.findSubdomain(), svc.findSubdomain().minStateByEnvironment (environment), profile, modBind.getRegistryBaseUrl());
 						
-						val namespaces = new HashSet<SubNamespace>();
-						namespaces.add (svc.findSubdomain());
-						namespaces.addAll (svc.findSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (vns|vns.subdomain as SubNamespace));
-						for (ns : namespaces) {
-							xsdGenerator.toXSD (ns, ns.minStateByEnvironment (environment), profile, modBind.getRegistryBaseUrl());
-						}
-						if (forceRelativePaths()) {
-							msgHeaderGenerator.toMessageHeaderXSD (profile);
-						} else {
-							msgHeaderGenerator.toMessageHeaderXSD (profile, modBind.getRegistryBaseUrl());
+						if ( ! noDependencies ) {
+							val namespaces = new HashSet<SubNamespace>();
+							namespaces.add (svc.findSubdomain());
+							namespaces.addAll (svc.findSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (vns|vns.subdomain as SubNamespace));
+							for (ns : namespaces) {
+								xsdGenerator.toXSD (ns, ns.minStateByEnvironment (environment), profile, modBind.getRegistryBaseUrl());
+							}
+							if (forceRelativePaths()) {
+								msgHeaderGenerator.toMessageHeaderXSD (profile);
+							} else {
+								msgHeaderGenerator.toMessageHeaderXSD (profile, modBind.getRegistryBaseUrl());
+							}
 						}
 					}
 				
 			}
 		}
 	}
+	
 	def toBindImportModulesToEnvironment (List<ModuleBinding> bindings, SOAProfile profile, String targetEnvironmentName) {
 		for (modBind : bindings.filter (e|e.environment.name==targetEnvironmentName)) {
 			val environment = modBind.environment;
@@ -224,16 +238,19 @@ class BindingTemplates {
 				if (svc != null) {
 					impBind.toBindingByService (svc, impBind.getMostSpecificBinding (svc), profile);
 					serviceGenerator.toSubNamespace (svc.findSubdomain(), svc.findSubdomain().minStateByEnvironment (environment), profile, impBind.getRegistryBaseUrl());
-					var namespaces = new HashSet<SubNamespace>();
-					namespaces.add (svc.findSubdomain());
-					namespaces.addAll (svc.findSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (vns|vns.subdomain as SubNamespace));
-					for (ns : namespaces) {
-						xsdGenerator.toXSD (ns, ns.minStateByEnvironment (environment), profile, impBind.getRegistryBaseUrl());
-					}
-					if (forceRelativePaths()) {
-						msgHeaderGenerator.toMessageHeaderXSD (profile);
-					} else {
-						msgHeaderGenerator.toMessageHeaderXSD (profile, impBind.getRegistryBaseUrl());
+
+					if ( ! noDependencies ) {
+						var namespaces = new HashSet<SubNamespace>();
+						namespaces.add (svc.findSubdomain());
+						namespaces.addAll (svc.findSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (vns|vns.subdomain as SubNamespace));
+						for (ns : namespaces) {
+							xsdGenerator.toXSD (ns, ns.minStateByEnvironment (environment), profile, impBind.getRegistryBaseUrl());
+						}
+						if (forceRelativePaths()) {
+							msgHeaderGenerator.toMessageHeaderXSD (profile);
+						} else {
+							msgHeaderGenerator.toMessageHeaderXSD (profile, impBind.getRegistryBaseUrl());
+						}
 					}
 				}
 			}
@@ -260,16 +277,19 @@ class BindingTemplates {
 			if (svc != null) {
 				binding.toBindingByService (svc, binding.getMostSpecificBinding (svc), profile);
 				serviceGenerator.toSubNamespace (svc.findSubdomain(), svc.findSubdomain().minStateByEnvironment (environment), profile, binding.getRegistryBaseUrl());
-				var namespaces = new HashSet<SubNamespace>();
-				namespaces.add (svc.findSubdomain());
-				namespaces.addAll (svc.findSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (vns|vns.subdomain as SubNamespace));
-				for (ns : namespaces) {
-					xsdGenerator.toXSD (ns, ns.minStateByEnvironment (environment), profile, binding.getRegistryBaseUrl());
-				}
-				if (forceRelativePaths()) {
-					msgHeaderGenerator.toMessageHeaderXSD (profile);
-				} else {
-					msgHeaderGenerator.toMessageHeaderXSD (profile, binding.getRegistryBaseUrl());
+
+				if ( ! noDependencies ) {
+					var namespaces = new HashSet<SubNamespace>();
+					namespaces.add (svc.findSubdomain());
+					namespaces.addAll (svc.findSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (vns|vns.subdomain as SubNamespace));
+					for (ns : namespaces) {
+						xsdGenerator.toXSD (ns, ns.minStateByEnvironment (environment), profile, binding.getRegistryBaseUrl());
+					}
+					if (forceRelativePaths()) {
+						msgHeaderGenerator.toMessageHeaderXSD (profile);
+					} else {
+						msgHeaderGenerator.toMessageHeaderXSD (profile, binding.getRegistryBaseUrl());
+					}
 				}
 			}
 		}
@@ -282,20 +302,23 @@ class BindingTemplates {
 			if (svc != null) {
 				binding.toBindingByService (svc, binding.getMostSpecificBinding (svc), profile);
 				serviceGenerator.toSubNamespace (svc.findSubdomain(), svc.findSubdomain().minStateByEnvironment (environment), profile, binding.getRegistryBaseUrl());
-				if (noDeps) {
-					val ns = svc.findSubdomain();
-					xsdGenerator.toXSD (svc.findSubdomain(), ns.minStateByEnvironment (environment), profile, binding.getRegistryBaseUrl(), noDeps, includeSubNamespaces) ;
-				} else {
-					var namespaces = new HashSet<SubNamespace>();	
-					namespaces.add (svc.findSubdomain());
-					namespaces.addAll (svc.findSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (vns|vns.subdomain as SubNamespace));
-					for (ns : namespaces) {
-						xsdGenerator.toXSD (ns, ns.minStateByEnvironment (environment), profile, binding.getRegistryBaseUrl(), noDeps, includeSubNamespaces);
-					}
-					if (forceRelativePaths()) {
-						msgHeaderGenerator.toMessageHeaderXSD (profile);
+
+				if ( ! noDependencies ) {
+					if (noDeps) {
+						val ns = svc.findSubdomain();
+						xsdGenerator.toXSD (svc.findSubdomain(), ns.minStateByEnvironment (environment), profile, binding.getRegistryBaseUrl(), noDeps, includeSubNamespaces) ;
 					} else {
-						msgHeaderGenerator.toMessageHeaderXSD (profile, binding.getRegistryBaseUrl());
+						var namespaces = new HashSet<SubNamespace>();	
+						namespaces.add (svc.findSubdomain());
+						namespaces.addAll (svc.findSubdomain().getImportedSubdomains().getAllLatestSubNamespacesByMajorVersion().map (vns|vns.subdomain as SubNamespace));
+						for (ns : namespaces) {
+							xsdGenerator.toXSD (ns, ns.minStateByEnvironment (environment), profile, binding.getRegistryBaseUrl(), noDeps, includeSubNamespaces);
+						}
+						if (forceRelativePaths()) {
+							msgHeaderGenerator.toMessageHeaderXSD (profile);
+						} else {
+							msgHeaderGenerator.toMessageHeaderXSD (profile, binding.getRegistryBaseUrl());
+						}
 					}
 				}
 			}
@@ -341,55 +364,7 @@ class BindingTemplates {
 	
 	}
 	
-	
-	
-	def toXSD (SubNamespace ns, List<Environment> env, String targetEnv, List<SOAProfile> profiles, String profileName) {
-		ns.toXSD (env.findFirst (e|e.name == targetEnv), profiles.findFirst (e|e.name == profileName));
-	}
-	
-	
-	def dispatch toXSD (SubNamespace ns, Environment env, SOAProfile profile) {
-		xsdGenerator.toXSD (ns, env.getMinLifecycleState (ns), profile, env.getRegistryBaseUrl());
-	}
-	
-	/*
-		ENTRYPOINT for generation of XSDs for a given DomainBinding. 
 		
-		An XSD for each VersionedDomainNamespace derived from the given SubNamespace. 
-		VersionedDomainNamespaces are derived using the major version based splitting algorithm 
-		constrained by the given LifecycleState.
-		
-		All VersionedDomainNamespaces that contain VerisonedTypes or Exceptions that match 
-		the minimal LifecycleState required for the environment	referenced by the given DomainBinding 
-		are considered. Overrides of minimal LifecycleStates declared in SubNamespaces 
-		will be respected.
-		
-		If there exits no DomainBinding for the given SubNamespace any DomainBinding to the targeted
-		Environment can be chosen.
-	*/
-	def dispatch void toXSD (SubNamespace ns, DomainBinding bind, SOAProfile profile) {
-		ns.toXSD (bind.environment.getMinLifecycleState (ns), bind, profile);
-	}
-	
-	/*
-		<b>ENTRYPOINT</b> for generation of <b>XSD</b>s for a given DomainBinding. <br/><br/>
-		
-		An XSD for each VersionedDomainNamespace derived from the given SubNamespace 
-		by the given DomainBinding. VersionedDomainNamespaces are derived using the 
-		major version based splitting algorithm constrained by the given LifecycleState.<br/><br/>
-		
-		All VersionedDomainNamespaces that contain VerisonedTypes or Exceptions that match 
-		the given minimal LifecycleState are considered.<br/><br/>
-		
-		If there exits no DomainBinding for the given SubNamespace any DomainBinding to the targeted
-		Environment can be chosen.
-	*/
-	def toXSD (SubNamespace ns, LifecycleState minState, DomainBinding bind, SOAProfile profile) {
-		xsdGenerator.toXSD (ns, bind.environment.getMinLifecycleState(ns), profile, bind.getRegistryBaseUrl());
-	}
-	
-	
-	
 	/*
 		Event XSDs for Services having an request and an response event for each service operation
 	*/

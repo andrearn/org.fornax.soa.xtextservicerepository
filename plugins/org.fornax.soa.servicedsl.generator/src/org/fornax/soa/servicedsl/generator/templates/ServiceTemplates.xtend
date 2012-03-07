@@ -15,6 +15,7 @@ import org.fornax.soa.serviceDsl.InternalNamespace
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
+import com.google.inject.name.Named
 
 class ServiceTemplates {
 	
@@ -24,6 +25,9 @@ class ServiceTemplates {
 	@Inject extension ServiceFinder
 	@Inject extension WSDLTemplates
 	@Inject extension XSDTemplates
+	
+	@Inject @Named ("noDependencies") 		
+	Boolean noDependencies
 
 	def void main (ServiceModel model, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		model.getAllServiceModels().map (m|m.orgNamespaces).flatten.forEach (o|o.toOrganizationNamespace (minState, profile, registryBaseUrl));
@@ -37,7 +41,7 @@ class ServiceTemplates {
 		//ERROR "not a concrete type"
 	}
 
-	def dispatch toSubNamespace (DomainNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch void toSubNamespace (DomainNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		ns.interalNamespaces.forEach (n|n.toSubNamespace (minState, profile, registryBaseUrl));
 		val verNs = ns.toVersionedDomainNamespaces();
 		verNs.forEach (
@@ -47,10 +51,12 @@ class ServiceTemplates {
 				.forEach (s|s.toService (ns, minState, profile, registryBaseUrl))
 		);
 
-		ns.toBusinessObject (minState, profile, registryBaseUrl);
+		if ( ! noDependencies ) {
+			ns.toBusinessObject (minState, profile, registryBaseUrl);
+		}
 	}
 	
-	def dispatch toSubNamespace (InternalNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch void toSubNamespace (InternalNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val verNs = ns.toVersionedDomainNamespaces();
 		verNs.forEach (
 			v|v.servicesWithMinState (minState).filter (typeof (Service))
@@ -58,7 +64,9 @@ class ServiceTemplates {
 				.filter (e|e.providedContractUrl == null)
 				.forEach (s|s.toService (ns, minState, profile, registryBaseUrl))
 		)
-		ns.toBusinessObject (minState, profile, registryBaseUrl);
+		if ( ! noDependencies ) {
+			ns.toBusinessObject (minState, profile, registryBaseUrl);
+		}
 	}
 
 

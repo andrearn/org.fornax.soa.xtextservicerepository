@@ -50,7 +50,9 @@ class SchemaNamespaceExtensions {
 	Boolean useNestedPaths
 	
 	@Inject IQualifiedNameProvider nameProvider
-	
+
+
+
 	def boolean forceRelativePaths () {
 		forceRelativePaths;
 	}

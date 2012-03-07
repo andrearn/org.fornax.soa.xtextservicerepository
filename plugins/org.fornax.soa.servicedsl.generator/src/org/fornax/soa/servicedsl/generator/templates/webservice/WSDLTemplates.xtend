@@ -46,6 +46,9 @@ class WSDLTemplates {
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
 	
 	
+	@Inject @Named ("noDependencies") 		
+	Boolean noDependencies
+	
 	def dispatch toWSDL (Service s, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val allServiceExceptionRefs = s.operations.map (o|o.throws).flatten;
 		val content = '''
@@ -287,15 +290,15 @@ class WSDLTemplates {
 	
 	
 	def toBindingOperation (Operation o) '''
-			<wsdl:operation name="«o.name»">
-				<soap:operation
-					soapAction="«o.eContainer.toNamespace() + o.name»" />
-				<wsdl:input>
-					<soap:body use="literal" />
-				</wsdl:input>
-				<wsdl:output>
-					<soap:body use="literal" />
-				</wsdl:output>
-			</wsdl:operation>
+		<wsdl:operation name="«o.name»">
+			<soap:operation
+				soapAction="«o.eContainer.toNamespace() + o.name»" />
+			<wsdl:input>
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal" />
+			</wsdl:output>
+		</wsdl:operation>
 	'''
 }

@@ -1,41 +1,33 @@
 package org.fornax.soa.bindingdsl.generator
 
-import com.google.common.base.Predicates
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import java.util.ArrayList
 import java.util.List
-import org.eclipse.emf.ecore.EObject
+import java.util.regex.Pattern
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
-import org.fornax.soa.basedsl.search.IPredicateSearch
-import org.fornax.soa.basedsl.search.SearchPattern
-import org.fornax.soa.bindingDsl.BindingModel
-import org.fornax.soa.bindingDsl.ModuleBinding
-import org.fornax.soa.bindingdsl.generator.templates.BindingTemplates
-import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage
-import org.eclipse.xtext.EcoreUtil2
-import org.fornax.soa.bindingDsl.DomainBinding
-import org.eclipse.xtext.resource.IResourceDescriptions
-import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions
-import org.eclipse.xtext.resource.SynchronizedXtextResourceSet
-import org.eclipse.xtext.resource.IResourceDescription
-import org.fornax.soa.serviceDsl.ServiceModel
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
-import org.fornax.soa.environmentDsl.Environment
-import org.fornax.soa.environmentDsl.EnvironmentDslPackage
-import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
-import org.fornax.soa.serviceDsl.SubNamespace
-import java.util.regex.Pattern
+import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions
 import org.fornax.soa.basedsl.search.IEObjectLookup
+import org.fornax.soa.basedsl.search.IPredicateSearch
+import org.fornax.soa.bindingDsl.BindingModel
+import org.fornax.soa.bindingDsl.DomainBinding
+import org.fornax.soa.bindingDsl.ModuleBinding
+import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
+import org.fornax.soa.bindingdsl.generator.templates.BindingTemplates
+import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDTemplates
+import org.fornax.soa.environmentDsl.Environment
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.serviceDsl.ServiceModel
+import org.fornax.soa.serviceDsl.SubNamespace
 
 class DefaultBindingContractGenerators implements IGenerator {
 	
 	
 	@Inject BindingTemplates bindingTpl
+	@Inject org.fornax.soa.bindingdsl.generator.templates.xsd.XSDTemplates xsdGen
+
 	@Inject BindingExtensions bindingExt
 	
 	@Inject @Named ("profileName") 			
@@ -123,7 +115,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 		
 		if (env != null && profile != null) {
-			bindingTpl.toXSD (namespace, env, profile);
+			xsdGen.toXSD (namespace, env, profile);
 		}
 	}
 }

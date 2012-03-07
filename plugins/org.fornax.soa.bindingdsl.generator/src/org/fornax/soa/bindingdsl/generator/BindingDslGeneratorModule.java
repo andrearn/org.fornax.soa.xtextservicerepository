@@ -15,7 +15,6 @@ import org.fornax.soa.bindingdsl.generator.templates.soap.SoapVendorBindingsReso
 import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportExtension;
 import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportTemplates;
 import org.fornax.soa.bindingdsl.generator.templates.wsdl.WrappedWSDLTemplates;
-import org.fornax.soa.servicedsl.generator.templates.webservice.WrappedWsdlTemplates;
 
 import com.google.inject.Binder;
 import com.google.inject.TypeLiteral;

@@ -27,6 +27,10 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates;
+import org.fornax.soa.xtextservicerepo.generator.XtextServiceRepositoryGeneratorConstants;
+
+import com.google.inject.Binder;
+import com.google.inject.name.Names;
 
 public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 	
@@ -135,6 +139,16 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 	public Class<? extends WSDLTemplates> bindWSDLTemplates () {
 		return WSDLTemplates.class;
 	}
+	
+	public void configureNoDependencies (Binder binder) {
+		binder.bind (Boolean.class).annotatedWith (Names.named ("noDependencies")).toInstance (false); 		
+	}
+	
+	public void configureUseNestedPaths (Binder binder) {
+		binder.bind (Boolean.class).annotatedWith (Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
+			.toInstance (false);
+	}
+
 	
 	
 }

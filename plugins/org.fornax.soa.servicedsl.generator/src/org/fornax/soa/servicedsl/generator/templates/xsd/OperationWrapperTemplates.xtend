@@ -19,6 +19,7 @@ import org.fornax.soa.serviceDsl.Parameter
 import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
+import com.google.inject.name.Named
 
 
 class OperationWrapperTemplates {
@@ -36,6 +37,9 @@ class OperationWrapperTemplates {
 	@Inject extension XSDTemplates
 	
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
+	
+	@Inject @Named ("noDependencies") 		
+	Boolean noDependencies
 
 	def dispatch toOperationWrappersInclSubNamespaces (String serviceName, List<SubNamespace> namespaces, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		for (ns : namespaces.filter(e|e.name.startsWith (serviceName))) {

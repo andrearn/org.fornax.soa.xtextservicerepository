@@ -25,6 +25,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 import org.fornax.soa.profiledsl.sOAProfileDsl.Property
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
+import com.google.inject.name.Named
 
 class WrappedWsdlTemplates {
 	
@@ -44,6 +45,9 @@ class WrappedWsdlTemplates {
 	@Inject extension XSDTemplates
 	@Inject extension OperationWrapperTemplates
 	@Inject extension LatestMatchingTypeFinder
+	
+	@Inject @Named ("noDependencies") 		
+	Boolean noDependencies
 	
 	
 	/*
@@ -65,7 +69,8 @@ class WrappedWsdlTemplates {
 	def dispatch toWrappedWSDL(Service svc, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val allServiceExceptionRefs = svc.operations.map (o|o.throws).flatten;
 		svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);
-		val content = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		val content = '''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 			xmlns:tns="«svc.toWrapperServiceTargetNamespace()»"
 			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
@@ -95,14 +100,15 @@ class WrappedWsdlTemplates {
 		
 		svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);
 		val xsdFileName = subDom.toFileNameFragment() + "-" + svc.name + "-" + svc.version.toVersionPostfix() + "Wrapped.wsdl";
-		val content = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		val content = '''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
 			xmlns:tns="«svc.toWrapperServiceTargetNamespace()»"
 			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-		«/*	
-			xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-		*/»
+			«/*	
+				xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+			*/»
 			name="«svc.name»" 
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
 			<wsdl:documentation>
@@ -217,8 +223,8 @@ class WrappedWsdlTemplates {
 	'''
 	
 	def dispatch toOperation (Operation op) '''
-			<wsdl:operation name="«op.name»">
-				«IF op.doc != null»
+		<wsdl:operation name="«op.name»">
+			«IF op.doc != null»
 				<wsdl:documentation>
 					<![CDATA[«op.doc?.stripCommentBraces()?.trim()»]]>   			
 				</wsdl:documentation>
@@ -229,11 +235,11 @@ class WrappedWsdlTemplates {
 						</jaxws:javadoc>
 					</jaxws:method>
 				*/»
-				«ENDIF»
-				<wsdl:input message="tns:«op.name»Request" />
-				<wsdl:output message="tns:«op.name»Response" />
-				«op.toFault()»
-			</wsdl:operation>
+			«ENDIF»
+			<wsdl:input message="tns:«op.name»Request" />
+			<wsdl:output message="tns:«op.name»Response" />
+			«op.toFault()»
+		</wsdl:operation>
 	'''
 	
 	def dispatch toFaultMessages(String faultName, List<ExceptionRef> exceptions) {
@@ -241,7 +247,7 @@ class WrappedWsdlTemplates {
 		if (exceptionRef != null) {
 			'''
 			<wsdl:message name="«exceptions.findFirst(e|e.exception.name == faultName).exception.toTypeName()»">
-		  		<wsdl:part name="parameters" element="tns:«exceptionRef?.exception.toTypeName()»"></wsdl:part>
+				<wsdl:part name="parameters" element="tns:«exceptionRef?.exception.toTypeName()»"></wsdl:part>
 			</wsdl:message>
 			'''
 		}
