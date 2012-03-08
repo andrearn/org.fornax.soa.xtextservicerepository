@@ -108,6 +108,13 @@ class XSDTemplates {
 			}
 		}
 	}
+
+	def dispatch toXSD (VersionedDomainNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		ns.toXSDVersion (minState, profile, registryBaseUrl);
+		ns.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
+				.filter(e| !(e.subdomain == ns.subdomain && e.version.toMajorVersionNumber() == ns.version.toMajorVersionNumber()))
+				.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl));
+	}
 	
 	/*
 		Generate XSDs for all VersionedDomainNamespaces derived from the given SubNamespace by applying
@@ -144,10 +151,10 @@ class XSDTemplates {
 				xmlns="«vns.toNamespace()»"
 				xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 				xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
-			«/*
-				xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
-				jxb:version="2.0"
-			*/»
+				«/*
+					xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+					jxb:version="2.0"
+				*/»
 				elementFormDefault="qualified"
 				attributeFormDefault="unqualified"
 				targetNamespace="«vns.toNamespace()»"

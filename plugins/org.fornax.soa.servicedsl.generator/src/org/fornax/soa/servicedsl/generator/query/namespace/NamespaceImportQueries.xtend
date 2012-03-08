@@ -239,6 +239,22 @@ class NamespaceImportQueries {
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
 	 */
+	def dispatch Set<VersionedDomainNamespace> importedVersionedNS (Service s, LifecycleState minState) {
+		var imports = new HashSet<VersionedDomainNamespace>();
+		var serviceBos = s.allReferencedVersionedTypes (minState).map (e|e.createVersionedDomainNamespace());
+		imports.addAll (serviceBos);
+		imports.addAll (s.allReferencedExceptions().map (e|e.createVersionedDomainNamespace()));
+		imports.addAll (s.allReferencedExceptions().map (e|e.allReferencedVersionedTypes (minState)).flatten.map(e|e.createVersionedDomainNamespace()));
+		imports.addAll (s.allReferencedExceptions().map (e|e.superException).filterNull().map (e|e.findLatestMatchingException().createVersionedDomainNamespace()));
+		imports.addAll ({s.createVersionedDomainNamespace()});
+		return imports;
+	}
+	
+	/**
+	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
+	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
+	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 */
 	def dispatch Set<VersionedDomainNamespace> importedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) {
 		var imports = new HashSet<VersionedDomainNamespace>();
 		var bos = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (BusinessObject))

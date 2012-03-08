@@ -69,6 +69,14 @@ class MessageHeaderXSDTemplates {
 		}
 	}
 	
+	def dispatch toMessageHeaderXSD (MessageHeader header, SOAProfile profile) {
+		header.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, header));
+	}
+	
+	def dispatch toMessageHeaderXSD (MessageHeader header, SOAProfile profile, String registryBaseUrl) {
+		header.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, registryBaseUrl, header));
+	}
+	
 	/* 
 	 * Generate a message header XSD for each header defided inthe given profile 
 	 * and for each major version of a TechnicalNamespace<br/><br/>

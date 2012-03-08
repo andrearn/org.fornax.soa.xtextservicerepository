@@ -33,6 +33,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
+import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
 
 class BindingTemplates {
 	
@@ -50,6 +51,8 @@ class BindingTemplates {
 	@Inject extension ModuleBindingResolver
 		
 	
+	@Inject BindingProtocolServiceContractBuilder	contractBuilder
+	@Inject WSDLTemplates 					wsdlGenerator
 	@Inject XSDTemplates 					xsdGenerator
 	@Inject ServiceTemplates 				serviceGenerator
 	@Inject EventXSDTemplates 				eventXsdGenerator
@@ -235,6 +238,7 @@ class BindingTemplates {
 			for (usedSvc : modBind.module.module.usedServices) {
 				val svc 		= usedSvc.latestServiceInEnvironment (environment);
 				val impBind 	= bindings.getImportModuleBinding (usedSvc.module.module, targetEnvironmentName);
+				
 				if (svc != null) {
 					impBind.toBindingByService (svc, impBind.getMostSpecificBinding (svc), profile);
 					serviceGenerator.toSubNamespace (svc.findSubdomain(), svc.findSubdomain().minStateByEnvironment (environment), profile, impBind.getRegistryBaseUrl());
@@ -327,16 +331,20 @@ class BindingTemplates {
 	
 	def toBindingByService (ModuleBinding binding, Service s, Binding specificBinding, SOAProfile profile) {
 		for (prot : specificBinding.protocol) {
-			if (prot instanceof SOAP) {
-				val soapProt = prot as SOAP;
-					if (s.providedContractUrl == null && s.isEligibleForEnvironment (binding.environment)) {
-						if (s.isPublicEndpoint (binding.provider.provServer)) {
-							concreteWsdlGenerator.toWSDL(binding, s, prot, profile);
-						} else {
-							concreteProviderWsdlGenerator.toWSDL(s, binding, prot, profile);
-						}
-					}
-			}
+			contractBuilder.toContractForProtocol(s, binding, prot, profile);
+			
+//			if (prot instanceof SOAP) {
+//				val soapProt = prot as SOAP;
+//				if (s.providedContractUrl == null && s.isEligibleForEnvironment (binding.environment)) {
+//					val namespace = s.findSubdomain();
+//					wsdlGenerator.toWSDL(s, namespace, namespace.minStateByEnvironment (binding.environment), profile, binding.getRegistryBaseUrl());
+//					if (s.isPublicEndpoint (binding.provider.provServer)) {
+//						concreteWsdlGenerator.toWSDL(binding, s, soapProt, profile);
+//					} else {
+//						concreteProviderWsdlGenerator.toWSDL(s, binding, soapProt, profile);
+//					}
+//				}
+//			}
 		}
 	}
 	
