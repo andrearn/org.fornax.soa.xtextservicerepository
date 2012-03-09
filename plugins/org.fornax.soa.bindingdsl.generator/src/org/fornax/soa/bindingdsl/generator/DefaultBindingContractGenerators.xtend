@@ -15,7 +15,7 @@ import org.fornax.soa.bindingDsl.BindingModel
 import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
-import org.fornax.soa.bindingdsl.generator.templates.BindingTemplates
+import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder
 import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDTemplates
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
@@ -25,7 +25,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 class DefaultBindingContractGenerators implements IGenerator {
 	
 	
-	@Inject BindingTemplates bindingTpl
+	@Inject org.fornax.soa.bindingdsl.generator.templates.BindingBuilder bindingTpl
 	@Inject org.fornax.soa.bindingdsl.generator.templates.xsd.XSDTemplates xsdGen
 
 	@Inject BindingExtensions bindingExt

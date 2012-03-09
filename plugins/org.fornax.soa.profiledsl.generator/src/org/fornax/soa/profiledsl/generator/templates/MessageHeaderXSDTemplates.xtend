@@ -63,13 +63,28 @@ class MessageHeaderXSDTemplates {
 		Prefixes all imports with given registryBaseUrl. Referenced imported XSDs must be
 		available under the calculated URL
 	*/
-	def dispatch toMessageHeaderXSD (SOAProfile profile, String registryBaseUrl) {
+	def dispatch toAllMessageHeadersXSD (SOAProfile profile) {
+		for (h : profile.messaging.messageHeaders) {
+			h.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, h));
+		}
+	}
+	def dispatch toAllMessageHeadersXSD (SOAProfile profile, Void registryBaseUrl) {
+		for (h : profile.messaging.messageHeaders) {
+			h.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, h));
+		}
+	}
+	
+	def dispatch toAllMessageHeadersXSD (SOAProfile profile, String registryBaseUrl) {
 		for (h : profile.messaging.messageHeaders) {
 			h.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, registryBaseUrl, h));
 		}
 	}
 	
 	def dispatch toMessageHeaderXSD (MessageHeader header, SOAProfile profile) {
+		header.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, header));
+	}
+	
+	def dispatch toMessageHeaderXSD (MessageHeader header, SOAProfile profile, Void registryBaseUrl) {
 		header.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, header));
 	}
 	

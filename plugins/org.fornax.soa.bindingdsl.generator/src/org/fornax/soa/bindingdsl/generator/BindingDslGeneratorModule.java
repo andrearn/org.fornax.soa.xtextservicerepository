@@ -1,15 +1,19 @@
 package org.fornax.soa.bindingdsl.generator;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.fornax.soa.BindingDslRuntimeModule;
 import org.fornax.soa.bindingdsl.generator.queries.modules.ModuleBindingResolver;
 import org.fornax.soa.bindingdsl.generator.queries.services.BindingServiceResolver;
+import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
-import org.fornax.soa.bindingdsl.generator.templates.BindingTemplates;
+import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteProviderWsdlTemplates;
 import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlTemplates;
+import org.fornax.soa.bindingdsl.generator.templates.soap.SOAPProtocolContractBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SoapBindingResolver;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SoapVendorBindingsResolver;
 import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportExtension;
@@ -34,8 +38,8 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		return BindingExtensions.class;
 	}
 	
-	public Class<? extends BindingTemplates> bindBindingTemplates () {
-		return BindingTemplates.class;
+	public Class<? extends BindingBuilder> bindBindingTemplates () {
+		return BindingBuilder.class;
 	}
 	
 	public Class<? extends ConcreteProviderWsdlTemplates> bindConcreteProviderWsdlTemplates () {
@@ -106,6 +110,20 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 			.annotatedWith (
 					Names.named (BindingDSLGeneratorConstants.GENERATE_PRIVATE_WSDL_FOR_PROVIDER_HOST))
 			.toInstance (false);
+	}
+	
+	public void configureBindingTemplates (final Binder binder) {
+		binder.bind (new TypeLiteral<Set<ProvidedProtocolContractBuilder>> () {}).toInstance (
+			new HashSet<ProvidedProtocolContractBuilder> () {
+				{
+					add (getLazyProtocolContractProvider (binder, SOAPProtocolContractBuilder.class));
+				}
+			}
+		);
+	}
+	
+	protected ProvidedProtocolContractBuilder getLazyProtocolContractProvider (final Binder binder, Class<? extends IProtocolContractBuilder> clazz) {
+		return new ProvidedProtocolContractBuilder (binder.getProvider (clazz));
 	}
 
 }
