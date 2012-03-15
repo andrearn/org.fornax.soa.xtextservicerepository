@@ -8,7 +8,6 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
-import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
 
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
@@ -29,9 +28,6 @@ public class EObjectDescriptionBuilder implements IEObjectDescriptionBuilder {
 				String version = BaseDslVersionResolver.INSTANCE.getVersion(eObject);
 				if (version != null)
 					userData.put(VERSION_KEY, version);
-				String state = ServiceDslLifecycleStateResolver.INSTANCE.getLifecycleStateName(eObject);
-				if (state != null)
-					userData.put(STATE_KEY, state);
 				return EObjectDescription.create(qualifiedName, eObject, userData);
 			}
 		}

@@ -2,7 +2,7 @@ package org.fornax.soa.servicedsl.generator.query.type
 
 import java.util.List
 import org.fornax.soa.serviceDsl.Property
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.serviceDsl.BusinessObject
 import java.util.ArrayList
 

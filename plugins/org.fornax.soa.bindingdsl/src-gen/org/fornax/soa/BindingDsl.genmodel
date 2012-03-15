@@ -104,9 +104,11 @@
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//Publisher">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Publisher/pubServer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Publisher/connectors"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//Provider">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Provider/provServer"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Provider/connectors"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//ServiceBinding">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ServiceBinding/service"/>

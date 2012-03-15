@@ -14,7 +14,6 @@ import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.scoping.IGlobalScopeProvider;
 import org.eclipse.xtext.util.IResourceScopeCache;
 import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
@@ -29,11 +28,12 @@ import org.fornax.soa.basedsl.scoping.versions.LatestMajorVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
-import org.fornax.soa.basedsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
-import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
+import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.CapabilityRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
@@ -51,6 +51,7 @@ import org.fornax.soa.serviceDsl.VersionedTypeRef;
 import org.fornax.soa.util.DslElementAccessor;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 /**
  * This class contains custom scoping description.
  * 
@@ -65,6 +66,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 
 	@Inject
 	private IGlobalScopeProvider globalScopeProvider;
+	
+	@Inject Injector injector;
 
 	public void setGlobalScopeProvider(IGlobalScopeProvider globalScopeProvider) {
 		this.globalScopeProvider = globalScopeProvider;
@@ -100,6 +103,22 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext (
 			EObject ctx, final EReference reference) {
+//		EObject eContainer = ctx.eContainer();
+//		if (eContainer instanceof BusinessObject) {
+//			BusinessObject bo = (BusinessObject) ctx.eContainer();
+//			State newState = bo.getNewState();
+//			if (newState != null) {
+//				String name = newState.getName();
+//				logger.error("State " + name);
+//				newState = (State)EcoreUtil2.resolve(newState, ctx.eResource());
+//				EList<org.fornax.soa.environmentDsl.Environment> qualifiesForEnvironments = newState.getQualifiesForEnvironment();
+//				for (org.fornax.soa.environmentDsl.Environment env : qualifiesForEnvironments ) {
+//					EnvironmentType envType = env.getType();
+//					String envTypeName = envType.getName();
+//					logger.error ("Env: "+ envTypeName);
+//				}
+//			}
+//		}
 		if (reference==ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE && ctx instanceof VersionedTypeRef) {
 			final VersionRef v = ((VersionedTypeRef) ctx).getVersionRef();
 			return createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
@@ -152,13 +171,16 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 		if (v != null) {
 			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
-			LifecycleStateResolver stateResolver = new ServiceDslLifecycleStateResolver (v.eResource().getResourceSet());
+			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 			LifecycleState minDevState = StateConstraintConfigurer.getMinDevState(owner);
 			LifecycleState minTestState = StateConstraintConfigurer.getMinTestState(owner);
 			LifecycleState minProdState = StateConstraintConfigurer.getMinProdState(owner);
-			if (v instanceof MajorVersionRef)
-				return new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, minDevState, minTestState, minProdState);
+			if (v instanceof MajorVersionRef) {
+				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, minDevState, minTestState, minProdState);
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
 			if (v instanceof MaxVersionRef)
 				return new LatestMaxExclVersionFilter<IEObjectDescription>(verResolver, ((MaxVersionRef)v).getMaxVersion());
 			if (v instanceof MinVersionRef)
@@ -191,13 +213,16 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 		if (v != null) {
 			VersionResolver verResolver = new EContainerVersionResolver (v.eResource().getResourceSet());
-			LifecycleStateResolver stateResolver = new ServiceDslLifecycleStateResolver (v.eResource().getResourceSet());
+			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 			LifecycleState minDevState = StateConstraintConfigurer.getMinDevState(owner);
 			LifecycleState minTestState = StateConstraintConfigurer.getMinTestState(owner);
 			LifecycleState minProdState = StateConstraintConfigurer.getMinProdState(owner);
-			if (v instanceof MajorVersionRef)
-				return new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, minDevState, minTestState, minProdState);
+			if (v instanceof MajorVersionRef) {
+				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, minDevState, minTestState, minProdState);
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
 			if (v instanceof MaxVersionRef)
 				return new LatestMaxExclVersionFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion());
 			if (v instanceof MinVersionRef)

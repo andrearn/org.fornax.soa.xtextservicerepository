@@ -2,9 +2,9 @@ package org.fornax.soa.servicedsl.generator.query.type
 
 import com.google.inject.Inject
 import java.util.List
-import org.fornax.soa.basedsl.generator.lifecycle.StateMatcher
+import org.fornax.soa.profiledsl.generator.query.StateMatcher
 import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.basedsl.generator.version.VersionMatcher
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import org.fornax.soa.serviceDsl.BusinessObject

@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import java.util.List
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
@@ -26,6 +25,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 import org.fornax.soa.profiledsl.sOAProfileDsl.Property
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import com.google.inject.name.Named
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 class WrappedWsdlTemplates {
 	

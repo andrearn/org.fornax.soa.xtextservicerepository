@@ -2,7 +2,6 @@ package org.fornax.soa.servicedsl.generator.templates.xsd
 
 import java.util.List
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.DomainNamespace
@@ -20,6 +19,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import com.google.inject.name.Named
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 
 class OperationWrapperTemplates {

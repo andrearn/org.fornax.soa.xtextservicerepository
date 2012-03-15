@@ -6,13 +6,17 @@
     modelPluginID="org.fornax.soa.profiledsl" forceOverwrite="true" modelName="SOAProfileDsl"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.profiledsl.edit"
-    editorPluginID="org.fornax.soa.profiledsl.editor" usedGenPackages="../../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl">
+    editorPluginID="org.fornax.soa.profiledsl.editor" usedGenPackages="../../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl ../../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.genmodel#//environmentDsl">
   <genPackages prefix="SOAProfileDsl" basePackage="org.fornax.soa.profiledsl" disposableProviderFactory="true"
       ecorePackage="SOAProfileDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOAProfileDsl.ecore#//MEPMessageKind">
       <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//MEPMessageKind/REQUEST"/>
       <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//MEPMessageKind/RESPONSE"/>
       <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//MEPMessageKind/PUBLISH"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOAProfileDsl.ecore#//VersioningStrategy">
+      <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//VersioningStrategy/NAMESPACE"/>
+      <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//VersioningStrategy/NAME"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOAProfileDsl.ecore#//InternalNsQualifierPolicy">
       <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//InternalNsQualifierPolicy/MUST_CONTAIN_QUALIFIER"/>
@@ -23,15 +27,37 @@
     <genClasses ecoreClass="SOAProfileDsl.ecore#//SOAProfileModel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfileModel/types"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfileModel/profiles"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfileModel/roles"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//SOAProfile">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//SOAProfile/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//SOAProfile/scope"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/lifecycle"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/messaging"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/designRules"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/versioningRule"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/orgNamespaces"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/namespaceRules"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/scopedBasicTypes"/>
+    </genClasses>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//Lifecycle">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Lifecycle/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Lifecycle/states"/>
+    </genClasses>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//LifecycleState">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/isInitial"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/isEnd"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/qualifiesFor"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//LifecycleState/qualifiesForEnvironment"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//LifecycleState/transitions"/>
+    </genClasses>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//Transition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Transition/targetState"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Transition/roles"/>
+    </genClasses>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//Role">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Role/name"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Messaging">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Messaging/messageHeaders"/>
@@ -45,6 +71,9 @@
     <genClasses ecoreClass="SOAProfileDsl.ecore#//NamespaceRules">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//NamespaceRules/noTrailingSlash"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//NamespaceRules/aliases"/>
+    </genClasses>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//VersioningRule">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//VersioningRule/versioningStrategy"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//BasicTypes">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//BasicTypes/scope"/>

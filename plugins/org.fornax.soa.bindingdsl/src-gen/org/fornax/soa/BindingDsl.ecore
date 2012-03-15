@@ -31,9 +31,13 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Publisher">
     <eStructuralFeatures xsi:type="ecore:EReference" name="pubServer" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connectors" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Provider">
     <eStructuralFeatures xsi:type="ecore:EReference" name="provServer" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="connectors" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Connector"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ServiceBinding" eSuperTypes="#//Binding">
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="#//ServiceRef"

@@ -1,9 +1,9 @@
 package org.fornax.soa.scoping;
 
 import org.eclipse.emf.ecore.EObject;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.Enumeration;
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.SubNamespace;
 import org.fornax.soa.util.DslElementAccessor;
@@ -15,8 +15,8 @@ public class StateConstraintConfigurer {
 			SubNamespace ns = (SubNamespace)o;
 			if (ns.getLinkingPolicy() != null)
 				return ns.getLinkingPolicy().getMinDevState();
-			else
-				return LifecycleState.DEVELOPMENT;
+//			else
+//				return LifecycleState.DEVELOPMENT;
 		}
 		o = DslElementAccessor.INSTANCE.getVersionedOwner(o);
 		if (o instanceof BusinessObject) {
@@ -47,15 +47,16 @@ public class StateConstraintConfigurer {
 			else if(o.eContainer() instanceof SubNamespace && ((SubNamespace)o.eContainer()).getLinkingPolicy() != null && ((SubNamespace)o.eContainer()).getLinkingPolicy().getMinDevState() != null)
 				return ((SubNamespace)o.eContainer()).getLinkingPolicy().getMinDevState();
 		}
-		return LifecycleState.DEVELOPMENT;
+//		return LifecycleState.DEVELOPMENT;
+		return null;
 	}
 	
 	public static LifecycleState getMinTestState (EObject o) {
 		if (o instanceof SubNamespace)
 			if (((SubNamespace)o).getLinkingPolicy() != null)
 				return ((SubNamespace)o).getLinkingPolicy().getMinTestState();
-			else
-				return LifecycleState.TEST;
+//			else
+//				return LifecycleState.TEST;
 		o = DslElementAccessor.INSTANCE.getVersionedOwner(o);
 		if (o instanceof BusinessObject) {
 			BusinessObject bo = (BusinessObject)o;
@@ -85,7 +86,8 @@ public class StateConstraintConfigurer {
 			else if(o.eContainer() instanceof SubNamespace && ((SubNamespace)o.eContainer()).getLinkingPolicy() != null && ((SubNamespace)o.eContainer()).getLinkingPolicy().getMinTestState() != null)
 				return ((SubNamespace)o.eContainer()).getLinkingPolicy().getMinTestState();
 		}
-		return LifecycleState.TEST;
+//		return LifecycleState.TEST;
+		return null;
 	}
 	
 	public static LifecycleState getMinProdState (EObject o) {
@@ -93,7 +95,7 @@ public class StateConstraintConfigurer {
 			if (((SubNamespace)o).getLinkingPolicy() != null)
 				return ((SubNamespace)o).getLinkingPolicy().getMinProdState();
 			else
-				return LifecycleState.PRODUCTIVE;
+//				return LifecycleState.PRODUCTIVE;
 		o = DslElementAccessor.INSTANCE.getVersionedOwner(o);
 		if (o instanceof BusinessObject) {
 			BusinessObject bo = (BusinessObject)o;
@@ -123,7 +125,8 @@ public class StateConstraintConfigurer {
 			else if(o.eContainer() instanceof SubNamespace && ((SubNamespace)o.eContainer()).getLinkingPolicy() != null && ((SubNamespace)o.eContainer()).getLinkingPolicy().getMinProdState() != null)
 				return ((SubNamespace)o.eContainer()).getLinkingPolicy().getMinProdState();
 		}
-		return LifecycleState.PRODUCTIVE;
+//		return LifecycleState.PRODUCTIVE;
+		return null;
 	}
 
 }

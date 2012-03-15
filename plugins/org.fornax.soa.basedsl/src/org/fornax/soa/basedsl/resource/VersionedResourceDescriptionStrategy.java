@@ -10,7 +10,6 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.util.IAcceptor;
 import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
-import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
 
 import com.google.common.collect.Maps;
 
@@ -33,9 +32,6 @@ public class VersionedResourceDescriptionStrategy extends
 				String version = BaseDslVersionResolver.INSTANCE.getVersion(eObject);
 				if (version != null)
 					userData.put(VERSION_KEY, version);
-				String state = ServiceDslLifecycleStateResolver.INSTANCE.getLifecycleStateName(eObject);
-				if (state != null)
-					userData.put(STATE_KEY, state);
 				acceptor.accept (EObjectDescription.create(qualifiedName, eObject, userData));
 			}
 		} catch (Exception exc) {

@@ -1,65 +1,66 @@
 package org.fornax.soa.servicedsl.generator.templates.xsd
 
-import org.fornax.soa.serviceDsl.SubNamespace
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
-import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
-import org.fornax.soa.basedsl.generator.lifecycle.LifecycleQualifierExtensions
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
-import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.eclipse.xtext.generator.IFileSystemAccess
-import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceImportQueries
-import org.fornax.soa.servicedsl.generator.query.type.ReferencedTypesFinder
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
-import org.fornax.soa.serviceDsl.BusinessObject
-import org.fornax.soa.serviceDsl.Enumeration
-import org.fornax.soa.basedsl.generator.lifecycle.StateMatcher
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
-import org.fornax.soa.servicedsl.generator.query.ExceptionFinder
-import org.fornax.soa.serviceDsl.OrganizationNamespace
-import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
-import org.fornax.soa.serviceDsl.VersionedType
-import org.fornax.soa.serviceDsl.Property
-import org.fornax.soa.serviceDsl.Attribute
-import org.fornax.soa.serviceDsl.SimpleAttribute
-import org.fornax.soa.serviceDsl.Reference
-import org.fornax.soa.serviceDsl.EnumLiteral
-import org.fornax.soa.serviceDsl.TypeRef
-import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
-import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
 import com.google.inject.name.Named
+import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.eclipse.emf.ecore.EObject
+import org.fornax.soa.basedsl.generator.CommonStringExtensions
+import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.serviceDsl.Attribute
+import org.fornax.soa.serviceDsl.BusinessObject
+import org.fornax.soa.serviceDsl.EnumLiteral
+import org.fornax.soa.serviceDsl.Enumeration
+import org.fornax.soa.serviceDsl.Exception
+import org.fornax.soa.serviceDsl.OrganizationNamespace
+import org.fornax.soa.serviceDsl.Property
+import org.fornax.soa.serviceDsl.Reference
+import org.fornax.soa.serviceDsl.SimpleAttribute
+import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.serviceDsl.TypeRef
+import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
+import org.fornax.soa.servicedsl.generator.query.ExceptionFinder
+import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
+import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceImportQueries
+import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.servicedsl.generator.query.type.ReferencedTypesFinder
+import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 
 class XSDTemplates {
 
 
 	@Inject IFileSystemAccess fsa
 	
-	@Inject extension StateMatcher
 	@Inject extension VersionMatcher
 	@Inject extension CommonStringExtensions
 	@Inject extension SchemaNamespaceExtensions
 	@Inject extension SchemaTemplateExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ProfileSchemaTypeExtensions
-	@Inject extension VersionQualifierExtensions
 	@Inject extension VersionedTypeFilter
 	@Inject extension LifecycleQueries
-	@Inject extension LifecycleQualifierExtensions
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries
 	@Inject extension LatestMatchingTypeFinder
 	@Inject extension ReferencedTypesFinder
+	@Inject extension IStateMatcher
+	
 	@Inject ExceptionFinder exceptionFinder
 	
+	@Inject VersionQualifierExtensions versionQualifier
+
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
 	
 	@Inject
 	IQualifiedNameProvider nameProvider
+	
+	@Inject org.fornax.soa.profiledsl.generator.query.LifecycleQueries lifecycleQueries
 
 	/*
 		CARTRIDGE ENTRYPOINT for generation of XSDs from namespaces. 
@@ -69,11 +70,11 @@ class XSDTemplates {
 		given minimal LifecycleState.
 	*/
 	def dispatch toXSD (SubNamespace ns, String minState, org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile profile, String registryBaseUrl) {
-		ns.toXSD (stateByName (minState), profile, registryBaseUrl);
+		ns.toXSD (lifecycleQueries.stateByName (minState, ns.eResource), profile, registryBaseUrl);
 	}
 	
 	def dispatch toXSD (SubNamespace ns, String minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
-		ns.toXSD (stateByName (minState), profile, registryBaseUrl, noDeps, includeSubNamespaces);
+		ns.toXSD (lifecycleQueries.stateByName (minState, ns.eResource), profile, registryBaseUrl, noDeps, includeSubNamespaces);
 	}
 	
 	
@@ -88,7 +89,7 @@ class XSDTemplates {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl);
 			if ( ! noDependencies ) {
 				nsVer.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
-					.filter (e| !(e.subdomain == nsVer.subdomain && e.version.toMajorVersionNumber() == nsVer.version.toMajorVersionNumber()))
+					.filter (e| !(e.subdomain == nsVer.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(nsVer.version)))
 					.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl));
 			}
 		}
@@ -103,7 +104,7 @@ class XSDTemplates {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces);
 			if ( !noDeps) {
 				nsVer.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
-					.filter (e|!(e.subdomain == nsVer.subdomain && e.version.toMajorVersionNumber() == nsVer.version.toMajorVersionNumber()))
+					.filter (e|!(e.subdomain == nsVer.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(nsVer.version)))
 					.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces));
 			}
 		}
@@ -112,7 +113,7 @@ class XSDTemplates {
 	def dispatch toXSD (VersionedDomainNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		ns.toXSDVersion (minState, profile, registryBaseUrl);
 		ns.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
-				.filter(e| !(e.subdomain == ns.subdomain && e.version.toMajorVersionNumber() == ns.version.toMajorVersionNumber()))
+				.filter(e| !(e.subdomain == ns.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(ns.version)))
 				.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl));
 	}
 	
@@ -124,7 +125,7 @@ class XSDTemplates {
 		for (nsVer : ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()) {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl);
 			nsVer.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
-				.filter(e| !(e.subdomain == nsVer.subdomain && e.version.toMajorVersionNumber() == nsVer.version.toMajorVersionNumber()))
+				.filter(e| !(e.subdomain == nsVer.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(nsVer.version)))
 				.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl));
 		}
 	}
@@ -136,12 +137,12 @@ class XSDTemplates {
 	*/
 	def dispatch toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val imports = vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace());
-		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.state != LifecycleState::RETIRED)
-			.filter (e|e.state.matchesMinStateLevel(minState) && e.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(),  minState));
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)
+			.filter (e|minState.matches (e.state) && e.isLatestMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
-			.filter (en|en.state.matchesMinStateLevel (minState) && en.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(), minState));
+			.filter (en|minState.matches (en.state) && en.isLatestMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
-			.filter (ex|ex.state.matchesMinStateLevel(minState) && exceptionFinder.isLatestMatchingException (ex, vns.version.toMajorVersionNumber().asInteger(), minState));
+			.filter (ex|minState.matches (ex.state) && exceptionFinder.isLatestMatchingException (ex, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 
 		if (!bos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''
@@ -176,12 +177,12 @@ class XSDTemplates {
 
 	def dispatch toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val imports = vns.importedVersionedNS(minState).filter(e|e.toNamespace() != vns.toNamespace());
-		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.state != LifecycleState::RETIRED)
-			.filter (e|e.state.matchesMinStateLevel (minState) && e.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(),  minState));
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)
+			.filter (e|minState.matches (e.state) && e.isLatestMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
-			.filter (en|en.state.matchesMinStateLevel (minState) && en.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger(), minState));
+			.filter (en|minState.matches (en.state) && en.isLatestMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
-			.filter (e|e.state.matchesMinStateLevel(minState) && exceptionFinder.isLatestMatchingException (e, vns.version.toMajorVersionNumber().asInteger(), minState));
+			.filter (e|minState.matches (e.state) && exceptionFinder.isLatestMatchingException (e, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 
 		if (!bos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''
@@ -216,7 +217,7 @@ class XSDTemplates {
 	
 	
 	def dispatch toNamespaceDeclaration (VersionedDomainNamespace vns) '''
-		xmlns:«vns.toPrefix() + vns.version.toMajorVersionNumber()»="«vns.toNamespace()»"
+		xmlns:«vns.toPrefix() + versionQualifier.toMajorVersionNumber(vns.version)»="«vns.toNamespace()»"
 	'''
 	
 	def dispatch toImportDeclaration (VersionedDomainNamespace vns, String registryBaseUrl) '''
@@ -237,8 +238,8 @@ class XSDTemplates {
 		<xsd:complexType name="«bo.name»"«IF bo.abstract» abstract="true"«ENDIF»>
 			<xsd:annotation>
 		    	<xsd:documentation>
-					<![CDATA[Version:	«bo.version.toVersionNumber()»
-						Lifecycle state: «bo.state.toString()»
+					<![CDATA[Version:	«versionQualifier.toVersionNumber(bo.version)»
+						Lifecycle state: «bo.state.name»
 						«IF bo.doc != null»
 										
 							«bo.doc?.stripCommentBraces()?.trim()»
@@ -330,7 +331,7 @@ class XSDTemplates {
 			<xsd:annotation>
 				<xsd:documentation>
 					<![CDATA[
-						Version:	«en.version.toVersionNumber()»
+						Version:	«versionQualifier.toVersionNumber(en.version)»
 					«IF en.doc != null»
 						
 						«en.doc?.stripCommentBraces()?.trim()»
@@ -358,8 +359,8 @@ class XSDTemplates {
 			<xsd:annotation>
 				<xsd:documentation>
 					<![CDATA[
-						Version:			«ex.version.toVersionNumber()»
-					    Lifecycle state: 	«ex.state.toString()»
+						Version:			«versionQualifier.toVersionNumber(ex.version)»
+					    Lifecycle state: 	«ex.state.name»
 						«IF ex.doc != null»
 							
 							«ex.doc?.stripCommentBraces()?.trim()»

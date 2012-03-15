@@ -42,7 +42,7 @@ class WrappedWSDLTemplates {
 	
 	
 	def dispatch toWrappedWSDL (Service svc, SOAProfile profile, Environment environment) {
-		svc.toWrappedWSDL (environment.getMinLifecycleState (svc), profile, environment.getRegistryBaseUrl());
+		svc.toWrappedWSDL (environment.getMinLifecycleState (svc, profile.lifecycle), profile, environment.getRegistryBaseUrl());
 	}
 
 }

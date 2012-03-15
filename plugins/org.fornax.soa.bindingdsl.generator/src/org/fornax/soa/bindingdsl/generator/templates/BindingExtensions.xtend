@@ -1,38 +1,39 @@
 package org.fornax.soa.bindingdsl.generator.templates
 
 import com.google.inject.Inject
-import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.bindingDsl.DomainBinding
-import org.fornax.soa.bindingDsl.ServiceBinding
-import org.fornax.soa.bindingDsl.OperationBinding
-import org.fornax.soa.bindingDsl.ModuleBinding
-import org.fornax.soa.environmentDsl.Environment
-import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.bindingDsl.Binding
+import com.google.inject.name.Named
 import java.util.List
-import org.fornax.soa.bindingDsl.BindingProtocol
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
-import org.fornax.soa.environmentDsl.EnvironmentType
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.sOABaseDsl.Version
-import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.environmentDsl.Server
+import org.fornax.soa.bindingDsl.Binding
+import org.fornax.soa.bindingDsl.BindingProtocol
+import org.fornax.soa.bindingDsl.DomainBinding
+import org.fornax.soa.bindingDsl.ModuleBinding
+import org.fornax.soa.bindingDsl.OperationBinding
+import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.environmentDsl.AppServer
-import org.fornax.soa.serviceDsl.VISIBILITY
 import org.fornax.soa.environmentDsl.ESB
-import org.fornax.soa.basedsl.generator.lifecycle.StateMatcher
-import com.google.inject.name.Named
+import org.fornax.soa.environmentDsl.Environment
+import org.fornax.soa.environmentDsl.EnvironmentType
+import org.fornax.soa.environmentDsl.Server
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.serviceDsl.VISIBILITY
+import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
+import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
 
 class BindingExtensions {
 	
 	@Inject extension CommonStringExtensions
-	@Inject extension StateMatcher
 	@Inject extension NamespaceQuery
 	@Inject extension LifecycleQueries
-	@Inject extension VersionQualifierExtensions
+	@Inject VersionQualifierExtensions versionQualifier
+	@Inject IStateMatcher stateMatcher
 	
 	@Inject @Named ("generatePrivateWsdlForProviderHost") 
 	Boolean generatePrivateWsdlForProviderHost
@@ -124,29 +125,29 @@ class BindingExtensions {
 		b.protocol;
 	}
 	
-	def dispatch LifecycleState getMinLifecycleState (Environment env, EObject o) {
+	def dispatch LifecycleState getMinLifecycleState (Environment env, EObject o, Lifecycle l) {
 		switch (env.type) {
-			case EnvironmentType::DEV : 		o.toOwnerMinDevState()
-			case EnvironmentType::TEST:			o.toOwnerMinTestState()
-			case EnvironmentType::PRE_PROD :	o.toOwnerMinTestState()
-			case EnvironmentType::PROD :		o.toOwnerMinProdState()
-			default:							o.toOwnerMinDevState()
+			case EnvironmentType::DEV : 		o.toOwnerMinDevState(l)
+			case EnvironmentType::TEST:			o.toOwnerMinTestState(l)
+			case EnvironmentType::STAGING :		o.toOwnerMinTestState(l)
+			case EnvironmentType::PROD :		o.toOwnerMinProdState(l)
+			default:							o.toOwnerMinDevState(l)
 		}
 	}
 	
 	def dispatch String toModuleName (String moduleBaseName, Version v) {
-		moduleBaseName + "." + v.toVersionPostfix();
+		moduleBaseName + "." + versionQualifier.toVersionPostfix(v);
 	}
 			
 	def dispatch String toModuleName (SubNamespace subNs, Version v) {
-		subNs.findOrgNamespace().prefix + "."  + subNs.name + "." + v.toVersionPostfix();
+		subNs.findOrgNamespace().prefix + "."  + subNs.name + "." + versionQualifier.toVersionPostfix (v);
 	}
 			
 	def dispatch String toModuleName (SubNamespace subNs, Version v, String moduleName) {
 		if (moduleName != null) {
-			moduleName + "." + v.toVersionPostfix()
+			moduleName + "." + versionQualifier.toVersionPostfix(v)
 		} else {
-			subNs.findOrgNamespace().prefix + "."  + subNs.name + "." + v.toVersionPostfix();
+			subNs.findOrgNamespace().prefix + "."  + subNs.name + "." + versionQualifier.toVersionPostfix(v);
 		}
 	}
 	
@@ -177,6 +178,6 @@ class BindingExtensions {
 	}
 		
 	def dispatch boolean isEligibleForEnvironment (Service s, Environment env) {
-		s.state.matchesMinStateLevel (env.getMinLifecycleState(s));
+		stateMatcher.matches (env.getMinLifecycleState(s, s.state.eContainer as Lifecycle), s.state);
 	}
 }

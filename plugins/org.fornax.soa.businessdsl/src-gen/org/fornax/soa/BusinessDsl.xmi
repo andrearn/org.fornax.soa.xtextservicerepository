@@ -30,7 +30,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="org"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -46,7 +46,7 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Member"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
         </elements>
@@ -58,7 +58,7 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Organization"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="members" operator="+=">
@@ -74,7 +74,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="domain"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -90,7 +90,7 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Member"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
         </elements>
@@ -101,7 +101,7 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Member"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
         </elements>
@@ -112,7 +112,7 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Member"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
         </elements>
@@ -239,7 +239,7 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" feature="version" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="short-description"/>
         <elements xsi:type="xtext:Assignment" feature="shortDescription" operator="=">
@@ -268,7 +268,7 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Member"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
         </elements>
@@ -309,7 +309,7 @@
               <type metamodel="/0/@metamodelDeclarations.1">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
         </elements>
@@ -334,12 +334,12 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Capability"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" feature="version" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="short-description"/>
         <elements xsi:type="xtext:Assignment" feature="shortDescription" operator="=">
@@ -368,7 +368,7 @@
               <type metamodel="/0/@metamodelDeclarations.0">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Member"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
         </elements>
@@ -433,7 +433,7 @@
               <type metamodel="/0/@metamodelDeclarations.1">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
         </elements>
@@ -490,11 +490,11 @@
             <type metamodel="/0/@metamodelDeclarations.0">
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Capability"/>
             </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="versionRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.5"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
         </elements>
       </alternatives>
     </rules>
@@ -576,7 +576,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="import"/>
         <elements xsi:type="xtext:Assignment" feature="importedNamespace" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.10"/>
         </elements>
       </alternatives>
     </rules>
@@ -603,7 +603,7 @@
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionedName"/>
             </type>
           </elements>
-          <elements xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+          <elements xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
         </elements>
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
@@ -611,41 +611,6 @@
           <elements xsi:type="xtext:Assignment" feature="version" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.1"/>
           </elements>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="LifecycleState">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/proposed"/>
-          <literal value="proposed"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/defined"/>
-          <literal value="defined"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/development"/>
-          <literal value="development"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/test"/>
-          <literal value="test"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/productive"/>
-          <literal value="productive"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/deprecated"/>
-          <literal value="deprecated"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState/retired"/>
-          <literal value="retired"/>
         </elements>
       </alternatives>
     </rules>
@@ -665,11 +630,11 @@
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.5"/>
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.6"/>
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.7"/>
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.8"/>
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.9"/>
-        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.10"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="MinVersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
@@ -743,7 +708,7 @@
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+        <elements xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
         <elements xsi:type="xtext:Keyword" cardinality="?" value=".*"/>
       </alternatives>
     </rules>
@@ -766,7 +731,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="qualifier"/>
         <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
         </elements>
       </alternatives>
     </rules>

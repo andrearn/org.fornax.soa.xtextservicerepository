@@ -69,9 +69,9 @@ InternalNamespace:
 	
 LinkingPolicy :
 	'deployment-policy' '{'
-		'minimal-development-state' minDevState = LifecycleState 
-		'minimal-test-state' minTestState = LifecycleState
-		'minimal-production-state' minProdState = LifecycleState
+		'minimal-development-state' minDevState = [profileDsl::LifecycleState | QualifiedName] 
+		'minimal-test-state' minTestState = [profileDsl::LifecycleState | QualifiedName]
+		'minimal-production-state' minProdState = [profileDsl::LifecycleState | QualifiedName]
 	'}';
 	
 Type:
@@ -87,7 +87,7 @@ BusinessObject:
 		'metadata' '{'
 			version=Version 
 			('replaces' replaces=BusinessObjectRef)?
-			'lifecycle-state' state=LifecycleState
+			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
 			('retirement-on' retirementDate = STRING)?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
@@ -120,16 +120,21 @@ Property:
 	
 Attribute:
 	(doc=ML_COMMENT)?
-	(deprecated?='deprecated')? (optional?='optional')? (isBusinessKey?='business-key')? ((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? name=ID ':' type=TypeRef ;
+	(deprecated?='@deprecated')? 
+	((optional?='optional')? | (shallow?='shallow')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
+	((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? 
+	name=ID ':' type=TypeRef ;
 	
 //links to a target businessObject but uses it's business-key to resolve a reference, hence it is a weak reference
 Reference:
 	(doc=ML_COMMENT)?
-	(deprecated?='deprecated')? (optional?='optional')? (isBusinessKey?='business-key')? 'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef; 
+	(deprecated?='@deprecated')? 
+	((optional?='optional')? | (shallow?='shallow')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
+	'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef; 
 	
 SimpleAttribute:
 	(doc=ML_COMMENT)?
-	(deprecated?='deprecated')? (optional?='optional')? name=ID ':' type=TypeRef;
+	(deprecated?='@deprecated')? (optional?='optional')? name=ID ':' type=TypeRef;
 	
 Enumeration:
 	(doc=ML_COMMENT)?
@@ -137,7 +142,7 @@ Enumeration:
 		'metadata' '{'
 			version=Version  
 			('replaces' replaces=EnumTypeRef )?
-			'lifecycle-state' state=LifecycleState
+			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
 			('retirement-on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
@@ -149,7 +154,7 @@ Enumeration:
 	
 EnumLiteral: 
 	(doc=ML_COMMENT)?
-	(deprecated?='deprecated')? name=ID;
+	(deprecated?='@deprecated')? name=ID;
 	
 // -- Technical eternal entities
 
@@ -160,7 +165,7 @@ Service hidden(WS):
 	visibility=VISIBILITY 'service' name=ID '{'
 		'metadata' '{'
 			version=Version  
-			'lifecycle-state' state=LifecycleState 
+			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
 			'service-category' category=ServiceCategory 
 			'statefulness' statefulness=Statefulness 
@@ -225,7 +230,7 @@ GlobalEvent:
 		'metadata' '{'
 			version=Version  
 			('replaces' replaces=EventRef )?
-			'lifecycle-state' state=LifecycleState 
+			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] 
 			(governanceApproval=GovernanceApproval)?
 			('retirement-on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
@@ -259,7 +264,7 @@ Channel:
 	
 Operation:
 	(doc=ML_COMMENT)?
-	(deprecated?='deprecated')? mep=MEP name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
+	(deprecated?='@deprecated')? mep=MEP name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
 		('callback-listener-for' (callbackForOperation+=OperationRef) (',' callbackForOperation+=OperationRef)*)?
 		('publishes' '{'
 				(publishes+=PublishedEvent )+ 
@@ -294,7 +299,7 @@ Exception:
 		'metadata' '{'
 			version=Version  
 			('replaces' replaces=ExceptionRef )?
-			'lifecycle-state' state=LifecycleState 
+			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] 
 			(governanceApproval=GovernanceApproval)?
 			('retirement-on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
@@ -302,6 +307,7 @@ Exception:
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(properties+=SimpleAttribute)*
+		(wrappedExceptions+=ExceptionRef)*
 	'}';
 
 ExceptionRef:

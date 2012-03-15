@@ -48,9 +48,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InternalNamespace" eSuperTypes="#//SubNamespace"/>
   <eClassifiers xsi:type="ecore:EClass" name="LinkingPolicy">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minDevState" eType="ecore:EEnum http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minTestState" eType="ecore:EEnum http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="minProdState" eType="ecore:EEnum http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="minDevState" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="minTestState" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="minProdState" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Type"/>
   <eClassifiers xsi:type="ecore:EClass" name="VersionedType" eSuperTypes="#//Type">
@@ -58,7 +58,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="ecore:EEnum http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="retirementDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -103,7 +103,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="doc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deprecated" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="shallow" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isBusinessKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isProvidedKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="historized" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//TypeRef"
@@ -140,7 +142,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="ecore:EEnum http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="category" eType="#//ServiceCategory"/>
@@ -245,7 +247,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//EventRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="ecore:EEnum http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="retirementDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -321,7 +323,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//ExceptionRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="state" eType="ecore:EEnum http://www.fornax.org/soa/basedsl/SOABaseDsl#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="retirementDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -333,6 +335,8 @@
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
         eType="#//SimpleAttribute" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="wrappedExceptions" upperBound="-1"
+        eType="#//ExceptionRef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExceptionRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="exception" eType="#//Exception"/>

@@ -19,8 +19,6 @@ VersionId hidden(WS): INT('.'INT)*;
 
 VersionedName hidden(WS): {VersionedName} QualifiedName|ID (WS)* version=VersionId;
 
-enum LifecycleState: proposed | defined | development | test | productive | deprecated | retired;
-	
 Version hidden(WS):
 	'version' (version=VersionId) ;
 	

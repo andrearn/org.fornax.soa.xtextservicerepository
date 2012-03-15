@@ -11,9 +11,10 @@
       ecorePackage="EnvironmentDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//EnvironmentType">
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/Prod"/>
-      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/PreProd"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/Staging"/>
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/Test"/>
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/Dev"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/Local"/>
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EnvironmentType/Other"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//RegistryKind">
@@ -185,6 +186,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//DatabaseSchema/owner"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//Connector">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/isDefault"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/port"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/securityProtocol"/>
     </genClasses>
@@ -219,9 +222,7 @@
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//Tuxedo">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/version"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/port"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/securedPort"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/securityProtocol"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//JMS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JMS/version"/>
@@ -247,6 +248,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//POP3/securedPort"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//JCAConnectionSpec">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JCAConnectionSpec/isDefault"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JCAConnectionSpec/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JCAConnectionSpec/connectionFactoryJNDI"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JCAConnectionSpec/connectionFactoryClass"/>
     </genClasses>

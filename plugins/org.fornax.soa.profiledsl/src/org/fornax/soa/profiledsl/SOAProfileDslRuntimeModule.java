@@ -10,6 +10,10 @@ import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
+import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
+import org.fornax.soa.util.EnvironmentTypeComparator;
 
 import com.google.inject.Binder;
 
@@ -33,6 +37,18 @@ public class SOAProfileDslRuntimeModule extends org.fornax.soa.profiledsl.Abstra
 	
 	public void configureIEObjectDocumentationProvider (Binder binder) {
 		binder.bind(IEObjectDocumentationProvider.class).to(DocFeatureDocumationProvider.class);
+	}
+	
+	public Class<? extends IStateMatcher> bindIStateMatcher () {
+		return DefaultStateMatcher.class;
+	}
+	
+	public Class<? extends EnvironmentTypeComparator> bindEnvironmentTypeComparator () {
+		return EnvironmentTypeComparator.class;
+	}
+	
+	public Class<? extends LifecycleStateComparator> bindLifecycleStateComparator () {
+		return LifecycleStateComparator.class;
 	}
 
 }

@@ -5,6 +5,8 @@ package org.fornax.soa;
 
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
+import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -14,6 +16,11 @@ public class EnvironmentDslRuntimeModule extends org.fornax.soa.AbstractEnvironm
 	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
 	public Class<? extends IPluggableValidatorProvider> bindIPluggableValidatorProvider () {
 		return ReflectivePluggableValidatorProvider.class;
+	}
+	
+	@org.eclipse.xtext.service.SingletonBinding	
+	public Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector () {
+		return DefaultEnvironmentPerspectiveSelector.class;
 	}
 
 }

@@ -8,13 +8,19 @@
         eType="#//DataType" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="profiles" upperBound="-1"
         eType="#//SOAProfile" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="roles" upperBound="-1"
+        eType="#//Role" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SOAProfile">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="lifecycle" eType="#//Lifecycle"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="messaging" eType="#//Messaging"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="designRules" eType="#//DesignRules"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versioningRule" eType="#//VersioningRule"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="orgNamespaces" upperBound="-1"
         eType="#//OrganizationNamespace" containment="true"/>
@@ -22,6 +28,30 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scopedBasicTypes" upperBound="-1"
         eType="#//BasicTypes" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Lifecycle">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"
+        eType="#//LifecycleState" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LifecycleState">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isInitial" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEnd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="qualifiesFor" unique="false"
+        upperBound="-1" eType="ecore:EEnum ../../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiesForEnvironment"
+        unique="false" upperBound="-1" eType="ecore:EClass ../../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" upperBound="-1"
+        eType="#//Transition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Transition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="targetState" eType="#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="roles" unique="false" upperBound="-1"
+        eType="#//Role"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Role">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Messaging">
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeaders" upperBound="-1"
@@ -41,6 +71,9 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="noTrailingSlash" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="aliases" upperBound="-1"
         eType="#//BaseNamespaceAlias" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="VersioningRule">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="versioningStrategy" eType="#//VersioningStrategy"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BasicTypes">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -82,6 +115,10 @@
     <eLiterals name="REQUEST" literal="request"/>
     <eLiterals name="RESPONSE" value="1" literal="response"/>
     <eLiterals name="PUBLISH" value="2" literal="publish"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="VersioningStrategy">
+    <eLiterals name="NAMESPACE" literal="namespace-based"/>
+    <eLiterals name="NAME" value="1" literal="name-based"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AbstractProperty">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="doc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

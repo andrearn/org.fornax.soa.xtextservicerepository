@@ -6,8 +6,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
-import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 
 public class BaseDslVersionResolver implements VersionResolver {

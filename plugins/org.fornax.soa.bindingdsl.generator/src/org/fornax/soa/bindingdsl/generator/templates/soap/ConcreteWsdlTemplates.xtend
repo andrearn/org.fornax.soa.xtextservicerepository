@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import java.util.List
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.generator.lifecycle.StateMatcher
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.DomainBinding
@@ -20,10 +19,10 @@ import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.servicedsl.generator.query.ServiceFinder
+import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
-import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -39,7 +38,6 @@ class ConcreteWsdlTemplates {
 	@Inject extension EndpointResolver
 	@Inject extension BindingExtensions
 	@Inject extension SoapBindingResolver
-	@Inject extension StateMatcher
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
@@ -55,7 +53,7 @@ class ConcreteWsdlTemplates {
 	 */
 	def toWSDL (DomainBinding binding, BindingProtocol prot, SOAProfile profile) {
 		if (binding.subNamespace instanceof DomainNamespace) {
-			val services = binding.subNamespace.services.filter (e|e.isLatestMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e)));
+			val services = binding.subNamespace.services.filter (e|e.isLatestMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
 			services.forEach (s|s.toWSDL (binding, prot, profile)); 
 		}
 	}
@@ -70,7 +68,7 @@ class ConcreteWsdlTemplates {
 	
 	def toWSDLByServiceName (DomainBinding binding, List<String> serviceNames, BindingProtocol prot, SOAProfile profile) {
 		if (binding.subNamespace instanceof DomainNamespace) {
-			val services = binding.subNamespace.services.filter (e| serviceNames.contains (e.name) && e.isLatestMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e)));
+			val services = binding.subNamespace.services.filter (e| serviceNames.contains (e.name) && e.isLatestMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
 			services.forEach (s|s.toWSDL (binding, prot, profile));
 		}
 	}

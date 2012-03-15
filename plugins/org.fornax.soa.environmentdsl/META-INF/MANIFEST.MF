@@ -22,13 +22,14 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.0.0",
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa,
- org.fornax.soa.services,
  org.fornax.soa.environmentDsl,
  org.fornax.soa.environmentDsl.impl,
  org.fornax.soa.environmentDsl.util,
+ org.fornax.soa.formatting,
  org.fornax.soa.parseTreeConstruction,
  org.fornax.soa.parser.antlr,
  org.fornax.soa.parser.antlr.internal,
- org.fornax.soa.validation,
  org.fornax.soa.scoping,
- org.fornax.soa.formatting
+ org.fornax.soa.services,
+ org.fornax.soa.util,
+ org.fornax.soa.validation

@@ -1,6 +1,5 @@
 package org.fornax.soa.servicedsl.generator.templates
 
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.ServiceModel
 import org.fornax.soa.serviceDsl.DomainNamespace
@@ -16,6 +15,7 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 import com.google.inject.name.Named
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 class ServiceTemplates {
 	

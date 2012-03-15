@@ -9,7 +9,6 @@ import org.eclipse.emf.common.util.TreeIterator
 import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.basedsl.generator.CommonEObjectExtensions
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.serviceDsl.BusinessObjectRef
@@ -27,6 +26,7 @@ import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.query.type.TypesByLifecycleStateFinder
 import org.fornax.soa.basedsl.sOABaseDsl.Version
 import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 
 /*

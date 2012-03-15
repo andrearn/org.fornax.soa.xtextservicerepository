@@ -21,6 +21,9 @@ var svcGenModel = "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/forn
 var bizMetaModel="platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore"
 var bizGenModel="platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.genmodel"
 
+var envMetaModel = "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore"
+var envGenModel = "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.genmodel"
+
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
@@ -28,14 +31,17 @@ Workflow {
 		uriMap = { to = svcMetaModel from = "http://www.fornax.org/soa/ServiceDsl" }
 		uriMap = { to = bizMetaModel from = "http://www.fornax.org/soa/BusinessDsl" }
 		uriMap = { to = baseMetaModel from = "http://www.fornax.org/soa/basedsl/SOABaseDsl" }
+		uriMap = { to = envMetaModel from = "http://www.fornax.org/soa/EnvironmentDsl" }
 		registerEcoreFile = baseMetaModel
 		registerEcoreFile = semMetaModel
 		registerEcoreFile = svcMetaModel
 		registerEcoreFile = bizMetaModel
+		registerEcoreFile = envMetaModel
 		registerGenModelFile = baseGenModel
 		registerGenModelFile = semGenModel
 		registerGenModelFile = svcGenModel
 		registerGenModelFile = bizGenModel
+		registerGenModelFile = envGenModel
 	}
 
 	component = DirectoryCleaner {

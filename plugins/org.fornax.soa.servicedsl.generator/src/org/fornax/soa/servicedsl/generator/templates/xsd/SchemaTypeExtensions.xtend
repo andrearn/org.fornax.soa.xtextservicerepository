@@ -18,7 +18,6 @@ import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Attribute
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.servicedsl.generator.query.type.BusinessObjectQueries
 import org.fornax.soa.basedsl.generator.version.VersionMatcher
 import org.fornax.soa.serviceDsl.SubNamespace
@@ -33,6 +32,7 @@ import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataType
 import org.fornax.soa.profiledsl.sOAProfileDsl.EnumRef
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 /* types.ext */
 class SchemaTypeExtensions {

@@ -9,15 +9,6 @@
     editorPluginID="org.fornax.soa.basedsl.editor">
   <genPackages prefix="SOABaseDsl" basePackage="org.fornax.soa.basedsl" disposableProviderFactory="true"
       ecorePackage="SOABaseDsl.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOABaseDsl.ecore#//LifecycleState">
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/proposed"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/defined"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/development"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/test"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/productive"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/deprecated"/>
-      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//LifecycleState/retired"/>
-    </genEnums>
     <genClasses ecoreClass="SOABaseDsl.ecore#//Import">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Import/importedNamespace"/>
     </genClasses>

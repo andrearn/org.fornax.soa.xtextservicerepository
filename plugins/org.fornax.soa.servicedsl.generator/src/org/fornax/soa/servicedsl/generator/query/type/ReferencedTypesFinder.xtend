@@ -10,9 +10,9 @@ import org.fornax.soa.serviceDsl.Parameter
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.VersionedType
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import com.google.inject.Inject
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 class ReferencedTypesFinder {
 	

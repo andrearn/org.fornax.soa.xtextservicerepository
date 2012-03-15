@@ -7,9 +7,9 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Class
 import org.fornax.soa.profiledsl.sOAProfileDsl.Property
 import org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.Type
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType
 import java.util.ArrayList
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 class ReferencedTypesFinder {
 	

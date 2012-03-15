@@ -12,11 +12,17 @@ var runtimeProject = "../${projectName}"
 var baseMetaModel="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore"
 var baseGenModel="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel"
 
+var envMetaModel = "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore"
+var envGenModel = "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.genmodel"
+
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
 		uriMap = { to = baseMetaModel from = "http://www.fornax.org/soa/basedsl/SOABaseDsl" }
+		uriMap = { to = envMetaModel from = "http://www.fornax.org/soa/EnvironmentDsl" }
 		registerEcoreFile = baseMetaModel
+		registerEcoreFile = envMetaModel
+		registerGenModelFile = envGenModel
 	}
 
 	component = DirectoryCleaner {
@@ -41,7 +47,7 @@ Workflow {
 
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
-				referencedGenModels = "${baseGenModel}"
+				referencedGenModels = "${baseGenModel},${envGenModel}"
 			}
 
 			// the serialization component

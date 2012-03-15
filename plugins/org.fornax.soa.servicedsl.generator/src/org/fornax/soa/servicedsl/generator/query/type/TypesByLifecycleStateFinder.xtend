@@ -2,8 +2,6 @@ package org.fornax.soa.servicedsl.generator.query.type
 
 import com.google.inject.Inject
 import java.util.List
-import org.fornax.soa.basedsl.generator.lifecycle.StateMatcher
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
@@ -12,6 +10,8 @@ import java.util.Set
 import org.fornax.soa.servicedsl.VersionedDomainNamespace
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Enumeration
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.generator.query.StateMatcher
 
 class TypesByLifecycleStateFinder {
 	

@@ -3,7 +3,6 @@ package org.fornax.soa.basedsl.generator;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.fornax.soa.basedsl.SOABaseDslRuntimeModule;
-import org.fornax.soa.basedsl.generator.lifecycle.StateMatcher;
 import org.fornax.soa.basedsl.generator.version.VersionMatcher;
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions;
 import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
@@ -23,11 +22,6 @@ public class BaseDslGeneratorModule extends SOABaseDslRuntimeModule {
 	public Class<? extends VersionMatcher> bindVersionMatcher () {
 		return VersionMatcher.class;
 	}	
-
-	public Class<? extends StateMatcher> bindStateMatcher () {
-		return StateMatcher.class;
-	}
-	
 	
 	public Class<? extends IFileSystemAccess> bindIFileSystemAccess () {
 		return JavaIoFileSystemAccess.class;

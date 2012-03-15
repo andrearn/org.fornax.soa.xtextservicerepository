@@ -32,10 +32,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="EnvironmentType">
     <eLiterals name="Prod" literal="Production-Environment"/>
-    <eLiterals name="PreProd" value="1" literal="Pre-Production-Environment"/>
+    <eLiterals name="Staging" value="1" literal="Staging-Environment"/>
     <eLiterals name="Test" value="2" literal="Test-Environment"/>
     <eLiterals name="Dev" value="3" literal="Development-Environment"/>
-    <eLiterals name="Other" value="4" literal="Other-Environment"/>
+    <eLiterals name="Local" value="4" literal="Local-Environment"/>
+    <eLiterals name="Other" value="5" literal="Other-Environment"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Server">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -193,6 +194,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="owner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Connector">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDefault" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securityProtocol" eType="#//SecurityProtocol"/>
   </eClassifiers>
@@ -233,12 +236,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectionSpec" eType="#//JCAConnectionSpec"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Tuxedo">
+  <eClassifiers xsi:type="ecore:EClass" name="Tuxedo" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="securityProtocol" eType="#//SecurityProtocol"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JMS" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"
@@ -268,6 +269,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securedPort" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JCAConnectionSpec">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDefault" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectionFactoryJNDI"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="connectionFactoryClass"

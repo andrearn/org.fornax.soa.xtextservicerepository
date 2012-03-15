@@ -1,7 +1,6 @@
 package org.fornax.soa.servicedsl.generator.templates.webservice
 
 import org.fornax.soa.serviceDsl.DomainNamespace
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.Service
 import com.google.inject.Inject
@@ -23,6 +22,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import com.google.inject.name.Named
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 /*
  * Template class for generation of abstract WSDLs
@@ -62,7 +62,7 @@ class WSDLTemplates {
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(s.version)»
-				Lifecycle state: «s.state.toString()»
+				Lifecycle state: «s.state.name»
 				
 				«s.doc?.trim()?.stripCommentBraces()»
 			</wsdl:documentation>
@@ -92,7 +92,7 @@ class WSDLTemplates {
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «versionQualifier.toVersionNumber(s.version)»
-				Lifecycle state: «s.state.toString()»
+				Lifecycle state: «s.state.name»
 				
 				«s.doc?.trim()?.stripCommentBraces()»]]>
 			</wsdl:documentation>
@@ -220,7 +220,7 @@ class WSDLTemplates {
 			<wsdl:documentation>
 					<![CDATA[
 						Version:	«versionQualifier.toVersionNumber(s.version)»
-						Lifecycle state: «s.state.toString()»
+						Lifecycle state: «s.state.name»
 						«IF s.doc != null»
 
 							«s.doc?.stripCommentBraces().trim()»

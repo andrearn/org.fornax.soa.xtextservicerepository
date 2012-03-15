@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import java.util.List
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
 import org.fornax.soa.profiledsl.sOAProfileDsl.Property
@@ -22,6 +21,7 @@ import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.webservice.WsdlExtensions
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 class EventXSDTemplates {
 	

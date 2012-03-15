@@ -2,17 +2,10 @@ package org.fornax.soa.bindingdsl.generator.templates
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import java.util.HashSet
 import java.util.List
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.generator.lifecycle.StateMatcher
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
-import org.fornax.soa.bindingDsl.Binding
-import org.fornax.soa.bindingDsl.BindingModel
 import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
-import org.fornax.soa.bindingDsl.SOAP
-import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.bindingdsl.generator.queries.modules.ModuleBindingResolver
 import org.fornax.soa.bindingdsl.generator.queries.services.BindingServiceResolver
 import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
@@ -21,8 +14,6 @@ import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlTemplates
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.fornax.soa.serviceDsl.DomainNamespace
-import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
 import org.fornax.soa.servicedsl.generator.query.ServiceFinder
@@ -42,7 +33,6 @@ class BindingBuilder {
 	@Inject extension CommonStringExtensions
 	@Inject extension ServiceFinder
 	@Inject extension BindingExtensions
-	@Inject extension StateMatcher
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
@@ -110,7 +100,8 @@ class BindingBuilder {
 	
 	def toEvents (SubNamespace ns, List<Environment> environments, String targetEnv, List<SOAProfile> profiles, String profileName) { 
 		val env = environments.findFirst (e|e.name == targetEnv);
-		eventXsdGenerator.toEvents (ns,env.getMinLifecycleState(ns), profiles.findFirst (e|e.name == profileName), env.getRegistryBaseUrl());
+		val profile = profiles.findFirst (e|e.name == profileName);
+		eventXsdGenerator.toEvents (ns,env.getMinLifecycleState(ns, profile.lifecycle), profile, env.getRegistryBaseUrl());
 	}
 	
 }

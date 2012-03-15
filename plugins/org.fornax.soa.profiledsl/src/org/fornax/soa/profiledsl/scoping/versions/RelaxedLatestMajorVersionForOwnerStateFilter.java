@@ -1,15 +1,17 @@
-package org.fornax.soa.basedsl.scoping.versions;
+package org.fornax.soa.profiledsl.scoping.versions;
 
 import java.util.Collections;
-import java.util.Map;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
+import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
+import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
 import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
+import com.google.inject.Inject;
 
 /**
  * A filter of potential references in scope matching the version constraint and
@@ -29,6 +31,9 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 	private LifecycleState minTestLifecycleState;
 	private LifecycleState minProdLifecycleState;
 	private LifecycleStateResolver stateResolver;
+	
+	@Inject
+	private	IStateMatcher stateMatcher;
 	
 	public RelaxedLatestMajorVersionForOwnerStateFilter (VersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState, LifecycleState minDevLifecycleState, LifecycleState minTestLifecycleState, LifecycleState minProdLifecycleState) {
 		this.majorVersion = majorVersion;
@@ -87,24 +92,10 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 		final LifecycleState state = stateResolver.getLifecycleState(description);
 		if (state == null && ownerLifecycleState != null) {
 			return true;
-		} else if (ownerLifecycleState == LifecycleState.RETIRED) {
+		} else if (ownerLifecycleState != null && (ownerLifecycleState.isIsEnd() || ownerLifecycleState.isIsInitial())) {
 			return true;
-		} else if (ownerLifecycleState == LifecycleState.DEFINED && state != LifecycleState.RETIRED) {
-			return LifecycleStateComparator.compare(ownerLifecycleState, state) >= 0 || LifecycleStateComparator.compare(minDevLifecycleState, state) >= 0;
-		} else if (ownerLifecycleState == LifecycleState.DEVELOPMENT && state != LifecycleState.RETIRED) {
-			return LifecycleStateComparator.compare(ownerLifecycleState, state) >= 0 || LifecycleStateComparator.compare(minDevLifecycleState, state) >= 0;
-		} else if (ownerLifecycleState == LifecycleState.TEST && state != LifecycleState.RETIRED) {
-			return LifecycleStateComparator.compare(ownerLifecycleState, state) >= 0 || LifecycleStateComparator.compare(minTestLifecycleState, state) >= 0;
-		} else if (ownerLifecycleState == LifecycleState.PRODUCTIVE && state != LifecycleState.RETIRED) {
-			return LifecycleStateComparator.compare(ownerLifecycleState, state) >= 0 || LifecycleStateComparator.compare(minProdLifecycleState, state) >= 0;
-		} else if (ownerLifecycleState == LifecycleState.DEPRECATED && state != LifecycleState.RETIRED) {
-			return LifecycleStateComparator.compare(ownerLifecycleState, state) >= 0 || LifecycleStateComparator.compare(minProdLifecycleState, state) >= 0;
-		} else if (ownerLifecycleState == LifecycleState.PROPOSED && state != LifecycleState.RETIRED) {
-			return LifecycleStateComparator.compare(ownerLifecycleState, state) >= 0 || LifecycleStateComparator.compare(minDevLifecycleState, state) >= 0;
-		} else {
-			return false;
 		}
-		
+		return getStateMatcher().matches (ownerLifecycleState, state, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
 	}
 	
 
@@ -185,6 +176,14 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 		if (ownerLifecycleState != other.ownerLifecycleState)
 			return false;
 		return true;
+	}
+
+	public void setStateMatcher(IStateMatcher stateMatcher) {
+		this.stateMatcher = stateMatcher;
+	}
+
+	public IStateMatcher getStateMatcher() {
+		return stateMatcher;
 	}
 	
 

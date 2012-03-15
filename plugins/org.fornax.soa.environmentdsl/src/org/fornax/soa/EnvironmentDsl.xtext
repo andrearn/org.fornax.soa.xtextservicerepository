@@ -37,7 +37,7 @@ Environment :
 		('default' 'Broker' defaultBroker=[Broker])? 
 	'}';
 	
-enum EnvironmentType : Prod = "Production-Environment" | PreProd="Pre-Production-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Other="Other-Environment";
+enum EnvironmentType : Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
 
 Server  hidden (WS): ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP;
 
@@ -269,12 +269,12 @@ DatabaseSchema:
 
 
 Connector:
-	SOAPHTTP | SOAPJMS | REST | EJB | JMS | AMQP | IIOP | RMI | RFC | FTP | IMAP | POP3 | SMTP | HTTP | TCP
+	SOAPHTTP | SOAPJMS | REST | EJB | JMS | AMQP | IIOP | RMI | Tuxedo | RFC | FTP | IMAP | POP3 | SMTP | HTTP | TCP
 ;
 
 SOAPHTTP:
 	{SOAPHTTP}
-	'SOAP/HTTP' '{'
+	(isDefault?='default')? 'SOAP/HTTP' name=ID '{'
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -284,7 +284,7 @@ SOAPHTTP:
 	'}';
 
 SOAPJMS:
-	'SOAP/JMS' '{'
+	(isDefault?='default')? 'SOAP/JMS' name=ID '{'
 		('versions' (version+=STRING)+)?
 		'port' port=INT
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -294,7 +294,7 @@ SOAPJMS:
 
 REST:
 	{REST}
-	'REST' '{'
+	(isDefault?='default')? 'REST' name=ID '{'
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -303,7 +303,7 @@ REST:
 
 EJB:
 	{EJB}
-	'EJB' '{'
+	(isDefault?='default')? 'EJB' name=ID '{'
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -313,7 +313,7 @@ EJB:
 
 IIOP:
 	{IIOP}
-	'IIOP' '{'
+	(isDefault?='default')? 'IIOP' name=ID '{'
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -324,7 +324,7 @@ IIOP:
 
 RMI:
 	{RMI}
-	'RMI' '{'
+	(isDefault?='default')? 'RMI' name=ID '{'
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -335,7 +335,7 @@ RMI:
 
 Tuxedo:
 	{Tuxedo}
-	'Tuxedo' '{'
+	(isDefault?='default')? 'Tuxedo' name=ID '{'
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -344,7 +344,7 @@ Tuxedo:
 ;
 
 JMS:
-	'JMS' '{'
+	(isDefault?='default')? 'JMS' name=ID '{'
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -355,7 +355,7 @@ JMS:
 
 AMQP:
 	{AMQP}
-	'AMQP' '{'
+	(isDefault?='default')? 'AMQP' name=ID '{'
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -366,7 +366,7 @@ AMQP:
 
 RFC: 
 	{RFC}
-	'RFC' '{'
+	(isDefault?='default')? 'RFC' name=ID '{'
 		('port' port=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
 		(connectionSpec=JCAConnectionSpec)?
@@ -374,7 +374,7 @@ RFC:
 
 FTP:
 	{FTP}
-	'FTP' '{'
+	(isDefault?='default')? 'FTP' name=ID '{'
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -382,7 +382,7 @@ FTP:
 
 IMAP:
 	{IMAP}
-	'IMAP' '{'
+	(isDefault?='default')? 'IMAP' name=ID '{'
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -390,21 +390,21 @@ IMAP:
 
 POP3:
 	{POP3}
-	'POP3' '{'
+	(isDefault?='default')? 'POP3' name=ID '{'
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
 	'}';
 
 JCAConnectionSpec:
-	'JCA-connection-spec' '{'
+	(isDefault?='default')? 'JCA-connection-spec' name=ID '{'
 		'connection-factory-JNDI-name' connectionFactoryJNDI = STRING
 		('connection-factory-class' connectionFactoryClass = STRING)?
 	'}';
 
 SMTP:
 	{SMTP}
-	'SMTP' '{'
+	(isDefault?='default')? 'SMTP' name=ID '{'
 		('port' port=INT)?
 		('secured-port' securedPort = INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -412,7 +412,7 @@ SMTP:
 
 HTTP:
 	{HTTP}
-	'HTTP' '{'
+	(isDefault?='default')? 'HTTP' name=ID '{'
 		('port' port=INT)?
 		('secured-port' securedPort = INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -420,7 +420,7 @@ HTTP:
 	'}';
 
 TCP:
-	'TCP' '{'
+	(isDefault?='default')? 'TCP' name=ID '{'
 		'port' port = INT
 		('security-protocol' securityProtocol=SecurityProtocol)?
 	'}';

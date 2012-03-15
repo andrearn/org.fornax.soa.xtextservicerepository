@@ -2,30 +2,28 @@ package org.fornax.soa.bindingdsl.generator.templates.xsd
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import java.util.HashSet
 import java.util.List
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.generator.lifecycle.StateMatcher
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState
-import org.fornax.soa.bindingDsl.Binding
-import org.fornax.soa.bindingDsl.BindingModel
 import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
-import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
 import org.fornax.soa.bindingdsl.generator.queries.modules.ModuleBindingResolver
 import org.fornax.soa.bindingdsl.generator.queries.services.BindingServiceResolver
+import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
+import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 
 class XSDTemplates {
 
 	@Inject extension BindingExtensions
 	@Inject extension BindingServiceResolver
 	@Inject extension ModuleBindingResolver
+	@Inject extension LifecycleQueries
 		
 	
 	@Inject org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates 					xsdGenerator
@@ -41,11 +39,11 @@ class XSDTemplates {
 	
 	
 	def toXSD (SubNamespace ns, Environment env, SOAProfile profile) {
-		xsdGenerator.toXSD (ns, env.getMinLifecycleState (ns), profile, env.getRegistryBaseUrl());
+		xsdGenerator.toXSD (ns, env.getMinLifecycleState (ns, profile.lifecycle), profile, env.getRegistryBaseUrl());
 	}
 	
 	def toXSD (VersionedDomainNamespace ns, Environment env, SOAProfile profile) {
-		xsdGenerator.toXSD (ns, env.getMinLifecycleState (ns.subdomain as SubNamespace), profile, env.getRegistryBaseUrl());
+		xsdGenerator.toXSD (ns, env.getMinLifecycleState (ns.subdomain as SubNamespace, profile.lifecycle), profile, env.getRegistryBaseUrl());
 	}
 	
 	/*
@@ -64,7 +62,7 @@ class XSDTemplates {
 		Environment can be chosen.
 	*/
 	def dispatch void toXSD (SubNamespace ns, DomainBinding bind, SOAProfile profile) {
-		ns.toXSD (bind.environment.getMinLifecycleState (ns), bind, profile);
+		ns.toXSD (bind.environment.getMinLifecycleState (ns, profile.lifecycle), bind, profile);
 	}
 	
 	/*
@@ -81,15 +79,15 @@ class XSDTemplates {
 		Environment can be chosen.
 	*/
 	def toXSD (SubNamespace ns, LifecycleState minState, DomainBinding bind, SOAProfile profile) {
-		xsdGenerator.toXSD (ns, bind.environment.getMinLifecycleState(ns), profile, bind.getRegistryBaseUrl());
+		xsdGenerator.toXSD (ns, bind.environment.getMinLifecycleState(ns, profile.lifecycle), profile, bind.getRegistryBaseUrl());
 	}
 
 	def toXSD (VersionedDomainNamespace ns, LifecycleState minState, DomainBinding bind, SOAProfile profile) {
-		xsdGenerator.toXSD (ns, bind.environment.getMinLifecycleState(ns.subdomain as SubNamespace), profile, bind.getRegistryBaseUrl());
+		xsdGenerator.toXSD (ns, bind.environment.getMinLifecycleState(ns.subdomain as SubNamespace, profile.lifecycle), profile, bind.getRegistryBaseUrl());
 	}
 	
 	def toXSD (VersionedDomainNamespace ns, LifecycleState minState, ModuleBinding bind, SOAProfile profile) {
-		xsdGenerator.toXSD (ns, bind.environment.getMinLifecycleState(ns.subdomain as SubNamespace), profile, bind.getRegistryBaseUrl());
+		xsdGenerator.toXSD (ns, bind.environment.getMinLifecycleState(ns.subdomain as SubNamespace, profile.lifecycle), profile, bind.getRegistryBaseUrl());
 	}
 	
 	
