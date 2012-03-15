@@ -2,11 +2,14 @@ package org.fornax.soa.servicedsl.test;
 
 import org.eclipse.xtext.junit.AbstractXtextTests;
 import org.fornax.soa.ServiceDslStandaloneSetup;
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
+import org.fornax.soa.environmentDsl.EnvironmentType;
+import org.fornax.soa.profiledsl.SOAProfileDslStandaloneSetup;
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslFactory;
 import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
@@ -54,12 +57,74 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 	protected Attribute attr1Bos2;
 	protected LinkingPolicy pol;
 	protected LinkingPolicy svcpol;
+	
+	protected LifecycleState proposed;
+	protected LifecycleState defined;
+	protected LifecycleState development;
+	protected LifecycleState test;
+	protected LifecycleState productive;
+	protected LifecycleState deprecated;
+	protected LifecycleState retired;
+	
+	private Lifecycle lifecycle;
 
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
 		with (ServiceDslStandaloneSetup.class);
+		SOAProfileDslFactory factory = SOAProfileDslFactory.eINSTANCE;
+		lifecycle = factory.createLifecycle ();
+		proposed = factory.createLifecycleState ();
+		proposed.setName ("proposed");
+		proposed.setIsInitial (true);
+		proposed.getQualifiesFor ().add (EnvironmentType.LOCAL);
+		proposed.getQualifiesFor ().add (EnvironmentType.DEV);
 		
+		defined = factory.createLifecycleState ();
+		defined.setName ("defined");
+		defined.getQualifiesFor ().add (EnvironmentType.LOCAL);
+		defined.getQualifiesFor ().add (EnvironmentType.DEV);
+		
+		development = factory.createLifecycleState ();
+		development.setName ("development");
+		development.getQualifiesFor ().add (EnvironmentType.LOCAL);
+		development.getQualifiesFor ().add (EnvironmentType.DEV);
+		
+		test = factory.createLifecycleState ();
+		test.setName ("test");
+		test.getQualifiesFor ().add (EnvironmentType.LOCAL);
+		test.getQualifiesFor ().add (EnvironmentType.DEV);
+		test.getQualifiesFor ().add (EnvironmentType.TEST);
+		test.getQualifiesFor ().add (EnvironmentType.STAGING);
+		
+		productive = factory.createLifecycleState ();
+		productive.setName ("productive");
+		productive.getQualifiesFor ().add (EnvironmentType.LOCAL);
+		productive.getQualifiesFor ().add (EnvironmentType.DEV);
+		productive.getQualifiesFor ().add (EnvironmentType.TEST);
+		productive.getQualifiesFor ().add (EnvironmentType.STAGING);
+		productive.getQualifiesFor ().add (EnvironmentType.PROD);
+		
+		deprecated = factory.createLifecycleState ();
+		deprecated.setName ("deprecated");
+		deprecated.getQualifiesFor ().add (EnvironmentType.LOCAL);
+		deprecated.getQualifiesFor ().add (EnvironmentType.DEV);
+		deprecated.getQualifiesFor ().add (EnvironmentType.TEST);
+		deprecated.getQualifiesFor ().add (EnvironmentType.STAGING);
+		deprecated.getQualifiesFor ().add (EnvironmentType.PROD);
+		
+		retired = factory.createLifecycleState ();
+		retired.setName ("retired");
+		retired.setIsEnd (true);
+		
+		lifecycle.getStates ().add (proposed);
+		lifecycle.getStates ().add (defined);
+		lifecycle.getStates ().add (development);
+		lifecycle.getStates ().add (test);
+		lifecycle.getStates ().add (productive);
+		lifecycle.getStates ().add (deprecated);
+		lifecycle.getStates ().add (retired);
+
 		SOABaseDslFactory baseDslFactory = SOABaseDslFactory.eINSTANCE;
 		SOAProfileDslFactory profDslFactory = SOAProfileDslFactory.eINSTANCE;
 		ServiceDslFactory dslFactory = ServiceDslFactory.eINSTANCE;
@@ -68,7 +133,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		Version v1 = baseDslFactory.createVersion();
 		v1.setVersion ("1.0");
 		bo1.setVersion(v1);
-		bo1.setState(LifecycleState.DEVELOPMENT);
+		bo1.setState(development);
 		
 		org.fornax.soa.profiledsl.sOAProfileDsl.DataType stringType = profDslFactory.createDataType();
 		stringType.setName("string");
@@ -87,7 +152,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		v2.setVersion("1.0");
 
 		bo2.setVersion(v2);
-		bo2.setState(LifecycleState.DEFINED);
+		bo2.setState(defined);
 		
 		bo1_2_TypeRef = dslFactory.createVersionedTypeRef();
 		bo1_2_TypeRef.setType(bo2);
@@ -116,7 +181,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		Version v3 = baseDslFactory.createVersion();
 		v3.setVersion("1.0");
 		bo3.setVersion(v3);
-		bo3.setState(LifecycleState.DEVELOPMENT);
+		bo3.setState(development);
 
 		attrBo3 = dslFactory.createAttribute();
 		attrBo3.setName("attr3");
@@ -137,7 +202,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		Version v4 = baseDslFactory.createVersion();
 		v4.setVersion("1.0");
 		bo4.setVersion(v4);
-		bo4.setState(LifecycleState.DEVELOPMENT);
+		bo4.setState(development);
 		
 		bo4.getProperties().add (attrBo4);
 
@@ -160,7 +225,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		s = dslFactory.createService();
 		s.setName("TestService");
 		s.setVersion(v1);
-		s.setState(LifecycleState.DEVELOPMENT);
+		s.setState(development);
 		
 		op = dslFactory.createOperation();
 		p  = dslFactory.createParameter();
@@ -190,7 +255,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		en.getLiterals().add(lit);
 		en.setName("Enum1");
 		en.setVersion(v1);
-		en.setState(LifecycleState.DEFINED);
+		en.setState(defined);
 		
 		dns = dslFactory.createDomainNamespace();
 		dns.setName("domain");
@@ -199,14 +264,14 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		dns.getServices().add(s);
 		
 		pol = dslFactory.createLinkingPolicy();
-		pol.setMinDevState(LifecycleState.DEFINED);
-		pol.setMinTestState(LifecycleState.DEVELOPMENT);
-		pol.setMinProdState(LifecycleState.TEST);
+		pol.setMinDevState(defined);
+		pol.setMinTestState(development);
+		pol.setMinProdState(test);
+		svcpol = dslFactory.createLinkingPolicy ();
 		
-		svcpol = dslFactory.createLinkingPolicy();
-		svcpol.setMinDevState(LifecycleState.PROPOSED);
-		svcpol.setMinTestState(LifecycleState.TEST);
-		svcpol.setMinProdState(LifecycleState.PRODUCTIVE);
+		svcpol.setMinDevState(proposed);
+		svcpol.setMinTestState(test);
+		svcpol.setMinProdState(productive);
 		
 		s.setLinkingPolicy(svcpol);
 		dns.setLinkingPolicy(pol);

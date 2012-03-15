@@ -1,18 +1,17 @@
 package org.fornax.soa.scoping.versions;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
-import org.fornax.soa.basedsl.scoping.versions.LatestMajorVersionForOwnerStateFilter;
-import org.fornax.soa.basedsl.scoping.versions.LifecycleStateResolver;
-import org.fornax.soa.basedsl.scoping.versions.ServiceDslLifecycleStateResolver;
 import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.LatestMajorVersionForOwnerStateFilter;
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.servicedsl.test.BaseServiceDslTest;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 
 public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTest {
 
@@ -22,21 +21,29 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 	private LatestMajorVersionForOwnerStateFilter defFilter;
 	private LatestMajorVersionForOwnerStateFilter propFilter;
 	private LatestMajorVersionForOwnerStateFilter deprFilter;
+	
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
 		VersionResolver verRes = new BaseDslVersionResolver(null);
-		LifecycleStateResolver stateResolver = new ServiceDslLifecycleStateResolver(null);
+		LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver(null);
 		String majorVersion = "1";
-		LifecycleState minDevLifecycleState = LifecycleState.DEFINED;
-		LifecycleState minTestLifecycleState = LifecycleState.TEST;
-		LifecycleState minProdLifecycleState = LifecycleState.PRODUCTIVE;
-		devFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , LifecycleState.DEVELOPMENT, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
-		testFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , LifecycleState.TEST, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
-		prodFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , LifecycleState.PRODUCTIVE, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
-		defFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , LifecycleState.DEFINED, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
-		propFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , LifecycleState.PROPOSED, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
-		deprFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , LifecycleState.DEPRECATED, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
+		LifecycleState minDevLifecycleState = defined;
+		LifecycleState minTestLifecycleState = test;
+		LifecycleState minProdLifecycleState = productive;
+		devFilter =  new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , development, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
+		testFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , test, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
+		prodFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , productive, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
+		defFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , defined, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
+		propFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , proposed, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
+		deprFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , deprecated, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
+		
+		getInjector().injectMembers (devFilter);
+		getInjector().injectMembers (testFilter);
+		getInjector().injectMembers (prodFilter);
+		getInjector().injectMembers (defFilter);
+		getInjector().injectMembers (propFilter);
+		getInjector().injectMembers (deprFilter);
 	}
 
 	
@@ -52,21 +59,21 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 
 	@Test
 	public void testStateMatches() {
-		assertFalse (devFilter.stateMatches(LifecycleState.PROPOSED));
-		assertTrue (devFilter.stateMatches(LifecycleState.DEFINED));
-		assertTrue (devFilter.stateMatches(LifecycleState.DEVELOPMENT));
-		assertTrue (defFilter.stateMatches(LifecycleState.DEFINED));
-		assertFalse (testFilter.stateMatches(LifecycleState.DEVELOPMENT));
-		assertFalse (prodFilter.stateMatches(LifecycleState.TEST));
-		assertTrue (testFilter.stateMatches(LifecycleState.TEST));
-		assertTrue (prodFilter.stateMatches(LifecycleState.PRODUCTIVE));
-		assertTrue (deprFilter.stateMatches(LifecycleState.PRODUCTIVE));
-		assertTrue (deprFilter.stateMatches(LifecycleState.DEPRECATED));
-		assertFalse (defFilter.stateMatches(LifecycleState.RETIRED));
-		assertFalse (devFilter.stateMatches(LifecycleState.RETIRED));
-		assertFalse (testFilter.stateMatches(LifecycleState.RETIRED));
-		assertFalse (prodFilter.stateMatches(LifecycleState.RETIRED));
-		assertFalse (deprFilter.stateMatches(LifecycleState.RETIRED));
+		assertFalse (devFilter.stateMatches(proposed));
+		assertTrue (devFilter.stateMatches(defined));
+		assertTrue (devFilter.stateMatches(development));
+		assertTrue (defFilter.stateMatches(defined));
+		assertFalse (testFilter.stateMatches(development));
+		assertFalse (prodFilter.stateMatches(test));
+		assertTrue (testFilter.stateMatches(test));
+		assertTrue (prodFilter.stateMatches(productive));
+		assertTrue (deprFilter.stateMatches(productive));
+		assertTrue (deprFilter.stateMatches(deprecated));
+		assertFalse (defFilter.stateMatches(retired));
+		assertFalse (devFilter.stateMatches(retired));
+		assertFalse (testFilter.stateMatches(retired));
+		assertFalse (prodFilter.stateMatches(retired));
+		assertFalse (deprFilter.stateMatches(retired));
 		
 	}
 

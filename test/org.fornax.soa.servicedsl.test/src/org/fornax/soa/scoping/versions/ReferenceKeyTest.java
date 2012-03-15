@@ -26,9 +26,9 @@ public class ReferenceKeyTest {
 	
 	@Test
 	public void testVersionRefComparison () {
-		Assert.assertTrue(major1.equals(major11));
+		Assert.assertTrue(major1.getMajorVersion () == (major11.getMajorVersion ()));
 		
-		Assert.assertFalse (major1.equals(major2));
+		Assert.assertFalse (major1.getMajorVersion () == major2.getMajorVersion ());
 	}
 
 }

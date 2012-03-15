@@ -2,103 +2,96 @@ package org.fornax.soa.servicedsl.test.scoping.version;
 
 import static org.junit.Assert.assertEquals;
 
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
-import org.fornax.soa.basedsl.scoping.versions.LifecycleStateComparator;
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
+import org.fornax.soa.servicedsl.test.BaseServiceDslTest;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LifecycleStateComparatorTest {
-	
-	private LifecycleState proposedState;
-	private LifecycleState definedState;
-	private LifecycleState developmentState;
-	private LifecycleState testState;
-	private LifecycleState productiveState;
-	private LifecycleState deprecatedState;
-	private LifecycleState retiredState;
+import com.google.inject.Inject;
+
+public class LifecycleStateComparatorTest extends BaseServiceDslTest {
 	
 
+	private LifecycleStateComparator comparator;
+	
 	@Before
 	public void setUp() throws Exception {
-		proposedState = LifecycleState.PROPOSED;
-		definedState = LifecycleState.DEFINED;
-		developmentState = LifecycleState.DEVELOPMENT;
-		testState = LifecycleState.TEST;
-		productiveState = LifecycleState.PRODUCTIVE;
-		deprecatedState = LifecycleState.DEPRECATED;
-		retiredState = LifecycleState.RETIRED;
+		super.setUp ();
+		comparator = getInjector ().getInstance (LifecycleStateComparator.class);
+		
 	}
 
 	@Test
 	public void testCompareEqualStates() {
-		assertEquals(0, LifecycleStateComparator.compare(proposedState, proposedState));
-		assertEquals(0, LifecycleStateComparator.compare(definedState, definedState));
-		assertEquals(0, LifecycleStateComparator.compare(developmentState, developmentState));
-		assertEquals(0, LifecycleStateComparator.compare(testState, testState));
-		assertEquals(0, LifecycleStateComparator.compare(productiveState, productiveState));
-		assertEquals(0, LifecycleStateComparator.compare(deprecatedState, deprecatedState));
-		assertEquals(0, LifecycleStateComparator.compare(retiredState, retiredState));
+		assertEquals(0, comparator.compare(proposed, proposed));
+		assertEquals(0, comparator.compare(defined, defined));
+		assertEquals(0, comparator.compare(development, development));
+		assertEquals(0, comparator.compare(test, test));
+		assertEquals(0, comparator.compare(productive, productive));
+		assertEquals(0, comparator.compare(deprecated, deprecated));
+		assertEquals(0, comparator.compare(retired, retired));
 		
 	}
 	
 	@Test
 	public void testCompareHigherStates() {
-		assertEquals(1, LifecycleStateComparator.compare(proposedState, definedState));
-		assertEquals(1, LifecycleStateComparator.compare(proposedState, developmentState));
-		assertEquals(1, LifecycleStateComparator.compare(proposedState, testState));
-		assertEquals(1, LifecycleStateComparator.compare(proposedState, productiveState));
-		assertEquals(1, LifecycleStateComparator.compare(proposedState, deprecatedState));
-		assertEquals(1, LifecycleStateComparator.compare(proposedState, retiredState));
+		assertEquals(-1, comparator.compare(proposed, defined));
+		assertEquals(-1, comparator.compare(proposed, development));
+		assertEquals(-1, comparator.compare(proposed, test));
+		assertEquals(-1, comparator.compare(proposed, productive));
+		assertEquals(-1, comparator.compare(proposed, deprecated));
+		assertEquals(-1, comparator.compare(proposed, retired));
 
-		assertEquals(1, LifecycleStateComparator.compare(definedState, developmentState));
-		assertEquals(1, LifecycleStateComparator.compare(definedState, testState));
-		assertEquals(1, LifecycleStateComparator.compare(definedState, productiveState));
-		assertEquals(1, LifecycleStateComparator.compare(definedState, deprecatedState));
-		assertEquals(1, LifecycleStateComparator.compare(definedState, retiredState));
+		assertEquals(-1, comparator.compare(defined, development));
+		assertEquals(-1, comparator.compare(defined, test));
+		assertEquals(-1, comparator.compare(defined, productive));
+		assertEquals(-1, comparator.compare(defined, deprecated));
+		assertEquals(-1, comparator.compare(defined, retired));
 
-		assertEquals(1, LifecycleStateComparator.compare(developmentState, testState));
-		assertEquals(1, LifecycleStateComparator.compare(developmentState, productiveState));
-		assertEquals(1, LifecycleStateComparator.compare(developmentState, deprecatedState));
-		assertEquals(1, LifecycleStateComparator.compare(developmentState, retiredState));
+		assertEquals(-1, comparator.compare(development, test));
+		assertEquals(-1, comparator.compare(development, productive));
+		assertEquals(-1, comparator.compare(development, deprecated));
+		assertEquals(-1, comparator.compare(development, retired));
 
-		assertEquals(1, LifecycleStateComparator.compare(testState, productiveState));
-		assertEquals(1, LifecycleStateComparator.compare(testState, deprecatedState));
-		assertEquals(1, LifecycleStateComparator.compare(testState, retiredState));
+		assertEquals(-1, comparator.compare(test, productive));
+		assertEquals(-1, comparator.compare(test, deprecated));
+		assertEquals(-1, comparator.compare(test, retired));
 
-		assertEquals(1, LifecycleStateComparator.compare(productiveState, deprecatedState));
-		assertEquals(1, LifecycleStateComparator.compare(productiveState, retiredState));
+		assertEquals(-1, comparator.compare(productive, deprecated));
+		assertEquals(-1, comparator.compare(productive, retired));
 
-		assertEquals(1, LifecycleStateComparator.compare(deprecatedState, retiredState));
+		assertEquals(-1, comparator.compare(deprecated, retired));
 	}
 
 	@Test
 	public void testCompareLowerStates() {
-		assertEquals(-1, LifecycleStateComparator.compare(retiredState, proposedState));
-		assertEquals(-1, LifecycleStateComparator.compare(retiredState, definedState));
-		assertEquals(-1, LifecycleStateComparator.compare(retiredState, developmentState));
-		assertEquals(-1, LifecycleStateComparator.compare(retiredState, testState));
-		assertEquals(-1, LifecycleStateComparator.compare(retiredState, productiveState));
-		assertEquals(-1, LifecycleStateComparator.compare(retiredState, deprecatedState));
+		assertEquals(1, comparator.compare(retired, proposed));
+		assertEquals(1, comparator.compare(retired, defined));
+		assertEquals(1, comparator.compare(retired, development));
+		assertEquals(1, comparator.compare(retired, test));
+		assertEquals(1, comparator.compare(retired, productive));
+		assertEquals(1, comparator.compare(retired, deprecated));
 
-		assertEquals(-1, LifecycleStateComparator.compare(deprecatedState, proposedState));
-		assertEquals(-1, LifecycleStateComparator.compare(deprecatedState, definedState));
-		assertEquals(-1, LifecycleStateComparator.compare(deprecatedState, developmentState));
-		assertEquals(-1, LifecycleStateComparator.compare(deprecatedState, testState));
-		assertEquals(0, LifecycleStateComparator.compare(deprecatedState, productiveState));
+		assertEquals(1, comparator.compare(deprecated, proposed));
+		assertEquals(1, comparator.compare(deprecated, defined));
+		assertEquals(1, comparator.compare(deprecated, development));
+		assertEquals(1, comparator.compare(deprecated, test));
+		assertEquals(1, comparator.compare(deprecated, productive));
 
-		assertEquals(-1, LifecycleStateComparator.compare(productiveState, proposedState));
-		assertEquals(-1, LifecycleStateComparator.compare(productiveState, definedState));
-		assertEquals(-1, LifecycleStateComparator.compare(productiveState, developmentState));
-		assertEquals(-1, LifecycleStateComparator.compare(productiveState, testState));
+		assertEquals(1, comparator.compare(productive, proposed));
+		assertEquals(1, comparator.compare(productive, defined));
+		assertEquals(1, comparator.compare(productive, development));
+		assertEquals(1, comparator.compare(productive, test));
 
-		assertEquals(-1, LifecycleStateComparator.compare(testState, proposedState));
-		assertEquals(-1, LifecycleStateComparator.compare(testState, definedState));
-		assertEquals(-1, LifecycleStateComparator.compare(testState, developmentState));
+		assertEquals(1, comparator.compare(test, proposed));
+		assertEquals(1, comparator.compare(test, defined));
+		assertEquals(1, comparator.compare(test, development));
 
-		assertEquals(-1, LifecycleStateComparator.compare(developmentState, proposedState));
-		assertEquals(-1, LifecycleStateComparator.compare(developmentState, definedState));
+		assertEquals(1, comparator.compare(development, proposed));
+		assertEquals(1, comparator.compare(development, defined));
 
-		assertEquals(-1, LifecycleStateComparator.compare(definedState, proposedState));
+		assertEquals(1, comparator.compare(defined, proposed));
 	}
 
 }

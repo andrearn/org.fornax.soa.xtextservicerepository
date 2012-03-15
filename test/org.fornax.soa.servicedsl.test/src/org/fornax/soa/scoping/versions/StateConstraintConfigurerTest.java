@@ -1,8 +1,6 @@
 package org.fornax.soa.scoping.versions;
 
-import static org.junit.Assert.assertEquals;
-
-import org.fornax.soa.basedsl.sOABaseDsl.LifecycleState;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.scoping.StateConstraintConfigurer;
 import org.fornax.soa.servicedsl.test.BaseServiceDslTest;
 import org.junit.Before;
@@ -17,21 +15,21 @@ public class StateConstraintConfigurerTest extends BaseServiceDslTest {
 
 	@Test
 	public void testGetMinDevState() {
-		assertEquals (LifecycleState.PROPOSED, StateConstraintConfigurer.getMinDevState(s));
-		assertEquals (LifecycleState.PROPOSED, StateConstraintConfigurer.getMinDevState(paramBoRef));
-		assertEquals (LifecycleState.DEFINED, StateConstraintConfigurer.getMinDevState(stringTypeRef));
+		assertEquals (proposed, StateConstraintConfigurer.getMinDevState(s));
+		assertEquals (proposed, StateConstraintConfigurer.getMinDevState(paramBoRef));
+		assertEquals (defined, StateConstraintConfigurer.getMinDevState(stringTypeRef));
 	}
 
 	@Test
 	public void testGetMinTestState() {
-		assertEquals (LifecycleState.TEST, StateConstraintConfigurer.getMinTestState(s));
-		assertEquals (LifecycleState.DEVELOPMENT, StateConstraintConfigurer.getMinTestState(attrBo1));
+		assertEquals (test, StateConstraintConfigurer.getMinTestState(s));
+		assertEquals (development, StateConstraintConfigurer.getMinTestState(attrBo1));
 	}
 
 	@Test
 	public void testGetMinProdState() {
-		assertEquals (LifecycleState.PRODUCTIVE, StateConstraintConfigurer.getMinProdState(s));
-		assertEquals (LifecycleState.TEST, StateConstraintConfigurer.getMinProdState(stringTypeRef));
+		assertEquals (productive, StateConstraintConfigurer.getMinProdState(s));
+		assertEquals (test, StateConstraintConfigurer.getMinProdState(dns));
 	}
 
 }
