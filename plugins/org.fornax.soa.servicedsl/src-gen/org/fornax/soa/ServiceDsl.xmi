@@ -90,51 +90,53 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Keyword" value="metadata"/>
-        <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="domain"/>
-          <elements xsi:type="xtext:Assignment" feature="domain" operator="=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.3">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Domain"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-            </terminal>
+          <elements xsi:type="xtext:Keyword" value="metadata"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="domain"/>
+            <elements xsi:type="xtext:Assignment" feature="domain" operator="=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.3">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BusinessDsl#//Domain"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
           </elements>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="version" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="namespace-owner"/>
-          <elements xsi:type="xtext:Assignment" feature="owner" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          <elements xsi:type="xtext:Assignment" cardinality="?" feature="version" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
           </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="architecture-profile"/>
-          <elements xsi:type="xtext:Assignment" feature="profile" operator="=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.1">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//SOAProfile"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-            </terminal>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="namespace-owner"/>
+            <elements xsi:type="xtext:Assignment" feature="owner" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+            </elements>
           </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Keyword" value="tags"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="tags" operator="+=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.2">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-            </terminal>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="architecture-profile"/>
+            <elements xsi:type="xtext:Assignment" feature="profile" operator="=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.1">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//SOAProfile"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
           </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value="tags"/>
+            <elements xsi:type="xtext:Assignment" cardinality="+" feature="tags" operator="+=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.2">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="}"/>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="types" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
         </elements>
@@ -175,34 +177,36 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Keyword" value="metadata"/>
-        <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="version" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
-        </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="architecture-profile"/>
-          <elements xsi:type="xtext:Assignment" feature="profile" operator="=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.1">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//SOAProfile"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-            </terminal>
+          <elements xsi:type="xtext:Keyword" value="metadata"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="?" feature="version" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
           </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Keyword" value="tags"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="tags" operator="+=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.2">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-            </terminal>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="architecture-profile"/>
+            <elements xsi:type="xtext:Assignment" feature="profile" operator="=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.1">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//SOAProfile"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
           </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value="tags"/>
+            <elements xsi:type="xtext:Assignment" cardinality="+" feature="tags" operator="+=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.2">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="}"/>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="types" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
         </elements>

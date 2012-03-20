@@ -25,6 +25,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deploymentModuleName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="providedServices" upperBound="-1"
         eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providedNamespaces" upperBound="-1"
+        eType="#//NamespaceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="usedServices" upperBound="-1"
         eType="#//ImportServiceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -39,15 +41,27 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass ../../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Service"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//ModuleRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//ServiceModuleRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceModuleRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//Module"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModuleRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//Module"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="excludedServices" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamespaceRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="ecore:EClass ../../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//SubNamespace"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="excludedServices" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AssemblyType">
     <eLiterals name="OTHER" literal="OTHER"/>

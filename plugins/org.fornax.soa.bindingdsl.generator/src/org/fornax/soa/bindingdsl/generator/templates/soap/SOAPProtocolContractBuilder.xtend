@@ -31,6 +31,8 @@ import org.fornax.soa.servicedsl.generator.templates.ServiceTemplates
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
+import java.util.List
+import java.util.Set
 
 class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	
@@ -69,9 +71,10 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 
 
 	override buildServiceContracts (ModuleBinding binding, SOAProfile profile) {
-		for (provSvc : binding.module.module.providedServices) {
-			val environment = binding.environment;
-			val svc = provSvc.latestServiceInEnvironment (environment);
+		val provNamespaces = binding.module.module.providedNamespaces;
+		var Set<Service> services = serviceLookup.getAllProvidedServices (binding, profile);
+
+		for (svc : services) {
 			if (svc != null) {
 				for (soapProt : binding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
 					if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (binding.environment)) {

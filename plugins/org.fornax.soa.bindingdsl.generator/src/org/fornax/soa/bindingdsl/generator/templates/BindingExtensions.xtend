@@ -26,6 +26,9 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.VISIBILITY
 import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
 import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import java.util.Set
+import org.fornax.soa.servicedsl.generator.query.ServiceFinder
 
 class BindingExtensions {
 	

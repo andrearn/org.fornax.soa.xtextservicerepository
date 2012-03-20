@@ -22,7 +22,8 @@ Module:
 		('deployment-module-name' deploymentModuleName = STRING)?
 		
 		('provides' '{'
-			(providedServices += ServiceRef)+
+			(providedServices += ServiceRef)*
+			(providedNamespaces += NamespaceRef)*
 		'}')?
 		('uses' '{'
 			(usedServices += ImportServiceRef)+
@@ -36,11 +37,27 @@ ServiceRef:
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
 	
 ImportServiceRef:
-	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 'from' module=ModuleRef (qualifier=Qualifier)?
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 'from' module=ServiceModuleRef (qualifier=Qualifier)?
+;
+
+ServiceModuleRef:
+	module=[Module|QualifiedName] version=VersionRef
 ;
 
 ModuleRef:
-	module=[Module|QualifiedName] version=VersionRef
+	module=[Module|QualifiedName] version=VersionRef '{'
+		'excluding' '{'
+			(excludedServices+=ServiceRef)+
+		'}'
+	'}'
+;
+
+NamespaceRef: 
+	'namespace' namespace=[serviceDsl::SubNamespace | QualifiedName] ('{'
+		'excluding' '{'
+			(excludedServices+=ServiceRef)+
+		'}'
+	'}')?
 ;
 	
 enum AssemblyType:

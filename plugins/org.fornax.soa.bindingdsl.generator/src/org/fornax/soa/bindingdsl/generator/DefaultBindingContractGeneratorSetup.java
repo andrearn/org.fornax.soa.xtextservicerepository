@@ -218,8 +218,8 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 	}
 
 
-	public void setDomainNamespaces(List<String> domainNamespaces) {
-		this.domainNamespaces = domainNamespaces;
+	public void addDomainNamespace(String domainNamespace) {
+		this.domainNamespaces.add (domainNamespace);
 	}
 
 
@@ -228,8 +228,8 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 	}
 
 
-	public void setInternalNamespaces(List<String> internalNamespaces) {
-		this.internalNamespaces = internalNamespaces;
+	public void addInternalNamespace(String internalNamespace) {
+		this.internalNamespaces.add (internalNamespace);
 	}
 
 

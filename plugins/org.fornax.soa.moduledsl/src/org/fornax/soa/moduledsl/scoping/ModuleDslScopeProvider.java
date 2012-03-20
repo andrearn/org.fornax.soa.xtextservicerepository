@@ -12,6 +12,7 @@ import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleRef;
+import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
 
 /**
@@ -36,6 +37,10 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 		}
 		if (reference == ModuleDslPackage.Literals.MODULE_REF__MODULE && context instanceof ModuleRef) {
 			final VersionRef v = ((ModuleRef) context).getVersion();
+			return createVersionFilter(v, context);
+		}
+		if (reference == ModuleDslPackage.Literals.SERVICE_MODULE_REF__MODULE && context instanceof ServiceModuleRef) {
+			final VersionRef v = ((ServiceModuleRef) context).getVersion();
 			return createVersionFilter(v, context);
 		}
 		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;

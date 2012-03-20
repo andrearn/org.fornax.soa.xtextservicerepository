@@ -27,8 +27,12 @@ import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
+import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleModel;
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef;
+import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
+import org.fornax.soa.moduledsl.util.ModuleDslAccess;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 
@@ -49,6 +53,8 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 			ICompletionProposalAcceptor acceptor) {
 		if (model.eContainer() instanceof MajorVersionRef)  {
 			calculateVersionProposals(model, context, acceptor, true);
+		} else if (model instanceof MajorVersionRef)  {
+				calculateVersionProposals(model, context, acceptor, true);
 		} else {
 			super.complete_INT (model, ruleCall, context, acceptor);
 		}
@@ -65,7 +71,7 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 			}
 			
 		});
-		ModuleModel moduleModel = (ModuleModel) model.eContainer().eContainer().eContainer();
+		ModuleModel moduleModel = ModuleDslAccess.getModuleModel (model);
 		EList<Import> imports = moduleModel.getImports();
 		final Iterable<String> importedNamespaces = Lists.transform (imports, new Function<Import, String> () {
 
@@ -89,7 +95,23 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 			if (serviceName.startsWith ("service"))
 				serviceName = serviceName.replaceFirst ("service", "").trim();
 			final String className = ServiceDslPackage.Literals.SERVICE.getName();
-			Iterable<String> canditateVersions = getCanditateVersions (serviceName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef);
+			Iterable<String> canditateVersions = getCanditateVersions (serviceName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef || model instanceof MajorVersionRef);
+			for (String version : canditateVersions) {
+				acceptor.accept (createCompletionProposal (version, context));
+			}
+		} else if (model.eContainer() instanceof ModuleRef || model.eContainer() instanceof ServiceModuleRef) {
+			boolean versionConstraintFound = false;
+			StringBuilder nameParts = new StringBuilder();
+			while (leafIt.hasNext() && !versionConstraintFound) {
+				ILeafNode curNode = leafIt.next();
+				if (curNode.getSemanticElement() instanceof VersionRef)
+					versionConstraintFound = true;
+				else
+					nameParts.append(curNode.getText());
+			}
+			String moduleName = nameParts.toString().trim();
+			final String className = ModuleDslPackage.Literals.MODULE.getName();
+			Iterable<String> canditateVersions = getCanditateVersions (moduleName, className, importedNamespaces, model.eContainer() instanceof MajorVersionRef || model instanceof MajorVersionRef);
 			for (String version : canditateVersions) {
 				acceptor.accept (createCompletionProposal (version, context));
 			}
