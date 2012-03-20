@@ -8,12 +8,10 @@ public interface IStateMatcher {
 
 	public abstract boolean matches(LifecycleState sourceState,
 			LifecycleState targetState);
-
-	public abstract boolean matches(LifecycleState sourceState,
-			LifecycleState targetState, LifecycleState minDevState,
-			LifecycleState minTestState, LifecycleState minProdState);
 	
 	public abstract boolean supportsEnvironment (LifecycleState state, Environment env);
+	
+	public abstract boolean supportsEnvironment (LifecycleState state, String envName);
 
 	public abstract boolean supportsEnvironmentType (LifecycleState state, EnvironmentType envType);
 

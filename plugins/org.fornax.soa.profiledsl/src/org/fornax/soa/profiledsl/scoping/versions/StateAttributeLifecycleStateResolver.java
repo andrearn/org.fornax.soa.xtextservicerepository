@@ -25,8 +25,11 @@ public class StateAttributeLifecycleStateResolver implements LifecycleStateResol
 	}
 
 	public LifecycleState getLifecycleState(IEObjectDescription ieDesc) {
+		return getLifecycleState(ieDesc, resSet);		
+	}
+	
+	public LifecycleState getLifecycleState(IEObjectDescription ieDesc, ResourceSet rs) {
 		EObject o = ieDesc.getEObjectOrProxy();
-		ResourceSet rs = resSet;
 		if (rs == null) {
 			if (o.eResource() != null) {
 				rs = o.eResource().getResourceSet();

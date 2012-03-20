@@ -31,27 +31,12 @@ class BindingServiceResolver {
 	
 	def dispatch LifecycleState minStateByEnvironment (SubNamespace ns, Environment env, Lifecycle l) {
 		switch (env.type) {
-			case EnvironmentType::DEV: {
-											if (ns.linkingPolicy != null) {
-												ns.linkingPolicy.minDevState
-											} else {
-												lifecycleQueries.getMinDevState(l)
-											}
-										}
-			case EnvironmentType::TEST: {
-											if (ns.linkingPolicy != null) {
-												ns.linkingPolicy.minTestState
-											} else {
-												lifecycleQueries.getMinTestState(l)
-											}
-										}
-			case EnvironmentType::PROD: {
-											if (ns.linkingPolicy != null) {
-												ns.linkingPolicy.minProdState
-											} else {
-												lifecycleQueries.getMinProdState(l)
-											}
-										}
+			case EnvironmentType::LOCAL: 	lifecycleQueries.getMinLocalState(l)
+			case EnvironmentType::DEV: 		lifecycleQueries.getMinDevState(l)
+			case EnvironmentType::TEST: 	lifecycleQueries.getMinTestState(l)
+			case EnvironmentType::STAGING: 	lifecycleQueries.getMinStagingState(l)
+			case EnvironmentType::PROD: 	lifecycleQueries.getMinProdState(l)
+
 			default: lifecycleQueries.getMinProdState(l)
 		}
 	}

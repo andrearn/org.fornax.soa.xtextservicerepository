@@ -2,52 +2,77 @@ package org.fornax.soa.profiledsl.scoping.versions;
 
 import java.util.Collections;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
-public class LatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateVersionFilter<T> {
-	
+public class EnvironmentBasedLatestMajorVersionFilter<T> extends AbstractPredicateVersionFilter<T> {
+
 	private String majorVersion;
 	private VersionResolver resolver;
-	private LifecycleState ownerLifecycleState;
-	private LifecycleStateResolver stateResolver;
 	
 	@Inject
-	IStateMatcher stateMatcher;
+	private LifecycleStateResolver stateResolver;
+	private String environmentName;
+	private EnvironmentType environmentType;
+	private ResourceSet resSet;
 	
-	public LatestMajorVersionForOwnerStateFilter(VersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	@Inject
+	private	IStateMatcher stateMatcher;
+	
+	public EnvironmentBasedLatestMajorVersionFilter (VersionResolver resolver, String majorVersion, String environmentName, EnvironmentType envType) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
-		this.ownerLifecycleState = ownerLifecycleState;
-		this.stateResolver = stateResolver;
+		this.environmentName = environmentName;
+		this.environmentType = envType;
+	}
+	public EnvironmentBasedLatestMajorVersionFilter (VersionResolver resolver, String majorVersion, String environmentName, EnvironmentType envType, ResourceSet rs) {
+		this.majorVersion = majorVersion;
+		this.resolver = resolver;
+		this.environmentName = environmentName;
+		this.environmentType = envType;
+		this.resSet = rs;
 	}
 
-	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames(
+	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames (
 			Iterable<IEObjectDescription> canditates, boolean ignoreCase) {
 		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
 		if (canditates != null) {
+			Multimap<QualifiedName, IEObjectDescription> versionMatches = LinkedHashMultimap.create(5,2);
 			for (IEObjectDescription ieObjDesc : canditates) {
-				if (ieObjDesc != null && matches (ieObjDesc)) {
+				if (ieObjDesc != null && matches(ieObjDesc)) {
 					QualifiedName objName = ieObjDesc.getName();
-					IEObjectDescription bestMatch = getCurrentBestMatch(matches, objName);
+					IEObjectDescription bestMatch = getCurrentBestMatch (matches, objName);
 					if (bestMatch == null) {
-						matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+						if (stateMatches(ieObjDesc))
+							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+						else
+							versionMatches.replaceValues(objName, Collections.singleton (ieObjDesc));
 					}
 					else {
-						int c = VersionComparator.compare (ieObjDesc, bestMatch, resolver);
+						int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
 						if (c >= 0) {
-							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+							if (stateMatches(ieObjDesc))
+								matches.replaceValues(objName, Collections.singleton (ieObjDesc));
+							else {
+								versionMatches.replaceValues(objName, Collections.singleton (ieObjDesc));
+							}
 						}
 					}
 				}
+			}
+			for (QualifiedName relaxedCandName : versionMatches.keySet()) {
+				if (!matches.containsKey(relaxedCandName))
+					matches.replaceValues (relaxedCandName, Collections.singleton (getCurrentBestMatch (versionMatches, relaxedCandName)));
 			}
 		}
 		return matches;
@@ -55,18 +80,15 @@ public class LatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateV
 
 	public boolean matches(IEObjectDescription description) {
 		final String v = resolver.getVersion(description);
-		final LifecycleState state = stateResolver.getLifecycleState(description);
 		if (v != null)
-			if (state != null)
-				return toMajorVersion (v).equals(majorVersion) && stateMatches (state);
-			else
-				return toMajorVersion (v).equals(majorVersion);
+			return toMajorVersion (v).equals(majorVersion);
 		else
 			return true;
 	}
 	
-	public boolean stateMatches (LifecycleState state) {
-		return stateMatcher.matches (ownerLifecycleState, state);
+	public boolean stateMatches (IEObjectDescription description) {
+		final LifecycleState state = stateResolver.getLifecycleState(description, resSet);
+		return stateMatcher.supportsEnvironment (state, environmentName) || stateMatcher.supportsEnvironmentType (state, environmentType);
 	}
 	
 
@@ -83,7 +105,7 @@ public class LatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateV
 			for (IEObjectDescription ieObjDesc : canditates) {
 				if (matches(ieObjDesc)) {
 					QualifiedName objName = ieObjDesc.getQualifiedName();
-					IEObjectDescription bestMatch = getCurrentBestMatch(matches, objName);
+					IEObjectDescription bestMatch = getCurrentBestMatch (matches, objName);
 					if (bestMatch == null) {
 						matches.replaceValues (objName, Collections.singleton(ieObjDesc));
 					}
@@ -105,10 +127,6 @@ public class LatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateV
 		int result = 1;
 		result = prime * result
 				+ ((majorVersion == null) ? 0 : majorVersion.hashCode());
-		result = prime
-				* result
-				+ ((ownerLifecycleState == null) ? 0 : ownerLifecycleState
-						.hashCode());
 		return result;
 	}
 
@@ -118,19 +136,23 @@ public class LatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateV
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof LatestMajorVersionForOwnerStateFilter))
+		if (!(obj instanceof EnvironmentBasedLatestMajorVersionFilter))
 			return false;
-		LatestMajorVersionForOwnerStateFilter other = (LatestMajorVersionForOwnerStateFilter) obj;
+		EnvironmentBasedLatestMajorVersionFilter other = (EnvironmentBasedLatestMajorVersionFilter) obj;
 		if (majorVersion == null) {
 			if (other.majorVersion != null)
 				return false;
 		} else if (!majorVersion.equals(other.majorVersion))
 			return false;
-		if (ownerLifecycleState != other.ownerLifecycleState)
-			return false;
 		return true;
 	}
-	
-	
 
+	public void setStateMatcher(IStateMatcher stateMatcher) {
+		this.stateMatcher = stateMatcher;
+	}
+
+	public IStateMatcher getStateMatcher() {
+		return stateMatcher;
+	}
+	
 }

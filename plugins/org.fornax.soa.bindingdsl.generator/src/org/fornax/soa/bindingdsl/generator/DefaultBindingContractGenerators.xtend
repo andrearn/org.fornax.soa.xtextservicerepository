@@ -21,6 +21,8 @@ import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.ServiceModel
 import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.serviceDsl.InternalNamespace
+import org.fornax.soa.serviceDsl.DomainNamespace
 
 class DefaultBindingContractGenerators implements IGenerator {
 	
@@ -41,6 +43,12 @@ class DefaultBindingContractGenerators implements IGenerator {
 	
 	@Inject @Named ("namespaces") 			
 	List<String> namespaces
+	
+	@Inject @Named ("domainNamespaces") 			
+	List<String> domainNamespaces
+	
+	@Inject @Named ("internalNamespaces") 			
+	List<String> internalNamespaces
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
@@ -92,6 +100,12 @@ class DefaultBindingContractGenerators implements IGenerator {
 			val Iterable<? extends SubNamespace> subNamespaces = svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten;
 			for (ns : subNamespaces) {
 				if (namespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
+					compile (ns as SubNamespace, resource); 
+				}
+				if (ns instanceof DomainNamespace && domainNamespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
+					compile (ns as SubNamespace, resource); 
+				}
+				if (ns instanceof InternalNamespace && internalNamespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
 					compile (ns as SubNamespace, resource); 
 				}
 			}

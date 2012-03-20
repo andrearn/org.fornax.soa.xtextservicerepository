@@ -11,6 +11,9 @@
         eType="#//Binding" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Binding">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="protocol" upperBound="-1"
         eType="#//BindingProtocol" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
@@ -53,11 +56,15 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BindingProtocol">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperationBinding">
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Operation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="protocol" upperBound="-1"
         eType="#//BindingProtocol" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="providerProtocol" upperBound="-1"
@@ -89,6 +96,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="implements" eType="#//ServiceRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="environment" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="services" upperBound="-1"
         eType="#//ServiceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referencedServices" upperBound="-1"
@@ -187,21 +197,27 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="providerUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="verb" eType="#//Verb"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="format" eType="#//RESTFormat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="consumesFormat" eType="#//RESTFormat"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="provideFormat" eType="#//RESTFormat"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="RESTFormat">
     <eLiterals name="JSON" literal="JSON"/>
     <eLiterals name="XML" value="1" literal="XML"/>
-    <eLiterals name="OTHER" value="2" literal="OTHER"/>
+    <eLiterals name="BISON" value="2" literal="BISON"/>
+    <eLiterals name="OTHER" value="3" literal="OTHER"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Verb">
-    <eLiterals name="create" literal="create"/>
-    <eLiterals name="retrieve" value="1" literal="retrieve"/>
-    <eLiterals name="update" value="2" literal="update"/>
-    <eLiterals name="delete" value="3" literal="delete"/>
+    <eLiterals name="CREATE" literal="CREATE"/>
+    <eLiterals name="RETRIEVE" value="1" literal="RETRIEVE"/>
+    <eLiterals name="UPDATE" value="2" literal="UPDATE"/>
+    <eLiterals name="DELETE" value="3" literal="DELETE"/>
+    <eLiterals name="GET" value="4" literal="GET"/>
+    <eLiterals name="PUT" value="5" literal="PUT"/>
+    <eLiterals name="POST" value="6" literal="POST"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="JMS" eSuperTypes="#//BindingProtocol">
     <eStructuralFeatures xsi:type="ecore:EReference" name="publisher" eType="#//Publisher"
@@ -236,7 +252,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pollIntervall" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FTP" eSuperTypes="#//BindingProtocol">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="url" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="accessType" eType="#//ReadWrite"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pollIntervall" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>

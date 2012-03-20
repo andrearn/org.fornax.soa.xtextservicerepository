@@ -5,10 +5,10 @@ Bundle-Vendor: Fornax Platform
 Bundle-Version: 1.5.0.qualifier
 Bundle-SymbolicName: org.fornax.soa.businessdsl.generator; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.fornax.soa.businessdsl;bundle-version="1.4.5";visibility:=reexport,
+Require-Bundle: org.fornax.soa.businessdsl;bundle-version="1.5.0";visibility:=reexport,
  org.eclipse.xtext;bundle-version="2.0.0";visibility:=reexport,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.mwe.utils;visibility:=reexport,
- org.fornax.soa.basedsl;bundle-version="1.4.5"
+ org.fornax.soa.basedsl;bundle-version="1.5.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

@@ -15,6 +15,7 @@ Module:
 	(external?='external')? 'module' name = QualifiedName '{'
 		version = Version
 		'lifecycle-state' state = [profileDsl::LifecycleState | QualifiedName]
+		((qualifiers+=Qualifier)(',' qualifiers+=Qualifier)*)?
 		('owner' owner = STRING)?
 		('assembly-type' assemblyType = AssemblyType)?
 		('assembly-type-details' assemblyTypeDetails = STRING)?

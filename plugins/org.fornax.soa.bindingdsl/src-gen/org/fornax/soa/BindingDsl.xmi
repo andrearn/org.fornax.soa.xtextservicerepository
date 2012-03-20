@@ -71,6 +71,9 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+        </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="protocols"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
@@ -141,8 +144,9 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="connectors"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="connectors" operator="+=">
+          <elements xsi:type="xtext:Keyword" value="with"/>
+          <elements xsi:type="xtext:Keyword" value="connector"/>
+          <elements xsi:type="xtext:Assignment" feature="connectors" operator="+=">
             <terminal xsi:type="xtext:CrossReference">
               <type metamodel="/0/@metamodelDeclarations.3">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Connector"/>
@@ -179,8 +183,9 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="connectors"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="connectors" operator="+=">
+          <elements xsi:type="xtext:Keyword" value="with"/>
+          <elements xsi:type="xtext:Keyword" value="connector"/>
+          <elements xsi:type="xtext:Assignment" feature="connectors" operator="+=">
             <terminal xsi:type="xtext:CrossReference">
               <type metamodel="/0/@metamodelDeclarations.3">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Connector"/>
@@ -212,6 +217,9 @@
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="protocols"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="+" feature="protocol" operator="+=">
@@ -309,6 +317,9 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="protocols"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="+" feature="protocol" operator="+=">
@@ -388,6 +399,9 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" feature="provider" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
         </elements>
@@ -475,6 +489,9 @@
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
           </terminal>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="provided-services"/>
         <elements xsi:type="xtext:Assignment" feature="services" operator="+=">
@@ -704,7 +721,7 @@
             <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SOAP"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
@@ -771,7 +788,7 @@
             <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SAP"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider" operator="=">
@@ -819,7 +836,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="EJB"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
@@ -842,7 +859,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="HTTP"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
@@ -873,7 +890,7 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="REST"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
@@ -882,8 +899,8 @@
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="provider" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="url"/>
-        <elements xsi:type="xtext:Assignment" feature="url" operator="=">
+        <elements xsi:type="xtext:Keyword" value="path"/>
+        <elements xsi:type="xtext:Assignment" feature="path" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="provider-url"/>
@@ -894,9 +911,23 @@
         <elements xsi:type="xtext:Assignment" feature="verb" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="format"/>
-        <elements xsi:type="xtext:Assignment" feature="format" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="format"/>
+          <elements xsi:type="xtext:Assignment" feature="format" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="consumes-format"/>
+          <elements xsi:type="xtext:Assignment" feature="consumesFormat" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provides-format"/>
+          <elements xsi:type="xtext:Assignment" feature="provideFormat" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+          </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -915,6 +946,10 @@
           <literal value="XML"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//RESTFormat/BISON"/>
+          <literal value="BISON"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//RESTFormat/OTHER"/>
           <literal value="OTHER"/>
         </elements>
@@ -926,20 +961,32 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/create"/>
-          <literal value="create"/>
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/CREATE"/>
+          <literal value="CREATE"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/retrieve"/>
-          <literal value="retrieve"/>
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/RETRIEVE"/>
+          <literal value="RETRIEVE"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/update"/>
-          <literal value="update"/>
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/UPDATE"/>
+          <literal value="UPDATE"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/delete"/>
-          <literal value="delete"/>
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/DELETE"/>
+          <literal value="DELETE"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/GET"/>
+          <literal value="GET"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/PUT"/>
+          <literal value="PUT"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//Verb/POST"/>
+          <literal value="POST"/>
         </elements>
       </alternatives>
     </rules>
@@ -955,7 +1002,7 @@
             <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//JMS"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
@@ -1032,7 +1079,7 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="publisher" operator="=">
@@ -1065,7 +1112,8 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="FILE"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="url" operator="=">
@@ -1080,6 +1128,7 @@
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="FTP">
@@ -1088,11 +1137,9 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="FTP"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiers" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" feature="url" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="access"/>
         <elements xsi:type="xtext:Assignment" feature="accessType" operator="=">
@@ -1104,6 +1151,7 @@
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="ReadWrite">

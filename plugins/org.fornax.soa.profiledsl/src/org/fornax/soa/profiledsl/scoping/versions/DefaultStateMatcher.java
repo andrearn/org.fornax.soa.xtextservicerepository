@@ -39,30 +39,20 @@ public class DefaultStateMatcher implements IStateMatcher {
 		return false;
 	}
 	
-	/* (non-Javadoc)
-	 * @see org.fornax.soa.profiledsl.scoping.versions.IStateMatcher#matches(org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState, org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState, org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState, org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState, org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState)
-	 */
-	public boolean matches (LifecycleState sourceState, LifecycleState targetState, LifecycleState minDevState, LifecycleState minTestState, LifecycleState minProdState) {
-		int compare = getStateComparator().compare (sourceState, targetState);
-		if (!sourceState.isIsEnd () && targetState != null && targetState.isIsEnd ()) {
-			return false;
-		} else if (sourceState.isIsEnd () && targetState != null && targetState.isIsEnd ()) {
-			return true;
-		}
-		EnvironmentType sourceStateEnvType = envTypeComparator.getGreatestEnvType (stateComparator.getStateEnvironmentTypes (sourceState));
-		EnvironmentType targetStateEnvType = envTypeComparator.getGreatestEnvType (stateComparator.getStateEnvironmentTypes (targetState));
-		if (targetStateEnvType != null)
-			return envTypeComparator.compare (sourceStateEnvType, targetStateEnvType) <= 0;
-		if  (compare <= 0)
-			return true;
-		return false;
-	}
-
 	public boolean supportsEnvironment(LifecycleState state, Environment env) {
 		if (state != null && state.getQualifiesForEnvironment() != null) {
 			for (Environment curEnv : state.getQualifiesForEnvironment()) {
 				if (curEnv.equals(env))
 					return true;
+			}
+		}
+		return false;
+	}
+
+	public boolean supportsEnvironment (LifecycleState state, String envName) {
+		for (Environment env : state.getQualifiesForEnvironment ()) {
+			if (env.getName().equals (envName)) {
+				return true;
 			}
 		}
 		return false;

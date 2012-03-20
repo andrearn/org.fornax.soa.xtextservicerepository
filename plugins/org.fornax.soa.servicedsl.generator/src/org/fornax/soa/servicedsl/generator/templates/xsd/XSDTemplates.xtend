@@ -403,7 +403,7 @@ class XSDTemplates {
 	
 	def dispatch toProperty (Attribute attr, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 		«IF attr.doc != null»
-			<xsd:element name="«attr.name»" «IF attr.optional»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment()»«ENDIF» >
+			<xsd:element name="«attr.name»" «IF attr.optionalElement»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment()»«ENDIF» >
 				«IF attr.doc != null»
 					<xsd:annotation>
 						<xsd:documentation>
@@ -452,7 +452,7 @@ class XSDTemplates {
 	'''
 	
 	def dispatch toProperty (Reference ref, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
-		<xsd:element name="«ref.name»" «IF ref.optional»minOccurs="0"«ENDIF» type="«ref.type.toWeakRefType (minState)»" >
+		<xsd:element name="«ref.name»" «IF ref.optionalElement»minOccurs="0"«ENDIF» type="«ref.type.toWeakRefType (minState)»" >
 		   	<xsd:annotation>
 		   		<xsd:documentation>
 		   			<![CDATA[

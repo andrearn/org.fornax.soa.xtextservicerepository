@@ -156,6 +156,7 @@
         eType="#//DatabaseSchema" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SAP" eSuperTypes="#//Server">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="systemId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataDir" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="adminUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="client" upperBound="-1"

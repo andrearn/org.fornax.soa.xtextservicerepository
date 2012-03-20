@@ -166,6 +166,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//Database/schema"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//SAP">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SAP/systemId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SAP/dataDir"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SAP/adminUrl"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//SAP/client"/>

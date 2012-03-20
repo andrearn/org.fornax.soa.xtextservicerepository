@@ -28,6 +28,7 @@ Binding: DomainBinding | ModuleBinding | ServiceBinding ;
 
 DomainBinding: 
 	'bind namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment] '{'
+		(qualifiers+=Qualifier)*
 		('protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}')?
@@ -43,13 +44,14 @@ DomainBinding:
 	'}';
 	
 Publisher:
-	'publish on' pubServer=[environmentDsl::Server|QualifiedName] ('connectors' (connectors+=[environmentDsl::Connector | QualifiedName])+ (',' connectors+=[environmentDsl::Connector | QualifiedName])*)?;
+	'publish on' pubServer=[environmentDsl::Server|QualifiedName] ('with' 'connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*)?;
 	
 Provider:
-	'provided on' provServer = [environmentDsl::Server|QualifiedName] ('connectors' (connectors+=[environmentDsl::Connector | QualifiedName])+ (',' connectors+=[environmentDsl::Connector | QualifiedName])*)?;
+	'provided on' provServer = [environmentDsl::Server|QualifiedName] ('with' 'connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*)?;
 	
 ServiceBinding:
 	'bind-service' service=ServiceRef '{'
+		(qualifiers+=Qualifier)*
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
@@ -70,6 +72,7 @@ BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP;
 
 OperationBinding: 
 	'bind-operation' operation=[serviceDsl::Operation|QualifiedName] '{' 
+		(qualifiers+=Qualifier)*
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
@@ -87,6 +90,7 @@ OperationBinding:
 	
 ModuleBinding:
 	'bind-module' module=ModuleRef 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment|QualifiedName] '{'
+		(qualifiers+=Qualifier)*
 		provider=Provider
 		('default-protocols' '{'
 			(protocol+=BindingProtocol)+
@@ -104,6 +108,7 @@ ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
 Component:
 	'component' name=ID 'implements' implements=ServiceRef '{'
 		'bind to environment' environment = [environmentDsl::Environment|QualifiedName]
+		(qualifiers+=Qualifier)*
 		'provided-services' services+=ServiceRef (',' services+=ServiceRef)* 
 		('referenced-services' referencedServices+=ServiceRef (',' )* )?
 		'protocols' '{'
@@ -127,7 +132,7 @@ enum ImplementationType: BPMN | BPMN2 | BPEL | WSHT='WS-HT' | RuleML | Drools | 
 SOAP: 
 	'SOAP' '{'
 		{SOAP}
-		(qualifier=Qualifier)?
+		(qualifiers+=Qualifier)*
 		(publisher=Publisher)?
 		(provider=Provider)?
 		('style' style=SOAPStyle )?
@@ -141,7 +146,7 @@ enum SOAPStyle: doclitwrap='document/literal-wrapped' | rpclit = 'rpc/literal' |
 SAP: 
 	'SAP' '{'
 		{SAP}
-		(qualifier=Qualifier)?
+		(qualifiers+=Qualifier)*
 		(provider=Provider)?
 		('transport' transport=SAPTransport )?
 		('client' client=[environmentDsl::SapClient|QualifiedName] )?
@@ -151,7 +156,7 @@ enum SAPTransport: IDOC | RFC;
  
 EJB: 
 	'EJB' '{'
-		(qualifier=Qualifier)?
+		(qualifiers+=Qualifier)*
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'jndi-name' jndiName=STRING 
@@ -159,7 +164,7 @@ EJB:
 	
 HTTP: 
 	'HTTP' '{'
-		(qualifier=Qualifier)?
+		(qualifiers+=Qualifier)*
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'url' url=STRING 
@@ -169,27 +174,29 @@ HTTP:
 
 REST: 
 	'REST' '{'
-		(qualifier=Qualifier)?
+		(qualifiers+=Qualifier)*
 		(publisher=Publisher)?
 		(provider=Provider)?
-		'url' url=STRING  
+		'path' path=STRING  
 		'provider-url' providerUrl=STRING  
 		'verb' verb=Verb 
-		'format' format=RESTFormat 
+		('format' format=RESTFormat)? 
+		('consumes-format' consumesFormat=RESTFormat)? 
+		('provides-format' provideFormat=RESTFormat)? 
 	'}';
 
 	
-enum RESTFormat: JSON | XML | OTHER;
-enum Verb: create | retrieve | update | delete;
+enum RESTFormat: JSON | XML | BISON | OTHER;
+enum Verb: CREATE | RETRIEVE | UPDATE | DELETE | GET | PUT | POST;
 
 JMS:
 	'JMS' '{'
 		{JMS}
-		(qualifier=Qualifier)?
+		(qualifiers+=Qualifier)*
 		(publisher=Publisher)?
 		(provider=Provider)?
 		(channel=TopicOrQueue)?
-		'jndi-name' jndiName=STRING 
+		'jndi-name' jndiName=STRING
 		('provider-jndi-name' providerJndi=STRING )?
 	'}';
 	
@@ -202,16 +209,24 @@ Queue: 'queue' name=STRING (qualifier=Qualifier)?;
 SCA:
 	{SCA} 
 	'SCA' (name=STRING)? '{'
-		(qualifier=Qualifier)?
+		(qualifiers+=Qualifier)*
 		(publisher=Publisher)?
 		(provider=Provider)?
 		('promote' promote=STRING )?
 		('reference' reference=STRING (isMultipleRef?='[]')? )?
 	'}' ;
 
-FILE: 'FILE' (qualifier=Qualifier)? url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?;
+FILE: 
+	'FILE' '{'
+		(qualifiers+=Qualifier)*
+		url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?
+	'}';
 
-FTP: 'FTP' (qualifier=Qualifier)? url=STRING 'access' accessType=ReadWrite ('interval' pollIntervall=STRING)?;
+FTP: 
+	'FTP' '{' 
+		(qualifiers+=Qualifier)*
+		'access' accessType=ReadWrite ('interval' pollIntervall=STRING)?
+	'}';
 
 enum ReadWrite : read|write;
 

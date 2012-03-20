@@ -34,16 +34,17 @@ OrganizationNamespace :
 
 SubNamespace : DomainNamespace | InternalNamespace;
 	
+/* Namespace of a canonical domain subject to SOA governance rules*/
 DomainNamespace:
 	(doc=ML_COMMENT)? 
 	'domain-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
-		'metadata' '{'
+		('metadata' '{'
 			('domain' domain=[businessDsl::Domain|QualifiedName])?
 			(version=Version  )?
 			('namespace-owner' owner=STRING)?
-			(linkingPolicy = LinkingPolicy)?
+			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
 			('tags' (tags+=[semanticsDsl::Tag])+)*
-		'}'
+		'}')?
 		(types+=Type)*
 		(services+=Service)*
 		(channels+=Channel)*
@@ -52,28 +53,22 @@ DomainNamespace:
 		(interalNamespaces+=InternalNamespace)*
 	'}';
 
+/* Namespace for internal use with no restrictions */
 InternalNamespace:	
 	(doc=ML_COMMENT)? 
 	'internal-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
-		'metadata' '{'
+		('metadata' '{'
 			(version=Version)?
-			(linkingPolicy = LinkingPolicy)?
+			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
 			('tags' (tags+=[semanticsDsl::Tag])+)*
-		'}'
+		'}')?
 		(types+=Type)*
 		(services+=Service)*
 		(exceptions+=Exception)*
 		(events+=GlobalEvent)*
 		(interalNamespaces+=InternalNamespace)*
 	'}';
-	
-LinkingPolicy :
-	'deployment-policy' '{'
-		'minimal-development-state' minDevState = [profileDsl::LifecycleState | QualifiedName] 
-		'minimal-test-state' minTestState = [profileDsl::LifecycleState | QualifiedName]
-		'minimal-production-state' minProdState = [profileDsl::LifecycleState | QualifiedName]
-	'}';
-	
+		
 Type:
 	VersionedType;
 
@@ -91,7 +86,6 @@ BusinessObject:
 			(governanceApproval=GovernanceApproval)?
 			('retirement-on' retirementDate = STRING)?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
-			(linkingPolicy = LinkingPolicy)?
 			('tags' (tags+=[semanticsDsl::Tag])+)*
 		'}'
 		(properties+=Property)*
@@ -125,7 +119,7 @@ Attribute:
 	((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? 
 	name=ID ':' type=TypeRef ;
 	
-//links to a target businessObject but uses it's business-key to resolve a reference, hence it is a weak reference
+/* links to a target businessObject but uses it's business-key to resolve a reference, hence it is a weak reference */
 Reference:
 	(doc=ML_COMMENT)?
 	(deprecated?='@deprecated')? 
@@ -146,7 +140,6 @@ Enumeration:
 			(governanceApproval=GovernanceApproval)?
 			('retirement-on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
-			(linkingPolicy = LinkingPolicy)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(literals+=EnumLiteral )*
@@ -181,7 +174,6 @@ Service hidden(WS):
 			&	('retirement-on' retirementDate = STRING )?
 			&	('replaces' replaces=ServiceRef )?
 			&	('messageHeader' messageHeader = MessageHeaderRef )?
-			&   (linkingPolicy = LinkingPolicy)?
 			)
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
@@ -190,7 +182,7 @@ Service hidden(WS):
 	
 enum ServiceCategory: process | rule | activity | entity | utility;
 
-
+/* reflects SOA governance decisions */
 GovernanceApproval:
 	'governance-approval' '{'
 		decision=ApprovalDecision 
@@ -205,6 +197,7 @@ enum Statefulness: idempotent | stateless | transientState="transient-state"| st
 
 enum Persistence: none | read | write | readWrite = "read / write";
 
+/* references a service applying a version constraint */
 ServiceRef:
 	service=[Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')?;
 	
@@ -234,7 +227,6 @@ GlobalEvent:
 			(governanceApproval=GovernanceApproval)?
 			('retirement-on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
-			(linkingPolicy = LinkingPolicy)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(parameter+=Parameter )*
@@ -244,7 +236,6 @@ OperationEvent:
 	'event' name=ID '{'
 		('metadata' '{'
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
-			(linkingPolicy = LinkingPolicy)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}')?
 		(parameter+=Parameter )*
@@ -303,7 +294,6 @@ Exception:
 			(governanceApproval=GovernanceApproval)?
 			('retirement-on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
-			(linkingPolicy = LinkingPolicy)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(properties+=SimpleAttribute)*
@@ -313,6 +303,7 @@ Exception:
 ExceptionRef:
 	exception=[Exception|QualifiedName] version=VersionRef;
 	
+/* the message exchange pattern */
 enum MEP : 
 	sync | async | oneway | fireForget='fire+forget'; 
 

@@ -25,8 +25,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="prefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="linkingPolicy" eType="#//LinkingPolicy"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profile" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//SOAProfile"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
@@ -47,11 +46,6 @@
         eType="#//Channel" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InternalNamespace" eSuperTypes="#//SubNamespace"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LinkingPolicy">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="minDevState" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="minTestState" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="minProdState" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Type"/>
   <eClassifiers xsi:type="ecore:EClass" name="VersionedType" eSuperTypes="#//Type">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="doc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -64,8 +58,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="retirementDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedDefinitionUrl"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="linkingPolicy" eType="#//LinkingPolicy"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
@@ -162,8 +154,6 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeader" eType="#//MessageHeaderRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="linkingPolicy" eType="#//LinkingPolicy"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="operations" upperBound="-1"
@@ -235,8 +225,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedDefinitionUrl"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="linkingPolicy" eType="#//LinkingPolicy"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" upperBound="-1"
@@ -329,8 +317,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="retirementDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedDefinitionUrl"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="linkingPolicy" eType="#//LinkingPolicy"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"

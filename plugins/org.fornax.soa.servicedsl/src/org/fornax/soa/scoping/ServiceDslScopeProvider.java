@@ -103,22 +103,6 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext (
 			EObject ctx, final EReference reference) {
-//		EObject eContainer = ctx.eContainer();
-//		if (eContainer instanceof BusinessObject) {
-//			BusinessObject bo = (BusinessObject) ctx.eContainer();
-//			State newState = bo.getNewState();
-//			if (newState != null) {
-//				String name = newState.getName();
-//				logger.error("State " + name);
-//				newState = (State)EcoreUtil2.resolve(newState, ctx.eResource());
-//				EList<org.fornax.soa.environmentDsl.Environment> qualifiesForEnvironments = newState.getQualifiesForEnvironment();
-//				for (org.fornax.soa.environmentDsl.Environment env : qualifiesForEnvironments ) {
-//					EnvironmentType envType = env.getType();
-//					String envTypeName = envType.getName();
-//					logger.error ("Env: "+ envTypeName);
-//				}
-//			}
-//		}
 		if (reference==ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE && ctx instanceof VersionedTypeRef) {
 			final VersionRef v = ((VersionedTypeRef) ctx).getVersionRef();
 			return createVersionFilter (v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
@@ -173,11 +157,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
 			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
-			LifecycleState minDevState = StateConstraintConfigurer.getMinDevState(owner);
-			LifecycleState minTestState = StateConstraintConfigurer.getMinTestState(owner);
-			LifecycleState minProdState = StateConstraintConfigurer.getMinProdState(owner);
 			if (v instanceof MajorVersionRef) {
-				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, minDevState, minTestState, minProdState);
+				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState);
 				injector.injectMembers (stateFilter);
 				return stateFilter;
 			}
@@ -215,11 +196,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			VersionResolver verResolver = new EContainerVersionResolver (v.eResource().getResourceSet());
 			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
-			LifecycleState minDevState = StateConstraintConfigurer.getMinDevState(owner);
-			LifecycleState minTestState = StateConstraintConfigurer.getMinTestState(owner);
-			LifecycleState minProdState = StateConstraintConfigurer.getMinProdState(owner);
 			if (v instanceof MajorVersionRef) {
-				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, minDevState, minTestState, minProdState);
+				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState);
 				injector.injectMembers (stateFilter);
 				return stateFilter;
 			}

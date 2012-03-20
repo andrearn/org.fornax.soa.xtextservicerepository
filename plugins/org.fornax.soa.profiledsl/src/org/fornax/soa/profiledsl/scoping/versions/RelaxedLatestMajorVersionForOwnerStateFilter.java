@@ -27,21 +27,15 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 	private String majorVersion;
 	private VersionResolver resolver;
 	private LifecycleState ownerLifecycleState;
-	private LifecycleState minDevLifecycleState;
-	private LifecycleState minTestLifecycleState;
-	private LifecycleState minProdLifecycleState;
 	private LifecycleStateResolver stateResolver;
 	
 	@Inject
 	private	IStateMatcher stateMatcher;
 	
-	public RelaxedLatestMajorVersionForOwnerStateFilter (VersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState, LifecycleState minDevLifecycleState, LifecycleState minTestLifecycleState, LifecycleState minProdLifecycleState) {
+	public RelaxedLatestMajorVersionForOwnerStateFilter (VersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
 		this.ownerLifecycleState = ownerLifecycleState;
-		this.minDevLifecycleState = minDevLifecycleState;
-		this.minTestLifecycleState = minTestLifecycleState;
-		this.minProdLifecycleState = minProdLifecycleState;
 		this.stateResolver = stateResolver;
 	}
 
@@ -95,7 +89,7 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 		} else if (ownerLifecycleState != null && (ownerLifecycleState.isIsEnd() || ownerLifecycleState.isIsInitial())) {
 			return true;
 		}
-		return getStateMatcher().matches (ownerLifecycleState, state, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
+		return getStateMatcher().matches (ownerLifecycleState, state);
 	}
 	
 
@@ -136,18 +130,6 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 				+ ((majorVersion == null) ? 0 : majorVersion.hashCode());
 		result = prime
 				* result
-				+ ((minDevLifecycleState == null) ? 0 : minDevLifecycleState
-						.hashCode());
-		result = prime
-				* result
-				+ ((minProdLifecycleState == null) ? 0 : minProdLifecycleState
-						.hashCode());
-		result = prime
-				* result
-				+ ((minTestLifecycleState == null) ? 0 : minTestLifecycleState
-						.hashCode());
-		result = prime
-				* result
 				+ ((ownerLifecycleState == null) ? 0 : ownerLifecycleState
 						.hashCode());
 		return result;
@@ -166,12 +148,6 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 			if (other.majorVersion != null)
 				return false;
 		} else if (!majorVersion.equals(other.majorVersion))
-			return false;
-		if (minDevLifecycleState != other.minDevLifecycleState)
-			return false;
-		if (minProdLifecycleState != other.minProdLifecycleState)
-			return false;
-		if (minTestLifecycleState != other.minTestLifecycleState)
 			return false;
 		if (ownerLifecycleState != other.ownerLifecycleState)
 			return false;

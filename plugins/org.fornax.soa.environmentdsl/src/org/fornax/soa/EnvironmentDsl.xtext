@@ -240,7 +240,8 @@ SAP  hidden (WS):
 	'sap' name=ID '{'
 		('identifier' dslCode=STRING )?
 		('admins' (admins+=[User|QualifiedName])+ )? 
-		'host' host=[Host|QualifiedName]  
+		'host' host=[Host|QualifiedName] 
+		'system-id' systemId = INT 
 		('dir' home=STRING )?
 		('dataDir' dataDir=STRING )?
 		('adminUrl' adminUrl=STRING )? 

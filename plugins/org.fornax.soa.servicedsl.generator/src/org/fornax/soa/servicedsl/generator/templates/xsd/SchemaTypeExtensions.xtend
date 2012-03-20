@@ -324,6 +324,10 @@ class SchemaTypeExtensions {
 		} else {
 			t.exception.findSubdomain().toShortName() + t.exception.findSubdomain().version.toMajorVersionNumber() + ":" +t.exception.toTypeName();
 		}
+	}
+	
+	def boolean isOptionalElement (Property p) {
+		return p.optional || p.shallow || p.isProvidedKey;
 	}		
 		
 	def dispatch boolean isMany (TypeRef t) {

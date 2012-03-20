@@ -3,17 +3,55 @@
  */
 package org.fornax.soa.scoping;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.ISelectable;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.impl.FilteringScope;
+import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvider;
 import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.FixedVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.LatestMajorVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.VersionFilteringScope;
+import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.VersioningContainerBasedScope;
+import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingDslPackage;
+import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.bindingDsl.ModuleRef;
+import org.fornax.soa.bindingDsl.Provider;
+import org.fornax.soa.bindingDsl.Publisher;
 import org.fornax.soa.bindingDsl.ServiceRef;
+import org.fornax.soa.environmentDsl.Connector;
+import org.fornax.soa.environmentDsl.Environment;
+import org.fornax.soa.environmentDsl.Server;
+import org.fornax.soa.profiledsl.scoping.versions.EnvironmentBasedLatestMajorVersionFilter;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
+import org.fornax.soa.util.BindingDslHelper;
+import org.fornax.soa.util.ServerAccessUtil;
+
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Lists;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 
 /**
  * This class contains custom scoping description.
@@ -23,46 +61,48 @@ import org.fornax.soa.serviceDsl.ServiceDslPackage;
  *
  */
 public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
+
 	private static final Logger logger = Logger.getLogger(BindingDslScopeProvider.class);
+	
+	@Inject Injector injector;
+	@Inject IQualifiedNameProvider nameProvider;
 
-	/*
-	private VersionFilter filter;
-
-
-	@Inject
-	private IGlobalScopeProvider globalScopeProvider;
-
-	public void setGlobalScopeProvider(IGlobalScopeProvider globalScopeProvider) {
-		this.globalScopeProvider = globalScopeProvider;
+	@Override
+	protected IScope getLocalElementsScope(IScope parent, final EObject context,
+			final EReference reference) {
+		IScope result = super.getLocalElementsScope(parent, context, reference);
+		if (context instanceof Provider && reference == BindingDslPackage.Literals.PROVIDER__CONNECTORS) {
+			final Provider prov = (Provider) context;
+			Server provServer = prov.getProvServer();
+			return getServerConnectorScope (parent, context, reference, provServer);
+		}
+		if (context instanceof Publisher && reference == BindingDslPackage.Literals.PUBLISHER__CONNECTORS) {
+			final Publisher prov = (Publisher) context;
+			Server pubServer = prov.getPubServer();
+			return getServerConnectorScope (parent, context, reference, pubServer);
+		}
+		AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = getVersionFilterFromContext (context, reference);
+		return new VersionFilteringScope (result, versionFilter, isIgnoreCase());
 	}
-
-	@Inject 
-	private IResourceServiceProvider.Registry resourceServiceProviderRegistry;
-
-	private IResourceDescription.Manager getManager(Resource res) {
-		IResourceServiceProvider resourceServiceProvider = resourceServiceProviderRegistry
-				.getResourceServiceProvider(res.getURI());
-		return resourceServiceProvider.getResourceDescriptionManager();
+	
+	@Override
+	protected IScope getResourceScope(final IScope parent, final EObject context, final EReference reference) {
+		// TODO: SZ - context may not be a proxy, may it?
+		if (context.eResource() == null)
+			return parent;
+		ISelectable allDescriptions = getAllDescriptions (context.eResource());
+		if (context instanceof Provider && reference.getName().equals("connectors")) {
+			final Provider prov = (Provider) context;
+			Server provServer = prov.getProvServer();
+			return getServerConnectorScope (parent, context, reference, provServer);
+		}
+		if (context instanceof Publisher && reference.getName().equals("connectors")) {
+			final Publisher prov = (Publisher) context;
+			Server pubServer = prov.getPubServer();
+			return getServerConnectorScope (parent, context, reference, pubServer);
+		}
+		return VersioningContainerBasedScope.createScope (parent, allDescriptions, getVersionFilterFromContext (context, reference), reference.getEReferenceType(), isIgnoreCase(reference));
 	}
-
-	@Inject
-	private IResourceScopeCache cache = IResourceScopeCache.NullImpl.INSTANCE;
-
-	public void setCache(IResourceScopeCache cache) {
-		this.cache = cache;
-	}
-
-	@Inject
-	private IQualifiedNameProvider nameProvider;
-
-	public void setNameProvider(IQualifiedNameProvider nameProvider) {
-		this.nameProvider = nameProvider;
-	}
-
-	public IQualifiedNameProvider getNameProvider() {
-		return nameProvider;
-	}
-	*/
 
 
 	@Override
@@ -78,7 +118,7 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		}
 		if (ctx instanceof ModuleRef) {
 			final VersionRef v = ((ModuleRef) ctx).getVersionRef();
-			return createVersionFilter(v, ctx);
+			return createVersionFilter(v, (ModuleRef) ctx);
 		}
 		if (ctx instanceof ServiceRef) {
 			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
@@ -86,7 +126,42 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		}
 		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 	}
-	
-	
 
+	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, ModuleRef owner) {
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		if (v != null) {
+			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
+			if (v instanceof MajorVersionRef && owner.eContainer () instanceof Binding) {
+				Environment environment = BindingDslHelper.getEnvironment ((Binding) owner.eContainer ());
+				EnvironmentBasedLatestMajorVersionFilter<IEObjectDescription> versionFilter = new EnvironmentBasedLatestMajorVersionFilter <IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), environment.getName (), environment.getType (), owner.eResource().getResourceSet());
+				injector.injectMembers(versionFilter);
+				return versionFilter;
+			}
+			if (v instanceof MaxVersionRef)
+				return new LatestMaxExclVersionFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion());
+			if (v instanceof MinVersionRef)
+				return new LatestMinInclVersionFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion());
+			if (v instanceof LowerBoundRangeVersionRef)
+				return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+			if (v instanceof FixedVersionRef)
+				return new FixedVersionFilter<IEObjectDescription> (verResolver, ((FixedVersionRef)v).getFixedVersion());
+		}
+		return filter;
+	}
+
+	private IScope getServerConnectorScope (IScope parent, final EObject context, final EReference reference, Server server) {
+		final List<QualifiedName> connectors = Lists.transform(ServerAccessUtil.getConnectors (server), new Function<Connector, QualifiedName> () {
+
+			public QualifiedName apply(Connector from) {
+				return nameProvider.getFullyQualifiedName(from);
+			}
+			
+		});
+		return new FilteringScope(parent, new Predicate<IEObjectDescription>() {
+			
+			public boolean apply(IEObjectDescription input) {
+				return connectors.contains(input.getQualifiedName());
+			}
+		});
+	}
 }

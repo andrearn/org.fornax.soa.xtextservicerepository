@@ -32,6 +32,8 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 	private List<String> moduleBindingNames = new ArrayList<String>();
 	private List<String> domainBindingNames = new ArrayList<String>();
 	private List<String> namespaces = new ArrayList<String>();
+	private List<String> domainNamespaces = new ArrayList<String>();
+	private List<String> internalNamespaces = new ArrayList<String>();
 	private Boolean noDependencies = false;
 	private Boolean includeSubNamespaces = false;
 	private Boolean useNestedPaths = false;
@@ -85,6 +87,14 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.NAME_SPACES))
 								.toInstance (namespaces);
+						bind (new TypeLiteral<List<String>>() {})
+								.annotatedWith (
+										Names.named (BindingDSLGeneratorConstants.DOMAIN_NAME_SPACES))
+								.toInstance (getDomainNamespaces());
+						bind (new TypeLiteral<List<String>>() {})
+								.annotatedWith (
+										Names.named (BindingDSLGeneratorConstants.INTERNAL_NAME_SPACES))
+								.toInstance (getInternalNamespaces());
 						bind (Boolean.class)
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.NO_DEPENDENCIES))
@@ -205,6 +215,26 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 	public String getTargetEnvironmentName () {
 		return targetEnvironmentName;
+	}
+
+
+	public void setDomainNamespaces(List<String> domainNamespaces) {
+		this.domainNamespaces = domainNamespaces;
+	}
+
+
+	public List<String> getDomainNamespaces() {
+		return domainNamespaces;
+	}
+
+
+	public void setInternalNamespaces(List<String> internalNamespaces) {
+		this.internalNamespaces = internalNamespaces;
+	}
+
+
+	public List<String> getInternalNamespaces() {
+		return internalNamespaces;
 	}
 
 }

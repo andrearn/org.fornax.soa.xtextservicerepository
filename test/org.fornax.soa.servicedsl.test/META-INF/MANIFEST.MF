@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SOA Service DSL tests
 Bundle-SymbolicName: org.fornax.soa.servicedsl.test
-Bundle-Version: 1.4.5.qualifier
+Bundle-Version: 1.5.0.qualifier
 Bundle-Activator: org.fornax.soa.servicedsl.test.Activator
 Bundle-Vendor: Fornax Platform
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.fornax.soa.servicedsl;bundle-version="1.4.5",
+ org.fornax.soa.servicedsl;bundle-version="1.5.0",
  org.junit;bundle-version="4.8.1",
  org.eclipse.emf.ecore;bundle-version="2.6.0",
  org.fornax.soa.basedsl;bundle-version="1.0.0",
@@ -16,6 +16,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext;bundle-version="2.1.0",
  org.eclipse.xtext.junit4,
  org.eclipse.xtext.ui.junit;bundle-version="2.1.0",
- org.fornax.soa.environmentdsl;bundle-version="1.4.5"
+ org.fornax.soa.environmentdsl;bundle-version="1.5.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
