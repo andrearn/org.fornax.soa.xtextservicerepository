@@ -10,7 +10,9 @@ import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -20,8 +22,11 @@ import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.util.BaseDslEqualityHelper;
+import org.fornax.soa.serviceDsl.ApprovalDecision;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.Property;
+import org.fornax.soa.serviceDsl.Service;
+import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.SubNamespace;
 import org.fornax.soa.serviceDsl.Type;
 import org.fornax.soa.serviceDsl.TypeRef;
@@ -81,6 +86,26 @@ public class BusinessObjectQuery {
 		return collectAllInheritedProperties (bo, new ArrayList<Property>());
 	}
 	
+	
+	public Iterable<IEObjectDescription> findUnapprovedBusinessObjects (ResourceSet res) {
+		final ResourceSet resSet = res;
+		Iterable<IEObjectDescription> result = predicateSearch.search (ServiceDslPackage.Literals.BUSINESS_OBJECT.getName (), new Predicate<IEObjectDescription>() {
+
+			public boolean apply (IEObjectDescription objDesc) {
+				EObject eObjectOrProxy = objDesc.getEObjectOrProxy ();
+				if (eObjectOrProxy.eIsProxy () && eObjectOrProxy instanceof Service) {
+					BusinessObject bo = (BusinessObject) EcoreUtil2.resolve (eObjectOrProxy, resSet);
+					if (bo.getGovernanceApproval () == null)
+						return true;
+					else if (bo.getGovernanceApproval ().getDecision () != ApprovalDecision.YES)
+						return true;
+				}
+				return false;
+			}
+			
+		});
+		return result;
+	}
 	
 	
 	/**
