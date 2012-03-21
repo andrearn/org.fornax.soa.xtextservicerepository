@@ -32,13 +32,6 @@ public class ServiceDslFormatter extends AbstractDeclarativeFormatter {
 		c.setLinewrap(1, 1, 1).after(f.getPropertyRule());
 		c.setLinewrap(1, 2, 1).after(f.getServiceRule());
 		c.setLinewrap(2).after(f.getServiceModelAccess().getImportsAssignment_0());
-		c.setLinewrap().after(f.getExceptionAccess().getDocAssignment_0());
-		c.setLinewrap().after(f.getEnumerationAccess().getDocAssignment_0());
-		c.setLinewrap().after(f.getBusinessObjectAccess().getDocAssignment_0());
-		c.setLinewrap().after(f.getServiceAccess().getDocAssignment_0());
-		c.setLinewrap().after(f.getOperationAccess().getDocAssignment_0());
-		c.setLinewrap().after(f.getReferenceAccess().getDocAssignment_0());
-		c.setLinewrap().after(f.getAttributeAccess().getDocAssignment_0());
 		for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("{", "}")) {
 			c.setIndentationIncrement().after(pair.getFirst());
 			c.setLinewrap(1).after(pair.getFirst());
@@ -54,9 +47,5 @@ public class ServiceDslFormatter extends AbstractDeclarativeFormatter {
 		for (Keyword returnsKw : f.findKeywords("returns")) {
 			c.setLinewrap(1).before(returnsKw);
 		}
-		c.setIndentationIncrement().before(f.getOperationAccess().getReturnAssignment_8_1());
-		c.setIndentationDecrement().after(f.getOperationAccess().getReturnAssignment_8_1());
-		c.setIndentationIncrement().before(f.getOperationAccess().getThrowsAssignment_9_1());
-		c.setIndentationDecrement().after(f.getOperationAccess().getThrowsAssignment_9_1());
 	}
 }

@@ -57,7 +57,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//OrganizationNamespace/subNamespaces"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//SubNamespace">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SubNamespace/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SubNamespace/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SubNamespace/prefix"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/version"/>
@@ -77,7 +76,6 @@
     <genClasses ecoreClass="ServiceDsl.ecore#//InternalNamespace"/>
     <genClasses ecoreClass="ServiceDsl.ecore#//Type"/>
     <genClasses ecoreClass="ServiceDsl.ecore#//VersionedType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedType/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedType/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/version"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/state"/>
@@ -113,7 +111,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObjectRef/type"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//Property">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/deprecated"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/optional"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/shallow"/>
@@ -129,7 +126,6 @@
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//Reference"/>
     <genClasses ecoreClass="ServiceDsl.ecore#//SimpleAttribute">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SimpleAttribute/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SimpleAttribute/deprecated"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SimpleAttribute/optional"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SimpleAttribute/name"/>
@@ -140,12 +136,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Enumeration/literals"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//EnumLiteral">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//EnumLiteral/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//EnumLiteral/deprecated"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//EnumLiteral/name"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//Service">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/visibility"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/version"/>
@@ -226,7 +220,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Channel/name"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//Operation">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/deprecated"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/mep"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/name"/>
@@ -258,7 +251,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Parameter/type"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//Exception">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Exception/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Exception/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/superException"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/version"/>

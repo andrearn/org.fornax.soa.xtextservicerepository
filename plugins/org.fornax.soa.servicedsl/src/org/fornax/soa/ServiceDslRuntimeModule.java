@@ -4,6 +4,7 @@
 package org.fornax.soa;
 
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
+import org.eclipse.xtext.documentation.impl.MultiLineCommentDocumentationProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.documentation.DocFeatureDocumationProvider;
 import org.fornax.soa.basedsl.resource.EObjectDescriptionBuilder;
@@ -47,7 +48,7 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 	}
 	
 	public void configureIEObjectDocumentationProvider (Binder binder) {
-		binder.bind(IEObjectDocumentationProvider.class).to(DocFeatureDocumationProvider.class);
+		binder.bind(IEObjectDocumentationProvider.class).to(MultiLineCommentDocumentationProvider.class);
 	}
 	
 	@org.eclipse.xtext.service.SingletonBinding(eager=true)	

@@ -20,6 +20,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import com.google.inject.name.Named
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 
 class OperationWrapperTemplates {
@@ -40,6 +41,9 @@ class OperationWrapperTemplates {
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
+	
+	@Inject
+	IEObjectDocumentationProvider docProvider
 
 	def dispatch toOperationWrappersInclSubNamespaces (String serviceName, List<SubNamespace> namespaces, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		for (ns : namespaces.filter(e|e.name.startsWith (serviceName))) {
@@ -88,7 +92,7 @@ class OperationWrapperTemplates {
 					<![CDATA[Version «service.version.toVersionNumber()»
 					Lifecycle state: «service.state.toString()»
 					
-					«service.doc?.trim()?.stripCommentBraces()»]]>
+					«docProvider.getDocumentation (service)»]]>
 			   	</xsd:documentation>
 		   	</xsd:annotation>
 			
@@ -132,7 +136,7 @@ class OperationWrapperTemplates {
 					<![CDATA[Version «service.version.toVersionNumber()»
 					Lifecycle state: «service.state.toString()»
 					
-					«service.doc?.trim()?.stripCommentBraces()»]]>
+					«docProvider.getDocumentation (service)»]]>
 		    	</xsd:documentation>
 		    </xsd:annotation>
 			

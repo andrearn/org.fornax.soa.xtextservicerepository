@@ -20,7 +20,7 @@ import "platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/prof
 import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
 import "platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore" as businessDsl
 
-ServiceModel hidden(WS):
+ServiceModel:
 	(imports+=Import)*
 	(orgNamespaces+=OrganizationNamespace)*
 	(types+=Type)*;
@@ -36,7 +36,6 @@ SubNamespace : DomainNamespace | InternalNamespace;
 	
 /* Namespace of a canonical domain subject to SOA governance rules*/
 DomainNamespace:
-	(doc=ML_COMMENT)? 
 	'domain-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		('metadata' '{'
 			('domain' domain=[businessDsl::Domain|QualifiedName])?
@@ -55,7 +54,6 @@ DomainNamespace:
 
 /* Namespace for internal use with no restrictions */
 InternalNamespace:	
-	(doc=ML_COMMENT)? 
 	'internal-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		('metadata' '{'
 			(version=Version)?
@@ -77,7 +75,6 @@ VersionedType:
 		
 
 BusinessObject:
-	(doc=ML_COMMENT)?
 	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superBusinessObject=BusinessObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
@@ -113,7 +110,6 @@ Property:
 	Attribute | Reference;
 	
 Attribute:
-	(doc=ML_COMMENT)?
 	(deprecated?='@deprecated')? 
 	((optional?='optional')? | (shallow?='shallow')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
 	((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? 
@@ -121,17 +117,14 @@ Attribute:
 	
 /* links to a target businessObject but uses it's business-key to resolve a reference, hence it is a weak reference */
 Reference:
-	(doc=ML_COMMENT)?
 	(deprecated?='@deprecated')? 
 	((optional?='optional')? | (shallow?='shallow')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
 	'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef; 
 	
 SimpleAttribute:
-	(doc=ML_COMMENT)?
 	(deprecated?='@deprecated')? (optional?='optional')? name=ID ':' type=TypeRef;
 	
 Enumeration:
-	(doc=ML_COMMENT)?
 	'enum' name=ID '{'
 		'metadata' '{'
 			version=Version  
@@ -146,15 +139,13 @@ Enumeration:
 	'}';
 	
 EnumLiteral: 
-	(doc=ML_COMMENT)?
 	(deprecated?='@deprecated')? name=ID;
 	
 // -- Technical eternal entities
 
 
 
-Service hidden(WS):
-	(doc=ML_COMMENT)?
+Service:
 	visibility=VISIBILITY 'service' name=ID '{'
 		'metadata' '{'
 			version=Version  
@@ -254,7 +245,6 @@ Channel:
 	
 	
 Operation:
-	(doc=ML_COMMENT)?
 	(deprecated?='@deprecated')? mep=MEP name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
 		('callback-listener-for' (callbackForOperation+=OperationRef) (',' callbackForOperation+=OperationRef)*)?
 		('publishes' '{'
@@ -285,7 +275,6 @@ Parameter:
 	(optional?='optional')? name=ID ':' type=TypeRef ;
 	
 Exception:
-	(doc=ML_COMMENT)?
 	'exception' name=ID ('extends' superException=ExceptionRef)? '{' 
 		'metadata' '{'
 			version=Version  

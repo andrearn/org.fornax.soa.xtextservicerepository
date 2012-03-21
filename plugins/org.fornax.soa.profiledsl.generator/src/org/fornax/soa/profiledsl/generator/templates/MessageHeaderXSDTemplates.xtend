@@ -21,6 +21,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 /* A template class to generate an XSD for a TechnicalNamespace 
  * declaring the complextype used by message headers
@@ -38,6 +39,8 @@ class MessageHeaderXSDTemplates {
 	@Inject extension TechnicalNamespaceSplitter
 	@Inject extension NamespaceImportQueries
 	@Inject extension LatestMatchingTypeFinder
+	
+	@Inject IEObjectDocumentationProvider docProvider
 
 	/*
 		<b>CARTRIDGE ENTRYPOINT</b> for generation message headers defined in the give SOAProfile<br/><br/>
@@ -196,10 +199,8 @@ class MessageHeaderXSDTemplates {
 				<xsd:documentation>
 					<![CDATA[
 						Version:	«cls.version.toVersionNumber()»
-						«IF cls.doc != null»
 
-							«cls.doc?.stripCommentBraces()?.trim()»
-						«ENDIF» 
+						«docProvider.getDocumentation (cls)»
 					]]>
 				</xsd:documentation>
 			</xsd:annotation>
@@ -247,12 +248,10 @@ class MessageHeaderXSDTemplates {
 	    <xsd:simpleType name="«enumeration.name»">
 	    	<xsd:annotation>
 	    		<xsd:documentation>
-	    			<![CDATA[Version:	«enumeration.version.toVersionNumber()»
+	    			<![CDATA[
+	    			Version:	«enumeration.version.toVersionNumber()»
 	    			
-						«IF enumeration.doc != null»
-
-			    			«enumeration.doc?.stripCommentBraces()?.trim()»
-						«ENDIF»
+	    			«docProvider.getDocumentation (enumeration)»
 	    			]]> 
 	       		</xsd:documentation>
 	    	</xsd:annotation>
@@ -264,13 +263,13 @@ class MessageHeaderXSDTemplates {
 	
 	
 	def protected dispatch toProperty (Property prop, VersionedTechnicalNamespace currNs, SOAProfile profile) '''
-		«IF prop.doc == null»
+		«IF docProvider.getDocumentation (prop) == null»
 			<xsd:element name="«prop.name»" «IF prop.optional»minOccurs="0"«ENDIF» «IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«prop.type.toTypeNameRef(currNs)»" />
 		«ELSE»		
 			<xsd:element name="«prop.name»" «IF prop.optional»minOccurs="0"«ENDIF» «IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«prop.type.toTypeNameRef(currNs)»" >
 				<xsd:annotation>
 					<xsd:documentation>
-						<![CDATA[«prop.doc?.stripCommentBraces()?.trim()»]]>
+						<![CDATA[«docProvider.getDocumentation (prop)»]]>
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:element>
@@ -278,13 +277,13 @@ class MessageHeaderXSDTemplates {
 	'''
 	
 	def protected dispatch toProperty (Attribute attr, VersionedTechnicalNamespace currNs, SOAProfile profile) '''
-		«IF attr.doc == null»
+		«IF docProvider.getDocumentation (attr) == null»
 		   	<xsd:attribute name="«attr.name»" «IF attr.optional»use="optional"«ENDIF» type="«attr.type.toTypeNameRef (currNs)»" />
 		«ELSE»		
 			<xsd:attribute name="«attr.name»" «IF attr.optional»use="optional"«ENDIF» type="«attr.type.toTypeNameRef (currNs)»" >
 				<xsd:annotation>
 					<xsd:documentation>
-						<![CDATA[«attr.doc?.stripCommentBraces()?.trim()»]]>
+						<![CDATA[«docProvider.getDocumentation (attr)»]]>
 					</xsd:documentation>
 				</xsd:annotation>
 			</xsd:attribute>

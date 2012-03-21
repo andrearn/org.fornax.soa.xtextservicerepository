@@ -30,6 +30,7 @@ import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.servicedsl.generator.query.type.ReferencedTypesFinder
 import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 class XSDTemplates {
 
@@ -59,6 +60,9 @@ class XSDTemplates {
 	
 	@Inject
 	IQualifiedNameProvider nameProvider
+	
+	@Inject
+	IEObjectDocumentationProvider docProvider
 	
 	@Inject org.fornax.soa.profiledsl.generator.query.LifecycleQueries lifecycleQueries
 
@@ -238,12 +242,11 @@ class XSDTemplates {
 		<xsd:complexType name="«bo.name»"«IF bo.abstract» abstract="true"«ENDIF»>
 			<xsd:annotation>
 		    	<xsd:documentation>
-					<![CDATA[Version:	«versionQualifier.toVersionNumber(bo.version)»
-						Lifecycle state: «bo.state.name»
-						«IF bo.doc != null»
+					<![CDATA[
+						Version:			«versionQualifier.toVersionNumber(bo.version)»
+						Lifecycle state: 	«bo.state.name»
 										
-							«bo.doc?.stripCommentBraces()?.trim()»
-						«ENDIF»
+						«docProvider.getDocumentation (bo)»
 					]]>
 				</xsd:documentation>
 						«/*
@@ -332,10 +335,8 @@ class XSDTemplates {
 				<xsd:documentation>
 					<![CDATA[
 						Version:	«versionQualifier.toVersionNumber(en.version)»
-					«IF en.doc != null»
 						
-						«en.doc?.stripCommentBraces()?.trim()»
-					«ENDIF» 
+						«docProvider.getDocumentation (en)»
 					]]>
 				</xsd:documentation>
 			</xsd:annotation>
@@ -361,10 +362,8 @@ class XSDTemplates {
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(ex.version)»
 					    Lifecycle state: 	«ex.state.name»
-						«IF ex.doc != null»
-							
-							«ex.doc?.stripCommentBraces()?.trim()»
-						«ENDIF»
+						
+						«docProvider.getDocumentation (ex)»
 					]]>   			
 				</xsd:documentation>
 				«/*
@@ -402,24 +401,22 @@ class XSDTemplates {
 	}
 	
 	def dispatch toProperty (Attribute attr, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
-		«IF attr.doc != null»
+		«IF docProvider.getDocumentation (attr) != null»
 			<xsd:element name="«attr.name»" «IF attr.optionalElement»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment()»«ENDIF» >
-				«IF attr.doc != null»
-					<xsd:annotation>
-						<xsd:documentation>
-							<![CDATA[«attr.doc?.stripCommentBraces()?.trim()»]]>
-						</xsd:documentation>
-						«/*
-			   			<xsd:appinfo>
-			    			<jxb:property>
-			    				<jxb:javadoc>
-				    				<![CDATA[«doc?.stripCommentBraces()?.trim()»]]>
-			    				</jxb:javadoc>
-			    			</jxb:property>
-						</xsd:appinfo>
-						*/»
-					</xsd:annotation>
-				«ENDIF»
+				<xsd:annotation>
+					<xsd:documentation>
+						<![CDATA[«docProvider.getDocumentation (attr)»]]>
+					</xsd:documentation>
+					«/*
+			   		<xsd:appinfo>
+			    		<jxb:property>
+			    			<jxb:javadoc>
+				   				<![CDATA[«doc?.stripCommentBraces()?.trim()»]]>
+			    			</jxb:javadoc>
+			    		</jxb:property>
+					</xsd:appinfo>
+					*/»
+				</xsd:annotation>
 			</xsd:element>
 		«ELSE»
 			<xsd:element name="«attr.name»" «IF attr.optional»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment ()»«ENDIF» />
@@ -427,15 +424,14 @@ class XSDTemplates {
 	'''
 	
 	def dispatch toProperty (SimpleAttribute attr, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
-		«IF attr.doc == null»
+		«IF docProvider.getDocumentation (attr) == null»
 			<xsd:element name="«attr.name»" «IF attr.optional»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment ()»«ENDIF»/>
 		«ELSE»
 			<xsd:element name="«attr.name»" «IF attr.optional»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment () »«ENDIF»>
-				«IF attr.doc != null»
-					<xsd:annotation>
-						<xsd:documentation>
-							<![CDATA[«attr.doc?.stripCommentBraces()?.trim()»]]>
-						</xsd:documentation>
+				<xsd:annotation>
+					<xsd:documentation>
+						<![CDATA[«docProvider.getDocumentation (attr)»]]>
+					</xsd:documentation>
 					«/*
 				   		<xsd:appinfo>
 				    		<jxb:property>
@@ -445,8 +441,7 @@ class XSDTemplates {
 				    		</jxb:property>
 						</xsd:appinfo>
 					*/»
-					</xsd:annotation>
-			   	«ENDIF»
+				</xsd:annotation>
 			</xsd:element>
 		«ENDIF»
 	'''
@@ -457,9 +452,7 @@ class XSDTemplates {
 		   		<xsd:documentation>
 		   			<![CDATA[
 			   			References an instance of type «ref.type.toFullTypeNameRef(currNs)» using it's business-key «ref.type.toWeakRefKeyAttr(minState)»
-						«IF ref.doc != null»
-				   			«ref.doc?.stripCommentBraces()?.trim()»
-				    	«ENDIF»
+				   			«docProvider.getDocumentation (ref)»
 			    	]]>
 			    </xsd:documentation>
 				«/*

@@ -35,9 +35,9 @@ public class SOAProfileDslRuntimeModule extends org.fornax.soa.profiledsl.Abstra
 		binder.bind(IDefaultResourceDescriptionStrategy.class).to(VersionedResourceDescriptionStrategy.class);
 	}
 	
-	public void configureIEObjectDocumentationProvider (Binder binder) {
-		binder.bind(IEObjectDocumentationProvider.class).to(DocFeatureDocumationProvider.class);
-	}
+//	public void configureIEObjectDocumentationProvider (Binder binder) {
+//		binder.bind(IEObjectDocumentationProvider.class).to(DocFeatureDocumationProvider.class);
+//	}
 	
 	public Class<? extends IStateMatcher> bindIStateMatcher () {
 		return DefaultStateMatcher.class;

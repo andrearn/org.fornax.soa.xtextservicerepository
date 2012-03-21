@@ -22,6 +22,7 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateE
 import org.fornax.soa.servicedsl.generator.templates.webservice.WsdlExtensions
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 class EventXSDTemplates {
 	
@@ -41,6 +42,8 @@ class EventXSDTemplates {
 	@Inject extension XSDTemplates
 	@Inject extension OperationWrapperTemplates
 	@Inject extension LatestMatchingTypeFinder
+	
+	@Inject IEObjectDocumentationProvider docProvider
 	
 	
 	def dispatch toEventsInclSubNamespaces (String namespace, List<SubNamespace> namespaces, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
@@ -89,7 +92,7 @@ class EventXSDTemplates {
 					<![CDATA[Version «svc.version.toVersionNumber()»
 					Lifecycle state: «svc.state.toString()»
 					
-					«svc.doc?.trim()?.stripCommentBraces()»]]>
+					«docProvider.getDocumentation (svc)»]]>
 			   	</xsd:documentation>
 		   	</xsd:annotation>
 			
@@ -133,7 +136,7 @@ class EventXSDTemplates {
 					<![CDATA[Version «svc.version.toVersionNumber()»
 					Lifecycle state: «svc.state.toString()»
 					
-					«svc.doc?.trim()?.stripCommentBraces()»]]>
+					«docProvider.getDocumentation (svc)»]]>
 		    	</xsd:documentation>
 		    </xsd:annotation>
 			

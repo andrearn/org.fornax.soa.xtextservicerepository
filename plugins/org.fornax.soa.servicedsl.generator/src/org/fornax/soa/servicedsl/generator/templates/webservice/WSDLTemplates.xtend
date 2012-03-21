@@ -23,6 +23,7 @@ import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import com.google.inject.name.Named
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 /*
  * Template class for generation of abstract WSDLs
@@ -44,7 +45,7 @@ class WSDLTemplates {
 
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
-	
+	@Inject IEObjectDocumentationProvider docProvider	
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
@@ -64,7 +65,7 @@ class WSDLTemplates {
 				Version «versionQualifier.toVersionNumber(s.version)»
 				Lifecycle state: «s.state.name»
 				
-				«s.doc?.trim()?.stripCommentBraces()»
+				«docProvider.getDocumentation (s)»
 			</wsdl:documentation>
 			
 			«s.toTypes (minState, profile, registryBaseUrl)»
@@ -94,7 +95,7 @@ class WSDLTemplates {
 				<![CDATA[Version «versionQualifier.toVersionNumber(s.version)»
 				Lifecycle state: «s.state.name»
 				
-				«s.doc?.trim()?.stripCommentBraces()»]]>
+				«docProvider.getDocumentation (s)»]]>
 			</wsdl:documentation>
 			
 			«s.toTypes (minState, profile, registryBaseUrl)»
@@ -221,10 +222,8 @@ class WSDLTemplates {
 					<![CDATA[
 						Version:	«versionQualifier.toVersionNumber(s.version)»
 						Lifecycle state: «s.state.name»
-						«IF s.doc != null»
 
-							«s.doc?.stripCommentBraces().trim()»
-						«ENDIF»
+						«docProvider.getDocumentation (s)»
 					]]>   			
 			</wsdl:documentation>
 			«/*
@@ -246,9 +245,8 @@ class WSDLTemplates {
 	
 	def toOperation (Operation o) '''
 		<wsdl:operation name="«o.name»">
-			«IF o.doc != null»
 			<wsdl:documentation>
-				<![CDATA[«o.doc?.stripCommentBraces().trim()»]]>   			
+				<![CDATA[«docProvider.getDocumentation (o)»]]>   			
 			</wsdl:documentation>
 			«/*
 				<jaxws:method>
@@ -257,7 +255,6 @@ class WSDLTemplates {
 					</jaxws:javadoc>
 				</jaxws:method>
 			*/»
-			«ENDIF»
 			<wsdl:input message="tns:«o.name»Request" />
 			<wsdl:output message="tns:«o.name»Response" />
 			«o.toFault()»

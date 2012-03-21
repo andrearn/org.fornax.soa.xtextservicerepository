@@ -23,6 +23,7 @@ import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -44,6 +45,7 @@ class ConcreteWsdlTemplates {
 	@Inject extension LatestMatchingTypeFinder
 
 	@Inject VersionQualifierExtensions versionQualifier
+	@Inject IEObjectDocumentationProvider docProvider
 	
 	@Inject IFileSystemAccess fsa
 	
@@ -87,7 +89,7 @@ class ConcreteWsdlTemplates {
 				Version «versionQualifier.toVersionNumber(svc.version)»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc?.trim()?.stripCommentBraces()»
+				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (domBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 			
@@ -114,7 +116,7 @@ class ConcreteWsdlTemplates {
 				Version «versionQualifier.toVersionNumber(svc.version)»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc?.trim()?.stripCommentBraces()»
+				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
 
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
@@ -142,7 +144,7 @@ class ConcreteWsdlTemplates {
 				Version «versionQualifier.toVersionNumber(svc.version)»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc?.trim()?.stripCommentBraces()»
+				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
 
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>

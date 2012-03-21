@@ -103,7 +103,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//MessageHeader/parameters"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//AbstractProperty">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//AbstractProperty/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//AbstractProperty/optional"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//AbstractProperty/name"/>
     </genClasses>
@@ -140,7 +139,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//MessageHeaderRef/versionRef"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Type">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Type/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Type/name"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//DataType">
@@ -155,7 +153,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Enumeration/literals"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//EnumLiteral">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//EnumLiteral/doc"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//EnumLiteral/name"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Class">

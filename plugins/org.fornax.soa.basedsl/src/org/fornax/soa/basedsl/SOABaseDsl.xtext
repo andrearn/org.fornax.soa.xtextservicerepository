@@ -12,38 +12,38 @@ grammar org.fornax.soa.basedsl.SOABaseDsl with org.eclipse.xtext.common.Terminal
 
 generate sOABaseDsl "http://www.fornax.org/soa/basedsl/SOABaseDsl"
 
-Import hidden(WS): 
+Import: 
 	'import' importedNamespace=QualifiedNameWithWildCard;
 
-VersionId hidden(WS): INT('.'INT)*;
+VersionId: INT('.'INT)*;
 
-VersionedName hidden(WS): {VersionedName} QualifiedName|ID (WS)* version=VersionId;
+VersionedName: {VersionedName} QualifiedName|ID (WS)* version=VersionId;
 
-Version hidden(WS):
+Version:
 	'version' (version=VersionId) ;
 	
-VersionRef hidden(WS):
+VersionRef:
 	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
 	
-MinVersionRef hidden(WS):
+MinVersionRef:
 	('minVersion') minVersion=VersionId;
 	
-MaxVersionRef hidden(WS):
+MaxVersionRef:
 	('maxVersion') maxVersion=VersionId;
 	
-LowerBoundRangeVersionRef hidden(WS):
+LowerBoundRangeVersionRef:
 	('minVersion' '>=') minVersion=VersionId ',' ('maxVersion' '<') maxVersion=VersionId;
 
-MajorVersionRef hidden(WS):
+MajorVersionRef:
 	'majorVersion' majorVersion=INT;
 	
-FixedVersionRef hidden(WS):
+FixedVersionRef:
 	'fixedVersion' fixedVersion=VersionId;
 
-QualifiedNameWithWildCard hidden(WS):
+QualifiedNameWithWildCard:
 	QualifiedName '.*'?;
 
-QualifiedName hidden(WS):
+QualifiedName:
 	ID ('.' ID)*;
 	
 Qualifier: 

@@ -23,6 +23,7 @@ import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 class ConcreteProviderWsdlTemplates {
 
@@ -40,6 +41,7 @@ class ConcreteProviderWsdlTemplates {
 	
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IFileSystemAccess fsa
+	@Inject IEObjectDocumentationProvider docProvider
 	
 	def toWSDL(DomainBinding binding, BindingProtocol prot, SOAProfile profile) {
 		val services = binding.subNamespace.services.filter (e|stateMatcher.matches (binding.environment.getMinLifecycleState(e, profile.lifecycle), e.state) && e.isLatestMatchingService(versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
@@ -67,7 +69,7 @@ class ConcreteProviderWsdlTemplates {
 				Version «versionQualifier.toVersionNumber(svc.version)»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc?.trim()?.stripCommentBraces()»
+				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
 
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (domBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
@@ -95,7 +97,7 @@ class ConcreteProviderWsdlTemplates {
 				Version «versionQualifier.toVersionNumber(svc.version)»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc?.trim()?.stripCommentBraces()»
+				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
 
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
@@ -122,7 +124,7 @@ class ConcreteProviderWsdlTemplates {
 				Version «versionQualifier.toVersionNumber(svc.version)»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc?.trim()?.stripCommentBraces()»
+				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
 
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>

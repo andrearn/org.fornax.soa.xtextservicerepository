@@ -15,13 +15,12 @@ generate sOAProfileDsl "http://www.fornax.org/soa/profiledsl/SOAProfileDsl"
 
 import "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore" as  environmentDsl
 
-SOAProfileModel hidden (WS):
+SOAProfileModel:
 	(types+=DataType)+
 	(profiles += SOAProfile)*
 	(roles+=Role)*;
 	
 SOAProfile:
-	(ML_COMMENT)?
 	'soa-profile' name=ID '{'
 		'scope' scope = STRING
 		lifecycle=Lifecycle
@@ -34,13 +33,11 @@ SOAProfile:
 	'}';
 	
 Lifecycle:
-	(ML_COMMENT)?
 	'lifecycle' name = ID '{'
 		(states+= LifecycleState)+
 	'}';
 
 LifecycleState:
-	(ML_COMMENT)?
 	(isInitial?='initial' | isEnd?='end')? 'state' name = ID '{'
 		('qualifies-for' (qualifiesFor+=EnvironmentType)(',' qualifiesFor+=EnvironmentType)*)?
 		('qualifies-for-environment' (qualifiesForEnvironment+=[environmentDsl::Environment])(',' qualifiesForEnvironment+=[environmentDsl::Environment])*)?
@@ -50,7 +47,6 @@ LifecycleState:
 Transition: '->' targetState = [LifecycleState | QualifiedName] ('by' (roles+=[Role | QualifiedName])(',' roles+=[Role | QualifiedName])*)?;
 
 Role: 
-	(ML_COMMENT)?
 	'role' name=ID;
 
 enum EnvironmentType returns environmentDsl::EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
@@ -86,13 +82,11 @@ BaseNamespaceAlias :
 	'shorten' baseNamespaceFragment=QualifiedName 'to' shortenedBaseNamespaceFragment=QualifiedName ;
 
 OrganizationNamespace:
-	(ML_COMMENT)?
 	'org-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		(subNamespaces+=TechnicalNamespace)*
 	'}' ;
 	
 TechnicalNamespace: 
-	(ML_COMMENT)?
 	'namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
 		(types+=Type)*
@@ -119,10 +113,10 @@ AbstractProperty :
 	Property | Attribute;	
 	
 Property:
-	(doc=ML_COMMENT)? (optional?='optional')? name=ID ':' type=TypeRef ;
+	(optional?='optional')? name=ID ':' type=TypeRef ;
 
 Attribute:
-	(doc=ML_COMMENT)? (optional?='optional')? 'attr' name=ID ':' type=AttributeDataTypeRef ;
+	(optional?='optional')? 'attr' name=ID ':' type=AttributeDataTypeRef ;
 
 TypeRef:	DataTypeRef | VersionedTypeRef;
 
@@ -147,13 +141,11 @@ MessageHeaderRef:
 Type : DataType | VersionedType;
 
 DataType hidden(WS):
-	(doc=ML_COMMENT)?
 	'datatype' name=ID ('extends' base=[DataType] 'scope' scope=STRING)? ;
 	
 VersionedType:	Enumeration | Class;
 
 Enumeration:
-	(doc=ML_COMMENT)?
 	'enum' name=ID '{'
 		'metadata' '{'
 			version=Version  
@@ -163,11 +155,9 @@ Enumeration:
 	'}';
 
 EnumLiteral: 
-	(doc=ML_COMMENT)?
 	name=ID;
 	
 Class:
-	(doc=ML_COMMENT)?
 	'class' name=ID ('extends' superClass=ClassRef)? '{'
 		'metadata' '{'
 			version=Version  

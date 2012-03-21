@@ -26,6 +26,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Property
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import com.google.inject.name.Named
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 class WrappedWsdlTemplates {
 	
@@ -45,6 +46,8 @@ class WrappedWsdlTemplates {
 	@Inject extension XSDTemplates
 	@Inject extension OperationWrapperTemplates
 	@Inject extension LatestMatchingTypeFinder
+	
+	@Inject IEObjectDocumentationProvider docProvider
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
@@ -82,7 +85,7 @@ class WrappedWsdlTemplates {
 				Version «svc.version.toVersionNumber()»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc?.trim()?.stripCommentBraces()»
+				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
 			
 			«svc.toTypes (minState, profile, registryBaseUrl)»
@@ -115,7 +118,7 @@ class WrappedWsdlTemplates {
 				<![CDATA[Version «svc.version.toVersionNumber()»
 				Lifecycle state: «svc.state.toString()»
 				
-				«svc.doc?.trim()?.stripCommentBraces()»]]>
+				«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>
 			
 			«svc.toTypes(minState, profile, registryBaseUrl)»
@@ -201,10 +204,8 @@ class WrappedWsdlTemplates {
 			<wsdl:documentation>
 					<![CDATA[Version:	«svc.version.toVersionNumber()»
 					Lifecycle state: «svc.state.toString()»
-					«IF svc.doc != null»
 										
-					«svc.doc?.stripCommentBraces()?.trim()»
-					«ENDIF» ]]>   			
+					«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
 			«/*
 			<jaxws:class>
@@ -224,18 +225,16 @@ class WrappedWsdlTemplates {
 	
 	def dispatch toOperation (Operation op) '''
 		<wsdl:operation name="«op.name»">
-			«IF op.doc != null»
-				<wsdl:documentation>
-					<![CDATA[«op.doc?.stripCommentBraces()?.trim()»]]>   			
-				</wsdl:documentation>
-				«/*
-					<jaxws:method>
-						<jaxws:javadoc>
-							<![CDATA[«doc.stripCommentBraces()?.trim()»]]>   			
-						</jaxws:javadoc>
-					</jaxws:method>
-				*/»
-			«ENDIF»
+			<wsdl:documentation>
+				<![CDATA[«docProvider.getDocumentation (op)»]]>   			
+			</wsdl:documentation>
+			«/*
+				<jaxws:method>
+					<jaxws:javadoc>
+						<![CDATA[«doc.stripCommentBraces()?.trim()»]]>   			
+					</jaxws:javadoc>
+				</jaxws:method>
+			*/»
 			<wsdl:input message="tns:«op.name»Request" />
 			<wsdl:output message="tns:«op.name»Response" />
 			«op.toFault()»
