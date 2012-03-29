@@ -81,8 +81,11 @@ BusinessObject:
 			('replaces' replaces=BusinessObjectRef)?
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
-			('retirement-on' retirementDate = STRING)?
-			('provided-definition-URL' providedDefinitionUrl=STRING)?
+			(
+				('release-on' releaseDate = STRING )?
+			&	('retirement-on' retirementDate = STRING)?
+			&	('provided-definition-URL' providedDefinitionUrl=STRING)?
+			)
 			('tags' (tags+=[semanticsDsl::Tag])+)*
 		'}'
 		(properties+=Property)*
@@ -111,14 +114,14 @@ Property:
 	
 Attribute:
 	(deprecated?='@deprecated')? 
-	((optional?='optional')? | (shallow?='shallow')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
+	((optional?='optional')? | (weak?='weak')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
 	((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? 
 	name=ID ':' type=TypeRef ;
 	
 /* links to a target businessObject but uses it's business-key to resolve a reference, hence it is a weak reference */
 Reference:
 	(deprecated?='@deprecated')? 
-	((optional?='optional')? | (shallow?='shallow')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
+	((optional?='optional')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
 	'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef; 
 	
 SimpleAttribute:
@@ -131,8 +134,11 @@ Enumeration:
 			('replaces' replaces=EnumTypeRef )?
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
-			('retirement-on' retirementDate = STRING )?
-			('provided-definition-URL' providedDefinitionUrl=STRING)?
+			(
+				('release-on' releaseDate = STRING )?
+			&	('retirement-on' retirementDate = STRING )?
+			&	('provided-definition-URL' providedDefinitionUrl=STRING)?
+			)
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(literals+=EnumLiteral )*
@@ -151,7 +157,7 @@ Service:
 			version=Version  
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
-			'service-category' category=ServiceCategory 
+			'service-category' category=[profileDsl::ServiceCategory | QualifiedName] 
 			'statefulness' statefulness=Statefulness 
 			('persistence' persistence=Persistence )? 
 			(
@@ -171,7 +177,6 @@ Service:
 		(operations+=Operation)*
 	'}';
 	
-enum ServiceCategory: process | rule | activity | entity | utility;
 
 /* reflects SOA governance decisions */
 GovernanceApproval:
@@ -216,6 +221,7 @@ GlobalEvent:
 			('replaces' replaces=EventRef )?
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] 
 			(governanceApproval=GovernanceApproval)?
+			('release-on' releaseDate = STRING )?
 			('retirement-on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
@@ -281,6 +287,7 @@ Exception:
 			('replaces' replaces=ExceptionRef )?
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] 
 			(governanceApproval=GovernanceApproval)?
+			('release-on' releaseDate = STRING )?
 			('retirement-on' retirementDate = STRING )?
 			('provided-definition-URL' providedDefinitionUrl=STRING)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*

@@ -419,7 +419,7 @@ class XSDTemplates {
 				</xsd:annotation>
 			</xsd:element>
 		«ELSE»
-			<xsd:element name="«attr.name»" «IF attr.optional»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment ()»«ENDIF» />
+			<xsd:element name="«attr.name»" «IF attr.optionalElement»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment ()»«ENDIF» />
 		«ENDIF»
 	'''
 	

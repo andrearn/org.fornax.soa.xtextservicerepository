@@ -9,6 +9,14 @@
     editorPluginID="org.fornax.soa.profiledsl.editor" usedGenPackages="../../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl ../../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.genmodel#//environmentDsl">
   <genPackages prefix="SOAProfileDsl" basePackage="org.fornax.soa.profiledsl" disposableProviderFactory="true"
       ecorePackage="SOAProfileDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOAProfileDsl.ecore#//ServiceBaseCategory">
+      <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//ServiceBaseCategory/process"/>
+      <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//ServiceBaseCategory/rule"/>
+      <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//ServiceBaseCategory/activity"/>
+      <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//ServiceBaseCategory/entity"/>
+      <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//ServiceBaseCategory/utility"/>
+      <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//ServiceBaseCategory/other"/>
+    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOAProfileDsl.ecore#//MEPMessageKind">
       <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//MEPMessageKind/REQUEST"/>
       <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//MEPMessageKind/RESPONSE"/>
@@ -25,6 +33,7 @@
       <genEnumLiterals ecoreEnumLiteral="SOAProfileDsl.ecore#//InternalNsQualifierPolicy/NO_QUALIFIER"/>
     </genEnums>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//SOAProfileModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfileModel/imports"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfileModel/types"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfileModel/profiles"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfileModel/roles"/>
@@ -33,6 +42,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//SOAProfile/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//SOAProfile/scope"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/lifecycle"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/serviceCategory"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/messaging"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/designRules"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/versioningRule"/>
@@ -58,6 +68,10 @@
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Role">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Role/name"/>
+    </genClasses>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//ServiceCategory">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//ServiceCategory/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//ServiceCategory/baseCategory"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Messaging">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Messaging/messageHeaders"/>
@@ -97,6 +111,7 @@
     <genClasses ecoreClass="SOAProfileDsl.ecore#//MessageHeader">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//MessageHeader/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//MessageHeader/version"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//MessageHeader/state"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//MessageHeader/exchanges"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//MessageHeader/extendableProperties"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//MessageHeader/extendableXMLAttributes"/>
@@ -148,6 +163,7 @@
     <genClasses ecoreClass="SOAProfileDsl.ecore#//VersionedType">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//VersionedType/version"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//VersionedType/replaces"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//VersionedType/state"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Enumeration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Enumeration/literals"/>

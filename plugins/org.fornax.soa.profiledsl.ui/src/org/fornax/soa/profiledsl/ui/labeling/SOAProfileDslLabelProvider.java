@@ -4,6 +4,7 @@
 package org.fornax.soa.profiledsl.ui.labeling;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataType;
 import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader;
@@ -22,17 +23,6 @@ public class SOAProfileDslLabelProvider extends DefaultEObjectLabelProvider {
 		super(delegate);
 	}
 
-/*
-	//Labels and icons can be computed like this:
-	
-	String text(MyModel ele) {
-	  return "my "+ele.getName();
-	}
-	 
-    String image(MyModel ele) {
-      return "MyModel.gif";
-    }
-*/
 	
 	String image (DataType ele) {
 		return "full/obj16/datatype_obj.gif";
@@ -40,5 +30,26 @@ public class SOAProfileDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	String image (MessageHeader ele) {
 		return "full/obj16/message_part.gif";
+	}
+
+	Object text (org.fornax.soa.profiledsl.sOAProfileDsl.Class ele) {
+		StyledString name = new StyledString(ele.getName());
+		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + ele.getState().getName (), StyledString.DECORATIONS_STYLER);
+		name.append(versionAndState);
+		return name;
+	}
+	
+	String image (org.fornax.soa.profiledsl.sOAProfileDsl.Class ele) {
+		return "full/obj16/bo_obj.gif";
+	}
+	
+	Object text (org.fornax.soa.profiledsl.sOAProfileDsl.Enumeration ele) {
+		StyledString name = new StyledString(ele.getName());
+		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + ele.getState().getName (), StyledString.DECORATIONS_STYLER);
+		name.append(versionAndState);
+		return name;
+	}
+	String image (org.fornax.soa.profiledsl.sOAProfileDsl.Enumeration ele) {
+		return "full/obj16/enum_obj.gif";
 	}
 }

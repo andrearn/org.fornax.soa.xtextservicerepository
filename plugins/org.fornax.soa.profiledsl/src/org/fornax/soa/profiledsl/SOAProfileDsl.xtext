@@ -16,6 +16,7 @@ generate sOAProfileDsl "http://www.fornax.org/soa/profiledsl/SOAProfileDsl"
 import "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore" as  environmentDsl
 
 SOAProfileModel:
+	(imports+=Import)*
 	(types+=DataType)+
 	(profiles += SOAProfile)*
 	(roles+=Role)*;
@@ -24,6 +25,9 @@ SOAProfile:
 	'soa-profile' name=ID '{'
 		'scope' scope = STRING
 		lifecycle=Lifecycle
+		'service-categories' '{'
+			serviceCategory+=ServiceCategory+
+		'}'
 		(messaging=Messaging)?
 		(designRules=DesignRules)?
 		(versioningRule = VersioningRule)
@@ -48,6 +52,12 @@ Transition: '->' targetState = [LifecycleState | QualifiedName] ('by' (roles+=[R
 
 Role: 
 	'role' name=ID;
+	
+ServiceCategory:
+	name = ID 'base-category' baseCategory = ServiceBaseCategory
+;
+
+enum ServiceBaseCategory: process | rule | activity | entity | utility | other;
 
 enum EnvironmentType returns environmentDsl::EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
 
@@ -97,6 +107,7 @@ MessageHeader:
 	'message-headers' name=QualifiedName '{'
 		'meta-data' '{'
 			version=Version 
+			'lifecycle-state' state=[LifecycleState | QualifiedName]
 			'for' (exchanges+=MEPMessageKind) (',' exchanges+=MEPMessageKind)* 
 			(extendableProperties?='extendable-properties' )?
 			(extendableXMLAttributes?='extendable-XML-attributes' )?
@@ -150,6 +161,7 @@ Enumeration:
 		'metadata' '{'
 			version=Version  
 			('replaces' replaces=EnumRef )?
+			'lifecycle-state' state=[LifecycleState | QualifiedName]
 		'}'
 		(literals+=EnumLiteral )*
 	'}';
@@ -162,6 +174,7 @@ Class:
 		'metadata' '{'
 			version=Version  
 			('replaces' replaces=EnumRef )?
+			'lifecycle-state' state=[LifecycleState | QualifiedName]
 		'}'
 		(properties+=AbstractProperty)+
 	'}';

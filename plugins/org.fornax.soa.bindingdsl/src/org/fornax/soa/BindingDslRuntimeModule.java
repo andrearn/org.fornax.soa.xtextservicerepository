@@ -11,6 +11,8 @@ import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
+import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
+import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
 import org.fornax.soa.util.EnvironmentTypeComparator;
 
 /**
@@ -41,6 +43,11 @@ public class BindingDslRuntimeModule extends org.fornax.soa.AbstractBindingDslRu
 	
 	public Class<? extends LifecycleStateResolver> bindLifecycleStateResolver () {
 		return StateAttributeLifecycleStateResolver.class;
+	}
+	
+	@org.eclipse.xtext.service.SingletonBinding	
+	public Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector () {
+		return DefaultEnvironmentPerspectiveSelector.class;
 	}
 
 }

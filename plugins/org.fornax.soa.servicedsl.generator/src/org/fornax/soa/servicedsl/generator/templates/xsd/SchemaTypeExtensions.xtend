@@ -33,6 +33,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.DataType
 import org.fornax.soa.profiledsl.sOAProfileDsl.EnumRef
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.serviceDsl.Reference
 
 /* types.ext */
 class SchemaTypeExtensions {
@@ -326,8 +327,14 @@ class SchemaTypeExtensions {
 		}
 	}
 	
-	def boolean isOptionalElement (Property p) {
-		return p.optional || p.shallow || p.isProvidedKey;
+	def dispatch boolean isOptionalElement (Property p) {
+		return p.optional || p.isProvidedKey;
+	}		
+	def dispatch boolean isOptionalElement (Attribute p) {
+		return p.optional || p.weak || p.isProvidedKey;
+	}		
+	def dispatch boolean isOptionalElement (Reference p) {
+		return !p.isBusinessKey;
 	}		
 		
 	def dispatch boolean isMany (TypeRef t) {

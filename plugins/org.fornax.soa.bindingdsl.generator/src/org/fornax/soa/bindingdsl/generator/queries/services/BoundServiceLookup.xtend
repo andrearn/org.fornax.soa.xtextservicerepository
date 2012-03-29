@@ -15,6 +15,7 @@ import org.fornax.soa.moduledsl.generator.query.ModuleNamespaceQuery
 import org.fornax.soa.servicedsl.generator.query.ServiceFinder
 import org.fornax.soa.servicedsl.VersionedDomainNamespace
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef
+import org.fornax.soa.serviceDsl.SubNamespace
 
 /*
  * Finds services bound into an environment, i.e. referenced from a binding
@@ -74,7 +75,7 @@ class BoundServiceLookup {
 	 * chosen with respect ttheir state and the target environment
 	 */
 	def Set<Service> getAllProvidedServices (ModuleBinding binding, SOAProfile profile) {
-		val provNamespaces = binding.module.module.providedNamespaces.map (n | n.namespace);
+		val Iterable<SubNamespace> provNamespaces = binding.module.module.providedNamespaces.map (n | n.namespace);
 		val Iterable<ServiceRef> nsServiceExclRefs = binding.module.module.providedNamespaces.map (n | n.excludedServices).flatten;
 		val exclServices = nsServiceExclRefs.map (r | r.service).toList;
 		val environment = binding.environment;

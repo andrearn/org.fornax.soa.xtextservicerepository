@@ -31,5 +31,6 @@ Export-Package: org.fornax.soa.profiledsl,
  org.fornax.soa.profiledsl.sOAProfileDsl.util,
  org.fornax.soa.profiledsl.scoping,
  org.fornax.soa.profiledsl.scoping.versions,
+ org.fornax.soa.profiledsl.search.predicate,
  org.fornax.soa.profiledsl.services,
  org.fornax.soa.profiledsl.validation

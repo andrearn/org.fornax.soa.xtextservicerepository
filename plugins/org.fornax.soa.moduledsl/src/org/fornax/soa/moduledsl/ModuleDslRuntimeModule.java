@@ -7,6 +7,8 @@ import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
+import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
 
 import com.google.inject.Binder;
 
@@ -22,6 +24,11 @@ public class ModuleDslRuntimeModule extends org.fornax.soa.moduledsl.AbstractMod
 	
 	public void configureIDefaultResourceDescriptionStrategy (Binder binder) {
 		binder.bind(IDefaultResourceDescriptionStrategy.class).to(VersionedResourceDescriptionStrategy.class);
+	}
+	
+	@org.eclipse.xtext.service.SingletonBinding	
+	public Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector () {
+		return DefaultEnvironmentPerspectiveSelector.class;
 	}
 
 }

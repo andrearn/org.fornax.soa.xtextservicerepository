@@ -3,7 +3,6 @@ package org.fornax.soa.validation;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -15,8 +14,7 @@ import org.eclipse.xtext.validation.CheckType;
 import org.fornax.soa.basedsl.ref.DependencyDescription;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.validation.PluggableChecks;
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
-import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
+import org.fornax.soa.profiledsl.sOAProfileDsl.ServiceBaseCategory;
 import org.fornax.soa.query.BusinessObjectQuery;
 import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
@@ -30,7 +28,6 @@ import org.fornax.soa.serviceDsl.Parameter;
 import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.Service;
-import org.fornax.soa.serviceDsl.ServiceCategory;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceRef;
 import org.fornax.soa.serviceDsl.SimpleAttribute;
@@ -260,8 +257,8 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		EObject o = svcRef.eContainer().eContainer();
 		if (o instanceof Service) {
 			Service s = (Service) svcRef.eContainer().eContainer();
-			if (s.getCategory() == ServiceCategory.ENTITY) {
-				if (svcRef.getService().getCategory() == ServiceCategory.PROCESS) {
+			if (s.getCategory().getBaseCategory () == ServiceBaseCategory.ENTITY) {
+				if (svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
 					error("Business entity services may not call business process services",
 							ServiceDslPackage.Literals.OPERATION__REQUIRES);
 				}
@@ -294,7 +291,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkWeakRefHasBusinessKey(final VersionedTypeRef b) {
+	public void checkWeakRefHasKey(final VersionedTypeRef b) {
 		if (b.eContainer() instanceof Reference
 				&& b.getType() instanceof BusinessObject) {
 			List<Property> props = new ArrayList<Property>();
@@ -306,23 +303,23 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 					new Predicate<Property>() {
 
 						public boolean apply(final Property input) {
-							return input.isIsBusinessKey();
+							return input.isIsBusinessKey() || input.isIsProvidedKey ();
 						}
 
 					});
 			if (Lists.newArrayList(keys).isEmpty())
-				error("The target businessObject of the weak-ref defines no business-key. "
-						+ "The business-key is required to represent and resolve the reference. "
-						+ "Remove the weak-ref qualifier or define a single business-key in the target businessObject",
+				error("The target businessObject of the weak-ref defines no business-key or provided-key. "
+						+ "One of the keys is required to represent and resolve the reference. "
+						+ "Remove the weak-ref qualifier or define a single business-key or provided-key in the target businessObject",
 						ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
 		}
 	}
 
 	@Check
-	public void checkWeakRefTargetDefinesOnlyOneBusinessKey(
+	public void checkWeakRefTargetDefinesOnlyOneKey(
 			final BusinessObjectRef b) {
 		if (b.eContainer() instanceof Reference) {
-			Iterable<Property> keys = Iterables.filter(b.getType()
+			Iterable<Property> bizKeys = Iterables.filter(b.getType()
 					.getProperties(), new Predicate<Property>() {
 
 				public boolean apply(final Property input) {
@@ -331,21 +328,29 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 				}
 
 			});
-			if (Lists.newArrayList(keys).size() > 1)
-				error("The target businessObject of the weak-ref defines more than one business-key. "
-						+ "The business-key is required to represent and resolve the reference. "
-						+ "Remove the weak-ref qualifier or define a single business-key in the target businessObject",
+			Iterable<Property> keys = Iterables.filter(b.getType()
+					.getProperties(), new Predicate<Property>() {
+
+				public boolean apply(final Property input) {
+					return input.isIsProvidedKey ();
+				}
+
+			});
+			if (!(Lists.newArrayList(keys).size() == 1 || Lists.newArrayList(bizKeys).size() == 1))
+				error("The target businessObject of the weak-ref does not define a single business-key or provided-key. "
+						+ "The key is required to represent and resolve the reference. "
+						+ "Remove the weak-ref qualifier or define a single business-key or provided-key in the target businessObject",
 						ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
 
 		}
 	}
 
 	@Check
-	public void checkWeakRefTargetDefinesOnlyOneBusinessKey(
+	public void checkWeakRefTargetDefinesOnlyOneKey(
 			final VersionedTypeRef b) {
 		if (b.eContainer() instanceof Reference
 				&& b.getType() instanceof BusinessObject) {
-			Iterable<Property> keys = Iterables.filter(
+			Iterable<Property> bizKeys = Iterables.filter(
 					((BusinessObject) b.getType()).getProperties(),
 					new Predicate<Property>() {
 
@@ -355,10 +360,20 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 						}
 
 					});
-			if (Lists.newArrayList(keys).size() > 1)
-				error("The target businessObject of the weak-ref defines more than one business-key. "
-						+ "The business-key is required to represent and resolve the reference. "
-						+ "Remove the weak-ref qualifier or define a single business-key in the target businessObject",
+			Iterable<Property> keys = Iterables.filter(
+					((BusinessObject) b.getType()).getProperties(),
+					new Predicate<Property>() {
+
+						public boolean apply(final Property input) {
+							// TODO Auto-generated method stub
+							return input.isIsProvidedKey ();
+						}
+
+					});
+			if (!(Lists.newArrayList(keys).size() == 1 || Lists.newArrayList(bizKeys).size() == 1))
+				error("The target businessObject of the weak-ref does not define a single business-key or provided-key. "
+						+ "The key is required to represent and resolve the reference. "
+						+ "Remove the weak-ref qualifier or define a single business-key or provided-key in the target businessObject",
 						ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
 
 		}
@@ -369,8 +384,8 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		EObject o = svcRef.eContainer().eContainer();
 		if (o instanceof Service) {
 			Service s = (Service) o;
-			if (s.getCategory() == ServiceCategory.ACTIVITY) {
-				if (svcRef.getService().getCategory() == ServiceCategory.PROCESS) {
+			if (s.getCategory().getBaseCategory () == ServiceBaseCategory.ACTIVITY) {
+				if (svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
 					error("Business entity services may not call business activity services",
 							ServiceDslPackage.Literals.OPERATION__REQUIRES);
 				}
@@ -383,8 +398,8 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		EObject o = svcRef.eContainer().eContainer();
 		if (o instanceof Service) {
 			Service s = (Service) svcRef.eContainer().eContainer();
-			if (s.getCategory() == ServiceCategory.ACTIVITY) {
-				if (svcRef.getService().getCategory() == ServiceCategory.PROCESS) {
+			if (s.getCategory().getBaseCategory () == ServiceBaseCategory.ACTIVITY) {
+				if (svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
 					error("Business entity services may not call business rule services",
 							ServiceDslPackage.Literals.OPERATION__REQUIRES);
 				}

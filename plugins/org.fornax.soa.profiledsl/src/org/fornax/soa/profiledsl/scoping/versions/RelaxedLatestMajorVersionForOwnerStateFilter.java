@@ -7,7 +7,10 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.environmentDsl.Environment;
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
@@ -31,6 +34,12 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 	
 	@Inject
 	private	IStateMatcher stateMatcher;
+	
+	@Inject
+	private IEnvironmentPerspectiveSelector envSelector;
+	
+	@Inject
+	private LifecycleStateComparator stateComparator;
 	
 	public RelaxedLatestMajorVersionForOwnerStateFilter (VersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
 		this.majorVersion = majorVersion;
@@ -84,12 +93,19 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 	
 	public boolean stateMatches (IEObjectDescription description) {
 		final LifecycleState state = stateResolver.getLifecycleState(description);
-		if (state == null && ownerLifecycleState != null) {
+		LifecycleState sourceState = ownerLifecycleState;
+		Environment selectedEnvironment = getEnvSelector().getSelectedEnvironment();
+		if (selectedEnvironment != null && ownerLifecycleState.eContainer() instanceof Lifecycle) {
+			LifecycleState lowestStateByEnvironment = stateMatcher.getLowestStateByEnvironment ((Lifecycle)ownerLifecycleState.eContainer(), selectedEnvironment);
+			if (getStateComparator().compare (ownerLifecycleState, lowestStateByEnvironment) > 0)
+				sourceState = lowestStateByEnvironment;
+		}
+		if (state == null && sourceState != null) {
 			return true;
-		} else if (ownerLifecycleState != null && (ownerLifecycleState.isIsEnd() || ownerLifecycleState.isIsInitial())) {
+		} else if (sourceState != null && (sourceState.isIsEnd() || sourceState.isIsInitial())) {
 			return true;
 		}
-		return getStateMatcher().matches (ownerLifecycleState, state);
+		return getStateMatcher().matches (sourceState, state);
 	}
 	
 
@@ -160,6 +176,22 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 
 	public IStateMatcher getStateMatcher() {
 		return stateMatcher;
+	}
+
+	public void setEnvSelector(IEnvironmentPerspectiveSelector envSelector) {
+		this.envSelector = envSelector;
+	}
+
+	public IEnvironmentPerspectiveSelector getEnvSelector() {
+		return envSelector;
+	}
+
+	public void setStateComparator(LifecycleStateComparator stateComparator) {
+		this.stateComparator = stateComparator;
+	}
+
+	public LifecycleStateComparator getStateComparator() {
+		return stateComparator;
 	}
 	
 

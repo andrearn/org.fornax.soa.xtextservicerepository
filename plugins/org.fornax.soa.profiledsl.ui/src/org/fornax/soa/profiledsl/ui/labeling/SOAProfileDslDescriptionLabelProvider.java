@@ -3,7 +3,10 @@
 */
 package org.fornax.soa.profiledsl.ui.labeling;
 
+import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
+import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 
 /**
  * Provides labels for a IEObjectDescriptions and IResourceDescriptions.
@@ -12,16 +15,23 @@ import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
  */
 public class SOAProfileDslDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
 
-/*
-	//Labels and icons can be computed like this:
-	
-	String text(IEObjectDescription ele) {
-	  return "my "+ele.getName();
+	public Object text(IEObjectDescription ele) {
+		StyledString s = new StyledString (ele.getQualifiedName().toString());
+		if (ele.getUserData (VersionedResourceDescriptionStrategy.VERSION_KEY) != null) {
+			s.append(" v");
+			s.append (ele.getUserData (VersionedResourceDescriptionStrategy.VERSION_KEY));
+		}
+		s.append (" - ");
+		s.append (ele.getEClass().getName());
+		if (ele.getUserData(VersionedResourceDescriptionStrategy.STATE_KEY) != null) {
+			s.append(" ");
+			s.append (ele.getUserData (VersionedResourceDescriptionStrategy.STATE_KEY), StyledString.DECORATIONS_STYLER);
+		}
+		return s;
 	}
-	 
-    String image(IEObjectDescription ele) {
-      return ele.getEClass().getName() + ".gif";
-    }	 
-*/
+	
+	public String image(IEObjectDescription description) {
+		return "full/obj16/" + description.getEClass().getName() + ".gif"; 
+	}
 
 }

@@ -13,16 +13,33 @@ import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.scoping.IGlobalScopeProvider;
 import org.eclipse.xtext.util.IResourceScopeCache;
+import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvider;
 import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.FixedVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.LatestMajorVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef;
 import org.fornax.soa.profiledsl.sOAProfileDsl.EnumRef;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef;
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
+import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.profiledsl.util.ProfileDslElementAccessor;
 
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 
 /**
  * This class contains custom scoping description.
@@ -37,6 +54,8 @@ public class SOAProfileDslScopeProvider extends VersionedImportedNamespaceAwareS
 
 	@Inject
 	private IGlobalScopeProvider globalScopeProvider;
+
+	@Inject Injector injector;
 
 	public void setGlobalScopeProvider(IGlobalScopeProvider globalScopeProvider) {
 		this.globalScopeProvider = globalScopeProvider;
@@ -90,7 +109,30 @@ public class SOAProfileDslScopeProvider extends VersionedImportedNamespaceAwareS
 		}
 		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 	}
-
+	
+	@Override
+	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner) {
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		if (v != null) {
+			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
+			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
+			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
+			if (v instanceof MajorVersionRef) {
+				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState);
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof MaxVersionRef)
+				return new LatestMaxExclVersionFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion());
+			if (v instanceof MinVersionRef)
+				return new LatestMinInclVersionFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion());
+			if (v instanceof LowerBoundRangeVersionRef)
+				return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+			if (v instanceof FixedVersionRef)
+				return new FixedVersionFilter<IEObjectDescription> (verResolver, ((FixedVersionRef)v).getFixedVersion());
+		}
+		return filter;
+	}
 
 
 }

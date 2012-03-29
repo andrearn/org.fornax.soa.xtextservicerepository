@@ -4,6 +4,9 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sOAProfileDsl"
     nsURI="http://www.fornax.org/soa/profiledsl/SOAProfileDsl" nsPrefix="sOAProfileDsl">
   <eClassifiers xsi:type="ecore:EClass" name="SOAProfileModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Import"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
         eType="#//DataType" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="profiles" upperBound="-1"
@@ -16,6 +19,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="lifecycle" eType="#//Lifecycle"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceCategory" upperBound="-1"
+        eType="#//ServiceCategory" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="messaging" eType="#//Messaging"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="designRules" eType="#//DesignRules"
@@ -52,6 +57,18 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Role">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceCategory">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="baseCategory" eType="#//ServiceBaseCategory"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ServiceBaseCategory">
+    <eLiterals name="process" literal="process"/>
+    <eLiterals name="rule" value="1" literal="rule"/>
+    <eLiterals name="activity" value="2" literal="activity"/>
+    <eLiterals name="entity" value="3" literal="entity"/>
+    <eLiterals name="utility" value="4" literal="utility"/>
+    <eLiterals name="other" value="5" literal="other"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Messaging">
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeaders" upperBound="-1"
@@ -103,6 +120,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exchanges" unique="false"
         upperBound="-1" eType="#//MEPMessageKind"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableProperties" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -174,6 +192,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//EnumRef"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="#//LifecycleState"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Enumeration" eSuperTypes="#//VersionedType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="literals" upperBound="-1"

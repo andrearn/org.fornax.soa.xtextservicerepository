@@ -4,6 +4,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.environmentDsl.Environment;
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
 public interface LifecycleStateResolver {
