@@ -2,9 +2,9 @@ package org.fornax.soa.basedsl.search;
 
 import java.util.List;
 
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
@@ -18,7 +18,7 @@ public class EObjectLookup implements IEObjectLookup {
 	
 	@Inject IPredicateSearch searchEngine;
 
-	public <T> T getModelElementByName (final String elementName, final Resource res, String eClassName) {
+	public <T> T getModelElementByName (final String elementName, final ResourceSet res, String eClassName) {
         List<IEObjectDescription> searchResult = Lists.newArrayList (searchEngine.search(elementName, SearchPattern.RULE_EXACT_MATCH, eClassName, Predicates.<IEObjectDescription>alwaysTrue()));
         if (searchResult.size () == 1) {
         	IEObjectDescription ieDesc = searchResult.get (0);
@@ -36,7 +36,7 @@ public class EObjectLookup implements IEObjectLookup {
         return null;
 	}
 
-	public <T> T getModelElementByNameAndVersion (final String elementName, final String version, Resource res, String eClassName) {
+	public <T> T getModelElementByNameAndVersion (final String elementName, final String version, ResourceSet res, String eClassName) {
         List<IEObjectDescription> searchResult = Lists.newArrayList (searchEngine.search(elementName, SearchPattern.RULE_EXACT_MATCH, eClassName, new Predicate<IEObjectDescription>() {
 
 			public boolean apply (IEObjectDescription input) {
@@ -59,6 +59,16 @@ public class EObjectLookup implements IEObjectLookup {
         	}
         }
         return null;
+	}
+
+	public <T> T getModelElementByName(String elementName, Resource resource,
+			String eClassName) {
+		return getModelElementByName(elementName, resource.getResourceSet(), eClassName);
+	}
+
+	public <T> T getModelElementByNameAndVersion(String elementName,
+			String version, Resource resource, String eClassName) {
+		return getModelElementByNameAndVersion(elementName, version, resource.getResourceSet(), eClassName);
 	}
 
 }

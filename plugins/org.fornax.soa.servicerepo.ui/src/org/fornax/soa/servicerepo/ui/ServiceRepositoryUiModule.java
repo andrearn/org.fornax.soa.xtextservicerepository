@@ -12,6 +12,7 @@ public class ServiceRepositoryUiModule extends org.fornax.soa.servicerepo.ui.Abs
 	public ServiceRepositoryUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
+	
 
 /*
 	public Class<? extends ISemanticModelTransformer> bindISemanticModelTransformer() {

@@ -17,5 +17,9 @@ public interface LifecycleStateResolver {
 	public LifecycleState getLifecycleState (EObject o);
 	
 	public LifecycleState getLifecycleState (EObject o, Resource res);
+	
+	public boolean definesState (EObject o);
+	
+	public boolean definesState (IEObjectDescription ieDesc);
 
 }

@@ -13,6 +13,9 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.resource.impl.SimpleResourceDescriptionsBasedContainerManager;
 import org.eclipse.xtext.service.AbstractGenericModule;
+import org.eclipse.xtext.service.DefaultRuntimeModule;
+import org.fornax.soa.basedsl.search.IPredicateSearch;
+import org.fornax.soa.basedsl.search.PredicateSearch;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
@@ -21,7 +24,7 @@ import com.google.inject.name.Names;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-public class ServiceRepositoryRuntimeModule extends AbstractGenericModule {
+public class ServiceRepositoryRuntimeModule extends DefaultRuntimeModule {
 
 	protected Properties properties = null;
 
@@ -38,5 +41,9 @@ public class ServiceRepositoryRuntimeModule extends AbstractGenericModule {
 	public void configureFileExtensions(Binder binder) {
 		if (properties == null || properties.getProperty(Constants.FILE_EXTENSIONS) == null)
 			binder.bind(String.class).annotatedWith(Names.named(Constants.FILE_EXTENSIONS)).toInstance("svcdsl");
+	}
+	
+	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
+		return PredicateSearch.class;
 	}
 }

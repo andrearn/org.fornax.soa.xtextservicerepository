@@ -51,7 +51,7 @@ public class LifecycleStatePredicate implements Predicate<IEObjectDescription> {
 		LifecycleState lifecycleState = stateResolver.getLifecycleState(eObjectOrProxy);
 		if (minState != null && maxState != null) {
 			int minStateCmp = stateComparator.compare(lifecycleState, minState);
-			int maxStateCmp = stateComparator.compare(lifecycleState, minState);
+			int maxStateCmp = stateComparator.compare(lifecycleState, maxState);
 			if (includingMaxState && includingMinState) {
 				if (minStateCmp >= 0 && maxStateCmp <=0)
 					return true;
@@ -72,10 +72,10 @@ public class LifecycleStatePredicate implements Predicate<IEObjectDescription> {
 			else if (!includingMinState && minStateCmp > 0)
 				return true;
 		} else {
-			int maxStateCmp = stateComparator.compare(lifecycleState, minState);
-			if (includingMaxState && maxStateCmp >= 0)
+			int maxStateCmp = stateComparator.compare(lifecycleState, maxState);
+			if (includingMaxState && maxStateCmp <= 0)
 				return true;
-			else if (!includingMaxState && maxStateCmp > 0)
+			else if (!includingMaxState && maxStateCmp < 0)
 				return true;
 		}
 		return false;

@@ -20,7 +20,25 @@
             project="true">
       </wizard>
     </extension>
-
+    <extension point="org.eclipse.search.searchPages">
+	   <page id="org.fornax.soa.servicerepo.ui.search.dialog.ServiceRepositorySearchPage"
+			icon="icons/full/etool16/search.gif"
+			label="Service Repository Search"
+			extensions="svcdsl:90"
+			showScopeSection="true"
+			canSearchEnclosingProjects="true"
+			class="org.fornax.soa.servicerepo.ui.search.dialog.ServiceRepositorySearchPage">
+		</page>
+	</extension>
+	<extension
+		id="ServiceRepositorySearchViewPage"
+		point="org.eclipse.search.searchResultViewPages">
+		<viewPage
+			id="org.fornax.soa.servicerepo.ui.search.dialog.ServiceRepositorySearchViewPage"
+			searchResultClass="org.fornax.soa.servicerepo.ui.search.EObjectSearchResult"
+			class="org.fornax.soa.servicerepo.ui.search.dialog.ServiceRepositorySearchViewPage">
+		</viewPage>
+	</extension>
 
 
 </plugin>

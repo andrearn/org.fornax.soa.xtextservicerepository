@@ -32,7 +32,18 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xpand,
  org.eclipse.xtend,
  org.eclipse.xtext.ui.shared;bundle-version="2.0.0",
- org.fornax.soa.servicerepo;bundle-version="1.5.0"
+ org.fornax.soa.servicerepo;bundle-version="1.5.0",
+ org.eclipse.search;bundle-version="3.6.0",
+ org.fornax.soa.basedsl;bundle-version="1.5.0",
+ org.fornax.soa.profiledsl;bundle-version="1.5.0",
+ org.fornax.soa.moduledsl;bundle-version="1.5.0",
+ org.fornax.soa.basedsl.ui;bundle-version="1.5.0",
+ org.fornax.soa.moduledsl.ui;bundle-version="1.5.0",
+ org.fornax.soa.profiledsl.ui;bundle-version="1.5.0",
+ org.eclipse.jdt.core;bundle-version="3.6.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j;version="1.2.15"
+Bundle-ClassPath: .,
+ swt-grouplayout.jar,
+ swing2swt.jar

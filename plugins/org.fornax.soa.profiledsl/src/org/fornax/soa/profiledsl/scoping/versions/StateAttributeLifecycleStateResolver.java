@@ -101,4 +101,16 @@ public class StateAttributeLifecycleStateResolver implements LifecycleStateResol
 		return null;
 	}
 
+	@Override
+	public boolean definesState(EObject o) {
+		final EStructuralFeature stateFeature = o.eClass().getEStructuralFeature(STATE_ATTR_NAME);
+		return stateFeature != null;
+	}
+
+	@Override
+	public boolean definesState(IEObjectDescription ieDesc) {
+		final EStructuralFeature stateFeature = ieDesc.getEClass().getEStructuralFeature(STATE_ATTR_NAME);
+		return stateFeature != null;
+	}
+
 }

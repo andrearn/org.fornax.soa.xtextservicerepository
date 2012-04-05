@@ -6,15 +6,14 @@ import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.xtend.type.impl.java.JavaBeansMetaModel;
 import org.eclipse.xpand2.XpandExecutionContextImpl;
 import org.eclipse.xpand2.XpandFacade;
 import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xpand2.output.OutputImpl;
+import org.eclipse.xtend.type.impl.java.JavaBeansMetaModel;
 import org.eclipse.xtext.ui.wizard.AbstractPluginProjectCreator;
 
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
 public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreator {
 
