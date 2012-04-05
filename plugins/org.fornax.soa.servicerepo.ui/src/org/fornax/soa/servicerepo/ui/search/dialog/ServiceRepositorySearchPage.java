@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.search.ui.ISearchPage;
@@ -25,20 +26,28 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.IWorkingSetManager;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
 import org.fornax.soa.profiledsl.search.FindAssetsWithStateQuery;
 import org.fornax.soa.query.FindUnapprovedAssetsQuery;
 import org.fornax.soa.servicerepo.ui.internal.ServiceRepositoryActivator;
 import org.fornax.soa.servicerepo.ui.search.ServiceRepositoryQuerySpec;
 import org.fornax.soa.servicerepo.ui.search.ServiceRepositorySearchQuery;
 
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
 import com.google.inject.Injector;
 
 public class ServiceRepositorySearchPage extends DialogPage implements ISearchPage {
@@ -58,11 +67,11 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     private Button fCaseSensitive;
 
     private ServiceRepositoryQueryData fInitialData;
-    private EObject fJavaElement;
+    private EObject fElement;
+    private Group limitToGroup;
 
 	private Combo searchForCombo;
 	private Combo queryCombo;
-	private Composite limitTo;
 
     private static final int HISTORY_SIZE= 12;
 
@@ -76,6 +85,8 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     private final List fPreviousSearchPatterns;
 	private Combo minStateCombo;
 	private Combo maxStateCombo;
+	private Composite result_1;
+	private IPredicateSearch predicateSearch;
 
     public ServiceRepositorySearchPage() {
 		fPreviousSearchPatterns = new ArrayList();
@@ -83,19 +94,25 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 
 	@Override
 	public void createControl(Composite parent) {
+		injector = ServiceRepositoryActivator.getInstance().getInjector();
+		predicateSearch = injector.getInstance(IPredicateSearch.class);
 		initializeDialogUnits (parent);
 
-		Composite result= new Composite(parent, SWT.NONE);
+		result_1= new Composite(parent, SWT.NONE);
 
-        GridLayout layout= new GridLayout(2, false);
-        layout.horizontalSpacing= 10;
-        result.setLayout(layout);
+        GridLayout gl_result_1= new GridLayout(2, false);
+        gl_result_1.horizontalSpacing= 10;
+        result_1.setLayout(gl_result_1);
 
-        Control expressionComposite= createExpression(result);
-        expressionComposite.setLayoutData(new GridData(GridData.FILL, GridData.CENTER, true, false, 2, 1));
-        new Label(result, SWT.NONE);
+        Control expressionComposite= createExpression(result_1);
+        expressionComposite.setLayoutData(new GridData(SWT.FILL, GridData.CENTER, true, false, 1, 1));
+        new Label(result_1, SWT.NONE);
+        new Label(result_1, SWT.NONE);
+        new Label(result_1, SWT.NONE);
+        new Label(result_1, SWT.NONE);
+        new Label(result_1, SWT.NONE);
 
-        Label separator= new Label(result, SWT.NONE);
+        Label separator= new Label(result_1, SWT.NONE);
         separator.setVisible(false);
         GridData data= new GridData(GridData.FILL, GridData.FILL, false, false, 2, 1);
         data.heightHint= convertHeightInCharsToPixels(1) / 3;
@@ -186,44 +203,51 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         });
         new Label(result, SWT.NONE);
         
-        
         createLimitTo(parent);
-        
 
         setControl(result);
         return result;
 	}
+    private Control createLimitTo(Composite parent) {
+    	new Label(result_1, SWT.NONE);
+    	limitToGroup= new Group(parent, SWT.NONE);
+    	limitToGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+     	limitToGroup.setVisible(false);
+    	limitToGroup.setText(Messages.SearchPage_limitTo_label);
+    	limitToGroup.setLayout(new GridLayout(3, false));
+        fillLimitToGroup();
+        return limitToGroup;
+	}
 
-	public void createLimitTo(Composite parent) {
-		limitTo= new Composite(parent, SWT.BORDER);
-		GridData gd_limitTo = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-		gd_limitTo.widthHint = 580;
-		limitTo.setLayoutData(gd_limitTo);
-        GridLayout limitToLayout= new GridLayout(3, false);
-        limitToLayout.marginWidth= 0;
-        limitToLayout.marginHeight= 0;
-        limitTo.setLayout(limitToLayout);
-        limitTo.setVisible(false);
+	private void fillLimitToGroup() {
+		Control[] children = limitToGroup.getChildren();
+		for (Control child : children) {
+			child.dispose();
+		}
         
-        Label minStateLabel = new Label (limitTo, SWT.NONE);
+        Label minStateLabel = new Label (limitToGroup, SWT.NONE);
         GridData gd_minStateLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
         gd_minStateLabel.widthHint = 121;
         minStateLabel.setLayoutData(gd_minStateLabel);
         minStateLabel.setText (Messages.SearchPage_minState_label);
         
-        minStateCombo = new Combo(limitTo, SWT.NONE);
+        minStateCombo = new Combo(limitToGroup, SWT.NONE);
 
-        new Label(limitTo, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
         
-        Label maxStateLabel = new Label (limitTo, SWT.NONE);
+        Label maxStateLabel = new Label (limitToGroup, SWT.NONE);
         maxStateLabel.setText (Messages.SearchPage_maxState_label);
         
-        maxStateCombo = new Combo(limitTo, SWT.NONE);
+        maxStateCombo = new Combo(limitToGroup, SWT.NONE);
         
-        new Label(limitTo, SWT.NONE);
-        new Label(limitTo, SWT.NONE);
-        new Label(limitTo, SWT.NONE);
-        new Label(limitTo, SWT.NONE);
+        initializeStates();
+        
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        Dialog.applyDialogFont(limitToGroup); // re-apply font as we disposed the previous widgets
+        limitToGroup.layout();
 	}
 	
     public void dispose() {
@@ -238,6 +262,24 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     private void initializeQuery () {
         queryCombo.setItems(new String[] {"Any asset", "Unapproved assets", "Assets with lifecycle state"});
     }
+    
+    private void initializeStates () {
+    	minStateCombo.add("");
+    	maxStateCombo.add("");
+    	Predicate<IEObjectDescription> predicate = Predicates.alwaysTrue();
+    	Iterable<IEObjectDescription> states = predicateSearch.search(SOAProfileDslPackage.Literals.LIFECYCLE_STATE.getName(), predicate);
+    	Iterable<String> stateNames = Iterables.transform(states, new Function<IEObjectDescription, String>() {
+
+			public String apply(IEObjectDescription from) {
+				return from.getQualifiedName().getLastSegment();
+			}
+    		
+    	});
+    	for (String state : stateNames) {
+			minStateCombo.add(state);
+			maxStateCombo.add(state);
+		}
+    }
 
     private String[] getPreviousSearchPatterns() {
         // Search results are not persistent
@@ -248,7 +290,8 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         return patterns;
     }
 
-	private void updateOKStatus() {
+
+    private void updateOKStatus() {
 		getContainer().setPerformActionEnabled (true);
 	}   
 
@@ -258,12 +301,11 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
             return;
 
         ServiceRepositoryQueryData initialData= (ServiceRepositoryQueryData) fPreviousSearchPatterns.get(selectionIndex);
-
         setSearchFor(initialData.getSearchFor());
 
         fPattern.setText(initialData.getPattern());
 //        fIsCaseSensitive = initialData.isCaseSensitive();
-        fJavaElement = initialData.getEObject();
+        fElement = initialData.getEObject();
 //        fCaseSensitive.setEnabled (fJavaElement == null);
 //        fCaseSensitive.setSelection (initialData.isCaseSensitive());
 
@@ -279,19 +321,19 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         if (fInitialData != null && getQueryData().equals(fInitialData.getPattern()) && fInitialData.getEObject() != null && fInitialData.getSearchFor() == getSearchFor()) {
 //            fCaseSensitive.setEnabled(false);
 //            fCaseSensitive.setSelection(true);
-            fJavaElement= fInitialData.getEObject();
+            fElement= fInitialData.getEObject();
         } else {
 //            fCaseSensitive.setEnabled(true);
 //            fCaseSensitive.setSelection(fIsCaseSensitive);
-            fJavaElement= null;
+            fElement= null;
         }
     }
 
 	protected void handleQueryNameSelected() {
 		if ("Assets with lifecycle state".equals(getQueryName()))
-			limitTo.setVisible(true);
+			limitToGroup.setVisible(true);
 		else {
-			limitTo.setVisible(false);
+			limitToGroup.setVisible(false);
 		}
 	}
 
@@ -304,6 +346,51 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 				
 	}
 
+	
+	@Override
+	public boolean performAction() {
+        return performNewSearch();
+    }
+
+    private boolean performNewSearch() {
+    	ServiceRepositoryQueryData data= getQueryData();
+
+        // Setup search scope
+        String scopeDescription= ""; //$NON-NLS-1$
+
+        String searchFor= data.getSearchFor();
+
+        switch (getContainer().getSelectedScope()) {
+            case ISearchPageContainer.WORKSPACE_SCOPE:
+                break;
+            case ISearchPageContainer.SELECTION_SCOPE:
+//                IJavaElement[] javaElements= factory.getJavaElements(getContainer().getSelection());
+                break;
+            case ISearchPageContainer.SELECTED_PROJECTS_SCOPE: {
+                String[] projectNames= getContainer().getSelectedProjectNames();
+                break;
+            }
+            case ISearchPageContainer.WORKING_SET_SCOPE: {
+                IWorkingSet[] workingSets= getContainer().getSelectedWorkingSets();
+                // should not happen - just to be sure
+                if (workingSets == null || workingSets.length < 1)
+                    return false;
+//                SearchUtil.updateLRUWorkingSets(workingSets);
+            }
+        }
+
+       	ServiceRepositoryQuerySpec querySpec= new ServiceRepositoryQuerySpec (data.getPattern(), data.getSearchFor(), data.getQueryName(), data.isCaseSensitive(), scopeDescription);
+       	
+       	querySpec.setMinState(getMinState());
+       	querySpec.setMaxState(getMaxState());
+
+        ServiceRepositorySearchQuery textSearchJob= injector.getInstance (ServiceRepositorySearchQuery.class);
+        textSearchJob.init (querySpec);
+        NewSearchUI.runQueryInBackground (textSearchJob);
+        return true;
+    }
+
+    
     private String getQueryName() {
         return queryCombo.getText();
     }
@@ -362,7 +449,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 				pattern,
 //				fCaseSensitive.getSelection(), 
 				false,
-				fJavaElement, 
+				fElement, 
 				getContainer().getSelectedScope(), 
 				getContainer().getSelectedWorkingSets());
 		if (queryName == FindAssetsWithStateQuery.class.getName()) {
@@ -373,50 +460,6 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 		fPreviousSearchPatterns.add(0, match); // insert on top
 		return match;
 	}
-
-	
-	@Override
-	public boolean performAction() {
-        return performNewSearch();
-    }
-
-    private boolean performNewSearch() {
-    	ServiceRepositoryQueryData data= getQueryData();
-
-        // Setup search scope
-        String scopeDescription= ""; //$NON-NLS-1$
-
-        String searchFor= data.getSearchFor();
-
-        switch (getContainer().getSelectedScope()) {
-            case ISearchPageContainer.WORKSPACE_SCOPE:
-                break;
-            case ISearchPageContainer.SELECTION_SCOPE:
-//                IJavaElement[] javaElements= factory.getJavaElements(getContainer().getSelection());
-                break;
-            case ISearchPageContainer.SELECTED_PROJECTS_SCOPE: {
-                String[] projectNames= getContainer().getSelectedProjectNames();
-                break;
-            }
-            case ISearchPageContainer.WORKING_SET_SCOPE: {
-                IWorkingSet[] workingSets= getContainer().getSelectedWorkingSets();
-                // should not happen - just to be sure
-                if (workingSets == null || workingSets.length < 1)
-                    return false;
-//                SearchUtil.updateLRUWorkingSets(workingSets);
-            }
-        }
-
-       	ServiceRepositoryQuerySpec querySpec= new ServiceRepositoryQuerySpec (data.getPattern(), data.getSearchFor(), data.getQueryName(), data.isCaseSensitive(), scopeDescription);
-       	
-       	querySpec.setMinState(getMinState());
-       	querySpec.setMaxState(getMaxState());
-
-        ServiceRepositorySearchQuery textSearchJob= injector.getInstance (ServiceRepositorySearchQuery.class);
-        textSearchJob.init(querySpec);
-        NewSearchUI.runQueryInBackground(textSearchJob);
-        return true;
-    }
 
     private ServiceRepositoryQueryData getDefaultInitValues() {
         if (!fPreviousSearchPatterns.isEmpty()) {

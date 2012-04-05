@@ -26,7 +26,7 @@ public class FindUnapprovedAssetsQuery {
 			@Override
 			public boolean apply (final IEObjectDescription objDesc) {
 				EObject eObjectOrProxy = objDesc.getEObjectOrProxy ();
-				final EStructuralFeature approvalFeature = eObjectOrProxy.eClass().getEStructuralFeature("governanceApproval");
+				final EStructuralFeature approvalFeature = objDesc.getEClass().getEStructuralFeature("governanceApproval");
 				if (approvalFeature != null) {
 					if (eObjectOrProxy.eIsProxy ()) {
 						eObjectOrProxy = EcoreUtil2.resolve (eObjectOrProxy, resourceSet);

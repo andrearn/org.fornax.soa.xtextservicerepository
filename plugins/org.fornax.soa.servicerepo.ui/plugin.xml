@@ -24,7 +24,7 @@
 	   <page id="org.fornax.soa.servicerepo.ui.search.dialog.ServiceRepositorySearchPage"
 			icon="icons/full/etool16/search.gif"
 			label="Service Repository Search"
-			extensions="svcdsl:90"
+			extensions="svcdsl:99,moddsl:90,binddsl:90,soldsl:90,sladsl:90,profdsl:90,envdsl:90,semdsl:90"
 			showScopeSection="true"
 			canSearchEnclosingProjects="true"
 			class="org.fornax.soa.servicerepo.ui.search.dialog.ServiceRepositorySearchPage">

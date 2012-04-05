@@ -4,6 +4,7 @@
 package org.fornax.soa.servicerepo.ui.search.dialog;
 
 import org.eclipse.jface.action.Action;
+import org.fornax.soa.servicerepo.ui.internal.ServiceRepositoryPluginImages;
 
 /**
  * @author Jan Koehnlein - Initial contribution and API
@@ -16,7 +17,7 @@ public interface ServiceRepositorySearchViewPageActions {
 
 		public ShowNext(ServiceRepositorySearchViewPage page) {
 			super(Messages.ServiceRepositorySearchViewPageActions_showNextMatch);
-//			setImageDescriptor(XtextPluginImages.DESC_SEARCH_NEXT);
+			setImageDescriptor(ServiceRepositoryPluginImages.DESC_SEARCH_NEXT);
 			setToolTipText(Messages.ServiceRepositorySearchViewPageActions_showNextMatch_tooltip);
 			this.page = page;
 		}
@@ -33,7 +34,7 @@ public interface ServiceRepositorySearchViewPageActions {
 
 		public ShowPrevious(ServiceRepositorySearchViewPage page) {
 			super(Messages.ServiceRepositorySearchViewPageActions_showPreviousMatch);
-//			setImageDescriptor(XtextPluginImages.DESC_SEARCH_PREVIOUS);
+			setImageDescriptor(ServiceRepositoryPluginImages.DESC_SEARCH_PREVIOUS);
 			setToolTipText(Messages.ServiceRepositorySearchViewPageActions_showPreviousMatch_tooltip);
 			this.page = page;
 		}
@@ -49,7 +50,7 @@ public interface ServiceRepositorySearchViewPageActions {
 
 		public ExpandAll(ServiceRepositorySearchViewPage page) {
 			super(Messages.ServiceRepositorySearchViewPageActions_expandAll);
-//			setImageDescriptor(XtextPluginImages.DESC_EXPAND_ALL);
+			setImageDescriptor(ServiceRepositoryPluginImages.DESC_EXPAND_ALL);
 			setToolTipText(Messages.ServiceRepositorySearchViewPageActions_expandAll_tooltip);
 			this.page = page;
 		}
@@ -65,7 +66,7 @@ public interface ServiceRepositorySearchViewPageActions {
 
 		public CollapseAll(ServiceRepositorySearchViewPage page) {
 			super(Messages.ServiceRepositorySearchViewPageActions_collapseAll);
-//			setImageDescriptor(XtextPluginImages.DESC_COLLAPSE_ALL);
+			setImageDescriptor(ServiceRepositoryPluginImages.DESC_COLLAPSE_ALL);
 			setToolTipText(Messages.ServiceRepositorySearchViewPageActions_collapseAll_tooltip);
 			this.page = page;
 		}

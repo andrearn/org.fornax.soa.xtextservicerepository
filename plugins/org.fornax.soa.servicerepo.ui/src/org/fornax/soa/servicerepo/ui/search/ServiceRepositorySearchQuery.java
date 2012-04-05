@@ -90,7 +90,7 @@ public class ServiceRepositorySearchQuery implements ISearchQuery {
 			if (XtextProjectHelper.hasNature(project)) {
 				Iterable<IEObjectDescription> result = doSearch (project);
 				for (IEObjectDescription ieObjDesc : result) {
-					searchResult.accept(ieObjDesc);
+					searchResult.accept (ieObjDesc);
 				}
 			}
 		}
@@ -120,7 +120,7 @@ public class ServiceRepositorySearchQuery implements ISearchQuery {
 			}
 			
 			result = query.search (pattern, assetType, minState, maxState, rs);
-		}else {
+		} else {
 			result = predicateSearch.search(pattern, assetType, new Predicate<IEObjectDescription>() {
 				public boolean apply(IEObjectDescription input) {
 					if (input.getEObjectOrProxy().getClass().getCanonicalName().startsWith("org.fornax.soa."))
