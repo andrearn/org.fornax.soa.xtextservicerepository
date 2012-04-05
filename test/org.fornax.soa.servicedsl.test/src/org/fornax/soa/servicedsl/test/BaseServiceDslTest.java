@@ -7,7 +7,6 @@ import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.environmentDsl.EnvironmentType;
-import org.fornax.soa.profiledsl.SOAProfileDslStandaloneSetup;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslFactory;
@@ -21,7 +20,6 @@ import org.fornax.soa.serviceDsl.EnumLiteral;
 import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.FetchProfile;
 import org.fornax.soa.serviceDsl.InternalNamespace;
-import org.fornax.soa.serviceDsl.LinkingPolicy;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Parameter;
 import org.fornax.soa.serviceDsl.ParameterRef;
@@ -55,8 +53,6 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 	protected BusinessObjectRef bo3_4_SuperTypeRef;
 	protected Attribute attr2Bos1;
 	protected Attribute attr1Bos2;
-	protected LinkingPolicy pol;
-	protected LinkingPolicy svcpol;
 	
 	protected LifecycleState proposed;
 	protected LifecycleState defined;
@@ -263,18 +259,6 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		dns.getTypes().add(en);
 		dns.getServices().add(s);
 		
-		pol = dslFactory.createLinkingPolicy();
-		pol.setMinDevState(defined);
-		pol.setMinTestState(development);
-		pol.setMinProdState(test);
-		svcpol = dslFactory.createLinkingPolicy ();
-		
-		svcpol.setMinDevState(proposed);
-		svcpol.setMinTestState(test);
-		svcpol.setMinProdState(productive);
-		
-		s.setLinkingPolicy(svcpol);
-		dns.setLinkingPolicy(pol);
 	}
 
 }

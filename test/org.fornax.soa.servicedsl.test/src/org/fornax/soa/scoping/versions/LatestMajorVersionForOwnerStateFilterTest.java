@@ -31,12 +31,12 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 		LifecycleState minDevLifecycleState = defined;
 		LifecycleState minTestLifecycleState = test;
 		LifecycleState minProdLifecycleState = productive;
-		devFilter =  new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , development, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
-		testFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , test, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
-		prodFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , productive, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
-		defFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , defined, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
-		propFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , proposed, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
-		deprFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , deprecated, minDevLifecycleState, minTestLifecycleState, minProdLifecycleState);
+		devFilter =  new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , development);
+		testFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , test);
+		prodFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , productive);
+		defFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , defined);
+		propFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , proposed);
+		deprFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , deprecated);
 		
 		getInjector().injectMembers (devFilter);
 		getInjector().injectMembers (testFilter);
