@@ -86,26 +86,29 @@ public class ServiceRepositorySearchQuery implements ISearchQuery {
 	public IStatus run(IProgressMonitor monitor) throws OperationCanceledException {
 		searchResult.reset();
 		IProject[] projects = workspace.getRoot().getProjects();
-		for (IProject project : projects) {
-			if (XtextProjectHelper.hasNature(project)) {
-				Iterable<IEObjectDescription> result = doSearch (project);
-				for (IEObjectDescription ieObjDesc : result) {
-					searchResult.accept (ieObjDesc);
-				}
+		ResourceSet rs = null;
+		
+		for (IProject curProject : projects) {
+			if (XtextProjectHelper.hasNature(curProject)) {
+				rs = resourceSetProvider.get(curProject);
+				break;
 			}
+		}
+		Iterable<IEObjectDescription> result = doSearch (rs);
+		for (IEObjectDescription ieObjDesc : result) {
+			searchResult.accept (ieObjDesc);
 		}
 		searchResult.finish();
 		return (monitor.isCanceled()) ? Status.CANCEL_STATUS : Status.OK_STATUS;
 	}
 
-	public Iterable<IEObjectDescription> doSearch(IProject project) {
+	public Iterable<IEObjectDescription> doSearch(ResourceSet rs) {
 		Iterable<IEObjectDescription> result = new ArrayList<IEObjectDescription>();
-		ResourceSet rs = resourceSetProvider.get(project);
 		
 		String queryName = querySpec.getQueryName();
 		if (FindUnapprovedAssetsQuery.class.getName().equals(queryName)) {
 			unApprovedServicesQuery = injector.getInstance (FindUnapprovedAssetsQuery.class);
-			result = unApprovedServicesQuery.search(pattern, assetType, resourceSetProvider.get(project));
+			result = unApprovedServicesQuery.search(pattern, assetType, rs);
 		} else if (FindAssetsWithStateQuery.class.getName().equals(queryName)) { 
 			FindAssetsWithStateQuery query = injector.getInstance(FindAssetsWithStateQuery.class);
 			String minStateName = querySpec.getMinState();

@@ -23,7 +23,6 @@ public class FindUnapprovedAssetsQuery {
 			assetType = "";
 		Iterable<IEObjectDescription> result = search.search (pattern, assetType, new Predicate<IEObjectDescription>() {
 
-			@Override
 			public boolean apply (final IEObjectDescription objDesc) {
 				EObject eObjectOrProxy = objDesc.getEObjectOrProxy ();
 				final EStructuralFeature approvalFeature = objDesc.getEClass().getEStructuralFeature("governanceApproval");

@@ -92,7 +92,6 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 		fPreviousSearchPatterns = new ArrayList();
 	}
 
-	@Override
 	public void createControl(Composite parent) {
 		injector = ServiceRepositoryActivator.getInstance().getInjector();
 		predicateSearch = injector.getInstance(IPredicateSearch.class);
@@ -118,6 +117,11 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         data.heightHint= convertHeightInCharsToPixels(1) / 3;
         separator.setLayoutData(data);
 	}
+	
+	public boolean performAction() {
+        return performNewSearch();
+    }
+
 
 	private Control createExpression(Composite parent) {
         Composite result= new Composite(parent, SWT.NONE);
@@ -346,11 +350,6 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 				
 	}
 
-	
-	@Override
-	public boolean performAction() {
-        return performNewSearch();
-    }
 
     private boolean performNewSearch() {
     	ServiceRepositoryQueryData data= getQueryData();
@@ -469,7 +468,6 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         return new ServiceRepositoryQueryData(ANY_ASSET_QUERY, DEFAULT_ASSET_TYPE, fIsCaseSensitive, DEFAULT_PATTERN, null); //$NON-NLS-1$
     }
 
-	@Override
 	public void setContainer(ISearchPageContainer container) {
 		fContainer = container;
 	}

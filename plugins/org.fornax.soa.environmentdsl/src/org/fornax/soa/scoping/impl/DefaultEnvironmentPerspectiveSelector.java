@@ -8,12 +8,10 @@ public class DefaultEnvironmentPerspectiveSelector implements
 	
 	private Environment selectedEnvironment;
 
-	@Override
 	public Environment getSelectedEnvironment () {
 		return selectedEnvironment;
 	}
 
-	@Override
 	public void selectEnvironment (Environment selectedEnvironment) {
 		this.selectedEnvironment = selectedEnvironment;
 	}
