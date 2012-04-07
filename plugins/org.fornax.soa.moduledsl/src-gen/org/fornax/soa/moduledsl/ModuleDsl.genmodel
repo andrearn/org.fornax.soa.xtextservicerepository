@@ -49,8 +49,11 @@
     <genClasses ecoreClass="ModuleDsl.ecore#//ImportServiceRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/service"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/versionRef"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/module"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/qualifier"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/modules"/>
+    </genClasses>
+    <genClasses ecoreClass="ModuleDsl.ecore#//QualifiedServiceModuleRef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//QualifiedServiceModuleRef/module"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//QualifiedServiceModuleRef/qualifier"/>
     </genClasses>
     <genClasses ecoreClass="ModuleDsl.ecore#//ServiceModuleRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ServiceModuleRef/module"/>

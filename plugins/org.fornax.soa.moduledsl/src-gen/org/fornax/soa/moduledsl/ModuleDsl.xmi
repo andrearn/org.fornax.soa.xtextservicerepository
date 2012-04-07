@@ -72,7 +72,7 @@
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="assembly-type"/>
           <elements xsi:type="xtext:Assignment" feature="assemblyType" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -94,7 +94,7 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
           </elements>
           <elements xsi:type="xtext:Assignment" cardinality="*" feature="providedNamespaces" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
@@ -157,12 +157,30 @@
         <elements xsi:type="xtext:Assignment" feature="versionRef" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="from"/>
-        <elements xsi:type="xtext:Assignment" feature="module" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="from-any-module-of"/>
+          <elements xsi:type="xtext:Assignment" feature="modules" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="+">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="modules" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+            </elements>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="QualifiedServiceModuleRef">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/moduledsl/ModuleDsl#//QualifiedServiceModuleRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" feature="module" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
         </elements>
       </alternatives>
     </rules>
@@ -292,7 +310,7 @@
     <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="sOABaseDsl">
       <ePackage href="http://www.fornax.org/soa/basedsl/SOABaseDsl#/"/>
     </metamodelDeclarations>
-    <rules xsi:type="xtext:ParserRule" name="Import" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Import">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Import"/>
       </type>
@@ -303,7 +321,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="VersionId" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="VersionId">
       <type metamodel="/2/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
@@ -313,9 +331,13 @@
           <elements xsi:type="xtext:Keyword" value="."/>
           <elements xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
         </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="."/>
+          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="VersionedName" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="VersionedName">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionedName"/>
       </type>
@@ -337,7 +359,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Version" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Version">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"/>
       </type>
@@ -348,7 +370,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="VersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="VersionRef">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"/>
       </type>
@@ -360,7 +382,7 @@
         <elements xsi:type="xtext:RuleCall" rule="/1/@rules.9"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="MinVersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="MinVersionRef">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//MinVersionRef"/>
       </type>
@@ -371,7 +393,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="MaxVersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="MaxVersionRef">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//MaxVersionRef"/>
       </type>
@@ -382,7 +404,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="LowerBoundRangeVersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="LowerBoundRangeVersionRef">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//LowerBoundRangeVersionRef"/>
       </type>
@@ -404,7 +426,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="MajorVersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="MajorVersionRef">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//MajorVersionRef"/>
       </type>
@@ -415,7 +437,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="FixedVersionRef" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="FixedVersionRef">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//FixedVersionRef"/>
       </type>
@@ -426,7 +448,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="QualifiedNameWithWildCard" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="QualifiedNameWithWildCard">
       <type metamodel="/2/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
@@ -435,7 +457,7 @@
         <elements xsi:type="xtext:Keyword" cardinality="?" value=".*"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="QualifiedName" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="QualifiedName">
       <type metamodel="/2/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
       </type>
@@ -454,6 +476,23 @@
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="qualifier"/>
         <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="MultiQualifier">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//MultiQualifier"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="qualified-by"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="isOneOf" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="one-of"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="qualifiedName" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiedName" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
         </elements>
       </alternatives>

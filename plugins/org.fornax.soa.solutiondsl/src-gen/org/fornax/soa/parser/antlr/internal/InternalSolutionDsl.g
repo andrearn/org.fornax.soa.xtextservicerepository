@@ -1023,23 +1023,16 @@ ruleEventRef returns [EObject current=null]
 
 // Entry rule entryRuleImport
 entryRuleImport returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getImportRule()); }
 	 iv_ruleImport=ruleImport 
 	 { $current=$iv_ruleImport.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule Import
 ruleImport returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (	otherlv_0='import' 
@@ -1066,9 +1059,6 @@ ruleImport returns [EObject current=null]
 )
 ))
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -1076,23 +1066,16 @@ finally {
 
 // Entry rule entryRuleVersionId
 entryRuleVersionId returns [String current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getVersionIdRule()); } 
 	 iv_ruleVersionId=ruleVersionId 
 	 { $current=$iv_ruleVersionId.current.getText(); }  
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule VersionId
 ruleVersionId returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (    this_INT_0=RULE_INT    {
@@ -1115,11 +1098,21 @@ ruleVersionId returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
     { 
     newLeafNode(this_INT_2, grammarAccess.getVersionIdAccess().getINTTerminalRuleCall_1_1()); 
     }
-)*)
+)*(
+	kw='.' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getVersionIdAccess().getFullStopKeyword_2_0()); 
+    }
+    this_ID_4=RULE_ID    {
+		$current.merge(this_ID_4);
+    }
+
+    { 
+    newLeafNode(this_ID_4, grammarAccess.getVersionIdAccess().getIDTerminalRuleCall_2_1()); 
+    }
+)?)
     ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -1129,23 +1122,16 @@ finally {
 
 // Entry rule entryRuleVersionRef
 entryRuleVersionRef returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getVersionRefRule()); }
 	 iv_ruleVersionRef=ruleVersionRef 
 	 { $current=$iv_ruleVersionRef.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule VersionRef
 ruleVersionRef returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (
@@ -1214,9 +1200,6 @@ ruleVersionRef returns [EObject current=null]
     }
 )
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -1224,23 +1207,16 @@ finally {
 
 // Entry rule entryRuleMinVersionRef
 entryRuleMinVersionRef returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getMinVersionRefRule()); }
 	 iv_ruleMinVersionRef=ruleMinVersionRef 
 	 { $current=$iv_ruleMinVersionRef.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule MinVersionRef
 ruleMinVersionRef returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (	otherlv_0='minVersion' 
@@ -1267,9 +1243,6 @@ ruleMinVersionRef returns [EObject current=null]
 )
 ))
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -1277,23 +1250,16 @@ finally {
 
 // Entry rule entryRuleMaxVersionRef
 entryRuleMaxVersionRef returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getMaxVersionRefRule()); }
 	 iv_ruleMaxVersionRef=ruleMaxVersionRef 
 	 { $current=$iv_ruleMaxVersionRef.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule MaxVersionRef
 ruleMaxVersionRef returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (	otherlv_0='maxVersion' 
@@ -1320,9 +1286,6 @@ ruleMaxVersionRef returns [EObject current=null]
 )
 ))
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -1330,23 +1293,16 @@ finally {
 
 // Entry rule entryRuleLowerBoundRangeVersionRef
 entryRuleLowerBoundRangeVersionRef returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getLowerBoundRangeVersionRefRule()); }
 	 iv_ruleLowerBoundRangeVersionRef=ruleLowerBoundRangeVersionRef 
 	 { $current=$iv_ruleLowerBoundRangeVersionRef.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule LowerBoundRangeVersionRef
 ruleLowerBoundRangeVersionRef returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 ((	otherlv_0='minVersion' 
@@ -1407,9 +1363,6 @@ ruleLowerBoundRangeVersionRef returns [EObject current=null]
 )
 ))
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -1417,23 +1370,16 @@ finally {
 
 // Entry rule entryRuleMajorVersionRef
 entryRuleMajorVersionRef returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getMajorVersionRefRule()); }
 	 iv_ruleMajorVersionRef=ruleMajorVersionRef 
 	 { $current=$iv_ruleMajorVersionRef.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule MajorVersionRef
 ruleMajorVersionRef returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (	otherlv_0='majorVersion' 
@@ -1460,9 +1406,6 @@ ruleMajorVersionRef returns [EObject current=null]
 )
 ))
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -1470,23 +1413,16 @@ finally {
 
 // Entry rule entryRuleFixedVersionRef
 entryRuleFixedVersionRef returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getFixedVersionRefRule()); }
 	 iv_ruleFixedVersionRef=ruleFixedVersionRef 
 	 { $current=$iv_ruleFixedVersionRef.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule FixedVersionRef
 ruleFixedVersionRef returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (	otherlv_0='fixedVersion' 
@@ -1513,9 +1449,6 @@ ruleFixedVersionRef returns [EObject current=null]
 )
 ))
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -1523,23 +1456,16 @@ finally {
 
 // Entry rule entryRuleQualifiedNameWithWildCard
 entryRuleQualifiedNameWithWildCard returns [String current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getQualifiedNameWithWildCardRule()); } 
 	 iv_ruleQualifiedNameWithWildCard=ruleQualifiedNameWithWildCard 
 	 { $current=$iv_ruleQualifiedNameWithWildCard.current.getText(); }  
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule QualifiedNameWithWildCard
 ruleQualifiedNameWithWildCard returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (
@@ -1561,9 +1487,6 @@ ruleQualifiedNameWithWildCard returns [AntlrDatatypeRuleToken current=new AntlrD
     }
 )?)
     ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -1571,23 +1494,16 @@ finally {
 
 // Entry rule entryRuleQualifiedName
 entryRuleQualifiedName returns [String current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getQualifiedNameRule()); } 
 	 iv_ruleQualifiedName=ruleQualifiedName 
 	 { $current=$iv_ruleQualifiedName.current.getText(); }  
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule QualifiedName
 ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (    this_ID_0=RULE_ID    {
@@ -1612,9 +1528,6 @@ ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleT
     }
 )*)
     ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 

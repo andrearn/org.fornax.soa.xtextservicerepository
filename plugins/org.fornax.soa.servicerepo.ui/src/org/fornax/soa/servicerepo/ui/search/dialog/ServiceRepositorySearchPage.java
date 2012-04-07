@@ -32,7 +32,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.IWorkingSetManager;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
@@ -97,25 +96,22 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 		predicateSearch = injector.getInstance(IPredicateSearch.class);
 		initializeDialogUnits (parent);
 
-		result_1= new Composite(parent, SWT.NONE);
+		result_1= new Composite(parent, SWT.FILL);
 
         GridLayout gl_result_1= new GridLayout(2, false);
         gl_result_1.horizontalSpacing= 10;
         result_1.setLayout(gl_result_1);
 
         Control expressionComposite= createExpression(result_1);
-        expressionComposite.setLayoutData(new GridData(SWT.FILL, GridData.CENTER, true, false, 1, 1));
-        new Label(result_1, SWT.NONE);
-        new Label(result_1, SWT.NONE);
-        new Label(result_1, SWT.NONE);
-        new Label(result_1, SWT.NONE);
-        new Label(result_1, SWT.NONE);
+        GridData gd_result = new GridData(SWT.FILL, GridData.CENTER, true, false, 1, 1);
+        expressionComposite.setLayoutData(gd_result);
 
-        Label separator= new Label(result_1, SWT.NONE);
+        Label separator= new Label(result_1, SWT.FILL);
         separator.setVisible(false);
-        GridData data= new GridData(GridData.FILL, GridData.FILL, false, false, 2, 1);
+        GridData data= new GridData(GridData.FILL, GridData.FILL, false, false, 1, 1);
         data.heightHint= convertHeightInCharsToPixels(1) / 3;
         separator.setLayoutData(data);
+        new Label(result_1, SWT.NONE);
 	}
 	
 	public boolean performAction() {
@@ -133,8 +129,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         // Pattern text + info
 
         Label exprLabel = new Label (result, SWT.NONE);
-        GridData gd_exprLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
-        gd_exprLabel.widthHint = 121;
+        GridData gd_exprLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         exprLabel.setLayoutData(gd_exprLabel);
         exprLabel.setText (Messages.SearchPage_expression_label);
        
@@ -212,8 +207,8 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         setControl(result);
         return result;
 	}
+	
     private Control createLimitTo(Composite parent) {
-    	new Label(result_1, SWT.NONE);
     	limitToGroup= new Group(parent, SWT.NONE);
     	limitToGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
      	limitToGroup.setVisible(false);
@@ -230,25 +225,25 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 		}
         
         Label minStateLabel = new Label (limitToGroup, SWT.NONE);
-        GridData gd_minStateLabel = new GridData(SWT.LEFT, SWT.CENTER, false, false, 1, 1);
+        GridData gd_minStateLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         gd_minStateLabel.widthHint = 121;
         minStateLabel.setLayoutData(gd_minStateLabel);
         minStateLabel.setText (Messages.SearchPage_minState_label);
         
         minStateCombo = new Combo(limitToGroup, SWT.NONE);
+        minStateCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         new Label(limitToGroup, SWT.NONE);
         
         Label maxStateLabel = new Label (limitToGroup, SWT.NONE);
+        maxStateLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         maxStateLabel.setText (Messages.SearchPage_maxState_label);
         
         maxStateCombo = new Combo(limitToGroup, SWT.NONE);
+        maxStateCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         
         initializeStates();
         
-        new Label(limitToGroup, SWT.NONE);
-        new Label(limitToGroup, SWT.NONE);
-        new Label(limitToGroup, SWT.NONE);
         new Label(limitToGroup, SWT.NONE);
         Dialog.applyDialogFont(limitToGroup); // re-apply font as we disposed the previous widgets
         limitToGroup.layout();
@@ -272,13 +267,12 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     	maxStateCombo.add("");
     	Predicate<IEObjectDescription> predicate = Predicates.alwaysTrue();
     	Iterable<IEObjectDescription> states = predicateSearch.search(SOAProfileDslPackage.Literals.LIFECYCLE_STATE.getName(), predicate);
-    	Iterable<String> stateNames = Iterables.transform(states, new Function<IEObjectDescription, String>() {
-
-			public String apply(IEObjectDescription from) {
-				return from.getQualifiedName().getLastSegment();
-			}
-    		
-    	});
+    	List<String> stateNames = new ArrayList<String>();
+    	for (IEObjectDescription stateDesc : states) {
+			String state = stateDesc.getQualifiedName().getLastSegment();
+			if (! stateNames.contains(state))
+				stateNames.add (state);
+		}
     	for (String state : stateNames) {
 			minStateCombo.add(state);
 			maxStateCombo.add(state);

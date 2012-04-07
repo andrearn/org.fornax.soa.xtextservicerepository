@@ -2769,7 +2769,7 @@ protected class EventRef_VersionRefAssignment_1 extends AssignmentToken  {
 
 /************ begin Rule Import ****************
  *
- * Import hidden(WS):
+ * Import:
  * 	"import" importedNamespace=QualifiedNameWithWildCard;
  *
  **/
@@ -2865,7 +2865,7 @@ protected class Import_ImportedNamespaceAssignment_1 extends AssignmentToken  {
 
 /************ begin Rule VersionedName ****************
  *
- * VersionedName hidden(WS):
+ * VersionedName:
  * 	{VersionedName} QualifiedName | ID WS* version=VersionId;
  *
  **/
@@ -3055,7 +3055,7 @@ protected class VersionedName_VersionAssignment_1_2 extends AssignmentToken  {
 
 /************ begin Rule VersionRef ****************
  *
- * VersionRef hidden(WS):
+ * VersionRef:
  * 	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
  *
  **/
@@ -3283,7 +3283,7 @@ protected class VersionRef_FixedVersionRefParserRuleCall_4 extends RuleCallToken
 
 /************ begin Rule MinVersionRef ****************
  *
- * MinVersionRef hidden(WS):
+ * MinVersionRef:
  * 	"minVersion" minVersion=VersionId;
  *
  **/
@@ -3378,7 +3378,7 @@ protected class MinVersionRef_MinVersionAssignment_1 extends AssignmentToken  {
 
 /************ begin Rule MaxVersionRef ****************
  *
- * MaxVersionRef hidden(WS):
+ * MaxVersionRef:
  * 	"maxVersion" maxVersion=VersionId;
  *
  **/
@@ -3473,7 +3473,7 @@ protected class MaxVersionRef_MaxVersionAssignment_1 extends AssignmentToken  {
 
 /************ begin Rule LowerBoundRangeVersionRef ****************
  *
- * LowerBoundRangeVersionRef hidden(WS):
+ * LowerBoundRangeVersionRef:
  * 	("minVersion" ">=") minVersion=VersionId "," ("maxVersion" "<") maxVersion=VersionId;
  *
  **/
@@ -3736,7 +3736,7 @@ protected class LowerBoundRangeVersionRef_MaxVersionAssignment_4 extends Assignm
 
 /************ begin Rule MajorVersionRef ****************
  *
- * MajorVersionRef hidden(WS):
+ * MajorVersionRef:
  * 	"majorVersion" majorVersion=INT;
  *
  **/
@@ -3831,7 +3831,7 @@ protected class MajorVersionRef_MajorVersionAssignment_1 extends AssignmentToken
 
 /************ begin Rule FixedVersionRef ****************
  *
- * FixedVersionRef hidden(WS):
+ * FixedVersionRef:
  * 	"fixedVersion" fixedVersion=VersionId;
  *
  **/

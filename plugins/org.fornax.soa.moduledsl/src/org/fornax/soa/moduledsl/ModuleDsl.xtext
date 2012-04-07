@@ -37,7 +37,14 @@ ServiceRef:
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
 	
 ImportServiceRef:
-	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 'from' module=ServiceModuleRef (qualifier=Qualifier)?
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 
+		('from-any-module-of'
+			(modules+=QualifiedServiceModuleRef)(',' modules+=QualifiedServiceModuleRef)+ 
+		)?
+;
+
+QualifiedServiceModuleRef:
+	module+=ServiceModuleRef (qualifier=MultiQualifier)?
 ;
 
 ServiceModuleRef:

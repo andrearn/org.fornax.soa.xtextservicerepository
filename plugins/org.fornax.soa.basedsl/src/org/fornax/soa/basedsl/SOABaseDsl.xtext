@@ -15,7 +15,7 @@ generate sOABaseDsl "http://www.fornax.org/soa/basedsl/SOABaseDsl"
 Import: 
 	'import' importedNamespace=QualifiedNameWithWildCard;
 
-VersionId: INT('.'INT)*;
+VersionId: INT('.'INT)*('.'ID)?;
 
 VersionedName: {VersionedName} QualifiedName|ID (WS)* version=VersionId;
 
@@ -48,5 +48,9 @@ QualifiedName:
 	
 Qualifier: 
 	'qualifier' qualifierName=QualifiedName;
+	
+MultiQualifier:
+	'qualified-by' (isOneOf?='one-of')? qualifiedName+=QualifiedName (qualifiedName+=QualifiedName)*
+;
 
 AbstractType: {AbstractType} name=ID;

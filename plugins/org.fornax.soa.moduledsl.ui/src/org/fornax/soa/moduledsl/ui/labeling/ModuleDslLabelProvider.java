@@ -7,8 +7,10 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.basedsl.ui.labeling.SOABaseDslLabelHelper;
+import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
+import org.fornax.soa.serviceDsl.impl.ServiceImpl;
 
 import com.google.inject.Inject;
 
@@ -42,10 +44,29 @@ public class ModuleDslLabelProvider extends DefaultEObjectLabelProvider {
 		return name;
 	}
 	
+	String image(Module mod) {
+		return "Module.gif";
+	}
+	
 	Object text(ServiceRef s) {
 		StyledString name = new StyledString(s.getService().getName());
 		StyledString versionAndState  = new StyledString(" " + SOABaseDslLabelHelper.getVersionConstraint (s.getVersionRef()), StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		return name;
 	}
+	Object text(ImportServiceRef s) {
+		StyledString name = new StyledString(s.getService().getName());
+		StyledString versionAndState  = new StyledString(" " + SOABaseDslLabelHelper.getVersionConstraint (s.getVersionRef()), StyledString.DECORATIONS_STYLER);
+		name.append(versionAndState);
+		return name;
+	}
+	
+	String image(ServiceRef svc) {
+		return "ServiceExportRef.gif";
+	}
+	
+	String image(ImportServiceRef svc) {
+		return "ImportServiceRef.gif";
+	}
+
 }

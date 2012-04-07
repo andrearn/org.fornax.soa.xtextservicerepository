@@ -796,7 +796,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getEventRefAccess().getRule();
 	}
 
-	//Import hidden(WS):
+	//Import:
 	//	"import" importedNamespace=QualifiedNameWithWildCard;
 	public SOABaseDslGrammarAccess.ImportElements getImportAccess() {
 		return gaSOABaseDsl.getImportAccess();
@@ -806,8 +806,8 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getImportAccess().getRule();
 	}
 
-	//VersionId hidden(WS):
-	//	INT ("." INT)*;
+	//VersionId:
+	//	INT ("." INT)* ("." ID)?;
 	public SOABaseDslGrammarAccess.VersionIdElements getVersionIdAccess() {
 		return gaSOABaseDsl.getVersionIdAccess();
 	}
@@ -816,7 +816,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getVersionIdAccess().getRule();
 	}
 
-	//VersionedName hidden(WS):
+	//VersionedName:
 	//	{VersionedName} QualifiedName | ID WS* version=VersionId;
 	public SOABaseDslGrammarAccess.VersionedNameElements getVersionedNameAccess() {
 		return gaSOABaseDsl.getVersionedNameAccess();
@@ -826,7 +826,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getVersionedNameAccess().getRule();
 	}
 
-	//VersionRef hidden(WS):
+	//VersionRef:
 	//	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
 	public SOABaseDslGrammarAccess.VersionRefElements getVersionRefAccess() {
 		return gaSOABaseDsl.getVersionRefAccess();
@@ -836,7 +836,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getVersionRefAccess().getRule();
 	}
 
-	//MinVersionRef hidden(WS):
+	//MinVersionRef:
 	//	"minVersion" minVersion=VersionId;
 	public SOABaseDslGrammarAccess.MinVersionRefElements getMinVersionRefAccess() {
 		return gaSOABaseDsl.getMinVersionRefAccess();
@@ -846,7 +846,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getMinVersionRefAccess().getRule();
 	}
 
-	//MaxVersionRef hidden(WS):
+	//MaxVersionRef:
 	//	"maxVersion" maxVersion=VersionId;
 	public SOABaseDslGrammarAccess.MaxVersionRefElements getMaxVersionRefAccess() {
 		return gaSOABaseDsl.getMaxVersionRefAccess();
@@ -856,7 +856,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getMaxVersionRefAccess().getRule();
 	}
 
-	//LowerBoundRangeVersionRef hidden(WS):
+	//LowerBoundRangeVersionRef:
 	//	("minVersion" ">=") minVersion=VersionId "," ("maxVersion" "<") maxVersion=VersionId;
 	public SOABaseDslGrammarAccess.LowerBoundRangeVersionRefElements getLowerBoundRangeVersionRefAccess() {
 		return gaSOABaseDsl.getLowerBoundRangeVersionRefAccess();
@@ -866,7 +866,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getLowerBoundRangeVersionRefAccess().getRule();
 	}
 
-	//MajorVersionRef hidden(WS):
+	//MajorVersionRef:
 	//	"majorVersion" majorVersion=INT;
 	public SOABaseDslGrammarAccess.MajorVersionRefElements getMajorVersionRefAccess() {
 		return gaSOABaseDsl.getMajorVersionRefAccess();
@@ -876,7 +876,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getMajorVersionRefAccess().getRule();
 	}
 
-	//FixedVersionRef hidden(WS):
+	//FixedVersionRef:
 	//	"fixedVersion" fixedVersion=VersionId;
 	public SOABaseDslGrammarAccess.FixedVersionRefElements getFixedVersionRefAccess() {
 		return gaSOABaseDsl.getFixedVersionRefAccess();
@@ -886,7 +886,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getFixedVersionRefAccess().getRule();
 	}
 
-	//QualifiedNameWithWildCard hidden(WS):
+	//QualifiedNameWithWildCard:
 	//	QualifiedName ".*"?;
 	public SOABaseDslGrammarAccess.QualifiedNameWithWildCardElements getQualifiedNameWithWildCardAccess() {
 		return gaSOABaseDsl.getQualifiedNameWithWildCardAccess();
@@ -896,7 +896,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getQualifiedNameWithWildCardAccess().getRule();
 	}
 
-	//QualifiedName hidden(WS):
+	//QualifiedName:
 	//	ID ("." ID)*;
 	public SOABaseDslGrammarAccess.QualifiedNameElements getQualifiedNameAccess() {
 		return gaSOABaseDsl.getQualifiedNameAccess();

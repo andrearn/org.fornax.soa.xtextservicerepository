@@ -6,6 +6,8 @@ package org.fornax.soa.ui.labeling;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.basedsl.ui.labeling.SOABaseDslLabelHelper;
+import org.fornax.soa.businessDsl.Capability;
+import org.fornax.soa.businessDsl.CapabilityGroup;
 import org.fornax.soa.businessDsl.CapabilityRef;
 import org.fornax.soa.businessDsl.CapabilityVariation;
 
@@ -34,6 +36,14 @@ public class BusinessDslLabelProvider extends DefaultEObjectLabelProvider {
       return "MyModel.gif";
     }
 */
+	
+	String image (Capability cap) {
+		return "Capability.gif";
+	}
+
+	String image (CapabilityGroup cap) {
+		return "CapabilityGroup.gif";
+	}
 	
 	String text(CapabilityVariation var) {
 		return "~ " + var.getVarying().getCapability().getName() + SOABaseDslLabelHelper.getVersionConstraint (var.getVarying().getVersionRef());

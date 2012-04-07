@@ -41,9 +41,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass ../../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Service"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//ServiceModuleRef"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
+        eType="#//QualifiedServiceModuleRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="QualifiedServiceModuleRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="module" upperBound="-1"
+        eType="#//ServiceModuleRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//MultiQualifier"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ServiceModuleRef">
