@@ -38,8 +38,9 @@ ServiceRef:
 	
 ImportServiceRef:
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 
-		('from-any-module-of'
-			(modules+=QualifiedServiceModuleRef)(',' modules+=QualifiedServiceModuleRef)+ 
+		('from-any-module-of' '{'
+			(modules+=QualifiedServiceModuleRef)(',' modules+=QualifiedServiceModuleRef)+
+		'}' 
 		)?
 ;
 
