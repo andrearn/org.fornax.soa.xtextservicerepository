@@ -36,6 +36,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass ../../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Service"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ImportServiceRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass ../../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Service"/>
