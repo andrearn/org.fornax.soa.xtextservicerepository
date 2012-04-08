@@ -34,6 +34,7 @@
     <genClasses ecoreClass="SolutionDsl.ecore#//Module">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Module/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Module/kind"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/version"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/requires"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/features"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/modules"/>

@@ -21,6 +21,7 @@ import org.fornax.soa.semanticsDsl.Tag;
  * <ul>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getName <em>Name</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getKind <em>Kind</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Module#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getRequires <em>Requires</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getModules <em>Modules</em>}</li>
@@ -88,6 +89,32 @@ public interface Module extends EObject
    * @generated
    */
   void setKind(ModuleKind value);
+
+  /**
+   * Returns the value of the '<em><b>Version</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Version</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Version</em>' containment reference.
+   * @see #setVersion(Version)
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getModule_Version()
+   * @model containment="true"
+   * @generated
+   */
+  Version getVersion();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.solutionDsl.Module#getVersion <em>Version</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Version</em>' containment reference.
+   * @see #getVersion()
+   * @generated
+   */
+  void setVersion(Version value);
 
   /**
    * Returns the value of the '<em><b>Requires</b></em>' containment reference list.

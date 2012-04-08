@@ -93,6 +93,9 @@
         <elements xsi:type="xtext:Assignment" feature="kind" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="version" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+        </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:Keyword" value="requires"/>
           <elements xsi:type="xtext:Assignment" feature="requires" operator="+=">
@@ -467,8 +470,14 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="qualifier"/>
-        <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value=","/>
+          <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </elements>
         </elements>
       </alternatives>
     </rules>

@@ -325,7 +325,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModule_Requires()
+  public EReference getModule_Version()
   {
     return (EReference)moduleEClass.getEStructuralFeatures().get(2);
   }
@@ -335,7 +335,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModule_Features()
+  public EReference getModule_Requires()
   {
     return (EReference)moduleEClass.getEStructuralFeatures().get(3);
   }
@@ -345,7 +345,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModule_Modules()
+  public EReference getModule_Features()
   {
     return (EReference)moduleEClass.getEStructuralFeatures().get(4);
   }
@@ -355,9 +355,19 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModule_Tags()
+  public EReference getModule_Modules()
   {
     return (EReference)moduleEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getModule_Tags()
+  {
+    return (EReference)moduleEClass.getEStructuralFeatures().get(6);
   }
 
   /**
@@ -627,6 +637,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     moduleEClass = createEClass(MODULE);
     createEAttribute(moduleEClass, MODULE__NAME);
     createEAttribute(moduleEClass, MODULE__KIND);
+    createEReference(moduleEClass, MODULE__VERSION);
     createEReference(moduleEClass, MODULE__REQUIRES);
     createEReference(moduleEClass, MODULE__FEATURES);
     createEReference(moduleEClass, MODULE__MODULES);
@@ -717,6 +728,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModule_Name(), ecorePackage.getEString(), "name", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getModule_Kind(), this.getModuleKind(), "kind", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModule_Version(), this.getVersion(), null, "version", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModule_Requires(), this.getServiceRef(), null, "requires", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModule_Features(), this.getFeature(), null, "features", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModule_Modules(), this.getModule(), null, "modules", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -15,7 +15,7 @@ Module:
 	(external?='external')? 'module' name = QualifiedName '{'
 		version = Version
 		'lifecycle-state' state = [profileDsl::LifecycleState | QualifiedName]
-		((qualifiers+=Qualifier)(',' qualifiers+=Qualifier)*)?
+		(qualifiers=Qualifier)?
 		('owner' owner = STRING)?
 		('assembly-type' assemblyType = AssemblyType)?
 		('assembly-type-details' assemblyTypeDetails = STRING)?
@@ -34,22 +34,18 @@ Module:
 	'}';
 	
 ServiceRef: 
-	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef ((qualifiers+=Qualifier)(',' qualifiers+=Qualifier)*)?;
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (qualifiers=Qualifier)?;
 	
 ImportServiceRef:
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 
 		('from-any-module-of' '{'
-			(modules+=QualifiedServiceModuleRef)(',' modules+=QualifiedServiceModuleRef)+
+			(modules+=ServiceModuleRef)(',' modules+=ServiceModuleRef)+
 		'}' 
 		)?
 ;
 
-QualifiedServiceModuleRef:
-	module+=ServiceModuleRef (qualifier=MultiQualifier)?
-;
-
 ServiceModuleRef:
-	module=[Module|QualifiedName] version=VersionRef
+	module=[Module|QualifiedName] version=VersionRef (importQualifier=MultiQualifierRef)?
 ;
 
 ModuleRef:
@@ -66,6 +62,10 @@ NamespaceRef:
 			(excludedServices+=ServiceRef)+
 		'}'
 	'}')?
+;
+
+MultiQualifierRef:
+	'qualified-by' (isOneOf?='one-of')? '{' (qualifiedName+=QualifiedName) (','qualifiedName+=QualifiedName)* '}'
 ;
 	
 enum AssemblyType:

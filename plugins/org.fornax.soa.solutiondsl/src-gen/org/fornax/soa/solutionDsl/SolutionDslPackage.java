@@ -219,13 +219,22 @@ public interface SolutionDslPackage extends EPackage
   int MODULE__KIND = 1;
 
   /**
+   * The feature id for the '<em><b>Version</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE__VERSION = 2;
+
+  /**
    * The feature id for the '<em><b>Requires</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODULE__REQUIRES = 2;
+  int MODULE__REQUIRES = 3;
 
   /**
    * The feature id for the '<em><b>Features</b></em>' containment reference list.
@@ -234,7 +243,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__FEATURES = 3;
+  int MODULE__FEATURES = 4;
 
   /**
    * The feature id for the '<em><b>Modules</b></em>' containment reference list.
@@ -243,7 +252,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__MODULES = 4;
+  int MODULE__MODULES = 5;
 
   /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
@@ -252,7 +261,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__TAGS = 5;
+  int MODULE__TAGS = 6;
 
   /**
    * The number of structural features of the '<em>Module</em>' class.
@@ -261,7 +270,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE_FEATURE_COUNT = 6;
+  int MODULE_FEATURE_COUNT = 7;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.solutionDsl.impl.FeatureImpl <em>Feature</em>}' class.
@@ -683,6 +692,17 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    */
   EAttribute getModule_Kind();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.fornax.soa.solutionDsl.Module#getVersion <em>Version</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Version</em>'.
+   * @see org.fornax.soa.solutionDsl.Module#getVersion()
+   * @see #getModule()
+   * @generated
+   */
+  EReference getModule_Version();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.fornax.soa.solutionDsl.Module#getRequires <em>Requires</em>}'.
@@ -1112,6 +1132,14 @@ public interface SolutionDslPackage extends EPackage
      * @generated
      */
     EAttribute MODULE__KIND = eINSTANCE.getModule_Kind();
+
+    /**
+     * The meta object literal for the '<em><b>Version</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODULE__VERSION = eINSTANCE.getModule_Version();
 
     /**
      * The meta object literal for the '<em><b>Requires</b></em>' containment reference list feature.

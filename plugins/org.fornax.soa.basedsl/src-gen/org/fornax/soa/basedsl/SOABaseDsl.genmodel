@@ -38,10 +38,6 @@
     <genClasses ecoreClass="SOABaseDsl.ecore#//Qualifier">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Qualifier/qualifierName"/>
     </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//MultiQualifier">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//MultiQualifier/isOneOf"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//MultiQualifier/qualifiedName"/>
-    </genClasses>
     <genClasses ecoreClass="SOABaseDsl.ecore#//AbstractType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//AbstractType/name"/>
     </genClasses>

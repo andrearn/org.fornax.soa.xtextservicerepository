@@ -29,6 +29,7 @@ import org.fornax.soa.solutionDsl.Module;
 import org.fornax.soa.solutionDsl.ModuleKind;
 import org.fornax.soa.solutionDsl.ServiceRef;
 import org.fornax.soa.solutionDsl.SolutionDslPackage;
+import org.fornax.soa.solutionDsl.Version;
 
 /**
  * <!-- begin-user-doc -->
@@ -39,6 +40,7 @@ import org.fornax.soa.solutionDsl.SolutionDslPackage;
  * <ul>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getKind <em>Kind</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getRequires <em>Requires</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getModules <em>Modules</em>}</li>
@@ -89,6 +91,16 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * @ordered
    */
   protected ModuleKind kind = KIND_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getVersion() <em>Version</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVersion()
+   * @generated
+   * @ordered
+   */
+  protected Version version;
 
   /**
    * The cached value of the '{@link #getRequires() <em>Requires</em>}' containment reference list.
@@ -202,6 +214,54 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
+  public Version getVersion()
+  {
+    return version;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetVersion(Version newVersion, NotificationChain msgs)
+  {
+    Version oldVersion = version;
+    version = newVersion;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SolutionDslPackage.MODULE__VERSION, oldVersion, newVersion);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setVersion(Version newVersion)
+  {
+    if (newVersion != version)
+    {
+      NotificationChain msgs = null;
+      if (version != null)
+        msgs = ((InternalEObject)version).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SolutionDslPackage.MODULE__VERSION, null, msgs);
+      if (newVersion != null)
+        msgs = ((InternalEObject)newVersion).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SolutionDslPackage.MODULE__VERSION, null, msgs);
+      msgs = basicSetVersion(newVersion, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SolutionDslPackage.MODULE__VERSION, newVersion, newVersion));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<ServiceRef> getRequires()
   {
     if (requires == null)
@@ -263,6 +323,8 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   {
     switch (featureID)
     {
+      case SolutionDslPackage.MODULE__VERSION:
+        return basicSetVersion(null, msgs);
       case SolutionDslPackage.MODULE__REQUIRES:
         return ((InternalEList<?>)getRequires()).basicRemove(otherEnd, msgs);
       case SolutionDslPackage.MODULE__FEATURES:
@@ -287,6 +349,8 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return getName();
       case SolutionDslPackage.MODULE__KIND:
         return getKind();
+      case SolutionDslPackage.MODULE__VERSION:
+        return getVersion();
       case SolutionDslPackage.MODULE__REQUIRES:
         return getRequires();
       case SolutionDslPackage.MODULE__FEATURES:
@@ -315,6 +379,9 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return;
       case SolutionDslPackage.MODULE__KIND:
         setKind((ModuleKind)newValue);
+        return;
+      case SolutionDslPackage.MODULE__VERSION:
+        setVersion((Version)newValue);
         return;
       case SolutionDslPackage.MODULE__REQUIRES:
         getRequires().clear();
@@ -352,6 +419,9 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       case SolutionDslPackage.MODULE__KIND:
         setKind(KIND_EDEFAULT);
         return;
+      case SolutionDslPackage.MODULE__VERSION:
+        setVersion((Version)null);
+        return;
       case SolutionDslPackage.MODULE__REQUIRES:
         getRequires().clear();
         return;
@@ -382,6 +452,8 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SolutionDslPackage.MODULE__KIND:
         return kind != KIND_EDEFAULT;
+      case SolutionDslPackage.MODULE__VERSION:
+        return version != null;
       case SolutionDslPackage.MODULE__REQUIRES:
         return requires != null && !requires.isEmpty();
       case SolutionDslPackage.MODULE__FEATURES:

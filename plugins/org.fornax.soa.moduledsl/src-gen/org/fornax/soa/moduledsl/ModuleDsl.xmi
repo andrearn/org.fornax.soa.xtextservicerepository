@@ -52,16 +52,8 @@
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
           </terminal>
         </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Assignment" feature="qualifiers" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value=","/>
-            <elements xsi:type="xtext:Assignment" feature="qualifiers" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
-            </elements>
-          </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifiers" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="owner"/>
@@ -94,7 +86,7 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
           </elements>
           <elements xsi:type="xtext:Assignment" cardinality="*" feature="providedNamespaces" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.6"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
@@ -138,16 +130,8 @@
         <elements xsi:type="xtext:Assignment" feature="versionRef" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
         </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Assignment" feature="qualifiers" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value=","/>
-            <elements xsi:type="xtext:Assignment" feature="qualifiers" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
-            </elements>
-          </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifiers" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
       </alternatives>
     </rules>
@@ -184,19 +168,6 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="QualifiedServiceModuleRef">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/moduledsl/ModuleDsl#//QualifiedServiceModuleRef"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="module" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifier" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
-        </elements>
-      </alternatives>
-    </rules>
     <rules xsi:type="xtext:ParserRule" name="ServiceModuleRef">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/moduledsl/ModuleDsl#//ServiceModuleRef"/>
@@ -212,6 +183,9 @@
         </elements>
         <elements xsi:type="xtext:Assignment" feature="version" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="importQualifier" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.7"/>
         </elements>
       </alternatives>
     </rules>
@@ -265,6 +239,28 @@
           <elements xsi:type="xtext:Keyword" value="}"/>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="MultiQualifierRef">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/moduledsl/ModuleDsl#//MultiQualifierRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="qualified-by"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="isOneOf" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="one-of"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" feature="qualifiedName" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value=","/>
+          <elements xsi:type="xtext:Assignment" feature="qualifiedName" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="AssemblyType">
@@ -488,25 +484,14 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="qualifier"/>
-        <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
         </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="MultiQualifier">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//MultiQualifier"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="qualified-by"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="isOneOf" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="one-of"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" feature="qualifiedName" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="qualifiedName" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value=","/>
+          <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </elements>
         </elements>
       </alternatives>
     </rules>

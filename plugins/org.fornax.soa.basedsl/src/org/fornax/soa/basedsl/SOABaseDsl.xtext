@@ -47,10 +47,7 @@ QualifiedName:
 	ID ('.' ID)*;
 	
 Qualifier: 
-	'qualifier' qualifierName=QualifiedName;
+	'qualifier' (qualifierName+=QualifiedName)(',' qualifierName+=QualifiedName)*;
 	
-MultiQualifier:
-	'qualified-by' (isOneOf?='one-of')? qualifiedName+=QualifiedName (qualifiedName+=QualifiedName)*
-;
 
 AbstractType: {AbstractType} name=ID;

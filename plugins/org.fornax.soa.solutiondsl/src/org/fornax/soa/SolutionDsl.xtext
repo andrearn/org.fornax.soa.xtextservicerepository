@@ -36,6 +36,7 @@ Solution hidden(WS):
 Module hidden (WS):
 	'module' name=ID '{'
 		'kind' kind=ModuleKind 
+		(version=Version)?
 		('requires' requires+=ServiceRef )*
 		(features+=Feature)*
 		(modules+=Module)*

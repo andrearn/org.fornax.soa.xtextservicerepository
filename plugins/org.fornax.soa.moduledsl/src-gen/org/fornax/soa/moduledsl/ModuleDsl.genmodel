@@ -52,13 +52,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/versionRef"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ImportServiceRef/modules"/>
     </genClasses>
-    <genClasses ecoreClass="ModuleDsl.ecore#//QualifiedServiceModuleRef">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//QualifiedServiceModuleRef/module"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//QualifiedServiceModuleRef/qualifier"/>
-    </genClasses>
     <genClasses ecoreClass="ModuleDsl.ecore#//ServiceModuleRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ServiceModuleRef/module"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ServiceModuleRef/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ServiceModuleRef/importQualifier"/>
     </genClasses>
     <genClasses ecoreClass="ModuleDsl.ecore#//ModuleRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//ModuleRef/module"/>
@@ -68,6 +65,10 @@
     <genClasses ecoreClass="ModuleDsl.ecore#//NamespaceRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//NamespaceRef/namespace"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//NamespaceRef/excludedServices"/>
+    </genClasses>
+    <genClasses ecoreClass="ModuleDsl.ecore#//MultiQualifierRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//MultiQualifierRef/isOneOf"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//MultiQualifierRef/qualifiedName"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>
