@@ -51,7 +51,7 @@ Provider:
 	
 ServiceBinding:
 	'bind-service' service=ServiceRef '{'
-		(qualifier=Qualifier)
+		(qualifier=Qualifier)?
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
