@@ -3,7 +3,9 @@
 */
 package org.fornax.soa.moduledsl.ui.labeling;
 
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
+import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
 
 /**
  * Provides labels for a IEObjectDescriptions and IResourceDescriptions.
@@ -23,5 +25,17 @@ public class ModuleDslDescriptionLabelProvider extends DefaultDescriptionLabelPr
       return ele.getEClass().getName() + ".gif";
     }	 
 */
+	
+	public String image (IEObjectDescription ele) {
+		if (ele.getEClass ().isSuperTypeOf (ModuleDslPackage.Literals.MODULE)) {
+			return "Module.gif";
+		} else if (ele.getEClass ().isSuperTypeOf (ModuleDslPackage.Literals.SERVICE_REF)) {
+			return "ServiceExportRef.gif";
+		} else if (ele.getEClass ().isSuperTypeOf (ModuleDslPackage.Literals.IMPORT_SERVICE_REF)) {
+			return "ImportServiceRef.gif";
+		} else {
+			return null;
+		}
+	}
 
 }

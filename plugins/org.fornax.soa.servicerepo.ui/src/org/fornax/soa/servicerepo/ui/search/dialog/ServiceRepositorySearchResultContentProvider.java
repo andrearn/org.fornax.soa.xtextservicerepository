@@ -213,23 +213,23 @@ public class ServiceRepositorySearchResultContentProvider implements ITreeConten
 										viewer.remove(rootNode);
 										break;
 									} else {
-										Iterable<IReferenceDescription> newReferenceDescriptions = delta.getNew()
-												.getReferenceDescriptions();
-										List<ServiceRepositorySearchViewTreeNode> removedReferenceNodes = Lists.newArrayList();
-										for (ServiceRepositorySearchViewTreeNode referenceNode : rootNode.getChildren()) {
-											final URI referenceSourceURI = ((IReferenceDescription) referenceNode
-													.getDescription()).getSourceEObjectUri();
-											if (Iterables.isEmpty(Iterables.filter(newReferenceDescriptions,
-													new Predicate<IReferenceDescription>() {
-														public boolean apply(IReferenceDescription input) {
-															return input.getSourceEObjectUri().equals(
-																	referenceSourceURI);
+										Iterable<IEObjectDescription> exportedEObjectDescriptions = delta.getNew()
+												.getExportedObjects ();
+										List<ServiceRepositorySearchViewTreeNode> removedEObjectNodes = Lists.newArrayList();
+										for (ServiceRepositorySearchViewTreeNode eObjectNode : rootNode.getChildren()) {
+											final URI eObjectURI = ((IEObjectDescription) eObjectNode
+													.getDescription()).getEObjectURI ();
+											if (Iterables.isEmpty(Iterables.filter(exportedEObjectDescriptions,
+													new Predicate<IEObjectDescription>() {
+														public boolean apply(IEObjectDescription input) {
+															return input.getEObjectURI ().equals(
+																	eObjectURI);
 														}
 													}))) {
-												removedReferenceNodes.add(referenceNode);
+												removedEObjectNodes.add(eObjectNode);
 											}
 										}
-										for (ServiceRepositorySearchViewTreeNode removedReferenceNode : removedReferenceNodes) {
+										for (ServiceRepositorySearchViewTreeNode removedReferenceNode : removedEObjectNodes) {
 											rootNode.removeChild(removedReferenceNode);
 										}
 										if (rootNode.getChildren().isEmpty()) {
@@ -237,7 +237,7 @@ public class ServiceRepositorySearchResultContentProvider implements ITreeConten
 											viewer.remove(rootNode);
 											break;
 										} else {
-											viewer.remove(rootNode, Iterables.toArray(removedReferenceNodes,
+											viewer.remove(rootNode, Iterables.toArray(removedEObjectNodes,
 													ServiceRepositorySearchViewTreeNode.class));
 										}
 									}
