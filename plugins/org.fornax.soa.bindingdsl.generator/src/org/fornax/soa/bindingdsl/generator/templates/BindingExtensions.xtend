@@ -48,7 +48,7 @@ class BindingExtensions {
 	def dispatch String getRegistryBaseUrl (EObject o) {}
 
 	def dispatch String getRegistryBaseUrl (DomainBinding b) {
-		b.environment.defaultRegistry?.baseUrl?.stripTrailingSlash();
+		b.environment?.defaultRegistry?.baseUrl?.stripTrailingSlash();
 	}
 	
 	def dispatch String getRegistryBaseUrl (ServiceBinding b) {
@@ -60,11 +60,11 @@ class BindingExtensions {
 	}
 	
 	def dispatch String getRegistryBaseUrl (ModuleBinding b) {
-		b.environment.defaultRegistry.baseUrl.stripTrailingSlash();
+		b.environment?.defaultRegistry?.baseUrl?.stripTrailingSlash();
 	}
 	
 	def dispatch String getRegistryBaseUrl (Environment env) {
-		env.defaultRegistry?.baseUrl?.stripTrailingSlash();
+		env?.defaultRegistry?.baseUrl?.stripTrailingSlash();
 	}
 	
 	/*

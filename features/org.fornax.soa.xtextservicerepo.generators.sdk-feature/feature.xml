@@ -57,4 +57,8 @@
          id="org.fornax.soa.solutiondsl.generator"
          version="0.0.0"/>
 
+   <includes
+         id="org.fornax.soa.xtextservicerepo.generator"
+         version="0.0.0"/>
+
 </feature>

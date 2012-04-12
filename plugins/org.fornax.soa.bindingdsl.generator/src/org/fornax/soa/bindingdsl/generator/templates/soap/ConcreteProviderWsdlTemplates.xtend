@@ -67,7 +67,7 @@ class ConcreteProviderWsdlTemplates {
 
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(svc.version)»
-				Lifecycle state: «svc.state.toString()»
+				Lifecycle state: «svc.state.name»
 				
 				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>

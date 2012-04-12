@@ -340,7 +340,8 @@ class XSDTemplates {
 			<xsd:annotation>
 				<xsd:documentation>
 					<![CDATA[
-						Version:	«versionQualifier.toVersionNumber(en.version)»
+						Version:			«versionQualifier.toVersionNumber(en.version)»
+						Lifecycle state: 	«en.state.name»
 						
 						«docProvider.getDocumentation (en)»
 					]]>
