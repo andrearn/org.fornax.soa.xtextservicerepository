@@ -34,6 +34,9 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import java.util.List
 import java.util.Set
 
+/* 
+ * Generates WSDLs and XSDs for SOAP based service endpoints 
+ */
 class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	
 	@Inject extension NamespaceSplitter

@@ -30,6 +30,7 @@ import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.servicedsl.generator.query.type.ReferencedTypesFinder
 import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.fornax.soa.profiledsl.generator.query.StateMatcher
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 class XSDTemplates {
@@ -50,6 +51,7 @@ class XSDTemplates {
 	@Inject extension LatestMatchingTypeFinder
 	@Inject extension ReferencedTypesFinder
 	@Inject extension IStateMatcher
+	@Inject extension StateMatcher
 	
 	@Inject ExceptionFinder exceptionFinder
 	
@@ -179,6 +181,10 @@ class XSDTemplates {
 		}
 	}
 
+	/*
+		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
+		that match the given minimal LifecycleState.
+	*/
 	def dispatch toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val imports = vns.importedVersionedNS(minState).filter(e|e.toNamespace() != vns.toNamespace());
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)

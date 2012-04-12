@@ -18,7 +18,7 @@ class WrappedWSDLTemplates {
 	/*
 		<b>CARTRIDGE ENTRYPOINT</b> for generation of abstract wrapped  WSDLs
 		Abstract WSDLs only define the abstract interface of a service. The binding is declared
-		in a separate WSDL that imports this abstract WSDL
+		in a separate WSDL that imports this abstract WSDL. <br/>
 		
 		A WSDL for each Service in the given SubNamespace matching the given minimal LifecycleState
 		will be generated. For each major version of a service WSDL is generated for the latest minor

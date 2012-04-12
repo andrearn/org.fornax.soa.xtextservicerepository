@@ -232,7 +232,7 @@ class NamespaceImportQueries {
 	 *	SubNamespace matching the given major version. The owning VersiondDomainNamespace of the found dependencies are returned.
 	 */
 	def dispatch Set<VersionedDomainNamespace> importedVersionedNS (SubNamespace s, String nameSpaceMajorVersion, LifecycleState minState) {
-		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (BusinessObject))
+		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion, minState).filter (typeof (BusinessObject))
 			.map (b|b.allReferencedVersionedTypes (minState)).flatten.map (e|namespaceSplitter.createVersionedDomainNamespace(e)).toSet;
 		val exByMajor = serviceFinder.allExceptionsByMajorVersion (s, nameSpaceMajorVersion);
 		imports.addAll (exByMajor.map (ex|ex.allReferencedVersionedTypes (minState)).flatten.map(e|namespaceSplitter.createVersionedDomainNamespace(e)));
@@ -255,7 +255,6 @@ class NamespaceImportQueries {
 		val exRefTypes = allEx.map (e|e.allReferencedVersionedTypes (minState)).flatten;
 		imports.addAll (exRefTypes.map(e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		imports.addAll (allEx.map (e|e.superException).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace (excFinder.findLatestMatchingException(e))));
-		imports.addAll ({namespaceSplitter.createVersionedDomainNamespace(s)});
 		return imports;
 	}
 	
@@ -266,9 +265,6 @@ class NamespaceImportQueries {
 	 */
 	def dispatch Set<VersionedDomainNamespace> importedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) {
 		var imports = new HashSet<VersionedDomainNamespace>();
-		var bos = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (BusinessObject))
-			.map (b|b.allReferencedVersionedTypes (minState)).flatten.map (e|namespaceSplitter.createVersionedDomainNamespace(e)).toSet;
-		imports.addAll (bos);
 		var serviceBos = s.allReferencedVersionedTypes (minState).map (e|namespaceSplitter.createVersionedDomainNamespace(e));
 		imports.addAll (serviceBos);
 		imports.addAll (serviceFinder.allReferencedExceptions(s).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
@@ -277,7 +273,6 @@ class NamespaceImportQueries {
 		val exRefTypes = exByMajor.map (e|e.allReferencedVersionedTypes (minState)).flatten;
 		imports.addAll (exRefTypes.map(e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		imports.addAll (exByMajor.map (e|e.superException).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace (excFinder.findLatestMatchingException(e))));
-		imports.addAll ({namespaceSplitter.createVersionedDomainNamespace(s)});
 		return imports;
 	}
 
