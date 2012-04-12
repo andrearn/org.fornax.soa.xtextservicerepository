@@ -83,7 +83,7 @@ class WrappedWsdlTemplates {
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
 			<wsdl:documentation>
 				Version «svc.version.toVersionNumber()»
-				Lifecycle state: «svc.state.toString()»
+				Lifecycle state: «svc.state.name»
 				
 				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
@@ -116,7 +116,7 @@ class WrappedWsdlTemplates {
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «svc.version.toVersionNumber()»
-				Lifecycle state: «svc.state.toString()»
+				Lifecycle state: «svc.state.name»
 				
 				«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>
@@ -203,7 +203,7 @@ class WrappedWsdlTemplates {
 		<wsdl:portType name="«svc.name»Wrapped">
 			<wsdl:documentation>
 					<![CDATA[Version:	«svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state.toString()»
+					Lifecycle state: «svc.state.name»
 										
 					«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>

@@ -90,7 +90,7 @@ class OperationWrapperTemplates {
 			<xsd:annotation>
 		   		<xsd:documentation>
 					<![CDATA[Version «service.version.toVersionNumber()»
-					Lifecycle state: «service.state.toString()»
+					Lifecycle state: «service.state.name»
 					
 					«docProvider.getDocumentation (service)»]]>
 			   	</xsd:documentation>
@@ -134,7 +134,7 @@ class OperationWrapperTemplates {
 			<xsd:annotation>
 		    	<xsd:documentation>
 					<![CDATA[Version «service.version.toVersionNumber()»
-					Lifecycle state: «service.state.toString()»
+					Lifecycle state: «service.state.name»
 					
 					«docProvider.getDocumentation (service)»]]>
 		    	</xsd:documentation>

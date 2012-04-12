@@ -90,7 +90,7 @@ class EventXSDTemplates {
 			<xsd:annotation>
 		   		<xsd:documentation>
 					<![CDATA[Version «svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state.toString()»
+					Lifecycle state: «svc.state.name»
 					
 					«docProvider.getDocumentation (svc)»]]>
 			   	</xsd:documentation>
@@ -134,7 +134,7 @@ class EventXSDTemplates {
 			<xsd:annotation>
 		    	<xsd:documentation>
 					<![CDATA[Version «svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state.toString()»
+					Lifecycle state: «svc.state.name»
 					
 					«docProvider.getDocumentation (svc)»]]>
 		    	</xsd:documentation>
