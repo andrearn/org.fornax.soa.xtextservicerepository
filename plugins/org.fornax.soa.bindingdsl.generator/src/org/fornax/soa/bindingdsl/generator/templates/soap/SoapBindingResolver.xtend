@@ -56,7 +56,7 @@ class SoapBindingResolver {
 		if (b.serviceBinding.map (svcBind|svcBind.service).contains(s)) { 
 			getPublisherEndpointAddress(s, s.getServiceBinding(b))
 		} else {
-			b.getPublishingServer().getBaseUrl()
+			b.getPublishingServer().getSOAPHttpEndpointUrl
 			+ getEndpoint (b.getContextRoot(s), b.subNamespace.findOrgNamespace(), b.subNamespace, s, b.getPublishingServer());
 	/*		+ b.subNamespace.getOrgNamespace().name.replaceAll("\\.","/") + "/" 
 			+ b.subNamespace.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
@@ -67,7 +67,7 @@ class SoapBindingResolver {
 	}	
 	
 	def dispatch String getPublisherEndpointAddress(Service s, ServiceBinding b) {
-		b.getPublishingServer().getBaseUrl()
+		b.getPublishingServer().getSOAPHttpEndpointUrl
 			+ getEndpoint (b.getContextRoot(), b.service.service.findOrgNamespace(), (b.service.service.eContainer as SubNamespace), s, b.getPublishingServer());
 		/*
 		+ b.getContextRoot() 
@@ -83,7 +83,7 @@ class SoapBindingResolver {
 		if (b.serviceBinding.map (svcBind | svcBind.service).contains (s)) {
 			getProviderEndpointAddress(s, s.getServiceBinding(b))
 		} else {
-			b.getProvidingServer().getBaseUrl()
+			b.getProvidingServer().getSOAPHttpEndpointUrl
 			+ b.getProviderContextRoot(s) 
 			+ b.subNamespace.findOrgNamespace().name.replaceAll("\\.","/") + "/" 
 			+ b.subNamespace.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
@@ -91,7 +91,7 @@ class SoapBindingResolver {
 	}
 		
 	def dispatch String getProviderEndpointAddress (Service s, ServiceBinding b) {
-		b.getProvidingServer().getBaseUrl() 
+		b.getProvidingServer().getSOAPHttpEndpointUrl
 		+ b.getProviderContextRoot() 
 		+ b.service.service.findOrgNamespace().name.replaceAll("\\.","/") + "/" 
 		+ (b.service.service.eContainer as SubNamespace).name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
@@ -138,7 +138,7 @@ class SoapBindingResolver {
 		{
 			"/" + soapBindings.head.contextRoot + "/";
 		} else {
-			"/";
+			"/"
 		}
 	}
 	
@@ -149,7 +149,7 @@ class SoapBindingResolver {
 		{
 			"/" + soapBindings.head.providerContextRoot + "/";
 		} else {
-			"/";
+			"/"
 		}
 	}
 			
@@ -160,7 +160,7 @@ class SoapBindingResolver {
 		{
 			"/" + soapBindings.head.contextRoot + "/";
 		} else {
-			"/";
+			"/"
 		}
 	}
 	
@@ -171,7 +171,7 @@ class SoapBindingResolver {
 		{
 				"/" + soapBindings.head.providerContextRoot + "/";
 		} else {
-			"/";
+			"/"
 		}
 	}
 			
@@ -204,8 +204,8 @@ class SoapBindingResolver {
 		
 	def dispatch Server getProvidingServer (Binding b) {
 		val soapBindings = b.protocol.filter ( typeof (SOAP));
-		if (soapBindings.head?.publisher?.pubServer != null) {
-			soapBindings.head?.publisher?.pubServer;
+		if (soapBindings.head?.provider?.provServer != null) {
+			soapBindings.head?.provider?.provServer;
 		} else if (b.eContainer instanceof DomainBinding) {
 			(b.eContainer as DomainBinding).environment.defaultAppServer;
 		} else if (b.eContainer instanceof ModuleBinding) {
@@ -214,8 +214,8 @@ class SoapBindingResolver {
 	}
 	def dispatch Server getProvidingServer (DomainBinding b) {
 		val soapBindings = b.protocol.filter ( typeof (SOAP));
-		if (soapBindings.head?.publisher?.pubServer != null) {
-			soapBindings.head?.publisher?.pubServer;
+		if (soapBindings.head?.provider?.provServer != null) {
+			soapBindings.head?.provider?.provServer;
 		} else {
 			b.environment.defaultAppServer;
 		}
@@ -230,13 +230,13 @@ class SoapBindingResolver {
 	}
 		
 	def dispatch String getDefaultESBEndpointAddress (Service s, DomainBinding b) {
-		(b.environment.defaultESB as ESB).baseUrl + "/" 
+		(b.environment.defaultESB as ESB).getSOAPHttpEndpointUrl + "/" 
 		+ b.subNamespace.findOrgNamespace().shorten() + "/" 
 		+ b.subNamespace.name.replaceAll("\\.","/") +"/" + s.name;
 	}
 		 
 	def dispatch String getDefaultAppServerEndpointAddress (Service s, DomainBinding b) {
-		(b.environment.defaultAppServer).baseUrl + "/" 
+		(b.environment.defaultAppServer).getSOAPHttpEndpointUrl + "/" 
 		+ b.subNamespace.findOrgNamespace().shorten() + "/" 
 		+ b.subNamespace.name.replaceAll("\\.","/") +"/" + s.name;
 	} 
@@ -244,13 +244,42 @@ class SoapBindingResolver {
 	def dispatch String toBindingName (Service s, SOAP p) {
 		s.name + p.getPortNamePostfix();
 	}
+		
+	def dispatch String toBindingName (Service s, SOAP p, String qualifierName) {
+		s.name + qualifierName + p.getPortNamePostfix();
+	}
 	
 	def dispatch String toPortName (Service s, SOAP p) {
 		s.name + p.getPortNamePostfix();
 	}
 	
+	def dispatch String toPortName (Service s, SOAP p, String qualifierName) {
+		if (qualifierName != "Public" && qualifierName != "Private")
+			s.name + qualifierName + p.getPortNamePostfix()
+		else 
+			s.toPortName(p)
+	}
+	
+	def dispatch String toPrivatePortName (Service s, SOAP p) {
+		s.name + p.getPortNamePostfix();
+	}
+	
+	def dispatch String toPrivatePortName (Service s, SOAP p, String qualifierName) {
+		if (qualifierName != "Public" && qualifierName != "Private")
+			s.name + qualifierName + p.getPortNamePostfix() + "Private"
+		else 
+			s.toPrivatePortName(p) + "Private"
+	}
+	
 	def dispatch String toScopedPortName (Service s, SOAP p) {
 		s.toPortName(p) + s.getServiceVisibilityName ();
+	}
+	
+	def dispatch String toScopedPortName (Service s, SOAP p, String qualifierName) {
+		if (qualifierName != "Public" && qualifierName != "Private")
+			s.toPortName(p) + qualifierName + s.getServiceVisibilityName ()
+		else
+			s.toScopedPortName(p)
 	}
 	
 	def private String getPortNamePostfix(SOAP p) { 
@@ -264,5 +293,23 @@ class SoapBindingResolver {
 	def dispatch String getServerEndpoint(Service s, Server server, BindingProtocol prot, Module mod) { 
 		server.getSOAPHttpEndpointUrl() + "/"
 		+ mod.getEndpoint (s.findOrgNamespace(), s.findSubdomain(), s, server);
+	}
+	
+	def dispatch String getServerEndpoint(Service s, Server server, BindingProtocol prot, DomainBinding bind) {
+		server.getSOAPHttpEndpointUrl() + "/"
+		+ bind.getEndpoint (prot, s.findOrgNamespace(), s.findSubdomain(), s, server);
+	}
+	def dispatch String getServerEndpoint(Service s, Server server, BindingProtocol prot, ServiceBinding bind) { 
+		server.getSOAPHttpEndpointUrl() + "/"
+		+ bind.getEndpoint (prot, s.findOrgNamespace(), s.findSubdomain(), s, server);
+	}
+	
+	def dispatch String getPrivateServerEndpoint(Service s, Server server, BindingProtocol prot, DomainBinding bind) {
+		server.getSOAPHttpEndpointUrl() + "/"
+		+ bind.getPrivateEndpoint (prot, s.findOrgNamespace(), s.findSubdomain(), s, server);
+	}
+	def dispatch String getPrivateServerEndpoint(Service s, Server server, BindingProtocol prot, ServiceBinding bind) { 
+		server.getSOAPHttpEndpointUrl() + "/"
+		+ bind.getPrivateEndpoint (prot, s.findOrgNamespace(), s.findSubdomain(), s, server);
 	}
 }

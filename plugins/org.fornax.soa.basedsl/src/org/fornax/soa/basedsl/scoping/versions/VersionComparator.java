@@ -72,4 +72,14 @@ public class VersionComparator {
 		return compare (resolver.getVersion(eObjDesc1), resolver.getVersion(eObjDesc2));
 	}
 
+	public static int compare (final Integer v1, final Integer v2) {
+		return compare(v1.toString(), v2.toString());
+	}
+	public static int compare (final String v1, final Integer v2) {
+		return compare(v1.toString(), v2.toString());
+	}
+	public static int compare (final Integer v1, final String v2) {
+		return compare(v1.toString(), v2.toString());
+	}
+
 }

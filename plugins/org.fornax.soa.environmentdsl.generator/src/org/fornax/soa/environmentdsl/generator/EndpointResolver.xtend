@@ -51,14 +51,20 @@ class EndpointResolver {
 	def dispatch SOAPHTTP getSOAPHttpEndpoint (Server s, Connector con) {}
 	
 	def dispatch SOAPHTTP getSOAPHttpEndpoint (AppServer s) {
-		s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e.isDefault);
+		val con = s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e.isDefault);
+		if (con == null) 
+			return s.connectors.filter (typeof (SOAPHTTP)).head;
+		return con;
 	}
 	def dispatch SOAPHTTP getSOAPHttpEndpoint (AppServer s, Connector con) {
 		s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e == con);
 	}
 	
 	def dispatch SOAPHTTP getSOAPHttpEndpoint (ESB s) {
-		s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e.isDefault);
+		val con = s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e.isDefault);
+		if (con == null) 
+			return s.connectors.filter (typeof (SOAPHTTP)).head;
+		return con;
 	}
 	def dispatch SOAPHTTP getSOAPHttpEndpoint (ESB s, Connector con) {
 		s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e == con);

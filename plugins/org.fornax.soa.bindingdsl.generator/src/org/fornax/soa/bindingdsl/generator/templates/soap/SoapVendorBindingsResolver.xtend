@@ -13,18 +13,61 @@ import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+import org.fornax.soa.environmentDsl.Broker
+import org.fornax.soa.environmentDsl.WebServer
+import org.fornax.soa.environmentDsl.SAP
+import org.fornax.soa.environmentDsl.Database
+import org.fornax.soa.environmentDsl.Registry
+import org.fornax.soa.environmentDsl.UDDIRegistry
+import org.fornax.soa.bindingDsl.DomainBinding
+import org.fornax.soa.bindingDsl.ServiceBinding
+import org.fornax.soa.bindingDsl.BindingProtocol
 
 class SoapVendorBindingsResolver {
 	
 	@Inject extension VersionQualifierExtensions
 	@Inject extension BindingExtensions
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+	@Inject ContextRootProvider ctxRootProvider
+	@Inject SoapBindingResolver soapBindRes
 	
-	def dispatch String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {}
 	
-	def dispatch String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, ESB server) {
-		if (server.serverType != null) {
-			switch (server?.serverType.toLowerCase()) {
+	def dispatch String getEndpoint (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+		val serverType = server.toServerTypeName ();
+		val ctxRoot = ctxRootProvider.getContextRoot(mod, serverType);
+		getEndpoint (ctxRoot, orgNs, subNs, s, server)
+	}
+	
+	def dispatch String getEndpoint (DomainBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+		val serverType = server.toServerTypeName ();
+		val ctxRoot = soapBindRes.getContextRoot(bind, s);
+		getEndpoint (ctxRoot, orgNs, subNs, s, server)
+	}
+	
+	def dispatch String getEndpoint (ServiceBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+		val serverType = server.toServerTypeName ();
+		val ctxRoot = soapBindRes.getContextRoot(bind);
+		getEndpoint (ctxRoot, orgNs, subNs, s, server)
+	}
+	
+	
+	def dispatch String getPrivateEndpoint (DomainBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+		val serverType = server.toServerTypeName ();
+		val ctxRoot = soapBindRes.getProviderContextRoot(bind, s);
+		getEndpoint (ctxRoot, orgNs, subNs, s, server)
+	}
+	
+	def dispatch String getPrivateEndpoint (ServiceBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+		val serverType = server.toServerTypeName ();
+		val ctxRoot = soapBindRes.getProviderContextRoot(bind);
+		getEndpoint (ctxRoot, orgNs, subNs, s, server)
+	}
+	
+	
+	def dispatch String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+		val serverType = server.toServerTypeName ();
+		if (serverType != null) {
+			switch (serverType.toLowerCase()) {
 			case "tomcat": 			tomcatEndpoint (ctxRoot, orgNs, subNs, s, server)
 			case "websphere":		websphereSCAEndpoint (ctxRoot, orgNs, subNs, s, server)
 			case "webmethods":		webmethodsEndpoint (ctxRoot, orgNs, subNs, s, server)
@@ -45,97 +88,17 @@ class SoapVendorBindingsResolver {
 		}
 	}
 	
-	def dispatch String getEndpoint (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, AppServer server) {
-		if (server.serverType != null) {
-			switch (server.serverType.toLowerCase()) {
-			case "tomcat": 			tomcatEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "websphere":		websphereEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "webmethods":		webmethodsEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "oraclesb":		oraclesbEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "weblogic":		weblogicEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "aqualogic":		aqualogicEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "sappi":			sappiEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "sapce":			sapceEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "sapnetweaver":	sapnetweaverEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "jboss":			jbossEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "jbossesb":		jbossesbEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "mule":			muleEndpoint (ctxRoot, orgNs, subNs, s, server)
-			case "fuseesb":			fuseesbEndpoint (ctxRoot, orgNs, subNs, s, server)
-			default: 				defaultPatternEndpoint (ctxRoot, orgNs, subNs, s, server)
-			}
-		} else {
-			defaultPatternEndpoint (ctxRoot, orgNs, subNs, s, server);
-		}
-	}
-	
-	def dispatch String getEndpoint (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {}
-	
-	def dispatch String getEndpoint (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, AppServer server) {
-		if (server.serverType != null) {
-			switch (server.serverType.toLowerCase()) {
-			case "tomcat": 			tomcatEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "websphere":		websphereEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "webmethods":		webmethodsEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "oraclesb":		oraclesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "weblogic":		weblogicEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "aqualogic":		aqualogicEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "sappi":			sappiEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "sapce":			sapceEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "sapnetweaver":	sapnetweaverEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "jboss":			jbossEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "jbossesb":		jbossesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "mule":			muleEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "fuseesb":			fuseesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			default: 				defaultPatternEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			}
-		} else {
-			defaultPatternEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server);
-		}
-	}
-		
-	def dispatch String getEndpoint (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, ESB server) {
-		if (server.serverType != null) {
-			switch (server.serverType.toLowerCase()) {
-			case "tomcat": 			tomcatEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "websphere":		websphereSCAEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "webmethods":		webmethodsEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "oraclesb":		oraclesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "weblogic":		weblogicEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "aqualogic":		aqualogicEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "sappi":			sappiEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "sapce":			sapceEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "sapnetweaver":	sapnetweaverEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "jboss":			jbossEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "jbossesb":		jbossesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "mule":			muleEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "fuseesb":			fuseesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			default: 				defaultPatternEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			}
-		} else {
-			defaultPatternEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server);
-		}
-	}
-	
-	def dispatch String getEndpoint (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, ProcessServer server) {
-		if (server.serverType != null) {
-			switch (server.serverType.toLowerCase()) {
-			case "tomcat": 			tomcatEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "websphere":		websphereSCAEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "webmethods":		webmethodsEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "oraclesb":		oraclesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "weblogic":		weblogicEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "aqualogic":		aqualogicEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "sappi":			sappiEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "sapce":			sapceEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "sapnetweaver":	sapnetweaverEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "jboss":			jbossEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "jbossesb":		jbossesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "mule":			muleEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			case "fuseesb":			fuseesbEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			default: 				defaultPatternEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server)
-			}
-		} else {
-			defaultPatternEndpoint (mod.getCtxRootByAssemblyType (server.serverType), orgNs, subNs, s, server);
+	def String toServerTypeName (Server s) {
+		switch (s) {
+			AppServer: 		(s as AppServer).serverType
+			ESB:			(s as ESB).serverType
+			ProcessServer:	(s as ProcessServer).serverType
+			Broker:			(s as Broker).serverType
+			WebServer:		(s as WebServer).serverType
+			SAP:			"saperp"
+			Database:		(s as Database).serverType
+			Registry:		(s as Registry).serverType
+			default: null
 		}
 	}
 		
@@ -229,12 +192,4 @@ class SoapVendorBindingsResolver {
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-		
-	def String getCtxRootByAssemblyType (Module mod, String serverType) {
-		switch (mod.assemblyType) {
-			case AssemblyType::SCA_EAR: mod.name + "Web/sca/"
-			case AssemblyType::WEB_METHODS: ""
-			default: mod.name + "/"
-		}
-	}
 }

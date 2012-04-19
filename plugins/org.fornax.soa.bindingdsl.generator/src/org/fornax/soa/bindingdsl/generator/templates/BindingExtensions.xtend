@@ -29,6 +29,7 @@ import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import java.util.Set
 import org.fornax.soa.servicedsl.generator.query.ServiceFinder
+import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
 
 class BindingExtensions {
 	
@@ -37,6 +38,7 @@ class BindingExtensions {
 	@Inject extension LifecycleQueries
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IStateMatcher stateMatcher
+	@Inject BoundServiceLookup boundSvcLookup
 	
 	@Inject @Named ("generatePrivateWsdlForProviderHost") 
 	Boolean generatePrivateWsdlForProviderHost
@@ -182,5 +184,24 @@ class BindingExtensions {
 		
 	def dispatch boolean isEligibleForEnvironment (Service s, Environment env) {
 		stateMatcher.matches (env.getMinLifecycleState(s, s.state.eContainer as Lifecycle), s.state);
+	}
+	
+	def getPublicEndpointQualifier (ModuleBinding bind, Service svc) {
+		val moduleQualifier = bind.module.module.qualifiers
+		val boundSvcQualifier = bind.module?.module?.providedServices?.findFirst(provSvc | provSvc.service==svc)?.qualifiers
+		if (boundSvcQualifier != null)
+			return boundSvcQualifier.qualifierName.head.replaceAll("\\.","_")
+		if (moduleQualifier != null)
+			return moduleQualifier.qualifierName.head.replaceAll("\\.","_")
+		return "Public"
+	}
+	def getPrivateEndpointQualifier (ModuleBinding bind, Service svc) {
+		val moduleQualifier = bind.module.module.qualifiers
+		val boundSvcQualifier = bind.module?.module?.providedServices?.findFirst(provSvc | provSvc.service==svc)?.qualifiers
+		if (boundSvcQualifier != null)
+			return boundSvcQualifier.qualifierName.head.replaceAll("\\.","_")
+		if (moduleQualifier != null)
+			return moduleQualifier.qualifierName.head.replaceAll("\\.","_")
+		return "Private"
 	}
 }

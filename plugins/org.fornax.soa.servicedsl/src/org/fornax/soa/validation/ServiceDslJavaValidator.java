@@ -46,7 +46,8 @@ import com.google.inject.Inject;
 
 @PluggableChecks(validators = {
 		org.fornax.soa.validation.GovernanceApprovalValidator.class,
-		org.fornax.soa.validation.LifecycleStatefulReferenceValidator.class })
+		org.fornax.soa.validation.LifecycleStatefulReferenceValidator.class,
+		org.fornax.soa.validation.ServiceDslVersionPolicyValidator.class})
 public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	
 	@Inject
