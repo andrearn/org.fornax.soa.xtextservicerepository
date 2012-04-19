@@ -43,6 +43,7 @@ class ConcreteWsdlTemplates {
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension LatestMatchingTypeFinder
+	@Inject extension SoapEndpointAddressResolver
 
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IEObjectDocumentationProvider docProvider
@@ -205,7 +206,7 @@ class ConcreteWsdlTemplates {
 		<wsdl:service name="«svc.name»">
 			<wsdl:port binding="tns:«svc.toBindingName (protocol)»"
 				name="«svc.toScopedPortName (protocol)»">
-				<soap:address location="«svc.getPublisherEndpointAddress (protocol.eContainer)»" />
+				<soap:address location="«svc.toEndpointAddress (protocol.eContainer)»" />
 			</wsdl:port>
 		</wsdl:service>
 	'''
@@ -214,7 +215,7 @@ class ConcreteWsdlTemplates {
 		<wsdl:service name="«svc.name»">
 			<wsdl:port binding="tns:«svc.toBindingName (protocol, qualifierName)»"
 				name="«svc.toScopedPortName (protocol, qualifierName)»">
-				<soap:address location="«svc.getPublisherEndpointAddress (protocol.eContainer)»" />
+				<soap:address location="«svc.toEndpointAddress (protocol.eContainer)»" />
 			</wsdl:port>
 		</wsdl:service>
 	'''
@@ -225,7 +226,7 @@ class ConcreteWsdlTemplates {
 		<wsdl:service name="«svc.name»">
 			<wsdl:port binding="tns:«svc.toBindingName (protocol, bind.getPublicEndpointQualifier (svc))»"
 				name="«svc.toScopedPortName (protocol, bind.getPublicEndpointQualifier (svc))»">
-				<soap:address location="«svc.getServerEndpoint (server, protocol, bind.module.module)»" />
+				<soap:address location="«svc.toEndpointAddress (server, protocol, bind.module.module)»" />
 			</wsdl:port>
 		</wsdl:service>
 	'''

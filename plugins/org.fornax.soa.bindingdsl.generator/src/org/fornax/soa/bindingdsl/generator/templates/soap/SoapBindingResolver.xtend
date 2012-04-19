@@ -48,54 +48,7 @@ class SoapBindingResolver {
 	}
 		
 		
-	def dispatch String getPublisherEndpointAddress (Service s, EObject b) {
 		
-	}
-	
-	def dispatch String getPublisherEndpointAddress (Service s, DomainBinding b) {
-		if (b.serviceBinding.map (svcBind|svcBind.service).contains(s)) { 
-			getPublisherEndpointAddress(s, s.getServiceBinding(b))
-		} else {
-			b.getPublishingServer().getSOAPHttpEndpointUrl
-			+ getEndpoint (b.getContextRoot(s), b.subNamespace.findOrgNamespace(), b.subNamespace, s, b.getPublishingServer());
-	/*		+ b.subNamespace.getOrgNamespace().name.replaceAll("\\.","/") + "/" 
-			+ b.subNamespace.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
-	*/
-	
-		}
-	
-	}	
-	
-	def dispatch String getPublisherEndpointAddress(Service s, ServiceBinding b) {
-		b.getPublishingServer().getSOAPHttpEndpointUrl
-			+ getEndpoint (b.getContextRoot(), b.service.service.findOrgNamespace(), (b.service.service.eContainer as SubNamespace), s, b.getPublishingServer());
-		/*
-		+ b.getContextRoot() 
-		+ b.service.service.getOrgNamespace().name.replaceAll("\\.","/") + "/" 
-		+ ((SubNamespace)b.service.service.eContainer).name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
-	*/
-	}
-	
-	def dispatch String getProviderEndpointAddress(Service s, EObject b) {
-	}
-	
-	def dispatch String getProviderEndpointAddress(Service s, DomainBinding b) {
-		if (b.serviceBinding.map (svcBind | svcBind.service).contains (s)) {
-			getProviderEndpointAddress(s, s.getServiceBinding(b))
-		} else {
-			b.getProvidingServer().getSOAPHttpEndpointUrl
-			+ b.getProviderContextRoot(s) 
-			+ b.subNamespace.findOrgNamespace().name.replaceAll("\\.","/") + "/" 
-			+ b.subNamespace.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
-		}
-	}
-		
-	def dispatch String getProviderEndpointAddress (Service s, ServiceBinding b) {
-		b.getProvidingServer().getSOAPHttpEndpointUrl
-		+ b.getProviderContextRoot() 
-		+ b.service.service.findOrgNamespace().name.replaceAll("\\.","/") + "/" 
-		+ (b.service.service.eContainer as SubNamespace).name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
-	}
 	
 	def dispatch ServiceBinding getServiceBinding (Service s, DomainBinding b) {
 		b.serviceBinding.findFirst(e|e.service.service == s);
@@ -288,28 +241,5 @@ class SoapBindingResolver {
 		case SOAPStyle::RPCENC: "SOAPRPCEnc"
 		default : "SOAP"	
 		}
-	}
-		
-	def dispatch String getServerEndpoint(Service s, Server server, BindingProtocol prot, Module mod) { 
-		server.getSOAPHttpEndpointUrl() + "/"
-		+ mod.getEndpoint (s.findOrgNamespace(), s.findSubdomain(), s, server);
-	}
-	
-	def dispatch String getServerEndpoint(Service s, Server server, BindingProtocol prot, DomainBinding bind) {
-		server.getSOAPHttpEndpointUrl() + "/"
-		+ bind.getEndpoint (prot, s.findOrgNamespace(), s.findSubdomain(), s, server);
-	}
-	def dispatch String getServerEndpoint(Service s, Server server, BindingProtocol prot, ServiceBinding bind) { 
-		server.getSOAPHttpEndpointUrl() + "/"
-		+ bind.getEndpoint (prot, s.findOrgNamespace(), s.findSubdomain(), s, server);
-	}
-	
-	def dispatch String getPrivateServerEndpoint(Service s, Server server, BindingProtocol prot, DomainBinding bind) {
-		server.getSOAPHttpEndpointUrl() + "/"
-		+ bind.getPrivateEndpoint (prot, s.findOrgNamespace(), s.findSubdomain(), s, server);
-	}
-	def dispatch String getPrivateServerEndpoint(Service s, Server server, BindingProtocol prot, ServiceBinding bind) { 
-		server.getSOAPHttpEndpointUrl() + "/"
-		+ bind.getPrivateEndpoint (prot, s.findOrgNamespace(), s.findSubdomain(), s, server);
 	}
 }

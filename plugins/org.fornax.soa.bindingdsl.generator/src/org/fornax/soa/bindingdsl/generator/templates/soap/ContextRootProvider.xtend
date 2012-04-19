@@ -6,7 +6,7 @@ import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
 class ContextRootProvider {
 	
 	def String getContextRoot (Module mod, String serverTypeName ) {
-		mod.getCtxRootByAssemblyType (serverTypeName)
+		"/" + mod.getCtxRootByAssemblyType (serverTypeName)
 	}
 		
 	def String getCtxRootByAssemblyType (Module mod, String serverType) {

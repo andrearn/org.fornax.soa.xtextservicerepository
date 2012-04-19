@@ -33,10 +33,11 @@ class ConcreteProviderWsdlTemplates {
 	@Inject extension EndpointResolver
 	@Inject extension ServiceFinder
 	@Inject extension SoapBindingResolver
-	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+	@Inject extension SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension LatestMatchingTypeFinder
+	@Inject extension SoapEndpointAddressResolver
 	@Inject IStateMatcher stateMatcher
 	
 	@Inject VersionQualifierExtensions versionQualifier
@@ -183,7 +184,7 @@ class ConcreteProviderWsdlTemplates {
 		<wsdl:service name="«svc.name»">
 			<wsdl:port binding="tns:«svc.toBindingName (protocol)»"
 				name="«svc.toPortName (protocol)»">
-				<soap:address location="«svc.getProviderEndpointAddress (protocol.eContainer)»" />
+				<soap:address location="«svc.toProviderEndpointAddress (protocol.eContainer)»" />
 			</wsdl:port>
 		</wsdl:service>
 	'''
@@ -192,7 +193,7 @@ class ConcreteProviderWsdlTemplates {
 		<wsdl:service name="«svc.name»">
 			<wsdl:port binding="tns:«svc.toBindingName (protocol, qualifierName)»"
 				name="«svc.toPortName (protocol, qualifierName)»">
-				<soap:address location="«svc.getProviderEndpointAddress (protocol.eContainer)»" />
+				<soap:address location="«svc.toProviderEndpointAddress (protocol.eContainer)»" />
 			</wsdl:port>
 		</wsdl:service>
 	'''
@@ -203,7 +204,7 @@ class ConcreteProviderWsdlTemplates {
 		<wsdl:service name="«svc.name»">
 			<wsdl:port binding="tns:«svc.toBindingName (protocol, bind.getPrivateEndpointQualifier(svc))»"
 				name="«svc.toPrivatePortName (protocol, bind.getPrivateEndpointQualifier(svc))»">
-				<soap:address location="«svc.getServerEndpoint (server, protocol, bind.module.module)»" />
+				<soap:address location="«svc.toEndpointAddress (server, protocol, bind.module.module)»" />
 			</wsdl:port>
 		</wsdl:service>
 	'''
