@@ -1,12 +1,19 @@
 package org.fornax.soa.environmentdsl.generator
 
-import org.fornax.soa.environmentDsl.Server
-import org.fornax.soa.environmentDsl.SOAPHTTP
-import org.fornax.soa.environmentDsl.ESB
 import org.fornax.soa.environmentDsl.AppServer
+import org.fornax.soa.environmentDsl.Broker
 import org.fornax.soa.environmentDsl.Connector
+import org.fornax.soa.environmentDsl.ESB
+import org.fornax.soa.environmentDsl.ProcessServer
+import org.fornax.soa.environmentDsl.SOAPHTTP
+import org.fornax.soa.environmentDsl.Server
+import org.fornax.soa.environmentDsl.WebServer
+import com.google.inject.Inject
+import java.util.logging.Logger
 
 class EndpointResolver {
+	
+	@Inject Logger log
 	
 	def dispatch String getSOAPHttpEndpointUrl (Server s) {
 		if (s.getSOAPHttpEndpoint() != null) {
@@ -18,11 +25,11 @@ class EndpointResolver {
 		}
 	}
 	def dispatch String getSOAPHttpEndpointUrl (Server s, Connector con) {
-		if (s.getSOAPHttpEndpoint() != null) {
-			if (s.getSOAPHttpEndpoint().contextRoot != null) {
-				("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString() + s.getSOAPHttpEndpoint().contextRoot)
+		if (s.getSOAPHttpEndpoint(con) != null) {
+			if (s.getSOAPHttpEndpoint(con).contextRoot != null) {
+				("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint(con).port.toString() + s.getSOAPHttpEndpoint(con).contextRoot)
 			} else {
-				("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString())
+				("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint(con).port.toString())
 			}
 		}
 	}
@@ -39,10 +46,10 @@ class EndpointResolver {
 			
 	def dispatch String getSecuredSOAPHttpEndpointUrl (Server s, Connector con) {
 		if (s.getSOAPHttpEndpoint() != null) {
-			if (s.getSOAPHttpEndpoint().contextRoot != null) { 
-				("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString() + s.getSOAPHttpEndpoint().contextRoot)
+			if (s.getSOAPHttpEndpoint(con).contextRoot != null) { 
+				("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint(con).port.toString() + s.getSOAPHttpEndpoint(con).contextRoot)
 			} else {
-				("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString())
+				("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint(con).port.toString())
 			}
 		}
 	}
@@ -68,6 +75,22 @@ class EndpointResolver {
 	}
 	def dispatch SOAPHTTP getSOAPHttpEndpoint (ESB s, Connector con) {
 		s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e == con);
+	}
+	
+	def getConnectors (Server server) {
+		if (server == null)
+			throw new IllegalArgumentException("Server may not be null");
+		switch (server) {
+			AppServer:		(server as AppServer).connectors
+			Broker:			(server as Broker).connectors
+			ESB:			(server as ESB).connectors
+			ProcessServer:	(server as ProcessServer).connectors
+			WebServer:		(server as WebServer).connectors
+			default:		{
+				log.severe ("Server " + server.name + " of type " + server.eClass.name + " dos not support connectors.")
+				throw new ServerNotConnectableException()
+			}
+		}
 	}
 		
 }

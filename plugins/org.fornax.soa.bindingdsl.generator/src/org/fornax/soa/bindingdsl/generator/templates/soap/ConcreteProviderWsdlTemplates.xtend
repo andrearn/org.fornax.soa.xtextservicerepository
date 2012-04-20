@@ -204,7 +204,7 @@ class ConcreteProviderWsdlTemplates {
 		<wsdl:service name="«svc.name»">
 			<wsdl:port binding="tns:«svc.toBindingName (protocol, bind.getPrivateEndpointQualifier(svc))»"
 				name="«svc.toPrivatePortName (protocol, bind.getPrivateEndpointQualifier(svc))»">
-				<soap:address location="«svc.toEndpointAddress (server, protocol, bind.module.module)»" />
+				<soap:address location="«svc.toProviderEndpointAddress (server, protocol, bind.module.module)»" />
 			</wsdl:port>
 		</wsdl:service>
 	'''
