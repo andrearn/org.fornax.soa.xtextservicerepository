@@ -39,6 +39,7 @@ Export-Package: org.fornax.soa,
  org.fornax.soa.servicedsl,
  org.fornax.soa.servicedsl.search.predicate,
  org.fornax.soa.servicedsl.util,
+ org.fornax.soa.servicedsl.validation.version,
  org.fornax.soa.services,
  org.fornax.soa.util,
  org.fornax.soa.validation

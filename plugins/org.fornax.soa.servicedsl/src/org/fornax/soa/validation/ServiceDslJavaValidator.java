@@ -37,6 +37,10 @@ import org.fornax.soa.serviceDsl.TypeRef;
 import org.fornax.soa.serviceDsl.VISIBILITY;
 import org.fornax.soa.serviceDsl.VersionedType;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
+import org.fornax.soa.servicedsl.validation.version.BusinessObjectVersionValidator;
+import org.fornax.soa.servicedsl.validation.version.EnumerationVersionValidator;
+import org.fornax.soa.servicedsl.validation.version.ExceptionVersionValidator;
+import org.fornax.soa.servicedsl.validation.version.ServiceVersionValidator;
 import org.fornax.soa.util.ReferencedStateChecker;
 
 import com.google.common.base.Predicate;
@@ -44,10 +48,14 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
-@PluggableChecks(validators = {
-		org.fornax.soa.validation.GovernanceApprovalValidator.class,
-		org.fornax.soa.validation.LifecycleStatefulReferenceValidator.class,
-		org.fornax.soa.validation.ServiceDslVersionPolicyValidator.class})
+@PluggableChecks (validators = {
+		GovernanceApprovalValidator.class,
+		LifecycleStatefulReferenceValidator.class,
+		ServiceVersionValidator.class,
+		BusinessObjectVersionValidator.class,
+		EnumerationVersionValidator.class,
+		ExceptionVersionValidator.class
+		})
 public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	
 	@Inject
