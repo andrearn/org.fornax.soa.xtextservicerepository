@@ -36,7 +36,7 @@ public class EnumerationVersionValidator extends AbstractServiceDslVersionValida
 
 
 	@Check
-	public void checkEnumCompatibility (final Enumeration enumeration) {
+	public void checkEnumBackwardCompatibility (final Enumeration enumeration) {
 		QualifiedName enumName = nameProvider.getFullyQualifiedName (enumeration);
 		final Resource res = enumeration.eResource ();
 		IEObjectDescription nextLesserVersion = getNextLesserVersion (enumName.toString (), enumeration.getVersion ().getVersion (), enumeration.eClass ().getName ());
@@ -64,8 +64,9 @@ public class EnumerationVersionValidator extends AbstractServiceDslVersionValida
 			}
 		}
 	}
+	
 	@Check
-	public void checkPropertyCompatibility (final EnumLiteral literal) {
+	public void checkPropertyBackwardCompatibility (final EnumLiteral literal) {
 		Enumeration en = (Enumeration)literal.eContainer ();
 		QualifiedName enumName = nameProvider.getFullyQualifiedName (en);
 		final Resource res = en.eResource ();
@@ -82,33 +83,33 @@ public class EnumerationVersionValidator extends AbstractServiceDslVersionValida
 					EList<EnumLiteral> enumLiterals = en.getLiterals ();
 					EList<EnumLiteral> otherEnumLiterals = otherEnum.getLiterals ();
 					int enumLiteralIdx = enumLiterals.indexOf (literal);
-					int highestPrevEnumKnownLiteralIdx = -1;
-					highestPrevEnumKnownLiteralIdx = updateHighestPrevPropIndex (enumLiterals, otherEnumLiterals, highestPrevEnumKnownLiteralIdx);
-					EnumLiteral otherEnumLiteral = null;
-					int otherEnumLiteralIdx = -1;
-					boolean otherHasLiteral = Iterables.any (otherEnumLiterals, new Predicate<EnumLiteral>() {
 
-						public boolean apply (EnumLiteral input) {
-							return input.getName ().equals (literal.getName ());
-						}
-						
-					});
-					if (otherHasLiteral) {
-						otherEnumLiteral = Iterables.find (otherEnumLiterals, new Predicate<EnumLiteral>() {
-
-							public boolean apply (EnumLiteral input) {
-								return input.getName ().equals (literal.getName ());
-							}
-							
-						});
-						otherEnumLiteralIdx = otherEnumLiterals.indexOf (otherEnumLiteral);
-					}
-						
-					Set<VersionedObjectFeatureConflicts> conflicts = compareLiterals (enumLiteralIdx, literal, enumLiterals, otherEnumLiteralIdx, otherEnumLiteral, otherEnumLiterals, highestPrevEnumKnownLiteralIdx);
-					notifyLiteralVersionConflicts (literal, conflicts);
+					checkEnumLiterals (literal, enumLiterals,
+							otherEnumLiterals, enumLiteralIdx);
 				}
 			}
 		}		
+	}
+	
+	private void checkEnumLiterals (final EnumLiteral literal,
+			EList<EnumLiteral> enumLiterals,
+			EList<EnumLiteral> otherEnumLiterals, int enumLiteralIdx) {
+
+		EnumLiteral otherEnumLiteral = null;
+		int otherEnumLiteralIdx = -1;
+
+		for (int i=0; i<otherEnumLiterals.size (); i++) {
+			EnumLiteral enumLit = otherEnumLiterals.get (i);
+			if (enumLit.getName ().equals (literal.getName ())) {
+				otherEnumLiteral = enumLit;
+				otherEnumLiteralIdx = i;
+			}
+		}
+		int highestPrevEnumKnownLiteralIdx = -1;
+		highestPrevEnumKnownLiteralIdx = updateHighestPrevPropIndex (enumLiterals, otherEnumLiterals, highestPrevEnumKnownLiteralIdx);
+			
+		Set<VersionedObjectFeatureConflicts> conflicts = compareLiterals (enumLiteralIdx, literal, enumLiterals, otherEnumLiteralIdx, otherEnumLiteral, otherEnumLiterals, highestPrevEnumKnownLiteralIdx);
+		notifyLiteralVersionConflicts (literal, conflicts);
 	}
 	
 	private Set<VersionedObjectFeatureConflicts> compareLiterals (int curEnumLitIdx, final EnumLiteral curLiteral, final List<EnumLiteral> curEnumLitarals, int otherEnumLitIdx, final EnumLiteral lesserEnumLiteral, final List<EnumLiteral> lesserEnumLiterals, int highestPrevBOKnownPropertyIdx) {

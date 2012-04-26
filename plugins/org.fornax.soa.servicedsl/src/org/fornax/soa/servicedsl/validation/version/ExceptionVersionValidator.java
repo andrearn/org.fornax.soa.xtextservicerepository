@@ -32,7 +32,7 @@ public class ExceptionVersionValidator extends AbstractServiceDslVersionValidato
 	@Inject TypeRefMatcher typeRefMatcher;	
 	
 	@Check
-	public void compatibleExceptionMinorVersions (final org.fornax.soa.serviceDsl.Exception ex) {
+	public void checkExceptionBackwardCompatibility (final org.fornax.soa.serviceDsl.Exception ex) {
 		QualifiedName exName = nameProvider.getFullyQualifiedName (ex);
 		final Resource res = ex.eResource ();
 		IEObjectDescription nextLesserVersion = getNextLesserVersion (exName.toString (), ex.getVersion ().getVersion (), ex.eClass ().getName ());
@@ -70,7 +70,7 @@ public class ExceptionVersionValidator extends AbstractServiceDslVersionValidato
 
 	
 	@Check
-	public void checkExceptionPropertyCompatibility (final SimpleAttribute prop) {
+	public void checkExceptionPropertyBackwardCompatibility (final SimpleAttribute prop) {
 		org.fornax.soa.serviceDsl.Exception exc = (org.fornax.soa.serviceDsl.Exception)prop.eContainer ();
 		QualifiedName boName = nameProvider.getFullyQualifiedName (exc);
 		final Resource res = exc.eResource ();
@@ -87,37 +87,37 @@ public class ExceptionVersionValidator extends AbstractServiceDslVersionValidato
 					EList<SimpleAttribute> exProps = exc.getProperties ();
 					EList<SimpleAttribute> otherExProps = otherBo.getProperties ();
 					int exPropIdx = exProps.indexOf (prop);
-					int highestPrevBOKnownPropertyIdx = -1;
-					highestPrevBOKnownPropertyIdx = updateHighestPrevAttrIndex (exProps, otherExProps, highestPrevBOKnownPropertyIdx);
-					SimpleAttribute otherExProp = null;
-					int otherExPropIdx = -1;
-					boolean otherHasProp = Iterables.any (otherExProps, new Predicate<SimpleAttribute>() {
-
-						public boolean apply (SimpleAttribute input) {
-							return input.getName ().equals (prop.getName ());
-						}
-						
-					});
-					if (otherHasProp) {
-						otherExProp = Iterables.find (otherExProps, new Predicate<SimpleAttribute>() {
-
-							public boolean apply (SimpleAttribute input) {
-								return input.getName ().equals (prop.getName ());
-							}
-							
-						});
-						otherExPropIdx = otherExProps.indexOf (otherExProp);
-					}
-						
-					Set<VersionedObjectFeatureConflicts> conflicts = compareAttributes (exPropIdx, prop, exProps, otherExPropIdx, otherExProp, otherExProps, highestPrevBOKnownPropertyIdx);
-					notifySimpleAttrVersionConflicts (prop, conflicts);
+					
+					checkExceptionAttributes (prop, exProps, otherExProps,
+							exPropIdx);
 				}
 			}
 		}		
 	}
 
+
+	private void checkExceptionAttributes (final SimpleAttribute prop,
+			EList<SimpleAttribute> exProps,
+			EList<SimpleAttribute> otherExProps, int exPropIdx) {
+		SimpleAttribute otherExProp = null;
+		int otherExPropIdx = -1;
+		
+		for (int i = 0; i < otherExProps.size (); i++) {
+			SimpleAttribute attr = otherExProps.get (i);
+			if (attr.getName ().equals (prop.getName ())) {
+				otherExProp = attr;
+				otherExPropIdx = i;
+			}
+		}
+		int highestPrevBOKnownPropertyIdx = -1;
+		highestPrevBOKnownPropertyIdx = updateHighestPrevAttrIndex (exProps, otherExProps, highestPrevBOKnownPropertyIdx);
+			
+		Set<VersionedObjectFeatureConflicts> conflicts = compareAttributes (exPropIdx, prop, exProps, otherExPropIdx, otherExProp, otherExProps, highestPrevBOKnownPropertyIdx);
+		notifySimpleAttrVersionConflicts (prop, conflicts);
+	}
+
 	
-	private Set<VersionedObjectFeatureConflicts> compareAttributes (int indexOfProp1, final SimpleAttribute prop1, final List<SimpleAttribute> boProps, int otherBoPropIdx, final SimpleAttribute prop2, final List<SimpleAttribute> otherBOProps, int highestPrevBOKnownPropertyIdx) {
+	protected Set<VersionedObjectFeatureConflicts> compareAttributes (int indexOfProp1, final SimpleAttribute prop1, final List<SimpleAttribute> boProps, int otherBoPropIdx, final SimpleAttribute prop2, final List<SimpleAttribute> otherBOProps, int highestPrevBOKnownPropertyIdx) {
 		Set<VersionedObjectFeatureConflicts> conflicts = new HashSet<VersionedObjectFeatureConflicts>();
 		if (prop2 != null) {
 			if (indexOfProp1 != otherBoPropIdx) {
@@ -147,21 +147,55 @@ public class ExceptionVersionValidator extends AbstractServiceDslVersionValidato
 		org.fornax.soa.serviceDsl.Exception exc = (org.fornax.soa.serviceDsl.Exception) attr.eContainer ();
 		for (VersionedObjectFeatureConflicts conflict : conflicts) {
 			if (conflict.equals (VersionedObjectFeatureConflicts.NAME_CONFLICT)) {
-				error ("The property " + attr.getName () + " has a different name than the property in the same position of the previous version of the Exception type.  This is an incompatible change.", ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME );
-			} else if (conflict.equals (VersionedObjectFeatureConflicts.OUT_OF_ORDER_FEATURE)) {
-				warning ("The property " + attr.getName () + " appears in a different order than in the previous version of the Exception type. This is an incompatible change and will not work in many cases.", ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME );
-			} else if (conflict.equals (VersionedObjectFeatureConflicts.WRONG_MULTIPLICITY)) {
-				error ("The property " + attr.getName () + " has a different multiplicity than the property in the previous version of the Exception type. This is an incompatible change.", ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME );
-			} else if (conflict.equals (VersionedObjectFeatureConflicts.WRONG_TYPE)) {
-				error ("The property " + attr.getName () + " has a different type than the property in the previous version of the Exception type. This is an incompatible change.", ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME );
-			} else if (conflict.equals (VersionedObjectFeatureConflicts.WRONG_TYPE_VERSION_RANGE)) {
-				error ("The property " + attr.getName () + " has the same type but a version constraint that can not satisfy the version constraint of the property's  type in the previous version of the Exception type. This is an incompatible change.", ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME );
-			} else if (conflict.equals (VersionedObjectFeatureConflicts.NEW_FEATURE_IN_WRONG_POSITION)) {
-				warning ("The property " + attr.getName () + " is a new property, but does not appear after the properties defined in the previous version. This is an incompatible change and will not work in many cases.", ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME );
-			} else if (conflict.equals (VersionedObjectFeatureConflicts.NEW_FEATURE_FROM_OTHER_NAMESPACE)) {
-				warning ("The property " + attr.getName () + " uses a type defined in a different namespace or with a defferent major version. Validating consumers might consider it an incompatible change.", ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME );
-			} else if (conflict.equals (VersionedObjectFeatureConflicts.NEW_FEATURE_MANDATORY)) {
-				error ("The property " + attr.getName () + " is a new property in this version, but is not optional. This is an incompatible change.", ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME );
+				error ("The property "
+						+ attr.getName ()
+						+ " has a different name than the property in the same position of the previous version of the Exception type.  This is an incompatible change.",
+						ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME);
+			} else if (conflict
+					.equals (VersionedObjectFeatureConflicts.OUT_OF_ORDER_FEATURE)) {
+				warning (
+						"The property "
+								+ attr.getName ()
+								+ " appears in a different order than in the previous version of the Exception type. This is an incompatible change and will not work in many cases.",
+						ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME);
+			} else if (conflict
+					.equals (VersionedObjectFeatureConflicts.WRONG_MULTIPLICITY)) {
+				error ("The property "
+						+ attr.getName ()
+						+ " has a different multiplicity than the property in the previous version of the Exception type. This is an incompatible change.",
+						ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME);
+			} else if (conflict
+					.equals (VersionedObjectFeatureConflicts.WRONG_TYPE)) {
+				error ("The property "
+						+ attr.getName ()
+						+ " has a different type than the property in the previous version of the Exception type. This is an incompatible change.",
+						ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME);
+			} else if (conflict
+					.equals (VersionedObjectFeatureConflicts.WRONG_TYPE_VERSION_RANGE)) {
+				error ("The property "
+						+ attr.getName ()
+						+ " has the same type but a version constraint that can not satisfy the version constraint of the property's  type in the previous version of the Exception type. This is an incompatible change.",
+						ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME);
+			} else if (conflict
+					.equals (VersionedObjectFeatureConflicts.NEW_FEATURE_IN_WRONG_POSITION)) {
+				warning (
+						"The property "
+								+ attr.getName ()
+								+ " is a new property, but does not appear after the properties defined in the previous version. This is an incompatible change and will not work in many cases.",
+						ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME);
+			} else if (conflict
+					.equals (VersionedObjectFeatureConflicts.NEW_FEATURE_FROM_OTHER_NAMESPACE)) {
+				warning (
+						"The property "
+								+ attr.getName ()
+								+ " uses a type defined in a different namespace or with a defferent major version. Validating consumers might consider it an incompatible change.",
+						ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME);
+			} else if (conflict
+					.equals (VersionedObjectFeatureConflicts.NEW_FEATURE_MANDATORY)) {
+				error ("The property "
+						+ attr.getName ()
+						+ " is a new property in this version, but is not optional. This is an incompatible change.",
+						ServiceDslPackage.Literals.SIMPLE_ATTRIBUTE__NAME);
 			}
 		}
 	}

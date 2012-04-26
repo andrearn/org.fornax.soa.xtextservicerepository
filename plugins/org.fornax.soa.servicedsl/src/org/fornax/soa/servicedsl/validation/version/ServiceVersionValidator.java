@@ -17,6 +17,7 @@ import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.serviceDsl.ExceptionRef;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Parameter;
+import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.servicedsl.util.TypeRefMatchResult;
@@ -148,31 +149,33 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 				eObject = EcoreUtil2.resolve (eObject, res.getResourceSet ());
 			if (eObject instanceof Service) {
 				Service otherSvc  = (Service)eObject;
-				boolean lesserHasOp = Iterables.any (otherSvc.getOperations (), new Predicate<Operation>() {
-
-					public boolean apply (Operation input) {
-						return input.getName ().equals (op.getName ());
-					}
-				});
-				
-				if (lesserHasOp) {
-					Operation lesserVerOp = Iterables.find (otherSvc.getOperations (), new Predicate<Operation>() {
+				if (! otherSvc.getState ().isIsEnd ()) {
+					boolean lesserHasOp = Iterables.any (otherSvc.getOperations (), new Predicate<Operation>() {
 	
 						public boolean apply (Operation input) {
 							return input.getName ().equals (op.getName ());
 						}
 					});
-					if (param.eContainingFeature ().equals (ServiceDslPackage.Literals.OPERATION__PARAMETERS)) {
-						EList<Parameter> lesserVerParams 	= lesserVerOp.getParameters ();
-						EList<Parameter> currVerParams 		= op.getParameters ();
-						checkOpParameters (param, lesserVerParams,
-								currVerParams, false);
-						
-					} else if (param.eContainingFeature ().equals (ServiceDslPackage.Literals.OPERATION__RETURN)) {
-						EList<Parameter> lesserVerParams 	= lesserVerOp.getReturn ();
-						EList<Parameter> currVerParams 		= op.getReturn ();
-						checkOpParameters (param, lesserVerParams,
-								currVerParams, true);
+					
+					if (lesserHasOp) {
+						Operation lesserVerOp = Iterables.find (otherSvc.getOperations (), new Predicate<Operation>() {
+		
+							public boolean apply (Operation input) {
+								return input.getName ().equals (op.getName ());
+							}
+						});
+						if (param.eContainingFeature ().equals (ServiceDslPackage.Literals.OPERATION__PARAMETERS)) {
+							EList<Parameter> lesserVerParams 	= lesserVerOp.getParameters ();
+							EList<Parameter> currVerParams 		= op.getParameters ();
+							checkOpParameters (param, lesserVerParams,
+									currVerParams, false);
+							
+						} else if (param.eContainingFeature ().equals (ServiceDslPackage.Literals.OPERATION__RETURN)) {
+							EList<Parameter> lesserVerParams 	= lesserVerOp.getReturn ();
+							EList<Parameter> currVerParams 		= op.getReturn ();
+							checkOpParameters (param, lesserVerParams,
+									currVerParams, true);
+						}
 					}
 				}
 			}
@@ -243,32 +246,25 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 	private void checkOpParameters (final Parameter param,
 			EList<Parameter> lesserVerParams, EList<Parameter> currVerParams, boolean isReturnParam) {
 		int paramIdx = currVerParams.indexOf (param);
+		int highestLesserParamIdx = -1;
+
 		Parameter lesserVerParam = null;
 		int lesserVerParamIdx = -1;
-		boolean lesserHasParam = Iterables.any (lesserVerParams, new Predicate<Parameter>() {
-
-			public boolean apply (Parameter input) {
-				return input.getName ().equals (param.getName ());
+		for (int i = 0; i < lesserVerParams.size (); i++) {
+			Parameter p = lesserVerParams.get (i);
+			if (p.getName().equals (param.getName ())) {
+				lesserVerParam = p;
+				lesserVerParamIdx = i;
 			}
-			
-		});
-		if (lesserHasParam) {
-			lesserVerParam = Iterables.find (lesserVerParams, new Predicate<Parameter>() {
-
-				public boolean apply (Parameter input) {
-					return input.getName ().equals (param.getName ());
-				}
-				
-			});
-			lesserVerParamIdx = lesserVerParams.indexOf (lesserVerParam);
 		}
+		highestLesserParamIdx = determineHighestLesserParamIndex (currVerParams, lesserVerParams, highestLesserParamIdx);
 			
-		Set<VersionedObjectFeatureConflicts> conflicts = compareParameters (paramIdx, param, currVerParams, lesserVerParamIdx, lesserVerParam, lesserVerParams);
+		Set<VersionedObjectFeatureConflicts> conflicts = compareParameters (paramIdx, param, currVerParams, lesserVerParamIdx, lesserVerParam, lesserVerParams, highestLesserParamIdx);
 		notifyParamVersionConflicts (param, isReturnParam, conflicts);
 	}
 	
 	
-	private Set<VersionedObjectFeatureConflicts> compareParameters (int indexOfCurrParam, final Parameter curParam, final List<Parameter> curParams, int lesserVerParamIdx, final Parameter lesserVerParam, final List<Parameter> lesserVerParams) {
+	private Set<VersionedObjectFeatureConflicts> compareParameters (int indexOfCurrParam, final Parameter curParam, final List<Parameter> curParams, int lesserVerParamIdx, final Parameter lesserVerParam, final List<Parameter> lesserVerParams, int highestLesserParamIdx) {
 		Set<VersionedObjectFeatureConflicts> conflicts = new HashSet<VersionedObjectFeatureConflicts>();
 		if (lesserVerParam != null) {
 			if (indexOfCurrParam != lesserVerParamIdx) {
@@ -287,5 +283,22 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 		return conflicts;
 	}
 	
+
+	private int determineHighestLesserParamIndex (EList<Parameter> opParams,
+			EList<Parameter> lesserOpParams, int highestLesserOpKnownParamIdx) {
+		for (int i=0; i< opParams.size (); i++) {
+			final Parameter param = opParams.get(i);
+			boolean lesserHasParam = Iterables.any (lesserOpParams, new Predicate<Parameter>() {
+
+				public boolean apply (Parameter input) {
+					return input.getName ().equals (param.getName ());
+				}
+			});
+			if (lesserHasParam && i > highestLesserOpKnownParamIdx) {
+				highestLesserOpKnownParamIdx = i;
+			}
+		}
+		return highestLesserOpKnownParamIdx;
+	}
 
 }

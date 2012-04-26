@@ -33,7 +33,7 @@ public class BusinessObjectVersionValidator extends AbstractServiceDslVersionVal
 	@Inject TypeRefMatcher typeRefMatcher;
 	
 	@Check
-	public void compatibleBOMinorVersions (final BusinessObject bo) {
+	public void checkBOBackwardCompatibility (final BusinessObject bo) {
 		QualifiedName boName = nameProvider.getFullyQualifiedName (bo);
 		final Resource res = bo.eResource ();
 		IEObjectDescription nextLesserVersion = getNextLesserVersion (boName.toString (), bo.getVersion ().getVersion (), bo.eClass ().getName ());
@@ -83,7 +83,7 @@ public class BusinessObjectVersionValidator extends AbstractServiceDslVersionVal
 	 * generally represent the old one, i.e. is convertible
 	 */
 	@Check
-	public void checkPropertyCompatibility (final Property prop) {
+	public void checkPropertyBackwardCompatibility (final Property prop) {
 		BusinessObject bo = (BusinessObject)prop.eContainer ();
 		QualifiedName boName = nameProvider.getFullyQualifiedName (bo);
 		final Resource res = bo.eResource ();
@@ -100,33 +100,30 @@ public class BusinessObjectVersionValidator extends AbstractServiceDslVersionVal
 					EList<Property> boProps = bo.getProperties ();
 					EList<Property> otherBoProps = otherBo.getProperties ();
 					int boPropIdx = boProps.indexOf (prop);
-					int highestPrevBOKnownPropertyIdx = -1;
-					highestPrevBOKnownPropertyIdx = updateHighestPrevPropIndex (boProps, otherBoProps, highestPrevBOKnownPropertyIdx);
-					Property otherBOProp = null;
-					int otherBoPropIdx = -1;
-					boolean otherHasProp = Iterables.any (otherBoProps, new Predicate<Property>() {
-
-						public boolean apply (Property input) {
-							return input.getName ().equals (prop.getName ());
-						}
-						
-					});
-					if (otherHasProp) {
-						otherBOProp = Iterables.find (otherBoProps, new Predicate<Property>() {
-
-							public boolean apply (Property input) {
-								return input.getName ().equals (prop.getName ());
-							}
-							
-						});
-						otherBoPropIdx = otherBoProps.indexOf (otherBOProp);
-					}
-						
-					Set<VersionedObjectFeatureConflicts> conflicts = compareProperties (boPropIdx, prop, boProps, otherBoPropIdx, otherBOProp, otherBoProps, highestPrevBOKnownPropertyIdx);
-					notifyPropertyVersionConflicts (prop, conflicts);
+					checkBOProperties (prop, boProps, otherBoProps, boPropIdx);
 				}
 			}
 		}		
+	}
+
+
+	private void checkBOProperties (final Property prop,
+			EList<Property> boProps, EList<Property> otherBoProps, int boPropIdx) {
+		int highestPrevBOKnownPropertyIdx = -1;
+		int otherBoPropIdx = -1;
+		highestPrevBOKnownPropertyIdx = updateHighestPrevPropIndex (boProps, otherBoProps, highestPrevBOKnownPropertyIdx);
+		Property otherBOProp = null;
+		
+		for (int i=0; i<otherBoProps.size (); i++) {
+			Property p = otherBoProps.get (i);
+			if (p.getName ().equals (prop.getName ())) {
+				otherBOProp = p;
+				otherBoPropIdx = i;
+			}
+		}
+			
+		Set<VersionedObjectFeatureConflicts> conflicts = compareProperties (boPropIdx, prop, boProps, otherBoPropIdx, otherBOProp, otherBoProps, highestPrevBOKnownPropertyIdx);
+		notifyPropertyVersionConflicts (prop, conflicts);
 	}
 
 	
@@ -195,6 +192,17 @@ public class BusinessObjectVersionValidator extends AbstractServiceDslVersionVal
 			}
 		}
 		return highestPrevBOKnownPropertyIdx;
+	}
+	
+	class PropertyLocation {
+		
+		private int propertyIndex = -1;
+		private Property property;
+		
+		public PropertyLocation (Property prop, int propertyIndex) {
+			property = prop;
+			this.propertyIndex = propertyIndex;
+		}
 	}
 
 }
