@@ -13,7 +13,7 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="businessDsl">
       <ePackage href="http://www.fornax.org/soa/BusinessDsl#/"/>
     </metamodelDeclarations>
-    <rules xsi:type="xtext:ParserRule" name="Model" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Model">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SolutionDsl#//Model"/>
       </type>
@@ -26,7 +26,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Solution" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Solution">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SolutionDsl#//Solution"/>
       </type>
@@ -79,7 +79,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Module" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Module">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SolutionDsl#//Module"/>
       </type>
@@ -153,7 +153,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Feature" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Feature">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SolutionDsl#//Feature"/>
       </type>

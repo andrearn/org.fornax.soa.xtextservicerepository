@@ -14,7 +14,7 @@ generate sLADsl "http://www.fornax.org/soa/SLADsl"
 
 import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
 
-SlaModel hidden(WS):
+SlaModel:
 	agreements+=SLA*;
 	
 SLA:
@@ -40,7 +40,7 @@ SLA:
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 	
-Import hidden(WS): NsImport /*| FileImport*/;
+Import: NsImport /*| FileImport*/;
 	
 NsImport:
 	'import' importedNamespace=QualifiedNameWithWildCard ;

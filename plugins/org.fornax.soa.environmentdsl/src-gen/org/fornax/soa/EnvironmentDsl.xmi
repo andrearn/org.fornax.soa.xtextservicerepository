@@ -7,7 +7,7 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="semanticsDsl">
       <ePackage href="http://www.fornax.org/soa/SemanticsDsl#/"/>
     </metamodelDeclarations>
-    <rules xsi:type="xtext:ParserRule" name="EnvModel" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="EnvModel">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//EnvModel"/>
       </type>
@@ -32,7 +32,7 @@
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="EnvNsImport" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="EnvNsImport">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//EnvNsImport"/>
       </type>
@@ -43,7 +43,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="EnvFileImport" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="EnvFileImport">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//EnvFileImport"/>
       </type>
@@ -156,7 +156,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Server" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Server">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Server"/>
       </type>
@@ -171,7 +171,7 @@
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="ESB" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="ESB">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//ESB"/>
       </type>
@@ -279,7 +279,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Registry" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Registry">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Registry"/>
       </type>
@@ -530,7 +530,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="AppServer" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="AppServer">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//AppServer"/>
       </type>
@@ -635,7 +635,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="WebServer" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="WebServer">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//WebServer"/>
       </type>
@@ -723,7 +723,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="ProcessServer" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="ProcessServer">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//ProcessServer"/>
       </type>
@@ -836,7 +836,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Broker" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Broker">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Broker"/>
       </type>
@@ -936,7 +936,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Database" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Database">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Database"/>
       </type>
@@ -1029,7 +1029,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="SAP" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="SAP">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//SAP"/>
       </type>
@@ -1108,7 +1108,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="SapClient" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="SapClient">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//SapClient"/>
       </type>
@@ -1135,7 +1135,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="DataSource" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="DataSource">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//DataSource"/>
       </type>
@@ -1981,7 +1981,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Host" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Host">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Host"/>
       </type>
@@ -2021,7 +2021,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="User" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="User">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//User"/>
       </type>

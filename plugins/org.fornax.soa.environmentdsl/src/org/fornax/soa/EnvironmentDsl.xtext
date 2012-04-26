@@ -14,20 +14,20 @@ generate environmentDsl "http://www.fornax.org/soa/EnvironmentDsl"
 
 import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as  semanticsDsl
 
-EnvModel  hidden(WS):
+EnvModel:
 	(imports+=EnvImport)*
 	(users+=User)*
 	(environments+=Environment)*;
 	
 EnvImport : EnvNsImport | EnvFileImport; 
 
-EnvNsImport  hidden (WS):
+EnvNsImport:
 	'import' importedNamespace=QualifiedNameWithWildCard ; 
 	
-EnvFileImport hidden (WS):
+EnvFileImport:
 	'import' importURI=STRING ;
 	
-Environment :
+Environment:
 	'environment' name=ID 'of type' (type=EnvironmentType) '{'
 		(hosts+=Host)*
 		(servers+=Server)*
@@ -37,11 +37,11 @@ Environment :
 		('default' 'Broker' defaultBroker=[Broker])? 
 	'}';
 	
-enum EnvironmentType : Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
+enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
 
-Server  hidden (WS): ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP;
+Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP;
 
-ESB hidden (WS): 
+ESB: 
 	'esb' name=ID '{'
 		('identifier' dslCode=STRING )?
 		('admins' admins+=[User|QualifiedName] )? 
@@ -66,7 +66,7 @@ ESB hidden (WS):
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
-Registry  hidden (WS):
+Registry:
 	'registry' name=ID '{'
 		('identifier' dslCode=STRING )?
 		('admins' admins+=[User|QualifiedName] )? 
@@ -129,7 +129,7 @@ UDDIRegistry:
 	'}'
 ;
 	
-AppServer  hidden (WS): 
+AppServer: 
 	'appserver' name=ID '{'
 		('identifier' dslCode=STRING )?
 		('admins' (admins+=[User|QualifiedName])+ )? 
@@ -154,7 +154,7 @@ AppServer  hidden (WS):
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
-WebServer  hidden (WS): 
+WebServer: 
 	'webserver' name=ID '{'
 		('identifier' dslCode=STRING )?
 		('admins' (admins+=[User|QualifiedName])+ )? 
@@ -173,7 +173,7 @@ WebServer  hidden (WS):
 	'}';
 	
 	
-ProcessServer  hidden (WS):
+ProcessServer:
 	'processserver'  name=ID '{'
 		('identifier' dslCode=STRING )?
 		('admins' (admins+=[User|QualifiedName])+ )? 
@@ -198,7 +198,7 @@ ProcessServer  hidden (WS):
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
-Broker  hidden (WS): 
+Broker: 
 	'broker' name=ID '{'
 		('identifier' dslCode=STRING )? 
 		('admins' (admins+=[User|QualifiedName])+ )? 
@@ -221,7 +221,7 @@ Broker  hidden (WS):
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}'; 
 
-Database  hidden (WS):  
+Database:  
 	'database' name=ID '{'
 		('identifier' dslCode=STRING )?
 		('admins' (admins+=[User|QualifiedName])+ )? 
@@ -236,7 +236,7 @@ Database  hidden (WS):
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
-SAP  hidden (WS):  
+SAP:  
 	'sap' name=ID '{'
 		('identifier' dslCode=STRING )?
 		('admins' (admins+=[User|QualifiedName])+ )? 
@@ -249,14 +249,14 @@ SAP  hidden (WS):
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 	
-SapClient  hidden (WS): 
+SapClient: 
 	'client' name=ID '{'
 		'client-ID' client=INT 
 		'owner' owner=STRING 
 		('accountingArea' accountingArea=STRING)?
 	'}';
 	
-DataSource  hidden (WS):
+DataSource:
 	'data-source' name=ID '{'
 		'jndi-name' jndiName=STRING 
 		'schema' schema=[DatabaseSchema|QualifiedName] 
@@ -427,7 +427,7 @@ TCP:
 	'}';
 	
 		
-Host  hidden (WS):
+Host:
 	'host' name=ID '{'
 		'full-qualified-name' fqn=STRING 
 		('ip-address' ip=STRING)? 
@@ -435,7 +435,7 @@ Host  hidden (WS):
 		('admins' admins+=[User|QualifiedName])?
 	'}';
 	
-User  hidden (WS): 
+User: 
 	'user' name=ID '{'
 		('firstname' firstname=STRING 'lastname' lastname=STRING )? 
 		'email' email=STRING 

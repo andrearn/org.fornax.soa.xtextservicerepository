@@ -72,23 +72,16 @@ import org.fornax.soa.services.SolutionDslGrammarAccess;
 
 // Entry rule entryRuleModel
 entryRuleModel returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getModelRule()); }
 	 iv_ruleModel=ruleModel 
 	 { $current=$iv_ruleModel.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule Model
 ruleModel returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 ((
@@ -129,9 +122,6 @@ ruleModel returns [EObject current=null]
 )
 )*)
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -139,23 +129,16 @@ finally {
 
 // Entry rule entryRuleSolution
 entryRuleSolution returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getSolutionRule()); }
 	 iv_ruleSolution=ruleSolution 
 	 { $current=$iv_ruleSolution.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule Solution
 ruleSolution returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (	otherlv_0='solution' 
@@ -326,9 +309,6 @@ ruleSolution returns [EObject current=null]
     }
 )
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -336,23 +316,16 @@ finally {
 
 // Entry rule entryRuleModule
 entryRuleModule returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getModuleRule()); }
 	 iv_ruleModule=ruleModule 
 	 { $current=$iv_ruleModule.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule Module
 ruleModule returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 (	otherlv_0='module' 
@@ -505,9 +478,6 @@ ruleModule returns [EObject current=null]
     }
 )
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 
@@ -515,23 +485,16 @@ finally {
 
 // Entry rule entryRuleFeature
 entryRuleFeature returns [EObject current=null] 
-	@init { 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
-	}
 	:
 	{ newCompositeNode(grammarAccess.getFeatureRule()); }
 	 iv_ruleFeature=ruleFeature 
 	 { $current=$iv_ruleFeature.current; } 
 	 EOF 
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 // Rule Feature
 ruleFeature returns [EObject current=null] 
     @init { enterRule(); 
-		HiddenTokens myHiddenTokenState = ((XtextTokenStream)input).setHiddenTokens("RULE_WS");
     }
     @after { leaveRule(); }:
 ((
@@ -759,9 +722,6 @@ ruleFeature returns [EObject current=null]
     }
 )
 ;
-finally {
-	myHiddenTokenState.restore();
-}
 
 
 

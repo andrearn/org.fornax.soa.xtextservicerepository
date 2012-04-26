@@ -28,7 +28,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Tag" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Tag">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
       </type>

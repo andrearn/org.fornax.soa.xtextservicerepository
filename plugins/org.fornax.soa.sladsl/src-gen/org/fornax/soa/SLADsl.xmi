@@ -7,7 +7,7 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="semanticsDsl">
       <ePackage href="http://www.fornax.org/soa/SemanticsDsl#/"/>
     </metamodelDeclarations>
-    <rules xsi:type="xtext:ParserRule" name="SlaModel" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="SlaModel">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SlaModel"/>
       </type>
@@ -126,7 +126,7 @@
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Import" definesHiddenTokens="true" hiddenTokens="/1/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="Import">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//Import"/>
       </type>

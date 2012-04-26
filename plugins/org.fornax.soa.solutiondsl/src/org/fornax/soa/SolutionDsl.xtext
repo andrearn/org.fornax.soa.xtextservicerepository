@@ -17,12 +17,12 @@ import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/Se
 import "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore" as serviceDsl
 import "platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore" as businessDsl
 
-Model hidden (WS):
+Model:
 	(imports+=Import)*
 	(solution+=Solution)*;
 	
 	
-Solution hidden(WS):
+Solution:
 	'solution' name=QualifiedName '{'
 		('domain' domain = [businessDsl::Domain|QualifiedName] )?
 		version=Version
@@ -33,7 +33,7 @@ Solution hidden(WS):
 		('tags' (tags+=[semanticsDsl::Tag])+ )?
 	'}';
 
-Module hidden (WS):
+Module:
 	'module' name=ID '{'
 		'kind' kind=ModuleKind 
 		(version=Version)?
@@ -45,7 +45,7 @@ Module hidden (WS):
 	
 enum ModuleKind : UI | BusinessLogic | Persistence | Security | Batch | OTHER;
 
-Feature hidden (WS):
+Feature:
 	(nonFunctional?='non-functional')? 'feature' name=ID '{'
 		('use cases' (useCase+=STRING)+ )?
 		('description' description=STRING )?

@@ -19,7 +19,7 @@ import "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/
 import "platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore" as profileDsl
 import "platform:/resource/org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore" as slaDsl
 
-BindingModel hidden(WS):
+BindingModel:
 	(imports+=Import)*
 	(bindings+=Binding)*;
 

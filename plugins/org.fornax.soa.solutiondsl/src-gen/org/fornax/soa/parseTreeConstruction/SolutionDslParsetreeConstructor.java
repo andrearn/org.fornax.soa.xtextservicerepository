@@ -58,7 +58,7 @@ protected class ThisRootNode extends RootToken {
 
 /************ begin Rule Model ****************
  *
- * Model hidden(WS):
+ * Model:
  * 	imports+=Import* solution+=Solution*;
  *
  **/
@@ -192,7 +192,7 @@ protected class Model_SolutionAssignment_1 extends AssignmentToken  {
 
 /************ begin Rule Solution ****************
  *
- * Solution hidden(WS):
+ * Solution:
  * 	"solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
  * 	productVersion=ProductVersion? ("requires" requires+=ServiceRef)* features+=Feature* modules+=Module* ("tags"
  * 	tags+=[semanticsDsl::Tag]+)? "}";
@@ -794,7 +794,7 @@ protected class Solution_RightCurlyBracketKeyword_10 extends KeywordToken  {
 
 /************ begin Rule Module ****************
  *
- * Module hidden(WS):
+ * Module:
  * 	"module" name=ID "{" "kind" kind=ModuleKind version=Version? ("requires" requires+=ServiceRef)* features+=Feature*
  * 	modules+=Module* ("tags" tags+=[semanticsDsl::Tag]+)? "}";
  *
@@ -1321,7 +1321,7 @@ protected class Module_RightCurlyBracketKeyword_10 extends KeywordToken  {
 
 /************ begin Rule Feature ****************
  *
- * Feature hidden(WS):
+ * Feature:
  * 	nonFunctional?="non-functional"? "feature" name=ID "{" ("use cases" useCase+=STRING+)? ("description"
  * 	description=STRING)? ("uses capabilities" "{" usesCapabilities+=CapabilityRef+ "}")? ("requires"
  * 	requires+=ServiceRef)* ("subscibes-to-event" event+=EventRef ("," event+=EventRef)*)? features+=Feature* ("tags"

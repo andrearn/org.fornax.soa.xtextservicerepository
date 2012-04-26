@@ -19,7 +19,7 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="slaDsl">
       <ePackage href="http://www.fornax.org/soa/SLADsl#/"/>
     </metamodelDeclarations>
-    <rules xsi:type="xtext:ParserRule" name="BindingModel" definesHiddenTokens="true" hiddenTokens="/2/@rules.5">
+    <rules xsi:type="xtext:ParserRule" name="BindingModel">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//BindingModel"/>
       </type>

@@ -25,7 +25,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cSolutionAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cSolutionSolutionParserRuleCall_1_0 = (RuleCall)cSolutionAssignment_1.eContents().get(0);
 		
-		//Model hidden(WS):
+		//Model:
 		//	imports+=Import* solution+=Solution*;
 		public ParserRule getRule() { return rule; }
 
@@ -76,7 +76,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTagsTagIDTerminalRuleCall_9_1_0_1 = (RuleCall)cTagsTagCrossReference_9_1_0.eContents().get(1);
 		private final Keyword cRightCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
 		
-		//Solution hidden(WS):
+		//Solution:
 		//	"solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
 		//	productVersion=ProductVersion? ("requires" requires+=ServiceRef)* features+=Feature* modules+=Module* ("tags"
 		//	tags+=[semanticsDsl::Tag]+)? "}";
@@ -196,7 +196,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTagsTagIDTerminalRuleCall_9_1_0_1 = (RuleCall)cTagsTagCrossReference_9_1_0.eContents().get(1);
 		private final Keyword cRightCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
 		
-		//Module hidden(WS):
+		//Module:
 		//	"module" name=ID "{" "kind" kind=ModuleKind version=Version? ("requires" requires+=ServiceRef)* features+=Feature*
 		//	modules+=Module* ("tags" tags+=[semanticsDsl::Tag]+)? "}";
 		public ParserRule getRule() { return rule; }
@@ -319,7 +319,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTagsTagIDTerminalRuleCall_10_1_0_1 = (RuleCall)cTagsTagCrossReference_10_1_0.eContents().get(1);
 		private final Keyword cRightCurlyBracketKeyword_11 = (Keyword)cGroup.eContents().get(11);
 		
-		//Feature hidden(WS):
+		//Feature:
 		//	nonFunctional?="non-functional"? "feature" name=ID "{" ("use cases" useCase+=STRING+)? ("description"
 		//	description=STRING)? ("uses capabilities" "{" usesCapabilities+=CapabilityRef+ "}")? ("requires"
 		//	requires+=ServiceRef)* ("subscibes-to-event" event+=EventRef ("," event+=EventRef)*)? features+=Feature* ("tags"
@@ -698,7 +698,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//Model hidden(WS):
+	//Model:
 	//	imports+=Import* solution+=Solution*;
 	public ModelElements getModelAccess() {
 		return (pModel != null) ? pModel : (pModel = new ModelElements());
@@ -708,7 +708,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getModelAccess().getRule();
 	}
 
-	//Solution hidden(WS):
+	//Solution:
 	//	"solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
 	//	productVersion=ProductVersion? ("requires" requires+=ServiceRef)* features+=Feature* modules+=Module* ("tags"
 	//	tags+=[semanticsDsl::Tag]+)? "}";
@@ -720,7 +720,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getSolutionAccess().getRule();
 	}
 
-	//Module hidden(WS):
+	//Module:
 	//	"module" name=ID "{" "kind" kind=ModuleKind version=Version? ("requires" requires+=ServiceRef)* features+=Feature*
 	//	modules+=Module* ("tags" tags+=[semanticsDsl::Tag]+)? "}";
 	public ModuleElements getModuleAccess() {
@@ -741,7 +741,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getModuleKindAccess().getRule();
 	}
 
-	//Feature hidden(WS):
+	//Feature:
 	//	nonFunctional?="non-functional"? "feature" name=ID "{" ("use cases" useCase+=STRING+)? ("description"
 	//	description=STRING)? ("uses capabilities" "{" usesCapabilities+=CapabilityRef+ "}")? ("requires"
 	//	requires+=ServiceRef)* ("subscibes-to-event" event+=EventRef ("," event+=EventRef)*)? features+=Feature* ("tags"
