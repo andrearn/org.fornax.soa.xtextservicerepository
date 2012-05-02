@@ -16,12 +16,12 @@ generate businessDsl "http://www.fornax.org/soa/BusinessDsl"
 
 import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as  semantics
 
-BusinessModel hidden(WS):
+BusinessModel :
 	(imports+=Import)*
 	(organizations+=Organization)*
 	(domains+=Domain)*;
 		
-Organization hidden(WS):
+Organization :
 	'org' name=QualifiedName '{'
 		('competence' competence=STRING)?
 		('head' bizLead=[Member|QualifiedName])?
@@ -30,7 +30,7 @@ Organization hidden(WS):
 		(members+=Member)*
 	'}';
 	
-Domain hidden(WS):
+Domain :
 	'domain' name=QualifiedName '{'
 		('competence' competence=STRING)?
 		('head' bizLead=[Member|QualifiedName])?
@@ -46,7 +46,7 @@ Domain hidden(WS):
 /**
  * A business function operated by an organization.
  */
-BusinessFunction hidden(WS):
+BusinessFunction :
 	'business-function' name=ID '{' 
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
@@ -83,7 +83,7 @@ CapabilityGroup :
  */
 Capability: SimpleCapability | CapabilityVariant;
 
-SimpleCapability hidden(WS):
+SimpleCapability :
 	(external?='external')? 'capability' name=ID '{'
 		version=Version
 		'short-description' shortDescription=STRING
@@ -179,7 +179,7 @@ Outcome:
 ;
 
 	
-Member hidden(WS):
+Member :
 	'member' name=ID '{'
 		'fullname' fullname=STRING
 		'email' email=STRING
