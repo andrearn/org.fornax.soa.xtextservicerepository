@@ -6,14 +6,30 @@ package org.fornax.soa.moduledsl.scoping;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvider;
 import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
+import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
+
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 
 /**
  * This class contains custom scoping description.
@@ -23,6 +39,9 @@ import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
  *
  */
 public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
+
+	
+	@Inject Injector injector;
 
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
@@ -46,4 +65,25 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 	}
 
+	@Override
+	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner) {
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		if (v != null) {
+			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
+			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
+			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
+			if (v instanceof MajorVersionRef) {
+				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState);
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof MaxVersionRef)
+				return new LatestMaxExclVersionFilter<IEObjectDescription>(verResolver, ((MaxVersionRef)v).getMaxVersion());
+			if (v instanceof MinVersionRef)
+				return new LatestMinInclVersionFilter<IEObjectDescription>(verResolver, ((MinVersionRef)v).getMinVersion());
+			if (v instanceof LowerBoundRangeVersionRef)
+				return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription>(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+		}
+		return filter;
+	}
 }

@@ -72,6 +72,8 @@ public class StateAttributeLifecycleStateResolver implements LifecycleStateResol
 				}
 				return state;
 			}
+		} else if (o.eContainer () != null) {
+			return getLifecycleState (o.eContainer ());
 		}
 		return null;
 	}

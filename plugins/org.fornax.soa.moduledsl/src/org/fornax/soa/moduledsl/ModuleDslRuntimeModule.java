@@ -5,8 +5,15 @@ package org.fornax.soa.moduledsl;
 
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
+import org.fornax.soa.basedsl.search.IPredicateSearch;
+import org.fornax.soa.basedsl.search.PredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
 import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
 
@@ -31,4 +38,19 @@ public class ModuleDslRuntimeModule extends org.fornax.soa.moduledsl.AbstractMod
 		return DefaultEnvironmentPerspectiveSelector.class;
 	}
 
+	public Class<? extends LifecycleStateComparator> bindLifecycleStateComparator () {
+		return LifecycleStateComparator.class;
+	}
+	
+	public Class<? extends LifecycleStateResolver> bindLifecycleStateResolver () {
+		return StateAttributeLifecycleStateResolver.class;
+	}
+	
+	public Class<? extends IStateMatcher> bindIStateMatcher () {
+		return DefaultStateMatcher.class;
+	}
+	
+	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
+		return PredicateSearch.class;
+	}
 }
