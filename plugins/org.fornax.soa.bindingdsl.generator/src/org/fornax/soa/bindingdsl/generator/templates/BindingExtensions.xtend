@@ -132,6 +132,7 @@ class BindingExtensions {
 	
 	def dispatch LifecycleState getMinLifecycleState (Environment env, EObject o, Lifecycle l) {
 		switch (env.type) {
+			case EnvironmentType::LOCAL : 		o.toOwnerMinLocalState(l)
 			case EnvironmentType::DEV : 		o.toOwnerMinDevState(l)
 			case EnvironmentType::TEST:			o.toOwnerMinTestState(l)
 			case EnvironmentType::STAGING :		o.toOwnerMinTestState(l)

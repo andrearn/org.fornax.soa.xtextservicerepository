@@ -79,7 +79,8 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 
 		for (svc : services) {
 			if (svc != null) {
-				for (soapProt : binding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
+				val specBinding = binding.getMostSpecificBinding (svc);
+				for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
 					if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (binding.environment)) {
 						val namespace = svc.findSubdomain();
 								

@@ -20,6 +20,30 @@ class LifecycleQueries {
 	
 	@Inject org.fornax.soa.profiledsl.generator.query.LifecycleQueries lifecycleQueries
 	
+	def dispatch LifecycleState toOwnerMinLocalState (Object o, Lifecycle l) {
+		lifecycleQueries.getMinLocalState (l);
+	}
+
+	def dispatch LifecycleState toOwnerMinLocalState (SubNamespace ns, Lifecycle l) {
+		lifecycleQueries.getMinLocalState(l);
+	}
+
+	def dispatch LifecycleState toOwnerMinLocalState (BusinessObject o, Lifecycle l) {
+		o.eContainer.toOwnerMinLocalState(l);
+	}
+
+	def dispatch LifecycleState toOwnerMinLocalState (org.fornax.soa.serviceDsl.Enumeration o, Lifecycle l) {
+		o.eContainer.toOwnerMinLocalState(l);
+	}
+	
+	def dispatch LifecycleState toOwnerMinLocalState (org.fornax.soa.serviceDsl.Exception o, Lifecycle l) {
+		o.eContainer.toOwnerMinLocalState(l);
+	}
+	
+	def dispatch LifecycleState toOwnerMinLocalState (Service o, Lifecycle l) {
+		o.eContainer.toOwnerMinLocalState(l);
+	}
+	
 	def dispatch LifecycleState toOwnerMinDevState (Object o, Lifecycle l) {
 		lifecycleQueries.getMinDevState (l);
 	}
