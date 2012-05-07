@@ -1,4 +1,4 @@
-package org.fornax.soa.businessdsl.documentation;
+package org.fornax.soa.business.documentation;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.documentation.impl.MultiLineCommentDocumentationProvider;

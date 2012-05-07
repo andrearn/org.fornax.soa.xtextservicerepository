@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl.validation.version;
+package org.fornax.soa.service.validation.version;
 
 import java.util.HashSet;
 import java.util.List;
@@ -14,14 +14,13 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.validation.Check;
 import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
+import org.fornax.soa.service.util.TypeRefMatchResult;
+import org.fornax.soa.service.util.TypeRefMatcher;
 import org.fornax.soa.serviceDsl.ExceptionRef;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Parameter;
-import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
-import org.fornax.soa.servicedsl.util.TypeRefMatchResult;
-import org.fornax.soa.servicedsl.util.TypeRefMatcher;
 import org.fornax.soa.validation.VersionedObjectFeatureConflicts;
 
 import com.google.common.base.Predicate;

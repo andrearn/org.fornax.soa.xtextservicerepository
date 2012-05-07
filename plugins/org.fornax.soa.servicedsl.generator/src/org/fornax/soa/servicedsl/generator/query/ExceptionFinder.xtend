@@ -6,7 +6,7 @@ import org.fornax.soa.basedsl.generator.version.VersionMatcher
 import org.fornax.soa.serviceDsl.Exception
 import org.fornax.soa.serviceDsl.ExceptionRef
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
 import org.fornax.soa.profiledsl.generator.query.StateMatcher
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState

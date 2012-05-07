@@ -2,7 +2,7 @@ package org.fornax.soa.bindingdsl.generator.templates
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile

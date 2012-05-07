@@ -12,7 +12,7 @@ import org.fornax.soa.serviceDsl.DataTypeRef
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.EnumTypeRef
 import org.fornax.soa.serviceDsl.ExceptionRef
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder

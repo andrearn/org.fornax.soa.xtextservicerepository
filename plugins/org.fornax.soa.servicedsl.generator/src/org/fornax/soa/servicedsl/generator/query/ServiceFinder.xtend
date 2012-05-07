@@ -3,7 +3,7 @@ package org.fornax.soa.servicedsl.generator.query
 import com.google.inject.Inject
 import java.util.List
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.serviceDsl.ExceptionRef
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery

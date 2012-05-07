@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl.util;
+package org.fornax.soa.service.util;
 
 public enum TypeRefMatchResult {
 	NO_MATCH,

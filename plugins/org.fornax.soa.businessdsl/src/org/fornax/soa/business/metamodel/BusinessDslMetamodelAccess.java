@@ -1,4 +1,4 @@
-package org.fornax.soa.businessdsl.metamodel;
+package org.fornax.soa.business.metamodel;
 
 import org.eclipse.emf.ecore.EObject;
 import org.fornax.soa.basedsl.metamodel.MetamodelAccess;

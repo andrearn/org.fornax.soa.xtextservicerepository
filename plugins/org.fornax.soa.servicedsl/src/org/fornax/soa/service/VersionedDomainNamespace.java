@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl;
+package org.fornax.soa.service;
 
 import java.util.List;
 

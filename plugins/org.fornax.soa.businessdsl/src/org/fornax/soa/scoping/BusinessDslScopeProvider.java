@@ -9,9 +9,9 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvider;
 import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
+import org.fornax.soa.business.metamodel.BusinessDslMetamodelAccess;
 import org.fornax.soa.businessDsl.BusinessDslPackage;
 import org.fornax.soa.businessDsl.CapabilityRef;
-import org.fornax.soa.businessdsl.metamodel.BusinessDslMetamodelAccess;
 
 
 /**

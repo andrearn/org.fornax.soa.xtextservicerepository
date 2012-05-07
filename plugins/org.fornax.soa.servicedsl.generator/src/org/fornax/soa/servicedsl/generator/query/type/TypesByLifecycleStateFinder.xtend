@@ -7,7 +7,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
 import java.util.HashSet
 import java.util.Set
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Enumeration
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState

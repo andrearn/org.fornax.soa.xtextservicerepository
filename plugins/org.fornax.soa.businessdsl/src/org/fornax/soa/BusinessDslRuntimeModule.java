@@ -9,7 +9,7 @@ import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
-import org.fornax.soa.businessdsl.documentation.BusinessDslDocumentationProvider;
+import org.fornax.soa.business.documentation.BusinessDslDocumentationProvider;
 
 import com.google.inject.Binder;
 

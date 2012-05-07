@@ -21,7 +21,7 @@ import org.fornax.soa.serviceDsl.Reference
 import org.fornax.soa.serviceDsl.SimpleAttribute
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
 import org.fornax.soa.servicedsl.generator.query.ExceptionFinder
 import org.fornax.soa.servicedsl.generator.query.LifecycleQueries

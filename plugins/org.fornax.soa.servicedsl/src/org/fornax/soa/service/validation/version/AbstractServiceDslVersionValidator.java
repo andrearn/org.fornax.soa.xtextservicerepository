@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl.validation.version;
+package org.fornax.soa.service.validation.version;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,7 +12,7 @@ import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
-import org.fornax.soa.servicedsl.util.TypeRefMatcher;
+import org.fornax.soa.service.util.TypeRefMatcher;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;

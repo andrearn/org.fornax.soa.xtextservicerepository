@@ -13,7 +13,7 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.serviceDsl.VersionedTypeRef
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
 import org.fornax.soa.servicedsl.generator.query.ExceptionFinder
 import org.fornax.soa.servicedsl.generator.query.ServiceFinder

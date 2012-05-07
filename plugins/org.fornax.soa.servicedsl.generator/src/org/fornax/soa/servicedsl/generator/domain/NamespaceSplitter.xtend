@@ -8,7 +8,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtension
 import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
 import java.util.Set
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type

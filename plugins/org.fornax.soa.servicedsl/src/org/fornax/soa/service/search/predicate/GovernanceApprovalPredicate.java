@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl.search.predicate;
+package org.fornax.soa.service.search.predicate;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;

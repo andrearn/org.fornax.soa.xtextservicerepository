@@ -8,7 +8,7 @@ import org.fornax.soa.serviceDsl.Service
 import java.util.List
 import java.util.Set
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
 import com.google.inject.Inject
 import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder

@@ -19,7 +19,7 @@ import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.ServiceModel
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.VersionedDomainNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.servicedsl.generator.query.ExceptionFinder
 import org.fornax.soa.servicedsl.generator.query.ServiceFinder
 import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery

@@ -5,8 +5,8 @@ import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
+import org.fornax.soa.service.VersionedDomainNamespace;
 import org.fornax.soa.serviceDsl.SubNamespace;
-import org.fornax.soa.servicedsl.VersionedDomainNamespace;
 
 import com.google.inject.Provider;
 

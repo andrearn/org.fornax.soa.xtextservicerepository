@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl.util;
+package org.fornax.soa.service.util;
 
 import org.fornax.soa.basedsl.util.VersionRefMatcher;
 import org.fornax.soa.serviceDsl.DataTypeRef;
