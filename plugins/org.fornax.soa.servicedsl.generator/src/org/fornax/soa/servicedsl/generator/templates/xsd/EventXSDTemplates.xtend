@@ -150,7 +150,7 @@ class EventXSDTemplates {
 	
 	def dispatch toEventMessages(Service svc, LifecycleState minState, SOAProfile profile) '''
 		«svc.operations.map (o|o.toOperationWrapperTypes (profile)).join»
-		«svc.operations.map (o|o.throws).flatten.map (t|t.exception.name).toSet().map (o|o.toOperationFaultWrapperTypes(svc.operations.map (op|op.throws).flatten.toList())).join»
+		«svc.operations.map (o|o.^throws).flatten.map (t|t.exception.name).toSet().map (o|o.toOperationFaultWrapperTypes(svc.operations.map (op|op.^throws).flatten.toList())).join»
 	'''
 	
 	

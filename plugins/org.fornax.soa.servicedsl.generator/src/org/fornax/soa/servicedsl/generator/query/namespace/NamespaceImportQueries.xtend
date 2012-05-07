@@ -53,7 +53,7 @@ class NamespaceImportQueries {
 			.map (r|r.findLatestMatchingType()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)).toSet;
 		imports.addAll (svc.operations.map (o|o.^return).flatten.map (r|r.type).filter (typeof (VersionedTypeRef))
 			.map (v|v.findLatestMatchingType()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
-		imports.addAll (svc.operations.map (o|o.throws).flatten.map(t|excFinder.findLatestMatchingException(t)).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
+		imports.addAll (svc.operations.map (o|o.^throws).flatten.map(t|excFinder.findLatestMatchingException(t)).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		return imports;
 	}
 	

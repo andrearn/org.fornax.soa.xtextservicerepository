@@ -70,7 +70,7 @@ class WrappedWsdlTemplates {
 	}
 	
 	def dispatch toWrappedWSDL(Service svc, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		val allServiceExceptionRefs = svc.operations.map (o|o.throws).flatten;
+		val allServiceExceptionRefs = svc.operations.map (o|o.^throws).flatten;
 		svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -99,7 +99,7 @@ class WrappedWsdlTemplates {
 	}
 	
 	def dispatch toWrappedWSDL(Service svc, InternalNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		val allServiceExceptionRefs = svc.operations.map (o|o.throws).flatten;
+		val allServiceExceptionRefs = svc.operations.map (o|o.^throws).flatten;
 		
 		svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);
 		val xsdFileName = subDom.toFileNameFragment() + "-" + svc.name + "-" + svc.version.toVersionPostfix() + "Wrapped.wsdl";
@@ -146,7 +146,7 @@ class WrappedWsdlTemplates {
 				<xsd:import schemaLocation="«svc.getRegisteredOperationWrapperUrl (registryBaseUrl)»"
 					namespace="«svc.toWrapperTargetNamespace()»"/>
 				«svc.operations.map (o|o.toOperationWrapperTypes (profile)).join»
-				«svc.operations.map (o|o.throws).flatten.map(t|t.exception.name).toSet().map (n|n.toOperationFaultWrapperTypes (svc.operations.map (o|o.throws).flatten.toList)).join»
+				«svc.operations.map (o|o.^throws).flatten.map(t|t.exception.name).toSet().map (n|n.toOperationFaultWrapperTypes (svc.operations.map (o|o.^throws).flatten.toList)).join»
 			</xsd:schema>
 		</wsdl:types>
 	'''
@@ -252,7 +252,7 @@ class WrappedWsdlTemplates {
 		}
 	}
 	def dispatch toFault (Operation op) '''
-		«FOR fault : op.throws»
+		«FOR fault : op.^throws»
 				<wsdl:fault name="«fault?.exception.toTypeName().toFirstLower()»" message="tns:«fault?.exception.toTypeName()»"></wsdl:fault>
 		«ENDFOR»
 	'''

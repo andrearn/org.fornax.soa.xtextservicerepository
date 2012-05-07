@@ -169,7 +169,7 @@ class ConcreteProviderWsdlTemplates {
 			<wsdl:output>
 				<soap:body use="«protocol.getSoapEncoding()»" />
 			</wsdl:output>
-			«FOR fault : op.throws»
+			«FOR fault : op.^throws»
 				<wsdl:fault name="«fault.exception.toTypeName().toFirstLower()»">
 					<soap:fault name="«fault.exception.toTypeName().toFirstLower()»" use="«protocol.getSoapEncoding()»"/>
 				</wsdl:fault>

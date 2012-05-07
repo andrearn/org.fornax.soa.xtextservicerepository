@@ -32,7 +32,7 @@ class ServiceFinder {
 
 
 	def List<ExceptionRef> allReferencedExceptionRefs (Service s) {
-		s.operations.map (o|o.throws).flatten.toList;
+		s.operations.map (o|o.^throws).flatten.toList;
 	}
 	
 	def List<org.fornax.soa.serviceDsl.Exception> allExceptionsByMajorVersion (SubNamespace s, String majorVersion) {
@@ -44,7 +44,7 @@ class ServiceFinder {
 	}
 	
 	def List<org.fornax.soa.serviceDsl.Exception> allReferencedExceptions (Service s) {
-		s.operations.map (o|o.throws).flatten.map (e|e.exception).toList;
+		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
 	}
 
 	def List<Service> allLatestMajorVersions (List<Service> s, LifecycleState minState) {

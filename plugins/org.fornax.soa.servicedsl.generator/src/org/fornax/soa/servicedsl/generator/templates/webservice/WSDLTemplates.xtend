@@ -51,7 +51,7 @@ class WSDLTemplates {
 	Boolean noDependencies
 	
 	def dispatch toWSDL (Service s, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		val allServiceExceptionRefs = s.operations.map (o|o.throws).flatten;
+		val allServiceExceptionRefs = s.operations.map (o|o.^throws).flatten;
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -79,7 +79,7 @@ class WSDLTemplates {
 	}
 
 	def dispatch toWSDL (Service s, InternalNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		val allServiceExceptionRefs = s.operations.map (o|o.throws).flatten;
+		val allServiceExceptionRefs = s.operations.map (o|o.^throws).flatten;
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -134,7 +134,7 @@ class WSDLTemplates {
 					«ENDFOR»
 				«ENDIF»
 				«s.operations.map (e|e.toOperationWrapperTypes (profile)).join»
-				«s.operations.map (o|o.throws).flatten.map(t|t.exception.name).toSet().map (e|e.toOperationFaultWrapperTypes (s.operations.map (o|o.throws).flatten.toList)).join»
+				«s.operations.map (o|o.^throws).flatten.map(t|t.exception.name).toSet().map (e|e.toOperationFaultWrapperTypes (s.operations.map (o|o.^throws).flatten.toList)).join»
 			</xsd:schema>
 		</wsdl:types>
 	'''
@@ -270,7 +270,7 @@ class WSDLTemplates {
 	
 	
 	def toFault (Operation o) '''
-		«FOR fault : o.throws»
+		«FOR fault : o.^throws»
 			<wsdl:fault name="«fault.exception.toTypeName().toFirstLower()»" message="tns:«fault.exception.toTypeName()»"></wsdl:fault>
 		«ENDFOR»
 	'''
