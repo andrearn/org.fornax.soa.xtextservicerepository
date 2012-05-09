@@ -27,7 +27,8 @@ import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
- * from a DomainBinding or ModuleBinding.<br/><br/>
+ * from a DomainBinding or ModuleBinding. Whether a service is eligible is determined from it's lifecycle state checking
+ * whether the state is supported in the bindings target environment.<br/><br/>
  * 
  * Each concrete WSDL imports the abstract WSDL of the respective service. Generation of the abstract WSDL is being 
  * delegated to the Service DSL generator.

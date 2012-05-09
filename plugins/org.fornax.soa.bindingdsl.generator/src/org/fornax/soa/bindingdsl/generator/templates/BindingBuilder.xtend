@@ -26,6 +26,9 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 
+/**
+ * Builds all technical artifacts tthat repsent a binding (WSDLs/XSDs etc.).
+ */
 class BindingBuilder {
 	
 	

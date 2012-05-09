@@ -8,7 +8,7 @@ import org.fornax.soa.service.VersionedDomainNamespace;
 import org.fornax.soa.serviceDsl.SubNamespace;
 
 /* 
- * An IProtocolContractBuilder builds all interface contract artifacts that can be used to build interface stub 
+ * An IProtocolContractBuilder builds all interface contract artifacts that can be used to build an interface stub 
  * for a certain technology like SOAP.
  */
 public abstract interface IProtocolContractBuilder {

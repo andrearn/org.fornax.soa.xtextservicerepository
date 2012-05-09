@@ -18,7 +18,11 @@ import org.fornax.soa.bindingDsl.SCA
 import org.eclipse.xtext.generator.IFileSystemAccess
 
 
-/* Generator for IBM SCA export components */
+/* 
+ * Generator for IBM SCA export components for the IBM WebSphere ESB. For each service provided from the module referenced in the binding
+ * that supports an SCA protocol and is elible for the bindings target environment as of their lifecycle state 
+ * an SCA export component is being generated.
+ */
 class SCAExportTemplates {
 
 	
