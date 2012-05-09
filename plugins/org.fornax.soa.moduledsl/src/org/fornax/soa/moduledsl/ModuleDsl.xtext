@@ -9,20 +9,33 @@ import "platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/prof
 ModuleModel:
 	imports+=Import*
 	modules+=Module*;
-	
+/*
+ * A (deployable) service module. External modules are provided by other organizations.
+ */	
 Module:
-	(ML_COMMENT)?
 	(external?='external')? 'module' name = QualifiedName '{'
+		
 		version = Version
 		'lifecycle-state' state = [profileDsl::LifecycleState | QualifiedName]
+		/* An additional named Qualifier of the module, may referred to by bindings or other modules using this module */
 		(qualifiers=Qualifier)?
 		('owner' owner = STRING)?
+		/*
+		 * How is the module packaged? SCA, EAR etc.
+		 */
 		('assembly-type' assemblyType = AssemblyType)?
 		('assembly-type-details' assemblyTypeDetails = STRING)?
+		/* override the module name used by default for the modules technical name for deployment */
 		('deployment-module-name' deploymentModuleName = STRING)?
 		
 		('provides' '{'
+			/*
+			 * Services that the module provides
+			 */
 			(providedServices += ServiceRef)*
+			/*
+			 * A namespace to provide all it's services, that match the modules state
+			 */
 			(providedNamespaces += NamespaceRef)*
 		'}')?
 		('uses' '{'
@@ -32,10 +45,17 @@ Module:
 		('source-location' source=STRING )? //Where can I get the sources?
 		('revision-tag' revisionTag=STRING )? //Tag in VCS
 	'}';
-	
+
+/* 
+ * Refers to a service constrained by the given version constraint
+ */
 ServiceRef: 
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (qualifiers=Qualifier)?;
 	
+/* 
+ * Refers to a service imported by the module constrained by the given version constraint. 
+ * The module to import the service from may be stated explicitely
+ */
 ImportServiceRef:
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 
 		('from-any-module-of' '{'
@@ -44,6 +64,10 @@ ImportServiceRef:
 		)?
 ;
 
+/*
+ * References a module matching the name and version constraint. Additional qualifiers, i.e. names 
+ * qualifying the other model, may be used to select the referenced module
+ */
 ServiceModuleRef:
 	module=[Module|QualifiedName] version=VersionRef (importQualifier=MultiQualifierRef)?
 ;
@@ -56,6 +80,7 @@ ModuleRef:
 	'}'
 ;
 
+/* refer to a whole SubNamespace */
 NamespaceRef: 
 	'namespace' namespace=[serviceDsl::SubNamespace | QualifiedName] ('{'
 		'excluding' '{'
@@ -67,7 +92,11 @@ NamespaceRef:
 MultiQualifierRef:
 	'qualified-by' (isOneOf?='one-of')? '{' (qualifiedName+=QualifiedName) (','qualifiedName+=QualifiedName)* '}'
 ;
-	
+
+/*
+ *	How the module is packaged 
+ */
+
 enum AssemblyType:
 	OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL
 ;

@@ -20,14 +20,25 @@ SOAProfileModel:
 	(types+=DataType)+
 	(profiles += SOAProfile)*
 	(roles+=Role)*;
-	
+
+/*
+ * Defines architectural constraints that apply. General foundational governance principles, like lifecycle states 
+ * are defined as well in the profile. Usually scoped to an organization
+ */	
 SOAProfile:
 	'soa-profile' name=ID '{'
+		/* The scope, where the architecture profile applies to */
 		'scope' scope = STRING
+		/* The asset lifecycle states */
 		lifecycle=Lifecycle
+		/* The available service categories */
 		'service-categories' '{'
 			serviceCategory+=ServiceCategory+
 		'}'
+		/* 
+		 * basic message principles, e.g. message headers that have to be set in every service message
+		 * if not stated otherwise in the service definition
+		 */
 		(messaging=Messaging)?
 		(designRules=DesignRules)?
 		(versioningRule = VersioningRule)
@@ -35,12 +46,18 @@ SOAProfile:
 		(namespaceRules = NamespaceRules)?
 		(scopedBasicTypes+=BasicTypes)*
 	'}';
-	
+
+/*
+ * Defines an asset lifecycle and it's possible state transitions
+ */
 Lifecycle:
 	'lifecycle' name = ID '{'
 		(states+= LifecycleState)+
 	'}';
 
+/*
+ * Defines an asset lifecycle state
+ */
 LifecycleState:
 	(isInitial?='initial' | isEnd?='end')? 'state' name = ID '{'
 		('qualifies-for' (qualifiesFor+=EnvironmentType)(',' qualifiesFor+=EnvironmentType)*)?
@@ -50,9 +67,15 @@ LifecycleState:
 	
 Transition: '->' targetState = [LifecycleState | QualifiedName] ('by' (roles+=[Role | QualifiedName])(',' roles+=[Role | QualifiedName])*)?;
 
+/*
+ * User role, e.g. to authorize asset lifecycle state transition
+ */
 Role: 
 	'role' name=ID;
-	
+
+/* 
+ * Defines a service category
+ */	
 ServiceCategory:
 	name = ID 'base-category' baseCategory = ServiceBaseCategory
 ;
@@ -61,28 +84,48 @@ enum ServiceBaseCategory: process | rule | activity | entity | utility | other;
 
 enum EnvironmentType returns environmentDsl::EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
 
+/* 
+ * Defines basic messaging principles, e.g. message headers that have to be set in every service message
+ * if not stated otherwise in the service definition
+ */
 Messaging :
 	{Messaging} 'messaging' '{'
 		(messageHeaders+=MessageHeader)*
 		('default-header' defaultHeader=MessageHeaderRef )?
 	'}';
-	
+
+/*
+ * General design rules for services and types
+ */	
 DesignRules:
 	{DesignRules} 'design-rules' '{'
 		(internalNamespaceRules+=InternalNamespaceRule)*
 		(typeDefPolicy=TypeDefPolicy)?
 		(serviceDefPolicy=ServiceDefPolicy)?
 	'}';
-	
+
+/*
+ * Conventions that apply to namespaces, especially their names
+ */	
 NamespaceRules:
 	{NamespaceRules}
 	'namespace-rules' '{'
 		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
 		(aliases+=BaseNamespaceAlias)*
 	'}';
-	
+
+/*
+ * How technical assets with the same name declare a version
+ * <ul>
+ * 	<li>by using different namespaces, but the same name</li>
+ * 	<li>by using different names, but the same namespace</li>
+ * </ul>
+ */	
 VersioningRule: 'versioning-strategy' versioningStrategy = VersioningStrategy;
-	
+
+/*
+ * Definies the basic / primitive types
+ */	
 BasicTypes:
 	'basic-types' 'for' scope=ID '{'
 		(types+=DataType)+
@@ -91,28 +134,40 @@ BasicTypes:
 BaseNamespaceAlias :
 	'shorten' baseNamespaceFragment=QualifiedName 'to' shortenedBaseNamespaceFragment=QualifiedName ;
 
+/*
+ * The toplevel namespace of the organization
+ */
 OrganizationNamespace:
 	'org-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		(subNamespaces+=TechnicalNamespace)*
 	'}' ;
-	
+
+/*
+ * A technical namespace, e.g. used to declare message object types
+ */	
 TechnicalNamespace: 
 	'namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
 		(types+=Type)*
 	'}';
  
-
+/*
+ * Declares a versioned message header for service messages
+ */
 MessageHeader:
 	'message-headers' name=QualifiedName '{'
 		'meta-data' '{'
 			version=Version 
 			'lifecycle-state' state=[LifecycleState | QualifiedName]
-			'for' (exchanges+=MEPMessageKind) (',' exchanges+=MEPMessageKind)* 
+			/* For which message exchange patterns the header is being used */
+			'for' (exchanges+=MEPMessageKind) (',' exchanges+=MEPMessageKind)*
+			/* may extension placeholder properties be used */ 
 			(extendableProperties?='extendable-properties' )?
+			/* may extension placeholder XML schema element attributes be used */ 
 			(extendableXMLAttributes?='extendable-XML-attributes' )?
 		'}'
-		
+		/* The parameters of the message header. The parameters are available as operation parameters. 
+		 * Parameters should not be stated again in the service operation definition*/
 		(parameters+=Property)+
 	'}';
 	
@@ -179,6 +234,7 @@ Class:
 		(properties+=AbstractProperty)+
 	'}';
 
+/* Design rule that applies to internal namespaces, e.g. naming convention to be checked by validators */
 InternalNamespaceRule: 
 	'internal-namespace-rule' name=ID '{'
 		'internal-qualifier' internalNsQualifierPolicy = InternalNsQualifierPolicy  
@@ -201,7 +257,10 @@ TypeDefPolicy:
 		(allowInheritance?='allow-inheritance' )?
 		(allowPolymorphism?='allow-polymorphism' )?
 	'}';
-	
+
+/*
+ * Defines convention to be met by service definitions
+ */	
 ServiceDefPolicy:
 	{ServiceDefPolicy}
 	'services' '{'

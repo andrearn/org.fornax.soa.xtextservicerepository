@@ -25,7 +25,9 @@ ServiceModel:
 	(orgNamespaces+=OrganizationNamespace)*
 	(types+=Type)*;
 	
-
+/*
+ * The toplevel namespace of the organization
+ */
 OrganizationNamespace :
 	'org-namespace' name= QualifiedName ('shortname' prefix=STRING)? '{'
 		('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
@@ -111,7 +113,8 @@ BusinessObjectRef:
 	
 Property:
 	Attribute | Reference;
-	
+
+/* A simple attribute */	
 Attribute:
 	(deprecated?='@deprecated')? 
 	((optional?='optional')? | (weak?='weak')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
@@ -157,23 +160,57 @@ Service:
 			version=Version  
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
-			'service-category' category=[profileDsl::ServiceCategory | QualifiedName] 
-			'statefulness' statefulness=Statefulness 
+			'service-category' category=[profileDsl::ServiceCategory | QualifiedName]
+			/* To what extend is a service stateful or stateless */ 
+			'statefulness' statefulness=Statefulness
+			/* are data persisted by the service ? */ 
 			('persistence' persistence=Persistence )? 
 			(
+				/* Who is responsible for the service? */
 				('service-owner' owner=STRING )?
-			&	('realizes-capabilty' '{'(realizedCapabilies+=CapabilityRef)+ '}')?	
-			&	('supports-capabilty' '{'(supportedCapabilies+=CapabilityRef)+ '}')?	
+				/* The business capabilities the service fully implements */
+			&	('realizes-capabilty' '{'(realizedCapabilies+=CapabilityRef)+ '}')?
+				/* The business capabilities that are supported but not fully implemented by this service alone */	
+			&	('supports-capabilty' '{'(supportedCapabilies+=CapabilityRef)+ '}')?
+				/* 
+				 * A technical service contract to be used instead of the one generation from this service definition.
+				 * This should only be used with private services, as the technical contract might not meet the architectural
+				 * rules that apply to public and domain scoped services
+				 */	
 			&	('provided-Contract-URL' providedContractUrl=STRING )? //Where can I get the sources?
+				/*
+				 * Location of the source code
+				 */
 			&	('sourceURL' source=STRING )? //Where can I get the sources?
+				/*
+				 * Location of documentation or specification documents
+				 */
 			&	('docURL' docUrl=STRING )?
+				/*
+				 * Date, when the service will be or has been released to production
+				 */
 			&	('release-on' releaseDate = STRING )?
+				/*
+				 * Date, when the service will be or was put out of service
+				 */
 			&	('retirement-on' retirementDate = STRING )?
+				/*
+				 * Used in conjunction with renaming the service. Points to the previous service version
+				 */
 			&	('replaces' replaces=ServiceRef )?
+				/*
+				 * The message header definition being used. Overrides the default from the architecture profile
+				 */
 			&	('messageHeader' messageHeader = MessageHeaderRef )?
 			)
+			/*
+			 * Semantic tagging
+			 */
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
+		/*
+		 * The service operations
+		 */
 		(operations+=Operation)*
 	'}';
 	
@@ -189,7 +226,14 @@ GovernanceApproval:
 	
 enum ApprovalDecision: no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated;
 	
-enum Statefulness: idempotent | stateless | transientState="transient-state"| stateful ;
+enum Statefulness: 
+	/* same result, no matter how often the operation has been called with the same parameters*/
+	idempotent | 
+	stateless |
+	/* Operation acts as if stateless, however a state transiently exists */ 
+	transientState="transient-state"| 
+	stateful
+;
 
 enum Persistence: none | read | write | readWrite = "read / write";
 
@@ -208,12 +252,18 @@ ParameterRef:
 
 MessageHeaderRef:
 	header = [profileDsl::MessageHeader|QualifiedName] versionRef=VersionRef;
-	
+
+/*
+ * References a business capability
+ */
 CapabilityRef:
 	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
 
 Event:	GlobalEvent | OperationEvent;
 
+/*
+ * Event, that is not scoped to an operation
+ */
 GlobalEvent:
 	'event' name=ID '{'
 		'metadata' '{'
@@ -228,7 +278,10 @@ GlobalEvent:
 		'}'
 		(parameter+=Parameter )*
 	'}';
-	
+
+/*
+ * Event that is scoped to an operation
+ */
 OperationEvent:
 	'event' name=ID '{'
 		('metadata' '{'
@@ -245,23 +298,48 @@ OperationEventRef:
 
 GlobalEventRef:
 	event=[GlobalEvent|QualifiedName] versionRef=VersionRef ('subType' subType=ID)?;
-	
+
+/*
+ * Channel used to publish events to or to watch for events
+ */
 Channel:
 	'channel' name=QualifiedName  ;
 	
-	
+/*
+ * A service operation
+ */
 Operation:
 	(deprecated?='@deprecated')? mep=MEP name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
+		/*
+		 * Listens for callback from the given operations. Used, when one of the operations has been called asynchronously.
+		 * The operation must correlate the asynch response to the original request
+		 */
 		('callback-listener-for' (callbackForOperation+=OperationRef) (',' callbackForOperation+=OperationRef)*)?
+		/* The following event are published, when the operation is called */
 		('publishes' '{'
 				(publishes+=PublishedEvent )+ 
-		'}')? 
+		'}')?
+		/*
+		 * The operation is automaitically invoked, when one of the given events occurs
+		 */ 
 		('subscribes-to' '{'
 			(subscribes+=EventRef )
 		'}')? 
-		('requires' requires+=ServiceRef )* 
+		/*
+		 * Services used by this service
+		 */
+		('requires' requires+=ServiceRef )*
+		/*
+		 * overrides the default from the service
+		 */ 
 		('statefulness' statefulness=Statefulness (updating?='updating')? )?
+		/*
+		 * The operation is capabale to revert/compensate the effect ot the given other operation
+		 */
 		('can-compensate' canCompensate+=OperationRef )?
+		/*
+		 * Overrides the message header declaration from the architecture profile or service for this operation
+		 */
 		('messageHeader' messageHeader = MessageHeaderRef )?
 		(fetchProfile+=FetchProfile)*
 		('realizes-capabilty' '{'(realizedCapabilies+=CapabilityRef)+ '}')?	
@@ -269,17 +347,32 @@ Operation:
 	'}';
 	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
 
+/*
+ * Defines the publishing of an event.
+ */
 PublishedEvent : PublishedGlobalEvent | PublishedOperationEvent;
 
+/*
+ * An event published by the operation
+ */
 PublishedOperationEvent: 
 	publishesOpEvent = OperationEvent;
 
+/*
+ * Declares an event being published. Not scoped to the service operation.
+ */
 PublishedGlobalEvent:
 	 publishesGlobalEvent = GlobalEventRef ;
-	 
+
+/*
+ * An operation (return) parameter
+ */	 
 Parameter:
 	(optional?='optional')? name=ID ':' type=TypeRef ;
-	
+
+/*
+ * Declared service operation exceptions
+ */
 Exception:
 	'exception' name=ID ('extends' superException=ExceptionRef)? '{' 
 		'metadata' '{'
@@ -310,11 +403,20 @@ enum MEP :
  */	
 enum VISIBILITY : public | domain | private; 
 
+/*
+ * Defines what data will be fetch. Consumers can rely on respective BO properties being set
+ */
 FetchProfile:
 	'fetch-profile' (isDefault?='default')? profileName=ID fetchSpec=FetchSpec ;
 
 FetchSpec: EagerFetch | FlatFetch;
 
+/*
+ * Defines object properties to be always fetched
+ */
 EagerFetch: 'fetches' (eagerFetchAssoc+=ParameterRef)(',' eagerFetchAssoc+=ParameterRef)*;
 
+/*
+ * Don't fetch properties of nested objects
+ */
 FlatFetch: 'fetches-flat-only' {FlatFetch};

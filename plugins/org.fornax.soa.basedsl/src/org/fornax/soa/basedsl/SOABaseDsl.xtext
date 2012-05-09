@@ -12,31 +12,64 @@ grammar org.fornax.soa.basedsl.SOABaseDsl with org.eclipse.xtext.common.Terminal
 
 generate sOABaseDsl "http://www.fornax.org/soa/basedsl/SOABaseDsl"
 
+/* Java like imports */
 Import: 
 	'import' importedNamespace=QualifiedNameWithWildCard;
 
+/* 
+ * Version numbers, some postfixes are treated in a special way:
+ * <ul>
+ * 	<li>Final:		treated as if the version number ends with ".0"</li>
+ * 	<li>RC:			release candidate, may end with a number</li>
+ * 	<li>CR:			release candidate (snynonym for RC), may end with a number</li></li>
+ * 	<li>Beta:		beta, may end with a number</li>
+ * 	<li>Alpha:		alpha, may end with a number</li>
+ * 	<li>Milestone:	milestone release, may end with a number</li>
+ * </ul>
+ */
 VersionId: INT('.'INT)*('.'ID)?;
 
 VersionedName: {VersionedName} QualifiedName|ID (WS)* version=VersionId;
 
+/*
+ * A version qualifier for versioned assets
+ */
 Version:
 	'version' (version=VersionId) ;
-	
+
+/*
+ * Version constraints applied to referenced assets
+ */
 VersionRef:
 	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
-	
+
+/*
+ * Assets, where the version is lesser than maximal version: asset version >= minVersion
+ */	
 MinVersionRef:
 	('minVersion') minVersion=VersionId;
-	
+
+/*
+ * Assets, that match a minimal version: asset version >= minVersion
+ */	
 MaxVersionRef:
 	('maxVersion') maxVersion=VersionId;
-	
+
+/*
+ * Matches version in the half open range [minVersion, maxVersion)
+ */	
 LowerBoundRangeVersionRef:
 	('minVersion' '>=') minVersion=VersionId ',' ('maxVersion' '<') maxVersion=VersionId;
 
+/*
+ * Constraint matches assets with any version with the same major version, i.e. the first INT until the first '.' is equal
+ */
 MajorVersionRef:
 	'majorVersion' majorVersion=INT;
-	
+
+/*
+ * Constraint that matches an asset version  explicitely
+ */
 FixedVersionRef:
 	'fixedVersion' fixedVersion=VersionId;
 

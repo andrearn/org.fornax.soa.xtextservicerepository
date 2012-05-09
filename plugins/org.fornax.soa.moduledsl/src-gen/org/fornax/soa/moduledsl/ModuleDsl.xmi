@@ -31,7 +31,6 @@
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/moduledsl/ModuleDsl#//Module"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:RuleCall" cardinality="?" rule="/2/@rules.3"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="external" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="external"/>
         </elements>

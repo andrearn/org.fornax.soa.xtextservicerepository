@@ -41,6 +41,7 @@ enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environ
 
 Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP;
 
+/* An Enterprise Service Bus */
 ESB: 
 	'esb' name=ID '{'
 		('identifier' dslCode=STRING )?
@@ -66,6 +67,7 @@ ESB:
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
+/* A service registry */
 Registry:
 	'registry' name=ID '{'
 		('identifier' dslCode=STRING )?
@@ -90,6 +92,7 @@ enum RegistryKind : UDDI | HTTP | File | Native;
 
 RegistryService: JNDIRegistry | COSNamingRegistry | RMIRegistry | IOR | UDDIRegistry;
 
+/* A Java JNDI registry */
 JNDIRegistry: 
 	'jndi' '{'
 		'port' port = INT
@@ -100,6 +103,7 @@ JNDIRegistry:
 	'}'
 ;
 
+/* A CORBA COS naming based registry */
 COSNamingRegistry:
 	'COS-Naming' '{'
 		'port' port = INT
@@ -108,6 +112,7 @@ COSNamingRegistry:
 	'}'
 ;
 
+/* A plain Java RMI registry, where RMI capable objects are registered */
 RMIRegistry:
 	'RMI-Registry' '{'
 		'port' port = INT
@@ -115,6 +120,7 @@ RMIRegistry:
 	'}'
 ;
 
+/* A interface object repository, where CORBA objec are registered */
 IOR:
 	'Corba-IOR' '{'
 		'port' port = INT
@@ -122,13 +128,15 @@ IOR:
 	'}'
 ;
 
+/* A UDDI registry used to retrieve WDSLs of webservices */
 UDDIRegistry:
 	'UDDI' '{'
 		'url' url = STRING
 		('secure-url' secureUrl = STRING)?
 	'}'
 ;
-	
+
+/* An application server */	
 AppServer: 
 	'appserver' name=ID '{'
 		('identifier' dslCode=STRING )?
@@ -154,6 +162,7 @@ AppServer:
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
+/* A HTTP webserver, e.g. Apache */
 WebServer: 
 	'webserver' name=ID '{'
 		('identifier' dslCode=STRING )?
@@ -172,7 +181,7 @@ WebServer:
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 	
-	
+/* A business process server */
 ProcessServer:
 	'processserver'  name=ID '{'
 		('identifier' dslCode=STRING )?
@@ -198,6 +207,7 @@ ProcessServer:
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
+/* A message broker */
 Broker: 
 	'broker' name=ID '{'
 		('identifier' dslCode=STRING )? 
@@ -236,6 +246,7 @@ Database:
 		('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
+/* A SAP system */
 SAP:  
 	'sap' name=ID '{'
 		('identifier' dslCode=STRING )?
@@ -268,11 +279,14 @@ enum DatabaseKind : Other | Oracle | DB2 | MSSQL | MySQL | Postgres | Sybase | H
 DatabaseSchema: 
 	'schema' name=ID 'owner' owner=STRING;
 
-
+/*
+ * A protocol, connector available on the server that support a specific protocol. E.g. used to expose service endpoints
+ */
 Connector:
 	SOAPHTTP | SOAPJMS | REST | EJB | JMS | AMQP | IIOP | RMI | Tuxedo | RFC | FTP | IMAP | POP3 | SMTP | HTTP | TCP
 ;
 
+/* Connector for SOAP over HTTP */
 SOAPHTTP:
 	{SOAPHTTP}
 	(isDefault?='default')? 'SOAP/HTTP' name=ID '{'
@@ -284,6 +298,7 @@ SOAPHTTP:
 		('implementation' implementation=STRING)?
 	'}';
 
+/* Connector for SOAP over JMS */
 SOAPJMS:
 	(isDefault?='default')? 'SOAP/JMS' name=ID '{'
 		('versions' (version+=STRING)+)?
@@ -293,6 +308,7 @@ SOAPJMS:
 		('implementation' implementation=STRING)?
 	'}';
 
+/* A HTTP REST connector */
 REST:
 	{REST}
 	(isDefault?='default')? 'REST' name=ID '{'
@@ -302,6 +318,7 @@ REST:
 		('context-root' contextRoot=STRING)?
 	'}';
 
+/* An EJB connector. Defines the RMI or IIOP ports */
 EJB:
 	{EJB}
 	(isDefault?='default')? 'EJB' name=ID '{'
@@ -312,6 +329,7 @@ EJB:
 	'}'
 ;
 
+/* A (CORBA) IIOP connector */
 IIOP:
 	{IIOP}
 	(isDefault?='default')? 'IIOP' name=ID '{'
@@ -323,6 +341,7 @@ IIOP:
 	'}'
 ;
 
+/* A Java RMI connector */
 RMI:
 	{RMI}
 	(isDefault?='default')? 'RMI' name=ID '{'
@@ -334,6 +353,7 @@ RMI:
 	'}'
 ;
 
+/* A Tuxedo RPC connector */
 Tuxedo:
 	{Tuxedo}
 	(isDefault?='default')? 'Tuxedo' name=ID '{'
@@ -344,6 +364,7 @@ Tuxedo:
 	'}'
 ;
 
+/* A JMS connector */
 JMS:
 	(isDefault?='default')? 'JMS' name=ID '{'
 		('versions' (version+=STRING)+)?
@@ -354,6 +375,7 @@ JMS:
 		('implementation' implementation=STRING)?
 	'}';
 
+/* An AMQP based messaging connector */
 AMQP:
 	{AMQP}
 	(isDefault?='default')? 'AMQP' name=ID '{'
@@ -365,6 +387,7 @@ AMQP:
 	'}'
 ;
 
+/* A SAP RFC connector */
 RFC: 
 	{RFC}
 	(isDefault?='default')? 'RFC' name=ID '{'
@@ -373,6 +396,7 @@ RFC:
 		(connectionSpec=JCAConnectionSpec)?
 	'}';
 
+/* A FTP file transfer connector */
 FTP:
 	{FTP}
 	(isDefault?='default')? 'FTP' name=ID '{'
@@ -381,6 +405,7 @@ FTP:
 		('security-protocol' securityProtocol=SecurityProtocol)?
 	'}';
 
+/* An IMAP mail connector */
 IMAP:
 	{IMAP}
 	(isDefault?='default')? 'IMAP' name=ID '{'
@@ -389,6 +414,9 @@ IMAP:
 		('security-protocol' securityProtocol=SecurityProtocol)?
 	'}';
 
+/*
+ * A POP3 mail connector
+ */
 POP3:
 	{POP3}
 	(isDefault?='default')? 'POP3' name=ID '{'
@@ -403,6 +431,9 @@ JCAConnectionSpec:
 		('connection-factory-class' connectionFactoryClass = STRING)?
 	'}';
 
+/*
+ * An SMTP mail sender connector
+ */
 SMTP:
 	{SMTP}
 	(isDefault?='default')? 'SMTP' name=ID '{'
@@ -411,6 +442,9 @@ SMTP:
 		('security-protocol' securityProtocol=SecurityProtocol)?
 	'}';
 
+/*
+ * A plain HTTP connector
+ */
 HTTP:
 	{HTTP}
 	(isDefault?='default')? 'HTTP' name=ID '{'
@@ -419,14 +453,17 @@ HTTP:
 		('security-protocol' securityProtocol=SecurityProtocol)?
 		('context-root' contextRoot = STRING)?
 	'}';
-
+	
+/*
+ * A plain TCP connector
+ */
 TCP:
 	(isDefault?='default')? 'TCP' name=ID '{'
 		'port' port = INT
 		('security-protocol' securityProtocol=SecurityProtocol)?
 	'}';
 	
-		
+/* A host, i.e. hardware */
 Host:
 	'host' name=ID '{'
 		'full-qualified-name' fqn=STRING 
@@ -434,7 +471,8 @@ Host:
 		('identifier' dshCode=STRING )?
 		('admins' admins+=[User|QualifiedName])?
 	'}';
-	
+
+/* A system user */	
 User: 
 	'user' name=ID '{'
 		('firstname' firstname=STRING 'lastname' lastname=STRING )? 

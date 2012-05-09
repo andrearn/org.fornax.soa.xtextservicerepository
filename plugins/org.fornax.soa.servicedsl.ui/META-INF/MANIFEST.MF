@@ -25,5 +25,6 @@ Require-Bundle: org.fornax.soa.servicedsl;bundle-version="1.5.0";visibility:=ree
  org.eclipse.compare
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: org.fornax.soa.ui.contentassist.antlr
+Export-Package: org.fornax.soa.ui.contentassist.antlr,
+ org.fornax.soa.ui.contentassist
 Bundle-Activator: org.fornax.soa.ui.internal.ServiceDslCustomActivator

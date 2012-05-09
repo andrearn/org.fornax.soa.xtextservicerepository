@@ -247,5 +247,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HashAlgorithm/useBase64"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HashAlgorithm/kind"/>
     </genClasses>
+    <genClasses ecoreClass="BindingDsl.ecore#//AuthorizationPolicy"/>
+    <genClasses ecoreClass="BindingDsl.ecore#//SigningPolicy"/>
+    <genClasses ecoreClass="BindingDsl.ecore#//EncryptionPolicy"/>
   </genPackages>
 </genmodel:GenModel>

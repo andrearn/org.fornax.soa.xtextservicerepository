@@ -26,6 +26,10 @@ BindingModel:
 
 Binding: DomainBinding | ModuleBinding | ServiceBinding ;
 
+/*
+ * Binds all services in the given namespace, where the service lifecycle state matches the minimal required lifecycle state of the 
+ * targeted environment
+ */
 DomainBinding: 
 	'bind namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment] '{'
 		(qualifier=Qualifier)?
@@ -48,7 +52,10 @@ Publisher:
 	
 Provider:
 	'provided on' provServer = [environmentDsl::Server|QualifiedName] ('with' 'connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*)?;
-	
+
+/*
+ * Overrides the binding of a parent DomainBinding or ModuleBinding for the given Service
+ */
 ServiceBinding:
 	'bind-service' service=ServiceRef '{'
 		(qualifier=Qualifier)?
@@ -62,14 +69,22 @@ ServiceBinding:
 		('references-module' referencedModule = ModuleRef)?
 		(operation+=OperationBinding)*
 	'}';
-	
+
+/*
+ * References a service constained by the VersionRef constraint
+ */	
 ServiceRef:
 	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
 	
 
-	
+/*
+ * The endpoint protocol of the entpoint on which the service is provided
+ */	
 BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP;
 
+/*
+ * Overrides the binding of a parent ServiceBinding for the given service Operation
+ */
 OperationBinding: 
 	'bind-operation' operation=[serviceDsl::Operation|QualifiedName] '{' 
 		(qualifier=Qualifier)?
@@ -87,14 +102,21 @@ OperationBinding:
 		'}')?
 		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
 	'}';
-	
+
+/*
+ * Binds the referenced module to the given target environment. All services provided by the module become available in the
+ * targeted environment
+ */	
 ModuleBinding:
 	'bind-module' module=ModuleRef 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment|QualifiedName] '{'
 		(qualifier=Qualifier)?
+		/* The server to bind the endpoint to */
 		provider=Provider
+		/* The default endpoint protocols to be used by default. The protocols respective connector on the server is used to expose the service */
 		('default-protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}')?
+		
 		('default-policies' '{'
 			(policies+=Policy)*
 		'}')?
@@ -128,7 +150,7 @@ Component:
 
 enum ImplementationType: BPMN | BPMN2 | BPEL | WSHT='WS-HT' | RuleML | Drools | Mediation | Java | CS='C#' | CPP='C++' | Scala | Ruby | PHP | WSDocLit = 'WS-Document/Literal' | WSRPC = 'WS-RPC/Literal' | WSRPCEnc='WS-RPC/Encoded' | REST_XML='REST-XML' | REST_JSON = 'REST-JSON'| EJB | Spring | EJB2 | SAP | SAP_IDOC = 'SAP/iDoc' | SAP_BAPI = 'SAP/BAPI'| Corba | Shell | Siebel | Tuxedo | File | SQL | Ivy | jPDL3 | jPDL4;
 
-
+/* Use SOAP on the endpoint */
 SOAP: 
 	'SOAP' '{'
 		{SOAP}
@@ -143,6 +165,7 @@ SOAP:
 	
 enum SOAPStyle: doclitwrap='document/literal-wrapped' | rpclit = 'rpc/literal' | rpcenc='rpc/encoded';
 
+/* SAP endpoint (RFC or IDoc as stated with the SAPTransport */
 SAP: 
 	'SAP' '{'
 		{SAP}
@@ -153,7 +176,8 @@ SAP:
 	'}';
 
 enum SAPTransport: IDOC | RFC;
- 
+
+/* An EJB endpoint protocol (IIOP/RMI) */ 
 EJB: 
 	'EJB' '{'
 		(qualifier=Qualifier)?
@@ -161,7 +185,8 @@ EJB:
 		(provider=Provider)?
 		'jndi-name' jndiName=STRING 
 	'}';
-	
+
+/* A  plain HTTP endpoint protocol */	
 HTTP: 
 	'HTTP' '{'
 		(qualifier=Qualifier)?
@@ -172,6 +197,7 @@ HTTP:
 		'verb' verb=Verb 
 	'}';
 
+/* A REST endpoint protocol */
 REST: 
 	'REST' '{'
 		(qualifier=Qualifier)?
@@ -185,10 +211,12 @@ REST:
 		('provides-format' provideFormat=RESTFormat)? 
 	'}';
 
-	
+/* The wire data serialization format */	
 enum RESTFormat: JSON | XML | BISON | OTHER;
+/* The REST operation verb */
 enum Verb: CREATE | RETRIEVE | UPDATE | DELETE | GET | PUT | POST;
 
+/* A JMS endpoint protocol. The actual wire format of the messages is not specified. However, the Broker exposes an JMS API */
 JMS:
 	'JMS' '{'
 		{JMS}
@@ -202,10 +230,13 @@ JMS:
 	
 TopicOrQueue: Topic | Queue;
 
+/* JMS topic to send/retrieve messages */
 Topic: 'topic' name=STRING (qualifier=Qualifier)?;
 
+/* JMS queue to send/retrieve messages */
 Queue: 'queue' name=STRING (qualifier=Qualifier)?;
-	
+
+/* An SCA native endpoint protocol. Messages are accessed via the SCA API or import/export primitives*/	
 SCA:
 	{SCA} 
 	'SCA' (name=STRING)? '{'
@@ -216,12 +247,14 @@ SCA:
 		('reference' reference=STRING (isMultipleRef?='[]')? )?
 	'}' ;
 
+/* A file access protocol for endpoints */
 FILE: 
 	'FILE' '{'
 		(qualifier=Qualifier)?
 		url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?
 	'}';
 
+/* Use FTP to access message files on the endpoint */
 FTP: 
 	'FTP' '{' 
 		(qualifier=Qualifier)?
@@ -230,13 +263,18 @@ FTP:
 
 enum ReadWrite : read|write;
 
+/* Service policies */
 Policy: LogPolicy | SecurityPolicy;
 
+/* Logging policy to be applied to the services */
 LogPolicy: 'logging policy' logPolicy=LogPolicyKind ;
 
+/* Security policy to be applied to the services */
 SecurityPolicy : AuthenticationPolicy | AuthorizationPolicy | SigningPolicy | EncryptionPolicy;
 
+/* Policy, that defines how consumer are authenticated */
 AuthenticationPolicy : 
+	{AuthenticationPolicy}
 	'authn policy' (name=ID)? (optional?='optional')? '{'
 		'auth tokens' '{'
 			(authTokens+=AuthToken)+
@@ -252,11 +290,14 @@ HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=Hash
 
 enum HashAlgKind : MD5 | SHA1 | SHA256 | PlainText;
 
-AuthorizationPolicy : 'authorization rolicy';
+/* Policy, that defines, how service consumers are authorized*/
+AuthorizationPolicy : {AuthorizationPolicy} 'authorization rolicy';
 
-SigningPolicy : 'signing policy';
+/* How messages are signed, to verify their authenticity */
+SigningPolicy : {SigningPolicy} 'signing policy';
 
-EncryptionPolicy : 'encryption policy';
+/* How messages are encrypted */
+EncryptionPolicy : {EncryptionPolicy} 'encryption policy';
 
 enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos;
 

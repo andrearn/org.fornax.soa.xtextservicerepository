@@ -283,6 +283,9 @@
     <eLiterals name="SHA256" value="2" literal="SHA256"/>
     <eLiterals name="PlainText" value="3" literal="PlainText"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AuthorizationPolicy" eSuperTypes="#//SecurityPolicy"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SigningPolicy" eSuperTypes="#//SecurityPolicy"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EncryptionPolicy" eSuperTypes="#//SecurityPolicy"/>
   <eClassifiers xsi:type="ecore:EEnum" name="AuthTokenKind">
     <eLiterals name="UsernamePassword" literal="UsernamePassword"/>
     <eLiterals name="SAML" value="1" literal="SAML"/>
