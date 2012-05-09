@@ -2,10 +2,10 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Solution DSL.generator
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Bundle-SymbolicName: org.fornax.soa.solutiondsl.generator; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.fornax.soa.solutiondsl;bundle-version="1.5.0";visibility:=reexport,
+Require-Bundle: org.fornax.soa.solutiondsl;bundle-version="1.5.1";visibility:=reexport,
  org.eclipse.xtext;bundle-version="2.0.0";visibility:=reexport,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.mwe.utils;visibility:=reexport,

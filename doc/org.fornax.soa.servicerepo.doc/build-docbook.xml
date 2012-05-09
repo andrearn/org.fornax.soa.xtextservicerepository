@@ -10,9 +10,9 @@
 	<!--
 		Global vars
 	-->
-	<property name="document.name" value="xpand_reference" />
-	<property name="src.dir" value="${basedir}/src/5.0/structure" />
-	<property name="images.dir" value="${basedir}/src/5.0/content/images" />
+	<property name="document.name" value="manual" />
+	<property name="src.dir" value="${basedir}/docbook" />
+	<property name="images.dir" value="${basedir}/docbook/images" />
 	<property name="styles.dir" value="src/styles" />
 	<property name="xslt.dir" value="${styles.dir}/xslt" />
 	<property name="css.dir" value="${styles.dir}/css" />
@@ -37,15 +37,15 @@
 	<property name="docbook.dir"
 	          value="${download.dir}${file.separator}docbook-xsl-${docbook.version}" />
 	<property name="docbookxsl.url"
-	          value="http://internap.dl.sourceforge.net/sourceforge/docbook/docbook-xsl-${docbook.version}.zip" />
+	          value="http://sourceforge.net/projects/docbook/files/docbook-xsl/${docbook.version}/docbook-xsl-${docbook.version}.zip/download" />
 	<property name="fop.dir" value="${download.dir}${file.separator}fop-0.95" />
 	<property name="fop.url"
-	          value="http://mirrorspace.org/apache/xmlgraphics/fop/binaries/fop-0.95-bin.zip" />
+	          value="http://apache.linux-mirror.org/xmlgraphics/fop/binaries/fop-1.0-bin.zip" />
 	<property name="xom.dir" value="${download.dir}${file.separator}XOM" />
 	<property name="xom.url"
 	          value="http://www.cafeconleche.org/XOM/xom-1.2.1.zip" />
 	<property name="xcluder.url"
-	          value="http://ovh.dl.sourceforge.net/project/xcluder/xcluder/xcluder%200.9.2/xcluder-0.9.2.jar" />
+	          value="http://sourceforge.net/projects/xcluder/files/xcluder/xcluder%200.9.2/xcluder-0.9.2.jar/download" />
 	<property name="xcluder.jar"
 	          value="${download.dir}${file.separator}xcluder.jar" />
 	
@@ -257,16 +257,16 @@
 
 	<target name="docbook2eclipsehelp" depends="get-fop,get-docbook-xsl,merge">
 		<echo>Converting article to Eclipse Help...</echo>
-		<delete dir="${basedir}/help"
+		<delete dir="${basedir}/html"
 		        failonerror="false"
 		        excludes="CVS"
 		        includeemptydirs="true" />
-		<copy todir="${basedir}/help/images">
+		<copy todir="${basedir}/html/images">
 			<fileset dir="${images.dir}">
 				<include name="**/*" />
 			</fileset>
 		</copy>
-		<copy file="${eclipsehelp-css.file}" todir="${basedir}/help" />
+		<copy file="${eclipsehelp-css.file}" todir="${basedir}/html" />
 
 		<xslt basedir="${build.dir}"
 		      destdir="${basedir}"
@@ -288,7 +288,7 @@
 	<target name="clean">
 		<delete dir="build" />
 		<delete dir="manual" />
-		<delete dir="help" />
+		<delete dir="html" />
 		<delete dir="html" />
 	</target>
 

@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.bindingdsl.generator"
       label="SOA Binding DSL generator"
-      version="1.5.0.qualifier"
+      version="1.5.1.qualifier"
       provider-name="Fornax Platform">
 
    <description url="http://www.eclipse.org/modeling/m2t">
