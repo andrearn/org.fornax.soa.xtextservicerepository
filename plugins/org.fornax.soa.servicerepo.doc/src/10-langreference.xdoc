@@ -1,0 +1,737 @@
+chapter:DSLReference[DSL Reference]
+
+
+section:GeneralRules[General syntax rules]
+
+section2:qualifiedNameRule[Qualified names]
+
+Asset names can be fully qualified. A <code>QualifiedName</code> is defined as:
+
+Definition:		
+code[Xtext][
+	ID(.ID)*
+]
+
+Example:
+code[SOABaseDSL][
+	my.qualified.Name
+]
+
+
+section2:keywordEscapeRule[Keyword escape]
+
+If a name is already a keyword it can be escaped with the character e[^] as usual in Xtext
+based languages.
+
+
+section2:versionDeclRule[Version declarations]
+
+Versioned assets declare their version with the following statement:
+
+Definition:		
+code[Xtext][
+	version INT('.'INT)*
+]
+
+Example:
+code[SOABaseDSL][
+	version 1.3.1
+]
+
+The first number is the major version number. Two elements with the same name and major version
+number are considered compatible.
+
+
+section2:lifecycleDeclRule[Lifecycle state declarations]
+
+Elements under the SOA governance lifecycle declare their current state with the following statement:
+
+Definition:		
+code[ServiceDSL][
+	lifecycle-state lifecycleStateNameFromProfile
+]
+
+Example:
+code[ServiceDSL][
+	lifecycle-state productive
+]
+
+Possible lifecycle states are defined with Lifecycles in the profil DSL.
+
+
+section2:govApprovalDeclRule[Governance approval declarations]
+
+Assets under the SOA governance declare their current approval state with the following a[section]:
+
+Definition:	
+code[ServiceDSL][
+	governance-approval {
+		yes | no | tolerated | temporarily-tolerated
+		(decision-on DATESTRING)?
+		(decision-by STRING)? 
+	}
+]
+
+Example:
+code[ServiceDSL][
+	governance-approval {
+		yes
+		decision-on "01.03.2011"
+		decision-by "Max Miller" 
+	}
+]
+
+In the example the asset has been approved on March 1st, 2011 by Max Miller.
+	
+
+section:BusinessDsl[Business DSL]
+
+section2:bizDslLangIntro[Introduction]
+
+The Business DSL defines and business capabilties and business functions as well as organizational structures
+that implements the business function. Business capabilities can be mapped to services, service operations or 
+features of a solution. E.g. a service may declare that it realizes a certain capability. Capabilities can be grouped 
+into e[capability-group]s and organized into e[domain]s. It is also possible to define variants
+of a capability.
+
+Example:
+code[BusinessDSL][
+	domain company.shop {
+		
+		capability-group Invoicing {
+			description "Creating and managing invoices"
+			
+				
+			capability BillRun {
+				version 1.0
+				short-description "Start the monthly billrun"
+				automation-level automated
+				business-value "critical"
+			}
+			
+			capability InvoiceCreation {
+				version 1.0
+				short-description "Create an invoice document for the customer "
+				automation-level automated
+				business-value "medium"
+				inputs {
+					input "order"
+					input "customer"
+					input "customer address"
+				}
+				outcomes {
+					outcome "Invoice document created and archived"
+					outcome "Invoice document sent by email and postal mail to the customer"
+				}
+			}
+		}	
+		
+	}
+]
+
+The example defines a capability group e[Invoicing] in the domain e[company.shop]. 
+The capability group contains the fully automated capabilities e[Billrun] and e[InvoiceCreation].
+The latter one defines required inputs and expected results.
+ 
+Business capability models can be created by creating a new e[Business DSL file]. A wizard is 
+available for that.
+
+
+section:ServiceDSL[Service DSL]
+
+
+section2:ServiceDSLIntro[Language overview]
+
+section3:ServiceDslFile[Service DSL file structure]
+
+A Service DSL file defines namespace, business objects, services and exception. It has the following basic structure:
+
+code[ServiceDSL][
+	org-namespace <QualifiedName> shortname "<String>" {
+						
+		domain-namespace <QualifiedName> shortname "<String>" {
+			(
+			metadata {
+				<business-domain>?
+				<owner>?
+			}
+			)?
+			
+			/* business objects and enums */
+			businessObject AbstractProduct {
+				metadata {
+					version <someversion.number>
+					lifecycle-state <a governance lifecycle state>
+					governance-approval {
+						...
+					}
+				}
+				<... attributes and weak-references ...>
+			}
+			
+			
+			/* services ... */			    
+			public service CustomerEntityService {
+				metadata {
+					version <someversion.number>
+					lifecycle-state <a governance lifecycle state>
+					governance-approval {
+						...
+					}
+					category entity
+					statefulness &lt; idempodent | stateless | stateful &gt;
+					persistence <read | write | read/write>
+				}
+				
+				// operations go here:
+				<message exchange pattern: sync | async ..> <operationName> (<(optional)? parameters> ) 
+					returns <(optional)? return paramters>
+					throws <exceptions, ...>
+				{
+					requires <other version constrained service dependency>
+				}
+			}
+			
+			<exceptions ... >
+			exception <ExceptionName> {
+				metadata {
+					version <someversion.number>
+					lifecycle-state <a governance lifecycle state>
+					governance-approval {
+						...
+					}
+				}
+				<exception-attributes like in business objects>
+			}
+		}
+	}
+]
+
+
+section3:langNamespaces[Namespaces]
+
+section4:langOrgNamespace[Organization Namespace]
+
+Organization Namespaces are toplevel namespaces like e[com.example]. They reflect
+a company, organization or top level unit of a company. Organization Namespaces are
+used as host part in namespace URIs in reversed order, e.g. e[http://example.com/]
+Organization Namespace should declare a short name which might be used as namespace prefix or
+part of a file name.	
+
+section4:langDomainNamespace[Domain Namespace]
+
+A Domain Namespace contains a canonical datamodel as well as related public services for a certain 
+logical subdomain. Usually a service DSL file declares a single Domain Namespace and no Domain Namespaces
+are nested in that file within the declared Domain Namespace. Instead subnamespaces will be declared in
+separate file having their namespace name prefixed with with the names of all their parnet Domain
+Namespaces. Hence parent-child relationships of Domain Namespaces are built by apply this 
+naming convention. Dots are used as separators.
+
+Example:
+
+Be e[product] the top level of all subnamespace related to customers. Then 
+e[customer.contract] would declare the subnamespace e[contract] as subnamespace
+of e[customer]. If e[org.example] would be the top level Organization Namespace 
+containing these Domain Namespaces, the full qualified name would be: 
+
+e[org.example.customer.contract]. The resulting namespace URI would look like: e[http://example.org/customer/contract]
+
+The resp. declarations with Service DSL would look like:
+
+code[ServiceDSL][
+	org-namespace com.example shortname "ex" {
+						
+		domain-namespace customer shortname "cust" {
+			metadata {
+			}
+						    
+		}
+	}
+]
+
+And it's subdomain:
+code[ServiceDSL][
+	org-namespace com.example shortname "ex" {
+						
+		domain-namespace customer.contract shortname "ct" {
+			metadata {
+			}
+					    
+		}
+	}
+]
+
+section4:langInternalNamespace[Internal Namespace]
+
+An internal namespace contains private services and the non canonical datamodel, i.e. internal parts 
+of the infrastructure the may change frequently. Datatypes declared in an internal namespace are being 
+considered noncanonical. Services defined in an internal namespace should be marked e[private]. An internal
+namespace is declared like this:
+
+Example:
+code[ServiceDSL][
+	org-namespace com.example shortname "ex" {
+						
+		internal-namespace customer.contract.internal.backend shortname "ctback" {
+			metadata {
+			}
+						    
+		}
+	}
+]
+
+
+
+section3:langBOs[BusinessObjects]
+
+BusinessObject are user defined complex datatypes capturing business data. BusinessObject are versioned 
+and have a lifecycle state. The actual data are represented by one or more properties, that have a name and a datatype.
+				
+Example:
+
+code[ServiceDSL][
+		businessObject AbstractProduct {
+			metadata {
+				version 1.0
+				lifecycle-state test
+				governance-approval {
+					yes
+					approval-date "20.04.2011"
+					approved-by "Anna Jacobson"
+				}
+			}
+			business-key productId : string
+			name : string
+			price : AbstractPrice majorVersion 1
+			category : string
+			optional vendor : string
+		}
+]
+
+section4:langBOMetadata[Business object meta data]
+
+table[
+
+tr[ 
+td[Keyword] 	td[Valid values] 						td[Example] 													td[Description]
+]
+
+tr[	
+td[version] 	td[INT('.'INT)*] 						td[code[ServiceDSL][version 1.2.1]] 							td[The business object version.]
+]
+
+tr[ 
+td[replaces]	td[Reference to old business object] 	td[code[ServiceDSL][replaces OldBusinessObject majorVersion 1]]	td[Used to rename business objects or move them to another namespace. The reference to the previous business object is
+given here.]
+]
+
+tr[
+td[lifecycle-state]	td[Reference to a lifecycle state by name] td[code[ServiceDSL][lifecycle-state defined]]
+td[The lifecycle state of the business object with regard to SOA governance.]
+]
+
+tr[
+td[governance-approval] td[see definition of governance approval] td[code[ServiceDSL][
+governance-approval {
+	yes
+	decision-on "01.02.2011"
+	decision-by "John Miller"
+}
+]]
+td[The state of the governance decision on the business object.]
+]
+
+tr[
+td[retirement-on]	td[STRING literal with a date] td[code[ServiceDSL][retirement-on "01.06.2014"]]	td[The (planned) date of retirement of the business object.]
+]
+tr[
+td[provided-definition-URL]	td[STRING with technical contract URL]	td[code[ServiceDSL][provided-definition-URL "http://somehost:8080/some.xsd"]]	td[Only for business objects defined in internal namespaces. The location where the already existing definition of the business object can be found.]
+]
+]
+
+
+section4:langBoProperties[Properties]
+
+Properties may be of one of the following types:
+ul[
+	item[Attributes - Attributes are the basic kind of property. The referenced type is being fully resolved, i.e. an 
+						instance being transferred contains all properties of the referenced type. 
+						]
+	item[Weak references - Contrary to an attribute a weak reference does not resolve to the properties of a referenced type. 
+						Instead the businesskey of the referenced type is being used. Weak references are prefixed by the keyword "weak-ref"
+						]
+]
+
+Common features of Properties:
+
+
+Property name and type:
+
+Each property has a name and a type. The name and the type are separated by <code>:</code>. Types may be
+BusinessObjects, Enumerations or DataTypes, i.e. primitive types defined in the SOAProfile. As BusinessObjects and 
+Enumerations are versioned, the type reference of the attribute must declare a version constraint.
+
+Example:
+code[ServiceDSL][
+	firstname : string
+
+	contract : Contract majorVersion 1
+]
+
+
+Cardinality:
+
+Properties may be marked optional by using the keyword <code>optional</code> in front of the property name.
+
+firstname may be left empty / null:
+code[ServiceDSL][
+	optional firstname : string
+]								
+
+Properties may also have a collection type:
+code[ServiceDSL][
+	contracts : Contract \[\] majorVersion 1
+]
+The BusinessObject has a collection of at least one Contract in major version 1.
+
+
+section3:langEnum[Enumerations]
+
+section4:langEnumMetadata[Enumeration meta data]
+
+table[
+tr[
+td[Keyword]	td[Valid values]	td[Example]	td[Description]
+]
+tr[
+td[version]	td[INT('.'INT)*]	td[code[ServiceDSL][version 1.2.1]]	td[The enumeration version.]
+]
+tr[
+td[replaces]	td[Reference to old enumeration]	td[code[ServiceDSL][replaces OldEnumeration majorVersion 1]]	
+td[Used to rename enumerations or move them to another namespace. The reference to the previous 
+enumeration is given here.]
+]
+tr[
+td[lifecycle-state]	td[Reference to a lifecycle state by name] td[code[ServiceDSL][lifecycle-state defined]]
+td[The lifecycle state of the enumeration with regard to SOA governance.]
+]
+tr[
+td[governance-approval]	td[see definition of governance approval]	td[
+code[ServiceDSL][
+governance-approval {
+	yes
+	decision-on "01.02.2011"
+	decision-by "John Miller"
+}]]
+td[The state of the governance decision on the enumeration.]
+]
+tr[
+td[retirement-on]	td[STRING literal with a date] td[code[ServiceDSL][retirement-on "01.06.2014"]]	
+td[The (planned) date of retirement of the enumeration.]
+]
+tr[
+td[provided-definition-URL]	td[STRING with technical contract URL]	td[code[ServiceDSL][provided-definition-URL "http://somehost:8080/some.xsd"]]
+td[Only for enumerations defined in internal namespaces. The location where the already existing definition of the business object can be found.]
+]
+]
+
+
+section3:Services[Services]
+
+section4:langGeneralServiceProperties[General service properties]
+
+
+Public services:
+
+Public services comprice the official API and should be generally used. Public services
+may depend, i.e. <code>require</code> a private service. Hence, such a public service would 
+wrap the e[require]d private service.
+
+Public services may only use the canonical datamodel to be reusable.
+
+
+DomainServices:
+
+Domain services are some more restricted in their usage. They can only be called from services defined
+in the same namespace or one of it's subnamespaces. Domain services may only use the canonical datamodel to be reusable.
+
+
+Private services:
+
+Private service are internal API that should be wrapped by public or domain services. Private services
+can only be called from the wrapping public and domain service. While they can be called from other 
+private services as well, this is regarded bad design and should be refactored to call their wrapping 
+public services. 
+
+Every service has a name, version, lifecycle state and governance approval state.					
+
+
+section4:langServiceSyntax[Defining services]
+
+A service is defined in a domain namespace or internal namespace like this:
+
+code[ServiceDSL][
+	/*
+		The CustomerEntityService loads, stores and find Customer instances
+	*/
+	public service CustomerEntityService {
+		metadata {
+			version 1.0
+			lifecycle-state proposed
+			governance-approval {
+				yes
+				approval-date "20.04.2011"
+				approved-by "Anna Jacobson"
+			}
+			category entity
+			statefulness stateful
+			persistence read/write
+		}
+		
+		// operations go here:
+		sync getCustomerByName (optional firstName : string, lastname : string) 
+			returns optional customers : Customer \[\] majorVersion 1
+			throws CustomerNotFoundException 
+		{
+			requires SomeBackendService majorVersion 1
+		}
+	}
+]
+
+section4:ServiceMetadata[Service meta data]
+
+table[
+tr[
+td[Keyword]	td[Valid values]	td[Example]	td[Description]
+]
+
+tr[
+td[version]	td[INT('.'INT)*]	td[code[ServiceDSL][version 1.0.1]]	td[The service version.]
+]
+
+tr[
+td[lifecycle-state]	td[Reference to a lifecycle state by name] td[code[ServiceDSL][lifecycle-state defined]]	td[The lifecycle state of the service with regard to SOA governance.]
+]
+
+tr[
+td[governance-approval]	td[see definition of governance approval]	td[code[ServiceDSL][
+governance-approval {
+	yes
+	decision-on "01.02.2011"
+	decision-by "John Miller"
+}
+]]
+td[The state of the governance decision on the service.]
+]
+tr[
+td[category] td[Reference to a service category by name as defined in the SOAProfile] td[code[ServiceDSL][category activity]]
+td[The service category.]
+]
+tr[
+td[statefulness]	td[idempotend | stateless | stateful]	td[code[ServiceDSL][statefulness stateless]]	td[Whether the service can be repeatedly called with the same 
+result (idempotend), is stateless or stateful.]
+]
+tr[
+td[persistence]	td[read | write | read/write | none]	td[code[ServiceDSL][persistence read/write]]	td[Whether data treaded by the service are persistent and read and/or written to a persistent store.]
+]
+tr[
+td[service-owner]	td[STRING with the name of the service owner]	td[code[ServiceDSL][service-owner "Anna Morris"]]	td[Who is responsible for the service?]
+]
+tr[
+td[realizes-capabilty]	td[(QualifiedCapabilityName VersionConstraint)+]	td[code[ServiceDSL][realizes-capabilty InvoiceCustomer fixedVersion 1 InvoiceMail fixedVersion 2]]
+td[Reference to one or more business capabilities that are fully realized by the service.]
+]
+tr[
+td[supports-capabilty]	td[QualifiedCapabilityName VersionConstraint)+]	td[code[ServiceDSL][supports-capability InvoiceCustomer fixedVersion 1 InvoiceMail fixedVersion 2]]
+td[Reference to one or more business capabilities that are supported, but not fully realized by the service.]
+]
+tr[
+td[provided-Contract-URL]	td[STRING]	td[code[ServiceDSL][provided-Contract-URL "http://somehost:someport/some.wsdl"]]
+td[Only for private services defined in internal namespaces. The location where the already existing contract of the service can be found.]
+]
+tr[
+td[sourceURL]	td[STRING with the location URL of the source code repository]	td[code[ServiceDSL][sourceURL "svn://somehost/somelocation"]]
+td[Where the sources can be found.]
+]
+tr[
+td[docURL]	td[STRING with the URL of the document]	td[code[ServiceDSL][docURL "svn://somehost/somelocation"]]
+td[Where the documentation or specification can be found.]
+]
+tr[
+td[release-on]	td[STRING with the release date]	td[code[ServiceDSL][release-on "01.06.2010"]]
+td[The (planned) release date of the service.]
+]
+tr[
+td[retirement-on]	td[STRING the date of retirement]	td[code[ServiceDSL][retirement-on "01.06.2014"]]
+td[The (planned) date of retirement of the service.]
+]
+tr[
+td[replaces]	td[Reference to old service]	td[code[ServiceDSL][replaces OldServiceName majorVersion 1]]
+td[Used to rename services or move them to another namespace. The reference to the previous service is
+given here.]
+]
+tr[
+td[messageHeader]	td[Reference to a MessageHeader definition]	td[code[ServiceDSL][messageHeader MyHeader majorVersion 1]]
+td[An alternative message header to be sent with each message. Usually a 
+default message header has been defined in the profile which is being 
+used when this attribute has not been defined, hence it is an override.]
+]
+]
+
+
+section4:langOperations[Operations]
+
+section4:langParameters[Operation parameters]
+
+section3:langExceptions[Exceptions]
+
+
+section:langModuleDsl[Module DSL]
+
+section2:langDefModule[Defining modules]
+
+Modules aggregate services into a deployable unit. Modules
+have a version and are subject to a lifecycle. The services provided by should be referenced with a fixed version
+in order be to know what exactly the module provides. Hence, a version of a module contains a fixed set of 
+services with exactly defined versions.
+
+The following example shows, how modules are defined:
+ 
+
+code[ModuleDSL][
+	module com.company.shop.invoicing {
+		version 1.4.3
+		lifecycle-state test
+		assembly-type SCA_EAR
+		provides {
+			InvoiceProcessService fixedVersion 1.4
+			InvoiceActivityService fixedVersion 1.2
+			InvoiceNotificationUtilityService fixedVersion 1.1.1
+		}
+		source-location "git://git.company.com/shop/invoicing"
+		revision-tag "Release_1.4.3_RC2"
+	}
+]
+
+The example defines a module with the e[QualifiedName] e[com.company.shop.invoicing] in version e[1.4.3] 
+that provides three services. The module is available for acceptance test and has been packaged as an EAR containing
+a SCA composite. The source-location and revision tag referring to the source commited to the version control system 
+are optional parameters. The version and lifecycle-state declaration comply to the common syntax rules for versions and 
+lifecycle status declarations being follow the general syntax rules for these used throughout the service repository.
+
+Modules are declared in e[Module DSL file]s. A wizard is available to create new e[Module DSL] files.
+
+section:langEnvironmentDsl[Environment DSL]
+
+section2:langDefEnv[Defining environments]
+
+The environment defines which servers are available and where they are hosted. Environments have a unique name and a type
+such as e[development], e[test] or e[production]. To create a new environment create a 
+new e[Environment DSL file]. A new file wizard is available for that. Then define an environment as in this example:
+			
+
+code[EnvironmentDSL][
+	environment CoreDevelopment of type Development-Environment {
+		host as4000 {
+			full-qualified-name "as4000.company.com"
+		}
+		host as4200 {
+			full-qualified-name "as4000.company.com"
+		}
+		host as4350 {
+			full-qualified-name "as4350.company.com"
+		}
+		appserver as4350Tomcat {
+			identifier "tomcat.as4350.core.dev"
+			host as4350
+			baseUrl "http://as4350.company.com:8080"
+			connectors {
+				HTTP {
+					port 8080
+					secured-port 8443
+				}
+				SOAPHTTP {
+					port 8080
+					secured-port 8443
+					context-root "ws"
+				}
+			}
+		}
+		
+		esb DevESB {
+			identifier "esb.as4200.core.dev"
+			host localhost
+			adminUrl "https://as4200.company.com:9443/ibm/console"
+			server-type "websphere"
+			server-version "7.5"
+			connectors {
+				SOAP/HTTP {
+					port 9080
+					secured-port 9443
+					security-protocol SSLv3
+					implementation "IBM"
+				}
+			}
+		}
+		
+		registry reg {
+			identifier "simplereg.as4000.core"
+			host as4000 
+			
+			baseUrl "http://registry.company.com"
+			
+			server-type "Apache"
+			server-version "2.2"
+			kind HTTP
+		}
+	}
+]
+
+
+In this example three hosts e[as4000] e[as4200] and e[as4350] have set up in the
+development environment named e[CoreDevelopment]. On host e[as4000] an Apache has been installed
+having the identifier e[simplereg.as4000.core] in the Definitive Software Library whithin the Configuration
+Database. On host e[as4350] a tomcat has been installed, that offers HTTP on port 8080 and HTTPS on port 8443
+as outlined in the e[connectors] section. The tomcat also offers a SOAP interface on the same ports, while all
+SOAP service will be available under the context root e[ws]. Finally an ESB has been installed on host 4200, that 
+also offer SOAP on port 9080. The connectors are implicitely referenced from the binding when having the same type as 
+the e[BindingProtocol] defined for a service or module in the binding of them to this environment.
+
+
+
+section:langBindingDsl[Binding DSL]
+
+section2:langDefBind[Defining bindings]
+
+The binding creates the link between services / modules and a target environment where they get deployed. Hence they are
+bound to that environment. Consequently a binding would be defined for each environment where the services / modules are deployed. 
+The following example shows how a binding can be defined for a module to a target environment.
+
+Example:
+
+code[BindingDSL][
+	import CoreDevelopment
+	
+	bind-module com.company.shop.invoicing fixedVersion 1.4.3 as com.company.shop.invoicing.dev to environment CoreDevelopment {
+		provided on DevESB
+		default-protocols {
+			SOAP {
+				style document/literal-wrapped
+			}
+		}
+	}
+]
+
+The module e[com.company.shop.invoicing] in version e[1.4.3] is  bound to the development environment named
+e[CoreDevelopment]. The binding has the name e[com.company.shop.invoicing.dev] to be easily referrable from
+code generators. The binding definition ist pretty simple by stating, that the module will bde deployed to the ESB e[DevESB]
+in the target environment. All services provided by the module will be offered as SOAP services using the document / literal-wrapped style.
+Note that the e[BindingProtocol] e[SOAP] links to the e[SOAPHTTP] connector of the ESB</code>
+
+Bindings are declared in e[Binding DSL file]s. A wizard is available to create new <code>Binding DSL</code> files.
+		
+
+section:langSolutionDsl[Solution DSL]
+
+section:langProfileDsl[Profile DSL]
+

@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Xtext Service Repository generator core
 Bundle-SymbolicName: org.fornax.soa.xtextservicerepo.generator
-Bundle-Version: 1.5.1.qualifier
+Bundle-Version: 1.5.2.qualifier
 Bundle-Activator: org.fornax.soa.xtextservicerepo.generator.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtext.xtend2.lib;bundle-version="2.1.1",
- org.fornax.soa.servicerepo;bundle-version="1.5.1",
+ org.fornax.soa.servicerepo;bundle-version="1.5.2",
  org.eclipse.xtext
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6

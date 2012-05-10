@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.fornax.soa.basedsl"
-      label="Base DSL feature"
-      version="1.5.1.qualifier"
+      label="SOA Base DSL feature"
+      version="1.5.2.qualifier"
       provider-name="Fornax Platform">
 
    <description>

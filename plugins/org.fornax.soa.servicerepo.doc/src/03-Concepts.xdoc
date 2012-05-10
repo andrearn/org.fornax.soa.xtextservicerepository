@@ -1,0 +1,221 @@
+chapter:ServiceModelingConcepts[Service modeling concepts]
+
+section:Datamodel[The data model]
+
+The data model in a SOA approach may be separated into two major parts:
+
+ol[
+	item[Canonical data model]
+	item[Non canonical data model]
+]
+
+
+section2:CanonicalDataMode[Canonical data model]
+
+The canonical data model defines data types that are standardized to some extent. 
+It is the "common language". Whenever data are exchanged between different systems, 
+the canonical data model should be used as it protects the user from frequent changes. 
+A canonical data model is scoped to a domain or subdomain. Namespace that belong to the 
+canonical data model are called e[domain namespace]s.
+
+
+section2:NonCanonicalDataModel[Non canonical data model]
+
+The non canonical data model defines data types that are e[not] standardized. The canonical 
+data model is the "local language" of an application or system. Hence, it is considered 
+internal and should only be used internally by that system or application. The non canonical 
+data model enables frequent changes to the data model in a "safe" area, that does not affect 
+other systems or applications. Namespaces that belong to the non canonical data model are called 
+e[internal namespace]s.
+
+
+section2:DomainsAndNamespaces[Domains and namespaces]
+
+The canonical and the non canonical datamodel are organized into domains which 
+are reflected by namespaces. For each subdomain there exists a respective domain-namespace.
+Domains and there subdomains are defined in the business model. Hence, domain namespaces 
+contain the respective subdomain of the canonical datamodel and their related public services.
+
+Domain namespaces are complemented by internal namespaces that contain the non canonical datamodel
+and private services. Whatever is defined in an internal namespace should only be internally as 
+the name suggests. Internal namespaces contain fragile API.
+
+img:NamespaceExample[images/namespaces.png] [Namespace hierarchy] [] [align="center"]
+
+
+
+section:EncapsulationOfServices[Encapsulation of services]
+
+Often, a SOA will be built from already existing systems and interfaces. However, the services 
+already available will usually not suit very well with the larger scope of an enterprise wide IT 
+architecture as they have been developed with specific usage scenarios in mind.</para>
+
+A good approach to provide more suitable services, would be to define new standard service 
+contracts which hide the technical details of the service implementation provided by a 
+certain system. The new service contract would be a e[public] service, while the already 
+available technical service implementation will be considered e[private]. This will shield 
+consumers of the public service from rather frequent changes of the technical service implementations 
+as well as their interfaces.
+				
+img:PublicEncapsPrivateService[images/PublicEncapsPrivateService.png] 
+	[A public service encapsulating a private service] [] [align="center"]
+
+
+
+
+section:ModelPerspectives[Perspectives in a SOA model]
+
+In a SOA model you can take different perspectives, depending on the matter of interest.
+
+
+section2:BusinessModelPerspective[Business view]
+
+The business view gives a perspective on what makes up the business of a company. It is typically 
+organized into domains which may be reflected by the company's organizational structure. The business
+model also defines business functions that are supported by the organization or certain organizational roles.
+to build solutions from business functions.
+
+Business capabilities are used to define what can be done in the business sense. They can be compared to 
+use cases, yet they do not define actors as they are designed for reuse. A business capability might 
+be e.g. "Lookup a customer by her address". Business capabilities relate to services or service operations
+defined in the service model.
+
+
+section2:SolutionPerspective[Solutions]
+
+Solutions support the business of company. Solutions are available as applications or bundles of application 
+that solve a certain problem, e.g. a customer self care solution. In SOA solutions will reuse business 
+function by using services that support those business functions. Solutions are the end consumers
+of services.
+
+img:Solutions[images/Solutions.png] [Structure of a solution] [] [align="center"]
+
+
+
+section2:ServiceModelPerspective[Service model]
+
+The service model let's you look at service contracts and data types. The service model defines domain 
+and internal namespaces, which in turn define business objects, enumerations, services and exception
+types.
+
+
+section3:VersionANdLifecycles[Versions and lifecycle states]
+
+Different consumers	of a service may require a different version of the service. Hence, several different
+versions of a service and related business objects etc. may be deployed in the same runtime environment. 
+Generally the latest compatible version will be used when a dependency to another service or business 
+object is being declared. Whether a newer version is compatible to it's previous version or not is inferred 
+from the version number increment. If the major version is incremented the change is incmpatible to the previous
+version.
+ 
+Business objects, enumerations and services are versioned by having a version number. Versionnumber may 
+be qualified with major and minor version numbers and so seperated by dots. A namespace may declare 
+several different versions of a service etc. Dependencies to other services and types are qualified 
+by the name and a version constraint, that selects the latest applicable version.
+
+Whether a certain version matches the version constraint depends also on the lifecycle states of the 
+dependency owner and the target object of the dependency.
+ 
+Example:
+
+There may be a service e[CustomerEntityService] in version e[1.2] which has a service operation 
+e[getCustomer] that returns a list of e[Customer]s in the latest minor version of major version e[1].
+Be e[Customer] available in version e[1.0] in the lifecycle state e[productive], meaning it is ready 
+for production use and let's say we have a e[Customer] in version e[1.1] that is in state e[development] 
+meaning it is ready for development purposes. In a production environment the latter version would 
+not yet be available. Hence, in the production environment the dependency to e[Customer] in major 
+version e[1] would actually resolve to e[Customer] version e[1.0], while in the the development 
+environment it would resolve to version e[1.1].
+
+
+section3:Services[Services]
+
+A public service usually relates to a business function in	the business model. A service provides 
+functional capabilities implemented	as service operations.
+
+
+section3:BusinessObjects[Business Objects]
+
+Business objects are complex types with one ore more attributes. Attibutes have a name, a type with 
+a version constraint if it is a business object or enumeration, an optional many cardinality and 
+some other optional flags.
+
+
+section3:Enumerations[Enumerations]
+
+Enumerations declare all possible values that an attribute or parameter of that type may have.
+
+
+section3:Exceptions[Exceptions]
+
+As in many programming languages, exceptions describe an unexpected behavior or error condition.
+
+
+section2:ModulePerspective[Modules]
+
+Modules assemble services into modules. The module has a unique version number.
+
+
+section2:EnvironmentPerspective[Runtime environment]
+
+The environment defines, what makes up the IT infrastructure that hosts services and solutions. Typical 
+parts of an environment are hosts, application servers, databases and so on. Typically a company has 
+a production, test and a development environment.
+		
+
+section2:BindingPerspective[Service binding]
+
+The binding perspective wires services to an environment, where they are supposed to be hosted together. 
+It defines protocols, servers hosting the services (and implicitly their endpoints) as well as assigned 
+SLAs and policies like security policies.
+		
+img:CoreDSLs[images/CoreDSLs.png] [The core DSLs] [] [align="center"]
+				
+Every binding declares what it binds from the service model to which environment. Bindings can be declared 
+on several levels with regard to the service model:
+
+ul[
+	item[e[ModuleBinding] refers to a module to be bound to a given environment. Hence, the services provided 
+	by the referenced module will be bound to the given environment using the defined default protocols defined 
+	for the whole module in	the ModuleBinding definition. Alternatively the defaults can be overridden defining 
+	e[ServiceBindings]] 
+
+	item[e[DomainBinding] references a namespace (domain namespace or internal namespace) from service model. 
+	DomainBindings are always toplevel binding in the binding model and have name to be referable]
+
+	item[e[ServiceBinding] refers to a specific service	by name and a version constraint. e[ServiceBindings]
+	override the definitions of the surrounding e[DomainBinding]]
+
+	item[e[OperationBinding]s refer to a specific service operation with the full qualified name of the operation 
+	and version constraint selecting the owning service. Definitions from a surrounding e[ServiceBinding]
+	will overridden.]	
+]
+
+The perspective supports convention over configuration in that one would define a default binding configuration 
+for a certain namespace. The defaults may the be overridden for a specific service or even a specific 
+operation of a service.
+
+
+section2:SLAPerspective[Service level agreements]
+
+Service Level Agreement can be declared in a SLA model. Service Level Agreement declare
+properties properties like service availability, maximum downtimes, responsible service owners
+and so on. SLAs are generally scoped to an environment. Hence, SLAs must be assigned to a 
+namespace or service in the binding model. As each binding is scoped to an environment, assigned
+SLAs are implicitly scoped to the environment for which the respective binding has
+been declared.
+
+
+section2:ModelingWithDSLs[Modeling with Domain Specific Languages]
+
+Domain Specific Languages (short DSLs) are textual or graphical languages designed for specific problem domain. 
+Xtext Service Repository describes the central assets of a SOA as explained in the ref:ModelPerspectives 
+using a specific textual DSL for each perspective. The Xtext Service Repository DSL editors will support with 
+code completion.
+
+As services are the most important assets of a SOA, the Service DSL is the most important one. Create a new 
+Service DSL file to define namespace, business objects and services. To define a runtime environment 
+you are going to create an Environment DSL file. To finally declare, where the defines services run bind 
+them with DomainBinding, ServiceBinding or even OperationBinding to the environment or more specific, 
+certain servers in the target environment. Create a new Binding DSL file to declare such a binding.
+				

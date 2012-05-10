@@ -1,0 +1,79 @@
+chapter:GeneratorReference[Generator Reference]
+
+section[Generating technical contracts for services and types for an environment]
+
+In general, all code generators use Xtend2 and can be called executed MWE2, the new Modeling Workflow Engine, 
+that comes with Xtext. Code generation is usually done in three steps that should be defined in your workflow:
+ol[
+	item[A model reader. Use the read that comes with Xtext]
+	item[Optionally, but recommended a DirectoryCleaner (comes with MWE)]
+	item[A GeneratorComponent having the generator setup of the respective generator registered]
+]
+
+
+section2[Configuration of the model reader]
+
+The reader must be configured with the DSL setups, to be able to parse and build the models. The is put into a
+so called "slot". As a prototype to your reader configuration you can use this:
+
+Example:
+code[MWE2][
+	component = org.eclipse.xtext.mwe.Reader {
+		path = modelPath
+		register = org.fornax.soa.ServiceDslStandaloneSetup {}
+		register = org.fornax.soa.SemanticsDslStandaloneSetup {}
+		register = org.fornax.soa.BusinessDslStandaloneSetup {}
+		register = org.fornax.soa.BindingDslStandaloneSetup {}
+		register = org.fornax.soa.EnvironmentDslStandaloneSetup {}
+		register = org.fornax.soa.SLADslStandaloneSetup {}
+		register = org.fornax.soa.basedsl.SOABaseDslStandaloneSetup {}
+		register = org.fornax.soa.profiledsl.SOAProfileDslStandaloneSetup {}
+		register = org.fornax.soa.moduledsl.ModuleDslStandaloneSetup {}
+		loadResource = {
+			slot = 'model'
+		}
+	}
+]
+
+
+section2[Generate WSDLs and XSDs]
+
+You can generate WSDLs and XSDs from service and type definitions for Binding. This binding also references 
+a target environment to generate the contracts for. The generator can be configured to generate for ModuleBindings, 
+DomainBinding, DomainNamespaces, InternalNamespaces or any SubNamespace by providing a list of names of the 
+bindings or namespaces. You can use Java regular expressions here. For an example see this:
+
+Example:
+code[MWE2][
+	component = org.eclipse.xtext.generator.GeneratorComponent {
+        register = org.fornax.soa.bindingdsl.generator.DefaultBindingContractGeneratorSetup {
+			moduleBindingName 	= 'com\\.example\\.salesmodulebinding'
+			moduleBindingName 	= 'com\\.example\\.billing\\.*'
+			
+			domainBindingName   = 'com\\.example\\.paymentDomainBindingName'
+			
+			domainNamespace  	= 'de\\.countandcare\\.product.*'
+			internalNamespace = 'com.example.technical.internal.*'
+			namespace = 'com\\.example\\.anysubnamespace.*'
+			
+			noDependencies = false
+			profileName = profile
+			targetEnvironmentName = 'Prod'
+			forceRelativePaths = true
+			generatePrivateWsdlForProviderHost = false
+		}
+        slot = 'model'
+      	outlet = {
+            path = "${resSrcGenPath}/contracts"
+        }
+    }
+]
+
+The will generate WSDLs and their imported XSDs for the given ModuleBindings and the DomainBinding that matches
+the name "com.example.paymentDomainBindingName". Additionaly all XSDs for all given DomainNamespaces, InternalNamespaces 
+and any SubNamespace having fully qualified names that match the given expressions.
+
+section[Generate business objects for a platform]
+
+section[Generator API reference]
+

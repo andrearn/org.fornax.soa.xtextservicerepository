@@ -1,0 +1,101 @@
+document[Xtext Service Repository User's Guide]
+
+authors[André Arnold and others]
+
+codelanguage-def[Xtext]
+[
+	ID,INT,STRING,
+	enum,
+	ML_COMMENT,SL_COMMENT
+]
+
+codelanguage-def[SOABaseDSL]
+[ 
+	import,
+	version,
+	majorVersion,minVersion,maxVersion,fixedVersion
+]
+
+codelanguage-def[ServiceDSL]
+[ 
+	abstract,businessObject,extends,enumeration,exception,import,
+	public,private,domain,service,exception,as,set,optional,weak,
+	business-key,provided-key,historizing-key,historized,version-independant-key,
+	sync,async,oneway,domain,tags,release-on,retirement-on,
+	metadata,governance-approval,yes,no,provided-definition-URL,justification-doc,
+	decision-date,decision-by,temporarily-tolerated,tolerated,
+	org-namespace,domain-namespace,internal-namespace,shortname,namespace-ownerarchitecture-profile,
+	fetches,version,replaces,lifecycle-state,
+	idempotent,stateless,transient-state,stateful,
+	none,read,write,handling,responses,
+	event,subType,channel,category,throws,returns,
+	requires,callback-listener-for,publishes,subscribes-to,messageHeader,
+	realizes-capabilty,supports-capability,can-compensate,statefulness,persistence,updating,
+	fetch-profile,fetches-flat-only,default,decision-on,docURL,sourceURL,provided-Contract-URL,
+	import,
+	version,
+	majorVersion,minVersion,maxVersion,fixedVersion
+]
+
+codelanguage-def[BusinessDSL][
+	domain,organization,member,function,version,
+	capability,capability-group,
+	description,short-description,automation-level,business-value,
+	input,inputs,outcome,outcomes
+]
+
+codelanguage-def[ModuleDSL][
+	module,version,qualifier,
+	provides,uses,service,from,
+	lifecycle-state,assembly-type,
+	source-location,revision-tag,
+	SCA_EAR,Webmethods,EAR,WAR,JAR,ZIP,
+	import,
+	majorVersion,minVersion,maxVersion,fixedVersion
+]
+
+codelanguage-def[BindingDSL][
+	bind-module,bind-namespace,on,provider,with,connector,module,as,to,environment,service,
+	default-protocols,default-policies,provided,
+	SOAP,IIOP,JMS,EJB,SCA,HTTP,REST,FILE,FTP,
+	style,document,literal-wrapped,rpc-encoded,
+	import,
+	majorVersion,minVersion,maxVersion,fixedVersion
+]
+
+codelanguage-def[EnvironmentDSL][
+	environment,of,type,full-qualified-name,
+	host,appserver,esb,broker,registry,
+	connectors,port,server-version,
+	identifier,baseUrl,server-type,kind,adminUrl,
+	secured-port,security-protocol,implementation,
+	SOAP,context-root,HTTP,SOAPHTTP,SOAPJMS,
+	Development-Environment,Test-Environment,Staging-Environment
+]
+
+codelanguage-def[Java]
+[
+	abstract,continue,for,new,switch,
+	assert,default,package,synchronized,
+	boolean,do,if,private,this,
+	break,double,implements,protected,throw,
+	byte,else,import,public,throws,
+	case,enum,instanceof,return,transient,
+	catch,extends,int,short,try,
+	char,final,interface,static,void,
+	class,finally,long,strictfp,volatile,
+	float,native,super,while
+]
+
+codelanguage-def[MWE2]
+[
+	component,module,workflow,var
+]
+
+chapter-ref[Introduction]
+
+chapter-ref[ServiceModelingConcepts]
+
+chapter-ref[DSLReference]
+
+chapter-ref[GeneratorReference]
