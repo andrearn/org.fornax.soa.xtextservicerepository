@@ -187,6 +187,16 @@ class BindingExtensions {
 		stateMatcher.matches (env.getMinLifecycleState(s, s.state.eContainer as Lifecycle), s.state);
 	}
 	
+	def getPublicEndpointQualifier (Binding bind, Service svc) {
+		""
+	}
+	def getPublicEndpointQualifier (ServiceBinding bind, Service svc) {
+		if (bind.eContainer instanceof ModuleBinding) {
+			val modBind = (bind.eContainer as ModuleBinding)
+			modBind.getPublicEndpointQualifier(svc)
+		}
+		""
+	}
 	def getPublicEndpointQualifier (ModuleBinding bind, Service svc) {
 		val moduleQualifier = bind.module.module.qualifiers
 		val boundSvcQualifier = bind.module?.module?.providedServices?.findFirst(provSvc | provSvc.service==svc)?.qualifiers

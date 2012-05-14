@@ -22,6 +22,8 @@ import org.fornax.soa.environmentDsl.UDDIRegistry
 import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.bindingDsl.BindingProtocol
+import org.fornax.soa.bindingDsl.Binding
+import org.fornax.soa.bindingDsl.SOAP
 
 class SoapVendorBindingsResolver {
 	
@@ -32,45 +34,45 @@ class SoapVendorBindingsResolver {
 	@Inject SoapBindingResolver soapBindRes
 	
 	
-	def dispatch String toEndpointAddressPath (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def dispatch String toEndpointAddressPath (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		val serverType = server.toServerTypeName ();
 		val ctxRoot = ctxRootProvider.getContextRoot(mod, serverType);
-		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server)
+		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
 	
 	def dispatch String toEndpointAddressPath (DomainBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
 		val serverType = server.toServerTypeName ();
 		val ctxRoot = soapBindRes.getContextRoot(bind, s);
-		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server)
+		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
 	
 	def dispatch String toEndpointAddressPath (ServiceBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
 		val serverType = server.toServerTypeName ();
 		val ctxRoot = soapBindRes.getContextRoot(bind);
-		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server)
+		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
 	
 	
 	def dispatch String toProviderEndpointAddressPath (DomainBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
 		val serverType = server.toServerTypeName ();
 		val ctxRoot = soapBindRes.getProviderContextRoot(bind, s);
-		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server)
+		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
 	
 	def dispatch String toProviderEndpointAddressPath (ServiceBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
 		val serverType = server.toServerTypeName ();
 		val ctxRoot = soapBindRes.getProviderContextRoot(bind);
-		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server)
+		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
 	
 	
-	def dispatch String toEndpointAddressPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def dispatch String toEndpointAddressPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		val serverType = server.toServerTypeName ();
 		if (serverType != null) {
 			switch (serverType.toLowerCase()) {
 			case "tomcat": 			tomcatEndpointPath (ctxRoot, orgNs, subNs, s, server)
 			case "websphere":		websphereSCAEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "webmethods":		webmethodsEndpointPath (ctxRoot, orgNs, subNs, s, server)
+			case "webmethods":		webmethodsEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 			case "oraclesb":		oraclesbEndpointPath (ctxRoot, orgNs, subNs, s, server)
 			case "weblogic":		weblogicEndpointPath (ctxRoot, orgNs, subNs, s, server)
 			case "aqualogic":		aqualogicEndpointPath (ctxRoot, orgNs, subNs, s, server)
@@ -126,10 +128,25 @@ class SoapVendorBindingsResolver {
 		+ subNs.name.replaceAll("\\.","_") +"_" + s.name + "SOAP" + s.getServiceVisibilityName() + "_" + s.version.toVersionPostfix();
 	}
 	
-	def String webmethodsEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
-		ctxRoot
+	def String webmethodsEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val servicePath = ctxRoot
 		+ orgNs.name + "." 
 		+ subNs.name + "." + s.name + "." + s.version.toVersionPostfix() + ":" + s.name;
+		var scopedPortName = ""
+		if (prot instanceof SOAP) {
+			scopedPortName = soapBindRes.toScopedPortName (s, prot as SOAP, bind.getPublicEndpointQualifier (s))
+		}
+		if (server instanceof ESB) {
+			val esb = (server as ESB)
+			val esbVersion = esb.serverVersion
+			if (esbVersion != null) {
+				val esbVersionDigits = esbVersion.split("\\.")
+				if (esbVersionDigits.get(0) >= "8" && scopedPortName != "") {
+					return servicePath + "/" + scopedPortName
+				}
+			}
+		}
+		return servicePath
 	}
 	
 	def String oraclesbEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
