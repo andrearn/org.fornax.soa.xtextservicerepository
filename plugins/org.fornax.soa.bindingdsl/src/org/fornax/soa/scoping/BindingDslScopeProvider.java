@@ -42,7 +42,11 @@ import org.fornax.soa.bindingDsl.ServiceRef;
 import org.fornax.soa.environmentDsl.Connector;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.environmentDsl.Server;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.EnvironmentBasedLatestMajorVersionFilter;
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
+import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.util.BindingDslHelper;
 import org.fornax.soa.util.ServerAccessUtil;
@@ -133,9 +137,13 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
 			if (v instanceof MajorVersionRef && owner.eContainer () instanceof Binding) {
 				Environment environment = BindingDslHelper.getEnvironment ((Binding) owner.eContainer ());
-				EnvironmentBasedLatestMajorVersionFilter<IEObjectDescription> versionFilter = new EnvironmentBasedLatestMajorVersionFilter <IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), environment.getName (), environment.getType (), owner.eResource().getResourceSet());
-				injector.injectMembers(versionFilter);
-				return versionFilter;
+				if (environment != null) {
+					EnvironmentBasedLatestMajorVersionFilter<IEObjectDescription> versionFilter = new EnvironmentBasedLatestMajorVersionFilter <IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), environment.getName (), environment.getType (), owner.eResource().getResourceSet());
+					injector.injectMembers(versionFilter);
+					return versionFilter;
+				} else {
+					return new LatestMajorVersionFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString());
+				}
 			}
 			if (v instanceof MaxVersionRef)
 				return new LatestMaxExclVersionFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion());

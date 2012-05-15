@@ -2820,7 +2820,7 @@ protected class EventRef_VersionRefAssignment_1 extends AssignmentToken  {
 
 /************ begin Rule Import ****************
  *
- * Import:
+ * / * Java like imports * / Import:
  * 	"import" importedNamespace=QualifiedNameWithWildCard;
  *
  **/
@@ -3106,7 +3106,9 @@ protected class VersionedName_VersionAssignment_1_2 extends AssignmentToken  {
 
 /************ begin Rule VersionRef ****************
  *
- * VersionRef:
+ * / *
+ *  * Version constraints applied to referenced assets
+ *  * / VersionRef:
  * 	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
  *
  **/
@@ -3334,7 +3336,9 @@ protected class VersionRef_FixedVersionRefParserRuleCall_4 extends RuleCallToken
 
 /************ begin Rule MinVersionRef ****************
  *
- * MinVersionRef:
+ * / *
+ *  * Assets, where the version is lesser than maximal version: asset version >= minVersion
+ *  * / MinVersionRef:
  * 	"minVersion" minVersion=VersionId;
  *
  **/
@@ -3429,7 +3433,9 @@ protected class MinVersionRef_MinVersionAssignment_1 extends AssignmentToken  {
 
 /************ begin Rule MaxVersionRef ****************
  *
- * MaxVersionRef:
+ * / *
+ *  * Assets, that match a minimal version: asset version >= minVersion
+ *  * / MaxVersionRef:
  * 	"maxVersion" maxVersion=VersionId;
  *
  **/
@@ -3524,7 +3530,9 @@ protected class MaxVersionRef_MaxVersionAssignment_1 extends AssignmentToken  {
 
 /************ begin Rule LowerBoundRangeVersionRef ****************
  *
- * LowerBoundRangeVersionRef:
+ * / *
+ *  * Matches version in the half open range [minVersion, maxVersion)
+ *  * / LowerBoundRangeVersionRef:
  * 	("minVersion" ">=") minVersion=VersionId "," ("maxVersion" "<") maxVersion=VersionId;
  *
  **/
@@ -3787,7 +3795,9 @@ protected class LowerBoundRangeVersionRef_MaxVersionAssignment_4 extends Assignm
 
 /************ begin Rule MajorVersionRef ****************
  *
- * MajorVersionRef:
+ * / *
+ *  * Constraint matches assets with any version with the same major version, i.e. the first INT until the first '.' is equal
+ *  * / MajorVersionRef:
  * 	"majorVersion" majorVersion=INT;
  *
  **/
@@ -3882,7 +3892,9 @@ protected class MajorVersionRef_MajorVersionAssignment_1 extends AssignmentToken
 
 /************ begin Rule FixedVersionRef ****************
  *
- * FixedVersionRef:
+ * / *
+ *  * Constraint that matches an asset version  explicitely
+ *  * / FixedVersionRef:
  * 	"fixedVersion" fixedVersion=VersionId;
  *
  **/

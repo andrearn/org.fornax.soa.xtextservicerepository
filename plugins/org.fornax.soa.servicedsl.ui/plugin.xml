@@ -267,15 +267,4 @@
 	    </page>
 	</extension>
 
-   <extension
-         point="org.eclipse.ui.newWizards">
-      <wizard
-            category="org.eclipse.xtext.projectwiz"
-            class="org.fornax.soa.ui.ServiceDslExecutableExtensionFactory:org.fornax.soa.ui.wizard.ServiceDslNewProjectWizard"
-            id="org.fornax.soa.ui.wizard.ServiceDslNewProjectWizard"
-            name="ServiceDsl Project"
-            project="true">
-      </wizard>
-   </extension>
-
 </plugin>

@@ -804,7 +804,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getEventRefAccess().getRule();
 	}
 
-	//Import:
+	/// * Java like imports * / Import:
 	//	"import" importedNamespace=QualifiedNameWithWildCard;
 	public SOABaseDslGrammarAccess.ImportElements getImportAccess() {
 		return gaSOABaseDsl.getImportAccess();
@@ -814,7 +814,17 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getImportAccess().getRule();
 	}
 
-	//VersionId:
+	/// * 
+	// * Version numbers, some postfixes are treated in a special way:
+	// * <ul>
+	// * 	<li>Final:		treated as if the version number ends with ".0"</li>
+	// * 	<li>RC:			release candidate, may end with a number</li>
+	// * 	<li>CR:			release candidate (snynonym for RC), may end with a number</li></li>
+	// * 	<li>Beta:		beta, may end with a number</li>
+	// * 	<li>Alpha:		alpha, may end with a number</li>
+	// * 	<li>Milestone:	milestone release, may end with a number</li>
+	// * </ul>
+	// * / VersionId:
 	//	INT ("." INT)* ("." ID)?;
 	public SOABaseDslGrammarAccess.VersionIdElements getVersionIdAccess() {
 		return gaSOABaseDsl.getVersionIdAccess();
@@ -834,7 +844,9 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getVersionedNameAccess().getRule();
 	}
 
-	//VersionRef:
+	/// *
+	// * Version constraints applied to referenced assets
+	// * / VersionRef:
 	//	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
 	public SOABaseDslGrammarAccess.VersionRefElements getVersionRefAccess() {
 		return gaSOABaseDsl.getVersionRefAccess();
@@ -844,7 +856,9 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getVersionRefAccess().getRule();
 	}
 
-	//MinVersionRef:
+	/// *
+	// * Assets, where the version is lesser than maximal version: asset version >= minVersion
+	// * / MinVersionRef:
 	//	"minVersion" minVersion=VersionId;
 	public SOABaseDslGrammarAccess.MinVersionRefElements getMinVersionRefAccess() {
 		return gaSOABaseDsl.getMinVersionRefAccess();
@@ -854,7 +868,9 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getMinVersionRefAccess().getRule();
 	}
 
-	//MaxVersionRef:
+	/// *
+	// * Assets, that match a minimal version: asset version >= minVersion
+	// * / MaxVersionRef:
 	//	"maxVersion" maxVersion=VersionId;
 	public SOABaseDslGrammarAccess.MaxVersionRefElements getMaxVersionRefAccess() {
 		return gaSOABaseDsl.getMaxVersionRefAccess();
@@ -864,7 +880,9 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getMaxVersionRefAccess().getRule();
 	}
 
-	//LowerBoundRangeVersionRef:
+	/// *
+	// * Matches version in the half open range [minVersion, maxVersion)
+	// * / LowerBoundRangeVersionRef:
 	//	("minVersion" ">=") minVersion=VersionId "," ("maxVersion" "<") maxVersion=VersionId;
 	public SOABaseDslGrammarAccess.LowerBoundRangeVersionRefElements getLowerBoundRangeVersionRefAccess() {
 		return gaSOABaseDsl.getLowerBoundRangeVersionRefAccess();
@@ -874,7 +892,9 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getLowerBoundRangeVersionRefAccess().getRule();
 	}
 
-	//MajorVersionRef:
+	/// *
+	// * Constraint matches assets with any version with the same major version, i.e. the first INT until the first '.' is equal
+	// * / MajorVersionRef:
 	//	"majorVersion" majorVersion=INT;
 	public SOABaseDslGrammarAccess.MajorVersionRefElements getMajorVersionRefAccess() {
 		return gaSOABaseDsl.getMajorVersionRefAccess();
@@ -884,7 +904,9 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getMajorVersionRefAccess().getRule();
 	}
 
-	//FixedVersionRef:
+	/// *
+	// * Constraint that matches an asset version  explicitely
+	// * / FixedVersionRef:
 	//	"fixedVersion" fixedVersion=VersionId;
 	public SOABaseDslGrammarAccess.FixedVersionRefElements getFixedVersionRefAccess() {
 		return gaSOABaseDsl.getFixedVersionRefAccess();

@@ -127,11 +127,11 @@ Workflow {
 			fragment = refactoring.RefactorElementNameFragment {}
 
 			// project wizard (optional) 
-			fragment = projectWizard.SimpleProjectWizardFragment {
+			/*fragment = projectWizard.SimpleProjectWizardFragment {
 				generatorProjectName = "${projectName}.generator" 
 				modelFileExtension = file.extensions
 				pluginProject = true
-			}
+			}*/
 		}
 	}
 }
