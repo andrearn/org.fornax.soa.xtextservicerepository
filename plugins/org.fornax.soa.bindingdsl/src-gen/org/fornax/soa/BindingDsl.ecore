@@ -251,6 +251,23 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="accessType" eType="#//ReadWrite"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="pollIntervall" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="IIOP" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publisher" eType="#//Publisher"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lookupName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AMQP" eSuperTypes="#//BindingProtocol">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publisher" eType="#//Publisher"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="channel" eType="#//TopicOrQueue"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lookupName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providerLookupName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ReadWrite">
     <eLiterals name="read" literal="read"/>
     <eLiterals name="write" value="1" literal="write"/>

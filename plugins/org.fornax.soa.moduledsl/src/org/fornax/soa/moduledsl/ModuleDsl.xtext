@@ -13,7 +13,7 @@ ModuleModel:
  * A (deployable) service module. External modules are provided by other organizations.
  */	
 Module:
-	(external?='external')? 'module' name = QualifiedName '{'
+	(external?='external')? (client?='client')? 'module' name = QualifiedName '{'
 		
 		version = Version
 		'lifecycle-state' state = [profileDsl::LifecycleState | QualifiedName]
@@ -39,7 +39,11 @@ Module:
 			(providedNamespaces += NamespaceRef)*
 		'}')?
 		('uses' '{'
-			(usedServices += ImportServiceRef)+
+			(usedServices += ImportServiceRef)*
+			(usedModules  += ModuleRef)*
+			('endpoint-protocol' usesEndpointProtocol=ImportBindingProtocol)?
+			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=ImportBindingProtocol) (',' usesAlternativeEndpointProtocols+=ImportBindingProtocol)*)?
+			('binding-qualifier' bindingQualifier=QualifiedName)?
 		'}')?
 			
 		('source-location' source=STRING )? //Where can I get the sources?
@@ -57,11 +61,17 @@ ServiceRef:
  * The module to import the service from may be stated explicitely
  */
 ImportServiceRef:
-	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef ('{')?
 		('from-any-module-of' '{'
 			(modules+=ServiceModuleRef)(',' modules+=ServiceModuleRef)*
 		'}' 
 		)?
+		('using-endpoint' '{'
+			('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
+			('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
+			('binding-qualifier' bindingQualifier=QualifiedName)?
+		'}')?
+	('}')?
 ;
 
 /*
@@ -73,10 +83,13 @@ ServiceModuleRef:
 ;
 
 ModuleRef:
-	module=[Module|QualifiedName] version=VersionRef '{'
-		'excluding' '{'
+	'module' moduleRef=ServiceModuleRef '{'
+		('excluding' '{'
 			(excludedServices+=ServiceRef)+
-		'}'
+		'}')?
+		('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
+		('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
+		('binding-qualifier' bindingQualifier=QualifiedName)?
 	'}'
 ;
 
@@ -101,6 +114,7 @@ enum AssemblyType:
 	OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL
 ;
 
+enum ImportBindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP;
 
 /*
 module mod.bla  {

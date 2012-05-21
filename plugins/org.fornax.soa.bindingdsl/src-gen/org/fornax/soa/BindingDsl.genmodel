@@ -227,6 +227,18 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//FTP/accessType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//FTP/pollIntervall"/>
     </genClasses>
+    <genClasses ecoreClass="BindingDsl.ecore#//IIOP">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//IIOP/publisher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//IIOP/provider"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//IIOP/lookupName"/>
+    </genClasses>
+    <genClasses ecoreClass="BindingDsl.ecore#//AMQP">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AMQP/publisher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AMQP/provider"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AMQP/channel"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AMQP/lookupName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AMQP/providerLookupName"/>
+    </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//Policy"/>
     <genClasses ecoreClass="BindingDsl.ecore#//LogPolicy">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//LogPolicy/logPolicy"/>

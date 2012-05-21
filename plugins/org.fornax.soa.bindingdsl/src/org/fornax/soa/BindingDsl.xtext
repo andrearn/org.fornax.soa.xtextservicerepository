@@ -46,10 +46,16 @@ DomainBinding:
 		(serviceBinding+=ServiceBinding)*
 		(components+=Component)*
 	'}';
-	
+
+/* 
+ * Publishers are server connectors that export an inbound endpoint
+ */	
 Publisher:
 	'publish on' pubServer=[environmentDsl::Server|QualifiedName] ('with' 'connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*)?;
-	
+
+/* 
+ * Providers are server connetors to outbound endpoints, when using a service
+ */	
 Provider:
 	'provided on' provServer = [environmentDsl::Server|QualifiedName] ('with' 'connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*)?;
 
@@ -79,8 +85,8 @@ ServiceRef:
 
 /*
  * The endpoint protocol of the entpoint on which the service is provided
- */	
-BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP;
+ */																																				
+BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP;
 
 /*
  * Overrides the binding of a parent ServiceBinding for the given service Operation
@@ -127,6 +133,9 @@ ModuleBinding:
 
 ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
 
+/*
+ * @deprecated
+ */
 Component:
 	'component' name=ID 'implements' implements=ServiceRef '{'
 		'bind to environment' environment = [environmentDsl::Environment|QualifiedName]
@@ -259,6 +268,26 @@ FTP:
 	'FTP' '{' 
 		(qualifier=Qualifier)?
 		'access' accessType=ReadWrite ('interval' pollIntervall=STRING)?
+	'}';
+
+/* An IIOP endpoint protocol */ 
+IIOP: 
+	'IIOP' '{'
+		(qualifier=Qualifier)?
+		(publisher=Publisher)?
+		(provider=Provider)?
+		'lookup-name' lookupName=STRING 
+	'}';
+
+AMQP:
+	'AMQP' '{'
+		{AMQP}
+		(qualifier=Qualifier)?
+		(publisher=Publisher)?
+		(provider=Provider)?
+		(channel=TopicOrQueue)?
+		'lookup-name' lookupName=STRING
+		('provider-lookup-name' providerLookupName=STRING )?
 	'}';
 
 enum ReadWrite : read|write;

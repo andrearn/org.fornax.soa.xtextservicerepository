@@ -12,6 +12,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Module">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="external" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="client" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"
         containment="true"/>
@@ -28,6 +29,12 @@
         eType="#//NamespaceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="usedServices" upperBound="-1"
         eType="#//ImportServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="usedModules" upperBound="-1"
+        eType="#//ModuleRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="usesEndpointProtocol" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="usesAlternativeEndpointProtocols"
+        unique="false" upperBound="-1" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bindingQualifier" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="revisionTag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -44,6 +51,10 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
         eType="#//ServiceModuleRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endpointProtocol" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alternativeEndpointProtocols"
+        unique="false" upperBound="-1" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bindingQualifier" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ServiceModuleRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//Module"/>
@@ -53,11 +64,14 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModuleRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//Module"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="moduleRef" eType="#//ServiceModuleRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="excludedServices" upperBound="-1"
         eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endpointProtocol" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alternativeEndpointProtocols"
+        unique="false" upperBound="-1" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="bindingQualifier" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NamespaceRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="ecore:EClass ../../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//SubNamespace"/>
@@ -81,5 +95,18 @@
     <eLiterals name="dotNet" value="8" literal=".Net"/>
     <eLiterals name="ZIP" value="9" literal="ZIP"/>
     <eLiterals name="DLL" value="10" literal="DLL"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ImportBindingProtocol">
+    <eLiterals name="SCA" literal="SCA"/>
+    <eLiterals name="SOAP" value="1" literal="SOAP"/>
+    <eLiterals name="EJB" value="2" literal="EJB"/>
+    <eLiterals name="HTTP" value="3" literal="HTTP"/>
+    <eLiterals name="REST" value="4" literal="REST"/>
+    <eLiterals name="SAP" value="5" literal="SAP"/>
+    <eLiterals name="JMS" value="6" literal="JMS"/>
+    <eLiterals name="FILE" value="7" literal="FILE"/>
+    <eLiterals name="FTP" value="8" literal="FTP"/>
+    <eLiterals name="IIOP" value="9" literal="IIOP"/>
+    <eLiterals name="AMQP" value="10" literal="AMQP"/>
   </eClassifiers>
 </ecore:EPackage>

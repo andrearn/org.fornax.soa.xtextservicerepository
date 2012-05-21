@@ -54,10 +54,6 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 			final VersionRef v = ((ImportServiceRef) context).getVersionRef();
 			return createVersionFilter(v, context);
 		}
-		if (reference == ModuleDslPackage.Literals.MODULE_REF__MODULE && context instanceof ModuleRef) {
-			final VersionRef v = ((ModuleRef) context).getVersion();
-			return createVersionFilter(v, context);
-		}
 		if (reference == ModuleDslPackage.Literals.SERVICE_MODULE_REF__MODULE && context instanceof ServiceModuleRef) {
 			final VersionRef v = ((ServiceModuleRef) context).getVersion();
 			return createVersionFilter(v, context);
