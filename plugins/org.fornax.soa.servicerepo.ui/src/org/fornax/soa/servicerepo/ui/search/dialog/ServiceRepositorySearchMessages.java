@@ -2,7 +2,7 @@ package org.fornax.soa.servicerepo.ui.search.dialog;
 
 import org.eclipse.osgi.util.NLS;
 
-public class Messages extends NLS {
+public class ServiceRepositorySearchMessages extends NLS {
 
 	private static final String BUNDLE_NAME = "org.fornax.soa.servicerepo.ui.search.dialog.messages"; //$NON-NLS-1$
 	
@@ -17,6 +17,8 @@ public class Messages extends NLS {
 	public static String ServiceRepositorySearchResultContentProvider_label;
 	public static String ServiceRepositorySearchResultLabelProvider_invalid;
 	public static String ServiceRepositorySearchViewPage_busyLabel;
+	public static String ServiceRepositorySearchViewPage_resultLabel;
+	public static String ServiceRepositorySearchViewPage_resultLabelInitial;
 	public static String ServiceRepositorySearchViewPageActions_collapseAll;
 	public static String ServiceRepositorySearchViewPageActions_collapseAll_tooltip;
 	public static String ServiceRepositorySearchViewPageActions_expandAll;
@@ -29,10 +31,10 @@ public class Messages extends NLS {
 	
 	static {
 		// initialize resource bundle
-		NLS.initializeMessages(BUNDLE_NAME, Messages.class);
+		NLS.initializeMessages(BUNDLE_NAME, ServiceRepositorySearchMessages.class);
 	}
 
-	private Messages() {
+	private ServiceRepositorySearchMessages() {
 	}
 
 }

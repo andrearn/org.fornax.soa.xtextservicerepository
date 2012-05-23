@@ -23,10 +23,13 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
 import org.fornax.soa.profiledsl.search.FindAssetsWithStateQuery;
 import org.fornax.soa.query.FindUnapprovedAssetsQuery;
+import org.fornax.soa.servicerepo.ui.internal.ServiceRepositoryActivator;
+import org.fornax.soa.servicerepo.ui.search.dialog.ServiceRepositorySearchMessages;
 
 import com.google.common.base.Predicate;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.ibm.icu.text.MessageFormat;
 
 
 public class ServiceRepositorySearchQuery implements ISearchQuery {
@@ -75,8 +78,11 @@ public class ServiceRepositorySearchQuery implements ISearchQuery {
 	}
 
 	public String getLabel() {
-		// TODO Auto-generated method stub
-		return "Service repository query result";
+		return ServiceRepositorySearchMessages.ServiceRepositorySearchViewPage_resultLabelInitial;
+	}
+	
+	public String getResultLabel (int matchCount) {
+		return MessageFormat.format (ServiceRepositorySearchMessages.ServiceRepositorySearchViewPage_resultLabel,new Object[] {String.valueOf (matchCount)});
 	}
 
 	public ISearchResult getSearchResult() {
@@ -95,11 +101,14 @@ public class ServiceRepositorySearchQuery implements ISearchQuery {
 			}
 		}
 		Iterable<IEObjectDescription> result = doSearch (rs);
+		int i = 0;
 		for (IEObjectDescription ieObjDesc : result) {
+			i++;
 			searchResult.accept (ieObjDesc);
 		}
 		searchResult.finish();
-		return (monitor.isCanceled()) ? Status.CANCEL_STATUS : Status.OK_STATUS;
+		String message = MessageFormat.format (ServiceRepositorySearchMessages.ServiceRepositorySearchViewPage_resultLabel,new Object[] {String.valueOf (i)});
+		return (monitor.isCanceled()) ? Status.CANCEL_STATUS : new Status (Status.OK, ServiceRepositoryActivator.PLUGIN_ID, message);
 	}
 
 	public Iterable<IEObjectDescription> doSearch(ResourceSet rs) {

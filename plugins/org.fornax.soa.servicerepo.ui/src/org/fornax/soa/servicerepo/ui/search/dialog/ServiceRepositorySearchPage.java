@@ -131,7 +131,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         Label exprLabel = new Label (result, SWT.NONE);
         GridData gd_exprLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         exprLabel.setLayoutData(gd_exprLabel);
-        exprLabel.setText (Messages.SearchPage_expression_label);
+        exprLabel.setText (ServiceRepositorySearchMessages.SearchPage_expression_label);
        
         // Pattern combo
         fPattern= new Combo(result, SWT.SINGLE | SWT.BORDER);
@@ -153,7 +153,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 
         // Ignore case checkbox
 //        fCaseSensitive= new Button(result, SWT.CHECK);
-//        fCaseSensitive.setText(Messages.SearchPage_expression_caseSensitive);
+//        fCaseSensitive.setText(ServiceRepositorySearchMessages.SearchPage_expression_caseSensitive);
 //        fCaseSensitive.addSelectionListener(new SelectionAdapter() {
 //            public void widgetSelected(SelectionEvent e) {
 //                fIsCaseSensitive= fCaseSensitive.getSelection();
@@ -163,7 +163,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         new Label(result, SWT.NONE);
 
         Label queryLabel = new Label (result, SWT.NONE);
-        queryLabel.setText (Messages.SearchPage_query_label);
+        queryLabel.setText (ServiceRepositorySearchMessages.SearchPage_query_label);
 
         queryCombo = new Combo(result, SWT.READ_ONLY);
         initializeQuery();
@@ -182,7 +182,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 
         
         Label scopeLabel = new Label (result, SWT.NONE);
-        scopeLabel.setText (Messages.SearchPage_searchFor_label);
+        scopeLabel.setText (ServiceRepositorySearchMessages.SearchPage_searchFor_label);
 
         searchForCombo = new Combo(result, SWT.NONE);
         initializeSearchFor();
@@ -212,7 +212,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     	limitToGroup= new Group(parent, SWT.NONE);
     	limitToGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
      	limitToGroup.setVisible(false);
-    	limitToGroup.setText(Messages.SearchPage_limitTo_label);
+    	limitToGroup.setText(ServiceRepositorySearchMessages.SearchPage_limitTo_label);
     	limitToGroup.setLayout(new GridLayout(3, false));
         fillLimitToGroup();
         return limitToGroup;
@@ -228,7 +228,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         GridData gd_minStateLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         gd_minStateLabel.widthHint = 121;
         minStateLabel.setLayoutData(gd_minStateLabel);
-        minStateLabel.setText (Messages.SearchPage_minState_label);
+        minStateLabel.setText (ServiceRepositorySearchMessages.SearchPage_minState_label);
         
         minStateCombo = new Combo(limitToGroup, SWT.NONE);
         minStateCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
@@ -237,7 +237,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         
         Label maxStateLabel = new Label (limitToGroup, SWT.NONE);
         maxStateLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        maxStateLabel.setText (Messages.SearchPage_maxState_label);
+        maxStateLabel.setText (ServiceRepositorySearchMessages.SearchPage_maxState_label);
         
         maxStateCombo = new Combo(limitToGroup, SWT.NONE);
         maxStateCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));

@@ -75,6 +75,10 @@ public class EObjectSearchResult implements ISearchResult,
 	public List<IEObjectDescription> getMatchingObjects() {
 		return matchingObjects;
 	}
+	
+	public int getMatchCount() {
+		return matchingObjects.size ();
+	}
 
 	public void reset() {
 		matchingObjects.clear();

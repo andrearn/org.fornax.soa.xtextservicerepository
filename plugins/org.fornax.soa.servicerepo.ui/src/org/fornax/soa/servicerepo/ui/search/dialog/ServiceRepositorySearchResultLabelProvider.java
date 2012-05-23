@@ -18,7 +18,7 @@ public class ServiceRepositorySearchResultLabelProvider extends org.eclipse.jfac
 		if (element instanceof ServiceRepositorySearchViewTreeNode) {
 			return globalDescriptionProvider.getText(((ServiceRepositorySearchViewTreeNode) element).getLabelDescription());
 		}
-		return Messages.ServiceRepositorySearchResultLabelProvider_invalid;
+		return ServiceRepositorySearchMessages.ServiceRepositorySearchResultLabelProvider_invalid;
 	}
 
 	@Override

@@ -16,9 +16,9 @@ public interface ServiceRepositorySearchViewPageActions {
 		private ServiceRepositorySearchViewPage page;
 
 		public ShowNext(ServiceRepositorySearchViewPage page) {
-			super(Messages.ServiceRepositorySearchViewPageActions_showNextMatch);
+			super(ServiceRepositorySearchMessages.ServiceRepositorySearchViewPageActions_showNextMatch);
 			setImageDescriptor(ServiceRepositoryPluginImages.DESC_SEARCH_NEXT);
-			setToolTipText(Messages.ServiceRepositorySearchViewPageActions_showNextMatch_tooltip);
+			setToolTipText(ServiceRepositorySearchMessages.ServiceRepositorySearchViewPageActions_showNextMatch_tooltip);
 			this.page = page;
 		}
 
@@ -33,9 +33,9 @@ public interface ServiceRepositorySearchViewPageActions {
 		private ServiceRepositorySearchViewPage page;
 
 		public ShowPrevious(ServiceRepositorySearchViewPage page) {
-			super(Messages.ServiceRepositorySearchViewPageActions_showPreviousMatch);
+			super(ServiceRepositorySearchMessages.ServiceRepositorySearchViewPageActions_showPreviousMatch);
 			setImageDescriptor(ServiceRepositoryPluginImages.DESC_SEARCH_PREVIOUS);
-			setToolTipText(Messages.ServiceRepositorySearchViewPageActions_showPreviousMatch_tooltip);
+			setToolTipText(ServiceRepositorySearchMessages.ServiceRepositorySearchViewPageActions_showPreviousMatch_tooltip);
 			this.page = page;
 		}
 
@@ -49,9 +49,9 @@ public interface ServiceRepositorySearchViewPageActions {
 		private ServiceRepositorySearchViewPage page;
 
 		public ExpandAll(ServiceRepositorySearchViewPage page) {
-			super(Messages.ServiceRepositorySearchViewPageActions_expandAll);
+			super(ServiceRepositorySearchMessages.ServiceRepositorySearchViewPageActions_expandAll);
 			setImageDescriptor(ServiceRepositoryPluginImages.DESC_EXPAND_ALL);
-			setToolTipText(Messages.ServiceRepositorySearchViewPageActions_expandAll_tooltip);
+			setToolTipText(ServiceRepositorySearchMessages.ServiceRepositorySearchViewPageActions_expandAll_tooltip);
 			this.page = page;
 		}
 
@@ -65,9 +65,9 @@ public interface ServiceRepositorySearchViewPageActions {
 		private ServiceRepositorySearchViewPage page;
 
 		public CollapseAll(ServiceRepositorySearchViewPage page) {
-			super(Messages.ServiceRepositorySearchViewPageActions_collapseAll);
+			super(ServiceRepositorySearchMessages.ServiceRepositorySearchViewPageActions_collapseAll);
 			setImageDescriptor(ServiceRepositoryPluginImages.DESC_COLLAPSE_ALL);
-			setToolTipText(Messages.ServiceRepositorySearchViewPageActions_collapseAll_tooltip);
+			setToolTipText(ServiceRepositorySearchMessages.ServiceRepositorySearchViewPageActions_collapseAll_tooltip);
 			this.page = page;
 		}
 

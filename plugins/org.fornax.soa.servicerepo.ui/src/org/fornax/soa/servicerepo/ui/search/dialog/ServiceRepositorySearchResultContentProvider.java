@@ -166,7 +166,7 @@ public class ServiceRepositorySearchResultContentProvider implements ITreeConten
 	private class UIUpdater extends UIJob {
 
 		public UIUpdater() {
-			super(Messages.ServiceRepositorySearchResultContentProvider_label);
+			super(ServiceRepositorySearchMessages.ServiceRepositorySearchResultContentProvider_label);
 			setSystem(true);
 		}
 
@@ -248,5 +248,9 @@ public class ServiceRepositorySearchResultContentProvider implements ITreeConten
 				}
 			}
 		});
+	}
+	
+	public void clear() {
+		viewer.refresh();
 	}
 }

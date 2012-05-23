@@ -5,6 +5,9 @@ package org.fornax.soa.servicerepo.ui.search.dialog;
 
 import java.util.Iterator;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.util.OpenStrategy;
@@ -34,13 +37,16 @@ import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.IPageSite;
 import org.eclipse.ui.part.Page;
 import org.eclipse.ui.part.PageBook;
+import org.eclipse.ui.progress.UIJob;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.ui.editor.IURIEditorOpener;
 import org.fornax.soa.servicerepo.ui.internal.ServiceRepositoryActivator;
+import org.fornax.soa.servicerepo.ui.search.EObjectSearchResult;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.ibm.icu.text.MessageFormat;
 
 public class ServiceRepositorySearchViewPage extends Page implements ISearchResultPage {
 
@@ -84,6 +90,9 @@ public class ServiceRepositorySearchViewPage extends Page implements ISearchResu
 	
 	private static Injector injector;
 
+	private volatile boolean fIsUIUpdateScheduled= false;
+	private boolean fBatchedClearAll;
+
 	public ServiceRepositorySearchViewPage() {
 		showPreviousAction = new ServiceRepositorySearchViewPageActions.ShowPrevious(this);
 		showNextAction = new ServiceRepositorySearchViewPageActions.ShowNext(this);
@@ -102,7 +111,14 @@ public class ServiceRepositorySearchViewPage extends Page implements ISearchResu
 	}
 
 	public String getLabel() {
-		return searchResult == null ? "" : searchResult.getLabel();
+		ISearchResult input = getInput();
+		if (input != null && input instanceof EObjectSearchResult) {
+			EObjectSearchResult result = (EObjectSearchResult) input;
+			int matchCount = result.getMatchCount ();
+			return MessageFormat.format (ServiceRepositorySearchMessages.ServiceRepositorySearchViewPage_resultLabel,new Object[] {String.valueOf (matchCount)});
+		} else {
+			return "";
+		}
 	}
 
 	public Object getUIState() {
@@ -118,6 +134,10 @@ public class ServiceRepositorySearchViewPage extends Page implements ISearchResu
 	@Override
 	public void init(IPageSite pageSite) {
 		super.init(pageSite);
+	}
+	
+	public ISearchResult getInput() {
+		return searchResult;
 	}
 
 	public void setInput(ISearchResult newSearchResult, Object uiState) {
@@ -136,6 +156,9 @@ public class ServiceRepositorySearchViewPage extends Page implements ISearchResu
 	public void setViewPart(ISearchResultViewPart part) {
 		this.part = part;
 	}
+	public ISearchResultViewPart getViewPart() {
+		return part;
+	}
 
 	@Override
 	public void createControl(Composite parent) {
@@ -143,7 +166,7 @@ public class ServiceRepositorySearchViewPage extends Page implements ISearchResu
 		pagebook.setLayoutData(new GridData(GridData.FILL_BOTH));
 		busyLabel = new Table(pagebook, SWT.NONE);
 		TableItem item = new TableItem(busyLabel, SWT.NONE);
-		item.setText(Messages.ServiceRepositorySearchViewPage_busyLabel);
+		item.setText(ServiceRepositorySearchMessages.ServiceRepositorySearchViewPage_busyLabel);
 		busyLabel.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		control = new Composite(pagebook, SWT.NULL);
 		control.setLayoutData(new GridData(GridData.FILL_BOTH));
@@ -201,10 +224,12 @@ public class ServiceRepositorySearchViewPage extends Page implements ISearchResu
 
 			public void queryFinished(ISearchQuery query) {
 				showBusyLabel(false);
+				scheduleUIUpdate();
 			}
 
 			public void queryAdded(ISearchQuery query) {
 				showBusyLabel(false);
+				scheduleUIUpdate();
 			}
 		};
 	}
@@ -221,8 +246,10 @@ public class ServiceRepositorySearchViewPage extends Page implements ISearchResu
 				public void run() {
 					if (shouldShowBusy)
 						pagebook.showPage(busyLabel);
-					else
+					else {
 						pagebook.showPage(control);
+						scheduleUIUpdate();
+					}
 				}
 			});
 			isBusyShowing = shouldShowBusy;
@@ -275,6 +302,81 @@ public class ServiceRepositorySearchViewPage extends Page implements ISearchResu
 
 	public TreeViewer getViewer() {
 		return viewer;
+	}
+	
+	private synchronized void scheduleUIUpdate() {
+		if (!fIsUIUpdateScheduled) {
+			fIsUIUpdateScheduled= true;
+			new UpdateUIJob().schedule();
+		}
+	}
+
+
+	private synchronized void runBatchedUpdates() {
+	}
+
+	private synchronized void postClear() {
+		fBatchedClearAll= true;
+		scheduleUIUpdate();
+	}
+
+	private synchronized boolean hasMoreUpdates() {
+		return fBatchedClearAll;
+	}
+
+	private boolean isQueryRunning() {
+		ISearchResult result= getInput();
+		if (result != null) {
+			return NewSearchUI.isQueryRunning(result.getQuery());
+		}
+		return false;
+	}
+
+	private void runBatchedClear() {
+		synchronized(this) {
+			if (!fBatchedClearAll) {
+				return;
+			}
+			fBatchedClearAll= false;
+		}
+		getViewPart().updateLabel();
+		clear();
+	}
+	
+	protected void clear() {
+		if (contentProvider != null)
+			contentProvider.clear();
+	}
+
+	private class UpdateUIJob extends UIJob {
+
+		public UpdateUIJob() {
+			super("Servicerepo search update job");
+			setSystem(true);
+		}
+
+		public IStatus runInUIThread(IProgressMonitor monitor) {
+			Control control= getControl();
+			if (control == null || control.isDisposed()) {
+				// disposed the control while the UI was posted.
+				return Status.OK_STATUS;
+			}
+			if (hasMoreUpdates() || isQueryRunning()) {
+				schedule(500);
+			} else {
+				fIsUIUpdateScheduled= false;
+			}
+			getViewPart().updateLabel();
+			return Status.OK_STATUS;
+		}
+
+		/*
+		 * Undocumented for testing only. Used to find UpdateUIJobs.
+		 */
+		public boolean belongsTo(Object family) {
+			return family == ServiceRepositorySearchViewPage.this;
+		}
+
 	}
 
 }
