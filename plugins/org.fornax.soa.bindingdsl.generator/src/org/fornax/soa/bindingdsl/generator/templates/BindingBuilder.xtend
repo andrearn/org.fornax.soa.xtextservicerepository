@@ -92,8 +92,8 @@ class BindingBuilder {
 		contractBuilder.build (binding, profile);
 	}
 
-	def dispatch toBinding (Module binding, Environment environment, SOAProfile profile) {
-		contractBuilder.build (binding, environment, profile);
+	def dispatch toBinding (Module module, Environment environment, SOAProfile profile) {
+		contractBuilder.build (module, environment, profile);
 	}
 		
 	

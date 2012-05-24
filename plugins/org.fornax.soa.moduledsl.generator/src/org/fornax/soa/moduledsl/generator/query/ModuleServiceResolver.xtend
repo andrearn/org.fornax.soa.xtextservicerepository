@@ -14,6 +14,7 @@ import com.google.common.base.Predicates
 import org.eclipse.xtext.EcoreUtil2
 import java.util.List
 import org.eclipse.emf.ecore.resource.ResourceSet
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef
 
 class ModuleServiceResolver {
 	
@@ -74,5 +75,25 @@ class ModuleServiceResolver {
 	 */
 	def findProvidingModules (Service service, Iterable<Module> canditateModules, String qualifierName) {
 		service.findProvidingModules (canditateModules).filter (m|m.qualifiers.qualifierName.contains(qualifierName))
-	}	
+	}
+	
+		
+	def dispatch String getQualifier (Module module) {
+		module.bindingQualifier
+	}
+	
+	def dispatch String getQualifier (ModuleRef moduleRef) {
+		if (moduleRef.bindingQualifier != null)
+			return moduleRef.bindingQualifier
+		else
+			return (moduleRef.eContainer as Module).qualifier
+	}
+	
+	def dispatch String getQualifier (ImportServiceRef impServiceRef) {
+		if (impServiceRef.bindingQualifier != null)
+			return impServiceRef.bindingQualifier
+		else
+			return (impServiceRef.eContainer as Module).qualifier
+	}
+		
 }

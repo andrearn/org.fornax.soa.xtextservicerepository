@@ -12,10 +12,16 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
+import java.util.Set
+import org.fornax.soa.bindingDsl.Binding
+import org.fornax.soa.bindingdsl.generator.queries.modules.ModuleBindingResolver
+import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
+import org.fornax.soa.moduledsl.moduleDsl.Module
 
 class BindingServiceResolver {
 	
 	@Inject extension ModuleNamespaceQuery
+	@Inject extension ModuleBindingResolver
 	@Inject ModuleServiceResolver serviceResolver
 	@Inject LifecycleQueries lifecycleQueries
 	
@@ -39,5 +45,19 @@ class BindingServiceResolver {
 
 			default: lifecycleQueries.getMinProdState(l)
 		}
+	}
+	
+	def resolveServiceBinding (Service svc, ImportBindingProtocol protocol, Iterable<Module> canditateModules, String qualifier) {
+		var Set<Binding> bindings =  newHashSet()
+		if (!canditateModules?.empty && qualifier != null) {
+			bindings.addAll (svc.findMostSpecificBindings(protocol, qualifier, canditateModules.toSet))
+		} else if (!canditateModules?.empty && qualifier == null) {
+			bindings.addAll (svc.findMostSpecificBindings(protocol, canditateModules.toSet))
+		} else if (canditateModules?.empty && qualifier != null) {
+			bindings.addAll (svc.findMostSpecificBindings(protocol, qualifier))
+		} else {
+			bindings.addAll (svc.findMostSpecificBindings(protocol))
+		} 
+		return bindings
 	}
 }

@@ -28,9 +28,9 @@ class BindingServiceContractBuilder {
 		}
 	}
 	
-	def void build (Module binding, Environment targetEnvironment, SOAProfile profile) {
+	def void build (Module module, Environment targetEnvironment, SOAProfile profile) {
 		for (protContractBuilder : protocolContractBuilders) {
-			protContractBuilder.buildUsedServiceContracts (binding, targetEnvironment, profile);
+			protContractBuilder.buildUsedServiceContracts (module, targetEnvironment, profile);
 		}
 	}
 	

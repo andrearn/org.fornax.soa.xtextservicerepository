@@ -36,6 +36,8 @@ import java.util.Set
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
 import org.fornax.soa.bindingdsl.generator.queries.environment.EnvironmentBindingResolver
+import org.fornax.soa.bindingDsl.Binding
+import org.fornax.soa.moduledsl.generator.query.ModuleServiceResolver
 
 /* 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -66,6 +68,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	@Inject ConcreteProviderWsdlTemplates 	concreteProviderWsdlGenerator
 	@Inject MessageHeaderXSDTemplates 		msgHeaderGenerator
 	@Inject BoundServiceLookup				serviceLookup
+	@Inject ModuleServiceResolver			modServiceResolver
 
 	
 	@Inject @Named ("noDependencies") 		
@@ -158,40 +161,64 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	}
 
 	override buildUsedServiceContracts (Module module, Environment targetEnvironment, SOAProfile profile) {
-		var Set<Service> services = serviceLookup.getAllUsedServicesWithProtocol (module, targetEnvironment, ImportBindingProtocol::SOAP, profile);
-		for (svc : services) {
-			val bindings = svc.findMostSpecificBindings(ImportBindingProtocol::SOAP)
-			for (specBinding : bindings) {
-				for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
-					if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
-						val namespace = svc.findSubdomain();
-								
-						wsdlGenerator.toWSDL (svc, namespace, namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle), profile, specBinding.getRegistryBaseUrl());
-								
-						if (svc.isPublicEndpoint (specBinding.resolveServer)) {
-							concreteWsdlGenerator.toWSDL(specBinding, svc, soapProt, profile);
-						} else {
-							concreteProviderWsdlGenerator.toWSDL(svc, specBinding, soapProt, profile);
-						}
-								
-						if ( ! noDependencies) {
-							val verNamespaces = svc.importedVersionedNS (namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle));
-							verNamespaces.forEach (n | xsdGenerator.toXSD(n, namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle), specBinding, profile));
-									
-							val header = svc.findBestMatchingHeader (profile);
-							if (forceRelativePaths)
-								msgHeaderGenerator.toMessageHeaderXSD(header, profile, specBinding.getRegistryBaseUrl())
-							else 
-								msgHeaderGenerator.toMessageHeaderXSD(header, profile)
-						}
-					}
+		val Set<Service> services = serviceLookup.getAllUsedServicesWithProtocol (module, targetEnvironment, ImportBindingProtocol::SOAP, profile);
+		val moduleRefs = module.usedModules
+		val serviceRefs = module.usedServices
+		for (svcRef : serviceRefs) {
+			if (services.contains(svcRef.service)) {
+				val svc = svcRef.service
+				val qualifier = modServiceResolver.getQualifier(svcRef)
+				val canditateModules = svcRef.modules.map (m|m.module)
+				val bindings = svc.resolveServiceBinding (ImportBindingProtocol::SOAP, canditateModules, qualifier)
+				
+				for (specBinding : bindings) {
+					doBuildServiceContracts(svc, specBinding, profile)
 				}
 			}
+		}
+		for (modRef : moduleRefs) {
+			val modRefServices = modRef.moduleRef.module.providedServices
 			
+			for (svc : modRefServices.filter (e|services.exists (s|s == e.service)).map (e|e.service)) {
+				val qualifier = modServiceResolver.getQualifier(modRef)
+				val Set<Module> canditateModules = newHashSet()
+				canditateModules.add (modRef.moduleRef.module)
+				val bindings = svc.resolveServiceBinding (ImportBindingProtocol::SOAP, canditateModules, qualifier)
+				
+				for (specBinding : bindings) {
+					doBuildServiceContracts(svc, specBinding, profile)
+				}
+			}
 		}
 	}
 	
-
+	def protected doBuildServiceContracts (Service service, Binding specBinding, SOAProfile profile) {
+		for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
+			if (service.providedContractUrl == null && service.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
+				val namespace = service.findSubdomain();
+						
+				wsdlGenerator.toWSDL (service, namespace, namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle), profile, specBinding.getRegistryBaseUrl());
+						
+				if (service.isPublicEndpoint (specBinding.resolveServer)) {
+					concreteWsdlGenerator.toWSDL(specBinding, service, soapProt, profile);
+				} else {
+					concreteProviderWsdlGenerator.toWSDL(service, specBinding, soapProt, profile);
+				}
+						
+				if ( ! noDependencies) {
+					val verNamespaces = service.importedVersionedNS (namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle));
+					verNamespaces.forEach (n | xsdGenerator.toXSD(n, namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle), specBinding, profile));
+							
+					val header = service.findBestMatchingHeader (profile);
+					if (forceRelativePaths)
+						msgHeaderGenerator.toMessageHeaderXSD(header, profile, specBinding.getRegistryBaseUrl())
+					else 
+						msgHeaderGenerator.toMessageHeaderXSD(header, profile)
+				}
+			}
+		}
+	}
+	
 	override buildTypeDefinitions (SubNamespace namespace, Environment env, SOAProfile profile) {
 		xsdGenerator.toXSD (namespace, env, profile);
 	}

@@ -19,6 +19,8 @@ import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
 import org.fornax.soa.bindingdsl.generator.queries.ProtocolMatcher
 import org.fornax.soa.bindingDsl.OperationBinding
 import org.eclipse.xtext.resource.IEObjectDescription
+import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef
+import org.fornax.soa.bindingDsl.ModuleRef
 
 class ModuleBindingResolver {
 	
@@ -86,6 +88,43 @@ class ModuleBindingResolver {
 	def Iterable<Binding> findMostSpecificBindings (Service service, String qualifierName) {
 		var Set<Binding> bindings = newHashSet()
 		val serviceBindings = service.findMostSpecificBindings.filter (typeof (ServiceBinding))
+		val bindingsInQualifiedModule = serviceBindings.filter (b | b.eContainer instanceof ModuleBinding && (b.eContainer as ModuleBinding).module.module.qualifiers.qualifierName.exists(modQualifier|modQualifier == qualifierName))
+		bindings.addAll (bindingsInQualifiedModule)
+		return bindings
+	}
+	/*
+	 * Find all bindings for the given Service to any environment
+	 */
+	def Iterable<Binding> findMostSpecificBindings (Service service, Iterable<Module> canditateModules) {
+		val allBindings = getAllBindings(service.eResource?.resourceSet)
+		var Set<Binding> bindings = newHashSet()
+		val serviceBindings = allBindings.filter (typeof (ServiceBinding)).filter (b|b.service.service == service)
+		if (serviceBindings.empty) {
+			val providingModules = moduleResolver.findProvidingModules(service, canditateModules)
+			if (!providingModules.empty) {
+				val moduleBindings = allBindings.filter (typeof (ModuleBinding)).filter (b|providingModules.exists(m|m == b.module.module))
+				bindings.addAll(moduleBindings)
+			}
+			val serviceNamespace = service.eContainer as SubNamespace
+			val domainBindings = allBindings.filter (typeof (DomainBinding)).filter (b|b.subNamespace == serviceNamespace)
+			bindings.addAll(domainBindings)
+		} else {
+			bindings.addAll(serviceBindings)
+		}
+		return bindings
+	}
+	
+	def Iterable<Binding> findMostSpecificBindings (Service service, ImportBindingProtocol protocol, Iterable<Module> canditateModules) {
+		return service.findMostSpecificBindings(canditateModules).filter (p|protocolMatcher.supportsImportBindingProtocol (p, protocol))
+	}
+	
+	def Iterable<Binding> findMostSpecificBindings (Service service, ImportBindingProtocol protocol, String qualifierName, Iterable<Module> canditateModules) {
+		return service.findMostSpecificBindings (qualifierName, canditateModules).filter (p|protocolMatcher.supportsImportBindingProtocol (p, protocol))
+	}
+	
+	def Iterable<Binding> findMostSpecificBindings (Service service, String qualifierName, Iterable<Module> canditateModules) {
+		var Set<Binding> bindings = newHashSet()
+		val serviceBindings = service.findMostSpecificBindings(canditateModules).filter (typeof (ServiceBinding))
 		val bindingsInQualifiedModule = serviceBindings.filter (b | b.eContainer instanceof ModuleBinding && (b.eContainer as ModuleBinding).module.module.qualifiers.qualifierName.exists(modQualifier|modQualifier == qualifierName))
 		bindings.addAll (bindingsInQualifiedModule)
 		return bindings
