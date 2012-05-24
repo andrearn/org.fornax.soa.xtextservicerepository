@@ -36,18 +36,21 @@ class SoapVendorBindingsResolver {
 	
 	def dispatch String toEndpointAddressPath (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		val serverType = server.toServerTypeName ();
-		val ctxRoot = ctxRootProvider.getContextRoot(mod, serverType);
+		val serverVersion = server.toServerTypeVersion ();
+		val ctxRoot = ctxRootProvider.getContextRoot(mod, serverType, serverVersion);
 		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
 	
 	def dispatch String toEndpointAddressPath (DomainBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
 		val serverType = server.toServerTypeName ();
+		val serverVersion = server.toServerTypeVersion ();
 		val ctxRoot = soapBindRes.getContextRoot(bind, s);
 		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
 	
 	def dispatch String toEndpointAddressPath (ServiceBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
 		val serverType = server.toServerTypeName ();
+		val serverVersion = server.toServerTypeVersion ();
 		val ctxRoot = soapBindRes.getContextRoot(bind);
 		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
@@ -55,12 +58,14 @@ class SoapVendorBindingsResolver {
 	
 	def dispatch String toProviderEndpointAddressPath (DomainBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
 		val serverType = server.toServerTypeName ();
+		val serverVersion = server.toServerTypeVersion ();
 		val ctxRoot = soapBindRes.getProviderContextRoot(bind, s);
 		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
 	
 	def dispatch String toProviderEndpointAddressPath (ServiceBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
 		val serverType = server.toServerTypeName ();
+		val serverVersion = server.toServerTypeVersion ();
 		val ctxRoot = soapBindRes.getProviderContextRoot(bind);
 		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
@@ -68,6 +73,7 @@ class SoapVendorBindingsResolver {
 	
 	def dispatch String toEndpointAddressPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		val serverType = server.toServerTypeName ();
+		val serverVersion = server.toServerTypeVersion ();
 		if (serverType != null) {
 			switch (serverType.toLowerCase()) {
 			case "tomcat": 			tomcatEndpointPath (ctxRoot, orgNs, subNs, s, server)
@@ -89,7 +95,6 @@ class SoapVendorBindingsResolver {
 			defaultPatternEndpointPath (ctxRoot, orgNs, subNs, s, server);
 		}
 	}
-	
 	def String toServerTypeName (Server s) {
 		switch (s) {
 			AppServer: 		(s as AppServer).serverType
@@ -100,6 +105,20 @@ class SoapVendorBindingsResolver {
 			SAP:			"saperp"
 			Database:		(s as Database).serverType
 			Registry:		(s as Registry).serverType
+			default: null
+		}
+	}
+	
+	def String toServerTypeVersion (Server s) {
+		switch (s) {
+			AppServer: 		(s as AppServer).serverVersion
+			ESB:			(s as ESB).serverVersion
+			ProcessServer:	(s as ProcessServer).serverVersion
+			Broker:			(s as Broker).serverVersion
+			WebServer:		(s as WebServer).serverVersion
+			SAP:			null
+			Database:		(s as Database).serverVersion
+			Registry:		(s as Registry).serverVersion
 			default: null
 		}
 	}

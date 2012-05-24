@@ -47,16 +47,16 @@ class BindingServiceResolver {
 		}
 	}
 	
-	def resolveServiceBinding (Service svc, ImportBindingProtocol protocol, Iterable<Module> canditateModules, String qualifier) {
+	def resolveServiceBinding (Service svc, Environment targetEnvironment, ImportBindingProtocol protocol, Iterable<Module> canditateModules, String qualifier) {
 		var Set<Binding> bindings =  newHashSet()
 		if (!canditateModules?.empty && qualifier != null) {
-			bindings.addAll (svc.findMostSpecificBindings(protocol, qualifier, canditateModules.toSet))
+			bindings.addAll (svc.findMostSpecificBindings(targetEnvironment, protocol, qualifier, canditateModules.toSet))
 		} else if (!canditateModules?.empty && qualifier == null) {
-			bindings.addAll (svc.findMostSpecificBindings(protocol, canditateModules.toSet))
+			bindings.addAll (svc.findMostSpecificBindings(targetEnvironment, protocol, canditateModules.toSet))
 		} else if (canditateModules?.empty && qualifier != null) {
-			bindings.addAll (svc.findMostSpecificBindings(protocol, qualifier))
+			bindings.addAll (svc.findMostSpecificBindings(targetEnvironment, protocol, qualifier))
 		} else {
-			bindings.addAll (svc.findMostSpecificBindings(protocol))
+			bindings.addAll (svc.findMostSpecificBindings(targetEnvironment, protocol))
 		} 
 		return bindings
 	}

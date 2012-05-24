@@ -169,7 +169,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				val svc = svcRef.service
 				val qualifier = modServiceResolver.getQualifier(svcRef)
 				val canditateModules = svcRef.modules.map (m|m.module)
-				val bindings = svc.resolveServiceBinding (ImportBindingProtocol::SOAP, canditateModules, qualifier)
+				val bindings = svc.resolveServiceBinding (targetEnvironment, ImportBindingProtocol::SOAP, canditateModules, qualifier)
 				
 				for (specBinding : bindings) {
 					doBuildServiceContracts(svc, specBinding, profile)
@@ -183,7 +183,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				val qualifier = modServiceResolver.getQualifier(modRef)
 				val Set<Module> canditateModules = newHashSet()
 				canditateModules.add (modRef.moduleRef.module)
-				val bindings = svc.resolveServiceBinding (ImportBindingProtocol::SOAP, canditateModules, qualifier)
+				val bindings = svc.resolveServiceBinding (targetEnvironment, ImportBindingProtocol::SOAP, canditateModules, qualifier)
 				
 				for (specBinding : bindings) {
 					doBuildServiceContracts(svc, specBinding, profile)
