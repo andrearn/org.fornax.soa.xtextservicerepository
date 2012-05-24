@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.moduledsl
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.5.2.qualifier
+Bundle-Version: 1.5.3.qualifier
 Bundle-SymbolicName: org.fornax.soa.moduledsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;bundle-version="2.1.1",
@@ -13,15 +13,15 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.1",
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
  org.eclipse.xtext.xtend;resolution:=optional,
- org.fornax.soa.basedsl;bundle-version="1.5.2",
- org.fornax.soa.semanticsdsl;bundle-version="1.5.2",
- org.fornax.soa.profiledsl;bundle-version="1.5.2",
- org.fornax.soa.servicedsl;bundle-version="1.5.2",
+ org.fornax.soa.basedsl;bundle-version="1.5.3",
+ org.fornax.soa.semanticsdsl;bundle-version="1.5.3",
+ org.fornax.soa.profiledsl;bundle-version="1.5.3",
+ org.fornax.soa.servicedsl;bundle-version="1.5.3",
  org.eclipse.xtext.util;bundle-version="2.1.1",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.fornax.soa.environmentdsl;bundle-version="1.5.2"
+ org.fornax.soa.environmentdsl;bundle-version="1.5.3"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.moduledsl,
