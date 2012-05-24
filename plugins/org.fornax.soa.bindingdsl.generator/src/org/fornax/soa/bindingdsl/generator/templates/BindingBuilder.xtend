@@ -25,6 +25,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
+import org.fornax.soa.moduledsl.moduleDsl.Module
 
 /**
  * Builds all technical artifacts tthat repsent a binding (WSDLs/XSDs etc.).
@@ -90,7 +91,11 @@ class BindingBuilder {
 	def toBinding (ModuleBinding binding, SOAProfile profile, boolean noDeps, boolean includeSubNamespaces) {
 		contractBuilder.build (binding, profile);
 	}
-	
+
+	def dispatch toBinding (Module binding, Environment environment, SOAProfile profile) {
+		contractBuilder.build (binding, environment, profile);
+	}
+		
 	
 	/*
 		Event XSDs for Services having an request and an response event for each service operation

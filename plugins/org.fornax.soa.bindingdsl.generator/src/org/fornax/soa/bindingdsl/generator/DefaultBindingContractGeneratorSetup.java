@@ -30,6 +30,7 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 	private String profileName = ".*";
 	private List<String> moduleBindingNames = new ArrayList<String>();
+	private List<String> moduleNames = new ArrayList<String>();
 	private List<String> domainBindingNames = new ArrayList<String>();
 	private List<String> namespaces = new ArrayList<String>();
 	private List<String> domainNamespaces = new ArrayList<String>();
@@ -79,6 +80,10 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.MODULE_BINDING_NAMES))
 								.toInstance (moduleBindingNames);
+						bind (new TypeLiteral<List<String>>() {})
+								.annotatedWith (
+										Names.named (BindingDSLGeneratorConstants.MODULE_NAMES))
+								.toInstance (moduleNames);
 						bind (new TypeLiteral<List<String>>() {})
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.DOMAIN_BINDING_NAMES))
@@ -138,6 +143,14 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 	public void addModuleBindingName (String moduleBindingName) {
 		moduleBindingNames.add (moduleBindingName);
+	}
+
+	public List<String> getModuleNames () {
+		return moduleNames;
+	}
+
+	public void addModuleName (String moduleName) {
+		moduleNames.add (moduleName);
 	}
 
 	public List<String> getDomainBindingNames () {

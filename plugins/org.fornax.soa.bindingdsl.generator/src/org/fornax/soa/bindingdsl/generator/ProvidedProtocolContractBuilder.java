@@ -4,6 +4,7 @@ import org.fornax.soa.bindingDsl.DomainBinding;
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
 import org.fornax.soa.environmentDsl.Environment;
+import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.service.VersionedDomainNamespace;
 import org.fornax.soa.serviceDsl.SubNamespace;
@@ -24,6 +25,10 @@ public class ProvidedProtocolContractBuilder implements IProtocolContractBuilder
 
 	public void buildServiceContracts (DomainBinding bind, SOAProfile profile) {
 		provider.get().buildServiceContracts (bind, profile);
+	}
+
+	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, SOAProfile profile) {
+		provider.get().buildUsedServiceContracts (module, targetEnvironment, profile);
 	}
 
 	public void buildTypeDefinitions (SubNamespace namespace, Environment env,

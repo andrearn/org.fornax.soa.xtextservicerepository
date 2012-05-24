@@ -33,6 +33,9 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import java.util.List
 import java.util.Set
+import org.fornax.soa.moduledsl.moduleDsl.Module
+import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
+import org.fornax.soa.bindingdsl.generator.queries.environment.EnvironmentBindingResolver
 
 /* 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -51,6 +54,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	@Inject extension ModuleBindingResolver
 	@Inject extension ReferencedTypesFinder
 	@Inject extension HeaderFinder
+	@Inject extension EnvironmentBindingResolver		
 		
 	
 	@Inject WSDLTemplates 					wsdlGenerator
@@ -150,6 +154,40 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				headers.forEach (header | msgHeaderGenerator.toMessageHeaderXSD (header, profile, binding.getRegistryBaseUrl()))
 			else 
 				headers.forEach (header | msgHeaderGenerator.toMessageHeaderXSD (header, profile, binding.getRegistryBaseUrl()))
+		}
+	}
+
+	override buildUsedServiceContracts (Module module, Environment targetEnvironment, SOAProfile profile) {
+		var Set<Service> services = serviceLookup.getAllUsedServicesWithProtocol (module, targetEnvironment, ImportBindingProtocol::SOAP, profile);
+		for (svc : services) {
+			val bindings = svc.findMostSpecificBindings(ImportBindingProtocol::SOAP)
+			for (specBinding : bindings) {
+				for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
+					if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
+						val namespace = svc.findSubdomain();
+								
+						wsdlGenerator.toWSDL (svc, namespace, namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle), profile, specBinding.getRegistryBaseUrl());
+								
+						if (svc.isPublicEndpoint (specBinding.resolveServer)) {
+							concreteWsdlGenerator.toWSDL(specBinding, svc, soapProt, profile);
+						} else {
+							concreteProviderWsdlGenerator.toWSDL(svc, specBinding, soapProt, profile);
+						}
+								
+						if ( ! noDependencies) {
+							val verNamespaces = svc.importedVersionedNS (namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle));
+							verNamespaces.forEach (n | xsdGenerator.toXSD(n, namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle), specBinding, profile));
+									
+							val header = svc.findBestMatchingHeader (profile);
+							if (forceRelativePaths)
+								msgHeaderGenerator.toMessageHeaderXSD(header, profile, specBinding.getRegistryBaseUrl())
+							else 
+								msgHeaderGenerator.toMessageHeaderXSD(header, profile)
+						}
+					}
+				}
+			}
+			
 		}
 	}
 	

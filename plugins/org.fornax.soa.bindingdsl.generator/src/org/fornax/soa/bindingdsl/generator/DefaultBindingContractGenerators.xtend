@@ -23,6 +23,8 @@ import org.fornax.soa.serviceDsl.ServiceModel
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.InternalNamespace
 import org.fornax.soa.serviceDsl.DomainNamespace
+import org.fornax.soa.moduledsl.moduleDsl.Module
+import org.fornax.soa.moduledsl.moduleDsl.ModuleModel
 
 /*
  * Generate technical service and datamodel contract artifacts like WSDLs, XSDs or IDLs for ModuleBindings
@@ -47,6 +49,9 @@ class DefaultBindingContractGenerators implements IGenerator {
 	
 	@Inject @Named ("moduleBindingNames") 	
 	List<String> moduleBindingNames
+
+	@Inject @Named ("moduleNames") 	
+	List<String> moduleNames
 	
 	@Inject @Named ("domainBindingNames") 	
 	List<String> domainBindingNames
@@ -105,6 +110,16 @@ class DefaultBindingContractGenerators implements IGenerator {
 			}
 		}
 		
+		if (contentRoot instanceof ModuleModel) {
+			val modModel = contentRoot as ModuleModel
+			val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
+			for (module : modModel.modules) {
+				if (moduleNames.exists(modName | Pattern::matches (modName, nameProvider.getFullyQualifiedName (module).toString))) {
+					module.compile (profile, resource)
+				}
+			}
+		}
+		
 		if  (contentRoot instanceof ServiceModel) {
 			val svcModel = contentRoot as ServiceModel;
 			val Iterable<? extends SubNamespace> subNamespaces = svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten;
@@ -132,6 +147,11 @@ class DefaultBindingContractGenerators implements IGenerator {
 	
 	def protected compile (DomainBinding bind, SOAProfile profile) {
 		bindingTpl.toBinding (bind, profile);
+	}
+	
+	def protected compile (Module mod, SOAProfile profile, Resource resource) {
+		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
+		bindingTpl.toBinding(mod, env, profile)
 	}
 	
 	def protected compile (SubNamespace namespace, Resource resource) {

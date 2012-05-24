@@ -4,6 +4,7 @@ package org.fornax.soa.bindingdsl.generator;
 public class BindingDSLGeneratorConstants {
 
 	public final static String MODULE_BINDING_NAMES = "moduleBindingNames";
+	public final static String MODULE_NAMES = "moduleNames";
 	public final static String DOMAIN_BINDING_NAMES = "domainBindingNames";
 	public final static String NAME_SPACES = "namespaces";
 	public final static String DOMAIN_NAME_SPACES = "domainNamespaces";

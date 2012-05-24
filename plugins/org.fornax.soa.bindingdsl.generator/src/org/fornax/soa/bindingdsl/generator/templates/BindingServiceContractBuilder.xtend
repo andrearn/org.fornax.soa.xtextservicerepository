@@ -7,6 +7,8 @@ import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.bindingdsl.generator.ProvidedProtocolContractBuilder
+import org.fornax.soa.moduledsl.moduleDsl.Module
+import org.fornax.soa.environmentDsl.Environment
 
 class BindingServiceContractBuilder {
 
@@ -23,6 +25,12 @@ class BindingServiceContractBuilder {
 	def dispatch void build (ModuleBinding binding, SOAProfile profile) {
 		for (protContractBuilder : protocolContractBuilders) {
 			protContractBuilder.buildServiceContracts (binding, profile);
+		}
+	}
+	
+	def void build (Module binding, Environment targetEnvironment, SOAProfile profile) {
+		for (protContractBuilder : protocolContractBuilders) {
+			protContractBuilder.buildUsedServiceContracts (binding, targetEnvironment, profile);
 		}
 	}
 	

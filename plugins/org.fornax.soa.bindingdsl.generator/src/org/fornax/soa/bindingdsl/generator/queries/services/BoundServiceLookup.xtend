@@ -16,6 +16,10 @@ import org.fornax.soa.servicedsl.generator.query.ServiceFinder
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef
 import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.moduledsl.moduleDsl.NamespaceRef
+import org.fornax.soa.environmentDsl.Environment
+import org.fornax.soa.moduledsl.moduleDsl.Module
+import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
 
 /*
  * Finds services bound into an environment, i.e. referenced from a binding
@@ -84,6 +88,50 @@ class BoundServiceLookup {
 
 		services.addAll (binding.module.module.providedServices.map (s | s.latestServiceInEnvironment (environment)));
 		val Set<VersionedDomainNamespace> versionedNamespaces = provNamespaces.map (ns |ns.toVersionedDomainNamespaces()).flatten.toSet
+		for (VersionedDomainNamespace verNs : versionedNamespaces) {
+			val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService (verNs.version.asInteger(), minState));
+			val nsServices = svcCand.filter (c | !exclServices.contains (c));
+			services.addAll (nsServices);
+		}
+		return services;
+	}
+	
+	/*
+	 * Find all services referenced by the module referenced in the binding. Service versions are 
+	 * chosen with respect ttheir state and the target environment
+	 */
+	def Set<Service> getAllUsedServices (Module module, Environment environment, SOAProfile profile) {
+		val usedModules = module.usedModules
+		val Iterable<SubNamespace> usedModuleNamespaces = usedModules.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (e|e.namespace);
+		val Iterable<ServiceRef> nsServiceExclRefs = usedModules.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (n | n.excludedServices).flatten;
+		val exclServices = nsServiceExclRefs.map (r | r.service).toList;
+		val minState = environment.getMinLifecycleState (module, profile.lifecycle);	
+		var Set<Service> services = newHashSet();	
+
+		services.addAll (module.usedServices.map (s | s.latestServiceInEnvironment (environment)));
+		val Set<VersionedDomainNamespace> versionedNamespaces = usedModuleNamespaces.map (ns |ns.toVersionedDomainNamespaces()).flatten.toSet
+		for (VersionedDomainNamespace verNs : versionedNamespaces) {
+			val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService (verNs.version.asInteger(), minState));
+			val nsServices = svcCand.filter (c | !exclServices.contains (c));
+			services.addAll (nsServices);
+		}
+		return services;
+	}
+	
+	/*
+	 * Find all services referenced by the module referenced in the binding. Service versions are 
+	 * chosen with respect ttheir state and the target environment
+	 */
+	def Set<Service> getAllUsedServicesWithProtocol (Module module, Environment environment, ImportBindingProtocol protocol, SOAProfile profile) {
+		val usedModules = module.usedModules
+		val Iterable<SubNamespace> usedModuleNamespaces = usedModules.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (e|e.namespace);
+		val Iterable<ServiceRef> nsServiceExclRefs = usedModules.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (n | n.excludedServices).flatten;
+		val exclServices = nsServiceExclRefs.map (r | r.service).toList;
+		val minState = environment.getMinLifecycleState (module, profile.lifecycle);	
+		var Set<Service> services = newHashSet();	
+
+		services.addAll (module.usedServices.filter (e|e.endpointProtocol == protocol || module.usesEndpointProtocol == protocol).map (s | s.latestServiceInEnvironment (environment)));
+		val Set<VersionedDomainNamespace> versionedNamespaces = usedModuleNamespaces.map (ns |ns.toVersionedDomainNamespaces()).flatten.toSet
 		for (VersionedDomainNamespace verNs : versionedNamespaces) {
 			val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService (verNs.version.asInteger(), minState));
 			val nsServices = svcCand.filter (c | !exclServices.contains (c));
