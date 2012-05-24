@@ -35,22 +35,22 @@ public class VersionComparator {
 					return classifierCmp;
 				
 				int cmp = ver1Parts[i].compareTo(ver2Parts[i]);
-				if (cmp != 0 && Character.isDigit (ver1Parts[i].charAt (0)) && Character.isDigit (ver2Parts[i].charAt (0))) {
+				if (cmp != 0 && ver1Parts[i].length () > 0 && Character.isDigit (ver1Parts[i].charAt (0)) && ver2Parts[i].length () > 0 && Character.isDigit (ver2Parts[i].charAt (0))) {
 					return cmp;
 				}
-				if (cmp != 0 && Character.isDigit (ver1Parts[i].charAt (0)) && !Character.isDigit (ver2Parts[i].charAt (0))) {
+				if (cmp != 0 && ver1Parts[i].length () > 0 && Character.isDigit (ver1Parts[i].charAt (0)) && ver2Parts[i].length () > 0 && !Character.isDigit (ver2Parts[i].charAt (0))) {
 					if (ver1Parts[i].compareTo ("0") > 0)
 						return 1;
 					else
 						return 0;
 				}
-				if (cmp != 0 && !Character.isDigit (ver1Parts[i].charAt (0)) && Character.isDigit (ver2Parts[i].charAt (0))) {
+				if (cmp != 0 && ver1Parts[i].length () > 0 && !Character.isDigit (ver1Parts[i].charAt (0)) && ver2Parts[i].length () > 0 && Character.isDigit (ver2Parts[i].charAt (0))) {
 					if (ver2Parts[i].compareTo ("0") > 0)
 						return 1;
 					else
 						return 0;
 				}
-				if (cmp != 0 && !Character.isDigit (ver1Parts[i].charAt (0)) && !Character.isDigit (ver2Parts[i].charAt (0))) {
+				if (cmp != 0 && ver1Parts[i].length () > 0 && !Character.isDigit (ver1Parts[i].charAt (0)) && ver2Parts[i].length () > 0 && !Character.isDigit (ver2Parts[i].charAt (0))) {
 					return VersionClassifierComparator.compare (ver1Parts[i], ver2Parts[i]);
 				}
 			}
