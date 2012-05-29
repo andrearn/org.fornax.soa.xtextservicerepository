@@ -69,6 +69,10 @@ class ConcreteWsdlTemplates {
 	def dispatch toWSDL (ModuleBinding binding, Service svc, SOAP prot, SOAProfile profile) {
 		svc.toWSDL (binding, prot, profile);
 	}
+
+	def dispatch toWSDL (DomainBinding domBind, Service svc, BindingProtocol prot, SOAProfile profile) {
+		svc.toWSDL (domBind, prot, profile) 
+	}
 	
 	def toWSDLByServiceName (DomainBinding binding, List<String> serviceNames, BindingProtocol prot, SOAProfile profile) {
 		if (binding.subNamespace instanceof DomainNamespace) {

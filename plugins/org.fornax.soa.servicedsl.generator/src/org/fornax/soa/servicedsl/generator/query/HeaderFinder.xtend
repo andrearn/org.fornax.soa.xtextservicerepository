@@ -34,7 +34,7 @@ import org.fornax.soa.profiledsl.generator.query.NamespaceImportQueries
 import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
 
 /* 
- * Find th most specific message header declaration to be used by a service operation
+ * Find the most specific message header declaration to be used by a service operation
  */
 class HeaderFinder {
 	

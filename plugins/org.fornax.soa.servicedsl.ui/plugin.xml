@@ -4,6 +4,11 @@
 <plugin>
    <extension-point id="ServiceDSLValidator" name="Pluggable Service DSL validator" schema="schema/servicedsl_validator.exsd"/>
 
+	<!--extension point="org.eclipse.xtext.graphview.selectionStrategy">
+		<strategy
+        	class="org.fornax.soa.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.graphview.view.selection.XtextEditorSelectionStrategy">
+    	</strategy>
+	</extension-->
 	<extension
          point="org.eclipse.team.core.fileTypes">
       <fileTypes

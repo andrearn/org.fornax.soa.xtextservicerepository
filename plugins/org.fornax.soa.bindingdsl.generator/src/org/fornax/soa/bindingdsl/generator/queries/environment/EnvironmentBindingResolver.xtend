@@ -7,19 +7,37 @@ import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.environmentDsl.Server
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.bindingDsl.OperationBinding
+import org.fornax.soa.bindingDsl.BindingProtocol
+import com.google.inject.Inject
+import org.fornax.soa.bindingdsl.generator.templates.BindingResolver
 
 class EnvironmentBindingResolver {
+
+	@Inject BindingResolver		bindingResolver
 	
-	def dispatch Server resolveServer (Binding bind) {
+	def dispatch Server resolveServer (Binding bind, BindingProtocol prot) {
 		
 	}
-	def dispatch Server resolveServer (ModuleBinding bind) {
+	
+	def dispatch Server resolveServer (ModuleBinding bind, BindingProtocol prot) {
 		bind.provider.provServer
 	}
-	def dispatch Server resolveServer (DomainBinding bind) {
+	
+	def dispatch Server resolveServer (DomainBinding bind, BindingProtocol prot) {
+		if (prot == null)
+			return bind.environment.defaultESB
+		var publisher = bindingResolver.getPublisher (prot)
+		var provider = bindingResolver.getProvider (prot)
+		if (publisher?.pubServer != null)
+			return publisher.pubServer
+		else if (provider?.provServer != null)
+			return provider.provServer
+		else
+			bind.environment.defaultESB
 	}
-	def dispatch Server resolveServer (ServiceBinding bind) {
-		(bind.eContainer as Binding).resolveServer
+	
+	def dispatch Server resolveServer (ServiceBinding bind, BindingProtocol prot) {
+		(bind.eContainer as Binding).resolveServer(prot)
 	}
 	
 	def dispatch Environment resolveEnvironment (Binding bind) {

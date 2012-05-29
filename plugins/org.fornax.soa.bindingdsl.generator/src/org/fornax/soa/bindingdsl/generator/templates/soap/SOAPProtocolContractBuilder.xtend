@@ -38,6 +38,7 @@ import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
 import org.fornax.soa.bindingdsl.generator.queries.environment.EnvironmentBindingResolver
 import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.moduledsl.generator.query.ModuleServiceResolver
+import org.fornax.soa.bindingdsl.generator.templates.BindingResolver
 
 /* 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -69,6 +70,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	@Inject MessageHeaderXSDTemplates 		msgHeaderGenerator
 	@Inject BoundServiceLookup				serviceLookup
 	@Inject ModuleServiceResolver			modServiceResolver
+	@Inject BindingResolver					bindingResolver
 
 	
 	@Inject @Named ("noDependencies") 		
@@ -172,7 +174,9 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				val bindings = svc.resolveServiceBinding (targetEnvironment, ImportBindingProtocol::SOAP, canditateModules, qualifier)
 				
 				for (specBinding : bindings) {
-					doBuildServiceContracts(svc, specBinding, profile)
+					if ((specBinding instanceof DomainBinding && svcRef.modules.empty) || (!(specBinding instanceof DomainBinding) && !svcRef.modules.empty)) {
+						doBuildServiceContracts(svc, specBinding, profile)
+					}
 				}
 			}
 		}
@@ -198,8 +202,8 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				val namespace = service.findSubdomain();
 						
 				wsdlGenerator.toWSDL (service, namespace, namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle), profile, specBinding.getRegistryBaseUrl());
-						
-				if (service.isPublicEndpoint (specBinding.resolveServer)) {
+
+				if (service.isPublicEndpoint (specBinding.resolveServer(soapProt))) {
 					concreteWsdlGenerator.toWSDL(specBinding, service, soapProt, profile);
 				} else {
 					concreteProviderWsdlGenerator.toWSDL(service, specBinding, soapProt, profile);
