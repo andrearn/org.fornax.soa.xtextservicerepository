@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.fornax.soa.servicerepo.view.sdk"
+      label="SOA Xtext Service Repository graph views SDK"
+      version="1.5.3.qualifier"
+      provider-name="Fornax Platform">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
+      %copyright
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      %license
+   </license>
+
+   <url>
+      <discovery label="KIELER layouts release 0.6" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_0.6/"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.fornax.soa.servicedsl" version="1.5.3" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.xbase.lib" version="2.2.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.graphview" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.core" version="3.6.2" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.basedsl" version="1.5.3" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.profiledsl" version="1.5.3" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.servicedsl.ui" version="1.5.3" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="org.fornax.soa.servicedsl.view"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.fornax.soa.servicedsl.view.fragment"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+</feature>

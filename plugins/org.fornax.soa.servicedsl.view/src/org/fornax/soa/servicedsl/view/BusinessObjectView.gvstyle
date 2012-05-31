@@ -1,0 +1,109 @@
+import org.eclipse.xtext.graphview.shape.*
+import org.eclipse.xtext.graphview.layout.*  
+import org.eclipse.xtext.graphview.behavior.layout.*  
+import org.eclipse.draw2d.*
+import org.eclipse.swt.SWT
+import BusinessObjectDiagram.*
+
+stylesheet BusinessObjectDiagram for BusinessObjectDiagram
+
+style BusinessObjectDiagram {
+	autoLayoutManager = new KielerAutoLayout() 
+}
+
+style BusinessObjectNode as RoundedRectangleShape { 
+	backgroundColor = color(#d8e8f8)
+}
+
+
+style BusinessObjectNode { 
+	font = font("Helvetica", 12, SWT::LEFT + 
+		(if (element.abstract) SWT::ITALIC else SWT::NONE)
+	)
+}
+style BusinessObjectNode.Name { 
+	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
+}
+style BusinessObjectNode.Version { 
+	font = font("Helvetica", 12, SWT::CENTER 
+	)
+}
+
+style BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
+	outline = false
+	backgroundColor = color(#ffffff)
+	font = font("Helvetica", 12, SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
+
+style BusinessObjectNode.EnumReferenceEdge {
+	lineStyle = SWT::LINE_DASH
+	foregroundColor = color(#cccccc)
+}
+
+
+style HiddenBusinessObjectNode as RoundedRectangleShape { 
+	backgroundColor = color(#d8e8f8)
+}
+style HiddenBusinessObjectNode { 
+	font = font("Helvetica", 12, SWT::CENTER +
+		(if (element.abstract) SWT::ITALIC else SWT::NONE)
+	)
+}
+style HiddenBusinessObjectNode.Name { 
+	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+	)
+}
+
+style HiddenBusinessObjectNode.PropertiesNode as RoundedRectangleShape {
+	outline = false
+	backgroundColor = color(#ffffff)
+	font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
+
+
+style BusinessObjectNode.HiddenReferenceEdge.HiddenEdgeLabel {
+	connectionAlignment = ConnectionLocator::TARGET
+}
+style HiddenBusinessObjectNode.HiddenEnumReferenceEdge {
+	lineStyle = SWT::LINE_DASH
+	foregroundColor = color(#cccccc)
+}
+
+style BusinessObjectNode.InhertanceEdge as ConnectionShape  {
+	var arrow = new PolygonDecoration()
+	arrow.setScale(8,8)
+	arrow.backgroundColor = color(#ffffff)
+	arrow.lineWidth = 2
+	targetDecoration = arrow 
+}
+
+
+style EnumNode as RoundedRectangleShape { 
+	backgroundColor = color(#f8e8a8)
+}
+style EnumNode { 
+	font = font("Helvetica", 12, SWT::CENTER + 
+		 SWT::NONE
+	)
+}
+style EnumNode.Name { 
+	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
+		 SWT::NONE
+	)
+}
+style EnumNode.EnumLabel { 
+	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
+		 SWT::NONE
+	)
+}
+style EnumNode.EnumLiteralNode as RoundedRectangleShape {
+	outline = false
+	backgroundColor = color(#ffffff)
+	font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
