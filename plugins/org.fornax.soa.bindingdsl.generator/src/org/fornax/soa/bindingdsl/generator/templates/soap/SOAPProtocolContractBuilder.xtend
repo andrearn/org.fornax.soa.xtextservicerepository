@@ -174,9 +174,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				val bindings = svc.resolveServiceBinding (targetEnvironment, ImportBindingProtocol::SOAP, canditateModules, qualifier)
 				
 				for (specBinding : bindings) {
-					if ((specBinding instanceof DomainBinding && svcRef.modules.empty) || (!(specBinding instanceof DomainBinding) && !svcRef.modules.empty)) {
-						doBuildServiceContracts(svc, specBinding, profile)
-					}
+					doBuildServiceContracts(svc, specBinding, profile)
 				}
 			}
 		}

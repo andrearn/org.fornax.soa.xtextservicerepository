@@ -99,14 +99,14 @@ class ModuleBindingResolver {
 		if (bindings.empty) {
 			val moduleBindingsWithBindingQualifier = moduleBindings.filter (b | 
 				protocolMatcher.supportsImportBindingProtocol (b, protocol) &&
-				qualifierName == null || b.protocol.exists(p|p.qualifier != null && p.qualifier.qualifierName.exists(bindQualifier|bindQualifier == qualifierName))
+				(qualifierName == null || b.protocol.exists(p|p.qualifier != null && p.qualifier.qualifierName.exists(bindQualifier|bindQualifier == qualifierName)))
 			)
 			bindings.addAll (moduleBindingsWithBindingQualifier)
 		}
 		if (bindings.empty) {
 			val domainBindingsWithBindingQualifier = domainBindings.filter (b | 
 				protocolMatcher.supportsImportBindingProtocol (b, protocol) &&
-				qualifierName == null || b.protocol.exists(p|p.qualifier != null && p.qualifier.qualifierName.exists(bindQualifier|bindQualifier == qualifierName))
+				(qualifierName == null || b.protocol.exists(p|p.qualifier != null && p.qualifier.qualifierName.exists(bindQualifier|bindQualifier == qualifierName)))
 			)
 			bindings.addAll (domainBindingsWithBindingQualifier)
 		}
@@ -140,7 +140,7 @@ class ModuleBindingResolver {
 	}
 	
 	
-	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env, ImportBindingProtocol protocol, String qualifierName, Iterable<Module> canditateModules) {
+	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env, ImportBindingProtocol protocol, String qualifierName, Iterable<Module> scopedProviderModules) {
 		var Set<Binding> bindings = newHashSet()
 		val serviceBindings = service.findMostSpecificBindings(env).filter (typeof (ServiceBinding))
 		val moduleBindings = service.findMostSpecificBindings(env).filter (typeof (ModuleBinding))
@@ -148,7 +148,7 @@ class ModuleBindingResolver {
 				b.eContainer instanceof ModuleBinding && 
 				protocolMatcher.supportsImportBindingProtocol (b, protocol) && 
 				(qualifierName == null || b.protocol.exists (p|p.qualifier != null && p.qualifier.qualifierName.exists (bindQualifier|bindQualifier == qualifierName))) &&
-				canditateModules.exists (m|m == (b.eContainer as ModuleBinding).module.module)
+				(scopedProviderModules.nullOrEmpty || scopedProviderModules.exists (m|m == (b.eContainer as ModuleBinding).module.module))
 		)
 		if (!serviceBindingsWithBindingQualifier.nullOrEmpty) {
 			bindings.addAll (serviceBindingsWithBindingQualifier)
@@ -156,7 +156,7 @@ class ModuleBindingResolver {
 		if (bindings.empty) {
 			val moduleBindingsWithBindingQualifier = moduleBindings.filter (b | 
 				protocolMatcher.supportsImportBindingProtocol (b, protocol) && 
-				canditateModules.exists (m| m == b.module.module) && 
+				(scopedProviderModules.nullOrEmpty || scopedProviderModules.exists (m| m == b.module.module)) && 
 				(qualifierName == null || b.protocol.exists(p|p.qualifier != null && p.qualifier.qualifierName.exists (bindQualifier|bindQualifier == qualifierName))))
 			if (!moduleBindingsWithBindingQualifier.nullOrEmpty) {
 				bindings.addAll (moduleBindingsWithBindingQualifier)
