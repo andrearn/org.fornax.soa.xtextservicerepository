@@ -33,28 +33,6 @@ style ServiceNode.OperationNode as RoundedRectangleShape {
 	)
 }
 
-style ExceptionNode as RoundedRectangleShape { 
-	backgroundColor = color(#f8e8d8)
-}
-style ExceptionNode { 
-	font = font("Helvetica", 12, SWT::CENTER 
-	)
-}
-style ExceptionNode.ExceptionLabel { 
-	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
-	)
-}
-style ExceptionNode.Name { 
-	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
-	)
-}
-style ExceptionNode.PropertiesNode as RoundedRectangleShape {
-	outline = false
-	backgroundColor = color(#ffffff)
-	font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
-		(SWT::NONE)
-	)
-}
 
 
 style HiddenExceptionNode as RoundedRectangleShape { 
