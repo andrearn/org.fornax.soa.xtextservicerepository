@@ -38,7 +38,6 @@ public class IBMScaExportsGeneratorSetup implements ISetup {
 	private Boolean forceRelativePaths = false;
 	private String targetEnvironmentName = ".*";
 
-	@Override
 	public Injector createInjectorAndDoEMFRegistration () {
 		Injector injector = Guice.createInjector (Modules2.mixin (
 				new BaseDslGeneratorModule (),
