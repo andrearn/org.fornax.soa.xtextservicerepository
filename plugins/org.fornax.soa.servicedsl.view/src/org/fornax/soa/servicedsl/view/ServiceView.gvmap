@@ -4,34 +4,34 @@ diagram ServiceDiagram type SubNamespace {
 	
 	node ServiceNode for each services {
 		label Name for name
-		label Version for "[v" + version.version + ", " + state.name + "]"
+		label Version for "[v" + version?.version + ", " + state?.name + "]"
 		
 		node OperationNode for operations {
-			label Name for each map (op|op.name + "(" + {if (op.parameters.size < 4) {op.parameters.map(p|p.name).join(",")} else "..."} + ")")
+			label Name for each map (op|op.name + "(" + {if (op.parameters?.size < 4) {op.parameters.map(p|p.name).join(",")} else "..."} + ")")
 		}
 		hidden edge BOEdge for each 
 			operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+				(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type)?.toSet {
 			=> call BusinessObjectNode for (this as BusinessObject)
 		}
 		hidden edge EnumEdge for each 
 			operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type)?.toSet {
 			=> call EnumNode for (this as org.fornax.soa.serviceDsl.Enumeration)
 		}
 		
 		hidden edge BOReturnEdge for each 
 			operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+				(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type)?.toSet {
 			=> call BusinessObjectNode for (this as BusinessObject)
 		}
 		hidden edge EnumReturnEdge for each 
 			operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type)?.toSet {
 			=> call EnumNode for (this as org.fornax.soa.serviceDsl.Enumeration)
 		}
 		edge ExceptionEdge for each 
-			operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer == t.exception.eContainer).map(e|e.exception).toSet {
+			operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer == t.exception.eContainer).map(e|e.exception)?.toSet {
 			=> ref HiddenExceptionNode for this
 		}
 		hidden edge HiddenExceptionEdge for each
@@ -42,41 +42,41 @@ diagram ServiceDiagram type SubNamespace {
 
 	node BusinessObjectNode for this as BusinessObject {
 		label Name for name
-		label Version for "[v" + version.version + ", " + state.name + "]"
+		label Version for "[v" + version?.version + ", " + state?.name + "]"
 		
 		hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
-			label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef).^type.name)
+			label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
 		} unless properties.empty
 		
 		
 		edge ReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof BusinessObject) && 
-				((p.^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.BusinessObject).eContainer == p.eContainer.eContainer && 
-				eContainer == p.eContainer.eContainer) {
+				(p.^type as VersionedTypeRef)?.^type instanceof BusinessObject) && 
+				((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.BusinessObject).eContainer == p.eContainer?.eContainer && 
+				eContainer == p.eContainer?.eContainer) {
 			=> ref BusinessObjectNode for ((^type as VersionedTypeRef).^type as BusinessObject)
 			label HiddenEdgeLabel for name
 		} 
 		edge EnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
 				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-				((p.^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration).eContainer == p.eContainer.eContainer && 
-				eContainer == p.eContainer.eContainer) {
+				((p.^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
+				eContainer == p.eContainer?.eContainer) {
 			=> ref EnumNode for ((^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)
 			label EdgeLabel for name
 		}
 		hidden edge HiddenReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof BusinessObject) &&
-				((p.^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.BusinessObject).eContainer != p.eContainer.eContainer && 
-				eContainer == p.eContainer.eContainer) {
-			=> call BusinessObjectNode for ((^type as VersionedTypeRef).^type as BusinessObject)
+				(p.^type as VersionedTypeRef)?.^type instanceof BusinessObject) &&
+				((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.BusinessObject)?.eContainer != p.eContainer?.eContainer && 
+				eContainer == p.eContainer?.eContainer) {
+			=> call BusinessObjectNode for ((^type as VersionedTypeRef)?.^type as BusinessObject)
 			label HiddenEdgeLabel for name
 		} 
 		hidden edge HiddenEnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-				((p.^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration).eContainer != p.eContainer.eContainer && 
+				(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
+				((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer != p.eContainer.eContainer && 
 				eContainer == p.eContainer.eContainer) {
 			=> call EnumNode for ((^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)
 			label EdgeLabel for name
@@ -91,7 +91,7 @@ diagram ServiceDiagram type SubNamespace {
 	node EnumNode for this as org.fornax.soa.serviceDsl.Enumeration {
 		label EnumLabel  for "<<Enum>>"
 		label Name for name
-		label Version for "[v" + version.version + ", " + state.name + "]"
+		label Version for "[v" + version?.version + ", " + state?.name + "]"
 		hidden node EnumLiteralNode for literals {
 			label Label for each map(lit|lit.name)
 		} unless literals.empty
@@ -100,33 +100,33 @@ diagram ServiceDiagram type SubNamespace {
 	node HiddenExceptionNode for this as org.fornax.soa.serviceDsl.Exception {
 		label ExceptionLabel for "<<Exception>>"
 		label Name for name	
-		label Version for "[v" + version.version + ", " + state.name + "]"
+		label Version for "[v" + version?.version + ", " + state?.name + "]"
 		
 		hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
-			label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef).^type.name)
+			label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
 		} unless properties.filter (up | up.^type instanceof DataTypeRef).nullOrEmpty
 		hidden edge ReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof BusinessObject) && 
-				((p.^type as VersionedTypeRef).^type as BusinessObject).eContainer == p.eContainer.eContainer && 
-				eContainer == p.eContainer.eContainer) {
-			=> call BusinessObjectNode for ((^type as VersionedTypeRef).^type as BusinessObject)
+				(p.^type as VersionedTypeRef)?.^type instanceof BusinessObject) && 
+				((p.^type as VersionedTypeRef)?.^type as BusinessObject).eContainer == p.eContainer?.eContainer && 
+				eContainer == p.eContainer?.eContainer) {
+			=> call BusinessObjectNode for ((^type as VersionedTypeRef)?.^type as BusinessObject)
 			label EdgeLabel for name
 		}
 		hidden edge EnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-				((p.^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration).eContainer == p.eContainer.eContainer && 
-				eContainer == p.eContainer.eContainer) {
-			=> call EnumNode for ((^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)
+				(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
+				((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
+				eContainer == p.eContainer?.eContainer) {
+			=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
 			label EdgeLabel for name
 		}
 		
 		hidden edge HiddenReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof BusinessObject) && 
-				(((p.^type as VersionedTypeRef).^type) as BusinessObject).eContainer != p.eContainer.eContainer) {
-			=> call BusinessObjectNode for ((^type as VersionedTypeRef).^type as BusinessObject)
+				(p.^type as VersionedTypeRef)?.^type instanceof BusinessObject) && 
+				(((p.^type as VersionedTypeRef)?.^type) as BusinessObject).eContainer != p.eContainer?.eContainer) {
+			=> call BusinessObjectNode for ((^type as VersionedTypeRef)?.^type as BusinessObject)
 			label HiddenEdgeLabel for name
 		}
 		 
