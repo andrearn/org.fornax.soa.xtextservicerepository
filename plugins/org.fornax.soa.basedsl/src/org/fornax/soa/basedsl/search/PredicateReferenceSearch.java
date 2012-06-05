@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.util.EcoreUtil.CrossReferencer;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -23,6 +24,7 @@ import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.DefaultReferenceDescription;
+import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;
 import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.fornax.soa.basedsl.resource.ILocalResourceAccess;
@@ -46,18 +48,21 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 		this.ieObjLookup = ieObjLookup;
 	}
 
-	public void findAllReferences (IEObjectDescription iEObjDesc,
+	public void findAllReferences (EObject eObjectOrProxy,
 			ResourceSet resourceSet, Predicate<IReferenceDescription> referencePredicate, IAcceptor<IReferenceDescription> acceptor) {
-		//TODO is EObject required?
-		EObject eObjectOrProxy = iEObjDesc.getEObjectOrProxy ();
 		if (eObjectOrProxy.eIsProxy ()) {
 			eObjectOrProxy = EcoreUtil2.resolve (eObjectOrProxy, resourceSet);
 		}
 		if (!eObjectOrProxy.eIsProxy ()) {
-			URI targetURI = iEObjDesc.getEObjectURI ();
+			URI targetURI = EcoreUtil.getURI (eObjectOrProxy);
 			IReferenceQueryData queryData = new ReferenceQueryData (targetURI, singleton (targetURI), targetURI.trimFragment (), referencePredicate);
 			findAllReferences (queryData, new SimpleLocalResourceAccess (resourceSet), acceptor);
 		}
+	}
+	public void findAllReferences (IEObjectDescription iEObjDesc,
+			ResourceSet resourceSet, Predicate<IReferenceDescription> referencePredicate, IAcceptor<IReferenceDescription> acceptor) {
+		EObject eObjectOrProxy = iEObjDesc.getEObjectOrProxy ();
+		findAllReferences (eObjectOrProxy, resourceSet, referencePredicate, acceptor);
 	}
 
 	public void findAllReferences(IReferenceQueryData queryData, ILocalResourceAccess localResourceAccess,
@@ -142,6 +147,8 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 	}
 
 	protected Map<EObject, URI> createExportedElementsMap(Resource resource) {
+		if (index instanceof ResourceSetBasedResourceDescriptions)
+			((ResourceSetBasedResourceDescriptions)index).setContext (resource.getResourceSet ());
 		IResourceDescription resourceDescription = index.getResourceDescription(EcoreUtil2.getNormalizedURI(resource));
 		Map<EObject, URI> exportedElementMap = newHashMap();
 		if (resourceDescription != null) {

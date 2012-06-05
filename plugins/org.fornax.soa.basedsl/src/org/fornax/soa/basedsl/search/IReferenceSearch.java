@@ -31,6 +31,8 @@ public interface IReferenceSearch {
 		URI getLocalContextResourceURI();
 	}
 	
+	public abstract void findAllReferences (EObject eObject, ResourceSet resourceSet, Predicate<IReferenceDescription> referencePredicate, final IAcceptor<IReferenceDescription> acceptor);
+	
 	public abstract void findAllReferences (IEObjectDescription iEObjDesc, ResourceSet resourceSet, Predicate<IReferenceDescription> referencePredicate, final IAcceptor<IReferenceDescription> acceptor);
 
 	public abstract void findLocalReferences (Set<? extends EObject> targets, IAcceptor<IReferenceDescription> acceptor,

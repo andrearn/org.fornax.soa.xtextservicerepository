@@ -2,11 +2,14 @@ package org.fornax.soa.basedsl.search;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IResourceDescription;
+import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 
 import com.google.common.base.Predicate;
@@ -17,6 +20,9 @@ import com.google.inject.Inject;
 public class EObjectLookup implements IEObjectLookup {
 	
 	@Inject IPredicateSearch searchEngine;
+
+	@Inject
+	private IResourceDescriptions resourceDescriptions;
 
 	public <T> T getModelElementByName (final String elementName, final ResourceSet res, String eClassName) {
         List<IEObjectDescription> searchResult = Lists.newArrayList (searchEngine.search(elementName, SearchPattern.RULE_EXACT_MATCH, eClassName, Predicates.<IEObjectDescription>alwaysTrue()));
@@ -69,6 +75,36 @@ public class EObjectLookup implements IEObjectLookup {
 	public <T> T getModelElementByNameAndVersion(String elementName,
 			String version, Resource resource, String eClassName) {
 		return getModelElementByNameAndVersion(elementName, version, resource.getResourceSet(), eClassName);
+	}
+
+
+	public EObject getModelElementByURI (URI elementURI, ResourceSet resourceSet) {
+		IEObjectDescription ieObjDesc = getIEOBjectDescriptionByURI (elementURI, resourceSet);
+		if (ieObjDesc != null) {
+			EObject eObjectOrProxy = ieObjDesc.getEObjectOrProxy ();
+			if (eObjectOrProxy.eIsProxy ()) {
+				eObjectOrProxy = EcoreUtil.resolve (eObjectOrProxy, resourceSet);
+			}
+			
+			return eObjectOrProxy;
+		}
+		return null;
+	}
+
+	public IEObjectDescription getIEOBjectDescriptionByURI (URI eObjectURI,
+			ResourceSet resourceSet) {
+		IResourceDescription resourceDescription = resourceDescriptions.getResourceDescription(eObjectURI
+				.trimFragment());
+		IEObjectDescription ieObjDesc = null;
+		if (resourceDescription != null) {
+			for (IEObjectDescription eObjectDescription : resourceDescription.getExportedObjects()) {
+				if (eObjectDescription.getEObjectURI().equals(eObjectURI)) {
+					ieObjDesc = eObjectDescription;
+					break;
+				}
+			}
+		}
+		return ieObjDesc;
 	}
 
 }
