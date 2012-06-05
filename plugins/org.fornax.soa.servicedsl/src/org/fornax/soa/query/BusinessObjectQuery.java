@@ -1,5 +1,7 @@
 package org.fornax.soa.query;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -16,12 +18,16 @@ import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IReferenceDescription;
+import org.eclipse.xtext.util.IAcceptor;
 import org.fornax.soa.basedsl.ref.DependencyDescription;
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
-import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
+import org.fornax.soa.basedsl.search.IReferenceSearch;
 import org.fornax.soa.basedsl.util.BaseDslEqualityHelper;
+import org.fornax.soa.basedsl.util.TreeNode;
 import org.fornax.soa.serviceDsl.ApprovalDecision;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.Property;
@@ -48,6 +54,12 @@ public class BusinessObjectQuery {
 	
 	@Inject
 	IEObjectDescriptionBuilder descriptionBuilder;
+	
+	@Inject
+	IReferenceSearch referenceSearch;
+	
+	@Inject
+	IEObjectLookup objLookup;
 
 	/**
 	 * Get all super types of the business object in upward order
@@ -236,4 +248,31 @@ public class BusinessObjectQuery {
 		}
 		return verType;
 	}
+	
+	public List<TreeNode<IEObjectDescription>> getAllSubTypes (final BusinessObject bo, final ResourceSet resourceSet) {
+		final List<TreeNode<IEObjectDescription>> subTypes = newArrayList ();
+		Predicate<IReferenceDescription> predicate = new Predicate<IReferenceDescription> () {
+
+			public boolean apply (final IReferenceDescription input) {
+				IEObjectDescription sourceObjContainer = objLookup.getIEOBjectDescriptionByURI (input.getContainerEObjectURI (), resourceSet);
+				if (sourceObjContainer != null && sourceObjContainer.getEObjectOrProxy () instanceof BusinessObject &&
+						ServiceDslPackage.Literals.BUSINESS_OBJECT__SUPER_BUSINESS_OBJECT.getName ().equals (input.getEReference ().eContainingFeature ().getName ()))
+					return true;
+				else
+					return false;
+			}
+			
+		};
+
+		IAcceptor<IReferenceDescription> acceptor = new IAcceptor<IReferenceDescription>() {
+			public void accept(IReferenceDescription referenceDescription) {
+				IEObjectDescription childBODesc = objLookup.getIEOBjectDescriptionByURI (referenceDescription.getContainerEObjectURI (), resourceSet);
+				TreeNode<IEObjectDescription> childNode = new TreeNode<IEObjectDescription>(childBODesc);
+				subTypes.add (childNode);
+			}
+		};
+		referenceSearch.findAllReferences (bo, resourceSet, predicate, acceptor);
+		return subTypes;
+	}
+	
 }
