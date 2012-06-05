@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.bindingdsl
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.5.3.qualifier
+Bundle-Version: 1.5.4.qualifier
 Bundle-SymbolicName: org.fornax.soa.bindingdsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;bundle-version="2.1.1",
@@ -19,10 +19,10 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.1",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.fornax.soa.sladsl;bundle-version="1.5.3",
- org.fornax.soa.basedsl;bundle-version="1.5.3",
- org.fornax.soa.moduledsl;bundle-version="1.5.3",
- org.fornax.soa.profiledsl;bundle-version="1.5.3"
+ org.fornax.soa.sladsl;bundle-version="1.5.4",
+ org.fornax.soa.basedsl;bundle-version="1.5.4",
+ org.fornax.soa.moduledsl;bundle-version="1.5.4",
+ org.fornax.soa.profiledsl;bundle-version="1.5.4"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa,

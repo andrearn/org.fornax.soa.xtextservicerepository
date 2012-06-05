@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.basedsl"
       label="SOA Base DSL feature"
-      version="1.5.3.qualifier"
+      version="1.5.4.qualifier"
       provider-name="Fornax Platform">
 
    <description>

@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.servicedsl"
       label="SOA Service DSL"
-      version="1.5.3.qualifier"
+      version="1.5.4.qualifier"
       provider-name="Fornax Platform">
 
    <description url="http://www.eclipse.org/modeling/m2t">

@@ -1,19 +1,27 @@
 package org.fornax.soa.servicedsl.test.query;
 
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.junit4.XtextRunner;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
-import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.XtextResource;
 import org.fornax.soa.basedsl.ref.DependencyDescription;
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.util.BaseDslEqualityHelper;
+import org.fornax.soa.basedsl.util.TreeNode;
 import org.fornax.soa.query.BusinessObjectQuery;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.Property;
+import org.fornax.soa.serviceDsl.ServiceModel;
+import org.fornax.soa.serviceDsl.Type;
 import org.fornax.soa.servicedsl.test.BaseServiceDslTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,6 +45,9 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	
 	@Inject
 	IEObjectDescriptionBuilder descriptionBuilder;
+	
+	@Inject
+	IEObjectLookup eObjectLookup;
 
 	@Before
 	public void setUp() throws Exception {
@@ -93,6 +104,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 		
 		
 	}
+	
 
 	public void setNameProvider (IQualifiedNameProvider nameProvider) {
 		this.nameProvider = nameProvider;

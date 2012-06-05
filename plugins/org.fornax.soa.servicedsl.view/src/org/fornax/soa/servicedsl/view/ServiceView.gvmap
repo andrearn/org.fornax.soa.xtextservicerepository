@@ -11,27 +11,27 @@ diagram ServiceDiagram type SubNamespace {
 		}
 		hidden edge BOEdge for each 
 			operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type)?.toSet {
+				(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
 			=> call BusinessObjectNode for (this as BusinessObject)
 		}
 		hidden edge EnumEdge for each 
 			operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type)?.toSet {
+				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
 			=> call EnumNode for (this as org.fornax.soa.serviceDsl.Enumeration)
 		}
 		
 		hidden edge BOReturnEdge for each 
 			operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type)?.toSet {
+				(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
 			=> call BusinessObjectNode for (this as BusinessObject)
 		}
 		hidden edge EnumReturnEdge for each 
 			operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type)?.toSet {
+				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
 			=> call EnumNode for (this as org.fornax.soa.serviceDsl.Enumeration)
 		}
 		edge ExceptionEdge for each 
-			operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer == t.exception.eContainer).map(e|e.exception)?.toSet {
+			operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer == t.exception.eContainer).map(e|e.exception).toSet {
 			=> ref HiddenExceptionNode for this
 		}
 		hidden edge HiddenExceptionEdge for each
