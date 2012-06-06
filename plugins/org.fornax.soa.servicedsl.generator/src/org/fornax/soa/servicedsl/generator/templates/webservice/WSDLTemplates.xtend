@@ -157,8 +157,8 @@ class WSDLTemplates {
 						<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
 							processContents="skip"/>
 					«ENDIF»
-	    		</xsd:sequence>
-	    		«IF profile.operationsUseExtendableXMLAttributes()»
+				</xsd:sequence>
+				«IF profile.operationsUseExtendableXMLAttributes()»
 					<xsd:anyAttribute namespace="##any"/>
 	    		«ENDIF»
 			</xsd:complexType>
@@ -175,9 +175,9 @@ class WSDLTemplates {
 							processContents="skip"/>
 					«ENDIF»
 				</xsd:sequence>
-	    		«IF profile.operationsUseExtendableXMLAttributes()»
+				«IF profile.operationsUseExtendableXMLAttributes()»
 					<xsd:anyAttribute namespace="##any"/>
-				«ENDIF»
+	    		«ENDIF»
 			</xsd:complexType>
 		</xsd:element>
 	'''
@@ -264,7 +264,7 @@ class WSDLTemplates {
 	
 	def toFaultMessages (String name, List<ExceptionRef> exceptions) '''
 		<wsdl:message name="«exceptions.findFirst (e|e.exception.name == name).exception.toTypeName()»">
-	  		<wsdl:part name="parameters" element="tns:«exceptions.findFirst (e|e.exception.name == name).exception.toTypeName()»"></wsdl:part>
+			<wsdl:part name="parameters" element="tns:«exceptions.findFirst (e|e.exception.name == name).exception.toTypeName()»"></wsdl:part>
 		</wsdl:message>
 	'''
 	
