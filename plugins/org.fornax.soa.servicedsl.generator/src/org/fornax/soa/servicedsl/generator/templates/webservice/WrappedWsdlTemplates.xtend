@@ -82,10 +82,10 @@ class WrappedWsdlTemplates {
 			name="«svc.name»" 
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
 			<wsdl:documentation>
-				Version «svc.version.toVersionNumber()»
+				<![CDATA[Version «svc.version.toVersionNumber()»
 				Lifecycle state: «svc.state.name»
 				
-				«docProvider.getDocumentation (svc)»
+				«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>
 			
 			«svc.toTypes (minState, profile, registryBaseUrl)»
@@ -205,7 +205,7 @@ class WrappedWsdlTemplates {
 					<![CDATA[Version:	«svc.version.toVersionNumber()»
 					Lifecycle state: «svc.state.name»
 										
-					«docProvider.getDocumentation (svc)»
+					«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>
 			«/*
 			<jaxws:class>
