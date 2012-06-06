@@ -31,6 +31,14 @@ org-namespace org.fornax.soa shortname "ofs" {
 			poBoxNum : string
 		}
 		
+		businessObject ExtStreetAddress extends StreetAddress majorVersion 1 {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+			}
+			building : string
+		}
+		
 		businessObject Person {
 			metadata {
 				version 1.0

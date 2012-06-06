@@ -41,11 +41,11 @@ public interface IReferenceSearch {
 	public abstract void findLocalReferences (final IReferenceQueryData queryData, ILocalResourceAccess localResourceAccess,
 			final IAcceptor<IReferenceDescription> acceptor);
 
-	public abstract void findIndexedReferences (IReferenceQueryData queryData, URI resourceURI,
+	public abstract void findIndexedReferences (IReferenceQueryData queryData, ResourceSet resourceSet, URI resourceURI,
 			IAcceptor<IReferenceDescription> acceptor);
 
-	public abstract void findIndexedReferences (final IReferenceQueryData queryData, final IAcceptor<IReferenceDescription> acceptor);
+	public abstract void findIndexedReferences (final IReferenceQueryData queryData, ResourceSet resourceSet, final IAcceptor<IReferenceDescription> acceptor);
 
-	public abstract void findAllReferences (IReferenceQueryData queryData, ILocalResourceAccess localResourceAccess,
+	public abstract void findAllReferences (IReferenceQueryData queryData, ResourceSet resourceSet, ILocalResourceAccess localResourceAccess,
 			final IAcceptor<IReferenceDescription> acceptor);
 }

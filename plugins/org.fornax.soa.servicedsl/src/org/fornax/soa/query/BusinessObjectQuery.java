@@ -255,8 +255,9 @@ public class BusinessObjectQuery {
 
 			public boolean apply (final IReferenceDescription input) {
 				IEObjectDescription sourceObjContainer = objLookup.getIEOBjectDescriptionByURI (input.getContainerEObjectURI (), resourceSet);
+				EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
 				if (sourceObjContainer != null && sourceObjContainer.getEObjectOrProxy () instanceof BusinessObject &&
-						ServiceDslPackage.Literals.BUSINESS_OBJECT__SUPER_BUSINESS_OBJECT.getName ().equals (input.getEReference ().eContainingFeature ().getName ()))
+						ServiceDslPackage.Literals.BUSINESS_OBJECT__SUPER_BUSINESS_OBJECT.getName ().equals (sourceObj.eContainingFeature ().getName ()))
 					return true;
 				else
 					return false;
@@ -272,7 +273,49 @@ public class BusinessObjectQuery {
 			}
 		};
 		referenceSearch.findAllReferences (bo, resourceSet, predicate, acceptor);
+		for (TreeNode<IEObjectDescription> subType : subTypes) {
+			getAllSubTypesWithParent (subType, resourceSet);
+		}
 		return subTypes;
+	}
+	
+	public TreeNode<IEObjectDescription> getAllSubTypesWithParent (TreeNode<IEObjectDescription> parent, final ResourceSet resourceSet) {
+		EObject parentObj = parent.getElement ().getEObjectOrProxy ();
+		if (parentObj instanceof BusinessObject) {
+			BusinessObject bo = (BusinessObject)parentObj;
+			if (bo.eIsProxy ())
+				bo = (BusinessObject) EcoreUtil.resolve (bo, resourceSet);
+			final List<TreeNode<IEObjectDescription>> subTypes = newArrayList ();
+			Predicate<IReferenceDescription> predicate = new Predicate<IReferenceDescription> () {
+	
+				public boolean apply (final IReferenceDescription input) {
+					IEObjectDescription sourceObjContainer = objLookup.getIEOBjectDescriptionByURI (input.getContainerEObjectURI (), resourceSet);
+					EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
+					if (sourceObjContainer != null && sourceObjContainer.getEObjectOrProxy () instanceof BusinessObject &&
+							ServiceDslPackage.Literals.BUSINESS_OBJECT__SUPER_BUSINESS_OBJECT.getName ().equals (sourceObj.eContainingFeature ().getName ()))
+						return true;
+					else
+						return false;
+				}
+				
+			};
+	
+			IAcceptor<IReferenceDescription> acceptor = new IAcceptor<IReferenceDescription>() {
+				public void accept(IReferenceDescription referenceDescription) {
+					IEObjectDescription childBODesc = objLookup.getIEOBjectDescriptionByURI (referenceDescription.getContainerEObjectURI (), resourceSet);
+					TreeNode<IEObjectDescription> childNode = new TreeNode<IEObjectDescription>(childBODesc);
+					subTypes.add (childNode);
+				}
+			};
+			referenceSearch.findAllReferences (bo, resourceSet, predicate, acceptor);
+			parent.setChildren (subTypes);
+			for (TreeNode<IEObjectDescription> subType : subTypes) {
+				subType.setParent (parent);
+				parent = getAllSubTypesWithParent (subType, resourceSet);
+				
+			}
+		}
+		return parent;
 	}
 	
 }

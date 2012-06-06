@@ -10,6 +10,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 
 import com.google.common.base.Predicate;
@@ -78,21 +79,14 @@ public class EObjectLookup implements IEObjectLookup {
 	}
 
 
-	public EObject getModelElementByURI (URI elementURI, ResourceSet resourceSet) {
-		IEObjectDescription ieObjDesc = getIEOBjectDescriptionByURI (elementURI, resourceSet);
-		if (ieObjDesc != null) {
-			EObject eObjectOrProxy = ieObjDesc.getEObjectOrProxy ();
-			if (eObjectOrProxy.eIsProxy ()) {
-				eObjectOrProxy = EcoreUtil.resolve (eObjectOrProxy, resourceSet);
-			}
-			
-			return eObjectOrProxy;
-		}
-		return null;
+	public EObject getModelElementByURI (URI eEObjectUri, ResourceSet resourceSet) {
+		return resourceSet.getEObject(eEObjectUri, true);
 	}
 
 	public IEObjectDescription getIEOBjectDescriptionByURI (URI eObjectURI,
 			ResourceSet resourceSet) {
+		if (resourceDescriptions instanceof ResourceSetBasedResourceDescriptions)
+			((ResourceSetBasedResourceDescriptions)resourceDescriptions).setContext (resourceSet);
 		IResourceDescription resourceDescription = resourceDescriptions.getResourceDescription(eObjectURI
 				.trimFragment());
 		IEObjectDescription ieObjDesc = null;

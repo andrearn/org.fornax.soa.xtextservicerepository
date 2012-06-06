@@ -64,8 +64,12 @@ public class ModelBusinessObjectQueryTest extends AbstractModelBasedTest {
 						assertEquals (2, allSubTypes.size ());
 						int subTypeCount = 0;
 						for (TreeNode<IEObjectDescription> node : allSubTypes) {
-							if (node.getElement ().getName ().getLastSegment ().equals ("StreetAddress"))
+							if (node.getElement ().getName ().getLastSegment ().equals ("StreetAddress")) {
 								subTypeCount++;
+								List<TreeNode<IEObjectDescription>> subSubTypes = node.getChildren ();
+								assertEquals (1, subSubTypes.size ());
+								assertEquals ("ExtStreetAddress", subSubTypes.get(0).getElement ().getName ().getLastSegment ());
+							}
 							if (node.getElement ().getName ().getLastSegment ().equals ("POBoxAddress"))
 								subTypeCount++;
 						}

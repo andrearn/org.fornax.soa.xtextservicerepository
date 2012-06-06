@@ -56,7 +56,7 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 		if (!eObjectOrProxy.eIsProxy ()) {
 			URI targetURI = EcoreUtil.getURI (eObjectOrProxy);
 			IReferenceQueryData queryData = new ReferenceQueryData (targetURI, singleton (targetURI), targetURI.trimFragment (), referencePredicate);
-			findAllReferences (queryData, new SimpleLocalResourceAccess (resourceSet), acceptor);
+			findAllReferences (queryData, resourceSet, new SimpleLocalResourceAccess (resourceSet), acceptor);
 		}
 	}
 	public void findAllReferences (IEObjectDescription iEObjDesc,
@@ -65,19 +65,21 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 		findAllReferences (eObjectOrProxy, resourceSet, referencePredicate, acceptor);
 	}
 
-	public void findAllReferences(IReferenceQueryData queryData, ILocalResourceAccess localResourceAccess,
+	public void findAllReferences(IReferenceQueryData queryData, ResourceSet resourceSet, ILocalResourceAccess localResourceAccess,
 			final IAcceptor<IReferenceDescription> acceptor) {
 		if (!queryData.getTargetURIs().isEmpty()) {
 			findLocalReferences(queryData, localResourceAccess, acceptor);
-			findIndexedReferences(queryData, acceptor);
+			findIndexedReferences(queryData, resourceSet, acceptor);
 		}
 	}
 
-	public void findIndexedReferences(final IReferenceQueryData queryData, final IAcceptor<IReferenceDescription> acceptor) {
+	public void findIndexedReferences(final IReferenceQueryData queryData, ResourceSet resourceSet, final IAcceptor<IReferenceDescription> acceptor) {
 		findIndexedReferences(queryData.getTargetURIs(), acceptor, queryData.getResultFilter());
 	}
 
-	public void findIndexedReferences(IReferenceQueryData queryData, URI resourceURI, IAcceptor<IReferenceDescription> acceptor) {
+	public void findIndexedReferences(IReferenceQueryData queryData, ResourceSet resourceSet, URI resourceURI, IAcceptor<IReferenceDescription> acceptor) {
+		if (index instanceof ResourceSetBasedResourceDescriptions)
+			((ResourceSetBasedResourceDescriptions)index).setContext (resourceSet);
 		IResourceDescription resourceDescription = index.getResourceDescription(resourceURI.trimFragment());
 		if (resourceDescription != null) {
 			for (IReferenceDescription referenceDescription : resourceDescription.getReferenceDescriptions()) {
