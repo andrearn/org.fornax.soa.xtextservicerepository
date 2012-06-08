@@ -18,6 +18,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslFactory
 import org.fornax.soa.environmentDsl.Environment
 import java.util.regex.Pattern
+import org.fornax.soa.serviceDsl.DomainNamespace
+import org.fornax.soa.serviceDsl.InternalNamespace
 
 class DefaultWrappedWsdlGenerator implements IGenerator {
 
@@ -30,6 +32,12 @@ class DefaultWrappedWsdlGenerator implements IGenerator {
 	
 	@Inject @Named ("namespaces") 			
 	List<String> namespaces
+	
+	@Inject @Named ("domainNamespaces") 			
+	List<String> domainNamespaces
+	
+	@Inject @Named ("internalNamespaces") 			
+	List<String> internalNamespaces
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
@@ -59,6 +67,20 @@ class DefaultWrappedWsdlGenerator implements IGenerator {
 			val Iterable<? extends SubNamespace> subNamespaces = svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten;
 			for (ns : subNamespaces) {
 				for (nsName : namespaces) {
+					if (Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString)) {
+						compile (ns as SubNamespace, resource); 
+					}
+				}
+			}
+			for (ns : subNamespaces.filter (typeof (DomainNamespace))) {
+				for (nsName : domainNamespaces) {
+					if (Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString)) {
+						compile (ns as SubNamespace, resource); 
+					}
+				}
+			}
+			for (ns : subNamespaces.filter (typeof (InternalNamespace))) {
+				for (nsName : internalNamespaces) {
 					if (Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString)) {
 						compile (ns as SubNamespace, resource); 
 					}

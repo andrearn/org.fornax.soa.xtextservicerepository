@@ -219,7 +219,7 @@ class WrappedWsdlTemplates {
 				</jaxws:javadoc>
 			</jaxws:class>
 			*/»
-			«svc.operations.forEach (o|o.toOperation ())»
+			«svc.operations.map (o|o.toOperation ()).join»
 		</wsdl:portType>
 	'''
 	

@@ -32,6 +32,8 @@ public class DefaultWrappedWsdlGeneratorSetup implements ISetup {
 
 	private String profileName = ".*";
 	private List<String> namespaces = new ArrayList<String>();
+	private List<String> domainNamespaces = new ArrayList<String>();
+	private List<String> internalNamespaces = new ArrayList<String>();
 	private Boolean noDependencies = false;
 	private Boolean includeSubNamespaces = false;
 	private Boolean useNestedPaths = false;
@@ -71,6 +73,14 @@ public class DefaultWrappedWsdlGeneratorSetup implements ISetup {
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.NAME_SPACES))
 								.toInstance (namespaces);
+						bind (new TypeLiteral<List<String>>() {})
+								.annotatedWith (
+										Names.named (BindingDSLGeneratorConstants.DOMAIN_NAME_SPACES))
+								.toInstance (domainNamespaces);
+						bind (new TypeLiteral<List<String>>() {})
+								.annotatedWith (
+										Names.named (BindingDSLGeneratorConstants.INTERNAL_NAME_SPACES))
+								.toInstance (internalNamespaces);
 						bind (Boolean.class)
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.NO_DEPENDENCIES))
@@ -113,6 +123,22 @@ public class DefaultWrappedWsdlGeneratorSetup implements ISetup {
 
 	public List<String> getNamespaces () {
 		return namespaces;
+	}
+
+	public void addDomainNamespace (String domainNamespaceName) {
+		domainNamespaces.add (domainNamespaceName);
+	}
+
+	public List<String> getDomainNamespaces () {
+		return domainNamespaces;
+	}
+
+	public void addInternalNamespace (String internalNamespaceName) {
+		internalNamespaces.add (internalNamespaceName);
+	}
+
+	public List<String> getInternalNamespaces () {
+		return internalNamespaces;
 	}
 
 	public Boolean getNoDependencies () {
