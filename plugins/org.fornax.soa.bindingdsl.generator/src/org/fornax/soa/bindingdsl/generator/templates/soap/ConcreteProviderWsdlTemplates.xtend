@@ -111,7 +111,7 @@ class ConcreteProviderWsdlTemplates {
 	}
 	
 	def dispatch toWSDL(Service svc, ModuleBinding modBind, BindingProtocol prot, SOAProfile profile) {
-		val wsdlFile = svc.getConcreteWsdlFileNameFragment(modBind.getPrivateEndpointQualifier(svc)) + ".wsdl";
+		val wsdlFile = svc.getConcreteWsdlFileNameFragment(modBind.getProviderEndpointQualifier(svc)) + ".wsdl";
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -130,7 +130,7 @@ class ConcreteProviderWsdlTemplates {
 
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 			
-			«prot.toSOAPBinding (svc, modBind.getPrivateEndpointQualifier(svc))»
+			«prot.toSOAPBinding (svc, modBind.getProviderEndpointQualifier(svc))»
 
 			«prot.toWsdlService (svc, modBind.provider.provServer, modBind)»
 		</wsdl:definitions>
@@ -202,8 +202,8 @@ class ConcreteProviderWsdlTemplates {
 	
 	def dispatch toWsdlService (SOAP protocol, Service svc, Server server, ModuleBinding bind) '''
 		<wsdl:service name="«svc.name»">
-			<wsdl:port binding="tns:«svc.toBindingName (protocol, bind.getPrivateEndpointQualifier(svc))»"
-				name="«svc.toPrivatePortName (protocol, bind.getPrivateEndpointQualifier(svc))»">
+			<wsdl:port binding="tns:«svc.toBindingName (protocol, bind.getProviderEndpointQualifier(svc))»"
+				name="«svc.toPrivatePortName (protocol, bind.getProviderEndpointQualifier(svc))»">
 				<soap:address location="«svc.toProviderEndpointAddress (server, protocol, bind.module.module)»" />
 			</wsdl:port>
 		</wsdl:service>

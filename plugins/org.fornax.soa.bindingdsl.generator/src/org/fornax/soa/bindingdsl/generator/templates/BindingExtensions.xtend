@@ -93,6 +93,9 @@ class BindingExtensions {
 		};
 	*/
 
+	def dispatch Binding getMostSpecificBinding (Binding b, Service s) {
+		
+	}
 	def dispatch Binding getMostSpecificBinding (DomainBinding b, Service s) {
 		if (b.serviceBinding.filter (e|e.service.service == s).size > 0) {
 			b.serviceBinding.findFirst (e|e.service.service == s)
@@ -157,14 +160,14 @@ class BindingExtensions {
 		}
 	}
 	
-	def dispatch boolean isPublicEndpoint (Service s, Server server) {
-		false;
+	def dispatch boolean isProviderEndpoint (Service s, Server server) {
+		true;
 	}
-	def dispatch boolean isPublicEndpoint (Service s, AppServer server) {
-		false;
+	def dispatch boolean isProviderEndpoint (Service s, AppServer server) {
+		true;
 	}
-	def dispatch boolean isPublicEndpoint (Service s, ESB server) {
-		s.visibility == VISIBILITY::PUBLIC;
+	def dispatch boolean isProviderEndpoint (Service s, ESB server) {
+		s.visibility == VISIBILITY::PRIVATE;
 	}
 	
 	def dispatch Binding getMostSpecificBinding (ModuleBinding modBind, Service svc) {
@@ -187,32 +190,41 @@ class BindingExtensions {
 		stateMatcher.matches (env.getMinLifecycleState(s, s.state.eContainer as Lifecycle), s.state);
 	}
 	
-	def getPublicEndpointQualifier (Binding bind, Service svc) {
-		""
+	def dispatch getEndpointQualifier (Binding bind, Service svc) {
+		return svc.serviceVisibilityName
 	}
-	def getPublicEndpointQualifier (ServiceBinding bind, Service svc) {
+	def dispatch getEndpointQualifier (ServiceBinding bind, Service svc) {
 		if (bind.eContainer instanceof ModuleBinding) {
 			val modBind = (bind.eContainer as ModuleBinding)
-			modBind.getPublicEndpointQualifier(svc)
+			modBind.getEndpointQualifier(svc)
 		}
-		""
+		return svc.serviceVisibilityName
 	}
-	def getPublicEndpointQualifier (ModuleBinding bind, Service svc) {
+	def dispatch getEndpointQualifier (ModuleBinding bind, Service svc) {
 		val moduleQualifier = bind.module.module.qualifiers
 		val boundSvcQualifier = bind.module?.module?.providedServices?.findFirst(provSvc | provSvc.service==svc)?.qualifiers
 		if (boundSvcQualifier != null)
 			return boundSvcQualifier.qualifierName.head.replaceAll("\\.","_")
 		if (moduleQualifier != null)
 			return moduleQualifier.qualifierName.head.replaceAll("\\.","_")
-		return "Public"
+		return svc.serviceVisibilityName
 	}
-	def getPrivateEndpointQualifier (ModuleBinding bind, Service svc) {
+	def getProviderEndpointQualifier (Binding bind, Service svc) {
+		if (svc.visibility == VISIBILITY::PRIVATE)
+			return "PrivateProvider"
+		else
+			return "Private"
+	}
+	def getProviderEndpointQualifier (ModuleBinding bind, Service svc) {
 		val moduleQualifier = bind.module.module.qualifiers
 		val boundSvcQualifier = bind.module?.module?.providedServices?.findFirst(provSvc | provSvc.service==svc)?.qualifiers
 		if (boundSvcQualifier != null)
 			return boundSvcQualifier.qualifierName.head.replaceAll("\\.","_")
 		if (moduleQualifier != null)
 			return moduleQualifier.qualifierName.head.replaceAll("\\.","_")
-		return "Private"
+		if (svc.visibility == VISIBILITY::PRIVATE)
+			return "PrivateProvider"
+		else
+			return "Private"
 	}
 }

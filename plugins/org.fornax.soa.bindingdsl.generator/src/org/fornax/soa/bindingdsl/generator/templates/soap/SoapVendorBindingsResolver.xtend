@@ -153,7 +153,7 @@ class SoapVendorBindingsResolver {
 		+ subNs.name + "." + s.name + "." + s.version.toVersionPostfix() + ":" + s.name;
 		var scopedPortName = ""
 		if (prot instanceof SOAP) {
-			scopedPortName = soapBindRes.toScopedPortName (s, prot as SOAP, bind.getPublicEndpointQualifier (s))
+			scopedPortName = soapBindRes.toScopedPortName (s, prot as SOAP, bind.getEndpointQualifier (s))
 		}
 		if (server instanceof ESB) {
 			val esb = (server as ESB)

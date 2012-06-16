@@ -95,10 +95,10 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 								
 						wsdlGenerator.toWSDL (svc, namespace, namespace.minStateByEnvironment (binding.environment, profile.lifecycle), profile, binding.getRegistryBaseUrl());
 								
-						if (svc.isPublicEndpoint (binding.provider.provServer)) {
-							concreteWsdlGenerator.toWSDL(binding, svc, soapProt, profile);
-						} else {
+						if (svc.isProviderEndpoint (binding.provider.provServer)) {
 							concreteProviderWsdlGenerator.toWSDL(svc, binding, soapProt, profile);
+						} else {
+							concreteWsdlGenerator.toWSDL(binding, svc, soapProt, profile);
 						}
 								
 						if ( ! noDependencies) {
@@ -201,10 +201,10 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 						
 				wsdlGenerator.toWSDL (service, namespace, namespace.minStateByEnvironment (specBinding.resolveEnvironment, profile.lifecycle), profile, specBinding.getRegistryBaseUrl());
 
-				if (service.isPublicEndpoint (specBinding.resolveServer(soapProt))) {
-					concreteWsdlGenerator.toWSDL(specBinding, service, soapProt, profile);
-				} else {
+				if (service.isProviderEndpoint (specBinding.resolveServer(soapProt))) {
 					concreteProviderWsdlGenerator.toWSDL(service, specBinding, soapProt, profile);
+				} else {
+					concreteWsdlGenerator.toWSDL(specBinding, service, soapProt, profile);
 				}
 						
 				if ( ! noDependencies) {
