@@ -96,31 +96,41 @@ class SoapVendorBindingsResolver {
 		}
 	}
 	def String toServerTypeName (Server s) {
+		var serverTypeName = "undefined"
 		switch (s) {
-			AppServer: 		(s as AppServer).serverType
-			ESB:			(s as ESB).serverType
-			ProcessServer:	(s as ProcessServer).serverType
-			Broker:			(s as Broker).serverType
-			WebServer:		(s as WebServer).serverType
-			SAP:			"saperp"
-			Database:		(s as Database).serverType
-			Registry:		(s as Registry).serverType
-			default: null
+			AppServer: 		serverTypeName = (s as AppServer).serverType
+			ESB:			serverTypeName = (s as ESB).serverType
+			ProcessServer:	serverTypeName = (s as ProcessServer).serverType
+			Broker:			serverTypeName = (s as Broker).serverType
+			WebServer:		serverTypeName = (s as WebServer).serverType
+			SAP:			serverTypeName = "saperp"
+			Database:		serverTypeName = (s as Database).serverType
+			Registry:		serverTypeName = (s as Registry).serverType
+			default: "undefined"
 		}
+		if (serverTypeName != null)
+			return serverTypeName
+		else
+			return "undefined"
 	}
 	
 	def String toServerTypeVersion (Server s) {
+		var serverTypeVersion = "undefined"
 		switch (s) {
-			AppServer: 		(s as AppServer).serverVersion
-			ESB:			(s as ESB).serverVersion
-			ProcessServer:	(s as ProcessServer).serverVersion
-			Broker:			(s as Broker).serverVersion
-			WebServer:		(s as WebServer).serverVersion
-			SAP:			null
-			Database:		(s as Database).serverVersion
-			Registry:		(s as Registry).serverVersion
-			default: null
+			AppServer: 		serverTypeVersion = (s as AppServer).serverVersion
+			ESB:			serverTypeVersion = (s as ESB).serverVersion
+			ProcessServer:	serverTypeVersion = (s as ProcessServer).serverVersion
+			Broker:			serverTypeVersion = (s as Broker).serverVersion
+			WebServer:		serverTypeVersion = (s as WebServer).serverVersion
+			SAP:			"undefined"
+			Database:		serverTypeVersion = (s as Database).serverVersion
+			Registry:		serverTypeVersion = (s as Registry).serverVersion
+			default: "undefined"
 		}
+		if (serverTypeVersion != null)
+			return serverTypeVersion
+		else 
+			return "undefined"
 	}
 		
 	def String defaultPatternEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
