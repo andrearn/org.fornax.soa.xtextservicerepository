@@ -21,11 +21,14 @@ Require-Bundle: org.fornax.soa.bindingdsl;bundle-version="1.5.4";visibility:=ree
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.bindingdsl.generator,
- org.fornax.soa.bindingdsl.generator.sca,
- org.fornax.soa.bindingdsl.generator.wsdl,
+ org.fornax.soa.bindingdsl.generator.queries,
+ org.fornax.soa.bindingdsl.generator.queries.environment,
  org.fornax.soa.bindingdsl.generator.queries.modules,
  org.fornax.soa.bindingdsl.generator.queries.services,
+ org.fornax.soa.bindingdsl.generator.sca,
  org.fornax.soa.bindingdsl.generator.templates,
  org.fornax.soa.bindingdsl.generator.templates.soap,
  org.fornax.soa.bindingdsl.generator.templates.vendor.ibm,
- org.fornax.soa.bindingdsl.generator.templates.wsdl
+ org.fornax.soa.bindingdsl.generator.templates.wsdl,
+ org.fornax.soa.bindingdsl.generator.templates.xsd,
+ org.fornax.soa.bindingdsl.generator.wsdl
