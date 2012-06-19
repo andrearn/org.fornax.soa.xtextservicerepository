@@ -120,7 +120,7 @@ class BoundServiceLookup {
 	
 	/*
 	 * Find all services referenced by the module referenced in the binding. Service versions are 
-	 * chosen with respect ttheir state and the target environment
+	 * chosen with respect to their state and the target environment
 	 */
 	def Set<Service> getAllUsedServicesWithProtocol (Module module, Environment environment, ImportBindingProtocol protocol, SOAProfile profile) {
 		val usedModules = module.usedModules

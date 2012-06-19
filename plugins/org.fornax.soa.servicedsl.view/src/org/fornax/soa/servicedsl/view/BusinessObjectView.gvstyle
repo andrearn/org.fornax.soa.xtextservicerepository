@@ -80,6 +80,13 @@ style BusinessObjectNode.InhertanceEdge as ConnectionShape  {
 	arrow.lineWidth = 2
 	targetDecoration = arrow 
 }
+style HiddenBusinessObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+	var hiddenArrow = new PolygonDecoration()
+	hiddenArrow.setScale(8,8)
+	hiddenArrow.backgroundColor = color(#ffffff)
+	hiddenArrow.lineWidth = 2
+	targetDecoration = hiddenArrow 
+}
 
 
 style EnumNode as RoundedRectangleShape { 

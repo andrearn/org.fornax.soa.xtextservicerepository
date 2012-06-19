@@ -65,7 +65,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	private	BusinessObjectQuery boQuery;
 	
 	@Inject
-	IPredicateSearch pericateSearch;
+	IPredicateSearch predicateSearch;
 	
 	@Inject
 	IResourceDescriptions resourceDescriptions;

@@ -9,6 +9,8 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import com.google.common.base.Predicates
 import org.eclipse.xtext.EcoreUtil2
 import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef
+import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef
 
 class ModuleLookup {
 	
@@ -59,6 +61,23 @@ class ModuleLookup {
 	 */
 	def findProvidingModules (Service service, Iterable<Module> canditateModules, String qualifierName) {
 		service.findProvidingModules (canditateModules).filter (m|m.qualifiers.qualifierName.contains(qualifierName))
+	}	
+		
+	def dispatch String getBindingQualifier (Module module) {
+		module.bindingQualifier
 	}
 	
+	def dispatch String getBindingQualifier (ModuleRef moduleRef) {
+		if (moduleRef.bindingQualifier != null)
+			return moduleRef.bindingQualifier
+		else
+			return (moduleRef.eContainer as Module).bindingQualifier
+	}
+	
+	def dispatch String getBindingQualifier (ImportServiceRef impServiceRef) {
+		if (impServiceRef.bindingQualifier != null)
+			return impServiceRef.bindingQualifier
+		else
+			return (impServiceRef.eContainer as Module).bindingQualifier
+	}
 }

@@ -1,11 +1,22 @@
 package org.fornax.soa.validation;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.resource.IReferenceDescription;
+import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.validation.Check;
-import org.eclipse.xtext.validation.CheckType;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
+import org.fornax.soa.basedsl.search.IReferenceSearch;
+import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
+import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingDslPackage;
 import org.fornax.soa.bindingDsl.DomainBinding;
@@ -22,20 +33,42 @@ import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
-import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
+import org.fornax.soa.moduledsl.query.ModuleLookup;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
-import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.serviceDsl.VISIBILITY;
 import org.fornax.soa.util.BindingDslHelper;
 
+import com.google.common.base.Predicate;
 import com.google.inject.Inject;
+import com.google.inject.Injector;
 
+@PluggableChecks (validators = {
+		UsedModuleValidator.class
+})
 public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 
 	@Inject
 	LifecycleStateComparator stateComparator;
+	
+	@Inject
+	ModuleLookup moduleLookup;
+	
+	@Inject
+	IReferenceSearch referenceSearch;
+	
+	@Inject
+	IEObjectLookup objLookup;
+	
+	@Inject
+	Injector injector;
+
+	@Override
+	protected List<EPackage> getEPackages() {
+	    List<EPackage> result = new ArrayList<EPackage>();
+	    result.add(org.fornax.soa.bindingDsl.BindingDslPackage.eINSTANCE);
+		return result;
+	}
 
 	@Check
 	public void checkOnlyPrivateServiceHasProvidedWSDL (SOAP soap) {
@@ -205,5 +238,13 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 			}
 		}
 	}
+	
+	protected Set<AbstractPluggableDeclarativeValidator> getRegisteredValidators () {
+		Set<AbstractPluggableDeclarativeValidator> regValidators = new HashSet<AbstractPluggableDeclarativeValidator>();
+		regValidators.add(this);
+		regValidators.add(injector.getInstance(UsedModuleValidator.class));
+		return regValidators;
+	}
 
+	
 }
