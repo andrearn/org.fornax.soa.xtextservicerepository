@@ -94,12 +94,12 @@ class DefaultBindingContractGenerators implements IGenerator {
 		
 		var hasValidParameters = true
 		
-		if (targetEnvironmentName == null && !"".equals(targetEnvironmentName)) {
-			logger.log(Level::SEVERE, "No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
+		if (targetEnvironmentName == null || "".equals(targetEnvironmentName)) {
+			logger.severe ("No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
 			hasValidParameters = false
 		}
-		if (profileName != null && !"".equals(profileName)) {
-			logger.log(Level::SEVERE, "No profileName has been supplied to the Generator. Please proved the name an architecture profile to be applied.")
+		if (profileName == null || "".equals(profileName)) {
+			logger.severe ("No profileName has been supplied to the Generator. Please proved the name an architecture profile to be applied.")
 			hasValidParameters = false
 		}
 		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
@@ -173,7 +173,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 		if (env != null)
 			bindingTpl.toBinding(mod, env, profile)
 		else
-			logger.severe ("No environment found mathcing the name expression " + targetEnvironmentName)
+			logger.severe ("No environment found matching the name expression " + targetEnvironmentName)
 	}
 	
 	def protected compile (SubNamespace namespace, Resource resource) {
@@ -182,7 +182,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 		if (env == null)
 			logger.severe ("No environment found mathcing the name expression " + targetEnvironmentName)
 		if (profile == null)
-			logger.severe ("No architecture profile found mathcing the name " + profileName)
+			logger.severe ("No architecture profile found matching the name " + profileName)
 		
 		if (env != null && profile != null) {
 			xsdGen.toXSD (namespace, env, profile);
