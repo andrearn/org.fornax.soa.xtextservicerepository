@@ -26,6 +26,8 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 import org.fornax.soa.moduledsl.moduleDsl.Module
+import java.util.logging.Logger
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 /**
  * Builds all technical artifacts tthat repsent a binding (WSDLs/XSDs etc.).
@@ -54,9 +56,12 @@ class BindingBuilder {
 	@Inject ConcreteProviderWsdlTemplates 	concreteProviderWsdlGenerator
 	@Inject MessageHeaderXSDTemplates 		msgHeaderGenerator
 	@Inject BoundServiceLookup				serviceLookup
+	@Inject IQualifiedNameProvider			nameProvider
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
+	
+	@Inject Logger log
 	
 		
 	/*
@@ -69,7 +74,12 @@ class BindingBuilder {
 		declared in SubNamespaces will be respected
 	*/
 	def dispatch void toBinding (DomainBinding binding, SOAProfile profile) {
+		log.info ("Generating technical service contracts for binding " + binding.name)
+		try {
 		contractBuilder.build (binding, profile);
+		} catch (Exception ex) {
+			log.severe ("Error generating technical service contracts for binding " + binding.name + "\n" + ex.message)
+		}
 	}
 	
 	
@@ -85,15 +95,30 @@ class BindingBuilder {
 		of the respective Service / owning SubNamespace
 	*/
 	def dispatch toBinding (ModuleBinding binding, SOAProfile profile) {
-		contractBuilder.build (binding, profile);
+		log.info ("Generating technical service contracts for binding " + binding.name)
+		try {
+			contractBuilder.build (binding, profile);
+		} catch (Exception ex) {
+			log.severe ("Error generating technical service contracts for binding " + binding.name + "\n" + ex.message)
+		}
 	}
 	
 	def toBinding (ModuleBinding binding, SOAProfile profile, boolean noDeps, boolean includeSubNamespaces) {
-		contractBuilder.build (binding, profile);
+		log.info ("Generating technical service contracts for binding " + binding.name)
+		try {
+			contractBuilder.build (binding, profile);
+		} catch (Exception ex) {
+			log.severe ("Error generating technical service contracts for binding " + binding.name + "\n" + ex.message)
+		}
 	}
 
 	def dispatch toBinding (Module module, Environment environment, SOAProfile profile) {
-		contractBuilder.build (module, environment, profile);
+		log.info ("Generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name)
+		try {
+			contractBuilder.build (module, environment, profile);
+		} catch (Exception ex) {
+			log.severe ("Error generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name + "\n" + ex.message)
+		}
 	}
 		
 	
@@ -101,15 +126,24 @@ class BindingBuilder {
 		Event XSDs for Services having an request and an response event for each service operation
 	*/
 	def toEventsInclSubNamespaces (String namespaceName, List<SubNamespace> namespaces, List<Environment> environments, String targetEnv, List<SOAProfile> profiles, String profileName) {
-		for (ns : namespaces.filter (e|e.name.startsWith (namespaceName))) {
-			ns.toEvents (environments, targetEnv, profiles, profileName);
+		if (namespaceName != null) {
+			for (ns : namespaces.filter (e|e.name.startsWith (namespaceName))) {
+				ns.toEvents (environments, targetEnv, profiles, profileName);
+			}
+		} else {
+			log.severe("No namespace name expression has been supplied")
 		}
 	}
 	
 	def toEvents (SubNamespace ns, List<Environment> environments, String targetEnv, List<SOAProfile> profiles, String profileName) { 
 		val env = environments.findFirst (e|e.name == targetEnv);
 		val profile = profiles.findFirst (e|e.name == profileName);
+		log.info ("Generating event data definitions for services in namespace " + nameProvider.getFullyQualifiedName(ns) + " applicable for Environment " + env.name)
+		try {
 		eventXsdGenerator.toEvents (ns,env.getMinLifecycleState(ns, profile.lifecycle), profile, env.getRegistryBaseUrl());
+		} catch (Exception ex) {
+			log.severe ("Error generating event data definitions for services in namespace " + nameProvider.getFullyQualifiedName(ns) + " applicable for Environment " + env.name + "\n" + ex.message)
+		}
 	}
 	
 }

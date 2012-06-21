@@ -9,6 +9,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.bindingdsl.generator.ProvidedProtocolContractBuilder
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.environmentDsl.Environment
+import java.util.logging.Logger
 
 class BindingServiceContractBuilder {
 
@@ -20,23 +21,37 @@ class BindingServiceContractBuilder {
 	
 	@Inject @Named ("forceRelativePaths") 		
 	Boolean forceRelativePaths
+	
+	@Inject Logger log
 
 	
 	def dispatch void build (ModuleBinding binding, SOAProfile profile) {
 		for (protContractBuilder : protocolContractBuilders) {
-			protContractBuilder.buildServiceContracts (binding, profile);
+			try {
+				protContractBuilder.buildServiceContracts (binding, profile);
+			} catch (Exception ex) {
+				log.severe ("Error generating contracts\n" + ex.message)
+			}
 		}
 	}
 	
 	def void build (Module module, Environment targetEnvironment, SOAProfile profile) {
 		for (protContractBuilder : protocolContractBuilders) {
-			protContractBuilder.buildUsedServiceContracts (module, targetEnvironment, profile);
+			try {
+				protContractBuilder.buildUsedServiceContracts (module, targetEnvironment, profile);
+			} catch (Exception ex) {
+				log.severe ("Error generating contracts\n" + ex.message)
+			}
 		}
 	}
 	
 	def dispatch void build (DomainBinding binding, SOAProfile profile) {
 		for (protContractBuilder : protocolContractBuilders) {
-			protContractBuilder.buildServiceContracts (binding, profile);
+			try {
+				protContractBuilder.buildServiceContracts (binding, profile);
+			} catch (Exception ex) {
+				log.severe ("Error generating contracts\n" + ex.message)
+			}
 		}
 	}
 	

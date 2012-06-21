@@ -25,6 +25,8 @@ import org.fornax.soa.serviceDsl.InternalNamespace
 import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.moduleDsl.ModuleModel
+import java.util.logging.Logger
+import java.util.logging.Level
 
 /*
  * Generate technical service and datamodel contract artifacts like WSDLs, XSDs or IDLs for ModuleBindings
@@ -83,55 +85,72 @@ class DefaultBindingContractGenerators implements IGenerator {
 	@Inject IQualifiedNameProvider nameProvider
 	@Inject IEObjectLookup eObjectLookup
 	
+	@Inject Logger logger
+	
 	override void doGenerate (Resource resource, IFileSystemAccess fsa) {
 		var contentRoot = resource.contents.head;
 		var resourceSet = resource.resourceSet;
 		resourceDescriptions.setContext (resourceSet);
-
-		if (contentRoot instanceof BindingModel) {
-			var model = resource.contents.head as BindingModel;
-			val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
-			for (binding : model.bindings) {
-				if (binding instanceof ModuleBinding) {
-					val modBind = binding as ModuleBinding;
-					if (moduleBindingNames.exists (modBindName | Pattern::matches (modBindName, modBind.name)) 
-						&& Pattern::matches (targetEnvironmentName, modBind.environment.name)
-					) {
-						compile (modBind, profile);
-					}
-				} else if (binding instanceof DomainBinding) {
-					val domBind = binding as DomainBinding;
-					if (domainBindingNames.exists (domBindName | Pattern::matches(domBindName, domBind.name))
-						&& Pattern::matches (targetEnvironmentName, domBind.environment.name)
-					) {
-						compile (domBind, profile);
+		
+		var hasValidParameters = true
+		
+		if (targetEnvironmentName == null && !"".equals(targetEnvironmentName)) {
+			logger.log(Level::SEVERE, "No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
+			hasValidParameters = false
+		}
+		if (profileName != null && !"".equals(profileName)) {
+			logger.log(Level::SEVERE, "No profileName has been supplied to the Generator. Please proved the name an architecture profile to be applied.")
+			hasValidParameters = false
+		}
+		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
+		if (profile == null) {
+			logger.severe ("No profile found mathing the name " + profileName)
+			hasValidParameters = false
+		}
+		if (hasValidParameters) {
+			if (contentRoot instanceof BindingModel) {
+				var model = resource.contents.head as BindingModel;
+				for (binding : model.bindings) {
+					if (binding instanceof ModuleBinding) {
+						val modBind = binding as ModuleBinding;
+						if (moduleBindingNames.exists (modBindName | Pattern::matches (modBindName, modBind.name)) 
+							&& Pattern::matches (targetEnvironmentName, modBind.environment.name)
+						) {
+							compile (modBind, profile);
+						}
+					} else if (binding instanceof DomainBinding) {
+						val domBind = binding as DomainBinding;
+						if (domainBindingNames.exists (domBindName | Pattern::matches(domBindName, domBind.name))
+							&& Pattern::matches (targetEnvironmentName, domBind.environment.name)
+						) {
+							compile (domBind, profile);
+						}
 					}
 				}
 			}
-		}
-		
-		if (contentRoot instanceof ModuleModel) {
-			val modModel = contentRoot as ModuleModel
-			val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
-			for (module : modModel.modules) {
-				if (moduleNames.exists(modName | Pattern::matches (modName, nameProvider.getFullyQualifiedName (module).toString))) {
-					module.compile (profile, resource)
+			
+			if (contentRoot instanceof ModuleModel) {
+				val modModel = contentRoot as ModuleModel
+				for (module : modModel.modules) {
+					if (moduleNames.exists(modName | Pattern::matches (modName, nameProvider.getFullyQualifiedName (module).toString))) {
+						module.compile (profile, resource)
+					}
 				}
 			}
-		}
-		
-		if  (contentRoot instanceof ServiceModel) {
-			val svcModel = contentRoot as ServiceModel;
-			val Iterable<? extends SubNamespace> subNamespaces = svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten;
-			for (ns : subNamespaces) {
-				if (namespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
-					compile (ns as SubNamespace, resource); 
-				}
-				if (ns instanceof DomainNamespace && domainNamespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
-					compile (ns as SubNamespace, resource); 
-				}
-				if (ns instanceof InternalNamespace && internalNamespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
-					compile (ns as SubNamespace, resource); 
+			
+			if  (contentRoot instanceof ServiceModel) {
+				val svcModel = contentRoot as ServiceModel;
+				val Iterable<? extends SubNamespace> subNamespaces = svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten;
+				for (ns : subNamespaces) {
+					if (namespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
+						compile (ns as SubNamespace, resource); 
+					}
+					if (ns instanceof DomainNamespace && domainNamespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
+						compile (ns as SubNamespace, resource); 
+					}
+					if (ns instanceof InternalNamespace && internalNamespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
+						compile (ns as SubNamespace, resource); 
+					}
 				}
 			}
 		}
@@ -151,12 +170,19 @@ class DefaultBindingContractGenerators implements IGenerator {
 	
 	def protected compile (Module mod, SOAProfile profile, Resource resource) {
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
-		bindingTpl.toBinding(mod, env, profile)
+		if (env != null)
+			bindingTpl.toBinding(mod, env, profile)
+		else
+			logger.severe ("No environment found mathcing the name expression " + targetEnvironmentName)
 	}
 	
 	def protected compile (SubNamespace namespace, Resource resource) {
 		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
+		if (env == null)
+			logger.severe ("No environment found mathcing the name expression " + targetEnvironmentName)
+		if (profile == null)
+			logger.severe ("No architecture profile found mathcing the name " + profileName)
 		
 		if (env != null && profile != null) {
 			xsdGen.toXSD (namespace, env, profile);
