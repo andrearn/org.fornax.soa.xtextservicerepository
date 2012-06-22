@@ -21,6 +21,7 @@ import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensio
 import com.google.inject.name.Named
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
+import java.util.logging.Logger
 
 
 class OperationWrapperTemplates {
@@ -45,6 +46,9 @@ class OperationWrapperTemplates {
 	@Inject
 	IEObjectDocumentationProvider docProvider
 
+	@Inject 
+	private Logger log
+
 	def dispatch toOperationWrappersInclSubNamespaces (String serviceName, List<SubNamespace> namespaces, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		for (ns : namespaces.filter(e|e.name.startsWith (serviceName))) {
 			ns.toOperationWrappers (minState, profile, registryBaseUrl);
@@ -56,6 +60,7 @@ class OperationWrapperTemplates {
 	}
 	
 	def dispatch void toOperationWrappers (Service service, SubNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		
 	}
 	
 	def dispatch toOperationWrappers (Service service, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {

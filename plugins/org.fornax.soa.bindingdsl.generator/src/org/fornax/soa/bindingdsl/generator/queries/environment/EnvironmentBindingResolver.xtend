@@ -16,11 +16,16 @@ class EnvironmentBindingResolver {
 	@Inject BindingResolver		bindingResolver
 	
 	def dispatch Server resolveServer (Binding bind, BindingProtocol prot) {
-		
+		throw new UnsupportedOperationException ()
 	}
 	
+	/*
+	 * Return the server to bind to. If not stated explicitely in the ModuleBinding
+	 * the environments default ESB is being used
+	 */
 	def dispatch Server resolveServer (ModuleBinding bind, BindingProtocol prot) {
-		bind.provider.provServer
+		val server = bind.provider.provServer
+		return if (server != null) server else bind.resolveEnvironment.defaultESB
 	}
 	
 	def dispatch Server resolveServer (DomainBinding bind, BindingProtocol prot) {
@@ -37,6 +42,10 @@ class EnvironmentBindingResolver {
 	}
 	
 	def dispatch Server resolveServer (ServiceBinding bind, BindingProtocol prot) {
+		(bind.eContainer as Binding).resolveServer(prot)
+	}
+	
+	def dispatch Server resolveServer (OperationBinding bind, BindingProtocol prot) {
 		(bind.eContainer as Binding).resolveServer(prot)
 	}
 	

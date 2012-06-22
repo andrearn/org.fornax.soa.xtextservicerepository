@@ -108,6 +108,7 @@ class ConcreteProviderWsdlTemplates {
 		«svcBind.protocol.filter (typeof (SOAP)).map (p|p.toWsdlService (svc)).join»
 		</wsdl:definitions>
 		'''
+		fsa.generateFile (wsdlFile, content);
 	}
 	
 	def dispatch toWSDL(Service svc, ModuleBinding modBind, BindingProtocol prot, SOAProfile profile) {

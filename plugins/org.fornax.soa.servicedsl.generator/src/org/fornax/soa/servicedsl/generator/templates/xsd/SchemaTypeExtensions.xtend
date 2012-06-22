@@ -140,7 +140,7 @@ class SchemaTypeExtensions {
 		}
 	}
 	
-	def dispatch String toExceptionNameRef (ExceptionRef t) {
+	def String toExceptionNameRef (ExceptionRef t) {
 		if (t.exception.findSubdomain() != null) {
 			var prefix = "tns";
 			if (!(t.findOwnerSubdomain() == t.exception.findSubdomain()

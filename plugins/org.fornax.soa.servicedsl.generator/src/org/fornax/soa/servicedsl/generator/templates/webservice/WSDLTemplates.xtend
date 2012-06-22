@@ -24,6 +24,7 @@ import com.google.inject.name.Named
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
+import java.util.logging.Logger
 
 /*
  * Template class for generation of abstract WSDLs
@@ -49,6 +50,9 @@ class WSDLTemplates {
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
+
+	@Inject 
+	private Logger log
 	
 	def dispatch toWSDL (Service s, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val allServiceExceptionRefs = s.operations.map (o|o.^throws).flatten;
@@ -116,7 +120,7 @@ class WSDLTemplates {
 					xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber (imp.version)»="«imp.toNamespace()»"
 				«ENDFOR»
 				«IF s.findBestMatchingHeader(profile) != null»
-					«FOR headerImp : s.findBestMatchingHeader (profile).allImportedVersionedNS(versionQualifier.toMajorVersionNumber(s.version))»
+					«FOR headerImp : s.findBestMatchingHeader (profile)?.allImportedVersionedNS(versionQualifier.toMajorVersionNumber(s.version))»
 						xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp)+versionQualifier.toMajorVersionNumber (headerImp.version)»="«profileSchemaNamespaceExt.toNamespace(headerImp)»"
 					«ENDFOR»
 				«ENDIF»
@@ -128,7 +132,7 @@ class WSDLTemplates {
 						namespace="«imp.toNamespace ()»"/>
 				«ENDFOR»
 				«IF s.findBestMatchingHeader (profile) != null»
-					«FOR headerImp : s.findBestMatchingHeader (profile).allImportedVersionedNS (versionQualifier.toMajorVersionNumber(s.version))»
+					«FOR headerImp : s.findBestMatchingHeader (profile)?.allImportedVersionedNS (versionQualifier.toMajorVersionNumber(s.version))»
 						<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
 							namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
 					«ENDFOR»
@@ -263,7 +267,7 @@ class WSDLTemplates {
 	
 	
 	def toFaultMessages (String name, List<ExceptionRef> exceptions) '''
-		<wsdl:message name="«exceptions.findFirst (e|e.exception.name == name).exception.toTypeName()»">
+		<wsdl:message name="«exceptions.findFirst (e|e.exception.name == name)?.exception.toTypeName()»">
 			<wsdl:part name="parameters" element="tns:«exceptions.findFirst (e|e.exception.name == name).exception.toTypeName()»"></wsdl:part>
 		</wsdl:message>
 	'''

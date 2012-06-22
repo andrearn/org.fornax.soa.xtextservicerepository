@@ -32,6 +32,7 @@ import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.profiledsl.generator.query.StateMatcher
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
+import java.util.logging.Logger
 
 class XSDTemplates {
 
@@ -67,6 +68,9 @@ class XSDTemplates {
 	IEObjectDocumentationProvider docProvider
 	
 	@Inject org.fornax.soa.profiledsl.generator.query.LifecycleQueries lifecycleQueries
+
+	@Inject 
+	private Logger log
 
 	/*
 		CARTRIDGE ENTRYPOINT for generation of XSDs from namespaces. 
@@ -127,7 +131,7 @@ class XSDTemplates {
 		Generate XSDs for all VersionedDomainNamespaces derived from the given SubNamespace by applying
 		the major version splitting algorithm filtered by the given minimal LifecycleState
 	*/
-	def dispatch toXSDForImports (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def toXSDForImports (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		for (nsVer : ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()) {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl);
 			nsVer.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
@@ -141,7 +145,7 @@ class XSDTemplates {
 		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
 		that match the given minimal LifecycleState.
 	*/
-	def dispatch toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val imports = vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace());
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)
 			.filter (e|minState.matches (e.state) && e.isLatestMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
@@ -185,7 +189,7 @@ class XSDTemplates {
 		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
 		that match the given minimal LifecycleState.
 	*/
-	def dispatch toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val imports = vns.importedVersionedNS(minState).filter(e|e.toNamespace() != vns.toNamespace());
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)
 			.filter (e|minState.matches (e.state) && e.isLatestMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
@@ -226,11 +230,11 @@ class XSDTemplates {
 	}
 	
 	
-	def dispatch toNamespaceDeclaration (VersionedDomainNamespace vns) '''
+	def toNamespaceDeclaration (VersionedDomainNamespace vns) '''
 		xmlns:«vns.toPrefix() + versionQualifier.toMajorVersionNumber(vns.version)»="«vns.toNamespace()»"
 	'''
 	
-	def dispatch toImportDeclaration (VersionedDomainNamespace vns, String registryBaseUrl) '''
+	def toImportDeclaration (VersionedDomainNamespace vns, String registryBaseUrl) '''
 		<xsd:import schemaLocation="«vns.toRegistryAssetUrl (registryBaseUrl)».xsd"
 			namespace="«vns.toNamespace()»"></xsd:import>
 	'''
@@ -243,7 +247,7 @@ class XSDTemplates {
 							XSD being generated
 		@param		profile	The SOAProfile defining the governing architecture rules.
 	*/
-	def dispatch toComplexType(BusinessObject bo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
+	def toComplexType(BusinessObject bo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 
 		<xsd:complexType name="«bo.name»"«IF bo.abstract» abstract="true"«ENDIF»>
 			<xsd:annotation>
@@ -334,7 +338,7 @@ class XSDTemplates {
 		</xsd:sequence>
 	'''
 	
-	def dispatch toSimpleType (Enumeration en, LifecycleState minState) '''
+	def toSimpleType (Enumeration en, LifecycleState minState) '''
 
 		<xsd:simpleType name="«en.name»">
 			<xsd:annotation>
@@ -361,7 +365,7 @@ class XSDTemplates {
 							XSD being generated
 		@param		profile	The SOAProfile defining the governing architecture rules.
 	*/
-	def dispatch toFaultType (org.fornax.soa.serviceDsl.Exception ex, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
+	def toFaultType (org.fornax.soa.serviceDsl.Exception ex, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 
 		<xsd:complexType name="«ex.toTypeName()»">
 			<xsd:annotation>
@@ -475,11 +479,11 @@ class XSDTemplates {
 		</xsd:element>
 	'''
 	
-	def dispatch toEnumLiteral (EnumLiteral enumLit) '''
+	def toEnumLiteral (EnumLiteral enumLit) '''
 		<xsd:enumeration value="«enumLit.name»"/>
 	'''
 	
-	def dispatch toAttachmentMimeFragment (TypeRef t) '''
+	def toAttachmentMimeFragment (TypeRef t) '''
 		xmime:expectedContentTypes="application/octet-stream"
 	'''
 }

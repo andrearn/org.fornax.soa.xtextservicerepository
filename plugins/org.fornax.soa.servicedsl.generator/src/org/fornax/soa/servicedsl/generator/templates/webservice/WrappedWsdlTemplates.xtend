@@ -62,11 +62,12 @@ class WrappedWsdlTemplates {
 		will be generated. For each major version of a service WSDL is generated for the latest minor
 		version in that major version matching the minimal Lifecycle constraint is be generated
 	*/
-	def dispatch toWrappedWSDL(Service svc, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def toWrappedWSDL(Service svc, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		svc.toWrappedWSDL (svc.findSubdomain(), minState, profile, registryBaseUrl);
 	}
 	
-	def dispatch void toWrappedWSDL(Service svc, SubNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toWrappedWSDL(Service svc, SubNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		throw new UnsupportedOperationException ()
 	}
 	
 	def dispatch toWrappedWSDL(Service svc, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
@@ -127,21 +128,22 @@ class WrappedWsdlTemplates {
 			«svc.toPortType»
 		</wsdl:definitions>
 		'''
+		fsa.generateFile (xsdFileName, content);
 	}
 	
-	def dispatch toTypes(Service svc, LifecycleState minState, SOAProfile profile, String registryBaseUrl) '''
+	def protected toTypes(Service svc, LifecycleState minState, SOAProfile profile, String registryBaseUrl) '''
 		<wsdl:types>
 			<xsd:schema targetNamespace="«svc.toWrapperServiceTargetNamespace()»"
 				«FOR imp : svc.importedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+					xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 				«ENDFOR»
 				xmlns:svc="«svc.toWrapperTargetNamespace()»"
 				elementFormDefault="qualified"
 				attributeFormDefault="unqualified"
 			>
 				«FOR imp : svc.importedVersionedNS(svc.version.toMajorVersionNumber(), minState) »
-				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-					namespace="«imp.toNamespace()»"/>
+					<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+						namespace="«imp.toNamespace()»"/>
 				«ENDFOR»
 				<xsd:import schemaLocation="«svc.getRegisteredOperationWrapperUrl (registryBaseUrl)»"
 					namespace="«svc.toWrapperTargetNamespace()»"/>
@@ -151,7 +153,7 @@ class WrappedWsdlTemplates {
 		</wsdl:types>
 	'''
 	
-	def dispatch toOperationWrapperTypes (Operation op, SOAProfile profile) '''
+	def protected toOperationWrapperTypes (Operation op, SOAProfile profile) '''
 		<xsd:element name="«op.name»">
 			<xsd:complexType>
 				<xsd:sequence>
@@ -168,7 +170,7 @@ class WrappedWsdlTemplates {
 		</xsd:element>
 	'''
 	
-	def dispatch toOperationFaultWrapperTypes(String faultName, List<ExceptionRef> exceptions) {
+	def protected toOperationFaultWrapperTypes(String faultName, List<ExceptionRef> exceptions) {
 		val exceptionRef = exceptions.findFirst(e|e.exception.name == faultName);
 		if (exceptionRef != null) {
 			'''
@@ -177,20 +179,20 @@ class WrappedWsdlTemplates {
 		}
 	}
 	
-	def dispatch toParameter (Parameter param) '''
+	def protected dispatch toParameter (Parameter param) '''
 		<xsd:element name="«param.name»" type="«param.type.toTypeNameRef ()»" «IF param.optional»minOccurs="0" «ENDIF»«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF» «IF param.type.isAttachment()»«param.type.toAttachmentMimeFragment()»«ENDIF»></xsd:element>
 	'''
 	
-	def dispatch toParameter (Property prop) '''
+	def protected dispatch toParameter (Property prop) '''
 		<xsd:element name="«prop.name»" type="«prop.type.toTypeNameRef ()»" «IF prop.optional»minOccurs="0" «ENDIF»«IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 	
-	def dispatch toParameter (MessageHeader header) '''
+	def protected dispatch toParameter (MessageHeader header) '''
 		«header.parameters.map (p|p.toParameter()).join»
 	'''
 	
 	
-	def dispatch toMessages (Operation op) '''
+	def protected toMessages (Operation op) '''
 		<wsdl:message name="«op.name»Request">
 			<wsdl:part element="tns:«op.name»" name="parameters" />
 		</wsdl:message>
@@ -199,7 +201,7 @@ class WrappedWsdlTemplates {
 		</wsdl:message>
 	'''
 	
-	def dispatch toPortType (Service svc) '''
+	def protected toPortType (Service svc) '''
 		<wsdl:portType name="«svc.name»Wrapped">
 			<wsdl:documentation>
 					<![CDATA[Version:	«svc.version.toVersionNumber()»
@@ -223,7 +225,7 @@ class WrappedWsdlTemplates {
 		</wsdl:portType>
 	'''
 	
-	def dispatch toOperation (Operation op) '''
+	def protected toOperation (Operation op) '''
 		<wsdl:operation name="«op.name»">
 			<wsdl:documentation>
 				<![CDATA[«docProvider.getDocumentation (op)»]]>   			
@@ -241,7 +243,7 @@ class WrappedWsdlTemplates {
 		</wsdl:operation>
 	'''
 	
-	def dispatch toFaultMessages(String faultName, List<ExceptionRef> exceptions) {
+	def protected toFaultMessages(String faultName, List<ExceptionRef> exceptions) {
 		val exceptionRef = exceptions.findFirst(e|e.exception.name == faultName);
 		if (exceptionRef != null) {
 			'''
@@ -251,13 +253,13 @@ class WrappedWsdlTemplates {
 			'''
 		}
 	}
-	def dispatch toFault (Operation op) '''
+	def protected toFault (Operation op) '''
 		«FOR fault : op.^throws»
 				<wsdl:fault name="«fault?.exception.toTypeName().toFirstLower()»" message="tns:«fault?.exception.toTypeName()»"></wsdl:fault>
 		«ENDFOR»
 	'''
 	
-	def dispatch toBinding (Service svc) '''
+	def protected toBinding (Service svc) '''
 		<wsdl:binding name="«svc.name»SOAP"
 			type="tns:«svc.name»">
 			<soap:binding style="document"
@@ -266,7 +268,7 @@ class WrappedWsdlTemplates {
 		</wsdl:binding>
 	'''
 	
-	def dispatch toBindingOperation (Operation op) '''
+	def protected toBindingOperation (Operation op) '''
 		<wsdl:operation name="«op.name»">
 			<soap:operation
 				soapAction="«op.eContainer.toNamespace() + op.name»" />

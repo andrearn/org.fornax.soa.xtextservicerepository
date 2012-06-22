@@ -23,6 +23,7 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.WsdlExtensions
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
+import java.util.logging.Logger
 
 class EventXSDTemplates {
 	
@@ -44,15 +45,18 @@ class EventXSDTemplates {
 	@Inject extension LatestMatchingTypeFinder
 	
 	@Inject IEObjectDocumentationProvider docProvider
+
+	@Inject 
+	private Logger log
 	
 	
-	def dispatch toEventsInclSubNamespaces (String namespace, List<SubNamespace> namespaces, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def toEventsInclSubNamespaces (String namespace, List<SubNamespace> namespaces, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		for (ns : namespaces.filter (e|e.name.startsWith (namespace))) {
 			ns.toEvents (minState, profile, registryBaseUrl);
 		}
 	}
 	
-	def dispatch toEvents (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def toEvents (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		ns.services.forEach (s|s.toEvents (ns, minState, profile, registryBaseUrl));
 	}
 	
@@ -82,8 +86,8 @@ class EventXSDTemplates {
 			«ENDFOR»
 			«IF svc.findBestMatchingHeader(profile) != null»
 				«FOR headerImp : svc.findBestMatchingHeader(profile).allImportedVersionedNS(svc.version.toMajorVersionNumber())»
-			<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-				namespace="«headerImp.toNamespace()»"/>
+					<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+						namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
 			«ENDIF»
 			
@@ -109,11 +113,11 @@ class EventXSDTemplates {
 		<xsd:schema targetNamespace="«svc.toTargetNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-			xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 			«ENDFOR»
 			«IF svc.findBestMatchingHeader(profile) != null»
 				«FOR headerImp : svc.findBestMatchingHeader(profile).allImportedVersionedNS(svc.version.toMajorVersionNumber())»
-			xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
+					xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
 				«ENDFOR»
 			«ENDIF»
 			elementFormDefault="qualified"
@@ -121,13 +125,13 @@ class EventXSDTemplates {
 			>
 			
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-			<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-				namespace="«imp.toNamespace()»"/>
+				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+					namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF svc.findBestMatchingHeader(profile) != null»
 				«FOR headerImp : svc.findBestMatchingHeader(profile).allImportedVersionedNS(svc.version.toMajorVersionNumber())»
-			<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
-				namespace="«headerImp.toNamespace()»"/>
+					<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+						namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
 			«ENDIF»
 			
@@ -148,13 +152,13 @@ class EventXSDTemplates {
 	}
 	
 	
-	def dispatch toEventMessages(Service svc, LifecycleState minState, SOAProfile profile) '''
+	def toEventMessages(Service svc, LifecycleState minState, SOAProfile profile) '''
 		«svc.operations.map (o|o.toOperationWrapperTypes (profile)).join»
 		«svc.operations.map (o|o.^throws).flatten.map (t|t.exception.name).toSet().map (o|o.toOperationFaultWrapperTypes(svc.operations.map (op|op.^throws).flatten.toList())).join»
 	'''
 	
 	
-	def dispatch toOperationWrapperTypes (Operation op, SOAProfile profile) '''
+	def toOperationWrapperTypes (Operation op, SOAProfile profile) '''
 		<xsd:element name="«op.name.toFirstUpper()»">
 			<xsd:complexType>
 				<xsd:sequence>
@@ -177,7 +181,7 @@ class EventXSDTemplates {
 		</xsd:element>
 	'''
 	
-	def dispatch toOperationFaultWrapperTypes(String faultName, List<ExceptionRef> exceptions) { 
+	def toOperationFaultWrapperTypes(String faultName, List<ExceptionRef> exceptions) { 
 		val exceptionRef = exceptions.findFirst(e|e.exception.name == faultName);
 		if (exceptionRef != null) {
 			'''

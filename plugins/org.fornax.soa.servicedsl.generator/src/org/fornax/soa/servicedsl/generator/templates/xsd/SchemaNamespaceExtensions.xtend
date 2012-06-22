@@ -112,7 +112,7 @@ class SchemaNamespaceExtensions {
 
 
 	def dispatch String toVersionPostfix (Object o) { 
-		null;
+		throw new UnsupportedOperationException();
 	}
 	
 	def dispatch String toVersionPostfix (Version v) {
@@ -157,7 +157,7 @@ class SchemaNamespaceExtensions {
 	}
 	
 	def List<SubNamespace> toSubNamespacePath (List<SubNamespace> domList) {
-		if (domList.last().eContainer instanceof SubNamespace) {
+		if (domList.last()?.eContainer instanceof SubNamespace) {
 			domList.add (domList.last().eContainer as SubNamespace) 
 			toSubNamespacePath (domList);
 			return domList;
