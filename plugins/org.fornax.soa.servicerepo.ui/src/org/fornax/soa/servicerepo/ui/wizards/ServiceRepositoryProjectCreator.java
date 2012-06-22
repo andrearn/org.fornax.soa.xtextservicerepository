@@ -11,6 +11,8 @@ import org.eclipse.xpand2.XpandFacade;
 import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xpand2.output.OutputImpl;
 import org.eclipse.xtend.type.impl.java.JavaBeansMetaModel;
+import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
+import org.eclipse.xtext.generator.OutputConfiguration;
 import org.eclipse.xtext.ui.wizard.AbstractPluginProjectCreator;
 
 import com.google.common.collect.ImmutableList;
@@ -39,9 +41,10 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 	protected static final String SERVICE_DSL_UI_PROJECT_NAME = "org.fornax.soa.servicedsl.ui";
 	protected static final String SOLUTION_DSL_UI_PROJECT_NAME = "org.fornax.soa.solutiondsl.ui";
 
-	protected static final String SRC_ROOT = "src";
+	protected static final String MODEL_ROOT = "model";
+	protected static final String VIEW_SRC_ROOT = "view";
 	protected static final String SRC_GEN_ROOT = "src-gen";
-	protected final List<String> SRC_FOLDER_LIST = ImmutableList.of(SRC_ROOT, SRC_GEN_ROOT);
+	protected final List<String> SRC_FOLDER_LIST = ImmutableList.of(MODEL_ROOT, VIEW_SRC_ROOT);
 
 	@Override
 	protected ServiceRepositoryProjectInfo getProjectInfo() {
@@ -49,7 +52,10 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 	}
 	
 	protected String getModelFolderName() {
-		return SRC_ROOT;
+		return MODEL_ROOT;
+	}
+	protected String getViewFolderName() {
+		return VIEW_SRC_ROOT;
 	}
 	
 	@Override
@@ -85,16 +91,11 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 	}
 
 	protected void enhanceProject(final IProject project, final IProgressMonitor monitor) throws CoreException {
-		OutputImpl output = new OutputImpl();
-		output.addOutlet(new Outlet(false, getEncoding(), null, true, project.getLocation().makeAbsolute().toOSString()));
-
-		XpandExecutionContextImpl execCtx = new XpandExecutionContextImpl(output, null);
-		execCtx.getResourceManager().setFileEncoding("UTF-8");
-		execCtx.registerMetaModel(new JavaBeansMetaModel());
-
-		XpandFacade facade = XpandFacade.create(execCtx);
-		facade.evaluate("org::fornax::soa::servicerepo::ui::wizards::ServiceRepositoryNewProject::main", getProjectInfo());
-
+		ServiceRepositoryNewProjectGenerator gen = new ServiceRepositoryNewProjectGenerator();
+		JavaIoFileSystemAccess fsa = new JavaIoFileSystemAccess();
+		fsa.setOutputPath(project.getLocation().makeAbsolute().toOSString());
+		gen.generateProject(fsa);
+		
 		project.refreshLocal(IResource.DEPTH_INFINITE, monitor);
 	}
 
