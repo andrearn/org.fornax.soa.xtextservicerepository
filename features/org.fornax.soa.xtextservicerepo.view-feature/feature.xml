@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.servicerepo.view.sdk"
       label="SOA Xtext Service Repository graph views SDK"
-      version="1.5.4.qualifier"
+      version="1.5.5.qualifier"
       provider-name="Fornax Platform">
 
    <description>
@@ -23,13 +23,13 @@
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.fornax.soa.servicedsl" version="1.5.4" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.servicedsl" version="1.5.5" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.xbase.lib" version="2.2.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.graphview" version="1.0.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jdt.core" version="3.6.2" match="greaterOrEqual"/>
-      <import plugin="org.fornax.soa.basedsl" version="1.5.4" match="greaterOrEqual"/>
-      <import plugin="org.fornax.soa.profiledsl" version="1.5.4" match="greaterOrEqual"/>
-      <import plugin="org.fornax.soa.servicedsl.ui" version="1.5.4" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.basedsl" version="1.5.5" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.profiledsl" version="1.5.5" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.servicedsl.ui" version="1.5.5" match="greaterOrEqual"/>
    </requires>
 
    <plugin
