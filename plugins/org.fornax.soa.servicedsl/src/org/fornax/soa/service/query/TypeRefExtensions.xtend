@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl.query
+package org.fornax.soa.service.query
 
 import org.fornax.soa.serviceDsl.DataTypeRef
 import org.fornax.soa.serviceDsl.Type
