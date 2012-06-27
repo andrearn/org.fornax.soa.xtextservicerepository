@@ -6,7 +6,7 @@ Bundle-Version: 1.5.5.qualifier
 Bundle-SymbolicName: org.fornax.soa.servicedsl.generator; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.fornax.soa.servicedsl;bundle-version="1.5.5";visibility:=reexport,
- org.eclipse.xtext;bundle-version="2.0.0";visibility:=reexport,
+ org.eclipse.xtext;bundle-version="2.1.1";visibility:=reexport,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.mwe.utils;visibility:=reexport,
  org.fornax.soa.bindingdsl;bundle-version="1.5.5",
@@ -14,9 +14,9 @@ Require-Bundle: org.fornax.soa.servicedsl;bundle-version="1.5.5";visibility:=ree
  org.fornax.soa.profiledsl;bundle-version="1.5.5",
  org.fornax.soa.basedsl;bundle-version="1.5.5",
  org.fornax.soa.basedsl.generator;bundle-version="1.5.5",
- org.eclipse.xtext.xtend2.lib;bundle-version="2.1.1",
  org.fornax.soa.profiledsl.generator;bundle-version="1.5.5",
- org.fornax.soa.xtextservicerepo.generator;bundle-version="1.5.5"
+ org.fornax.soa.xtextservicerepo.generator;bundle-version="1.5.5",
+ org.eclipse.xtend2.lib;bundle-version="2.2.1"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.servicedsl.generator,
