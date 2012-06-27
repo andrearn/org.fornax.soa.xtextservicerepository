@@ -19,6 +19,7 @@ import org.fornax.soa.bindingdsl.generator.templates.soap.SoapVendorBindingsReso
 import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportExtension;
 import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportTemplates;
 import org.fornax.soa.bindingdsl.generator.templates.wsdl.WrappedWSDLTemplates;
+import org.fornax.soa.profiledsl.generator.ProfileGeneratorConstants;
 
 import com.google.inject.Binder;
 import com.google.inject.TypeLiteral;
@@ -83,6 +84,13 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 					Names.named (BindingDSLGeneratorConstants.DOMAIN_BINDING_NAMES))
 			.toInstance (new ArrayList <String>());
 	}
+	
+	public void configureModuleNames (Binder binder) {
+		binder.bind (new TypeLiteral<List<String>>() {})
+			.annotatedWith (
+					Names.named (BindingDSLGeneratorConstants.MODULE_NAMES))
+			.toInstance (new ArrayList <String>());
+	}
 
 	public void configureNameSpaces (Binder binder) {
 		binder.bind (new TypeLiteral<List<String>>() {})
@@ -122,8 +130,18 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		);
 	}
 	
-	public void configureForceRelativePaths (final Binder binder) {
-		binder.bind(Boolean.class).annotatedWith(Names.named("forceRelativePaths")).toInstance(true);
+	public void configureProfileName (final Binder binder) {
+		binder.bind (String.class)
+			.annotatedWith (
+					Names.named (ProfileGeneratorConstants.PROFILE_NAME))
+			.toInstance ("");
+	}
+	
+	public void configureTargetEnvironmentName (final Binder binder) {
+		binder.bind (String.class)
+			.annotatedWith (
+					Names.named (BindingDSLGeneratorConstants.TARGET_ENVIRONMENT_NAME))
+			.toInstance ("");
 	}
 	
 	protected ProvidedProtocolContractBuilder getLazyProtocolContractProvider (final Binder binder, Class<? extends IProtocolContractBuilder> clazz) {

@@ -35,7 +35,6 @@ code[MWE2][
 	}
 ]
 
-
 section2[Generate WSDLs and XSDs]
 
 You can generate WSDLs and XSDs from service and type definitions for Binding. This binding also references 
@@ -72,6 +71,75 @@ code[MWE2][
 The will generate WSDLs and their imported XSDs for the given ModuleBindings and the DomainBinding that matches
 the name "com.example.paymentDomainBindingName". Additionaly all XSDs for all given DomainNamespaces, InternalNamespaces 
 and any SubNamespace having fully qualified names that match the given expressions.
+
+section3[Configuring the generator]
+
+The generator is configured using the e[ISetup] implementation e[org.fornax.soa.bindingdsl.generator.DefaultBindingContractGeneratorSetup].
+e[DefaultBindingContractGeneratorSetup] supports the following configuration parameters:
+
+table[
+	tr[
+		td[Parameter name]		td[Type]	td[Cardinality]	td[Default]	td[Description]
+	]
+	tr[		
+		td[moduleBindingName]	td[String]	td[0..*]		td[]	td[Generate service contracts
+		for any e[ModuleBinding] whose name matches the given regular expression and binds to the given
+		e[targetNamespace]. ModuleBindings bind a Module to an Environment.]
+	]
+	tr[		
+		td[domainBindingName]	td[String]	td[0..*]		td[]	td[Generate service contracts
+		for any e[DomainBinding] whose name matches the given regular expression and binds to the given
+		e[targetNamespace] DomainBindings bind a namespace to an Environment.]
+	]
+	tr[		
+		td[moduleName]			td[String]	td[0..*]		td[]	td[Generate service contracts
+		for any used module or used service defined in the module. The generator looks up a e[Binding]
+		that provides the service and matches the constraints and qualifiers defined in the usage reference.]
+	]
+	tr[		
+		td[domainNamespace]		td[String]	td[0..*]		td[]	td[Generate XSDs for a code[ServiceDSL][domain-namespace]
+		whose name matches the given regular expression.]
+	]
+	tr[		
+		td[internalNamespace]	td[String]	td[0..*]		td[]	td[Generate XSDs for a code[ServiceDSL][internal-namespace]
+		whose name matches the given regular expression.]
+	]
+	tr[		
+		td[namespace]			td[String]	td[0..*]		td[]	td[Generate XSDs for a e[SubNamespace]
+		whose name matches the given regular expression.]
+	]
+	tr[		
+		td[noDependecies]		td[boolean]	td[1..1]		td[false]	td[Also generate artefacts
+		imported by generated artefacts? If true, no imported artefacts are generated]
+	]
+	tr[		
+		td[profileName]			td[String]	td[1..1]		td[]		td[The name of the architecture
+		profile, that defines the architectural rules to be applied on generation]
+	]
+	tr[		
+		td[targetEnvironmentName]	td[String] td[1..1]		td[]		td[The of the Environment
+		to generate for. Bindings and used Modules Bindings are filtered by their targeted Environment,
+		only selecting Bindings that bind to an Environment with the given targetEnvironmentName. For
+		namespace generated XSDs will contain latest version of VersionedTypes that are supported in
+		the given Environment as defined by the lifecycle state model.]
+	]
+	
+	tr[		
+		td[forceRelativePaths]		td[boolean]	td[0..1]	td[false]		td[Whether imported artefacts
+		in generated contracts shall be resolved using relative paths. If true, relative paths will be
+		used. Otherwise a fully qualified name is being used resolved using the location of the registry
+		as base URL]
+	]
+	tr[		
+		td[generatePrivateWsdlForProviderHost]	td[boolean]	td[0..1]	td[false]		td[When
+		using DomainBindings, the ESB might pass call through to a service implementation with the same
+		interface. The service provider is being considered as a private service. It would usually run
+		on a different host than the ESB. This flag states, wether a "private" WSDL with endpoint targeted
+		on the actual provider should be generated as well. This does not apply to ModuleBindings as
+		these state the hosting server explicitely. Different Modules would be used in such a scenario.]
+	]
+]
+
 
 section[Generate business objects for a platform]
 

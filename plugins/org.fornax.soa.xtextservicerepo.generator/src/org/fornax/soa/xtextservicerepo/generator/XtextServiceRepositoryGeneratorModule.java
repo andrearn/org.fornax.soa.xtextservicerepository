@@ -5,6 +5,7 @@ import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;
 import org.eclipse.xtext.service.AbstractGenericModule;
 
 import com.google.inject.Binder;
+import com.google.inject.name.Names;
 
 public class XtextServiceRepositoryGeneratorModule extends AbstractGenericModule {
 	
@@ -18,6 +19,18 @@ public class XtextServiceRepositoryGeneratorModule extends AbstractGenericModule
 		
 		binder.bind (IResourceDescriptions.class).toInstance (resourceDescriptions);
 		binder.bind (ResourceSetBasedResourceDescriptions.class).toInstance (resourceDescriptions);
+	}
+	
+	public void configureForceRelativePaths (Binder binder) {
+		binder.bind(Boolean.class).
+			annotatedWith (Names.named(XtextServiceRepositoryGeneratorConstants.FORCE_RELATIVE_PATHS)).
+					toInstance(false);
+	}
+
+	public void configureUseNestedPaths (Binder binder) {
+		binder.bind(Boolean.class).
+			annotatedWith (Names.named(XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS)).
+					toInstance(false);
 	}
 
 //	public void configureIResourceDescriptions (Binder binder) {
