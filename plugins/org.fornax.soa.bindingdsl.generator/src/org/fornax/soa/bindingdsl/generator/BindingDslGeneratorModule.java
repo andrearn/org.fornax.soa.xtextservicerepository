@@ -122,7 +122,7 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		);
 	}
 	
-	public void configureForceRelatrivePaths (final Binder binder) {
+	public void configureForceRelativePaths (final Binder binder) {
 		binder.bind(Boolean.class).annotatedWith(Names.named("forceRelativePaths")).toInstance(true);
 	}
 	
