@@ -122,6 +122,10 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		);
 	}
 	
+	public void configureForceRelatrivePaths (final Binder binder) {
+		binder.bind(Boolean.class).annotatedWith(Names.named("forceRelativePaths")).toInstance(true);
+	}
+	
 	protected ProvidedProtocolContractBuilder getLazyProtocolContractProvider (final Binder binder, Class<? extends IProtocolContractBuilder> clazz) {
 		return new ProvidedProtocolContractBuilder (binder.getProvider (clazz));
 	}
