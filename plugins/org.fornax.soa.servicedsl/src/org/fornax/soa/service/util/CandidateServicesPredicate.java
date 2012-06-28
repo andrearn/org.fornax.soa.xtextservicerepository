@@ -27,7 +27,6 @@ public class CandidateServicesPredicate implements Predicate<IEObjectDescription
 		this.context = context;
 	}
 
-	@Override
 	public boolean apply(final IEObjectDescription input) {
 		// TODO Auto-generated method stub
 		final String version = input.getUserData(VersionedResourceDescriptionStrategy.VERSION_KEY);
