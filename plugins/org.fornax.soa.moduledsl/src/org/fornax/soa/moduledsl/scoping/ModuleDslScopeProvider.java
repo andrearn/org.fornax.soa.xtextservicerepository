@@ -3,8 +3,13 @@
  */
 package org.fornax.soa.moduledsl.scoping;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
@@ -23,15 +28,20 @@ import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
-import org.fornax.soa.moduledsl.moduleDsl.ModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
+import org.fornax.soa.moduledsl.query.ModuleLookup;
 import org.fornax.soa.moduledsl.util.ModuleDslAccess;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
+import org.fornax.soa.service.util.CandidateServicesPredicate;
+import org.fornax.soa.serviceDsl.Service;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -46,6 +56,8 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 
 	
 	@Inject Injector injector;
+	
+	@Inject ModuleLookup modLookup;
 
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
@@ -56,7 +68,29 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 		}
 		if (reference == ModuleDslPackage.Literals.IMPORT_SERVICE_REF__SERVICE && context instanceof ImportServiceRef) {
 			final VersionRef v = ((ImportServiceRef) context).getVersionRef();
-			return createVersionFilter(v, context);
+			ImportServiceRef impSvcRef = (ImportServiceRef) context;
+			Module owningModule = ModuleDslAccess.getOwningModule(impSvcRef);
+			final List<ServiceModuleRef> modules = impSvcRef.getModules();
+			List<Service> candServices = new ArrayList<Service>();
+			if (modules.isEmpty()) {
+				List<Module> allModules = modLookup.findAllModules (context.eResource().getResourceSet());
+				for (Module mod : allModules) {
+					if (!mod.equals(owningModule)) {
+						extractProvidedServices(context, candServices, mod);
+					}
+				}
+			} else {
+				for (ServiceModuleRef ref : modules) {
+					Module targetModule = ref.getModule();
+					//TODO filter modules, that are don not have one of the accepted qualifiers
+					extractProvidedServices(context, candServices, targetModule);
+				}
+			}
+ 
+			if (!candServices.isEmpty())
+				return createVersionFilter(v, context, candServices);
+			else
+				return createVersionFilter(v, context);
 		}
 		if (reference == ModuleDslPackage.Literals.SERVICE_MODULE_REF__MODULE && context instanceof ServiceModuleRef) {
 			final VersionRef v = ((ServiceModuleRef) context).getVersion();
@@ -64,6 +98,22 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 			return createVersionFilter(v, owningModule);
 		}
 		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+	}
+
+	private void extractProvidedServices(EObject context,
+			List<Service> candServices, Module targetModule) {
+		if (targetModule != null) {
+			if (targetModule.eIsProxy())
+				targetModule = (Module) EcoreUtil.resolve (targetModule, context.eResource().getResourceSet());
+			EList<ServiceRef> providedServiceRefs = targetModule.getProvidedServices();
+			for (ServiceRef svcRef : providedServiceRefs) {
+				if (svcRef.eIsProxy()) {
+					svcRef = (ServiceRef) EcoreUtil.resolve (svcRef, context.eResource().getResourceSet());
+				}
+				if (svcRef.getService() != null)
+					candServices.add (svcRef.getService());
+			}
+		}
 	}
 
 	@Override
@@ -86,6 +136,51 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 				return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription>(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
 			if (v instanceof FixedVersionRef)
 				return new FixedVersionFilter<IEObjectDescription>(verResolver, ((FixedVersionRef) v).getFixedVersion());
+		}
+		return filter;
+	}
+	
+	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner, List<Service> candidates) {
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		if (v != null) {
+			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
+			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
+			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
+			
+			if (candidates != null && !candidates.isEmpty()) {
+				
+				CandidateServicesPredicate pred = new CandidateServicesPredicate(candidates, v.eResource().getResourceSet());
+				injector.injectMembers(pred);
+			
+				if (v instanceof MajorVersionRef) {
+					RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState);
+					injector.injectMembers (stateFilter);
+					stateFilter.setPreFilterPredicate (pred);
+					return stateFilter;
+				}
+				if (v instanceof MaxVersionRef) {
+					LatestMaxExclVersionFilter<IEObjectDescription> latestMaxExclVersionFilter = new LatestMaxExclVersionFilter<IEObjectDescription>(verResolver, ((MaxVersionRef)v).getMaxVersion());
+					latestMaxExclVersionFilter.setPreFilterPredicate(pred);
+					return latestMaxExclVersionFilter;
+				}
+				if (v instanceof MinVersionRef) {
+					LatestMinInclVersionFilter<IEObjectDescription> latestMinInclVersionFilter = new LatestMinInclVersionFilter<IEObjectDescription>(verResolver, ((MinVersionRef)v).getMinVersion());
+					latestMinInclVersionFilter.setPreFilterPredicate(pred);
+					return latestMinInclVersionFilter;
+				}
+				if (v instanceof LowerBoundRangeVersionRef) {
+					LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> latestMinInclMaxExclRangeVersionFilter = new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription>(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+					latestMinInclMaxExclRangeVersionFilter.setPreFilterPredicate(pred);
+					return latestMinInclMaxExclRangeVersionFilter;
+				}
+				if (v instanceof FixedVersionRef) {
+					FixedVersionFilter<IEObjectDescription> fixedVersionFilter = new FixedVersionFilter<IEObjectDescription>(verResolver, ((FixedVersionRef) v).getFixedVersion());
+					fixedVersionFilter.setPreFilterPredicate(pred);
+					return fixedVersionFilter;
+				}
+			} else {
+				createVersionFilter(v, owner);
+			}
 		}
 		return filter;
 	}
