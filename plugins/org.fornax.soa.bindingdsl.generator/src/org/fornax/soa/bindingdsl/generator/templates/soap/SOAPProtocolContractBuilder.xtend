@@ -200,15 +200,18 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 		}
 		for (modRef : moduleRefs) {
 			val modRefServices = modRef.moduleRef.module.providedServices
+			val exclServices = modRef.excludedServices.map(s|s.service)
 			
-			for (svc : modRefServices.filter (e|services.exists (s|s == e.service)).map (e|e.service)) {
-				val qualifier = modServiceResolver.getQualifier(modRef)
-				val Set<Module> canditateModules = newHashSet()
-				canditateModules.add (modRef.moduleRef.module)
-				val bindings = svc.resolveServiceBinding (targetEnvironment, ImportBindingProtocol::SOAP, canditateModules, qualifier)
-				
-				for (specBinding : bindings) {
-					doBuildServiceContracts(svc, specBinding, profile)
+			for (svc : modRefServices.map (e|e.service)) {
+				if (!exclServices.contains(svc)) {
+					val qualifier = modServiceResolver.getQualifier(modRef)
+					val Set<Module> canditateModules = newHashSet()
+					canditateModules.add (modRef.moduleRef.module)
+					val bindings = svc.resolveServiceBinding (targetEnvironment, ImportBindingProtocol::SOAP, canditateModules, qualifier)
+					
+					for (specBinding : bindings) {
+						doBuildServiceContracts(svc, specBinding, profile)
+					}
 				}
 			}
 		}

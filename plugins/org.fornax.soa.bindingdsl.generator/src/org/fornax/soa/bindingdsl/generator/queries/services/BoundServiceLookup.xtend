@@ -123,19 +123,23 @@ class BoundServiceLookup {
 	 * chosen with respect to their state and the target environment
 	 */
 	def Set<Service> getAllUsedServicesWithProtocol (Module module, Environment environment, ImportBindingProtocol protocol, SOAProfile profile) {
-		val usedModules = module.usedModules
-		val Iterable<SubNamespace> usedModuleNamespaces = usedModules.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (e|e.namespace);
-		val Iterable<ServiceRef> nsServiceExclRefs = usedModules.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (n | n.excludedServices).flatten;
+		val usedModuleRefs = module.usedModules
+		val Iterable<SubNamespace> usedModuleNamespaces = usedModuleRefs.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (e|e.namespace);
+		val Iterable<ServiceRef> nsServiceExclRefs = usedModuleRefs.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (n | n.excludedServices).flatten;
 		val exclServices = nsServiceExclRefs.map (r | r.service).toList;
 		val minState = environment.getMinLifecycleState (module, profile.lifecycle);	
-		var Set<Service> services = newHashSet();	
-
-		services.addAll (module.usedServices.filter (e|e.endpointProtocol == protocol || module.usesEndpointProtocol == protocol).map (s | s.latestServiceInEnvironment (environment)));
-		val Set<VersionedDomainNamespace> versionedNamespaces = usedModuleNamespaces.map (ns |ns.toVersionedDomainNamespaces()).flatten.toSet
-		for (VersionedDomainNamespace verNs : versionedNamespaces) {
-			val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService (verNs.version.asInteger(), minState));
-			val nsServices = svcCand.filter (c | !exclServices.contains (c));
-			services.addAll (nsServices);
+		var Set<Service> services = newHashSet();
+		
+		if (!module.usedServices.empty) {
+			services.addAll (module.usedServices.filter (e|e.endpointProtocol == protocol || module.usesEndpointProtocol == protocol).map (s | s.latestServiceInEnvironment (environment)));
+		}
+		if (!usedModuleNamespaces.empty) {
+			val Set<VersionedDomainNamespace> versionedNamespaces = usedModuleNamespaces.map (ns |ns.toVersionedDomainNamespaces()).flatten.toSet
+			for (VersionedDomainNamespace verNs : versionedNamespaces) {
+				val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService (verNs.version.asInteger(), minState));
+				val nsServices = svcCand.filter (c | !exclServices.contains (c));
+				services.addAll (nsServices);
+			}
 		}
 		return services;
 	}
