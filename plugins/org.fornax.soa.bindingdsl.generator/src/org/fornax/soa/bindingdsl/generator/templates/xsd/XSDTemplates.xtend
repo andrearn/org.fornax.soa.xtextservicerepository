@@ -3,8 +3,12 @@ package org.fornax.soa.bindingdsl.generator.templates.xsd
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import java.util.List
+import java.util.logging.Logger
+import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
+import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.bindingdsl.generator.queries.modules.ModuleBindingResolver
 import org.fornax.soa.bindingdsl.generator.queries.services.BindingServiceResolver
 import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
@@ -13,15 +17,9 @@ import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.VersionedDomainNamespace
+import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
-import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
-import org.fornax.soa.bindingDsl.ServiceBinding
-import org.fornax.soa.bindingDsl.Binding
-import java.util.logging.Logger
-import java.util.logging.Level
-import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 /*
  * Generate an XSD for a SubNamespace. Types and exceptions are filtered by their lifecycle state, determining whether it

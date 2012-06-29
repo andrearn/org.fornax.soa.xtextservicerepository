@@ -106,7 +106,7 @@ class SoapVendorBindingsResolver {
 			SAP:			serverTypeName = "saperp"
 			Database:		serverTypeName = (s as Database).serverType
 			Registry:		serverTypeName = (s as Registry).serverType
-			default: "undefined"
+			default: return "undefined"
 		}
 		if (serverTypeName != null)
 			return serverTypeName
@@ -122,10 +122,10 @@ class SoapVendorBindingsResolver {
 			ProcessServer:	serverTypeVersion = (s as ProcessServer).serverVersion
 			Broker:			serverTypeVersion = (s as Broker).serverVersion
 			WebServer:		serverTypeVersion = (s as WebServer).serverVersion
-			SAP:			"undefined"
+			SAP:			return "undefined"
 			Database:		serverTypeVersion = (s as Database).serverVersion
 			Registry:		serverTypeVersion = (s as Registry).serverVersion
-			default: "undefined"
+			default: return "undefined"
 		}
 		if (serverTypeVersion != null)
 			return serverTypeVersion

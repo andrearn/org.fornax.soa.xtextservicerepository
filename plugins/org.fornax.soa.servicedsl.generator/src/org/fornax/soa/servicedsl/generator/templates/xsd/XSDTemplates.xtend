@@ -249,7 +249,7 @@ class XSDTemplates {
 	*/
 	def toComplexType(BusinessObject bo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 
-		<xsd:complexType name="«bo.name»"«IF bo.abstract» abstract="true"«ENDIF»>
+		<xsd:complexType name="«bo.name»"«IF bo.^abstract» abstract="true"«ENDIF»>
 			<xsd:annotation>
 		    	<xsd:documentation>
 					<![CDATA[

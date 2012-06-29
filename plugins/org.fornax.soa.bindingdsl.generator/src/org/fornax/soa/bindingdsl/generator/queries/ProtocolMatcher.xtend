@@ -30,7 +30,6 @@ class ProtocolMatcher {
 			case ImportBindingProtocol::FTP:	if (bindingProtocol instanceof FTP) return true else return false
 			case ImportBindingProtocol::IIOP:	if (bindingProtocol instanceof IIOP) return true else return false
 			case ImportBindingProtocol::AMQP:	if (bindingProtocol instanceof AMQP) return true else return false
-			default: false
 		}
 		return false
 	}

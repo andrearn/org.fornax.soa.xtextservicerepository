@@ -34,7 +34,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
  */
 class SchemaNamespaceExtensions {
 	
-	extension CommonEObjectExtensions
+	@Inject extension CommonEObjectExtensions
 
 	@Inject extension CommonStringExtensions
 	@Inject VersionQualifierExtensions versionQualifier

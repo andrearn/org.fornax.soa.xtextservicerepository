@@ -202,7 +202,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 			val modRefServices = modRef.moduleRef.module.providedServices
 			val exclServices = modRef.excludedServices.map(s|s.service)
 			
-			for (svc : modRefServices.map (e|e.service)) {
+			for (Service svc : modRefServices.map (e|e.service).filter(typeof(Service))) {
 				if (!exclServices.contains(svc)) {
 					val qualifier = modServiceResolver.getQualifier(modRef)
 					val Set<Module> canditateModules = newHashSet()
