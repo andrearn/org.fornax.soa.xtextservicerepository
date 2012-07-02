@@ -10,6 +10,7 @@ import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.eclipse.xtext.ui.wizard.AbstractPluginProjectCreator;
 
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 
 public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreator {
 
@@ -59,28 +60,33 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 
     @Override
 	protected List<String> getRequiredBundles() {
-		List<String> result = super.getRequiredBundles();
-		result.add(BASE_DSL_PROJECT_NAME);
-		result.add(BINDING_DSL_PROJECT_NAME);
-		result.add(BUSINESS_DSL_PROJECT_NAME);
-		result.add(ENVIRONMENT_DSL_PROJECT_NAME);
-		result.add(MODULE_DSL_PROJECT_NAME);
-		result.add(PROFILE_DSL_PROJECT_NAME);
-		result.add(SEMANTICS_DSL_PROJECT_NAME);
-		result.add(SERVICE_DSL_PROJECT_NAME);
-		result.add(SLA_DSL_PROJECT_NAME);
-		result.add(SOLUTION_DSL_PROJECT_NAME);
+		List<String> result = Lists.newArrayList(
+				"com.ibm.icu",
+				"org.eclipse.xtext", 
+				"org.eclipse.xtext.generator",
+				"de.itemis.xtext.antlr;resolution:=optional",
+				"org.eclipse.emf.mwe2.launch;resolution:=optional",
+				BASE_DSL_PROJECT_NAME,
+				BINDING_DSL_PROJECT_NAME,
+				BUSINESS_DSL_PROJECT_NAME,
+				ENVIRONMENT_DSL_PROJECT_NAME,
+				MODULE_DSL_PROJECT_NAME,
+				PROFILE_DSL_PROJECT_NAME,
+				SEMANTICS_DSL_PROJECT_NAME,
+				SERVICE_DSL_PROJECT_NAME,
+				SLA_DSL_PROJECT_NAME,
+				SOLUTION_DSL_PROJECT_NAME,
 		
-		result.add(BASE_DSL_UI_PROJECT_NAME);
-		result.add(BINDING_DSL_UI_PROJECT_NAME);
-		result.add(BUSINESS_DSL_UI_PROJECT_NAME);
-		result.add(ENVIRONMENT_DSL_UI_PROJECT_NAME);
-		result.add(MODULE_DSL_UI_PROJECT_NAME);
-		result.add(PROFILE_DSL_UI_PROJECT_NAME);
-		result.add(SEMANTICS_DSL_UI_PROJECT_NAME);
-		result.add(SERVICE_DSL_UI_PROJECT_NAME);
-		result.add(SLA_DSL_UI_PROJECT_NAME);
-		result.add(SOLUTION_DSL_UI_PROJECT_NAME);
+				BASE_DSL_UI_PROJECT_NAME,
+				BINDING_DSL_UI_PROJECT_NAME,
+				BUSINESS_DSL_UI_PROJECT_NAME,
+				ENVIRONMENT_DSL_UI_PROJECT_NAME,
+				MODULE_DSL_UI_PROJECT_NAME,
+				PROFILE_DSL_UI_PROJECT_NAME,
+				SEMANTICS_DSL_UI_PROJECT_NAME,
+				SERVICE_DSL_UI_PROJECT_NAME,
+				SLA_DSL_UI_PROJECT_NAME,
+				SOLUTION_DSL_UI_PROJECT_NAME);
 		return result;
 	}
 
