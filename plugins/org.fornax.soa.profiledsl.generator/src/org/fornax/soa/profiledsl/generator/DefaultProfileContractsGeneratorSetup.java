@@ -25,7 +25,6 @@ public class DefaultProfileContractsGeneratorSetup implements ISetup {
 	private Boolean useNestedPaths = false;
 	private Boolean forceRelativePaths = false;
 
-	@Override
 	public Injector createInjectorAndDoEMFRegistration () {
 		Injector injector = Guice.createInjector (Modules2.mixin (
 				new BaseDslGeneratorModule (),

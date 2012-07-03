@@ -109,7 +109,6 @@ public class AnyVersionRef implements VersionRef {
 
 	}
 
-	@Override
 	public Object eInvoke(EOperation operation, EList<?> arguments)
 			throws InvocationTargetException {
 		// TODO Auto-generated method stub
