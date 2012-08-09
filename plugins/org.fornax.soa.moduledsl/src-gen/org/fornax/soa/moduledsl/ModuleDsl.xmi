@@ -54,6 +54,9 @@
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
           </terminal>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifiers" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
@@ -79,6 +82,26 @@
           <elements xsi:type="xtext:Keyword" value="deployment-module-name"/>
           <elements xsi:type="xtext:Assignment" feature="deploymentModuleName" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:UnorderedGroup">
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="release-on"/>
+            <elements xsi:type="xtext:Assignment" feature="releaseDate" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="release-tag"/>
+            <elements xsi:type="xtext:Assignment" feature="releaseTag" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="source-location"/>
+            <elements xsi:type="xtext:Assignment" feature="source" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+            </elements>
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -126,18 +149,6 @@
             </elements>
           </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="source-location"/>
-          <elements xsi:type="xtext:Assignment" feature="source" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="revision-tag"/>
-          <elements xsi:type="xtext:Assignment" feature="revisionTag" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
-          </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -622,6 +633,81 @@
           <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="+=">
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
           </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="GovernanceDecision">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="governance-decision"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="subject"/>
+          <elements xsi:type="xtext:Assignment" feature="subject" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="decision-result"/>
+          <elements xsi:type="xtext:Assignment" feature="decisionResult" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.14"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="specific-result"/>
+          <elements xsi:type="xtext:Assignment" feature="specificResult" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="justification-doc"/>
+          <elements xsi:type="xtext:Assignment" feature="justificationOrDocURL" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="decision-date"/>
+          <elements xsi:type="xtext:Assignment" feature="approvalDate" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="decision-by"/>
+          <elements xsi:type="xtext:Assignment" feature="approvedBy" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="effective-date"/>
+          <elements xsi:type="xtext:Assignment" feature="effectiveDate" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="GovernanceDecisionResult">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecisionResult"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecisionResult/pending"/>
+          <literal value="pending"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecisionResult/accepted"/>
+          <literal value="accepted"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecisionResult/denied"/>
+          <literal value="denied"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecisionResult/specific"/>
+          <literal value="specific"/>
         </elements>
       </alternatives>
     </rules>

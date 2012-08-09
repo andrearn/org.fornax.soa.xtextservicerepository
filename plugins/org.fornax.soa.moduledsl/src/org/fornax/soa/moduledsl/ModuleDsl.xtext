@@ -17,6 +17,7 @@ Module:
 		
 		version = Version
 		'lifecycle-state' state = [profileDsl::LifecycleState | QualifiedName]
+		(governanceDecisions+=GovernanceDecision)*
 		/* An additional named Qualifier of the module, may referred to by bindings or other modules using this module */
 		(qualifiers=Qualifier)?
 		('owner' owner = STRING)?
@@ -27,6 +28,11 @@ Module:
 		('assembly-type-details' assemblyTypeDetails = STRING)?
 		/* override the module name used by default for the modules technical name for deployment */
 		('deployment-module-name' deploymentModuleName = STRING)?
+		(	
+			('release-on' releaseDate = STRING)? &
+			('release-tag' releaseTag = STRING)? &		// Tag in VCS
+			('source-location' source=STRING )? 		// Where can I get the sources? 
+		)
 		
 		('provides' '{'
 			/*
@@ -46,8 +52,6 @@ Module:
 			('binding-qualifier' bindingQualifier=QualifiedName)?
 		'}')?
 			
-		('source-location' source=STRING )? //Where can I get the sources?
-		('revision-tag' revisionTag=STRING )? //Tag in VCS
 	'}';
 
 /* 

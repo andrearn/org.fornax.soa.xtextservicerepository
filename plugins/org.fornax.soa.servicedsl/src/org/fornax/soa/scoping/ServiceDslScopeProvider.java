@@ -36,16 +36,18 @@ import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOw
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.CapabilityRef;
+import org.fornax.soa.serviceDsl.ComplexFetchPropertyRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.EventRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
+import org.fornax.soa.serviceDsl.FetchParameterRef;
 import org.fornax.soa.serviceDsl.GlobalEventRef;
 import org.fornax.soa.serviceDsl.MessageHeaderRef;
 import org.fornax.soa.serviceDsl.OperationEventRef;
 import org.fornax.soa.serviceDsl.OperationRef;
-import org.fornax.soa.serviceDsl.ParameterRef;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceRef;
+import org.fornax.soa.serviceDsl.SimpleFetchPropertyRef;
 import org.fornax.soa.serviceDsl.TypeRef;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 import org.fornax.soa.util.DslElementAccessor;
@@ -131,8 +133,24 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		} else if (reference == ServiceDslPackage.Literals.OPERATION_REF__OPERATION && ctx instanceof OperationRef) {
 			final VersionRef v = ((OperationRef) ctx).getVersionRef();
 			return createEContainerVersionFilter(v, DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		} else if (reference == ServiceDslPackage.Literals.PARAMETER_REF__PROPERTY && ctx instanceof ParameterRef) {
-			TypeRef typeRef = ((ParameterRef) ctx).getParam().getType();
+		} else if (reference == ServiceDslPackage.Literals.FETCH_PARAMETER_REF__FETCH_PROPERTY_REF && ctx instanceof FetchParameterRef) {
+			TypeRef typeRef = ((FetchParameterRef) ctx).getParam().getType();
+			AbstractPredicateVersionFilter<IEObjectDescription> f = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+			if (typeRef instanceof BusinessObjectRef) 
+				f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+			else if (typeRef instanceof EnumTypeRef)
+				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+			return f;
+		} else if (reference == ServiceDslPackage.Literals.SIMPLE_FETCH_PROPERTY_REF && ctx instanceof SimpleFetchPropertyRef) {
+			TypeRef typeRef = ((SimpleFetchPropertyRef) ctx).getProperty().getType();
+			AbstractPredicateVersionFilter<IEObjectDescription> f = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+			if (typeRef instanceof BusinessObjectRef) 
+				f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+			else if (typeRef instanceof EnumTypeRef)
+				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+			return f;
+		} else if (reference == ServiceDslPackage.Literals.COMPLEX_FETCH_PROPERTY_REF && ctx instanceof ComplexFetchPropertyRef) {
+			TypeRef typeRef = ((ComplexFetchPropertyRef) ctx).getFetchPropertyRef().getProperty().getType();
 			AbstractPredicateVersionFilter<IEObjectDescription> f = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 			if (typeRef instanceof BusinessObjectRef) 
 				f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));

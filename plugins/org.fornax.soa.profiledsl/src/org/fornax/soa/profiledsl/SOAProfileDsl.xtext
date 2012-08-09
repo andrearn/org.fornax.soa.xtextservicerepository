@@ -45,6 +45,8 @@ SOAProfile:
 		(orgNamespaces+=OrganizationNamespace)*
 		(namespaceRules = NamespaceRules)?
 		(scopedBasicTypes+=BasicTypes)*
+		(governanceDecisions+=GovernanceDecision)*
+		
 	'}';
 
 /*
@@ -159,6 +161,7 @@ MessageHeader:
 		'meta-data' '{'
 			version=Version 
 			'lifecycle-state' state=[LifecycleState | QualifiedName]
+			(governanceDecisions+=GovernanceDecision)*
 			/* For which message exchange patterns the header is being used */
 			'for' (exchanges+=MEPMessageKind) (',' exchanges+=MEPMessageKind)*
 			/* may extension placeholder properties be used */ 
@@ -217,6 +220,7 @@ Enumeration:
 			version=Version  
 			('replaces' replaces=EnumRef )?
 			'lifecycle-state' state=[LifecycleState | QualifiedName]
+			(governanceDecisions+=GovernanceDecision)*
 		'}'
 		(literals+=EnumLiteral )*
 	'}';
@@ -230,6 +234,7 @@ Class:
 			version=Version  
 			('replaces' replaces=EnumRef )?
 			'lifecycle-state' state=[LifecycleState | QualifiedName]
+			(governanceDecisions+=GovernanceDecision)*
 		'}'
 		(properties+=AbstractProperty)+
 	'}';
@@ -252,7 +257,10 @@ TypeDefPolicy:
 	{TypeDefPolicy}
 	'types' '{'
 		(extendableProperties?='extendable-properties' )?
+		('extendable-XML-clause' extendableXMLClause = STRING )?
 		(extendableXMLAttributes?='extendable-XML-attributes' )?
+		('extendable-XML-attribute-clause' extendableXMLAttributeClause = STRING)?
+		(extendableSubTypes?='extendable-sub-types')?
 		(allowEnums?='allow-enums' )?
 		(allowInheritance?='allow-inheritance' )?
 		(allowPolymorphism?='allow-polymorphism' )?

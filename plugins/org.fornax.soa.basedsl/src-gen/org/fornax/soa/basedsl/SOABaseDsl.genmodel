@@ -9,6 +9,12 @@
     editorPluginID="org.fornax.soa.basedsl.editor">
   <genPackages prefix="SOABaseDsl" basePackage="org.fornax.soa.basedsl" disposableProviderFactory="true"
       ecorePackage="SOABaseDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOABaseDsl.ecore#//GovernanceDecisionResult">
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//GovernanceDecisionResult/pending"/>
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//GovernanceDecisionResult/accepted"/>
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//GovernanceDecisionResult/denied"/>
+      <genEnumLiterals ecoreEnumLiteral="SOABaseDsl.ecore#//GovernanceDecisionResult/specific"/>
+    </genEnums>
     <genClasses ecoreClass="SOABaseDsl.ecore#//Import">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Import/importedNamespace"/>
     </genClasses>
@@ -37,6 +43,15 @@
     </genClasses>
     <genClasses ecoreClass="SOABaseDsl.ecore#//Qualifier">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Qualifier/qualifierName"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//GovernanceDecision">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//GovernanceDecision/subject"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//GovernanceDecision/decisionResult"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//GovernanceDecision/specificResult"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//GovernanceDecision/justificationOrDocURL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//GovernanceDecision/approvalDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//GovernanceDecision/approvedBy"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//GovernanceDecision/effectiveDate"/>
     </genClasses>
     <genClasses ecoreClass="SOABaseDsl.ecore#//AbstractType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//AbstractType/name"/>

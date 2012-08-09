@@ -38,7 +38,7 @@ import org.fornax.soa.serviceDsl.SimpleAttribute;
 import org.fornax.soa.serviceDsl.SubNamespace;
 import org.fornax.soa.serviceDsl.Type;
 import org.fornax.soa.serviceDsl.TypeRef;
-import org.fornax.soa.serviceDsl.VISIBILITY;
+import org.fornax.soa.serviceDsl.Visibility;
 import org.fornax.soa.serviceDsl.VersionedType;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 import org.fornax.soa.util.ReferencedStateChecker;
@@ -419,34 +419,34 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	@Check
 	public void checkProvidedContractOnPrivateServiceOnly(Service s) {
 		if (s.getProvidedContractUrl() != null
-				&& s.getVisibility() != VISIBILITY.PRIVATE)
+				&& s.getVisibility() != Visibility.PRIVATE)
 			error("Only private services may provide a predefined contract such as a WSDL",
 					ServiceDslPackage.Literals.SERVICE__PROVIDED_CONTRACT_URL);
 	}
 
 	@Check
 	public void checkProvidedDefOnInternalBOOnly(BusinessObject o) {
-		if (o.getProvidedDefinitionUrl() != null
+		if (o.getProvidedContractUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
 			error("Only internal businessObjects may provide a predefined definition such as an XSD",
-					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_DEFINITION_URL);
+					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_CONTRACT_URL);
 	}
 
 	@Check
 	public void checkProvidedDefOnInternalEnumOnly(Enumeration o) {
-		if (o.getProvidedDefinitionUrl() != null
+		if (o.getProvidedContractUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
 			error("Only internal enums may provide a predefined definition such as an XSD",
-					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_DEFINITION_URL);
+					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_CONTRACT_URL);
 	}
 
 	@Check
 	public void checkProvidedDefOnInternalEnumOnly(
 			org.fornax.soa.serviceDsl.Exception o) {
-		if (o.getProvidedDefinitionUrl() != null
+		if (o.getProvidedContractUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
 			error("Only internal exceptions may provide a predefined definition such as an XSD or WSDL",
-					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_DEFINITION_URL);
+					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_CONTRACT_URL);
 	}
 
 	// Consistency

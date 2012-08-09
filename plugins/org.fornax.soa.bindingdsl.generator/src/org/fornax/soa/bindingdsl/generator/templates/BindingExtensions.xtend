@@ -23,7 +23,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.serviceDsl.VISIBILITY
+import org.fornax.soa.serviceDsl.Visibility
 import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
 import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
@@ -167,7 +167,7 @@ class BindingExtensions {
 		true;
 	}
 	def dispatch boolean isProviderEndpoint (Service s, ESB server) {
-		s.visibility == VISIBILITY::PRIVATE;
+		s.visibility == Visibility::PRIVATE;
 	}
 	
 	def dispatch Binding getMostSpecificBinding (ModuleBinding modBind, Service svc) {
@@ -180,8 +180,8 @@ class BindingExtensions {
 		
 	def dispatch String getServiceVisibilityName (Service s) {
 		switch (s.visibility) {
-			case VISIBILITY::PUBLIC : "Public"
-			case VISIBILITY::DOMAIN : "Domain"
+			case Visibility::PUBLIC : "Public"
+			case Visibility::DOMAIN : "Domain"
 			default: "Private"
 		}
 	}
@@ -210,7 +210,7 @@ class BindingExtensions {
 		return svc.serviceVisibilityName
 	}
 	def getProviderEndpointQualifier (Binding bind, Service svc) {
-		if (svc.visibility == VISIBILITY::PRIVATE)
+		if (svc.visibility == Visibility::PRIVATE)
 			return "PrivateProvider"
 		else
 			return "Private"
@@ -222,7 +222,7 @@ class BindingExtensions {
 			return boundSvcQualifier.qualifierName.head.replaceAll("\\.","_")
 		if (moduleQualifier != null)
 			return moduleQualifier.qualifierName.head.replaceAll("\\.","_")
-		if (svc.visibility == VISIBILITY::PRIVATE)
+		if (svc.visibility == Visibility::PRIVATE)
 			return "PrivateProvider"
 		else
 			return "Private"

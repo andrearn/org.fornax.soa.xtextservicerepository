@@ -73,8 +73,7 @@ Type:
 	VersionedType;
 
 VersionedType:
-	BusinessObject | Enumeration;
-		
+	BusinessObject | Enumeration | QueryObject;		
 
 BusinessObject:
 	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superBusinessObject=BusinessObjectRef)? '{' 
@@ -83,10 +82,29 @@ BusinessObject:
 			('replaces' replaces=BusinessObjectRef)?
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
 			(
 				('release-on' releaseDate = STRING )?
 			&	('retirement-on' retirementDate = STRING)?
-			&	('provided-definition-URL' providedDefinitionUrl=STRING)?
+			&	('provided-contract' providedContractUrl=STRING)?
+			)
+			('tags' (tags+=[semanticsDsl::Tag])+)*
+		'}'
+		(properties+=Property)*
+	'}';
+	
+QueryObject:
+	'queryObject'  name=ID ('extends' superBusinessObject=BusinessObjectRef)? '{' 
+		'metadata' '{'
+			version=Version 
+			('replaces' replaces=QueryObjectRef)?
+			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			(
+				('release-on' releaseDate = STRING )?
+			&	('retirement-on' retirementDate = STRING)?
+			&	('provided-contract' providedContractUrl=STRING)?
 			)
 			('tags' (tags+=[semanticsDsl::Tag])+)*
 		'}'
@@ -110,6 +128,9 @@ EnumTypeRef:
 BusinessObjectRef:
 	type=[BusinessObject|QualifiedName] versionRef=VersionRef;
 
+QueryObjectRef:
+	type=[QueryObject|QualifiedName] versionRef=VersionRef;
+
 	
 Property:
 	Attribute | Reference;
@@ -117,14 +138,14 @@ Property:
 /* A simple attribute */	
 Attribute:
 	(deprecated?='@deprecated')? 
-	((optional?='optional')? | (weak?='weak')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
+	(((optional?='optional')? (weak?='weak')?) | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
 	((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? 
 	name=ID ':' type=TypeRef ;
 	
 /* links to a target businessObject but uses it's business-key to resolve a reference, hence it is a weak reference */
 Reference:
 	(deprecated?='@deprecated')? 
-	((optional?='optional')? | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
+	(((optional?='optional')? (weak?='weak')?) | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
 	'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef; 
 	
 SimpleAttribute:
@@ -140,7 +161,7 @@ Enumeration:
 			(
 				('release-on' releaseDate = STRING )?
 			&	('retirement-on' retirementDate = STRING )?
-			&	('provided-definition-URL' providedDefinitionUrl=STRING)?
+			&	('provided-contract' providedContractUrl=STRING)?
 			)
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
@@ -155,11 +176,16 @@ EnumLiteral:
 
 
 Service:
-	visibility=VISIBILITY 'service' name=ID '{'
+	visibility=Visibility 'service' name=ID '{'
 		'metadata' '{'
 			version=Version  
+			/*
+			 * Used in conjunction with renaming the service. Points to the previous service version
+			 */
+			('replaces' replaces=ServiceRef )?
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
 			'service-category' category=[profileDsl::ServiceCategory | QualifiedName]
 			/* To what extend is a service stateful or stateless */ 
 			'statefulness' statefulness=Statefulness
@@ -177,15 +203,11 @@ Service:
 				 * This should only be used with private services, as the technical contract might not meet the architectural
 				 * rules that apply to public and domain scoped services
 				 */	
-			&	('provided-Contract-URL' providedContractUrl=STRING )? //Where can I get the sources?
-				/*
-				 * Location of the source code
-				 */
-			&	('sourceURL' source=STRING )? //Where can I get the sources?
+			&	('provided-contract' providedContractUrl=STRING )? 
 				/*
 				 * Location of documentation or specification documents
 				 */
-			&	('docURL' docUrl=STRING )?
+			&	('document' documentUrl=STRING )?
 				/*
 				 * Date, when the service will be or has been released to production
 				 */
@@ -194,10 +216,6 @@ Service:
 				 * Date, when the service will be or was put out of service
 				 */
 			&	('retirement-on' retirementDate = STRING )?
-				/*
-				 * Used in conjunction with renaming the service. Points to the previous service version
-				 */
-			&	('replaces' replaces=ServiceRef )?
 				/*
 				 * The message header definition being used. Overrides the default from the architecture profile
 				 */
@@ -215,7 +233,10 @@ Service:
 	'}';
 	
 
-/* reflects SOA governance decisions */
+/* 
+ * reflects SOA governance approval decisions
+ * voteing until date will be part of the review ballots captured in the side store
+ */
 GovernanceApproval:
 	'governance-approval' '{'
 		decision=ApprovalDecision 
@@ -224,7 +245,7 @@ GovernanceApproval:
 		('decision-by' approvedBy=STRING )?
 	'}'; 
 	
-enum ApprovalDecision: no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated;
+enum ApprovalDecision: pending | no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated;
 	
 enum Statefulness: 
 	/* same result, no matter how often the operation has been called with the same parameters*/
@@ -247,8 +268,31 @@ OperationRef:
 PropertyRef:
 	property=[Property|QualifiedName] versionRef=VersionRef;
 	
-ParameterRef:
-	param=[Parameter|QualifiedName] '->' property=[Property|QualifiedName];
+	
+// Fetch specifications for data retrieval
+		
+FetchParameterRef:
+	param=[Parameter|QualifiedName] '->' (fetchPropertyRef=FetchPropertyRef);
+	
+FetchPropertyRef:
+	SimpleFetchPropertyRef | ComplexFetchPropertyRef
+;
+
+SimpleFetchPropertyRef:
+	property=[Property|QualifiedName]
+;
+
+ComplexFetchPropertyRef:
+	
+	(fetchPropertyRef = SimpleFetchPropertyRef 
+	( 
+		(flat?='flat-only') | 
+		'->' '{' 
+			(nestedFetchPropertyRef+=FetchPropertyRef)+
+		'}')
+	)
+;
+
 
 MessageHeaderRef:
 	header = [profileDsl::MessageHeader|QualifiedName] versionRef=VersionRef;
@@ -271,9 +315,10 @@ GlobalEvent:
 			('replaces' replaces=EventRef )?
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] 
 			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
 			('release-on' releaseDate = STRING )?
 			('retirement-on' retirementDate = STRING )?
-			('provided-definition-URL' providedDefinitionUrl=STRING)?
+			('provided-contract' providedContractUrl=STRING)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(parameter+=Parameter )*
@@ -285,7 +330,7 @@ GlobalEvent:
 OperationEvent:
 	'event' name=ID '{'
 		('metadata' '{'
-			('provided-definition-URL' providedDefinitionUrl=STRING)?
+			('provided-contract' providedContractUrl=STRING)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}')?
 		(parameter+=Parameter )*
@@ -303,13 +348,13 @@ GlobalEventRef:
  * Channel used to publish events to or to watch for events
  */
 Channel:
-	'channel' name=QualifiedName  ;
+	(isTopic?='topic')? 'channel' name=QualifiedName  ;
 	
 /*
  * A service operation
  */
 Operation:
-	(deprecated?='@deprecated')? mep=MEP name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
+	(deprecated?='@deprecated')? mep=MEP (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
 		/*
 		 * Listens for callback from the given operations. Used, when one of the operations has been called asynchronously.
 		 * The operation must correlate the asynch response to the original request
@@ -333,10 +378,12 @@ Operation:
 		 * overrides the default from the service
 		 */ 
 		('statefulness' statefulness=Statefulness (updating?='updating')? )?
+		('persistence' persistence=Persistence )? 
+		('transaction-spec' transactionSpec=TransactionSpec)?
 		/*
-		 * The operation is capabale to revert/compensate the effect ot the given other operation
+		 * The operation is capabale to revert/compensate the effect of this operation
 		 */
-		('can-compensate' canCompensate+=OperationRef )?
+		('compensated-by' compensatedBy+=OperationRef )?
 		/*
 		 * Overrides the message header declaration from the architecture profile or service for this operation
 		 */
@@ -346,6 +393,10 @@ Operation:
 		('supports-capabilty' '{'(supportedCapabilies+=CapabilityRef)+ '}')?	
 	'}';
 	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
+
+enum TransactionSpec:
+	requiresNew = "requires-new" | requires='requires' | mandatory
+;
 
 /*
  * Defines the publishing of an event.
@@ -380,13 +431,13 @@ Exception:
 			('replaces' replaces=ExceptionRef )?
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] 
 			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
 			('release-on' releaseDate = STRING )?
 			('retirement-on' retirementDate = STRING )?
-			('provided-definition-URL' providedDefinitionUrl=STRING)?
+			('provided-contract' providedContractUrl=STRING)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(properties+=SimpleAttribute)*
-		(wrappedExceptions+=ExceptionRef)*
 	'}';
 
 ExceptionRef:
@@ -394,14 +445,14 @@ ExceptionRef:
 	
 /* the message exchange pattern */
 enum MEP : 
-	sync | async | oneway | fireForget='fire+forget'; 
+	sync | async | oneway | fireForget='fire+forget' | deferredResponse='deferred' | syncAsync='sync+async'; 
 
 /**
  * public:	usable by anyone, potentially remotely available
  * domain:	usable by all services in the same namespace or a subnamespace, potentially remotely available
- * private:	for internal use only
+ * private:	for internal use only, not remotely available on an ESB
  */	
-enum VISIBILITY : public | domain | private; 
+enum Visibility : public | domain | private; 
 
 /*
  * Defines what data will be fetch. Consumers can rely on respective BO properties being set
@@ -414,7 +465,10 @@ FetchSpec: EagerFetch | FlatFetch;
 /*
  * Defines object properties to be always fetched
  */
-EagerFetch: 'fetches' (eagerFetchAssoc+=ParameterRef)(',' eagerFetchAssoc+=ParameterRef)*;
+EagerFetch: 
+	'fetches' '{' 
+		eagerFetchAssoc+=FetchParameterRef+ 
+	'}';
 
 /*
  * Don't fetch properties of nested objects

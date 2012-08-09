@@ -55,8 +55,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="retirementDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedDefinitionUrl"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedContractUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
@@ -65,6 +64,20 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="superBusinessObject" eType="#//BusinessObjectRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//BusinessObjectRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+        eType="#//Property" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="QueryObject" eSuperTypes="#//VersionedType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="superBusinessObject" eType="#//BusinessObjectRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//QueryObjectRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
         eType="#//Property" containment="true"/>
@@ -90,9 +103,15 @@
   <eClassifiers xsi:type="ecore:EClass" name="BusinessObjectRef" eSuperTypes="#//AbstractVersionedTypeRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//BusinessObject"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="QueryObjectRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//QueryObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Property">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deprecated" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="weak" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isBusinessKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isProvidedKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="historized" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -101,7 +120,6 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Attribute" eSuperTypes="#//Property">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="weak" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="historizingKey" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="versionIndependantKey"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -125,12 +143,17 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Service">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visibility" eType="#//VISIBILITY"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="visibility" eType="#//Visibility"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//ServiceRef"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//ServiceCategory"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="statefulness" eType="#//Statefulness"/>
@@ -141,12 +164,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCapabilies" upperBound="-1"
         eType="#//CapabilityRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedContractUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="docUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="documentUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="retirementDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//ServiceRef"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeader" eType="#//MessageHeaderRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
@@ -162,10 +182,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="approvedBy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ApprovalDecision">
-    <eLiterals name="no" literal="no"/>
-    <eLiterals name="yes" value="1" literal="yes"/>
-    <eLiterals name="temporarily_tolerated" value="2" literal="temporarily-tolerated"/>
-    <eLiterals name="tolerated" value="3" literal="tolerated"/>
+    <eLiterals name="pending" literal="pending"/>
+    <eLiterals name="no" value="1" literal="no"/>
+    <eLiterals name="yes" value="2" literal="yes"/>
+    <eLiterals name="temporarily_tolerated" value="3" literal="temporarily-tolerated"/>
+    <eLiterals name="tolerated" value="4" literal="tolerated"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Statefulness">
     <eLiterals name="idempotent" literal="idempotent"/>
@@ -195,9 +216,21 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ParameterRef">
+  <eClassifiers xsi:type="ecore:EClass" name="FetchParameterRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="param" eType="#//Parameter"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fetchPropertyRef" eType="#//FetchPropertyRef"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FetchPropertyRef"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleFetchPropertyRef" eSuperTypes="#//FetchPropertyRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="property" eType="#//Property"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComplexFetchPropertyRef" eSuperTypes="#//FetchPropertyRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fetchPropertyRef" eType="#//SimpleFetchPropertyRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="flat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nestedFetchPropertyRef"
+        upperBound="-1" eType="#//FetchPropertyRef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MessageHeaderRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="header" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//MessageHeader"/>
@@ -211,8 +244,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Event">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedDefinitionUrl"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedContractUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" upperBound="-1"
@@ -225,6 +257,9 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="retirementDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -242,11 +277,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//GlobalEvent"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Channel">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isTopic" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Operation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deprecated" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mep" eType="#//MEP"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transactional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
         eType="#//Parameter" containment="true"/>
@@ -264,7 +301,9 @@
         eType="#//ServiceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="statefulness" eType="#//Statefulness"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="updating" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="canCompensate" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="persistence" eType="#//Persistence"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transactionSpec" eType="#//TransactionSpec"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="compensatedBy" upperBound="-1"
         eType="#//OperationRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeader" eType="#//MessageHeaderRef"
         containment="true"/>
@@ -274,6 +313,11 @@
         eType="#//CapabilityRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCapabilies" upperBound="-1"
         eType="#//CapabilityRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TransactionSpec">
+    <eLiterals name="requiresNew" literal="requires-new"/>
+    <eLiterals name="requires" value="1" literal="requires"/>
+    <eLiterals name="mandatory" value="2" literal="mandatory"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PublishedEvent"/>
   <eClassifiers xsi:type="ecore:EClass" name="PublishedOperationEvent" eSuperTypes="#//PublishedEvent">
@@ -301,16 +345,16 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="retirementDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedDefinitionUrl"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedContractUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
         eType="#//SimpleAttribute" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="wrappedExceptions" upperBound="-1"
-        eType="#//ExceptionRef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExceptionRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="exception" eType="#//Exception"/>
@@ -322,8 +366,10 @@
     <eLiterals name="async" value="1" literal="async"/>
     <eLiterals name="oneway" value="2" literal="oneway"/>
     <eLiterals name="fireForget" value="3" literal="fire+forget"/>
+    <eLiterals name="deferredResponse" value="4" literal="deferred"/>
+    <eLiterals name="syncAsync" value="5" literal="sync+async"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="VISIBILITY">
+  <eClassifiers xsi:type="ecore:EEnum" name="Visibility">
     <eLiterals name="public" literal="public"/>
     <eLiterals name="domain" value="1" literal="domain"/>
     <eLiterals name="private" value="2" literal="private"/>
@@ -337,7 +383,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="FetchSpec"/>
   <eClassifiers xsi:type="ecore:EClass" name="EagerFetch" eSuperTypes="#//FetchSpec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="eagerFetchAssoc" upperBound="-1"
-        eType="#//ParameterRef" containment="true"/>
+        eType="#//FetchParameterRef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FlatFetch" eSuperTypes="#//FetchSpec"/>
 </ecore:EPackage>

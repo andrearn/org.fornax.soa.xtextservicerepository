@@ -33,6 +33,9 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="scopedBasicTypes" upperBound="-1"
         eType="#//BasicTypes" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Lifecycle">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -121,6 +124,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exchanges" unique="false"
         upperBound="-1" eType="#//MEPMessageKind"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableProperties" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -193,6 +199,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//EnumRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Enumeration" eSuperTypes="#//VersionedType">
     <eStructuralFeatures xsi:type="ecore:EReference" name="literals" upperBound="-1"
@@ -221,8 +230,12 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeDefPolicy">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableProperties" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableXMLClause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableXMLAttributes"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableXMLAttributeClause"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableSubTypes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="allowEnums" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="allowInheritance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="allowPolymorphism" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>

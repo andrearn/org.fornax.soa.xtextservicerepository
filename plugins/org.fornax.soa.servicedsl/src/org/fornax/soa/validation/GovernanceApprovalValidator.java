@@ -97,7 +97,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 
 		if (g.eContainer().eContainer() instanceof DomainNamespace
 				&& stateMatcher.supportsEnvironmentType (VersionedObjectQueryHelper.getLifecycleState(g), EnvironmentType.PROD)
-				&& g.getDecision() == ApprovalDecision.NO)
+				&& (g.getDecision() == ApprovalDecision.NO || g.getDecision() == ApprovalDecision.PENDING))
 			error("A "
 					+ getPubCanocicalName(g)
 					+ " "
@@ -112,7 +112,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	public void checkApprovedServiceHasDate (Service s) {
 		GovernanceApproval g = s.getGovernanceApproval();
 		if (s.eContainer() instanceof DomainNamespace
-				&& g.getDecision() != ApprovalDecision.NO
+				&& g.getDecision() != ApprovalDecision.PENDING
 				&& (g.getApprovalDate() == null || "".equals(g
 						.getApprovalDate())))
 			warning("Please provide the date of the governance decision!",
@@ -123,7 +123,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	public void checkApprovedServiceHasDate (BusinessObject bo) {
 		GovernanceApproval g = bo.getGovernanceApproval();
 		if (bo.eContainer() instanceof DomainNamespace
-				&& g.getDecision() != ApprovalDecision.NO
+				&& g.getDecision() != ApprovalDecision.PENDING
 				&& (g.getApprovalDate() == null || "".equals(g
 						.getApprovalDate())))
 			warning("Please provide the date of the governance decision!",
@@ -134,7 +134,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	public void checkApprovedServiceHasDate (Enumeration e) {
 		GovernanceApproval g = e.getGovernanceApproval();
 		if (e.eContainer() instanceof DomainNamespace
-				&& g.getDecision() != ApprovalDecision.NO
+				&& g.getDecision() != ApprovalDecision.PENDING
 				&& (g.getApprovalDate() == null || "".equals(g
 						.getApprovalDate())))
 			warning("Please provide the date of the governance decision!",
@@ -145,7 +145,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	public void checkApprovedServiceHasDate (org.fornax.soa.serviceDsl.Exception ex) {
 		GovernanceApproval g = ex.getGovernanceApproval();
 		if (ex.eContainer() instanceof DomainNamespace
-				&& g.getDecision() != ApprovalDecision.NO
+				&& g.getDecision() != ApprovalDecision.PENDING
 				&& (g.getApprovalDate() == null || "".equals(g
 						.getApprovalDate())))
 			warning("Please provide the date of the governance decision!",
@@ -156,7 +156,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	public void checkApprovedServiceHasBy (Service s) {
 		GovernanceApproval g = s.getGovernanceApproval();
 		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& g.getDecision() != ApprovalDecision.NO
+				&& g.getDecision() != ApprovalDecision.PENDING
 				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
 			warning("Please state who made the governance decision!",
 					ServiceDslPackage.Literals.SERVICE__GOVERNANCE_APPROVAL);
@@ -167,7 +167,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	public void checkApprovedServiceHasBy (BusinessObject bo) {
 		GovernanceApproval g = bo.getGovernanceApproval();
 		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& g.getDecision() != ApprovalDecision.NO
+				&& g.getDecision() != ApprovalDecision.PENDING
 				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
 			warning("Please state who made the governance decision!",
 					ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL);
@@ -178,7 +178,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	public void checkApprovedServiceHasBy (org.fornax.soa.serviceDsl.Exception ex) {
 		GovernanceApproval g = ex.getGovernanceApproval();
 		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& g.getDecision() != ApprovalDecision.NO
+				&& g.getDecision() != ApprovalDecision.PENDING
 				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
 			warning("Please state who made the governance decision!",
 					ServiceDslPackage.Literals.EXCEPTION__GOVERNANCE_APPROVAL);
@@ -189,7 +189,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	public void checkApprovedServiceHasBy (Enumeration e) {
 		GovernanceApproval g = e.getGovernanceApproval();
 		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& g.getDecision() != ApprovalDecision.NO
+				&& g.getDecision() != ApprovalDecision.PENDING
 				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
 			warning("Please state who made the governance decision!",
 					ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL);

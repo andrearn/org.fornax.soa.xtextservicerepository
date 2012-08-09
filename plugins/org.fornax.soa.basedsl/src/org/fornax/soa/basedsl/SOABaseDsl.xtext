@@ -81,6 +81,27 @@ QualifiedName:
 	
 Qualifier: 
 	'qualifier' (qualifierName+=QualifiedName)(',' qualifierName+=QualifiedName)*;
+
+/*
+ * Expresses SOA governance decisions
+ * voteing until date will be part of the review ballots captured in the side store
+ */
+GovernanceDecision:
+	'governance-decision' '{'
+		('subject' subject=STRING)
+		('decision-result' decisionResult=GovernanceDecisionResult)
+		('specific-result' specificResult=STRING)?
+		('justification-doc' justificationOrDocURL=STRING )?
+		('decision-date' approvalDate=STRING )? 
+		('decision-by' approvedBy=STRING )?
+		('effective-date' effectiveDate=STRING)?
+	'}'
+;
+
+enum GovernanceDecisionResult:
+	pending | accepted | denied | specific
+;
+
 	
 
 AbstractType: {AbstractType} name=ID;

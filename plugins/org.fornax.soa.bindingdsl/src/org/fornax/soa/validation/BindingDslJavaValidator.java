@@ -36,7 +36,7 @@ import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
 import org.fornax.soa.moduledsl.query.ModuleLookup;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
-import org.fornax.soa.serviceDsl.VISIBILITY;
+import org.fornax.soa.serviceDsl.Visibility;
 import org.fornax.soa.util.BindingDslHelper;
 
 import com.google.common.base.Predicate;
@@ -81,7 +81,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 						BindingDslPackage.Literals.SOAP__PROVIDED_WSDL_URL);
 			} else if (soap.eContainer () instanceof ServiceBinding
 					&& ((ServiceBinding) soap.eContainer ()).getService ()
-							.getService ().getVisibility () != VISIBILITY.PRIVATE) {
+							.getService ().getVisibility () != Visibility.PRIVATE) {
 				error ("SOAP may not define a provided-WSDL-Url for a service level binding to a non-private service",
 						BindingDslPackage.Literals.SOAP__PROVIDED_WSDL_URL);
 			}

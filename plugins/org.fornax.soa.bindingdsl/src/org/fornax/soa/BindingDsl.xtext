@@ -33,6 +33,7 @@ Binding: DomainBinding | ModuleBinding | ServiceBinding ;
 DomainBinding: 
 	'bind namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment] '{'
 		(qualifier=Qualifier)?
+		(governanceDecisions+=GovernanceDecision)*
 		('protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}')?
@@ -65,6 +66,7 @@ Provider:
 ServiceBinding:
 	'bind-service' service=ServiceRef '{'
 		(qualifier=Qualifier)?
+		(governanceDecisions+=GovernanceDecision)*
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
@@ -94,6 +96,7 @@ BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP 
 OperationBinding: 
 	'bind-operation' operation=[serviceDsl::Operation|QualifiedName] '{' 
 		(qualifier=Qualifier)?
+		(governanceDecisions+=GovernanceDecision)*
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
@@ -118,6 +121,7 @@ ModuleBinding:
 		(qualifier=Qualifier)?
 		/* The server to bind the endpoint to */
 		provider=Provider
+		(governanceDecisions+=GovernanceDecision)*
 		/* The default endpoint protocols to be used by default. The protocols respective connector on the server is used to expose the service */
 		('default-protocols' '{'
 			(protocol+=BindingProtocol)+

@@ -4,7 +4,7 @@ import org.eclipse.xtext.validation.Check;
 import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceRef;
-import org.fornax.soa.serviceDsl.VISIBILITY;
+import org.fornax.soa.serviceDsl.Visibility;
 import org.fornax.soa.solutionDsl.Module;
 import org.fornax.soa.solutionDsl.Solution;
  
@@ -14,7 +14,7 @@ public class SolutionDslJavaValidator extends AbstractSolutionDslJavaValidator {
 	@Check
 	public void checkDontCallPrivateServices (ServiceRef svc) {
 		if (svc.eContainer()  instanceof Module || svc.eContainer() instanceof Solution) {
-			if (svc.getService() != null && svc.getService().getVisibility() == VISIBILITY.PRIVATE) {
+			if (svc.getService() != null && svc.getService().getVisibility() == Visibility.PRIVATE) {
 				error ("Solutions may not call private services!", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
 			}
 		}
