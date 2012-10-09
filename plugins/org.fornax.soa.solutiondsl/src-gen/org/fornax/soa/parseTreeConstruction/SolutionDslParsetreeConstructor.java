@@ -36,20 +36,22 @@ protected class ThisRootNode extends RootToken {
 			case 2: return new Module_Group(this, this, 2, inst);
 			case 3: return new Feature_Group(this, this, 3, inst);
 			case 4: return new ServiceRef_Group(this, this, 4, inst);
-			case 5: return new CapabilityRef_Group(this, this, 5, inst);
-			case 6: return new Version_Group(this, this, 6, inst);
-			case 7: return new ProductVersion_Group(this, this, 7, inst);
-			case 8: return new EventRef_Group(this, this, 8, inst);
-			case 9: return new Import_Group(this, this, 9, inst);
-			case 10: return new VersionedName_Alternatives(this, this, 10, inst);
-			case 11: return new VersionRef_Alternatives(this, this, 11, inst);
-			case 12: return new MinVersionRef_Group(this, this, 12, inst);
-			case 13: return new MaxVersionRef_Group(this, this, 13, inst);
-			case 14: return new LowerBoundRangeVersionRef_Group(this, this, 14, inst);
-			case 15: return new MajorVersionRef_Group(this, this, 15, inst);
-			case 16: return new FixedVersionRef_Group(this, this, 16, inst);
-			case 17: return new Qualifier_Group(this, this, 17, inst);
-			case 18: return new AbstractType_Group(this, this, 18, inst);
+			case 5: return new SimpleOperationRef_OperationAssignment(this, this, 5, inst);
+			case 6: return new CapabilityRef_Group(this, this, 6, inst);
+			case 7: return new Version_Group(this, this, 7, inst);
+			case 8: return new ProductVersion_Group(this, this, 8, inst);
+			case 9: return new EventRef_Group(this, this, 9, inst);
+			case 10: return new Import_Group(this, this, 10, inst);
+			case 11: return new VersionedName_Alternatives(this, this, 11, inst);
+			case 12: return new VersionRef_Alternatives(this, this, 12, inst);
+			case 13: return new MinVersionRef_Group(this, this, 13, inst);
+			case 14: return new MaxVersionRef_Group(this, this, 14, inst);
+			case 15: return new LowerBoundRangeVersionRef_Group(this, this, 15, inst);
+			case 16: return new MajorVersionRef_Group(this, this, 16, inst);
+			case 17: return new FixedVersionRef_Group(this, this, 17, inst);
+			case 18: return new Qualifier_Group(this, this, 18, inst);
+			case 19: return new GovernanceDecision_Group(this, this, 19, inst);
+			case 20: return new AbstractType_Group(this, this, 20, inst);
 			default: return null;
 		}	
 	}	
@@ -2230,11 +2232,13 @@ protected class Feature_RightCurlyBracketKeyword_11 extends KeywordToken  {
 /************ begin Rule ServiceRef ****************
  *
  * ServiceRef:
- * 	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"?;
+ * 	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"? ("calling"
+ * 	calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?;
  *
  **/
 
-// service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"?
+// service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"? ("calling"
+// calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?
 protected class ServiceRef_Group extends GroupToken {
 	
 	public ServiceRef_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2249,8 +2253,9 @@ protected class ServiceRef_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new ServiceRef_IsResponseHandlerAssignment_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new ServiceRef_VersionRefAssignment_1(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new ServiceRef_Group_3(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new ServiceRef_IsResponseHandlerAssignment_2(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new ServiceRef_VersionRefAssignment_1(lastRuleCallOrigin, this, 2, inst);
 			default: return null;
 		}	
 	}
@@ -2380,8 +2385,241 @@ protected class ServiceRef_IsResponseHandlerAssignment_2 extends AssignmentToken
 
 }
 
+// ("calling" calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?
+protected class ServiceRef_Group_3 extends GroupToken {
+	
+	public ServiceRef_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getServiceRefAccess().getGroup_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new ServiceRef_Group_3_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new ServiceRef_CalledOperationsAssignment_3_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "calling"
+protected class ServiceRef_CallingKeyword_3_0 extends KeywordToken  {
+	
+	public ServiceRef_CallingKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getServiceRefAccess().getCallingKeyword_3_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new ServiceRef_IsResponseHandlerAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new ServiceRef_VersionRefAssignment_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// calledOperations+=SimpleOperationRef
+protected class ServiceRef_CalledOperationsAssignment_3_1 extends AssignmentToken  {
+	
+	public ServiceRef_CalledOperationsAssignment_3_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getServiceRefAccess().getCalledOperationsAssignment_3_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new SimpleOperationRef_OperationAssignment(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("calledOperations",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("calledOperations");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getSimpleOperationRefRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getServiceRefAccess().getCalledOperationsSimpleOperationRefParserRuleCall_3_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new ServiceRef_CallingKeyword_3_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+// ("," calledOperations+=SimpleOperationRef)*
+protected class ServiceRef_Group_3_2 extends GroupToken {
+	
+	public ServiceRef_Group_3_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getServiceRefAccess().getGroup_3_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new ServiceRef_CalledOperationsAssignment_3_2_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// ","
+protected class ServiceRef_CommaKeyword_3_2_0 extends KeywordToken  {
+	
+	public ServiceRef_CommaKeyword_3_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getServiceRefAccess().getCommaKeyword_3_2_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new ServiceRef_Group_3_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new ServiceRef_CalledOperationsAssignment_3_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// calledOperations+=SimpleOperationRef
+protected class ServiceRef_CalledOperationsAssignment_3_2_1 extends AssignmentToken  {
+	
+	public ServiceRef_CalledOperationsAssignment_3_2_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getServiceRefAccess().getCalledOperationsAssignment_3_2_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new SimpleOperationRef_OperationAssignment(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("calledOperations",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("calledOperations");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getSimpleOperationRefRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getServiceRefAccess().getCalledOperationsSimpleOperationRefParserRuleCall_3_2_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new ServiceRef_CommaKeyword_3_2_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+
 
 /************ end Rule ServiceRef ****************/
+
+
+/************ begin Rule SimpleOperationRef ****************
+ *
+ * SimpleOperationRef:
+ * 	operation=[serviceDsl::Operation|QualifiedName];
+ *
+ **/
+
+// operation=[serviceDsl::Operation|QualifiedName]
+protected class SimpleOperationRef_OperationAssignment extends AssignmentToken  {
+	
+	public SimpleOperationRef_OperationAssignment(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getSimpleOperationRefAccess().getOperationAssignment();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getSimpleOperationRefRule().getType().getClassifier())
+			return null;
+		if((value = eObjectConsumer.getConsumable("operation",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("operation");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getSimpleOperationRefAccess().getOperationOperationCrossReference_0().getType().getClassifier())) {
+				type = AssignmentType.CROSS_REFERENCE;
+				element = grammarAccess.getSimpleOperationRefAccess().getOperationOperationCrossReference_0(); 
+				return obj;
+			}
+		}
+		return null;
+	}
+
+}
+
+/************ end Rule SimpleOperationRef ****************/
 
 
 /************ begin Rule CapabilityRef ****************
@@ -4163,6 +4401,686 @@ protected class Qualifier_QualifierNameAssignment_2_1 extends AssignmentToken  {
 
 
 /************ end Rule Qualifier ****************/
+
+
+/************ begin Rule GovernanceDecision ****************
+ *
+ * / *
+ *  * Expresses SOA governance decisions
+ *  * voteing until date will be part of the review ballots captured in the side store
+ *  * / GovernanceDecision:
+ * 	"governance-decision" "{" ("subject" subject=STRING) ("decision-result" decisionResult=GovernanceDecisionResult)
+ * 	("specific-result" specificResult=STRING)? ("justification-doc" justificationOrDocURL=STRING)? ("decision-date"
+ * 	approvalDate=STRING)? ("decision-by" approvedBy=STRING)? ("effective-date" effectiveDate=STRING)? "}";
+ *
+ **/
+
+// "governance-decision" "{" ("subject" subject=STRING) ("decision-result" decisionResult=GovernanceDecisionResult)
+// ("specific-result" specificResult=STRING)? ("justification-doc" justificationOrDocURL=STRING)? ("decision-date"
+// approvalDate=STRING)? ("decision-by" approvedBy=STRING)? ("effective-date" effectiveDate=STRING)? "}"
+protected class GovernanceDecision_Group extends GroupToken {
+	
+	public GovernanceDecision_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_RightCurlyBracketKeyword_9(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getGovernanceDecisionRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// "governance-decision"
+protected class GovernanceDecision_GovernanceDecisionKeyword_0 extends KeywordToken  {
+	
+	public GovernanceDecision_GovernanceDecisionKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getGovernanceDecisionKeyword_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+}
+
+// "{"
+protected class GovernanceDecision_LeftCurlyBracketKeyword_1 extends KeywordToken  {
+	
+	public GovernanceDecision_LeftCurlyBracketKeyword_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getLeftCurlyBracketKeyword_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_GovernanceDecisionKeyword_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "subject" subject=STRING
+protected class GovernanceDecision_Group_2 extends GroupToken {
+	
+	public GovernanceDecision_Group_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getGroup_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_SubjectAssignment_2_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "subject"
+protected class GovernanceDecision_SubjectKeyword_2_0 extends KeywordToken  {
+	
+	public GovernanceDecision_SubjectKeyword_2_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getSubjectKeyword_2_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_LeftCurlyBracketKeyword_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// subject=STRING
+protected class GovernanceDecision_SubjectAssignment_2_1 extends AssignmentToken  {
+	
+	public GovernanceDecision_SubjectAssignment_2_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getSubjectAssignment_2_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_SubjectKeyword_2_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("subject",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("subject");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getGovernanceDecisionAccess().getSubjectSTRINGTerminalRuleCall_2_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getGovernanceDecisionAccess().getSubjectSTRINGTerminalRuleCall_2_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// "decision-result" decisionResult=GovernanceDecisionResult
+protected class GovernanceDecision_Group_3 extends GroupToken {
+	
+	public GovernanceDecision_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getGroup_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_DecisionResultAssignment_3_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "decision-result"
+protected class GovernanceDecision_DecisionResultKeyword_3_0 extends KeywordToken  {
+	
+	public GovernanceDecision_DecisionResultKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getDecisionResultKeyword_3_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_Group_2(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// decisionResult=GovernanceDecisionResult
+protected class GovernanceDecision_DecisionResultAssignment_3_1 extends AssignmentToken  {
+	
+	public GovernanceDecision_DecisionResultAssignment_3_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getDecisionResultAssignment_3_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_DecisionResultKeyword_3_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("decisionResult",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("decisionResult");
+		if(enumLitSerializer.isValid(obj.getEObject(), grammarAccess.getGovernanceDecisionAccess().getDecisionResultGovernanceDecisionResultEnumRuleCall_3_1_0(), value, null)) { 
+			type = AssignmentType.ENUM_RULE_CALL;
+			element = grammarAccess.getGovernanceDecisionAccess().getDecisionResultGovernanceDecisionResultEnumRuleCall_3_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// ("specific-result" specificResult=STRING)?
+protected class GovernanceDecision_Group_4 extends GroupToken {
+	
+	public GovernanceDecision_Group_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getGroup_4();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_SpecificResultAssignment_4_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "specific-result"
+protected class GovernanceDecision_SpecificResultKeyword_4_0 extends KeywordToken  {
+	
+	public GovernanceDecision_SpecificResultKeyword_4_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getSpecificResultKeyword_4_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_Group_3(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// specificResult=STRING
+protected class GovernanceDecision_SpecificResultAssignment_4_1 extends AssignmentToken  {
+	
+	public GovernanceDecision_SpecificResultAssignment_4_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getSpecificResultAssignment_4_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_SpecificResultKeyword_4_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("specificResult",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("specificResult");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getGovernanceDecisionAccess().getSpecificResultSTRINGTerminalRuleCall_4_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getGovernanceDecisionAccess().getSpecificResultSTRINGTerminalRuleCall_4_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// ("justification-doc" justificationOrDocURL=STRING)?
+protected class GovernanceDecision_Group_5 extends GroupToken {
+	
+	public GovernanceDecision_Group_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getGroup_5();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_JustificationOrDocURLAssignment_5_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "justification-doc"
+protected class GovernanceDecision_JustificationDocKeyword_5_0 extends KeywordToken  {
+	
+	public GovernanceDecision_JustificationDocKeyword_5_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getJustificationDocKeyword_5_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_Group_4(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new GovernanceDecision_Group_3(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// justificationOrDocURL=STRING
+protected class GovernanceDecision_JustificationOrDocURLAssignment_5_1 extends AssignmentToken  {
+	
+	public GovernanceDecision_JustificationOrDocURLAssignment_5_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getJustificationOrDocURLAssignment_5_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_JustificationDocKeyword_5_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("justificationOrDocURL",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("justificationOrDocURL");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getGovernanceDecisionAccess().getJustificationOrDocURLSTRINGTerminalRuleCall_5_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getGovernanceDecisionAccess().getJustificationOrDocURLSTRINGTerminalRuleCall_5_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// ("decision-date" approvalDate=STRING)?
+protected class GovernanceDecision_Group_6 extends GroupToken {
+	
+	public GovernanceDecision_Group_6(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getGroup_6();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_ApprovalDateAssignment_6_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "decision-date"
+protected class GovernanceDecision_DecisionDateKeyword_6_0 extends KeywordToken  {
+	
+	public GovernanceDecision_DecisionDateKeyword_6_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getDecisionDateKeyword_6_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_Group_5(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new GovernanceDecision_Group_4(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new GovernanceDecision_Group_3(lastRuleCallOrigin, this, 2, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// approvalDate=STRING
+protected class GovernanceDecision_ApprovalDateAssignment_6_1 extends AssignmentToken  {
+	
+	public GovernanceDecision_ApprovalDateAssignment_6_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getApprovalDateAssignment_6_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_DecisionDateKeyword_6_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("approvalDate",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("approvalDate");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getGovernanceDecisionAccess().getApprovalDateSTRINGTerminalRuleCall_6_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getGovernanceDecisionAccess().getApprovalDateSTRINGTerminalRuleCall_6_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// ("decision-by" approvedBy=STRING)?
+protected class GovernanceDecision_Group_7 extends GroupToken {
+	
+	public GovernanceDecision_Group_7(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getGroup_7();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_ApprovedByAssignment_7_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "decision-by"
+protected class GovernanceDecision_DecisionByKeyword_7_0 extends KeywordToken  {
+	
+	public GovernanceDecision_DecisionByKeyword_7_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getDecisionByKeyword_7_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_Group_6(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new GovernanceDecision_Group_5(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new GovernanceDecision_Group_4(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new GovernanceDecision_Group_3(lastRuleCallOrigin, this, 3, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// approvedBy=STRING
+protected class GovernanceDecision_ApprovedByAssignment_7_1 extends AssignmentToken  {
+	
+	public GovernanceDecision_ApprovedByAssignment_7_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getApprovedByAssignment_7_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_DecisionByKeyword_7_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("approvedBy",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("approvedBy");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getGovernanceDecisionAccess().getApprovedBySTRINGTerminalRuleCall_7_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getGovernanceDecisionAccess().getApprovedBySTRINGTerminalRuleCall_7_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// ("effective-date" effectiveDate=STRING)?
+protected class GovernanceDecision_Group_8 extends GroupToken {
+	
+	public GovernanceDecision_Group_8(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getGroup_8();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_EffectiveDateAssignment_8_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "effective-date"
+protected class GovernanceDecision_EffectiveDateKeyword_8_0 extends KeywordToken  {
+	
+	public GovernanceDecision_EffectiveDateKeyword_8_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getEffectiveDateKeyword_8_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_Group_7(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new GovernanceDecision_Group_6(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new GovernanceDecision_Group_5(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new GovernanceDecision_Group_4(lastRuleCallOrigin, this, 3, inst);
+			case 4: return new GovernanceDecision_Group_3(lastRuleCallOrigin, this, 4, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// effectiveDate=STRING
+protected class GovernanceDecision_EffectiveDateAssignment_8_1 extends AssignmentToken  {
+	
+	public GovernanceDecision_EffectiveDateAssignment_8_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getEffectiveDateAssignment_8_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_EffectiveDateKeyword_8_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("effectiveDate",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("effectiveDate");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getGovernanceDecisionAccess().getEffectiveDateSTRINGTerminalRuleCall_8_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getGovernanceDecisionAccess().getEffectiveDateSTRINGTerminalRuleCall_8_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+// "}"
+protected class GovernanceDecision_RightCurlyBracketKeyword_9 extends KeywordToken  {
+	
+	public GovernanceDecision_RightCurlyBracketKeyword_9(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getGovernanceDecisionAccess().getRightCurlyBracketKeyword_9();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new GovernanceDecision_Group_8(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new GovernanceDecision_Group_7(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new GovernanceDecision_Group_6(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new GovernanceDecision_Group_5(lastRuleCallOrigin, this, 3, inst);
+			case 4: return new GovernanceDecision_Group_4(lastRuleCallOrigin, this, 4, inst);
+			case 5: return new GovernanceDecision_Group_3(lastRuleCallOrigin, this, 5, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+
+/************ end Rule GovernanceDecision ****************/
 
 
 /************ begin Rule AbstractType ****************

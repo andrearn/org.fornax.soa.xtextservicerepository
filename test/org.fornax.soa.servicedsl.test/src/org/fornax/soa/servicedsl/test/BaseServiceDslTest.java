@@ -18,13 +18,14 @@ import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.EagerFetch;
 import org.fornax.soa.serviceDsl.EnumLiteral;
 import org.fornax.soa.serviceDsl.Enumeration;
+import org.fornax.soa.serviceDsl.FetchParameterRef;
 import org.fornax.soa.serviceDsl.FetchProfile;
 import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Parameter;
-import org.fornax.soa.serviceDsl.ParameterRef;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslFactory;
+import org.fornax.soa.serviceDsl.SimpleFetchPropertyRef;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 import org.junit.Before;
 
@@ -46,7 +47,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 	protected Operation op;
 	protected Parameter p;
 	protected VersionedTypeRef paramBoRef;
-	protected ParameterRef paramRef;
+	protected FetchParameterRef paramRef;
 	protected VersionedTypeRef bo1_2_TypeRef;
 	protected VersionedTypeRef bo2_1_TypeRef;
 	protected BusinessObjectRef bo1_3_SuperTypeRef;
@@ -237,10 +238,12 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		
 		FetchProfile profile = dslFactory.createFetchProfile();
 		profile.setProfileName("defaultProfile");
+		SimpleFetchPropertyRef fetchPropRef = dslFactory.createSimpleFetchPropertyRef();
+		fetchPropRef.setProperty(attrBo1);
 		EagerFetch spec = dslFactory.createEagerFetch();
-		paramRef = dslFactory.createParameterRef();
+		paramRef = dslFactory.createFetchParameterRef();
 		paramRef.setParam(p);
-		paramRef.setProperty(attrBo1);
+		paramRef.setFetchPropertyRef(fetchPropRef);
 		spec.getEagerFetchAssoc().add(paramRef);
 		profile.setFetchSpec(spec);
 		op.getFetchProfile().add(profile);

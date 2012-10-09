@@ -5,10 +5,10 @@
  */
 package org.fornax.soa.solutionDsl.util;
 
-import java.util.List;
-
-import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EPackage;
+
+import org.eclipse.emf.ecore.util.Switch;
 
 import org.fornax.soa.solutionDsl.*;
 
@@ -25,7 +25,7 @@ import org.fornax.soa.solutionDsl.*;
  * @see org.fornax.soa.solutionDsl.SolutionDslPackage
  * @generated
  */
-public class SolutionDslSwitch<T>
+public class SolutionDslSwitch<T> extends Switch<T>
 {
   /**
    * The cached model package
@@ -50,15 +50,17 @@ public class SolutionDslSwitch<T>
   }
 
   /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
+   * Checks whether this is a switch for the given package.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the first non-null result returned by a <code>caseXXX</code> call.
+   * @parameter ePackage the package in question.
+   * @return whether this is a switch for the given package.
    * @generated
    */
-  public T doSwitch(EObject theEObject)
+  @Override
+  protected boolean isSwitchFor(EPackage ePackage)
   {
-    return doSwitch(theEObject.eClass(), theEObject);
+    return ePackage == modelPackage;
   }
 
   /**
@@ -68,29 +70,7 @@ public class SolutionDslSwitch<T>
    * @return the first non-null result returned by a <code>caseXXX</code> call.
    * @generated
    */
-  protected T doSwitch(EClass theEClass, EObject theEObject)
-  {
-    if (theEClass.eContainer() == modelPackage)
-    {
-      return doSwitch(theEClass.getClassifierID(), theEObject);
-    }
-    else
-    {
-      List<EClass> eSuperTypes = theEClass.getESuperTypes();
-      return
-        eSuperTypes.isEmpty() ?
-          defaultCase(theEObject) :
-          doSwitch(eSuperTypes.get(0), theEObject);
-    }
-  }
-
-  /**
-   * Calls <code>caseXXX</code> for each class of the model until one returns a non null result; it yields that result.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the first non-null result returned by a <code>caseXXX</code> call.
-   * @generated
-   */
+  @Override
   protected T doSwitch(int classifierID, EObject theEObject)
   {
     switch (classifierID)
@@ -127,6 +107,13 @@ public class SolutionDslSwitch<T>
       {
         ServiceRef serviceRef = (ServiceRef)theEObject;
         T result = caseServiceRef(serviceRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SolutionDslPackage.SIMPLE_OPERATION_REF:
+      {
+        SimpleOperationRef simpleOperationRef = (SimpleOperationRef)theEObject;
+        T result = caseSimpleOperationRef(simpleOperationRef);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -237,6 +224,22 @@ public class SolutionDslSwitch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Simple Operation Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Simple Operation Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSimpleOperationRef(SimpleOperationRef object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Capability Ref</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -311,6 +314,7 @@ public class SolutionDslSwitch<T>
    * @see #doSwitch(org.eclipse.emf.ecore.EObject)
    * @generated
    */
+  @Override
   public T defaultCase(EObject object)
   {
     return null;

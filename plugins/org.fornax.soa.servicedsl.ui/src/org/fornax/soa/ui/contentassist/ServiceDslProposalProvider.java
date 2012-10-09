@@ -8,6 +8,8 @@ import java.util.Iterator;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -19,19 +21,25 @@ import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
+import org.fornax.soa.serviceDsl.RequiredServiceRef;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceModel;
 import org.fornax.soa.serviceDsl.ServiceRef;
+import org.fornax.soa.serviceDsl.SimpleOperationRef;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
 public class ServiceDslProposalProvider extends AbstractServiceDslProposalProvider {
+	
+	@Inject
+	IQualifiedNameProvider nameProvider;
 
 	public void complete_VersionId (EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		calculateVersionProposals (model, context, acceptor, false);
@@ -46,7 +54,19 @@ public class ServiceDslProposalProvider extends AbstractServiceDslProposalProvid
 		} else {
 			super.complete_INT (model, ruleCall, context, acceptor);
 		}
-	}	
+	}
+	
+//	public void complete_Operation (EObject model, RuleCall ruleCall, ContentAssistContext context,
+//			ICompletionProposalAcceptor acceptor) {
+//		if (model.eContainer() instanceof SimpleOperationRef && model.eContainer().eContainer() instanceof RequiredServiceRef) {
+//			RequiredServiceRef serviceRef = (RequiredServiceRef) model.eContainer().eContainer();
+//			final QualifiedName serviceName = nameProvider.getFullyQualifiedName(serviceRef.getService());
+//			getCrossReferenceProposalCreator().
+//		} else {
+//			super.complete_Operation(model, ruleCall, context, acceptor);
+//		}
+//		
+//	}
 
 	private void calculateVersionProposals (EObject model,
 			ContentAssistContext context, ICompletionProposalAcceptor acceptor, boolean majorVersionsOnly) {

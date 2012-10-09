@@ -71,6 +71,15 @@ public interface SolutionDslFactory extends EFactory
   ServiceRef createServiceRef();
 
   /**
+   * Returns a new object of class '<em>Simple Operation Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Simple Operation Ref</em>'.
+   * @generated
+   */
+  SimpleOperationRef createSimpleOperationRef();
+
+  /**
    * Returns a new object of class '<em>Capability Ref</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

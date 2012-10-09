@@ -5,6 +5,8 @@
  */
 package org.fornax.soa.solutionDsl;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
@@ -22,6 +24,7 @@ import org.fornax.soa.serviceDsl.Service;
  *   <li>{@link org.fornax.soa.solutionDsl.ServiceRef#getService <em>Service</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.ServiceRef#getVersionRef <em>Version Ref</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.ServiceRef#isIsResponseHandler <em>Is Response Handler</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.ServiceRef#getCalledOperations <em>Called Operations</em>}</li>
  * </ul>
  * </p>
  *
@@ -108,5 +111,21 @@ public interface ServiceRef extends EObject
    * @generated
    */
   void setIsResponseHandler(boolean value);
+
+  /**
+   * Returns the value of the '<em><b>Called Operations</b></em>' containment reference list.
+   * The list contents are of type {@link org.fornax.soa.solutionDsl.SimpleOperationRef}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Called Operations</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Called Operations</em>' containment reference list.
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getServiceRef_CalledOperations()
+   * @model containment="true"
+   * @generated
+   */
+  EList<SimpleOperationRef> getCalledOperations();
 
 } // ServiceRef

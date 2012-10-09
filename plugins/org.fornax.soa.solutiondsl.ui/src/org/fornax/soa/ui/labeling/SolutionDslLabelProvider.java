@@ -4,7 +4,9 @@
 package org.fornax.soa.ui.labeling;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
+import org.fornax.soa.solutionDsl.ServiceRef;
 
 import com.google.inject.Inject;
 
@@ -20,15 +22,13 @@ public class SolutionDslLabelProvider extends DefaultEObjectLabelProvider {
 		super(delegate);
 	}
 
-/*
-	//Labels and icons can be computed like this:
-	
-	String text(MyModel ele) {
-	  return "my "+ele.getName();
+	Object text (ServiceRef ele) {
+		StyledString name = new StyledString(ele.getService ().getName());
+		return name;
 	}
-	 
-    String image(MyModel ele) {
-      return "MyModel.gif";
-    }
-*/
+	
+	String image (ServiceRef ele) {
+		return "full/obj16/ServiceRef.gif";
+	}
+
 }

@@ -5,8 +5,12 @@
  */
 package org.fornax.soa.solutionDsl.impl;
 
+import java.util.Collection;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -14,11 +18,15 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
+
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 
 import org.fornax.soa.serviceDsl.Service;
 
 import org.fornax.soa.solutionDsl.ServiceRef;
+import org.fornax.soa.solutionDsl.SimpleOperationRef;
 import org.fornax.soa.solutionDsl.SolutionDslPackage;
 
 /**
@@ -31,6 +39,7 @@ import org.fornax.soa.solutionDsl.SolutionDslPackage;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ServiceRefImpl#getService <em>Service</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ServiceRefImpl#getVersionRef <em>Version Ref</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ServiceRefImpl#isIsResponseHandler <em>Is Response Handler</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.ServiceRefImpl#getCalledOperations <em>Called Operations</em>}</li>
  * </ul>
  * </p>
  *
@@ -77,6 +86,16 @@ public class ServiceRefImpl extends MinimalEObjectImpl.Container implements Serv
    * @ordered
    */
   protected boolean isResponseHandler = IS_RESPONSE_HANDLER_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getCalledOperations() <em>Called Operations</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getCalledOperations()
+   * @generated
+   * @ordered
+   */
+  protected EList<SimpleOperationRef> calledOperations;
 
   /**
    * <!-- begin-user-doc -->
@@ -218,6 +237,20 @@ public class ServiceRefImpl extends MinimalEObjectImpl.Container implements Serv
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<SimpleOperationRef> getCalledOperations()
+  {
+    if (calledOperations == null)
+    {
+      calledOperations = new EObjectContainmentEList<SimpleOperationRef>(SimpleOperationRef.class, this, SolutionDslPackage.SERVICE_REF__CALLED_OPERATIONS);
+    }
+    return calledOperations;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -225,6 +258,8 @@ public class ServiceRefImpl extends MinimalEObjectImpl.Container implements Serv
     {
       case SolutionDslPackage.SERVICE_REF__VERSION_REF:
         return basicSetVersionRef(null, msgs);
+      case SolutionDslPackage.SERVICE_REF__CALLED_OPERATIONS:
+        return ((InternalEList<?>)getCalledOperations()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -246,6 +281,8 @@ public class ServiceRefImpl extends MinimalEObjectImpl.Container implements Serv
         return getVersionRef();
       case SolutionDslPackage.SERVICE_REF__IS_RESPONSE_HANDLER:
         return isIsResponseHandler();
+      case SolutionDslPackage.SERVICE_REF__CALLED_OPERATIONS:
+        return getCalledOperations();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -255,6 +292,7 @@ public class ServiceRefImpl extends MinimalEObjectImpl.Container implements Serv
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -268,6 +306,10 @@ public class ServiceRefImpl extends MinimalEObjectImpl.Container implements Serv
         return;
       case SolutionDslPackage.SERVICE_REF__IS_RESPONSE_HANDLER:
         setIsResponseHandler((Boolean)newValue);
+        return;
+      case SolutionDslPackage.SERVICE_REF__CALLED_OPERATIONS:
+        getCalledOperations().clear();
+        getCalledOperations().addAll((Collection<? extends SimpleOperationRef>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -292,6 +334,9 @@ public class ServiceRefImpl extends MinimalEObjectImpl.Container implements Serv
       case SolutionDslPackage.SERVICE_REF__IS_RESPONSE_HANDLER:
         setIsResponseHandler(IS_RESPONSE_HANDLER_EDEFAULT);
         return;
+      case SolutionDslPackage.SERVICE_REF__CALLED_OPERATIONS:
+        getCalledOperations().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -312,6 +357,8 @@ public class ServiceRefImpl extends MinimalEObjectImpl.Container implements Serv
         return versionRef != null;
       case SolutionDslPackage.SERVICE_REF__IS_RESPONSE_HANDLER:
         return isResponseHandler != IS_RESPONSE_HANDLER_EDEFAULT;
+      case SolutionDslPackage.SERVICE_REF__CALLED_OPERATIONS:
+        return calledOperations != null && !calledOperations.isEmpty();
     }
     return super.eIsSet(featureID);
   }

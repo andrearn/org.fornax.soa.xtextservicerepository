@@ -103,6 +103,11 @@ public class SolutionDslAdapterFactory extends AdapterFactoryImpl
         return createServiceRefAdapter();
       }
       @Override
+      public Adapter caseSimpleOperationRef(SimpleOperationRef object)
+      {
+        return createSimpleOperationRefAdapter();
+      }
+      @Override
       public Adapter caseCapabilityRef(CapabilityRef object)
       {
         return createCapabilityRefAdapter();
@@ -215,6 +220,21 @@ public class SolutionDslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createServiceRefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.fornax.soa.solutionDsl.SimpleOperationRef <em>Simple Operation Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.fornax.soa.solutionDsl.SimpleOperationRef
+   * @generated
+   */
+  public Adapter createSimpleOperationRefAdapter()
   {
     return null;
   }

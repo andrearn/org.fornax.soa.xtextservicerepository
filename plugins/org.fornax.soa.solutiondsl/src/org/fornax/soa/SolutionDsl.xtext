@@ -59,7 +59,11 @@ Feature:
 	'}';
 	
 ServiceRef:
-	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')?;
+	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')? ('calling' (calledOperations+=SimpleOperationRef) (',' calledOperations+=SimpleOperationRef)*)?;
+
+
+SimpleOperationRef: 
+	operation=[serviceDsl::Operation|QualifiedName];
 
 	
 CapabilityRef:

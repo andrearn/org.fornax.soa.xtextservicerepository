@@ -120,6 +120,10 @@ public class SolutionDslScopeProvider extends VersionedImportedNamespaceAwareSco
 			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);
 		}
+		if (reference == SolutionDslPackage.Literals.SERVICE_REF__CALLED_OPERATIONS && ctx instanceof ServiceRef) {
+			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
+			return createVersionFilter(v, ctx);
+		}
 		if (reference == ServiceDslPackage.Literals.GLOBAL_EVENT_REF__EVENT && ctx instanceof EventRef) {
 			final VersionRef v = ((EventRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);

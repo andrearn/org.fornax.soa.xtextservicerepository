@@ -5,6 +5,7 @@ import org.fornax.soa.basedsl.metamodel.MetamodelAccess;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.GlobalEvent;
+import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.VersionedType;
 
@@ -29,5 +30,15 @@ public class DslElementAccessor extends MetamodelAccess {
 			return canditate;
 		}
 		return getVersionedOwner(canditate.eContainer());
+	}
+	
+	public Operation getOwningOperation (EObject canditate) {
+		if (canditate instanceof Operation) {
+			return (Operation)canditate;
+		} else if (canditate.eContainer() != null){
+			return getOwningOperation (canditate.eContainer());
+		} else {
+			return null;
+		}
 	}
 }

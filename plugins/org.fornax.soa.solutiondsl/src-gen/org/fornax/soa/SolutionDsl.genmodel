@@ -55,6 +55,10 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//ServiceRef/service"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//ServiceRef/versionRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//ServiceRef/isResponseHandler"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//ServiceRef/calledOperations"/>
+    </genClasses>
+    <genClasses ecoreClass="SolutionDsl.ecore#//SimpleOperationRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//SimpleOperationRef/operation"/>
     </genClasses>
     <genClasses ecoreClass="SolutionDsl.ecore#//CapabilityRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//CapabilityRef/capability"/>

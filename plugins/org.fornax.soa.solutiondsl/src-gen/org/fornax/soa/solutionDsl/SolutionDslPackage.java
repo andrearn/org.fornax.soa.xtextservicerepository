@@ -410,13 +410,50 @@ public interface SolutionDslPackage extends EPackage
   int SERVICE_REF__IS_RESPONSE_HANDLER = 2;
 
   /**
+   * The feature id for the '<em><b>Called Operations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SERVICE_REF__CALLED_OPERATIONS = 3;
+
+  /**
    * The number of structural features of the '<em>Service Ref</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SERVICE_REF_FEATURE_COUNT = 3;
+  int SERVICE_REF_FEATURE_COUNT = 4;
+
+  /**
+   * The meta object id for the '{@link org.fornax.soa.solutionDsl.impl.SimpleOperationRefImpl <em>Simple Operation Ref</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.fornax.soa.solutionDsl.impl.SimpleOperationRefImpl
+   * @see org.fornax.soa.solutionDsl.impl.SolutionDslPackageImpl#getSimpleOperationRef()
+   * @generated
+   */
+  int SIMPLE_OPERATION_REF = 5;
+
+  /**
+   * The feature id for the '<em><b>Operation</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_OPERATION_REF__OPERATION = 0;
+
+  /**
+   * The number of structural features of the '<em>Simple Operation Ref</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_OPERATION_REF_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.solutionDsl.impl.CapabilityRefImpl <em>Capability Ref</em>}' class.
@@ -426,7 +463,7 @@ public interface SolutionDslPackage extends EPackage
    * @see org.fornax.soa.solutionDsl.impl.SolutionDslPackageImpl#getCapabilityRef()
    * @generated
    */
-  int CAPABILITY_REF = 5;
+  int CAPABILITY_REF = 6;
 
   /**
    * The feature id for the '<em><b>Capability</b></em>' reference.
@@ -463,7 +500,7 @@ public interface SolutionDslPackage extends EPackage
    * @see org.fornax.soa.solutionDsl.impl.SolutionDslPackageImpl#getVersion()
    * @generated
    */
-  int VERSION = 6;
+  int VERSION = 7;
 
   /**
    * The feature id for the '<em><b>Version</b></em>' attribute.
@@ -491,7 +528,7 @@ public interface SolutionDslPackage extends EPackage
    * @see org.fornax.soa.solutionDsl.impl.SolutionDslPackageImpl#getEventRef()
    * @generated
    */
-  int EVENT_REF = 7;
+  int EVENT_REF = 8;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' reference.
@@ -528,7 +565,7 @@ public interface SolutionDslPackage extends EPackage
    * @see org.fornax.soa.solutionDsl.impl.SolutionDslPackageImpl#getModuleKind()
    * @generated
    */
-  int MODULE_KIND = 8;
+  int MODULE_KIND = 9;
 
 
   /**
@@ -899,6 +936,38 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    */
   EAttribute getServiceRef_IsResponseHandler();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.fornax.soa.solutionDsl.ServiceRef#getCalledOperations <em>Called Operations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Called Operations</em>'.
+   * @see org.fornax.soa.solutionDsl.ServiceRef#getCalledOperations()
+   * @see #getServiceRef()
+   * @generated
+   */
+  EReference getServiceRef_CalledOperations();
+
+  /**
+   * Returns the meta object for class '{@link org.fornax.soa.solutionDsl.SimpleOperationRef <em>Simple Operation Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Simple Operation Ref</em>'.
+   * @see org.fornax.soa.solutionDsl.SimpleOperationRef
+   * @generated
+   */
+  EClass getSimpleOperationRef();
+
+  /**
+   * Returns the meta object for the reference '{@link org.fornax.soa.solutionDsl.SimpleOperationRef#getOperation <em>Operation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Operation</em>'.
+   * @see org.fornax.soa.solutionDsl.SimpleOperationRef#getOperation()
+   * @see #getSimpleOperationRef()
+   * @generated
+   */
+  EReference getSimpleOperationRef_Operation();
 
   /**
    * Returns the meta object for class '{@link org.fornax.soa.solutionDsl.CapabilityRef <em>Capability Ref</em>}'.
@@ -1288,6 +1357,32 @@ public interface SolutionDslPackage extends EPackage
      * @generated
      */
     EAttribute SERVICE_REF__IS_RESPONSE_HANDLER = eINSTANCE.getServiceRef_IsResponseHandler();
+
+    /**
+     * The meta object literal for the '<em><b>Called Operations</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SERVICE_REF__CALLED_OPERATIONS = eINSTANCE.getServiceRef_CalledOperations();
+
+    /**
+     * The meta object literal for the '{@link org.fornax.soa.solutionDsl.impl.SimpleOperationRefImpl <em>Simple Operation Ref</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.fornax.soa.solutionDsl.impl.SimpleOperationRefImpl
+     * @see org.fornax.soa.solutionDsl.impl.SolutionDslPackageImpl#getSimpleOperationRef()
+     * @generated
+     */
+    EClass SIMPLE_OPERATION_REF = eINSTANCE.getSimpleOperationRef();
+
+    /**
+     * The meta object literal for the '<em><b>Operation</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SIMPLE_OPERATION_REF__OPERATION = eINSTANCE.getSimpleOperationRef_Operation();
 
     /**
      * The meta object literal for the '{@link org.fornax.soa.solutionDsl.impl.CapabilityRefImpl <em>Capability Ref</em>}' class.

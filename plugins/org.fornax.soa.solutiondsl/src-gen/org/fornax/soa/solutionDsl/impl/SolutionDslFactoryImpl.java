@@ -73,6 +73,7 @@ public class SolutionDslFactoryImpl extends EFactoryImpl implements SolutionDslF
       case SolutionDslPackage.MODULE: return createModule();
       case SolutionDslPackage.FEATURE: return createFeature();
       case SolutionDslPackage.SERVICE_REF: return createServiceRef();
+      case SolutionDslPackage.SIMPLE_OPERATION_REF: return createSimpleOperationRef();
       case SolutionDslPackage.CAPABILITY_REF: return createCapabilityRef();
       case SolutionDslPackage.VERSION: return createVersion();
       case SolutionDslPackage.EVENT_REF: return createEventRef();
@@ -168,6 +169,17 @@ public class SolutionDslFactoryImpl extends EFactoryImpl implements SolutionDslF
   {
     ServiceRefImpl serviceRef = new ServiceRefImpl();
     return serviceRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SimpleOperationRef createSimpleOperationRef()
+  {
+    SimpleOperationRefImpl simpleOperationRef = new SimpleOperationRefImpl();
+    return simpleOperationRef;
   }
 
   /**

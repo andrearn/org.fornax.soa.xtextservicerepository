@@ -792,7 +792,90 @@ ruleServiceRef returns [EObject current=null]
 	    }
 
 )
-)?)
+)?(	otherlv_3='calling' 
+    {
+    	newLeafNode(otherlv_3, grammarAccess.getServiceRefAccess().getCallingKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getServiceRefAccess().getCalledOperationsSimpleOperationRefParserRuleCall_3_1_0()); 
+	    }
+		lv_calledOperations_4_0=ruleSimpleOperationRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getServiceRefRule());
+	        }
+       		add(
+       			$current, 
+       			"calledOperations",
+        		lv_calledOperations_4_0, 
+        		"SimpleOperationRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(	otherlv_5=',' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getServiceRefAccess().getCommaKeyword_3_2_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getServiceRefAccess().getCalledOperationsSimpleOperationRefParserRuleCall_3_2_1_0()); 
+	    }
+		lv_calledOperations_6_0=ruleSimpleOperationRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getServiceRefRule());
+	        }
+       		add(
+       			$current, 
+       			"calledOperations",
+        		lv_calledOperations_6_0, 
+        		"SimpleOperationRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+))*)?)
+;
+
+
+
+
+
+// Entry rule entryRuleSimpleOperationRef
+entryRuleSimpleOperationRef returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getSimpleOperationRefRule()); }
+	 iv_ruleSimpleOperationRef=ruleSimpleOperationRef 
+	 { $current=$iv_ruleSimpleOperationRef.current; } 
+	 EOF 
+;
+
+// Rule SimpleOperationRef
+ruleSimpleOperationRef returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getSimpleOperationRefRule());
+	        }
+        }
+		{ 
+	        newCompositeNode(grammarAccess.getSimpleOperationRefAccess().getOperationOperationCrossReference_0()); 
+	    }
+		ruleQualifiedName		{ 
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)
 ;
 
 
@@ -1515,6 +1598,8 @@ ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleT
 
 
 
+
+
 // Rule ModuleKind
 ruleModuleKind returns [Enumerator current=null] 
     @init { enterRule(); }
@@ -1553,6 +1638,37 @@ ruleModuleKind returns [Enumerator current=null]
 	{
         $current = grammarAccess.getModuleKindAccess().getOTHEREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
         newLeafNode(enumLiteral_5, grammarAccess.getModuleKindAccess().getOTHEREnumLiteralDeclaration_5()); 
+    }
+));
+
+
+
+// Rule GovernanceDecisionResult
+ruleGovernanceDecisionResult returns [Enumerator current=null] 
+    @init { enterRule(); }
+    @after { leaveRule(); }:
+((	enumLiteral_0='pending' 
+	{
+        $current = grammarAccess.getGovernanceDecisionResultAccess().getPendingEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_0, grammarAccess.getGovernanceDecisionResultAccess().getPendingEnumLiteralDeclaration_0()); 
+    }
+)
+    |(	enumLiteral_1='accepted' 
+	{
+        $current = grammarAccess.getGovernanceDecisionResultAccess().getAcceptedEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_1, grammarAccess.getGovernanceDecisionResultAccess().getAcceptedEnumLiteralDeclaration_1()); 
+    }
+)
+    |(	enumLiteral_2='denied' 
+	{
+        $current = grammarAccess.getGovernanceDecisionResultAccess().getDeniedEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_2, grammarAccess.getGovernanceDecisionResultAccess().getDeniedEnumLiteralDeclaration_2()); 
+    }
+)
+    |(	enumLiteral_3='specific' 
+	{
+        $current = grammarAccess.getGovernanceDecisionResultAccess().getSpecificEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+        newLeafNode(enumLiteral_3, grammarAccess.getGovernanceDecisionResultAccess().getSpecificEnumLiteralDeclaration_3()); 
     }
 ));
 

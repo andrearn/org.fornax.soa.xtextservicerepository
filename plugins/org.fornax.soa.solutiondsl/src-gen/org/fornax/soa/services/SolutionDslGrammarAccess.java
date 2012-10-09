@@ -463,12 +463,22 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVersionRefVersionRefParserRuleCall_1_0 = (RuleCall)cVersionRefAssignment_1.eContents().get(0);
 		private final Assignment cIsResponseHandlerAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final Keyword cIsResponseHandlerHandlingResponsesKeyword_2_0 = (Keyword)cIsResponseHandlerAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cCallingKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cCalledOperationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cCalledOperationsSimpleOperationRefParserRuleCall_3_1_0 = (RuleCall)cCalledOperationsAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cCalledOperationsAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cCalledOperationsSimpleOperationRefParserRuleCall_3_2_1_0 = (RuleCall)cCalledOperationsAssignment_3_2_1.eContents().get(0);
 		
 		//ServiceRef:
-		//	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"?;
+		//	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"? ("calling"
+		//	calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?;
 		public ParserRule getRule() { return rule; }
 
-		//service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"?
+		//service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"? ("calling"
+		//calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?
 		public Group getGroup() { return cGroup; }
 
 		//service=[serviceDsl::Service|QualifiedName]
@@ -491,6 +501,50 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"handling responses"
 		public Keyword getIsResponseHandlerHandlingResponsesKeyword_2_0() { return cIsResponseHandlerHandlingResponsesKeyword_2_0; }
+
+		//("calling" calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//"calling"
+		public Keyword getCallingKeyword_3_0() { return cCallingKeyword_3_0; }
+
+		//calledOperations+=SimpleOperationRef
+		public Assignment getCalledOperationsAssignment_3_1() { return cCalledOperationsAssignment_3_1; }
+
+		//SimpleOperationRef
+		public RuleCall getCalledOperationsSimpleOperationRefParserRuleCall_3_1_0() { return cCalledOperationsSimpleOperationRefParserRuleCall_3_1_0; }
+
+		//("," calledOperations+=SimpleOperationRef)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
+
+		//","
+		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
+
+		//calledOperations+=SimpleOperationRef
+		public Assignment getCalledOperationsAssignment_3_2_1() { return cCalledOperationsAssignment_3_2_1; }
+
+		//SimpleOperationRef
+		public RuleCall getCalledOperationsSimpleOperationRefParserRuleCall_3_2_1_0() { return cCalledOperationsSimpleOperationRefParserRuleCall_3_2_1_0; }
+	}
+
+	public class SimpleOperationRefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SimpleOperationRef");
+		private final Assignment cOperationAssignment = (Assignment)rule.eContents().get(1);
+		private final CrossReference cOperationOperationCrossReference_0 = (CrossReference)cOperationAssignment.eContents().get(0);
+		private final RuleCall cOperationOperationQualifiedNameParserRuleCall_0_1 = (RuleCall)cOperationOperationCrossReference_0.eContents().get(1);
+		
+		//SimpleOperationRef:
+		//	operation=[serviceDsl::Operation|QualifiedName];
+		public ParserRule getRule() { return rule; }
+
+		//operation=[serviceDsl::Operation|QualifiedName]
+		public Assignment getOperationAssignment() { return cOperationAssignment; }
+
+		//[serviceDsl::Operation|QualifiedName]
+		public CrossReference getOperationOperationCrossReference_0() { return cOperationOperationCrossReference_0; }
+
+		//QualifiedName
+		public RuleCall getOperationOperationQualifiedNameParserRuleCall_0_1() { return cOperationOperationQualifiedNameParserRuleCall_0_1; }
 	}
 
 	public class CapabilityRefElements extends AbstractParserRuleElementFinder {
@@ -672,6 +726,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	private ModuleKindElements unknownRuleModuleKind;
 	private FeatureElements pFeature;
 	private ServiceRefElements pServiceRef;
+	private SimpleOperationRefElements pSimpleOperationRef;
 	private CapabilityRefElements pCapabilityRef;
 	private VersionElements pVersion;
 	private ProductVersionElements pProductVersion;
@@ -755,13 +810,24 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ServiceRef:
-	//	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"?;
+	//	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"? ("calling"
+	//	calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?;
 	public ServiceRefElements getServiceRefAccess() {
 		return (pServiceRef != null) ? pServiceRef : (pServiceRef = new ServiceRefElements());
 	}
 	
 	public ParserRule getServiceRefRule() {
 		return getServiceRefAccess().getRule();
+	}
+
+	//SimpleOperationRef:
+	//	operation=[serviceDsl::Operation|QualifiedName];
+	public SimpleOperationRefElements getSimpleOperationRefAccess() {
+		return (pSimpleOperationRef != null) ? pSimpleOperationRef : (pSimpleOperationRef = new SimpleOperationRefElements());
+	}
+	
+	public ParserRule getSimpleOperationRefRule() {
+		return getSimpleOperationRefAccess().getRule();
 	}
 
 	//CapabilityRef:
@@ -944,6 +1010,31 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getQualifierRule() {
 		return getQualifierAccess().getRule();
+	}
+
+	/// *
+	// * Expresses SOA governance decisions
+	// * voteing until date will be part of the review ballots captured in the side store
+	// * / GovernanceDecision:
+	//	"governance-decision" "{" ("subject" subject=STRING) ("decision-result" decisionResult=GovernanceDecisionResult)
+	//	("specific-result" specificResult=STRING)? ("justification-doc" justificationOrDocURL=STRING)? ("decision-date"
+	//	approvalDate=STRING)? ("decision-by" approvedBy=STRING)? ("effective-date" effectiveDate=STRING)? "}";
+	public SOABaseDslGrammarAccess.GovernanceDecisionElements getGovernanceDecisionAccess() {
+		return gaSOABaseDsl.getGovernanceDecisionAccess();
+	}
+	
+	public ParserRule getGovernanceDecisionRule() {
+		return getGovernanceDecisionAccess().getRule();
+	}
+
+	//enum GovernanceDecisionResult:
+	//	pending | accepted | denied | specific;
+	public SOABaseDslGrammarAccess.GovernanceDecisionResultElements getGovernanceDecisionResultAccess() {
+		return gaSOABaseDsl.getGovernanceDecisionResultAccess();
+	}
+	
+	public EnumRule getGovernanceDecisionResultRule() {
+		return getGovernanceDecisionResultAccess().getRule();
 	}
 
 	//AbstractType:

@@ -28,6 +28,7 @@ import org.fornax.soa.solutionDsl.Model;
 import org.fornax.soa.solutionDsl.Module;
 import org.fornax.soa.solutionDsl.ModuleKind;
 import org.fornax.soa.solutionDsl.ServiceRef;
+import org.fornax.soa.solutionDsl.SimpleOperationRef;
 import org.fornax.soa.solutionDsl.Solution;
 import org.fornax.soa.solutionDsl.SolutionDslFactory;
 import org.fornax.soa.solutionDsl.SolutionDslPackage;
@@ -75,6 +76,13 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * @generated
    */
   private EClass serviceRefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass simpleOperationRefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -515,6 +523,36 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getServiceRef_CalledOperations()
+  {
+    return (EReference)serviceRefEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSimpleOperationRef()
+  {
+    return simpleOperationRefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSimpleOperationRef_Operation()
+  {
+    return (EReference)simpleOperationRefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getCapabilityRef()
   {
     return capabilityRefEClass;
@@ -658,6 +696,10 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     createEReference(serviceRefEClass, SERVICE_REF__SERVICE);
     createEReference(serviceRefEClass, SERVICE_REF__VERSION_REF);
     createEAttribute(serviceRefEClass, SERVICE_REF__IS_RESPONSE_HANDLER);
+    createEReference(serviceRefEClass, SERVICE_REF__CALLED_OPERATIONS);
+
+    simpleOperationRefEClass = createEClass(SIMPLE_OPERATION_REF);
+    createEReference(simpleOperationRefEClass, SIMPLE_OPERATION_REF__OPERATION);
 
     capabilityRefEClass = createEClass(CAPABILITY_REF);
     createEReference(capabilityRefEClass, CAPABILITY_REF__CAPABILITY);
@@ -749,6 +791,10 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     initEReference(getServiceRef_Service(), theServiceDslPackage.getService(), null, "service", null, 0, 1, ServiceRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getServiceRef_VersionRef(), theSOABaseDslPackage.getVersionRef(), null, "versionRef", null, 0, 1, ServiceRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getServiceRef_IsResponseHandler(), ecorePackage.getEBoolean(), "isResponseHandler", null, 0, 1, ServiceRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getServiceRef_CalledOperations(), this.getSimpleOperationRef(), null, "calledOperations", null, 0, -1, ServiceRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(simpleOperationRefEClass, SimpleOperationRef.class, "SimpleOperationRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSimpleOperationRef_Operation(), theServiceDslPackage.getOperation(), null, "operation", null, 0, 1, SimpleOperationRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(capabilityRefEClass, CapabilityRef.class, "CapabilityRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getCapabilityRef_Capability(), theBusinessDslPackage.getCapability(), null, "capability", null, 0, 1, CapabilityRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

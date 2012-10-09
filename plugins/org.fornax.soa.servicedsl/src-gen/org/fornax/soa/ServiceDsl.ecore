@@ -206,10 +206,21 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isResponseHandler" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RequiredServiceRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="#//Service"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isResponseHandler" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calledOperations" upperBound="-1"
+        eType="#//SimpleOperationRef" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperationRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="#//Operation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleOperationRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="#//Operation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="property" eType="#//Property"/>
@@ -218,8 +229,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FetchParameterRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="param" eType="#//Parameter"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fetchPropertyRef" eType="#//FetchPropertyRef"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fetchPropertyRef" upperBound="-1"
+        eType="#//FetchPropertyRef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FetchPropertyRef"/>
   <eClassifiers xsi:type="ecore:EClass" name="SimpleFetchPropertyRef" eSuperTypes="#//FetchPropertyRef">
@@ -298,7 +309,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="subscribes" upperBound="-1"
         eType="#//EventRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
-        eType="#//ServiceRef" containment="true"/>
+        eType="#//RequiredServiceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="statefulness" eType="#//Statefulness"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="updating" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="persistence" eType="#//Persistence"/>

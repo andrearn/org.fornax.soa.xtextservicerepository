@@ -70,6 +70,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isResponseHandler" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calledOperations" upperBound="-1"
+        eType="#//SimpleOperationRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleOperationRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Operation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CapabilityRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="capability" eType="ecore:EClass ../../../../../org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore#//Capability"/>

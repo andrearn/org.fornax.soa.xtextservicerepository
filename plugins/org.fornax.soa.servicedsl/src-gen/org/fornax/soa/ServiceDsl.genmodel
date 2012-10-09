@@ -185,9 +185,18 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ServiceRef/versionRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//ServiceRef/isResponseHandler"/>
     </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//RequiredServiceRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//RequiredServiceRef/service"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//RequiredServiceRef/versionRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//RequiredServiceRef/isResponseHandler"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//RequiredServiceRef/calledOperations"/>
+    </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//OperationRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//OperationRef/operation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//OperationRef/versionRef"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//SimpleOperationRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SimpleOperationRef/operation"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//PropertyRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//PropertyRef/property"/>
