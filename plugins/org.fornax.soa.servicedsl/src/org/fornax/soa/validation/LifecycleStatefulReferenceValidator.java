@@ -13,7 +13,9 @@ import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
+import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
 import org.fornax.soa.query.VersionedObjectQueryHelper;
+import org.fornax.soa.service.util.ServiceDslElementAccessor;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
@@ -24,8 +26,6 @@ import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceRef;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
-import org.fornax.soa.util.DslElementAccessor;
-import org.fornax.soa.util.ReferencedStateChecker;
 
 import com.google.inject.Inject;
 
@@ -44,95 +44,95 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 
 	@Check
 	public void checkDoesNotRefRetiredService(ServiceRef svcRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(svcRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(svcRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner) && ownerState.isIsEnd() 
 				&& svcRef.getService().getState().isIsEnd()) 
-			error ("A retired Service cannot be referenced", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
+			error ("A service in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
 	}
 
 	@Check
 	public void checkDoesNotRefRetiredBO(BusinessObjectRef boRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(boRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(boRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner) && ownerState.isIsEnd()
 				&& boRef.getType().getState().isIsEnd())
-			error ("A retired businessObject cannot be referenced", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
+			error ("A businessObject in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
 	}
 
 	@Check
 	public void checkDoesNotRefRetiredEnumeration(EnumTypeRef enumRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(enumRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(enumRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner) && ownerState.isIsEnd()
 				&& enumRef.getType().getState().isIsEnd())
-			error ("A retired enum cannot be referenced", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
+			error ("An enum in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
 	}
 
 	@Check
 	public void checkExDoesNotRefRetiredException(ExceptionRef exRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(exRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(exRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner) && ownerState.isIsEnd()
 				&& exRef.getException().getState().isIsEnd())
-			error ("A retired exception cannot be referenced", ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION);
+			error ("An exception in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION);
 	}
 	
 	@Check
 	public void checkServiceOpDoesNotRefRetiredException(ExceptionRef exRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(exRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(exRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner) && ownerState.isIsEnd()
 				&& exRef.getException().getState().isIsEnd())
-			error ("A retired exception cannot be referenced", ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION);
+			error ("An exception in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION);
 	}
 
 	
 	@Check
 	public void checkRefsServiceInMatchingState (ServiceRef svcRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(svcRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(svcRef);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {
 			if(!referencedStateChecker.stateMatches(svcRef.getService().getState(), owner))
-				error ("A Service with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
+				error ("A Service with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the service.", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
 		}
 	}
 	@Check
 	public void checkRefsVersionedTypeInMatchingState (VersionedTypeRef verTypeRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(verTypeRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(verTypeRef);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {
 			if (!referencedStateChecker.stateMatches (verTypeRef.getType().getState(), owner))
 				if (verTypeRef.eContainer() instanceof Reference)
-					warning ("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
+					warning ("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the type.", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
 				else
-					error ("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
+					error ("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the type", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
 		}
 	}
 	@Check
 	public void checkRefsBOInMatchingState (BusinessObjectRef boRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(boRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(boRef);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {
 			if (!referencedStateChecker.stateMatches (((BusinessObject)boRef.getType()).getState(), owner))
 				if (boRef.eContainer() instanceof Reference)
-					warning ("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
+					warning ("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
 				else
-					error ("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
+					error ("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
 		}
 	}
 
 	@Check
 	public void checkRefsEnumerationInMatchingState (EnumTypeRef enumRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(enumRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(enumRef);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {
 			if (!referencedStateChecker.stateMatches (((Enumeration)enumRef.getType()).getState(), owner))
 				if (enumRef.eContainer() instanceof Reference)
-					warning ("An enum with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
+					warning ("An enum with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the enum", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
 				else
-					error ("An enum with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
+					error ("An enum with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the enum", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
 		}
 	}
 
@@ -140,17 +140,17 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	
 	@Check
 	public void checkRefsExceptionInMatchingState (ExceptionRef exRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(exRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(exRef);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {
 			if (!referencedStateChecker.stateMatches (exRef.getException().getState(), owner))
-				error ("An exception with a lower lifecycle-state or the declared minimal state must not be referenced", ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION);
+				error ("An exception with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the exception", ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION);
 		}
 	}
 
 	
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateService(ServiceRef svcRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(svcRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(svcRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {
@@ -160,7 +160,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	}
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateBO(BusinessObjectRef boRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(boRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(boRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {
@@ -170,7 +170,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	}
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateBO(VersionedTypeRef boRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(boRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(boRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {
@@ -181,7 +181,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateEnumeration(EnumTypeRef enumRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(enumRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(enumRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {
@@ -194,7 +194,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateException(ExceptionRef exRef) {
-		EObject owner = DslElementAccessor.INSTANCE.getVersionedOwner(exRef);
+		EObject owner = ServiceDslElementAccessor.INSTANCE.getVersionedOwner(exRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && VersionedObjectQueryHelper.isStatefulServiceDslObject (owner)) {

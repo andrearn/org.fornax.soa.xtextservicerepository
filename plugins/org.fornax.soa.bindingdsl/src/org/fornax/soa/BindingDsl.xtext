@@ -324,7 +324,7 @@ HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=Hash
 enum HashAlgKind : MD5 | SHA1 | SHA256 | PlainText;
 
 /* Policy, that defines, how service consumers are authorized*/
-AuthorizationPolicy : {AuthorizationPolicy} 'authorization rolicy';
+AuthorizationPolicy : {AuthorizationPolicy} 'authorization policy';
 
 /* How messages are signed, to verify their authenticity */
 SigningPolicy : {SigningPolicy} 'signing policy';
@@ -332,6 +332,6 @@ SigningPolicy : {SigningPolicy} 'signing policy';
 /* How messages are encrypted */
 EncryptionPolicy : {EncryptionPolicy} 'encryption policy';
 
-enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos;
+enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | X509Certificate;
 
 enum LogPolicyKind: NONE | HEADER | ALL;

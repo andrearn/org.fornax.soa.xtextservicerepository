@@ -37,6 +37,26 @@ public class BindingDslHelper {
 		return null;
 	}
 	
+	public static Binding getTopLevelBinding (EObject o) {
+		if (o instanceof DomainBinding || o instanceof ModuleBinding) {
+			return (Binding)o;
+		} else if (o.eContainer() != null) {
+			return getTopLevelBinding(o.eContainer());
+		} else {
+			return null;
+		}
+	}
+	
+	public static Environment getTargetEnvironment (EObject o) {
+		Binding bind = getTopLevelBinding(o);
+		if (bind instanceof ModuleBinding)
+			return ((ModuleBinding) bind).getEnvironment();
+		else if (bind instanceof DomainBinding)
+			return ((DomainBinding) bind).getEnvironment();
+		else
+			return null;
+	}
+	
 	public static SubNamespace getSubNamespace (BindingProtocol prot) {
 		EObject o = prot.eContainer();
 		if (o instanceof DomainBinding)

@@ -1308,6 +1308,9 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
+        </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="context-root"/>
           <elements xsi:type="xtext:Assignment" feature="contextRoot" operator="=">
@@ -1351,6 +1354,9 @@
           <elements xsi:type="xtext:Assignment" feature="securityProtocol" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="connectionSpec" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
@@ -1399,6 +1405,9 @@
           <elements xsi:type="xtext:Assignment" feature="securityProtocol" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="context-root"/>
@@ -1451,6 +1460,9 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
@@ -1495,6 +1507,9 @@
           <elements xsi:type="xtext:Assignment" feature="securityProtocol" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="connectionSpec" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
@@ -1592,6 +1607,9 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
@@ -1631,6 +1649,9 @@
           <elements xsi:type="xtext:Assignment" feature="securityProtocol" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="connectionSpec" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
@@ -1679,6 +1700,9 @@
           <elements xsi:type="xtext:Assignment" feature="securityProtocol" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="connectionSpec" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
@@ -1764,6 +1788,9 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
@@ -1803,6 +1830,9 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
@@ -1841,6 +1871,9 @@
           <elements xsi:type="xtext:Assignment" feature="securityProtocol" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -1907,6 +1940,9 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
@@ -1951,6 +1987,9 @@
           <elements xsi:type="xtext:Assignment" feature="contextRoot" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
           </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="requiresAuth" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="requires-auth"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>

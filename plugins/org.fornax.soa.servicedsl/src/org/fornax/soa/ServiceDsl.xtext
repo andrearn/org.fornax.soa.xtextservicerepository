@@ -245,7 +245,7 @@ GovernanceApproval:
 		('decision-by' approvedBy=STRING )?
 	'}'; 
 	
-enum ApprovalDecision: pending | no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated;
+enum ApprovalDecision: no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated | denied;
 	
 enum Statefulness: 
 	/* same result, no matter how often the operation has been called with the same parameters*/
@@ -277,24 +277,26 @@ PropertyRef:
 	
 // Fetch specifications for data retrieval
 		
-FetchParameterRef:
-	'parameter' param=[Parameter|QualifiedName] '->' '{' (fetchPropertyRef+=FetchPropertyRef)+ '}';
+ConsiderationParameterRef:
+	'parameter' param=[Parameter|QualifiedName] '->' '{' (propertyRef+=ConsiderationPropertyRef
+	)+ '}';
 	
-FetchPropertyRef:
-	SimpleFetchPropertyRef | ComplexFetchPropertyRef
+ConsiderationPropertyRef:
+	SimpleConsiderationPropertyRef | ComplexFetchPropertyRef
 ;
 
-SimpleFetchPropertyRef:
+SimpleConsiderationPropertyRef:
 	property=[Property|QualifiedName]
 ;
 
 ComplexFetchPropertyRef:
 	
-	(fetchPropertyRef = SimpleFetchPropertyRef 
+	(fetchPropertyRef = SimpleConsiderationPropertyRef 
 	( 
 		(flat?='flat-only') | 
 		'->' '{' 
-			(nestedFetchPropertyRef+=FetchPropertyRef)+
+			(nestedPropertyRef+=ConsiderationPropertyRef
+			)+
 		'}')
 	)
 ;
@@ -394,9 +396,11 @@ Operation:
 		 * Overrides the message header declaration from the architecture profile or service for this operation
 		 */
 		('messageHeader' messageHeader = MessageHeaderRef )?
+		(consideration=ConsiderationProfile)?
 		(fetchProfile+=FetchProfile)*
 		('realizes-capabilty' '{'(realizedCapabilies+=CapabilityRef)+ '}')?	
 		('supports-capabilty' '{'(supportedCapabilies+=CapabilityRef)+ '}')?	
+		('tags' (tags+=[semanticsDsl::Tag])+)*
 	'}';
 	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
 
@@ -473,10 +477,15 @@ FetchSpec: EagerFetch | FlatFetch;
  */
 EagerFetch: 
 	'fetches' '{' 
-		eagerFetchAssoc+=FetchParameterRef+ 
+		eagerFetchAssoc+=ConsiderationParameterRef+ 
 	'}';
 
 /*
  * Don't fetch properties of nested objects
  */
 FlatFetch: 'fetches-flat-only' {FlatFetch};
+
+ConsiderationProfile:
+	'considers' '{' 
+		consideredParam+=ConsiderationParameterRef+ 
+	'}';

@@ -195,25 +195,30 @@
     <genClasses ecoreClass="EnvironmentDsl.ecore#//SOAPHTTP">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPHTTP/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPHTTP/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPHTTP/requiresAuth"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPHTTP/contextRoot"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPHTTP/implementation"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//SOAPJMS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPJMS/version"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPJMS/requiresAuth"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//SOAPJMS/connectionSpec"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SOAPJMS/implementation"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//REST">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//REST/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//REST/requiresAuth"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//REST/contextRoot"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//EJB">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//EJB/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//EJB/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//EJB/requiresAuth"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//IIOP">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//IIOP/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//IIOP/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//IIOP/requiresAuth"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//IIOP/connectionSpec"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//RMI">
@@ -224,15 +229,18 @@
     <genClasses ecoreClass="EnvironmentDsl.ecore#//Tuxedo">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Tuxedo/requiresAuth"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//JMS">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JMS/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JMS/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JMS/requiresAuth"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//JMS/connectionSpec"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JMS/implementation"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//AMQP">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AMQP/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AMQP/requiresAuth"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//AMQP/connectionSpec"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AMQP/implementation"/>
     </genClasses>
@@ -241,12 +249,15 @@
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//FTP">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//FTP/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//FTP/requiresAuth"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//IMAP">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//IMAP/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//IMAP/requiresAuth"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//POP3">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//POP3/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//POP3/requiresAuth"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//JCAConnectionSpec">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//JCAConnectionSpec/isDefault"/>
@@ -256,10 +267,12 @@
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//SMTP">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SMTP/securedPort"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//SMTP/requiresAuth"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//HTTP">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//HTTP/securedPort"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//HTTP/contextRoot"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//HTTP/requiresAuth"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//TCP"/>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//Host">

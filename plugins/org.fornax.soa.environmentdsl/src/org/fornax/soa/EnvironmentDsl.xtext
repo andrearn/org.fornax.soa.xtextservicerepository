@@ -294,6 +294,7 @@ SOAPHTTP:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 		('context-root' contextRoot=STRING)?
 		('implementation' implementation=STRING)?
 	'}';
@@ -304,6 +305,7 @@ SOAPJMS:
 		('versions' (version+=STRING)+)?
 		'port' port=INT
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 		connectionSpec=JCAConnectionSpec
 		('implementation' implementation=STRING)?
 	'}';
@@ -315,6 +317,7 @@ REST:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 		('context-root' contextRoot=STRING)?
 	'}';
 
@@ -326,6 +329,7 @@ EJB:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 	'}'
 ;
 
@@ -337,6 +341,7 @@ IIOP:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 		(connectionSpec=JCAConnectionSpec)?
 	'}'
 ;
@@ -361,6 +366,7 @@ Tuxedo:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 	'}'
 ;
 
@@ -371,6 +377,7 @@ JMS:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 		connectionSpec=JCAConnectionSpec
 		('implementation' implementation=STRING)?
 	'}';
@@ -382,6 +389,7 @@ AMQP:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 		(connectionSpec=JCAConnectionSpec)?
 		('implementation' implementation=STRING)?
 	'}'
@@ -403,6 +411,7 @@ FTP:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 	'}';
 
 /* An IMAP mail connector */
@@ -412,6 +421,7 @@ IMAP:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 	'}';
 
 /*
@@ -423,6 +433,7 @@ POP3:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 	'}';
 
 JCAConnectionSpec:
@@ -440,6 +451,7 @@ SMTP:
 		('port' port=INT)?
 		('secured-port' securedPort = INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
+		(requiresAuth ?= 'requires-auth' )?
 	'}';
 
 /*
@@ -452,6 +464,7 @@ HTTP:
 		('secured-port' securedPort = INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
 		('context-root' contextRoot = STRING)?
+		(requiresAuth ?= 'requires-auth' )?
 	'}';
 	
 /*

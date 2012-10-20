@@ -10,11 +10,11 @@
   <genPackages prefix="ServiceDsl" basePackage="org.fornax.soa" disposableProviderFactory="true"
       ecorePackage="ServiceDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="ServiceDsl.ecore#//ApprovalDecision">
-      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/pending"/>
       <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/no"/>
       <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/yes"/>
       <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/temporarily_tolerated"/>
       <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/tolerated"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/denied"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="ServiceDsl.ecore#//Statefulness">
       <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Statefulness/idempotent"/>
@@ -202,18 +202,18 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//PropertyRef/property"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//PropertyRef/versionRef"/>
     </genClasses>
-    <genClasses ecoreClass="ServiceDsl.ecore#//FetchParameterRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//FetchParameterRef/param"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//FetchParameterRef/fetchPropertyRef"/>
+    <genClasses ecoreClass="ServiceDsl.ecore#//ConsiderationParameterRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ConsiderationParameterRef/param"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ConsiderationParameterRef/propertyRef"/>
     </genClasses>
-    <genClasses ecoreClass="ServiceDsl.ecore#//FetchPropertyRef"/>
-    <genClasses ecoreClass="ServiceDsl.ecore#//SimpleFetchPropertyRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SimpleFetchPropertyRef/property"/>
+    <genClasses ecoreClass="ServiceDsl.ecore#//ConsiderationPropertyRef"/>
+    <genClasses ecoreClass="ServiceDsl.ecore#//SimpleConsiderationPropertyRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SimpleConsiderationPropertyRef/property"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//ComplexFetchPropertyRef">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ComplexFetchPropertyRef/fetchPropertyRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//ComplexFetchPropertyRef/flat"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ComplexFetchPropertyRef/nestedFetchPropertyRef"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ComplexFetchPropertyRef/nestedPropertyRef"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//MessageHeaderRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//MessageHeaderRef/header"/>
@@ -271,9 +271,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/transactionSpec"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/compensatedBy"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/messageHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/consideration"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/fetchProfile"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/realizedCapabilies"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/supportedCapabilies"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/tags"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//PublishedEvent"/>
     <genClasses ecoreClass="ServiceDsl.ecore#//PublishedOperationEvent">
@@ -315,5 +317,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//EagerFetch/eagerFetchAssoc"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//FlatFetch"/>
+    <genClasses ecoreClass="ServiceDsl.ecore#//ConsiderationProfile">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ConsiderationProfile/consideredParam"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

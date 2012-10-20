@@ -34,4 +34,5 @@ Export-Package: org.fornax.soa.profiledsl,
  org.fornax.soa.profiledsl.search,
  org.fornax.soa.profiledsl.search.predicate,
  org.fornax.soa.profiledsl.services,
+ org.fornax.soa.profiledsl.util,
  org.fornax.soa.profiledsl.validation

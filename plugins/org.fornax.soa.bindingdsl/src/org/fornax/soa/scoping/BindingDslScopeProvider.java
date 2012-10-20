@@ -85,6 +85,12 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			Server pubServer = prov.getPubServer();
 			return getServerConnectorScope (parent, context, reference, pubServer);
 		}
+		if (context instanceof Provider && reference == BindingDslPackage.Literals.PROVIDER__PROV_SERVER) {
+			return getServerScope (parent, context, reference, BindingDslHelper.getTargetEnvironment(context));
+		}
+		if (context instanceof Publisher && reference == BindingDslPackage.Literals.PUBLISHER__PUB_SERVER) {
+			return getServerScope (parent, context, reference, BindingDslHelper.getTargetEnvironment(context));
+		}
 		AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = getVersionFilterFromContext (context, reference);
 		return new VersionFilteringScope (result, versionFilter, isIgnoreCase());
 	}
@@ -104,6 +110,12 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			final Publisher prov = (Publisher) context;
 			Server pubServer = prov.getPubServer();
 			return getServerConnectorScope (parent, context, reference, pubServer);
+		}
+		if (context instanceof Provider && reference == BindingDslPackage.Literals.PROVIDER__PROV_SERVER) {
+			return getServerScope (parent, context, reference, BindingDslHelper.getTargetEnvironment(context));
+		}
+		if (context instanceof Publisher && reference == BindingDslPackage.Literals.PUBLISHER__PUB_SERVER) {
+			return getServerScope (parent, context, reference, BindingDslHelper.getTargetEnvironment(context));
 		}
 		return VersioningContainerBasedScope.createScope (parent, allDescriptions, getVersionFilterFromContext (context, reference), reference.getEReferenceType(), isIgnoreCase(reference));
 	}
@@ -169,6 +181,22 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			
 			public boolean apply(IEObjectDescription input) {
 				return connectors.contains(input.getQualifiedName());
+			}
+		});
+	}
+	
+	private IScope getServerScope (IScope parent, final EObject context, final EReference reference, Environment env) {
+		final List<QualifiedName> servers = Lists.transform(env.getServers(), new Function<Server, QualifiedName> () {
+
+			public QualifiedName apply(Server from) {
+				return nameProvider.getFullyQualifiedName(from);
+			}
+			
+		});
+		return new FilteringScope(parent, new Predicate<IEObjectDescription>() {
+			
+			public boolean apply(IEObjectDescription input) {
+				return servers.contains(input.getQualifiedName());
 			}
 		});
 	}

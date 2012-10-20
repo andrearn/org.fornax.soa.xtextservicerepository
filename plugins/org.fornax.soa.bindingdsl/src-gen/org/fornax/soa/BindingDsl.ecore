@@ -314,6 +314,7 @@
     <eLiterals name="SAML" value="1" literal="SAML"/>
     <eLiterals name="SAML2" value="2" literal="SAML2"/>
     <eLiterals name="Kerberos" value="3" literal="Kerberos"/>
+    <eLiterals name="X509Certificate" value="4" literal="X509Certificate"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="LogPolicyKind">
     <eLiterals name="NONE" literal="NONE"/>

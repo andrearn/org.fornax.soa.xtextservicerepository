@@ -11,8 +11,8 @@ import com.google.common.collect.Multimap;
 
 public class LatestMaxExclVersionFilter<T> extends AbstractPredicateVersionFilter<T> {
 
-	private String maxVersion;
-	private VersionResolver resolver;
+	protected String maxVersion;
+	protected VersionResolver resolver;
 
 	public LatestMaxExclVersionFilter(VersionResolver resolver, String maxVersion) {
 		this.maxVersion = maxVersion;

@@ -83,6 +83,7 @@
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/SAML"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/SAML2"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/Kerberos"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/X509Certificate"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//LogPolicyKind">
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//LogPolicyKind/NONE"/>

@@ -10,8 +10,8 @@ import com.google.common.collect.Multimap;
 
 public class LatestMinInclVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 
-	private String minVersion;
-	private VersionResolver resolver;
+	protected String minVersion;
+	protected VersionResolver resolver;
 
 	public LatestMinInclVersionFilter(VersionResolver resolver, String minVersion) {
 		this.minVersion = minVersion;
@@ -85,7 +85,7 @@ public class LatestMinInclVersionFilter<T> extends AbstractPredicateVersionFilte
 			return false;
 		if (!(obj instanceof LatestMinInclVersionFilter))
 			return false;
-		LatestMinInclVersionFilter other = (LatestMinInclVersionFilter) obj;
+		LatestMinInclVersionFilter<T> other = (LatestMinInclVersionFilter<T>) obj;
 		if (minVersion == null) {
 			if (other.minVersion != null)
 				return false;

@@ -62,6 +62,7 @@ Lifecycle:
  */
 LifecycleState:
 	(isInitial?='initial' | isEnd?='end')? 'state' name = ID '{'
+		(requiresApproval?='requires-approval')?
 		('qualifies-for' (qualifiesFor+=EnvironmentType)(',' qualifiesFor+=EnvironmentType)*)?
 		('qualifies-for-environment' (qualifiesForEnvironment+=[environmentDsl::Environment])(',' qualifiesForEnvironment+=[environmentDsl::Environment])*)?
 		(transitions+=Transition)*

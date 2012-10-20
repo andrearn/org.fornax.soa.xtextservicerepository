@@ -182,11 +182,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="approvedBy" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ApprovalDecision">
-    <eLiterals name="pending" literal="pending"/>
-    <eLiterals name="no" value="1" literal="no"/>
-    <eLiterals name="yes" value="2" literal="yes"/>
-    <eLiterals name="temporarily_tolerated" value="3" literal="temporarily-tolerated"/>
-    <eLiterals name="tolerated" value="4" literal="tolerated"/>
+    <eLiterals name="no" literal="no"/>
+    <eLiterals name="yes" value="1" literal="yes"/>
+    <eLiterals name="temporarily_tolerated" value="2" literal="temporarily-tolerated"/>
+    <eLiterals name="tolerated" value="3" literal="tolerated"/>
+    <eLiterals name="denied" value="4" literal="denied"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Statefulness">
     <eLiterals name="idempotent" literal="idempotent"/>
@@ -227,21 +227,21 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FetchParameterRef">
+  <eClassifiers xsi:type="ecore:EClass" name="ConsiderationParameterRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="param" eType="#//Parameter"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fetchPropertyRef" upperBound="-1"
-        eType="#//FetchPropertyRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="propertyRef" upperBound="-1"
+        eType="#//ConsiderationPropertyRef" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FetchPropertyRef"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SimpleFetchPropertyRef" eSuperTypes="#//FetchPropertyRef">
+  <eClassifiers xsi:type="ecore:EClass" name="ConsiderationPropertyRef"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleConsiderationPropertyRef" eSuperTypes="#//ConsiderationPropertyRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="property" eType="#//Property"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ComplexFetchPropertyRef" eSuperTypes="#//FetchPropertyRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fetchPropertyRef" eType="#//SimpleFetchPropertyRef"
+  <eClassifiers xsi:type="ecore:EClass" name="ComplexFetchPropertyRef" eSuperTypes="#//ConsiderationPropertyRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="fetchPropertyRef" eType="#//SimpleConsiderationPropertyRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="flat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="nestedFetchPropertyRef"
-        upperBound="-1" eType="#//FetchPropertyRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nestedPropertyRef" upperBound="-1"
+        eType="#//ConsiderationPropertyRef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MessageHeaderRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="header" eType="ecore:EClass ../../../../../org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore#//MessageHeader"/>
@@ -318,12 +318,16 @@
         eType="#//OperationRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeader" eType="#//MessageHeaderRef"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="consideration" eType="#//ConsiderationProfile"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="fetchProfile" upperBound="-1"
         eType="#//FetchProfile" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="realizedCapabilies" upperBound="-1"
         eType="#//CapabilityRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCapabilies" upperBound="-1"
         eType="#//CapabilityRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
+        eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="TransactionSpec">
     <eLiterals name="requiresNew" literal="requires-new"/>
@@ -394,7 +398,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="FetchSpec"/>
   <eClassifiers xsi:type="ecore:EClass" name="EagerFetch" eSuperTypes="#//FetchSpec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="eagerFetchAssoc" upperBound="-1"
-        eType="#//FetchParameterRef" containment="true"/>
+        eType="#//ConsiderationParameterRef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FlatFetch" eSuperTypes="#//FetchSpec"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConsiderationProfile">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="consideredParam" upperBound="-1"
+        eType="#//ConsiderationParameterRef" containment="true"/>
+  </eClassifiers>
 </ecore:EPackage>

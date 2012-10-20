@@ -35,13 +35,13 @@ import org.fornax.soa.moduledsl.util.ModuleDslAccess;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
+import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMinMaxVersionForOwnerStateFilter;
+import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMinVersionForOwnerStateFilter;
+import org.fornax.soa.profiledsl.scoping.versions.RelaxedMaxVersionForOwnerStateFilter;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.service.util.CandidateServicesPredicate;
 import org.fornax.soa.serviceDsl.Service;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -128,12 +128,21 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 				injector.injectMembers (stateFilter);
 				return stateFilter;
 			}
-			if (v instanceof MaxVersionRef)
-				return new LatestMaxExclVersionFilter<IEObjectDescription>(verResolver, ((MaxVersionRef)v).getMaxVersion());
-			if (v instanceof MinVersionRef)
-				return new LatestMinInclVersionFilter<IEObjectDescription>(verResolver, ((MinVersionRef)v).getMinVersion());
-			if (v instanceof LowerBoundRangeVersionRef)
-				return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription>(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+			if (v instanceof MaxVersionRef) {
+				RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription>(verResolver, ((MaxVersionRef)v).getMaxVersion(), stateResolver, ownerState);
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof MinVersionRef) {
+				RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription>(verResolver, ((MinVersionRef)v).getMinVersion(), stateResolver, ownerState);
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof LowerBoundRangeVersionRef) {
+				RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription>(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion(), stateResolver, ownerState);
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
 			if (v instanceof FixedVersionRef)
 				return new FixedVersionFilter<IEObjectDescription>(verResolver, ((FixedVersionRef) v).getFixedVersion());
 		}
@@ -159,17 +168,20 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 					return stateFilter;
 				}
 				if (v instanceof MaxVersionRef) {
-					LatestMaxExclVersionFilter<IEObjectDescription> latestMaxExclVersionFilter = new LatestMaxExclVersionFilter<IEObjectDescription>(verResolver, ((MaxVersionRef)v).getMaxVersion());
+					RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription> latestMaxExclVersionFilter = new RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription>(verResolver, ((MaxVersionRef)v).getMaxVersion(), stateResolver, ownerState);
+					injector.injectMembers (latestMaxExclVersionFilter);
 					latestMaxExclVersionFilter.setPreFilterPredicate(pred);
 					return latestMaxExclVersionFilter;
 				}
 				if (v instanceof MinVersionRef) {
-					LatestMinInclVersionFilter<IEObjectDescription> latestMinInclVersionFilter = new LatestMinInclVersionFilter<IEObjectDescription>(verResolver, ((MinVersionRef)v).getMinVersion());
+					RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription> latestMinInclVersionFilter = new RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription>(verResolver, ((MinVersionRef)v).getMinVersion(), stateResolver, ownerState);
+					injector.injectMembers (latestMinInclVersionFilter);
 					latestMinInclVersionFilter.setPreFilterPredicate(pred);
 					return latestMinInclVersionFilter;
 				}
 				if (v instanceof LowerBoundRangeVersionRef) {
-					LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> latestMinInclMaxExclRangeVersionFilter = new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription>(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+					RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription> latestMinInclMaxExclRangeVersionFilter = new RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription>(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion(), stateResolver, ownerState);
+					injector.injectMembers (latestMinInclMaxExclRangeVersionFilter);
 					latestMinInclMaxExclRangeVersionFilter.setPreFilterPredicate(pred);
 					return latestMinInclMaxExclRangeVersionFilter;
 				}

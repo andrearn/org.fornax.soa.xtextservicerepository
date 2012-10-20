@@ -11,9 +11,9 @@ import com.google.common.collect.Multimap;
 
 public class LatestMinInclMaxExclRangeVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 
-	private String maxVersion;
-	private String minVersion;
-	private VersionResolver resolver;
+	protected String maxVersion;
+	protected String minVersion;
+	protected VersionResolver resolver;
 
 	public LatestMinInclMaxExclRangeVersionFilter(VersionResolver resolver, String minVersion, String maxVersion) {
 		this.minVersion = minVersion;

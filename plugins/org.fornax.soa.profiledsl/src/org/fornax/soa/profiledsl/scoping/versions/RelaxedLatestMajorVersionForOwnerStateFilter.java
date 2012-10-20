@@ -159,7 +159,7 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 			return false;
 		if (!(obj instanceof RelaxedLatestMajorVersionForOwnerStateFilter))
 			return false;
-		RelaxedLatestMajorVersionForOwnerStateFilter other = (RelaxedLatestMajorVersionForOwnerStateFilter) obj;
+		RelaxedLatestMajorVersionForOwnerStateFilter<T> other = (RelaxedLatestMajorVersionForOwnerStateFilter<T>) obj;
 		if (majorVersion == null) {
 			if (other.majorVersion != null)
 				return false;
