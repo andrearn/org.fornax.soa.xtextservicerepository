@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: org.fornax.soa.servicedsl.ui
-Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.5.5.qualifier
+Bundle-Name: %Bundle-Name
+Bundle-Vendor: %Bundle-Vendor
+Bundle-Version: 1.6.0.qualifier
 Bundle-SymbolicName: org.fornax.soa.servicedsl.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.fornax.soa.servicedsl;bundle-version="1.5.5";visibility:=reexport,

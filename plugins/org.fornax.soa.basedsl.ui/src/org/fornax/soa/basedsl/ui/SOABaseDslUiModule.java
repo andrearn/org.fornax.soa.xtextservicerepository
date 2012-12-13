@@ -4,6 +4,8 @@
 package org.fornax.soa.basedsl.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.fornax.soa.basedsl.ui.editor.IElementSelectionStrategy;
+import org.fornax.soa.basedsl.ui.editor.XtextEditorSelectionStrategy;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -11,5 +13,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class SOABaseDslUiModule extends org.fornax.soa.basedsl.ui.AbstractSOABaseDslUiModule {
 	public SOABaseDslUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
+	}
+	
+	public Class<? extends IElementSelectionStrategy> bindIElementSelectionStrategy() {
+		return XtextEditorSelectionStrategy.class;
 	}
 }
