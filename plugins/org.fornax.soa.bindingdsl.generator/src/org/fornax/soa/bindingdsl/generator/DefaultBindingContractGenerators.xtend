@@ -27,6 +27,7 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.moduleDsl.ModuleModel
 import java.util.logging.Logger
 import java.util.logging.Level
+import org.fornax.soa.moduledsl.generator.VersionedModuleSelector
 
 /*
  * Generate technical service and datamodel contract artifacts like WSDLs, XSDs or IDLs for ModuleBindings
@@ -54,6 +55,9 @@ class DefaultBindingContractGenerators implements IGenerator {
 
 	@Inject @Named ("moduleNames") 	
 	List<String> moduleNames
+	
+	@Inject @Named ("modules")
+	List<VersionedModuleSelector> modules
 	
 	@Inject @Named ("domainBindingNames") 	
 	List<String> domainBindingNames
@@ -132,7 +136,9 @@ class DefaultBindingContractGenerators implements IGenerator {
 			if (contentRoot instanceof ModuleModel) {
 				val modModel = contentRoot as ModuleModel
 				for (module : modModel.modules) {
-					if (moduleNames.exists(modName | Pattern::matches (modName, nameProvider.getFullyQualifiedName (module).toString))) {
+					if (moduleNames.exists(modName | Pattern::matches (modName, nameProvider.getFullyQualifiedName (module).toString))
+						|| modules.exists(mod | mod.name == nameProvider.getFullyQualifiedName (module).toString && mod.version == module.version)
+					) {
 						module.compile (profile, resource)
 					}
 				}

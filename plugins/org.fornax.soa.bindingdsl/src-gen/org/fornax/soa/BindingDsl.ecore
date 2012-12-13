@@ -11,7 +11,7 @@
         eType="#//Binding" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Binding">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//QualifierRefs"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
         eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
@@ -47,6 +47,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ServiceBinding" eSuperTypes="#//Binding">
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="#//ServiceRef"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedContract" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="referencedModule" eType="#//ModuleRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" upperBound="-1"
@@ -58,12 +59,12 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BindingProtocol">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//QualifierRefs"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperationBinding">
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Operation"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//QualifierRefs"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
         eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
@@ -99,7 +100,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="implements" eType="#//ServiceRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="environment" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//QualifierRefs"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="services" upperBound="-1"
         eType="#//ServiceRef" containment="true"/>
@@ -233,7 +234,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TopicOrQueue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//QualifierRefs"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Topic" eSuperTypes="#//TopicOrQueue"/>
@@ -320,5 +321,9 @@
     <eLiterals name="NONE" literal="NONE"/>
     <eLiterals name="HEADER" value="1" literal="HEADER"/>
     <eLiterals name="ALL" value="2" literal="ALL"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="QualifierRefs">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Qualifier"/>
   </eClassifiers>
 </ecore:EPackage>

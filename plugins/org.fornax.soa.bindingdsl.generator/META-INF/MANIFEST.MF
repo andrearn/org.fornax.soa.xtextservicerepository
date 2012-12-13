@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.bindingdsl.generator
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.5.5.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-SymbolicName: org.fornax.soa.bindingdsl.generator; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.fornax.soa.bindingdsl;bundle-version="1.5.5";visibility:=reexport,
@@ -17,7 +17,8 @@ Require-Bundle: org.fornax.soa.bindingdsl;bundle-version="1.5.5";visibility:=ree
  org.fornax.soa.moduledsl.generator;bundle-version="1.5.5",
  org.fornax.soa.profiledsl.generator;bundle-version="1.5.5",
  org.fornax.soa.xtextservicerepo.generator;bundle-version="1.5.5",
- org.eclipse.xtend2.lib;bundle-version="2.2.1"
+ org.eclipse.xtend2.lib;bundle-version="2.2.1",
+ org.fornax.soa.semanticsdsl;bundle-version="1.5.5"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.bindingdsl.generator,

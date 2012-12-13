@@ -74,24 +74,24 @@ class ModuleServiceResolver {
 	 * declare the given qualifier
 	 */
 	def findProvidingModules (Service service, Iterable<Module> canditateModules, String qualifierName) {
-		service.findProvidingModules (canditateModules).filter (m|m.qualifiers.qualifierName.contains(qualifierName))
+		service.findProvidingModules (canditateModules).filter (m|m.qualifiers.qualifiers.exists(q|q.name == qualifierName))
 	}
 	
 		
 	def dispatch String getQualifier (Module module) {
-		module.bindingQualifier
+		module.bindingQualifier.name
 	}
 	
 	def dispatch String getQualifier (ModuleRef moduleRef) {
 		if (moduleRef.bindingQualifier != null)
-			return moduleRef.bindingQualifier
+			return moduleRef.bindingQualifier.name
 		else
 			return (moduleRef.eContainer as Module).qualifier
 	}
 	
 	def dispatch String getQualifier (ImportServiceRef impServiceRef) {
 		if (impServiceRef.bindingQualifier != null)
-			return impServiceRef.bindingQualifier
+			return impServiceRef.bindingQualifier.name
 		else
 			return (impServiceRef.eContainer as Module).qualifier
 	}

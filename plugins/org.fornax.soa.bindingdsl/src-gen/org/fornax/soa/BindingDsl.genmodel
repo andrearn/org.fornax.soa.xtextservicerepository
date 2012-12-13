@@ -6,7 +6,7 @@
     modelPluginID="org.fornax.soa.bindingdsl" forceOverwrite="true" modelName="BindingDsl"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.bindingdsl.edit"
-    editorPluginID="org.fornax.soa.bindingdsl.editor" usedGenPackages="../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.genmodel#//environmentDsl ../../../../../org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.genmodel#//moduleDsl ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.genmodel#//serviceDsl ../../../../../org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.genmodel#//sLADsl">
+    editorPluginID="org.fornax.soa.bindingdsl.editor" runtimeVersion="2.7" usedGenPackages="../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.genmodel#//environmentDsl ../../../../../org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.genmodel#//moduleDsl ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel#//semanticsDsl ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.genmodel#//serviceDsl ../../../../../org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.genmodel#//sLADsl">
   <genPackages prefix="BindingDsl" basePackage="org.fornax.soa" disposableProviderFactory="true"
       ecorePackage="BindingDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//ImplementationType">
@@ -119,6 +119,7 @@
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//ServiceBinding">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ServiceBinding/service"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//ServiceBinding/providedContract"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ServiceBinding/referencedModule"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ServiceBinding/operation"/>
     </genClasses>
@@ -265,5 +266,8 @@
     <genClasses ecoreClass="BindingDsl.ecore#//AuthorizationPolicy"/>
     <genClasses ecoreClass="BindingDsl.ecore#//SigningPolicy"/>
     <genClasses ecoreClass="BindingDsl.ecore#//EncryptionPolicy"/>
+    <genClasses ecoreClass="BindingDsl.ecore#//QualifierRefs">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//QualifierRefs/qualifiers"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -1159,20 +1159,27 @@ ruleVersionId returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken
     { 
     newLeafNode(this_INT_2, grammarAccess.getVersionIdAccess().getINTTerminalRuleCall_1_1()); 
     }
-)*(
+)*((
 	kw='.' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getVersionIdAccess().getFullStopKeyword_2_0()); 
+        newLeafNode(kw, grammarAccess.getVersionIdAccess().getFullStopKeyword_2_0_0()); 
     }
-    this_ID_4=RULE_ID    {
-		$current.merge(this_ID_4);
+
+    |
+	kw='-' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getVersionIdAccess().getHyphenMinusKeyword_2_0_1()); 
+    }
+)    this_ID_5=RULE_ID    {
+		$current.merge(this_ID_5);
     }
 
     { 
-    newLeafNode(this_ID_4, grammarAccess.getVersionIdAccess().getIDTerminalRuleCall_2_1()); 
+    newLeafNode(this_ID_5, grammarAccess.getVersionIdAccess().getIDTerminalRuleCall_2_1()); 
     }
-)?)
+)*)
     ;
 
 
@@ -1589,8 +1596,6 @@ ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleT
     }
 )*)
     ;
-
-
 
 
 

@@ -76,6 +76,16 @@ public class BusinessObjectQuery {
 		}
 		return vistitedBOs;
 	}
+		
+	public BusinessObject getRootBusinessObject (BusinessObject bo) {
+		if (bo.getSuperBusinessObject() != null) {
+			List<BusinessObject> allSuperTypes = getAllSuperTypes(bo, new ArrayList<BusinessObject>());
+			if (!allSuperTypes.isEmpty()) {
+				return allSuperTypes.get(allSuperTypes.size()-1);
+			}
+		}
+		return bo;
+	}
 
 	/**
 	 * all own and inherited properties visible on the type

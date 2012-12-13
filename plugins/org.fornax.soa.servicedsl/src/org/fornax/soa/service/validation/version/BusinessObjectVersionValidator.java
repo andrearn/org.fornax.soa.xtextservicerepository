@@ -133,7 +133,7 @@ public class BusinessObjectVersionValidator extends AbstractServiceDslVersionVal
 			if (indexOfProp1 != otherBoPropIdx) {
 				conflicts.add (VersionedObjectFeatureConflicts.OUT_OF_ORDER_FEATURE);
 			} else {
-				TypeRefMatchResult typeRefMatchRes = typeRefMatcher.matches (prop2.getType(), prop1.getType());
+				TypeRefMatchResult typeRefMatchRes = typeRefMatcher.matches (prop2, prop1);
 				if (typeRefMatchRes == TypeRefMatchResult.NO_MATCH) {
 					conflicts.add (VersionedObjectFeatureConflicts.WRONG_TYPE);
 				} else if (typeRefMatchRes == TypeRefMatchResult.NO_VERSION_MATCH) {

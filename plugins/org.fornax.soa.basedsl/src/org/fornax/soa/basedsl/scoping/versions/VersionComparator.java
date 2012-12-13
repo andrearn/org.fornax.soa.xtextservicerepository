@@ -1,9 +1,14 @@
 package org.fornax.soa.basedsl.scoping.versions;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.eclipse.xtext.resource.IEObjectDescription;
 
 public class VersionComparator {
 	
+	private static final Pattern pattern = Pattern.compile("(^[\\d+][\\.\\d+]*)(?:(?:\\.|\\-)(\\w.*))?$");
+//	private static final Pattern qualPattern = Pattern.compile("(\\D*)(\\d*)(\\.|\\-)?(SNAPSHOT)?");	
 	
 	public static int compare (final String v1, final String v2) {
 		if (v1!=null && v2 == null)
@@ -15,53 +20,76 @@ public class VersionComparator {
 		if (v1.equals(v2)) {
 			return 0;
 		}
-		
-		String[] v1Parts = v1.split("\\.");
-		String[] v2Parts = v2.split("\\.");
-		String ver1 = v1;
-		String ver2 = v2;
-		if (v1Parts.length == v2Parts.length + 1) {
-			ver2 = v2 + ".0"; 
-		}
-		if (v2Parts.length == v1Parts.length + 1) {
-			ver1 = v1 + ".0";
-		}
-		String[] ver1Parts = ver1.split("\\.");
-		String[] ver2Parts = ver2.split("\\.");
-		for (int i = 0; i < ver1Parts.length; i++) {
-			if (i < ver2Parts.length) {
-				int classifierCmp = VersionClassifierComparator.compare (ver1Parts[i], ver2Parts[i]);
-				if (classifierCmp != 0)
-					return classifierCmp;
-				
-				int cmp = ver1Parts[i].compareTo(ver2Parts[i]);
-				if (cmp != 0 && ver1Parts[i].length () > 0 && Character.isDigit (ver1Parts[i].charAt (0)) && ver2Parts[i].length () > 0 && Character.isDigit (ver2Parts[i].charAt (0))) {
-					return cmp;
-				}
-				if (cmp != 0 && ver1Parts[i].length () > 0 && Character.isDigit (ver1Parts[i].charAt (0)) && ver2Parts[i].length () > 0 && !Character.isDigit (ver2Parts[i].charAt (0))) {
-					if (ver1Parts[i].compareTo ("0") > 0)
-						return 1;
-					else
-						return 0;
-				}
-				if (cmp != 0 && ver1Parts[i].length () > 0 && !Character.isDigit (ver1Parts[i].charAt (0)) && ver2Parts[i].length () > 0 && Character.isDigit (ver2Parts[i].charAt (0))) {
-					if (ver2Parts[i].compareTo ("0") > 0)
-						return 1;
-					else
-						return 0;
-				}
-				if (cmp != 0 && ver1Parts[i].length () > 0 && !Character.isDigit (ver1Parts[i].charAt (0)) && ver2Parts[i].length () > 0 && !Character.isDigit (ver2Parts[i].charAt (0))) {
-					return VersionClassifierComparator.compare (ver1Parts[i], ver2Parts[i]);
-				}
+		if ((v1+"SNAPSHOT").equals(v2))
+			return -1;
+		if ((v2+"SNAPSHOT").equals(v1))
+			return 1;
+		Matcher v1Matcher = pattern.matcher(v1);
+		v1Matcher.find();
+		String v1Digits = v1Matcher.group(1);
+		String v1Qualifier = v1Matcher.group(2);
+		Matcher v2Matcher = pattern.matcher(v2);
+		v2Matcher.find();
+		String v2Digits = v2Matcher.group(1);
+		String v2Qualifier = v2Matcher.group(2);
+		String[] v1DigitParts = v1Digits.split("\\.");
+		String[] v2DigitParts = v2Digits.split("\\.");
+		int dist = v1DigitParts.length - v2DigitParts.length;
+		if (dist < 0) {
+			dist = -dist;
+			for (int i = 0; i < dist; i++) {
+				v1Digits = v1Digits + ".0";
+			}
+		} else if (dist > 0){
+			for (int i = 0; i < dist; i++) {
+				v2Digits = v2Digits + ".0";
 			}
 		}
-		
-		if (v1Parts.length == v2Parts.length + 1 || v2Parts.length == v1Parts.length + 1)
-			return 0;
-		if (v1Parts.length > v2Parts.length) {
-			return 1;
+		v1DigitParts = v1Digits.split("\\.");
+		v2DigitParts = v2Digits.split("\\.");
+		for (int i = 0; i < v1DigitParts.length; i++) {
+			if (i < v2DigitParts.length) {
+				int cmp = v1DigitParts[i].compareTo(v2DigitParts[i]);
+				if (cmp != 0)
+					return cmp;
+			}
 		}
-		return -1;
+		int classifierCmp = VersionClassifierComparator.compare (v1, v2);
+//		if (v1Digits.equals(v2Digits)) {
+//			return VersionClassifierComparator.compare(v1, v2);
+//		}
+//		if (classifierCmp != 0) {
+			return classifierCmp;
+//		} else {
+//			String simpleQualNum1 = null;
+//			String simpleQualNum2 = null;
+//			if (v1Qualifier != null) {
+//				v1Qualifier = v1Qualifier.toUpperCase();
+//				Matcher q1Matcher = qualPattern.matcher(v1Qualifier);
+//				q1Matcher.find();
+//				try {
+//					simpleQualNum1 = q1Matcher.group(2);
+//				} catch (Exception ex) {
+//					
+//				}
+//			}
+//			if (v2Qualifier != null) {
+//				v2Qualifier = v2Qualifier.toUpperCase();
+//				Matcher q2Matcher = qualPattern.matcher(v2Qualifier);
+//				q2Matcher.find();
+//				try {
+//					simpleQualNum2 = q2Matcher.group(2);
+//				} catch (Exception ex) {
+//					
+//				}
+//			}
+//			if (simpleQualNum1 != null)
+//				return simpleQualNum1.compareTo(simpleQualNum2);
+//			else if (simpleQualNum1 == null && simpleQualNum2 == null)
+//				return 0;
+//			else 
+//				return 1;
+//		}
 	}
 	
 	public static int compare (IEObjectDescription eObjDesc1, IEObjectDescription eObjDesc2, VersionResolver resolver) {

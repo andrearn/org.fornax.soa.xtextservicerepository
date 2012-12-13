@@ -60,24 +60,24 @@ class ModuleLookup {
 	 * declare the given qualifier
 	 */
 	def findProvidingModules (Service service, Iterable<Module> canditateModules, String qualifierName) {
-		service.findProvidingModules (canditateModules).filter (m|m.qualifiers.qualifierName.contains(qualifierName))
+		service.findProvidingModules (canditateModules).filter (m|m.qualifiers.qualifiers.exists(q|q.name == qualifierName))
 	}	
 		
 	def dispatch String getBindingQualifier (Module module) {
-		module.bindingQualifier
+		module.bindingQualifier.name
 	}
 	
 	def dispatch String getBindingQualifier (ModuleRef moduleRef) {
 		if (moduleRef.bindingQualifier != null)
-			return moduleRef.bindingQualifier
+			return moduleRef.bindingQualifier.name
 		else
-			return (moduleRef.eContainer as Module).bindingQualifier
+			return (moduleRef.eContainer as Module).bindingQualifier.name
 	}
 	
 	def dispatch String getBindingQualifier (ImportServiceRef impServiceRef) {
 		if (impServiceRef.bindingQualifier != null)
-			return impServiceRef.bindingQualifier
+			return impServiceRef.bindingQualifier.name
 		else
-			return (impServiceRef.eContainer as Module).bindingQualifier
+			return (impServiceRef.eContainer as Module).bindingQualifier.name
 	}
 }

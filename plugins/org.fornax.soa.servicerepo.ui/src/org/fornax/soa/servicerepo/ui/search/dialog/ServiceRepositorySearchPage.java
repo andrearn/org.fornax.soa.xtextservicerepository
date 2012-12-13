@@ -28,6 +28,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkingSet;
 import org.eclipse.ui.IWorkingSetManager;
@@ -84,6 +85,8 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     private final List fPreviousSearchPatterns;
 	private Combo minStateCombo;
 	private Combo maxStateCombo;
+	private Text minVersionText;
+	private Text maxVersionText;
 	private Composite result_1;
 	private IPredicateSearch predicateSearch;
 
@@ -98,13 +101,12 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 
 		result_1= new Composite(parent, SWT.FILL);
 
-        GridLayout gl_result_1= new GridLayout(2, false);
+        GridLayout gl_result_1= new GridLayout(1, false);
         gl_result_1.horizontalSpacing= 10;
         result_1.setLayout(gl_result_1);
 
         Control expressionComposite= createExpression(result_1);
-        GridData gd_result = new GridData(SWT.FILL, GridData.CENTER, true, false, 1, 1);
-        expressionComposite.setLayoutData(gd_result);
+        expressionComposite.setLayoutData(new GridData(SWT.FILL, GridData.CENTER, true, false, 1, 1));
 
         Label separator= new Label(result_1, SWT.FILL);
         separator.setVisible(false);
@@ -129,8 +131,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         // Pattern text + info
 
         Label exprLabel = new Label (result, SWT.NONE);
-        GridData gd_exprLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
-        exprLabel.setLayoutData(gd_exprLabel);
+        exprLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         exprLabel.setText (ServiceRepositorySearchMessages.SearchPage_expression_label);
        
         // Pattern combo
@@ -203,6 +204,10 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         new Label(result, SWT.NONE);
         
         createLimitTo(parent);
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
 
         setControl(result);
         return result;
@@ -210,10 +215,12 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 	
     private Control createLimitTo(Composite parent) {
     	limitToGroup= new Group(parent, SWT.NONE);
-    	limitToGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+    	limitToGroup.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
      	limitToGroup.setVisible(false);
     	limitToGroup.setText(ServiceRepositorySearchMessages.SearchPage_limitTo_label);
-    	limitToGroup.setLayout(new GridLayout(3, false));
+    	GridLayout gl_limitToGroup = new GridLayout(5, false);
+    	gl_limitToGroup.marginTop = 5;
+    	limitToGroup.setLayout(gl_limitToGroup);
         fillLimitToGroup();
         return limitToGroup;
 	}
@@ -242,6 +249,25 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         maxStateCombo = new Combo(limitToGroup, SWT.NONE);
         maxStateCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         
+        
+        Label minVersionLabel = new Label (limitToGroup, SWT.NONE);
+        GridData gd_minVersionLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        gd_minVersionLabel.widthHint = 121;
+        minVersionLabel.setLayoutData(gd_minVersionLabel);
+        minVersionLabel.setText (ServiceRepositorySearchMessages.SearchPage_minVersion_label);
+        
+        minVersionText = new Text (limitToGroup, SWT.NONE);
+        minVersionText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
+        new Label(limitToGroup, SWT.NONE);
+
+        Label maxVersionLabel = new Label (limitToGroup, SWT.NONE);
+        maxVersionLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        maxVersionLabel.setText (ServiceRepositorySearchMessages.SearchPage_maxVersion_label);
+        
+        maxVersionText = new Text (limitToGroup, SWT.NONE);
+        maxVersionText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+
         initializeStates();
         
         new Label(limitToGroup, SWT.NONE);
@@ -376,6 +402,8 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
        	
        	querySpec.setMinState(getMinState());
        	querySpec.setMaxState(getMaxState());
+       	querySpec.setMinVersion(getMinVersion());
+       	querySpec.setMaxVersion(getMaxVersion());
 
         ServiceRepositorySearchQuery textSearchJob= injector.getInstance (ServiceRepositorySearchQuery.class);
         textSearchJob.init (querySpec);
@@ -398,6 +426,13 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     
     private String getMaxState () {
     	return maxStateCombo.getText();
+    }
+    private String getMinVersion () {
+    	return minVersionText.getText();
+    }
+    
+    private String getMaxVersion () {
+    	return maxVersionText.getText();
     }
     
     private String getSearchFor() {
@@ -544,6 +579,8 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         private EObject element;
         private String minState;
         private String maxState;
+        private String minVersion;
+        private String maxVersion;
 
         public ServiceRepositoryQueryData (String queryName, String searchFor, boolean isCaseSensitive, String pattern, EObject element) {
             this(queryName, searchFor, pattern, isCaseSensitive, element, ISearchPageContainer.WORKSPACE_SCOPE, null);
@@ -664,6 +701,22 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
                 return null;
             }
         }
+
+		public String getMinVersion() {
+			return minVersion;
+		}
+
+		public void setMinVersion(String minVersion) {
+			this.minVersion = minVersion;
+		}
+
+		public String getMaxVersion() {
+			return maxVersion;
+		}
+
+		public void setMaxVersion(String maxVersion) {
+			this.maxVersion = maxVersion;
+		}
 
     }
 

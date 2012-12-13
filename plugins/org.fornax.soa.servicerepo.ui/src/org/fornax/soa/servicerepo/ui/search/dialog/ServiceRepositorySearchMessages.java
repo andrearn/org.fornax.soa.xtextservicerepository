@@ -12,6 +12,8 @@ public class ServiceRepositorySearchMessages extends NLS {
 	public static String SearchPage_query_label;
 	public static String SearchPage_minState_label;
 	public static String SearchPage_maxState_label;
+	public static String SearchPage_minVersion_label;
+	public static String SearchPage_maxVersion_label;
 	public static String SearchPage_limitTo_label;
 	public static String ServiceRepositoryQuery_monitor;
 	public static String ServiceRepositorySearchResultContentProvider_label;

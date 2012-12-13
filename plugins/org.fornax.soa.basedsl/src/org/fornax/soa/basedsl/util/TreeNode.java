@@ -1,14 +1,23 @@
 package org.fornax.soa.basedsl.util;
 
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.Iterator;
 import java.util.List;
+import java.util.NoSuchElementException;
 
-public class TreeNode<T> {
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.ref.DependencyDescription;
+
+public class TreeNode<T>  implements Iterable<TreeNode<T>> {
 
 	private TreeNode<T> parent;
 	
 	private T element;
 	
-	private List<TreeNode<T>> children;
+	private T elementMembers;
+	
+	private List<TreeNode<T>> children = new ArrayList<TreeNode<T>>();
 
 	
 	public TreeNode() {
@@ -47,6 +56,86 @@ public class TreeNode<T> {
 
 	public void setElement (T element) {
 		this.element = element;
+	}
+
+	public T getElementMembers() {
+		return elementMembers;
+	}
+
+	public void setElementMembers(T elementMembers) {
+		this.elementMembers = elementMembers;
+	}
+
+	public TreeNode<T> getRoot() {
+		if (parent != null)
+			return parent.getRoot();
+		else
+			return this;
+	}
+	
+	public TreeNode<T> findNode(T element) {
+		if (this.element.equals(element)) {
+			return this;
+		} else {
+			for (TreeNode<T> child : children) {
+				return child.findNode(element);
+			}
+		}
+		return null;
+	}
+
+	public Iterator<TreeNode<T>> iterator() {
+		// TODO Auto-generated method stub
+		return new TreeNodeIterator(getRoot());
+	}
+	private class TreeNodeIterator implements Iterator<TreeNode<T>> {
+		
+		private TreeNode<T> first;
+		boolean isFirst = true;
+
+		private Iterator<TreeNode<T>> currentKeyIt;
+		private Iterator<TreeNode<T>> currentDepIt;
+		
+		public TreeNodeIterator(TreeNode<T> dep) {
+			if (children != null) {
+				currentKeyIt = children.iterator();
+			}
+			first = dep;
+		}
+
+		public boolean hasNext() {
+			if (!isFirst) {
+				return currentDepIt != null && currentDepIt.hasNext() || 
+					currentKeyIt != null && currentKeyIt.hasNext();
+			}
+			return first != null;
+		}
+
+		public TreeNode<T> next() {
+			TreeNode<T> next = successor();
+			return next;
+		}
+
+		public void remove() {
+			throw new RuntimeException ("Not implemented");
+		}
+		
+		private TreeNode<T> successor() {
+			if (isFirst) {
+				isFirst = false;
+				return first;
+			}
+			if (currentDepIt != null && currentDepIt.hasNext()) {
+				return currentDepIt.next();
+			}
+			if (currentKeyIt != null && currentKeyIt.hasNext()) {
+				TreeNode<T> nextDep = currentKeyIt.next();
+				currentDepIt = nextDep.iterator();
+				return nextDep;
+			}
+			throw new NoSuchElementException();
+		}
+		
 	}
 
 }

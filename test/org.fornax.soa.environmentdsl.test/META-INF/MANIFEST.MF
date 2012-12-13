@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Environment DSL Test
 Bundle-SymbolicName: org.fornax.soa.environmentdsl.test
-Bundle-Version: 1.5.5.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-Vendor: Fornax Platform
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Require-Bundle: org.fornax.soa.environmentdsl;bundle-version="1.5.5",

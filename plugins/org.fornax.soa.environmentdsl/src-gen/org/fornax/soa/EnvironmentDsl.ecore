@@ -197,8 +197,14 @@
   <eClassifiers xsi:type="ecore:EClass" name="Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDefault" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endpointVisibility" eType="#//EndpointVisibility"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="port" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="securityProtocol" eType="#//SecurityProtocol"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="EndpointVisibility">
+    <eLiterals name="private" literal="private"/>
+    <eLiterals name="public" value="1" literal="public"/>
+    <eLiterals name="external" value="2" literal="external"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SOAPHTTP" eSuperTypes="#//Connector">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" unique="false"

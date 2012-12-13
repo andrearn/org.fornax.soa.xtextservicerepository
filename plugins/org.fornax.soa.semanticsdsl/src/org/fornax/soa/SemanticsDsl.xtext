@@ -14,9 +14,15 @@ generate semanticsDsl "http://www.fornax.org/soa/SemanticsDsl"
 
 SemanticsModel :
 	(imports+=Import)*
+	(qualifierDefinition+=Qualifier)*
 	(tagDefinition+=Tag)*;
 	
 Import :
 	'import' importURI=STRING;
-	
+
+AbstractTag : Tag | Qualifier;	
 Tag: 'tag' name=ID ('extends' (extends+=[Tag])*)?;
+
+Qualifier: 
+	'qualifier' name=ID;
+	

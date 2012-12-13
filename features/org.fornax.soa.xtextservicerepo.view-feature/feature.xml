@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.servicerepo.view.sdk"
       label="SOA Xtext Service Repository graph views SDK"
-      version="1.5.5.qualifier"
+      version="1.6.0.qualifier"
       provider-name="Fornax Platform">
 
    <description>

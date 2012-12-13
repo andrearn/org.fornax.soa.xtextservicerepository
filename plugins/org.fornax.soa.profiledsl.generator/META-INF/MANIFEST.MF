@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.profiledsl.generator
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.5.5.qualifier
+Bundle-Version: 1.6.0.qualifier
 Bundle-SymbolicName: org.fornax.soa.profiledsl.generator; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.fornax.soa.profiledsl;bundle-version="1.5.5";visibility:=reexport,

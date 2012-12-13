@@ -13,6 +13,7 @@ import org.eclipse.xtext.util.Modules2;
 import org.fornax.soa.basedsl.generator.BaseDslGeneratorModule;
 import org.fornax.soa.environmentdsl.generator.EnvironmentDslGeneratorModule;
 import org.fornax.soa.moduledsl.generator.ModuleDslGeneratorModule;
+import org.fornax.soa.moduledsl.generator.VersionedModuleSelector;
 import org.fornax.soa.profiledsl.generator.ProfileDslGeneratorModule;
 import org.fornax.soa.profiledsl.generator.ProfileGeneratorConstants;
 import org.fornax.soa.servicedsl.generator.ServiceDslGeneratorModule;
@@ -31,6 +32,7 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 	private String profileName = ".*";
 	private List<String> moduleBindingNames = new ArrayList<String>();
 	private List<String> moduleNames = new ArrayList<String>();
+	private List<VersionedModuleSelector> modules = new ArrayList<VersionedModuleSelector>();
 	private List<String> domainBindingNames = new ArrayList<String>();
 	private List<String> namespaces = new ArrayList<String>();
 	private List<String> domainNamespaces = new ArrayList<String>();
@@ -80,10 +82,10 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.MODULE_BINDING_NAMES))
 								.toInstance (moduleBindingNames);
-						bind (new TypeLiteral<List<String>>() {})
+						bind (new TypeLiteral<List<VersionedModuleSelector>>() {})
 								.annotatedWith (
-										Names.named (BindingDSLGeneratorConstants.MODULE_NAMES))
-								.toInstance (moduleNames);
+										Names.named (BindingDSLGeneratorConstants.MODULES))
+								.toInstance (modules);
 						bind (new TypeLiteral<List<String>>() {})
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.DOMAIN_BINDING_NAMES))
@@ -151,6 +153,14 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 	public void addModuleName (String moduleName) {
 		moduleNames.add (moduleName);
+	}
+
+	public List<VersionedModuleSelector> getModules () {
+		return modules;
+	}
+
+	public void addModule (VersionedModuleSelector module) {
+		modules.add (module);
 	}
 
 	public List<String> getDomainBindingNames () {

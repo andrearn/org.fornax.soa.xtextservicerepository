@@ -204,9 +204,9 @@ class BindingExtensions {
 		val moduleQualifier = bind.module.module.qualifiers
 		val boundSvcQualifier = bind.module?.module?.providedServices?.findFirst(provSvc | provSvc.service==svc)?.qualifiers
 		if (boundSvcQualifier != null)
-			return boundSvcQualifier.qualifierName.head.replaceAll("\\.","_")
+			return boundSvcQualifier.qualifiers.head.name.replaceAll("\\.","_")
 		if (moduleQualifier != null)
-			return moduleQualifier.qualifierName.head.replaceAll("\\.","_")
+			return moduleQualifier.qualifiers.head.name.replaceAll("\\.","_")
 		return svc.serviceVisibilityName
 	}
 	def getProviderEndpointQualifier (Binding bind, Service svc) {
@@ -219,9 +219,9 @@ class BindingExtensions {
 		val moduleQualifier = bind.module.module.qualifiers
 		val boundSvcQualifier = bind.module?.module?.providedServices?.findFirst(provSvc | provSvc.service==svc)?.qualifiers
 		if (boundSvcQualifier != null)
-			return boundSvcQualifier.qualifierName.head.replaceAll("\\.","_")
+			return boundSvcQualifier.qualifiers.head.name.replaceAll("\\.","_")
 		if (moduleQualifier != null)
-			return moduleQualifier.qualifierName.head.replaceAll("\\.","_")
+			return moduleQualifier.qualifiers.head.name.replaceAll("\\.","_")
 		if (svc.visibility == Visibility::PRIVATE)
 			return "PrivateProvider"
 		else

@@ -7,6 +7,8 @@ package org.fornax.soa.services;
 import com.google.inject.Singleton;
 import com.google.inject.Inject;
 
+import java.util.List;
+
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
@@ -732,19 +734,36 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	private ProductVersionElements pProductVersion;
 	private EventRefElements pEventRef;
 	
-	private final GrammarProvider grammarProvider;
+	private final Grammar grammar;
 
 	private SOABaseDslGrammarAccess gaSOABaseDsl;
 
 	@Inject
 	public SolutionDslGrammarAccess(GrammarProvider grammarProvider,
 		SOABaseDslGrammarAccess gaSOABaseDsl) {
-		this.grammarProvider = grammarProvider;
+		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaSOABaseDsl = gaSOABaseDsl;
 	}
 	
-	public Grammar getGrammar() {	
-		return grammarProvider.getGrammar(this);
+	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
+		Grammar grammar = grammarProvider.getGrammar(this);
+		while (grammar != null) {
+			if ("org.fornax.soa.SolutionDsl".equals(grammar.getName())) {
+				return grammar;
+			}
+			List<Grammar> grammars = grammar.getUsedGrammars();
+			if (!grammars.isEmpty()) {
+				grammar = grammars.iterator().next();
+			} else {
+				return null;
+			}
+		}
+		return grammar;
+	}
+	
+	
+	public Grammar getGrammar() {
+		return grammar;
 	}
 	
 
@@ -891,7 +910,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	// * 	<li>Milestone:	milestone release, may end with a number</li>
 	// * </ul>
 	// * / VersionId:
-	//	INT ("." INT)* ("." ID)?;
+	//	INT ("." INT)* (("." | "-") ID)*;
 	public SOABaseDslGrammarAccess.VersionIdElements getVersionIdAccess() {
 		return gaSOABaseDsl.getVersionIdAccess();
 	}
@@ -1000,16 +1019,6 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getQualifiedNameRule() {
 		return getQualifiedNameAccess().getRule();
-	}
-
-	//Qualifier:
-	//	"qualifier" qualifierName+=QualifiedName ("," qualifierName+=QualifiedName)*;
-	public SOABaseDslGrammarAccess.QualifierElements getQualifierAccess() {
-		return gaSOABaseDsl.getQualifierAccess();
-	}
-	
-	public ParserRule getQualifierRule() {
-		return getQualifierAccess().getRule();
 	}
 
 	/// *

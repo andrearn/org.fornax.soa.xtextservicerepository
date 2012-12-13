@@ -5,6 +5,7 @@ generate moduleDsl "http://www.fornax.org/soa/moduledsl/ModuleDsl"
 import "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore" as serviceDsl
 import "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore" as environmentDsl
 import "platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore" as profileDsl
+import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
 
 ModuleModel:
 	imports+=Import*
@@ -13,13 +14,13 @@ ModuleModel:
  * A (deployable) service module. External modules are provided by other organizations.
  */	
 Module:
-	(external?='external')? (client?='client')? 'module' name = QualifiedName '{'
+	(external?='external')? (client?='client')? (public?='public')? 'module' name = QualifiedName '{'
 		
 		version = Version
 		'lifecycle-state' state = [profileDsl::LifecycleState | QualifiedName]
 		(governanceDecisions+=GovernanceDecision)*
 		/* An additional named Qualifier of the module, may referred to by bindings or other modules using this module */
-		(qualifiers=Qualifier)?
+		(qualifiers=QualifierRefs)?
 		('owner' owner = STRING)?
 		/*
 		 * How is the module packaged? SCA, EAR etc.
@@ -28,6 +29,8 @@ Module:
 		('assembly-type-details' assemblyTypeDetails = STRING)?
 		/* override the module name used by default for the modules technical name for deployment */
 		('deployment-module-name' deploymentModuleName = STRING)?
+		('groupId' groupId = STRING)?
+		('artifactId' artifactId = STRING)?
 		(	
 			('release-on' releaseDate = STRING)? &
 			('release-tag' releaseTag = STRING)? &		// Tag in VCS
@@ -49,7 +52,7 @@ Module:
 			(usedModules  += ModuleRef)*
 			('endpoint-protocol' usesEndpointProtocol=ImportBindingProtocol)?
 			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=ImportBindingProtocol) (',' usesAlternativeEndpointProtocols+=ImportBindingProtocol)*)?
-			('binding-qualifier' bindingQualifier=QualifiedName)?
+			('binding-qualifier' bindingQualifier=[semanticsDsl::Qualifier|QualifiedName])?
 		'}')?
 			
 	'}';
@@ -58,7 +61,7 @@ Module:
  * Refers to a service constrained by the given version constraint
  */
 ServiceRef: 
-	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (qualifiers=Qualifier)?;
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (qualifiers=QualifierRefs)?;
 	
 /* 
  * Refers to a service imported by the module constrained by the given version constraint. 
@@ -73,7 +76,7 @@ ImportServiceRef:
 		('using-endpoint' '{'
 			('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
 			('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
-			('binding-qualifier' bindingQualifier=QualifiedName)?
+			('binding-qualifier' bindingQualifier=[semanticsDsl::Qualifier|QualifiedName])?
 		'}')?
 	('}')?
 ;
@@ -88,26 +91,34 @@ ServiceModuleRef:
 
 ModuleRef:
 	'module' moduleRef=ServiceModuleRef '{'
+		('including' '{'
+			(includedServices+=ServiceRef)+
+		'}')?
 		('excluding' '{'
 			(excludedServices+=ServiceRef)+
 		'}')?
 		('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
 		('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
-		('binding-qualifier' bindingQualifier=QualifiedName)?
+		('binding-qualifier' bindingQualifier=[semanticsDsl::Qualifier|QualifiedName])?
 	'}'
 ;
 
 /* refer to a whole SubNamespace */
 NamespaceRef: 
 	'namespace' namespace=[serviceDsl::SubNamespace | QualifiedName] ('{'
-		'excluding' '{'
+		('including' '{'
+			(inclSubNamespace?="include-sub-namespaces")?
+			(inclDomainSubNamespace?="include-domain-sub-namespaces")?
+			(includedServices+=ServiceRef)+
+		'}')?
+		('excluding' '{'
 			(excludedServices+=ServiceRef)+
-		'}'
+		'}')?
 	'}')?
 ;
 
 MultiQualifierRef:
-	'qualified-by' (isOneOf?='one-of')? '{' (qualifiedName+=QualifiedName) (','qualifiedName+=QualifiedName)* '}'
+	'qualified-by' (isOneOf?='one-of')? '{' (qualifiers+=[semanticsDsl::Qualifier]) (','qualifiers+=[semanticsDsl::Qualifier])* '}'
 ;
 
 /*
@@ -119,6 +130,10 @@ enum AssemblyType:
 ;
 
 enum ImportBindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP;
+
+QualifierRefs:
+	'qualifier' (qualifiers+=[semanticsDsl::Qualifier|QualifiedName])(','qualifiers+=[semanticsDsl::Qualifier|QualifiedName])*
+;
 
 /*
 module mod.bla  {
@@ -145,36 +160,3 @@ module mod.bla  {
 
 */
 
-//BINDING with overrides:
-/*
-bind module bla.space version 1.1 as bla.space.1.1 to environment DevEnvironment {
-	overrides {
-		protocols {
-			SOAP {
-				version 1.2
-				doc/literal
-				on WESB proxied from Tomcat
-				for {
-					domain-namespace bla.space
-				}
-			}
-			SOAP {
-				version 1.2
-				doc/literal
-				on Tomcat
-				for {
-					internal-namespace bla.space.internal
-					service OtherService majorVersion 1
-				}
-			}
-		}
-		policies {
-		}
-		SLAs { 
-		}
-;
-
-	}
-
-}
-*/

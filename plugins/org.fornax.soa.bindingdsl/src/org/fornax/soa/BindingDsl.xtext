@@ -18,6 +18,7 @@ import "platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/modul
 import "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore" as environmentDsl
 import "platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore" as profileDsl
 import "platform:/resource/org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore" as slaDsl
+import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
 
 BindingModel:
 	(imports+=Import)*
@@ -32,7 +33,7 @@ Binding: DomainBinding | ModuleBinding | ServiceBinding ;
  */
 DomainBinding: 
 	'bind namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment] '{'
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(governanceDecisions+=GovernanceDecision)*
 		('protocols' '{'
 			(protocol+=BindingProtocol)+
@@ -65,8 +66,9 @@ Provider:
  */
 ServiceBinding:
 	'bind-service' service=ServiceRef '{'
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(governanceDecisions+=GovernanceDecision)*
+		('provided-contract' providedContract=STRING)?
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
@@ -95,7 +97,7 @@ BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP 
  */
 OperationBinding: 
 	'bind-operation' operation=[serviceDsl::Operation|QualifiedName] '{' 
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(governanceDecisions+=GovernanceDecision)*
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
@@ -118,7 +120,7 @@ OperationBinding:
  */	
 ModuleBinding:
 	'bind-module' module=ModuleRef 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment|QualifiedName] '{'
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		/* The server to bind the endpoint to */
 		provider=Provider
 		(governanceDecisions+=GovernanceDecision)*
@@ -143,7 +145,7 @@ ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
 Component:
 	'component' name=ID 'implements' implements=ServiceRef '{'
 		'bind to environment' environment = [environmentDsl::Environment|QualifiedName]
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		'provided-services' services+=ServiceRef (',' services+=ServiceRef)* 
 		('referenced-services' referencedServices+=ServiceRef (',' )* )?
 		'protocols' '{'
@@ -163,11 +165,14 @@ Component:
 
 enum ImplementationType: BPMN | BPMN2 | BPEL | WSHT='WS-HT' | RuleML | Drools | Mediation | Java | CS='C#' | CPP='C++' | Scala | Ruby | PHP | WSDocLit = 'WS-Document/Literal' | WSRPC = 'WS-RPC/Literal' | WSRPCEnc='WS-RPC/Encoded' | REST_XML='REST-XML' | REST_JSON = 'REST-JSON'| EJB | Spring | EJB2 | SAP | SAP_IDOC = 'SAP/iDoc' | SAP_BAPI = 'SAP/BAPI'| Corba | Shell | Siebel | Tuxedo | File | SQL | Ivy | jPDL3 | jPDL4;
 
+
+//Protocols 
+
 /* Use SOAP on the endpoint */
 SOAP: 
 	'SOAP' '{'
 		{SOAP}
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		('style' style=SOAPStyle )?
@@ -182,7 +187,7 @@ enum SOAPStyle: doclitwrap='document/literal-wrapped' | rpclit = 'rpc/literal' |
 SAP: 
 	'SAP' '{'
 		{SAP}
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(provider=Provider)?
 		('transport' transport=SAPTransport )?
 		('client' client=[environmentDsl::SapClient|QualifiedName] )?
@@ -193,7 +198,7 @@ enum SAPTransport: IDOC | RFC;
 /* An EJB endpoint protocol (IIOP/RMI) */ 
 EJB: 
 	'EJB' '{'
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'jndi-name' jndiName=STRING 
@@ -202,7 +207,7 @@ EJB:
 /* A  plain HTTP endpoint protocol */	
 HTTP: 
 	'HTTP' '{'
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'url' url=STRING 
@@ -213,7 +218,7 @@ HTTP:
 /* A REST endpoint protocol */
 REST: 
 	'REST' '{'
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'path' path=STRING  
@@ -233,7 +238,7 @@ enum Verb: CREATE | RETRIEVE | UPDATE | DELETE | GET | PUT | POST;
 JMS:
 	'JMS' '{'
 		{JMS}
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		(channel=TopicOrQueue)?
@@ -244,16 +249,16 @@ JMS:
 TopicOrQueue: Topic | Queue;
 
 /* JMS topic to send/retrieve messages */
-Topic: 'topic' name=STRING (qualifier=Qualifier)?;
+Topic: 'topic' name=STRING (qualifier=QualifierRefs)?;
 
 /* JMS queue to send/retrieve messages */
-Queue: 'queue' name=STRING (qualifier=Qualifier)?;
+Queue: 'queue' name=STRING (qualifier=QualifierRefs)?;
 
 /* An SCA native endpoint protocol. Messages are accessed via the SCA API or import/export primitives*/	
 SCA:
 	{SCA} 
 	'SCA' (name=STRING)? '{'
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		('promote' promote=STRING )?
@@ -263,21 +268,21 @@ SCA:
 /* A file access protocol for endpoints */
 FILE: 
 	'FILE' '{'
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?
 	'}';
 
 /* Use FTP to access message files on the endpoint */
 FTP: 
 	'FTP' '{' 
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		'access' accessType=ReadWrite ('interval' pollIntervall=STRING)?
 	'}';
 
 /* An IIOP endpoint protocol */ 
 IIOP: 
 	'IIOP' '{'
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'lookup-name' lookupName=STRING 
@@ -286,7 +291,7 @@ IIOP:
 AMQP:
 	'AMQP' '{'
 		{AMQP}
-		(qualifier=Qualifier)?
+		(qualifier=QualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		(channel=TopicOrQueue)?
@@ -295,6 +300,9 @@ AMQP:
 	'}';
 
 enum ReadWrite : read|write;
+
+
+// Policies
 
 /* Service policies */
 Policy: LogPolicy | SecurityPolicy;
@@ -335,3 +343,7 @@ EncryptionPolicy : {EncryptionPolicy} 'encryption policy';
 enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | X509Certificate;
 
 enum LogPolicyKind: NONE | HEADER | ALL;
+
+QualifierRefs:
+	'qualifier' (qualifiers+=[semanticsDsl::Qualifier|QualifiedName])(','qualifiers+=[semanticsDsl::Qualifier|QualifiedName])*
+;

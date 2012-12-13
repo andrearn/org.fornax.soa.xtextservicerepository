@@ -23,18 +23,20 @@ var profGenModel="platform:/resource/org.fornax.soa.profiledsl/src-gen/org/forna
 
 Workflow {
     bean = StandaloneSetup {
+    	scanClassPath = true
 		platformUri = "${runtimeProject}/.."
 		uriMap = { to = baseMetaModel from = "http://www.fornax.org/soa/basedsl/SOABaseDsl" }
-		registerEcoreFile = baseMetaModel
-		registerGenModelFile  = baseGenModel
 		uriMap = { to = profMetaModel from = "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" }
-		registerEcoreFile = profMetaModel
-		registerGenModelFile = profGenModel
 		uriMap = { to = semMetaModel from = "http://www.fornax.org/soa/SemanticsDsl" }
-		registerEcoreFile = semMetaModel
-		registerGenModelFile = semGenModel
 		uriMap = { to = bizMetaModel from = "http://www.fornax.org/soa/BusinessDsl" }
+		registerEcoreFile = baseMetaModel
+		registerEcoreFile = profMetaModel
+		registerEcoreFile = semMetaModel
 		registerEcoreFile = bizMetaModel
+		registerGenModelFile  = baseGenModel
+		//registerGeneratedEPackage = "org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslPackage"
+		registerGenModelFile = profGenModel
+		registerGenModelFile = semGenModel
 		registerGenModelFile = bizGenModel
 	}
 
@@ -61,6 +63,9 @@ Workflow {
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
 			}
+			
+			// the Ecore2Xtext specific terminal converter
+			fragment = ecore2xtext.Ecore2XtextValueConverterServiceFragment {}
 
 			// the serialization component
 			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}

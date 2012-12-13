@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.servicerepo.ui"
       label="SOA Xtext Service Repository Feature"
-      version="1.5.5.qualifier"
+      version="1.6.0.qualifier"
       provider-name="Fornax Platform">
 
    <description>

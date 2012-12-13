@@ -8,10 +8,6 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.xtext.resource.IReferenceDescription;
-import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.validation.Check;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
@@ -32,19 +28,18 @@ import org.fornax.soa.bindingDsl.ServiceBinding;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
-import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
 import org.fornax.soa.moduledsl.query.ModuleLookup;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.serviceDsl.Visibility;
 import org.fornax.soa.util.BindingDslHelper;
 
-import com.google.common.base.Predicate;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 @PluggableChecks (validators = {
-		UsedModuleValidator.class
+		UsedModuleValidator.class,
+		ModuleProvidedServicesValidator.class
 })
 public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 
@@ -67,6 +62,8 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
 	    result.add(org.fornax.soa.bindingDsl.BindingDslPackage.eINSTANCE);
+	    result.add(org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage.eINSTANCE);
+	    result.add(org.fornax.soa.serviceDsl.ServiceDslPackage.eINSTANCE);
 		return result;
 	}
 

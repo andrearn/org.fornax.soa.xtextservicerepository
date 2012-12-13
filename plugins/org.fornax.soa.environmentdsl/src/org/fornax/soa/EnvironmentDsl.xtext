@@ -286,10 +286,13 @@ Connector:
 	SOAPHTTP | SOAPJMS | REST | EJB | JMS | AMQP | IIOP | RMI | Tuxedo | RFC | FTP | IMAP | POP3 | SMTP | HTTP | TCP
 ;
 
+enum EndpointVisibility: private | public | external;
+
 /* Connector for SOAP over HTTP */
 SOAPHTTP:
 	{SOAPHTTP}
 	(isDefault?='default')? 'SOAP/HTTP' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -302,6 +305,7 @@ SOAPHTTP:
 /* Connector for SOAP over JMS */
 SOAPJMS:
 	(isDefault?='default')? 'SOAP/JMS' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('versions' (version+=STRING)+)?
 		'port' port=INT
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -314,6 +318,7 @@ SOAPJMS:
 REST:
 	{REST}
 	(isDefault?='default')? 'REST' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -325,6 +330,7 @@ REST:
 EJB:
 	{EJB}
 	(isDefault?='default')? 'EJB' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -337,6 +343,7 @@ EJB:
 IIOP:
 	{IIOP}
 	(isDefault?='default')? 'IIOP' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -350,6 +357,7 @@ IIOP:
 RMI:
 	{RMI}
 	(isDefault?='default')? 'RMI' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -362,6 +370,7 @@ RMI:
 Tuxedo:
 	{Tuxedo}
 	(isDefault?='default')? 'Tuxedo' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -373,6 +382,7 @@ Tuxedo:
 /* A JMS connector */
 JMS:
 	(isDefault?='default')? 'JMS' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('versions' (version+=STRING)+)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
@@ -386,6 +396,7 @@ JMS:
 AMQP:
 	{AMQP}
 	(isDefault?='default')? 'AMQP' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -399,6 +410,7 @@ AMQP:
 RFC: 
 	{RFC}
 	(isDefault?='default')? 'RFC' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('port' port=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
 		(connectionSpec=JCAConnectionSpec)?
@@ -408,6 +420,7 @@ RFC:
 FTP:
 	{FTP}
 	(isDefault?='default')? 'FTP' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -418,6 +431,7 @@ FTP:
 IMAP:
 	{IMAP}
 	(isDefault?='default')? 'IMAP' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -430,6 +444,7 @@ IMAP:
 POP3:
 	{POP3}
 	(isDefault?='default')? 'POP3' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -448,6 +463,7 @@ JCAConnectionSpec:
 SMTP:
 	{SMTP}
 	(isDefault?='default')? 'SMTP' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('port' port=INT)?
 		('secured-port' securedPort = INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -460,6 +476,7 @@ SMTP:
 HTTP:
 	{HTTP}
 	(isDefault?='default')? 'HTTP' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('port' port=INT)?
 		('secured-port' securedPort = INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
@@ -472,6 +489,7 @@ HTTP:
  */
 TCP:
 	(isDefault?='default')? 'TCP' name=ID '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		'port' port = INT
 		('security-protocol' securityProtocol=SecurityProtocol)?
 	'}';

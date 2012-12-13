@@ -12,6 +12,8 @@ public class ServiceRepositoryQuerySpec {
 	private String scopeDescription;
     private String minState;
     private String maxState;
+    private String minVersion;
+    private String maxVersion;
 
 	
 	
@@ -88,4 +90,19 @@ public class ServiceRepositoryQuerySpec {
 		return maxState;
 	}
 
+	public void setMinVersion(String minVersion) {
+		this.maxVersion = minVersion;
+	}
+
+	public void setMaxVersion(String maxVersion) {
+		this.maxVersion = maxVersion;
+	}
+
+	public String getMinVersion() {
+		return minVersion;
+	}
+
+	public String getMaxVersion() {
+		return maxVersion;
+	}
 }

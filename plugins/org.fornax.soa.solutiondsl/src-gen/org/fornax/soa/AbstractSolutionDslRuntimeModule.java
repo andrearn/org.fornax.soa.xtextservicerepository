@@ -35,6 +35,11 @@ public abstract class AbstractSolutionDslRuntimeModule extends DefaultRuntimeMod
 	}
 	
 	// contributed by org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment
+	public java.lang.ClassLoader bindClassLoaderToInstance() {
+		return getClass().getClassLoader();
+	}
+
+	// contributed by org.eclipse.xtext.generator.grammarAccess.GrammarAccessFragment
 	public Class<? extends org.eclipse.xtext.IGrammarAccess> bindIGrammarAccess() {
 		return org.fornax.soa.services.SolutionDslGrammarAccess.class;
 	}

@@ -13,6 +13,9 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="profileDsl">
       <ePackage href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#/"/>
     </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="semanticsDsl">
+      <ePackage href="http://www.fornax.org/soa/SemanticsDsl#/"/>
+    </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="ModuleModel">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/moduledsl/ModuleDsl#//ModuleModel"/>
@@ -37,6 +40,9 @@
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="client" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="client"/>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="public" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="public"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="module"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
@@ -55,10 +61,10 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifiers" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="owner"/>
@@ -81,6 +87,18 @@
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="deployment-module-name"/>
           <elements xsi:type="xtext:Assignment" feature="deploymentModuleName" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="groupId"/>
+          <elements xsi:type="xtext:Assignment" feature="groupId" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="artifactId"/>
+          <elements xsi:type="xtext:Assignment" feature="artifactId" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
           </elements>
         </elements>
@@ -145,7 +163,12 @@
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="binding-qualifier"/>
             <elements xsi:type="xtext:Assignment" feature="bindingQualifier" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.4">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
             </elements>
           </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
@@ -171,7 +194,7 @@
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="qualifiers" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
         </elements>
       </alternatives>
     </rules>
@@ -231,7 +254,12 @@
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="binding-qualifier"/>
             <elements xsi:type="xtext:Assignment" feature="bindingQualifier" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.4">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
             </elements>
           </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
@@ -271,6 +299,14 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="including"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="includedServices" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="excluding"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
           <elements xsi:type="xtext:Assignment" cardinality="+" feature="excludedServices" operator="+=">
@@ -299,7 +335,12 @@
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="binding-qualifier"/>
           <elements xsi:type="xtext:Assignment" feature="bindingQualifier" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.4">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
@@ -321,12 +362,28 @@
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="{"/>
-          <elements xsi:type="xtext:Keyword" value="excluding"/>
-          <elements xsi:type="xtext:Keyword" value="{"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="excludedServices" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="including"/>
+            <elements xsi:type="xtext:Keyword" value="{"/>
+            <elements xsi:type="xtext:Assignment" cardinality="?" feature="inclSubNamespace" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="include-sub-namespaces"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" cardinality="?" feature="inclDomainSubNamespace" operator="?=">
+              <terminal xsi:type="xtext:Keyword" value="include-domain-sub-namespaces"/>
+            </elements>
+            <elements xsi:type="xtext:Assignment" cardinality="+" feature="includedServices" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
+            </elements>
+            <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
-          <elements xsi:type="xtext:Keyword" value="}"/>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="excluding"/>
+            <elements xsi:type="xtext:Keyword" value="{"/>
+            <elements xsi:type="xtext:Assignment" cardinality="+" feature="excludedServices" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
+            </elements>
+            <elements xsi:type="xtext:Keyword" value="}"/>
+          </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
       </alternatives>
@@ -341,13 +398,23 @@
           <terminal xsi:type="xtext:Keyword" value="one-of"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" feature="qualifiedName" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+        <elements xsi:type="xtext:Assignment" feature="qualifiers" operator="+=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.4">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+          </terminal>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:Keyword" value=","/>
-          <elements xsi:type="xtext:Assignment" feature="qualifiedName" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          <elements xsi:type="xtext:Assignment" feature="qualifiers" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.4">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+            </terminal>
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
@@ -455,6 +522,33 @@
         </elements>
       </alternatives>
     </rules>
+    <rules xsi:type="xtext:ParserRule" name="QualifierRefs">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/moduledsl/ModuleDsl#//QualifierRefs"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="qualifier"/>
+        <elements xsi:type="xtext:Assignment" feature="qualifiers" operator="+=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.4">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value=","/>
+          <elements xsi:type="xtext:Assignment" feature="qualifiers" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.4">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
   </xtext:Grammar>
   <xtext:Grammar name="org.fornax.soa.basedsl.SOABaseDsl" usedGrammars="/2">
     <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="sOABaseDsl">
@@ -481,8 +575,11 @@
           <elements xsi:type="xtext:Keyword" value="."/>
           <elements xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
         </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="."/>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Alternatives">
+            <elements xsi:type="xtext:Keyword" value="."/>
+            <elements xsi:type="xtext:Keyword" value="-"/>
+          </elements>
           <elements xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
         </elements>
       </alternatives>
@@ -619,23 +716,6 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="Qualifier">
-      <type metamodel="/1/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Qualifier"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="qualifier"/>
-        <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Keyword" value=","/>
-          <elements xsi:type="xtext:Assignment" feature="qualifierName" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-          </elements>
-        </elements>
-      </alternatives>
-    </rules>
     <rules xsi:type="xtext:ParserRule" name="GovernanceDecision">
       <type metamodel="/1/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"/>
@@ -652,7 +732,7 @@
         <elements xsi:type="xtext:Group">
           <elements xsi:type="xtext:Keyword" value="decision-result"/>
           <elements xsi:type="xtext:Assignment" feature="decisionResult" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.14"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.13"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">

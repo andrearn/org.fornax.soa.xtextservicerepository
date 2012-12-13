@@ -6,7 +6,7 @@
     modelPluginID="org.fornax.soa.businessdsl" forceOverwrite="true" modelName="BusinessDsl"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.businessdsl.edit"
-    editorPluginID="org.fornax.soa.businessdsl.editor" usedGenPackages="../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel#//semanticsDsl">
+    editorPluginID="org.fornax.soa.businessdsl.editor" runtimeVersion="2.7" usedGenPackages="../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel#//sOABaseDsl ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel#//semanticsDsl">
   <genPackages prefix="BusinessDsl" basePackage="org.fornax.soa" disposableProviderFactory="true"
       ecorePackage="BusinessDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BusinessDsl.ecore#//CapabilityAutomationLevel">

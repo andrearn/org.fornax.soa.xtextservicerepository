@@ -23,7 +23,7 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'solution'", "'{'", "'domain'", "'requires'", "'tags'", "'}'", "'module'", "'kind'", "'non-functional'", "'feature'", "'use cases'", "'description'", "'uses capabilities'", "'subscibes-to-event'", "','", "'handling responses'", "'calling'", "'version'", "'product-version'", "'import'", "'.'", "'minVersion'", "'maxVersion'", "'>='", "'<'", "'majorVersion'", "'fixedVersion'", "'.*'", "'UI'", "'BusinessLogic'", "'Persistence'", "'Security'", "'Batch'", "'OTHER'", "'pending'", "'accepted'", "'denied'", "'specific'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_STRING", "RULE_INT", "RULE_ML_COMMENT", "RULE_SL_COMMENT", "RULE_WS", "RULE_ANY_OTHER", "'solution'", "'{'", "'domain'", "'requires'", "'tags'", "'}'", "'module'", "'kind'", "'non-functional'", "'feature'", "'use cases'", "'description'", "'uses capabilities'", "'subscibes-to-event'", "','", "'handling responses'", "'calling'", "'version'", "'product-version'", "'import'", "'.'", "'-'", "'minVersion'", "'maxVersion'", "'>='", "'<'", "'majorVersion'", "'fixedVersion'", "'.*'", "'UI'", "'BusinessLogic'", "'Persistence'", "'Security'", "'Batch'", "'OTHER'", "'pending'", "'accepted'", "'denied'", "'specific'"
     };
     public static final int RULE_ID=4;
     public static final int T__29=29;
@@ -57,12 +57,13 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
     public static final int T__44=44;
     public static final int T__45=45;
     public static final int T__48=48;
+    public static final int T__49=49;
     public static final int RULE_SL_COMMENT=8;
     public static final int RULE_ML_COMMENT=7;
     public static final int T__30=30;
     public static final int T__31=31;
-    public static final int T__32=32;
     public static final int RULE_STRING=5;
+    public static final int T__32=32;
     public static final int T__33=33;
     public static final int T__34=34;
     public static final int T__35=35;
@@ -3190,23 +3191,23 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVersionId"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1138:1: ruleVersionId returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_INT_0= RULE_INT (kw= '.' this_INT_2= RULE_INT )* (kw= '.' this_ID_4= RULE_ID )? ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1138:1: ruleVersionId returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_INT_0= RULE_INT (kw= '.' this_INT_2= RULE_INT )* ( (kw= '.' | kw= '-' ) this_ID_5= RULE_ID )* ) ;
     public final AntlrDatatypeRuleToken ruleVersionId() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
         Token this_INT_0=null;
         Token kw=null;
         Token this_INT_2=null;
-        Token this_ID_4=null;
+        Token this_ID_5=null;
 
          enterRule(); 
             
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1141:28: ( (this_INT_0= RULE_INT (kw= '.' this_INT_2= RULE_INT )* (kw= '.' this_ID_4= RULE_ID )? ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1142:1: (this_INT_0= RULE_INT (kw= '.' this_INT_2= RULE_INT )* (kw= '.' this_ID_4= RULE_ID )? )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1141:28: ( (this_INT_0= RULE_INT (kw= '.' this_INT_2= RULE_INT )* ( (kw= '.' | kw= '-' ) this_ID_5= RULE_ID )* ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1142:1: (this_INT_0= RULE_INT (kw= '.' this_INT_2= RULE_INT )* ( (kw= '.' | kw= '-' ) this_ID_5= RULE_ID )* )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1142:1: (this_INT_0= RULE_INT (kw= '.' this_INT_2= RULE_INT )* (kw= '.' this_ID_4= RULE_ID )? )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1142:6: this_INT_0= RULE_INT (kw= '.' this_INT_2= RULE_INT )* (kw= '.' this_ID_4= RULE_ID )?
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1142:1: (this_INT_0= RULE_INT (kw= '.' this_INT_2= RULE_INT )* ( (kw= '.' | kw= '-' ) this_ID_5= RULE_ID )* )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1142:6: this_INT_0= RULE_INT (kw= '.' this_INT_2= RULE_INT )* ( (kw= '.' | kw= '-' ) this_ID_5= RULE_ID )*
             {
             this_INT_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_ruleVersionId2221); if (state.failed) return current;
             if ( state.backtracking==0 ) {
@@ -3267,40 +3268,87 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1162:3: (kw= '.' this_ID_4= RULE_ID )?
-            int alt32=2;
-            int LA32_0 = input.LA(1);
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1162:3: ( (kw= '.' | kw= '-' ) this_ID_5= RULE_ID )*
+            loop33:
+            do {
+                int alt33=2;
+                int LA33_0 = input.LA(1);
 
-            if ( (LA32_0==31) ) {
-                alt32=1;
-            }
-            switch (alt32) {
-                case 1 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1163:2: kw= '.' this_ID_4= RULE_ID
-                    {
-                    kw=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleVersionId2276); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
+                if ( ((LA33_0>=31 && LA33_0<=32)) ) {
+                    alt33=1;
+                }
 
-                              current.merge(kw);
-                              newLeafNode(kw, grammarAccess.getVersionIdAccess().getFullStopKeyword_2_0()); 
-                          
-                    }
-                    this_ID_4=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleVersionId2291); if (state.failed) return current;
-                    if ( state.backtracking==0 ) {
 
-                      		current.merge(this_ID_4);
-                          
-                    }
-                    if ( state.backtracking==0 ) {
-                       
-                          newLeafNode(this_ID_4, grammarAccess.getVersionIdAccess().getIDTerminalRuleCall_2_1()); 
-                          
-                    }
+                switch (alt33) {
+            	case 1 :
+            	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1162:4: (kw= '.' | kw= '-' ) this_ID_5= RULE_ID
+            	    {
+            	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1162:4: (kw= '.' | kw= '-' )
+            	    int alt32=2;
+            	    int LA32_0 = input.LA(1);
 
-                    }
-                    break;
+            	    if ( (LA32_0==31) ) {
+            	        alt32=1;
+            	    }
+            	    else if ( (LA32_0==32) ) {
+            	        alt32=2;
+            	    }
+            	    else {
+            	        if (state.backtracking>0) {state.failed=true; return current;}
+            	        NoViableAltException nvae =
+            	            new NoViableAltException("", 32, 0, input);
 
-            }
+            	        throw nvae;
+            	    }
+            	    switch (alt32) {
+            	        case 1 :
+            	            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1163:2: kw= '.'
+            	            {
+            	            kw=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleVersionId2277); if (state.failed) return current;
+            	            if ( state.backtracking==0 ) {
+
+            	                      current.merge(kw);
+            	                      newLeafNode(kw, grammarAccess.getVersionIdAccess().getFullStopKeyword_2_0_0()); 
+            	                  
+            	            }
+
+            	            }
+            	            break;
+            	        case 2 :
+            	            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1170:2: kw= '-'
+            	            {
+            	            kw=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleVersionId2296); if (state.failed) return current;
+            	            if ( state.backtracking==0 ) {
+
+            	                      current.merge(kw);
+            	                      newLeafNode(kw, grammarAccess.getVersionIdAccess().getHyphenMinusKeyword_2_0_1()); 
+            	                  
+            	            }
+
+            	            }
+            	            break;
+
+            	    }
+
+            	    this_ID_5=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleVersionId2312); if (state.failed) return current;
+            	    if ( state.backtracking==0 ) {
+
+            	      		current.merge(this_ID_5);
+            	          
+            	    }
+            	    if ( state.backtracking==0 ) {
+            	       
+            	          newLeafNode(this_ID_5, grammarAccess.getVersionIdAccess().getIDTerminalRuleCall_2_1()); 
+            	          
+            	    }
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop33;
+                }
+            } while (true);
 
 
             }
@@ -3325,7 +3373,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1185:1: entryRuleVersionRef returns [EObject current=null] : iv_ruleVersionRef= ruleVersionRef EOF ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1192:1: entryRuleVersionRef returns [EObject current=null] : iv_ruleVersionRef= ruleVersionRef EOF ;
     public final EObject entryRuleVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -3333,13 +3381,13 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1186:2: (iv_ruleVersionRef= ruleVersionRef EOF )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1187:2: iv_ruleVersionRef= ruleVersionRef EOF
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1193:2: (iv_ruleVersionRef= ruleVersionRef EOF )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1194:2: iv_ruleVersionRef= ruleVersionRef EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getVersionRefRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleVersionRef_in_entryRuleVersionRef2340);
+            pushFollow(FollowSets000.FOLLOW_ruleVersionRef_in_entryRuleVersionRef2361);
             iv_ruleVersionRef=ruleVersionRef();
 
             state._fsp--;
@@ -3347,7 +3395,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleVersionRef; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleVersionRef2350); if (state.failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleVersionRef2371); if (state.failed) return current;
 
             }
 
@@ -3365,7 +3413,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1194:1: ruleVersionRef returns [EObject current=null] : (this_MinVersionRef_0= ruleMinVersionRef | this_MaxVersionRef_1= ruleMaxVersionRef | this_LowerBoundRangeVersionRef_2= ruleLowerBoundRangeVersionRef | this_MajorVersionRef_3= ruleMajorVersionRef | this_FixedVersionRef_4= ruleFixedVersionRef ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1201:1: ruleVersionRef returns [EObject current=null] : (this_MinVersionRef_0= ruleMinVersionRef | this_MaxVersionRef_1= ruleMaxVersionRef | this_LowerBoundRangeVersionRef_2= ruleLowerBoundRangeVersionRef | this_MajorVersionRef_3= ruleMajorVersionRef | this_FixedVersionRef_4= ruleFixedVersionRef ) ;
     public final EObject ruleVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -3383,57 +3431,57 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1197:28: ( (this_MinVersionRef_0= ruleMinVersionRef | this_MaxVersionRef_1= ruleMaxVersionRef | this_LowerBoundRangeVersionRef_2= ruleLowerBoundRangeVersionRef | this_MajorVersionRef_3= ruleMajorVersionRef | this_FixedVersionRef_4= ruleFixedVersionRef ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1198:1: (this_MinVersionRef_0= ruleMinVersionRef | this_MaxVersionRef_1= ruleMaxVersionRef | this_LowerBoundRangeVersionRef_2= ruleLowerBoundRangeVersionRef | this_MajorVersionRef_3= ruleMajorVersionRef | this_FixedVersionRef_4= ruleFixedVersionRef )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1204:28: ( (this_MinVersionRef_0= ruleMinVersionRef | this_MaxVersionRef_1= ruleMaxVersionRef | this_LowerBoundRangeVersionRef_2= ruleLowerBoundRangeVersionRef | this_MajorVersionRef_3= ruleMajorVersionRef | this_FixedVersionRef_4= ruleFixedVersionRef ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1205:1: (this_MinVersionRef_0= ruleMinVersionRef | this_MaxVersionRef_1= ruleMaxVersionRef | this_LowerBoundRangeVersionRef_2= ruleLowerBoundRangeVersionRef | this_MajorVersionRef_3= ruleMajorVersionRef | this_FixedVersionRef_4= ruleFixedVersionRef )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1198:1: (this_MinVersionRef_0= ruleMinVersionRef | this_MaxVersionRef_1= ruleMaxVersionRef | this_LowerBoundRangeVersionRef_2= ruleLowerBoundRangeVersionRef | this_MajorVersionRef_3= ruleMajorVersionRef | this_FixedVersionRef_4= ruleFixedVersionRef )
-            int alt33=5;
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1205:1: (this_MinVersionRef_0= ruleMinVersionRef | this_MaxVersionRef_1= ruleMaxVersionRef | this_LowerBoundRangeVersionRef_2= ruleLowerBoundRangeVersionRef | this_MajorVersionRef_3= ruleMajorVersionRef | this_FixedVersionRef_4= ruleFixedVersionRef )
+            int alt34=5;
             switch ( input.LA(1) ) {
-            case 32:
+            case 33:
                 {
-                int LA33_1 = input.LA(2);
+                int LA34_1 = input.LA(2);
 
-                if ( (LA33_1==RULE_INT) ) {
-                    alt33=1;
+                if ( (LA34_1==35) ) {
+                    alt34=3;
                 }
-                else if ( (LA33_1==34) ) {
-                    alt33=3;
+                else if ( (LA34_1==RULE_INT) ) {
+                    alt34=1;
                 }
                 else {
                     if (state.backtracking>0) {state.failed=true; return current;}
                     NoViableAltException nvae =
-                        new NoViableAltException("", 33, 1, input);
+                        new NoViableAltException("", 34, 1, input);
 
                     throw nvae;
                 }
                 }
                 break;
-            case 33:
+            case 34:
                 {
-                alt33=2;
-                }
-                break;
-            case 36:
-                {
-                alt33=4;
+                alt34=2;
                 }
                 break;
             case 37:
                 {
-                alt33=5;
+                alt34=4;
+                }
+                break;
+            case 38:
+                {
+                alt34=5;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 33, 0, input);
+                    new NoViableAltException("", 34, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt33) {
+            switch (alt34) {
                 case 1 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1199:2: this_MinVersionRef_0= ruleMinVersionRef
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1206:2: this_MinVersionRef_0= ruleMinVersionRef
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -3445,7 +3493,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                               newCompositeNode(grammarAccess.getVersionRefAccess().getMinVersionRefParserRuleCall_0()); 
                           
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleMinVersionRef_in_ruleVersionRef2400);
+                    pushFollow(FollowSets000.FOLLOW_ruleMinVersionRef_in_ruleVersionRef2421);
                     this_MinVersionRef_0=ruleMinVersionRef();
 
                     state._fsp--;
@@ -3460,7 +3508,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1212:2: this_MaxVersionRef_1= ruleMaxVersionRef
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1219:2: this_MaxVersionRef_1= ruleMaxVersionRef
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -3472,7 +3520,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                               newCompositeNode(grammarAccess.getVersionRefAccess().getMaxVersionRefParserRuleCall_1()); 
                           
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleMaxVersionRef_in_ruleVersionRef2430);
+                    pushFollow(FollowSets000.FOLLOW_ruleMaxVersionRef_in_ruleVersionRef2451);
                     this_MaxVersionRef_1=ruleMaxVersionRef();
 
                     state._fsp--;
@@ -3487,7 +3535,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1225:2: this_LowerBoundRangeVersionRef_2= ruleLowerBoundRangeVersionRef
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1232:2: this_LowerBoundRangeVersionRef_2= ruleLowerBoundRangeVersionRef
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -3499,7 +3547,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                               newCompositeNode(grammarAccess.getVersionRefAccess().getLowerBoundRangeVersionRefParserRuleCall_2()); 
                           
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleLowerBoundRangeVersionRef_in_ruleVersionRef2460);
+                    pushFollow(FollowSets000.FOLLOW_ruleLowerBoundRangeVersionRef_in_ruleVersionRef2481);
                     this_LowerBoundRangeVersionRef_2=ruleLowerBoundRangeVersionRef();
 
                     state._fsp--;
@@ -3514,7 +3562,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1238:2: this_MajorVersionRef_3= ruleMajorVersionRef
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1245:2: this_MajorVersionRef_3= ruleMajorVersionRef
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -3526,7 +3574,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                               newCompositeNode(grammarAccess.getVersionRefAccess().getMajorVersionRefParserRuleCall_3()); 
                           
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleMajorVersionRef_in_ruleVersionRef2490);
+                    pushFollow(FollowSets000.FOLLOW_ruleMajorVersionRef_in_ruleVersionRef2511);
                     this_MajorVersionRef_3=ruleMajorVersionRef();
 
                     state._fsp--;
@@ -3541,7 +3589,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1251:2: this_FixedVersionRef_4= ruleFixedVersionRef
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1258:2: this_FixedVersionRef_4= ruleFixedVersionRef
                     {
                     if ( state.backtracking==0 ) {
                        
@@ -3553,7 +3601,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                               newCompositeNode(grammarAccess.getVersionRefAccess().getFixedVersionRefParserRuleCall_4()); 
                           
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleFixedVersionRef_in_ruleVersionRef2520);
+                    pushFollow(FollowSets000.FOLLOW_ruleFixedVersionRef_in_ruleVersionRef2541);
                     this_FixedVersionRef_4=ruleFixedVersionRef();
 
                     state._fsp--;
@@ -3590,7 +3638,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMinVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1270:1: entryRuleMinVersionRef returns [EObject current=null] : iv_ruleMinVersionRef= ruleMinVersionRef EOF ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1277:1: entryRuleMinVersionRef returns [EObject current=null] : iv_ruleMinVersionRef= ruleMinVersionRef EOF ;
     public final EObject entryRuleMinVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -3598,13 +3646,13 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1271:2: (iv_ruleMinVersionRef= ruleMinVersionRef EOF )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1272:2: iv_ruleMinVersionRef= ruleMinVersionRef EOF
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1278:2: (iv_ruleMinVersionRef= ruleMinVersionRef EOF )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1279:2: iv_ruleMinVersionRef= ruleMinVersionRef EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMinVersionRefRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleMinVersionRef_in_entryRuleMinVersionRef2555);
+            pushFollow(FollowSets000.FOLLOW_ruleMinVersionRef_in_entryRuleMinVersionRef2576);
             iv_ruleMinVersionRef=ruleMinVersionRef();
 
             state._fsp--;
@@ -3612,7 +3660,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleMinVersionRef; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleMinVersionRef2565); if (state.failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleMinVersionRef2586); if (state.failed) return current;
 
             }
 
@@ -3630,7 +3678,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMinVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1279:1: ruleMinVersionRef returns [EObject current=null] : (otherlv_0= 'minVersion' ( (lv_minVersion_1_0= ruleVersionId ) ) ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1286:1: ruleMinVersionRef returns [EObject current=null] : (otherlv_0= 'minVersion' ( (lv_minVersion_1_0= ruleVersionId ) ) ) ;
     public final EObject ruleMinVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -3641,30 +3689,30 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1282:28: ( (otherlv_0= 'minVersion' ( (lv_minVersion_1_0= ruleVersionId ) ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1283:1: (otherlv_0= 'minVersion' ( (lv_minVersion_1_0= ruleVersionId ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1289:28: ( (otherlv_0= 'minVersion' ( (lv_minVersion_1_0= ruleVersionId ) ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1290:1: (otherlv_0= 'minVersion' ( (lv_minVersion_1_0= ruleVersionId ) ) )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1283:1: (otherlv_0= 'minVersion' ( (lv_minVersion_1_0= ruleVersionId ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1283:3: otherlv_0= 'minVersion' ( (lv_minVersion_1_0= ruleVersionId ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1290:1: (otherlv_0= 'minVersion' ( (lv_minVersion_1_0= ruleVersionId ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1290:3: otherlv_0= 'minVersion' ( (lv_minVersion_1_0= ruleVersionId ) )
             {
-            otherlv_0=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleMinVersionRef2602); if (state.failed) return current;
+            otherlv_0=(Token)match(input,33,FollowSets000.FOLLOW_33_in_ruleMinVersionRef2623); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getMinVersionRefAccess().getMinVersionKeyword_0());
                   
             }
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1287:1: ( (lv_minVersion_1_0= ruleVersionId ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1288:1: (lv_minVersion_1_0= ruleVersionId )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1294:1: ( (lv_minVersion_1_0= ruleVersionId ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1295:1: (lv_minVersion_1_0= ruleVersionId )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1288:1: (lv_minVersion_1_0= ruleVersionId )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1289:3: lv_minVersion_1_0= ruleVersionId
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1295:1: (lv_minVersion_1_0= ruleVersionId )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1296:3: lv_minVersion_1_0= ruleVersionId
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getMinVersionRefAccess().getMinVersionVersionIdParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_ruleVersionId_in_ruleMinVersionRef2623);
+            pushFollow(FollowSets000.FOLLOW_ruleVersionId_in_ruleMinVersionRef2644);
             lv_minVersion_1_0=ruleVersionId();
 
             state._fsp--;
@@ -3711,7 +3759,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMaxVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1313:1: entryRuleMaxVersionRef returns [EObject current=null] : iv_ruleMaxVersionRef= ruleMaxVersionRef EOF ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1320:1: entryRuleMaxVersionRef returns [EObject current=null] : iv_ruleMaxVersionRef= ruleMaxVersionRef EOF ;
     public final EObject entryRuleMaxVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -3719,13 +3767,13 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1314:2: (iv_ruleMaxVersionRef= ruleMaxVersionRef EOF )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1315:2: iv_ruleMaxVersionRef= ruleMaxVersionRef EOF
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1321:2: (iv_ruleMaxVersionRef= ruleMaxVersionRef EOF )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1322:2: iv_ruleMaxVersionRef= ruleMaxVersionRef EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMaxVersionRefRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleMaxVersionRef_in_entryRuleMaxVersionRef2659);
+            pushFollow(FollowSets000.FOLLOW_ruleMaxVersionRef_in_entryRuleMaxVersionRef2680);
             iv_ruleMaxVersionRef=ruleMaxVersionRef();
 
             state._fsp--;
@@ -3733,7 +3781,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleMaxVersionRef; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleMaxVersionRef2669); if (state.failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleMaxVersionRef2690); if (state.failed) return current;
 
             }
 
@@ -3751,7 +3799,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMaxVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1322:1: ruleMaxVersionRef returns [EObject current=null] : (otherlv_0= 'maxVersion' ( (lv_maxVersion_1_0= ruleVersionId ) ) ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1329:1: ruleMaxVersionRef returns [EObject current=null] : (otherlv_0= 'maxVersion' ( (lv_maxVersion_1_0= ruleVersionId ) ) ) ;
     public final EObject ruleMaxVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -3762,30 +3810,30 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1325:28: ( (otherlv_0= 'maxVersion' ( (lv_maxVersion_1_0= ruleVersionId ) ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1326:1: (otherlv_0= 'maxVersion' ( (lv_maxVersion_1_0= ruleVersionId ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1332:28: ( (otherlv_0= 'maxVersion' ( (lv_maxVersion_1_0= ruleVersionId ) ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1333:1: (otherlv_0= 'maxVersion' ( (lv_maxVersion_1_0= ruleVersionId ) ) )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1326:1: (otherlv_0= 'maxVersion' ( (lv_maxVersion_1_0= ruleVersionId ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1326:3: otherlv_0= 'maxVersion' ( (lv_maxVersion_1_0= ruleVersionId ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1333:1: (otherlv_0= 'maxVersion' ( (lv_maxVersion_1_0= ruleVersionId ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1333:3: otherlv_0= 'maxVersion' ( (lv_maxVersion_1_0= ruleVersionId ) )
             {
-            otherlv_0=(Token)match(input,33,FollowSets000.FOLLOW_33_in_ruleMaxVersionRef2706); if (state.failed) return current;
+            otherlv_0=(Token)match(input,34,FollowSets000.FOLLOW_34_in_ruleMaxVersionRef2727); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getMaxVersionRefAccess().getMaxVersionKeyword_0());
                   
             }
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1330:1: ( (lv_maxVersion_1_0= ruleVersionId ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1331:1: (lv_maxVersion_1_0= ruleVersionId )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1337:1: ( (lv_maxVersion_1_0= ruleVersionId ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1338:1: (lv_maxVersion_1_0= ruleVersionId )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1331:1: (lv_maxVersion_1_0= ruleVersionId )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1332:3: lv_maxVersion_1_0= ruleVersionId
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1338:1: (lv_maxVersion_1_0= ruleVersionId )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1339:3: lv_maxVersion_1_0= ruleVersionId
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getMaxVersionRefAccess().getMaxVersionVersionIdParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_ruleVersionId_in_ruleMaxVersionRef2727);
+            pushFollow(FollowSets000.FOLLOW_ruleVersionId_in_ruleMaxVersionRef2748);
             lv_maxVersion_1_0=ruleVersionId();
 
             state._fsp--;
@@ -3832,7 +3880,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleLowerBoundRangeVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1356:1: entryRuleLowerBoundRangeVersionRef returns [EObject current=null] : iv_ruleLowerBoundRangeVersionRef= ruleLowerBoundRangeVersionRef EOF ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1363:1: entryRuleLowerBoundRangeVersionRef returns [EObject current=null] : iv_ruleLowerBoundRangeVersionRef= ruleLowerBoundRangeVersionRef EOF ;
     public final EObject entryRuleLowerBoundRangeVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -3840,13 +3888,13 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1357:2: (iv_ruleLowerBoundRangeVersionRef= ruleLowerBoundRangeVersionRef EOF )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1358:2: iv_ruleLowerBoundRangeVersionRef= ruleLowerBoundRangeVersionRef EOF
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1364:2: (iv_ruleLowerBoundRangeVersionRef= ruleLowerBoundRangeVersionRef EOF )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1365:2: iv_ruleLowerBoundRangeVersionRef= ruleLowerBoundRangeVersionRef EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getLowerBoundRangeVersionRefRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleLowerBoundRangeVersionRef_in_entryRuleLowerBoundRangeVersionRef2763);
+            pushFollow(FollowSets000.FOLLOW_ruleLowerBoundRangeVersionRef_in_entryRuleLowerBoundRangeVersionRef2784);
             iv_ruleLowerBoundRangeVersionRef=ruleLowerBoundRangeVersionRef();
 
             state._fsp--;
@@ -3854,7 +3902,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleLowerBoundRangeVersionRef; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleLowerBoundRangeVersionRef2773); if (state.failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleLowerBoundRangeVersionRef2794); if (state.failed) return current;
 
             }
 
@@ -3872,7 +3920,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleLowerBoundRangeVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1365:1: ruleLowerBoundRangeVersionRef returns [EObject current=null] : ( (otherlv_0= 'minVersion' otherlv_1= '>=' ) ( (lv_minVersion_2_0= ruleVersionId ) ) otherlv_3= ',' (otherlv_4= 'maxVersion' otherlv_5= '<' ) ( (lv_maxVersion_6_0= ruleVersionId ) ) ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1372:1: ruleLowerBoundRangeVersionRef returns [EObject current=null] : ( (otherlv_0= 'minVersion' otherlv_1= '>=' ) ( (lv_minVersion_2_0= ruleVersionId ) ) otherlv_3= ',' (otherlv_4= 'maxVersion' otherlv_5= '<' ) ( (lv_maxVersion_6_0= ruleVersionId ) ) ) ;
     public final EObject ruleLowerBoundRangeVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -3889,22 +3937,22 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1368:28: ( ( (otherlv_0= 'minVersion' otherlv_1= '>=' ) ( (lv_minVersion_2_0= ruleVersionId ) ) otherlv_3= ',' (otherlv_4= 'maxVersion' otherlv_5= '<' ) ( (lv_maxVersion_6_0= ruleVersionId ) ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1369:1: ( (otherlv_0= 'minVersion' otherlv_1= '>=' ) ( (lv_minVersion_2_0= ruleVersionId ) ) otherlv_3= ',' (otherlv_4= 'maxVersion' otherlv_5= '<' ) ( (lv_maxVersion_6_0= ruleVersionId ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1375:28: ( ( (otherlv_0= 'minVersion' otherlv_1= '>=' ) ( (lv_minVersion_2_0= ruleVersionId ) ) otherlv_3= ',' (otherlv_4= 'maxVersion' otherlv_5= '<' ) ( (lv_maxVersion_6_0= ruleVersionId ) ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1376:1: ( (otherlv_0= 'minVersion' otherlv_1= '>=' ) ( (lv_minVersion_2_0= ruleVersionId ) ) otherlv_3= ',' (otherlv_4= 'maxVersion' otherlv_5= '<' ) ( (lv_maxVersion_6_0= ruleVersionId ) ) )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1369:1: ( (otherlv_0= 'minVersion' otherlv_1= '>=' ) ( (lv_minVersion_2_0= ruleVersionId ) ) otherlv_3= ',' (otherlv_4= 'maxVersion' otherlv_5= '<' ) ( (lv_maxVersion_6_0= ruleVersionId ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1369:2: (otherlv_0= 'minVersion' otherlv_1= '>=' ) ( (lv_minVersion_2_0= ruleVersionId ) ) otherlv_3= ',' (otherlv_4= 'maxVersion' otherlv_5= '<' ) ( (lv_maxVersion_6_0= ruleVersionId ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1376:1: ( (otherlv_0= 'minVersion' otherlv_1= '>=' ) ( (lv_minVersion_2_0= ruleVersionId ) ) otherlv_3= ',' (otherlv_4= 'maxVersion' otherlv_5= '<' ) ( (lv_maxVersion_6_0= ruleVersionId ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1376:2: (otherlv_0= 'minVersion' otherlv_1= '>=' ) ( (lv_minVersion_2_0= ruleVersionId ) ) otherlv_3= ',' (otherlv_4= 'maxVersion' otherlv_5= '<' ) ( (lv_maxVersion_6_0= ruleVersionId ) )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1369:2: (otherlv_0= 'minVersion' otherlv_1= '>=' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1369:4: otherlv_0= 'minVersion' otherlv_1= '>='
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1376:2: (otherlv_0= 'minVersion' otherlv_1= '>=' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1376:4: otherlv_0= 'minVersion' otherlv_1= '>='
             {
-            otherlv_0=(Token)match(input,32,FollowSets000.FOLLOW_32_in_ruleLowerBoundRangeVersionRef2811); if (state.failed) return current;
+            otherlv_0=(Token)match(input,33,FollowSets000.FOLLOW_33_in_ruleLowerBoundRangeVersionRef2832); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getLowerBoundRangeVersionRefAccess().getMinVersionKeyword_0_0());
                   
             }
-            otherlv_1=(Token)match(input,34,FollowSets000.FOLLOW_34_in_ruleLowerBoundRangeVersionRef2823); if (state.failed) return current;
+            otherlv_1=(Token)match(input,35,FollowSets000.FOLLOW_35_in_ruleLowerBoundRangeVersionRef2844); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_1, grammarAccess.getLowerBoundRangeVersionRefAccess().getGreaterThanSignEqualsSignKeyword_0_1());
@@ -3913,18 +3961,18 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1377:2: ( (lv_minVersion_2_0= ruleVersionId ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1378:1: (lv_minVersion_2_0= ruleVersionId )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1384:2: ( (lv_minVersion_2_0= ruleVersionId ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1385:1: (lv_minVersion_2_0= ruleVersionId )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1378:1: (lv_minVersion_2_0= ruleVersionId )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1379:3: lv_minVersion_2_0= ruleVersionId
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1385:1: (lv_minVersion_2_0= ruleVersionId )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1386:3: lv_minVersion_2_0= ruleVersionId
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getLowerBoundRangeVersionRefAccess().getMinVersionVersionIdParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_ruleVersionId_in_ruleLowerBoundRangeVersionRef2845);
+            pushFollow(FollowSets000.FOLLOW_ruleVersionId_in_ruleLowerBoundRangeVersionRef2866);
             lv_minVersion_2_0=ruleVersionId();
 
             state._fsp--;
@@ -3948,22 +3996,22 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_3=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleLowerBoundRangeVersionRef2857); if (state.failed) return current;
+            otherlv_3=(Token)match(input,25,FollowSets000.FOLLOW_25_in_ruleLowerBoundRangeVersionRef2878); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_3, grammarAccess.getLowerBoundRangeVersionRefAccess().getCommaKeyword_2());
                   
             }
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1399:1: (otherlv_4= 'maxVersion' otherlv_5= '<' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1399:3: otherlv_4= 'maxVersion' otherlv_5= '<'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1406:1: (otherlv_4= 'maxVersion' otherlv_5= '<' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1406:3: otherlv_4= 'maxVersion' otherlv_5= '<'
             {
-            otherlv_4=(Token)match(input,33,FollowSets000.FOLLOW_33_in_ruleLowerBoundRangeVersionRef2870); if (state.failed) return current;
+            otherlv_4=(Token)match(input,34,FollowSets000.FOLLOW_34_in_ruleLowerBoundRangeVersionRef2891); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_4, grammarAccess.getLowerBoundRangeVersionRefAccess().getMaxVersionKeyword_3_0());
                   
             }
-            otherlv_5=(Token)match(input,35,FollowSets000.FOLLOW_35_in_ruleLowerBoundRangeVersionRef2882); if (state.failed) return current;
+            otherlv_5=(Token)match(input,36,FollowSets000.FOLLOW_36_in_ruleLowerBoundRangeVersionRef2903); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_5, grammarAccess.getLowerBoundRangeVersionRefAccess().getLessThanSignKeyword_3_1());
@@ -3972,18 +4020,18 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1407:2: ( (lv_maxVersion_6_0= ruleVersionId ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1408:1: (lv_maxVersion_6_0= ruleVersionId )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1414:2: ( (lv_maxVersion_6_0= ruleVersionId ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1415:1: (lv_maxVersion_6_0= ruleVersionId )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1408:1: (lv_maxVersion_6_0= ruleVersionId )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1409:3: lv_maxVersion_6_0= ruleVersionId
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1415:1: (lv_maxVersion_6_0= ruleVersionId )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1416:3: lv_maxVersion_6_0= ruleVersionId
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getLowerBoundRangeVersionRefAccess().getMaxVersionVersionIdParserRuleCall_4_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_ruleVersionId_in_ruleLowerBoundRangeVersionRef2904);
+            pushFollow(FollowSets000.FOLLOW_ruleVersionId_in_ruleLowerBoundRangeVersionRef2925);
             lv_maxVersion_6_0=ruleVersionId();
 
             state._fsp--;
@@ -4030,7 +4078,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleMajorVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1433:1: entryRuleMajorVersionRef returns [EObject current=null] : iv_ruleMajorVersionRef= ruleMajorVersionRef EOF ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1440:1: entryRuleMajorVersionRef returns [EObject current=null] : iv_ruleMajorVersionRef= ruleMajorVersionRef EOF ;
     public final EObject entryRuleMajorVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -4038,13 +4086,13 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1434:2: (iv_ruleMajorVersionRef= ruleMajorVersionRef EOF )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1435:2: iv_ruleMajorVersionRef= ruleMajorVersionRef EOF
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1441:2: (iv_ruleMajorVersionRef= ruleMajorVersionRef EOF )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1442:2: iv_ruleMajorVersionRef= ruleMajorVersionRef EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getMajorVersionRefRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleMajorVersionRef_in_entryRuleMajorVersionRef2940);
+            pushFollow(FollowSets000.FOLLOW_ruleMajorVersionRef_in_entryRuleMajorVersionRef2961);
             iv_ruleMajorVersionRef=ruleMajorVersionRef();
 
             state._fsp--;
@@ -4052,7 +4100,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleMajorVersionRef; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleMajorVersionRef2950); if (state.failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleMajorVersionRef2971); if (state.failed) return current;
 
             }
 
@@ -4070,7 +4118,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleMajorVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1442:1: ruleMajorVersionRef returns [EObject current=null] : (otherlv_0= 'majorVersion' ( (lv_majorVersion_1_0= RULE_INT ) ) ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1449:1: ruleMajorVersionRef returns [EObject current=null] : (otherlv_0= 'majorVersion' ( (lv_majorVersion_1_0= RULE_INT ) ) ) ;
     public final EObject ruleMajorVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -4080,25 +4128,25 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1445:28: ( (otherlv_0= 'majorVersion' ( (lv_majorVersion_1_0= RULE_INT ) ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1446:1: (otherlv_0= 'majorVersion' ( (lv_majorVersion_1_0= RULE_INT ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1452:28: ( (otherlv_0= 'majorVersion' ( (lv_majorVersion_1_0= RULE_INT ) ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1453:1: (otherlv_0= 'majorVersion' ( (lv_majorVersion_1_0= RULE_INT ) ) )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1446:1: (otherlv_0= 'majorVersion' ( (lv_majorVersion_1_0= RULE_INT ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1446:3: otherlv_0= 'majorVersion' ( (lv_majorVersion_1_0= RULE_INT ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1453:1: (otherlv_0= 'majorVersion' ( (lv_majorVersion_1_0= RULE_INT ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1453:3: otherlv_0= 'majorVersion' ( (lv_majorVersion_1_0= RULE_INT ) )
             {
-            otherlv_0=(Token)match(input,36,FollowSets000.FOLLOW_36_in_ruleMajorVersionRef2987); if (state.failed) return current;
+            otherlv_0=(Token)match(input,37,FollowSets000.FOLLOW_37_in_ruleMajorVersionRef3008); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getMajorVersionRefAccess().getMajorVersionKeyword_0());
                   
             }
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1450:1: ( (lv_majorVersion_1_0= RULE_INT ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1451:1: (lv_majorVersion_1_0= RULE_INT )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1457:1: ( (lv_majorVersion_1_0= RULE_INT ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1458:1: (lv_majorVersion_1_0= RULE_INT )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1451:1: (lv_majorVersion_1_0= RULE_INT )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1452:3: lv_majorVersion_1_0= RULE_INT
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1458:1: (lv_majorVersion_1_0= RULE_INT )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1459:3: lv_majorVersion_1_0= RULE_INT
             {
-            lv_majorVersion_1_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_ruleMajorVersionRef3004); if (state.failed) return current;
+            lv_majorVersion_1_0=(Token)match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_ruleMajorVersionRef3025); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               			newLeafNode(lv_majorVersion_1_0, grammarAccess.getMajorVersionRefAccess().getMajorVersionINTTerminalRuleCall_1_0()); 
@@ -4145,7 +4193,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleFixedVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1476:1: entryRuleFixedVersionRef returns [EObject current=null] : iv_ruleFixedVersionRef= ruleFixedVersionRef EOF ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1483:1: entryRuleFixedVersionRef returns [EObject current=null] : iv_ruleFixedVersionRef= ruleFixedVersionRef EOF ;
     public final EObject entryRuleFixedVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -4153,13 +4201,13 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1477:2: (iv_ruleFixedVersionRef= ruleFixedVersionRef EOF )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1478:2: iv_ruleFixedVersionRef= ruleFixedVersionRef EOF
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1484:2: (iv_ruleFixedVersionRef= ruleFixedVersionRef EOF )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1485:2: iv_ruleFixedVersionRef= ruleFixedVersionRef EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getFixedVersionRefRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleFixedVersionRef_in_entryRuleFixedVersionRef3045);
+            pushFollow(FollowSets000.FOLLOW_ruleFixedVersionRef_in_entryRuleFixedVersionRef3066);
             iv_ruleFixedVersionRef=ruleFixedVersionRef();
 
             state._fsp--;
@@ -4167,7 +4215,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleFixedVersionRef; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleFixedVersionRef3055); if (state.failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleFixedVersionRef3076); if (state.failed) return current;
 
             }
 
@@ -4185,7 +4233,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleFixedVersionRef"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1485:1: ruleFixedVersionRef returns [EObject current=null] : (otherlv_0= 'fixedVersion' ( (lv_fixedVersion_1_0= ruleVersionId ) ) ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1492:1: ruleFixedVersionRef returns [EObject current=null] : (otherlv_0= 'fixedVersion' ( (lv_fixedVersion_1_0= ruleVersionId ) ) ) ;
     public final EObject ruleFixedVersionRef() throws RecognitionException {
         EObject current = null;
 
@@ -4196,30 +4244,30 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1488:28: ( (otherlv_0= 'fixedVersion' ( (lv_fixedVersion_1_0= ruleVersionId ) ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1489:1: (otherlv_0= 'fixedVersion' ( (lv_fixedVersion_1_0= ruleVersionId ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1495:28: ( (otherlv_0= 'fixedVersion' ( (lv_fixedVersion_1_0= ruleVersionId ) ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1496:1: (otherlv_0= 'fixedVersion' ( (lv_fixedVersion_1_0= ruleVersionId ) ) )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1489:1: (otherlv_0= 'fixedVersion' ( (lv_fixedVersion_1_0= ruleVersionId ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1489:3: otherlv_0= 'fixedVersion' ( (lv_fixedVersion_1_0= ruleVersionId ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1496:1: (otherlv_0= 'fixedVersion' ( (lv_fixedVersion_1_0= ruleVersionId ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1496:3: otherlv_0= 'fixedVersion' ( (lv_fixedVersion_1_0= ruleVersionId ) )
             {
-            otherlv_0=(Token)match(input,37,FollowSets000.FOLLOW_37_in_ruleFixedVersionRef3092); if (state.failed) return current;
+            otherlv_0=(Token)match(input,38,FollowSets000.FOLLOW_38_in_ruleFixedVersionRef3113); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
                   	newLeafNode(otherlv_0, grammarAccess.getFixedVersionRefAccess().getFixedVersionKeyword_0());
                   
             }
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1493:1: ( (lv_fixedVersion_1_0= ruleVersionId ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1494:1: (lv_fixedVersion_1_0= ruleVersionId )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1500:1: ( (lv_fixedVersion_1_0= ruleVersionId ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1501:1: (lv_fixedVersion_1_0= ruleVersionId )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1494:1: (lv_fixedVersion_1_0= ruleVersionId )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1495:3: lv_fixedVersion_1_0= ruleVersionId
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1501:1: (lv_fixedVersion_1_0= ruleVersionId )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1502:3: lv_fixedVersion_1_0= ruleVersionId
             {
             if ( state.backtracking==0 ) {
                
               	        newCompositeNode(grammarAccess.getFixedVersionRefAccess().getFixedVersionVersionIdParserRuleCall_1_0()); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_ruleVersionId_in_ruleFixedVersionRef3113);
+            pushFollow(FollowSets000.FOLLOW_ruleVersionId_in_ruleFixedVersionRef3134);
             lv_fixedVersion_1_0=ruleVersionId();
 
             state._fsp--;
@@ -4266,7 +4314,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQualifiedNameWithWildCard"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1519:1: entryRuleQualifiedNameWithWildCard returns [String current=null] : iv_ruleQualifiedNameWithWildCard= ruleQualifiedNameWithWildCard EOF ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1526:1: entryRuleQualifiedNameWithWildCard returns [String current=null] : iv_ruleQualifiedNameWithWildCard= ruleQualifiedNameWithWildCard EOF ;
     public final String entryRuleQualifiedNameWithWildCard() throws RecognitionException {
         String current = null;
 
@@ -4274,13 +4322,13 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1520:2: (iv_ruleQualifiedNameWithWildCard= ruleQualifiedNameWithWildCard EOF )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1521:2: iv_ruleQualifiedNameWithWildCard= ruleQualifiedNameWithWildCard EOF
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1527:2: (iv_ruleQualifiedNameWithWildCard= ruleQualifiedNameWithWildCard EOF )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1528:2: iv_ruleQualifiedNameWithWildCard= ruleQualifiedNameWithWildCard EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getQualifiedNameWithWildCardRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleQualifiedNameWithWildCard_in_entryRuleQualifiedNameWithWildCard3150);
+            pushFollow(FollowSets000.FOLLOW_ruleQualifiedNameWithWildCard_in_entryRuleQualifiedNameWithWildCard3171);
             iv_ruleQualifiedNameWithWildCard=ruleQualifiedNameWithWildCard();
 
             state._fsp--;
@@ -4288,7 +4336,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleQualifiedNameWithWildCard.getText(); 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleQualifiedNameWithWildCard3161); if (state.failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleQualifiedNameWithWildCard3182); if (state.failed) return current;
 
             }
 
@@ -4306,7 +4354,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQualifiedNameWithWildCard"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1528:1: ruleQualifiedNameWithWildCard returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_QualifiedName_0= ruleQualifiedName (kw= '.*' )? ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1535:1: ruleQualifiedNameWithWildCard returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_QualifiedName_0= ruleQualifiedName (kw= '.*' )? ) ;
     public final AntlrDatatypeRuleToken ruleQualifiedNameWithWildCard() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -4317,18 +4365,18 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1531:28: ( (this_QualifiedName_0= ruleQualifiedName (kw= '.*' )? ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1532:1: (this_QualifiedName_0= ruleQualifiedName (kw= '.*' )? )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1538:28: ( (this_QualifiedName_0= ruleQualifiedName (kw= '.*' )? ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1539:1: (this_QualifiedName_0= ruleQualifiedName (kw= '.*' )? )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1532:1: (this_QualifiedName_0= ruleQualifiedName (kw= '.*' )? )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1533:5: this_QualifiedName_0= ruleQualifiedName (kw= '.*' )?
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1539:1: (this_QualifiedName_0= ruleQualifiedName (kw= '.*' )? )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1540:5: this_QualifiedName_0= ruleQualifiedName (kw= '.*' )?
             {
             if ( state.backtracking==0 ) {
                
                       newCompositeNode(grammarAccess.getQualifiedNameWithWildCardAccess().getQualifiedNameParserRuleCall_0()); 
                   
             }
-            pushFollow(FollowSets000.FOLLOW_ruleQualifiedName_in_ruleQualifiedNameWithWildCard3208);
+            pushFollow(FollowSets000.FOLLOW_ruleQualifiedName_in_ruleQualifiedNameWithWildCard3229);
             this_QualifiedName_0=ruleQualifiedName();
 
             state._fsp--;
@@ -4343,18 +4391,18 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                       afterParserOrEnumRuleCall();
                   
             }
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1543:1: (kw= '.*' )?
-            int alt34=2;
-            int LA34_0 = input.LA(1);
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1550:1: (kw= '.*' )?
+            int alt35=2;
+            int LA35_0 = input.LA(1);
 
-            if ( (LA34_0==38) ) {
-                alt34=1;
+            if ( (LA35_0==39) ) {
+                alt35=1;
             }
-            switch (alt34) {
+            switch (alt35) {
                 case 1 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1544:2: kw= '.*'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1551:2: kw= '.*'
                     {
-                    kw=(Token)match(input,38,FollowSets000.FOLLOW_38_in_ruleQualifiedNameWithWildCard3227); if (state.failed) return current;
+                    kw=(Token)match(input,39,FollowSets000.FOLLOW_39_in_ruleQualifiedNameWithWildCard3248); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current.merge(kw);
@@ -4390,7 +4438,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRuleQualifiedName"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1557:1: entryRuleQualifiedName returns [String current=null] : iv_ruleQualifiedName= ruleQualifiedName EOF ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1564:1: entryRuleQualifiedName returns [String current=null] : iv_ruleQualifiedName= ruleQualifiedName EOF ;
     public final String entryRuleQualifiedName() throws RecognitionException {
         String current = null;
 
@@ -4398,13 +4446,13 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1558:2: (iv_ruleQualifiedName= ruleQualifiedName EOF )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1559:2: iv_ruleQualifiedName= ruleQualifiedName EOF
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1565:2: (iv_ruleQualifiedName= ruleQualifiedName EOF )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1566:2: iv_ruleQualifiedName= ruleQualifiedName EOF
             {
             if ( state.backtracking==0 ) {
                newCompositeNode(grammarAccess.getQualifiedNameRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleQualifiedName_in_entryRuleQualifiedName3270);
+            pushFollow(FollowSets000.FOLLOW_ruleQualifiedName_in_entryRuleQualifiedName3291);
             iv_ruleQualifiedName=ruleQualifiedName();
 
             state._fsp--;
@@ -4412,7 +4460,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
             if ( state.backtracking==0 ) {
                current =iv_ruleQualifiedName.getText(); 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleQualifiedName3281); if (state.failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleQualifiedName3302); if (state.failed) return current;
 
             }
 
@@ -4430,7 +4478,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleQualifiedName"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1566:1: ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1573:1: ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) ;
     public final AntlrDatatypeRuleToken ruleQualifiedName() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -4441,13 +4489,13 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
          enterRule(); 
             
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1569:28: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1570:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1576:28: ( (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1577:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1570:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1570:6: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )*
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1577:1: (this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )* )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1577:6: this_ID_0= RULE_ID (kw= '.' this_ID_2= RULE_ID )*
             {
-            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleQualifiedName3321); if (state.failed) return current;
+            this_ID_0=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleQualifiedName3342); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
               		current.merge(this_ID_0);
@@ -4458,29 +4506,29 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                   newLeafNode(this_ID_0, grammarAccess.getQualifiedNameAccess().getIDTerminalRuleCall_0()); 
                   
             }
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1577:1: (kw= '.' this_ID_2= RULE_ID )*
-            loop35:
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1584:1: (kw= '.' this_ID_2= RULE_ID )*
+            loop36:
             do {
-                int alt35=2;
-                int LA35_0 = input.LA(1);
+                int alt36=2;
+                int LA36_0 = input.LA(1);
 
-                if ( (LA35_0==31) ) {
-                    alt35=1;
+                if ( (LA36_0==31) ) {
+                    alt36=1;
                 }
 
 
-                switch (alt35) {
+                switch (alt36) {
             	case 1 :
-            	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1578:2: kw= '.' this_ID_2= RULE_ID
+            	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1585:2: kw= '.' this_ID_2= RULE_ID
             	    {
-            	    kw=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleQualifiedName3340); if (state.failed) return current;
+            	    kw=(Token)match(input,31,FollowSets000.FOLLOW_31_in_ruleQualifiedName3361); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	              current.merge(kw);
             	              newLeafNode(kw, grammarAccess.getQualifiedNameAccess().getFullStopKeyword_1_0()); 
             	          
             	    }
-            	    this_ID_2=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleQualifiedName3355); if (state.failed) return current;
+            	    this_ID_2=(Token)match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleQualifiedName3376); if (state.failed) return current;
             	    if ( state.backtracking==0 ) {
 
             	      		current.merge(this_ID_2);
@@ -4496,7 +4544,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
             	    break;
 
             	default :
-            	    break loop35;
+            	    break loop36;
                 }
             } while (true);
 
@@ -4523,7 +4571,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleModuleKind"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1604:1: ruleModuleKind returns [Enumerator current=null] : ( (enumLiteral_0= 'UI' ) | (enumLiteral_1= 'BusinessLogic' ) | (enumLiteral_2= 'Persistence' ) | (enumLiteral_3= 'Security' ) | (enumLiteral_4= 'Batch' ) | (enumLiteral_5= 'OTHER' ) ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1609:1: ruleModuleKind returns [Enumerator current=null] : ( (enumLiteral_0= 'UI' ) | (enumLiteral_1= 'BusinessLogic' ) | (enumLiteral_2= 'Persistence' ) | (enumLiteral_3= 'Security' ) | (enumLiteral_4= 'Batch' ) | (enumLiteral_5= 'OTHER' ) ) ;
     public final Enumerator ruleModuleKind() throws RecognitionException {
         Enumerator current = null;
 
@@ -4536,58 +4584,58 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1606:28: ( ( (enumLiteral_0= 'UI' ) | (enumLiteral_1= 'BusinessLogic' ) | (enumLiteral_2= 'Persistence' ) | (enumLiteral_3= 'Security' ) | (enumLiteral_4= 'Batch' ) | (enumLiteral_5= 'OTHER' ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1607:1: ( (enumLiteral_0= 'UI' ) | (enumLiteral_1= 'BusinessLogic' ) | (enumLiteral_2= 'Persistence' ) | (enumLiteral_3= 'Security' ) | (enumLiteral_4= 'Batch' ) | (enumLiteral_5= 'OTHER' ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1611:28: ( ( (enumLiteral_0= 'UI' ) | (enumLiteral_1= 'BusinessLogic' ) | (enumLiteral_2= 'Persistence' ) | (enumLiteral_3= 'Security' ) | (enumLiteral_4= 'Batch' ) | (enumLiteral_5= 'OTHER' ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1612:1: ( (enumLiteral_0= 'UI' ) | (enumLiteral_1= 'BusinessLogic' ) | (enumLiteral_2= 'Persistence' ) | (enumLiteral_3= 'Security' ) | (enumLiteral_4= 'Batch' ) | (enumLiteral_5= 'OTHER' ) )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1607:1: ( (enumLiteral_0= 'UI' ) | (enumLiteral_1= 'BusinessLogic' ) | (enumLiteral_2= 'Persistence' ) | (enumLiteral_3= 'Security' ) | (enumLiteral_4= 'Batch' ) | (enumLiteral_5= 'OTHER' ) )
-            int alt36=6;
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1612:1: ( (enumLiteral_0= 'UI' ) | (enumLiteral_1= 'BusinessLogic' ) | (enumLiteral_2= 'Persistence' ) | (enumLiteral_3= 'Security' ) | (enumLiteral_4= 'Batch' ) | (enumLiteral_5= 'OTHER' ) )
+            int alt37=6;
             switch ( input.LA(1) ) {
-            case 39:
-                {
-                alt36=1;
-                }
-                break;
             case 40:
                 {
-                alt36=2;
+                alt37=1;
                 }
                 break;
             case 41:
                 {
-                alt36=3;
+                alt37=2;
                 }
                 break;
             case 42:
                 {
-                alt36=4;
+                alt37=3;
                 }
                 break;
             case 43:
                 {
-                alt36=5;
+                alt37=4;
                 }
                 break;
             case 44:
                 {
-                alt36=6;
+                alt37=5;
+                }
+                break;
+            case 45:
+                {
+                alt37=6;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 36, 0, input);
+                    new NoViableAltException("", 37, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt36) {
+            switch (alt37) {
                 case 1 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1607:2: (enumLiteral_0= 'UI' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1612:2: (enumLiteral_0= 'UI' )
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1607:2: (enumLiteral_0= 'UI' )
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1607:4: enumLiteral_0= 'UI'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1612:2: (enumLiteral_0= 'UI' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1612:4: enumLiteral_0= 'UI'
                     {
-                    enumLiteral_0=(Token)match(input,39,FollowSets000.FOLLOW_39_in_ruleModuleKind3422); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,40,FollowSets000.FOLLOW_40_in_ruleModuleKind3441); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getModuleKindAccess().getUIEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -4601,12 +4649,12 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1613:6: (enumLiteral_1= 'BusinessLogic' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1618:6: (enumLiteral_1= 'BusinessLogic' )
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1613:6: (enumLiteral_1= 'BusinessLogic' )
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1613:8: enumLiteral_1= 'BusinessLogic'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1618:6: (enumLiteral_1= 'BusinessLogic' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1618:8: enumLiteral_1= 'BusinessLogic'
                     {
-                    enumLiteral_1=(Token)match(input,40,FollowSets000.FOLLOW_40_in_ruleModuleKind3439); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,41,FollowSets000.FOLLOW_41_in_ruleModuleKind3458); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getModuleKindAccess().getBusinessLogicEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -4620,12 +4668,12 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1619:6: (enumLiteral_2= 'Persistence' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1624:6: (enumLiteral_2= 'Persistence' )
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1619:6: (enumLiteral_2= 'Persistence' )
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1619:8: enumLiteral_2= 'Persistence'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1624:6: (enumLiteral_2= 'Persistence' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1624:8: enumLiteral_2= 'Persistence'
                     {
-                    enumLiteral_2=(Token)match(input,41,FollowSets000.FOLLOW_41_in_ruleModuleKind3456); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,42,FollowSets000.FOLLOW_42_in_ruleModuleKind3475); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getModuleKindAccess().getPersistenceEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -4639,12 +4687,12 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1625:6: (enumLiteral_3= 'Security' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1630:6: (enumLiteral_3= 'Security' )
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1625:6: (enumLiteral_3= 'Security' )
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1625:8: enumLiteral_3= 'Security'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1630:6: (enumLiteral_3= 'Security' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1630:8: enumLiteral_3= 'Security'
                     {
-                    enumLiteral_3=(Token)match(input,42,FollowSets000.FOLLOW_42_in_ruleModuleKind3473); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,43,FollowSets000.FOLLOW_43_in_ruleModuleKind3492); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getModuleKindAccess().getSecurityEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -4658,12 +4706,12 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1631:6: (enumLiteral_4= 'Batch' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1636:6: (enumLiteral_4= 'Batch' )
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1631:6: (enumLiteral_4= 'Batch' )
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1631:8: enumLiteral_4= 'Batch'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1636:6: (enumLiteral_4= 'Batch' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1636:8: enumLiteral_4= 'Batch'
                     {
-                    enumLiteral_4=(Token)match(input,43,FollowSets000.FOLLOW_43_in_ruleModuleKind3490); if (state.failed) return current;
+                    enumLiteral_4=(Token)match(input,44,FollowSets000.FOLLOW_44_in_ruleModuleKind3509); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getModuleKindAccess().getBatchEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -4677,12 +4725,12 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1637:6: (enumLiteral_5= 'OTHER' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1642:6: (enumLiteral_5= 'OTHER' )
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1637:6: (enumLiteral_5= 'OTHER' )
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1637:8: enumLiteral_5= 'OTHER'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1642:6: (enumLiteral_5= 'OTHER' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1642:8: enumLiteral_5= 'OTHER'
                     {
-                    enumLiteral_5=(Token)match(input,44,FollowSets000.FOLLOW_44_in_ruleModuleKind3507); if (state.failed) return current;
+                    enumLiteral_5=(Token)match(input,45,FollowSets000.FOLLOW_45_in_ruleModuleKind3526); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getModuleKindAccess().getOTHEREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -4718,7 +4766,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "ruleGovernanceDecisionResult"
-    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1647:1: ruleGovernanceDecisionResult returns [Enumerator current=null] : ( (enumLiteral_0= 'pending' ) | (enumLiteral_1= 'accepted' ) | (enumLiteral_2= 'denied' ) | (enumLiteral_3= 'specific' ) ) ;
+    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1652:1: ruleGovernanceDecisionResult returns [Enumerator current=null] : ( (enumLiteral_0= 'pending' ) | (enumLiteral_1= 'accepted' ) | (enumLiteral_2= 'denied' ) | (enumLiteral_3= 'specific' ) ) ;
     public final Enumerator ruleGovernanceDecisionResult() throws RecognitionException {
         Enumerator current = null;
 
@@ -4729,48 +4777,48 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
 
          enterRule(); 
         try {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1649:28: ( ( (enumLiteral_0= 'pending' ) | (enumLiteral_1= 'accepted' ) | (enumLiteral_2= 'denied' ) | (enumLiteral_3= 'specific' ) ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1650:1: ( (enumLiteral_0= 'pending' ) | (enumLiteral_1= 'accepted' ) | (enumLiteral_2= 'denied' ) | (enumLiteral_3= 'specific' ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1654:28: ( ( (enumLiteral_0= 'pending' ) | (enumLiteral_1= 'accepted' ) | (enumLiteral_2= 'denied' ) | (enumLiteral_3= 'specific' ) ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1655:1: ( (enumLiteral_0= 'pending' ) | (enumLiteral_1= 'accepted' ) | (enumLiteral_2= 'denied' ) | (enumLiteral_3= 'specific' ) )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1650:1: ( (enumLiteral_0= 'pending' ) | (enumLiteral_1= 'accepted' ) | (enumLiteral_2= 'denied' ) | (enumLiteral_3= 'specific' ) )
-            int alt37=4;
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1655:1: ( (enumLiteral_0= 'pending' ) | (enumLiteral_1= 'accepted' ) | (enumLiteral_2= 'denied' ) | (enumLiteral_3= 'specific' ) )
+            int alt38=4;
             switch ( input.LA(1) ) {
-            case 45:
-                {
-                alt37=1;
-                }
-                break;
             case 46:
                 {
-                alt37=2;
+                alt38=1;
                 }
                 break;
             case 47:
                 {
-                alt37=3;
+                alt38=2;
                 }
                 break;
             case 48:
                 {
-                alt37=4;
+                alt38=3;
+                }
+                break;
+            case 49:
+                {
+                alt38=4;
                 }
                 break;
             default:
                 if (state.backtracking>0) {state.failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("", 37, 0, input);
+                    new NoViableAltException("", 38, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt37) {
+            switch (alt38) {
                 case 1 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1650:2: (enumLiteral_0= 'pending' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1655:2: (enumLiteral_0= 'pending' )
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1650:2: (enumLiteral_0= 'pending' )
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1650:4: enumLiteral_0= 'pending'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1655:2: (enumLiteral_0= 'pending' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1655:4: enumLiteral_0= 'pending'
                     {
-                    enumLiteral_0=(Token)match(input,45,FollowSets000.FOLLOW_45_in_ruleGovernanceDecisionResult3552); if (state.failed) return current;
+                    enumLiteral_0=(Token)match(input,46,FollowSets000.FOLLOW_46_in_ruleGovernanceDecisionResult3571); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getGovernanceDecisionResultAccess().getPendingEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -4784,12 +4832,12 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1656:6: (enumLiteral_1= 'accepted' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1661:6: (enumLiteral_1= 'accepted' )
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1656:6: (enumLiteral_1= 'accepted' )
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1656:8: enumLiteral_1= 'accepted'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1661:6: (enumLiteral_1= 'accepted' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1661:8: enumLiteral_1= 'accepted'
                     {
-                    enumLiteral_1=(Token)match(input,46,FollowSets000.FOLLOW_46_in_ruleGovernanceDecisionResult3569); if (state.failed) return current;
+                    enumLiteral_1=(Token)match(input,47,FollowSets000.FOLLOW_47_in_ruleGovernanceDecisionResult3588); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getGovernanceDecisionResultAccess().getAcceptedEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -4803,12 +4851,12 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1662:6: (enumLiteral_2= 'denied' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1667:6: (enumLiteral_2= 'denied' )
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1662:6: (enumLiteral_2= 'denied' )
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1662:8: enumLiteral_2= 'denied'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1667:6: (enumLiteral_2= 'denied' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1667:8: enumLiteral_2= 'denied'
                     {
-                    enumLiteral_2=(Token)match(input,47,FollowSets000.FOLLOW_47_in_ruleGovernanceDecisionResult3586); if (state.failed) return current;
+                    enumLiteral_2=(Token)match(input,48,FollowSets000.FOLLOW_48_in_ruleGovernanceDecisionResult3605); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getGovernanceDecisionResultAccess().getDeniedEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -4822,12 +4870,12 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1668:6: (enumLiteral_3= 'specific' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1673:6: (enumLiteral_3= 'specific' )
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1668:6: (enumLiteral_3= 'specific' )
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1668:8: enumLiteral_3= 'specific'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1673:6: (enumLiteral_3= 'specific' )
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1673:8: enumLiteral_3= 'specific'
                     {
-                    enumLiteral_3=(Token)match(input,48,FollowSets000.FOLLOW_48_in_ruleGovernanceDecisionResult3603); if (state.failed) return current;
+                    enumLiteral_3=(Token)match(input,49,FollowSets000.FOLLOW_49_in_ruleGovernanceDecisionResult3622); if (state.failed) return current;
                     if ( state.backtracking==0 ) {
 
                               current = grammarAccess.getGovernanceDecisionResultAccess().getSpecificEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -4893,7 +4941,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_17_in_ruleModule576 = new BitSet(new long[]{0x0000000000000010L});
         public static final BitSet FOLLOW_RULE_ID_in_ruleModule593 = new BitSet(new long[]{0x0000000000001000L});
         public static final BitSet FOLLOW_12_in_ruleModule610 = new BitSet(new long[]{0x0000000000040000L});
-        public static final BitSet FOLLOW_18_in_ruleModule622 = new BitSet(new long[]{0x00001F8000000000L});
+        public static final BitSet FOLLOW_18_in_ruleModule622 = new BitSet(new long[]{0x00003F0000000000L});
         public static final BitSet FOLLOW_ruleModuleKind_in_ruleModule643 = new BitSet(new long[]{0x00000000101BE000L});
         public static final BitSet FOLLOW_ruleVersion_in_ruleModule664 = new BitSet(new long[]{0x00000000001BC000L});
         public static final BitSet FOLLOW_14_in_ruleModule678 = new BitSet(new long[]{0x0000000000000010L});
@@ -4929,7 +4977,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_16_in_ruleFeature1264 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleServiceRef_in_entryRuleServiceRef1300 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleServiceRef1310 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleQualifiedName_in_ruleServiceRef1362 = new BitSet(new long[]{0x0000003300000000L});
+        public static final BitSet FOLLOW_ruleQualifiedName_in_ruleServiceRef1362 = new BitSet(new long[]{0x0000006600000000L});
         public static final BitSet FOLLOW_ruleVersionRef_in_ruleServiceRef1383 = new BitSet(new long[]{0x000000000C000002L});
         public static final BitSet FOLLOW_26_in_ruleServiceRef1401 = new BitSet(new long[]{0x0000000008000002L});
         public static final BitSet FOLLOW_27_in_ruleServiceRef1428 = new BitSet(new long[]{0x0000000000000010L});
@@ -4941,7 +4989,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleQualifiedName_in_ruleSimpleOperationRef1584 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleCapabilityRef_in_entryRuleCapabilityRef1619 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleCapabilityRef1629 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleQualifiedName_in_ruleCapabilityRef1681 = new BitSet(new long[]{0x0000003300000000L});
+        public static final BitSet FOLLOW_ruleQualifiedName_in_ruleCapabilityRef1681 = new BitSet(new long[]{0x0000006600000000L});
         public static final BitSet FOLLOW_ruleVersionRef_in_ruleCapabilityRef1702 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleVersion_in_entryRuleVersion1738 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleVersion1748 = new BitSet(new long[]{0x0000000000000002L});
@@ -4953,7 +5001,7 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleVersionId_in_ruleProductVersion1910 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleEventRef_in_entryRuleEventRef1946 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleEventRef1956 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleQualifiedName_in_ruleEventRef2008 = new BitSet(new long[]{0x0000003300000000L});
+        public static final BitSet FOLLOW_ruleQualifiedName_in_ruleEventRef2008 = new BitSet(new long[]{0x0000006600000000L});
         public static final BitSet FOLLOW_ruleVersionRef_in_ruleEventRef2029 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleImport_in_entryRuleImport2065 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleImport2075 = new BitSet(new long[]{0x0000000000000002L});
@@ -4961,62 +5009,63 @@ public class InternalSolutionDslParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleQualifiedNameWithWildCard_in_ruleImport2133 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleVersionId_in_entryRuleVersionId2170 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleVersionId2181 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_INT_in_ruleVersionId2221 = new BitSet(new long[]{0x0000000080000002L});
+        public static final BitSet FOLLOW_RULE_INT_in_ruleVersionId2221 = new BitSet(new long[]{0x0000000180000002L});
         public static final BitSet FOLLOW_31_in_ruleVersionId2240 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_RULE_INT_in_ruleVersionId2255 = new BitSet(new long[]{0x0000000080000002L});
-        public static final BitSet FOLLOW_31_in_ruleVersionId2276 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleVersionId2291 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleVersionRef_in_entryRuleVersionRef2340 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleVersionRef2350 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMinVersionRef_in_ruleVersionRef2400 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMaxVersionRef_in_ruleVersionRef2430 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleLowerBoundRangeVersionRef_in_ruleVersionRef2460 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMajorVersionRef_in_ruleVersionRef2490 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleFixedVersionRef_in_ruleVersionRef2520 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMinVersionRef_in_entryRuleMinVersionRef2555 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleMinVersionRef2565 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_32_in_ruleMinVersionRef2602 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_ruleVersionId_in_ruleMinVersionRef2623 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMaxVersionRef_in_entryRuleMaxVersionRef2659 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleMaxVersionRef2669 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_33_in_ruleMaxVersionRef2706 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_ruleVersionId_in_ruleMaxVersionRef2727 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleLowerBoundRangeVersionRef_in_entryRuleLowerBoundRangeVersionRef2763 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleLowerBoundRangeVersionRef2773 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_32_in_ruleLowerBoundRangeVersionRef2811 = new BitSet(new long[]{0x0000000400000000L});
-        public static final BitSet FOLLOW_34_in_ruleLowerBoundRangeVersionRef2823 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_ruleVersionId_in_ruleLowerBoundRangeVersionRef2845 = new BitSet(new long[]{0x0000000002000000L});
-        public static final BitSet FOLLOW_25_in_ruleLowerBoundRangeVersionRef2857 = new BitSet(new long[]{0x0000000200000000L});
-        public static final BitSet FOLLOW_33_in_ruleLowerBoundRangeVersionRef2870 = new BitSet(new long[]{0x0000000800000000L});
-        public static final BitSet FOLLOW_35_in_ruleLowerBoundRangeVersionRef2882 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_ruleVersionId_in_ruleLowerBoundRangeVersionRef2904 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleMajorVersionRef_in_entryRuleMajorVersionRef2940 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleMajorVersionRef2950 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_36_in_ruleMajorVersionRef2987 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_RULE_INT_in_ruleMajorVersionRef3004 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleFixedVersionRef_in_entryRuleFixedVersionRef3045 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleFixedVersionRef3055 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_37_in_ruleFixedVersionRef3092 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_ruleVersionId_in_ruleFixedVersionRef3113 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleQualifiedNameWithWildCard_in_entryRuleQualifiedNameWithWildCard3150 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleQualifiedNameWithWildCard3161 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleQualifiedName_in_ruleQualifiedNameWithWildCard3208 = new BitSet(new long[]{0x0000004000000002L});
-        public static final BitSet FOLLOW_38_in_ruleQualifiedNameWithWildCard3227 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleQualifiedName_in_entryRuleQualifiedName3270 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleQualifiedName3281 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleQualifiedName3321 = new BitSet(new long[]{0x0000000080000002L});
-        public static final BitSet FOLLOW_31_in_ruleQualifiedName3340 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleQualifiedName3355 = new BitSet(new long[]{0x0000000080000002L});
-        public static final BitSet FOLLOW_39_in_ruleModuleKind3422 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_40_in_ruleModuleKind3439 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_41_in_ruleModuleKind3456 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_42_in_ruleModuleKind3473 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_43_in_ruleModuleKind3490 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_44_in_ruleModuleKind3507 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_45_in_ruleGovernanceDecisionResult3552 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_46_in_ruleGovernanceDecisionResult3569 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_47_in_ruleGovernanceDecisionResult3586 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_48_in_ruleGovernanceDecisionResult3603 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_INT_in_ruleVersionId2255 = new BitSet(new long[]{0x0000000180000002L});
+        public static final BitSet FOLLOW_31_in_ruleVersionId2277 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_32_in_ruleVersionId2296 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleVersionId2312 = new BitSet(new long[]{0x0000000180000002L});
+        public static final BitSet FOLLOW_ruleVersionRef_in_entryRuleVersionRef2361 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleVersionRef2371 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMinVersionRef_in_ruleVersionRef2421 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMaxVersionRef_in_ruleVersionRef2451 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleLowerBoundRangeVersionRef_in_ruleVersionRef2481 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMajorVersionRef_in_ruleVersionRef2511 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleFixedVersionRef_in_ruleVersionRef2541 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMinVersionRef_in_entryRuleMinVersionRef2576 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleMinVersionRef2586 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_33_in_ruleMinVersionRef2623 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_ruleVersionId_in_ruleMinVersionRef2644 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMaxVersionRef_in_entryRuleMaxVersionRef2680 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleMaxVersionRef2690 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_34_in_ruleMaxVersionRef2727 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_ruleVersionId_in_ruleMaxVersionRef2748 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleLowerBoundRangeVersionRef_in_entryRuleLowerBoundRangeVersionRef2784 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleLowerBoundRangeVersionRef2794 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_33_in_ruleLowerBoundRangeVersionRef2832 = new BitSet(new long[]{0x0000000800000000L});
+        public static final BitSet FOLLOW_35_in_ruleLowerBoundRangeVersionRef2844 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_ruleVersionId_in_ruleLowerBoundRangeVersionRef2866 = new BitSet(new long[]{0x0000000002000000L});
+        public static final BitSet FOLLOW_25_in_ruleLowerBoundRangeVersionRef2878 = new BitSet(new long[]{0x0000000400000000L});
+        public static final BitSet FOLLOW_34_in_ruleLowerBoundRangeVersionRef2891 = new BitSet(new long[]{0x0000001000000000L});
+        public static final BitSet FOLLOW_36_in_ruleLowerBoundRangeVersionRef2903 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_ruleVersionId_in_ruleLowerBoundRangeVersionRef2925 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleMajorVersionRef_in_entryRuleMajorVersionRef2961 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleMajorVersionRef2971 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_37_in_ruleMajorVersionRef3008 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_RULE_INT_in_ruleMajorVersionRef3025 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleFixedVersionRef_in_entryRuleFixedVersionRef3066 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleFixedVersionRef3076 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_38_in_ruleFixedVersionRef3113 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_ruleVersionId_in_ruleFixedVersionRef3134 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleQualifiedNameWithWildCard_in_entryRuleQualifiedNameWithWildCard3171 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleQualifiedNameWithWildCard3182 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleQualifiedName_in_ruleQualifiedNameWithWildCard3229 = new BitSet(new long[]{0x0000008000000002L});
+        public static final BitSet FOLLOW_39_in_ruleQualifiedNameWithWildCard3248 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleQualifiedName_in_entryRuleQualifiedName3291 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleQualifiedName3302 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleQualifiedName3342 = new BitSet(new long[]{0x0000000080000002L});
+        public static final BitSet FOLLOW_31_in_ruleQualifiedName3361 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleQualifiedName3376 = new BitSet(new long[]{0x0000000080000002L});
+        public static final BitSet FOLLOW_40_in_ruleModuleKind3441 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_41_in_ruleModuleKind3458 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_42_in_ruleModuleKind3475 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_43_in_ruleModuleKind3492 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_44_in_ruleModuleKind3509 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_45_in_ruleModuleKind3526 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_46_in_ruleGovernanceDecisionResult3571 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_47_in_ruleGovernanceDecisionResult3588 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_48_in_ruleGovernanceDecisionResult3605 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_49_in_ruleGovernanceDecisionResult3622 = new BitSet(new long[]{0x0000000000000002L});
     }
 
 

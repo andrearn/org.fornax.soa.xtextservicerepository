@@ -47,6 +47,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="isEnd" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiresApproval" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="strictChecks" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="qualifiesFor" unique="false"
         upperBound="-1" eType="ecore:EEnum ../../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiesForEnvironment"
@@ -222,6 +223,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="internalNsQualifierPolicy"
         eType="#//InternalNsQualifierPolicy"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="qualifyingName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="noTrailingSlash" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="InternalNsQualifierPolicy">
     <eLiterals name="MUST_CONTAIN_QUALIFIER" literal="must-contain-internal-qualifier"/>

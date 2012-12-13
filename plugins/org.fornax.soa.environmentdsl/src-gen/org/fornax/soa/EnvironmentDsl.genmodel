@@ -6,7 +6,7 @@
     modelPluginID="org.fornax.soa.environmentdsl" forceOverwrite="true" modelName="EnvironmentDsl"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.environmentdsl.edit"
-    editorPluginID="org.fornax.soa.environmentdsl.editor" usedGenPackages="../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel#//semanticsDsl">
+    editorPluginID="org.fornax.soa.environmentdsl.editor" runtimeVersion="2.7" usedGenPackages="../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel#//semanticsDsl">
   <genPackages prefix="EnvironmentDsl" basePackage="org.fornax.soa" disposableProviderFactory="true"
       ecorePackage="EnvironmentDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//EnvironmentType">
@@ -39,6 +39,11 @@
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Hadoop"/>
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/CouchDB"/>
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//DatabaseKind/Neo4J"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//EndpointVisibility">
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EndpointVisibility/private"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EndpointVisibility/public"/>
+      <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//EndpointVisibility/external"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="EnvironmentDsl.ecore#//SecurityProtocol">
       <genEnumLiterals ecoreEnumLiteral="EnvironmentDsl.ecore#//SecurityProtocol/NONE"/>
@@ -189,6 +194,7 @@
     <genClasses ecoreClass="EnvironmentDsl.ecore#//Connector">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/isDefault"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/endpointVisibility"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/port"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Connector/securityProtocol"/>
     </genClasses>

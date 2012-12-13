@@ -130,8 +130,14 @@ public class ServiceRepositorySearchQuery implements ISearchQuery {
 			if (maxStateName != null && minStateName != "") {
 				maxState = eObjectLookup.getModelElementByName(maxStateName, rs, SOAProfileDslPackage.Literals.LIFECYCLE.getName());
 			}
-			
-			result = query.search (pattern, assetType, minState, maxState, rs);
+			String minVersion = null;
+			if (! "".equals(querySpec.getMinVersion()))
+				minVersion = querySpec.getMinVersion();
+			String maxVersion = null;
+			if (! "".equals(querySpec.getMaxVersion()))
+				maxVersion = querySpec.getMaxVersion();
+				
+			result = query.search (pattern, assetType, minState, maxState, minVersion, maxVersion, rs);
 		} else {
 			result = predicateSearch.search(pattern, assetType, new Predicate<IEObjectDescription>() {
 				public boolean apply(IEObjectDescription input) {

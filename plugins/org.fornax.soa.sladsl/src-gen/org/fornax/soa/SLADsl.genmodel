@@ -6,7 +6,7 @@
     modelPluginID="org.fornax.soa.sladsl" forceOverwrite="true" modelName="SLADsl"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.sladsl.edit"
-    editorPluginID="org.fornax.soa.sladsl.editor" usedGenPackages="../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel#//semanticsDsl">
+    editorPluginID="org.fornax.soa.sladsl.editor" runtimeVersion="2.7" usedGenPackages="../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel#//semanticsDsl">
   <genPackages prefix="SLADsl" basePackage="org.fornax.soa" disposableProviderFactory="true"
       ecorePackage="SLADsl.ecore#/">
     <genClasses ecoreClass="SLADsl.ecore#//SlaModel">

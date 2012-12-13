@@ -13,7 +13,7 @@ import org.fornax.soa.bindingdsl.generator.templates.BindingResolver
 
 class EnvironmentBindingResolver {
 
-	@Inject BindingResolver		bindingResolver
+	@Inject BindingResolver	bindingResolver
 	
 	def dispatch Server resolveServer (Binding bind, BindingProtocol prot) {
 		throw new UnsupportedOperationException ()

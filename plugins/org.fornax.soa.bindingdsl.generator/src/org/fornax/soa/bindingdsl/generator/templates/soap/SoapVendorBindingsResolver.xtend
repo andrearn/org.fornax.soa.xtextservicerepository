@@ -37,7 +37,7 @@ class SoapVendorBindingsResolver {
 	def dispatch String toEndpointAddressPath (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		val serverType = server.toServerTypeName ();
 		val serverVersion = server.toServerTypeVersion ();
-		val ctxRoot = ctxRootProvider.getContextRoot(mod, serverType, serverVersion);
+		val ctxRoot = ctxRootProvider.getContextRoot(mod, serverType, serverVersion, prot);
 		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
 	

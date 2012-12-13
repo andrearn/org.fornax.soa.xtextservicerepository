@@ -6,7 +6,7 @@
     modelPluginID="org.fornax.soa.basedsl" forceOverwrite="true" modelName="SOABaseDsl"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.basedsl.edit"
-    editorPluginID="org.fornax.soa.basedsl.editor">
+    editorPluginID="org.fornax.soa.basedsl.editor" runtimeVersion="2.7">
   <genPackages prefix="SOABaseDsl" basePackage="org.fornax.soa.basedsl" disposableProviderFactory="true"
       ecorePackage="SOABaseDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOABaseDsl.ecore#//GovernanceDecisionResult">
@@ -40,9 +40,6 @@
     </genClasses>
     <genClasses ecoreClass="SOABaseDsl.ecore#//FixedVersionRef">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//FixedVersionRef/fixedVersion"/>
-    </genClasses>
-    <genClasses ecoreClass="SOABaseDsl.ecore#//Qualifier">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Qualifier/qualifierName"/>
     </genClasses>
     <genClasses ecoreClass="SOABaseDsl.ecore#//GovernanceDecision">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//GovernanceDecision/subject"/>
