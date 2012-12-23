@@ -314,7 +314,7 @@ SimpleConsiderationPropertyRef:
 		
 ComplexFetchPropertyRef:
 	
-	(fetchPropertyRef = SimpleConsiderationPropertyRef 
+	(fetchPropertyRef = [Property|QualifiedName] 
 	( 
 		(flat?='flat-only') | 
 		'->' '{' 

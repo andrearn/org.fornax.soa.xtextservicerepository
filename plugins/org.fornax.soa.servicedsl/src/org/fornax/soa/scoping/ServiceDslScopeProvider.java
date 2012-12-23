@@ -4,6 +4,7 @@
 package org.fornax.soa.scoping;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -14,6 +15,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.scoping.IGlobalScopeProvider;
+import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.util.IResourceScopeCache;
 import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
@@ -32,6 +34,7 @@ import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionF
 import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.NullVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.VersionFilteringScope;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
@@ -46,6 +49,7 @@ import org.fornax.soa.serviceDsl.CapabilityRef;
 import org.fornax.soa.serviceDsl.ComplexFetchPropertyRef;
 import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
 import org.fornax.soa.serviceDsl.ConsiderationProfile;
+import org.fornax.soa.serviceDsl.ConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.EagerFetch;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.EventRef;
@@ -69,6 +73,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+
 /**
  * This class contains custom scoping description.
  * 
@@ -79,6 +84,7 @@ import com.google.inject.Injector;
 public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
 	private static final Logger logger = Logger.getLogger(ServiceDslScopeProvider.class);
 
+	@SuppressWarnings("rawtypes")
 	private VersionFilter filter;
 
 	@Inject
@@ -116,49 +122,75 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 	public IQualifiedNameProvider getNameProvider() {
 		return nameProvider;
 	}
+	
+	@Override
+	protected IScope getLocalElementsScope(IScope parent, final EObject ctx,
+			final EReference reference) {
+		if (parent instanceof VersionFilteringScope && ctx instanceof ConsiderationPropertyRef) {
+			IScope currentParent = parent;
+			while (currentParent instanceof VersionFilteringScope) {
+				currentParent  = ((VersionFilteringScope) currentParent).getParent();
+			}
+			if (currentParent != null) {
+				return super.getLocalElementsScope(currentParent, ctx, reference);
+			}
+		}
+		return super.getLocalElementsScope(parent, ctx, reference);
+		
+	}
 
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext (
 			EObject ctx, final EReference reference) {
-		if (reference==ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE && ctx instanceof VersionedTypeRef) {
+		if (reference==ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE 
+				&& ctx instanceof VersionedTypeRef) {
 			final VersionRef v = ((VersionedTypeRef) ctx).getVersionRef();
 			return createVersionFilter (v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		
-		} else if (reference==ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE && ctx instanceof BusinessObjectRef) {
+		} else if (reference==ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE 
+				&& ctx instanceof BusinessObjectRef) {
 			final VersionRef v = ((BusinessObjectRef) ctx).getVersionRef();
 			return createVersionFilter (v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		
 			//FIXME verify this ref
-		} else if (reference==ServiceDslPackage.Literals.BUSINESS_OBJECT__SUPER_BUSINESS_OBJECT && ctx instanceof BusinessObjectRef) {
+		} else if (reference==ServiceDslPackage.Literals.BUSINESS_OBJECT__SUPER_BUSINESS_OBJECT 
+				&& ctx instanceof BusinessObjectRef) {
 			final VersionRef v = ((BusinessObjectRef) ctx).getVersionRef();
 			return createVersionFilter (v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		
-		} else if (reference == ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE && ctx instanceof EnumTypeRef) {
+		} else if (reference == ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE 
+				&& ctx instanceof EnumTypeRef) {
 			final VersionRef v = ((EnumTypeRef) ctx).getVersionRef();
 			return createVersionFilter (v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		
-		} else if (reference == ServiceDslPackage.Literals.SERVICE_REF__SERVICE && ctx instanceof ServiceRef) {
+		} else if (reference == ServiceDslPackage.Literals.SERVICE_REF__SERVICE 
+				&& ctx instanceof ServiceRef) {
 			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
 			return createVersionFilter (v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		
-		} else if (reference == ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION && ctx instanceof ExceptionRef) {
+		} else if (reference == ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION 
+				&& ctx instanceof ExceptionRef) {
 			final VersionRef v = ((ExceptionRef) ctx).getVersion();
 			return createVersionFilter (v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 
-		} else if (reference == ServiceDslPackage.Literals.GLOBAL_EVENT_REF__EVENT && ctx instanceof GlobalEventRef) {
+		} else if (reference == ServiceDslPackage.Literals.GLOBAL_EVENT_REF__EVENT 
+				&& ctx instanceof GlobalEventRef) {
 			final VersionRef v = ((EventRef) ctx).getVersionRef();
 			return createVersionFilter(v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		
-		} else if (reference == ServiceDslPackage.Literals.OPERATION_EVENT_REF__EVENT && ctx instanceof OperationEventRef) {
+		} else if (reference == ServiceDslPackage.Literals.OPERATION_EVENT_REF__EVENT 
+				&& ctx instanceof OperationEventRef) {
 			final VersionRef v = ((EventRef) ctx).getVersionRef();
 			return createVersionFilter(v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 
-		} else if (reference == ServiceDslPackage.Literals.OPERATION_REF__OPERATION && ctx instanceof OperationRef) {
+		} else if (reference == ServiceDslPackage.Literals.OPERATION_REF__OPERATION 
+				&& ctx instanceof OperationRef) {
 			final VersionRef v = ((OperationRef) ctx).getVersionRef();
 			return createEContainerVersionFilter(v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		
 			
-		} else if (reference == ServiceDslPackage.Literals.SIMPLE_OPERATION_REF__OPERATION && ctx instanceof SimpleOperationRef && ctx.eContainer() instanceof RequiredServiceRef) {
+		} else if (reference == ServiceDslPackage.Literals.SIMPLE_OPERATION_REF__OPERATION 
+				&& ctx instanceof SimpleOperationRef && ctx.eContainer() instanceof RequiredServiceRef) {
 			RequiredServiceRef requiredServiceRef =	(RequiredServiceRef) ctx.eContainer();
 			final VersionRef v = requiredServiceRef.getVersionRef();
 			final QualifiedName serviceName = nameProvider.getFullyQualifiedName(requiredServiceRef.getService());
@@ -174,19 +206,24 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				
 			});
 			return versionFilter;
-		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PARAM && ctx instanceof ConsiderationParameterRef && ctx.eContainer() instanceof ConsiderationProfile) {
+		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PARAM 
+				&& ctx instanceof ConsiderationParameterRef 
+				&& ctx.eContainer() instanceof ConsiderationProfile) {
 			ConsiderationParameterRef fetchParamRef = (ConsiderationParameterRef)ctx;
 			AbstractPredicateVersionFilter<IEObjectDescription> scopeFilter = createConsiderationParamterScopeFilter(fetchParamRef);
 			if (scopeFilter != null)
 				return scopeFilter;
 
-		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PARAM && ctx instanceof ConsiderationParameterRef && ctx.eContainer() instanceof EagerFetch) {
+		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PARAM 
+				&& ctx instanceof ConsiderationParameterRef 
+				&& ctx.eContainer() instanceof EagerFetch) {
 			ConsiderationParameterRef fetchParamRef = (ConsiderationParameterRef)ctx;
 			AbstractPredicateVersionFilter<IEObjectDescription> scopeFilter = createFetchParamterScopeFilter(fetchParamRef);
 			if (scopeFilter != null)
 				return scopeFilter;
 
-		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PROPERTY_REF && ctx instanceof ConsiderationParameterRef) {
+		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PROPERTY_REF 
+				&& ctx instanceof ConsiderationParameterRef) {
 			TypeRef typeRef = ((ConsiderationParameterRef) ctx).getParam().getType();
 			AbstractPredicateVersionFilter<IEObjectDescription> f = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 			if (typeRef instanceof BusinessObjectRef) 
@@ -194,10 +231,11 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			else if (typeRef instanceof EnumTypeRef)
 				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 			return f;
-		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF && ctx instanceof SimpleConsiderationPropertyRef) {
+		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF 
+				&& ctx instanceof SimpleConsiderationPropertyRef) {
 			TypeRef typeRef = null;
 			if (ctx.eContainer() instanceof ComplexFetchPropertyRef) {
-				typeRef = ((ComplexFetchPropertyRef) ctx.eContainer()).getFetchPropertyRef().getProperty().getType();
+				typeRef = ((ComplexFetchPropertyRef) ctx.eContainer()).getFetchPropertyRef()./*getProperty().*/getType();
 			} else {
 				typeRef = ((SimpleConsiderationPropertyRef) ctx).getProperty().getType();
 			}
@@ -222,36 +260,14 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				});
 			}
 			return f;
-//		} else if (reference == ServiceDslPackage.Literals.SIMPLE_FETCH_PROPERTY_REF__PROPERTY && ctx instanceof SimpleFetchPropertyRef) {
-//			TypeRef typeRef = null;
-//			if (ctx.eContainer() instanceof ComplexFetchPropertyRef) {
-//				typeRef = ((ComplexFetchPropertyRef) ctx.eContainer()).getFetchPropertyRef().getProperty().getType();
-//			} else {
-//				typeRef = ((SimpleFetchPropertyRef) ctx).getProperty().getType();
-//			}
-//			AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
-//			
-//			if (typeRef instanceof BusinessObjectRef) 
-//				f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-//			else if (typeRef instanceof EnumTypeRef)
-//				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), DslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-//			if (typeRef instanceof VersionedTypeRef) {
-//				VersionedTypeRef verTypeRef = (VersionedTypeRef) typeRef;
-//				final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());	
-//				f.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
-//
-//					public boolean apply(IEObjectDescription input) {
-//						if (input.getQualifiedName().startsWith(verTypeName))
-//							return true;
-//						else
-//							return false;
-//					}
-//					
-//				});
-//			}
-//			return f;
-		} else if (reference == ServiceDslPackage.Literals.COMPLEX_FETCH_PROPERTY_REF && ctx instanceof ComplexFetchPropertyRef) {
-			TypeRef typeRef = ((ComplexFetchPropertyRef) ctx).getFetchPropertyRef().getProperty().getType();
+		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF__PROPERTY 
+				&& ctx instanceof SimpleConsiderationPropertyRef) {
+			return createFilterForSimpleConsPropRefProperty(ctx);
+		} else if ("property".equals(reference.getName()) && ctx instanceof ComplexFetchPropertyRef) {
+			return createFilterForPropertyOfComplexFetchPropertyRef(ctx);
+		} else if (reference == ServiceDslPackage.Literals.COMPLEX_FETCH_PROPERTY_REF 
+				&& ctx instanceof ComplexFetchPropertyRef) {
+			TypeRef typeRef = ((ComplexFetchPropertyRef) ctx).getFetchPropertyRef()./*getProperty().*/getType();
 			AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
 			if (typeRef instanceof BusinessObjectRef) 
 				f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
@@ -259,102 +275,205 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 			return f;
 			
-		} else if (reference == ServiceDslPackage.Literals.MESSAGE_HEADER_REF__HEADER && ctx instanceof MessageHeaderRef) {
+		} else if (reference == ServiceDslPackage.Literals.MESSAGE_HEADER_REF__HEADER 
+				&& ctx instanceof MessageHeaderRef) {
 			final VersionRef v = ((MessageHeaderRef) ctx).getVersionRef();
 			return createStateLessVersionFilter (v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-		} else if (reference==ServiceDslPackage.Literals.CAPABILITY_REF__VERSION_REF && ctx instanceof CapabilityRef) {
+		} else if (reference==ServiceDslPackage.Literals.CAPABILITY_REF__VERSION_REF 
+				&& ctx instanceof CapabilityRef) {
 			final VersionRef v = ((CapabilityRef) ctx).getVersionRef();
 			return createVersionFilter (v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 
-		} else if (reference.eContainer() instanceof EClass && "operation".equals(reference.getName()) && ctx instanceof RequiredServiceRef) {
-			RequiredServiceRef requiredServiceRef =	(RequiredServiceRef) ctx;
-			final VersionRef v = requiredServiceRef.getVersionRef();
-			final QualifiedName serviceName = nameProvider.getFullyQualifiedName(requiredServiceRef.getService());
-			AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = createEContainerVersionFilter(v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-			versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription>() {
+		} else if (reference.eContainer() instanceof EClass && "operation".equals(reference.getName()) 
+				&& ctx instanceof RequiredServiceRef) {
+			return createFilterForOperationRef(ctx);
+		} else if ((reference == ServiceDslPackage.Literals.EAGER_FETCH__EAGER_FETCH_ASSOC || "param".equals(reference.getName())) && ctx instanceof EagerFetch) {
+			EagerFetch fetchSpec = (EagerFetch)ctx;
+			try {
+				return createFilterForEagerFeatchAssocOfEagerFetch(fetchSpec);
+			} catch (Exception ex) {
+				logger.error("Error creating scope filter for FetchParameterRefs", ex);
+			}
+			
+		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF__PROPERTY 
+				&& ctx.eContainer() instanceof ConsiderationParameterRef) {
+			//FIXME obsolete
+			return createFilterForSimpleConsPropRefBelowConsParamRef(ctx);
+		} else if (reference == ServiceDslPackage.Literals.COMPLEX_FETCH_PROPERTY_REF__FETCH_PROPERTY_REF 
+				&& ctx instanceof ComplexFetchPropertyRef) {
+			try {
+				TypeRef typeRef = ((ComplexFetchPropertyRef) ctx).getFetchPropertyRef().getType();
+				return getPropertiyFilterFromTypeRef(ctx, typeRef);
+			} catch (Throwable ex) {
+				logger.error("Error resolving a ComplexFetchPropertyRef fetchPorpertyRef");
+			}
+
+		}
+
+		return new NullVersionFilter<IEObjectDescription>();
+	}
+
+	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForOperationRef(
+			EObject ctx) {
+		RequiredServiceRef requiredServiceRef =	(RequiredServiceRef) ctx;
+		final VersionRef v = requiredServiceRef.getVersionRef();
+		final QualifiedName serviceName = nameProvider.getFullyQualifiedName(requiredServiceRef.getService());
+		AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = createEContainerVersionFilter(v, ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription>() {
+
+			public boolean apply(IEObjectDescription input) {
+				if (input.getQualifiedName().startsWith(serviceName))
+					return true;
+				else
+					return false;
+			}
+			
+		});
+		return versionFilter;
+	}
+
+	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForSimpleConsPropRefProperty(
+			EObject ctx) {
+		TypeRef typeRef = null;
+		if (ctx.eContainer() instanceof ComplexFetchPropertyRef) {
+			typeRef = ((ComplexFetchPropertyRef) ctx.eContainer()).getFetchPropertyRef()./*getProperty().*/getType();
+		} else if (ctx.eContainer() instanceof ConsiderationParameterRef){
+			typeRef = ((ConsiderationParameterRef) ctx.eContainer()).getParam().getType();
+		} else if (ctx.eContainer() instanceof SimpleConsiderationPropertyRef) {
+			typeRef = ((ConsiderationParameterRef) ctx.eContainer()).getParam().getType();
+		}
+		AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
+		
+		if (typeRef instanceof BusinessObjectRef) 
+			f = createVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		else if (typeRef instanceof EnumTypeRef)
+			f = createVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		if (typeRef instanceof VersionedTypeRef) {
+			f = createVersionFilter (((VersionedTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+			VersionedTypeRef verTypeRef = (VersionedTypeRef) typeRef;
+			final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());	
+			f.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
 
 				public boolean apply(IEObjectDescription input) {
-					if (input.getQualifiedName().startsWith(serviceName))
+					QualifiedName qualifiedName = input.getQualifiedName();
+					if (qualifiedName.startsWith(verTypeName))
 						return true;
 					else
 						return false;
 				}
 				
 			});
-			return versionFilter;
-		} else if ((reference == ServiceDslPackage.Literals.EAGER_FETCH__EAGER_FETCH_ASSOC || "param".equals(reference.getName())) && ctx instanceof EagerFetch) {
-			EagerFetch fetchSpec = (EagerFetch)ctx;
-			try {
-				Operation op = ServiceDslElementAccessor.INSTANCE.getOwningOperation(fetchSpec);
-				if (op != null) {
-					final Iterable<QualifiedName> paramNames = Iterables.transform(op.getReturn(), new Function<Parameter, QualifiedName>() {
-		
-						public QualifiedName apply(Parameter input) {
-							return nameProvider.getFullyQualifiedName(input);
-						}
-						
-					});
-					AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
-					filter.setPreFilterPredicate (new Predicate<IEObjectDescription>(){
-						
-						public boolean apply(IEObjectDescription input) {
-							try {
-								for(QualifiedName paramName : paramNames) {
-									if (paramName.equals (input.getQualifiedName()))
-										return true;
-								}
-							} catch (Exception e) {
-								logger.error("Error filtering Parameters", e);
-							}
-							return false;
-						}
-						
-					});
-					return filter;
-				}
-			} catch (Exception ex) {
-				logger.error("Error creating scope filter for FetchParameterRefs", ex);
-			}
-			
-		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF__PROPERTY && ctx instanceof ConsiderationParameterRef) {
-			TypeRef typeRef = ((ConsiderationParameterRef) ctx).getParam().getType();
-			AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = new NullVersionFilter<IEObjectDescription>();
-			if (typeRef instanceof BusinessObjectRef) {
-				versionFilter = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-				BusinessObjectRef verTypeRef = (BusinessObjectRef) typeRef;
-				final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());
-				versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
-
-					public boolean apply(IEObjectDescription input) {
-						if (input.getQualifiedName().startsWith(verTypeName))
-							return true;
-						else
-							return false;
-					}
-					
-				});
-			} else if (typeRef instanceof EnumTypeRef) {
-				versionFilter = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-			} else if (typeRef instanceof VersionedTypeRef) {
-				versionFilter = createVersionFilter (((VersionedTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-				VersionedTypeRef verTypeRef = (VersionedTypeRef) typeRef;
-				final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());
-				versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
-
-					public boolean apply(IEObjectDescription input) {
-						if (input.getQualifiedName().startsWith(verTypeName))
-							return true;
-						else
-							return false;
-					}
-					
-				});
-			}
-			return versionFilter;
-			
 		}
+		return f;
+	}
 
-		return new NullVersionFilter<IEObjectDescription>();
+	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForPropertyOfComplexFetchPropertyRef(
+			EObject ctx) {
+		TypeRef typeRef = null;
+		if (ctx.eContainer() instanceof ComplexFetchPropertyRef) {
+			typeRef = ((ComplexFetchPropertyRef) ctx.eContainer()).getFetchPropertyRef()./*getProperty().*/getType();
+		} else {
+				typeRef = ((ComplexFetchPropertyRef) ctx).getFetchPropertyRef().getType();
+		}
+		AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
+		
+		if (typeRef instanceof BusinessObjectRef) 
+			f = createVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		else if (typeRef instanceof EnumTypeRef)
+			f = createVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		if (typeRef instanceof VersionedTypeRef) {
+			f = createVersionFilter (((VersionedTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+			VersionedTypeRef verTypeRef = (VersionedTypeRef) typeRef;
+			final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());	
+			f.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
+
+				public boolean apply(IEObjectDescription input) {
+					QualifiedName qualifiedName = input.getQualifiedName();
+					if (qualifiedName.startsWith(verTypeName))
+						return true;
+					else
+						return false;
+				}
+				
+			});
+		}
+		return f;
+	}
+
+	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForEagerFeatchAssocOfEagerFetch(
+			EagerFetch fetchSpec) {
+		Operation op = ServiceDslElementAccessor.INSTANCE.getOwningOperation(fetchSpec);
+		if (op != null) {
+			final Iterable<QualifiedName> paramNames = Iterables.transform(op.getReturn(), new Function<Parameter, QualifiedName>() {
+
+				public QualifiedName apply(Parameter input) {
+					return nameProvider.getFullyQualifiedName(input);
+				}
+				
+			});
+			AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
+			filter.setPreFilterPredicate (new Predicate<IEObjectDescription>(){
+				
+				public boolean apply(IEObjectDescription input) {
+					try {
+						for(QualifiedName paramName : paramNames) {
+							if (paramName.equals (input.getQualifiedName()))
+								return true;
+						}
+					} catch (Exception e) {
+						logger.error("Error filtering Parameters", e);
+					}
+					return false;
+				}
+				
+			});
+			return filter;
+		} else {
+			return new NullVersionFilter<IEObjectDescription>();
+		}
+	}
+
+	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForSimpleConsPropRefBelowConsParamRef(
+			EObject ctx) {
+		TypeRef typeRef = ((ConsiderationParameterRef) ctx.eContainer()).getParam().getType();
+		return getPropertiyFilterFromTypeRef(ctx, typeRef);
+	}
+
+	private AbstractPredicateVersionFilter<IEObjectDescription> getPropertiyFilterFromTypeRef(
+			EObject ctx, TypeRef typeRef) {
+		AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = new NullVersionFilter<IEObjectDescription>();
+		if (typeRef instanceof BusinessObjectRef) {
+			versionFilter = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+			BusinessObjectRef verTypeRef = (BusinessObjectRef) typeRef;
+			final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());
+			versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
+
+				public boolean apply(IEObjectDescription input) {
+					if (input.getQualifiedName().startsWith(verTypeName))
+						return true;
+					else
+						return false;
+				}
+				
+			});
+		} else if (typeRef instanceof EnumTypeRef) {
+			versionFilter = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+		} else if (typeRef instanceof VersionedTypeRef) {
+			versionFilter = createVersionFilter (((VersionedTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
+			VersionedTypeRef verTypeRef = (VersionedTypeRef) typeRef;
+			final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());
+			versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
+
+				public boolean apply(IEObjectDescription input) {
+					if (input.getQualifiedName().startsWith(verTypeName))
+						return true;
+					else
+						return false;
+				}
+				
+			});
+		}
+		return versionFilter;
 	}
 
 	private AbstractPredicateVersionFilter<IEObjectDescription> createFetchParamterScopeFilter(ConsiderationParameterRef fetchParamRef) {
@@ -392,9 +511,9 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		return null;
 	}
 	
-	private AbstractPredicateVersionFilter<IEObjectDescription> createConsiderationParamterScopeFilter(ConsiderationParameterRef fetchParamRef) {
+	private AbstractPredicateVersionFilter<IEObjectDescription> createConsiderationParamterScopeFilter(ConsiderationParameterRef paramRef) {
 		try {
-			Operation op = ServiceDslElementAccessor.INSTANCE.getOwningOperation(fetchParamRef);
+			Operation op = ServiceDslElementAccessor.INSTANCE.getOwningOperation(paramRef);
 			if (op != null) {
 				Iterable<Parameter> params = Iterables.concat(op.getParameters(), op.getReturn());
 				final Iterable<QualifiedName> paramNames = Iterables.transform(params, new Function<Parameter, QualifiedName>() {

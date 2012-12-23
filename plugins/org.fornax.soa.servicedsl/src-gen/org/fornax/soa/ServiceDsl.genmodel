@@ -212,7 +212,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SimpleConsiderationPropertyRef/property"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//ComplexFetchPropertyRef">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ComplexFetchPropertyRef/fetchPropertyRef"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ComplexFetchPropertyRef/fetchPropertyRef"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//ComplexFetchPropertyRef/flat"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ComplexFetchPropertyRef/nestedPropertyRef"/>
     </genClasses>
