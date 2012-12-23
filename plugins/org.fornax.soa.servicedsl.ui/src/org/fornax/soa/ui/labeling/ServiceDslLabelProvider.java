@@ -11,6 +11,8 @@ import org.fornax.soa.basedsl.sOABaseDsl.Import;
 import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
+import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
+import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
 import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
@@ -22,6 +24,7 @@ import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.RequiredServiceRef;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceRef;
+import org.fornax.soa.serviceDsl.SimpleConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.TypeRef;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 
@@ -159,6 +162,16 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 
 	String image (Import ele) {
 		return "full/obj16/imp_obj.gif";
+	}
+	
+	String text(ConsiderationParameterRef ele) {
+		return ele.getParam().getName();
+	}
+	String text(ComplexConsiderationPropertyRef ele) {
+		return ele.getParentProperty().getName();
+	}
+	String text(SimpleConsiderationPropertyRef ele) {
+		return ele.getProperty().getName();
 	}
 	
 	

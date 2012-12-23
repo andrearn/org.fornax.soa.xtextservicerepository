@@ -2,6 +2,7 @@ package org.fornax.soa.basedsl.scoping.versions;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.Delayed;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.naming.QualifiedName;
@@ -16,12 +17,14 @@ public class VersionFilteringScope extends FilteringScope {
 	
 	private AbstractPredicateVersionFilter<IEObjectDescription> filter;
 	private boolean ignoreCase;
+	private IScope parent;
 
 	public VersionFilteringScope(IScope delegate,
 			AbstractPredicateVersionFilter <IEObjectDescription> filter, boolean ignoreCase) {
 		super(delegate, filter);
 		this.filter = filter;
 		this.ignoreCase = ignoreCase;
+		parent = delegate;
 	}
 
 	@Override
@@ -51,6 +54,10 @@ public class VersionFilteringScope extends FilteringScope {
 		Iterable<IEObjectDescription> elements = getElements (name);
 		List<IEObjectDescription> ieDesc = Lists.newArrayList (filter.getBestMatchByNames (elements, ignoreCase).values());
 		return getFirst (ieDesc);
+	}
+	
+	public IScope getParent () {
+		return parent;
 	}
 
 }

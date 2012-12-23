@@ -4,7 +4,6 @@
 package org.fornax.soa.scoping;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -46,14 +45,13 @@ import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateRe
 import org.fornax.soa.service.util.ServiceDslElementAccessor;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.CapabilityRef;
-import org.fornax.soa.serviceDsl.ComplexFetchPropertyRef;
+import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
-import org.fornax.soa.serviceDsl.ConsiderationProfile;
 import org.fornax.soa.serviceDsl.ConsiderationPropertyRef;
-import org.fornax.soa.serviceDsl.EagerFetch;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.EventRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
+import org.fornax.soa.serviceDsl.ExecutionProfile;
 import org.fornax.soa.serviceDsl.GlobalEventRef;
 import org.fornax.soa.serviceDsl.MessageHeaderRef;
 import org.fornax.soa.serviceDsl.Operation;
@@ -208,17 +206,9 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			return versionFilter;
 		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PARAM 
 				&& ctx instanceof ConsiderationParameterRef 
-				&& ctx.eContainer() instanceof ConsiderationProfile) {
-			ConsiderationParameterRef fetchParamRef = (ConsiderationParameterRef)ctx;
-			AbstractPredicateVersionFilter<IEObjectDescription> scopeFilter = createConsiderationParamterScopeFilter(fetchParamRef);
-			if (scopeFilter != null)
-				return scopeFilter;
-
-		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PARAM 
-				&& ctx instanceof ConsiderationParameterRef 
-				&& ctx.eContainer() instanceof EagerFetch) {
-			ConsiderationParameterRef fetchParamRef = (ConsiderationParameterRef)ctx;
-			AbstractPredicateVersionFilter<IEObjectDescription> scopeFilter = createFetchParamterScopeFilter(fetchParamRef);
+				&& ctx.eContainer() instanceof ExecutionProfile) {
+			ConsiderationParameterRef paramRef = (ConsiderationParameterRef)ctx;
+			AbstractPredicateVersionFilter<IEObjectDescription> scopeFilter = createConsiderationParameterScopeFilter(paramRef);
 			if (scopeFilter != null)
 				return scopeFilter;
 
@@ -234,8 +224,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF 
 				&& ctx instanceof SimpleConsiderationPropertyRef) {
 			TypeRef typeRef = null;
-			if (ctx.eContainer() instanceof ComplexFetchPropertyRef) {
-				typeRef = ((ComplexFetchPropertyRef) ctx.eContainer()).getFetchPropertyRef()./*getProperty().*/getType();
+			if (ctx.eContainer() instanceof ComplexConsiderationPropertyRef) {
+				typeRef = ((ComplexConsiderationPropertyRef) ctx.eContainer()).getParentProperty().getType();
 			} else {
 				typeRef = ((SimpleConsiderationPropertyRef) ctx).getProperty().getType();
 			}
@@ -263,11 +253,11 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF__PROPERTY 
 				&& ctx instanceof SimpleConsiderationPropertyRef) {
 			return createFilterForSimpleConsPropRefProperty(ctx);
-		} else if ("property".equals(reference.getName()) && ctx instanceof ComplexFetchPropertyRef) {
-			return createFilterForPropertyOfComplexFetchPropertyRef(ctx);
-		} else if (reference == ServiceDslPackage.Literals.COMPLEX_FETCH_PROPERTY_REF 
-				&& ctx instanceof ComplexFetchPropertyRef) {
-			TypeRef typeRef = ((ComplexFetchPropertyRef) ctx).getFetchPropertyRef()./*getProperty().*/getType();
+		} else if ("property".equals(reference.getName()) && ctx instanceof ComplexConsiderationPropertyRef) {
+			return createFilterForPropertyOfComplexConsPropertyRef(ctx);
+		} else if (reference == ServiceDslPackage.Literals.COMPLEX_CONSIDERATION_PROPERTY_REF 
+				&& ctx instanceof ComplexConsiderationPropertyRef) {
+			TypeRef typeRef = ((ComplexConsiderationPropertyRef) ctx).getParentProperty().getType();
 			AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
 			if (typeRef instanceof BusinessObjectRef) 
 				f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
@@ -287,28 +277,35 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		} else if (reference.eContainer() instanceof EClass && "operation".equals(reference.getName()) 
 				&& ctx instanceof RequiredServiceRef) {
 			return createFilterForOperationRef(ctx);
-		} else if ((reference == ServiceDslPackage.Literals.EAGER_FETCH__EAGER_FETCH_ASSOC || "param".equals(reference.getName())) && ctx instanceof EagerFetch) {
-			EagerFetch fetchSpec = (EagerFetch)ctx;
-			try {
-				return createFilterForEagerFeatchAssocOfEagerFetch(fetchSpec);
-			} catch (Exception ex) {
-				logger.error("Error creating scope filter for FetchParameterRefs", ex);
-			}
 			
 		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF__PROPERTY 
 				&& ctx.eContainer() instanceof ConsiderationParameterRef) {
 			//FIXME obsolete
 			return createFilterForSimpleConsPropRefBelowConsParamRef(ctx);
-		} else if (reference == ServiceDslPackage.Literals.COMPLEX_FETCH_PROPERTY_REF__FETCH_PROPERTY_REF 
-				&& ctx instanceof ComplexFetchPropertyRef) {
-			try {
-				TypeRef typeRef = ((ComplexFetchPropertyRef) ctx).getFetchPropertyRef().getType();
-				return getPropertiyFilterFromTypeRef(ctx, typeRef);
-			} catch (Throwable ex) {
-				logger.error("Error resolving a ComplexFetchPropertyRef fetchPorpertyRef");
-			}
 
+		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF__PROPERTY && ctx instanceof ConsiderationParameterRef) {
+			try {
+				TypeRef typeRef = ((ConsiderationParameterRef) ctx).getParam().getType();
+				return getPropertyFilterFromTypeRef(ctx, typeRef);
+			} catch (Throwable ex) {
+				logger.error("Error resolving a ConsiderationParameterRef propertyRef");
+			}
+		} else if (reference == ServiceDslPackage.Literals.COMPLEX_CONSIDERATION_PROPERTY_REF__PARENT_PROPERTY  && ctx instanceof ConsiderationParameterRef) {
+			try {
+				TypeRef typeRef = ((ConsiderationParameterRef) ctx).getParam().getType();
+				return getPropertyFilterFromTypeRef(ctx, typeRef);
+			} catch (Throwable ex) {
+				logger.error("Error resolving a ConsiderationParameterRef propertyRef");
+			}
+		} else if (reference == ServiceDslPackage.Literals.COMPLEX_CONSIDERATION_PROPERTY_REF__PARENT_PROPERTY  && ctx instanceof ComplexConsiderationPropertyRef) {
+			try {
+				TypeRef typeRef = ((ComplexConsiderationPropertyRef) ctx).getParentProperty().getType();
+				return getPropertyFilterFromTypeRef(ctx, typeRef);
+			} catch (Throwable ex) {
+				logger.error("Error resolving a ConsiderationParameterRef propertyRef");
+			}
 		}
+		
 
 		return new NullVersionFilter<IEObjectDescription>();
 	}
@@ -335,8 +332,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForSimpleConsPropRefProperty(
 			EObject ctx) {
 		TypeRef typeRef = null;
-		if (ctx.eContainer() instanceof ComplexFetchPropertyRef) {
-			typeRef = ((ComplexFetchPropertyRef) ctx.eContainer()).getFetchPropertyRef()./*getProperty().*/getType();
+		if (ctx.eContainer() instanceof ComplexConsiderationPropertyRef) {
+			typeRef = ((ComplexConsiderationPropertyRef) ctx.eContainer()).getParentProperty().getType();
 		} else if (ctx.eContainer() instanceof ConsiderationParameterRef){
 			typeRef = ((ConsiderationParameterRef) ctx.eContainer()).getParam().getType();
 		} else if (ctx.eContainer() instanceof SimpleConsiderationPropertyRef) {
@@ -367,13 +364,13 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		return f;
 	}
 
-	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForPropertyOfComplexFetchPropertyRef(
+	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForPropertyOfComplexConsPropertyRef(
 			EObject ctx) {
 		TypeRef typeRef = null;
-		if (ctx.eContainer() instanceof ComplexFetchPropertyRef) {
-			typeRef = ((ComplexFetchPropertyRef) ctx.eContainer()).getFetchPropertyRef()./*getProperty().*/getType();
+		if (ctx.eContainer() instanceof ComplexConsiderationPropertyRef) {
+			typeRef = ((ComplexConsiderationPropertyRef) ctx.eContainer()).getParentProperty().getType();
 		} else {
-				typeRef = ((ComplexFetchPropertyRef) ctx).getFetchPropertyRef().getType();
+				typeRef = ((ComplexConsiderationPropertyRef) ctx).getParentProperty().getType();
 		}
 		AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
 		
@@ -400,46 +397,14 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		return f;
 	}
 
-	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForEagerFeatchAssocOfEagerFetch(
-			EagerFetch fetchSpec) {
-		Operation op = ServiceDslElementAccessor.INSTANCE.getOwningOperation(fetchSpec);
-		if (op != null) {
-			final Iterable<QualifiedName> paramNames = Iterables.transform(op.getReturn(), new Function<Parameter, QualifiedName>() {
-
-				public QualifiedName apply(Parameter input) {
-					return nameProvider.getFullyQualifiedName(input);
-				}
-				
-			});
-			AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
-			filter.setPreFilterPredicate (new Predicate<IEObjectDescription>(){
-				
-				public boolean apply(IEObjectDescription input) {
-					try {
-						for(QualifiedName paramName : paramNames) {
-							if (paramName.equals (input.getQualifiedName()))
-								return true;
-						}
-					} catch (Exception e) {
-						logger.error("Error filtering Parameters", e);
-					}
-					return false;
-				}
-				
-			});
-			return filter;
-		} else {
-			return new NullVersionFilter<IEObjectDescription>();
-		}
-	}
 
 	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForSimpleConsPropRefBelowConsParamRef(
 			EObject ctx) {
 		TypeRef typeRef = ((ConsiderationParameterRef) ctx.eContainer()).getParam().getType();
-		return getPropertiyFilterFromTypeRef(ctx, typeRef);
+		return getPropertyFilterFromTypeRef(ctx, typeRef);
 	}
 
-	private AbstractPredicateVersionFilter<IEObjectDescription> getPropertiyFilterFromTypeRef(
+	private AbstractPredicateVersionFilter<IEObjectDescription> getPropertyFilterFromTypeRef(
 			EObject ctx, TypeRef typeRef) {
 		AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = new NullVersionFilter<IEObjectDescription>();
 		if (typeRef instanceof BusinessObjectRef) {
@@ -475,43 +440,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		}
 		return versionFilter;
 	}
-
-	private AbstractPredicateVersionFilter<IEObjectDescription> createFetchParamterScopeFilter(ConsiderationParameterRef fetchParamRef) {
-		try {
-			Operation op = ServiceDslElementAccessor.INSTANCE.getOwningOperation(fetchParamRef);
-			if (op != null) {
-				final Iterable<QualifiedName> paramNames = Iterables.transform(op.getReturn(), new Function<Parameter, QualifiedName>() {
-
-					public QualifiedName apply(Parameter input) {
-						return nameProvider.getFullyQualifiedName(input);
-					}
-					
-				});
-				AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
-				filter.setPreFilterPredicate (new Predicate<IEObjectDescription>(){
-					
-					public boolean apply(IEObjectDescription input) {
-						try {
-							for(QualifiedName paramName : paramNames) {
-								if (paramName.equals (input.getQualifiedName()))
-									return true;
-							}
-						} catch (Exception e) {
-							logger.error("Error filtering Parameters", e);
-						}
-						return false;
-					}
-					
-				});
-				return filter;
-			}
-		} catch (Exception ex) {
-			logger.error("Error creating scope filter for FetchParameterRefs", ex);
-		}
-		return null;
-	}
 	
-	private AbstractPredicateVersionFilter<IEObjectDescription> createConsiderationParamterScopeFilter(ConsiderationParameterRef paramRef) {
+	private AbstractPredicateVersionFilter<IEObjectDescription> createConsiderationParameterScopeFilter(ConsiderationParameterRef paramRef) {
 		try {
 			Operation op = ServiceDslElementAccessor.INSTANCE.getOwningOperation(paramRef);
 			if (op != null) {

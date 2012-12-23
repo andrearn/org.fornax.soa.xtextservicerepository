@@ -286,15 +286,29 @@ ServiceRef:
  */
 RequiredServiceRef:
 	service=[Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')? ('calling' (calledOperations+=SimpleOperationRef) (',' calledOperations+=SimpleOperationRef)*)?;
-	
+
+/*
+ * A reference to a service operation with a version constraint
+ */	
 OperationRef:
 	operation=[Operation|QualifiedName] versionRef=VersionRef;
 	
+/*
+ * A reference to a service operation without a version constraint, 
+ * taking the version constraint from the service reference defined in the same context
+ */	
 SimpleOperationRef: 
 	operation=[Operation|QualifiedName];
 	
 PropertyRef:
 	property=[Property|QualifiedName] versionRef=VersionRef;
+
+
+/* defines the execution of an operation in term of considered parameters */
+ExecutionProfile:
+	((isDefault?='default')? 'execution-profile' profileName=ID)? 'considers' '{' 
+		consideredParam+=ConsiderationParameterRef+ 
+	'}';
 	
 	
 ConsiderationParameterRef:
@@ -302,19 +316,17 @@ ConsiderationParameterRef:
 	)+ '}';
 	
 ConsiderationPropertyRef:
-	SimpleConsiderationPropertyRef | ComplexFetchPropertyRef
+	SimpleConsiderationPropertyRef | ComplexConsiderationPropertyRef
 ;
 
 SimpleConsiderationPropertyRef:
 	property=[Property|QualifiedName]
 ;
 
-
-// Fetch specifications for data retrieval
 		
-ComplexFetchPropertyRef:
+ComplexConsiderationPropertyRef:
 	
-	(fetchPropertyRef = [Property|QualifiedName] 
+	(parentProperty = [Property|QualifiedName] 
 	( 
 		(flat?='flat-only') | 
 		'->' '{' 
@@ -419,8 +431,7 @@ Operation:
 		 * Overrides the message header declaration from the architecture profile or service for this operation
 		 */
 		('messageHeader' messageHeader = MessageHeaderRef )?
-		(consideration=ConsiderationProfile)?
-		(fetchProfile+=FetchProfile)*
+		(executionProfile=ExecutionProfile)?
 		('realizes-capabilty' '{'(realizedCapabilies+=CapabilityRef)+ '}')?	
 		('supports-capabilty' '{'(supportedCapabilies+=CapabilityRef)+ '}')?	
 		('tags' (tags+=[semanticsDsl::Tag])+)*
@@ -493,29 +504,3 @@ enum MEP :
  * </ul>
  */	
 enum Visibility : public | domain | private; 
-
-/*
- * Defines what data will be fetch. Consumers can rely on respective BO properties being set
- */
-FetchProfile:
-	'fetch-profile' (isDefault?='default')? profileName=ID fetchSpec=FetchSpec ;
-
-FetchSpec: EagerFetch | FlatFetch;
-
-/*
- * Defines object properties to be always fetched
- */
-EagerFetch: 
-	'fetches' '{' 
-		eagerFetchAssoc+=ConsiderationParameterRef+ 
-	'}';
-
-/*
- * Don't fetch properties of nested objects
- */
-FlatFetch: 'fetches-flat-only' {FlatFetch};
-
-ConsiderationProfile:
-	'considers' '{' 
-		consideredParam+=ConsiderationParameterRef+ 
-	'}';

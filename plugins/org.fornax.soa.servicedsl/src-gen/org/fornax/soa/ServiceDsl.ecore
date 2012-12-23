@@ -228,6 +228,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExecutionProfile">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDefault" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="profileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="consideredParam" upperBound="-1"
+        eType="#//ConsiderationParameterRef" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConsiderationParameterRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="param" eType="#//Parameter"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="propertyRef" upperBound="-1"
@@ -237,8 +243,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="SimpleConsiderationPropertyRef" eSuperTypes="#//ConsiderationPropertyRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="property" eType="#//Property"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ComplexFetchPropertyRef" eSuperTypes="#//ConsiderationPropertyRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fetchPropertyRef" eType="#//Property"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ComplexConsiderationPropertyRef" eSuperTypes="#//ConsiderationPropertyRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentProperty" eType="#//Property"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="flat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="nestedPropertyRef" upperBound="-1"
         eType="#//ConsiderationPropertyRef" containment="true"/>
@@ -318,10 +324,8 @@
         eType="#//OperationRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeader" eType="#//MessageHeaderRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="consideration" eType="#//ConsiderationProfile"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="executionProfile" eType="#//ExecutionProfile"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fetchProfile" upperBound="-1"
-        eType="#//FetchProfile" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="realizedCapabilies" upperBound="-1"
         eType="#//CapabilityRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCapabilies" upperBound="-1"
@@ -388,21 +392,5 @@
     <eLiterals name="public" literal="public"/>
     <eLiterals name="domain" value="1" literal="domain"/>
     <eLiterals name="private" value="2" literal="private"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FetchProfile">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDefault" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="profileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fetchSpec" eType="#//FetchSpec"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FetchSpec"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EagerFetch" eSuperTypes="#//FetchSpec">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="eagerFetchAssoc" upperBound="-1"
-        eType="#//ConsiderationParameterRef" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FlatFetch" eSuperTypes="#//FetchSpec"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ConsiderationProfile">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="consideredParam" upperBound="-1"
-        eType="#//ConsiderationParameterRef" containment="true"/>
   </eClassifiers>
 </ecore:EPackage>

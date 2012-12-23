@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
@@ -19,12 +20,14 @@ import org.fornax.soa.basedsl.sOABaseDsl.Import;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
+import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
 import org.fornax.soa.serviceDsl.RequiredServiceRef;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceModel;
 import org.fornax.soa.serviceDsl.ServiceRef;
+import org.fornax.soa.serviceDsl.SimpleConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.SimpleOperationRef;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 
@@ -67,6 +70,7 @@ public class ServiceDslProposalProvider extends AbstractServiceDslProposalProvid
 //		}
 //		
 //	}
+	
 
 	private void calculateVersionProposals (EObject model,
 			ContentAssistContext context, ICompletionProposalAcceptor acceptor, boolean majorVersionsOnly) {
