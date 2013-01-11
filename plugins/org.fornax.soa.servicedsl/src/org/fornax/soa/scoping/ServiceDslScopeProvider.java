@@ -68,6 +68,7 @@ import org.fornax.soa.serviceDsl.VersionedTypeRef;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -124,13 +125,14 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 	@Override
 	protected IScope getLocalElementsScope(IScope parent, final EObject ctx,
 			final EReference reference) {
-		if (parent instanceof VersionFilteringScope && ctx instanceof ConsiderationPropertyRef) {
+		if (parent instanceof VersionFilteringScope && ctx instanceof ConsiderationPropertyRef ) {
 			IScope currentParent = parent;
-			while (currentParent instanceof VersionFilteringScope) {
+			while (currentParent instanceof VersionFilteringScope && ((VersionFilteringScope) currentParent).getParent() instanceof VersionFilteringScope) {
 				currentParent  = ((VersionFilteringScope) currentParent).getParent();
 			}
 			if (currentParent != null) {
-				return super.getLocalElementsScope(currentParent, ctx, reference);
+				IScope result = super.getLocalElementsScope(currentParent, ctx, reference);
+				return result;
 			}
 		}
 		return super.getLocalElementsScope(parent, ctx, reference);
@@ -253,18 +255,11 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF__PROPERTY 
 				&& ctx instanceof SimpleConsiderationPropertyRef) {
 			return createFilterForSimpleConsPropRefProperty(ctx);
-		} else if ("property".equals(reference.getName()) && ctx instanceof ComplexConsiderationPropertyRef) {
-			return createFilterForPropertyOfComplexConsPropertyRef(ctx);
-		} else if (reference == ServiceDslPackage.Literals.COMPLEX_CONSIDERATION_PROPERTY_REF 
-				&& ctx instanceof ComplexConsiderationPropertyRef) {
-			TypeRef typeRef = ((ComplexConsiderationPropertyRef) ctx).getParentProperty().getType();
-			AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
-			if (typeRef instanceof BusinessObjectRef) 
-				f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-			else if (typeRef instanceof EnumTypeRef)
-				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), ServiceDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
-			return f;
-			
+		} else if (
+				reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF__PROPERTY && 
+				ctx instanceof ComplexConsiderationPropertyRef) {
+			//intemediate state in content assist -> block all canditates
+			return createBlockingFilter(ctx);			
 		} else if (reference == ServiceDslPackage.Literals.MESSAGE_HEADER_REF__HEADER 
 				&& ctx instanceof MessageHeaderRef) {
 			final VersionRef v = ((MessageHeaderRef) ctx).getVersionRef();
@@ -394,6 +389,18 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				
 			});
 		}
+		return f;
+	}
+
+	private AbstractPredicateVersionFilter<IEObjectDescription> createBlockingFilter (EObject ctx) {
+		AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
+		f.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
+
+			public boolean apply(IEObjectDescription input) {
+				return false;
+			}
+			
+		});
 		return f;
 	}
 

@@ -160,10 +160,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="statefulness" eType="#//Statefulness"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="persistence" eType="#//Persistence"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="owner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="realizedCapabilies" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizedCapabilities" upperBound="-1"
         eType="#//CapabilityRef" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCapabilies" upperBound="-1"
-        eType="#//CapabilityRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCapabilities"
+        upperBound="-1" eType="#//CapabilityRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedContractUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="documentUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -236,6 +236,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConsiderationParameterRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="param" eType="#//Parameter"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="flat" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="propertyRef" upperBound="-1"
         eType="#//ConsiderationPropertyRef" containment="true"/>
   </eClassifiers>
@@ -326,10 +327,10 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="executionProfile" eType="#//ExecutionProfile"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="realizedCapabilies" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="realizedCapabilities" upperBound="-1"
         eType="#//CapabilityRef" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCapabilies" upperBound="-1"
-        eType="#//CapabilityRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCapabilities"
+        upperBound="-1" eType="#//CapabilityRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>

@@ -214,9 +214,9 @@ Service:
 				/* Who is responsible for the service? */
 				('service-owner' owner=STRING )?
 				/* The business capabilities the service fully implements */
-			&	('realizes-capabilty' '{'(realizedCapabilies+=CapabilityRef)+ '}')?
+			&	('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?
 				/* The business capabilities that are supported but not fully implemented by this service alone */	
-			&	('supports-capabilty' '{'(supportedCapabilies+=CapabilityRef)+ '}')?
+			&	('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?
 				/* 
 				 * A technical service contract to be used instead of the one generation from this service definition.
 				 * This should only be used with private services, as the technical contract might not meet the architectural
@@ -312,8 +312,8 @@ ExecutionProfile:
 	
 	
 ConsiderationParameterRef:
-	'parameter' param=[Parameter|QualifiedName] '->' '{' (propertyRef+=ConsiderationPropertyRef
-	)+ '}';
+	'parameter' param=[Parameter|QualifiedName] ((flat?='flat-only') | ('->' '{' (propertyRef+=ConsiderationPropertyRef
+	)+ '}'));
 	
 ConsiderationPropertyRef:
 	SimpleConsiderationPropertyRef | ComplexConsiderationPropertyRef
@@ -424,7 +424,7 @@ Operation:
 		('persistence' persistence=Persistence )? 
 		('transaction-spec' transactionSpec=TransactionSpec)?
 		/*
-		 * The operation is capabale to revert/compensate the effect of this operation
+		 * The operation that is capabale to revert/compensate the effect of this operation
 		 */
 		('compensated-by' compensatedBy+=OperationRef )?
 		/*
@@ -432,8 +432,8 @@ Operation:
 		 */
 		('messageHeader' messageHeader = MessageHeaderRef )?
 		(executionProfile=ExecutionProfile)?
-		('realizes-capabilty' '{'(realizedCapabilies+=CapabilityRef)+ '}')?	
-		('supports-capabilty' '{'(supportedCapabilies+=CapabilityRef)+ '}')?	
+		('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?	
+		('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?	
 		('tags' (tags+=[semanticsDsl::Tag])+)*
 	'}';
 	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */

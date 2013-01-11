@@ -167,9 +167,11 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	String text(ConsiderationParameterRef ele) {
 		return ele.getParam().getName();
 	}
+	
 	String text(ComplexConsiderationPropertyRef ele) {
 		return ele.getParentProperty().getName();
 	}
+	
 	String text(SimpleConsiderationPropertyRef ele) {
 		return ele.getProperty().getName();
 	}
