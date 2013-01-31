@@ -18,6 +18,8 @@ public abstract interface IProtocolContractBuilder {
 	
 	public void buildServiceContracts (DomainBinding bind, SOAProfile profile);
 	
+	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, SOAProfile profile);
+	
 	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, SOAProfile profile);
 	
 	

@@ -5,10 +5,14 @@ package org.fornax.soa.moduledsl;
 
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
+import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
+import org.fornax.soa.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.search.PredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+import org.fornax.soa.moduledsl.query.DefaultModuleVersionMatcher;
+import org.fornax.soa.moduledsl.query.IModuleVersionMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
@@ -53,4 +57,13 @@ public class ModuleDslRuntimeModule extends org.fornax.soa.moduledsl.AbstractMod
 	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
 		return PredicateSearch.class;
 	}
+	
+	public Class<? extends IModuleVersionMatcher> bindIModuleVersionMatcher () {
+		return DefaultModuleVersionMatcher.class;
+	}
+	
+	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
+		return SOABaseDslFactoryImpl.class;
+	}
+
 }

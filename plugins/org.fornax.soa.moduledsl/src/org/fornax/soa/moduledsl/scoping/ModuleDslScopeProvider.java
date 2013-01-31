@@ -5,6 +5,7 @@ package org.fornax.soa.moduledsl.scoping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
@@ -62,18 +63,18 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
 			EObject context, EReference reference) {
-		if (reference == ModuleDslPackage.Literals.SERVICE_REF__SERVICE && context instanceof ServiceRef) {
+		if (reference == ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE && context instanceof ServiceRef) {
 			final VersionRef v = ((ServiceRef) context).getVersionRef();
 			return createVersionFilter(v, context);
 		}
-		if (reference == ModuleDslPackage.Literals.IMPORT_SERVICE_REF__SERVICE && context instanceof ImportServiceRef) {
+		if (reference == ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE && context instanceof ImportServiceRef) {
 			final VersionRef v = ((ImportServiceRef) context).getVersionRef();
 			ImportServiceRef impSvcRef = (ImportServiceRef) context;
 			Module owningModule = ModuleDslAccess.getOwningModule(impSvcRef);
 			final List<ServiceModuleRef> modules = impSvcRef.getModules();
 			List<Service> candServices = new ArrayList<Service>();
 			if (modules.isEmpty()) {
-				List<Module> allModules = modLookup.findAllModules (context.eResource().getResourceSet());
+				Set<Module> allModules = modLookup.findAllModules (context.eResource().getResourceSet());
 				for (Module mod : allModules) {
 					if (!mod.equals(owningModule)) {
 						extractProvidedServices(context, candServices, mod);

@@ -3,7 +3,7 @@ package org.fornax.soa.basedsl.generator;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.fornax.soa.basedsl.SOABaseDslRuntimeModule;
-import org.fornax.soa.basedsl.generator.version.VersionMatcher;
+import org.fornax.soa.basedsl.version.VersionMatcher;
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions;
 import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
 import org.fornax.soa.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;

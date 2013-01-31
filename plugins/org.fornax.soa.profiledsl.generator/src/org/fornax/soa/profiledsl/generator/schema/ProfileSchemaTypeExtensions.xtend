@@ -15,6 +15,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
 import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
 import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
+import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
 
 class ProfileSchemaTypeExtensions {
 	
@@ -104,11 +105,51 @@ class ProfileSchemaTypeExtensions {
 		t.many;
 	}
 	
-	def boolean typesUseExtendableXMLAttributes (SOAProfile p) {
-		p.designRules != null && p.designRules.typeDefPolicy != null && p.designRules.typeDefPolicy.extendableXMLAttributes;
+	def boolean typesUseExtendibleProperties (MessageHeader header) {
+		if (header.versionEvolution != null) {
+			return  header.versionEvolution.extendibleProperties;
+		} else {
+			return false
+		}
+		
 	}
-	def boolean typesUseExtendableProperties (SOAProfile p) {
-		p.designRules != null && p.designRules.typeDefPolicy != null && p.designRules.typeDefPolicy.extendableProperties;
+	def boolean typesUseExtendibleXMLAttributes (MessageHeader header) {
+		if (header.versionEvolution != null) {
+			return  header.versionEvolution.extendibleXMLAttributes;
+		} else {
+			return false
+		}
 	}
+	
+	def String getTypesExtendiblePropertiesClause (MessageHeader header) {
+		if (header.typesUseExtendibleProperties) {
+			if (header.versionEvolution.extendibleXMLClause != null) {
+				return header.versionEvolution.extendibleXMLClause;
+			} else {
+				return 
+				'''
+				<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
+						processContents="skip"/>
+				'''
+			}
+		} else {
+			return ""
+		}
+		
+	}
+	def String getTypesExtendibleXMLAttributesClause (MessageHeader header) {
+		if (header.typesUseExtendibleXMLAttributes) {
+			if (header.versionEvolution.extendibleXMLAttributeClause != null) {
+				return header.versionEvolution.extendibleXMLAttributeClause;
+			} else {
+				return 
+				'''
+				<xsd:anyAttribute namespace="##any"/>
+				'''
+			}
+		} else {
+			return ""
+		}
+	}		
 	
 }

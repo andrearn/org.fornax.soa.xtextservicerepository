@@ -97,18 +97,18 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		}
 	}
 
-	@Check
-	public void checkProviderServerInBoundEnvironment (SOAP prot) {
-		if (prot.eContainer () instanceof Binding) {
-			Binding b = (Binding) prot.eContainer ();
-			if (prot.getProvider () != null
-					&& !BindingDslHelper.getEnvironment (b).getServers ()
-							.contains (prot.getProvider ().getProvServer ()))
-				warning (
-						"The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!",
-						BindingDslPackage.Literals.SOAP__PUBLISHER);
-		}
-	}
+//	@Check
+//	public void checkProviderServerInBoundEnvironment (SOAP prot) {
+//		if (prot.eContainer () instanceof Binding) {
+//			Binding b = (Binding) prot.eContainer ();
+//			if (prot.getProvider () != null
+//					&& !BindingDslHelper.getEnvironment (b).getServers ()
+//							.contains (prot.getProvider ().getProvServer ()))
+//				warning (
+//						"The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!",
+//						BindingDslPackage.Literals.SOAP__PUBLISHER);
+//		}
+//	}
 
 	@Check
 	public void checkPublisherServerInBoundEnvironment (EJB prot) {

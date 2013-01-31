@@ -19,7 +19,7 @@ import org.fornax.soa.environmentdsl.generator.EndpointResolver
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.eclipse.emf.ecore.EObject
 
@@ -54,19 +54,19 @@ class SoapBindingResolver {
 		b.serviceBinding.findFirst(e|e.service.service == s);
 	}
 	 
-	def dispatch String getBaseUrl (Server s) {
-		"http://" + s.host;
-	}
-	def dispatch String getBaseUrl (ESB s) {
-		if (s.soapUrl != null) {
-			s.soapUrl;
-		} else {
-			s.baseUrl;
-		}
-	}
-	def dispatch String getBaseUrl (AppServer s) {
-		s.baseUrl;
-	}
+//	def dispatch String getBaseUrl (Server s) {
+//		"http://" + s.host;
+//	}
+//	def dispatch String getBaseUrl (ESB s) {
+//		if (s.soapUrl != null) {
+//			s.soapUrl;
+//		} else {
+//			s.baseUrl;
+//		}
+//	}
+//	def dispatch String getBaseUrl (AppServer s) {
+//		s.baseUrl;
+//	}
 	
 	def dispatch List<BindingProtocol> getBindingProtocols (DomainBinding domBind, ServiceRef s) {
 		if (domBind.serviceBinding.filter (e|e.service.service.name == s.service.name).size > 0) {
@@ -95,16 +95,16 @@ class SoapBindingResolver {
 		}
 	}
 	
-	def dispatch String getProviderContextRoot (DomainBinding b, Service s) {
-		val soapBindings = b.getBindingProtocols(s).filter (typeof (SOAP));
-		if (!soapBindings.empty  
-			&& soapBindings.head.providerContextRoot != null) 
-		{
-			"/" + soapBindings.head.providerContextRoot + "/";
-		} else {
-			"/"
-		}
-	}
+//	def dispatch String getProviderContextRoot (DomainBinding b, Service s) {
+//		val soapBindings = b.getBindingProtocols(s).filter (typeof (SOAP));
+//		if (!soapBindings.empty  
+//			&& soapBindings.head.providerContextRoot != null) 
+//		{
+//			"/" + soapBindings.head.providerContextRoot + "/";
+//		} else {
+//			"/"
+//		}
+//	}
 			
 	def dispatch String getContextRoot (ServiceBinding b) {
 		val soapBindings = b.protocol.filter ( typeof (SOAP));
@@ -117,16 +117,16 @@ class SoapBindingResolver {
 		}
 	}
 	
-	def dispatch String getProviderContextRoot (ServiceBinding b) {
-		val soapBindings = b.protocol.filter ( typeof (SOAP));
-		if (!soapBindings.empty  
-			&& soapBindings.head.providerContextRoot != null)
-		{
-				"/" + soapBindings.head.providerContextRoot + "/";
-		} else {
-			"/"
-		}
-	}
+//	def dispatch String getProviderContextRoot (ServiceBinding b) {
+//		val soapBindings = b.protocol.filter ( typeof (SOAP));
+//		if (!soapBindings.empty  
+//			&& soapBindings.head.providerContextRoot != null)
+//		{
+//				"/" + soapBindings.head.providerContextRoot + "/";
+//		} else {
+//			"/"
+//		}
+//	}
 			
 	def dispatch Server getPublishingServer (Binding b) {
 		val soapBindings = b.protocol.filter ( typeof (SOAP));
@@ -155,32 +155,32 @@ class SoapBindingResolver {
 		}
 	}
 		
-	def dispatch Server getProvidingServer (Binding b) {
-		val soapBindings = b.protocol.filter ( typeof (SOAP));
-		if (soapBindings.head?.provider?.provServer != null) {
-			soapBindings.head?.provider?.provServer;
-		} else if (b.eContainer instanceof DomainBinding) {
-			(b.eContainer as DomainBinding).environment.defaultAppServer;
-		} else if (b.eContainer instanceof ModuleBinding) {
-			(b.eContainer as ModuleBinding).environment.defaultAppServer;
-		}
-	}
-	def dispatch Server getProvidingServer (DomainBinding b) {
-		val soapBindings = b.protocol.filter ( typeof (SOAP));
-		if (soapBindings.head?.provider?.provServer != null) {
-			soapBindings.head?.provider?.provServer;
-		} else {
-			b.environment.defaultAppServer;
-		}
-	}
-	def dispatch Server getProvidingServer (ModuleBinding b) {
-		val soapBindings = b.protocol.filter ( typeof (SOAP));
-		if (soapBindings.head?.publisher?.pubServer != null) {
-			soapBindings.head?.publisher?.pubServer;
-		} else {
-			b.environment.defaultAppServer;
-		}
-	}
+//	def dispatch Server getProvidingServer (Binding b) {
+//		val soapBindings = b.protocol.filter ( typeof (SOAP));
+//		if (soapBindings.head?.provider?.provServer != null) {
+//			soapBindings.head?.provider?.provServer;
+//		} else if (b.eContainer instanceof DomainBinding) {
+//			(b.eContainer as DomainBinding).environment.defaultAppServer;
+//		} else if (b.eContainer instanceof ModuleBinding) {
+//			(b.eContainer as ModuleBinding).environment.defaultAppServer;
+//		}
+//	}
+//	def dispatch Server getProvidingServer (DomainBinding b) {
+//		val soapBindings = b.protocol.filter ( typeof (SOAP));
+//		if (soapBindings.head?.provider?.provServer != null) {
+//			soapBindings.head?.provider?.provServer;
+//		} else {
+//			b.environment.defaultAppServer;
+//		}
+//	}
+//	def dispatch Server getProvidingServer (ModuleBinding b) {
+//		val soapBindings = b.protocol.filter ( typeof (SOAP));
+//		if (soapBindings.head?.publisher?.pubServer != null) {
+//			soapBindings.head?.publisher?.pubServer;
+//		} else {
+//			b.environment.defaultAppServer;
+//		}
+//	}
 		
 	def dispatch String getDefaultESBEndpointAddress (Service s, DomainBinding b) {
 		(b.environment.defaultESB as ESB).getSOAPHttpEndpointUrl + "/" 

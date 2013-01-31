@@ -9,8 +9,7 @@ import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.ServiceBinding
-import org.fornax.soa.bindingdsl.generator.queries.modules.ModuleBindingResolver
-import org.fornax.soa.bindingdsl.generator.queries.services.BindingServiceResolver
+import org.fornax.soa.binding.query.services.BindingServiceResolver
 import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.environmentDsl.Environment
@@ -19,7 +18,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
+import org.fornax.soa.service.query.LifecycleQueries
+import org.fornax.soa.binding.query.BindingLookup
 
 /*
  * Generate an XSD for a SubNamespace. Types and exceptions are filtered by their lifecycle state, determining whether it
@@ -29,7 +29,7 @@ class XSDTemplates {
 
 	@Inject extension BindingExtensions
 	@Inject extension BindingServiceResolver
-	@Inject extension ModuleBindingResolver
+	@Inject extension BindingLookup
 	@Inject extension LifecycleQueries
 		
 	

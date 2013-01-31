@@ -35,4 +35,5 @@ Export-Package: org.fornax.soa.basedsl,
  org.fornax.soa.basedsl.search,
  org.fornax.soa.basedsl.services,
  org.fornax.soa.basedsl.util,
- org.fornax.soa.basedsl.validation
+ org.fornax.soa.basedsl.validation,
+ org.fornax.soa.basedsl.version

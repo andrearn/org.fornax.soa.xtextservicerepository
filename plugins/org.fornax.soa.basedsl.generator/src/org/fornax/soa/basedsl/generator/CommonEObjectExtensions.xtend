@@ -25,8 +25,4 @@ class CommonEObjectExtensions {
 		o.eContainer?.getOwnerVersion();
 	}
 
-	def dispatch String toPrefix (EObject o) {
-		"tns";
-	}
-
 }

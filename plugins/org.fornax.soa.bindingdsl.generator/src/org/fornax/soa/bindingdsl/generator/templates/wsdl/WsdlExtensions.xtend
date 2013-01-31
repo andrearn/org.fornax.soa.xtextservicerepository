@@ -4,7 +4,7 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.environmentDsl.Server
 import org.fornax.soa.bindingDsl.Binding
 import com.google.inject.Inject
-import org.fornax.soa.bindingdsl.generator.queries.environment.EnvironmentBindingResolver
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.bindingDsl.SOAP

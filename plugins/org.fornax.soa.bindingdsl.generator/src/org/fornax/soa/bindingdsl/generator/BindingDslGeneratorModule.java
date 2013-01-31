@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Set;
 
 import org.fornax.soa.BindingDslRuntimeModule;
-import org.fornax.soa.bindingdsl.generator.queries.modules.ModuleBindingResolver;
-import org.fornax.soa.bindingdsl.generator.queries.services.BindingServiceResolver;
+import org.fornax.soa.binding.query.BindingLookup;
+import org.fornax.soa.binding.query.services.BindingServiceResolver;
 import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
@@ -27,8 +27,8 @@ import com.google.inject.name.Names;
 
 public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 
-	public Class<? extends ModuleBindingResolver> bindModuleBindingResolver () {
-		return ModuleBindingResolver.class;
+	public Class<? extends BindingLookup> bindModuleBindingResolver () {
+		return BindingLookup.class;
 	}
 	
 	public Class<? extends BindingServiceResolver> bindBindingServiceResolver () {
@@ -110,13 +110,6 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		binder.bind (Boolean.class)
 			.annotatedWith (
 					Names.named (BindingDSLGeneratorConstants.INCLUDE_SUB_NAMESPACES))
-			.toInstance (false);
-	}
-
-	public void configureGeneratePrivateWsdlForProviderHost (Binder binder) {
-		binder.bind (Boolean.class)
-			.annotatedWith (
-					Names.named (BindingDSLGeneratorConstants.GENERATE_PRIVATE_WSDL_FOR_PROVIDER_HOST))
 			.toInstance (false);
 	}
 	

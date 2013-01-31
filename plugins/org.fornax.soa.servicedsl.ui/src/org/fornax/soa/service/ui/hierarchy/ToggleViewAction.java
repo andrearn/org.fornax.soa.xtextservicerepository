@@ -5,8 +5,10 @@ import org.eclipse.jface.action.Action;
 
 public class ToggleViewAction extends Action {
 
+	public static final String ORG_FORNAX_SOA_SERVICEDSL_HIERARCHY_TOGGLEVIEW = "org.fornax.soa.servicedsl.hierarchy.toggleview";
 	private TypeHierarchyViewPart fViewPart;
 	private int fViewerIndex;
+	
 	public ToggleViewAction(TypeHierarchyViewPart v, int viewerIndex) {
 		super("", AS_RADIO_BUTTON); //$NON-NLS-1$
 		if (viewerIndex == TypeHierarchyViewPart.HIERARCHY_MODE_SUPERTYPES) {
@@ -27,6 +29,7 @@ public class ToggleViewAction extends Action {
 
 		fViewPart= v;
 		fViewerIndex= viewerIndex;
+		setActionDefinitionId(ORG_FORNAX_SOA_SERVICEDSL_HIERARCHY_TOGGLEVIEW);
 	}
 
 	public int getViewerIndex() {

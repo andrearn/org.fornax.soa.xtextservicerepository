@@ -9,6 +9,7 @@ Contributors:
     André Arnold 		- initial API and implementation
     Christian Schneider	- reviews
     Krunoslav Markotic	- reviews
+	Dennis Hauser		- reviews
     Vitaly Markin
     Liane Lenke
 */
@@ -61,6 +62,7 @@ InternalNamespace:
 		('metadata' '{'
 			(version=Version)?
 			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
+			('namespace-url' namespaceUrl = STRING)
 			('tags' (tags+=[semanticsDsl::Tag])+)*
 		'}')?
 		(types+=Type)*
@@ -102,7 +104,7 @@ BusinessObject:
  * BusinessObject instances. All properties are considered optional.
  */	
 QueryObject:
-	'queryObject'  name=ID ('extends' superBusinessObject=BusinessObjectRef)? '{' 
+	'queryObject'  name=ID ('extends' superQueryObject=QueryObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
 			('replaces' replaces=QueryObjectRef)?
@@ -126,7 +128,7 @@ TypeRef : DataTypeRef | AbstractVersionedTypeRef;
 DataTypeRef: 
 	type=[profileDsl::DataType|QualifiedName] (many?='[]' (set?='as set')? )? ;
 
-AbstractVersionedTypeRef:  VersionedTypeRef | EnumTypeRef | BusinessObjectRef;
+AbstractVersionedTypeRef:  VersionedTypeRef | EnumTypeRef | BusinessObjectRef | QueryObjectRef;
 
 /* A version constrained reference to any kind of VersionedType */
 VersionedTypeRef:
@@ -304,9 +306,9 @@ PropertyRef:
 	property=[Property|QualifiedName] versionRef=VersionRef;
 
 
-/* defines the execution of an operation in term of considered parameters */
-ExecutionProfile:
-	((isDefault?='default')? 'execution-profile' profileName=ID)? 'considers' '{' 
+/* defines the execution of an operation in terms of considered parameters */
+ConsiderationSpec:
+	'considers' '{' 
 		consideredParam+=ConsiderationParameterRef+ 
 	'}';
 	
@@ -431,7 +433,7 @@ Operation:
 		 * Overrides the message header declaration from the architecture profile or service for this operation
 		 */
 		('messageHeader' messageHeader = MessageHeaderRef )?
-		(executionProfile=ExecutionProfile)?
+		(considerationSpec=ConsiderationSpec)?
 		('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?	
 		('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?	
 		('tags' (tags+=[semanticsDsl::Tag])+)*

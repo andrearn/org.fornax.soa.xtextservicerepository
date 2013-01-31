@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import java.util.Set
 import org.fornax.soa.basedsl.generator.CommonEObjectExtensions
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace

@@ -13,6 +13,7 @@ import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import com.google.inject.Inject
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.serviceDsl.QueryObject
 
 class ReferencedTypesFinder {
 	
@@ -26,6 +27,17 @@ class ReferencedTypesFinder {
 		var refs = new ArrayList<TypeRef>();
 		if (t.superBusinessObject != null) {
 			refs.add (t.superBusinessObject);
+			refs.addAll(t.properties.map (p|p.type));
+		} else {
+			refs.addAll (t.properties.map (p|p.type));
+		}
+		return refs;
+	}
+	
+	def dispatch List<TypeRef> allReferencedTypeRefs (QueryObject t) { 
+		var refs = new ArrayList<TypeRef>();
+		if (t.superQueryObject != null) {
+			refs.add (t.superQueryObject);
 			refs.addAll(t.properties.map (p|p.type));
 		} else {
 			refs.addAll (t.properties.map (p|p.type));

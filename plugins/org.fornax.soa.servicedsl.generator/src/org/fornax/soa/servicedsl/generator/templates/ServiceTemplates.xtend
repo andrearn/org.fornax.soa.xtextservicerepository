@@ -8,7 +8,7 @@ import com.google.inject.Inject
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.serviceDsl.OrganizationNamespace
-import org.fornax.soa.servicedsl.generator.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceFinder
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.InternalNamespace
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates

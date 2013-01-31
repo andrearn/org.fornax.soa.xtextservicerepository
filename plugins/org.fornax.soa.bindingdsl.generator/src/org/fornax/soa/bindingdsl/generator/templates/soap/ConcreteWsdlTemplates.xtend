@@ -18,7 +18,7 @@ import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.Type
-import org.fornax.soa.servicedsl.generator.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceFinder
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
@@ -52,7 +52,7 @@ class ConcreteWsdlTemplates {
 	@Inject IFileSystemAccess fsa
 	
 	/* 
-	 * Generate concrete pubplic endpoint WSDLs for services bound by a DomainBinding 
+	 * Generate concrete public endpoint WSDLs for services bound by a DomainBinding 
 	 * with the given protocol definition applying the supplied profile
 	 */
 	def toWSDL (DomainBinding binding, BindingProtocol prot, SOAProfile profile) {

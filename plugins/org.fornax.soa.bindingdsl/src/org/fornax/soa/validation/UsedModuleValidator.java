@@ -17,7 +17,10 @@ import org.eclipse.xtext.validation.CheckType;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
+import org.fornax.soa.binding.query.BindingLookup;
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
 import org.fornax.soa.bindingDsl.ModuleBinding;
+import org.fornax.soa.environment.query.EnvironmentLookup;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
@@ -40,6 +43,8 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 	
 	@Inject
 	ModuleLookup moduleLookup;
+	@Inject
+	EnvironmentLookup envLookup;
 	
 	@Inject
 	IReferenceSearch referenceSearch;
@@ -49,6 +54,12 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 	
 	@Inject
 	BindingDslHelper bindingDslHelper;
+	
+	@Inject
+	EnvironmentBindingResolver envBindResolver;
+	
+	@Inject
+	BindingLookup bindLookup;
 	
 	@Override
 	protected List<EPackage> getEPackages() {
@@ -68,12 +79,13 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 		if (modRef.eResource() != null && !moduleLookup.findAllModules(modRef.eResource().getResourceSet()).isEmpty()) {
 			Module usedModule = modRef.getModule();
 			if (usedModule != null && usedModule.eResource() != null) {
-				
-				final Set<ModuleBinding> usedModuleBindings = bindingDslHelper.getBindingsForModule(usedModule);
+//				final Set<ModuleBinding> usedModuleBindings = bindingDslHelper.getBindingsForModule(usedModule);
+				final Set<ModuleBinding> usedModuleBindings = bindLookup.findAllBindingsToCompatibleModule (usedModule);
 				if (usedModuleBindings.isEmpty()) {
 					warning("The used module " + usedModule.getName() + " has no binding. You should define a binding to use it from another module", ModuleDslPackage.Literals.SERVICE_MODULE_REF__MODULE);
 				} else {
-					EList<EnvironmentType> envTypes = usedModule.getState().getQualifiesFor();
+					List<EnvironmentType> envTypes = usedModule.getState().getQualifiesFor();
+					envTypes = envLookup.filterByUsedEnvironmentTypes (envTypes, usedModule.eResource().getResourceSet());
 					for (EnvironmentType envType : envTypes) {
 						boolean hasBinding = false;
 						for (ModuleBinding bind : usedModuleBindings) {
@@ -111,30 +123,30 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 					}
 					
 				});
-				if (svcRef.getBindingQualifier() != null) {
-					providingModules = moduleLookup.findProvidingModules(svcRef.getService(), candModules, svcRef.getBindingQualifier().getName());
+				if (svcRef.getEndpointQualifier() != null) {
+					providingModules = moduleLookup.findProvidingModules(svcRef.getService(), candModules, svcRef.getEndpointQualifier().getName());
 					if (!providingModules.iterator().hasNext())
-						warning("The service "+ svcRef.getService().getName() + " is not provided by any of the candidate Modules with the binding qualifier " + svcRef.getBindingQualifier() + ".", ModuleDslPackage.Literals.IMPORT_SERVICE_REF__SERVICE);
+						warning("The service "+ svcRef.getService().getName() + " is not provided by any of the candidate Modules with the endpoint qualifier " + svcRef.getEndpointQualifier() + ".", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 				}
 				else
 					providingModules = moduleLookup.findProvidingModules(svcRef.getService(), candModules);
 					if (!providingModules.iterator().hasNext())
-						warning("The service "+ svcRef.getService().getName() + " is not provided by any of the candidate Modules.", ModuleDslPackage.Literals.IMPORT_SERVICE_REF__SERVICE);
+						warning("The service "+ svcRef.getService().getName() + " is not provided by any of the candidate Modules.", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 			} else {
 				providingModules = moduleLookup.findProvidingModules(svcRef.getService());
 				if (!providingModules.iterator().hasNext())
-					warning("The service "+ svcRef.getService().getName() + " is not provided by any Module.", ModuleDslPackage.Literals.IMPORT_SERVICE_REF__SERVICE);
+					warning("The service "+ svcRef.getService().getName() + " is not provided by any Module.", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 			}
 			boolean hasProvidingModuleWithBinding = false;
 			for (Module usedModule : providingModules) {
 				if (usedModule != null && usedModule.eResource() != null) {
-					final Set<ModuleBinding> usedModuleBindings = bindingDslHelper.getBindingsForModule(usedModule);
+					final Set<ModuleBinding> usedModuleBindings = bindLookup.findAllBindingsToCompatibleModule (usedModule);
 					if (!usedModuleBindings.isEmpty())
 						hasProvidingModuleWithBinding = true;
 				}
 			}
 			if (!hasProvidingModuleWithBinding)
-				warning("The service "+ svcRef.getService().getName() + " has no providing Module with a binding. You should define a binding for a providing module to use it from another module", ModuleDslPackage.Literals.IMPORT_SERVICE_REF__SERVICE);
+				warning("The service "+ svcRef.getService().getName() + " has no providing Module with a binding. You should define a binding for a providing module to use it from another module", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 		}
 		
 	}

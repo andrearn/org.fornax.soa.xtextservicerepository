@@ -11,8 +11,8 @@
         eType="#//Binding" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Binding">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//QualifierRefs"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRefs"
+        eType="#//EndpointQualifierRefs" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
         eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
         containment="true"/>
@@ -31,8 +31,6 @@
         eType="#//Policy" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serviceBinding" upperBound="-1"
         eType="#//ServiceBinding" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="components" upperBound="-1"
-        eType="#//Component" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Publisher">
     <eStructuralFeatures xsi:type="ecore:EReference" name="pubServer" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server"/>
@@ -59,13 +57,13 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BindingProtocol">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//QualifierRefs"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRefs"
+        eType="#//EndpointQualifierRefs" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperationBinding">
     <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Operation"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//QualifierRefs"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRefs"
+        eType="#//EndpointQualifierRefs" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
         eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
         containment="true"/>
@@ -95,73 +93,11 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Component">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="implements" eType="#//ServiceRef"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="environment" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//QualifierRefs"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="services" upperBound="-1"
-        eType="#//ServiceRef" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedServices" upperBound="-1"
-        eType="#//ServiceRef" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="protocol" upperBound="-1"
-        eType="#//BindingProtocol" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" upperBound="-1"
-        eType="#//OperationBinding" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
-        eType="#//Policy" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="providerPolicies" upperBound="-1"
-        eType="#//Policy" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sla" unique="false" upperBound="-1"
-        eType="ecore:EClass ../../../../../org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore#//SLA"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="implementation" eType="#//ImplementationType"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="ImplementationType">
-    <eLiterals name="BPMN" literal="BPMN"/>
-    <eLiterals name="BPMN2" value="1" literal="BPMN2"/>
-    <eLiterals name="BPEL" value="2" literal="BPEL"/>
-    <eLiterals name="WSHT" value="3" literal="WS-HT"/>
-    <eLiterals name="RuleML" value="4" literal="RuleML"/>
-    <eLiterals name="Drools" value="5" literal="Drools"/>
-    <eLiterals name="Mediation" value="6" literal="Mediation"/>
-    <eLiterals name="Java" value="7" literal="Java"/>
-    <eLiterals name="CS" value="8" literal="C#"/>
-    <eLiterals name="CPP" value="9" literal="C++"/>
-    <eLiterals name="Scala" value="10" literal="Scala"/>
-    <eLiterals name="Ruby" value="11" literal="Ruby"/>
-    <eLiterals name="PHP" value="12" literal="PHP"/>
-    <eLiterals name="WSDocLit" value="13" literal="WS-Document/Literal"/>
-    <eLiterals name="WSRPC" value="14" literal="WS-RPC/Literal"/>
-    <eLiterals name="WSRPCEnc" value="15" literal="WS-RPC/Encoded"/>
-    <eLiterals name="REST_XML" value="16" literal="REST-XML"/>
-    <eLiterals name="REST_JSON" value="17" literal="REST-JSON"/>
-    <eLiterals name="EJB" value="18" literal="EJB"/>
-    <eLiterals name="Spring" value="19" literal="Spring"/>
-    <eLiterals name="EJB2" value="20" literal="EJB2"/>
-    <eLiterals name="SAP" value="21" literal="SAP"/>
-    <eLiterals name="SAP_IDOC" value="22" literal="SAP/iDoc"/>
-    <eLiterals name="SAP_BAPI" value="23" literal="SAP/BAPI"/>
-    <eLiterals name="Corba" value="24" literal="Corba"/>
-    <eLiterals name="Shell" value="25" literal="Shell"/>
-    <eLiterals name="Siebel" value="26" literal="Siebel"/>
-    <eLiterals name="Tuxedo" value="27" literal="Tuxedo"/>
-    <eLiterals name="File" value="28" literal="File"/>
-    <eLiterals name="SQL" value="29" literal="SQL"/>
-    <eLiterals name="Ivy" value="30" literal="Ivy"/>
-    <eLiterals name="jPDL3" value="31" literal="jPDL3"/>
-    <eLiterals name="jPDL4" value="32" literal="jPDL4"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SOAP" eSuperTypes="#//BindingProtocol">
     <eStructuralFeatures xsi:type="ecore:EReference" name="publisher" eType="#//Publisher"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="provider" eType="#//Provider"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="#//SOAPStyle"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contextRoot" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="providerContextRoot" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedWsdlUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="SOAPStyle">
@@ -234,8 +170,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TopicOrQueue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifier" eType="#//QualifierRefs"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRefs"
+        eType="#//EndpointQualifierRefs" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Topic" eSuperTypes="#//TopicOrQueue"/>
   <eClassifiers xsi:type="ecore:EClass" name="Queue" eSuperTypes="#//TopicOrQueue"/>
@@ -316,14 +252,15 @@
     <eLiterals name="SAML2" value="2" literal="SAML2"/>
     <eLiterals name="Kerberos" value="3" literal="Kerberos"/>
     <eLiterals name="X509Certificate" value="4" literal="X509Certificate"/>
+    <eLiterals name="OAuth" value="5" literal="OAuth"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="LogPolicyKind">
     <eLiterals name="NONE" literal="NONE"/>
     <eLiterals name="HEADER" value="1" literal="HEADER"/>
     <eLiterals name="ALL" value="2" literal="ALL"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="QualifierRefs">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" unique="false"
+  <eClassifiers xsi:type="ecore:EClass" name="EndpointQualifierRefs">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifiers" unique="false"
         upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Qualifier"/>
   </eClassifiers>
 </ecore:EPackage>

@@ -53,11 +53,55 @@ class ServiceTemplateExtensions {
 	
 	
 	def boolean operationsUseExtendableParameters (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
-		p.designRules != null && p.designRules.serviceDefPolicy != null && p.designRules.serviceDefPolicy.extendableParameters;
+		if (p.designRules != null 
+			&& p.designRules.serviceDefPolicy != null 
+			&& p.designRules.serviceDefPolicy.operationRules != null
+			&& p.designRules.serviceDefPolicy.operationRules.versionEvolution != null) {
+			return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleParameters;
+		} else {
+			return false
+		}
 		
 	}
 	def boolean operationsUseExtendableXMLAttributes (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
-		p.designRules != null && p.designRules.serviceDefPolicy != null && p.designRules.serviceDefPolicy.extendableXMLAttributes;
+		if (p.designRules != null 
+			&& p.designRules.serviceDefPolicy != null 
+			&& p.designRules.serviceDefPolicy.operationRules != null
+			&& p.designRules.serviceDefPolicy.operationRules.versionEvolution != null) {
+			return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLAttributes;
+		} else {
+			return false
+		}
+	}		
+	def String getOperationsExtendibleParametersClause (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
+		if (p.operationsUseExtendableParameters) {
+			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause != null) {
+				return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLClause;
+			} else {
+				return 
+				'''
+				<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
+						processContents="skip"/>
+				'''
+			}
+		} else {
+			return ""
+		}
+		
+	}
+	def String getOperationsExtendibleXMLAttributesClause (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
+		if (p.operationsUseExtendableXMLAttributes) {
+			if (p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLAttributeClause != null) {
+				return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLAttributeClause;
+			} else {
+				return 
+				'''
+				<xsd:anyAttribute namespace="##any"/>
+				'''
+			}
+		} else {
+			return ""
+		}
 	}		
 	
 	def String toOperationWrapperRequestType (Operation op) {

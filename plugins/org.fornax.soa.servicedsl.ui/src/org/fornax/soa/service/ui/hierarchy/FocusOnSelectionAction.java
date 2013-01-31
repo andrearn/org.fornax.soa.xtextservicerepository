@@ -6,12 +6,14 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 
 public class FocusOnSelectionAction extends Action {
 
+	private static final String ORG_FORNAX_SOA_SERVICEDSL_HIERARCHY_FOCUSONSELECTION = "org.fornax.soa.servicedsl.hierarchy.focusonselection";
 	private TypeHierarchyViewPart fViewPart;
 
 	public FocusOnSelectionAction(TypeHierarchyViewPart part) {
 		super(EObjectDescrHierarchyMessages.FocusOnSelectionAction_label);
 		setDescription(EObjectDescrHierarchyMessages.FocusOnSelectionAction_description);
 		setToolTipText(EObjectDescrHierarchyMessages.FocusOnSelectionAction_tooltip);
+		setActionDefinitionId(ORG_FORNAX_SOA_SERVICEDSL_HIERARCHY_FOCUSONSELECTION);
 		fViewPart= part;
 
 	}

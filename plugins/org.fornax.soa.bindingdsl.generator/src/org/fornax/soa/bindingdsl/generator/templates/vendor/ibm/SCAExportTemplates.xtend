@@ -4,13 +4,13 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
-import org.fornax.soa.servicedsl.generator.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceFinder
 import com.google.inject.Inject
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.environmentdsl.generator.EndpointResolver
-import org.fornax.soa.bindingdsl.generator.queries.services.BindingServiceResolver
+import org.fornax.soa.binding.query.services.BindingServiceResolver
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.bindingdsl.generator.templates.soap.SoapBindingResolver

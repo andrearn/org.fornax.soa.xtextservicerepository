@@ -12,7 +12,7 @@ public class BindingDSLGeneratorConstants {
 	public final static String INTERNAL_NAME_SPACES = "internalNamespaces";
 	public final static String NO_DEPENDENCIES = "noDependencies";
 	public final static String INCLUDE_SUB_NAMESPACES = "includeSubNamespaces";
-	public final static String GENERATE_PRIVATE_WSDL_FOR_PROVIDER_HOST = "generatePrivateWsdlForProviderHost";
 	public final static String TARGET_ENVIRONMENT_NAME = "targetEnvironmentName";
+	public final static String PROFILE_NAME = "profileName";
 	
 }

@@ -2,7 +2,7 @@ package org.fornax.soa.profiledsl.generator.query
 
 import com.google.inject.Inject
 import java.util.Set
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
 import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace

@@ -10,6 +10,7 @@ import org.fornax.soa.bindingdsl.generator.ProvidedProtocolContractBuilder
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.environmentDsl.Environment
 import java.util.logging.Logger
+import java.util.logging.Level
 
 class BindingServiceContractBuilder {
 
@@ -30,7 +31,7 @@ class BindingServiceContractBuilder {
 			try {
 				protContractBuilder.buildServiceContracts (binding, profile);
 			} catch (Exception ex) {
-				log.severe ("Error generating contracts\n" + ex.message)
+				log.log (Level::SEVERE, "Error generating contracts\n", ex)
 			}
 		}
 	}
@@ -40,7 +41,7 @@ class BindingServiceContractBuilder {
 			try {
 				protContractBuilder.buildUsedServiceContracts (module, targetEnvironment, profile);
 			} catch (Exception ex) {
-				log.severe ("Error generating contracts\n" + ex.message)
+				log.log (Level::SEVERE, "Error generating contracts\n", ex)
 			}
 		}
 	}
@@ -50,7 +51,7 @@ class BindingServiceContractBuilder {
 			try {
 				protContractBuilder.buildServiceContracts (binding, profile);
 			} catch (Exception ex) {
-				log.severe ("Error generating contracts\n" + ex.message)
+				log.log (Level::SEVERE, "Error generating contracts\n", ex)
 			}
 		}
 	}

@@ -10,7 +10,7 @@ import java.util.Set
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.VersionedDomainNamespace
 import com.google.inject.Inject
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.servicedsl.generator.query.type.TypesByLifecycleStateFinder
 import org.fornax.soa.profiledsl.sOAProfileDsl.Type
@@ -21,7 +21,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.Property
 import java.util.HashSet
 import java.util.ArrayList
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions

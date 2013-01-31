@@ -48,10 +48,10 @@ import org.fornax.soa.serviceDsl.CapabilityRef;
 import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
 import org.fornax.soa.serviceDsl.ConsiderationPropertyRef;
+import org.fornax.soa.serviceDsl.ConsiderationSpec;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.EventRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
-import org.fornax.soa.serviceDsl.ExecutionProfile;
 import org.fornax.soa.serviceDsl.GlobalEventRef;
 import org.fornax.soa.serviceDsl.MessageHeaderRef;
 import org.fornax.soa.serviceDsl.Operation;
@@ -68,7 +68,6 @@ import org.fornax.soa.serviceDsl.VersionedTypeRef;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
@@ -208,7 +207,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			return versionFilter;
 		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PARAM 
 				&& ctx instanceof ConsiderationParameterRef 
-				&& ctx.eContainer() instanceof ExecutionProfile) {
+				&& ctx.eContainer() instanceof ConsiderationSpec) {
 			ConsiderationParameterRef paramRef = (ConsiderationParameterRef)ctx;
 			AbstractPredicateVersionFilter<IEObjectDescription> scopeFilter = createConsiderationParameterScopeFilter(paramRef);
 			if (scopeFilter != null)
@@ -283,21 +282,22 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				TypeRef typeRef = ((ConsiderationParameterRef) ctx).getParam().getType();
 				return getPropertyFilterFromTypeRef(ctx, typeRef);
 			} catch (Throwable ex) {
-				logger.error("Error resolving a ConsiderationParameterRef propertyRef");
+				logger.warn("Error resolving a SimpleConsiderationPropertyRef propertyRef of a ConsiderationParameterRef", ex);
 			}
 		} else if (reference == ServiceDslPackage.Literals.COMPLEX_CONSIDERATION_PROPERTY_REF__PARENT_PROPERTY  && ctx instanceof ConsiderationParameterRef) {
 			try {
 				TypeRef typeRef = ((ConsiderationParameterRef) ctx).getParam().getType();
 				return getPropertyFilterFromTypeRef(ctx, typeRef);
 			} catch (Throwable ex) {
-				logger.error("Error resolving a ConsiderationParameterRef propertyRef");
+				logger.warn("Error resolving a ComplexConsiderationProperty parentPropertyRef of a ConsiderationParameterRef", ex);
 			}
 		} else if (reference == ServiceDslPackage.Literals.COMPLEX_CONSIDERATION_PROPERTY_REF__PARENT_PROPERTY  && ctx instanceof ComplexConsiderationPropertyRef) {
+			//FIXME only required for content assist, resolution of static defined model leads to linking cycles
 			try {
 				TypeRef typeRef = ((ComplexConsiderationPropertyRef) ctx).getParentProperty().getType();
 				return getPropertyFilterFromTypeRef(ctx, typeRef);
 			} catch (Throwable ex) {
-				logger.error("Error resolving a ConsiderationParameterRef propertyRef");
+				logger.debug("Error resolving a ComplexConsiderationProperty parentPropertyRef of a ComplexConsiderationPropertyRef");
 			}
 		}
 		
@@ -479,7 +479,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				return filter;
 			}
 		} catch (Exception ex) {
-			logger.error("Error creating scope filter for FetchParameterRefs", ex);
+			logger.error("Error creating scope filter for ConsiderationParameterRefs", ex);
 		}
 		return null;
 	}

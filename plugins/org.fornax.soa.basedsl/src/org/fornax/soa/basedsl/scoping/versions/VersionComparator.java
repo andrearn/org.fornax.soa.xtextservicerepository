@@ -8,7 +8,6 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 public class VersionComparator {
 	
 	private static final Pattern pattern = Pattern.compile("(^[\\d+][\\.\\d+]*)(?:(?:\\.|\\-)(\\w.*))?$");
-//	private static final Pattern qualPattern = Pattern.compile("(\\D*)(\\d*)(\\.|\\-)?(SNAPSHOT)?");	
 	
 	public static int compare (final String v1, final String v2) {
 		if (v1!=null && v2 == null)
@@ -55,41 +54,7 @@ public class VersionComparator {
 			}
 		}
 		int classifierCmp = VersionClassifierComparator.compare (v1, v2);
-//		if (v1Digits.equals(v2Digits)) {
-//			return VersionClassifierComparator.compare(v1, v2);
-//		}
-//		if (classifierCmp != 0) {
-			return classifierCmp;
-//		} else {
-//			String simpleQualNum1 = null;
-//			String simpleQualNum2 = null;
-//			if (v1Qualifier != null) {
-//				v1Qualifier = v1Qualifier.toUpperCase();
-//				Matcher q1Matcher = qualPattern.matcher(v1Qualifier);
-//				q1Matcher.find();
-//				try {
-//					simpleQualNum1 = q1Matcher.group(2);
-//				} catch (Exception ex) {
-//					
-//				}
-//			}
-//			if (v2Qualifier != null) {
-//				v2Qualifier = v2Qualifier.toUpperCase();
-//				Matcher q2Matcher = qualPattern.matcher(v2Qualifier);
-//				q2Matcher.find();
-//				try {
-//					simpleQualNum2 = q2Matcher.group(2);
-//				} catch (Exception ex) {
-//					
-//				}
-//			}
-//			if (simpleQualNum1 != null)
-//				return simpleQualNum1.compareTo(simpleQualNum2);
-//			else if (simpleQualNum1 == null && simpleQualNum2 == null)
-//				return 0;
-//			else 
-//				return 1;
-//		}
+		return classifierCmp;
 	}
 	
 	public static int compare (IEObjectDescription eObjDesc1, IEObjectDescription eObjDesc2, VersionResolver resolver) {

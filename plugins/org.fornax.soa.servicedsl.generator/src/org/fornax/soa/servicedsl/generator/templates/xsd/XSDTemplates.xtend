@@ -5,7 +5,7 @@ import com.google.inject.name.Named
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
@@ -23,14 +23,14 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
-import org.fornax.soa.servicedsl.generator.query.ExceptionFinder
-import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
+import org.fornax.soa.service.query.ExceptionFinder
+import org.fornax.soa.service.query.LifecycleQueries
 import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceImportQueries
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.servicedsl.generator.query.type.ReferencedTypesFinder
 import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.fornax.soa.profiledsl.generator.query.StateMatcher
+import org.fornax.soa.profiledsl.search.StateMatcher
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import java.util.logging.Logger
 
@@ -67,7 +67,7 @@ class XSDTemplates {
 	@Inject
 	IEObjectDocumentationProvider docProvider
 	
-	@Inject org.fornax.soa.profiledsl.generator.query.LifecycleQueries lifecycleQueries
+	@Inject org.fornax.soa.profiledsl.search.LifecycleQueries lifecycleQueries
 
 	@Inject 
 	private Logger log
@@ -283,8 +283,8 @@ class XSDTemplates {
 				</xsd:complexContent>
 			«ELSE»
 				«bo.toPropertySequenceWithAny (currNs, profile, minState)»
-				«IF profile.typesUseExtendableXMLAttributes()»
-					<xsd:anyAttribute namespace="##any"/>
+				«IF profile.typesUseExtendibleXMLAttributes()»
+					«profile.typesExtendibleXMLAttributesClause»
 				«ENDIF»
 			«ENDIF»
 		</xsd:complexType>
@@ -301,9 +301,8 @@ class XSDTemplates {
 	def dispatch toPropertySequenceWithAny(BusinessObject bo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«bo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
-			«IF profile.typesUseExtendableProperties ()»
-				<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
-					processContents="skip"/>
+			«IF profile.typesUseExtendibleProperties ()»
+				«profile.typesExtendiblePropertiesClause»
 			«ENDIF»
 		</xsd:sequence>
 	'''
@@ -325,9 +324,8 @@ class XSDTemplates {
 	def dispatch toPropertySequenceWithAny (org.fornax.soa.serviceDsl.Exception ex, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«ex.properties.map (e|e.toProperty (currNs, profile, minState)).join»
-			«IF profile.typesUseExtendableProperties ()»
-				<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
-					processContents="skip"/>
+			«IF profile.typesUseExtendibleProperties ()»
+				«profile.typesExtendiblePropertiesClause»
 			«ENDIF»
 		</xsd:sequence>
 	'''
@@ -401,8 +399,8 @@ class XSDTemplates {
 				</xsd:complexContent>
 			«ELSE»
 				«ex.toPropertySequenceWithAny (currNs, profile, minState)»
-				«IF profile.typesUseExtendableXMLAttributes()»
-					<xsd:anyAttribute namespace="##any"/>
+				«IF profile.typesUseExtendibleXMLAttributes()»
+					«profile.typesExtendibleXMLAttributesClause»
 				«ENDIF»
 			«ENDIF»
 		</xsd:complexType>

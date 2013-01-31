@@ -64,8 +64,12 @@ LifecycleState:
 	(isInitial?='initial' | isEnd?='end')? 'state' name = ID '{'
 		(requiresApproval?='requires-approval')?
 		(strictChecks?='strict-checks')?
+		//Runtime view
 		('qualifies-for' (qualifiesFor+=EnvironmentType)(',' qualifiesFor+=EnvironmentType)*)?
 		('qualifies-for-environment' (qualifiesForEnvironment+=[environmentDsl::Environment])(',' qualifiesForEnvironment+=[environmentDsl::Environment])*)?
+		// Development- and built-time view
+		('build-qualifies-for' (buildQualifiesFor+=EnvironmentType)(',' buildQualifiesFor+=EnvironmentType)*)?
+		('build-qualifies-for-environment' (buildQualifiesForEnvironment+=[environmentDsl::Environment])(',' buildQualifiesForEnvironment+=[environmentDsl::Environment])*)?
 		(transitions+=Transition)*
 	'}';
 	
@@ -166,10 +170,7 @@ MessageHeader:
 			(governanceDecisions+=GovernanceDecision)*
 			/* For which message exchange patterns the header is being used */
 			'for' (exchanges+=MEPMessageKind) (',' exchanges+=MEPMessageKind)*
-			/* may extension placeholder properties be used */ 
-			(extendableProperties?='extendable-properties' )?
-			/* may extension placeholder XML schema element attributes be used */ 
-			(extendableXMLAttributes?='extendable-XML-attributes' )?
+			(versionEvolution = TypeVersionEvolution)?
 		'}'
 		/* The parameters of the message header. The parameters are available as operation parameters. 
 		 * Parameters should not be stated again in the service operation definition*/
@@ -259,15 +260,22 @@ enum InternalNsQualifierPolicy:
 TypeDefPolicy: 
 	{TypeDefPolicy}
 	'types' '{'
-		(extendableProperties?='extendable-properties' )?
-		('extendable-XML-clause' extendableXMLClause = STRING )?
-		(extendableXMLAttributes?='extendable-XML-attributes' )?
-		('extendable-XML-attribute-clause' extendableXMLAttributeClause = STRING)?
-		(extendableSubTypes?='extendable-sub-types')?
+		(versionEvolution=TypeVersionEvolution)?
 		(allowEnums?='allow-enums' )?
 		(allowInheritance?='allow-inheritance' )?
 		(allowPolymorphism?='allow-polymorphism' )?
 	'}';
+	
+TypeVersionEvolution:
+	{TypeVersionEvolution}
+	'version-evolution' '{'
+		(extendibleProperties?='extendible-properties' )?
+		('extendible-XML-clause' extendibleXMLClause = STRING )?
+		(extendibleXMLAttributes?='extendible-XML-attributes' )?
+		('extendible-XML-attribute-clause' extendibleXMLAttributeClause = STRING)?
+		(extendibleSubTypes?='extendible-sub-types')?
+	'}'
+;
 
 /*
  * Defines convention to be met by service definitions
@@ -275,9 +283,24 @@ TypeDefPolicy:
 ServiceDefPolicy:
 	{ServiceDefPolicy}
 	'services' '{'
-		'operations' '{'
-			(extendableParameters?='extendable-parameters' )?
-			(extendableXMLAttributes?='extendable-XML-attributes' )?
-			(allowPolymorphism?='allow-polymorphism' )?
-		'}'
+		(operationRules=OperationDefPolicy)?
 	'}';
+
+OperationDefPolicy:
+	{OperationDefPolicy}
+	'operations' '{'
+		(versionEvolution=ServiceVersionEvolution)?
+		(allowPolymorphism?='allow-polymorphism' )?
+	'}'
+;
+	
+ServiceVersionEvolution:
+	{ServiceVersionEvolution}
+	'version-evolution' '{'
+		(extendibleParameters?='extendible-parameters' )?
+		('extendible-XML-clause' extendibleXMLClause = STRING )?
+		(extendibleXMLAttributes?='extendible-XML-attributes' )?
+		('extendible-XML-attribute-clause' extendibleXMLAttributeClause = STRING)?
+	'}'
+;
+	

@@ -41,7 +41,6 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 	private Boolean includeSubNamespaces = false;
 	private Boolean useNestedPaths = false;
 	private Boolean forceRelativePaths = false;
-	private Boolean generatePrivateWsdlForProviderHost = false;
 	private String targetEnvironmentName = ".*";
 
 	public Injector createInjectorAndDoEMFRegistration() {
@@ -69,15 +68,7 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 								.annotatedWith (
 										Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
 								.toInstance (useNestedPaths);
-						bind (Boolean.class)
-								.annotatedWith (
-										Names.named (BindingDSLGeneratorConstants.GENERATE_PRIVATE_WSDL_FOR_PROVIDER_HOST))
-								.toInstance (generatePrivateWsdlForProviderHost);
 
-						bind (String.class)
-								.annotatedWith (
-										Names.named (ProfileGeneratorConstants.PROFILE_NAME))
-								.toInstance (profileName);
 						bind (new TypeLiteral<List<String>>() {})
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.MODULE_BINDING_NAMES))
@@ -111,9 +102,13 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 										Names.named (BindingDSLGeneratorConstants.INCLUDE_SUB_NAMESPACES))
 								.toInstance (includeSubNamespaces);
 						bind (String.class)
-								.annotatedWith (
-										Names.named (BindingDSLGeneratorConstants.TARGET_ENVIRONMENT_NAME))
-								.toInstance (getTargetEnvironmentName ());
+							.annotatedWith (
+								Names.named (BindingDSLGeneratorConstants.TARGET_ENVIRONMENT_NAME))
+							.toInstance (getTargetEnvironmentName ());
+						bind (String.class)
+							.annotatedWith (
+								Names.named (BindingDSLGeneratorConstants.PROFILE_NAME))
+							.toInstance (getProfileName ());
 
 						JavaIoFileSystemAccess fileSystemAccess = new JavaIoFileSystemAccess ();
 						OutputConfiguration out = new OutputConfiguration ("DEFAULT_OUTPUT");
@@ -155,11 +150,11 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 		moduleNames.add (moduleName);
 	}
 
-	public List<VersionedModuleSelector> getModules () {
+	public List<VersionedModuleSelector> getServiceModules () {
 		return modules;
 	}
 
-	public void addModule (VersionedModuleSelector module) {
+	public void addServiceModule (VersionedModuleSelector module) {
 		modules.add (module);
 	}
 
@@ -216,19 +211,6 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 	public void setForceRelativePaths (Boolean forceRelativePaths) {
 		this.forceRelativePaths = forceRelativePaths;
-	}
-
-
-
-	public Boolean getGeneratePrivateWsdlForProviderHost () {
-		return generatePrivateWsdlForProviderHost;
-	}
-
-
-
-	public void setGeneratePrivateWsdlForProviderHost (
-			Boolean generatePrivateWsdlForProviderHost) {
-		this.generatePrivateWsdlForProviderHost = generatePrivateWsdlForProviderHost;
 	}
 
 	public void setTargetEnvironmentName (String environmentName) {

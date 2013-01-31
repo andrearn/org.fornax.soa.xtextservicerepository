@@ -33,7 +33,7 @@ Binding: DomainBinding | ModuleBinding | ServiceBinding ;
  */
 DomainBinding: 
 	'bind namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment] '{'
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(governanceDecisions+=GovernanceDecision)*
 		('protocols' '{'
 			(protocol+=BindingProtocol)+
@@ -46,7 +46,6 @@ DomainBinding:
 		'}')?
 		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
 		(serviceBinding+=ServiceBinding)*
-		(components+=Component)*
 	'}';
 
 /* 
@@ -66,7 +65,7 @@ Provider:
  */
 ServiceBinding:
 	'bind-service' service=ServiceRef '{'
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(governanceDecisions+=GovernanceDecision)*
 		('provided-contract' providedContract=STRING)?
 		'protocols' '{'
@@ -97,7 +96,7 @@ BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP 
  */
 OperationBinding: 
 	'bind-operation' operation=[serviceDsl::Operation|QualifiedName] '{' 
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(governanceDecisions+=GovernanceDecision)*
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
@@ -120,7 +119,7 @@ OperationBinding:
  */	
 ModuleBinding:
 	'bind-module' module=ModuleRef 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment|QualifiedName] '{'
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		/* The server to bind the endpoint to */
 		provider=Provider
 		(governanceDecisions+=GovernanceDecision)*
@@ -139,32 +138,6 @@ ModuleBinding:
 
 ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
 
-/*
- * @deprecated
- */
-Component:
-	'component' name=ID 'implements' implements=ServiceRef '{'
-		'bind to environment' environment = [environmentDsl::Environment|QualifiedName]
-		(qualifier=QualifierRefs)?
-		'provided-services' services+=ServiceRef (',' services+=ServiceRef)* 
-		('referenced-services' referencedServices+=ServiceRef (',' )* )?
-		'protocols' '{'
-			(protocol+=BindingProtocol)+
-		'}'
-		(operation+=OperationBinding)*
-		('policies' '{'
-			(policies+=Policy)*
-		'}')?
-		('provider-policies' '{'
-			(providerPolicies+=Policy)*
-		'}')?
-		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
-		'implementation' implementation=ImplementationType 
-		('sourceURL' source=STRING )? //Where can I get the sources?
-	'}';
-
-enum ImplementationType: BPMN | BPMN2 | BPEL | WSHT='WS-HT' | RuleML | Drools | Mediation | Java | CS='C#' | CPP='C++' | Scala | Ruby | PHP | WSDocLit = 'WS-Document/Literal' | WSRPC = 'WS-RPC/Literal' | WSRPCEnc='WS-RPC/Encoded' | REST_XML='REST-XML' | REST_JSON = 'REST-JSON'| EJB | Spring | EJB2 | SAP | SAP_IDOC = 'SAP/iDoc' | SAP_BAPI = 'SAP/BAPI'| Corba | Shell | Siebel | Tuxedo | File | SQL | Ivy | jPDL3 | jPDL4;
-
 
 //Protocols 
 
@@ -172,12 +145,12 @@ enum ImplementationType: BPMN | BPMN2 | BPEL | WSHT='WS-HT' | RuleML | Drools | 
 SOAP: 
 	'SOAP' '{'
 		{SOAP}
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(publisher=Publisher)?
-		(provider=Provider)?
+		//(provider=Provider)?
 		('style' style=SOAPStyle )?
 		('http-context-root' contextRoot = STRING )?
-		('provider-http-context-root' providerContextRoot = STRING )?
+		//('provider-http-context-root' providerContextRoot = STRING )?
 		('provided-WSDL-Url' providedWsdlUrl = STRING )?
 	'}';
 	
@@ -187,7 +160,7 @@ enum SOAPStyle: doclitwrap='document/literal-wrapped' | rpclit = 'rpc/literal' |
 SAP: 
 	'SAP' '{'
 		{SAP}
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(provider=Provider)?
 		('transport' transport=SAPTransport )?
 		('client' client=[environmentDsl::SapClient|QualifiedName] )?
@@ -198,7 +171,7 @@ enum SAPTransport: IDOC | RFC;
 /* An EJB endpoint protocol (IIOP/RMI) */ 
 EJB: 
 	'EJB' '{'
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'jndi-name' jndiName=STRING 
@@ -207,7 +180,7 @@ EJB:
 /* A  plain HTTP endpoint protocol */	
 HTTP: 
 	'HTTP' '{'
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'url' url=STRING 
@@ -218,7 +191,7 @@ HTTP:
 /* A REST endpoint protocol */
 REST: 
 	'REST' '{'
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'path' path=STRING  
@@ -238,7 +211,7 @@ enum Verb: CREATE | RETRIEVE | UPDATE | DELETE | GET | PUT | POST;
 JMS:
 	'JMS' '{'
 		{JMS}
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		(channel=TopicOrQueue)?
@@ -249,16 +222,16 @@ JMS:
 TopicOrQueue: Topic | Queue;
 
 /* JMS topic to send/retrieve messages */
-Topic: 'topic' name=STRING (qualifier=QualifierRefs)?;
+Topic: 'topic' name=STRING (endpointQualifierRefs=EndpointQualifierRefs)?;
 
 /* JMS queue to send/retrieve messages */
-Queue: 'queue' name=STRING (qualifier=QualifierRefs)?;
+Queue: 'queue' name=STRING (endpointQualifierRefs=EndpointQualifierRefs)?;
 
 /* An SCA native endpoint protocol. Messages are accessed via the SCA API or import/export primitives*/	
 SCA:
 	{SCA} 
 	'SCA' (name=STRING)? '{'
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		('promote' promote=STRING )?
@@ -268,21 +241,21 @@ SCA:
 /* A file access protocol for endpoints */
 FILE: 
 	'FILE' '{'
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?
 	'}';
 
 /* Use FTP to access message files on the endpoint */
 FTP: 
 	'FTP' '{' 
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		'access' accessType=ReadWrite ('interval' pollIntervall=STRING)?
 	'}';
 
 /* An IIOP endpoint protocol */ 
 IIOP: 
 	'IIOP' '{'
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		'lookup-name' lookupName=STRING 
@@ -291,7 +264,7 @@ IIOP:
 AMQP:
 	'AMQP' '{'
 		{AMQP}
-		(qualifier=QualifierRefs)?
+		(endpointQualifierRefs=EndpointQualifierRefs)?
 		(publisher=Publisher)?
 		(provider=Provider)?
 		(channel=TopicOrQueue)?
@@ -340,10 +313,10 @@ SigningPolicy : {SigningPolicy} 'signing policy';
 /* How messages are encrypted */
 EncryptionPolicy : {EncryptionPolicy} 'encryption policy';
 
-enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | X509Certificate;
+enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | X509Certificate | OAuth;
 
 enum LogPolicyKind: NONE | HEADER | ALL;
 
-QualifierRefs:
-	'qualifier' (qualifiers+=[semanticsDsl::Qualifier|QualifiedName])(','qualifiers+=[semanticsDsl::Qualifier|QualifiedName])*
+EndpointQualifierRefs:
+	'endpoint-qualifier' (endpointQualifiers+=[semanticsDsl::Qualifier|QualifiedName])(','endpointQualifiers+=[semanticsDsl::Qualifier|QualifiedName])*
 ;

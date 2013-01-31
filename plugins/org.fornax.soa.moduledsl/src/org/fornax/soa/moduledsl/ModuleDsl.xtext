@@ -11,15 +11,23 @@ ModuleModel:
 	imports+=Import*
 	modules+=Module*;
 /*
- * A (deployable) service module. External modules are provided by other organizations.
+ * A (deployable) service module. External modules are provided by other organizations.<br/>
+ * Client modules are only users other modules, but don't provide services themselves. 
  */	
 Module:
-	(external?='external')? (client?='client')? (public?='public')? 'module' name = QualifiedName '{'
+	/* an externally provided module */
+	(external?='external')? 
+	/* The contains service clients only */
+	(client?='client')? 
+	/* the module is publically accessible */
+	(public?='public')?
+	 
+	'module' name = QualifiedName '{'
 		
 		version = Version
 		'lifecycle-state' state = [profileDsl::LifecycleState | QualifiedName]
 		(governanceDecisions+=GovernanceDecision)*
-		/* An additional named Qualifier of the module, may referred to by bindings or other modules using this module */
+		/* An additional named Qualifier of the module, may be referred to by bindings or other modules using this module */
 		(qualifiers=QualifierRefs)?
 		('owner' owner = STRING)?
 		/*
@@ -36,7 +44,7 @@ Module:
 			('release-tag' releaseTag = STRING)? &		// Tag in VCS
 			('source-location' source=STRING )? 		// Where can I get the sources? 
 		)
-		
+		/* Declares services provided by the module */
 		('provides' '{'
 			/*
 			 * Services that the module provides
@@ -47,21 +55,25 @@ Module:
 			 */
 			(providedNamespaces += NamespaceRef)*
 		'}')?
+		/* Declares services that are being used by this module. Services can be 
+		 * referenced implicitly by referring to the providing module
+		 */
 		('uses' '{'
 			(usedServices += ImportServiceRef)*
 			(usedModules  += ModuleRef)*
 			('endpoint-protocol' usesEndpointProtocol=ImportBindingProtocol)?
 			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=ImportBindingProtocol) (',' usesAlternativeEndpointProtocols+=ImportBindingProtocol)*)?
-			('binding-qualifier' bindingQualifier=[semanticsDsl::Qualifier|QualifiedName])?
+			('endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName])?
 		'}')?
 			
 	'}';
 
+AbstractServiceRef: ServiceRef | ImportServiceRef;
 /* 
  * Refers to a service constrained by the given version constraint
  */
 ServiceRef: 
-	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (qualifiers=QualifierRefs)?;
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
 	
 /* 
  * Refers to a service imported by the module constrained by the given version constraint. 
@@ -76,7 +88,7 @@ ImportServiceRef:
 		('using-endpoint' '{'
 			('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
 			('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
-			('binding-qualifier' bindingQualifier=[semanticsDsl::Qualifier|QualifiedName])?
+			('endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName])?
 		'}')?
 	('}')?
 ;
@@ -86,7 +98,7 @@ ImportServiceRef:
  * qualifying the other model, may be used to select the referenced module
  */
 ServiceModuleRef:
-	module=[Module|QualifiedName] version=VersionRef (importQualifier=MultiQualifierRef)?
+	module=[Module|QualifiedName] version=VersionRef
 ;
 
 ModuleRef:
@@ -99,7 +111,7 @@ ModuleRef:
 		'}')?
 		('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
 		('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
-		('binding-qualifier' bindingQualifier=[semanticsDsl::Qualifier|QualifiedName])?
+		('endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName])?
 	'}'
 ;
 
@@ -117,10 +129,6 @@ NamespaceRef:
 	'}')?
 ;
 
-MultiQualifierRef:
-	'qualified-by' (isOneOf?='one-of')? '{' (qualifiers+=[semanticsDsl::Qualifier]) (','qualifiers+=[semanticsDsl::Qualifier])* '}'
-;
-
 /*
  *	How the module is packaged 
  */
@@ -135,28 +143,4 @@ QualifierRefs:
 	'qualifier' (qualifiers+=[semanticsDsl::Qualifier|QualifiedName])(','qualifiers+=[semanticsDsl::Qualifier|QualifiedName])*
 ;
 
-/*
-module mod.bla  {
-	version 1.1
-	lifecycle-state development
-	provides {
-			default-protocols {
-				SOAP {
-					protocol-version 1.2
-				}
-			}
-			service MyServiceUS majorVersion 1 {
-				override dependencies {
-					operation myOp requires OtherService majorVersion 1
-				}
-				default-protocols {
-					EJB {
-					
-					}
-				}
-			}
-	}
-}
-
-*/
 

@@ -52,6 +52,10 @@
         upperBound="-1" eType="ecore:EEnum ../../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiesForEnvironment"
         unique="false" upperBound="-1" eType="ecore:EClass ../../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="buildQualifiesFor" unique="false"
+        upperBound="-1" eType="ecore:EEnum ../../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//EnvironmentType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="buildQualifiesForEnvironment"
+        unique="false" upperBound="-1" eType="ecore:EClass ../../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="transitions" upperBound="-1"
         eType="#//Transition" containment="true"/>
   </eClassifiers>
@@ -131,9 +135,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="exchanges" unique="false"
         upperBound="-1" eType="#//MEPMessageKind"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableProperties" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableXMLAttributes"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionEvolution" eType="#//TypeVersionEvolution"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
         eType="#//Property" containment="true"/>
   </eClassifiers>
@@ -232,21 +235,36 @@
     <eLiterals name="NO_QUALIFIER" value="3" literal="no-qualifier"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeDefPolicy">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableProperties" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableXMLClause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableXMLAttributes"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableXMLAttributeClause"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableSubTypes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionEvolution" eType="#//TypeVersionEvolution"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="allowEnums" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="allowInheritance" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="allowPolymorphism" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ServiceDefPolicy">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableParameters" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendableXMLAttributes"
+  <eClassifiers xsi:type="ecore:EClass" name="TypeVersionEvolution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendibleProperties" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendibleXMLClause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendibleXMLAttributes"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendibleXMLAttributeClause"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendibleSubTypes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceDefPolicy">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operationRules" eType="#//OperationDefPolicy"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OperationDefPolicy">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionEvolution" eType="#//ServiceVersionEvolution"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="allowPolymorphism" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceVersionEvolution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendibleParameters" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendibleXMLClause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendibleXMLAttributes"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="extendibleXMLAttributeClause"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

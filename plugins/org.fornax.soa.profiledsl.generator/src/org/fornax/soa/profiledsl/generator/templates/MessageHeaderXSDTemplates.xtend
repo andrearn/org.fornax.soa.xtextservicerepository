@@ -3,7 +3,7 @@ package org.fornax.soa.profiledsl.generator.templates
 import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
 import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
@@ -213,8 +213,8 @@ class MessageHeaderXSDTemplates {
 				</xsd:complexContent>
 			«ELSE»
 				«cls.toPropertySequenceWithAny (currNs, profile, header)»
-				«IF header.extendableXMLAttributes»
-					<xsd:anyAttribute namespace="##any"/>
+				«IF header.typesUseExtendibleXMLAttributes»
+					«header.getTypesExtendibleXMLAttributesClause»
 				«ENDIF»
 			«ENDIF»
 		</xsd:complexType>
@@ -223,9 +223,8 @@ class MessageHeaderXSDTemplates {
 	def protected dispatch toPropertySequenceWithAny (org.fornax.soa.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, SOAProfile profile, MessageHeader header) '''
 		<xsd:sequence>
 			«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
-			«IF header.extendableProperties»
-				<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
-					processContents="skip"/>
+			«IF header.typesUseExtendibleProperties»
+				«header.getTypesExtendiblePropertiesClause»
 			«ENDIF»
 		</xsd:sequence>
 		«IF !cls.properties.filter (typeof (Attribute)).isEmpty»

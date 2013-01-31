@@ -9,7 +9,6 @@ import org.fornax.soa.serviceDsl.InternalNamespace
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.servicedsl.generator.query.HeaderFinder
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtensions
 import org.fornax.soa.serviceDsl.Operation
 import java.util.List
@@ -25,6 +24,7 @@ import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensio
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import java.util.logging.Logger
+import org.fornax.soa.servicedsl.generator.query.HeaderFinder
 
 /*
  * Template class for generation of abstract WSDLs

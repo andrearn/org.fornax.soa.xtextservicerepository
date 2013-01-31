@@ -11,11 +11,17 @@ import org.eclipse.xtext.EcoreUtil2
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.moduledsl.moduleDsl.ModuleRef
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef
+import org.fornax.soa.semanticsDsl.Qualifier
+import org.fornax.soa.basedsl.sOABaseDsl.VersionRef
+import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef
+import org.eclipse.emf.ecore.EObject
+import java.util.Set
 
 class ModuleLookup {
 	
 	@Inject IStateMatcher stateMatcher
 	@Inject IPredicateSearch search
+	@Inject extension IModuleVersionMatcher
 	
 	def findAllModules (ResourceSet resourceSet) {
 		var moduleDescs = search.search("Module ", Predicates::alwaysTrue)
@@ -34,14 +40,27 @@ class ModuleLookup {
 				}
 			}
 		}
-		return allModules
+		return allModules.filter (typeof (Module)).toSet
+	}
+	
+	def findCompatibleModules (Module module) {
+		val allModules = findAllModules (module.eResource.resourceSet)
+		allModules.filter (m | m.isCompatibleTo (module))
 	}
 	
 	/* 
 	 * Find all modules that provide the given service
 	 */
 	def findProvidingModules (Service service) {
-		var List<Module> allModules = findAllModules (service.eResource?.resourceSet)
+		var Set<Module> allModules = findAllModules (service.eResource?.resourceSet)
+		var providingModules = allModules.filter (m|m.providedServices.map (e|e.service).exists (s|s == service))
+		val nsProvidingModules = allModules.filter (m|m.providedNamespaces.map (e|e.namespace.services).exists (s|s == service))
+		providingModules.toSet.addAll (nsProvidingModules)
+		return providingModules
+	}
+	
+	def findProvidingModules (Service service, VersionRef versionRef) {
+		var Set<Module> allModules = findAllModules (service.eResource?.resourceSet)
 		var providingModules = allModules.filter (m|m.providedServices.map (e|e.service).exists(s|s == service))
 		val nsProvidingModules = allModules.filter (m|m.providedNamespaces.map (e|e.namespace.services).exists(s|s == service))
 		providingModules.toSet.addAll (nsProvidingModules)
@@ -49,35 +68,52 @@ class ModuleLookup {
 	}
 	
 	/* 
-	 * Find all modules that provide the given service. from any of the canditate modules
+	 * Find all modules that provide the given service. from any of the candidate modules
 	 */
-	def findProvidingModules (Service service, Iterable<Module> canditateModules) {
-		canditateModules.filter (cand| service.findProvidingModules.exists(m|m == cand))
+	def findProvidingModules (Service service, Iterable<Module> candidateModules) {
+		candidateModules.filter (cand| service.findProvidingModules.exists(m|m == cand))
 	}
 	
 	/* 
-	 * Find all modules that provide the given service, from any of the canditate modules, that 
+	 * Find all modules that provide the given service, from any of the candidate modules, that 
 	 * declare the given qualifier
 	 */
-	def findProvidingModules (Service service, Iterable<Module> canditateModules, String qualifierName) {
-		service.findProvidingModules (canditateModules).filter (m|m.qualifiers.qualifiers.exists(q|q.name == qualifierName))
+	def findProvidingModules (Service service, Iterable<Module> candidateModules, String qualifierName) {
+		service.findProvidingModules (candidateModules).filter (m|m.qualifiers.qualifiers.exists(q|q.name == qualifierName))
 	}	
 		
 	def dispatch String getBindingQualifier (Module module) {
-		module.bindingQualifier.name
+		module.endpointQualifier.name
 	}
 	
 	def dispatch String getBindingQualifier (ModuleRef moduleRef) {
-		if (moduleRef.bindingQualifier != null)
-			return moduleRef.bindingQualifier.name
+		if (moduleRef.endpointQualifier != null)
+			return moduleRef.endpointQualifier.name
 		else
-			return (moduleRef.eContainer as Module).bindingQualifier.name
+			return (moduleRef.eContainer as Module).endpointQualifier.name
 	}
 	
 	def dispatch String getBindingQualifier (ImportServiceRef impServiceRef) {
-		if (impServiceRef.bindingQualifier != null)
-			return impServiceRef.bindingQualifier.name
+		if (impServiceRef.endpointQualifier != null)
+			return impServiceRef.endpointQualifier.name
 		else
-			return (impServiceRef.eContainer as Module).bindingQualifier.name
+			return (impServiceRef.eContainer as Module).endpointQualifier.name
+	}
+	
+	/*
+	 * Get the module that contains the model element.
+	 */
+	def dispatch getOwningModule (EObject modelElement) {
+		if (modelElement?.eContainer != null)
+			return modelElement.eContainer
+		else 
+			return null
+	}
+	
+	/*
+	 * Get the module that contains the model element. I.n this case the Module itself
+	 */
+	def dispatch getOwningModule (Module modelElement) {
+		return modelElement
 	}
 }

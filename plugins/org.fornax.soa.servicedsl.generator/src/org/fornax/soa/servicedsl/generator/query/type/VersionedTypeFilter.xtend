@@ -4,11 +4,11 @@ import org.fornax.soa.serviceDsl.VersionedType
 import java.util.List
 import org.fornax.soa.serviceDsl.SubNamespace
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
-import org.fornax.soa.profiledsl.generator.query.StateMatcher
+import org.fornax.soa.profiledsl.search.StateMatcher
 
 class VersionedTypeFilter {
 	

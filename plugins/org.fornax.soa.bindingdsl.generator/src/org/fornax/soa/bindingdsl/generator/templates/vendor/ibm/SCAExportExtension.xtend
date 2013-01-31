@@ -7,7 +7,7 @@ import org.fornax.soa.bindingDsl.SCA
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 
 class SCAExportExtension {

@@ -17,7 +17,7 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.query.HeaderFinder
 import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceImportQueries
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.webservice.WsdlExtensions
 import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder

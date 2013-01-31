@@ -17,7 +17,9 @@ import org.eclipse.xtext.validation.CheckType;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
+import org.fornax.soa.binding.query.BindingLookup;
 import org.fornax.soa.bindingDsl.ModuleBinding;
+import org.fornax.soa.environment.query.EnvironmentLookup;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
@@ -27,6 +29,9 @@ import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.util.BindingDslHelper;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativeValidator {
@@ -36,6 +41,8 @@ public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativ
 	
 	@Inject
 	ModuleLookup moduleLookup;
+	@Inject
+	EnvironmentLookup envLookup;
 	
 	@Inject
 	IReferenceSearch referenceSearch;
@@ -45,6 +52,9 @@ public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativ
 	
 	@Inject
 	BindingDslHelper bindingDslHelper;
+	
+	@Inject
+	BindingLookup bindingLookup;
 	
 	@Override
 	protected List<EPackage> getEPackages() {
@@ -62,11 +72,13 @@ public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativ
 	@Check (CheckType.FAST)
 	public void checkModuleHasBindingsForState (Module module) {
 		if (!module.isClient() && !module.isExternal()) {
-			final Set<ModuleBinding> moduleBindings = bindingDslHelper.getBindingsForModule(module);
+//			final Set<ModuleBinding> moduleBindings = bindingDslHelper.getBindingsForModule(module);
+			final Set<ModuleBinding> moduleBindings = bindingLookup.findAllBindingsToCompatibleModule (module);
 			if (moduleBindings.isEmpty()) {
 				warning("The module " + module.getName() + " has no binding. You should define a binding to use it from another module", ModuleDslPackage.Literals.MODULE__NAME);
 			} else {
-				EList<EnvironmentType> envTypes = module.getState().getQualifiesFor();
+				List<EnvironmentType> envTypes = module.getState().getQualifiesFor();
+				envTypes = envLookup.filterByUsedEnvironmentTypes (envTypes, module.eResource().getResourceSet());
 				for (EnvironmentType envType : envTypes) {
 					boolean hasBinding = false;
 					for (ModuleBinding bind : moduleBindings) {
@@ -76,7 +88,7 @@ public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativ
 					if (!hasBinding)
 						warning("The module " + module.getName() + " has no binding to an environment of type " + envType.getName() + ". You should define such a binding to use it in a " + envType.getName() + " environment", ModuleDslPackage.Literals.MODULE__NAME);
 				}
-				EList<Environment> envs = module.getState().getQualifiesForEnvironment();
+				List<Environment> envs = module.getState().getQualifiesForEnvironment();
 				for (Environment env : envs) {
 					boolean hasBinding = false;
 					for (ModuleBinding bind : moduleBindings) {

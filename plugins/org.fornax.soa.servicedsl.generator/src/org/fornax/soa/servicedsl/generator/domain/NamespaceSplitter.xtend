@@ -1,7 +1,7 @@
 package org.fornax.soa.servicedsl.generator.domain
 
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtensions

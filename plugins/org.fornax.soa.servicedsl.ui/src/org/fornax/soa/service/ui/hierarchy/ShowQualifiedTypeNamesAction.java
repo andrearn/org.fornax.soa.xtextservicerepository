@@ -5,14 +5,16 @@ import org.eclipse.swt.custom.BusyIndicator;
 
 public class ShowQualifiedTypeNamesAction extends Action {
 
+	private static final String ORG_FORNAX_SOA_SERVICEDSL_HIERARCHY_SHOWQUALIFIEDTYPENAMES = "org.fornax.soa.servicedsl.hierarchy.showqualifiedtypenames";
 	private TypeHierarchyViewPart fView;
 
 	public ShowQualifiedTypeNamesAction(
 			TypeHierarchyViewPart v, boolean initValue) {
+		
 		super(EObjectDescrHierarchyMessages.ShowQualifiedTypeNamesAction_label);
 		setDescription(EObjectDescrHierarchyMessages.ShowQualifiedTypeNamesAction_description);
 		setToolTipText(EObjectDescrHierarchyMessages.ShowQualifiedTypeNamesAction_tooltip);
-
+		setActionDefinitionId(ORG_FORNAX_SOA_SERVICEDSL_HIERARCHY_SHOWQUALIFIEDTYPENAMES);
 
 		fView= v;
 		setChecked(initValue);

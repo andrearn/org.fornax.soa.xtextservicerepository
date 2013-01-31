@@ -68,8 +68,8 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	String text (SOAP ele) {
 		Server server = null;
 		SubNamespace ns = BindingDslHelper.getSubNamespace(ele);
-		if (ele.getProvider() != null)
-			server = ele.getProvider().getProvServer();
+//		if (ele.getProvider() != null)
+//			server = ele.getProvider().getProvServer();
 		if (server == null && ele.getPublisher() != null)
 			server = ele.getPublisher().getPubServer();
 		if (server == null) {

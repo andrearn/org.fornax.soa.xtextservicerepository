@@ -3,6 +3,10 @@
  */
 package org.fornax.soa;
 
+import org.fornax.soa.basedsl.resource.EObjectDescriptionBuilder;
+import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
+import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
+import org.fornax.soa.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
 import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
@@ -10,8 +14,12 @@ import org.fornax.soa.basedsl.search.PredicateReferenceSearch;
 import org.fornax.soa.basedsl.search.PredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+import org.fornax.soa.moduledsl.query.DefaultModuleVersionMatcher;
+import org.fornax.soa.moduledsl.query.IModuleVersionMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
+import org.fornax.soa.profiledsl.scoping.versions.DefaultVersionFilterProvider;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
+import org.fornax.soa.profiledsl.scoping.versions.IVersionFilterProvider;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
@@ -60,6 +68,23 @@ public class BindingDslRuntimeModule extends org.fornax.soa.AbstractBindingDslRu
 	
 	public Class<? extends IReferenceSearch> bindIReferenceSearch () {
 		return PredicateReferenceSearch.class;
+	}
+	
+	public Class<? extends IModuleVersionMatcher> bindIModuleVersionMatcher () {
+		return DefaultModuleVersionMatcher.class;
+	}
+
+	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
+		return SOABaseDslFactoryImpl.class;
+	}
+	
+	public Class<? extends IEObjectDescriptionBuilder> bindIEObjectDescrionBuilder () {
+		return EObjectDescriptionBuilder.class;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public Class<? extends IVersionFilterProvider> bindIVersionFilterProvider () {
+		return DefaultVersionFilterProvider.class;
 	}
 
 }

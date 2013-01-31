@@ -11,7 +11,7 @@ import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Enumeration
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
-import org.fornax.soa.profiledsl.generator.query.StateMatcher
+import org.fornax.soa.profiledsl.search.StateMatcher
 
 class TypesByLifecycleStateFinder {
 	

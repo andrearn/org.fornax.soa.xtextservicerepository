@@ -7,6 +7,8 @@ import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.resource.EObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
+import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
+import org.fornax.soa.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.search.PredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
@@ -36,5 +38,10 @@ public class SOABaseDslRuntimeModule extends org.fornax.soa.basedsl.AbstractSOAB
 	public Class<? extends IEObjectDescriptionBuilder> bindEObjectDescriptionBuilder () {
 		return EObjectDescriptionBuilder.class;
 	}
+	
+	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
+		return SOABaseDslFactoryImpl.class;
+	}
+
 
 }

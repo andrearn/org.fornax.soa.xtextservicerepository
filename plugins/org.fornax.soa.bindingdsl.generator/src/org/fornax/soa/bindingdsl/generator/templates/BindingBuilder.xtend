@@ -6,8 +6,7 @@ import java.util.List
 import org.fornax.soa.basedsl.generator.CommonStringExtensions
 import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
-import org.fornax.soa.bindingdsl.generator.queries.modules.ModuleBindingResolver
-import org.fornax.soa.bindingdsl.generator.queries.services.BindingServiceResolver
+import org.fornax.soa.binding.query.services.BindingServiceResolver
 import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
 import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteProviderWsdlTemplates
 import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlTemplates
@@ -16,9 +15,9 @@ import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
-import org.fornax.soa.servicedsl.generator.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceFinder
 import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceImportQueries
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.templates.ServiceTemplates
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
 import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates
@@ -28,6 +27,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import java.util.logging.Logger
 import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.fornax.soa.binding.query.BindingLookup
 
 /**
  * Builds all technical artifacts tthat repsent a binding (WSDLs/XSDs etc.).
@@ -44,7 +44,7 @@ class BindingBuilder {
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension BindingServiceResolver
-	@Inject extension ModuleBindingResolver
+	@Inject extension BindingLookup
 		
 	
 	@Inject BindingServiceContractBuilder	contractBuilder

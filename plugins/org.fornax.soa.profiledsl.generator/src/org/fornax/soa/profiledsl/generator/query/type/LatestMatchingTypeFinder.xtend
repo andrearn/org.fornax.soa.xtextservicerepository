@@ -2,7 +2,7 @@ package org.fornax.soa.profiledsl.generator.query.type
 
 import com.google.inject.Inject
 import java.util.List
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
 import org.fornax.soa.profiledsl.generator.query.NamespaceQueries
 import org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef

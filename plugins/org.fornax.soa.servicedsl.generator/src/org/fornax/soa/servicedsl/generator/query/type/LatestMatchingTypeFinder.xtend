@@ -2,10 +2,10 @@ package org.fornax.soa.servicedsl.generator.query.type
 
 import com.google.inject.Inject
 import java.util.List
-import org.fornax.soa.profiledsl.generator.query.StateMatcher
+import org.fornax.soa.profiledsl.search.StateMatcher
 import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.BusinessObjectRef
@@ -17,8 +17,9 @@ import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.VersionedTypeRef
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.eclipse.emf.ecore.EObject
+import org.fornax.soa.serviceDsl.QueryObjectRef
 
 class LatestMatchingTypeFinder {
 	
@@ -35,6 +36,10 @@ class LatestMatchingTypeFinder {
 	def dispatch VersionedType selectLatestMatchingType (BusinessObjectRef ref) {
 		ref.type;
 	}
+	
+	def dispatch VersionedType selectLatestMatchingType (QueryObjectRef ref) {
+		ref.type;
+	}
 		
 	def dispatch VersionedType selectLatestMatchingType (EnumTypeRef ref) {
 		ref.type;
@@ -49,6 +54,12 @@ class LatestMatchingTypeFinder {
 	}
 		
 	def dispatch VersionedType selectLatestMatchingType (BusinessObjectRef ref, LifecycleState minState) {
+		ref.type.findSubdomain().types.filter (typeof (VersionedType)).filter (e| e.state.matchesMinStateLevel(minState))
+		.filter (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
+		.sortBy(e|e.version.version).last();
+	}
+		
+	def dispatch VersionedType selectLatestMatchingType (QueryObjectRef ref, LifecycleState minState) {
 		ref.type.findSubdomain().types.filter (typeof (VersionedType)).filter (e| e.state.matchesMinStateLevel(minState))
 		.filter (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
 		.sortBy(e|e.version.version).last();
@@ -148,6 +159,13 @@ class LatestMatchingTypeFinder {
 			.sortBy (e|e.version.version).last( );
 	}
 	
+	def dispatch Type findLatestMatchingType (QueryObjectRef t) { 
+		t.type.findSubdomain ().types.
+			filter (e|e.toTypeName() == t.type.toTypeName() && t.type.version.versionMatches (t.versionRef))
+			.filter (typeof (BusinessObject))
+			.sortBy (e|e.version.version).last( );
+	}
+	
 	def dispatch Type findLatestMatchingType (EnumTypeRef t) { 
 		t.type.findSubdomain ().types.
 			filter (
@@ -186,6 +204,17 @@ class LatestMatchingTypeFinder {
 	}
 	
 	def dispatch Type findLatestMatchingType (BusinessObjectRef t, LifecycleState minState) { 
+		t.type.findSubdomain ().types.
+			filter (
+				e|e.toTypeName() == t.type.toTypeName() && 
+				t.type.version.versionMatches (t.versionRef) && 
+				t.type.state.matchesMinStateLevel(minState)
+			)
+			.filter (typeof (BusinessObject))
+			.sortBy (e|e.version.version).last( );
+	}
+	
+	def dispatch Type findLatestMatchingType (QueryObjectRef t, LifecycleState minState) { 
 		t.type.findSubdomain ().types.
 			filter (
 				e|e.toTypeName() == t.type.toTypeName() && 

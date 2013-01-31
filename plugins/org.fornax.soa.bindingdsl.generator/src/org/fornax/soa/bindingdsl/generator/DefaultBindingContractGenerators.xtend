@@ -103,7 +103,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 			hasValidParameters = false
 		}
 		if (profileName == null || "".equals(profileName)) {
-			logger.severe ("No profileName has been supplied to the Generator. Please proved the name an architecture profile to be applied.")
+			logger.severe ("No profileName has been supplied to the Generator. Please provide the name an architecture profile to be applied.")
 			hasValidParameters = false
 		}
 		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
@@ -137,7 +137,9 @@ class DefaultBindingContractGenerators implements IGenerator {
 				val modModel = contentRoot as ModuleModel
 				for (module : modModel.modules) {
 					if (moduleNames.exists(modName | Pattern::matches (modName, nameProvider.getFullyQualifiedName (module).toString))
-						|| modules.exists(mod | mod.name == nameProvider.getFullyQualifiedName (module).toString && mod.version == module.version)
+						|| modules.exists(mod | mod.name == nameProvider.getFullyQualifiedName (module).toString 
+							&& (mod.version == null || mod.version == "" || mod.version == module.version.version )
+						)
 					) {
 						module.compile (profile, resource)
 					}
@@ -164,6 +166,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 	
 	
 	def protected compile (ModuleBinding bind, SOAProfile profile) {
+		logger.info("Generating contracts for module binding " + bind.name)
 		if (noDependencies != null && includeSubNamespaces != null)
 			bindingTpl.toBinding (bind, profile, noDependencies, includeSubNamespaces)
 		else
@@ -175,6 +178,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 	}
 	
 	def protected compile (Module mod, SOAProfile profile, Resource resource) {
+		logger.info("Generating contracts for module " + mod.name + " version " + mod.version.version)
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 		if (env != null)
 			bindingTpl.toBinding(mod, env, profile)

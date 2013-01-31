@@ -147,6 +147,40 @@
             </elements>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="build-qualifies-for"/>
+          <elements xsi:type="xtext:Assignment" feature="buildQualifiesFor" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="buildQualifiesFor" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.8"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="build-qualifies-for-environment"/>
+          <elements xsi:type="xtext:Assignment" feature="buildQualifiesForEnvironment" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.1">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Environment"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="buildQualifiesForEnvironment" operator="+=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.1">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/EnvironmentDsl#//Environment"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+              </terminal>
+            </elements>
+          </elements>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="transitions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
         </elements>
@@ -321,7 +355,7 @@
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="serviceDefPolicy" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -474,11 +508,8 @@
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
           </elements>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendableProperties" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="extendable-properties"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendableXMLAttributes" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="extendable-XML-attributes"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="versionEvolution" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
         <elements xsi:type="xtext:Assignment" cardinality="+" feature="parameters" operator="+=">
@@ -889,26 +920,8 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="types"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendableProperties" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="extendable-properties"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="extendable-XML-clause"/>
-          <elements xsi:type="xtext:Assignment" feature="extendableXMLClause" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendableXMLAttributes" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="extendable-XML-attributes"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="extendable-XML-attribute-clause"/>
-          <elements xsi:type="xtext:Assignment" feature="extendableXMLAttributeClause" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendableSubTypes" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="extendable-sub-types"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="versionEvolution" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="allowEnums" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="allow-enums"/>
@@ -918,6 +931,42 @@
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="allowPolymorphism" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="allow-polymorphism"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="TypeVersionEvolution">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//TypeVersionEvolution"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//TypeVersionEvolution"/>
+          </type>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="version-evolution"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendibleProperties" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="extendible-properties"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="extendible-XML-clause"/>
+          <elements xsi:type="xtext:Assignment" feature="extendibleXMLClause" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendibleXMLAttributes" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="extendible-XML-attributes"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="extendible-XML-attribute-clause"/>
+          <elements xsi:type="xtext:Assignment" feature="extendibleXMLAttributeClause" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendibleSubTypes" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="extendible-sub-types"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -934,18 +983,63 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="services"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="operationRules" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.41"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="OperationDefPolicy">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//OperationDefPolicy"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//OperationDefPolicy"/>
+          </type>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="operations"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendableParameters" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="extendable-parameters"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendableXMLAttributes" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="extendable-XML-attributes"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="versionEvolution" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.42"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="allowPolymorphism" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="allow-polymorphism"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="ServiceVersionEvolution">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//ServiceVersionEvolution"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//ServiceVersionEvolution"/>
+          </type>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="version-evolution"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendibleParameters" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="extendible-parameters"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="extendible-XML-clause"/>
+          <elements xsi:type="xtext:Assignment" feature="extendibleXMLClause" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="extendibleXMLAttributes" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="extendible-XML-attributes"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="extendible-XML-attribute-clause"/>
+          <elements xsi:type="xtext:Assignment" feature="extendibleXMLAttributeClause" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>

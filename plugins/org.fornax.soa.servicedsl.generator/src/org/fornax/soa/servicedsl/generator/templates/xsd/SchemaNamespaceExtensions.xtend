@@ -20,9 +20,9 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.ServiceModel
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.VersionedDomainNamespace
-import org.fornax.soa.servicedsl.generator.query.ExceptionFinder
-import org.fornax.soa.servicedsl.generator.query.ServiceFinder
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.ExceptionFinder
+import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.query.type.TypesByLifecycleStateFinder
 import org.fornax.soa.basedsl.sOABaseDsl.Version
 import org.eclipse.xtext.naming.IQualifiedNameProvider
@@ -57,7 +57,7 @@ class SchemaNamespaceExtensions {
 		forceRelativePaths;
 	}
 	
-	def dispatch String fqn (Object o) {
+	def dispatch String fqn (EObject o) {
 		null;
 	}
 	
@@ -74,7 +74,7 @@ class SchemaNamespaceExtensions {
 			 + toSubNamespacePath(newArrayList(s)).map(n|n.name.stripXtextEscapes()).join(".");
 	}
 	
-	def dispatch String toNamespace (Object o) {
+	def dispatch String toNamespace (EObject o) {
 		null;
 	}
 	
@@ -294,7 +294,7 @@ class SchemaNamespaceExtensions {
 	/*
 	 * 	XML Namespace prefixes / aliases
 	 */
-	def dispatch String toPrefix(Object o) {
+	def dispatch String toPrefix(EObject o) {
 		"tns";
 	}
 	def dispatch String toPrefix(OrganizationNamespace o) {

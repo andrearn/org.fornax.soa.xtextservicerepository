@@ -3,10 +3,10 @@ package org.fornax.soa.servicedsl.generator.templates.xsd
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedTypeRef
 import com.google.inject.Inject
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
-import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
-import org.fornax.soa.servicedsl.generator.query.VersionQueries
+import org.fornax.soa.service.query.LifecycleQueries
+import org.fornax.soa.service.query.VersionQueries
 import org.fornax.soa.serviceDsl.BusinessObjectRef
 import org.fornax.soa.serviceDsl.DataTypeRef
 import org.fornax.soa.serviceDsl.Service
@@ -19,14 +19,14 @@ import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Attribute
 import org.fornax.soa.servicedsl.generator.query.type.BusinessObjectQueries
-import org.fornax.soa.basedsl.generator.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.serviceDsl.SubNamespace
 import java.util.HashSet
 import java.util.Set
 import java.util.List
 import org.fornax.soa.serviceDsl.Property
 import org.fornax.soa.serviceDsl.VersionedType
-import org.fornax.soa.servicedsl.generator.query.ExceptionFinder
+import org.fornax.soa.service.query.ExceptionFinder
 import org.fornax.soa.serviceDsl.Enumeration
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataType
@@ -34,6 +34,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.EnumRef
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.serviceDsl.Reference
+import org.fornax.soa.serviceDsl.QueryObjectRef
+import org.fornax.soa.serviceDsl.QueryObject
 
 /* types.ext */
 class SchemaTypeExtensions {
@@ -124,6 +126,21 @@ class SchemaTypeExtensions {
 			t.type.name;
 		}
 	}
+	
+	def dispatch String toTypeNameRef (QueryObjectRef t) { 
+		if (t.type.findSubdomain() != null) {
+			var prefix = "tns";
+			if (!(t.findOwnerSubdomain() == t.type.findSubdomain()
+				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
+				&& !(t.getStatefulOwner() instanceof Service))
+			)  {
+				prefix = t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber();
+			}
+			prefix + ":" + t.type.name;
+		} else {
+			t.type.name;
+		}
+	}
 		
 	def dispatch String toTypeNameRef (EnumTypeRef t) { 
 		if (t.type.findSubdomain() != null) {
@@ -192,6 +209,17 @@ class SchemaTypeExtensions {
 		}
 	}
 			
+	def dispatch String toTypeNameRef (QueryObjectRef t, VersionedDomainNamespace currNs) { 
+		if (t.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()
+			&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
+			&& !(t.getStatefulOwner() instanceof Service)
+		) {
+			"tns:" +t.type.name;
+		} else {
+			t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+		}
+	}
+			
 	def dispatch String toTypeNameRef (EnumTypeRef t, VersionedDomainNamespace currNs) { 
 		if (t.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
 			&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
@@ -220,6 +248,10 @@ class SchemaTypeExtensions {
 	}
 		
 	def dispatch String toFullTypeNameRef (BusinessObjectRef t, VersionedDomainNamespace currNs) { 
+		t.toNamespace() + t.type.name;
+	}
+		
+	def dispatch String toFullTypeNameRef (QueryObjectRef t, VersionedDomainNamespace currNs) { 
 		t.toNamespace() + t.type.name;
 	}
 			
@@ -266,6 +298,9 @@ class SchemaTypeExtensions {
 		if (t.findLatestMatchingType() instanceof BusinessObject) {
 			(t.findLatestMatchingType() as BusinessObject).properties
 				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList().head().type.toTypeNameRef()
+		} else if (t.findLatestMatchingType() instanceof QueryObject) {
+			(t.findLatestMatchingType() as QueryObject).properties
+				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList().head().type.toTypeNameRef()
 		} else {
 			t.toTypeNameRef();
 		}
@@ -273,10 +308,17 @@ class SchemaTypeExtensions {
 	def dispatch String toWeakRefType (BusinessObjectRef t) {
 		(t.findLatestMatchingType() as BusinessObject).properties.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList.head().type.toTypeNameRef();
 	}
+	def dispatch String toWeakRefType (QueryObjectRef t) {
+		(t.findLatestMatchingType() as QueryObject).properties.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList.head().type.toTypeNameRef();
+	}
 	def dispatch String toWeakRefKeyAttr (TypeRef t) {
 		null;
 	}
 	def dispatch String toWeakRefKeyAttr (BusinessObjectRef t) {
+		(t.findLatestMatchingType() as BusinessObject).properties.filter (e|e.isBusinessKey)
+			.filter (typeof (Attribute)).head().name;
+	}
+	def dispatch String toWeakRefKeyAttr (QueryObjectRef t) {
 		(t.findLatestMatchingType() as BusinessObject).properties.filter (e|e.isBusinessKey)
 			.filter (typeof (Attribute)).head().name;
 	}
@@ -304,6 +346,16 @@ class SchemaTypeExtensions {
 			null;
 		}
 	}
+	def dispatch String toWeakRefType(QueryObjectRef t, LifecycleState minState) {
+		if (! (t.findLatestMatchingType (minState) as QueryObject).findAllVisibleProperties(minState)
+			.filter (e|e.isBusinessKey).filter (typeof (Attribute)).isEmpty 
+		) {
+			(t.findLatestMatchingType (minState) as QueryObject).findAllVisibleProperties(minState)
+				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList.head().type.toTypeNameRef();
+		} else {
+			null;
+		}
+	}
 	def dispatch String toWeakRefKeyAttr(TypeRef t, LifecycleState minState) {
 		null;
 	}
@@ -312,6 +364,16 @@ class SchemaTypeExtensions {
 			.filter (e|e.isBusinessKey).filter (typeof (Attribute)).isEmpty
 		) {
 			(t.findLatestMatchingType(minState) as BusinessObject).findAllVisibleProperties(minState)
+				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).head().name;
+		} else {
+			null;
+		}
+	}
+	def dispatch String toWeakRefKeyAttr(QueryObjectRef t, LifecycleState minState) { 
+		if (! (t.findLatestMatchingType(minState) as QueryObject).findAllVisibleProperties(minState)
+			.filter (e|e.isBusinessKey).filter (typeof (Attribute)).isEmpty
+		) {
+			(t.findLatestMatchingType(minState) as QueryObject).findAllVisibleProperties(minState)
 				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).head().name;
 		} else {
 			null;
@@ -346,6 +408,9 @@ class SchemaTypeExtensions {
 	def dispatch boolean isMany (BusinessObjectRef t) {
 		false;
 	}
+	def dispatch boolean isMany (QueryObjectRef t) {
+		false;
+	}
 	def dispatch boolean isMany (VersionedTypeRef t) {
 		t.many;
 	}
@@ -374,6 +439,11 @@ class SchemaTypeExtensions {
 			.map(p|p.type).filter (typeof (VersionedTypeRef))
 			.map(r|r.findLatestMatchingType()).filter (e|e!=null).map(e|e.createVersionedDomainNamespace())
 		);
+		// all refs from a QO property to a QO  
+		ns.addAll (s.types.filter (typeof (QueryObject)).map(t|t.properties).flatten
+			.map(p|p.type).filter (typeof (VersionedTypeRef))
+			.map(r|r.findLatestMatchingType()).filter (e|e!=null).map(e|e.createVersionedDomainNamespace())
+		);
 		// all refs from a BO to it's superBO  
 		ns.addAll (s.types.filter (typeof (BusinessObject)).filter (e|e.superBusinessObject != null)
 			.map(b|b.superBusinessObject.findLatestMatchingType().createVersionedDomainNamespace()));
@@ -396,12 +466,76 @@ class SchemaTypeExtensions {
 	def dispatch String toNamespace (BusinessObjectRef t) { 
 		t.type.eContainer.toUnversionedNamespace()+"/"+(t.findLatestMatchingType() as BusinessObject).version.toVersionPostfix() + "/";
 	}
+	def dispatch String toNamespace (QueryObjectRef t) { 
+		t.type.eContainer.toUnversionedNamespace()+"/"+(t.findLatestMatchingType() as QueryObject).version.toVersionPostfix() + "/";
+	}
 	def dispatch String toNamespace (EnumTypeRef t) {
 		t.type.eContainer.toUnversionedNamespace()+"/"+(t.findLatestMatchingType() as Enumeration).version.toVersionPostfix() + "/";
 	}
 	def dispatch String toNamespace (ExceptionRef t) {
 		t.exception.eContainer.toUnversionedNamespace()+"/"+(t.findLatestMatchingException() as org.fornax.soa.serviceDsl.Exception).version.toVersionPostfix() + "/";
 	}
+	
+	def boolean typesUseExtendibleProperties (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
+		if (p.designRules != null 
+			&& p.designRules.typeDefPolicy != null 
+			&& p.designRules.typeDefPolicy.versionEvolution != null) {
+			return  p.designRules.typeDefPolicy.versionEvolution.extendibleProperties;
+		} else {
+			return false
+		}
+		
+	}
+	def boolean typesUseExtendibleXMLAttributes (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
+		if (p.designRules != null 
+			&& p.designRules.typeDefPolicy != null 
+			&& p.designRules.typeDefPolicy.versionEvolution != null) {
+			return  p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributes;
+		} else {
+			return false
+		}
+	}
+	def boolean useExtendibleSubtypes (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
+		if (p.designRules != null 
+			&& p.designRules.typeDefPolicy != null 
+			&& p.designRules.typeDefPolicy.versionEvolution != null) {
+			return  p.designRules.typeDefPolicy.versionEvolution.extendibleSubTypes;
+		} else {
+			return false
+		}
+		
+	}
+	
+	def String getTypesExtendiblePropertiesClause (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
+		if (p.typesUseExtendibleProperties) {
+			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause != null) {
+				return p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause;
+			} else {
+				return 
+				'''
+				<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
+						processContents="skip"/>
+				'''
+			}
+		} else {
+			return ""
+		}
+		
+	}
+	def String getTypesExtendibleXMLAttributesClause (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
+		if (p.typesUseExtendibleXMLAttributes) {
+			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributeClause != null) {
+				return p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributeClause;
+			} else {
+				return 
+				'''
+				<xsd:anyAttribute namespace="##any"/>
+				'''
+			}
+		} else {
+			return ""
+		}
+	}		
 	
 		
 		

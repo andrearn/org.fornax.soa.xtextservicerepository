@@ -24,12 +24,13 @@ import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Visibility
-import org.fornax.soa.servicedsl.generator.query.LifecycleQueries
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.LifecycleQueries
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import java.util.Set
-import org.fornax.soa.servicedsl.generator.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceFinder
 import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
+import org.fornax.soa.environmentDsl.HTTP
 
 class BindingExtensions {
 	
@@ -40,17 +41,10 @@ class BindingExtensions {
 	@Inject IStateMatcher stateMatcher
 	@Inject BoundServiceLookup boundSvcLookup
 	
-	@Inject @Named ("generatePrivateWsdlForProviderHost") 
-	Boolean generatePrivateWsdlForProviderHost
-
-	def boolean generatePrivateWsdlForProviderHost () {
-		generatePrivateWsdlForProviderHost;
-	}
-
 	def dispatch String getRegistryBaseUrl (EObject o) {}
 
 	def dispatch String getRegistryBaseUrl (DomainBinding b) {
-		b.environment?.defaultRegistry?.baseUrl?.stripTrailingSlash();
+		b.environment.registryBaseUrl
 	}
 	
 	def dispatch String getRegistryBaseUrl (ServiceBinding b) {
@@ -62,11 +56,18 @@ class BindingExtensions {
 	}
 	
 	def dispatch String getRegistryBaseUrl (ModuleBinding b) {
-		b.environment?.defaultRegistry?.baseUrl?.stripTrailingSlash();
+		b.environment.registryBaseUrl
 	}
 	
 	def dispatch String getRegistryBaseUrl (Environment env) {
-		env?.defaultRegistry?.baseUrl?.stripTrailingSlash();
+		var regConnector = env.defaultRegistry?.connectors.filter(typeof(HTTP)).filter (c | c.isDefault).head
+		if (regConnector != null) {
+			var path = "/"+regConnector.contextRoot
+			path.replaceAll("//","/")
+			var baseUrl = "http://" + env.defaultRegistry.host.fqn + ":" + regConnector.port + path
+			baseUrl.stripTrailingSlash();
+		
+		}
 	}
 	
 	/*
@@ -189,6 +190,8 @@ class BindingExtensions {
 	def dispatch boolean isEligibleForEnvironment (Service s, Environment env) {
 		stateMatcher.matches (env.getMinLifecycleState(s, s.state.eContainer as Lifecycle), s.state);
 	}
+
+
 	
 	def dispatch getEndpointQualifier (Binding bind, Service svc) {
 		return svc.serviceVisibilityName
@@ -202,13 +205,15 @@ class BindingExtensions {
 	}
 	def dispatch getEndpointQualifier (ModuleBinding bind, Service svc) {
 		val moduleQualifier = bind.module.module.qualifiers
-		val boundSvcQualifier = bind.module?.module?.providedServices?.findFirst(provSvc | provSvc.service==svc)?.qualifiers
-		if (boundSvcQualifier != null)
-			return boundSvcQualifier.qualifiers.head.name.replaceAll("\\.","_")
 		if (moduleQualifier != null)
 			return moduleQualifier.qualifiers.head.name.replaceAll("\\.","_")
 		return svc.serviceVisibilityName
 	}
+	/*
+	 * Derive a qualifying name for the endpoint
+	 * 
+	 * FIXME: strange convention to name provider endpoints 
+	 */
 	def getProviderEndpointQualifier (Binding bind, Service svc) {
 		if (svc.visibility == Visibility::PRIVATE)
 			return "PrivateProvider"
@@ -217,9 +222,6 @@ class BindingExtensions {
 	}
 	def getProviderEndpointQualifier (ModuleBinding bind, Service svc) {
 		val moduleQualifier = bind.module.module.qualifiers
-		val boundSvcQualifier = bind.module?.module?.providedServices?.findFirst(provSvc | provSvc.service==svc)?.qualifiers
-		if (boundSvcQualifier != null)
-			return boundSvcQualifier.qualifiers.head.name.replaceAll("\\.","_")
 		if (moduleQualifier != null)
 			return moduleQualifier.qualifiers.head.name.replaceAll("\\.","_")
 		if (svc.visibility == Visibility::PRIVATE)

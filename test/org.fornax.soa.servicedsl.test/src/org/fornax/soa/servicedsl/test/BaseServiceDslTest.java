@@ -14,12 +14,11 @@ import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
+import org.fornax.soa.serviceDsl.ConsiderationSpec;
 import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
-import org.fornax.soa.serviceDsl.EagerFetch;
 import org.fornax.soa.serviceDsl.EnumLiteral;
 import org.fornax.soa.serviceDsl.Enumeration;
-import org.fornax.soa.serviceDsl.FetchProfile;
 import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Parameter;
@@ -236,17 +235,14 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		
 		s.getOperations().add(op);
 		
-		FetchProfile profile = dslFactory.createFetchProfile();
-		profile.setProfileName("defaultProfile");
+		ConsiderationSpec spec = dslFactory.createConsiderationSpec();
 		SimpleConsiderationPropertyRef fetchPropRef = dslFactory.createSimpleConsiderationPropertyRef();
 		fetchPropRef.setProperty(attrBo1);
-		EagerFetch spec = dslFactory.createEagerFetch();
 		paramRef = dslFactory.createConsiderationParameterRef();
 		paramRef.setParam(p);
 		paramRef.getPropertyRef().add(fetchPropRef);
-		spec.getEagerFetchAssoc().add(paramRef);
-		profile.setFetchSpec(spec);
-		op.getFetchProfile().add(profile);
+		spec.getConsideredParam().add(paramRef);
+		op.setConsiderationSpec(spec);
 		
 		en = dslFactory.createEnumeration();
 		EnumLiteral lit = dslFactory.createEnumLiteral();

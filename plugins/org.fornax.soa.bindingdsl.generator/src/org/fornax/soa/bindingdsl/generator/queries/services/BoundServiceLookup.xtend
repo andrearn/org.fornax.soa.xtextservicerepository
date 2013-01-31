@@ -1,25 +1,25 @@
 package org.fornax.soa.bindingdsl.generator.queries.services
 
 import com.google.inject.Inject
-import org.eclipse.emf.ecore.EClass
+import java.util.Set
+import org.fornax.soa.basedsl.generator.CommonStringExtensions
+import org.fornax.soa.binding.query.services.BindingServiceResolver
 import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
-import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import java.util.Set
-import org.fornax.soa.moduledsl.generator.query.ModuleNamespaceQuery
-import org.fornax.soa.servicedsl.generator.query.ServiceFinder
-import org.fornax.soa.service.VersionedDomainNamespace
-import org.fornax.soa.moduledsl.moduleDsl.ServiceRef
-import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.moduledsl.moduleDsl.NamespaceRef
 import org.fornax.soa.environmentDsl.Environment
-import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
+import org.fornax.soa.moduledsl.moduleDsl.Module
+import org.fornax.soa.moduledsl.moduleDsl.NamespaceRef
+import org.fornax.soa.moduledsl.moduleDsl.ServiceRef
+import org.fornax.soa.moduledsl.query.ModuleNamespaceQuery
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.service.VersionedDomainNamespace
+import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
 
 /*
  * Finds services bound into an environment, i.e. referenced from a binding
@@ -98,7 +98,7 @@ class BoundServiceLookup {
 	
 	/*
 	 * Find all services referenced by the module referenced in the binding. Service versions are 
-	 * chosen with respect ttheir state and the target environment
+	 * chosen with respect to their state and the target environment
 	 */
 	def Set<Service> getAllUsedServices (Module module, Environment environment, SOAProfile profile) {
 		val usedModules = module.usedModules

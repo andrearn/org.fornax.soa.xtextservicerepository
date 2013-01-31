@@ -59,7 +59,6 @@ code[MWE2][
 			profileName = profile
 			targetEnvironmentName = 'Prod'
 			forceRelativePaths = true
-			generatePrivateWsdlForProviderHost = false
 		}
         slot = 'model'
       	outlet = {
@@ -129,14 +128,6 @@ table[
 		in generated contracts shall be resolved using relative paths. If true, relative paths will be
 		used. Otherwise a fully qualified name is being used resolved using the location of the registry
 		as base URL]
-	]
-	tr[		
-		td[generatePrivateWsdlForProviderHost]	td[boolean]	td[0..1]	td[false]		td[When
-		using DomainBindings, the ESB might pass call through to a service implementation with the same
-		interface. The service provider is being considered as a private service. It would usually run
-		on a different host than the ESB. This flag states, wether a "private" WSDL with endpoint targeted
-		on the actual provider should be generated as well. This does not apply to ModuleBindings as
-		these state the hosting server explicitely. Different Modules would be used in such a scenario.]
 	]
 ]
 

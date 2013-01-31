@@ -19,9 +19,7 @@ EnvModel:
 	(users+=User)*
 	(environments+=Environment)*;
 	
-EnvImport : EnvNsImport | EnvFileImport; 
-
-EnvNsImport:
+EnvImport :
 	'import' importedNamespace=QualifiedNameWithWildCard ; 
 	
 EnvFileImport:
@@ -49,8 +47,6 @@ ESB:
 		'host' host=[Host|QualifiedName] 
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING )?
-		('baseUrl' baseUrl=STRING )?
-		('soapUrl' soapUrl=STRING )?
 		('adminUrl' adminUrl=STRING )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
@@ -75,8 +71,6 @@ Registry:
 		'host' host=[Host|QualifiedName] 
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING )?
-		('baseUrl' baseUrl=STRING )?
-		('adminUrl' adminUrl=STRING )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
 		('kind' kind=RegistryKind )?
@@ -144,7 +138,6 @@ AppServer:
 		'host' host=[Host|QualifiedName] 
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING  )?
-		('baseUrl' baseUrl=STRING  )?
 		('adminUrl' adminUrl=STRING  )?
 		(dataSources+=DataSource)*
 		('server-type' serverType=STRING )?
@@ -190,7 +183,6 @@ ProcessServer:
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING  )?
 		('deployUser' deployUser=[User] )?
-		('baseUrl' baseUrl=STRING  )?
 		('adminUrl' adminUrl=STRING  )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
@@ -214,7 +206,6 @@ Broker:
 		('admins' (admins+=[User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName] 'dir' home=STRING 
 		('deployDir' deployDir=STRING )?
-		('baseUrl' baseUrl=STRING )? 
 		('adminUrl' adminUrl=STRING )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?

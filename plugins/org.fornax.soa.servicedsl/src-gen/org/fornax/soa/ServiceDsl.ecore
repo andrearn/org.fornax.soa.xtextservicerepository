@@ -44,7 +44,9 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="channels" upperBound="-1"
         eType="#//Channel" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InternalNamespace" eSuperTypes="#//SubNamespace"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InternalNamespace" eSuperTypes="#//SubNamespace">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="namespaceUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Type"/>
   <eClassifiers xsi:type="ecore:EClass" name="VersionedType" eSuperTypes="#//Type">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -72,7 +74,7 @@
         eType="#//Property" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="QueryObject" eSuperTypes="#//VersionedType">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="superBusinessObject" eType="#//BusinessObjectRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="superQueryObject" eType="#//QueryObjectRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//QueryObjectRef"
         containment="true"/>
@@ -103,10 +105,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="BusinessObjectRef" eSuperTypes="#//AbstractVersionedTypeRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//BusinessObject"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="QueryObjectRef">
+  <eClassifiers xsi:type="ecore:EClass" name="QueryObjectRef" eSuperTypes="#//AbstractVersionedTypeRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//QueryObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Property">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="deprecated" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -228,9 +228,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExecutionProfile">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDefault" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="profileName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ConsiderationSpec">
     <eStructuralFeatures xsi:type="ecore:EReference" name="consideredParam" upperBound="-1"
         eType="#//ConsiderationParameterRef" containment="true"/>
   </eClassifiers>
@@ -325,7 +323,7 @@
         eType="#//OperationRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeader" eType="#//MessageHeaderRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="executionProfile" eType="#//ExecutionProfile"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="considerationSpec" eType="#//ConsiderationSpec"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="realizedCapabilities" upperBound="-1"
         eType="#//CapabilityRef" containment="true"/>

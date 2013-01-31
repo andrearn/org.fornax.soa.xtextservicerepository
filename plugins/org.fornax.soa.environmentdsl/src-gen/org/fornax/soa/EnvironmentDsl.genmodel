@@ -57,9 +57,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//EnvModel/users"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//EnvModel/environments"/>
     </genClasses>
-    <genClasses ecoreClass="EnvironmentDsl.ecore#//EnvImport"/>
-    <genClasses ecoreClass="EnvironmentDsl.ecore#//EnvNsImport">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//EnvNsImport/importedNamespace"/>
+    <genClasses ecoreClass="EnvironmentDsl.ecore#//EnvImport">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//EnvImport/importedNamespace"/>
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//EnvFileImport">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//EnvFileImport/importURI"/>
@@ -84,8 +83,6 @@
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//ESB">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/deployDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/baseUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/soapUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/adminUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/serverType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ESB/serverVersion"/>
@@ -94,8 +91,6 @@
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//Registry">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/deployDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/baseUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/adminUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/serverType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/serverVersion"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Registry/kind"/>
@@ -128,7 +123,6 @@
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//AppServer">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AppServer/deployDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AppServer/baseUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AppServer/adminUrl"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//AppServer/dataSources"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//AppServer/serverType"/>
@@ -146,7 +140,6 @@
     <genClasses ecoreClass="EnvironmentDsl.ecore#//ProcessServer">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ProcessServer/deployDir"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference EnvironmentDsl.ecore#//ProcessServer/deployUser"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ProcessServer/baseUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ProcessServer/adminUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ProcessServer/serverType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//ProcessServer/serverVersion"/>
@@ -155,7 +148,6 @@
     </genClasses>
     <genClasses ecoreClass="EnvironmentDsl.ecore#//Broker">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Broker/deployDir"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Broker/baseUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Broker/adminUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Broker/serverType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute EnvironmentDsl.ecore#//Broker/serverVersion"/>

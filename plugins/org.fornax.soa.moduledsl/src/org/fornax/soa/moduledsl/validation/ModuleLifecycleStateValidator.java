@@ -48,9 +48,9 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 		if (owner != null) {
 			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !ownerState.isIsEnd()) {
 				if (referencedStateChecker.stateMatches (svcRef.getService().getState(), owner))
-					warning ("A service with a lower lifecycle-state is being provided by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.IMPORT_SERVICE_REF__SERVICE);
+					warning ("A service with a lower lifecycle-state is being provided by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 				else
-					error ("A service with a lower lifecycle-state not supporting all required environments is being provided by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.IMPORT_SERVICE_REF__SERVICE);
+					error ("A service with a lower lifecycle-state not supporting all required environments is being provided by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 			}
 		}
 	}
@@ -78,9 +78,9 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 		if (owner != null) {
 			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !ownerState.isIsEnd()) {
 				if (referencedStateChecker.stateMatches (svcRef.getService().getState(), owner))
-					warning ("A service with a lower lifecycle-state is being used by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.SERVICE_REF__SERVICE);
+					warning ("A service with a lower lifecycle-state is being used by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 				else
-					error ("A service with a lower lifecycle-state not supporting all required environments is being used by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.SERVICE_REF__SERVICE);
+					error ("A service with a lower lifecycle-state not supporting all required environments is being used by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 			}
 		}
 	}
