@@ -1,15 +1,14 @@
 package org.fornax.soa.profiledsl.generator.schema
 
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
+import com.google.inject.name.Named
 import java.util.List
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.CommonStringExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
-import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
-import com.google.inject.name.Named
+import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 
 class ProfileSchemaNamespaceExtensions {
 	

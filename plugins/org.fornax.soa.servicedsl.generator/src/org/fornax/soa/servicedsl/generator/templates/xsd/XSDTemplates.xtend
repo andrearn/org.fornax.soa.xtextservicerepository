@@ -2,14 +2,25 @@ package org.fornax.soa.servicedsl.generator.templates.xsd
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
+import java.util.logging.Logger
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
+import org.fornax.soa.basedsl.CommonStringExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.fornax.soa.profiledsl.search.StateMatcher
+import org.fornax.soa.service.VersionedDomainNamespace
+import org.fornax.soa.service.query.ExceptionFinder
+import org.fornax.soa.service.query.LifecycleQueries
+import org.fornax.soa.service.query.namespace.NamespaceImportQueries
+import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.service.query.type.ReferencedTypesFinder
+import org.fornax.soa.service.query.type.VersionedTypeFilter
 import org.fornax.soa.serviceDsl.Attribute
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.EnumLiteral
@@ -21,18 +32,7 @@ import org.fornax.soa.serviceDsl.Reference
 import org.fornax.soa.serviceDsl.SimpleAttribute
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
-import org.fornax.soa.service.VersionedDomainNamespace
-import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
-import org.fornax.soa.service.query.ExceptionFinder
-import org.fornax.soa.service.query.LifecycleQueries
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceImportQueries
-import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
-import org.fornax.soa.servicedsl.generator.query.type.ReferencedTypesFinder
-import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
-import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.fornax.soa.profiledsl.search.StateMatcher
-import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
-import java.util.logging.Logger
+import org.fornax.soa.service.namespace.NamespaceSplitter
 
 class XSDTemplates {
 

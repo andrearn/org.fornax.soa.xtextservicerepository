@@ -1,7 +1,7 @@
 package org.fornax.soa.bindingdsl.generator.templates.vendor.ibm
 
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.SCA
 import org.fornax.soa.bindingDsl.SOAP

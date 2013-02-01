@@ -1,4 +1,4 @@
-package org.fornax.soa.basedsl.generator
+package org.fornax.soa.basedsl
 
 class CommonStringExtensions {
 	

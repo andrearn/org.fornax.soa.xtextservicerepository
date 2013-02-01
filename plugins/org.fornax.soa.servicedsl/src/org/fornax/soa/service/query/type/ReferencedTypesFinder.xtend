@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl.generator.query.type
+package org.fornax.soa.service.query.type
 
 import java.util.List
 import org.fornax.soa.serviceDsl.TypeRef
@@ -14,6 +14,7 @@ import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import com.google.inject.Inject
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.serviceDsl.QueryObject
+import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
 
 class ReferencedTypesFinder {
 	

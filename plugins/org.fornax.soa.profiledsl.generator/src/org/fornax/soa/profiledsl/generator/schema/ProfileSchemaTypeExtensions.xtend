@@ -1,21 +1,20 @@
 package org.fornax.soa.profiledsl.generator.schema
 
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
-import org.fornax.soa.profiledsl.generator.query.NamespaceQueries
-import org.fornax.soa.profiledsl.generator.query.ProfileVersionQueries
-import org.fornax.soa.profiledsl.generator.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
+import org.fornax.soa.profiledsl.query.namespace.NamespaceQueries
+import org.fornax.soa.profiledsl.query.ProfileVersionQueries
+import org.fornax.soa.profiledsl.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataType
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataTypeRef
-import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.Type
 import org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
-import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
-import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
-import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
+import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 
 class ProfileSchemaTypeExtensions {
 	

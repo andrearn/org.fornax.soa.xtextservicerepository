@@ -18,6 +18,9 @@ import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.InternalNamespace
 import org.fornax.soa.serviceDsl.QueryObject
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.xbase.lib.StringExtensions
+import org.fornax.soa.basedsl.CommonStringExtensions
 
 /*
  * Namespace lookup functions
@@ -25,6 +28,7 @@ import org.fornax.soa.serviceDsl.QueryObject
 class NamespaceQuery {
 	
 	@Inject extension LifecycleQueries
+	@Inject extension CommonStringExtensions
 	
 
 	def dispatch OrganizationNamespace findOrgNamespace (Object o) {
@@ -117,6 +121,14 @@ class NamespaceQuery {
 	
 	def dispatch SubNamespace findOwnerSubdomain (ServiceRef s) {
 		s?.getStatefulOwner()?.eContainer as SubNamespace;
+	}
+	
+	def dispatch String fqn (EObject o) {
+		null;
+	}
+	
+	def dispatch String fqn (OrganizationNamespace s) {
+		s.name.stripXtextEscapes();
 	}
 		
 }

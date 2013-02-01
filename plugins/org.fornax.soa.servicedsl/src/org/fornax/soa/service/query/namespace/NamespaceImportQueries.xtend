@@ -1,26 +1,25 @@
-package org.fornax.soa.servicedsl.generator.query.namespace
+package org.fornax.soa.service.query.namespace
 
 import com.google.inject.Inject
 import java.util.HashSet
 import java.util.Set
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
-import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter
 import org.fornax.soa.service.VersionedDomainNamespace
+import org.fornax.soa.service.query.ExceptionFinder
+import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.service.query.type.BusinessObjectQueries
+import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.service.query.type.ReferencedTypesFinder
+import org.fornax.soa.service.query.type.VersionedTypeFilter
+import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
-import org.fornax.soa.serviceDsl.VersionedTypeRef
-import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
-import org.fornax.soa.servicedsl.generator.query.type.BusinessObjectQueries
-import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
-import org.fornax.soa.servicedsl.generator.query.type.ReferencedTypesFinder
-import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
-import org.fornax.soa.service.query.ExceptionFinder
-import org.fornax.soa.service.query.ServiceFinder
-import org.fornax.soa.service.query.namespace.NamespaceQuery
+import org.fornax.soa.service.namespace.NamespaceSplitter
 
 /*********************************************************************************
  *	Calculation of all VersionedDomainNamespaces imported by a given or derived 
@@ -48,9 +47,9 @@ class NamespaceImportQueries {
 	 *	@param svc	The Service with it's version to calculate the imports for
 	 */
 	def Set<VersionedDomainNamespace> findImportedSubdomains (Service svc) { 
-		var imports = svc.operations.map (o|o.parameters).flatten.map (p|p.type).filter(typeof (VersionedTypeRef))
+		var imports = svc.operations.map (o|o.parameters).flatten.map (p|p.type).filter(typeof (AbstractVersionedTypeRef))
 			.map (r|r.findLatestMatchingType()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)).toSet;
-		imports.addAll (svc.operations.map (o|o.^return).flatten.map (r|r.type).filter (typeof (VersionedTypeRef))
+		imports.addAll (svc.operations.map (o|o.^return).flatten.map (r|r.type).filter (typeof (AbstractVersionedTypeRef))
 			.map (v|v.findLatestMatchingType()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		imports.addAll (svc.operations.map (o|o.^throws).flatten.map(t|excFinder.findLatestMatchingException(t)).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		return imports;

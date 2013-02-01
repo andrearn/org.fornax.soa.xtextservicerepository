@@ -1,4 +1,4 @@
-package org.fornax.soa.profiledsl.generator.query
+package org.fornax.soa.profiledsl.query
 
 import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType

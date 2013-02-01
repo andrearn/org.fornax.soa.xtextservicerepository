@@ -3,9 +3,9 @@ package org.fornax.soa.bindingdsl.generator.templates.soap
 import com.google.inject.Inject
 import java.util.List
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.fornax.soa.basedsl.generator.CommonEObjectExtensions
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.CommonEObjectExtensions
+import org.fornax.soa.basedsl.CommonStringExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
@@ -19,7 +19,7 @@ import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.service.query.ServiceFinder
-import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions

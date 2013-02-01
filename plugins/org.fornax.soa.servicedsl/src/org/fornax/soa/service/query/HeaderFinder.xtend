@@ -1,37 +1,37 @@
-package org.fornax.soa.servicedsl.generator.query
+package org.fornax.soa.service.query
 
-import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
-import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.fornax.soa.serviceDsl.Operation
-import org.fornax.soa.serviceDsl.Service
+import com.google.inject.Inject
+import java.util.ArrayList
+import java.util.HashSet
 import java.util.List
 import java.util.Set
-import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.service.VersionedDomainNamespace
-import com.google.inject.Inject
-import org.fornax.soa.service.query.namespace.NamespaceQuery
-import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
-import org.fornax.soa.servicedsl.generator.query.type.TypesByLifecycleStateFinder
-import org.fornax.soa.profiledsl.sOAProfileDsl.Type
+import org.eclipse.emf.ecore.EObject
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
-import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType
-import org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef
-import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
-import org.fornax.soa.profiledsl.sOAProfileDsl.Property
-import java.util.HashSet
-import java.util.ArrayList
 import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
+import org.fornax.soa.profiledsl.query.namespace.NamespaceImportQueries
+import org.fornax.soa.profiledsl.query.namespace.NamespaceQueries
+import org.fornax.soa.profiledsl.sOAProfileDsl.Class
 import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
-import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
-import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
-import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
-import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
-import org.fornax.soa.profiledsl.generator.query.NamespaceQueries
-import org.fornax.soa.profiledsl.generator.query.NamespaceImportQueries
-import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
+import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
+import org.fornax.soa.profiledsl.sOAProfileDsl.Property
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
+import org.fornax.soa.profiledsl.sOAProfileDsl.Type
+import org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef
+import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType
+import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
+import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
+import org.fornax.soa.service.VersionedDomainNamespace
+import org.fornax.soa.service.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.service.query.type.VersionedTypeFilter
+import org.fornax.soa.serviceDsl.Operation
+import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.service.namespace.NamespaceSplitter
+//import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 
 /* 
  * Find the most specific message header declaration to be used by a service operation
@@ -44,11 +44,11 @@ class HeaderFinder {
 	@Inject extension NamespaceQueries
 	@Inject extension NamespaceImportQueries
 	@Inject extension LatestMatchingTypeFinder
-	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+//	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension VersionedTypeFilter
 	@Inject NamespaceSplitter namespaceSplitter
 	@Inject NamespaceQuery namespaceQuery
-	@Inject org.fornax.soa.servicedsl.generator.query.namespace.NamespaceImportQueries nsImportQueries
+	@Inject org.fornax.soa.service.query.namespace.NamespaceImportQueries nsImportQueries
 	
 	
 	def dispatch MessageHeader findBestMatchingHeader (EObject o, SOAProfile p ) { 
@@ -197,15 +197,5 @@ class HeaderFinder {
 	}
 	def dispatch boolean isMany (VersionedTypeRef t) {
 		t.many;
-	}
-	
-	def dispatch String toTypeNameRef (TypeRef t, VersionedDomainNamespace currNs) {}
-	
-	def dispatch String toTypeNameRef (ClassRef t, VersionedDomainNamespace currNs) {
-		if (t.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef)) {
-			"tns:" +t.type.name
-		} else {
-			t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
-		}
 	}
 }

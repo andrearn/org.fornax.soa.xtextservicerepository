@@ -1,27 +1,23 @@
-package org.fornax.soa.servicedsl.generator.domain
+package org.fornax.soa.service.namespace
 
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtensions
-import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
-import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-
-import org.fornax.soa.service.VersionedDomainNamespace
 import java.util.Set
+import org.fornax.soa.basedsl.CommonStringExtensions
+import org.fornax.soa.basedsl.sOABaseDsl.Version
+import org.fornax.soa.basedsl.version.VersionMatcher
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
+import org.fornax.soa.service.VersionedDomainNamespace
+import org.fornax.soa.service.query.type.VersionedTypeFilter
+import org.fornax.soa.serviceDsl.BusinessObject
+import org.fornax.soa.serviceDsl.Enumeration
+import org.fornax.soa.serviceDsl.Exception
+import org.fornax.soa.serviceDsl.OrganizationNamespace
+import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
-import org.fornax.soa.serviceDsl.Service
-import java.util.HashSet
-import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
-import org.fornax.soa.basedsl.sOABaseDsl.Version
-import org.fornax.soa.serviceDsl.OrganizationNamespace
-import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.VersionedType
-import org.fornax.soa.serviceDsl.Enumeration
-import org.fornax.soa.servicedsl.generator.query.type.VersionedTypeFilter
-import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
+import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 /* 
  * Split SubNamespaces by major major versions of it's owned services, BOs, enums and exceptions
@@ -31,9 +27,7 @@ class NamespaceSplitter {
 	@Inject extension VersionMatcher
 	@Inject extension VersionQualifierExtensions
 	@Inject extension CommonStringExtensions
-	@Inject extension SchemaTemplateExtensions
-	@Inject extension CommonTemplateExtensions
-	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+	@Inject extension NamespaceQuery
 	@Inject extension VersionedTypeFilter
 	
 	/* 

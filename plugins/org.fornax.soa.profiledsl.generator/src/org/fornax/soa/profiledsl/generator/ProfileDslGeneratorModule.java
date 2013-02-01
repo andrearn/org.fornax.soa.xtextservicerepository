@@ -1,15 +1,15 @@
 package org.fornax.soa.profiledsl.generator;
 
 import org.fornax.soa.profiledsl.SOAProfileDslRuntimeModule;
-import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter;
+import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter;
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions;
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions;
-import org.fornax.soa.profiledsl.generator.query.NamespaceImportQueries;
-import org.fornax.soa.profiledsl.generator.query.NamespaceQueries;
-import org.fornax.soa.profiledsl.generator.query.ProfileVersionQueries;
-import org.fornax.soa.profiledsl.generator.query.type.LatestMatchingTypeFinder;
-import org.fornax.soa.profiledsl.generator.query.type.ReferencedTypesFinder;
-import org.fornax.soa.profiledsl.generator.query.type.VersionedTypeFilter;
+import org.fornax.soa.profiledsl.query.namespace.NamespaceImportQueries;
+import org.fornax.soa.profiledsl.query.namespace.NamespaceQueries;
+import org.fornax.soa.profiledsl.query.ProfileVersionQueries;
+import org.fornax.soa.profiledsl.query.type.LatestMatchingTypeFinder;
+import org.fornax.soa.profiledsl.query.type.ReferencedTypesFinder;
+import org.fornax.soa.profiledsl.query.type.VersionedTypeFilter;
 
 public class ProfileDslGeneratorModule extends SOAProfileDslRuntimeModule {
 

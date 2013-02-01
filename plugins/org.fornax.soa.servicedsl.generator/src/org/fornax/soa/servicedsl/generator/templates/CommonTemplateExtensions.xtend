@@ -6,7 +6,7 @@ import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef
 import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 
 class CommonTemplateExtensions {
 	

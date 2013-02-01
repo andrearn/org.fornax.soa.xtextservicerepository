@@ -1,21 +1,21 @@
 package org.fornax.soa.servicedsl.generator.templates
 
-import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.fornax.soa.serviceDsl.ServiceModel
-import org.fornax.soa.serviceDsl.DomainNamespace
-import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
 import com.google.inject.Inject
-import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-import org.fornax.soa.serviceDsl.OrganizationNamespace
-import org.fornax.soa.service.query.ServiceFinder
-import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.serviceDsl.InternalNamespace
-import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 import com.google.inject.name.Named
+import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.service.namespace.NamespaceSplitter
+import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.serviceDsl.DomainNamespace
+import org.fornax.soa.serviceDsl.InternalNamespace
+import org.fornax.soa.serviceDsl.OrganizationNamespace
+import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.serviceDsl.ServiceModel
+import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
+import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 
 class ServiceTemplates {
 	

@@ -2,7 +2,7 @@ package org.fornax.soa.bindingdsl.generator.queries.services
 
 import com.google.inject.Inject
 import java.util.Set
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
+import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.binding.query.services.BindingServiceResolver
 import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.bindingDsl.DomainBinding
@@ -19,7 +19,7 @@ import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.query.ServiceFinder
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
+import org.fornax.soa.service.namespace.NamespaceSplitter
 
 /*
  * Finds services bound into an environment, i.e. referenced from a binding

@@ -1,29 +1,27 @@
 package org.fornax.soa.bindingdsl.generator.templates.soap
 
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
+import org.fornax.soa.bindingDsl.Binding
+import org.fornax.soa.bindingDsl.BindingProtocol
+import org.fornax.soa.bindingDsl.DomainBinding
+import org.fornax.soa.bindingDsl.SOAP
+import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.environmentDsl.AppServer
+import org.fornax.soa.environmentDsl.Broker
+import org.fornax.soa.environmentDsl.Database
 import org.fornax.soa.environmentDsl.ESB
 import org.fornax.soa.environmentDsl.ProcessServer
+import org.fornax.soa.environmentDsl.Registry
+import org.fornax.soa.environmentDsl.SAP
 import org.fornax.soa.environmentDsl.Server
-import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
+import org.fornax.soa.environmentDsl.WebServer
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-import org.fornax.soa.environmentDsl.Broker
-import org.fornax.soa.environmentDsl.WebServer
-import org.fornax.soa.environmentDsl.SAP
-import org.fornax.soa.environmentDsl.Database
-import org.fornax.soa.environmentDsl.Registry
-import org.fornax.soa.environmentDsl.UDDIRegistry
-import org.fornax.soa.bindingDsl.DomainBinding
-import org.fornax.soa.bindingDsl.ServiceBinding
-import org.fornax.soa.bindingDsl.BindingProtocol
-import org.fornax.soa.bindingDsl.Binding
-import org.fornax.soa.bindingDsl.SOAP
 
 class SoapVendorBindingsResolver {
 	

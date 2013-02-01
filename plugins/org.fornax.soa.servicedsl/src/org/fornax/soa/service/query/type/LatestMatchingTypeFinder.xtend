@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl.generator.query.type
+package org.fornax.soa.service.query.type
 
 import com.google.inject.Inject
 import java.util.List
@@ -137,7 +137,7 @@ class LatestMatchingTypeFinder {
 	
 	/**
 	 * 		Type reference resolution
-	 *		find the lastest type declaration matching
+	 *		find the latest type declaration matching
 	 *  	- the version constraint defined in the reference
 	 */
 	def dispatch Type findLatestMatchingType (EObject t) {
@@ -162,7 +162,7 @@ class LatestMatchingTypeFinder {
 	def dispatch Type findLatestMatchingType (QueryObjectRef t) { 
 		t.type.findSubdomain ().types.
 			filter (e|e.toTypeName() == t.type.toTypeName() && t.type.version.versionMatches (t.versionRef))
-			.filter (typeof (BusinessObject))
+			.filter (typeof (VersionedType))
 			.sortBy (e|e.version.version).last( );
 	}
 	

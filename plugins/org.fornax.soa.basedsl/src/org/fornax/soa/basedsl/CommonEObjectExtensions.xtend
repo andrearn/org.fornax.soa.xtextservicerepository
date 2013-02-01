@@ -1,4 +1,4 @@
-package org.fornax.soa.basedsl.generator
+package org.fornax.soa.basedsl
 
 import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.basedsl.sOABaseDsl.Version

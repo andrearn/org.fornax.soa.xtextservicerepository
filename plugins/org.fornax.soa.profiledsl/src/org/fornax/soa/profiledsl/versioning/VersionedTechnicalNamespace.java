@@ -1,4 +1,4 @@
-package org.fornax.soa.profiledsl.generator.namespace;
+package org.fornax.soa.profiledsl.versioning;
 
 import java.util.List;
 

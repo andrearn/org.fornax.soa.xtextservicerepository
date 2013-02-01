@@ -1,16 +1,15 @@
 package org.fornax.soa.profiledsl.generator.templates
 
 import com.google.inject.Inject
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
+import org.fornax.soa.basedsl.CommonStringExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
-import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
-import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
-import org.fornax.soa.profiledsl.generator.query.NamespaceImportQueries
-import org.fornax.soa.profiledsl.generator.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
+import org.fornax.soa.profiledsl.query.namespace.NamespaceImportQueries
+import org.fornax.soa.profiledsl.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.profiledsl.sOAProfileDsl.Attribute
 import org.fornax.soa.profiledsl.sOAProfileDsl.Class
 import org.fornax.soa.profiledsl.sOAProfileDsl.EnumLiteral
@@ -21,7 +20,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
+import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 
 /* A template class to generate an XSD for a TechnicalNamespace 
  * declaring the complextype used by message headers

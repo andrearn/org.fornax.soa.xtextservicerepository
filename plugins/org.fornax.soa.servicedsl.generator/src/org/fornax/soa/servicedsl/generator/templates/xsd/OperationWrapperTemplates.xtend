@@ -1,27 +1,27 @@
 package org.fornax.soa.servicedsl.generator.templates.xsd
 
-import java.util.List
-import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.serviceDsl.DomainNamespace
-import org.eclipse.xtext.generator.IFileSystemAccess
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
-import org.fornax.soa.servicedsl.generator.query.HeaderFinder
-import org.fornax.soa.servicedsl.generator.query.namespace.NamespaceImportQueries
+import com.google.inject.name.Named
+import java.util.List
+import java.util.logging.Logger
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
+import org.eclipse.xtext.generator.IFileSystemAccess
+import org.fornax.soa.basedsl.CommonStringExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
+import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
+import org.fornax.soa.profiledsl.sOAProfileDsl.Property
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.service.query.namespace.NamespaceImportQueries
+import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.InternalNamespace
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Parameter
-import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
-import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
-import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
-import com.google.inject.name.Named
-import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
-import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
-import java.util.logging.Logger
+import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.service.query.HeaderFinder
+import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 
 
 class OperationWrapperTemplates {

@@ -4,7 +4,7 @@ import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedTypeRef
 import com.google.inject.Inject
 import org.fornax.soa.service.query.namespace.NamespaceQuery
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.service.query.LifecycleQueries
 import org.fornax.soa.service.query.VersionQueries
 import org.fornax.soa.serviceDsl.BusinessObjectRef
@@ -14,11 +14,11 @@ import org.fornax.soa.serviceDsl.EnumTypeRef
 import org.fornax.soa.serviceDsl.ExceptionRef
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.serviceDsl.Type
-import org.fornax.soa.servicedsl.generator.domain.NamespaceSplitter
-import org.fornax.soa.servicedsl.generator.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.service.namespace.NamespaceSplitter
+import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Attribute
-import org.fornax.soa.servicedsl.generator.query.type.BusinessObjectQueries
+import org.fornax.soa.service.query.type.BusinessObjectQueries
 import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.serviceDsl.SubNamespace
 import java.util.HashSet
@@ -36,6 +36,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.serviceDsl.Reference
 import org.fornax.soa.serviceDsl.QueryObjectRef
 import org.fornax.soa.serviceDsl.QueryObject
+import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
 
 /* types.ext */
 class SchemaTypeExtensions {
@@ -52,7 +53,7 @@ class SchemaTypeExtensions {
 	@Inject extension ExceptionFinder
 	
 	@Inject ProfileSchemaTypeExtensions profileSchemaTypes
-	@Inject org.fornax.soa.profiledsl.generator.query.NamespaceQueries profileNSQueries
+	@Inject org.fornax.soa.profiledsl.query.namespace.NamespaceQueries profileNSQueries
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNSExt
 	/*
 	 *	Return the XSD type name for a type reference including it's derived namespace prefix
@@ -233,6 +234,15 @@ class SchemaTypeExtensions {
 	
 	def dispatch String toTypeNameRef (Type t) {
 		"";
+	}
+	
+	
+	def dispatch String toTypeNameRef (ClassRef t, VersionedDomainNamespace currNs) {
+		if (t.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef)) {
+			"tns:" +t.type.name
+		} else {
+			t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+		}
 	}
 	
 	def dispatch String toFullTypeNameRef (TypeRef t, VersionedDomainNamespace currNs) {

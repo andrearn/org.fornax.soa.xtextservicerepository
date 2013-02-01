@@ -1,10 +1,10 @@
-package org.fornax.soa.profiledsl.generator.query.type
+package org.fornax.soa.profiledsl.query.type
 
 import com.google.inject.Inject
 import java.util.List
 import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
-import org.fornax.soa.profiledsl.generator.query.NamespaceQueries
+import org.fornax.soa.profiledsl.query.namespace.NamespaceQueries
 import org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataTypeRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
@@ -13,6 +13,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Type
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.fornax.soa.profiledsl.query.namespace.NamespaceQueries
 
 class LatestMatchingTypeFinder {
 		

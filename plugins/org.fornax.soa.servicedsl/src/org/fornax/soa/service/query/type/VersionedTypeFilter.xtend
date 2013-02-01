@@ -1,4 +1,4 @@
-package org.fornax.soa.servicedsl.generator.query.type
+package org.fornax.soa.service.query.type
 
 import org.fornax.soa.serviceDsl.VersionedType
 import java.util.List

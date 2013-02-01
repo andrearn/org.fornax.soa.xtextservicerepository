@@ -1,4 +1,4 @@
-package org.fornax.soa.profiledsl.generator.query.type
+package org.fornax.soa.profiledsl.query.type
 
 import com.google.inject.Inject
 import java.util.HashSet

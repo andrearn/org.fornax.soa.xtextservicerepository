@@ -1,17 +1,17 @@
-package org.fornax.soa.profiledsl.generator.query
+package org.fornax.soa.profiledsl.query.namespace
 
 import com.google.inject.Inject
+import java.util.HashSet
 import java.util.Set
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
-import org.fornax.soa.profiledsl.generator.namespace.TechnicalNamespaceSplitter
-import org.fornax.soa.profiledsl.generator.namespace.VersionedTechnicalNamespace
+import org.fornax.soa.profiledsl.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.profiledsl.query.type.ReferencedTypesFinder
+import org.fornax.soa.profiledsl.query.type.VersionedTypeFilter
 import org.fornax.soa.profiledsl.sOAProfileDsl.Class
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
-import java.util.HashSet
-import org.fornax.soa.profiledsl.generator.query.type.LatestMatchingTypeFinder
-import org.fornax.soa.profiledsl.generator.query.type.VersionedTypeFilter
-import org.fornax.soa.profiledsl.generator.query.type.ReferencedTypesFinder
+import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 
 /*********************************************************************************
  *	Calculation of all VersionedTechnicalNamespaces imported by a given or derived 

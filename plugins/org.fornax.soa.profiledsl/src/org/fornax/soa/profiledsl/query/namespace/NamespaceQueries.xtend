@@ -1,15 +1,14 @@
-package org.fornax.soa.profiledsl.generator.query
+package org.fornax.soa.profiledsl.query.namespace
 
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.CommonEObjectExtensions
+import org.fornax.soa.basedsl.CommonEObjectExtensions
 
 class NamespaceQueries {
 	
 	@Inject extension CommonEObjectExtensions
-	@Inject extension ProfileVersionQueries
 		
-	def dispatch TechnicalNamespace findOwnerSubdomain (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef c) {
+	def TechnicalNamespace findOwnerSubdomain (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef c) {
 		c?.getOwningType()?.eContainer as TechnicalNamespace;
 	}
 	

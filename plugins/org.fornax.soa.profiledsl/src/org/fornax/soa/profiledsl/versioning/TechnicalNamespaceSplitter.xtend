@@ -1,16 +1,15 @@
-package org.fornax.soa.profiledsl.generator.namespace
+package org.fornax.soa.profiledsl.versioning
 
 import com.google.inject.Inject
 import java.util.Set
-import org.fornax.soa.basedsl.generator.CommonEObjectExtensions
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
+import org.fornax.soa.basedsl.CommonEObjectExtensions
+import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.Type
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType
-import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import org.eclipse.emf.ecore.EObject
 
 class TechnicalNamespaceSplitter {
@@ -20,7 +19,6 @@ class TechnicalNamespaceSplitter {
 	@Inject extension VersionQualifierExtensions
 	@Inject extension CommonStringExtensions
 	@Inject extension CommonEObjectExtensions
-	@Inject extension ProfileSchemaNamespaceExtensions
 	
 	
 	/* 

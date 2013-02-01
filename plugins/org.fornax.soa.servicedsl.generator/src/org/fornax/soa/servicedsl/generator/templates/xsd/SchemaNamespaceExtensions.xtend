@@ -7,9 +7,9 @@ import java.util.List
 import java.util.Set
 import org.eclipse.emf.common.util.TreeIterator
 import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.basedsl.generator.CommonEObjectExtensions
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.CommonEObjectExtensions
+import org.fornax.soa.basedsl.CommonStringExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.serviceDsl.BusinessObjectRef
 import org.fornax.soa.serviceDsl.DomainNamespace
@@ -23,7 +23,7 @@ import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.query.ExceptionFinder
 import org.fornax.soa.service.query.ServiceFinder
 import org.fornax.soa.service.query.namespace.NamespaceQuery
-import org.fornax.soa.servicedsl.generator.query.type.TypesByLifecycleStateFinder
+import org.fornax.soa.service.query.type.TypesByLifecycleStateFinder
 import org.fornax.soa.basedsl.sOABaseDsl.Version
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
@@ -55,14 +55,6 @@ class SchemaNamespaceExtensions {
 
 	def boolean forceRelativePaths () {
 		forceRelativePaths;
-	}
-	
-	def dispatch String fqn (EObject o) {
-		null;
-	}
-	
-	def dispatch String fqn (OrganizationNamespace s) {
-		s.name.stripXtextEscapes();
 	}
 
 	def dispatch String toUnversionedNamespace (Object o) {

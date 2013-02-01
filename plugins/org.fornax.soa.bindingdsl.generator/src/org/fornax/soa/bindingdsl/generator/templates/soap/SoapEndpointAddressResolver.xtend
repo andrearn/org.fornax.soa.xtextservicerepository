@@ -2,7 +2,7 @@ package org.fornax.soa.bindingdsl.generator.templates.soap
 
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.environmentdsl.generator.EndpointResolver

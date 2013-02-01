@@ -1,10 +1,11 @@
 package org.fornax.soa.servicedsl.generator.templates.webservice
 
-import org.fornax.soa.serviceDsl.Service
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
-import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.Operation
+import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtensions
 
 class ServiceTemplateExtensions {

@@ -4,8 +4,8 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.basedsl.generator.CommonStringExtensions
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.CommonStringExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.sOABaseDsl.Version
 import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.bindingDsl.BindingProtocol

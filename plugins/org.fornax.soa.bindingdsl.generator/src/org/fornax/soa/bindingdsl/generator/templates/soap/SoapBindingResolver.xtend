@@ -2,7 +2,7 @@ package org.fornax.soa.bindingdsl.generator.templates.soap
 
 import com.google.inject.Inject
 import java.util.List
-import org.fornax.soa.basedsl.generator.version.VersionQualifierExtensions
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.DomainBinding
