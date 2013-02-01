@@ -67,13 +67,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Binding/policies"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Binding/sla"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//DomainBinding">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//DomainBinding/subNamespace"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//DomainBinding/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//DomainBinding/environment"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//DomainBinding/providerPolicies"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//DomainBinding/serviceBinding"/>
-    </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//Publisher">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Publisher/pubServer"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Publisher/connectors"/>

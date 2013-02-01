@@ -1,30 +1,22 @@
 package org.fornax.soa.bindingdsl.generator.templates.soap
 
 import com.google.inject.Inject
-import java.util.List
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.bindingDsl.BindingProtocol
-import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.environmentDsl.Server
-import org.fornax.soa.environmentdsl.generator.EndpointResolver
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.Type
-import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
-import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
-import org.fornax.soa.service.versioning.ITypeResolver
-import org.fornax.soa.service.versioning.IServiceResolver
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -36,34 +28,18 @@ import org.fornax.soa.service.versioning.IServiceResolver
  */
 class ConcreteWsdlTemplates {
 	
-	@Inject extension CommonStringExtensions
-	@Inject extension ServiceQueries
-	@Inject extension EndpointResolver
 	@Inject extension BindingExtensions
 	@Inject extension SoapBindingResolver
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
-	@Inject extension ITypeResolver
-	@Inject extension IServiceResolver
 	@Inject extension SoapEndpointAddressResolver
 
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IEObjectDocumentationProvider docProvider
 	
 	@Inject IFileSystemAccess fsa
-	
-	/* 
-	 * Generate concrete public endpoint WSDLs for services bound by a DomainBinding 
-	 * with the given protocol definition applying the supplied profile
-	 */
-	def toWSDL (DomainBinding binding, BindingProtocol prot, SOAProfile profile) {
-		if (binding.subNamespace instanceof DomainNamespace) {
-			val services = binding.subNamespace.services.filter (e|e.isMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
-			services.forEach (s|s.toWSDL (binding, prot, profile)); 
-		}
-	}
-	
+		
 	/* 
 	 * Generate a concrete pubplic endpoint WSDL for a service bound by a ModuleBinding 
 	 * with the given protocol definition applying the supplied profile
@@ -71,43 +47,7 @@ class ConcreteWsdlTemplates {
 	def dispatch toWSDL (ModuleBinding binding, Service svc, SOAP prot, SOAProfile profile) {
 		svc.toWSDL (binding, prot, profile);
 	}
-
-	def dispatch toWSDL (DomainBinding domBind, Service svc, BindingProtocol prot, SOAProfile profile) {
-		svc.toWSDL (domBind, prot, profile) 
-	}
 	
-	def toWSDLByServiceName (DomainBinding binding, List<String> serviceNames, BindingProtocol prot, SOAProfile profile) {
-		if (binding.subNamespace instanceof DomainNamespace) {
-			val services = binding.subNamespace.services.filter (e| serviceNames.contains (e.name) && e.isMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
-			services.forEach (s|s.toWSDL (binding, prot, profile));
-		}
-	}
-	
-	def dispatch toWSDL (Service svc, DomainBinding domBind, BindingProtocol prot, SOAProfile profile) {
-		val wsdlFile = svc.getConcreteWsdlFileNameFragment ("Public") + ".wsdl";
-		val content = '''
-		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-			xmlns:tns="«svc.toTargetNamespace()»"
-			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
-			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-			name="«svc.name»" 
-			targetNamespace="«svc.toTargetNamespace()»">
-			<wsdl:documentation>
-				Version «versionQualifier.toVersionNumber(svc.version)»
-				Lifecycle state: «svc.state.name»
-				
-				«docProvider.getDocumentation (svc)»
-			</wsdl:documentation>
-		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (domBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
-			
-			«domBind.protocol.filter (typeof(SOAP)).map (p|p.toSOAPBinding (svc)).join»
-
-			«domBind.protocol.filter (typeof(SOAP)).map (p|p.toWsdlService (svc)).join»
-		</wsdl:definitions>
-		''';
-		fsa.generateFile (wsdlFile, content);
-	}
 	
 	def dispatch toWSDL(Service svc, ServiceBinding svcBind, SOAP prot, SOAProfile profile) {
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment("Public") + ".wsdl";

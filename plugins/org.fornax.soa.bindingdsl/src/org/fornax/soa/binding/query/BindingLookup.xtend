@@ -21,7 +21,6 @@ import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder
 import org.fornax.soa.profiledsl.scoping.versions.IVersionFilterProvider
 import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.moduledsl.query.ModuleLookup
-import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.moduledsl.query.ModuleServiceResolver
@@ -35,31 +34,25 @@ import org.fornax.soa.moduledsl.query.ServiceRefMatcher
 
 class BindingLookup {
 	
+	@Inject extension EnvironmentBindingResolver
+
 	@Inject
 	private IQualifiedNameProvider nameProvider
 	@Inject
-	private VersionComparator versionComparator
-	@Inject
-	private IEObjectLookup ieObjectLookup
-	@Inject
-	private IReferenceSearch refLookup
-	@Inject
 	private IPredicateSearch lookup
-	@Inject
-	private	IStateMatcher stateMatcher
 	@Inject
 	private IEObjectDescriptionBuilder descBuilder
 	@Inject	
 	private IVersionFilterProvider versionFilterProvider
 	@Inject
 	private ModuleLookup moduleLookup	
-	@Inject extension EnvironmentBindingResolver
 	
-	@Inject IPredicateSearch search
-	@Inject ModuleServiceResolver moduleResolver
-	@Inject ProtocolMatcher protocolMatcher
-	@Inject VersionMatcher versionMatcher
-	@Inject private BindingServiceRefMatcher serviceRefMatcher
+	@Inject 
+	private ModuleServiceResolver moduleResolver
+	@Inject 
+	private ProtocolMatcher protocolMatcher
+	@Inject 
+	private BindingServiceRefMatcher serviceRefMatcher
 	
 	def getAllBindings (ResourceSet rs) {
 		var Set<IEObjectDescription> allBindingDescs = lookup.search("ModuleBinding ", Predicates::alwaysTrue).toSet
@@ -148,8 +141,6 @@ class BindingLookup {
 				bindings.addAll(moduleBindings)
 			}
 			val serviceNamespace = service.eContainer as SubNamespace
-			val domainBindings = allBindings.filter (typeof (DomainBinding)).filter (b|b.resolveEnvironment == env && b.subNamespace == serviceNamespace)
-			bindings.addAll(domainBindings)
 		} else {
 			bindings.addAll(serviceBindings)
 		}
@@ -173,7 +164,6 @@ class BindingLookup {
 		var Set<Binding> bindings = newHashSet()
 		val serviceBindings = service.findMostSpecificBindings(env).filter (typeof (ServiceBinding))
 		val moduleBindings = service.findMostSpecificBindings(env).filter (typeof (ModuleBinding))
-		val domainBindings = service.findMostSpecificBindings(env).filter (typeof (DomainBinding))
 		val serviceBindingsWithBindingQualifier = serviceBindings.filter (b | 
 			b.eContainer instanceof ModuleBinding && 
 			protocolMatcher.supportsImportBindingProtocol (b, protocol) &&
@@ -186,13 +176,6 @@ class BindingLookup {
 				(endpointQualifier == null || b.protocol.exists(p|p.endpointQualifierRefs != null && p.endpointQualifierRefs.endpointQualifiers.exists(bindQualifier|bindQualifier == endpointQualifier)))
 			)
 			bindings.addAll (moduleBindingsWithBindingQualifier)
-		}
-		if (bindings.empty) {
-			val domainBindingsWithBindingQualifier = domainBindings.filter (b | 
-				protocolMatcher.supportsImportBindingProtocol (b, protocol) &&
-				(endpointQualifier == null || b.protocol.exists(p|p.endpointQualifierRefs != null && p.endpointQualifierRefs.endpointQualifiers.exists(bindQualifier|bindQualifier == endpointQualifier)))
-			)
-			bindings.addAll (domainBindingsWithBindingQualifier)
 		}
 		return bindings.filter (p|protocolMatcher.supportsImportBindingProtocol (p, protocol))
 	}
@@ -212,8 +195,6 @@ class BindingLookup {
 				bindings.addAll(moduleBindings)
 			}
 			val serviceNamespace = service.eContainer as SubNamespace
-			val domainBindings = allBindings.filter (typeof (DomainBinding)).filter (b|b.resolveEnvironment == env && b.subNamespace == serviceNamespace)
-			bindings.addAll(domainBindings)
 		} else {
 			bindings.addAll(serviceBindings)
 		}
@@ -272,15 +253,6 @@ class BindingLookup {
 			return binding
 		else
 			return null
-	}
-	def dispatch getMostSpecificBinding (Service service, DomainBinding binding) {
-		if (!binding.serviceBinding.empty) {
-			for (svcBind : binding.serviceBinding) {
-				if (serviceRefMatcher.matches(service, svcBind.service)) {
-					return svcBind
-				}
-			}
-		}
 	}
 	
 	/*
@@ -355,15 +327,5 @@ class BindingLookup {
 		}
 	}
 
-	/*
-	 * Check, whether the given Binding applies to the given Service
-	 */
-	def dispatch isBindingApplicable (DomainBinding bind, Service svc) {
-		if (bind.subNamespace == svc.eContainer) {
-			return true
-		} else {
-			return false
-		}
-	}
 
 }

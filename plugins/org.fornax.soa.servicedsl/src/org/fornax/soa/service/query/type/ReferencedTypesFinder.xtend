@@ -16,6 +16,9 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.serviceDsl.QueryObject
 import org.fornax.soa.service.versioning.ITypeResolver
 
+/*
+ * Find types references by a model object
+ */
 class ReferencedTypesFinder {
 	
 	@Inject extension ITypeResolver

@@ -3,24 +3,17 @@
 */
 package org.fornax.soa.ui.contentassist;
 
-import java.util.Iterator;
-
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.AbstractElement;
 import org.eclipse.xtext.CrossReference;
-import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.RuleCall;
-import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
-import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.fornax.soa.basedsl.sOABaseDsl.Import;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
-import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.bindingDsl.BindingModel;
 import org.fornax.soa.bindingDsl.ModuleRef;
 import org.fornax.soa.bindingDsl.ServiceRef;
@@ -28,8 +21,6 @@ import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 /**

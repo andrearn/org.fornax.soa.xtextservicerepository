@@ -1,6 +1,5 @@
 package org.fornax.soa.bindingdsl.generator;
 
-import org.fornax.soa.bindingDsl.DomainBinding;
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
 import org.fornax.soa.environmentDsl.Environment;
@@ -20,10 +19,6 @@ public class ProvidedProtocolContractBuilder implements IProtocolContractBuilder
 	}
 
 	public void buildServiceContracts (ModuleBinding bind, SOAProfile profile) {
-		provider.get().buildServiceContracts (bind, profile);
-	}
-
-	public void buildServiceContracts (DomainBinding bind, SOAProfile profile) {
 		provider.get().buildServiceContracts (bind, profile);
 	}
 

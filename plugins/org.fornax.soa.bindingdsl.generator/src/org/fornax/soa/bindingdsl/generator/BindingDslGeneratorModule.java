@@ -11,7 +11,6 @@ import org.fornax.soa.binding.query.services.BindingServiceResolver;
 import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
-import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteProviderWsdlTemplates;
 import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlTemplates;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SOAPProtocolContractBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SoapBindingResolver;
@@ -43,10 +42,6 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		return BindingBuilder.class;
 	}
 	
-	public Class<? extends ConcreteProviderWsdlTemplates> bindConcreteProviderWsdlTemplates () {
-		return ConcreteProviderWsdlTemplates.class;
-	}
-	
 	public Class<? extends ConcreteWsdlTemplates> bindConcreteWsdlTemplates () {
 		return ConcreteWsdlTemplates.class;
 	}
@@ -75,13 +70,6 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		binder.bind (new TypeLiteral<List<String>>() {})
 			.annotatedWith (
 					Names.named (BindingDSLGeneratorConstants.MODULE_BINDING_NAMES))
-			.toInstance (new ArrayList <String>());
-	}
-
-	public void configureDomainBindingNames (Binder binder) {
-		binder.bind (new TypeLiteral<List<String>>() {})
-			.annotatedWith (
-					Names.named (BindingDSLGeneratorConstants.DOMAIN_BINDING_NAMES))
 			.toInstance (new ArrayList <String>());
 	}
 	

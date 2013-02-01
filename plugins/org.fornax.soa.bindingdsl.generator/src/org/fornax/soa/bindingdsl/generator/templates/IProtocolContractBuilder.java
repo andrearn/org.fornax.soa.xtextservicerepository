@@ -1,6 +1,5 @@
 package org.fornax.soa.bindingdsl.generator.templates;
 
-import org.fornax.soa.bindingDsl.DomainBinding;
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
@@ -15,8 +14,6 @@ import org.fornax.soa.serviceDsl.SubNamespace;
 public abstract interface IProtocolContractBuilder {
 	
 	public void buildServiceContracts (ModuleBinding bind, SOAProfile profile);
-	
-	public void buildServiceContracts (DomainBinding bind, SOAProfile profile);
 	
 	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, SOAProfile profile);
 	

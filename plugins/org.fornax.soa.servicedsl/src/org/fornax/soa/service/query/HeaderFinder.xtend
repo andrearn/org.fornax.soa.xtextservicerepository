@@ -6,13 +6,8 @@ import java.util.HashSet
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
 import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.profiledsl.query.namespace.NamespaceImportQueries
-import org.fornax.soa.profiledsl.query.namespace.NamespaceQueries
-import org.fornax.soa.profiledsl.sOAProfileDsl.Class
-import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
 import org.fornax.soa.profiledsl.sOAProfileDsl.Property
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
@@ -24,13 +19,12 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
 import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 import org.fornax.soa.service.VersionedDomainNamespace
-//import org.fornax.soa.service.query.namespace.NamespaceQuery
-//import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.service.namespace.NamespaceSplitter
+import org.fornax.soa.service.query.namespace.NamespaceImportQueries
 import org.fornax.soa.service.query.type.VersionedTypeFilter
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.service.namespace.NamespaceSplitter
 
 /* 
  * Find the most specific message header declaration to be used by a service operation
@@ -38,15 +32,10 @@ import org.fornax.soa.service.namespace.NamespaceSplitter
 class HeaderFinder {
 	
 	@Inject extension VersionMatcher
-//	@Inject extension VersionQualifierExtensions
 	@Inject extension TechnicalNamespaceSplitter
-//	@Inject extension NamespaceQueries
-//	@Inject extension NamespaceImportQueries
-//	@Inject extension LatestMatchingTypeFinder
 	@Inject extension VersionedTypeFilter
 	@Inject NamespaceSplitter namespaceSplitter
-//	@Inject NamespaceQuery namespaceQuery
-	@Inject org.fornax.soa.service.query.namespace.NamespaceImportQueries nsImportQueries
+	@Inject NamespaceImportQueries nsImportQueries
 	
 	
 	def dispatch MessageHeader findBestMatchingHeader (EObject o, SOAProfile p ) { 
@@ -164,13 +153,13 @@ class HeaderFinder {
 	
 	
 	
-	def dispatch VersionedType selectLatestMatchingType (VersionedTypeRef ref) {
+	def VersionedType selectLatestMatchingType (VersionedTypeRef ref) {
 		ref.type.findSubdomain().types.filter (typeof (VersionedType))
 		.filter (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
 		.sortBy(e|e.version.version).last();
 	}
 		
-	def dispatch TechnicalNamespace findSubdomain (VersionedType c) {
+	def TechnicalNamespace findSubdomain (VersionedType c) {
 		if (c.eContainer instanceof TechnicalNamespace) {
 			c.eContainer as TechnicalNamespace;
 		}
@@ -178,7 +167,7 @@ class HeaderFinder {
 	
 	
 	
-	def dispatch boolean isLatestMatchingType (org.fornax.soa.profiledsl.sOAProfileDsl.Class t, Integer majorVersion) {
+	def boolean isLatestMatchingType (org.fornax.soa.profiledsl.sOAProfileDsl.Class t, Integer majorVersion) {
 		var canditateClasses = (t.eContainer as TechnicalNamespace).types
 			.filter (typeof (org.fornax.soa.profiledsl.sOAProfileDsl.Class))
 			.filter (e|e.name == t.name).toList;

@@ -9,7 +9,6 @@ import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.sOABaseDsl.Version
 import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.bindingDsl.BindingProtocol
-import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.OperationBinding
 import org.fornax.soa.bindingDsl.ServiceBinding
@@ -42,10 +41,6 @@ class BindingExtensions {
 	@Inject BoundServiceLookup boundSvcLookup
 	
 	def dispatch String getRegistryBaseUrl (EObject o) {}
-
-	def dispatch String getRegistryBaseUrl (DomainBinding b) {
-		b.environment.registryBaseUrl
-	}
 	
 	def dispatch String getRegistryBaseUrl (ServiceBinding b) {
 		b.eContainer.getRegistryBaseUrl();
@@ -70,42 +65,8 @@ class BindingExtensions {
 		}
 	}
 	
-	/*
-	boolean isEligibleForEnvironment(Service svc, Environment env) :
-		switch (env.type) {
-			case EnvironmentType::Prod: {
-				(svc.state == LifecycleState::productive || 
-						svc.state == LifecycleState::deprecated) ? true : false
-			}
-			case EnvironmentType::PreProd: {
-				(svc.state == LifecycleState::productive || 
-						svc.state == LifecycleState::deprecated || 
-						svc.state == LifecycleState::test) ? true : false
-			}
-			case EnvironmentType::Test: {
-				(svc.state == LifecycleState::productive || 
-						svc.state == LifecycleState::deprecated || 
-						svc.state == LifecycleState::test) ? true : false
-			}
-			default: {
-				(svc.state != LifecycleState::retired) ? true : false
-			}
-			
-		};
-	*/
-
 	def dispatch Binding getMostSpecificBinding (Binding b, Service s) {
 		
-	}
-	def dispatch Binding getMostSpecificBinding (DomainBinding b, Service s) {
-		if (b.serviceBinding.filter (e|e.service.service == s).size > 0) {
-			b.serviceBinding.findFirst (e|e.service.service == s)
-		} else {
-			b;
-		}
-	}
-	def dispatch List<BindingProtocol> getProviderProtocols (DomainBinding b) {
-		b.protocol;
 	}
 	
 	/* TODO: CONTAINS DEAD CODE!!! */
@@ -123,10 +84,6 @@ class BindingExtensions {
 			b.protocol;
 		}
 	}
-	
-	def dispatch List<BindingProtocol> getPublisherProtocols (DomainBinding b) {
-		b.protocol;
-	}
 	def dispatch List<BindingProtocol> getPublisherProtocols (ServiceBinding b) {
 		b.protocol;
 	}
@@ -134,7 +91,7 @@ class BindingExtensions {
 		b.protocol;
 	}
 	
-	def dispatch LifecycleState getMinLifecycleState (Environment env, EObject o, Lifecycle l) {
+	def LifecycleState getMinLifecycleState (Environment env, EObject o, Lifecycle l) {
 		switch (env.type) {
 			case EnvironmentType::LOCAL : 		o.toOwnerMinLocalState(l)
 			case EnvironmentType::DEV : 		o.toOwnerMinDevState(l)

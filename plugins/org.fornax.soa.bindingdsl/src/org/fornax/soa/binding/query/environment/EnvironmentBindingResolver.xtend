@@ -1,24 +1,21 @@
 package org.fornax.soa.binding.query.environment
 
-import org.fornax.soa.bindingDsl.Binding
-import org.fornax.soa.bindingDsl.ModuleBinding
-import org.fornax.soa.bindingDsl.DomainBinding
-import org.fornax.soa.bindingDsl.ServiceBinding
-import org.fornax.soa.environmentDsl.Server
-import org.fornax.soa.environmentDsl.Environment
-import org.fornax.soa.bindingDsl.OperationBinding
-import org.fornax.soa.bindingDsl.BindingProtocol
 import com.google.inject.Inject
-import org.fornax.soa.binding.query.BindingResolver
 import java.util.Set
 import org.fornax.soa.binding.query.BindingLookup
-import org.fornax.soa.moduledsl.query.ModuleLookup
+import org.fornax.soa.bindingDsl.Binding
+import org.fornax.soa.bindingDsl.BindingProtocol
+import org.fornax.soa.bindingDsl.ModuleBinding
+import org.fornax.soa.bindingDsl.OperationBinding
+import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.environment.query.EnvironmentLookup
+import org.fornax.soa.environmentDsl.Environment
+import org.fornax.soa.environmentDsl.Server
 import org.fornax.soa.moduledsl.moduleDsl.Module
+import org.fornax.soa.moduledsl.query.ModuleLookup
 
 class EnvironmentBindingResolver {
 
-	@Inject BindingResolver	bindingResolver
 	@Inject
 	private BindingLookup bindingLookup
 	@Inject
@@ -51,20 +48,7 @@ class EnvironmentBindingResolver {
 		val server = bind.provider.provServer
 		return if (server != null) server else bind.resolveEnvironment.defaultESB
 	}
-	
-	def dispatch Server resolveServer (DomainBinding bind, BindingProtocol prot) {
-		if (prot == null)
-			return bind.environment.defaultESB
-		var publisher = bindingResolver.getPublisher (prot)
-//		var provider = bindingResolver.getProvider (prot)
-		if (publisher?.pubServer != null)
-			return publisher.pubServer
-//		else if (provider?.provServer != null)
-//			return provider.provServer
-		else
-			bind.environment.defaultESB
-	}
-	
+		
 	def dispatch Server resolveServer (ServiceBinding bind, BindingProtocol prot) {
 		(bind.eContainer as Binding).resolveServer(prot)
 	}
@@ -77,9 +61,6 @@ class EnvironmentBindingResolver {
 		bind.resolveEnvironment
 	}
 	def dispatch Environment resolveEnvironment (ModuleBinding bind) {
-		bind.environment
-	}
-	def dispatch Environment resolveEnvironment (DomainBinding bind) {
 		bind.environment
 	}
 	def dispatch Environment getEnvironment (ServiceBinding bind) {

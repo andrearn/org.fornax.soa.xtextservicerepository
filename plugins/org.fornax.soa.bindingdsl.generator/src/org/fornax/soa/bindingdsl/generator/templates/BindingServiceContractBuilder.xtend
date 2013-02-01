@@ -3,7 +3,6 @@ package org.fornax.soa.bindingdsl.generator.templates
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import java.util.Set
-import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.bindingdsl.generator.ProvidedProtocolContractBuilder
@@ -45,15 +44,5 @@ class BindingServiceContractBuilder {
 			}
 		}
 	}
-	
-	def dispatch void build (DomainBinding binding, SOAProfile profile) {
-		for (protContractBuilder : protocolContractBuilders) {
-			try {
-				protContractBuilder.buildServiceContracts (binding, profile);
-			} catch (Exception ex) {
-				log.log (Level::SEVERE, "Error generating contracts\n", ex)
-			}
-		}
-	}
-	
+		
 }

@@ -5,7 +5,6 @@ import java.util.Set
 import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.binding.query.services.BindingServiceResolver
 import org.fornax.soa.bindingDsl.Binding
-import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.environmentDsl.Environment
@@ -13,7 +12,6 @@ import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.moduleDsl.NamespaceRef
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef
-import org.fornax.soa.moduledsl.query.ModuleNamespaceQuery
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.query.ServiceQueries
@@ -32,7 +30,6 @@ class BoundServiceLookup {
 	@Inject extension BindingExtensions
 	@Inject extension CommonStringExtensions
 	@Inject extension BindingServiceResolver
-//	@Inject extension ModuleNamespaceQuery
 	@Inject extension IServiceResolver
 	
 	/*
@@ -42,20 +39,12 @@ class BoundServiceLookup {
 		
 	}
 	
-	/*
-	 * Find published services (with public service endpoints) bound with the given BindingProtocol
-	 */
-	def dispatch Iterable<Service> toServicesWithPublisherProtocol (DomainBinding bind, Class bindingProtocolClass) {
-		bind.subNamespace.services.filter (s| ! bind.getMostSpecificBinding (s).publisherProtocols
-			.map (p|bindingProtocolClass.isInstance (p)).empty
-		)
-	}
 	
 	/*
 	 * Find published services (with public service endpoints) bound with the given BindingProtocol
 	 */
 	def dispatch Iterable<Service> toServicesWithPublisherProtocol (ModuleBinding bind, Class bindingProtocolClass) {
-		bind.module.module.providedServices.map (ref|ref.service as Service).flatten.filter (s| ! bind.getMostSpecificBinding (s).publisherProtocols
+		bind.module.module.providedServices.map (ref|ref.service as Service).filter (s| ! bind.getMostSpecificBinding (s).publisherProtocols
 			.map (p|bindingProtocolClass.isInstance (p)).empty
 		)
 	}
@@ -64,14 +53,8 @@ class BoundServiceLookup {
 		
 	}
 	
-	def dispatch Iterable<Service> toServicesWithProviderProtocol (DomainBinding bind, Class bindingProtocolClass) {
-		bind.subNamespace.services.filter (s| ! bind.getMostSpecificBinding (s).providerProtocols
-			.map (p|bindingProtocolClass.isInstance (p)).empty
-		)
-	}
-	
 	def dispatch Iterable<Service> toServicesWithProviderProtocol (ModuleBinding bind, Class bindingProtocolClass) {
-		bind.module.module.providedServices.map (ref|ref.service as Service).flatten.filter (s| ! bind.getMostSpecificBinding (s).publisherProtocols
+		bind.module.module.providedServices.map (ref|ref.service as Service).filter (s| ! bind.getMostSpecificBinding (s).publisherProtocols
 			.map (p|bindingProtocolClass.isInstance (p)).empty
 		)
 	}

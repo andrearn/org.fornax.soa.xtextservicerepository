@@ -8,18 +8,16 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
-import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.fornax.soa.profiledsl.search.StateMatcher
+import org.fornax.soa.profiledsl.search.LifecycleQueries
 import org.fornax.soa.service.VersionedDomainNamespace
+import org.fornax.soa.service.namespace.NamespaceSplitter
 import org.fornax.soa.service.query.ExceptionFinder
-import org.fornax.soa.service.query.LifecycleQueries
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries
-import org.fornax.soa.service.query.type.ReferencedTypesFinder
-import org.fornax.soa.service.query.type.VersionedTypeFilter
+import org.fornax.soa.service.versioning.IExceptionResolver
+import org.fornax.soa.service.versioning.ITypeResolver
 import org.fornax.soa.serviceDsl.Attribute
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.EnumLiteral
@@ -31,30 +29,27 @@ import org.fornax.soa.serviceDsl.Reference
 import org.fornax.soa.serviceDsl.SimpleAttribute
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
-import org.fornax.soa.service.namespace.NamespaceSplitter
-import org.fornax.soa.service.versioning.ITypeResolver
+import org.fornax.soa.basedsl.version.VersionMatcher
+import org.fornax.soa.service.query.type.ReferencedTypesFinder
+import org.fornax.soa.profiledsl.search.StateMatcher
+import org.fornax.soa.service.query.type.VersionedTypeFilter
+import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
 
 class XSDTemplates {
 
 
 	@Inject IFileSystemAccess fsa
 	
-//	@Inject extension VersionMatcher
 	@Inject extension CommonStringExtensions
 	@Inject extension SchemaNamespaceExtensions
-//	@Inject extension SchemaTemplateExtensions
 	@Inject extension SchemaTypeExtensions
-//	@Inject extension ProfileSchemaTypeExtensions
-//	@Inject extension VersionedTypeFilter
-//	@Inject extension LifecycleQueries
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries
 	@Inject extension ITypeResolver
-//	@Inject extension ReferencedTypesFinder
 	@Inject extension IStateMatcher
-//	@Inject extension StateMatcher
 	
 	@Inject ExceptionFinder exceptionFinder
+	@Inject IExceptionResolver exceptionResolver
 	
 	@Inject VersionQualifierExtensions versionQualifier
 
@@ -152,7 +147,7 @@ class XSDTemplates {
 		val enums = vns.types.filter (typeof (Enumeration))
 			.filter (en|minState.matches (en.state) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
-			.filter (ex|minState.matches (ex.state) && exceptionFinder.isLatestMatchingException (ex, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
+			.filter (ex|minState.matches (ex.state) && exceptionResolver.isMatchingException (ex, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 
 		if (!bos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''
@@ -196,7 +191,7 @@ class XSDTemplates {
 		val enums = vns.types.filter (typeof (Enumeration))
 			.filter (en|minState.matches (en.state) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
-			.filter (e|minState.matches (e.state) && exceptionFinder.isLatestMatchingException (e, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
+			.filter (e|minState.matches (e.state) && exceptionResolver.isMatchingException (e, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 
 		if (!bos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''

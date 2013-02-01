@@ -16,7 +16,6 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.serviceDsl.VersionedType
-import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 /* 

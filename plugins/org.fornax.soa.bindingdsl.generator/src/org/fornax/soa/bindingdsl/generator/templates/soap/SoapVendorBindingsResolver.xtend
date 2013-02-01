@@ -4,7 +4,6 @@ import com.google.inject.Inject
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.bindingDsl.BindingProtocol
-import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
@@ -25,7 +24,6 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 
 class SoapVendorBindingsResolver {
 	
-	@Inject extension VersionQualifierExtensions
 	@Inject extension BindingExtensions
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject ContextRootProvider ctxRootProvider
@@ -39,34 +37,12 @@ class SoapVendorBindingsResolver {
 		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
 	
-	def dispatch String toEndpointAddressPath (DomainBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
-		val serverType = server.toServerTypeName ();
-		val serverVersion = server.toServerTypeVersion ();
-		val ctxRoot = soapBindRes.getContextRoot(bind, s);
-		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-	}
-	
 	def dispatch String toEndpointAddressPath (ServiceBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
 		val serverType = server.toServerTypeName ();
 		val serverVersion = server.toServerTypeVersion ();
 		val ctxRoot = soapBindRes.getContextRoot(bind);
 		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 	}
-	
-	
-//	def dispatch String toProviderEndpointAddressPath (DomainBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
-//		val serverType = server.toServerTypeName ();
-//		val serverVersion = server.toServerTypeVersion ();
-//		val ctxRoot = soapBindRes.getProviderContextRoot(bind, s);
-//		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-//	}
-//	
-//	def dispatch String toProviderEndpointAddressPath (ServiceBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
-//		val serverType = server.toServerTypeName ();
-//		val serverVersion = server.toServerTypeVersion ();
-//		val ctxRoot = soapBindRes.getProviderContextRoot(bind);
-//		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-//	}
 	
 	
 	def dispatch String toEndpointAddressPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {

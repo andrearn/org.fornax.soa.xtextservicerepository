@@ -15,7 +15,6 @@ import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingDslPackage;
-import org.fornax.soa.bindingDsl.DomainBinding;
 import org.fornax.soa.bindingDsl.EJB;
 import org.fornax.soa.bindingDsl.HTTP;
 import org.fornax.soa.bindingDsl.JMS;
@@ -70,7 +69,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 	@Check
 	public void checkOnlyPrivateServiceHasProvidedWSDL (SOAP soap) {
 		if (soap.getProvidedWsdlUrl () != null) {
-			if (soap.eContainer () instanceof DomainBinding) {
+			if (soap.eContainer () instanceof ModuleBinding) {
 				error ("SOAP may not define a provided-WSDL-Url for a domain level binding",
 						BindingDslPackage.Literals.SOAP__PROVIDED_WSDL_URL);
 			} else if (soap.eContainer () instanceof OperationBinding) {
@@ -96,19 +95,6 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 						BindingDslPackage.Literals.SOAP__PUBLISHER);
 		}
 	}
-
-//	@Check
-//	public void checkProviderServerInBoundEnvironment (SOAP prot) {
-//		if (prot.eContainer () instanceof Binding) {
-//			Binding b = (Binding) prot.eContainer ();
-//			if (prot.getProvider () != null
-//					&& !BindingDslHelper.getEnvironment (b).getServers ()
-//							.contains (prot.getProvider ().getProvServer ()))
-//				warning (
-//						"The referenced provider Server is not part of the environment declared in the binding. Hence, you are crossing environment boundaries! THIS WILL INCURR SECURITY RISKS!",
-//						BindingDslPackage.Literals.SOAP__PUBLISHER);
-//		}
-//	}
 
 	@Check
 	public void checkPublisherServerInBoundEnvironment (EJB prot) {

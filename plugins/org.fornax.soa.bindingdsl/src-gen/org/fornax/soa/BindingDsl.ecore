@@ -23,15 +23,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="sla" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore#//SLA"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="DomainBinding" eSuperTypes="#//Binding">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="subNamespace" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//SubNamespace"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="environment" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="providerPolicies" upperBound="-1"
-        eType="#//Policy" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceBinding" upperBound="-1"
-        eType="#//ServiceBinding" containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Publisher">
     <eStructuralFeatures xsi:type="ecore:EReference" name="pubServer" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectors" unique="false"

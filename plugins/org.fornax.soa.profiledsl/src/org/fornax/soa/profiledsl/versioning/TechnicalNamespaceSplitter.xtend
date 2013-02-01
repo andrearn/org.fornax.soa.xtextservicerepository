@@ -2,20 +2,18 @@ package org.fornax.soa.profiledsl.versioning
 
 import com.google.inject.Inject
 import java.util.Set
+import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.basedsl.CommonEObjectExtensions
 import org.fornax.soa.basedsl.CommonStringExtensions
-import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.OrganizationNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.Type
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType
-import org.eclipse.emf.ecore.EObject
 
 class TechnicalNamespaceSplitter {
 
 	
-	@Inject extension VersionMatcher
 	@Inject extension VersionQualifierExtensions
 	@Inject extension CommonStringExtensions
 	@Inject extension CommonEObjectExtensions
@@ -24,7 +22,7 @@ class TechnicalNamespaceSplitter {
 	/* 
 	 * Split into VersionedDomainNamespace per accounted major version of contained versioned elements
 	 */
-	def dispatch Set<VersionedTechnicalNamespace> toVersionedTechnicalNamespaces (TechnicalNamespace s) {
+	def Set<VersionedTechnicalNamespace> toVersionedTechnicalNamespaces (TechnicalNamespace s) {
 		 if (s.types.size > 0 )
 		 	s.types.map (t|t.createVersionedTechnicalNamespace()).toSet()
 		 else 

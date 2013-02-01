@@ -25,28 +25,8 @@ BindingModel:
 	(bindings+=Binding)*;
 
 
-Binding: DomainBinding | ModuleBinding | ServiceBinding ;
+Binding: ModuleBinding | ServiceBinding ;
 
-/*
- * Binds all services in the given namespace, where the service lifecycle state matches the minimal required lifecycle state of the 
- * targeted environment
- */
-DomainBinding: 
-	'bind namespace' subNamespace=[serviceDsl::SubNamespace|QualifiedName] 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment] '{'
-		(endpointQualifierRefs=EndpointQualifierRefs)?
-		(governanceDecisions+=GovernanceDecision)*
-		('protocols' '{'
-			(protocol+=BindingProtocol)+
-		'}')?
-		('policies' '{'
-			(policies+=Policy)*
-		'}')?
-		('provider-policies' '{'
-			(providerPolicies+=Policy)*
-		'}')?
-		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
-		(serviceBinding+=ServiceBinding)*
-	'}';
 
 /* 
  * Publishers are server connectors that export an inbound endpoint

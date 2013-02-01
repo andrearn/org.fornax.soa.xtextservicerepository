@@ -12,7 +12,6 @@ import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions
 import org.fornax.soa.basedsl.search.IEObjectLookup
 import org.fornax.soa.basedsl.search.IPredicateSearch
 import org.fornax.soa.bindingDsl.BindingModel
-import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder
@@ -58,9 +57,6 @@ class DefaultBindingContractGenerators implements IGenerator {
 	
 	@Inject @Named ("modules")
 	List<VersionedModuleSelector> modules
-	
-	@Inject @Named ("domainBindingNames") 	
-	List<String> domainBindingNames
 	
 	@Inject @Named ("namespaces") 			
 	List<String> namespaces
@@ -122,13 +118,6 @@ class DefaultBindingContractGenerators implements IGenerator {
 						) {
 							compile (modBind, profile);
 						}
-					} else if (binding instanceof DomainBinding) {
-						val domBind = binding as DomainBinding;
-						if (domainBindingNames.exists (domBindName | Pattern::matches(domBindName, domBind.name))
-							&& Pattern::matches (targetEnvironmentName, domBind.environment.name)
-						) {
-							compile (domBind, profile);
-						}
 					}
 				}
 			}
@@ -172,11 +161,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 		else
 			bindingTpl.toBinding (bind, profile);
 	}
-	
-	def protected compile (DomainBinding bind, SOAProfile profile) {
-		bindingTpl.toBinding (bind, profile);
-	}
-	
+		
 	def protected compile (Module mod, SOAProfile profile, Resource resource) {
 		logger.info("Generating contracts for module " + mod.name + " version " + mod.version.version)
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
@@ -190,11 +175,12 @@ class DefaultBindingContractGenerators implements IGenerator {
 		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 		if (env == null)
-			logger.severe ("No environment found mathcing the name expression " + targetEnvironmentName)
+			logger.severe ("No environment found matching the name expression " + targetEnvironmentName)
 		if (profile == null)
 			logger.severe ("No architecture profile found matching the name " + profileName)
 		
 		if (env != null && profile != null) {
+			logger.info ("Generating XSDs for namespace " + nameProvider.getFullyQualifiedName(namespace).toString)
 			xsdGen.toXSD (namespace, env, profile);
 		}
 	}

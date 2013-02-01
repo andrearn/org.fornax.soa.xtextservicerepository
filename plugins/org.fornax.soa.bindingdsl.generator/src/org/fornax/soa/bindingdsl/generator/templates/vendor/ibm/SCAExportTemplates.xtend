@@ -26,14 +26,11 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 class SCAExportTemplates {
 
 	
-	@Inject extension VersionQualifierExtensions
-	@Inject extension ServiceQueries
 	@Inject extension BindingExtensions
 	@Inject extension BindingServiceResolver
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension SCAExportExtension
 	@Inject extension SoapBindingResolver
-	@Inject extension EndpointResolver
 
 
 	@Inject IFileSystemAccess fsa

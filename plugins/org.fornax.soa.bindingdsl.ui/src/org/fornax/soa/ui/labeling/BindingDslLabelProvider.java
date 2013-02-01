@@ -7,7 +7,6 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.basedsl.ui.labeling.SOABaseDslLabelHelper;
 import org.fornax.soa.bindingDsl.BindingProtocol;
-import org.fornax.soa.bindingDsl.DomainBinding;
 import org.fornax.soa.bindingDsl.EJB;
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.bindingDsl.SAP;
@@ -32,25 +31,9 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	public BindingDslLabelProvider(AdapterFactoryLabelProvider delegate) {
 		super(delegate);
 	}
-
-/*
-	//Labels and icons can be computed like this:
 	
-	String text(MyModel ele) {
-	  return "my "+ele.getName();
-	}
-	 
-    String image(MyModel ele) {
-      return "MyModel.gif";
-    }
-*/
-	
-	String image (DomainBinding ele) {
+	String image (ModuleBinding ele) {
 		return "full/obj16/messageexchange.gif";
-	}
-	
-	String text (DomainBinding ele) {
-		return ele.getSubNamespace().getName() + " -> " + ele.getEnvironment().getName();
 	}
 	
 	String text (ServiceBinding ele) {
@@ -68,8 +51,6 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	String text (SOAP ele) {
 		Server server = null;
 		SubNamespace ns = BindingDslHelper.getSubNamespace(ele);
-//		if (ele.getProvider() != null)
-//			server = ele.getProvider().getProvServer();
 		if (server == null && ele.getPublisher() != null)
 			server = ele.getPublisher().getPubServer();
 		if (server == null) {

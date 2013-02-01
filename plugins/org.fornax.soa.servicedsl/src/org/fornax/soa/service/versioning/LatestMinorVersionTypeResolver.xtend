@@ -3,7 +3,6 @@ package org.fornax.soa.service.versioning
 import com.google.inject.Inject
 import java.util.List
 import org.fornax.soa.profiledsl.search.StateMatcher
-import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef

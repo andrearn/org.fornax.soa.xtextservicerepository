@@ -1,12 +1,8 @@
 package org.fornax.soa.service.query
 
-
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.serviceDsl.Enumeration
 import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.basedsl.sOABaseDsl.Version
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import com.google.inject.Inject
@@ -20,142 +16,124 @@ class LifecycleQueries {
 	
 	@Inject org.fornax.soa.profiledsl.search.LifecycleQueries lifecycleQueries
 	
-	def dispatch LifecycleState toOwnerMinLocalState (Object o, Lifecycle l) {
-		lifecycleQueries.getMinLocalState (l);
+	def dispatch LifecycleState toOwnerMinLocalState (EObject o, Lifecycle lifecycle) {
+		lifecycleQueries.getMinLocalState (lifecycle);
 	}
-
-	def dispatch LifecycleState toOwnerMinLocalState (SubNamespace ns, Lifecycle l) {
-		lifecycleQueries.getMinLocalState(l);
+	def dispatch LifecycleState toOwnerMinLocalState (SubNamespace namespace, Lifecycle lifecycle) {
+		lifecycleQueries.getMinLocalState(lifecycle);
 	}
-
-	def dispatch LifecycleState toOwnerMinLocalState (BusinessObject o, Lifecycle l) {
-		o.eContainer.toOwnerMinLocalState(l);
+	def dispatch LifecycleState toOwnerMinLocalState (VersionedType versionedType, Lifecycle lifecycle) {
+		versionedType.eContainer.toOwnerMinLocalState(lifecycle);
 	}
-
-	def dispatch LifecycleState toOwnerMinLocalState (org.fornax.soa.serviceDsl.Enumeration o, Lifecycle l) {
-		o.eContainer.toOwnerMinLocalState(l);
+	def dispatch LifecycleState toOwnerMinLocalState (org.fornax.soa.serviceDsl.Exception exception, Lifecycle lifecycle) {
+		exception.eContainer.toOwnerMinLocalState(lifecycle);
 	}
-	
-	def dispatch LifecycleState toOwnerMinLocalState (org.fornax.soa.serviceDsl.Exception o, Lifecycle l) {
-		o.eContainer.toOwnerMinLocalState(l);
+	def dispatch LifecycleState toOwnerMinLocalState (Service service, Lifecycle lifecycle) {
+		service.eContainer.toOwnerMinLocalState(lifecycle);
 	}
 	
-	def dispatch LifecycleState toOwnerMinLocalState (Service o, Lifecycle l) {
-		o.eContainer.toOwnerMinLocalState(l);
+	def dispatch LifecycleState toOwnerMinDevState (EObject o, Lifecycle lifecycle) {
+		lifecycleQueries.getMinDevState (lifecycle);
 	}
-	
-	def dispatch LifecycleState toOwnerMinDevState (Object o, Lifecycle l) {
-		lifecycleQueries.getMinDevState (l);
+	def dispatch LifecycleState toOwnerMinDevState (SubNamespace namespace, Lifecycle lifecycle) {
+		lifecycleQueries.getMinDevState (lifecycle);
 	}
-
-	def dispatch LifecycleState toOwnerMinDevState (SubNamespace ns, Lifecycle l) {
-		lifecycleQueries.getMinDevState(l);
+	def dispatch LifecycleState toOwnerMinDevState (VersionedType versionedType, Lifecycle lifecycle) {
+		versionedType.eContainer.toOwnerMinDevState (lifecycle);
 	}
-
-	def dispatch LifecycleState toOwnerMinDevState (BusinessObject o, Lifecycle l) {
-		o.eContainer.toOwnerMinDevState(l);
+	def dispatch LifecycleState toOwnerMinDevState (org.fornax.soa.serviceDsl.Exception exception, Lifecycle lifecycle) {
+		exception.eContainer.toOwnerMinDevState (lifecycle);
 	}
-
-	def dispatch LifecycleState toOwnerMinDevState (org.fornax.soa.serviceDsl.Enumeration o, Lifecycle l) {
-		o.eContainer.toOwnerMinDevState(l);
-	}
-	
-	def dispatch LifecycleState toOwnerMinDevState (org.fornax.soa.serviceDsl.Exception o, Lifecycle l) {
-		o.eContainer.toOwnerMinDevState(l);
-	}
-	
-	def dispatch LifecycleState toOwnerMinDevState (Service o, Lifecycle l) {
-		o.eContainer.toOwnerMinDevState(l);
+	def dispatch LifecycleState toOwnerMinDevState (Service service, Lifecycle lifecycle) {
+		service.eContainer.toOwnerMinDevState (lifecycle);
 	}
 
-	def dispatch LifecycleState toOwnerMinTestState (Object o, Lifecycle l) {
-		lifecycleQueries.getMinTestState(l);
+	def dispatch LifecycleState toOwnerMinTestState (EObject o, Lifecycle lifecycle) {
+		lifecycleQueries.getMinTestState(lifecycle);
 	}
-	
-	def LifecycleState toOwnerMinTestState (SubNamespace ns, Lifecycle l) {
-		lifecycleQueries.getMinTestState(l);
+	def dispatch LifecycleState toOwnerMinTestState (SubNamespace namespace, Lifecycle lifecycle) {
+		lifecycleQueries.getMinTestState(lifecycle);
 	}
-
-	def dispatch LifecycleState toOwnerMinTestState (BusinessObject o, Lifecycle l) {
-		o.eContainer.toOwnerMinTestState(l);
+	def dispatch LifecycleState toOwnerMinTestState (VersionedType versionedType, Lifecycle lifecycle) {
+		versionedType.eContainer.toOwnerMinTestState(lifecycle);
 	}
-
-	def dispatch LifecycleState toOwnerMinTestState (Enumeration o, Lifecycle l) {
-		o.eContainer.toOwnerMinTestState(l);
+	def dispatch LifecycleState toOwnerMinTestState (org.fornax.soa.serviceDsl.Exception exception, Lifecycle lifecycle) {
+		exception.eContainer.toOwnerMinTestState(lifecycle);
 	}
-
-	def dispatch LifecycleState toOwnerMinTestState (org.fornax.soa.serviceDsl.Exception o, Lifecycle l) {
-		o.eContainer.toOwnerMinTestState(l);
+	def dispatch LifecycleState toOwnerMinTestState (Service service, Lifecycle lifecycle) {
+		service.eContainer.toOwnerMinTestState(lifecycle);
 	}
 
-	def dispatch LifecycleState toOwnerMinTestState (Service o, Lifecycle l) {
-		o.eContainer.toOwnerMinTestState(l);
+	def dispatch LifecycleState toOwnerMinStagingState (EObject o, Lifecycle lifecycle) {
+		lifecycleQueries.getMinStagingState (lifecycle);
+	}
+	def dispatch LifecycleState toOwnerMinStagingState (SubNamespace namespace, Lifecycle lifecycle) {
+		lifecycleQueries.getMinStagingState (lifecycle);
+	}
+	def dispatch LifecycleState toOwnerMinStagingState (VersionedType versionedType, Lifecycle lifecycle) {
+		versionedType.eContainer.toOwnerMinStagingState (lifecycle);
+	}
+	def dispatch LifecycleState toOwnerMinStagingState (org.fornax.soa.serviceDsl.Exception exception, Lifecycle lifecycle) {
+		exception.eContainer.toOwnerMinStagingState (lifecycle);
+	}
+	def dispatch LifecycleState toOwnerMinStagingState (Service service, Lifecycle lifecycle) {
+		service.eContainer.toOwnerMinStagingState (lifecycle);
 	}
 
-	def dispatch LifecycleState toOwnerMinProdState (Object o, Lifecycle l) {
-		lifecycleQueries.getMinProdState(l);
+	def dispatch LifecycleState toOwnerMinProdState (EObject o, Lifecycle lifecycle) {
+		lifecycleQueries.getMinProdState(lifecycle);
 	}
-	
-	def dispatch LifecycleState toOwnerMinProdState (SubNamespace ns, Lifecycle l) {
-		lifecycleQueries.getMinProdState(l);
+	def dispatch LifecycleState toOwnerMinProdState (SubNamespace namespace, Lifecycle lifecycle) {
+		lifecycleQueries.getMinProdState(lifecycle);
 	}
-	
-	def dispatch LifecycleState toOwnerMinProdState (BusinessObject o, Lifecycle l) {
-		o.eContainer.toOwnerMinProdState(l);
+	def dispatch LifecycleState toOwnerMinProdState (VersionedType versionedType, Lifecycle lifecycle) {
+		versionedType.eContainer.toOwnerMinProdState(lifecycle);
 	}
-
-	def dispatch LifecycleState toOwnerMinProdState (Enumeration o, Lifecycle l) {
-		o.eContainer.toOwnerMinProdState(l);
+	def dispatch LifecycleState toOwnerMinProdState (org.fornax.soa.serviceDsl.Exception exception, Lifecycle lifecycle) {
+		exception.eContainer.toOwnerMinProdState(lifecycle);
 	}
-	
-	def dispatch LifecycleState toOwnerMinProdState (org.fornax.soa.serviceDsl.Exception o, Lifecycle l) {
-		o.eContainer.toOwnerMinProdState(l);
-	}
-	
-	def dispatch LifecycleState toOwnerMinProdState (Service o, Lifecycle l) {
-		o.eContainer.toOwnerMinProdState(l);
+	def dispatch LifecycleState toOwnerMinProdState (Service service, Lifecycle lifecycle) {
+		service.eContainer.toOwnerMinProdState(lifecycle);
 	}
 
 
+	/*
+	 * Find the first owning EObject with a LifecycleState that is a transitive compositor of this object
+	 */
 	def dispatch EObject getStatefulOwner (EObject o) {
 		o.eContainer?.getStatefulOwner();
 	}
-	
-	def dispatch EObject getStatefulOwner (BusinessObject o) {
-		o;
+	def dispatch EObject getStatefulOwner (VersionedType versionedType) {
+		versionedType;
+	}
+	def dispatch EObject getStatefulOwner (org.fornax.soa.serviceDsl.Exception exception) {
+		exception;
+	}
+	def dispatch EObject getStatefulOwner (Service service) {
+		service;
 	}
 	
-	def dispatch EObject getStatefulOwner (Enumeration o) {
-		o;
-	}
-	
-	def dispatch EObject getStatefulOwner (org.fornax.soa.serviceDsl.Exception o) {
-		o;
-	}
-	
-	def dispatch EObject getStatefulOwner (Service o) {
-		o;
-	}
-	
-	
-	def dispatch EObject getOwningType (EObject o) {
+	/* 
+	 * Find the closest Type that transitively is on the owning side of the composition hierarchy
+	 */	
+	def EObject getOwningType (EObject o) {
 		o.eContainer?.getOwningType();
 	}
 
 
+	/* 
+	 * Get the LifecycleState of the closest EObject defining a LifecycleState that transitively is on the owning side of the composition hierarchy
+	 */	
 	def dispatch LifecycleState getOwnerState (EObject o) {
 		o.eContainer?.getOwnerState();
 	}
-	
-	def dispatch LifecycleState getOwnerState (VersionedType o) {
-		o.state;
+	def dispatch LifecycleState getOwnerState (VersionedType versionedType) {
+		versionedType.state;
 	}
-	
-	def dispatch LifecycleState getOwnerState (org.fornax.soa.serviceDsl.Exception o) {
-		o.state;
+	def dispatch LifecycleState getOwnerState (org.fornax.soa.serviceDsl.Exception exception) {
+		exception.state;
 	}
-
-	def dispatch LifecycleState getOwnerState (Service o) {
-		o.state;
+	def dispatch LifecycleState getOwnerState (Service service) {
+		service.state;
 	}
 }

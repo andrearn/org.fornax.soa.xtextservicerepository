@@ -12,20 +12,20 @@ class VersionQueries {
 		o.eContainer?.getOwnerVersion();
 	}
 	
-	def dispatch Version getOwnerVersion (VersionedType o) {
-		o.version;
+	def dispatch Version getOwnerVersion (VersionedType versionedType) {
+		versionedType.version;
 	}
 	
-	def dispatch Version getOwnerVersion (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType o) {
-		o.version;
+	def dispatch Version getOwnerVersion (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType technicalVersionedType) {
+		technicalVersionedType.version;
 	}
 
-	def dispatch Version getOwnerVersion (org.fornax.soa.serviceDsl.Exception o) {
-		o.version;
+	def dispatch Version getOwnerVersion (org.fornax.soa.serviceDsl.Exception exception) {
+		exception.version;
 	}
 	
-	def dispatch Version getOwnerVersion (Service o) {
-		o.version;
+	def dispatch Version getOwnerVersion (Service service) {
+		service.version;
 	}
 	
 }

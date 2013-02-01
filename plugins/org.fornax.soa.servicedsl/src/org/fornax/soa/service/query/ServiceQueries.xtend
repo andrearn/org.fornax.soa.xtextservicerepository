@@ -16,7 +16,6 @@ import org.fornax.soa.profiledsl.search.StateMatcher
 class ServiceQueries {
 	
 	@Inject extension StateMatcher
-//	@Inject extension VersionMatcher
 	@Inject extension VersionQualifierExtensions
 	@Inject extension NamespaceQuery
 	
@@ -55,24 +54,4 @@ class ServiceQueries {
 		s.filter (e|e.version.version.split("\\.").head == majorVersion && e.state.matchesMinStateLevel (minState))
 			.sortBy (e|e.version.version).last();
 	}
-//		
-//	
-//	def Service findMatchingService (ServiceRef s) {
-//		s.service.findSubdomain ().services.filter (e|e.name == s.service.name && s.service.version.versionMatches (s.versionRef))
-//			.filter (typeof (Service)).sortBy (e|e.version.version).last();
-//	}
-//	
-//	def Service findMatchingServiceByState (ServiceRef s, LifecycleState minState) {
-//		s.findOwnerSubdomain().services
-//			.filter (e|e.name == s.service.name && e.version.versionMatches (s.versionRef) && e.state.matchesMinStateLevel (minState))
-//			.sortBy (e|e.version.version).last();
-//	}
-//	
-//	def boolean isMatchingService (Service s, int majorVersion, LifecycleState minState) { 
-//		findLatestMatchingService ( (s.eContainer as SubNamespace).services.filter (e|e.name == s.name).toList, majorVersion, minState) == s;
-//	}
-//			
-//	def private  Service findLatestMatchingService (List<Service> canditates, int majorVersion, LifecycleState minState) {
-//		canditates.filter (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel(minState)).sortBy(e|e.version.version).last();
-//	}	
 }

@@ -38,8 +38,9 @@ import org.fornax.soa.serviceDsl.QueryObjectRef
 import org.fornax.soa.serviceDsl.QueryObject
 import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
 import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
+import org.fornax.soa.service.versioning.IExceptionResolver
 
-/* types.ext */
+/* Extension functions Type representations and references in XSDs */
 class SchemaTypeExtensions {
 	
 	@Inject extension VersionMatcher
@@ -51,11 +52,12 @@ class SchemaTypeExtensions {
 	@Inject extension VersionQueries
 	@Inject extension ITypeResolver
 	@Inject extension BusinessObjectQueries
-	@Inject extension ExceptionFinder
+	@Inject extension IExceptionResolver
 	
 	@Inject ProfileSchemaTypeExtensions profileSchemaTypes
 	@Inject org.fornax.soa.profiledsl.query.namespace.NamespaceQueries profileNSQueries
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNSExt
+	
 	/*
 	 *	Return the XSD type name for a type reference including it's derived namespace prefix
 	 */
@@ -459,7 +461,7 @@ class SchemaTypeExtensions {
 		ns.addAll (s.types.filter (typeof (BusinessObject)).filter (e|e.superBusinessObject != null)
 			.map(b|b.superBusinessObject.findMatchingType().createVersionedDomainNamespace()));
 		// all refs from exceptions to their super exceptions
-		ns.addAll (s.exceptions.filter (e|e.superException != null).map (ex|ex.superException.findLatestMatchingException().createVersionedDomainNamespace()));
+		ns.addAll (s.exceptions.filter (e|e.superException != null).map (ex|ex.superException.findMatchingException().createVersionedDomainNamespace()));
 		return ns;
 	}
 	
@@ -484,7 +486,7 @@ class SchemaTypeExtensions {
 		t.type.eContainer.toUnversionedNamespace()+"/"+(t.findMatchingType() as Enumeration).version.toVersionPostfix() + "/";
 	}
 	def dispatch String toNamespace (ExceptionRef t) {
-		t.exception.eContainer.toUnversionedNamespace()+"/"+(t.findLatestMatchingException() as org.fornax.soa.serviceDsl.Exception).version.toVersionPostfix() + "/";
+		t.exception.eContainer.toUnversionedNamespace()+"/"+(t.findMatchingException() as org.fornax.soa.serviceDsl.Exception).version.toVersionPostfix() + "/";
 	}
 	
 	def boolean typesUseExtendibleProperties (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {

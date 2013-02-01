@@ -1,9 +1,10 @@
 package org.fornax.soa.bindingdsl.generator.templates
 
 import com.google.inject.Inject
-import org.fornax.soa.bindingDsl.Binding
+import java.util.logging.Logger
+import org.eclipse.emf.ecore.EObject
+import org.fornax.soa.binding.query.BindingResolver
 import org.fornax.soa.bindingDsl.BindingProtocol
-import org.fornax.soa.bindingDsl.DomainBinding
 import org.fornax.soa.bindingDsl.EJB
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.SCA
@@ -19,14 +20,9 @@ import org.fornax.soa.environmentDsl.JMS
 import org.fornax.soa.environmentDsl.REST
 import org.fornax.soa.environmentDsl.RMI
 import org.fornax.soa.environmentDsl.SOAPHTTP
-import org.fornax.soa.environmentDsl.WebServer
-import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.environmentdsl.generator.EndpointResolver
 import org.fornax.soa.environmentDsl.Server
-import org.fornax.soa.environmentdsl.generator.ServerNotConnectableException
-import java.util.logging.Logger
-import java.util.logging.Level
-import org.fornax.soa.binding.query.BindingResolver
+import org.fornax.soa.environmentDsl.WebServer
+import org.fornax.soa.environmentdsl.generator.EndpointResolver
 
 
 /*
@@ -34,7 +30,6 @@ import org.fornax.soa.binding.query.BindingResolver
  */
 class BindingConnectorResolver {
 	
-	@Inject extension BindingExtensions
 	@Inject extension BindingResolver
 	@Inject extension EndpointResolver
 	@Inject Logger log
@@ -62,21 +57,6 @@ class BindingConnectorResolver {
 		
 	}
 	
-	def dispatch Connector resolveConnector (Server s, DomainBinding bind, BindingProtocol prot) {
-		val publisher = prot.publisher
-		val serverConnectors = if (!publisher?.pubServer?.connectors.nullOrEmpty)
-				publisher?.pubServer.connectors
-			else 
-				s.connectors 
-		val chosenConnectors = publisher?.connectors
-		if (!chosenConnectors.nullOrEmpty && !serverConnectors.nullOrEmpty) {
-			selectBestMatchingConnector (prot, chosenConnectors, serverConnectors)
-		} else {
-			s.findConnectorsByProtocol(prot, serverConnectors)
-		}
-		
-	}
-	
 	def dispatch Connector resolveConnector (Server s, ServiceBinding bind, BindingProtocol prot) {
 		val publisher = prot.publisher
 		val serverConnectors = if (!publisher?.pubServer?.connectors.nullOrEmpty) 
@@ -92,65 +72,6 @@ class BindingConnectorResolver {
 			s.findConnectorsByProtocol(prot, serverConnectors)
 		}
 	}
-	
-	
-	/*
-	 * Find the closest matching connector to be used for the outbound provider side by the given protocol and connector name. If the connector name
-	 * is not provided the first closest match based on the supported protocol is returned
-	 */	
-//	def dispatch Connector resolveProviderConnector (Server s, EObject bind, BindingProtocol prot) {
-//		
-//	}
-//	
-//	def dispatch Connector resolveProviderConnector (Server s, ModuleBinding bind, BindingProtocol prot) {
-//		val serverConnectors = if (!bind.provider?.provServer?.connectors.nullOrEmpty) 
-//				bind.provider?.provServer?.connectors
-//			else 
-//				s.connectors 
-//		val chosenConnectors = bind.provider.connectors
-//		if (!chosenConnectors.nullOrEmpty && !serverConnectors.nullOrEmpty) {
-//			selectBestMatchingConnector (prot, chosenConnectors, serverConnectors)
-//		} else if (bind.provider != null && !serverConnectors.nullOrEmpty){
-//			bind.provider.provServer.findConnectorsByProtocol(prot, serverConnectors)
-//		} else {
-//			s.findConnectorsByProtocol(prot, serverConnectors)
-//		}
-//		
-//	}
-//	
-//	def dispatch Connector resolveProviderConnector (Server s, DomainBinding bind, BindingProtocol prot) {
-//		val provider = prot.provider
-//		val serverConnectors = if (!provider?.provServer?.connectors.nullOrEmpty) 
-//				provider?.provServer?.connectors
-//			else 
-//				s.connectors 
-//		val chosenConnectors = provider?.connectors
-//		if (!chosenConnectors.nullOrEmpty && !serverConnectors.nullOrEmpty) {
-//			selectBestMatchingConnector (prot, chosenConnectors, serverConnectors)
-//		} else if (provider != null && !serverConnectors.nullOrEmpty) {
-//			provider.provServer.findConnectorsByProtocol(prot, serverConnectors)
-//		} else {
-//			s.findConnectorsByProtocol(prot, serverConnectors)
-//		}
-//		
-//	}
-//	
-//	def dispatch Connector resolveProviderConnector (Server s, ServiceBinding bind, BindingProtocol prot) {
-//		val provider = prot.provider
-//		val serverConnectors = if (!provider?.provServer?.connectors.nullOrEmpty) 
-//				provider?.provServer?.connectors
-//			else 
-//				s.connectors 
-//		val chosenConnectors = provider?.connectors
-//		if (!chosenConnectors.nullOrEmpty && !serverConnectors.nullOrEmpty) {
-//			selectBestMatchingConnector (prot, chosenConnectors, serverConnectors)
-//		} else if (provider.provServer != null && !serverConnectors.nullOrEmpty) {
-//			provider.provServer.findConnectorsByProtocol(prot, serverConnectors)
-//		} else {
-//			s.resolveProviderConnector(bind.eContainer, prot)
-//		}
-//	}
-	
 	
 	
 	def dispatch Connector findConnectorsByProtocol (Server s, BindingProtocol prot, Iterable<Connector> canditateConnectors) {

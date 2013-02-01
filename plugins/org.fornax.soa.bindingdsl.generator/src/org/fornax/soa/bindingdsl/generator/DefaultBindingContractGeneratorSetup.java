@@ -33,7 +33,6 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 	private List<String> moduleBindingNames = new ArrayList<String>();
 	private List<String> moduleNames = new ArrayList<String>();
 	private List<VersionedModuleSelector> modules = new ArrayList<VersionedModuleSelector>();
-	private List<String> domainBindingNames = new ArrayList<String>();
 	private List<String> namespaces = new ArrayList<String>();
 	private List<String> domainNamespaces = new ArrayList<String>();
 	private List<String> internalNamespaces = new ArrayList<String>();
@@ -77,10 +76,6 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.MODULES))
 								.toInstance (modules);
-						bind (new TypeLiteral<List<String>>() {})
-								.annotatedWith (
-										Names.named (BindingDSLGeneratorConstants.DOMAIN_BINDING_NAMES))
-								.toInstance (domainBindingNames);
 						bind (new TypeLiteral<List<String>>() {})
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.NAME_SPACES))
@@ -156,14 +151,6 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 	public void addServiceModule (VersionedModuleSelector module) {
 		modules.add (module);
-	}
-
-	public List<String> getDomainBindingNames () {
-		return domainBindingNames;
-	}
-
-	public void addDomainBindingName (String domainBindingName) {
-		domainBindingNames.add (domainBindingName);
 	}
 	
 	public void addNamespace (String namespaceName) {
