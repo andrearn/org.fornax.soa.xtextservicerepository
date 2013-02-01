@@ -43,6 +43,7 @@ import org.fornax.soa.servicedsl.generator.templates.ServiceTemplates
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
+import org.fornax.soa.service.versioning.IServiceResolver
 
 /* 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -55,25 +56,26 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	@Inject extension ServiceQueries
 	@Inject extension BindingExtensions
 	@Inject extension NamespaceImportQueries
-	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-	@Inject extension SchemaTypeExtensions
+//	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+//	@Inject extension SchemaTypeExtensions
 	@Inject extension BindingServiceResolver
-	@Inject extension BindingLookup
-	@Inject extension ReferencedTypesFinder
+//	@Inject extension BindingLookup
+//	@Inject extension ReferencedTypesFinder
 	@Inject extension HeaderFinder
 	@Inject extension EnvironmentBindingResolver		
+	@Inject extension IServiceResolver
 		
 	
 	@Inject WSDLTemplates 					wsdlGenerator
 	@Inject XSDTemplates 					xsdGenerator
-	@Inject org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates 		serviceDslXsdGenerator
-	@Inject ServiceTemplates 				serviceGenerator
-	@Inject EventXSDTemplates 				eventXsdGenerator
+//	@Inject org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates 		serviceDslXsdGenerator
+//	@Inject ServiceTemplates 				serviceGenerator
+//	@Inject EventXSDTemplates 				eventXsdGenerator
 	@Inject ConcreteWsdlTemplates 			concreteWsdlGenerator
 //	@Inject ConcreteProviderWsdlTemplates 	concreteProviderWsdlGenerator
 	@Inject MessageHeaderXSDTemplates 		msgHeaderGenerator
 	@Inject BoundServiceLookup				serviceLookup
-	@Inject ModuleServiceResolver			modServiceResolver
+//	@Inject ModuleServiceResolver			modServiceResolver
 	@Inject BindingResolver					bindingResolver
 	@Inject IQualifiedNameProvider			nameProvider
 	@Inject ProtocolMatcher					protocolMatcher
@@ -135,7 +137,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 		var headers = new HashSet<MessageHeader>();
 		
 		for (verNs : binding.subNamespace.toVersionedDomainNamespaces()) {
-			val services = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService (verNs.version.asInteger(), minState));
+			val services = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isMatchingService (verNs.version.asInteger(), minState));
 
 			for (svc : services) {
 				try {

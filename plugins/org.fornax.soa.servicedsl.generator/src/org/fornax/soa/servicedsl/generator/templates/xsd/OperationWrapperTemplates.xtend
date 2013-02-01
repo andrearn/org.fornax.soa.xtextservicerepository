@@ -28,7 +28,7 @@ class OperationWrapperTemplates {
 	
 	@Inject IFileSystemAccess fsa
 
-	@Inject extension CommonStringExtensions
+//	@Inject extension CommonStringExtensions
 	@Inject extension SchemaNamespaceExtensions
 	@Inject extension SchemaTemplateExtensions
 	@Inject extension SchemaTypeExtensions
@@ -36,7 +36,7 @@ class OperationWrapperTemplates {
 	@Inject extension VersionQualifierExtensions
 	@Inject extension HeaderFinder
 	@Inject extension NamespaceImportQueries
-	@Inject extension XSDTemplates
+//	@Inject extension XSDTemplates
 	
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
 	

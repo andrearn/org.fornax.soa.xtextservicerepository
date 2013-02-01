@@ -16,6 +16,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
+import org.fornax.soa.service.versioning.IServiceResolver
 
 class ServiceTemplates {
 	
@@ -23,6 +24,7 @@ class ServiceTemplates {
 	@Inject extension NamespaceSplitter
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension ServiceQueries
+	@Inject extension IServiceResolver
 	@Inject extension WSDLTemplates
 	@Inject extension XSDTemplates
 	
@@ -46,7 +48,7 @@ class ServiceTemplates {
 		val verNs = ns.toVersionedDomainNamespaces();
 		verNs.forEach (
 			v|v.servicesWithMinState (minState)
-				.filter (typeof (Service)).filter(e|e.isLatestMatchingService(v.version.asInteger(), minState))
+				.filter (typeof (Service)).filter(e|e.isMatchingService(v.version.asInteger(), minState))
 				.filter(e|e.providedContractUrl == null)
 				.forEach (s|s.toService (ns, minState, profile, registryBaseUrl))
 		);
@@ -60,7 +62,7 @@ class ServiceTemplates {
 		val verNs = ns.toVersionedDomainNamespaces();
 		verNs.forEach (
 			v|v.servicesWithMinState (minState).filter (typeof (Service))
-				.filter (e|e.isLatestMatchingService(v.version.asInteger(), minState))
+				.filter (e|e.isMatchingService(v.version.asInteger(), minState))
 				.filter (e|e.providedContractUrl == null)
 				.forEach (s|s.toService (ns, minState, profile, registryBaseUrl))
 		)

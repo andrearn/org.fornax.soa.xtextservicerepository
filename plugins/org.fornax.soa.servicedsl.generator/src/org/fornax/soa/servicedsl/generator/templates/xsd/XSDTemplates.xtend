@@ -39,20 +39,20 @@ class XSDTemplates {
 
 	@Inject IFileSystemAccess fsa
 	
-	@Inject extension VersionMatcher
+//	@Inject extension VersionMatcher
 	@Inject extension CommonStringExtensions
 	@Inject extension SchemaNamespaceExtensions
-	@Inject extension SchemaTemplateExtensions
+//	@Inject extension SchemaTemplateExtensions
 	@Inject extension SchemaTypeExtensions
-	@Inject extension ProfileSchemaTypeExtensions
-	@Inject extension VersionedTypeFilter
-	@Inject extension LifecycleQueries
+//	@Inject extension ProfileSchemaTypeExtensions
+//	@Inject extension VersionedTypeFilter
+//	@Inject extension LifecycleQueries
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries
 	@Inject extension ITypeResolver
-	@Inject extension ReferencedTypesFinder
+//	@Inject extension ReferencedTypesFinder
 	@Inject extension IStateMatcher
-	@Inject extension StateMatcher
+//	@Inject extension StateMatcher
 	
 	@Inject ExceptionFinder exceptionFinder
 	

@@ -24,6 +24,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.fornax.soa.service.versioning.ITypeResolver
+import org.fornax.soa.service.versioning.IServiceResolver
 
 class ConcreteProviderWsdlTemplates {
 
@@ -37,6 +38,7 @@ class ConcreteProviderWsdlTemplates {
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension ITypeResolver
+	@Inject extension IServiceResolver
 	@Inject extension SoapEndpointAddressResolver
 	@Inject IStateMatcher stateMatcher
 	
@@ -45,12 +47,12 @@ class ConcreteProviderWsdlTemplates {
 	@Inject IEObjectDocumentationProvider docProvider
 	
 	def toWSDL(DomainBinding binding, BindingProtocol prot, SOAProfile profile) {
-		val services = binding.subNamespace.services.filter (e|stateMatcher.matches (binding.environment.getMinLifecycleState(e, profile.lifecycle), e.state) && e.isLatestMatchingService(versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
+		val services = binding.subNamespace.services.filter (e|stateMatcher.matches (binding.environment.getMinLifecycleState(e, profile.lifecycle), e.state) && e.isMatchingService(versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
 		services.forEach (s|s.toWSDL (binding, prot, profile));
 	}
 	
 	def toWSDLByServiceName(DomainBinding binding, List<String> serviceNames, BindingProtocol prot, SOAProfile profile) {
-		val services = binding.subNamespace.services.filter (e|serviceNames.contains(e.name) && stateMatcher.matches (binding.environment.getMinLifecycleState(e, profile.lifecycle), e.state) && e.isLatestMatchingService(versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
+		val services = binding.subNamespace.services.filter (e|serviceNames.contains(e.name) && stateMatcher.matches (binding.environment.getMinLifecycleState(e, profile.lifecycle), e.state) && e.isMatchingService(versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
 		services.forEach (s|s.toWSDL (binding, prot, profile)); 
 	}
 	

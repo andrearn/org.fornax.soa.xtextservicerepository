@@ -24,6 +24,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.fornax.soa.service.versioning.ITypeResolver
+import org.fornax.soa.service.versioning.IServiceResolver
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -44,6 +45,7 @@ class ConcreteWsdlTemplates {
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension ITypeResolver
+	@Inject extension IServiceResolver
 	@Inject extension SoapEndpointAddressResolver
 
 	@Inject VersionQualifierExtensions versionQualifier
@@ -57,7 +59,7 @@ class ConcreteWsdlTemplates {
 	 */
 	def toWSDL (DomainBinding binding, BindingProtocol prot, SOAProfile profile) {
 		if (binding.subNamespace instanceof DomainNamespace) {
-			val services = binding.subNamespace.services.filter (e|e.isLatestMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
+			val services = binding.subNamespace.services.filter (e|e.isMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
 			services.forEach (s|s.toWSDL (binding, prot, profile)); 
 		}
 	}
@@ -76,7 +78,7 @@ class ConcreteWsdlTemplates {
 	
 	def toWSDLByServiceName (DomainBinding binding, List<String> serviceNames, BindingProtocol prot, SOAProfile profile) {
 		if (binding.subNamespace instanceof DomainNamespace) {
-			val services = binding.subNamespace.services.filter (e| serviceNames.contains (e.name) && e.isLatestMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
+			val services = binding.subNamespace.services.filter (e| serviceNames.contains (e.name) && e.isMatchingService (versionQualifier.toMajorVersionNumber(e.version).asInteger(), binding.environment.getMinLifecycleState(e, profile.lifecycle)));
 			services.forEach (s|s.toWSDL (binding, prot, profile));
 		}
 	}

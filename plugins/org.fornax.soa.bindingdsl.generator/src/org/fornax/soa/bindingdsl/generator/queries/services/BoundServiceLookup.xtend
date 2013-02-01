@@ -20,6 +20,7 @@ import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.namespace.NamespaceSplitter
+import org.fornax.soa.service.versioning.IServiceResolver
 
 /*
  * Finds services bound into an environment, i.e. referenced from a binding
@@ -31,7 +32,8 @@ class BoundServiceLookup {
 	@Inject extension BindingExtensions
 	@Inject extension CommonStringExtensions
 	@Inject extension BindingServiceResolver
-	@Inject extension ModuleNamespaceQuery
+//	@Inject extension ModuleNamespaceQuery
+	@Inject extension IServiceResolver
 	
 	/*
 	 * Find published services (with public service endpoints) bound with the given BindingProtocol
@@ -89,7 +91,7 @@ class BoundServiceLookup {
 		services.addAll (binding.module.module.providedServices.map (s | s.latestServiceInEnvironment (environment)));
 		val Set<VersionedDomainNamespace> versionedNamespaces = provNamespaces.map (ns |ns.toVersionedDomainNamespaces()).flatten.toSet
 		for (VersionedDomainNamespace verNs : versionedNamespaces) {
-			val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService (verNs.version.asInteger(), minState));
+			val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isMatchingService (verNs.version.asInteger(), minState));
 			val nsServices = svcCand.filter (c | !exclServices.contains (c));
 			services.addAll (nsServices);
 		}
@@ -111,7 +113,7 @@ class BoundServiceLookup {
 		services.addAll (module.usedServices.map (s | s.latestServiceInEnvironment (environment)));
 		val Set<VersionedDomainNamespace> versionedNamespaces = usedModuleNamespaces.map (ns |ns.toVersionedDomainNamespaces()).flatten.toSet
 		for (VersionedDomainNamespace verNs : versionedNamespaces) {
-			val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService (verNs.version.asInteger(), minState));
+			val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isMatchingService (verNs.version.asInteger(), minState));
 			val nsServices = svcCand.filter (c | !exclServices.contains (c));
 			services.addAll (nsServices);
 		}
@@ -136,7 +138,7 @@ class BoundServiceLookup {
 		if (!usedModuleNamespaces.empty) {
 			val Set<VersionedDomainNamespace> versionedNamespaces = usedModuleNamespaces.map (ns |ns.toVersionedDomainNamespaces()).flatten.toSet
 			for (VersionedDomainNamespace verNs : versionedNamespaces) {
-				val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isLatestMatchingService (verNs.version.asInteger(), minState));
+				val svcCand = verNs.servicesWithMinState (minState).filter (typeof (Service)).filter (e|e.isMatchingService (verNs.version.asInteger(), minState));
 				val nsServices = svcCand.filter (c | !exclServices.contains (c));
 				services.addAll (nsServices);
 			}
