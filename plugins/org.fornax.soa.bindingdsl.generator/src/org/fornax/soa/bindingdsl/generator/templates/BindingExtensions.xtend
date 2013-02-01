@@ -28,7 +28,7 @@ import org.fornax.soa.service.query.LifecycleQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import java.util.Set
-import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
 import org.fornax.soa.environmentDsl.HTTP
 

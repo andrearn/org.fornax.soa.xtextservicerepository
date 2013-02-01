@@ -16,7 +16,7 @@ import org.fornax.soa.moduledsl.moduleDsl.ServiceRef
 import org.fornax.soa.moduledsl.query.ModuleNamespaceQuery
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.service.VersionedDomainNamespace
-import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.namespace.NamespaceSplitter
@@ -26,7 +26,7 @@ import org.fornax.soa.service.namespace.NamespaceSplitter
  */
 class BoundServiceLookup {
 	
-	@Inject extension ServiceFinder
+	@Inject extension ServiceQueries
 	@Inject extension NamespaceSplitter
 	@Inject extension BindingExtensions
 	@Inject extension CommonStringExtensions

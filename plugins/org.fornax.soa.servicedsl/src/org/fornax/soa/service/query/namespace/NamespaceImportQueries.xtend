@@ -9,9 +9,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.query.ExceptionFinder
-import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.service.query.type.BusinessObjectQueries
-import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.service.query.type.ReferencedTypesFinder
 import org.fornax.soa.service.query.type.VersionedTypeFilter
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
@@ -20,6 +19,7 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.service.namespace.NamespaceSplitter
+import org.fornax.soa.service.versioning.ITypeResolver
 
 /*********************************************************************************
  *	Calculation of all VersionedDomainNamespaces imported by a given or derived 
@@ -30,13 +30,13 @@ class NamespaceImportQueries {
 	@Inject extension VersionMatcher
 	@Inject extension VersionQualifierExtensions
 	@Inject extension NamespaceQuery
-	@Inject extension LatestMatchingTypeFinder
+	@Inject extension ITypeResolver
 	@Inject extension VersionedTypeFilter
 	@Inject extension BusinessObjectQueries
 	@Inject extension ReferencedTypesFinder
 
 	@Inject ExceptionFinder excFinder
-	@Inject ServiceFinder serviceFinder
+	@Inject ServiceQueries serviceFinder
 	@Inject NamespaceSplitter namespaceSplitter
 	@Inject TechnicalNamespaceSplitter technicalNSSpliter
 	
@@ -48,9 +48,9 @@ class NamespaceImportQueries {
 	 */
 	def Set<VersionedDomainNamespace> findImportedSubdomains (Service svc) { 
 		var imports = svc.operations.map (o|o.parameters).flatten.map (p|p.type).filter(typeof (AbstractVersionedTypeRef))
-			.map (r|r.findLatestMatchingType()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)).toSet;
+			.map (r|r.findMatchingType()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)).toSet;
 		imports.addAll (svc.operations.map (o|o.^return).flatten.map (r|r.type).filter (typeof (AbstractVersionedTypeRef))
-			.map (v|v.findLatestMatchingType()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
+			.map (v|v.findMatchingType()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		imports.addAll (svc.operations.map (o|o.^throws).flatten.map(t|excFinder.findLatestMatchingException(t)).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		return imports;
 	}

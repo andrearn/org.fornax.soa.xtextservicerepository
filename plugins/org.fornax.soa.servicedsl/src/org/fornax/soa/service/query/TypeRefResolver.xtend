@@ -8,7 +8,7 @@ import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import org.fornax.soa.serviceDsl.VersionedTypeRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
-class TypeRefExtensions {
+class TypeRefResolver {
 	
 	def dispatch EObject resolveType (EObject typeRef) {
 		throw new UnsupportedOperationException()

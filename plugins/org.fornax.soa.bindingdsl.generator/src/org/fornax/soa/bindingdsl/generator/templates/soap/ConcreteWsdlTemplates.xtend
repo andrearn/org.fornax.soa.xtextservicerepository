@@ -18,12 +18,12 @@ import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.Type
-import org.fornax.soa.service.query.ServiceFinder
-import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
+import org.fornax.soa.service.versioning.ITypeResolver
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -36,14 +36,14 @@ import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 class ConcreteWsdlTemplates {
 	
 	@Inject extension CommonStringExtensions
-	@Inject extension ServiceFinder
+	@Inject extension ServiceQueries
 	@Inject extension EndpointResolver
 	@Inject extension BindingExtensions
 	@Inject extension SoapBindingResolver
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
-	@Inject extension LatestMatchingTypeFinder
+	@Inject extension ITypeResolver
 	@Inject extension SoapEndpointAddressResolver
 
 	@Inject VersionQualifierExtensions versionQualifier

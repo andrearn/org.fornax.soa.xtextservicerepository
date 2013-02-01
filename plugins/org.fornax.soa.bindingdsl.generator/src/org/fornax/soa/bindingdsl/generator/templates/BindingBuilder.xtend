@@ -18,7 +18,7 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.service.namespace.NamespaceSplitter
-import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.serviceDsl.SubNamespace
@@ -37,7 +37,7 @@ class BindingBuilder {
 	
 	@Inject extension NamespaceQuery
 	@Inject extension CommonStringExtensions
-	@Inject extension ServiceFinder
+	@Inject extension ServiceQueries
 	@Inject extension BindingExtensions
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries

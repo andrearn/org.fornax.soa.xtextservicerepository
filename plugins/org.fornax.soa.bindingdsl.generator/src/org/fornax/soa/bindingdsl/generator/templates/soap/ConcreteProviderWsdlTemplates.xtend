@@ -18,12 +18,12 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.service.query.ServiceFinder
-import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
+import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
+import org.fornax.soa.service.versioning.ITypeResolver
 
 class ConcreteProviderWsdlTemplates {
 
@@ -31,12 +31,12 @@ class ConcreteProviderWsdlTemplates {
 	@Inject extension CommonStringExtensions
 	@Inject extension BindingExtensions
 	@Inject extension EndpointResolver
-	@Inject extension ServiceFinder
+	@Inject extension ServiceQueries
 	@Inject extension SoapBindingResolver
 	@Inject extension SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
-	@Inject extension LatestMatchingTypeFinder
+	@Inject extension ITypeResolver
 	@Inject extension SoapEndpointAddressResolver
 	@Inject IStateMatcher stateMatcher
 	

@@ -6,7 +6,7 @@ import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.service.namespace.NamespaceSplitter
-import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.InternalNamespace
 import org.fornax.soa.serviceDsl.OrganizationNamespace
@@ -22,7 +22,7 @@ class ServiceTemplates {
 	@Inject extension CommonStringExtensions
 	@Inject extension NamespaceSplitter
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-	@Inject extension ServiceFinder
+	@Inject extension ServiceQueries
 	@Inject extension WSDLTemplates
 	@Inject extension XSDTemplates
 	

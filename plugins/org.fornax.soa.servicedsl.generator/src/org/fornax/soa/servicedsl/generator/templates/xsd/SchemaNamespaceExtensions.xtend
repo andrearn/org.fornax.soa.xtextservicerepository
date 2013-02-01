@@ -21,7 +21,7 @@ import org.fornax.soa.serviceDsl.ServiceModel
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.query.ExceptionFinder
-import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.service.query.type.TypesByLifecycleStateFinder
 import org.fornax.soa.basedsl.sOABaseDsl.Version
@@ -40,7 +40,7 @@ class SchemaNamespaceExtensions {
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject extension NamespaceQuery
 	@Inject extension TypesByLifecycleStateFinder
-	@Inject extension ServiceFinder
+	@Inject extension ServiceQueries
 	@Inject extension ExceptionFinder
 	
 	@Inject @Named ("forceRelativePaths") 

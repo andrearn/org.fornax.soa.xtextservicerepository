@@ -18,7 +18,6 @@ import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.query.ExceptionFinder
 import org.fornax.soa.service.query.LifecycleQueries
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries
-import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.service.query.type.ReferencedTypesFinder
 import org.fornax.soa.service.query.type.VersionedTypeFilter
 import org.fornax.soa.serviceDsl.Attribute
@@ -33,6 +32,7 @@ import org.fornax.soa.serviceDsl.SimpleAttribute
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.service.namespace.NamespaceSplitter
+import org.fornax.soa.service.versioning.ITypeResolver
 
 class XSDTemplates {
 
@@ -49,7 +49,7 @@ class XSDTemplates {
 	@Inject extension LifecycleQueries
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries
-	@Inject extension LatestMatchingTypeFinder
+	@Inject extension ITypeResolver
 	@Inject extension ReferencedTypesFinder
 	@Inject extension IStateMatcher
 	@Inject extension StateMatcher
@@ -148,9 +148,9 @@ class XSDTemplates {
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val imports = vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace());
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)
-			.filter (e|minState.matches (e.state) && e.isLatestMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
+			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
-			.filter (en|minState.matches (en.state) && en.isLatestMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
+			.filter (en|minState.matches (en.state) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
 			.filter (ex|minState.matches (ex.state) && exceptionFinder.isLatestMatchingException (ex, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 
@@ -192,9 +192,9 @@ class XSDTemplates {
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val imports = vns.importedVersionedNS(minState).filter(e|e.toNamespace() != vns.toNamespace());
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)
-			.filter (e|minState.matches (e.state) && e.isLatestMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
+			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
-			.filter (en|minState.matches (en.state) && en.isLatestMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
+			.filter (en|minState.matches (en.state) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
 			.filter (e|minState.matches (e.state) && exceptionFinder.isLatestMatchingException (e, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 

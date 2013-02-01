@@ -4,7 +4,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
-import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceQueries
 import com.google.inject.Inject
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.bindingDsl.SOAP
@@ -27,7 +27,7 @@ class SCAExportTemplates {
 
 	
 	@Inject extension VersionQualifierExtensions
-	@Inject extension ServiceFinder
+	@Inject extension ServiceQueries
 	@Inject extension BindingExtensions
 	@Inject extension BindingServiceResolver
 	@Inject extension ServiceTemplateExtensions

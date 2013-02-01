@@ -33,7 +33,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.namespace.NamespaceSplitter
 import org.fornax.soa.service.query.HeaderFinder
-import org.fornax.soa.service.query.ServiceFinder
+import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.service.query.type.ReferencedTypesFinder
@@ -52,7 +52,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceQuery
 	@Inject extension CommonStringExtensions
-	@Inject extension ServiceFinder
+	@Inject extension ServiceQueries
 	@Inject extension BindingExtensions
 	@Inject extension NamespaceImportQueries
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions

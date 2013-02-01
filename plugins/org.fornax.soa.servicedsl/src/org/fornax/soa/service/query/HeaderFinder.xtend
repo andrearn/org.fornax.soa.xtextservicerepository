@@ -24,14 +24,13 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
 import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 import org.fornax.soa.service.VersionedDomainNamespace
-import org.fornax.soa.service.query.namespace.NamespaceQuery
-import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
+//import org.fornax.soa.service.query.namespace.NamespaceQuery
+//import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.service.query.type.VersionedTypeFilter
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.namespace.NamespaceSplitter
-//import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 
 /* 
  * Find the most specific message header declaration to be used by a service operation
@@ -39,15 +38,14 @@ import org.fornax.soa.service.namespace.NamespaceSplitter
 class HeaderFinder {
 	
 	@Inject extension VersionMatcher
-	@Inject extension VersionQualifierExtensions
+//	@Inject extension VersionQualifierExtensions
 	@Inject extension TechnicalNamespaceSplitter
-	@Inject extension NamespaceQueries
-	@Inject extension NamespaceImportQueries
-	@Inject extension LatestMatchingTypeFinder
-//	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+//	@Inject extension NamespaceQueries
+//	@Inject extension NamespaceImportQueries
+//	@Inject extension LatestMatchingTypeFinder
 	@Inject extension VersionedTypeFilter
 	@Inject NamespaceSplitter namespaceSplitter
-	@Inject NamespaceQuery namespaceQuery
+//	@Inject NamespaceQuery namespaceQuery
 	@Inject org.fornax.soa.service.query.namespace.NamespaceImportQueries nsImportQueries
 	
 	
@@ -71,13 +69,13 @@ class HeaderFinder {
 		}
 	}
 	
-	def dispatch List<MessageHeader> getLatestMajorVersions (SOAProfile p) {
+	def List<MessageHeader> getLatestMajorVersions (SOAProfile p) {
 		p.messaging.messageHeaders;
 	}
 	
 	
 	
-	def dispatch Set<TechnicalNamespace> allImportedSubNamespaces (Type t) {
+	def Set<TechnicalNamespace> allImportedSubNamespaces (Type t) {
 		t.allReferencedVersionedTypes ().filter (typeof (VersionedType)).map(e|e.findSubdomain()).toSet();
 	}
 	

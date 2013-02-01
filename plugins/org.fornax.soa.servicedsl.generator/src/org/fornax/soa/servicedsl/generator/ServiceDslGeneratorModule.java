@@ -1,16 +1,21 @@
 package org.fornax.soa.servicedsl.generator;
 
+import org.eclipse.xtext.generator.IFileSystemAccess;
+import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.fornax.soa.ServiceDslRuntimeModule;
+import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
+import org.fornax.soa.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
+import org.fornax.soa.basedsl.version.VersionMatcher;
+import org.fornax.soa.basedsl.version.VersionQualifierExtensions;
 import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates;
 import org.fornax.soa.service.query.ExceptionFinder;
 import org.fornax.soa.service.query.HeaderFinder;
 import org.fornax.soa.service.query.LifecycleQueries;
-import org.fornax.soa.service.query.ServiceFinder;
+import org.fornax.soa.service.query.ServiceQueries;
 import org.fornax.soa.service.query.VersionQueries;
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries;
 import org.fornax.soa.service.query.namespace.NamespaceQuery;
 import org.fornax.soa.service.query.type.BusinessObjectQueries;
-import org.fornax.soa.service.query.type.LatestMatchingTypeFinder;
 import org.fornax.soa.service.query.type.ReferencedTypesFinder;
 import org.fornax.soa.service.query.type.TypesByLifecycleStateFinder;
 import org.fornax.soa.service.query.type.VersionedTypeFilter;
@@ -50,10 +55,6 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 		return BusinessObjectQueries.class;
 	}
 	
-	public Class<? extends LatestMatchingTypeFinder> bindLatestMatchingTypeFinder () {
-		return LatestMatchingTypeFinder.class;
-	}
-	
 	public Class<? extends ReferencedTypesFinder> bindReferencedTypesFinder () {
 		return ReferencedTypesFinder.class;
 	}
@@ -78,8 +79,8 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 		return LifecycleQueries.class;
 	}
 	
-	public Class<? extends ServiceFinder> bindServiceFinder () {
-		return ServiceFinder.class;
+	public Class<? extends ServiceQueries> bindServiceFinder () {
+		return ServiceQueries.class;
 	}
 	
 	public Class<? extends VersionQueries> bindVersionQueries () {
@@ -147,6 +148,21 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 	public void configureUseNestedPaths (Binder binder) {
 		binder.bind (Boolean.class).annotatedWith (Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
 			.toInstance (false);
+	}
+	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
+		return SOABaseDslFactoryImpl.class;
+	}
+	
+	public Class<? extends VersionQualifierExtensions> bindVersionQualifierExtensions () {
+		return VersionQualifierExtensions.class;
+	}
+	
+	public Class<? extends VersionMatcher> bindVersionMatcher () {
+		return VersionMatcher.class;
+	}	
+	
+	public Class<? extends IFileSystemAccess> bindIFileSystemAccess () {
+		return JavaIoFileSystemAccess.class;
 	}
 
 	

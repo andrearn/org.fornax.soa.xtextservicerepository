@@ -10,6 +10,8 @@ import org.fornax.soa.basedsl.documentation.DocFeatureDocumationProvider;
 import org.fornax.soa.basedsl.resource.EObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
+import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
+import org.fornax.soa.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
 import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.search.PredicateSearch;
@@ -23,6 +25,10 @@ import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
 import org.fornax.soa.query.BusinessObjectQuery;
 import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
 import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
+import org.fornax.soa.service.versioning.IServiceResolver;
+import org.fornax.soa.service.versioning.ITypeResolver;
+import org.fornax.soa.service.versioning.LatestMinorVersionServiceResolver;
+import org.fornax.soa.service.versioning.LatestMinorVersionTypeResolver;
 import org.fornax.soa.util.EnvironmentTypeComparator;
 
 import com.google.inject.Binder;
@@ -87,6 +93,18 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 	@org.eclipse.xtext.service.SingletonBinding	
 	public Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector () {
 		return DefaultEnvironmentPerspectiveSelector.class;
+	}
+	
+	public Class<? extends ITypeResolver> bindITypeResolver () {
+		return LatestMinorVersionTypeResolver.class;
+	}
+	
+	public Class<? extends IServiceResolver> bindIServiceResolver () {
+		return LatestMinorVersionServiceResolver.class;
+	}
+	
+	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
+		return SOABaseDslFactoryImpl.class;
 	}
 
 }

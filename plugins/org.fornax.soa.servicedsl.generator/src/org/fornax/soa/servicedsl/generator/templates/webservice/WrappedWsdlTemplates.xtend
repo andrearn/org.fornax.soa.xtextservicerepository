@@ -14,7 +14,6 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.service.query.HeaderFinder
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
-import org.fornax.soa.service.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.ExceptionRef
 import org.fornax.soa.serviceDsl.InternalNamespace
@@ -45,7 +44,6 @@ class WrappedWsdlTemplates {
 	@Inject extension NamespaceImportQueries
 	@Inject extension XSDTemplates
 	@Inject extension OperationWrapperTemplates
-	@Inject extension LatestMatchingTypeFinder
 	
 	@Inject IEObjectDocumentationProvider docProvider
 	

@@ -13,7 +13,7 @@ import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.search.StateMatcher
 
-class ServiceFinder {
+class ServiceQueries {
 	
 	@Inject extension StateMatcher
 	@Inject extension VersionMatcher
