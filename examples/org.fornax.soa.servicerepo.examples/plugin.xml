@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?eclipse version="3.4"?>
+<?eclipse version="3.0"?>
 <plugin>
+	<extension point="org.eclipse.ui.newWizards">
+		<category id="org.fornax.soa.servicerepo.Examples" 
+				  name="%XSRExamples_category" 
+				  parentCategory="org.eclipse.ui.Examples" />
+	</extension>
 
+	<!-- ========= org.fornax.soa.servicerepo.simple.example ========= -->
+	<extension point="org.eclipse.ui.newWizards">
+		<wizard	id="org.fornax.soa.servicerepo.NewSimpleExampleWizard" 
+			name="%DomainExample_name" 
+			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
+			category="org.eclipse.ui.Examples/org.eclipse.xtext.ui.Examples"
+			icon="icons/genproject.gif" 
+			project="true">
+			<description>%SimpleExample_description</description>
+		</wizard>
+	</extension>
+	<extension point="org.eclipse.ui.newWizards">
+		<wizard	id="org.eclipse.xtext.examples.NewDomainModelExampleWizard" 
+			name="%SimpleExample_name" 
+			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
+			category="org.eclipse.xtext.projectwiz/org.eclipse.xtext.project.Examples"
+			icon="icons/genproject.gif" 
+			project="true">
+			<description>%SimpleExample_description</description>
+		</wizard>
+	</extension>
+	<extension point="org.eclipse.emf.common.ui.examples">
+	   <example wizardID="org.fornax.soa.servicerepo.NewSimpleExampleWizard" pageImage="icons/genproject.gif">
+		 <projectDescriptor name="org.fornax.soa.servicerepo.simple.example" contentURI="contents/org.fornax.soa.servicerepo.simple.example.zip" description="Services, BusinessObject, Modules, Binding and Profile etc."/>
+	  </example>
+	</extension>   
+   
 </plugin>
