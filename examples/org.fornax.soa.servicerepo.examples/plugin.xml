@@ -12,7 +12,7 @@
 		<wizard	id="org.fornax.soa.servicerepo.NewSimpleExampleWizard" 
 			name="%SimpleExample_name" 
 			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
-			category="org.eclipse.ui.Examples/org.eclipse.xtext.ui.Examples"
+			category="org.eclipse.ui.Examples/org.fornax.soa.servicerepo.Examples"
 			icon="icons/genproject.gif" 
 			project="true">
 			<description>%SimpleExample_description</description>
