@@ -10,19 +10,9 @@
 	<!-- ========= org.fornax.soa.servicerepo.simple.example ========= -->
 	<extension point="org.eclipse.ui.newWizards">
 		<wizard	id="org.fornax.soa.servicerepo.NewSimpleExampleWizard" 
-			name="%DomainExample_name" 
-			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
-			category="org.eclipse.ui.Examples/org.eclipse.xtext.ui.Examples"
-			icon="icons/genproject.gif" 
-			project="true">
-			<description>%SimpleExample_description</description>
-		</wizard>
-	</extension>
-	<extension point="org.eclipse.ui.newWizards">
-		<wizard	id="org.eclipse.xtext.examples.NewDomainModelExampleWizard" 
 			name="%SimpleExample_name" 
 			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
-			category="org.eclipse.xtext.projectwiz/org.eclipse.xtext.project.Examples"
+			category="org.eclipse.ui.Examples/org.eclipse.xtext.ui.Examples"
 			icon="icons/genproject.gif" 
 			project="true">
 			<description>%SimpleExample_description</description>

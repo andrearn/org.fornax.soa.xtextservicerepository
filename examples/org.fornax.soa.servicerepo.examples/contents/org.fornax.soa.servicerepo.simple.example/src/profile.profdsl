@@ -1,93 +1,150 @@
+/*
+ * Define simple data types
+ */
+ 
 datatype int
-datatype byte
-datatype long
-datatype float
-datatype double
 datatype string
-datatype char
 datatype date
 datatype datetime
 datatype boolean
+datatype char
+datatype long
+datatype float
+datatype double
 datatype decimal
 datatype base64Binary
-datatype binary
+datatype anyType 
 
-soa-profile enterprise_soa {
-	scope "The whole enterprise"
+/* 
+ * A SOA architecture profile defines some basic rules
+ */
+soa-profile SampleArchitectureProfile {
+	scope "Example Org"
 	
-	
-	lifecycle DefaultLifecycle {
+	/* Count+Care Standard-Lebenzyklus verwalteter SOA Assets */
+	lifecycle ExSOALifecycle {
 		
-		/* Asset ist ein Vorschlag und darf nur in der lokalen Umgebung experimentell genutzt werden.  */
+		/*
+		 * The asset is proposal that is only discussed
+		 */
 		initial state proposed {
-			qualifies-for Local-Environment, Development-Environment
-			-> defined by Developer
+			/*
+			 * One can play with the proposal only in a local environment (the local PC)
+			 */
+			qualifies-for Local-Environment
+			-> development 
 		}
 		
-		/* Stabile Definition, als Grundlage für Entwicklung geeignet */
-		state defined {
-			qualifies-for Local-Environment, Development-Environment
-			-> development
-		}
-		
-		/* Asset befindet sich in der Umsetzung */
+		/*
+		 * The asset is under development
+		 */
 		state development {
+			/*
+			 * It becomes accesible in the development environment as well
+			 */
 			qualifies-for Local-Environment, Development-Environment
 			-> test
 			-> proposed
 		}
 		
-		/* Asset befindet sich in der Abnahme */
+		/*
+		 * The asset is under test
+		 */
 		state test {
-			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment
+			qualifies-for Local-Environment, Development-Environment, Test-Environment
 			-> productive
-			-> development
-		}
-		
-		/* Asset ist produktiv oder wird zum angegebenen Releasedatum produktiv gesetzt */
-		state productive {
-			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
-			-> deprecated
-		}
-		
-		state deprecated {
-			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
-			-> retired
 			-> proposed
 		}
 		
-		end state retired {
-			
+		/* 
+		 * The is under productive use
+		 */
+		state productive {
+			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
+			-> deprecated
+			-> proposed
+		}
+		
+		/*
+		 * The asset is deprecated and will be retired soon.
+		 */
+		state deprecated {
+			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
+			-> productive
+			-> proposed
 		}
 	}
 	
+	/*
+	 * Categorize service based on a basic category
+	 */
 	service-categories {
-		/* Business level Prozessservice bzw. orchestrierter Taskservice */
-		^process base-category process
-		
-		/* Business Service für einfache Aktivitäten (einfacher Taskservice) */
+		/**
+		 * This is a <b>Business Activity Service</b> (BAS) <br/><br/>
+		 * 
+		 * A Service, that can execute an activity or function of the business logic.
+		 */
 		^activity base-category activity
 		
-		/* Business Service für Zugriff auf persistente Entitäten */
+		/* Categorizes a <b>Business Entity Service</b> (BES) <br/><br/>
+		 * 
+		 * The service accesses persistent data
+		 */
 		^entity base-category entity
 		
-		/* Business Service, der Regeln auswertet */
+		/** 
+		 * Categorizes a <b>Business Process Service</b> (BPS) <br/><br/>
+		 * 
+		 * The service represent a busines process
+		 */
+		^process base-category process
+		
+		/**
+		 * Kennzeichnet einen <b>Business Rule Service</b> (BRS) <br/><br/>
+		 * 
+		 * Ein Service, der eine Geschäftsregel implementiert.
+		 */
 		^rule base-category rule
 		
-		/* Hilfs- oder Interner Service. Hierunter fallen auch private Services aus Backends */
+		/**
+		 * Categorizes a <b>Utility Service</b> (US)
+		 * 
+		 * A service that can be used for helper functions
+		 */
 		^utility base-category utility
 	}
 	
+	
+	/**
+	 * Define general design rules and naming conventions
+	 */
 	design-rules {
-		internal-namespace-rule internalNsRule {
-			internal-qualifier must-contain-internal-qualifier
-			qualifying-name internal
+		
+		
+		/* Rules for data types */
+		types {
+			/*
+			 * Define how the evolution of backward compatible version is supported
+			 */
+			version-evolution {
+				/* XSDs will need a placeholder element for response messages. By default a list of "any"-elements */
+				extendible-properties
+				/* 
+				 * And placeholder for XSD attributes is defined will be used as well
+				 */
+				extendible-XML-attributes	
+			}
 		}
 	}
 	
+	
+	/* für jede in einem Namespace vorkommende Majorversion von BOs, Enums, Services oder Exception 
+	 * wird ein eigener technischer Namensraum, z.B. XML-Namespace ausgeprägt
+	 * 
+	 * Es wird immer die neueste zum Status des Referenzierers passende Version selektiert.
+	 */
 	versioning-strategy namespace-based
 	
+	
+		
 }
-
-role Developer
-

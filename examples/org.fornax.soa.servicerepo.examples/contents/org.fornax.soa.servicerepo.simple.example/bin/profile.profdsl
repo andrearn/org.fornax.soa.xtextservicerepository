@@ -1,93 +1,13 @@
-datatype int
-datatype byte
-datatype long
-datatype float
-datatype double
-datatype string
-datatype char
-datatype date
-datatype datetime
-datatype boolean
-datatype decimal
-datatype base64Binary
-datatype binary
-
-soa-profile enterprise_soa {
-	scope "The whole enterprise"
-	
-	
-	lifecycle DefaultLifecycle {
-		
-		/* Asset ist ein Vorschlag und darf nur in der lokalen Umgebung experimentell genutzt werden.  */
-		initial state proposed {
-			qualifies-for Local-Environment, Development-Environment
-			-> defined by Developer
-		}
-		
-		/* Stabile Definition, als Grundlage für Entwicklung geeignet */
-		state defined {
-			qualifies-for Local-Environment, Development-Environment
-			-> development
-		}
-		
-		/* Asset befindet sich in der Umsetzung */
-		state development {
-			qualifies-for Local-Environment, Development-Environment
-			-> test
-			-> proposed
-		}
-		
-		/* Asset befindet sich in der Abnahme */
-		state test {
-			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment
-			-> productive
-			-> development
-		}
-		
-		/* Asset ist produktiv oder wird zum angegebenen Releasedatum produktiv gesetzt */
-		state productive {
-			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
-			-> deprecated
-		}
-		
-		state deprecated {
-			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
-			-> retired
-			-> proposed
-		}
-		
-		end state retired {
-			
-		}
-	}
-	
-	service-categories {
-		/* Business level Prozessservice bzw. orchestrierter Taskservice */
-		^process base-category process
-		
-		/* Business Service für einfache Aktivitäten (einfacher Taskservice) */
-		^activity base-category activity
-		
-		/* Business Service für Zugriff auf persistente Entitäten */
-		^entity base-category entity
-		
-		/* Business Service, der Regeln auswertet */
-		^rule base-category rule
-		
-		/* Hilfs- oder Interner Service. Hierunter fallen auch private Services aus Backends */
-		^utility base-category utility
-	}
-	
-	design-rules {
-		internal-namespace-rule internalNsRule {
-			internal-qualifier must-contain-internal-qualifier
-			qualifying-name internal
-		}
-	}
-	
-	versioning-strategy namespace-based
-	
-}
-
-role Developer
-
+datatype int;
+datatype byte;
+datatype long;
+datatype float;
+datatype double;
+datatype string;
+datatype char;
+datatype date;
+datatype datetime;
+datatype boolean;
+datatype decimal;
+datatype base64Binary;
+datatype binary;

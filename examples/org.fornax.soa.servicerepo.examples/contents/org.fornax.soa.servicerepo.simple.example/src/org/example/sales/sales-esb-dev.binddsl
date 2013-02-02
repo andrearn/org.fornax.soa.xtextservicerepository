@@ -1,0 +1,17 @@
+/*
+ * We make the module org.example.sales.esb available in the development environment
+ */
+bind-module org.example.sales.esb majorVersion 1 as org.example.sales.esb.dev to environment Dev {
+	
+	/* The module will be deployed on this server (the ESB) */
+	provided on Dev.DevESB
+	
+	/*
+	 * Per default, all services of the module are provided as HTTP/SOAP services
+	 */
+	default-protocols {
+		SOAP {
+			
+		}
+	}
+}
