@@ -1,33 +1,33 @@
 package org.fornax.soa.service.query.namespace
 
+import com.google.inject.Inject
+import org.eclipse.emf.ecore.EObject
+import org.fornax.soa.basedsl.CommonStringExtensions
+import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.serviceDsl.BusinessObject
+import org.fornax.soa.serviceDsl.BusinessObjectRef
+import org.fornax.soa.serviceDsl.DomainNamespace
+import org.fornax.soa.serviceDsl.EnumTypeRef
 import org.fornax.soa.serviceDsl.Enumeration
+import org.fornax.soa.serviceDsl.Exception
+import org.fornax.soa.serviceDsl.ExceptionRef
+import org.fornax.soa.serviceDsl.InternalNamespace
+import org.fornax.soa.serviceDsl.OrganizationNamespace
+import org.fornax.soa.serviceDsl.QueryObject
+import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.serviceDsl.ServiceRef
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
-import org.fornax.soa.serviceDsl.VersionedType
-import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.serviceDsl.VersionedTypeRef
-import org.fornax.soa.serviceDsl.BusinessObjectRef
-import org.fornax.soa.serviceDsl.EnumTypeRef
-import org.fornax.soa.serviceDsl.ExceptionRef
-import org.fornax.soa.service.query.ServiceDslLifecycleQueries
-import com.google.inject.Inject
 import org.fornax.soa.serviceDsl.TypeRef
-import org.fornax.soa.serviceDsl.ServiceRef
-import org.fornax.soa.serviceDsl.DomainNamespace
-import org.fornax.soa.serviceDsl.OrganizationNamespace
-import org.fornax.soa.serviceDsl.InternalNamespace
-import org.fornax.soa.serviceDsl.QueryObject
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.xbase.lib.StringExtensions
-import org.fornax.soa.basedsl.CommonStringExtensions
+import org.fornax.soa.serviceDsl.VersionedType
+import org.fornax.soa.serviceDsl.VersionedTypeRef
 
 /*
  * Namespace lookup functions
  */
 class NamespaceQuery {
 	
-	@Inject extension ServiceDslLifecycleQueries
+	@Inject extension LifecycleQueries
 	@Inject extension CommonStringExtensions
 	
 

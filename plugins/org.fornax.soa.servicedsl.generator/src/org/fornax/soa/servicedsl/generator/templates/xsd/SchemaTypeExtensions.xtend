@@ -1,44 +1,46 @@
 package org.fornax.soa.servicedsl.generator.templates.xsd
 
-import org.fornax.soa.serviceDsl.TypeRef
-import org.fornax.soa.serviceDsl.VersionedTypeRef
 import com.google.inject.Inject
-import org.fornax.soa.service.query.namespace.NamespaceQuery
+import java.util.HashSet
+import java.util.List
+import java.util.Set
+import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
-import org.fornax.soa.service.query.ServiceDslLifecycleQueries
+import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
+import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
+import org.fornax.soa.profiledsl.query.LifecycleQueries
+import org.fornax.soa.profiledsl.query.namespace.NamespaceQueries
+import org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef
+import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
+import org.fornax.soa.profiledsl.sOAProfileDsl.DataType
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.service.VersionedDomainNamespace
+import org.fornax.soa.service.namespace.NamespaceSplitter
 import org.fornax.soa.service.query.VersionQueries
+import org.fornax.soa.service.query.namespace.NamespaceQuery
+import org.fornax.soa.service.query.type.BusinessObjectQueries
+import org.fornax.soa.service.versioning.IExceptionResolver
+import org.fornax.soa.service.versioning.ITypeResolver
+import org.fornax.soa.serviceDsl.Attribute
+import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.BusinessObjectRef
 import org.fornax.soa.serviceDsl.DataTypeRef
-import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.EnumTypeRef
-import org.fornax.soa.serviceDsl.ExceptionRef
-import org.fornax.soa.service.VersionedDomainNamespace
-import org.fornax.soa.serviceDsl.Type
-import org.fornax.soa.service.namespace.NamespaceSplitter
-import org.fornax.soa.serviceDsl.BusinessObject
-import org.fornax.soa.serviceDsl.Attribute
-import org.fornax.soa.service.query.type.BusinessObjectQueries
-import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.serviceDsl.SubNamespace
-import java.util.HashSet
-import java.util.Set
-import java.util.List
-import org.fornax.soa.serviceDsl.Property
-import org.fornax.soa.serviceDsl.VersionedType
-import org.fornax.soa.service.query.ExceptionFinder
-import org.fornax.soa.service.versioning.ITypeResolver
 import org.fornax.soa.serviceDsl.Enumeration
-import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
-import org.fornax.soa.profiledsl.sOAProfileDsl.DataType
-import org.fornax.soa.profiledsl.sOAProfileDsl.EnumRef
-import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
-import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
-import org.fornax.soa.serviceDsl.Reference
-import org.fornax.soa.serviceDsl.QueryObjectRef
+import org.fornax.soa.serviceDsl.Exception
+import org.fornax.soa.serviceDsl.ExceptionRef
+import org.fornax.soa.serviceDsl.Property
 import org.fornax.soa.serviceDsl.QueryObject
-import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
-import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
-import org.fornax.soa.service.versioning.IExceptionResolver
+import org.fornax.soa.serviceDsl.QueryObjectRef
+import org.fornax.soa.serviceDsl.Reference
+import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.serviceDsl.Type
+import org.fornax.soa.serviceDsl.TypeRef
+import org.fornax.soa.serviceDsl.VersionedType
+import org.fornax.soa.serviceDsl.VersionedTypeRef
 
 /* Extension functions Type representations and references in XSDs */
 class SchemaTypeExtensions {
@@ -48,7 +50,7 @@ class SchemaTypeExtensions {
 	@Inject extension NamespaceQuery
 	@Inject extension NamespaceSplitter
 	@Inject extension VersionQualifierExtensions
-	@Inject extension ServiceDslLifecycleQueries
+	@Inject extension LifecycleQueries
 	@Inject extension VersionQueries
 	@Inject extension ITypeResolver
 	@Inject extension BusinessObjectQueries
