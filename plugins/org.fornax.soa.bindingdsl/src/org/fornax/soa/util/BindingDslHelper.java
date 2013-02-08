@@ -10,6 +10,7 @@ import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.util.IAcceptor;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingProtocol;
 import org.fornax.soa.bindingDsl.ModuleBinding;
@@ -37,25 +38,10 @@ public class BindingDslHelper {
 	
 	@Inject
 	IEObjectLookup objLookup;
+	
+	@Inject
+	EnvironmentBindingResolver envBindResolver;
 
-	public static Environment getEnvironment (BindingProtocol prot) {
-		EObject o = prot.eContainer();
-		if (o instanceof Binding)
-			return getEnvironment((Binding)o);
-		return null;
-	}
-
-	public static Environment getEnvironment (Binding bind) {
-		if (bind instanceof ServiceBinding)
-			if (((ServiceBinding)bind).eContainer() instanceof ModuleBinding)
-				return ((ModuleBinding)((ServiceBinding)bind).eContainer()).getEnvironment();
-		if (bind instanceof ModuleBinding)
-			return ((ModuleBinding)bind).getEnvironment();
-		if (bind instanceof OperationBinding)
-			if (((ServiceBinding)bind).eContainer() instanceof ModuleBinding)
-				return ((ModuleBinding)((ServiceBinding)bind).eContainer().eContainer()).getEnvironment();
-		return null;
-	}
 	
 	public static Binding getTopLevelBinding (EObject o) {
 		if (o instanceof ModuleBinding) {
@@ -67,13 +53,6 @@ public class BindingDslHelper {
 		}
 	}
 	
-	public static Environment getTargetEnvironment (EObject o) {
-		Binding bind = getTopLevelBinding(o);
-		if (bind instanceof ModuleBinding)
-			return ((ModuleBinding) bind).getEnvironment();
-		else
-			return null;
-	}
 	
 	public static SubNamespace getSubNamespace (BindingProtocol prot) {
 		EObject o = prot.eContainer();

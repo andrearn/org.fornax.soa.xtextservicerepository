@@ -70,15 +70,15 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				try {
 					val specBinding = binding.getMostSpecificBinding (svc);
 					for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
-						if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (binding.environment)) {
+						if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (binding.resolveEnvironment)) {
 							val namespace = svc.findSubdomain();
 									
-							wsdlGenerator.toWSDL (svc, namespace, namespace.minStateByEnvironment (binding.environment, profile.lifecycle), profile, binding.getRegistryBaseUrl());
+							wsdlGenerator.toWSDL (svc, namespace, namespace.minStateByEnvironment (binding.resolveEnvironment, profile.lifecycle), profile, binding.getRegistryBaseUrl());
 							concreteWsdlGenerator.toWSDL(binding, svc, soapProt, profile);
 									
 							if ( ! noDependencies) {
-								val verNamespaces = svc.importedVersionedNS (namespace.minStateByEnvironment (binding.environment, profile.lifecycle));
-								verNamespaces.forEach (n | xsdGenerator.toXSD(n, namespace.minStateByEnvironment (binding.environment, profile.lifecycle), binding, profile));
+								val verNamespaces = svc.importedVersionedNS (namespace.minStateByEnvironment (binding.resolveEnvironment, profile.lifecycle));
+								verNamespaces.forEach (n | xsdGenerator.toXSD(n, namespace.minStateByEnvironment (binding.resolveEnvironment, profile.lifecycle), binding, profile));
 										
 								val header = svc.findBestMatchingHeader (profile);
 								if (forceRelativePaths)

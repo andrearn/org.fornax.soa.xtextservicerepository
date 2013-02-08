@@ -27,6 +27,7 @@ import org.fornax.soa.moduledsl.moduleDsl.ModuleModel
 import java.util.logging.Logger
 import java.util.logging.Level
 import org.fornax.soa.moduledsl.generator.VersionedModuleSelector
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 
 /*
  * Generate technical service and datamodel contract artifacts like WSDLs, XSDs or IDLs for ModuleBindings
@@ -86,6 +87,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 	@Inject IEObjectLookup eObjectLookup
 	
 	@Inject Logger logger
+	@Inject extension EnvironmentBindingResolver		
 	
 	override void doGenerate (Resource resource, IFileSystemAccess fsa) {
 		var contentRoot = resource.contents.head;
@@ -114,7 +116,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 					if (binding instanceof ModuleBinding) {
 						val modBind = binding as ModuleBinding;
 						if (moduleBindingNames.exists (modBindName | Pattern::matches (modBindName, modBind.name)) 
-							&& Pattern::matches (targetEnvironmentName, modBind.environment.name)
+							&& Pattern::matches (targetEnvironmentName, modBind.resolveEnvironment.name)
 						) {
 							compile (modBind, profile);
 						}

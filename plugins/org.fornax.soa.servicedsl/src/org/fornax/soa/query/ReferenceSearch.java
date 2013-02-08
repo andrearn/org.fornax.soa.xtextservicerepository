@@ -14,11 +14,17 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
+/**
+ * @deprecated
+ */
 public class ReferenceSearch {
 	
 	@Inject
 	private IResourceDescriptions resourceDescriptions;
 
+	/**
+	 * @deprecated
+	 */
 	public List<IReferenceDescription> findReferences (EObject o) {
 		final URI eObjectTargetURI = EcoreUtil.getURI(o);
 		List<IReferenceDescription> searchResult = new ArrayList<IReferenceDescription>();

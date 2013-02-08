@@ -17,7 +17,7 @@ import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.util.BaseDslEqualityHelper;
 import org.fornax.soa.basedsl.util.TreeNode;
-import org.fornax.soa.query.BusinessObjectQuery;
+import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.ServiceModel;
@@ -37,7 +37,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	
 	@Inject
 	private
-	BusinessObjectQuery boQuery;
+	BusinessObjectQueryInternal boQuery;
 	
 	@Inject
 	private
@@ -57,7 +57,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	
 	@Test
 	public void testGetAllInheritedProperties () {
-		List<Property> props = BusinessObjectQuery.getAllInheritedProperties (bo1);
+		List<Property> props = BusinessObjectQueryInternal.getAllInheritedProperties (bo1);
 		assertFalse (props.contains(attrBo1));
 		assertTrue (props.contains(attrBo3));
 		assertTrue (props.contains(attrBo4));
@@ -65,7 +65,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	
 	@Test
 	public void testGetAllVisibleProperties () {
-		List<Property> props = BusinessObjectQuery.getAllVisibleProperties (bo1);
+		List<Property> props = BusinessObjectQueryInternal.getAllVisibleProperties (bo1);
 		assertTrue (props.contains(attrBo1));
 		assertTrue (props.contains(attrBo3));
 		assertTrue (props.contains(attrBo4));
@@ -74,7 +74,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	@Test
 	public void testGetAllSuperTypes () {
 		List<BusinessObject> superTypes = Lists.newArrayList();
-		List<BusinessObject> allSuperTypes = BusinessObjectQuery.getAllSuperTypes (bo1, superTypes);
+		List<BusinessObject> allSuperTypes = BusinessObjectQueryInternal.getAllSuperTypes (bo1, superTypes);
 		assertTrue (superTypes.contains (bo3));
 		assertTrue (superTypes.contains (bo4));
 		assertFalse(superTypes.contains (bo1));
@@ -114,11 +114,11 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 		return nameProvider;
 	}
 
-	public void setBoQuery (BusinessObjectQuery boQuery) {
+	public void setBoQuery (BusinessObjectQueryInternal boQuery) {
 		this.boQuery = boQuery;
 	}
 
-	public BusinessObjectQuery getBoQuery() {
+	public BusinessObjectQueryInternal getBoQuery() {
 		return boQuery;
 	}
 

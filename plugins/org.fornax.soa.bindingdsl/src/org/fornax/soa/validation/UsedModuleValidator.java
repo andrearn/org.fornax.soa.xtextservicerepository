@@ -89,7 +89,7 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 					for (EnvironmentType envType : envTypes) {
 						boolean hasBinding = false;
 						for (ModuleBinding bind : usedModuleBindings) {
-							if (bind.getEnvironment().getType().equals(envType))
+							if (envBindResolver.resolveEnvironment(bind).getType().equals(envType))
 								hasBinding = true;
 						}
 						if (!hasBinding)
@@ -99,7 +99,7 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 					for (Environment env : envs) {
 						boolean hasBinding = false;
 						for (ModuleBinding bind : usedModuleBindings) {
-							if (bind.getEnvironment().equals(env))
+							if (envBindResolver.resolveEnvironment(bind).equals(env))
 								hasBinding = true;
 						}
 						if (!hasBinding)

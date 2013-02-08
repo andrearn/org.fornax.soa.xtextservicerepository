@@ -10,7 +10,7 @@ import org.fornax.soa.serviceDsl.VersionedTypeRef
 import org.fornax.soa.serviceDsl.BusinessObjectRef
 import org.fornax.soa.serviceDsl.EnumTypeRef
 import org.fornax.soa.serviceDsl.ExceptionRef
-import org.fornax.soa.service.query.LifecycleQueries
+import org.fornax.soa.service.query.ServiceDslLifecycleQueries
 import com.google.inject.Inject
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.ServiceRef
@@ -27,7 +27,7 @@ import org.fornax.soa.basedsl.CommonStringExtensions
  */
 class NamespaceQuery {
 	
-	@Inject extension LifecycleQueries
+	@Inject extension ServiceDslLifecycleQueries
 	@Inject extension CommonStringExtensions
 	
 

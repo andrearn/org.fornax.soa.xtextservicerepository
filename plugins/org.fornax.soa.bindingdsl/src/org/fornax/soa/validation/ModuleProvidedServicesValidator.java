@@ -18,6 +18,7 @@ import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.binding.query.BindingLookup;
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.environment.query.EnvironmentLookup;
 import org.fornax.soa.environmentDsl.Environment;
@@ -55,6 +56,7 @@ public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativ
 	
 	@Inject
 	BindingLookup bindingLookup;
+	@Inject EnvironmentBindingResolver envBindResolver;		
 	
 	@Override
 	protected List<EPackage> getEPackages() {
@@ -72,7 +74,6 @@ public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativ
 	@Check (CheckType.FAST)
 	public void checkModuleHasBindingsForState (Module module) {
 		if (!module.isClient() && !module.isExternal()) {
-//			final Set<ModuleBinding> moduleBindings = bindingDslHelper.getBindingsForModule(module);
 			final Set<ModuleBinding> moduleBindings = bindingLookup.findAllBindingsToCompatibleModule (module);
 			if (moduleBindings.isEmpty()) {
 				warning("The module " + module.getName() + " has no binding. You should define a binding to use it from another module", ModuleDslPackage.Literals.MODULE__NAME);
@@ -82,7 +83,7 @@ public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativ
 				for (EnvironmentType envType : envTypes) {
 					boolean hasBinding = false;
 					for (ModuleBinding bind : moduleBindings) {
-						if (bind.getEnvironment().getType().equals(envType))
+						if (envBindResolver.resolveEnvironment(bind).getType().equals(envType))
 							hasBinding = true;
 					}
 					if (!hasBinding)
@@ -92,7 +93,7 @@ public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativ
 				for (Environment env : envs) {
 					boolean hasBinding = false;
 					for (ModuleBinding bind : moduleBindings) {
-						if (bind.getEnvironment().equals(env))
+						if (envBindResolver.resolveEnvironment(bind).equals(env))
 							hasBinding = true;
 					}
 					if (!hasBinding)

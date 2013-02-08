@@ -1,4 +1,4 @@
-package org.fornax.soa.environmentdsl.generator;
+package org.fornax.soa.binding.query;
 
 public class ServerNotConnectableException extends RuntimeException {
 

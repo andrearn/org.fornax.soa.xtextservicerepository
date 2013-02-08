@@ -5,7 +5,7 @@ import org.fornax.soa.serviceDsl.VersionedTypeRef
 import com.google.inject.Inject
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
-import org.fornax.soa.service.query.LifecycleQueries
+import org.fornax.soa.service.query.ServiceDslLifecycleQueries
 import org.fornax.soa.service.query.VersionQueries
 import org.fornax.soa.serviceDsl.BusinessObjectRef
 import org.fornax.soa.serviceDsl.DataTypeRef
@@ -48,7 +48,7 @@ class SchemaTypeExtensions {
 	@Inject extension NamespaceQuery
 	@Inject extension NamespaceSplitter
 	@Inject extension VersionQualifierExtensions
-	@Inject extension LifecycleQueries
+	@Inject extension ServiceDslLifecycleQueries
 	@Inject extension VersionQueries
 	@Inject extension ITypeResolver
 	@Inject extension BusinessObjectQueries

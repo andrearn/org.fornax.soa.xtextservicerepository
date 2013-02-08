@@ -17,6 +17,7 @@ import java.util.Set
 import org.fornax.soa.moduledsl.query.ModuleServiceLookup
 import org.fornax.soa.moduledsl.query.ModuleServiceResolver
 import org.fornax.soa.binding.query.services.BindingServiceResolver
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 
 /**
  * Resolves Bindings to explicit descriptions describing which Binding applies to which service an module
@@ -27,6 +28,8 @@ class BindingResolver {
 	@Inject ModuleServiceResolver modServiceResolver
 	@Inject BindingLookup bindingLookup
 	@Inject extension BindingServiceResolver
+	
+	@Inject extension EnvironmentBindingResolver
 	
 	/**
 	 * Resolve Bindings of services provided by a module
@@ -88,17 +91,17 @@ class BindingResolver {
 	}
 	
 	
-	def getPublisher (BindingProtocol prot) {
-		switch (prot) {
-			SOAP:		(prot as SOAP).publisher
-			EJB:		(prot as EJB).publisher
-			JMS:		(prot as JMS).publisher
-			REST:		(prot as REST).publisher
-			SCA:		(prot as SCA).publisher
-			default:	null
-		}
-		
-	}
+//	def getPublisher (BindingProtocol prot) {
+//		switch (prot) {
+//			SOAP:		(prot as SOAP).publisher
+//			EJB:		(prot as EJB).publisher
+//			JMS:		(prot as JMS).publisher
+//			REST:		(prot as REST).publisher
+//			SCA:		(prot as SCA).publisher
+//			default:	null
+//		}
+//		
+//	}
 //	def getProvider (BindingProtocol prot) {
 //		switch (prot) {
 //			SOAP:		(prot as SOAP).provider

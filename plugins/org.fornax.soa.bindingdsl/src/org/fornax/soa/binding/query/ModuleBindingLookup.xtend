@@ -25,9 +25,11 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import java.util.Set
 import org.fornax.soa.profiledsl.scoping.versions.IVersionFilterProvider
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 
 class ModuleBindingLookup {
 	
+	@Inject extension EnvironmentBindingResolver		
 	@Inject
 	private IQualifiedNameProvider nameProvider;
 	@Inject
@@ -76,7 +78,7 @@ class ModuleBindingLookup {
 			.map (desc | EcoreUtil2::resolve (desc.EObjectOrProxy, targetEnvironment.eResource.resourceSet))
 		 	.filter (typeof (ModuleBinding))
 		 	.filter (bind | providingModuleName.equals (nameProvider.getFullyQualifiedName (bind.module).toString) 
-		 		&& bind.environment.equals (targetEnvironment)
+		 		&& bind.resolveEnvironment.equals (targetEnvironment)
 		 	)
 		return candBindings.toSet
 	}

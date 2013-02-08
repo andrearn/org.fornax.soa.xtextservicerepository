@@ -10,7 +10,7 @@ import org.fornax.soa.basedsl.version.VersionQualifierExtensions;
 import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates;
 import org.fornax.soa.service.query.ExceptionFinder;
 import org.fornax.soa.service.query.HeaderFinder;
-import org.fornax.soa.service.query.LifecycleQueries;
+import org.fornax.soa.service.query.ServiceDslLifecycleQueries;
 import org.fornax.soa.service.query.ServiceQueries;
 import org.fornax.soa.service.query.VersionQueries;
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries;
@@ -75,8 +75,8 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 		return HeaderFinder.class;
 	}
 	
-	public Class<? extends LifecycleQueries> bindLifecycleQueries () {
-		return LifecycleQueries.class;
+	public Class<? extends ServiceDslLifecycleQueries> bindLifecycleQueries () {
+		return ServiceDslLifecycleQueries.class;
 	}
 	
 	public Class<? extends ServiceQueries> bindServiceFinder () {

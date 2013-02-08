@@ -1,4 +1,4 @@
-package org.fornax.soa.query;
+package org.fornax.soa.service.query.type;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -31,6 +31,7 @@ import org.fornax.soa.basedsl.util.TreeNode;
 import org.fornax.soa.serviceDsl.ApprovalDecision;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.Property;
+import org.fornax.soa.serviceDsl.QueryObject;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.SubNamespace;
@@ -44,7 +45,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
-public class BusinessObjectQuery {
+class QueryObjectQueryInternal {
 	
 	@Inject
 	IQualifiedNameProvider nameProvider;
@@ -85,6 +86,22 @@ public class BusinessObjectQuery {
 			}
 		}
 		return bo;
+	}
+	
+	/**
+	 * Get all super types of the business object in upward order
+	 * @param bo The business object
+	 * @param vistitedBOs	already visited business objects
+	 * @return
+	 */
+	public static List<QueryObject> getAllSuperTypes (QueryObject bo, List<QueryObject> vistitedBOs) {
+		if (vistitedBOs == null)
+			vistitedBOs = Lists.newArrayList();
+		if (bo.getSuperQueryObject() != null && bo.getSuperQueryObject().getType() != null) {
+			vistitedBOs.add (bo.getSuperQueryObject().getType());
+			getAllSuperTypes (bo.getSuperQueryObject().getType(), vistitedBOs);
+		}
+		return vistitedBOs;
 	}
 
 	/**

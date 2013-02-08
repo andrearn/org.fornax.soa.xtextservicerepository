@@ -16,6 +16,7 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateE
 import org.fornax.soa.bindingdsl.generator.templates.soap.SoapBindingResolver
 import org.fornax.soa.bindingDsl.SCA
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 
 
 /* 
@@ -31,6 +32,7 @@ class SCAExportTemplates {
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension SCAExportExtension
 	@Inject extension SoapBindingResolver
+	@Inject extension EnvironmentBindingResolver		
 
 
 	@Inject IFileSystemAccess fsa
@@ -42,7 +44,7 @@ class SCAExportTemplates {
 	def dispatch void toSCAModuleExport (ModuleBinding binding, SOAProfile profile) {
 		if (binding.module.module.assemblyType == AssemblyType::SCA_EAR) {
 			for (provSvc : binding.module.module.providedServices) {
-				val svc = provSvc.latestServiceInEnvironment (binding.environment);
+				val svc = provSvc.latestServiceInEnvironment (binding.resolveEnvironment);
 				if (svc != null) {
 					binding.getMostSpecificBinding (svc).protocol.forEach (p|p.toServiceExport (binding, svc, profile));
 				}

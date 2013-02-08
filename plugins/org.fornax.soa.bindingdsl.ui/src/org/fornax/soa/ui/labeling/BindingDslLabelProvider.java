@@ -6,6 +6,7 @@ package org.fornax.soa.ui.labeling;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.basedsl.ui.labeling.SOABaseDslLabelHelper;
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
 import org.fornax.soa.bindingDsl.BindingProtocol;
 import org.fornax.soa.bindingDsl.EJB;
 import org.fornax.soa.bindingDsl.ModuleBinding;
@@ -27,6 +28,8 @@ import com.google.inject.Inject;
  */
 public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 
+	@Inject EnvironmentBindingResolver envBindResolver;
+
 	@Inject
 	public BindingDslLabelProvider(AdapterFactoryLabelProvider delegate) {
 		super(delegate);
@@ -41,7 +44,7 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text (ModuleBinding m) {
-		return m.getModule().getModule().getName() + " -> " + m.getEnvironment().getName();
+		return m.getModule().getModule().getName() + " -> " + envBindResolver.resolveEnvironment(m).getName();
 	}
 	
 	String text (org.fornax.soa.sLADsl.SLA ele) {
@@ -49,17 +52,8 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text (SOAP ele) {
-		Server server = null;
+		Server server = envBindResolver.resolveServer(ele);
 		SubNamespace ns = BindingDslHelper.getSubNamespace(ele);
-		if (server == null && ele.getPublisher() != null)
-			server = ele.getPublisher().getPubServer();
-		if (server == null) {
-			Environment env = BindingDslHelper.getEnvironment(ele);
-			if (ns instanceof DomainNamespace)
-				server = env.getDefaultESB();
-			else 
-				server = env.getDefaultAppServer();
-		}
 		if (server != null)
 			return "SOAP -> "+server.getName();
 		else
@@ -79,15 +73,11 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text (EJB ele) {
-		Server server = null;
+		Server server = envBindResolver.resolveServer(ele);
 		StringBuffer label = new StringBuffer("EJB");
 		SubNamespace ns = BindingDslHelper.getSubNamespace(ele);
-		if (ele.getProvider() != null)
-			server = ele.getProvider().getProvServer();
-		if (server == null && ele.getPublisher() != null)
-			server = ele.getPublisher().getPubServer();
 		if (server == null) {
-			Environment env = BindingDslHelper.getEnvironment(ele);
+			Environment env = envBindResolver.resolveEnvironment(ele);
 			if (ns instanceof DomainNamespace)
 				server = env.getDefaultESB();
 			else 

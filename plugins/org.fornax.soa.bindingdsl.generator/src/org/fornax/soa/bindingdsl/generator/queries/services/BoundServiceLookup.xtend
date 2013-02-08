@@ -19,6 +19,7 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.namespace.NamespaceSplitter
 import org.fornax.soa.service.versioning.IServiceResolver
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 
 /*
  * Finds services bound into an environment, i.e. referenced from a binding
@@ -31,6 +32,7 @@ class BoundServiceLookup {
 	@Inject extension CommonStringExtensions
 	@Inject extension BindingServiceResolver
 	@Inject extension IServiceResolver
+	@Inject extension EnvironmentBindingResolver		
 	
 	/*
 	 * Find published services (with public service endpoints) bound with the given BindingProtocol
@@ -44,7 +46,7 @@ class BoundServiceLookup {
 	 * Find published services (with public service endpoints) bound with the given BindingProtocol
 	 */
 	def dispatch Iterable<Service> toServicesWithPublisherProtocol (ModuleBinding bind, Class bindingProtocolClass) {
-		bind.module.module.providedServices.map (ref|ref.service as Service).filter (s| ! bind.getMostSpecificBinding (s).publisherProtocols
+		bind.module.module.providedServices.map (ref|ref.service as Service).filter (s| ! bind.getMostSpecificBinding (s).endpointProtocols
 			.map (p|bindingProtocolClass.isInstance (p)).empty
 		)
 	}
@@ -54,7 +56,7 @@ class BoundServiceLookup {
 	}
 	
 	def dispatch Iterable<Service> toServicesWithProviderProtocol (ModuleBinding bind, Class bindingProtocolClass) {
-		bind.module.module.providedServices.map (ref|ref.service as Service).filter (s| ! bind.getMostSpecificBinding (s).publisherProtocols
+		bind.module.module.providedServices.map (ref|ref.service as Service).filter (s| ! bind.getMostSpecificBinding (s).endpointProtocols
 			.map (p|bindingProtocolClass.isInstance (p)).empty
 		)
 	}
@@ -67,7 +69,7 @@ class BoundServiceLookup {
 		val Iterable<SubNamespace> provNamespaces = binding.module.module.providedNamespaces.map (n | n.namespace);
 		val Iterable<ServiceRef> nsServiceExclRefs = binding.module.module.providedNamespaces.map (n | n.excludedServices).flatten;
 		val exclServices = nsServiceExclRefs.map (r | r.service).toList;
-		val environment = binding.environment;
+		val environment = binding.resolveEnvironment;
 		val minState = environment.getMinLifecycleState (binding, profile.lifecycle);	
 		var Set<Service> services = newHashSet();	
 

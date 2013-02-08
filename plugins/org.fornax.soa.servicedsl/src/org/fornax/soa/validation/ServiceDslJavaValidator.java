@@ -16,7 +16,7 @@ import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.profiledsl.sOAProfileDsl.ServiceBaseCategory;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
-import org.fornax.soa.query.BusinessObjectQuery;
+import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
 import org.fornax.soa.service.validation.version.BusinessObjectVersionValidator;
 import org.fornax.soa.service.validation.version.EnumerationVersionValidator;
 import org.fornax.soa.service.validation.version.ExceptionVersionValidator;
@@ -31,6 +31,7 @@ import org.fornax.soa.serviceDsl.GovernanceApproval;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Parameter;
 import org.fornax.soa.serviceDsl.Property;
+import org.fornax.soa.serviceDsl.QueryObject;
 import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
@@ -62,7 +63,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	IQualifiedNameProvider nameProvider;
 	
 	@Inject
-	private	BusinessObjectQuery boQuery;
+	private	BusinessObjectQueryInternal boQuery;
 	
 	@Inject
 	IPredicateSearch predicateSearch;
@@ -79,7 +80,39 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (bo.getSuperBusinessObject() != null
 					&& bo.getSuperBusinessObject().getType() != null) {
 				final String propName = prop.getName();
-				for (BusinessObject superType : BusinessObjectQuery
+				for (BusinessObject superType : BusinessObjectQueryInternal
+						.getAllSuperTypes(bo, null)) {
+					
+					Iterable<Property> props = Iterables.filter (
+							superType.getProperties(),
+							new Predicate<Property>() {
+
+								public boolean apply (Property curProp) {
+									return curProp.getName().equals(propName);
+								}
+
+							});
+					
+					List<Property> opList = Lists.newArrayList(props);
+					if (opList.size() > 0) {
+						StringBuilder errMsg = new StringBuilder("Property ");
+						errMsg.append (propName)
+								.append (" overrides an inherited property from ")
+								.append (superType.getName())
+								.append (" version ")
+								.append (bo.getVersion().getVersion());
+						error (errMsg.toString(),
+								ServiceDslPackage.Literals.PROPERTY__NAME);
+					}
+				}
+			}
+		}
+		if (prop.eContainer() instanceof QueryObject) {
+			QueryObject bo = (QueryObject) prop.eContainer();
+			if (bo.getSuperQueryObject() != null
+					&& bo.getSuperQueryObject().getType() != null) {
+				final String propName = prop.getName();
+				for (QueryObject superType : BusinessObjectQueryInternal
 						.getAllSuperTypes(bo, null)) {
 					
 					Iterable<Property> props = Iterables.filter (
@@ -280,7 +313,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (b.eContainer() instanceof Reference) {
 			List<Property> props = new ArrayList<Property>();
 			props.addAll(b.getType().getProperties());
-			props.addAll(BusinessObjectQuery.getAllInheritedProperties(b
+			props.addAll(BusinessObjectQueryInternal.getAllInheritedProperties(b
 					.getType()));
 
 			Iterable<Property> keys = Iterables.filter(props,
@@ -305,7 +338,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 				&& b.getType() instanceof BusinessObject) {
 			List<Property> props = new ArrayList<Property>();
 			props.addAll(((BusinessObject) b.getType()).getProperties());
-			props.addAll(BusinessObjectQuery
+			props.addAll(BusinessObjectQueryInternal
 					.getAllInheritedProperties((BusinessObject) b.getType()));
 
 			Iterable<Property> keys = Iterables.filter(props,
@@ -615,11 +648,11 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		return propName.toString();
 	}
 
-	public void setBoQuery(BusinessObjectQuery boQuery) {
+	public void setBoQuery(BusinessObjectQueryInternal boQuery) {
 		this.boQuery = boQuery;
 	}
 
-	public BusinessObjectQuery getBoQuery() {
+	public BusinessObjectQueryInternal getBoQuery() {
 		return boQuery;
 	}
 

@@ -1,4 +1,4 @@
-package org.fornax.soa.query;
+package org.fornax.soa.service.query;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;

@@ -3,24 +3,24 @@
 <plugin>
 	<extension point="org.eclipse.ui.newWizards">
 		<category id="org.fornax.soa.servicerepo.Examples" 
-				  name="%XSRExamples_category" 
+				  name="%category.name" 
 				  parentCategory="org.eclipse.ui.Examples" />
 	</extension>
 
 	<!-- ========= org.fornax.soa.servicerepo.simple.example ========= -->
 	<extension point="org.eclipse.ui.newWizards">
 		<wizard	id="org.fornax.soa.servicerepo.NewSimpleExampleWizard" 
-			name="%SimpleExample_name" 
+			name="%wizard.name" 
 			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
 			category="org.eclipse.ui.Examples/org.fornax.soa.servicerepo.Examples"
 			icon="icons/genproject.gif" 
 			project="true">
-			<description>%SimpleExample_description</description>
+			<description>%wizard.description</description>
 		</wizard>
 	</extension>
 	<extension point="org.eclipse.emf.common.ui.examples">
 	   <example wizardID="org.fornax.soa.servicerepo.NewSimpleExampleWizard" pageImage="icons/genproject.gif">
-		 <projectDescriptor name="org.fornax.soa.servicerepo.simple.example" contentURI="contents/org.fornax.soa.servicerepo.simple.example.zip" description="Services, BusinessObject, Modules, Binding and Profile etc."/>
+		 <projectDescriptor name="org.fornax.soa.servicerepo.simple.example" contentURI="contents/org.fornax.soa.servicerepo.simple.example.zip" description="%projectDescriptor.description"/>
 	  </example>
 	</extension>   
    

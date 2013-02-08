@@ -32,7 +32,7 @@ import org.fornax.soa.basedsl.ui.hierarchy.IEObjDescrHierarchyLifeCycleListener;
 import org.fornax.soa.basedsl.ui.hierarchy.IEObjectDescrHierarchyChangedListener;
 import org.fornax.soa.basedsl.ui.hierarchy.IEObjectDescriptionHierarchyLifeCycle;
 import org.fornax.soa.basedsl.util.TreeNode;
-import org.fornax.soa.query.BusinessObjectQuery;
+import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
 import org.fornax.soa.service.ui.hierarchy.TypeHierarchyViewPart;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
@@ -281,7 +281,7 @@ public class EObjectDescriptionHierarchyLifeCycle implements IEObjectDescrHierar
 			if (fIsSuperTypesOnly) {
 				return null; //type.newSupertypeHierarchy(pm);
 			} else {
-				BusinessObjectQuery boQuery = injector.getInstance(BusinessObjectQuery.class);
+				BusinessObjectQueryInternal boQuery = injector.getInstance(BusinessObjectQueryInternal.class);
 				BusinessObject rootBO = boQuery.getRootBusinessObject(queryBO);
 				List<TreeNode<IEObjectDescription>> allSubTypes = boQuery.getAllSubTypes(rootBO, rootBO.eResource().getResourceSet());
 				TreeNode<IEObjectDescription> rootBODesc = new TreeNode<IEObjectDescription>(descBuilder.buildDescription(rootBO));

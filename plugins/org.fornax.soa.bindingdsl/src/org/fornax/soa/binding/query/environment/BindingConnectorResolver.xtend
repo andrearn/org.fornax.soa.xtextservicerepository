@@ -1,9 +1,8 @@
-package org.fornax.soa.bindingdsl.generator.templates
+package org.fornax.soa.binding.query.environment
 
 import com.google.inject.Inject
 import java.util.logging.Logger
 import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.binding.query.BindingResolver
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.EJB
 import org.fornax.soa.bindingDsl.ModuleBinding
@@ -17,12 +16,13 @@ import org.fornax.soa.environmentDsl.ESB
 import org.fornax.soa.environmentDsl.HTTP
 import org.fornax.soa.environmentDsl.IIOP
 import org.fornax.soa.environmentDsl.JMS
+import org.fornax.soa.environmentDsl.ProcessServer
 import org.fornax.soa.environmentDsl.REST
 import org.fornax.soa.environmentDsl.RMI
 import org.fornax.soa.environmentDsl.SOAPHTTP
 import org.fornax.soa.environmentDsl.Server
 import org.fornax.soa.environmentDsl.WebServer
-import org.fornax.soa.environmentdsl.generator.EndpointResolver
+import org.fornax.soa.binding.query.ServerNotConnectableException
 
 
 /*
@@ -30,8 +30,7 @@ import org.fornax.soa.environmentdsl.generator.EndpointResolver
  */
 class BindingConnectorResolver {
 	
-	@Inject extension BindingResolver
-	@Inject extension EndpointResolver
+	@Inject extension EnvironmentBindingResolver;
 	@Inject Logger log
 	
 	/*
@@ -42,15 +41,13 @@ class BindingConnectorResolver {
 	}
 	
 	def dispatch Connector resolveConnector (Server s, ModuleBinding bind, BindingProtocol prot) {
-		val serverConnectors = if (!bind.provider?.provServer?.connectors.nullOrEmpty) 
-				bind.provider?.provServer.connectors
+		val serverConnectors = if (!bind.resolveServer(prot)?.connectors.nullOrEmpty) 
+				bind.resolveServer(prot)?.connectors
 			else 
 				s.connectors 
-		val chosenConnectors = bind.provider?.connectors
+		val chosenConnectors = prot?.endpointConnector?.connectors
 		if (!chosenConnectors.nullOrEmpty && !serverConnectors.nullOrEmpty) {
 			selectBestMatchingConnector (prot, chosenConnectors, serverConnectors)
-		} else if (bind.provider != null && !serverConnectors.nullOrEmpty){
-			bind.provider.provServer.findConnectorsByProtocol(prot, serverConnectors)
 		} else {
 			s.findConnectorsByProtocol(prot, serverConnectors)
 		}
@@ -58,16 +55,13 @@ class BindingConnectorResolver {
 	}
 	
 	def dispatch Connector resolveConnector (Server s, ServiceBinding bind, BindingProtocol prot) {
-		val publisher = prot.publisher
-		val serverConnectors = if (!publisher?.pubServer?.connectors.nullOrEmpty) 
-				publisher?.pubServer?.connectors
+		val serverConnectors = if (!bind.resolveServer(prot)?.connectors.nullOrEmpty) 
+				bind.resolveServer(prot)?.connectors
 			else 
 				s.connectors 
-		val chosenConnectors = publisher?.connectors
+		val chosenConnectors = prot?.endpointConnector?.connectors
 		if (!chosenConnectors.nullOrEmpty && !serverConnectors.nullOrEmpty) {
 			selectBestMatchingConnector (prot, chosenConnectors, serverConnectors)
-		} else if (publisher != null && !serverConnectors.nullOrEmpty){
-			publisher.pubServer.findConnectorsByProtocol(prot, serverConnectors)
 		} else {
 			s.findConnectorsByProtocol(prot, serverConnectors)
 		}
@@ -121,6 +115,22 @@ class BindingConnectorResolver {
 			REST:		con instanceof org.fornax.soa.environmentDsl.REST
 			HTTP:		con instanceof org.fornax.soa.environmentDsl.HTTP
 			default: 	false
+		}
+	}
+	
+	def getConnectors (Server server) {
+		if (server == null)
+			throw new IllegalArgumentException("Server may not be null");
+		switch (server) {
+			AppServer:		(server as AppServer).connectors
+			Broker:			(server as Broker).connectors
+			ESB:			(server as ESB).connectors
+			ProcessServer:	(server as ProcessServer).connectors
+			WebServer:		(server as WebServer).connectors
+			default:		{
+				log.severe ("Server " + server.name + " of type " + server.eClass.name + " dos not support connectors.")
+				throw new ServerNotConnectableException()
+			}
 		}
 	}
 }

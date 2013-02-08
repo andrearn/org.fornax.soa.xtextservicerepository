@@ -6,7 +6,6 @@ package org.fornax.soa.scoping;
 import java.util.List;
 
 import org.apache.log4j.Logger;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
@@ -32,21 +31,16 @@ import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilteringScope;
 import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.basedsl.scoping.versions.VersioningContainerBasedScope;
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingDslPackage;
-import org.fornax.soa.bindingDsl.ModuleBinding;
+import org.fornax.soa.bindingDsl.ConnectorQualifier;
 import org.fornax.soa.bindingDsl.ModuleRef;
-import org.fornax.soa.bindingDsl.Provider;
-import org.fornax.soa.bindingDsl.Publisher;
 import org.fornax.soa.bindingDsl.ServiceRef;
 import org.fornax.soa.environmentDsl.Connector;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.environmentDsl.Server;
-import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.EnvironmentBasedLatestMajorVersionFilter;
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
-import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
-import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.util.BindingDslHelper;
 import org.fornax.soa.util.ServerAccessUtil;
@@ -70,26 +64,16 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 	
 	@Inject Injector injector;
 	@Inject IQualifiedNameProvider nameProvider;
+	@Inject EnvironmentBindingResolver envBindResolver;
 
 	@Override
 	protected IScope getLocalElementsScope(IScope parent, final EObject context,
 			final EReference reference) {
 		IScope result = super.getLocalElementsScope(parent, context, reference);
-		if (context instanceof Provider && reference == BindingDslPackage.Literals.PROVIDER__CONNECTORS) {
-			final Provider prov = (Provider) context;
-			Server provServer = prov.getProvServer();
+		if (context instanceof ConnectorQualifier && reference == BindingDslPackage.Literals.CONNECTOR_QUALIFIER__CONNECTORS) {
+			final ConnectorQualifier prov = (ConnectorQualifier) context;
+			Server provServer = envBindResolver.resolveServer(context);
 			return getServerConnectorScope (parent, context, reference, provServer);
-		}
-		if (context instanceof Publisher && reference == BindingDslPackage.Literals.PUBLISHER__CONNECTORS) {
-			final Publisher prov = (Publisher) context;
-			Server pubServer = prov.getPubServer();
-			return getServerConnectorScope (parent, context, reference, pubServer);
-		}
-		if (context instanceof Provider && reference == BindingDslPackage.Literals.PROVIDER__PROV_SERVER) {
-			return getServerScope (parent, context, reference, BindingDslHelper.getTargetEnvironment(context));
-		}
-		if (context instanceof Publisher && reference == BindingDslPackage.Literals.PUBLISHER__PUB_SERVER) {
-			return getServerScope (parent, context, reference, BindingDslHelper.getTargetEnvironment(context));
 		}
 		AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = getVersionFilterFromContext (context, reference);
 		return new VersionFilteringScope (result, versionFilter, isIgnoreCase());
@@ -97,26 +81,9 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 	
 	@Override
 	protected IScope getResourceScope(final IScope parent, final EObject context, final EReference reference) {
-		// TODO: SZ - context may not be a proxy, may it?
 		if (context.eResource() == null)
 			return parent;
 		ISelectable allDescriptions = getAllDescriptions (context.eResource());
-		if (context instanceof Provider && reference.getName().equals("connectors")) {
-			final Provider prov = (Provider) context;
-			Server provServer = prov.getProvServer();
-			return getServerConnectorScope (parent, context, reference, provServer);
-		}
-		if (context instanceof Publisher && reference.getName().equals("connectors")) {
-			final Publisher prov = (Publisher) context;
-			Server pubServer = prov.getPubServer();
-			return getServerConnectorScope (parent, context, reference, pubServer);
-		}
-		if (context instanceof Provider && reference == BindingDslPackage.Literals.PROVIDER__PROV_SERVER) {
-			return getServerScope (parent, context, reference, BindingDslHelper.getTargetEnvironment(context));
-		}
-		if (context instanceof Publisher && reference == BindingDslPackage.Literals.PUBLISHER__PUB_SERVER) {
-			return getServerScope (parent, context, reference, BindingDslHelper.getTargetEnvironment(context));
-		}
 		return VersioningContainerBasedScope.createScope (parent, allDescriptions, getVersionFilterFromContext (context, reference), reference.getEReferenceType(), isIgnoreCase(reference));
 	}
 
@@ -148,7 +115,7 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		if (v != null) {
 			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
 			if (v instanceof MajorVersionRef && owner.eContainer () instanceof Binding) {
-				Environment environment = BindingDslHelper.getEnvironment ((Binding) owner.eContainer ());
+				Environment environment = envBindResolver.resolveEnvironment((Binding) owner.eContainer ());
 				if (environment != null) {
 					EnvironmentBasedLatestMajorVersionFilter<IEObjectDescription> versionFilter = new EnvironmentBasedLatestMajorVersionFilter <IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), environment.getName (), environment.getType (), owner.eResource().getResourceSet());
 					injector.injectMembers(versionFilter);
@@ -181,22 +148,6 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			
 			public boolean apply(IEObjectDescription input) {
 				return connectors.contains(input.getQualifiedName());
-			}
-		});
-	}
-	
-	private IScope getServerScope (IScope parent, final EObject context, final EReference reference, Environment env) {
-		final List<QualifiedName> servers = Lists.transform(env.getServers(), new Function<Server, QualifiedName> () {
-
-			public QualifiedName apply(Server from) {
-				return nameProvider.getFullyQualifiedName(from);
-			}
-			
-		});
-		return new FilteringScope(parent, new Predicate<IEObjectDescription>() {
-			
-			public boolean apply(IEObjectDescription input) {
-				return servers.contains(input.getQualifiedName());
 			}
 		});
 	}

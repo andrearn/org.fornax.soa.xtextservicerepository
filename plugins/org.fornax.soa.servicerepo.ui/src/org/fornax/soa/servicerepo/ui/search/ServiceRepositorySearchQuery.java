@@ -22,7 +22,7 @@ import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
 import org.fornax.soa.profiledsl.search.FindAssetsWithStateQuery;
-import org.fornax.soa.query.FindUnapprovedAssetsQuery;
+import org.fornax.soa.service.query.FindUnapprovedAssetsQuery;
 import org.fornax.soa.servicerepo.ui.internal.ServiceRepositoryActivator;
 import org.fornax.soa.servicerepo.ui.search.dialog.ServiceRepositorySearchMessages;
 

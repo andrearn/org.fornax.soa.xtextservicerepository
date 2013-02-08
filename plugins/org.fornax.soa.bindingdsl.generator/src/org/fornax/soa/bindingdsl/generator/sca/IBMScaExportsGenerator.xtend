@@ -24,6 +24,7 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
 import java.util.regex.Pattern
 import java.util.logging.Logger
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 
 class IBMScaExportsGenerator implements IGenerator {
 	
@@ -61,6 +62,7 @@ class IBMScaExportsGenerator implements IGenerator {
 	
 	@Inject IQualifiedNameProvider nameProvider
 	@Inject IEObjectLookup eObjectLookup
+	@Inject extension EnvironmentBindingResolver		
 
 	@Inject 
 	private Logger logger
@@ -93,7 +95,7 @@ class IBMScaExportsGenerator implements IGenerator {
 					val modBind = binding as ModuleBinding;
 					val module = modBind.module.module
 					val assemblyType = module.assemblyType
-					if ((Pattern::matches (targetEnvironmentName, modBind.environment.name))
+					if ((Pattern::matches (targetEnvironmentName, modBind.resolveEnvironment.name))
 							&& assemblyType == AssemblyType::SCA_EAR
 					) {
 						if (moduleBindingNames.exists(bindName | Pattern::matches (bindName, modBind.name) )) {

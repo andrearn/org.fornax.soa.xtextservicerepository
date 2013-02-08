@@ -47,22 +47,22 @@ class SoapBindingResolver {
 		}
 	}
 			
-	def dispatch Server getPublishingServer (Binding b) {
-		val soapBindings = b.protocol.filter ( typeof (SOAP));
-		if (soapBindings.head?.publisher?.pubServer != null) {
-			soapBindings.head.publisher.pubServer;
-		} else if (b.eContainer instanceof ModuleBinding) {
-			(b.eContainer as ModuleBinding).environment.defaultESB;
-		}
-	}
-	def dispatch Server getPublishingServer (ModuleBinding b) {
-		val soapBindings = b.protocol.filter ( typeof (SOAP));
-		if (soapBindings.head?.publisher?.pubServer != null) {
-			soapBindings.head.publisher.pubServer;
-		} else {
-			b.environment.defaultESB;
-		}
-	}
+//	def dispatch Server getPublishingServer (Binding b) {
+//		val soapBindings = b.protocol.filter ( typeof (SOAP));
+//		if (soapBindings.head?.publisher?.pubServer != null) {
+//			soapBindings.head.publisher.pubServer;
+//		} else if (b.eContainer instanceof ModuleBinding) {
+//			(b.eContainer as ModuleBinding).environment.defaultESB;
+//		}
+//	}
+//	def dispatch Server getPublishingServer (ModuleBinding b) {
+//		val soapBindings = b.protocol.filter ( typeof (SOAP));
+//		if (soapBindings.head?.publisher?.pubServer != null) {
+//			soapBindings.head.publisher.pubServer;
+//		} else {
+//			b.environment.defaultESB;
+//		}
+//	}
 		
 	def String toBindingName (Service s, SOAP p) {
 		s.name + p.getPortNamePostfix();

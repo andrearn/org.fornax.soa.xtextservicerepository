@@ -23,19 +23,21 @@ import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Visibility
-import org.fornax.soa.service.query.LifecycleQueries
+import org.fornax.soa.service.query.ServiceDslLifecycleQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import java.util.Set
 import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.bindingdsl.generator.queries.services.BoundServiceLookup
 import org.fornax.soa.environmentDsl.HTTP
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 
 class BindingExtensions {
 	
 	@Inject extension CommonStringExtensions
 	@Inject extension NamespaceQuery
-	@Inject extension LifecycleQueries
+	@Inject extension ServiceDslLifecycleQueries
+	@Inject extension EnvironmentBindingResolver
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IStateMatcher stateMatcher
 	@Inject BoundServiceLookup boundSvcLookup
@@ -51,7 +53,7 @@ class BindingExtensions {
 	}
 	
 	def dispatch String getRegistryBaseUrl (ModuleBinding b) {
-		b.environment.registryBaseUrl
+		b.resolveEnvironment.registryBaseUrl
 	}
 	
 	def dispatch String getRegistryBaseUrl (Environment env) {
@@ -69,25 +71,10 @@ class BindingExtensions {
 		
 	}
 	
-	/* TODO: CONTAINS DEAD CODE!!! */
-	def dispatch List<BindingProtocol> getProviderProtocols (ServiceBinding b) {
-		if (!b.protocol.isEmpty) {
-			b.protocol;
-		} else {
-			b.protocol;
-		}
-	}
-	def dispatch List<BindingProtocol> getProviderProtocols (OperationBinding b) {
-		if (!b.providerProtocol.isEmpty) {
-			b.providerProtocol;
-		} else {
-			b.protocol;
-		}
-	}
-	def dispatch List<BindingProtocol> getPublisherProtocols (ServiceBinding b) {
+	def dispatch List<BindingProtocol> getEndpointProtocols (ServiceBinding b) {
 		b.protocol;
 	}
-	def dispatch List<BindingProtocol> getPublisherProtocols (OperationBinding b) {
+	def dispatch List<BindingProtocol> getEndpointProtocols (OperationBinding b) {
 		b.protocol;
 	}
 	
@@ -96,7 +83,7 @@ class BindingExtensions {
 			case EnvironmentType::LOCAL : 		o.toOwnerMinLocalState(l)
 			case EnvironmentType::DEV : 		o.toOwnerMinDevState(l)
 			case EnvironmentType::TEST:			o.toOwnerMinTestState(l)
-			case EnvironmentType::STAGING :		o.toOwnerMinTestState(l)
+			case EnvironmentType::STAGING :		o.toOwnerMinStagingState(l)
 			case EnvironmentType::PROD :		o.toOwnerMinProdState(l)
 			default:							o.toOwnerMinDevState(l)
 		}

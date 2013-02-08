@@ -67,13 +67,19 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Binding/policies"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Binding/sla"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//Publisher">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Publisher/pubServer"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Publisher/connectors"/>
+    <genClasses ecoreClass="BindingDsl.ecore#//ConnectorQualifier">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ConnectorQualifier/connectors"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//Provider">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Provider/provServer"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//Provider/connectors"/>
+    <genClasses ecoreClass="BindingDsl.ecore#//ModuleBinding">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleBinding/module"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//ModuleBinding/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleBinding/environment"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleBinding/provServer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleBinding/serviceBindings"/>
+    </genClasses>
+    <genClasses ecoreClass="BindingDsl.ecore#//ModuleRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleRef/module"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleRef/versionRef"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//ServiceBinding">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ServiceBinding/service"/>
@@ -87,6 +93,7 @@
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//BindingProtocol">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//BindingProtocol/endpointQualifierRefs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//BindingProtocol/endpointConnector"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//OperationBinding">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//OperationBinding/operation"/>
@@ -98,43 +105,24 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//OperationBinding/providerPolicies"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//OperationBinding/sla"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//ModuleBinding">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleBinding/module"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//ModuleBinding/name"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleBinding/environment"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleBinding/provider"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleBinding/serviceBindings"/>
-    </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//ModuleRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleRef/module"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//ModuleRef/versionRef"/>
-    </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//SOAP">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SOAP/publisher"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/style"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/contextRoot"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/providedWsdlUrl"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//SAP">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SAP/provider"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SAP/transport"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SAP/client"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//EJB">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//EJB/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//EJB/provider"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//EJB/jndiName"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//HTTP">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//HTTP/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//HTTP/provider"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HTTP/url"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HTTP/providerUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HTTP/verb"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//REST">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//REST/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//REST/provider"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/path"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/providerUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/verb"/>
@@ -143,8 +131,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/provideFormat"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//JMS">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//JMS/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//JMS/provider"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//JMS/channel"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//JMS/jndiName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//JMS/providerJndi"/>
@@ -157,8 +143,6 @@
     <genClasses ecoreClass="BindingDsl.ecore#//Queue"/>
     <genClasses ecoreClass="BindingDsl.ecore#//SCA">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SCA/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SCA/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SCA/provider"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SCA/promote"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SCA/reference"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SCA/isMultipleRef"/>
@@ -173,13 +157,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//FTP/pollIntervall"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//IIOP">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//IIOP/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//IIOP/provider"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//IIOP/lookupName"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//AMQP">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AMQP/publisher"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AMQP/provider"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AMQP/channel"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AMQP/lookupName"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AMQP/providerLookupName"/>

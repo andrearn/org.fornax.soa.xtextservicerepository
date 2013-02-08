@@ -17,6 +17,7 @@ import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -34,6 +35,7 @@ class ConcreteWsdlTemplates {
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension SoapEndpointAddressResolver
+	@Inject extension EnvironmentBindingResolver
 
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IEObjectDocumentationProvider docProvider
@@ -99,7 +101,7 @@ class ConcreteWsdlTemplates {
 			
 			«prot.toSOAPBinding (svc, modBind.getEndpointQualifier(svc))»
 
-			«prot.toWsdlService (svc, modBind.provider.provServer, modBind)»
+			«prot.toWsdlService (svc, modBind.resolveServer, modBind)»
 		</wsdl:definitions>
 		''';
 		fsa.generateFile (wsdlFile, content);

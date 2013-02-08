@@ -77,20 +77,5 @@ class EndpointResolver {
 		s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e == con);
 	}
 	
-	def getConnectors (Server server) {
-		if (server == null)
-			throw new IllegalArgumentException("Server may not be null");
-		switch (server) {
-			AppServer:		(server as AppServer).connectors
-			Broker:			(server as Broker).connectors
-			ESB:			(server as ESB).connectors
-			ProcessServer:	(server as ProcessServer).connectors
-			WebServer:		(server as WebServer).connectors
-			default:		{
-				log.severe ("Server " + server.name + " of type " + server.eClass.name + " dos not support connectors.")
-				throw new ServerNotConnectableException()
-			}
-		}
-	}
 		
 }

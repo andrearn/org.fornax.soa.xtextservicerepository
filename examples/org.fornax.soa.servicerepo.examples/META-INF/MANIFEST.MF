@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: XtextServiceRepository Examples
+Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.fornax.soa.servicerepo.examples;singleton:=true
 Bundle-Version: 1.6.0.qualifier
 Require-Bundle: org.eclipse.ui,

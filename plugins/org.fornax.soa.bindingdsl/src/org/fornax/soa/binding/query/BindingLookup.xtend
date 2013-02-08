@@ -79,7 +79,7 @@ class BindingLookup {
 	
 	
 	def ModuleBinding getImportModuleBinding (List<ModuleBinding> canditates, Module importMod, String envName) {
-		canditates.findFirst (e|e.module.module == importMod && e.environment.name == envName );
+		canditates.findFirst (e|e.module.module == importMod && e.resolveEnvironment.name == envName );
 	}
 	
 	/*
@@ -88,7 +88,7 @@ class BindingLookup {
 	 */
 	def Set<ModuleBinding> findBindingsToModule (Module module, String envName) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
-		allBindings.filter (e|e.module.module == module && e.environment.name == envName ).toSet;
+		allBindings.filter (e|e.module.module == module && e.resolveEnvironment.name == envName ).toSet;
 	}
 	
 	/*
@@ -96,7 +96,7 @@ class BindingLookup {
 	 * target environment
 	 */
 	def Set<ModuleBinding> findBindingsToModule (List<ModuleBinding> canditates, Module importMod, String envName) {
-		canditates.filter (e|e.module.module == importMod && e.environment.name == envName ).toSet;
+		canditates.filter (e|e.module.module == importMod && e.resolveEnvironment.name == envName ).toSet;
 	}
 
 	/*
@@ -106,7 +106,7 @@ class BindingLookup {
 	def Set<ModuleBinding> findBindingsToCompatibleModule (Module module, Environment targetEnvironment) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
 		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
-		return allBindings.filter (e|compatibleModules.contains (e.module.module) && e.environment == targetEnvironment ).toSet;
+		return allBindings.filter (e|compatibleModules.contains (e.module.module) && e.resolveEnvironment == targetEnvironment ).toSet;
 	}
 	
 	/*
@@ -115,7 +115,7 @@ class BindingLookup {
 	 */
 	def Set<ModuleBinding> findAllBindingsToCompatibleModule (List<ModuleBinding> canditates, Module module, Environment targetEnvironment) {
 		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
-		return canditates.filter (e|compatibleModules.contains (e.module.module) && e.environment == targetEnvironment ).toSet;
+		return canditates.filter (e|compatibleModules.contains (e.module.module) && e.resolveEnvironment == targetEnvironment ).toSet;
 	}
 	/*
 	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given 

@@ -12,7 +12,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.util.TreeNode;
-import org.fornax.soa.query.BusinessObjectQuery;
+import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.OrganizationNamespace;
 import org.fornax.soa.serviceDsl.ServiceModel;
@@ -30,7 +30,7 @@ public class ModelBusinessObjectQueryTest extends AbstractModelBasedTest {
 
 	@Inject
 	private
-	BusinessObjectQuery boQuery;
+	BusinessObjectQueryInternal boQuery;
 	
 	@Inject
 	private

@@ -10,7 +10,7 @@ import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
-import org.fornax.soa.query.VersionedObjectQueryHelper;
+import org.fornax.soa.service.query.VersionedObjectQueryHelper;
 import org.fornax.soa.serviceDsl.ApprovalDecision;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.DomainNamespace;

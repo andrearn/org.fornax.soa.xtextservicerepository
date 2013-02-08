@@ -14,6 +14,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.serviceDsl.SubNamespace
+import java.util.logging.Level
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 
 /*
  * Generate an XSD for a SubNamespace. Types and exceptions are filtered by their lifecycle state, determining whether it
@@ -22,6 +24,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 class XSDTemplates {
 
 	@Inject extension BindingExtensions
+	@Inject extension EnvironmentBindingResolver		
 		
 	
 	@Inject org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates 					xsdGenerator
@@ -42,7 +45,7 @@ class XSDTemplates {
 		try {
 			xsdGenerator.toXSD (ns, env.getMinLifecycleState (ns, profile.lifecycle), profile, env.getRegistryBaseUrl());
 		} catch (Exception ex) {
-			log.severe ("Error generating XSDs for namespace " + nameProvider.getFullyQualifiedName(ns).toString + "\n" + ex.message)
+			log.log (Level::SEVERE, "Error generating XSDs for namespace " + nameProvider.getFullyQualifiedName(ns).toString + "\n", ex)
 		}
 	}
 	
@@ -51,7 +54,7 @@ class XSDTemplates {
 		try {
 			xsdGenerator.toXSD (ns, env.getMinLifecycleState (ns.subdomain as SubNamespace, profile.lifecycle), profile, env.getRegistryBaseUrl());
 		} catch (Exception ex) {
-			log.severe ("Error generating XSDs for namespace " + ns.fqn + " with major version " + ns.version + "\n" + ex.message)
+			log.log (Level::SEVERE, "Error generating XSDs for namespace " + ns.fqn + " with major version " + ns.version + "\n", ex)
 		}
 	}
 	
@@ -67,9 +70,9 @@ class XSDTemplates {
 	def dispatch toXSD (VersionedDomainNamespace ns, LifecycleState minState, ModuleBinding bind, SOAProfile profile) {
 		log.fine("Generating XSDs for namespace " + ns.fqn + " with major version " + ns.version)
 		try {
-			xsdGenerator.toXSD (ns, bind.environment.getMinLifecycleState(ns.subdomain as SubNamespace, profile.lifecycle), profile, bind.getRegistryBaseUrl());
+			xsdGenerator.toXSD (ns, bind.resolveEnvironment.getMinLifecycleState(ns.subdomain as SubNamespace, profile.lifecycle), profile, bind.getRegistryBaseUrl());
 		} catch (Exception ex) {
-			log.severe ("Error generating XSDs for namespace " + ns.fqn + " with major version " + ns.version + "\n" + ex.message)
+			log.log (Level::SEVERE, "Error generating XSDs for namespace " + ns.fqn + " with major version " + ns.version + "\n", ex)
 		}
 	}
 	

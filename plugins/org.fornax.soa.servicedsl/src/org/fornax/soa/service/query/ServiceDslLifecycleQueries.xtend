@@ -12,7 +12,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
  * Finders for lifecycle state for of elements owning object and minimal applicable 
  * lifecycle state in an environment type as defined in the profile or overriden by the namespace
  */
-class LifecycleQueries {
+class ServiceDslLifecycleQueries {
 	
 	@Inject org.fornax.soa.profiledsl.search.LifecycleQueries lifecycleQueries
 	

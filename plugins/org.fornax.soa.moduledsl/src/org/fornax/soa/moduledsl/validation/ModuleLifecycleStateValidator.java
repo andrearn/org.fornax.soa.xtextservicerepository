@@ -19,7 +19,7 @@ import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
-import org.fornax.soa.query.VersionedObjectQueryHelper;
+import org.fornax.soa.service.query.VersionedObjectQueryHelper;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 
 import com.google.inject.Inject;

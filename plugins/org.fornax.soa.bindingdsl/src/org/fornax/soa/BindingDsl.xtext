@@ -28,17 +28,38 @@ BindingModel:
 Binding: ModuleBinding | ServiceBinding ;
 
 
-/* 
- * Publishers are server connectors that export an inbound endpoint
- */	
-Publisher:
-	'publish on' pubServer=[environmentDsl::Server|QualifiedName] ('with' 'connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*)?;
 
 /* 
  * Providers are server connetors to outbound endpoints, when using a service
  */	
-Provider:
-	'provided on' provServer = [environmentDsl::Server|QualifiedName] ('with' 'connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*)?;
+ConnectorQualifier:
+	'on' 'connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*;
+
+/*
+ * Binds the referenced module to the given target environment. All services provided by the module become available in the
+ * targeted environment
+ */	
+ModuleBinding:
+	'bind-module' module=ModuleRef 'as' name=QualifiedName 'to' 
+		(('environment' environment=[environmentDsl::Environment|QualifiedName] '{') | 
+		 ('server' provServer = [environmentDsl::Server|QualifiedName]  '{' )
+		)
+		(endpointQualifierRefs=EndpointQualifierRefs)?
+		(governanceDecisions+=GovernanceDecision)*
+		/* The default endpoint protocols to be used by default. The protocols respective connector on the server is used to expose the service */
+		('default-protocols' '{'
+			(protocol+=BindingProtocol)+
+		'}')?
+		
+		('default-policies' '{'
+			(policies+=Policy)*
+		'}')?
+		('default-SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
+		(serviceBindings+=ServiceBinding)*
+	'}'
+;
+
+ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
 
 /*
  * Overrides the binding of a parent DomainBinding or ModuleBinding for the given Service
@@ -93,30 +114,6 @@ OperationBinding:
 		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
 	'}';
 
-/*
- * Binds the referenced module to the given target environment. All services provided by the module become available in the
- * targeted environment
- */	
-ModuleBinding:
-	'bind-module' module=ModuleRef 'as' name=QualifiedName 'to' 'environment' environment=[environmentDsl::Environment|QualifiedName] '{'
-		(endpointQualifierRefs=EndpointQualifierRefs)?
-		/* The server to bind the endpoint to */
-		provider=Provider
-		(governanceDecisions+=GovernanceDecision)*
-		/* The default endpoint protocols to be used by default. The protocols respective connector on the server is used to expose the service */
-		('default-protocols' '{'
-			(protocol+=BindingProtocol)+
-		'}')?
-		
-		('default-policies' '{'
-			(policies+=Policy)*
-		'}')?
-		('default-SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
-		(serviceBindings+=ServiceBinding)*
-	'}'
-;
-
-ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
 
 
 //Protocols 
@@ -126,11 +123,9 @@ SOAP:
 	'SOAP' '{'
 		{SOAP}
 		(endpointQualifierRefs=EndpointQualifierRefs)?
-		(publisher=Publisher)?
-		//(provider=Provider)?
+		(endpointConnector=ConnectorQualifier)?
 		('style' style=SOAPStyle )?
 		('http-context-root' contextRoot = STRING )?
-		//('provider-http-context-root' providerContextRoot = STRING )?
 		('provided-WSDL-Url' providedWsdlUrl = STRING )?
 	'}';
 	
@@ -141,7 +136,7 @@ SAP:
 	'SAP' '{'
 		{SAP}
 		(endpointQualifierRefs=EndpointQualifierRefs)?
-		(provider=Provider)?
+		(endpointConnector=ConnectorQualifier)?
 		('transport' transport=SAPTransport )?
 		('client' client=[environmentDsl::SapClient|QualifiedName] )?
 	'}';
@@ -152,8 +147,7 @@ enum SAPTransport: IDOC | RFC;
 EJB: 
 	'EJB' '{'
 		(endpointQualifierRefs=EndpointQualifierRefs)?
-		(publisher=Publisher)?
-		(provider=Provider)?
+		(endpointConnector=ConnectorQualifier)?
 		'jndi-name' jndiName=STRING 
 	'}';
 
@@ -161,8 +155,7 @@ EJB:
 HTTP: 
 	'HTTP' '{'
 		(endpointQualifierRefs=EndpointQualifierRefs)?
-		(publisher=Publisher)?
-		(provider=Provider)?
+		(endpointConnector=ConnectorQualifier)?
 		'url' url=STRING 
 		'provider-url' providerUrl=STRING  
 		'verb' verb=Verb 
@@ -172,8 +165,7 @@ HTTP:
 REST: 
 	'REST' '{'
 		(endpointQualifierRefs=EndpointQualifierRefs)?
-		(publisher=Publisher)?
-		(provider=Provider)?
+		(endpointConnector=ConnectorQualifier)?
 		'path' path=STRING  
 		'provider-url' providerUrl=STRING  
 		'verb' verb=Verb 
@@ -192,8 +184,7 @@ JMS:
 	'JMS' '{'
 		{JMS}
 		(endpointQualifierRefs=EndpointQualifierRefs)?
-		(publisher=Publisher)?
-		(provider=Provider)?
+		(endpointConnector=ConnectorQualifier)?
 		(channel=TopicOrQueue)?
 		'jndi-name' jndiName=STRING
 		('provider-jndi-name' providerJndi=STRING )?
@@ -212,8 +203,7 @@ SCA:
 	{SCA} 
 	'SCA' (name=STRING)? '{'
 		(endpointQualifierRefs=EndpointQualifierRefs)?
-		(publisher=Publisher)?
-		(provider=Provider)?
+		(endpointConnector=ConnectorQualifier)?
 		('promote' promote=STRING )?
 		('reference' reference=STRING (isMultipleRef?='[]')? )?
 	'}' ;
@@ -222,6 +212,7 @@ SCA:
 FILE: 
 	'FILE' '{'
 		(endpointQualifierRefs=EndpointQualifierRefs)?
+		(endpointConnector=ConnectorQualifier)?
 		url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?
 	'}';
 
@@ -229,6 +220,7 @@ FILE:
 FTP: 
 	'FTP' '{' 
 		(endpointQualifierRefs=EndpointQualifierRefs)?
+		(endpointConnector=ConnectorQualifier)?
 		'access' accessType=ReadWrite ('interval' pollIntervall=STRING)?
 	'}';
 
@@ -236,8 +228,7 @@ FTP:
 IIOP: 
 	'IIOP' '{'
 		(endpointQualifierRefs=EndpointQualifierRefs)?
-		(publisher=Publisher)?
-		(provider=Provider)?
+		(endpointConnector=ConnectorQualifier)?
 		'lookup-name' lookupName=STRING 
 	'}';
 
@@ -245,8 +236,7 @@ AMQP:
 	'AMQP' '{'
 		{AMQP}
 		(endpointQualifierRefs=EndpointQualifierRefs)?
-		(publisher=Publisher)?
-		(provider=Provider)?
+		(endpointConnector=ConnectorQualifier)?
 		(channel=TopicOrQueue)?
 		'lookup-name' lookupName=STRING
 		('provider-lookup-name' providerLookupName=STRING )?
