@@ -8,10 +8,12 @@ import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.bindingDsl.SOAP
+import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
 
-class WsdlExtensions {
+class ConcreteWsdlExtensions {
 	
 	@Inject extension BindingExtensions
+	@Inject extension EndpointQualifierNameProvider
 	@Inject extension EnvironmentBindingResolver
 	@Inject extension SchemaNamespaceExtensions
 	
@@ -31,6 +33,11 @@ class WsdlExtensions {
 		else
 			return service.getConcreteWsdlFileNameFragment(binding.getEndpointQualifier (service))
 		
+	}
+	
+	
+	def String getConcreteWsdlFileNameFragment (Service s, String endPointKind) {
+		s.eContainer.toFileNameFragment().replaceAll("\\." , "-") + "-" + s.name + endPointKind + "Port" + "-" + s.version.toVersionPostfix();
 	}
 	
 }

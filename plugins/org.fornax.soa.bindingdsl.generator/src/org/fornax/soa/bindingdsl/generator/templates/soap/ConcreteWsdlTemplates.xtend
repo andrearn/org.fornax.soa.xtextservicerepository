@@ -18,6 +18,8 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateE
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
+import org.fornax.soa.bindingdsl.generator.templates.wsdl.ConcreteWsdlExtensions
+import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -30,12 +32,14 @@ import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 class ConcreteWsdlTemplates {
 	
 	@Inject extension BindingExtensions
+	@Inject extension ConcreteWsdlExtensions
 	@Inject extension SoapBindingResolver
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension SoapEndpointAddressResolver
 	@Inject extension EnvironmentBindingResolver
+	@Inject extension EndpointQualifierNameProvider
 
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IEObjectDocumentationProvider docProvider

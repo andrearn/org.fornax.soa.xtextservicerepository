@@ -9,12 +9,13 @@ import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
 
 class SCAExportExtension {
 	
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension NamespaceQuery
-	@Inject extension BindingExtensions
+	@Inject extension EndpointQualifierNameProvider
 	
 	def dispatch String getExportName (Service s, BindingProtocol prot) { 
 		s.findOrgNamespace().toPrefix() + "_" + s.findSubdomain().name.replaceAll("\\.", "_") + "_" + 

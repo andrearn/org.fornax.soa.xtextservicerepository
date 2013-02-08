@@ -11,6 +11,7 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates
+import org.fornax.soa.profiledsl.search.LifecycleQueries
 
 /**
  * Builds all technical artifacts that represent a binding (WSDLs/XSDs etc.).
@@ -19,6 +20,7 @@ class BindingBuilder {
 	
 	
 	@Inject extension BindingExtensions
+	@Inject extension LifecycleQueries
 		
 	
 	@Inject BindingServiceContractBuilder	contractBuilder
@@ -88,7 +90,7 @@ class BindingBuilder {
 		val profile = profiles.findFirst (e|e.name == profileName);
 		log.info ("Generating event data definitions for services in namespace " + nameProvider.getFullyQualifiedName(ns) + " applicable for Environment " + env.name)
 		try {
-		eventXsdGenerator.toEvents (ns,env.getMinLifecycleState(ns, profile.lifecycle), profile, env.getRegistryBaseUrl());
+		eventXsdGenerator.toEvents (ns,env.getMinLifecycleState(profile.lifecycle), profile, env.getRegistryBaseUrl());
 		} catch (Exception ex) {
 			log.severe ("Error generating event data definitions for services in namespace " + nameProvider.getFullyQualifiedName(ns) + " applicable for Environment " + env.name + "\n" + ex.message)
 		}

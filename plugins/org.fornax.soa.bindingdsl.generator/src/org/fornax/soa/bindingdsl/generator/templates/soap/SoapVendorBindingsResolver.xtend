@@ -21,10 +21,11 @@ import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
 
 class SoapVendorBindingsResolver {
 	
-	@Inject extension BindingExtensions
+	@Inject extension EndpointQualifierNameProvider
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject ContextRootProvider ctxRootProvider
 	@Inject SoapBindingResolver soapBindRes

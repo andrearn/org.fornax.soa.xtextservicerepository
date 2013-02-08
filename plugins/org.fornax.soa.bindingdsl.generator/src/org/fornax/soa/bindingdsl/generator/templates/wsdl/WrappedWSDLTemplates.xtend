@@ -7,6 +7,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Service
 import com.google.inject.Inject
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
+import org.fornax.soa.profiledsl.search.LifecycleQueries
 
 /*
  * Generate a WSDL where all input and output parameters are wrapped into a Wrappertype. 
@@ -16,6 +17,7 @@ class WrappedWSDLTemplates {
 	
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.webservice.WrappedWsdlTemplates
 	@Inject extension BindingExtensions
+	@Inject extension LifecycleQueries
 	
 	
 	/*
@@ -45,7 +47,7 @@ class WrappedWSDLTemplates {
 	
 	
 	def dispatch toWrappedWSDL (Service svc, SOAProfile profile, Environment environment) {
-		svc.toWrappedWSDL (environment.getMinLifecycleState (svc, profile.lifecycle), profile, environment.getRegistryBaseUrl());
+		svc.toWrappedWSDL (environment.getMinLifecycleState (profile.lifecycle), profile, environment.getRegistryBaseUrl());
 	}
 
 }

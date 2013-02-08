@@ -20,6 +20,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.namespace.NamespaceSplitter
 import org.fornax.soa.service.versioning.IServiceResolver
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
+import org.fornax.soa.profiledsl.search.LifecycleQueries
 
 /*
  * Finds services bound into an environment, i.e. referenced from a binding
@@ -33,6 +34,7 @@ class BoundServiceLookup {
 	@Inject extension BindingServiceResolver
 	@Inject extension IServiceResolver
 	@Inject extension EnvironmentBindingResolver		
+	@Inject extension LifecycleQueries
 	
 	/*
 	 * Find published services (with public service endpoints) bound with the given BindingProtocol
@@ -70,7 +72,7 @@ class BoundServiceLookup {
 		val Iterable<ServiceRef> nsServiceExclRefs = binding.module.module.providedNamespaces.map (n | n.excludedServices).flatten;
 		val exclServices = nsServiceExclRefs.map (r | r.service).toList;
 		val environment = binding.resolveEnvironment;
-		val minState = environment.getMinLifecycleState (binding, profile.lifecycle);	
+		val minState = environment.getMinLifecycleState (profile.lifecycle);	
 		var Set<Service> services = newHashSet();	
 
 		services.addAll (binding.module.module.providedServices.map (s | s.latestServiceInEnvironment (environment)));
@@ -92,7 +94,7 @@ class BoundServiceLookup {
 		val Iterable<SubNamespace> usedModuleNamespaces = usedModules.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (e|e.namespace);
 		val Iterable<ServiceRef> nsServiceExclRefs = usedModules.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (n | n.excludedServices).flatten;
 		val exclServices = nsServiceExclRefs.map (r | r.service).toList;
-		val minState = environment.getMinLifecycleState (module, profile.lifecycle);	
+		val minState = environment.getMinLifecycleState (profile.lifecycle);	
 		var Set<Service> services = newHashSet();	
 
 		services.addAll (module.usedServices.map (s | s.latestServiceInEnvironment (environment)));
@@ -114,7 +116,7 @@ class BoundServiceLookup {
 		val Iterable<SubNamespace> usedModuleNamespaces = usedModuleRefs.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (e|e.namespace);
 		val Iterable<ServiceRef> nsServiceExclRefs = usedModuleRefs.map (e | e.moduleRef.module.providedNamespaces).flatten.filter (typeof(NamespaceRef)).map (n | n.excludedServices).flatten;
 		val exclServices = nsServiceExclRefs.map (r | r.service).toList;
-		val minState = environment.getMinLifecycleState (module, profile.lifecycle);	
+		val minState = environment.getMinLifecycleState (profile.lifecycle);	
 		var Set<Service> services = newHashSet();
 		
 		if (!module.usedServices.empty) {

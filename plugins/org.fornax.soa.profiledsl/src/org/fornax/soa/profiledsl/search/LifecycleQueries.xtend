@@ -8,6 +8,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.environmentDsl.EnvironmentType
+import org.fornax.soa.environmentDsl.Environment
 
 /*
  * Queries for lifecycle states
@@ -56,6 +57,17 @@ class LifecycleQueries {
 	 */
 	def LifecycleState getMinProdState (Lifecycle lifecycleDefinition) {
 		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::PROD)).sort (stateComparator).head
+	}
+	
+	def LifecycleState getMinLifecycleState (Environment env, Lifecycle l) {
+		switch (env.type) {
+			case EnvironmentType::LOCAL : 		l.minLocalState
+			case EnvironmentType::DEV : 		l.minDevState
+			case EnvironmentType::TEST:			l.minTestState
+			case EnvironmentType::STAGING :		l.minStagingState
+			case EnvironmentType::PROD :		l.minProdState
+			default:							l.minDevState
+		}
 	}
 	
 	

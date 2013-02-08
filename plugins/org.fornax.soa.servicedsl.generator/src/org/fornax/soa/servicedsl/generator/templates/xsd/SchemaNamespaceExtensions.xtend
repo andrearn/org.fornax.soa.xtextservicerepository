@@ -248,32 +248,27 @@ class SchemaNamespaceExtensions {
 	}
 	
 	def dispatch String toFileNameFragment (OrganizationNamespace s) {
-		s.findOrgNamespace().shorten().replaceAll("\\." , "-");
+		s.findOrgNamespace().toPrefix().replaceAll("\\." , "-");
 	}
 	
 	def dispatch String toFileNameFragment (DomainNamespace s) {
 		val namespaces = new ArrayList<SubNamespace>();
 		namespaces.add (s);
-		s.findOrgNamespace().shorten().replaceAll("\\." , "-") + "-" + toSubNamespacePath (namespaces).map(n|n.name.stripXtextEscapes().replaceAll("\\." , "-")).join("-");
+		s.findOrgNamespace().toPrefix().replaceAll("\\." , "-") + "-" + toSubNamespacePath (namespaces).map(n|n.name.stripXtextEscapes().replaceAll("\\." , "-")).join("-");
 	}
 	
 	def dispatch String toFileNameFragment (InternalNamespace s) {
 		val namespaces = new ArrayList<SubNamespace>();
 		namespaces.add (s);
-		s.findOrgNamespace().shorten().replaceAll("\\." , "-") + "-" + toSubNamespacePath (namespaces).map(n|n.name.stripXtextEscapes().replaceAll("\\." , "-")).join("-");
+		s.findOrgNamespace().toPrefix().replaceAll("\\." , "-") + "-" + toSubNamespacePath (namespaces).map(n|n.name.stripXtextEscapes().replaceAll("\\." , "-")).join("-");
 	}
 	
 	def dispatch String toFileNameFragment (VersionedDomainNamespace s) {
 		s.subdomain.toFileNameFragment() + "-v" + versionQualifier.toMajorVersionNumber(s.version);
 	}
-	
-	
-	def String getConcreteWsdlFileNameFragment (Service s, String endPointKind) {
-		s.eContainer.toFileNameFragment().replaceAll("\\." , "-") + "-" + s.name + endPointKind + "Port" + "-" + s.version.toVersionPostfix();
-	}
 		
 	
-	def dispatch String shorten (OrganizationNamespace d) {
+	def dispatch String toShortName (OrganizationNamespace d) {
 		if (d.prefix != null) {
 			d.prefix;
 		} else { 

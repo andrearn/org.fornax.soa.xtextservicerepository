@@ -12,13 +12,11 @@ import org.fornax.soa.environmentdsl.generator.EndpointResolver
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
+import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
 
 class SoapBindingResolver {
 	
-//	@Inject extension NamespaceQuery
-//	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-	@Inject extension BindingExtensions
-//	@Inject extension EndpointResolver
+	@Inject extension EndpointQualifierNameProvider
 		
 	def String getWsdlBindingStyle(SOAP bind) { 
 		switch (bind.style) {
@@ -46,24 +44,7 @@ class SoapBindingResolver {
 			"/"
 		}
 	}
-			
-//	def dispatch Server getPublishingServer (Binding b) {
-//		val soapBindings = b.protocol.filter ( typeof (SOAP));
-//		if (soapBindings.head?.publisher?.pubServer != null) {
-//			soapBindings.head.publisher.pubServer;
-//		} else if (b.eContainer instanceof ModuleBinding) {
-//			(b.eContainer as ModuleBinding).environment.defaultESB;
-//		}
-//	}
-//	def dispatch Server getPublishingServer (ModuleBinding b) {
-//		val soapBindings = b.protocol.filter ( typeof (SOAP));
-//		if (soapBindings.head?.publisher?.pubServer != null) {
-//			soapBindings.head.publisher.pubServer;
-//		} else {
-//			b.environment.defaultESB;
-//		}
-//	}
-		
+					
 	def String toBindingName (Service s, SOAP p) {
 		s.name + p.getPortNamePostfix();
 	}

@@ -24,7 +24,7 @@ class JavaTypeExtensions {
 		
 	}
 	
-	def dispatch toQualifiedJavaTypeName (DataType type, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (DataType type, boolean optionalField) {
 		switch (type.name) {
 			case "date":			"java.util.Date"
 			case "datetime":		"java.util.Date"
@@ -34,45 +34,58 @@ class JavaTypeExtensions {
 			case "float":			if (optionalField) return "Float" else return "float"
 			case "double":			if (optionalField) return "Double" else return "double"
 			case "decimal":			"java.math.BigDecimal"
-			case "binary": 			"byte[]"
-			case "base64Binary": 	"byte[]"
+			case "binary": 			if (optionalField) return "Byte[]" else return "byte[]"
+			case "base64Binary": 	if (optionalField) return "Byte[]" else return "byte[]"
 			case "decimal":			"BigDecimal"
 			case "boolean":			if (optionalField) return "Boolean" else return "boolean"
 			case "char":			if (optionalField) return "Character" else return "char"
 			case "string":			return "String"
 			case "anyType":			return "Object"
-			default: 				return "void"
+			default: 				if (optionalField) return "Void" else return "void"
 		}
 	}
 	
-	def dispatch toQualifiedJavaTypeName (VersionedType type, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (VersionedType type, boolean optionalField) {
 		nameProvider.getFullyQualifiedName(type.eContainer).toString + "." + type.version.toVersionPostfix + "." + type.name
 	}
-	def toQualifiedJavaTypeName (Service service, boolean optionalField) {
+	def String toQualifiedJavaTypeName (Service service, boolean optionalField) {
 		nameProvider.getFullyQualifiedName(service.eContainer).toString + "." + service.version.toVersionPostfix + "." + service.name
 	}
-	def toQualifiedJavaTypeName (org.fornax.soa.serviceDsl.Exception exception, boolean optionalField) {
+	def String toQualifiedJavaTypeName (org.fornax.soa.serviceDsl.Exception exception, boolean optionalField) {
 		nameProvider.getFullyQualifiedName(exception.eContainer).toString + "." + exception.version.toVersionPostfix + "." + exception.name
 	}
 	
 	
-	def dispatch toQualifiedJavaTypeName (TypeRef typeRef, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (TypeRef typeRef, boolean optionalField) {
 		
 	}
-	def dispatch toQualifiedJavaTypeName (DataTypeRef typeRef, boolean optionalField) {
-		typeRef.type.toQualifiedJavaTypeName(optionalField)
+	def dispatch String toQualifiedJavaTypeName (DataTypeRef typeRef, boolean optionalField) {
+		if (typeRef.many)
+			if (typeRef.set)
+				return "Set<" + typeRef.type.toQualifiedJavaTypeName(true)+">"
+			else
+				return "List<" + typeRef.type.toQualifiedJavaTypeName(true)+">"
+		else
+			typeRef.type.toQualifiedJavaTypeName(optionalField)
 	}
-	def dispatch toQualifiedJavaTypeName (VersionedTypeRef typeRef, boolean optionalField) {
-		typeRef.type.toQualifiedJavaTypeName(optionalField)
+	def dispatch String toQualifiedJavaTypeName (VersionedTypeRef typeRef, boolean optionalField) {
+		if (typeRef.many)
+			if (typeRef.set)
+				return "Set<" + typeRef.type.toQualifiedJavaTypeName(true)+">"
+			else
+				return "List<" + typeRef.type.toQualifiedJavaTypeName(true)+">"
+		else
+			typeRef.type.toQualifiedJavaTypeName(optionalField)
 	}
-	def toQualifiedJavaTypeName (ExceptionRef exRef, boolean optionalField) {
+	
+	def String toQualifiedJavaTypeName (ExceptionRef exRef, boolean optionalField) {
 		exRef.exception.toQualifiedJavaTypeName(optionalField)
 	}
 	
 	/*
 	 * returns the Java type name of the property's type
 	 */
-	def toQualifiedJavaTypeName (Property property) {
+	def String toQualifiedJavaTypeName (Property property) {
 		property.type.toQualifiedJavaTypeName(property.optional)
 	}
 	
@@ -96,35 +109,47 @@ class JavaTypeExtensions {
 			case "float":			if (optionalField) return "Float" else return "float"
 			case "double":			if (optionalField) return "Double" else return "double"
 			case "decimal":			"BigDecimal"
-			case "binary": 			"byte[]"
-			case "base64Binary": 	"byte[]"
+			case "binary": 			if (optionalField) return "Byte[]" else return "byte[]"
+			case "base64Binary": 	if (optionalField) return "Byte[]" else return "byte[]"
 			case "decimal":			"BigDecimal"
 			case "boolean":			if (optionalField) return "Boolean" else return "boolean"
 			case "char":			if (optionalField) return "Character" else return "char"
 			case "string":			return "String"
 			case "anyType":			return "Object"
-			default: 				return "void"
+			default: 				if (optionalField) return "Void" else return "void"
 		}
 	}
 	
-	def dispatch toJavaTypeName (VersionedType type, boolean optionalField) {
+	def dispatch String toJavaTypeName (VersionedType type, boolean optionalField) {
 		type.name
 	}
 	
 	
-	def dispatch toJavaTypeName (TypeRef typeRef, boolean optionalField) {
+	def dispatch String toJavaTypeName (TypeRef typeRef, boolean optionalField) {
 		
 	}
-	def dispatch toJavaTypeName (DataTypeRef typeRef, boolean optionalField) {
-		typeRef.type.toJavaTypeName(optionalField)
+	def dispatch String toJavaTypeName (DataTypeRef typeRef, boolean optionalField) {
+		if (typeRef.many)
+			if (typeRef.set)
+				return "Set<" + typeRef.type.toJavaTypeName(true) + ">"
+			else
+				return "List<" + typeRef.type.toJavaTypeName(true) + ">"
+		else
+			return typeRef.type.toJavaTypeName(optionalField)
 	}
-	def dispatch toJavaTypeName (VersionedTypeRef typeRef, boolean optionalField) {
-		typeRef.type.toJavaTypeName(optionalField)
+	def dispatch String toJavaTypeName (VersionedTypeRef typeRef, boolean optionalField) {
+		if (typeRef.many)
+			if (typeRef.set)
+				return "Set<" + typeRef.type.toJavaTypeName(true) + ">"
+			else
+				return "List<" + typeRef.type.toJavaTypeName(true) + ">"
+		else
+			return typeRef.type.toJavaTypeName(optionalField)
 	}
-	def toJavaTypeName (Service service, boolean optionalField) {
+	def String toJavaTypeName (Service service, boolean optionalField) {
 		service.name
 	}
-	def toJavaTypeName (org.fornax.soa.serviceDsl.Exception exception, boolean optionalField) {
+	def String toJavaTypeName (org.fornax.soa.serviceDsl.Exception exception, boolean optionalField) {
 		exception.name
 	}
 	

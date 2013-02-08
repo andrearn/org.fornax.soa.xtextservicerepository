@@ -45,7 +45,6 @@ class DefaultBindingContractGenerators implements IGenerator {
 	@Inject org.fornax.soa.bindingdsl.generator.templates.BindingBuilder bindingTpl
 	@Inject org.fornax.soa.bindingdsl.generator.templates.xsd.XSDTemplates xsdGen
 
-	@Inject BindingExtensions bindingExt
 	
 	@Inject @Named ("profileName") 			
 	String profileName
