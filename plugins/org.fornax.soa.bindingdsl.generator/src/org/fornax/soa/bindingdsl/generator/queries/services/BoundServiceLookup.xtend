@@ -20,7 +20,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.namespace.NamespaceSplitter
 import org.fornax.soa.service.versioning.IServiceResolver
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
-import org.fornax.soa.profiledsl.search.LifecycleQueries
+import org.fornax.soa.profiledsl.query.LifecycleQueries
 
 /*
  * Finds services bound into an environment, i.e. referenced from a binding

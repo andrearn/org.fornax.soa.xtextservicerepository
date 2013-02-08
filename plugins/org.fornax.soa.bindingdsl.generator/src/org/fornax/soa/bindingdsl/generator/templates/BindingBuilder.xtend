@@ -11,7 +11,7 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates
-import org.fornax.soa.profiledsl.search.LifecycleQueries
+import org.fornax.soa.profiledsl.query.LifecycleQueries
 
 /**
  * Builds all technical artifacts that represent a binding (WSDLs/XSDs etc.).

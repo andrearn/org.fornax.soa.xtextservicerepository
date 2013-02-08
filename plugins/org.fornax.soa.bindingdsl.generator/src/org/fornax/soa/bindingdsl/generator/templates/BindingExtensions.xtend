@@ -19,7 +19,7 @@ import org.fornax.soa.environmentDsl.HTTP
 import org.fornax.soa.environmentDsl.Server
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.fornax.soa.profiledsl.search.LifecycleQueries
+import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace

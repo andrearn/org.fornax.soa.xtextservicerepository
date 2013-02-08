@@ -1,4 +1,4 @@
-package org.fornax.soa.profiledsl.search
+package org.fornax.soa.profiledsl.query
 
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.basedsl.search.EObjectLookup
@@ -9,11 +9,16 @@ import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.environmentDsl.EnvironmentType
 import org.fornax.soa.environmentDsl.Environment
+import org.eclipse.emf.ecore.EObject
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver
+import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver
+import org.eclipse.emf.ecore.EStructuralFeature
 
 /*
  * Queries for lifecycle states
  */
 class LifecycleQueries {
+	String STATE_ATTR_NAME = "state"
 	
 	@Inject EObjectLookup lookup
 	@Inject extension LifecycleStateComparator stateComparator
@@ -70,5 +75,14 @@ class LifecycleQueries {
 		}
 	}
 	
+	def EObject getStatefulOwner (EObject o) {
+		val EStructuralFeature stateFeature = o.eClass().getEStructuralFeature(STATE_ATTR_NAME);
+		if (stateFeature != null)
+			return o
+		else if (o.eContainer != null)
+			return o.eContainer.statefulOwner
+		else
+			return null
+	}
 	
 }

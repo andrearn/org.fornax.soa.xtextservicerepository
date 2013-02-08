@@ -1,23 +1,13 @@
 package org.fornax.soa.binding.query
 
-import org.fornax.soa.bindingDsl.BindingProtocol
-import org.fornax.soa.bindingDsl.SOAP
-import org.fornax.soa.bindingDsl.EJB
-import org.fornax.soa.bindingDsl.JMS
-import org.fornax.soa.bindingDsl.REST
-import org.fornax.soa.bindingDsl.SCA
-import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef
+import com.google.inject.Inject
+import java.util.Set
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
+import org.fornax.soa.binding.query.services.BindingServiceResolver
 import org.fornax.soa.environmentDsl.Environment
-import org.fornax.soa.moduledsl.moduleDsl.ServiceRef
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.query.ModuleLookup
-import com.google.inject.Inject
-import org.fornax.soa.bindingDsl.ModuleBinding
-import java.util.Set
-import org.fornax.soa.moduledsl.query.ModuleServiceLookup
 import org.fornax.soa.moduledsl.query.ModuleServiceResolver
-import org.fornax.soa.binding.query.services.BindingServiceResolver
-import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 
 /**
  * Resolves Bindings to explicit descriptions describing which Binding applies to which service an module

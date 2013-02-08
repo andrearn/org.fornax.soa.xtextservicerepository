@@ -11,7 +11,7 @@ import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.fornax.soa.profiledsl.search.LifecycleQueries
+import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.namespace.NamespaceSplitter
 import org.fornax.soa.service.query.ExceptionFinder
@@ -62,7 +62,7 @@ class XSDTemplates {
 	@Inject
 	IEObjectDocumentationProvider docProvider
 	
-	@Inject org.fornax.soa.profiledsl.search.LifecycleQueries lifecycleQueries
+	@Inject LifecycleQueries lifecycleQueries
 
 	@Inject 
 	private Logger log

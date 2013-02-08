@@ -7,7 +7,6 @@ import org.fornax.soa.moduledsl.query.ModuleNamespaceQuery
 import org.fornax.soa.moduledsl.query.ModuleServiceResolver
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef
-import org.fornax.soa.profiledsl.search.LifecycleQueries
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.serviceDsl.Service
@@ -18,6 +17,7 @@ import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.binding.query.BindingLookup
 import org.fornax.soa.semanticsDsl.Qualifier
+import org.fornax.soa.profiledsl.query.LifecycleQueries
 
 class BindingServiceResolver {
 	
