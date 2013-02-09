@@ -117,7 +117,7 @@ ProviderParty:
 	'}';
 	
 ThirdParty:
-	'provider-party' name=QualifiedName '{'
+	'third-party' name=QualifiedName '{'
 		'participation-role' role=STRING 
 		(representatives+=Repesentative)+
 		(responsibilities+=Responsibility)+

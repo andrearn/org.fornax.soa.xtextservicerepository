@@ -396,7 +396,7 @@
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//ThirdParty"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="provider-party"/>
+        <elements xsi:type="xtext:Keyword" value="third-party"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.23"/>
         </elements>

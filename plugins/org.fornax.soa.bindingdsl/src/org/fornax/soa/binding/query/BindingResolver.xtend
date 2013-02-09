@@ -2,11 +2,9 @@ package org.fornax.soa.binding.query
 
 import com.google.inject.Inject
 import java.util.Set
-import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.binding.query.services.BindingServiceResolver
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.moduledsl.moduleDsl.Module
-import org.fornax.soa.moduledsl.query.ModuleLookup
 import org.fornax.soa.moduledsl.query.ModuleServiceResolver
 
 /**
@@ -14,15 +12,12 @@ import org.fornax.soa.moduledsl.query.ModuleServiceResolver
  */
 class BindingResolver {
 	
-	@Inject ModuleLookup modLookup
 	@Inject ModuleServiceResolver modServiceResolver
 	@Inject BindingLookup bindingLookup
 	@Inject extension BindingServiceResolver
 	
-	@Inject extension EnvironmentBindingResolver
-	
 	/**
-	 * Resolve Bindings of services provided by a module
+	 * Resolve Bindings of services provided by a module or a compatible module version
 	 */
 	def Set<ServiceRefBindingDescription> resolveCompatibleProvidedServiceBindings (Module module, Environment targetEnvironment) {
 		val candBindings = bindingLookup.findBindingsToCompatibleModule (module, targetEnvironment)
