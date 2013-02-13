@@ -2,13 +2,15 @@ package org.fornax.soa.service;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
 import org.fornax.soa.serviceDsl.Service;
+import org.fornax.soa.serviceDsl.SubNamespace;
 import org.fornax.soa.serviceDsl.Type;
 
 
 public class VersionedDomainNamespace {
 
-	private Object subdomain;
+	private EObject subdomain;
 	
 	private String fqn;
 	
@@ -24,11 +26,11 @@ public class VersionedDomainNamespace {
 	
 	private List<org.fornax.soa.serviceDsl.Exception> exceptions;
 	
-	public Object getSubdomain() {
+	public EObject getSubdomain() {
 		return subdomain;
 	}
 
-	public void setSubdomain(Object owner) {
+	public void setSubdomain(EObject owner) {
 		this.subdomain = owner;
 	}
 

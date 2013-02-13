@@ -24,7 +24,6 @@ import org.fornax.soa.servicedsl.generator.templates.ServiceTemplates;
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions;
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates;
 import org.fornax.soa.servicedsl.generator.templates.webservice.WrappedWsdlTemplates;
-import org.fornax.soa.servicedsl.generator.templates.webservice.WsdlExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates;
 import org.fornax.soa.servicedsl.generator.templates.xsd.OperationWrapperTemplates;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
@@ -126,10 +125,6 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 	
 	public Class<? extends WrappedWsdlTemplates> bindWrappedWsdlTemplates () {
 		return WrappedWsdlTemplates.class;
-	}
-	
-	public Class<? extends WsdlExtensions> bindWsdlExtensions () {
-		return WsdlExtensions.class;
 	}
 	
 	public Class<? extends WSDLTemplates> bindWSDLTemplates () {

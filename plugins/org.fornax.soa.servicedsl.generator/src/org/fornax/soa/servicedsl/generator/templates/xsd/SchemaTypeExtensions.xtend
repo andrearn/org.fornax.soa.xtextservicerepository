@@ -92,7 +92,7 @@ class SchemaTypeExtensions {
 	def dispatch String toTypeNameRef (VersionedTypeRef t) {
 		if (t.type.findSubdomain() != null) {
 			var prefix = "tns";
-			if (! (t.findOwnerSubdomain() == t.type.findSubdomain()
+			if (! (t.findRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 			 	&& ! (t.getStatefulOwner() instanceof Service))
 			) {
@@ -121,7 +121,7 @@ class SchemaTypeExtensions {
 	def dispatch String toTypeNameRef (BusinessObjectRef t) { 
 		if (t.type.findSubdomain() != null) {
 			var prefix = "tns";
-			if (!(t.findOwnerSubdomain() == t.type.findSubdomain()
+			if (!(t.findRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 				&& !(t.getStatefulOwner() instanceof Service))
 			)  {
@@ -136,7 +136,7 @@ class SchemaTypeExtensions {
 	def dispatch String toTypeNameRef (QueryObjectRef t) { 
 		if (t.type.findSubdomain() != null) {
 			var prefix = "tns";
-			if (!(t.findOwnerSubdomain() == t.type.findSubdomain()
+			if (!(t.findRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 				&& !(t.getStatefulOwner() instanceof Service))
 			)  {
@@ -151,7 +151,7 @@ class SchemaTypeExtensions {
 	def dispatch String toTypeNameRef (EnumTypeRef t) { 
 		if (t.type.findSubdomain() != null) {
 			var prefix = "tns";
-			if (!(t.findOwnerSubdomain() == t.type.findSubdomain()
+			if (!(t.findRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t. getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 				&& ! (t.getStatefulOwner() instanceof Service))
 			) {
@@ -166,7 +166,7 @@ class SchemaTypeExtensions {
 	def String toExceptionNameRef (ExceptionRef t) {
 		if (t.exception.findSubdomain() != null) {
 			var prefix = "tns";
-			if (!(t.findOwnerSubdomain() == t.exception.findSubdomain()
+			if (!(t.findRefOwnerSubdomain() == t.exception.findSubdomain()
 			 && t.getOwnerVersion().toMajorVersionNumber() == t.exception.version.toMajorVersionNumber()
 			 && ! (t.getStatefulOwner() instanceof Service))
 			) {

@@ -32,14 +32,10 @@ class WrappedWsdlTemplates {
 	
 	@Inject IFileSystemAccess fsa
 
-	@Inject extension CommonStringExtensions
-	@Inject extension WsdlExtensions
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-	@Inject extension SchemaTemplateExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension VersionQualifierExtensions
-	@Inject extension HeaderFinder
 	@Inject extension NamespaceQuery
 	@Inject extension NamespaceImportQueries
 	@Inject extension XSDTemplates

@@ -45,7 +45,7 @@ class ServiceTemplates {
 
 	def dispatch void toSubNamespace (DomainNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		ns.interalNamespaces.forEach (n|n.toSubNamespace (minState, profile, registryBaseUrl));
-		val verNs = ns.toVersionedDomainNamespaces();
+		val verNs = ns.splitNamespaceByMajorVersion();
 		verNs.forEach (
 			v|v.servicesWithMinState (minState)
 				.filter (typeof (Service)).filter(e|e.isMatchingService(v.version.asInteger(), minState))
@@ -59,7 +59,7 @@ class ServiceTemplates {
 	}
 	
 	def dispatch void toSubNamespace (InternalNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		val verNs = ns.toVersionedDomainNamespaces();
+		val verNs = ns.splitNamespaceByMajorVersion();
 		verNs.forEach (
 			v|v.servicesWithMinState (minState).filter (typeof (Service))
 				.filter (e|e.isMatchingService(v.version.asInteger(), minState))

@@ -34,6 +34,7 @@ import org.fornax.soa.service.query.type.ReferencedTypesFinder
 import org.fornax.soa.profiledsl.search.StateMatcher
 import org.fornax.soa.service.query.type.VersionedTypeFilter
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
+import org.fornax.soa.serviceDsl.QueryObject
 
 class XSDTemplates {
 
@@ -89,7 +90,7 @@ class XSDTemplates {
 		given minimal LifecycleState.
 	*/
 	def dispatch toXSD (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		var nsVersions = ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion();
+		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
 		for (nsVer : nsVersions) {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl);
 			if ( ! noDependencies ) {
@@ -104,7 +105,7 @@ class XSDTemplates {
 	 * TODO: review for use as noDependencies flag is being injected already
 	 */
 	def dispatch toXSD (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
-		var nsVersions = ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion();
+		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
 		for (nsVer : nsVersions) {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces);
 			if ( !noDeps) {
@@ -127,7 +128,7 @@ class XSDTemplates {
 		the major version splitting algorithm filtered by the given minimal LifecycleState
 	*/
 	def toXSDForImports (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		for (nsVer : ns.toVersionedDomainNamespaces().getAllLatestSubNamespacesByMajorVersion()) {
+		for (nsVer : ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion()) {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl);
 			nsVer.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
 				.filter(e| !(e.subdomain == nsVer.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(nsVer.version)))
@@ -144,12 +145,14 @@ class XSDTemplates {
 		val imports = vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace());
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)
 			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|!b.state.isEnd)
+			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
 			.filter (en|minState.matches (en.state) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
 			.filter (ex|minState.matches (ex.state) && exceptionResolver.isMatchingException (ex, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 
-		if (!bos.empty || !enums.empty || !exceptions.empty) {
+		if (!bos.empty || !qos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''
 			<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 			<xsd:schema xmlns:tns="«vns.toNamespace()»"
@@ -168,6 +171,7 @@ class XSDTemplates {
 				«imports.map (e|e.toImportDeclaration (registryBaseUrl)).join» 	
 				«IF (vns.subdomain instanceof SubNamespace)»
 					«bos.map (e|e.toComplexType (vns, profile, minState)).join»
+					«qos.map (e|e.toComplexType (vns, profile, minState)).join»
 					«enums.map (e|e.toSimpleType (minState)).join»
 					«exceptions.map (e|e.toFaultType (vns, profile, minState)).join»
 				«ELSEIF (vns.subdomain instanceof OrganizationNamespace)»
@@ -188,12 +192,14 @@ class XSDTemplates {
 		val imports = vns.importedVersionedNS(minState).filter(e|e.toNamespace() != vns.toNamespace());
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)
 			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|!b.state.isEnd)
+			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
 			.filter (en|minState.matches (en.state) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
 			.filter (e|minState.matches (e.state) && exceptionResolver.isMatchingException (e, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 
-		if (!bos.empty || !enums.empty || !exceptions.empty) {
+		if (!bos.empty || !qos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''
 			<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 			<xsd:schema xmlns:tns="«vns.toNamespace()»"
@@ -212,6 +218,7 @@ class XSDTemplates {
 				«imports.map (e|e.toImportDeclaration (registryBaseUrl)).join» 	
 				«IF (vns.subdomain instanceof SubNamespace)»
 					«bos.map (e|e.toComplexType (vns, profile, minState)).join»
+					«qos.map (e|e.toComplexType (vns, profile, minState)).join»
 					«enums.map (e|e.toSimpleType (minState)).join»
 					«exceptions.map (e|e.toFaultType (vns, profile, minState)).join»
 				«ELSEIF (vns.subdomain instanceof OrganizationNamespace)»
@@ -234,7 +241,7 @@ class XSDTemplates {
 			namespace="«vns.toNamespace()»"></xsd:import>
 	'''
 	
-	/*
+	/**
 		Generate a ComplexType for a BusinessObject respecting the major version of the containing 
 		XSD. Hence, the same VersionedDomainNamespace as for the containing XSD must be used.
 		
@@ -284,6 +291,59 @@ class XSDTemplates {
 			«ENDIF»
 		</xsd:complexType>
 	'''
+
+
+	/**
+		Generate a ComplexType for a QueryObject respecting the major version of the containing 
+		XSD. Hence, the same VersionedDomainNamespace as for the containing XSD must be used.
+		
+		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
+							XSD being generated
+		@param		profile	The SOAProfile defining the governing architecture rules.
+	*/
+	def toComplexType(QueryObject qo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
+
+		<xsd:complexType name="«qo.name»">
+			<xsd:annotation>
+		    	<xsd:documentation>
+					<![CDATA[
+						Version:			«versionQualifier.toVersionNumber(qo.version)»
+						Lifecycle state: 	«qo.state.name»
+										
+						«docProvider.getDocumentation (qo)»
+					]]>
+				</xsd:documentation>
+						«/*
+					    	<xsd:appinfo>
+						    	<jxb:class>
+					  	    		<jxb:javadoc>
+						<![CDATA[Version:	«version.toVersionNumber()»
+						Lifecycle state: «state.toString()»
+						«IF doc != null-»
+										
+						«doc?.stripCommentBraces()?.trim()»
+						«ENDIF-» ]]>   			
+					    			</jxb:javadoc>
+						    	</jxb:class>
+					      	</xsd:appinfo>
+						*/» 
+			</xsd:annotation>
+			
+			«IF qo.superQueryObject != null»
+				<xsd:complexContent>
+					<xsd:extension base="«qo.superQueryObject.toTypeNameRef(currNs)»">
+						«qo.toPropertySequence (currNs, profile, minState)»
+					</xsd:extension>
+				</xsd:complexContent>
+			«ELSE»
+				«qo.toPropertySequenceWithAny (currNs, profile, minState)»
+				«IF profile.typesUseExtendibleXMLAttributes()»
+					«profile.typesExtendibleXMLAttributesClause»
+				«ENDIF»
+			«ENDIF»
+		</xsd:complexType>
+	'''
+
 	
 	/*
 		Generate a sequence of elements for properties plus an additional any as placeholder for future
@@ -303,6 +363,23 @@ class XSDTemplates {
 	'''
 	
 	/*
+		Generate a sequence of elements for properties plus an additional any as placeholder for future
+		backward compatible extensions of the ComplexType / BusinessObject
+		
+		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
+							XSD being generated
+		@param		profile	The SOAProfile defining the governing architecture rules.
+	*/
+	def dispatch toPropertySequenceWithAny(QueryObject qo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
+		<xsd:sequence>
+			«qo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
+			«IF profile.typesUseExtendibleProperties ()»
+				«profile.typesExtendiblePropertiesClause»
+			«ENDIF»
+		</xsd:sequence>
+	'''
+	
+	/*
 		Generate a sequence of elements for properties without a placeholder for future
 		backward compatible extensions of the ComplexType / BusinessObject
 		
@@ -313,6 +390,20 @@ class XSDTemplates {
 	def dispatch toPropertySequence(BusinessObject bo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«bo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
+		</xsd:sequence>
+	'''
+	
+	/*
+		Generate a sequence of elements for properties without a placeholder for future
+		backward compatible extensions of the ComplexType / BusinessObject
+		
+		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
+							XSD being generated
+		@param		profile	The SOAProfile defining the governing architecture rules.
+	*/
+	def dispatch toPropertySequence(QueryObject qo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
+		<xsd:sequence>
+			«qo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 		</xsd:sequence>
 	'''
 	

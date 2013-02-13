@@ -2,6 +2,7 @@ package org.fornax.soa.service.namespace
 
 import com.google.inject.Inject
 import java.util.Set
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.basedsl.sOABaseDsl.Version
 import org.fornax.soa.basedsl.version.VersionMatcher
@@ -16,7 +17,6 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.serviceDsl.VersionedType
-import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 /* 
  * Split SubNamespaces by major major versions of it's owned services, BOs, enums and exceptions
@@ -26,20 +26,20 @@ class NamespaceSplitter {
 	@Inject extension VersionMatcher
 	@Inject extension VersionQualifierExtensions
 	@Inject extension CommonStringExtensions
-	@Inject extension NamespaceQuery
 	@Inject extension VersionedTypeFilter
+	@Inject IQualifiedNameProvider nameProvider
 	
 	/* 
 	 * Split into VersionedDomainNamespace per accounted major version of contained versioned elements
 	 */
-	def dispatch Set<VersionedDomainNamespace> toVersionedDomainNamespaces (Object s) {
+	def dispatch Set<VersionedDomainNamespace> splitNamespaceByMajorVersion (Object s) {
 		newHashSet();
 	} 
 	
 	/* 
 	 * Split into VersionedDomainNamespace per accounted major version of contained versioned elements
 	 */
-	def dispatch Set<VersionedDomainNamespace> toVersionedDomainNamespaces (SubNamespace s) {
+	def dispatch Set<VersionedDomainNamespace> splitNamespaceByMajorVersion (SubNamespace s) {
 		var Set<VersionedDomainNamespace> verNS = newHashSet();
 		
 		if (s.types.size > 0 || s.services.size > 0 || s.exceptions.size > 0) {
@@ -51,6 +51,7 @@ class NamespaceSplitter {
 			return verNS;
 		}
 	}
+	
 		
 	
 	def Set<VersionedDomainNamespace> getAllLatestSubNamespacesByMajorVersion (Set<VersionedDomainNamespace> canditates) { 
@@ -88,7 +89,7 @@ class NamespaceSplitter {
 			shortName 	= (ns.eContainer as OrganizationNamespace)?.prefix.stripXtextEscapes();
 		} 
 		subdomain 	= ns;
-		fqn 		= ns.fqn();
+		fqn 		= nameProvider.getFullyQualifiedName(ns).toString;
 		version 	= v.toMajorVersionNumber();
 		types 		= ns.allTypesByMajorVersion (v.version.toMajorVersionNumber()).map (t|t as Type).toList;
 		services 	= ns.services.filter (t|t.version.matchesMajorVersion (v.version.toMajorVersionNumber())).toList;
@@ -97,7 +98,7 @@ class NamespaceSplitter {
 
 	
 
-	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (BusinessObject c) {
+	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (VersionedType c) {
 			if (c.eContainer   instanceof SubNamespace ) {
 				name 		= (c.eContainer as SubNamespace).name.stripXtextEscapes();
 				shortName 	= (c.eContainer as SubNamespace).prefix?.stripXtextEscapes();		
@@ -106,28 +107,28 @@ class NamespaceSplitter {
 				shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
 			} 
 		subdomain 	= c.eContainer;
-		fqn 		= c.eContainer.fqn();
+		fqn 		= nameProvider.getFullyQualifiedName(c.eContainer).toString;
 		version 	= c.version.toMajorVersionNumber();
 		types 		= (c.eContainer as SubNamespace).allTypesByMajorVersion (c.version.toMajorVersionNumber()).map (t|t as Type).toList;
 		services 	= (c.eContainer as SubNamespace).services.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
 		exceptions 	= (c.eContainer as SubNamespace).exceptions.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
 	}
 		
-	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (org.fornax.soa.serviceDsl.Enumeration c) {
-		if (c.eContainer instanceof SubNamespace)  {
-			name 		= (c.eContainer as SubNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as SubNamespace).prefix?.stripXtextEscapes();		
-		} else {
-			name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
-		}
-		subdomain 	= c.eContainer;
-		fqn 		= c.eContainer.fqn();
-		version		= c.version.toMajorVersionNumber();
-		types 		= (c.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).map (t|t as Type).toList;
-		services 	= (c.eContainer as SubNamespace).services.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
-		exceptions 	= (c.eContainer as SubNamespace).exceptions.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
-	}
+//	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (org.fornax.soa.serviceDsl.Enumeration c) {
+//		if (c.eContainer instanceof SubNamespace)  {
+//			name 		= (c.eContainer as SubNamespace).name.stripXtextEscapes();
+//			shortName 	= (c.eContainer as SubNamespace).prefix?.stripXtextEscapes();		
+//		} else {
+//			name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
+//			shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
+//		}
+//		subdomain 	= c.eContainer;
+//		fqn 		= nameProvider.getFullyQualifiedName(c.eContainer).toString;
+//		version		= c.version.toMajorVersionNumber();
+//		types 		= (c.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).map (t|t as Type).toList;
+//		services 	= (c.eContainer as SubNamespace).services.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+//		exceptions 	= (c.eContainer as SubNamespace).exceptions.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+//	}
 	
 	/* 
 	 * Create a VersionedDomainNamespace for an Exception
@@ -141,7 +142,7 @@ class NamespaceSplitter {
 			shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
 		}
 		subdomain 	= c.eContainer;
-		fqn 		= c.eContainer.fqn();
+		fqn 		= nameProvider.getFullyQualifiedName(c.eContainer).toString;
 		version		= c.version.toMajorVersionNumber();
 		types 		= (c.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).map (t|t as Type).toList;
 		services 	= (c.eContainer as SubNamespace).services.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
@@ -157,7 +158,7 @@ class NamespaceSplitter {
 			shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
 		}
 		subdomain 	= c.eContainer;
-		fqn 		= c.eContainer.fqn();
+		fqn 		= nameProvider.getFullyQualifiedName(c.eContainer).toString;
 		version		= c.version.toMajorVersionNumber();
 		types 		= (c.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).map (t|t as Type).toList;
 		services 	= (c.eContainer as SubNamespace).services.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;

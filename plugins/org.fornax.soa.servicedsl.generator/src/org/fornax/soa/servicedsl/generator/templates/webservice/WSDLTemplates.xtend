@@ -6,7 +6,6 @@ import java.util.List
 import java.util.logging.Logger
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
@@ -22,7 +21,6 @@ import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Parameter
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 
@@ -33,10 +31,7 @@ class WSDLTemplates {
 	
 	@Inject IFileSystemAccess fsa
 
-	@Inject extension CommonStringExtensions
-	@Inject extension WsdlExtensions
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-	@Inject extension SchemaTemplateExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension HeaderFinder

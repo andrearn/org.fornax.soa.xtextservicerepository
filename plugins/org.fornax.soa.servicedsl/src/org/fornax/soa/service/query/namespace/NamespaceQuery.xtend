@@ -96,39 +96,45 @@ class NamespaceQuery {
 	}
 
 	/**
-	 *	Find the owning namespace of the owner of the type, service or exception reference
+	 *	Find the owning namespace of the owner of the type reference
 	 */
-	// TODO make this safe for cases when there is no stateful owner 
-	def dispatch SubNamespace findOwnerSubdomain (TypeRef t) {
+	def dispatch SubNamespace findRefOwnerSubdomain (TypeRef t) {
 		t.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
-	def dispatch SubNamespace findOwnerSubdomain (VersionedTypeRef c) {
+	/**
+	 *	Find the owning namespace of the owner of the type reference
+	 */
+	def dispatch SubNamespace findRefOwnerSubdomain (VersionedTypeRef c) {
 		c?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
-	def dispatch SubNamespace findOwnerSubdomain (BusinessObjectRef c) {
+	/**
+	 *	Find the owning namespace of the owner of the type reference
+	 */
+	def dispatch SubNamespace findRefOwnerSubdomain (BusinessObjectRef c) {
 		c?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
-	def dispatch SubNamespace findOwnerSubdomain (EnumTypeRef c) {
+	/**
+	 *	Find the owning namespace of the owner of the type reference
+	 */
+	def dispatch SubNamespace findRefOwnerSubdomain (EnumTypeRef c) {
 		c?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
-	def dispatch SubNamespace findOwnerSubdomain (ExceptionRef e) {
+	/**
+	 *	Find the owning namespace of the owner of the exception reference
+	 */
+	def dispatch SubNamespace findRefOwnerSubdomain (ExceptionRef e) {
 		e?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
-	def dispatch SubNamespace findOwnerSubdomain (ServiceRef s) {
+	/**
+	 *	Find the owning namespace of the owner of the service reference
+	 */
+	def dispatch SubNamespace findRefOwnerSubdomain (ServiceRef s) {
 		s?.getStatefulOwner()?.eContainer as SubNamespace;
-	}
-	
-	def dispatch String fqn (EObject o) {
-		null;
-	}
-	
-	def dispatch String fqn (OrganizationNamespace s) {
-		s.name.stripXtextEscapes();
 	}
 		
 }
