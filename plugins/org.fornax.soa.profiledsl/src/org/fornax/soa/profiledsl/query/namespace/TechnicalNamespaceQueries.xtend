@@ -4,7 +4,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import com.google.inject.Inject
 import org.fornax.soa.basedsl.CommonEObjectExtensions
 
-class NamespaceQueries {
+class TechnicalNamespaceQueries {
 	
 	@Inject extension CommonEObjectExtensions
 		

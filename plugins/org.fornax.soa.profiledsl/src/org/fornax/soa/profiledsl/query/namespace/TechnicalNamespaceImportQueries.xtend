@@ -12,17 +12,14 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Class
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
 import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
+import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
 
 /*********************************************************************************
  *	Calculation of all VersionedTechnicalNamespaces imported by a given or derived 
  *	VersionedTechnicalNamespace. Transitive dependencies are not yet calculated
  */
-class NamespaceImportQueries {
+class TechnicalNamespaceImportQueries {
 	
-	@Inject extension VersionMatcher
-	@Inject extension VersionQualifierExtensions
-	@Inject extension NamespaceQueries
-	@Inject extension LatestMatchingTypeFinder
 	@Inject extension VersionedTypeFilter
 	@Inject extension ReferencedTypesFinder
 	@Inject extension TechnicalNamespaceSplitter
@@ -59,6 +56,10 @@ class NamespaceImportQueries {
 	def dispatch Set<VersionedTechnicalNamespace> allImportedVersionedNS (TechnicalNamespace s, String nameSpaceMajorVersion) {
 		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (org.fornax.soa.profiledsl.sOAProfileDsl.Class))
 			.map (e|e.allReferencedVersionedTypes()).flatten.map (v|v.createVersionedTechnicalNamespace()).toSet;
+	}
+	
+	def dispatch Set<VersionedTechnicalNamespace> allImportedVersionedNS (MessageHeader t, String nameSpaceMajorVersion) {
+		t.allReferencedVersionedTypes().map (e|e.createVersionedTechnicalNamespace()).toSet();
 	}
 	
 
