@@ -8,7 +8,7 @@ import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
-import org.fornax.soa.profiledsl.query.namespace.NamespaceImportQueries
+import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceImportQueries
 import org.fornax.soa.profiledsl.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.profiledsl.sOAProfileDsl.Attribute
 import org.fornax.soa.profiledsl.sOAProfileDsl.Class
@@ -37,7 +37,7 @@ class MessageHeaderXSDTemplates {
 	@Inject extension ProfileSchemaTypeExtensions
 	@Inject extension VersionQualifierExtensions
 	@Inject extension TechnicalNamespaceSplitter
-	@Inject extension NamespaceImportQueries
+	@Inject extension TechnicalNamespaceImportQueries
 	@Inject extension LatestMatchingTypeFinder
 	
 	@Inject IEObjectDocumentationProvider docProvider

@@ -10,6 +10,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Type
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType
 import java.util.ArrayList
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader
+import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
 
 class ReferencedTypesFinder {
 	
@@ -30,6 +32,28 @@ class ReferencedTypesFinder {
 			refs.addAll (t.properties.filter (typeof (org.fornax.soa.profiledsl.sOAProfileDsl.Property)).map (e|e.type));
 		}
 		refs.toList;
+	}
+		
+	def dispatch List<VersionedType> allReferencedVersionedTypes (MessageHeader t)  { 
+		val types = t.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (v|v.type as Type);
+		val transitiveTypeRefs = types.map (e|e.allReferencedTypeRefs ()).flatten.filter (typeof (VersionedTypeRef))
+		transitiveTypeRefs.map (r|r.selectLatestMatchingType ()).filter (typeof (VersionedType)).toList;
+	}	
+	
+	
+	def dispatch List<TypeRef> allReferencedTypeRefs (Type t) {
+		new ArrayList<TypeRef>();
+	}
+	def dispatch List<TypeRef> allReferencedTypeRefs (TypeRef t) {
+		new ArrayList<TypeRef>();
+	}
+	
+	def dispatch List<TypeRef> allReferencedTypeRefs (VersionedType t) {
+		new ArrayList<TypeRef>();
+	}
+			
+	def dispatch List<TypeRef> allReferencedTypeRefs (MessageHeader t) {
+		t.parameters.map (p|p.type).toList;
 	}
 	
 }

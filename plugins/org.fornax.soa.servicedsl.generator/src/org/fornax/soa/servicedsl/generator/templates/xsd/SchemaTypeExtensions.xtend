@@ -10,7 +10,7 @@ import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
 import org.fornax.soa.profiledsl.query.LifecycleQueries
-import org.fornax.soa.profiledsl.query.namespace.NamespaceQueries
+import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceQueries
 import org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataType
@@ -57,7 +57,7 @@ class SchemaTypeExtensions {
 	@Inject extension IExceptionResolver
 	
 	@Inject ProfileSchemaTypeExtensions profileSchemaTypes
-	@Inject org.fornax.soa.profiledsl.query.namespace.NamespaceQueries profileNSQueries
+	@Inject TechnicalNamespaceQueries profileNSQueries
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNSExt
 	
 	/*

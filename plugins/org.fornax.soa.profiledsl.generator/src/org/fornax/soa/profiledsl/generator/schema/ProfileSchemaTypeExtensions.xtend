@@ -2,7 +2,7 @@ package org.fornax.soa.profiledsl.generator.schema
 
 import com.google.inject.Inject
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
-import org.fornax.soa.profiledsl.query.namespace.NamespaceQueries
+import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceQueries
 import org.fornax.soa.profiledsl.query.ProfileVersionQueries
 import org.fornax.soa.profiledsl.query.type.LatestMatchingTypeFinder
 import org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef
@@ -19,7 +19,7 @@ import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 class ProfileSchemaTypeExtensions {
 	
 	@Inject extension TechnicalNamespaceSplitter
-	@Inject extension NamespaceQueries
+	@Inject extension TechnicalNamespaceQueries
 	@Inject extension ProfileSchemaNamespaceExtensions
 	@Inject ProfileVersionQueries profileVersionQueries
 	@Inject extension LatestMatchingTypeFinder

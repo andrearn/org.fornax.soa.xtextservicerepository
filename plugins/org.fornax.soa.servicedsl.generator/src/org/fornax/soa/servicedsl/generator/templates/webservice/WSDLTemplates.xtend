@@ -23,6 +23,7 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
+import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceImportQueries
 
 /*
  * Template class for generation of abstract WSDLs
@@ -38,6 +39,7 @@ class WSDLTemplates {
 	@Inject extension NamespaceImportQueries
 	@Inject extension XSDTemplates
 
+	@Inject TechnicalNamespaceImportQueries techNsImportQueries
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
 	@Inject IEObjectDocumentationProvider docProvider	
@@ -114,7 +116,7 @@ class WSDLTemplates {
 					xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber (imp.version)»="«imp.toNamespace()»"
 				«ENDFOR»
 				«IF s.findBestMatchingHeader(profile) != null»
-					«FOR headerImp : s.findBestMatchingHeader (profile)?.allImportedVersionedNS(versionQualifier.toMajorVersionNumber(s.version))»
+					«FOR headerImp : techNsImportQueries.allImportedVersionedNS(s.findBestMatchingHeader (profile), versionQualifier.toMajorVersionNumber(s.version))»
 						xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp)+versionQualifier.toMajorVersionNumber (headerImp.version)»="«profileSchemaNamespaceExt.toNamespace(headerImp)»"
 					«ENDFOR»
 				«ENDIF»
@@ -126,7 +128,7 @@ class WSDLTemplates {
 						namespace="«imp.toNamespace ()»"/>
 				«ENDFOR»
 				«IF s.findBestMatchingHeader (profile) != null»
-					«FOR headerImp : s.findBestMatchingHeader (profile)?.allImportedVersionedNS (versionQualifier.toMajorVersionNumber(s.version))»
+					«FOR headerImp : techNsImportQueries.allImportedVersionedNS (s.findBestMatchingHeader (profile), versionQualifier.toMajorVersionNumber(s.version))»
 						<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
 							namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
 					«ENDFOR»

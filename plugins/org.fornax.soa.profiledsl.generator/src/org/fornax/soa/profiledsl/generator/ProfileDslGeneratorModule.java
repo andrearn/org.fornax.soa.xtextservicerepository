@@ -4,8 +4,8 @@ import org.fornax.soa.profiledsl.SOAProfileDslRuntimeModule;
 import org.fornax.soa.profiledsl.versioning.TechnicalNamespaceSplitter;
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions;
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions;
-import org.fornax.soa.profiledsl.query.namespace.NamespaceImportQueries;
-import org.fornax.soa.profiledsl.query.namespace.NamespaceQueries;
+import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceImportQueries;
+import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceQueries;
 import org.fornax.soa.profiledsl.query.ProfileVersionQueries;
 import org.fornax.soa.profiledsl.query.type.LatestMatchingTypeFinder;
 import org.fornax.soa.profiledsl.query.type.ReferencedTypesFinder;
@@ -25,12 +25,12 @@ public class ProfileDslGeneratorModule extends SOAProfileDslRuntimeModule {
 		return VersionedTypeFilter.class;
 	}
 	
-	public Class<? extends NamespaceImportQueries> bindProfileNamespaceImportQueries () {
-		return NamespaceImportQueries.class;
+	public Class<? extends TechnicalNamespaceImportQueries> bindProfileNamespaceImportQueries () {
+		return TechnicalNamespaceImportQueries.class;
 	}
 	
-	public Class<? extends NamespaceQueries> bindProfileNamespaceQueries () {
-		return NamespaceQueries.class;
+	public Class<? extends TechnicalNamespaceQueries> bindProfileNamespaceQueries () {
+		return TechnicalNamespaceQueries.class;
 	}
 	
 	public Class<? extends ProfileVersionQueries> bindProfileVersionQueries () {
