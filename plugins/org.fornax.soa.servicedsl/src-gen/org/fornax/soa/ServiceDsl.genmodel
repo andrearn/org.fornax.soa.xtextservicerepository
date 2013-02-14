@@ -267,17 +267,17 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/parameters"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/return"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/throws"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/considerationSpec"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/statefulness"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/updating"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/transactionSpec"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/persistence"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/messageHeader"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/callbackForOperation"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/publishes"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/subscribes"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/requires"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/statefulness"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/updating"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/persistence"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/transactionSpec"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/compensatedBy"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/messageHeader"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/considerationSpec"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/requires"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/realizedCapabilities"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/supportedCapabilities"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/tags"/>

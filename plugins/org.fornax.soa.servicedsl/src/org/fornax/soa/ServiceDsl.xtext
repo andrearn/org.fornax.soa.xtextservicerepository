@@ -400,6 +400,17 @@ Channel:
  */
 Operation:
 	(deprecated?='@deprecated')? (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
+		(considerationSpec=ConsiderationSpec)?
+		('statefulness' statefulness=Statefulness (updating?='updating')? )?
+		('transaction-spec' transactionSpec=TransactionSpec)?
+		/*
+		 * overrides the default from the service
+		 */ 
+		('persistence' persistence=Persistence )? 
+		/*
+		 * Overrides the message header declaration from the architecture profile or service for this operation
+		 */
+		('messageHeader' messageHeader = MessageHeaderRef )?
 		/*
 		 * Listens for callback from the given operations. Used, when one of the operations has been called asynchronously.
 		 * The operation must correlate the asynch response to the original request
@@ -416,24 +427,13 @@ Operation:
 			(subscribes+=EventRef )
 		'}')? 
 		/*
-		 * Services used by this service
-		 */
-		('requires' requires+=RequiredServiceRef )*
-		/*
-		 * overrides the default from the service
-		 */ 
-		('statefulness' statefulness=Statefulness (updating?='updating')? )?
-		('persistence' persistence=Persistence )? 
-		('transaction-spec' transactionSpec=TransactionSpec)?
-		/*
 		 * The operation that is capabale to revert/compensate the effect of this operation
 		 */
 		('compensated-by' compensatedBy+=OperationRef )?
 		/*
-		 * Overrides the message header declaration from the architecture profile or service for this operation
+		 * Services used by this service
 		 */
-		('messageHeader' messageHeader = MessageHeaderRef )?
-		(considerationSpec=ConsiderationSpec)?
+		('requires' requires+=RequiredServiceRef )*
 		('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?	
 		('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?	
 		('tags' (tags+=[semanticsDsl::Tag])+)*

@@ -307,24 +307,24 @@
         eType="#//Parameter" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="throws" upperBound="-1"
         eType="#//ExceptionRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="considerationSpec" eType="#//ConsiderationSpec"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="statefulness" eType="#//Statefulness"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="updating" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transactionSpec" eType="#//TransactionSpec"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="persistence" eType="#//Persistence"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeader" eType="#//MessageHeaderRef"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="callbackForOperation" upperBound="-1"
         eType="#//OperationRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="publishes" upperBound="-1"
         eType="#//PublishedEvent" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subscribes" upperBound="-1"
         eType="#//EventRef" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
-        eType="#//RequiredServiceRef" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="statefulness" eType="#//Statefulness"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="updating" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="persistence" eType="#//Persistence"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transactionSpec" eType="#//TransactionSpec"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="compensatedBy" upperBound="-1"
         eType="#//OperationRef" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeader" eType="#//MessageHeaderRef"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="considerationSpec" eType="#//ConsiderationSpec"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
+        eType="#//RequiredServiceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="realizedCapabilities" upperBound="-1"
         eType="#//CapabilityRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCapabilities"
