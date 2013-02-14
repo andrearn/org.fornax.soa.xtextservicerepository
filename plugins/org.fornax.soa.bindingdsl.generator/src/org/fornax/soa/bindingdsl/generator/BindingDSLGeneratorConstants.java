@@ -13,5 +13,6 @@ public class BindingDSLGeneratorConstants {
 	public final static String INCLUDE_SUB_NAMESPACES = "includeSubNamespaces";
 	public final static String TARGET_ENVIRONMENT_NAME = "targetEnvironmentName";
 	public final static String PROFILE_NAME = "profileName";
+	public final static String IGNORE_ENDPOINT_QUALIFIER_NAMES = "ignoreEndpointQualifierNames";
 	
 }

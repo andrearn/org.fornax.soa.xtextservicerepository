@@ -10,6 +10,8 @@ import org.fornax.soa.binding.query.BindingLookup;
 import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
+import org.fornax.soa.bindingdsl.generator.templates.naming.DefaultEndpointQualifierNameProvider;
+import org.fornax.soa.bindingdsl.generator.templates.naming.IEndpointQualifierNameProvider;
 import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlTemplates;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SOAPProtocolContractBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SoapBindingResolver;
@@ -59,6 +61,10 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 	
 	public Class<? extends WrappedWSDLTemplates> bindWrappedWSDLTemplates () {
 		return WrappedWSDLTemplates.class;
+	}
+	
+	public Class<? extends IEndpointQualifierNameProvider> bindIEndpointQualifierNameProvider() {
+		return DefaultEndpointQualifierNameProvider.class;
 	}
 	
 	public void configureModuleBindingNames (Binder binder) {

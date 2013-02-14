@@ -21,11 +21,12 @@ import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
+import org.fornax.soa.bindingdsl.generator.templates.naming.DefaultEndpointQualifierNameProvider
+import org.fornax.soa.bindingdsl.generator.templates.naming.IEndpointQualifierNameProvider
 
 class SoapVendorEndpointAddressResolver {
 	
-	@Inject extension EndpointQualifierNameProvider
+	@Inject extension IEndpointQualifierNameProvider
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject ContextRootProvider ctxRootProvider
 	@Inject SoapBindingResolver soapBindRes
@@ -51,23 +52,23 @@ class SoapVendorEndpointAddressResolver {
 		val serverVersion = server.toServerTypeVersion ();
 		if (serverType != null) {
 			switch (serverType.toLowerCase()) {
-			case "tomcat": 			tomcatEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "websphere":		websphereSCAEndpointPath (ctxRoot, orgNs, subNs, s, server)
+			case "tomcat": 			tomcatEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "websphere":		websphereSCAEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 			case "webmethods":		webmethodsEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "oraclesb":		oraclesbEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "weblogic":		weblogicEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "aqualogic":		aqualogicEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "sappi":			sappiEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "sapce":			sapceEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "sapnetweaver":	sapNetweaverEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "jboss":			jbossEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "jbossesb":		jbossesbEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "mule":			muleEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			case "fuseesb":			fuseesbEndpointPath (ctxRoot, orgNs, subNs, s, server)
-			default: 				defaultPatternEndpointPath (ctxRoot, orgNs, subNs, s, server)
+			case "oraclesb":		oraclesbEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "weblogic":		weblogicEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "aqualogic":		aqualogicEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "sappi":			sappiEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "sapce":			sapceEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "sapnetweaver":	sapNetweaverEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "jboss":			jbossEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "jbossesb":		jbossesbEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "mule":			muleEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "fuseesb":			fuseesbEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			default: 				defaultPatternEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
 			}
 		} else {
-			defaultPatternEndpointPath (ctxRoot, orgNs, subNs, s, server);
+			defaultPatternEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot);
 		}
 	}
 	def String toServerTypeName (Server s) {
@@ -108,28 +109,28 @@ class SoapVendorEndpointAddressResolver {
 			return "undefined"
 	}
 		
-	def String defaultPatternEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String defaultPatternEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String tomcatEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String tomcatEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String websphereEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String websphereEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String websphereSCAEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String websphereSCAEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.toPrefix() + "_" 
-		+ subNs.name.replaceAll("\\.","_") +"_" + s.name + "SOAP" + s.getServiceVisibilityName() + "_" + s.version.toVersionPostfix();
+		+ subNs.name.replaceAll("\\.","_") +"_" + s.name + "SOAP" + bind.getEndpointQualifierName (s, prot) + "_" + s.version.toVersionPostfix();
 	}
 	
 	def String webmethodsEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
@@ -138,7 +139,7 @@ class SoapVendorEndpointAddressResolver {
 		+ subNs.name + "." + s.name + "." + s.version.toVersionPostfix() + ":" + s.name;
 		var scopedPortName = ""
 		if (prot instanceof SOAP) {
-			scopedPortName = soapBindRes.toScopedPortName (s, prot as SOAP, bind.getEndpointQualifier (s))
+			scopedPortName = soapBindRes.toScopedPortName (s, bind, prot as SOAP, bind.getEndpointQualifierName (s, prot))
 		}
 		if (server instanceof ESB) {
 			val esb = (server as ESB)
@@ -153,61 +154,61 @@ class SoapVendorEndpointAddressResolver {
 		return servicePath
 	}
 	
-	def String oraclesbEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String oraclesbEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String weblogicEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String weblogicEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String aqualogicEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String aqualogicEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String sappiEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String sappiEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String sapceEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String sapceEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String sapNetweaverEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String sapNetweaverEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String jbossEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String jbossEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String jbossesbEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String jbossesbEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String muleEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String muleEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String fuseesbEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
+	def String fuseesbEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
 		ctxRoot
 		+ orgNs.name.replaceAll("\\.","/") + "/" 
 		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();

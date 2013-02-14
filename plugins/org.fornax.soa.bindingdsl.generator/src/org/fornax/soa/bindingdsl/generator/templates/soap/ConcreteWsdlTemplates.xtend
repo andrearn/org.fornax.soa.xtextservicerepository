@@ -10,8 +10,8 @@ import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
-import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
-import org.fornax.soa.bindingdsl.generator.templates.wsdl.ConcreteWsdlExtensions
+import org.fornax.soa.bindingdsl.generator.templates.naming.DefaultEndpointQualifierNameProvider
+import org.fornax.soa.bindingdsl.generator.templates.wsdl.ConcreteWsdlFileNameProvider
 import org.fornax.soa.environmentDsl.Server
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.Operation
@@ -20,6 +20,7 @@ import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
+import org.fornax.soa.bindingDsl.Binding
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -32,14 +33,14 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 class ConcreteWsdlTemplates {
 	
 	@Inject extension BindingExtensions
-	@Inject extension ConcreteWsdlExtensions
+	@Inject extension ConcreteWsdlFileNameProvider
 	@Inject extension SoapBindingResolver
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension SoapEndpointAddressResolver
 	@Inject extension EnvironmentBindingResolver
-	@Inject extension EndpointQualifierNameProvider
+	@Inject extension DefaultEndpointQualifierNameProvider
 
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IEObjectDocumentationProvider docProvider
@@ -56,7 +57,7 @@ class ConcreteWsdlTemplates {
 	
 	
 	def dispatch toWSDL(Service svc, ServiceBinding svcBind, SOAP prot, SOAProfile profile) {
-		val wsdlFile = svc.getConcreteWsdlFileNameFragment("Public") + ".wsdl";
+		val wsdlFile = svc.getConcreteWsdlFileNameFragment(svcBind, prot) + ".wsdl";
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -77,14 +78,14 @@ class ConcreteWsdlTemplates {
 			
 			«svcBind.protocol.filter (typeof(SOAP)).map (p|p.toSOAPBinding (svc)).join»
 
-			«svcBind.protocol.filter (typeof(SOAP)).map (p|p.toWsdlService(svc)).join»
+			«svcBind.protocol.filter (typeof(SOAP)).map (p|p.toWsdlService(svc, svcBind.resolveServer, svcBind)).join»
 		</wsdl:definitions>
 		''';
 		fsa.generateFile (wsdlFile, content);
 	}
 	
 	def dispatch toWSDL(Service svc, ModuleBinding modBind, BindingProtocol prot, SOAProfile profile) {
-		val wsdlFile = svc.getConcreteWsdlFileNameFragment(modBind.getEndpointQualifier (svc)) + ".wsdl";
+		val wsdlFile = svc.getConcreteWsdlFileNameFragment(modBind, prot) + ".wsdl";
 		val content ='''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -103,7 +104,7 @@ class ConcreteWsdlTemplates {
 
 		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 			
-			«prot.toSOAPBinding (svc, modBind.getEndpointQualifier(svc))»
+			«prot.toSOAPBinding (svc, modBind.getEndpointQualifierName(svc, prot))»
 
 			«prot.toWsdlService (svc, modBind.resolveServer, modBind)»
 		</wsdl:definitions>
@@ -155,19 +156,19 @@ class ConcreteWsdlTemplates {
 	def dispatch toWsdlService (BindingProtocol protocol, Service svc) {}
 	def dispatch toWsdlService (BindingProtocol protocol, Service svc, String qualifierName) {}
 	
-	def dispatch toWsdlService(SOAP protocol, Service svc) '''
+	def dispatch toWsdlService(SOAP protocol, Service svc, Binding bind) '''
 		<wsdl:service name="«svc.name»">
 			<wsdl:port binding="tns:«svc.toBindingName (protocol)»"
-				name="«svc.toScopedPortName (protocol)»">
+				name="«svc.toScopedPortName (bind, protocol)»">
 				<soap:address location="«svc.toEndpointAddress (protocol.eContainer)»" />
 			</wsdl:port>
 		</wsdl:service>
 	'''
 	
-	def dispatch toWsdlService(SOAP protocol, Service svc, String qualifierName) '''
+	def dispatch toWsdlService(SOAP protocol, Service svc, String qualifierName, Binding bind) '''
 		<wsdl:service name="«svc.name»">
 			<wsdl:port binding="tns:«svc.toBindingName (protocol, qualifierName)»"
-				name="«svc.toScopedPortName (protocol, qualifierName)»">
+				name="«svc.toScopedPortName (bind, protocol, qualifierName)»">
 				<soap:address location="«svc.toEndpointAddress (protocol.eContainer)»" />
 			</wsdl:port>
 		</wsdl:service>
@@ -177,8 +178,8 @@ class ConcreteWsdlTemplates {
 	
 	def dispatch toWsdlService (SOAP protocol, Service svc, Server server, ModuleBinding bind) '''
 		<wsdl:service name="«svc.name»">
-			<wsdl:port binding="tns:«svc.toBindingName (protocol, bind.getEndpointQualifier (svc))»"
-				name="«svc.toScopedPortName (protocol, bind.getEndpointQualifier (svc))»">
+			<wsdl:port binding="tns:«svc.toBindingName (protocol, bind.getEndpointQualifierName (svc, protocol))»"
+				name="«svc.toScopedPortName (bind, protocol, bind.getEndpointQualifierName (svc, protocol))»">
 				<soap:address location="«svc.toEndpointAddress (server, protocol, bind.module.module)»" />
 			</wsdl:port>
 		</wsdl:service>

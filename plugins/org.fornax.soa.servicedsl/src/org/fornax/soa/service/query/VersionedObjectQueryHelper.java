@@ -8,6 +8,7 @@ import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.GovernanceApproval;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.SubNamespace;
+import org.fornax.soa.serviceDsl.VersionedType;
 
 public class VersionedObjectQueryHelper {
 
@@ -55,9 +56,8 @@ public class VersionedObjectQueryHelper {
 	
 	public static boolean isStatefulServiceDslObject (EObject o) {
 		if (o instanceof SubNamespace || 
-				o instanceof BusinessObject ||
+				o instanceof VersionedType ||
 				o instanceof Service ||
-				o instanceof Enumeration ||
 				o instanceof org.fornax.soa.serviceDsl.Exception) {
 			return true;
 		} else {

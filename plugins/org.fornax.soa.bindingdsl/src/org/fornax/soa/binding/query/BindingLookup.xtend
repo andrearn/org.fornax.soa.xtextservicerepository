@@ -23,6 +23,7 @@ import org.fornax.soa.profiledsl.scoping.versions.IVersionFilterProvider
 import org.fornax.soa.semanticsDsl.Qualifier
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.binding.query.EndpointQualifierQueries
 
 class BindingLookup {
 	
@@ -37,7 +38,9 @@ class BindingLookup {
 	@Inject	
 	private IVersionFilterProvider versionFilterProvider
 	@Inject
-	private ModuleLookup moduleLookup	
+	private ModuleLookup moduleLookup
+	@Inject
+	private extension EndpointQualifierQueries	
 	
 	@Inject 
 	private ProtocolMatcher protocolMatcher
@@ -157,13 +160,13 @@ class BindingLookup {
 		val serviceBindingsWithBindingQualifier = serviceBindings.filter (b | 
 			b.eContainer instanceof ModuleBinding && 
 			protocolMatcher.supportsImportBindingProtocol (b, protocol) &&
-			(endpointQualifier == null || (b.eContainer as ModuleBinding).protocol.exists(p|p.endpointQualifierRefs.endpointQualifiers.exists(bindQualifier|bindQualifier == endpointQualifier)))
+			(endpointQualifier == null || (b.eContainer as ModuleBinding).protocol.exists(p|p.effectiveEndpointQualifier == endpointQualifier))
 		)
 		bindings.addAll (serviceBindingsWithBindingQualifier)
 		if (bindings.empty) {
 			val moduleBindingsWithBindingQualifier = moduleBindings.filter (b | 
 				protocolMatcher.supportsImportBindingProtocol (b, protocol) &&
-				(endpointQualifier == null || b.protocol.exists(p|p.endpointQualifierRefs != null && p.endpointQualifierRefs.endpointQualifiers.exists(bindQualifier|bindQualifier == endpointQualifier)))
+				(endpointQualifier == null || b.protocol.exists(p|p.endpointQualifierRef != null && p.effectiveEndpointQualifier == endpointQualifier))
 			)
 			bindings.addAll (moduleBindingsWithBindingQualifier)
 		}
@@ -196,6 +199,7 @@ class BindingLookup {
 	}
 	
 	
+	//TODO REVIEW resolution when unqualified
 	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env, ImportBindingProtocol protocol, Qualifier qualifier, Iterable<Module> scopedProviderModules) {
 		var Set<Binding> bindings = newHashSet()
 		val serviceBindings = service.findMostSpecificBindings(env).filter (typeof (ServiceBinding))
@@ -203,7 +207,7 @@ class BindingLookup {
 		val serviceBindingsWithBindingQualifier = serviceBindings.filter (b | 
 				b.eContainer instanceof ModuleBinding && 
 				protocolMatcher.supportsImportBindingProtocol (b, protocol) && 
-				(qualifier == null || b.protocol.exists (p|p.endpointQualifierRefs != null && p.endpointQualifierRefs.endpointQualifiers.exists (q|q == qualifier))) &&
+				(qualifier == null || b.protocol.exists (p|p.endpointQualifierRef != null && p.endpointQualifierRef.endpointQualifier == qualifier)) &&
 				(scopedProviderModules.nullOrEmpty || scopedProviderModules.exists (m|m == (b.eContainer as ModuleBinding).module.module))
 		)
 		if (!serviceBindingsWithBindingQualifier.nullOrEmpty) {
@@ -213,7 +217,7 @@ class BindingLookup {
 			val moduleBindingsWithBindingQualifier = moduleBindings.filter (b | 
 				protocolMatcher.supportsImportBindingProtocol (b, protocol) && 
 				(scopedProviderModules.nullOrEmpty || scopedProviderModules.exists (m| m == b.module.module)) && 
-				(qualifier == null || b.protocol.exists(p|p.endpointQualifierRefs != null && p.endpointQualifierRefs.endpointQualifiers.exists (q|q == qualifier))))
+				(qualifier == null || b.protocol.exists(p|p.endpointQualifierRef != null && p.effectiveEndpointQualifier == qualifier)))
 			if (!moduleBindingsWithBindingQualifier.nullOrEmpty) {
 				bindings.addAll (moduleBindingsWithBindingQualifier)
 			}
@@ -221,14 +225,19 @@ class BindingLookup {
 		return bindings.filter (p|protocolMatcher.supportsImportBindingProtocol (p, protocol))
 	}
 	
+	//TODO REVIEW resolution when unqualified
 	def dispatch Binding getMostSpecificBinding (Service service, Binding binding, Qualifier endpointQualifier) {
 		val candBind = service.getMostSpecificBinding (binding)
-		if (endpointQualifier != null && candBind != null && candBind.endpointQualifierRefs.endpointQualifiers.contains (endpointQualifier)) {
+		val bindEndpointQualifier = candBind.effectiveEndpointQualifier
+		if (endpointQualifier != null && candBind != null && bindEndpointQualifier == endpointQualifier) {
 			return binding
+		} else {
+			return candBind
 		}
 	}
 
 	def dispatch Binding getMostSpecificBinding (Service service, ModuleBinding binding) {
+		
 		if (!binding.serviceBindings.empty) {
 			for (svcBind : binding.serviceBindings) {
 				if (serviceRefMatcher.matches(service, svcBind.service)) {

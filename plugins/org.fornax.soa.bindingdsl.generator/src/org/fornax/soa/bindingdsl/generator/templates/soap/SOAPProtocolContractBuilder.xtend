@@ -28,6 +28,7 @@ import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver
+import org.fornax.soa.binding.query.BindingLookup
 
 /** 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -36,6 +37,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	
 	@Inject extension NamespaceQuery
 	@Inject extension BindingExtensions
+	@Inject extension BindingLookup
 	@Inject extension NamespaceImportQueries
 	@Inject extension HeaderFinder
 	@Inject extension EnvironmentBindingResolver		
@@ -67,7 +69,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 
 			if (svc != null) {
 				try {
-					val specBinding = binding.getMostSpecificBinding (svc);
+					val specBinding = svc.getMostSpecificBinding (binding);
 					for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
 						if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (binding.resolveEnvironment)) {
 							val namespace = svc.findSubdomain();

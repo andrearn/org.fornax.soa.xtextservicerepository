@@ -15,6 +15,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver
+import org.fornax.soa.binding.query.BindingLookup
 
 
 /* 
@@ -25,7 +26,7 @@ import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 class SCAExportTemplates {
 
 	
-	@Inject extension BindingExtensions
+	@Inject extension BindingLookup
 	@Inject extension IModuleServiceResolver
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension SCAExportExtension
@@ -44,7 +45,7 @@ class SCAExportTemplates {
 			for (provSvc : binding.module.module.providedServices) {
 				val svc = provSvc.resolveModuleServiceRef (binding.resolveEnvironment);
 				if (svc != null) {
-					binding.getMostSpecificBinding (svc).protocol.forEach (p|p.toServiceExport (binding, svc, profile));
+					svc.getMostSpecificBinding (binding).protocol.forEach (p|p.toServiceExport (binding, svc, profile));
 				}
 			}
 		}
@@ -69,7 +70,7 @@ class SCAExportTemplates {
 			<interfaces>
 				<interface xsi:type="wsdl:WSDLPortType" preferredInteractionStyle="sync" portType="ns1:«svc.name»"/>
 			</interfaces>
-			<esbBinding xsi:type="jaxws:JaxWsExportBinding" port="ns1:«svc.toScopedPortName (protocol)»" service="ns1:«svc.name»"/>
+			<esbBinding xsi:type="jaxws:JaxWsExportBinding" port="ns1:«svc.toScopedPortName (modBind, protocol)»" service="ns1:«svc.name»"/>
 		</scdl:export>
 		''';
 		

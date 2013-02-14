@@ -59,9 +59,6 @@ class BindingExtensions {
 		}
 	}
 	
-	def dispatch Binding getMostSpecificBinding (Binding b, Service s) {
-		
-	}
 	
 	def dispatch List<BindingProtocol> getEndpointProtocols (ServiceBinding b) {
 		b.protocol;
@@ -85,25 +82,7 @@ class BindingExtensions {
 			subNs.findOrgNamespace().prefix + "."  + subNs.name + "." + versionQualifier.toVersionPostfix(v);
 		}
 	}
-	
-	def dispatch boolean isProviderEndpoint (Service s, Server server) {
-		true;
-	}
-	def dispatch boolean isProviderEndpoint (Service s, AppServer server) {
-		true;
-	}
-	def dispatch boolean isProviderEndpoint (Service s, ESB server) {
-		s.visibility == Visibility::PRIVATE;
-	}
-	
-	def dispatch Binding getMostSpecificBinding (ModuleBinding modBind, Service svc) {
-		if (!modBind.serviceBindings.filter (e|e.service.service == svc).isEmpty) { 
-			modBind.serviceBindings.findFirst(e|e.service.service == svc);
-		} else { 
-			modBind;
-		}
-	}
-		
+			
 		
 	def dispatch boolean isEligibleForEnvironment (Service s, Environment env) {
 		stateMatcher.matches (env.getMinLifecycleState(s.state.eContainer as Lifecycle), s.state);

@@ -4,12 +4,14 @@ import com.google.inject.Inject
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingDsl.SOAPStyle
 import org.fornax.soa.bindingDsl.ServiceBinding
-import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
+import org.fornax.soa.bindingdsl.generator.templates.naming.DefaultEndpointQualifierNameProvider
 import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.bindingdsl.generator.templates.naming.IEndpointQualifierNameProvider
+import org.fornax.soa.bindingDsl.Binding
 
 class SoapBindingResolver {
 	
-	@Inject extension EndpointQualifierNameProvider
+	@Inject extension IEndpointQualifierNameProvider
 		
 	def String getWsdlBindingStyle(SOAP bind) { 
 		switch (bind.style) {
@@ -57,26 +59,17 @@ class SoapBindingResolver {
 			s.toPortName(p)
 	}
 	
-	def dispatch String toPrivatePortName (Service s, SOAP p) {
-		s.name + p.getPortNamePostfix();
+	
+	def String toScopedPortName (Service s, Binding binding, SOAP p) {
+		binding.getEndpointQualifierName (s, p)
+		s.toPortName(p) + binding.getEndpointQualifierName (s, p);
 	}
 	
-	def dispatch String toPrivatePortName (Service s, SOAP p, String qualifierName) {
+	def String toScopedPortName (Service s, Binding binding, SOAP p, String qualifierName) {
 		if (qualifierName != "Public" && qualifierName != "Private")
-			s.name + qualifierName + p.getPortNamePostfix() + "Private"
-		else 
-			s.toPrivatePortName(p) + "Private"
-	}
-	
-	def String toScopedPortName (Service s, SOAP p) {
-		s.toPortName(p) + s.getServiceVisibilityName ();
-	}
-	
-	def String toScopedPortName (Service s, SOAP p, String qualifierName) {
-		if (qualifierName != "Public" && qualifierName != "Private")
-			s.toPortName(p) + qualifierName + s.getServiceVisibilityName ()
+			s.toPortName(p) + qualifierName
 		else
-			s.toScopedPortName(p)
+			s.toScopedPortName(binding, p)
 	}
 	
 	def private String getPortNamePostfix(SOAP p) { 

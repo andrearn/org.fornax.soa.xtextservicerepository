@@ -10,7 +10,7 @@ import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder
 import org.fornax.soa.basedsl.search.IPredicateSearch
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.bindingDsl.Binding
-import org.fornax.soa.bindingDsl.EndpointQualifierRefs
+import org.fornax.soa.bindingDsl.EndpointQualifierRef
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
@@ -34,10 +34,10 @@ class ModuleBindingLookup {
 	private IEObjectDescriptionBuilder descBuilder;
 	
 	
-	def Binding getMostSpecificBinding (Service service, EndpointQualifierRefs endpointQualifierRefs, ImportBindingProtocol protocol, Environment targetEnvironment, Module module) {
-		val moduleBindings = findBindingForProvidingModuleAndEnv (targetEnvironment, module)
-		return null
-	}
+//	def Binding getMostSpecificBinding (Service service, EndpointQualifierRef endpointQualifierRef, ImportBindingProtocol protocol, Environment targetEnvironment, Module module) {
+//		val moduleBindings = findBindingForProvidingModuleAndEnv (targetEnvironment, module)
+//		return null
+//	}
 	
 	/*
 	 * Find a binding to the target environment that is applicable for the module 

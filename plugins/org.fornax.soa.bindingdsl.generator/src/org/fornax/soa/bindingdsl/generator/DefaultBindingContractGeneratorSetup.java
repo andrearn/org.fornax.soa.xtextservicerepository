@@ -40,6 +40,7 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 	private Boolean useNestedPaths = false;
 	private Boolean forceRelativePaths = false;
 	private String targetEnvironmentName = ".*";
+	private Boolean ignoreEndpointQualifierNames = false;
 
 	public Injector createInjectorAndDoEMFRegistration() {
 		Injector injector = Guice.createInjector (Modules2.mixin (
@@ -103,6 +104,10 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 							.annotatedWith (
 								Names.named (BindingDSLGeneratorConstants.PROFILE_NAME))
 							.toInstance (getProfileName ());
+						bind (Boolean.class)
+							.annotatedWith (
+								Names.named (BindingDSLGeneratorConstants.IGNORE_ENDPOINT_QUALIFIER_NAMES))
+							.toInstance (ignoreEndpointQualifierNames);
 
 						JavaIoFileSystemAccess fileSystemAccess = new JavaIoFileSystemAccess ();
 						OutputConfiguration out = new OutputConfiguration ("DEFAULT_OUTPUT");
@@ -218,6 +223,17 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 	public List<String> getInternalNamespaces() {
 		return internalNamespaces;
+	}
+
+
+	public Boolean getIgnoreEndpointQualifierNames() {
+		return ignoreEndpointQualifierNames;
+	}
+
+
+	public void setIgnoreEndpointQualifierNames(
+			Boolean ignoreEndpointQualifierNames) {
+		this.ignoreEndpointQualifierNames = ignoreEndpointQualifierNames;
 	}
 
 }
