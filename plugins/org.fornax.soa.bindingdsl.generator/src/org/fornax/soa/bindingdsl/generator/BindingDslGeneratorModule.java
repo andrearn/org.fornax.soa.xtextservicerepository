@@ -7,14 +7,13 @@ import java.util.Set;
 
 import org.fornax.soa.BindingDslRuntimeModule;
 import org.fornax.soa.binding.query.BindingLookup;
-import org.fornax.soa.binding.query.services.BindingServiceResolver;
 import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlTemplates;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SOAPProtocolContractBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SoapBindingResolver;
-import org.fornax.soa.bindingdsl.generator.templates.soap.SoapVendorBindingsResolver;
+import org.fornax.soa.bindingdsl.generator.templates.soap.SoapVendorEndpointAddressResolver;
 import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportExtension;
 import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportTemplates;
 import org.fornax.soa.bindingdsl.generator.templates.wsdl.WrappedWSDLTemplates;
@@ -28,10 +27,6 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 
 	public Class<? extends BindingLookup> bindModuleBindingResolver () {
 		return BindingLookup.class;
-	}
-	
-	public Class<? extends BindingServiceResolver> bindBindingServiceResolver () {
-		return BindingServiceResolver.class;
 	}
 	
 	public Class<? extends BindingExtensions> bindBindingExtensions () {
@@ -50,8 +45,8 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		return SoapBindingResolver.class;
 	}
 	
-	public Class<? extends SoapVendorBindingsResolver> bindSoapVendorBindingsResolver () {
-		return SoapVendorBindingsResolver.class;
+	public Class<? extends SoapVendorEndpointAddressResolver> bindSoapVendorBindingsResolver () {
+		return SoapVendorEndpointAddressResolver.class;
 	}
 	
 	public Class<? extends SCAExportExtension> bindSCAExportExtension () {

@@ -17,6 +17,7 @@ import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.util.BaseDslEqualityHelper;
 import org.fornax.soa.basedsl.util.TreeNode;
+import org.fornax.soa.service.query.type.BusinessObjectQueries;
 import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.Property;
@@ -37,7 +38,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	
 	@Inject
 	private
-	BusinessObjectQueryInternal boQuery;
+	BusinessObjectQueries boQuery;
 	
 	@Inject
 	private
@@ -57,7 +58,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	
 	@Test
 	public void testGetAllInheritedProperties () {
-		List<Property> props = BusinessObjectQueryInternal.getAllInheritedProperties (bo1);
+		List<Property> props = boQuery.getAllInheritedProperties (bo1);
 		assertFalse (props.contains(attrBo1));
 		assertTrue (props.contains(attrBo3));
 		assertTrue (props.contains(attrBo4));
@@ -65,7 +66,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	
 	@Test
 	public void testGetAllVisibleProperties () {
-		List<Property> props = BusinessObjectQueryInternal.getAllVisibleProperties (bo1);
+		List<Property> props = boQuery.getAllVisibleProperties (bo1);
 		assertTrue (props.contains(attrBo1));
 		assertTrue (props.contains(attrBo3));
 		assertTrue (props.contains(attrBo4));
@@ -114,11 +115,11 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 		return nameProvider;
 	}
 
-	public void setBoQuery (BusinessObjectQueryInternal boQuery) {
+	public void setBoQuery (BusinessObjectQueries boQuery) {
 		this.boQuery = boQuery;
 	}
 
-	public BusinessObjectQueryInternal getBoQuery() {
+	public BusinessObjectQueries getBoQuery() {
 		return boQuery;
 	}
 

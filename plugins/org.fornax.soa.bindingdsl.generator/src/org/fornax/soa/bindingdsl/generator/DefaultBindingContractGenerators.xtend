@@ -51,9 +51,6 @@ class DefaultBindingContractGenerators implements IGenerator {
 	
 	@Inject @Named ("moduleBindingNames") 	
 	List<String> moduleBindingNames
-
-	@Inject @Named ("moduleNames") 	
-	List<String> moduleNames
 	
 	@Inject @Named ("modules")
 	List<VersionedModuleSelector> modules
@@ -126,12 +123,13 @@ class DefaultBindingContractGenerators implements IGenerator {
 			if (contentRoot instanceof ModuleModel) {
 				val modModel = contentRoot as ModuleModel
 				for (module : modModel.modules) {
-					if (moduleNames.exists(modName | Pattern::matches (modName, nameProvider.getFullyQualifiedName (module).toString))
-						|| modules.exists(mod | mod.name == nameProvider.getFullyQualifiedName (module).toString 
+					if (modules.exists(mod | mod.name == nameProvider.getFullyQualifiedName (module).toString 
 							&& (mod.version == null || mod.version == "" || mod.version == module.version.version )
 						)
 					) {
-						module.compile (profile, resource)
+						val moduleSelector = modules.findFirst(modSel | modSel.name == nameProvider.getFullyQualifiedName (module).toString 
+							&& (modSel.version == null || modSel.version == "" || modSel.version == module.version.version))
+						module.compile (moduleSelector, profile, resource)
 					}
 				}
 			}
@@ -163,11 +161,15 @@ class DefaultBindingContractGenerators implements IGenerator {
 			bindingTpl.toBinding (bind, profile);
 	}
 		
-	def protected compile (Module mod, SOAProfile profile, Resource resource) {
+	def protected compile (Module mod, VersionedModuleSelector moduleSelector, SOAProfile profile, Resource resource) {
 		logger.info("Generating contracts for module " + mod.name + " version " + mod.version.version)
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
+		var generateProvidedServices = moduleSelector.generateProvidedServices
+		var generateUsedServices = moduleSelector.generateUsedServices
+		if (!generateProvidedServices && !generateUsedServices)
+			generateUsedServices = true
 		if (env != null)
-			bindingTpl.toBinding(mod, env, profile)
+			bindingTpl.toBinding(mod, env, generateProvidedServices, generateUsedServices, profile)
 		else
 			logger.severe ("No environment found matching the name expression " + targetEnvironmentName)
 	}

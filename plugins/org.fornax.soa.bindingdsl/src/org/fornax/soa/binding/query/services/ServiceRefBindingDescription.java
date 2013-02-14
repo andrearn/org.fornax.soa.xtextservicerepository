@@ -1,4 +1,4 @@
-package org.fornax.soa.binding.query;
+package org.fornax.soa.binding.query.services;
 
 import org.eclipse.emf.ecore.EObject;
 import org.fornax.soa.bindingDsl.Binding;

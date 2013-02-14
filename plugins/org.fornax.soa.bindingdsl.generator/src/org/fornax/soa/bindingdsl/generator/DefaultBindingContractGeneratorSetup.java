@@ -31,7 +31,6 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 	private String profileName = ".*";
 	private List<String> moduleBindingNames = new ArrayList<String>();
-	private List<String> moduleNames = new ArrayList<String>();
 	private List<VersionedModuleSelector> modules = new ArrayList<VersionedModuleSelector>();
 	private List<String> namespaces = new ArrayList<String>();
 	private List<String> domainNamespaces = new ArrayList<String>();
@@ -135,14 +134,6 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 	public void addModuleBindingName (String moduleBindingName) {
 		moduleBindingNames.add (moduleBindingName);
-	}
-
-	public List<String> getModuleNames () {
-		return moduleNames;
-	}
-
-	public void addModuleName (String moduleName) {
-		moduleNames.add (moduleName);
 	}
 
 	public List<VersionedModuleSelector> getServiceModules () {

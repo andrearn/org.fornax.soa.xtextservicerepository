@@ -34,16 +34,16 @@ class BindingBuilder {
 	
 	
 
-	/*
-		ENTRYPOINT for generation of concrete and imported abstract WSDLs and their required XSDs 
-		for a gibven ModuleBindings. The ModuleBinding binds all Services provided by the module
-		to a certain Environment. Generates artifacts for all ModuleBindings
-		that target an Environment matching the given environment name.
-		
-		All Services referenced by the Module and their required XSDs that match the minimal given 
-		LifecycleState derived from the profile's Environment and the minimal required LifecycleState 
-		of the respective Service / owning SubNamespace
-	*/
+	/**
+	 *	ENTRYPOINT for generation of concrete and imported abstract WSDLs and their required XSDs 
+	 *	for a gibven ModuleBindings. The ModuleBinding binds all Services provided by the module
+	 *	to a certain Environment. Generates artifacts for all ModuleBindings
+	 *	that target an Environment matching the given environment name.
+	 *	
+	 *	All Services referenced by the Module and their required XSDs that match the minimal given 
+	 *	LifecycleState derived from the profile's Environment and the minimal required LifecycleState 
+	 *	of the respective Service / owning SubNamespace
+	 */
 	def toBinding (ModuleBinding binding, SOAProfile profile) {
 		log.info ("Generating technical service contracts for binding " + binding.name)
 		try {
@@ -62,19 +62,19 @@ class BindingBuilder {
 		}
 	}
 
-	def toBinding (Module module, Environment environment, SOAProfile profile) {
+	def toBinding (Module module, Environment environment, boolean generateProvidedServices, boolean generateUsedServices, SOAProfile profile) {
 		log.info ("Generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name)
 		try {
-			contractBuilder.build (module, environment, profile);
+			contractBuilder.build (module, environment, generateProvidedServices, generateUsedServices, profile);
 		} catch (Exception ex) {
 			log.severe ("Error generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name + "\n" + ex.message)
 		}
 	}
 		
 	
-	/*
-		Event XSDs for Services having an request and an response event for each service operation
-	*/
+	/**
+	 *	Event XSDs for Services having an request and an response event for each service operation
+	 */
 	def toEventsInclSubNamespaces (String namespaceName, List<SubNamespace> namespaces, List<Environment> environments, String targetEnv, List<SOAProfile> profiles, String profileName) {
 		if (namespaceName != null) {
 			for (ns : namespaces.filter (e|e.name.startsWith (namespaceName))) {

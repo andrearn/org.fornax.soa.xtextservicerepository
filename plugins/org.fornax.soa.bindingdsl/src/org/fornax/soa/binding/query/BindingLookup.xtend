@@ -1,36 +1,28 @@
 package org.fornax.soa.binding.query
 
-import org.fornax.soa.serviceDsl.Service
-import org.eclipse.emf.ecore.resource.ResourceSet
-import java.util.Set
-import org.eclipse.xtext.resource.IEObjectDescription
 import com.google.common.base.Predicates
-import java.util.List
-import org.fornax.soa.bindingDsl.Binding
-import org.eclipse.xtext.EcoreUtil2
 import com.google.inject.Inject
+import java.util.List
+import java.util.Set
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator
-import org.fornax.soa.basedsl.search.IEObjectLookup
-import org.fornax.soa.basedsl.search.IReferenceSearch
-import org.fornax.soa.basedsl.search.IPredicateSearch
-import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.fornax.soa.moduledsl.moduleDsl.Module
-import org.fornax.soa.bindingDsl.ModuleBinding
+import org.eclipse.xtext.resource.IEObjectDescription
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder
-import org.fornax.soa.profiledsl.scoping.versions.IVersionFilterProvider
-import org.fornax.soa.bindingDsl.ServiceBinding
-import org.fornax.soa.moduledsl.query.ModuleLookup
-import org.fornax.soa.environmentDsl.Environment
+import org.fornax.soa.basedsl.search.IPredicateSearch
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
-import org.fornax.soa.moduledsl.query.ModuleServiceResolver
-import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.binding.query.services.BindingServiceRefMatcher
+import org.fornax.soa.bindingDsl.Binding
+import org.fornax.soa.bindingDsl.ModuleBinding
+import org.fornax.soa.bindingDsl.ServiceBinding
+import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
-import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef
-import org.fornax.soa.moduledsl.query.IModuleVersionMatcher
+import org.fornax.soa.moduledsl.moduleDsl.Module
+import org.fornax.soa.moduledsl.query.ModuleLookup
+import org.fornax.soa.profiledsl.scoping.versions.IVersionFilterProvider
 import org.fornax.soa.semanticsDsl.Qualifier
-import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.moduledsl.query.ServiceRefMatcher
+import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.serviceDsl.SubNamespace
 
 class BindingLookup {
 	
@@ -47,8 +39,6 @@ class BindingLookup {
 	@Inject
 	private ModuleLookup moduleLookup	
 	
-	@Inject 
-	private ModuleServiceResolver moduleResolver
 	@Inject 
 	private ProtocolMatcher protocolMatcher
 	@Inject 
@@ -135,7 +125,7 @@ class BindingLookup {
 		var Set<Binding> bindings = newHashSet()
 		val serviceBindings = allBindings.filter (typeof (ServiceBinding)).filter (b|b.resolveEnvironment == env && b.service.service == service)
 		if (serviceBindings.empty) {
-			val providingModules = moduleResolver.findProvidingModules(service)
+			val providingModules = moduleLookup.findProvidingModules(service)
 			if (!providingModules.empty) {
 				val moduleBindings = allBindings.filter (typeof (ModuleBinding)).filter (b|b.resolveEnvironment == env && providingModules.exists(m|m == b.module.module))
 				bindings.addAll(moduleBindings)
@@ -189,7 +179,7 @@ class BindingLookup {
 		var Set<Binding> bindings = newHashSet()
 		val serviceBindings = allBindings.filter (typeof (ServiceBinding)).filter (b|b.resolveEnvironment == env && b.service.service == service)
 		if (serviceBindings.empty) {
-			val providingModules = moduleResolver.findProvidingModules(service, canditateModules)
+			val providingModules = moduleLookup.findProvidingModules(service, canditateModules)
 			if (!providingModules.empty) {
 				val moduleBindings = allBindings.filter (typeof (ModuleBinding)).filter (b|b.resolveEnvironment == env && providingModules.exists(m|m == b.module.module))
 				bindings.addAll(moduleBindings)

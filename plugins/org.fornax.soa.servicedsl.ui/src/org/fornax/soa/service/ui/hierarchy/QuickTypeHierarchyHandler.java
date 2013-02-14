@@ -21,6 +21,7 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.ILocationInFileProvider;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.util.ITextRegion;
+import org.fornax.soa.service.ui.EObjectElementProvider;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;

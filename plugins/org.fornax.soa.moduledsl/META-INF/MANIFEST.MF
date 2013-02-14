@@ -5,23 +5,23 @@ Bundle-Vendor: Fornax Platform
 Bundle-Version: 1.6.0.qualifier
 Bundle-SymbolicName: org.fornax.soa.moduledsl; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.1.1",
- org.eclipse.xtext.generator;bundle-version="2.1.1";resolution:=optional,
+Require-Bundle: org.eclipse.xtext;bundle-version="2.3.1",
+ org.eclipse.xtext.generator;bundle-version="2.3.1";resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
- org.eclipse.xtext.xtend;resolution:=optional,
- org.fornax.soa.basedsl;bundle-version="1.5.5",
- org.fornax.soa.semanticsdsl;bundle-version="1.5.5",
- org.fornax.soa.profiledsl;bundle-version="1.5.5",
- org.fornax.soa.servicedsl;bundle-version="1.5.5",
- org.eclipse.xtext.util;bundle-version="2.1.1",
+ org.fornax.soa.basedsl;bundle-version="1.6.0",
+ org.fornax.soa.semanticsdsl;bundle-version="1.6.0",
+ org.fornax.soa.profiledsl;bundle-version="1.6.0",
+ org.fornax.soa.servicedsl;bundle-version="1.6.0",
+ org.eclipse.xtext.util;bundle-version="2.3.1",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.fornax.soa.environmentdsl;bundle-version="1.5.5"
+ org.fornax.soa.environmentdsl;bundle-version="1.6.0",
+ org.eclipse.xtend.lib;bundle-version="2.3.1"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.moduledsl,

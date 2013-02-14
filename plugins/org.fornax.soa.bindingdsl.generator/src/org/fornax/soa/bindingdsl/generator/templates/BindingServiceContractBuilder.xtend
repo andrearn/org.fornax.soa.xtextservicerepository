@@ -35,10 +35,13 @@ class BindingServiceContractBuilder {
 		}
 	}
 	
-	def void build (Module module, Environment targetEnvironment, SOAProfile profile) {
+	def void build (Module module, Environment targetEnvironment, boolean generateProvidedServices, boolean generateUsedServices, SOAProfile profile) {
 		for (protContractBuilder : protocolContractBuilders) {
 			try {
-				protContractBuilder.buildUsedServiceContracts (module, targetEnvironment, profile);
+				if (generateProvidedServices)
+					protContractBuilder.buildProvidedServiceContracts (module, targetEnvironment, profile);
+				if (generateUsedServices)
+					protContractBuilder.buildUsedServiceContracts (module, targetEnvironment, profile);
 			} catch (Exception ex) {
 				log.log (Level::SEVERE, "Error generating contracts\n", ex)
 			}

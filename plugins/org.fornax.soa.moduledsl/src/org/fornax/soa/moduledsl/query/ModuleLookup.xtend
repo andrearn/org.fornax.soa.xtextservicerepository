@@ -1,25 +1,21 @@
 package org.fornax.soa.moduledsl.query
 
-import com.google.inject.Inject
-import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.fornax.soa.basedsl.search.IPredicateSearch
-import org.eclipse.emf.ecore.resource.ResourceSet
-import java.util.List
-import org.fornax.soa.moduledsl.moduleDsl.Module
 import com.google.common.base.Predicates
-import org.eclipse.xtext.EcoreUtil2
-import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.moduledsl.moduleDsl.ModuleRef
-import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef
-import org.fornax.soa.semanticsDsl.Qualifier
-import org.fornax.soa.basedsl.sOABaseDsl.VersionRef
-import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef
-import org.eclipse.emf.ecore.EObject
+import com.google.inject.Inject
+import java.util.List
 import java.util.Set
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.EcoreUtil2
+import org.fornax.soa.basedsl.sOABaseDsl.VersionRef
+import org.fornax.soa.basedsl.search.IPredicateSearch
+import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef
+import org.fornax.soa.moduledsl.moduleDsl.Module
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef
+import org.fornax.soa.serviceDsl.Service
 
 class ModuleLookup {
 	
-	@Inject IStateMatcher stateMatcher
 	@Inject IPredicateSearch search
 	@Inject extension IModuleVersionMatcher
 	
@@ -81,6 +77,33 @@ class ModuleLookup {
 	def findProvidingModules (Service service, Iterable<Module> candidateModules, String qualifierName) {
 		service.findProvidingModules (candidateModules).filter (m|m.qualifiers.qualifiers.exists(q|q.name == qualifierName))
 	}	
+		
+	/*
+	 * Get the endpoint qualifier
+	 */	
+	def dispatch String getQualifier (Module module) {
+		module.endpointQualifier.name
+	}
+	
+	/*
+	 * Get the endpoint qualifier
+	 */	
+	def dispatch String getQualifier (ModuleRef moduleRef) {
+		if (moduleRef.endpointQualifier != null)
+			return moduleRef.endpointQualifier.name
+		else
+			return (moduleRef.eContainer as Module).qualifier
+	}
+	
+	/*
+	 * Get the endpoint qualifier
+	 */	
+	def dispatch String getQualifier (ImportServiceRef impServiceRef) {
+		if (impServiceRef.endpointQualifier != null)
+			return impServiceRef.endpointQualifier.name
+		else
+			return (impServiceRef.eContainer as Module).qualifier
+	}
 		
 	def dispatch String getBindingQualifier (Module module) {
 		module.endpointQualifier.name

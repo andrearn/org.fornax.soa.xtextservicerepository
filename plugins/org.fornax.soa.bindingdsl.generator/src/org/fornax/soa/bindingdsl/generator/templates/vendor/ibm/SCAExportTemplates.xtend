@@ -1,34 +1,32 @@
 package org.fornax.soa.bindingdsl.generator.templates.vendor.ibm
 
-import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.fornax.soa.bindingDsl.BindingProtocol
-import org.fornax.soa.bindingDsl.ModuleBinding
-import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
-import org.fornax.soa.service.query.ServiceQueries
 import com.google.inject.Inject
-import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.bindingDsl.SOAP
-import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
-import org.fornax.soa.environmentdsl.generator.EndpointResolver
-import org.fornax.soa.binding.query.services.BindingServiceResolver
-import org.fornax.soa.basedsl.version.VersionQualifierExtensions
-import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
-import org.fornax.soa.bindingdsl.generator.templates.soap.SoapBindingResolver
-import org.fornax.soa.bindingDsl.SCA
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
+import org.fornax.soa.bindingDsl.BindingProtocol
+import org.fornax.soa.bindingDsl.ModuleBinding
+import org.fornax.soa.bindingDsl.SCA
+import org.fornax.soa.bindingDsl.SOAP
+import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
+import org.fornax.soa.bindingdsl.generator.templates.soap.SoapBindingResolver
+import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
+import org.fornax.soa.moduledsl.query.DefaultModuleServiceResolver
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
+import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 
 
 /* 
  * Generator for IBM SCA export components for the IBM WebSphere ESB. For each service provided from the module referenced in the binding
- * that supports an SCA protocol and is elible for the bindings target environment as of their lifecycle state 
+ * that supports an SCA protocol and is eligible for the bindings target environment as of their lifecycle state 
  * an SCA export component is being generated.
  */
 class SCAExportTemplates {
 
 	
 	@Inject extension BindingExtensions
-	@Inject extension BindingServiceResolver
+	@Inject extension IModuleServiceResolver
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension SCAExportExtension
 	@Inject extension SoapBindingResolver
@@ -44,7 +42,7 @@ class SCAExportTemplates {
 	def dispatch void toSCAModuleExport (ModuleBinding binding, SOAProfile profile) {
 		if (binding.module.module.assemblyType == AssemblyType::SCA_EAR) {
 			for (provSvc : binding.module.module.providedServices) {
-				val svc = provSvc.latestServiceInEnvironment (binding.resolveEnvironment);
+				val svc = provSvc.resolveModuleServiceRef (binding.resolveEnvironment);
 				if (svc != null) {
 					binding.getMostSpecificBinding (svc).protocol.forEach (p|p.toServiceExport (binding, svc, profile));
 				}

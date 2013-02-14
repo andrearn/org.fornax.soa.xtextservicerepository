@@ -1397,7 +1397,7 @@
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="deprecated" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="@deprecated"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" feature="mep" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="mep" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.54"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="transactional" operator="?=">

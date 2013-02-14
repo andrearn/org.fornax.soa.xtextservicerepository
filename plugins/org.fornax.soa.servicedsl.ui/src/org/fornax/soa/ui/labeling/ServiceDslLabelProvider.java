@@ -20,6 +20,7 @@ import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Parameter;
+import org.fornax.soa.serviceDsl.QueryObject;
 import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.RequiredServiceRef;
 import org.fornax.soa.serviceDsl.Service;
@@ -79,6 +80,15 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	String image (BusinessObject ele) {
 		return "full/obj16/bo_obj.gif";
+	}
+	Object text (QueryObject ele) {
+		StyledString name = new StyledString(ele.getName());
+		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + ele.getState().getName (), StyledString.DECORATIONS_STYLER);
+		name.append(versionAndState);
+		return name;
+	}
+	String image (QueryObject ele) {
+		return "full/obj16/QueryObject.gif";
 	}
 	
 	Object text (Enumeration ele) {

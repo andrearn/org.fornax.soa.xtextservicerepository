@@ -16,7 +16,9 @@ import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.profiledsl.sOAProfileDsl.ServiceBaseCategory;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
+import org.fornax.soa.service.query.type.BusinessObjectQueries;
 import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
+import org.fornax.soa.service.query.type.QueryObjectQueries;
 import org.fornax.soa.service.validation.version.BusinessObjectVersionValidator;
 import org.fornax.soa.service.validation.version.EnumerationVersionValidator;
 import org.fornax.soa.service.validation.version.ExceptionVersionValidator;
@@ -63,7 +65,10 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	IQualifiedNameProvider nameProvider;
 	
 	@Inject
-	private	BusinessObjectQueryInternal boQuery;
+	private	BusinessObjectQueries boQuery;
+	
+	@Inject
+	private	QueryObjectQueries qoQuery;
 	
 	@Inject
 	IPredicateSearch predicateSearch;
@@ -80,7 +85,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (bo.getSuperBusinessObject() != null
 					&& bo.getSuperBusinessObject().getType() != null) {
 				final String propName = prop.getName();
-				for (BusinessObject superType : BusinessObjectQueryInternal
+				for (BusinessObject superType : boQuery
 						.getAllSuperTypes(bo, null)) {
 					
 					Iterable<Property> props = Iterables.filter (
@@ -112,7 +117,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (bo.getSuperQueryObject() != null
 					&& bo.getSuperQueryObject().getType() != null) {
 				final String propName = prop.getName();
-				for (QueryObject superType : BusinessObjectQueryInternal
+				for (QueryObject superType : getQoQuery()
 						.getAllSuperTypes(bo, null)) {
 					
 					Iterable<Property> props = Iterables.filter (
@@ -648,12 +653,20 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		return propName.toString();
 	}
 
-	public void setBoQuery(BusinessObjectQueryInternal boQuery) {
+	public void setBoQuery(BusinessObjectQueries boQuery) {
 		this.boQuery = boQuery;
 	}
 
-	public BusinessObjectQueryInternal getBoQuery() {
+	public BusinessObjectQueries getBoQuery() {
 		return boQuery;
+	}
+
+	public QueryObjectQueries getQoQuery() {
+		return qoQuery;
+	}
+
+	public void setQoQuery(QueryObjectQueries qoQuery) {
+		this.qoQuery = qoQuery;
 	}
 
 }

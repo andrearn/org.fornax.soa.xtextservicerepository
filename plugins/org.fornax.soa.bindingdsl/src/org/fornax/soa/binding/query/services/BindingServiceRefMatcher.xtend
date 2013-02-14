@@ -1,4 +1,5 @@
-package org.fornax.soa.binding.query
+package org.fornax.soa.binding.query.services
+
 
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.basedsl.version.VersionMatcher

@@ -4,11 +4,14 @@ import com.google.inject.Inject
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
+import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingDsl.ServiceBinding
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
+import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
+import org.fornax.soa.bindingdsl.generator.templates.wsdl.ConcreteWsdlExtensions
 import org.fornax.soa.environmentDsl.Server
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.Operation
@@ -17,9 +20,6 @@ import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
-import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
-import org.fornax.soa.bindingdsl.generator.templates.wsdl.ConcreteWsdlExtensions
-import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 

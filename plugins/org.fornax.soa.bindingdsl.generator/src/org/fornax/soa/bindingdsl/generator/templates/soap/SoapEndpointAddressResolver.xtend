@@ -22,7 +22,7 @@ class SoapEndpointAddressResolver {
 
 	@Inject extension NamespaceQuery
 	@Inject extension BindingExtensions
-	@Inject extension SoapVendorBindingsResolver
+	@Inject extension SoapVendorEndpointAddressResolver
 	@Inject extension EndpointResolver
 	@Inject extension EnvironmentBindingResolver
 	@Inject BindingConnectorResolver connectorResolver

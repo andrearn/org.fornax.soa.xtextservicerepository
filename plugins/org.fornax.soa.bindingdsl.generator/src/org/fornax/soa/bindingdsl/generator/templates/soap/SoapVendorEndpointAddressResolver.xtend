@@ -23,7 +23,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
 
-class SoapVendorBindingsResolver {
+class SoapVendorEndpointAddressResolver {
 	
 	@Inject extension EndpointQualifierNameProvider
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions

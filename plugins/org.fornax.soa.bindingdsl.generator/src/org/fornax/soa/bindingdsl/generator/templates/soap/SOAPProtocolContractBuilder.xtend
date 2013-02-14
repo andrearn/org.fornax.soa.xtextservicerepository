@@ -7,9 +7,8 @@ import java.util.logging.Logger
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.fornax.soa.binding.query.BindingResolver
 import org.fornax.soa.binding.query.ProtocolMatcher
-import org.fornax.soa.binding.query.ServiceRefBindingDescription
+import org.fornax.soa.binding.query.services.ServiceRefBindingDescription
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
-import org.fornax.soa.binding.query.services.BindingServiceResolver
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
@@ -18,7 +17,7 @@ import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDTemplates
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
 import org.fornax.soa.moduledsl.moduleDsl.Module
-import org.fornax.soa.moduledsl.query.ModuleServiceResolver
+import org.fornax.soa.moduledsl.query.DefaultModuleServiceResolver
 import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates
 import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
@@ -28,6 +27,7 @@ import org.fornax.soa.service.query.namespace.NamespaceImportQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
+import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 
 /** 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -39,7 +39,6 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	@Inject extension NamespaceImportQueries
 	@Inject extension HeaderFinder
 	@Inject extension EnvironmentBindingResolver		
-	@Inject extension BindingServiceResolver
 		
 	
 	@Inject WSDLTemplates 					wsdlGenerator
@@ -50,7 +49,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	@Inject IQualifiedNameProvider			nameProvider
 	@Inject ProtocolMatcher					protocolMatcher
 	@Inject LifecycleQueries 				lifecycleQueries
-	@Inject ModuleServiceResolver 			modServiceResolver
+	@Inject IModuleServiceResolver 			modServiceResolver
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
@@ -64,7 +63,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 		log.fine ("Generating WSDLs and XSDs for binding " + binding.name)
 		val providedServices = modServiceResolver.getAllProvidedServiceRefs(binding.module.module)
 		for (provSvcRef : providedServices) {
-			val svc = provSvcRef.latestServiceInEnvironment (binding.resolveEnvironment)
+			val svc = modServiceResolver.resolveModuleServiceRef (provSvcRef, binding.resolveEnvironment)
 
 			if (svc != null) {
 				try {

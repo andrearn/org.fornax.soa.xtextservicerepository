@@ -1,3 +1,4 @@
+package org.fornax.soa.service.ui;
 
 
 import org.eclipse.emf.ecore.EObject;

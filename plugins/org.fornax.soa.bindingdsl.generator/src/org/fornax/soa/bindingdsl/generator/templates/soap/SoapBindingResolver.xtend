@@ -1,18 +1,11 @@
 package org.fornax.soa.bindingdsl.generator.templates.soap
 
 import com.google.inject.Inject
-import org.fornax.soa.bindingDsl.Binding
-import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingDsl.SOAPStyle
 import org.fornax.soa.bindingDsl.ServiceBinding
-import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
-import org.fornax.soa.environmentDsl.Server
-import org.fornax.soa.environmentdsl.generator.EndpointResolver
-import org.fornax.soa.service.query.namespace.NamespaceQuery
-import org.fornax.soa.serviceDsl.Service
-import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.bindingdsl.generator.templates.naming.EndpointQualifierNameProvider
+import org.fornax.soa.serviceDsl.Service
 
 class SoapBindingResolver {
 	

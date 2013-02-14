@@ -89,22 +89,6 @@ public class BusinessObjectQueryInternal {
 	}
 	
 	/**
-	 * Get all super types of the business object in upward order
-	 * @param bo The business object
-	 * @param vistitedBOs	already visited business objects
-	 * @return
-	 */
-	public static List<QueryObject> getAllSuperTypes (QueryObject bo, List<QueryObject> vistitedBOs) {
-		if (vistitedBOs == null)
-			vistitedBOs = Lists.newArrayList();
-		if (bo.getSuperQueryObject() != null && bo.getSuperQueryObject().getType() != null) {
-			vistitedBOs.add (bo.getSuperQueryObject().getType());
-			getAllSuperTypes (bo.getSuperQueryObject().getType(), vistitedBOs);
-		}
-		return vistitedBOs;
-	}
-
-	/**
 	 * all own and inherited properties visible on the type
 	 * @param bo The BusinessObject
 	 * @return all own and inherited properties visible on the type
