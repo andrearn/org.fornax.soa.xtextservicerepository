@@ -12,12 +12,21 @@ import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.search.StateMatcher
+import org.fornax.soa.basedsl.search.IReferenceSearch
+import com.google.common.base.Predicate
+import org.eclipse.xtext.resource.IReferenceDescription
+import org.eclipse.emf.ecore.EObject
+import org.fornax.soa.basedsl.search.IEObjectLookup
+import org.eclipse.xtext.util.IAcceptor
+import org.eclipse.xtext.resource.IEObjectDescription
 
 class ServiceQueries {
 	
 	@Inject extension StateMatcher
 	@Inject extension VersionQualifierExtensions
 	@Inject extension NamespaceQuery
+	@Inject
+	private ServiceQueriesInternal svcQueriesInt
 	
 	def dispatch List servicesWithMinState (Object ns, LifecycleState state) {null;}
 	
@@ -46,8 +55,12 @@ class ServiceQueries {
 		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
 	}
 
-	def List<Service> allLatestMajorVersions (List<Service> s, LifecycleState minState) {
+	def List<Service> allServicesByMajorVersionAndState (List<Service> s, LifecycleState minState) {
 		s.map(e|e.version.toMajorVersionNumber ().findMatchingServiceByMajorVersionAndState (s, minState));
+	}
+	
+	def List<EObject> findAllServiceConsumers (Service service) {
+		svcQueriesInt.findAllServiceConsumers(service) 
 	}
 	
 	def private Service findMatchingServiceByMajorVersionAndState (String majorVersion, List<Service> s, LifecycleState minState) {

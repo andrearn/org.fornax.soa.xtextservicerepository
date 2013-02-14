@@ -57,7 +57,8 @@ import com.google.inject.Inject;
 		ServiceVersionValidator.class,
 		BusinessObjectVersionValidator.class,
 		EnumerationVersionValidator.class,
-		ExceptionVersionValidator.class
+		ExceptionVersionValidator.class,
+		ServiceUsageValidator.class
 		})
 public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	
