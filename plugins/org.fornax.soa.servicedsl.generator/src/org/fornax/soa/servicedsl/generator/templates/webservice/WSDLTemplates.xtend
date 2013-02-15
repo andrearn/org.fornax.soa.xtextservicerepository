@@ -184,10 +184,13 @@ class WSDLTemplates {
 	
 	def toOperationFaultWrapperTypes(String name, List<ExceptionRef> exceptions) {
 		val exRef = exceptions.findFirst (e|e.exception.name == name)
-		'''
-		<xsd:element name="«exRef.exception.toTypeName()»" type="«exRef.toExceptionNameRef()»"/>
-		'''
-	
+		if (exRef != null) {
+			'''
+			<xsd:element name="«exRef.exception.toTypeName()»" type="«exRef.toExceptionNameRef()»"/>
+			'''
+		} else {
+			''''''
+		}
 	}
 	
 	

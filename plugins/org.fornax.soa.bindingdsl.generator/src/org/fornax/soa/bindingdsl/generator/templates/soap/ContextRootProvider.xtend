@@ -5,6 +5,7 @@ import org.fornax.soa.bindingDsl.REST
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
 import org.fornax.soa.moduledsl.moduleDsl.Module
+import org.fornax.soa.bindingDsl.ServiceBinding
 
 class ContextRootProvider {
 	
@@ -26,7 +27,18 @@ class ContextRootProvider {
 			"/" + mod.getCtxRootByAssemblyType (serverTypeName, serverVersion)
 		}
 	}
-		
+				
+	def dispatch String getContextRoot (ServiceBinding b) {
+		val soapBindings = b.protocol.filter ( typeof (SOAP));
+		if (!soapBindings.empty  
+			&& soapBindings.head.contextRoot != null)
+		{
+			"/" + soapBindings.head.contextRoot + "/";
+		} else {
+			"/"
+		}
+	}
+	
 	def String getCtxRootByAssemblyType (Module mod, String serverType) {
 		if (serverType.toLowerCase.trim == "webmethods") {
 			""

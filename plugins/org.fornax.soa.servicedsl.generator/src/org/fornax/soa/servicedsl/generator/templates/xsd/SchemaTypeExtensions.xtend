@@ -163,18 +163,18 @@ class SchemaTypeExtensions {
 		}
 	}
 	
-	def String toExceptionNameRef (ExceptionRef t) {
-		if (t.exception.findSubdomain() != null) {
+	def String toExceptionNameRef (ExceptionRef exRef) {
+		if (exRef.exception.findSubdomain() != null) {
 			var prefix = "tns";
-			if (!(t.findRefOwnerSubdomain() == t.exception.findSubdomain()
-			 && t.getOwnerVersion().toMajorVersionNumber() == t.exception.version.toMajorVersionNumber()
-			 && ! (t.getStatefulOwner() instanceof Service))
+			if (!(exRef.findRefOwnerSubdomain() == exRef.exception.findSubdomain()
+			 && exRef.getOwnerVersion().toMajorVersionNumber() == exRef.exception.version.toMajorVersionNumber()
+			 && ! (exRef.getStatefulOwner() instanceof Service))
 			) {
-				prefix = t.exception.findSubdomain().toShortName() + t.exception.version.toMajorVersionNumber()
+				prefix = exRef.exception.findSubdomain().toShortName() + exRef.exception?.version?.toMajorVersionNumber()
 			}
-			prefix + ":" +t.exception.toTypeName()
+			prefix + ":" +exRef.exception.toTypeName()
 		} else {
-			t.exception.toTypeName();
+			exRef.exception.toTypeName();
 			
 		}
 	
@@ -397,11 +397,20 @@ class SchemaTypeExtensions {
 		
 		
 	def dispatch String toExceptionNameRef (ExceptionRef t, VersionedDomainNamespace currNs) {
-		if (t.toNamespace() == currNs.subdomain.toNamespace() && currNs.version.toVersion().versionMatches(t.version)) {
-			"tns:" +t.exception.toTypeName();
+		if (t.exception.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
+			&& t.getOwnerVersion().toMajorVersionNumber() == t.exception.version.toMajorVersionNumber()
+			&& ! (t.getStatefulOwner() instanceof Service)
+		
+		) {
+			"tns:" +t.exception.toTypeName;
 		} else {
-			t.exception.findSubdomain().toShortName() + t.exception.findSubdomain().version.toMajorVersionNumber() + ":" +t.exception.toTypeName();
+			t.exception.findSubdomain().toShortName() + t.exception.version.toMajorVersionNumber() + ":" +t.exception.toTypeName;
 		}
+//		if (t.findSubdomain().toNamespace() == currNs.subdomain.toNamespace() && currNs.version.toVersion().versionMatches(t.version)) {
+//			"tns:" +t.exception.toTypeName();
+//		} else {
+//			t.exception.findSubdomain().toShortName() + t.exception.findSubdomain().version.toMajorVersionNumber() + ":" +t.exception.toTypeName();
+//		}
 	}
 	
 	def dispatch boolean isOptionalElement (Property p) {
@@ -474,7 +483,6 @@ class SchemaTypeExtensions {
 	
 	def dispatch String toNamespace (TypeRef t) {
 	}
-	
 	def dispatch String toNamespace (VersionedTypeRef t) { 
 		t.type.eContainer.toUnversionedNamespace()+"/"+(t.findMatchingType() as VersionedType).version.toVersionPostfix() + "/";
 	}
@@ -489,6 +497,14 @@ class SchemaTypeExtensions {
 	}
 	def dispatch String toNamespace (ExceptionRef t) {
 		t.exception.eContainer.toUnversionedNamespace()+"/"+(t.findMatchingException() as org.fornax.soa.serviceDsl.Exception).version.toVersionPostfix() + "/";
+	}
+	
+	def dispatch String toNamespace (SubNamespace ns) {
+		ns.toUnversionedNamespace()+"/"
+	}
+	
+	def dispatch String toNamespace (VersionedDomainNamespace ns) {
+		ns.toUnversionedNamespace() + "/" + ns.version.toMajorVersionNumber.toVersionPostfix + "/"
 	}
 	
 	def boolean typesUseExtendibleProperties (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {

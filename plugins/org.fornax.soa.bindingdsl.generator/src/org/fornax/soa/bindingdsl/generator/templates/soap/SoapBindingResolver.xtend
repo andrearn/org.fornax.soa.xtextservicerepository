@@ -28,17 +28,6 @@ class SoapBindingResolver {
 		}
 	}
 		
-				
-	def dispatch String getContextRoot (ServiceBinding b) {
-		val soapBindings = b.protocol.filter ( typeof (SOAP));
-		if (!soapBindings.empty  
-			&& soapBindings.head.contextRoot != null)
-		{
-			"/" + soapBindings.head.contextRoot + "/";
-		} else {
-			"/"
-		}
-	}
 					
 	def String toBindingName (Service s, SOAP p) {
 		s.name + p.getPortNamePostfix();
