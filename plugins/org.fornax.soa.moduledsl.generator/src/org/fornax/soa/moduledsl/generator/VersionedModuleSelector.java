@@ -20,12 +20,6 @@ public class VersionedModuleSelector {
 	public void setVersion(String version) {
 		this.version = version;
 	}
-	public String getMaxVersion() {
-		return version;
-	}
-	public void setMaxVersion(String version) {
-		this.version = version;
-	}
 	public boolean isGenerateProvidedServices() {
 		return generateProvidedServices;
 	}
