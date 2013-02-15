@@ -40,6 +40,7 @@ class BindingResolver {
 		}
 		return svcBindDescs
 	}
+	
 	/**
 	 * Resolve Bindings of services provided by a module or a compatible module version
 	 */
@@ -65,7 +66,9 @@ class BindingResolver {
 	}
 	
 	/**
-	 * Resolve Bindings of services used by a module
+	 * Resolve Bindings of services used by a module. Endpoint qualifiers in the module definition that select used endpoints of used services
+	 * are used as additional filter criteria on the selected bindings. If an endpoint qualifier is defined, the selected specific binding for the service
+	 * must declare the endpoint qualifier itself or in one of it's supported protocols.
 	 */
 	def Set<ServiceRefBindingDescription> resolveCompatibleUsedServiceBindings (Module module, Environment targetEnvironment) {
 		val usedServiceRefs = modServiceResolver.getAllUsedServiceRefs(module)
@@ -73,8 +76,8 @@ class BindingResolver {
 		for (usedModRef : module.usedModules) {
 			val impModSvcBindDescs = resolveCompatibleProvidedServiceBindings (usedModRef.moduleRef.module, targetEnvironment, if (usedModRef.endpointQualifier != null) usedModRef.endpointQualifier else module.endpointQualifier)
 			for (curDesc : impModSvcBindDescs.filter (d | usedServiceRefs.contains (d.serviceRef))) {
-				val curEndpointQualifiers = endpointQualifierQuery.getEffectiveEndpointQualifiers (curDesc.applicableBinding)
-				if (curDesc.endpointQualifier == null || curEndpointQualifiers.exists(q|q == curDesc.endpointQualifier)) {
+				val curEndpointQualifiers = endpointQualifierQuery.getPotentialEffectiveEndpointQualifiers (curDesc.applicableBinding)
+				if (curDesc.endpointQualifier == null || curEndpointQualifiers.containsEndpointQualifier (curDesc.endpointQualifier)) {
 					svcBindDescs.add (curDesc)
 				}
 			}
