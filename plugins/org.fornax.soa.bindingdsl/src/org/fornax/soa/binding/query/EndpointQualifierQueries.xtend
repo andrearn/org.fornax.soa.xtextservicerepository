@@ -12,6 +12,8 @@ import com.google.inject.Inject
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.semanticsDsl.Qualifier
+import java.util.Set
+import com.google.common.base.Predicates
 
 class EndpointQualifierQueries {
 	
@@ -20,24 +22,26 @@ class EndpointQualifierQueries {
 	@Inject
 	private EnvironmentBindingResolver envResolver
 	
-	def dispatch Qualifier getEffectiveEndpointQualifier (EObject binding) {
-		
-	}
 	
-	def dispatch Qualifier getEffectiveEndpointQualifier (Binding binding) {
-		if (binding.endpointQualifierRef?.endpointQualifier != null)
-			return binding.endpointQualifierRef.endpointQualifier
-		else if (! (binding instanceof ModuleBinding)) 
-			getEffectiveEndpointQualifier (binding.eContainer)
-		else
-			return null
+	def Set<Qualifier> getEffectiveEndpointQualifiers (Binding binding) {
+		var Set<Qualifier> effectiveQualifiers = newHashSet()
+		if (binding.endpointQualifierRef?.endpointQualifier != null) {
+			effectiveQualifiers.add (binding.endpointQualifierRef.endpointQualifier)
+			return effectiveQualifiers
+		} else if (! (binding instanceof ModuleBinding) && binding.eContainer instanceof Binding) {
+			effectiveQualifiers.addAll (getEffectiveEndpointQualifiers (binding.eContainer as Binding)) 
+		}
+		if (effectiveQualifiers.empty) {
+			effectiveQualifiers.addAll (binding.protocol.map (p |p.endpointQualifierRef?.endpointQualifier).filterNull())
+		}
+		effectiveQualifiers
 	}
 	
 	def dispatch Qualifier getEffectiveEndpointQualifier (BindingProtocol prot) {
 		if (prot.endpointQualifierRef?.endpointQualifier != null)
 			return prot.endpointQualifierRef?.endpointQualifier
 		else if (prot.eContainer instanceof Binding)
-			return getEffectiveEndpointQualifier (prot.eContainer as Binding)
+			return getEffectiveEndpointQualifiers (prot.eContainer as Binding).head
 		else
 			return null
 	}

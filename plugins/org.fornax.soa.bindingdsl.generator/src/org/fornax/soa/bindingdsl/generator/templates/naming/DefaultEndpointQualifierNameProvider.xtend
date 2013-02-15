@@ -17,8 +17,8 @@ class DefaultEndpointQualifierNameProvider implements IEndpointQualifierNameProv
 	
 	override String getEndpointQualifierName (Binding bind, Service svc, BindingProtocol prot) {
 		var detailedQualifierName = ""
-		if (bind.endpointQualifierRef?.endpointQualifier != null) {
-			detailedQualifierName = bind.effectiveEndpointQualifier.name.replaceAll("\\.","_")
+		if (prot.effectiveEndpointQualifier != null) {
+			detailedQualifierName = prot.effectiveEndpointQualifier.name.replaceAll("\\.","_")
 		
 		}
 		if (svc.isPublicEndpoint(bind, prot)) {

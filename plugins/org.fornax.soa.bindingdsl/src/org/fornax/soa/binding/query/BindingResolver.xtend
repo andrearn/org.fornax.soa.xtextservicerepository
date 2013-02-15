@@ -73,8 +73,8 @@ class BindingResolver {
 		for (usedModRef : module.usedModules) {
 			val impModSvcBindDescs = resolveCompatibleProvidedServiceBindings (usedModRef.moduleRef.module, targetEnvironment, if (usedModRef.endpointQualifier != null) usedModRef.endpointQualifier else module.endpointQualifier)
 			for (curDesc : impModSvcBindDescs.filter (d | usedServiceRefs.contains (d.serviceRef))) {
-				val curEndpointQualifiers = endpointQualifierQuery.getEffectiveEndpointQualifier(curDesc.applicableBinding)
-				if (curDesc.endpointQualifier == null || curEndpointQualifiers == curDesc.endpointQualifier) {
+				val curEndpointQualifiers = endpointQualifierQuery.getEffectiveEndpointQualifiers (curDesc.applicableBinding)
+				if (curDesc.endpointQualifier == null || curEndpointQualifiers.exists(q|q == curDesc.endpointQualifier)) {
 					svcBindDescs.add (curDesc)
 				}
 			}

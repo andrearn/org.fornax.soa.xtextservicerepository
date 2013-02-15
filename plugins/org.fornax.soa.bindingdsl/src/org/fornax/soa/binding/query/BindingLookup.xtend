@@ -228,8 +228,8 @@ class BindingLookup {
 	//TODO REVIEW resolution when unqualified
 	def dispatch Binding getMostSpecificBinding (Service service, Binding binding, Qualifier endpointQualifier) {
 		val candBind = service.getMostSpecificBinding (binding)
-		val bindEndpointQualifier = candBind.effectiveEndpointQualifier
-		if (endpointQualifier != null && candBind != null && bindEndpointQualifier == endpointQualifier) {
+		val bindEndpointQualifiers = candBind.effectiveEndpointQualifiers
+		if (endpointQualifier != null && candBind != null && bindEndpointQualifiers.exists (q|q == endpointQualifier)) {
 			return binding
 		} else {
 			return candBind
