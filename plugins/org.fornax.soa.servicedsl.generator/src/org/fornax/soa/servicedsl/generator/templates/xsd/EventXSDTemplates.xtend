@@ -174,7 +174,7 @@ class EventXSDTemplates {
 		val exceptionRef = exceptions.findFirst(e|e.exception.name == faultName);
 		if (exceptionRef != null) {
 			'''
-	    	<xsd:element name="«exceptionRef?.exception.toTypeName()»" type="«exceptionRef?.toExceptionNameRef()»"/>
+	    	<xsd:element name="«exceptionRef?.exception.name»" type="«exceptionRef?.toExceptionNameRef()»"/>
 			'''
 		}
 	}

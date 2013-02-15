@@ -168,7 +168,7 @@ class WrappedWsdlTemplates {
 		val exceptionRef = exceptions.findFirst(e|e.exception.name == faultName);
 		if (exceptionRef != null) {
 			'''
-			<xsd:element name="«exceptionRef?.exception.toTypeName()»" type="«exceptionRef?.toExceptionNameRef()»"/>
+			<xsd:element name="«exceptionRef?.exception.name»" type="«exceptionRef?.toExceptionNameRef()»"/>
 			'''
 		}
 	}
@@ -241,15 +241,15 @@ class WrappedWsdlTemplates {
 		val exceptionRef = exceptions.findFirst(e|e.exception.name == faultName);
 		if (exceptionRef != null) {
 			'''
-			<wsdl:message name="«exceptions.findFirst(e|e.exception.name == faultName).exception.toTypeName()»">
-				<wsdl:part name="parameters" element="tns:«exceptionRef?.exception.toTypeName()»"></wsdl:part>
+			<wsdl:message name="«exceptions.findFirst(e|e.exception.name == faultName).exception.name»">
+				<wsdl:part name="parameters" element="tns:«exceptionRef?.exception.name»"></wsdl:part>
 			</wsdl:message>
 			'''
 		}
 	}
 	def protected toFault (Operation op) '''
 		«FOR fault : op.^throws»
-				<wsdl:fault name="«fault?.exception.toTypeName().toFirstLower()»" message="tns:«fault?.exception.toTypeName()»"></wsdl:fault>
+				<wsdl:fault name="«fault?.exception.name.toFirstLower()»" message="tns:«fault?.exception.name»"></wsdl:fault>
 		«ENDFOR»
 	'''
 	

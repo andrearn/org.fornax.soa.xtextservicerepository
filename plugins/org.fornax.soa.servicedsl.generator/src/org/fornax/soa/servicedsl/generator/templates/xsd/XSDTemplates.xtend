@@ -451,7 +451,7 @@ class XSDTemplates {
 	*/
 	def toFaultType (org.fornax.soa.serviceDsl.Exception ex, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 
-		<xsd:complexType name="«ex.toTypeName()»">
+		<xsd:complexType name="«ex.name»">
 			<xsd:annotation>
 				<xsd:documentation>
 					<![CDATA[

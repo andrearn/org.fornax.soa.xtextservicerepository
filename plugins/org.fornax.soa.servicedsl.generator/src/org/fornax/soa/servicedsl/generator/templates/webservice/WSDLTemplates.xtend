@@ -186,7 +186,7 @@ class WSDLTemplates {
 		val exRef = exceptions.findFirst (e|e.exception.name == name)
 		if (exRef != null) {
 			'''
-			<xsd:element name="«exRef.exception.toTypeName()»" type="«exRef.toExceptionNameRef()»"/>
+			<xsd:element name="«exRef.exception.name»" type="«exRef.toExceptionNameRef()»"/>
 			'''
 		} else {
 			''''''
@@ -266,15 +266,15 @@ class WSDLTemplates {
 	
 	
 	def toFaultMessages (String name, List<ExceptionRef> exceptions) '''
-		<wsdl:message name="«exceptions.findFirst (e|e.exception.name == name)?.exception.toTypeName()»">
-			<wsdl:part name="parameters" element="tns:«exceptions.findFirst (e|e.exception.name == name).exception.toTypeName()»"></wsdl:part>
+		<wsdl:message name="«exceptions.findFirst (e|e.exception.name == name)?.exception.name»">
+			<wsdl:part name="parameters" element="tns:«exceptions.findFirst (e|e.exception.name == name).exception.name»"></wsdl:part>
 		</wsdl:message>
 	'''
 	
 	
 	def toFault (Operation o) '''
 		«FOR fault : o.^throws»
-			<wsdl:fault name="«fault.exception.toTypeName().toFirstLower()»" message="tns:«fault.exception.toTypeName()»"></wsdl:fault>
+			<wsdl:fault name="«fault.exception.name.toFirstLower()»" message="tns:«fault.exception.name»"></wsdl:fault>
 		«ENDFOR»
 	'''
 	

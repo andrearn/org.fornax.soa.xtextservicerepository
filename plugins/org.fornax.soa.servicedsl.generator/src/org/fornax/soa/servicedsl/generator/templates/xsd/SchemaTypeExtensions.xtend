@@ -172,9 +172,9 @@ class SchemaTypeExtensions {
 			) {
 				prefix = exRef.exception.findSubdomain().toShortName() + exRef.exception?.version?.toMajorVersionNumber()
 			}
-			prefix + ":" +exRef.exception.toTypeName()
+			prefix + ":" +exRef.exception.name
 		} else {
-			exRef.exception.toTypeName();
+			exRef.exception.name
 			
 		}
 	
@@ -402,15 +402,10 @@ class SchemaTypeExtensions {
 			&& ! (t.getStatefulOwner() instanceof Service)
 		
 		) {
-			"tns:" +t.exception.toTypeName;
+			"tns:" +t.exception.name;
 		} else {
-			t.exception.findSubdomain().toShortName() + t.exception.version.toMajorVersionNumber() + ":" +t.exception.toTypeName;
+			t.exception.findSubdomain().toShortName() + t.exception.version.toMajorVersionNumber() + ":" +t.exception.name;
 		}
-//		if (t.findSubdomain().toNamespace() == currNs.subdomain.toNamespace() && currNs.version.toVersion().versionMatches(t.version)) {
-//			"tns:" +t.exception.toTypeName();
-//		} else {
-//			t.exception.findSubdomain().toShortName() + t.exception.findSubdomain().version.toMajorVersionNumber() + ":" +t.exception.toTypeName();
-//		}
 	}
 	
 	def dispatch boolean isOptionalElement (Property p) {
@@ -567,26 +562,6 @@ class SchemaTypeExtensions {
 			return ""
 		}
 	}		
-	def dispatch String toTypeName (Type t) {
-		"";
-	}
-	def dispatch String toTypeName (VersionedType t) {
-		t.name;
-	}
-	def dispatch String toTypeName (AbstractType t) {
-		t.name;
-	}	
 	
-	def dispatch String toTypeName (org.fornax.soa.serviceDsl.Exception e) {
-		if (e.name.endsWith("Exception")) {
-			e.name.replaceAll("Exception", "Fault")
-		} else if (e.name.endsWith("Fault")) {
-				e.name
-		} else {
-				e.name + "Fault"
-		}
-	}
-	
-		
 		
 }
