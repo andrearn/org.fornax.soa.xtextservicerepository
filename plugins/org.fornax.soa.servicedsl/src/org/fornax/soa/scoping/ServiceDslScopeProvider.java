@@ -297,7 +297,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				TypeRef typeRef = ((ComplexConsiderationPropertyRef) ctx).getParentProperty().getType();
 				return getPropertyFilterFromTypeRef(ctx, typeRef);
 			} catch (Throwable ex) {
-				logger.debug("Error resolving a ComplexConsiderationProperty parentPropertyRef of a ComplexConsiderationPropertyRef");
+//				logger.debug("Error resolving a ComplexConsiderationProperty parentPropertyRef of a ComplexConsiderationPropertyRef", ex);
 			}
 		}
 		
