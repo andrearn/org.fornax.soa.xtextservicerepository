@@ -30,6 +30,7 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 import org.fornax.soa.binding.query.BindingLookup
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
+import org.fornax.soa.binding.query.services.BindingServiceQueries
 
 /** 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -38,6 +39,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	
 	@Inject extension NamespaceQuery
 	@Inject extension BindingExtensions
+	@Inject extension BindingServiceQueries
 	@Inject extension BindingLookup
 	@Inject extension NamespaceImportQueries
 	@Inject extension HeaderFinder

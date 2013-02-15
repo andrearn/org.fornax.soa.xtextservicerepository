@@ -8,6 +8,7 @@ import org.fornax.soa.serviceDsl.Service
 import com.google.inject.Inject
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.profiledsl.query.LifecycleQueries
+import org.fornax.soa.binding.query.services.BindingServiceQueries
 
 /*
  * Generate a WSDL where all input and output parameters are wrapped into a Wrappertype. 
@@ -18,6 +19,7 @@ class WrappedWSDLTemplates {
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.webservice.WrappedWsdlTemplates
 	@Inject extension BindingExtensions
 	@Inject extension LifecycleQueries
+	@Inject extension BindingServiceQueries
 	
 	
 	/*
