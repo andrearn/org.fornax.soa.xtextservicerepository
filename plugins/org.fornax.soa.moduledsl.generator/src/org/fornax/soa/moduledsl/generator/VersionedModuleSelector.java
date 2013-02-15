@@ -6,6 +6,7 @@ public class VersionedModuleSelector {
 	private String version;
 	private boolean generateProvidedServices;
 	private boolean generateUsedServices;
+	private String providerEndpointQualifier;
 	
 	public String getName() {
 		return name;
@@ -36,6 +37,13 @@ public class VersionedModuleSelector {
 	}
 	public void setGenerateUsedServices(boolean generateUsedServices) {
 		this.generateUsedServices = generateUsedServices;
+	}
+	
+	public String getProviderEndpointQualifier() {
+		return providerEndpointQualifier;
+	}
+	public void setProviderEndpointQualifier(String providerEndpointQualifier) {
+		this.providerEndpointQualifier = providerEndpointQualifier;
 	}
 	
 	@Override

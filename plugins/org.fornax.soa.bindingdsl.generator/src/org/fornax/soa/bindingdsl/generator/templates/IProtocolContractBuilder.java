@@ -2,6 +2,7 @@ package org.fornax.soa.bindingdsl.generator.templates;
 
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.environmentDsl.Environment;
+import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.service.VersionedDomainNamespace;
@@ -22,7 +23,7 @@ public abstract interface IProtocolContractBuilder {
 	 * Build technical service contracts for all services provided by this module. A binding of this module (or to
 	 * a compatible module version) to the given target environment will be used.
 	 */
-	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, SOAProfile profile);
+	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef providerEndpointQualifier, SOAProfile profile);
 	
 	
 	/**

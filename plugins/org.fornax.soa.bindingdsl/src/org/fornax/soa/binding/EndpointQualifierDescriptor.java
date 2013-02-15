@@ -29,7 +29,7 @@ public class EndpointQualifierDescriptor {
 
 	public boolean containsEndpointQualifier(Qualifier referredEndpointQualifier) {
 		if (referredEndpointQualifier == null)
-			return false;
+			return true;
 		if (referredEndpointQualifier.equals(effectiveEndpointQualifier))
 			return true;
 		else {

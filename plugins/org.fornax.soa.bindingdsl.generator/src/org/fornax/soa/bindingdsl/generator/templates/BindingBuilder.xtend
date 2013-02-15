@@ -12,6 +12,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates
 import org.fornax.soa.profiledsl.query.LifecycleQueries
+import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
 
 /**
  * Builds all technical artifacts that represent a binding (WSDLs/XSDs etc.).
@@ -62,10 +63,10 @@ class BindingBuilder {
 		}
 	}
 
-	def toBinding (Module module, Environment environment, boolean generateProvidedServices, boolean generateUsedServices, SOAProfile profile) {
+	def toBinding (Module module, Environment environment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef providerEndpointQualifier, SOAProfile profile) {
 		log.info ("Generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name)
 		try {
-			contractBuilder.build (module, environment, generateProvidedServices, generateUsedServices, profile);
+			contractBuilder.build (module, environment, generateProvidedServices, generateUsedServices, providerEndpointQualifier, profile);
 		} catch (Exception ex) {
 			log.severe ("Error generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name + "\n" + ex.message)
 		}

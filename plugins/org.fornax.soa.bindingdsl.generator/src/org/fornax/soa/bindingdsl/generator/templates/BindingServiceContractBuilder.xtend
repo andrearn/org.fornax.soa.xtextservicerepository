@@ -10,6 +10,7 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.environmentDsl.Environment
 import java.util.logging.Logger
 import java.util.logging.Level
+import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
 
 class BindingServiceContractBuilder {
 
@@ -35,11 +36,11 @@ class BindingServiceContractBuilder {
 		}
 	}
 	
-	def void build (Module module, Environment targetEnvironment, boolean generateProvidedServices, boolean generateUsedServices, SOAProfile profile) {
+	def void build (Module module, Environment targetEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef providerEndpointQualifier, SOAProfile profile) {
 		for (protContractBuilder : protocolContractBuilders) {
 			try {
 				if (generateProvidedServices)
-					protContractBuilder.buildProvidedServiceContracts (module, targetEnvironment, profile);
+					protContractBuilder.buildProvidedServiceContracts (module, targetEnvironment, providerEndpointQualifier, profile);
 				if (generateUsedServices)
 					protContractBuilder.buildUsedServiceContracts (module, targetEnvironment, profile);
 			} catch (Exception ex) {

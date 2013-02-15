@@ -65,19 +65,19 @@ class EndpointQualifierQueries {
 	}
 	
 	def private EndpointQualifierDescriptor getPotentialEffectiveEndpointQualifiersInternal (Binding binding, EndpointQualifierDescriptor qualifierDescriptor) {
-		var List<Qualifier> effectiveQualifiers = newArrayList()
-		if (binding.endpointQualifierRef?.endpointQualifier != null) {
+		if (binding.endpointQualifierRef?.endpointQualifier != null && qualifierDescriptor.effectiveEndpointQualifier == null) {
 			qualifierDescriptor.setEffectiveEndpointQualifier(binding.endpointQualifierRef.endpointQualifier)
-			for (prot : binding.protocol) {
-				if (prot.endpointQualifierRef?.endpointQualifier != null) {
-					qualifierDescriptor.addPotentialEndpointQualifiers(prot, prot.endpointQualifierRef?.endpointQualifier)
-				}
-			}
-			return qualifierDescriptor
-		} else if (! (binding instanceof ModuleBinding) && binding.eContainer instanceof Binding) {
-			return getPotentialEffectiveEndpointQualifiersInternal (binding.eContainer as Binding, qualifierDescriptor)
 		}
-		return qualifierDescriptor
+		for (prot : binding.protocol) {
+			if (prot.endpointQualifierRef?.endpointQualifier != null && qualifierDescriptor.potentialEndpointQualifiers.get(prot) == null) {
+				qualifierDescriptor.addPotentialEndpointQualifiers(prot, prot.endpointQualifierRef.endpointQualifier)
+			}
+		}
+		if (! (binding instanceof ModuleBinding) && binding.eContainer instanceof Binding) {
+			return getPotentialEffectiveEndpointQualifiersInternal (binding.eContainer as Binding, qualifierDescriptor)
+		} else {
+			return qualifierDescriptor
+		}
 	}
 	
 	

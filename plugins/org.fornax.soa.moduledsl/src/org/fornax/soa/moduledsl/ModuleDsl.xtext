@@ -63,7 +63,7 @@ Module:
 			(usedModules  += ModuleRef)*
 			('endpoint-protocol' usesEndpointProtocol=ImportBindingProtocol)?
 			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=ImportBindingProtocol) (',' usesAlternativeEndpointProtocols+=ImportBindingProtocol)*)?
-			('endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName])?
+			(endpointQualifierRef=EndpointQualifierRef)?
 		'}')?
 			
 	'}';
@@ -88,7 +88,7 @@ ImportServiceRef:
 		('using-endpoint' '{'
 			('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
 			('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
-			('endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName])?
+			(endpointQualifierRef=EndpointQualifierRef)?
 		'}')?
 	('}')?
 ;
@@ -111,7 +111,7 @@ ModuleRef:
 		'}')?
 		('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
 		('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
-		('endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName])?
+		(endpointQualifierRef=EndpointQualifierRef)?
 	'}'
 ;
 
@@ -141,6 +141,10 @@ enum ImportBindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | 
 
 QualifierRefs:
 	'qualifier' (qualifiers+=[semanticsDsl::Qualifier|QualifiedName])(','qualifiers+=[semanticsDsl::Qualifier|QualifiedName])*
+;
+
+EndpointQualifierRef:
+	'endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName] (acceptOtherEndpoints?='accepting-other-endpoints')?
 ;
 
 

@@ -29,6 +29,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 import org.fornax.soa.binding.query.BindingLookup
+import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
 
 /** 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -99,9 +100,12 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	
 	
 
-	override buildProvidedServiceContracts (Module module, Environment targetEnvironment, SOAProfile profile) {
+	override buildProvidedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef providerEndpointQualifier, SOAProfile profile) {
 		log.fine ("Generating WSDLs and XSDs for services provided by module " + module.name + " looking up binding for used module to environment " + targetEnvironment.name)
-		val bindingDescs = bindingResolver.resolveCompatibleProvidedServiceBindings (module, targetEnvironment)
+		val bindingDescs = 	if (providerEndpointQualifier != null) 
+								bindingResolver.resolveCompatibleProvidedServiceBindings (module, targetEnvironment, providerEndpointQualifier)
+							else
+								bindingResolver.resolveCompatibleProvidedServiceBindings (module, targetEnvironment)
 		for (specBindingDesc : bindingDescs) {
 			val svc = specBindingDesc.resolvedService
 			if (svc != null) {

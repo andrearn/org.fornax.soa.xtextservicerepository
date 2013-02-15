@@ -43,7 +43,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="usesEndpointProtocol" eType="#//ImportBindingProtocol"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="usesAlternativeEndpointProtocols"
         unique="false" upperBound="-1" eType="#//ImportBindingProtocol"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifier" eType="ecore:EClass ../../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Qualifier"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRef" eType="#//EndpointQualifierRef"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AbstractServiceRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass ../../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Service"/>
@@ -57,7 +58,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endpointProtocol" eType="#//ImportBindingProtocol"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="alternativeEndpointProtocols"
         unique="false" upperBound="-1" eType="#//ImportBindingProtocol"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifier" eType="ecore:EClass ../../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Qualifier"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRef" eType="#//EndpointQualifierRef"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ServiceModuleRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//Module"/>
@@ -74,7 +76,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="endpointProtocol" eType="#//ImportBindingProtocol"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="alternativeEndpointProtocols"
         unique="false" upperBound="-1" eType="#//ImportBindingProtocol"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifier" eType="ecore:EClass ../../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Qualifier"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRef" eType="#//EndpointQualifierRef"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="NamespaceRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="ecore:EClass ../../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//SubNamespace"/>
@@ -115,5 +118,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="QualifierRefs">
     <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" unique="false"
         upperBound="-1" eType="ecore:EClass ../../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Qualifier"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EndpointQualifierRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifier" eType="ecore:EClass ../../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Qualifier"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="acceptOtherEndpoints" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
 </ecore:EPackage>

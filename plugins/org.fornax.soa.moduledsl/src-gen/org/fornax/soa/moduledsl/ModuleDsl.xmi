@@ -160,16 +160,8 @@
               </elements>
             </elements>
           </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="endpoint-qualifier"/>
-            <elements xsi:type="xtext:Assignment" feature="endpointQualifier" operator="=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.4">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
+          <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
@@ -257,16 +249,8 @@
               </elements>
             </elements>
           </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="endpoint-qualifier"/>
-            <elements xsi:type="xtext:Assignment" feature="endpointQualifier" operator="=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.4">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
+          <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
@@ -335,16 +319,8 @@
             </elements>
           </elements>
         </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="endpoint-qualifier"/>
-          <elements xsi:type="xtext:Assignment" feature="endpointQualifier" operator="=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.4">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-            </terminal>
-          </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -517,6 +493,25 @@
               <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="EndpointQualifierRef">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/moduledsl/ModuleDsl#//EndpointQualifierRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="endpoint-qualifier"/>
+        <elements xsi:type="xtext:Assignment" feature="endpointQualifier" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.4">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="acceptOtherEndpoints" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="accepting-other-endpoints"/>
         </elements>
       </alternatives>
     </rules>

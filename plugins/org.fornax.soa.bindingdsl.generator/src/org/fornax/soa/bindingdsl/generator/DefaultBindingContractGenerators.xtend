@@ -28,6 +28,8 @@ import java.util.logging.Logger
 import java.util.logging.Level
 import org.fornax.soa.moduledsl.generator.VersionedModuleSelector
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
+import org.fornax.soa.moduledsl.moduleDsl.ModuleDslFactory
+import org.fornax.soa.semanticsDsl.Qualifier
 
 /*
  * Generate technical service and datamodel contract artifacts like WSDLs, XSDs or IDLs for ModuleBindings
@@ -168,10 +170,24 @@ class DefaultBindingContractGenerators implements IGenerator {
 		var generateUsedServices = moduleSelector.generateUsedServices
 		if (!generateProvidedServices && !generateUsedServices)
 			generateUsedServices = true
-		if (env != null)
-			bindingTpl.toBinding(mod, env, generateProvidedServices, generateUsedServices, profile)
-		else
+		if (env != null) {
+			if (moduleSelector.getProviderEndpointQualifier != null && moduleSelector.generateProvidedServices) {
+				val providerEndpointQualifier =  ModuleDslFactory::eINSTANCE.createEndpointQualifierRef
+				val Qualifier endpointQualifier = eObjectLookup.getModelElementByName(moduleSelector.getProviderEndpointQualifier, resource, "Qualifier")
+				if (endpointQualifier != null) {
+					providerEndpointQualifier.setEndpointQualifier(endpointQualifier)
+					bindingTpl.toBinding(mod, env, generateProvidedServices, generateUsedServices, providerEndpointQualifier, profile)
+				} else {
+					logger.severe("The provider endpoint-qualifier " + moduleSelector.getProviderEndpointQualifier + " is not defined.")
+				}
+			
+			} else {
+				bindingTpl.toBinding(mod, env, generateProvidedServices, generateUsedServices, null, profile)
+			}
+			
+		} else {
 			logger.severe ("No environment found matching the name expression " + targetEnvironmentName)
+		}
 	}
 	
 	def protected compile (SubNamespace namespace, Resource resource) {

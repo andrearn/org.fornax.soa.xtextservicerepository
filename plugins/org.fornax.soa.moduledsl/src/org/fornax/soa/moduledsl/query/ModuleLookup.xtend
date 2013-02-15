@@ -82,15 +82,15 @@ class ModuleLookup {
 	 * Get the endpoint qualifier
 	 */	
 	def dispatch String getQualifier (Module module) {
-		module.endpointQualifier.name
+		module.endpointQualifierRef?.endpointQualifier.name
 	}
 	
 	/*
 	 * Get the endpoint qualifier
 	 */	
 	def dispatch String getQualifier (ModuleRef moduleRef) {
-		if (moduleRef.endpointQualifier != null)
-			return moduleRef.endpointQualifier.name
+		if (moduleRef.endpointQualifierRef?.endpointQualifier != null)
+			return moduleRef.endpointQualifierRef.endpointQualifier.name
 		else
 			return (moduleRef.eContainer as Module).qualifier
 	}
@@ -99,28 +99,28 @@ class ModuleLookup {
 	 * Get the endpoint qualifier
 	 */	
 	def dispatch String getQualifier (ImportServiceRef impServiceRef) {
-		if (impServiceRef.endpointQualifier != null)
-			return impServiceRef.endpointQualifier.name
+		if (impServiceRef.endpointQualifierRef?.endpointQualifier != null)
+			return impServiceRef.endpointQualifierRef.endpointQualifier.name
 		else
 			return (impServiceRef.eContainer as Module).qualifier
 	}
 		
 	def dispatch String getBindingQualifier (Module module) {
-		module.endpointQualifier.name
+		module.endpointQualifierRef?.endpointQualifier.name
 	}
 	
 	def dispatch String getBindingQualifier (ModuleRef moduleRef) {
-		if (moduleRef.endpointQualifier != null)
-			return moduleRef.endpointQualifier.name
+		if (moduleRef.endpointQualifierRef?.endpointQualifier != null)
+			return moduleRef.endpointQualifierRef.endpointQualifier.name
 		else
-			return (moduleRef.eContainer as Module).endpointQualifier.name
+			return (moduleRef.eContainer as Module).endpointQualifierRef?.endpointQualifier.name
 	}
 	
 	def dispatch String getBindingQualifier (ImportServiceRef impServiceRef) {
-		if (impServiceRef.endpointQualifier != null)
-			return impServiceRef.endpointQualifier.name
+		if (impServiceRef.endpointQualifierRef?.endpointQualifier != null)
+			return impServiceRef.endpointQualifierRef.endpointQualifier.name
 		else
-			return (impServiceRef.eContainer as Module).endpointQualifier.name
+			return (impServiceRef.eContainer as Module).endpointQualifierRef?.endpointQualifier.name
 	}
 	
 	/*
