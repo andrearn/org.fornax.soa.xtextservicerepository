@@ -85,11 +85,17 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 								val verNamespaces = svc.importedVersionedNS (minState);
 								verNamespaces.forEach (n | xsdGenerator.toXSD(n, minState, binding, profile));
 										
-								val header = svc.findBestMatchingHeader (profile);
+								val requestHeader = svc.findBestMatchingRequestHeader (profile);
 								if (forceRelativePaths)
-									msgHeaderGenerator.toMessageHeaderXSD(header, profile, binding.getRegistryBaseUrl())
+									msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, binding.getRegistryBaseUrl())
 								else 
-									msgHeaderGenerator.toMessageHeaderXSD(header, profile)
+									msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile)
+
+								val responseHeader = svc.findBestMatchingResponseHeader (profile);
+								if (forceRelativePaths)
+									msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, binding.getRegistryBaseUrl())
+								else 
+									msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile)
 							}
 						}
 					}
@@ -163,11 +169,17 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 						val verNamespaces = service.importedVersionedNS (minState);
 						verNamespaces.forEach (n | xsdGenerator.toXSD(n, minState, specBinding, profile));
 								
-						val header = service.findBestMatchingHeader (profile);
+						val requestHeader = service.findBestMatchingRequestHeader (profile);
 						if (forceRelativePaths)
-							msgHeaderGenerator.toMessageHeaderXSD(header, profile, specBinding.getRegistryBaseUrl())
+							msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, specBinding.getRegistryBaseUrl())
 						else 
-							msgHeaderGenerator.toMessageHeaderXSD(header, profile)
+							msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile)
+
+						val responseHeader = service.findBestMatchingRequestHeader (profile);
+						if (forceRelativePaths)
+							msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, specBinding.getRegistryBaseUrl())
+						else 
+							msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile)
 					}
 				}
 			} catch (Exception ex) {

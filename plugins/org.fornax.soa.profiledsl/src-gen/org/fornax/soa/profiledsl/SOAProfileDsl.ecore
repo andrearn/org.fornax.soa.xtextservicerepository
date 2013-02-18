@@ -21,11 +21,11 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serviceCategory" upperBound="-1"
         eType="#//ServiceCategory" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="messaging" eType="#//Messaging"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="designRules" eType="#//DesignRules"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versioningRule" eType="#//VersioningRule"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messaging" eType="#//Messaging"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="orgNamespaces" upperBound="-1"
         eType="#//OrganizationNamespace" containment="true"/>
@@ -82,7 +82,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="Messaging">
     <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeaders" upperBound="-1"
         eType="#//MessageHeader" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultHeader" eType="#//MessageHeaderRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultRequestHeader" eType="#//MessageHeaderRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultResponseHeader"
+        eType="#//MessageHeaderRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="defaultPublishHeader" eType="#//MessageHeaderRef"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DesignRules">

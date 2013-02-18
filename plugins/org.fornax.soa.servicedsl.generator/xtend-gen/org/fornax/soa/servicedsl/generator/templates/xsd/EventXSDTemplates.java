@@ -23,6 +23,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Property;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace;
 import org.fornax.soa.service.VersionedDomainNamespace;
 import org.fornax.soa.service.query.HeaderFinder;
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries;
@@ -95,6 +96,7 @@ public class EventXSDTemplates {
   }
   
   protected void _toEvents(final Service svc, final DomainNamespace subDom, final LifecycleState minState, final SOAProfile profile, final String registryBaseUrl) {
+    final Set<VersionedTechnicalNamespace> headerImports = this._serviceTemplateExtensions.collectTechnicalVersionedNamespaceImports(svc, profile);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
     _builder.newLine();
@@ -130,21 +132,17 @@ public class EventXSDTemplates {
       }
     }
     {
-      MessageHeader _findBestMatchingHeader = this._headerFinder.findBestMatchingHeader(svc, profile);
-      boolean _notEquals = (!Objects.equal(_findBestMatchingHeader, null));
-      if (_notEquals) {
+      boolean _isEmpty = headerImports.isEmpty();
+      boolean _not = (!_isEmpty);
+      if (_not) {
         {
-          MessageHeader _findBestMatchingHeader_1 = this._headerFinder.findBestMatchingHeader(svc, profile);
-          Version _version_2 = svc.getVersion();
-          String _majorVersionNumber_2 = this._versionQualifierExtensions.toMajorVersionNumber(_version_2);
-          Set<VersionedDomainNamespace> _allImportedVersionedNS_1 = this._namespaceImportQueries.allImportedVersionedNS(_findBestMatchingHeader_1, _majorVersionNumber_2);
-          for(final VersionedDomainNamespace headerImp : _allImportedVersionedNS_1) {
+          for(final VersionedTechnicalNamespace headerImp : headerImports) {
             _builder.append("\t\t\t");
             _builder.append("xmlns:");
             String _prefix_1 = this._schemaNamespaceExtensions.toPrefix(headerImp);
-            String _version_3 = headerImp.getVersion();
-            String _majorVersionNumber_3 = this._versionQualifierExtensions.toMajorVersionNumber(_version_3);
-            String _plus_1 = (_prefix_1 + _majorVersionNumber_3);
+            String _version_2 = headerImp.getVersion();
+            String _majorVersionNumber_2 = this._versionQualifierExtensions.toMajorVersionNumber(_version_2);
+            String _plus_1 = (_prefix_1 + _majorVersionNumber_2);
             _builder.append(_plus_1, "			");
             _builder.append("=\"");
             String _namespace_1 = this._schemaTypeExtensions.toNamespace(headerImp);
@@ -167,10 +165,10 @@ public class EventXSDTemplates {
     _builder.append("\t\t\t");
     _builder.newLine();
     {
-      Version _version_4 = svc.getVersion();
-      String _majorVersionNumber_4 = this._versionQualifierExtensions.toMajorVersionNumber(_version_4);
-      Set<VersionedDomainNamespace> _allImportedVersionedNS_2 = this._namespaceImportQueries.allImportedVersionedNS(svc, _majorVersionNumber_4, minState);
-      for(final VersionedDomainNamespace imp_1 : _allImportedVersionedNS_2) {
+      Version _version_3 = svc.getVersion();
+      String _majorVersionNumber_3 = this._versionQualifierExtensions.toMajorVersionNumber(_version_3);
+      Set<VersionedDomainNamespace> _allImportedVersionedNS_1 = this._namespaceImportQueries.allImportedVersionedNS(svc, _majorVersionNumber_3, minState);
+      for(final VersionedDomainNamespace imp_1 : _allImportedVersionedNS_1) {
         _builder.append("\t\t\t");
         _builder.append("<xsd:import schemaLocation=\"");
         String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(imp_1, registryBaseUrl);
@@ -187,15 +185,11 @@ public class EventXSDTemplates {
       }
     }
     {
-      MessageHeader _findBestMatchingHeader_2 = this._headerFinder.findBestMatchingHeader(svc, profile);
-      boolean _notEquals_1 = (!Objects.equal(_findBestMatchingHeader_2, null));
-      if (_notEquals_1) {
+      boolean _isEmpty_1 = headerImports.isEmpty();
+      boolean _not_1 = (!_isEmpty_1);
+      if (_not_1) {
         {
-          MessageHeader _findBestMatchingHeader_3 = this._headerFinder.findBestMatchingHeader(svc, profile);
-          Version _version_5 = svc.getVersion();
-          String _majorVersionNumber_5 = this._versionQualifierExtensions.toMajorVersionNumber(_version_5);
-          Set<VersionedDomainNamespace> _allImportedVersionedNS_3 = this._namespaceImportQueries.allImportedVersionedNS(_findBestMatchingHeader_3, _majorVersionNumber_5);
-          for(final VersionedDomainNamespace headerImp_1 : _allImportedVersionedNS_3) {
+          for(final VersionedTechnicalNamespace headerImp_1 : headerImports) {
             _builder.append("\t\t\t");
             _builder.append("<xsd:import schemaLocation=\"");
             String _registryAssetUrl_1 = this._schemaNamespaceExtensions.toRegistryAssetUrl(headerImp_1, registryBaseUrl);
@@ -223,8 +217,8 @@ public class EventXSDTemplates {
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
     _builder.append("<![CDATA[Version ");
-    Version _version_6 = svc.getVersion();
-    String _versionNumber = this._versionQualifierExtensions.toVersionNumber(_version_6);
+    Version _version_4 = svc.getVersion();
+    String _versionNumber = this._versionQualifierExtensions.toVersionNumber(_version_4);
     _builder.append(_versionNumber, "					");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t\t\t");
@@ -262,6 +256,7 @@ public class EventXSDTemplates {
   }
   
   protected void _toEvents(final Service svc, final InternalNamespace subDom, final LifecycleState minState, final SOAProfile profile, final String registryBaseUrl) {
+    final Set<VersionedTechnicalNamespace> headerImports = this._serviceTemplateExtensions.collectTechnicalVersionedNamespaceImports(svc, profile);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
     _builder.newLine();
@@ -294,21 +289,17 @@ public class EventXSDTemplates {
       }
     }
     {
-      MessageHeader _findBestMatchingHeader = this._headerFinder.findBestMatchingHeader(svc, profile);
-      boolean _notEquals = (!Objects.equal(_findBestMatchingHeader, null));
-      if (_notEquals) {
+      boolean _isEmpty = headerImports.isEmpty();
+      boolean _not = (!_isEmpty);
+      if (_not) {
         {
-          MessageHeader _findBestMatchingHeader_1 = this._headerFinder.findBestMatchingHeader(svc, profile);
-          Version _version_2 = svc.getVersion();
-          String _majorVersionNumber_2 = this._versionQualifierExtensions.toMajorVersionNumber(_version_2);
-          Set<VersionedDomainNamespace> _allImportedVersionedNS_1 = this._namespaceImportQueries.allImportedVersionedNS(_findBestMatchingHeader_1, _majorVersionNumber_2);
-          for(final VersionedDomainNamespace headerImp : _allImportedVersionedNS_1) {
+          for(final VersionedTechnicalNamespace headerImp : headerImports) {
             _builder.append("\t\t\t");
             _builder.append("xmlns:");
             String _prefix_1 = this._schemaNamespaceExtensions.toPrefix(headerImp);
-            String _version_3 = headerImp.getVersion();
-            String _majorVersionNumber_3 = this._versionQualifierExtensions.toMajorVersionNumber(_version_3);
-            String _plus_1 = (_prefix_1 + _majorVersionNumber_3);
+            String _version_2 = headerImp.getVersion();
+            String _majorVersionNumber_2 = this._versionQualifierExtensions.toMajorVersionNumber(_version_2);
+            String _plus_1 = (_prefix_1 + _majorVersionNumber_2);
             _builder.append(_plus_1, "			");
             _builder.append("=\"");
             String _namespace_1 = this._schemaTypeExtensions.toNamespace(headerImp);
@@ -331,10 +322,10 @@ public class EventXSDTemplates {
     _builder.append("\t\t\t");
     _builder.newLine();
     {
-      Version _version_4 = svc.getVersion();
-      String _majorVersionNumber_4 = this._versionQualifierExtensions.toMajorVersionNumber(_version_4);
-      Set<VersionedDomainNamespace> _allImportedVersionedNS_2 = this._namespaceImportQueries.allImportedVersionedNS(svc, _majorVersionNumber_4, minState);
-      for(final VersionedDomainNamespace imp_1 : _allImportedVersionedNS_2) {
+      Version _version_3 = svc.getVersion();
+      String _majorVersionNumber_3 = this._versionQualifierExtensions.toMajorVersionNumber(_version_3);
+      Set<VersionedDomainNamespace> _allImportedVersionedNS_1 = this._namespaceImportQueries.allImportedVersionedNS(svc, _majorVersionNumber_3, minState);
+      for(final VersionedDomainNamespace imp_1 : _allImportedVersionedNS_1) {
         _builder.append("\t\t\t");
         _builder.append("<xsd:import schemaLocation=\"");
         String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(imp_1, registryBaseUrl);
@@ -351,15 +342,11 @@ public class EventXSDTemplates {
       }
     }
     {
-      MessageHeader _findBestMatchingHeader_2 = this._headerFinder.findBestMatchingHeader(svc, profile);
-      boolean _notEquals_1 = (!Objects.equal(_findBestMatchingHeader_2, null));
-      if (_notEquals_1) {
+      boolean _isEmpty_1 = headerImports.isEmpty();
+      boolean _not_1 = (!_isEmpty_1);
+      if (_not_1) {
         {
-          MessageHeader _findBestMatchingHeader_3 = this._headerFinder.findBestMatchingHeader(svc, profile);
-          Version _version_5 = svc.getVersion();
-          String _majorVersionNumber_5 = this._versionQualifierExtensions.toMajorVersionNumber(_version_5);
-          Set<VersionedDomainNamespace> _allImportedVersionedNS_3 = this._namespaceImportQueries.allImportedVersionedNS(_findBestMatchingHeader_3, _majorVersionNumber_5);
-          for(final VersionedDomainNamespace headerImp_1 : _allImportedVersionedNS_3) {
+          for(final VersionedTechnicalNamespace headerImp_1 : headerImports) {
             _builder.append("\t\t\t");
             _builder.append("<xsd:import schemaLocation=\"");
             String _registryAssetUrl_1 = this._schemaNamespaceExtensions.toRegistryAssetUrl(headerImp_1, registryBaseUrl);
@@ -387,8 +374,8 @@ public class EventXSDTemplates {
     _builder.newLine();
     _builder.append("\t\t\t\t\t");
     _builder.append("<![CDATA[Version ");
-    Version _version_6 = svc.getVersion();
-    String _versionNumber = this._versionQualifierExtensions.toVersionNumber(_version_6);
+    Version _version_4 = svc.getVersion();
+    String _versionNumber = this._versionQualifierExtensions.toVersionNumber(_version_4);
     _builder.append(_versionNumber, "					");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t\t\t");
@@ -425,8 +412,8 @@ public class EventXSDTemplates {
     String _name_1 = svc.getName();
     String _plus_3 = (_plus_2 + _name_1);
     String _plus_4 = (_plus_3 + "-");
-    Version _version_7 = svc.getVersion();
-    String _versionPostfix = this._versionQualifierExtensions.toVersionPostfix(_version_7);
+    Version _version_5 = svc.getVersion();
+    String _versionPostfix = this._versionQualifierExtensions.toVersionPostfix(_version_5);
     String _plus_5 = (_plus_4 + _versionPostfix);
     final String xsdFileName = (_plus_5 + "Events.xsd");
     this.fsa.generateFile(xsdFileName, content);
@@ -501,12 +488,12 @@ public class EventXSDTemplates {
     _builder.append("<xsd:sequence>");
     _builder.newLine();
     {
-      MessageHeader _findBestMatchingHeader = this._headerFinder.findBestMatchingHeader(op, profile);
-      boolean _notEquals = (!Objects.equal(_findBestMatchingHeader, null));
+      MessageHeader _findBestMatchingRequestHeader = this._headerFinder.findBestMatchingRequestHeader(op, profile);
+      boolean _notEquals = (!Objects.equal(_findBestMatchingRequestHeader, null));
       if (_notEquals) {
         _builder.append("\t\t\t");
-        MessageHeader _findBestMatchingHeader_1 = this._headerFinder.findBestMatchingHeader(op, profile);
-        CharSequence _parameter = this.toParameter(_findBestMatchingHeader_1);
+        MessageHeader _findBestMatchingRequestHeader_1 = this._headerFinder.findBestMatchingRequestHeader(op, profile);
+        CharSequence _parameter = this.toParameter(_findBestMatchingRequestHeader_1);
         _builder.append(_parameter, "			");
         _builder.newLineIfNotEmpty();
       }
@@ -544,12 +531,12 @@ public class EventXSDTemplates {
     _builder.append("<xsd:sequence>");
     _builder.newLine();
     {
-      MessageHeader _findBestMatchingHeader_2 = this._headerFinder.findBestMatchingHeader(op, profile);
-      boolean _notEquals_1 = (!Objects.equal(_findBestMatchingHeader_2, null));
+      MessageHeader _findBestMatchingResponseHeader = this._headerFinder.findBestMatchingResponseHeader(op, profile);
+      boolean _notEquals_1 = (!Objects.equal(_findBestMatchingResponseHeader, null));
       if (_notEquals_1) {
         _builder.append("\t\t\t");
-        MessageHeader _findBestMatchingHeader_3 = this._headerFinder.findBestMatchingHeader(op, profile);
-        CharSequence _parameter_1 = this.toParameter(_findBestMatchingHeader_3);
+        MessageHeader _findBestMatchingResponseHeader_1 = this._headerFinder.findBestMatchingResponseHeader(op, profile);
+        CharSequence _parameter_1 = this.toParameter(_findBestMatchingResponseHeader_1);
         _builder.append(_parameter_1, "			");
         _builder.newLineIfNotEmpty();
       }

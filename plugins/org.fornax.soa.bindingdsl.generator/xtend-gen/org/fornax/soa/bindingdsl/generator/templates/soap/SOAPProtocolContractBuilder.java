@@ -169,12 +169,19 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
                       }
                     };
                   IterableExtensions.<VersionedDomainNamespace>forEach(verNamespaces, _function_2);
-                  final MessageHeader header = this._headerFinder.findBestMatchingHeader(svc, profile);
+                  final MessageHeader requestHeader = this._headerFinder.findBestMatchingRequestHeader(svc, profile);
                   if ((this.forceRelativePaths).booleanValue()) {
                     String _registryBaseUrl_1 = this._bindingExtensions.getRegistryBaseUrl(binding);
-                    this.msgHeaderGenerator.toMessageHeaderXSD(header, profile, _registryBaseUrl_1);
+                    this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, _registryBaseUrl_1);
                   } else {
-                    this.msgHeaderGenerator.toMessageHeaderXSD(header, profile);
+                    this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile);
+                  }
+                  final MessageHeader responseHeader = this._headerFinder.findBestMatchingResponseHeader(svc, profile);
+                  if ((this.forceRelativePaths).booleanValue()) {
+                    String _registryBaseUrl_2 = this._bindingExtensions.getRegistryBaseUrl(binding);
+                    this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, _registryBaseUrl_2);
+                  } else {
+                    this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile);
                   }
                 }
               }
@@ -373,12 +380,19 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
                 }
               };
             IterableExtensions.<VersionedDomainNamespace>forEach(verNamespaces, _function_2);
-            final MessageHeader header = this._headerFinder.findBestMatchingHeader(service, profile);
+            final MessageHeader requestHeader = this._headerFinder.findBestMatchingRequestHeader(service, profile);
             if ((this.forceRelativePaths).booleanValue()) {
               String _registryBaseUrl_1 = this._bindingExtensions.getRegistryBaseUrl(specBinding);
-              this.msgHeaderGenerator.toMessageHeaderXSD(header, profile, _registryBaseUrl_1);
+              this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, _registryBaseUrl_1);
             } else {
-              this.msgHeaderGenerator.toMessageHeaderXSD(header, profile);
+              this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile);
+            }
+            final MessageHeader responseHeader = this._headerFinder.findBestMatchingRequestHeader(service, profile);
+            if ((this.forceRelativePaths).booleanValue()) {
+              String _registryBaseUrl_2 = this._bindingExtensions.getRegistryBaseUrl(specBinding);
+              this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, _registryBaseUrl_2);
+            } else {
+              this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile);
             }
           }
         }

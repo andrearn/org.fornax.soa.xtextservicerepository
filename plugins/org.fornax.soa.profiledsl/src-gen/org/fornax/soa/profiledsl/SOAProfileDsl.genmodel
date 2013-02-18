@@ -43,9 +43,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//SOAProfile/scope"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/lifecycle"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/serviceCategory"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/messaging"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/designRules"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/versioningRule"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/messaging"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/orgNamespaces"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/namespaceRules"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/scopedBasicTypes"/>
@@ -80,7 +80,9 @@
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Messaging">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Messaging/messageHeaders"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Messaging/defaultHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Messaging/defaultRequestHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Messaging/defaultResponseHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Messaging/defaultPublishHeader"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//DesignRules">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//DesignRules/internalNamespaceRules"/>

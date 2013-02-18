@@ -98,8 +98,8 @@ Escalation :
 Contact :
 	'contact' '{'
 		'name' fullname=STRING 
-		'phone' phone=STRING 
-		'email' email=STRING 
+		('phone' phone=STRING)? 
+		('email' email=STRING)?
 	'}';
 		
 Party: CustomerParty | ProviderParty | ThirdParty;
@@ -127,8 +127,8 @@ ThirdParty:
 Repesentative:
 	'representative' '{'
 		'name' fullname=STRING 
-		'phone' phone=STRING 
-		'email' email=STRING 
+		('phone' phone=STRING)? 
+		('email' email=STRING)?
 	'}';
 
 Responsibility: SimpleResponsibility | ReportingResponsibility;
@@ -143,7 +143,7 @@ SimpleResponsibility:
 
 Report:
 	'report' name=ID '{'
-		'report-to' 
+		'report-to' reportTo=STRING
 		'contents' content=STRING
 	'}';
 	

@@ -168,7 +168,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="documentUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="retirementDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeader" eType="#//MessageHeaderRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requestMessageHeader" eType="#//MessageHeaderRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responseMessageHeader"
+        eType="#//MessageHeaderRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publishMessageHeader" eType="#//MessageHeaderRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
@@ -313,7 +317,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="updating" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="transactionSpec" eType="#//TransactionSpec"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="persistence" eType="#//Persistence"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="messageHeader" eType="#//MessageHeaderRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requestMessageHeader" eType="#//MessageHeaderRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responseMessageHeader"
+        eType="#//MessageHeaderRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="publishMessageHeader" eType="#//MessageHeaderRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="callbackForOperation" upperBound="-1"
         eType="#//OperationRef" containment="true"/>

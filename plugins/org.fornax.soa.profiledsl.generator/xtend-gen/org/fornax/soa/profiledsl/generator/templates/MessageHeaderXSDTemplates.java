@@ -308,7 +308,7 @@ public class MessageHeaderXSDTemplates {
   }
   
   /**
-   * Generate a message header XSD for each header defided inthe given profile
+   * Generate a message header XSD for each header defined in the given profile
    * and for each major version of a TechnicalNamespace<br/><br/>
    * 
    * @param namespace			the TechnicalNamespace to generate XSDs for<br/>

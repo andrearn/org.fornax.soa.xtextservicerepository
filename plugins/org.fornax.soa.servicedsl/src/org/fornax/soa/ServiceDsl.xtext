@@ -240,7 +240,9 @@ Service:
 				/*
 				 * The message header definition being used. Overrides the default from the architecture profile
 				 */
-			&	('messageHeader' messageHeader = MessageHeaderRef )?
+			&	('request-message-header' requestMessageHeader = MessageHeaderRef )?
+			&	('response-message-header' responseMessageHeader = MessageHeaderRef )?
+			&	('publish-message-header' publishMessageHeader = MessageHeaderRef )?
 			)
 			/*
 			 * Semantic tagging
@@ -410,7 +412,9 @@ Operation:
 		/*
 		 * Overrides the message header declaration from the architecture profile or service for this operation
 		 */
-		('messageHeader' messageHeader = MessageHeaderRef )?
+		('request-message-header' requestMessageHeader = MessageHeaderRef )?
+		('response-message-header' responseMessageHeader = MessageHeaderRef )?
+		('publish-message-header' publishMessageHeader = MessageHeaderRef )?
 		/*
 		 * Listens for callback from the given operations. Used, when one of the operations has been called asynchronously.
 		 * The operation must correlate the asynch response to the original request

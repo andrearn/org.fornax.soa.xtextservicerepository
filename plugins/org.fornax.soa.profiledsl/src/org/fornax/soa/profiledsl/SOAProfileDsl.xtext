@@ -35,14 +35,14 @@ SOAProfile:
 		'service-categories' '{'
 			serviceCategory+=ServiceCategory+
 		'}'
+		(designRules=DesignRules)?
+		(versioningRule = VersioningRule)
 		/* 
 		 * basic message principles, e.g. message headers that have to be set in every service message
 		 * if not stated otherwise in the service definition
 		 */
 		(messaging=Messaging)?
-		(designRules=DesignRules)?
-		(versioningRule = VersioningRule)
-		(orgNamespaces+=OrganizationNamespace)*
+		(orgNamespaces += OrganizationNamespace)*
 		(namespaceRules = NamespaceRules)?
 		(scopedBasicTypes+=BasicTypes)*
 		(governanceDecisions+=GovernanceDecision)*
@@ -99,7 +99,9 @@ enum EnvironmentType returns environmentDsl::EnvironmentType: Prod = "Production
 Messaging :
 	{Messaging} 'messaging' '{'
 		(messageHeaders+=MessageHeader)*
-		('default-header' defaultHeader=MessageHeaderRef )?
+		('default-request-header' defaultRequestHeader=MessageHeaderRef )?
+		('default-response-header' defaultResponseHeader=MessageHeaderRef )?
+		('default-publish-header' defaultPublishHeader=MessageHeaderRef )?
 	'}';
 
 /*
@@ -164,7 +166,7 @@ TechnicalNamespace:
  */
 MessageHeader:
 	'message-headers' name=QualifiedName '{'
-		'meta-data' '{'
+		'metadata' '{'
 			version=Version 
 			'lifecycle-state' state=[LifecycleState | QualifiedName]
 			(governanceDecisions+=GovernanceDecision)*

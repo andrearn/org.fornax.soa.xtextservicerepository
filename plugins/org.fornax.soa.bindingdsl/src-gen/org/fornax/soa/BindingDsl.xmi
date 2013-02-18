@@ -113,7 +113,7 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
@@ -191,7 +191,7 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
@@ -302,7 +302,7 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
@@ -375,7 +375,7 @@
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -433,7 +433,7 @@
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -481,7 +481,7 @@
         <elements xsi:type="xtext:Keyword" value="EJB"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -501,7 +501,7 @@
         <elements xsi:type="xtext:Keyword" value="HTTP"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -529,7 +529,7 @@
         <elements xsi:type="xtext:Keyword" value="REST"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -638,7 +638,7 @@
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -678,7 +678,7 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRefs" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
       </alternatives>
     </rules>
@@ -692,7 +692,7 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRefs" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
       </alternatives>
     </rules>
@@ -712,7 +712,7 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -743,7 +743,7 @@
         <elements xsi:type="xtext:Keyword" value="FILE"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -771,7 +771,7 @@
         <elements xsi:type="xtext:Keyword" value="FTP"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -797,7 +797,7 @@
         <elements xsi:type="xtext:Keyword" value="IIOP"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -822,7 +822,7 @@
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -872,9 +872,9 @@
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//LogPolicy"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="logging policy"/>
+        <elements xsi:type="xtext:Keyword" value="logging-policy"/>
         <elements xsi:type="xtext:Assignment" feature="logPolicy" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.42"/>
         </elements>
       </alternatives>
     </rules>
@@ -885,8 +885,7 @@
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.31"/>
         <elements xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.37"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="AuthenticationPolicy">
@@ -899,7 +898,7 @@
             <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//AuthenticationPolicy"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="authn policy"/>
+        <elements xsi:type="xtext:Keyword" value="authn-policy"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
         </elements>
@@ -907,18 +906,27 @@
           <terminal xsi:type="xtext:Keyword" value="optional"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Keyword" value="auth tokens"/>
+        <elements xsi:type="xtext:Keyword" value="auth-tokens"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="+" feature="authTokens" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.32"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
-        <elements xsi:type="xtext:Keyword" value="hash algorithms"/>
+        <elements xsi:type="xtext:Keyword" value="hash-algorithms"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="hashAlgorithms" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.33"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="useNonce" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="use-nonce"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="issuer"/>
+          <elements xsi:type="xtext:Assignment" feature="issuer" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
@@ -931,7 +939,7 @@
           <terminal xsi:type="xtext:Keyword" value="optional"/>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="kind" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.41"/>
         </elements>
       </alternatives>
     </rules>
@@ -969,22 +977,13 @@
           <literal value="SHA256"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//HashAlgKind/RSA"/>
+          <literal value="RSA"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//HashAlgKind/PlainText"/>
           <literal value="PlainText"/>
         </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="AuthorizationPolicy">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//AuthorizationPolicy"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Action">
-          <type metamodel="/0/@metamodelDeclarations.0">
-            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//AuthorizationPolicy"/>
-          </type>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="authorization policy"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="SigningPolicy">
@@ -997,7 +996,115 @@
             <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//SigningPolicy"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="signing policy"/>
+        <elements xsi:type="xtext:Keyword" value="signing-policy"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="supported-algorithms"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="supportedSigningAlgorithms" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="requires-algorithm"/>
+          <elements xsi:type="xtext:Assignment" feature="requiredSigningAlgorithm" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="signed-message-parts"/>
+          <elements xsi:type="xtext:Assignment" feature="signedParts" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="signedParts" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="MessagePartRef">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//MessagePartRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" feature="messagePartRef" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.37"/>
+        </elements>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="expression"/>
+          <elements xsi:type="xtext:Assignment" feature="partRefExpression" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="MessagePartRefKind">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//MessagePartRefKind"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//MessagePartRefKind/header"/>
+          <literal value="header"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//MessagePartRefKind/body"/>
+          <literal value="body"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//MessagePartRefKind/attachments"/>
+          <literal value="attachments"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//MessagePartRefKind/all"/>
+          <literal value="all"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//MessagePartRefKind/expression"/>
+          <literal value="expression"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="SigningAlgothm">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//SigningAlgothm"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SigningAlgothm/NONE"/>
+          <literal value="NONE"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SigningAlgothm/SHA1"/>
+          <literal value="SHA1"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SigningAlgothm/SHA256"/>
+          <literal value="SHA256"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SigningAlgothm/MD5"/>
+          <literal value="MD5"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SigningAlgothm/RSA_1_5"/>
+          <literal value="RSA_1_5"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SigningAlgothm/AES128"/>
+          <literal value="AES128"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SigningAlgothm/AES192"/>
+          <literal value="AES192"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//SigningAlgothm/AES256"/>
+          <literal value="AES256"/>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="EncryptionPolicy">
@@ -1010,7 +1117,72 @@
             <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//EncryptionPolicy"/>
           </type>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="encryption policy"/>
+        <elements xsi:type="xtext:Keyword" value="encryption-policy"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="supported-algorithms"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="supportedCipherAlgorithms" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="requires-algorithm"/>
+          <elements xsi:type="xtext:Assignment" feature="requiredCipherAlgorithm" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="encrypted-message-parts"/>
+          <elements xsi:type="xtext:Assignment" feature="encryptedParts" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="encryptedParts" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="CipherAlgorithmKind">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//CipherAlgorithmKind"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//CipherAlgorithmKind/NONE"/>
+          <literal value="NONE"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//CipherAlgorithmKind/Basic128"/>
+          <literal value="Basic128"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//CipherAlgorithmKind/Basic192"/>
+          <literal value="Basic192"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//CipherAlgorithmKind/Basic256"/>
+          <literal value="Basic256"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//CipherAlgorithmKind/DES"/>
+          <literal value="DES"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//CipherAlgorithmKind/TRIPLE_DES"/>
+          <literal value="3DES"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//CipherAlgorithmKind/AES128"/>
+          <literal value="AES128"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//CipherAlgorithmKind/AES256"/>
+          <literal value="AES256"/>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="AuthTokenKind">
@@ -1035,12 +1207,24 @@
           <literal value="Kerberos"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//AuthTokenKind/SPNEGO"/>
+          <literal value="SPNEGO"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//AuthTokenKind/RELToken"/>
+          <literal value="RELToken"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//AuthTokenKind/X509Certificate"/>
           <literal value="X509Certificate"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//AuthTokenKind/OAuth"/>
           <literal value="OAuth"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//AuthTokenKind/OAuth2"/>
+          <literal value="OAuth2"/>
         </elements>
       </alternatives>
     </rules>
@@ -1050,16 +1234,16 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//LogPolicyKind/NONE"/>
-          <literal value="NONE"/>
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//LogPolicyKind/none"/>
+          <literal value="none"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//LogPolicyKind/HEADER"/>
-          <literal value="HEADER"/>
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//LogPolicyKind/header"/>
+          <literal value="header"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//LogPolicyKind/ALL"/>
-          <literal value="ALL"/>
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//LogPolicyKind/all"/>
+          <literal value="all"/>
         </elements>
       </alternatives>
     </rules>

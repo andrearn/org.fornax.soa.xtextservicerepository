@@ -3,18 +3,24 @@ package org.fornax.soa.servicedsl.generator.templates.webservice;
 import com.google.common.base.Objects;
 import com.google.inject.Inject;
 import java.util.Arrays;
+import java.util.Set;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
+import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions;
+import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceImportQueries;
 import org.fornax.soa.profiledsl.sOAProfileDsl.DesignRules;
+import org.fornax.soa.profiledsl.sOAProfileDsl.MessageHeader;
 import org.fornax.soa.profiledsl.sOAProfileDsl.OperationDefPolicy;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.profiledsl.sOAProfileDsl.ServiceDefPolicy;
 import org.fornax.soa.profiledsl.sOAProfileDsl.ServiceVersionEvolution;
 import org.fornax.soa.profiledsl.sOAProfileDsl.TypeDefPolicy;
 import org.fornax.soa.profiledsl.sOAProfileDsl.TypeVersionEvolution;
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace;
+import org.fornax.soa.service.query.HeaderFinder;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
@@ -26,10 +32,16 @@ public class ServiceTemplateExtensions {
   private VersionQualifierExtensions versionQualifier;
   
   @Inject
+  private TechnicalNamespaceImportQueries techNsImportQueries;
+  
+  @Inject
   private SchemaNamespaceExtensions _schemaNamespaceExtensions;
   
   @Inject
   private SchemaTemplateExtensions _schemaTemplateExtensions;
+  
+  @Inject
+  private HeaderFinder _headerFinder;
   
   protected String _toTargetNamespace(final Object svc) {
     return "";
@@ -309,6 +321,33 @@ public class ServiceTemplateExtensions {
       _xifexpression = _opWrapperXSDFileName_1;
     }
     return _xifexpression;
+  }
+  
+  public Set<VersionedTechnicalNamespace> collectTechnicalVersionedNamespaceImports(final Service service, final SOAProfile profile) {
+    final Set<VersionedTechnicalNamespace> headerImports = CollectionLiterals.<VersionedTechnicalNamespace>newHashSet();
+    MessageHeader _findBestMatchingRequestHeader = this._headerFinder.findBestMatchingRequestHeader(service, profile);
+    boolean _notEquals = (!Objects.equal(_findBestMatchingRequestHeader, null));
+    if (_notEquals) {
+      MessageHeader _findBestMatchingRequestHeader_1 = this._headerFinder.findBestMatchingRequestHeader(service, profile);
+      Version _version = service.getVersion();
+      String _majorVersionNumber = this.versionQualifier.toMajorVersionNumber(_version);
+      Set<VersionedTechnicalNamespace> _allImportedVersionedNS = this.techNsImportQueries.allImportedVersionedNS(_findBestMatchingRequestHeader_1, _majorVersionNumber);
+      for (final VersionedTechnicalNamespace headerImp : _allImportedVersionedNS) {
+        headerImports.add(headerImp);
+      }
+    }
+    MessageHeader _findBestMatchingResponseHeader = this._headerFinder.findBestMatchingResponseHeader(service, profile);
+    boolean _notEquals_1 = (!Objects.equal(_findBestMatchingResponseHeader, null));
+    if (_notEquals_1) {
+      MessageHeader _findBestMatchingResponseHeader_1 = this._headerFinder.findBestMatchingResponseHeader(service, profile);
+      Version _version_1 = service.getVersion();
+      String _majorVersionNumber_1 = this.versionQualifier.toMajorVersionNumber(_version_1);
+      Set<VersionedTechnicalNamespace> _allImportedVersionedNS_1 = this.techNsImportQueries.allImportedVersionedNS(_findBestMatchingResponseHeader_1, _majorVersionNumber_1);
+      for (final VersionedTechnicalNamespace headerImp_1 : _allImportedVersionedNS_1) {
+        headerImports.add(headerImp_1);
+      }
+    }
+    return headerImports;
   }
   
   public String toTargetNamespace(final Object svc) {

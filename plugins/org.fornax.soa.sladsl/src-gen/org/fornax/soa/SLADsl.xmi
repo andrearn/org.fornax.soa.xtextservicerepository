@@ -332,13 +332,17 @@
         <elements xsi:type="xtext:Assignment" feature="fullname" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="phone"/>
-        <elements xsi:type="xtext:Assignment" feature="phone" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="phone"/>
+          <elements xsi:type="xtext:Assignment" feature="phone" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          </elements>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="email"/>
-        <elements xsi:type="xtext:Assignment" feature="email" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="email"/>
+          <elements xsi:type="xtext:Assignment" feature="email" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -425,13 +429,17 @@
         <elements xsi:type="xtext:Assignment" feature="fullname" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="phone"/>
-        <elements xsi:type="xtext:Assignment" feature="phone" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="phone"/>
+          <elements xsi:type="xtext:Assignment" feature="phone" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          </elements>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="email"/>
-        <elements xsi:type="xtext:Assignment" feature="email" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="email"/>
+          <elements xsi:type="xtext:Assignment" feature="email" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+          </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -478,6 +486,9 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Keyword" value="report-to"/>
+        <elements xsi:type="xtext:Assignment" feature="reportTo" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="contents"/>
         <elements xsi:type="xtext:Assignment" feature="content" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>

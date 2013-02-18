@@ -22,6 +22,8 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.service.query.HeaderFinder
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
+import java.util.Set
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 
 
 class OperationWrapperTemplates {
@@ -62,6 +64,7 @@ class OperationWrapperTemplates {
 	}
 	
 	def dispatch toOperationWrappers (Service service, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
 		var content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<xsd:schema targetNamespace="«service.toWrapperTargetNamespace()»"
@@ -70,8 +73,8 @@ class OperationWrapperTemplates {
 			«FOR imp : service.allImportedVersionedNS (service.version.toMajorVersionNumber(), minState)»
 				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 			«ENDFOR»
-			«IF service.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : service.findBestMatchingHeader (profile).allImportedVersionedNS (service.version.toMajorVersionNumber())»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
 					xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp) + headerImp.version.toMajorVersionNumber()»="«profileSchemaNamespaceExt.toNamespace (headerImp)»"
 				«ENDFOR»
 			«ENDIF»
@@ -83,8 +86,8 @@ class OperationWrapperTemplates {
 				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 					namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
-			«IF service.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : service.findBestMatchingHeader(profile).allImportedVersionedNS(service.version.toMajorVersionNumber())»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
 					<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
 						namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
 				«ENDFOR»
@@ -107,6 +110,7 @@ class OperationWrapperTemplates {
 	}
 	
 	def dispatch toOperationWrappers (Service service, InternalNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
 		var content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<xsd:schema targetNamespace="«service.toWrapperTargetNamespace()»"
@@ -114,8 +118,8 @@ class OperationWrapperTemplates {
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
 				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 			«ENDFOR»
-			«IF service.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : service.findBestMatchingHeader(profile).allImportedVersionedNS(service.version.toMajorVersionNumber())»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
 					xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp) + headerImp.version.toMajorVersionNumber()»="«profileSchemaNamespaceExt.toNamespace (headerImp)»"
 				«ENDFOR»
 			«ENDIF»
@@ -127,8 +131,8 @@ class OperationWrapperTemplates {
 			<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 				namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
-			«IF service.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : service.findBestMatchingHeader (profile).allImportedVersionedNS (service.version.toMajorVersionNumber())»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
 					<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
 						namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
 				«ENDFOR»
@@ -160,16 +164,16 @@ class OperationWrapperTemplates {
 	def dispatch toConcreteOperationWrapperTypes (Operation op, SOAProfile profile) '''
 		<xsd:complexType name="«op.toOperationWrapperRequestType()»">
 			<xsd:sequence>
-				«IF op.findBestMatchingHeader(profile) != null»
-					«op.findBestMatchingHeader (profile)?.toParameter()»
+				«IF op.findBestMatchingRequestHeader(profile) != null»
+					«op.findBestMatchingRequestHeader (profile)?.toParameter()»
 				«ENDIF»
 				«op.parameters.map (p|p.toParameter()).join»
 			</xsd:sequence>
 		</xsd:complexType>
 		<xsd:complexType name="«op.toOperationWrapperResponseType()»">
 			<xsd:sequence>
-				«IF op.findBestMatchingHeader(profile) != null»
-					«op.findBestMatchingHeader (profile)?.toParameter()»
+				«IF op.findBestMatchingResponseHeader(profile) != null»
+					«op.findBestMatchingResponseHeader (profile)?.toParameter()»
 				«ENDIF»
 				«op.^return.map (r|r.toParameter()).join»
 			</xsd:sequence>

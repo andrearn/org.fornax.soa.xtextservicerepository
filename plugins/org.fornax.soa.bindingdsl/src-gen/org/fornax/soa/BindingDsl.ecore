@@ -181,6 +181,8 @@
         eType="#//AuthToken" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="hashAlgorithms" upperBound="-1"
         eType="#//HashAlgorithm" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="useNonce" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="issuer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="AuthToken">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
@@ -195,23 +197,71 @@
     <eLiterals name="MD5" literal="MD5"/>
     <eLiterals name="SHA1" value="1" literal="SHA1"/>
     <eLiterals name="SHA256" value="2" literal="SHA256"/>
-    <eLiterals name="PlainText" value="3" literal="PlainText"/>
+    <eLiterals name="RSA" value="3" literal="RSA"/>
+    <eLiterals name="PlainText" value="4" literal="PlainText"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AuthorizationPolicy" eSuperTypes="#//SecurityPolicy"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SigningPolicy" eSuperTypes="#//SecurityPolicy"/>
-  <eClassifiers xsi:type="ecore:EClass" name="EncryptionPolicy" eSuperTypes="#//SecurityPolicy"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SigningPolicy" eSuperTypes="#//SecurityPolicy">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportedSigningAlgorithms"
+        unique="false" upperBound="-1" eType="#//SigningAlgothm"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiredSigningAlgorithm"
+        eType="#//SigningAlgothm"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signedParts" upperBound="-1"
+        eType="#//MessagePartRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessagePartRef">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messagePartRef" eType="#//MessagePartRefKind"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="partRefExpression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MessagePartRefKind">
+    <eLiterals name="header" literal="header"/>
+    <eLiterals name="body" value="1" literal="body"/>
+    <eLiterals name="attachments" value="2" literal="attachments"/>
+    <eLiterals name="all" value="3" literal="all"/>
+    <eLiterals name="expression" value="4" literal="expression"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SigningAlgothm">
+    <eLiterals name="NONE" literal="NONE"/>
+    <eLiterals name="SHA1" value="1" literal="SHA1"/>
+    <eLiterals name="SHA256" value="2" literal="SHA256"/>
+    <eLiterals name="MD5" value="3" literal="MD5"/>
+    <eLiterals name="RSA_1_5" value="4" literal="RSA_1_5"/>
+    <eLiterals name="AES128" value="5" literal="AES128"/>
+    <eLiterals name="AES192" value="6" literal="AES192"/>
+    <eLiterals name="AES256" value="7" literal="AES256"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EncryptionPolicy" eSuperTypes="#//SecurityPolicy">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportedCipherAlgorithms"
+        unique="false" upperBound="-1" eType="#//CipherAlgorithmKind"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiredCipherAlgorithm"
+        eType="#//CipherAlgorithmKind"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="encryptedParts" upperBound="-1"
+        eType="#//MessagePartRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="CipherAlgorithmKind">
+    <eLiterals name="NONE" literal="NONE"/>
+    <eLiterals name="Basic128" value="1" literal="Basic128"/>
+    <eLiterals name="Basic192" value="2" literal="Basic192"/>
+    <eLiterals name="Basic256" value="3" literal="Basic256"/>
+    <eLiterals name="DES" value="4" literal="DES"/>
+    <eLiterals name="TRIPLE_DES" value="5" literal="3DES"/>
+    <eLiterals name="AES128" value="6" literal="AES128"/>
+    <eLiterals name="AES256" value="7" literal="AES256"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="AuthTokenKind">
     <eLiterals name="UsernamePassword" literal="UsernamePassword"/>
     <eLiterals name="SAML" value="1" literal="SAML"/>
     <eLiterals name="SAML2" value="2" literal="SAML2"/>
     <eLiterals name="Kerberos" value="3" literal="Kerberos"/>
-    <eLiterals name="X509Certificate" value="4" literal="X509Certificate"/>
-    <eLiterals name="OAuth" value="5" literal="OAuth"/>
+    <eLiterals name="SPNEGO" value="4" literal="SPNEGO"/>
+    <eLiterals name="RELToken" value="5" literal="RELToken"/>
+    <eLiterals name="X509Certificate" value="6" literal="X509Certificate"/>
+    <eLiterals name="OAuth" value="7" literal="OAuth"/>
+    <eLiterals name="OAuth2" value="8" literal="OAuth2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="LogPolicyKind">
-    <eLiterals name="NONE" literal="NONE"/>
-    <eLiterals name="HEADER" value="1" literal="HEADER"/>
-    <eLiterals name="ALL" value="2" literal="ALL"/>
+    <eLiterals name="none" literal="none"/>
+    <eLiterals name="header" value="1" literal="header"/>
+    <eLiterals name="all" value="2" literal="all"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EndpointQualifierRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifier" eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Qualifier"/>

@@ -91,6 +91,7 @@
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//Report">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Report/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Report/reportTo"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Report/content"/>
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//ReportingResponsibility">

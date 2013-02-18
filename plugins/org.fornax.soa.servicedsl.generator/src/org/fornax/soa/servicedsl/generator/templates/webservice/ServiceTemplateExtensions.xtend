@@ -7,12 +7,18 @@ import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtensions
+import java.util.Set
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
+import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceImportQueries
+import org.fornax.soa.service.query.HeaderFinder
 
 class ServiceTemplateExtensions {
 
 	@Inject VersionQualifierExtensions versionQualifier
+	@Inject TechnicalNamespaceImportQueries techNsImportQueries
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTemplateExtensions
+	@Inject extension HeaderFinder
 	
 	def dispatch String toTargetNamespace (Object svc) {
 		"";
@@ -125,5 +131,20 @@ class ServiceTemplateExtensions {
 		} else {
 			s.toOpWrapperXSDFileName();
 		}
+	}
+	
+	def collectTechnicalVersionedNamespaceImports (Service service, SOAProfile profile) {
+		val Set<VersionedTechnicalNamespace> headerImports = newHashSet
+		if (service.findBestMatchingRequestHeader(profile) != null) {
+			for (headerImp : techNsImportQueries.allImportedVersionedNS(service.findBestMatchingRequestHeader (profile), versionQualifier.toMajorVersionNumber(service.version))) {
+				headerImports.add (headerImp)
+			}
+		}
+		if (service.findBestMatchingResponseHeader(profile) != null) {
+			for (headerImp : techNsImportQueries.allImportedVersionedNS(service.findBestMatchingResponseHeader (profile), versionQualifier.toMajorVersionNumber(service.version))) {
+				headerImports.add (headerImp)
+			}
+		}
+		return headerImports
 	}
 }

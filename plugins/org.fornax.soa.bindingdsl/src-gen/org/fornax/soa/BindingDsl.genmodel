@@ -41,20 +41,51 @@
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//HashAlgKind/MD5"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//HashAlgKind/SHA1"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//HashAlgKind/SHA256"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//HashAlgKind/RSA"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//HashAlgKind/PlainText"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//MessagePartRefKind">
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//MessagePartRefKind/header"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//MessagePartRefKind/body"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//MessagePartRefKind/attachments"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//MessagePartRefKind/all"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//MessagePartRefKind/expression"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SigningAlgothm">
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/SHA1"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/SHA256"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/MD5"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/RSA_1_5"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES128"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES192"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES256"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//CipherAlgorithmKind">
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//CipherAlgorithmKind/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//CipherAlgorithmKind/Basic128"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//CipherAlgorithmKind/Basic192"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//CipherAlgorithmKind/Basic256"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//CipherAlgorithmKind/DES"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//CipherAlgorithmKind/TRIPLE_DES"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//CipherAlgorithmKind/AES128"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//CipherAlgorithmKind/AES256"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//AuthTokenKind">
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/UsernamePassword"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/SAML"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/SAML2"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/Kerberos"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/SPNEGO"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/RELToken"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/X509Certificate"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/OAuth"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//AuthTokenKind/OAuth2"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//LogPolicyKind">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//LogPolicyKind/NONE"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//LogPolicyKind/HEADER"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//LogPolicyKind/ALL"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//LogPolicyKind/none"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//LogPolicyKind/header"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//LogPolicyKind/all"/>
     </genEnums>
     <genClasses ecoreClass="BindingDsl.ecore#//BindingModel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//BindingModel/imports"/>
@@ -174,6 +205,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AuthenticationPolicy/optional"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AuthenticationPolicy/authTokens"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AuthenticationPolicy/hashAlgorithms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AuthenticationPolicy/useNonce"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AuthenticationPolicy/issuer"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//AuthToken">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AuthToken/optional"/>
@@ -184,9 +217,20 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HashAlgorithm/useBase64"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//HashAlgorithm/kind"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//AuthorizationPolicy"/>
-    <genClasses ecoreClass="BindingDsl.ecore#//SigningPolicy"/>
-    <genClasses ecoreClass="BindingDsl.ecore#//EncryptionPolicy"/>
+    <genClasses ecoreClass="BindingDsl.ecore#//SigningPolicy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SigningPolicy/supportedSigningAlgorithms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SigningPolicy/requiredSigningAlgorithm"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//SigningPolicy/signedParts"/>
+    </genClasses>
+    <genClasses ecoreClass="BindingDsl.ecore#//MessagePartRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//MessagePartRef/messagePartRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//MessagePartRef/partRefExpression"/>
+    </genClasses>
+    <genClasses ecoreClass="BindingDsl.ecore#//EncryptionPolicy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//EncryptionPolicy/supportedCipherAlgorithms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//EncryptionPolicy/requiredCipherAlgorithm"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//EncryptionPolicy/encryptedParts"/>
+    </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//EndpointQualifierRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//EndpointQualifierRef/endpointQualifier"/>
     </genClasses>

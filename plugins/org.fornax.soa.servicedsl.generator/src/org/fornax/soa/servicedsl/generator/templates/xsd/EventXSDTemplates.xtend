@@ -20,6 +20,8 @@ import org.fornax.soa.serviceDsl.Parameter
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
+import java.util.Set
 
 class EventXSDTemplates {
 	
@@ -53,6 +55,7 @@ class EventXSDTemplates {
 	}
 	
 	def dispatch toEvents (Service svc, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		val Set<VersionedTechnicalNamespace> headerImports = svc.collectTechnicalVersionedNamespaceImports (profile)
 		val content = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<xsd:schema targetNamespace="«svc.toTargetNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
@@ -60,8 +63,8 @@ class EventXSDTemplates {
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
 				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 			«ENDFOR»
-			«IF svc.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : svc.findBestMatchingHeader(profile).allImportedVersionedNS(svc.version.toMajorVersionNumber())»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
 					xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
 				«ENDFOR»
 			«ENDIF»
@@ -73,8 +76,8 @@ class EventXSDTemplates {
 				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 					namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
-			«IF svc.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : svc.findBestMatchingHeader(profile).allImportedVersionedNS(svc.version.toMajorVersionNumber())»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
 					<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 						namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
@@ -98,14 +101,15 @@ class EventXSDTemplates {
 	}
 	
 	def dispatch toEvents (Service svc, InternalNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		val Set<VersionedTechnicalNamespace> headerImports = svc.collectTechnicalVersionedNamespaceImports (profile)
 		val content = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<xsd:schema targetNamespace="«svc.toTargetNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
 				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
 			«ENDFOR»
-			«IF svc.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : svc.findBestMatchingHeader(profile).allImportedVersionedNS(svc.version.toMajorVersionNumber())»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
 					xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
 				«ENDFOR»
 			«ENDIF»
@@ -117,8 +121,8 @@ class EventXSDTemplates {
 				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 					namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
-			«IF svc.findBestMatchingHeader(profile) != null»
-				«FOR headerImp : svc.findBestMatchingHeader(profile).allImportedVersionedNS(svc.version.toMajorVersionNumber())»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
 					<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 						namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
@@ -151,8 +155,8 @@ class EventXSDTemplates {
 		<xsd:element name="«op.name.toFirstUpper()»">
 			<xsd:complexType>
 				<xsd:sequence>
-					«IF op.findBestMatchingHeader(profile) != null»
-						«op.findBestMatchingHeader (profile).toParameter()»
+					«IF op.findBestMatchingRequestHeader(profile) != null»
+						«op.findBestMatchingRequestHeader (profile).toParameter()»
 					«ENDIF»
 					«op.parameters.map (p|p.toParameter ()).join»
 				</xsd:sequence>
@@ -161,8 +165,8 @@ class EventXSDTemplates {
 		<xsd:element name="«op.name.toFirstUpper()»Response">
 			<xsd:complexType>
 				<xsd:sequence>
-					«IF op.findBestMatchingHeader(profile) != null»
-						«op.findBestMatchingHeader (profile).toParameter ()»
+					«IF op.findBestMatchingResponseHeader(profile) != null»
+						«op.findBestMatchingResponseHeader (profile).toParameter ()»
 					«ENDIF»
 					«op.^return?.map (r|r.toParameter ()).join»
 				</xsd:sequence>

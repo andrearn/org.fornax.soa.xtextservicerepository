@@ -24,6 +24,8 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
 import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceImportQueries
+import java.util.Set
+import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 
 /*
  * Template class for generation of abstract WSDLs
@@ -109,14 +111,16 @@ class WSDLTemplates {
 	}
 
 
-	def toTypes(Service s, LifecycleState minState, SOAProfile profile, String registryBaseUrl) '''
+	def toTypes(Service s, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		val Set<VersionedTechnicalNamespace> headerImports = s.collectTechnicalVersionedNamespaceImports (profile)
+		'''
 		<wsdl:types>
 			<xsd:schema targetNamespace="«s.toTargetNamespace()»"
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber (s.version), minState) »
 					xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber (imp.version)»="«imp.toNamespace()»"
 				«ENDFOR»
-				«IF s.findBestMatchingHeader(profile) != null»
-					«FOR headerImp : techNsImportQueries.allImportedVersionedNS(s.findBestMatchingHeader (profile), versionQualifier.toMajorVersionNumber(s.version))»
+				«IF !headerImports.empty»
+					«FOR headerImp : headerImports»
 						xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp)+versionQualifier.toMajorVersionNumber (headerImp.version)»="«profileSchemaNamespaceExt.toNamespace(headerImp)»"
 					«ENDFOR»
 				«ENDIF»
@@ -127,8 +131,8 @@ class WSDLTemplates {
 					<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 						namespace="«imp.toNamespace ()»"/>
 				«ENDFOR»
-				«IF s.findBestMatchingHeader (profile) != null»
-					«FOR headerImp : techNsImportQueries.allImportedVersionedNS (s.findBestMatchingHeader (profile), versionQualifier.toMajorVersionNumber(s.version))»
+				«IF !headerImports.empty»
+					«FOR headerImp : headerImports»
 						<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
 							namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
 					«ENDFOR»
@@ -137,15 +141,16 @@ class WSDLTemplates {
 				«s.operations.map (o|o.^throws).flatten.map(t|t.exception.name).toSet().map (e|e.toOperationFaultWrapperTypes (s.operations.map (o|o.^throws).flatten.toList)).join»
 			</xsd:schema>
 		</wsdl:types>
-	'''
+		'''
+	}
 
 
 	def toOperationWrapperTypes (Operation o, SOAProfile profile)  '''
 		<xsd:element name="«o.name»">
 			<xsd:complexType>
 				<xsd:sequence>
-					«IF o.findBestMatchingHeader (profile) != null»
-						«o.findBestMatchingHeader (profile).toParameter»
+					«IF o.findBestMatchingRequestHeader (profile) != null»
+						«o.findBestMatchingRequestHeader (profile).toParameter»
 					«ENDIF»
 					«o.parameters.map (p|p.toParameter()).join»
 					«/*
@@ -166,8 +171,8 @@ class WSDLTemplates {
 		<xsd:element name="«o.name»Response">
 			<xsd:complexType>
 				<xsd:sequence>
-					«IF o.findBestMatchingHeader(profile) != null»
-						«o.findBestMatchingHeader (profile).toParameter»
+					«IF o.findBestMatchingResponseHeader(profile) != null»
+						«o.findBestMatchingResponseHeader (profile).toParameter»
 					«ENDIF»
 					«o.^return.map(r|r.toParameter()).join»
 					«IF profile.operationsUseExtendableParameters()»

@@ -326,173 +326,170 @@ public class WSDLTemplates {
   }
   
   public CharSequence toTypes(final Service s, final LifecycleState minState, final SOAProfile profile, final String registryBaseUrl) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("<wsdl:types>");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append("<xsd:schema targetNamespace=\"");
-    String _targetNamespace = this._serviceTemplateExtensions.toTargetNamespace(s);
-    _builder.append(_targetNamespace, "	");
-    _builder.append("\"");
-    _builder.newLineIfNotEmpty();
+    CharSequence _xblockexpression = null;
     {
-      Version _version = s.getVersion();
-      String _majorVersionNumber = this.versionQualifier.toMajorVersionNumber(_version);
-      Set<VersionedDomainNamespace> _importedVersionedNS = this._namespaceImportQueries.importedVersionedNS(s, _majorVersionNumber, minState);
-      for(final VersionedDomainNamespace imp : _importedVersionedNS) {
-        _builder.append("\t\t");
-        _builder.append("xmlns:");
-        String _prefix = this._schemaNamespaceExtensions.toPrefix(imp);
-        String _version_1 = imp.getVersion();
-        String _majorVersionNumber_1 = this.versionQualifier.toMajorVersionNumber(_version_1);
-        String _plus = (_prefix + _majorVersionNumber_1);
-        _builder.append(_plus, "		");
-        _builder.append("=\"");
-        String _namespace = this._schemaTypeExtensions.toNamespace(imp);
-        _builder.append(_namespace, "		");
-        _builder.append("\"");
-        _builder.newLineIfNotEmpty();
+      final Set<VersionedTechnicalNamespace> headerImports = this._serviceTemplateExtensions.collectTechnicalVersionedNamespaceImports(s, profile);
+      StringConcatenation _builder = new StringConcatenation();
+      _builder.append("<wsdl:types>");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append("<xsd:schema targetNamespace=\"");
+      String _targetNamespace = this._serviceTemplateExtensions.toTargetNamespace(s);
+      _builder.append(_targetNamespace, "	");
+      _builder.append("\"");
+      _builder.newLineIfNotEmpty();
+      {
+        Version _version = s.getVersion();
+        String _majorVersionNumber = this.versionQualifier.toMajorVersionNumber(_version);
+        Set<VersionedDomainNamespace> _importedVersionedNS = this._namespaceImportQueries.importedVersionedNS(s, _majorVersionNumber, minState);
+        for(final VersionedDomainNamespace imp : _importedVersionedNS) {
+          _builder.append("\t\t");
+          _builder.append("xmlns:");
+          String _prefix = this._schemaNamespaceExtensions.toPrefix(imp);
+          String _version_1 = imp.getVersion();
+          String _majorVersionNumber_1 = this.versionQualifier.toMajorVersionNumber(_version_1);
+          String _plus = (_prefix + _majorVersionNumber_1);
+          _builder.append(_plus, "		");
+          _builder.append("=\"");
+          String _namespace = this._schemaTypeExtensions.toNamespace(imp);
+          _builder.append(_namespace, "		");
+          _builder.append("\"");
+          _builder.newLineIfNotEmpty();
+        }
       }
-    }
-    {
-      MessageHeader _findBestMatchingHeader = this._headerFinder.findBestMatchingHeader(s, profile);
-      boolean _notEquals = (!Objects.equal(_findBestMatchingHeader, null));
-      if (_notEquals) {
-        {
-          MessageHeader _findBestMatchingHeader_1 = this._headerFinder.findBestMatchingHeader(s, profile);
-          Version _version_2 = s.getVersion();
-          String _majorVersionNumber_2 = this.versionQualifier.toMajorVersionNumber(_version_2);
-          Set<VersionedTechnicalNamespace> _allImportedVersionedNS = this.techNsImportQueries.allImportedVersionedNS(_findBestMatchingHeader_1, _majorVersionNumber_2);
-          for(final VersionedTechnicalNamespace headerImp : _allImportedVersionedNS) {
-            _builder.append("\t\t");
-            _builder.append("xmlns:");
-            String _prefix_1 = this.profileSchemaNamespaceExt.toPrefix(headerImp);
-            String _version_3 = headerImp.getVersion();
-            String _majorVersionNumber_3 = this.versionQualifier.toMajorVersionNumber(_version_3);
-            String _plus_1 = (_prefix_1 + _majorVersionNumber_3);
-            _builder.append(_plus_1, "		");
-            _builder.append("=\"");
-            String _namespace_1 = this.profileSchemaNamespaceExt.toNamespace(headerImp);
-            _builder.append(_namespace_1, "		");
-            _builder.append("\"");
-            _builder.newLineIfNotEmpty();
+      {
+        boolean _isEmpty = headerImports.isEmpty();
+        boolean _not = (!_isEmpty);
+        if (_not) {
+          {
+            for(final VersionedTechnicalNamespace headerImp : headerImports) {
+              _builder.append("\t\t");
+              _builder.append("xmlns:");
+              String _prefix_1 = this.profileSchemaNamespaceExt.toPrefix(headerImp);
+              String _version_2 = headerImp.getVersion();
+              String _majorVersionNumber_2 = this.versionQualifier.toMajorVersionNumber(_version_2);
+              String _plus_1 = (_prefix_1 + _majorVersionNumber_2);
+              _builder.append(_plus_1, "		");
+              _builder.append("=\"");
+              String _namespace_1 = this.profileSchemaNamespaceExt.toNamespace(headerImp);
+              _builder.append(_namespace_1, "		");
+              _builder.append("\"");
+              _builder.newLineIfNotEmpty();
+            }
           }
         }
       }
-    }
-    _builder.append("\t\t");
-    _builder.append("elementFormDefault=\"qualified\"");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.append("attributeFormDefault=\"unqualified\"");
-    _builder.newLine();
-    _builder.append("\t");
-    _builder.append(">");
-    _builder.newLine();
-    {
-      Version _version_4 = s.getVersion();
-      String _majorVersionNumber_4 = this.versionQualifier.toMajorVersionNumber(_version_4);
-      Set<VersionedDomainNamespace> _importedVersionedNS_1 = this._namespaceImportQueries.importedVersionedNS(s, _majorVersionNumber_4, minState);
-      for(final VersionedDomainNamespace imp_1 : _importedVersionedNS_1) {
-        _builder.append("\t\t");
-        _builder.append("<xsd:import schemaLocation=\"");
-        String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(imp_1, registryBaseUrl);
-        _builder.append(_registryAssetUrl, "		");
-        _builder.append(".xsd\"");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        _builder.append("\t");
-        _builder.append("namespace=\"");
-        String _namespace_2 = this._schemaTypeExtensions.toNamespace(imp_1);
-        _builder.append(_namespace_2, "			");
-        _builder.append("\"/>");
-        _builder.newLineIfNotEmpty();
+      _builder.append("\t\t");
+      _builder.append("elementFormDefault=\"qualified\"");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("attributeFormDefault=\"unqualified\"");
+      _builder.newLine();
+      _builder.append("\t");
+      _builder.append(">");
+      _builder.newLine();
+      {
+        Version _version_3 = s.getVersion();
+        String _majorVersionNumber_3 = this.versionQualifier.toMajorVersionNumber(_version_3);
+        Set<VersionedDomainNamespace> _importedVersionedNS_1 = this._namespaceImportQueries.importedVersionedNS(s, _majorVersionNumber_3, minState);
+        for(final VersionedDomainNamespace imp_1 : _importedVersionedNS_1) {
+          _builder.append("\t\t");
+          _builder.append("<xsd:import schemaLocation=\"");
+          String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(imp_1, registryBaseUrl);
+          _builder.append(_registryAssetUrl, "		");
+          _builder.append(".xsd\"");
+          _builder.newLineIfNotEmpty();
+          _builder.append("\t\t");
+          _builder.append("\t");
+          _builder.append("namespace=\"");
+          String _namespace_2 = this._schemaTypeExtensions.toNamespace(imp_1);
+          _builder.append(_namespace_2, "			");
+          _builder.append("\"/>");
+          _builder.newLineIfNotEmpty();
+        }
       }
-    }
-    {
-      MessageHeader _findBestMatchingHeader_2 = this._headerFinder.findBestMatchingHeader(s, profile);
-      boolean _notEquals_1 = (!Objects.equal(_findBestMatchingHeader_2, null));
-      if (_notEquals_1) {
-        {
-          MessageHeader _findBestMatchingHeader_3 = this._headerFinder.findBestMatchingHeader(s, profile);
-          Version _version_5 = s.getVersion();
-          String _majorVersionNumber_5 = this.versionQualifier.toMajorVersionNumber(_version_5);
-          Set<VersionedTechnicalNamespace> _allImportedVersionedNS_1 = this.techNsImportQueries.allImportedVersionedNS(_findBestMatchingHeader_3, _majorVersionNumber_5);
-          for(final VersionedTechnicalNamespace headerImp_1 : _allImportedVersionedNS_1) {
-            _builder.append("\t\t");
-            _builder.append("<xsd:import schemaLocation=\"");
-            String _registryAssetUrl_1 = this.profileSchemaNamespaceExt.toRegistryAssetUrl(headerImp_1, registryBaseUrl);
-            _builder.append(_registryAssetUrl_1, "		");
-            _builder.append(".xsd\"");
-            _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
-            _builder.append("\t");
-            _builder.append("namespace=\"");
-            String _namespace_3 = this.profileSchemaNamespaceExt.toNamespace(headerImp_1);
-            _builder.append(_namespace_3, "			");
-            _builder.append("\"/>");
-            _builder.newLineIfNotEmpty();
+      {
+        boolean _isEmpty_1 = headerImports.isEmpty();
+        boolean _not_1 = (!_isEmpty_1);
+        if (_not_1) {
+          {
+            for(final VersionedTechnicalNamespace headerImp_1 : headerImports) {
+              _builder.append("\t\t");
+              _builder.append("<xsd:import schemaLocation=\"");
+              String _registryAssetUrl_1 = this.profileSchemaNamespaceExt.toRegistryAssetUrl(headerImp_1, registryBaseUrl);
+              _builder.append(_registryAssetUrl_1, "		");
+              _builder.append(".xsd\"");
+              _builder.newLineIfNotEmpty();
+              _builder.append("\t\t");
+              _builder.append("\t");
+              _builder.append("namespace=\"");
+              String _namespace_3 = this.profileSchemaNamespaceExt.toNamespace(headerImp_1);
+              _builder.append(_namespace_3, "			");
+              _builder.append("\"/>");
+              _builder.newLineIfNotEmpty();
+            }
           }
         }
       }
+      _builder.append("\t\t");
+      EList<Operation> _operations = s.getOperations();
+      final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
+          public CharSequence apply(final Operation e) {
+            CharSequence _operationWrapperTypes = WSDLTemplates.this.toOperationWrapperTypes(e, profile);
+            return _operationWrapperTypes;
+          }
+        };
+      List<CharSequence> _map = ListExtensions.<Operation, CharSequence>map(_operations, _function);
+      String _join = IterableExtensions.join(_map);
+      _builder.append(_join, "		");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t\t");
+      EList<Operation> _operations_1 = s.getOperations();
+      final Function1<Operation,EList<ExceptionRef>> _function_1 = new Function1<Operation,EList<ExceptionRef>>() {
+          public EList<ExceptionRef> apply(final Operation o) {
+            EList<ExceptionRef> _throws = o.getThrows();
+            return _throws;
+          }
+        };
+      List<EList<ExceptionRef>> _map_1 = ListExtensions.<Operation, EList<ExceptionRef>>map(_operations_1, _function_1);
+      Iterable<ExceptionRef> _flatten = Iterables.<ExceptionRef>concat(_map_1);
+      final Function1<ExceptionRef,String> _function_2 = new Function1<ExceptionRef,String>() {
+          public String apply(final ExceptionRef t) {
+            org.fornax.soa.serviceDsl.Exception _exception = t.getException();
+            String _name = _exception.getName();
+            return _name;
+          }
+        };
+      Iterable<String> _map_2 = IterableExtensions.<ExceptionRef, String>map(_flatten, _function_2);
+      Set<String> _set = IterableExtensions.<String>toSet(_map_2);
+      final Function1<String,CharSequence> _function_3 = new Function1<String,CharSequence>() {
+          public CharSequence apply(final String e) {
+            EList<Operation> _operations = s.getOperations();
+            final Function1<Operation,EList<ExceptionRef>> _function = new Function1<Operation,EList<ExceptionRef>>() {
+                public EList<ExceptionRef> apply(final Operation o) {
+                  EList<ExceptionRef> _throws = o.getThrows();
+                  return _throws;
+                }
+              };
+            List<EList<ExceptionRef>> _map = ListExtensions.<Operation, EList<ExceptionRef>>map(_operations, _function);
+            Iterable<ExceptionRef> _flatten = Iterables.<ExceptionRef>concat(_map);
+            List<ExceptionRef> _list = IterableExtensions.<ExceptionRef>toList(_flatten);
+            CharSequence _operationFaultWrapperTypes = WSDLTemplates.this.toOperationFaultWrapperTypes(e, _list);
+            return _operationFaultWrapperTypes;
+          }
+        };
+      Iterable<CharSequence> _map_3 = IterableExtensions.<String, CharSequence>map(_set, _function_3);
+      String _join_1 = IterableExtensions.join(_map_3);
+      _builder.append(_join_1, "		");
+      _builder.newLineIfNotEmpty();
+      _builder.append("\t");
+      _builder.append("</xsd:schema>");
+      _builder.newLine();
+      _builder.append("</wsdl:types>");
+      _builder.newLine();
+      _xblockexpression = (_builder);
     }
-    _builder.append("\t\t");
-    EList<Operation> _operations = s.getOperations();
-    final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
-        public CharSequence apply(final Operation e) {
-          CharSequence _operationWrapperTypes = WSDLTemplates.this.toOperationWrapperTypes(e, profile);
-          return _operationWrapperTypes;
-        }
-      };
-    List<CharSequence> _map = ListExtensions.<Operation, CharSequence>map(_operations, _function);
-    String _join = IterableExtensions.join(_map);
-    _builder.append(_join, "		");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
-    EList<Operation> _operations_1 = s.getOperations();
-    final Function1<Operation,EList<ExceptionRef>> _function_1 = new Function1<Operation,EList<ExceptionRef>>() {
-        public EList<ExceptionRef> apply(final Operation o) {
-          EList<ExceptionRef> _throws = o.getThrows();
-          return _throws;
-        }
-      };
-    List<EList<ExceptionRef>> _map_1 = ListExtensions.<Operation, EList<ExceptionRef>>map(_operations_1, _function_1);
-    Iterable<ExceptionRef> _flatten = Iterables.<ExceptionRef>concat(_map_1);
-    final Function1<ExceptionRef,String> _function_2 = new Function1<ExceptionRef,String>() {
-        public String apply(final ExceptionRef t) {
-          org.fornax.soa.serviceDsl.Exception _exception = t.getException();
-          String _name = _exception.getName();
-          return _name;
-        }
-      };
-    Iterable<String> _map_2 = IterableExtensions.<ExceptionRef, String>map(_flatten, _function_2);
-    Set<String> _set = IterableExtensions.<String>toSet(_map_2);
-    final Function1<String,CharSequence> _function_3 = new Function1<String,CharSequence>() {
-        public CharSequence apply(final String e) {
-          EList<Operation> _operations = s.getOperations();
-          final Function1<Operation,EList<ExceptionRef>> _function = new Function1<Operation,EList<ExceptionRef>>() {
-              public EList<ExceptionRef> apply(final Operation o) {
-                EList<ExceptionRef> _throws = o.getThrows();
-                return _throws;
-              }
-            };
-          List<EList<ExceptionRef>> _map = ListExtensions.<Operation, EList<ExceptionRef>>map(_operations, _function);
-          Iterable<ExceptionRef> _flatten = Iterables.<ExceptionRef>concat(_map);
-          List<ExceptionRef> _list = IterableExtensions.<ExceptionRef>toList(_flatten);
-          CharSequence _operationFaultWrapperTypes = WSDLTemplates.this.toOperationFaultWrapperTypes(e, _list);
-          return _operationFaultWrapperTypes;
-        }
-      };
-    Iterable<CharSequence> _map_3 = IterableExtensions.<String, CharSequence>map(_set, _function_3);
-    String _join_1 = IterableExtensions.join(_map_3);
-    _builder.append(_join_1, "		");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t");
-    _builder.append("</xsd:schema>");
-    _builder.newLine();
-    _builder.append("</wsdl:types>");
-    _builder.newLine();
-    return _builder;
+    return _xblockexpression;
   }
   
   public CharSequence toOperationWrapperTypes(final Operation o, final SOAProfile profile) {
@@ -509,12 +506,12 @@ public class WSDLTemplates {
     _builder.append("<xsd:sequence>");
     _builder.newLine();
     {
-      MessageHeader _findBestMatchingHeader = this._headerFinder.findBestMatchingHeader(o, profile);
-      boolean _notEquals = (!Objects.equal(_findBestMatchingHeader, null));
+      MessageHeader _findBestMatchingRequestHeader = this._headerFinder.findBestMatchingRequestHeader(o, profile);
+      boolean _notEquals = (!Objects.equal(_findBestMatchingRequestHeader, null));
       if (_notEquals) {
         _builder.append("\t\t\t");
-        MessageHeader _findBestMatchingHeader_1 = this._headerFinder.findBestMatchingHeader(o, profile);
-        CharSequence _parameter = this.toParameter(_findBestMatchingHeader_1);
+        MessageHeader _findBestMatchingRequestHeader_1 = this._headerFinder.findBestMatchingRequestHeader(o, profile);
+        CharSequence _parameter = this.toParameter(_findBestMatchingRequestHeader_1);
         _builder.append(_parameter, "			");
         _builder.newLineIfNotEmpty();
       }
@@ -573,12 +570,12 @@ public class WSDLTemplates {
     _builder.append("<xsd:sequence>");
     _builder.newLine();
     {
-      MessageHeader _findBestMatchingHeader_2 = this._headerFinder.findBestMatchingHeader(o, profile);
-      boolean _notEquals_1 = (!Objects.equal(_findBestMatchingHeader_2, null));
+      MessageHeader _findBestMatchingResponseHeader = this._headerFinder.findBestMatchingResponseHeader(o, profile);
+      boolean _notEquals_1 = (!Objects.equal(_findBestMatchingResponseHeader, null));
       if (_notEquals_1) {
         _builder.append("\t\t\t");
-        MessageHeader _findBestMatchingHeader_3 = this._headerFinder.findBestMatchingHeader(o, profile);
-        CharSequence _parameter_1 = this.toParameter(_findBestMatchingHeader_3);
+        MessageHeader _findBestMatchingResponseHeader_1 = this._headerFinder.findBestMatchingResponseHeader(o, profile);
+        CharSequence _parameter_1 = this.toParameter(_findBestMatchingResponseHeader_1);
         _builder.append(_parameter_1, "			");
         _builder.newLineIfNotEmpty();
       }
