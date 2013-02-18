@@ -1,0 +1,42 @@
+import SampleArchitectureProfile.ExSOALifecycle.*
+
+org-namespace org.example shortname "ex" {
+	
+	domain-namespace common shortname "cmn" {
+		
+		businessObject Address {
+			metadata {
+				version 1.0
+				lifecycle-state development
+			}
+			city 		: string
+			zipcode 	: string
+			street 		: string
+			housenum 	: string
+			
+		}
+		
+		businessObject Person {
+			metadata {
+				version 1.0
+				lifecycle-state development
+			}
+			firstname 	: string
+			lastname 	: string
+			/* Maybe one does not want give us his birth date ... */
+			optional birthDate : date
+			sex 		: Sex majorVersion 1
+		}
+		
+		enum Sex {
+			metadata {
+				version 1.0
+				lifecycle-state development
+			}
+			UNDEFINED
+			FEMALE
+			MALE
+		}
+		
+	}
+}

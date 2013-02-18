@@ -19,17 +19,20 @@
 
    <url>
       <discovery label="KIELER layouts release 0.6" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_0.6/"/>
+   	  <discovery label="GEF relaeses" url="http://download.eclipse.org/tools/gef/updates/releases/"/>
+   	  <discovery label="Eclipse Modelling TMF Update Site" url="http://download.eclipse.org/modeling/tmf/updates/"/>
+   	  <discovery label="Xtext Composite Update Site" url="http://download.itemis.de/updates"/>
    </url>
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.fornax.soa.servicedsl" version="1.5.5" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtext.xbase.lib" version="2.2.1" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.servicedsl" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.xbase.lib" version="2.3.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.graphview" version="1.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.jdt.core" version="3.6.2" match="greaterOrEqual"/>
-      <import plugin="org.fornax.soa.basedsl" version="1.5.5" match="greaterOrEqual"/>
-      <import plugin="org.fornax.soa.profiledsl" version="1.5.5" match="greaterOrEqual"/>
-      <import plugin="org.fornax.soa.servicedsl.ui" version="1.5.5" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.core" version="3.7.0" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.basedsl" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.profiledsl" version="1.6.0" match="greaterOrEqual"/>
+      <import plugin="org.fornax.soa.servicedsl.ui" version="1.6.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin

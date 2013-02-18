@@ -5,3 +5,4 @@ Bundle-SymbolicName: org.fornax.soa.businessdsl.view.fragment
 Bundle-Version: 1.6.0.qualifier
 Fragment-Host: org.fornax.soa.businessdsl.ui;bundle-version="1.6.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
+Require-Bundle: org.eclipse.xtext.graphview;bundle-version="1.0.0"

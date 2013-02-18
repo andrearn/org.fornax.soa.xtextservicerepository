@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.ui.newWizards">
+		<category id="org.fornax.soa.servicerepo.Examples" 
+				  name="%category.name" 
+				  parentCategory="org.eclipse.ui.Examples" />
+	</extension>
+
+	<!-- ========= org.fornax.soa.servicerepo.simple.example ========= -->
+	<extension point="org.eclipse.ui.newWizards">
+		<wizard	id="org.fornax.soa.servicerepo.NewSimpleExampleWizard" 
+			name="%simple.example.name" 
+			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
+			category="org.eclipse.ui.Examples/org.fornax.soa.servicerepo.Examples"
+			icon="icons/genproject.gif" 
+			project="true">
+			<description>%simple.example.description</description>
+		</wizard>
+	</extension>
+	
+	<!-- ========= org.fornax.soa.servicerepo.advanced.example ========= -->
+	<extension point="org.eclipse.ui.newWizards">
+		<wizard	id="org.fornax.soa.servicerepo.NewAdvancedExampleWizard" 
+			name="%advanced.example.name" 
+			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
+			category="org.eclipse.ui.Examples/org.fornax.soa.servicerepo.Examples"
+			icon="icons/genproject.gif" 
+			project="true">
+			<description>%advanced.example.description</description>
+		</wizard>
+	</extension>
+
+	<extension point="org.eclipse.emf.common.ui.examples">
+	    <example wizardID="org.fornax.soa.servicerepo.NewSimpleExampleWizard" pageImage="icons/genproject.gif">
+		 <projectDescriptor name="org.fornax.soa.servicerepo.simple.example" contentURI="contents/org.fornax.soa.servicerepo.simple.example.zip" description="%simple.example.repoproject.description"/>
+	    </example>
+	</extension>
+	
+	<extension point="org.eclipse.emf.common.ui.examples">
+	    <example wizardID="org.fornax.soa.servicerepo.NewAdvancedExampleWizard" pageImage="icons/genproject.gif">
+		 <projectDescriptor name="org.fornax.soa.servicerepo.advanced.example" contentURI="contents/org.fornax.soa.servicerepo.advanced.example.zip" description="%advanced.example.repoproject.description"/>
+	    </example>
+	</extension>   
+   
+</plugin>
