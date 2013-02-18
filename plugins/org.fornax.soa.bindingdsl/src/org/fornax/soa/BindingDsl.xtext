@@ -286,7 +286,7 @@ SigningPolicy :
 	'}'
 ;
 
-MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpression=STRING);
+MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpression=STRING)?;
 
 enum MessagePartRefKind: header | body | attachments | all | expression;
 

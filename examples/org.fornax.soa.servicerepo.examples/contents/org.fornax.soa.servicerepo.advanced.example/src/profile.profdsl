@@ -15,16 +15,16 @@ datatype decimal
 datatype base64Binary
 datatype anyType 
 
-/* 
- * A SOA architecture profile defines some basic rules
+/**
+ * A SOA architecture profile defines some basic rules for the whole company
  */
 soa-profile SampleArchitectureProfile {
 	scope "Example Org"
 	
-	/* Count+Care Standard-Lebenzyklus verwalteter SOA Assets */
+	/** Example Org default asset lifecycle */
 	lifecycle ExSOALifecycle {
 		
-		/*
+		/**
 		 * The asset is proposal that is only discussed
 		 */
 		initial state proposed {
@@ -35,10 +35,11 @@ soa-profile SampleArchitectureProfile {
 			-> development 
 		}
 		
-		/*
+		/**
 		 * The asset is under development
 		 */
 		state development {
+			requires-approval
 			/*
 			 * It becomes accesible in the development environment as well
 			 */
@@ -51,6 +52,7 @@ soa-profile SampleArchitectureProfile {
 		 * The asset is under test
 		 */
 		state test {
+			requires-approval
 			qualifies-for Local-Environment, Development-Environment, Test-Environment
 			-> productive
 			-> proposed
@@ -60,6 +62,7 @@ soa-profile SampleArchitectureProfile {
 		 * The is under productive use
 		 */
 		state productive {
+			requires-approval
 			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
 			-> deprecated
 			-> proposed
@@ -69,14 +72,15 @@ soa-profile SampleArchitectureProfile {
 		 * The asset is deprecated and will be retired soon.
 		 */
 		state deprecated {
+			requires-approval
 			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
 			-> productive
 			-> proposed
 		}
 	}
 	
-	/*
-	 * Categorize service based on a basic category
+	/**
+	 * Categorize services based on a standard category
 	 */
 	service-categories {
 		/**
@@ -95,14 +99,14 @@ soa-profile SampleArchitectureProfile {
 		/** 
 		 * Categorizes a <b>Business Process Service</b> (BPS) <br/><br/>
 		 * 
-		 * The service represent a busines process
+		 * The service represents a business process
 		 */
 		^process base-category process
 		
 		/**
-		 * Kennzeichnet einen <b>Business Rule Service</b> (BRS) <br/><br/>
+		 * Categorizes a <b>Business Rule Service</b> (BRS) <br/><br/>
 		 * 
-		 * Ein Service, der eine Geschäftsregel implementiert.
+		 * The service represents a business rule
 		 */
 		^rule base-category rule
 		
@@ -130,7 +134,7 @@ soa-profile SampleArchitectureProfile {
 				/* XSDs will need a placeholder element for response messages. By default a list of "any"-elements */
 				extendible-properties
 				/* 
-				 * And placeholder for XSD attributes is defined will be used as well
+				 * And placeholders for XSD attributes is defined will be used as well
 				 */
 				extendible-XML-attributes	
 			}
@@ -138,13 +142,91 @@ soa-profile SampleArchitectureProfile {
 	}
 	
 	
-	/* für jede in einem Namespace vorkommende Majorversion von BOs, Enums, Services oder Exception 
-	 * wird ein eigener technischer Namensraum, z.B. XML-Namespace ausgeprägt
-	 * 
-	 * Es wird immer die neueste zum Status des Referenzierers passende Version selektiert.
+	/**
+	 * Use a new namespace for every major version of BOs, Enums, Services oder Exception 
+	 * e.g. an XSD-namespace 
 	 */
-	versioning-strategy namespace-based
+	versioning-strategy namespace-based 
 	
+	
+	/**
+	 * Define general rules for messaging:
+	 * 
+	 * Canonical services must use the message header defined below
+	 */
+	messaging {
+		message-headers ExOrgServiceMessageContext {
+			metadata {
+				version 1.0
+				lifecycle-state ExSOALifecycle.productive
+				for request , response , publish
+				version-evolution {
+					extendible-properties
+					extendible-XML-attributes
+					extendible-sub-types
+				}
+			}
+			msgCtx : org.example.soa.ServiceMessageContext majorVersion 1
+		}
+		/**
+		 * All services define in domain-namespaces use per default the following message header for every request message.
+		 */
+		default-request-header ExOrgServiceMessageContext majorVersion 1
+		/**
+		 * All services define in domain-namespaces use per default the following message header for every response message.
+		 */
+		default-response-header ExOrgServiceMessageContext majorVersion 1
+		/**
+		 * All services define in domain-namespaces use per default the following message header for every published event.
+		 */
+		default-publish-header ExOrgServiceMessageContext majorVersion 1
+	}
+	
+	
+	
+	/**
+	 * Define some technical datatypes for messaging
+	 */
+	org-namespace org.example shortname "ex" {
+		namespace soa {
+			class ServiceMessageContext {
+				metadata {
+					version 1.0
+					lifecycle-state ExSOALifecycle.productive
+					governance-decision {
+						subject "approval"
+						decision-result accepted
+					}
+				}
+				/** logical endpoint to route the call to */
+				^to : string
+				/** identify the caller */
+				from : string
+				/** where should the response be routed to */
+				optional replyTo : string
+				/** a unique message ID */
+				messageId : string
+				/** set in a response message - the messageId of the original request */
+				optional requestId : string
+				/** attributes for message correlation */
+				optional correlation : Correlation majorVersion 1
+			}
+			
+			class Correlation {
+				metadata {
+					version 1.0
+					lifecycle-state ExSOALifecycle.productive
+					governance-decision {
+						subject "approval"
+						decision-result accepted
+					}
+				}
+				correlationId : string
+				optional sequenceId : string
+				optional sequenceNum : long
+			}
+		}
+	}
 	
 		
 }

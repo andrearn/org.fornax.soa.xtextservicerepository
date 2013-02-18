@@ -1,0 +1,29 @@
+import SampleArchitectureProfile.ExSOALifecycle.*
+import SampleArchitectureProfile.*
+
+org-namespace org.example shortname "ex" {
+	
+	internal-namespace sales.internal.sap shortname "salsap" {
+		
+		businessObject CUSTOMER {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+			}
+			// and here some properties are defined ...
+		}
+		
+		private service BAPI_CUSTOMER_CREATE {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+				service-category utility
+				statefulness stateful
+				persistence write
+			}
+			BAPI_CUSTOMER_CREATE (IS_CUSTOMER : CUSTOMER majorVersion 1) {
+				
+			} 
+		}
+	}
+}

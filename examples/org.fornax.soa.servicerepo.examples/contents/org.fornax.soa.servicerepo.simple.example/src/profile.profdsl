@@ -21,21 +21,21 @@ datatype anyType
 soa-profile SampleArchitectureProfile {
 	scope "Example Org"
 	
-	/* Count+Care Standard-Lebenzyklus verwalteter SOA Assets */
+	/** Example Org default asset lifecycle */
 	lifecycle ExSOALifecycle {
 		
-		/*
+		/**
 		 * The asset is proposal that is only discussed
 		 */
 		initial state proposed {
-			/*
+			/**
 			 * One can play with the proposal only in a local environment (the local PC)
 			 */
 			qualifies-for Local-Environment
 			-> development 
 		}
 		
-		/*
+		/**
 		 * The asset is under development
 		 */
 		state development {
@@ -56,7 +56,7 @@ soa-profile SampleArchitectureProfile {
 			-> proposed
 		}
 		
-		/* 
+		/**
 		 * The is under productive use
 		 */
 		state productive {
@@ -65,7 +65,7 @@ soa-profile SampleArchitectureProfile {
 			-> proposed
 		}
 		
-		/*
+		/**
 		 * The asset is deprecated and will be retired soon.
 		 */
 		state deprecated {
@@ -75,10 +75,13 @@ soa-profile SampleArchitectureProfile {
 		}
 	}
 	
-	/*
-	 * Categorize service based on a basic category
+	
+	
+	/**
+	 * Categorize services based on a standard category
 	 */
 	service-categories {
+		
 		/**
 		 * This is a <b>Business Activity Service</b> (BAS) <br/><br/>
 		 * 
@@ -95,14 +98,14 @@ soa-profile SampleArchitectureProfile {
 		/** 
 		 * Categorizes a <b>Business Process Service</b> (BPS) <br/><br/>
 		 * 
-		 * The service represent a busines process
+		 * The service represents a business process
 		 */
 		^process base-category process
 		
 		/**
-		 * Kennzeichnet einen <b>Business Rule Service</b> (BRS) <br/><br/>
+		 * Categorizes a <b>Business Rule Service</b> (BRS) <br/><br/>
 		 * 
-		 * Ein Service, der eine Geschäftsregel implementiert.
+		 * The service represents a business rule
 		 */
 		^rule base-category rule
 		
@@ -113,6 +116,7 @@ soa-profile SampleArchitectureProfile {
 		 */
 		^utility base-category utility
 	}
+	
 	
 	
 	/**
@@ -130,7 +134,7 @@ soa-profile SampleArchitectureProfile {
 				/* XSDs will need a placeholder element for response messages. By default a list of "any"-elements */
 				extendible-properties
 				/* 
-				 * And placeholder for XSD attributes is defined will be used as well
+				 * And placeholders for XSD attributes is defined will be used as well
 				 */
 				extendible-XML-attributes	
 			}
@@ -138,13 +142,10 @@ soa-profile SampleArchitectureProfile {
 	}
 	
 	
-	/* für jede in einem Namespace vorkommende Majorversion von BOs, Enums, Services oder Exception 
-	 * wird ein eigener technischer Namensraum, z.B. XML-Namespace ausgeprägt
-	 * 
-	 * Es wird immer die neueste zum Status des Referenzierers passende Version selektiert.
+	/**
+	 * Use a new namespace for every major version of BOs, Enums, Services oder Exception 
+	 * e.g. an XSD-namespace 
 	 */
-	versioning-strategy namespace-based
-	
-	
+	versioning-strategy namespace-based	
 		
 }

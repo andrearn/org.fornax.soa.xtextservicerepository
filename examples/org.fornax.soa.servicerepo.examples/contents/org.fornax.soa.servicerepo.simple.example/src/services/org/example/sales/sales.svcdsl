@@ -48,7 +48,7 @@ org-namespace org.example shortname "ex" {
 			/*
 			 * Get all detail information of the customer
 			 */
-			sync getCustomerDetails (customerId : string) 
+			getCustomerDetails (customerId : string) 
 				returns customer : Customer majorVersion 1
 				throws NoSuchCustomerException majorVersion 1
 			{
@@ -71,7 +71,7 @@ org-namespace org.example shortname "ex" {
 			/*
 			 * Create a new customer
 			 */
-			sync createCustomer (customer : Customer majorVersion 1) {
+			createCustomer (customer : Customer majorVersion 1) {
 				
 			}
 		}
