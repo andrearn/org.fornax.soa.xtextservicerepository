@@ -9,6 +9,8 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.fornax.soa.basedsl.sOABaseDsl.AdditionalInformation;
+
 import org.fornax.soa.semanticsDsl.Tag;
 
 /**
@@ -23,11 +25,12 @@ import org.fornax.soa.semanticsDsl.Tag;
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getName <em>Name</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getUseCase <em>Use Case</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Feature#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getUsesCapabilities <em>Uses Capabilities</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getRequires <em>Requires</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getEvent <em>Event</em>}</li>
- *   <li>{@link org.fornax.soa.solutionDsl.Feature#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Feature#getFeatures <em>Features</em>}</li>
  * </ul>
  * </p>
  *
@@ -132,6 +135,32 @@ public interface Feature extends EObject
   void setDescription(String value);
 
   /**
+   * Returns the value of the '<em><b>Additional Info</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Additional Info</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Additional Info</em>' containment reference.
+   * @see #setAdditionalInfo(AdditionalInformation)
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getFeature_AdditionalInfo()
+   * @model containment="true"
+   * @generated
+   */
+  AdditionalInformation getAdditionalInfo();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.solutionDsl.Feature#getAdditionalInfo <em>Additional Info</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Additional Info</em>' containment reference.
+   * @see #getAdditionalInfo()
+   * @generated
+   */
+  void setAdditionalInfo(AdditionalInformation value);
+
+  /**
    * Returns the value of the '<em><b>Uses Capabilities</b></em>' containment reference list.
    * The list contents are of type {@link org.fornax.soa.solutionDsl.CapabilityRef}.
    * <!-- begin-user-doc -->
@@ -180,22 +209,6 @@ public interface Feature extends EObject
   EList<EventRef> getEvent();
 
   /**
-   * Returns the value of the '<em><b>Features</b></em>' containment reference list.
-   * The list contents are of type {@link org.fornax.soa.solutionDsl.Feature}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Features</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Features</em>' containment reference list.
-   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getFeature_Features()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Feature> getFeatures();
-
-  /**
    * Returns the value of the '<em><b>Tags</b></em>' reference list.
    * The list contents are of type {@link org.fornax.soa.semanticsDsl.Tag}.
    * <!-- begin-user-doc -->
@@ -210,5 +223,21 @@ public interface Feature extends EObject
    * @generated
    */
   EList<Tag> getTags();
+
+  /**
+   * Returns the value of the '<em><b>Features</b></em>' containment reference list.
+   * The list contents are of type {@link org.fornax.soa.solutionDsl.Feature}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Features</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Features</em>' containment reference list.
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getFeature_Features()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Feature> getFeatures();
 
 } // Feature

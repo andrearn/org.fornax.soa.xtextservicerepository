@@ -57,6 +57,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/releaseDate"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/releaseTag"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ModuleDsl.ecore#//Module/source"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//Module/additionalInfo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//Module/providedServices"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//Module/providedNamespaces"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ModuleDsl.ecore#//Module/usedServices"/>

@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.fornax.soa.basedsl.sOABaseDsl.AdditionalInformation;
+
 import org.fornax.soa.semanticsDsl.Tag;
 
 import org.fornax.soa.solutionDsl.Feature;
@@ -41,6 +43,7 @@ import org.fornax.soa.solutionDsl.Version;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getKind <em>Kind</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getVersion <em>Version</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getRequires <em>Requires</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getModules <em>Modules</em>}</li>
@@ -101,6 +104,16 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * @ordered
    */
   protected Version version;
+
+  /**
+   * The cached value of the '{@link #getAdditionalInfo() <em>Additional Info</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAdditionalInfo()
+   * @generated
+   * @ordered
+   */
+  protected AdditionalInformation additionalInfo;
 
   /**
    * The cached value of the '{@link #getRequires() <em>Requires</em>}' containment reference list.
@@ -262,6 +275,54 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
+  public AdditionalInformation getAdditionalInfo()
+  {
+    return additionalInfo;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetAdditionalInfo(AdditionalInformation newAdditionalInfo, NotificationChain msgs)
+  {
+    AdditionalInformation oldAdditionalInfo = additionalInfo;
+    additionalInfo = newAdditionalInfo;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SolutionDslPackage.MODULE__ADDITIONAL_INFO, oldAdditionalInfo, newAdditionalInfo);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setAdditionalInfo(AdditionalInformation newAdditionalInfo)
+  {
+    if (newAdditionalInfo != additionalInfo)
+    {
+      NotificationChain msgs = null;
+      if (additionalInfo != null)
+        msgs = ((InternalEObject)additionalInfo).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SolutionDslPackage.MODULE__ADDITIONAL_INFO, null, msgs);
+      if (newAdditionalInfo != null)
+        msgs = ((InternalEObject)newAdditionalInfo).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SolutionDslPackage.MODULE__ADDITIONAL_INFO, null, msgs);
+      msgs = basicSetAdditionalInfo(newAdditionalInfo, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SolutionDslPackage.MODULE__ADDITIONAL_INFO, newAdditionalInfo, newAdditionalInfo));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<ServiceRef> getRequires()
   {
     if (requires == null)
@@ -325,6 +386,8 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
     {
       case SolutionDslPackage.MODULE__VERSION:
         return basicSetVersion(null, msgs);
+      case SolutionDslPackage.MODULE__ADDITIONAL_INFO:
+        return basicSetAdditionalInfo(null, msgs);
       case SolutionDslPackage.MODULE__REQUIRES:
         return ((InternalEList<?>)getRequires()).basicRemove(otherEnd, msgs);
       case SolutionDslPackage.MODULE__FEATURES:
@@ -351,6 +414,8 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return getKind();
       case SolutionDslPackage.MODULE__VERSION:
         return getVersion();
+      case SolutionDslPackage.MODULE__ADDITIONAL_INFO:
+        return getAdditionalInfo();
       case SolutionDslPackage.MODULE__REQUIRES:
         return getRequires();
       case SolutionDslPackage.MODULE__FEATURES:
@@ -382,6 +447,9 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return;
       case SolutionDslPackage.MODULE__VERSION:
         setVersion((Version)newValue);
+        return;
+      case SolutionDslPackage.MODULE__ADDITIONAL_INFO:
+        setAdditionalInfo((AdditionalInformation)newValue);
         return;
       case SolutionDslPackage.MODULE__REQUIRES:
         getRequires().clear();
@@ -422,6 +490,9 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       case SolutionDslPackage.MODULE__VERSION:
         setVersion((Version)null);
         return;
+      case SolutionDslPackage.MODULE__ADDITIONAL_INFO:
+        setAdditionalInfo((AdditionalInformation)null);
+        return;
       case SolutionDslPackage.MODULE__REQUIRES:
         getRequires().clear();
         return;
@@ -454,6 +525,8 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return kind != KIND_EDEFAULT;
       case SolutionDslPackage.MODULE__VERSION:
         return version != null;
+      case SolutionDslPackage.MODULE__ADDITIONAL_INFO:
+        return additionalInfo != null;
       case SolutionDslPackage.MODULE__REQUIRES:
         return requires != null && !requires.isEmpty();
       case SolutionDslPackage.MODULE__FEATURES:

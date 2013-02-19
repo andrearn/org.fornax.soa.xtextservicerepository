@@ -43,8 +43,12 @@ org-namespace org.example shortname "ex" {
 					decision-date "14.12.2012"
 					decision-by "John Doe"
 				}
+				
 				service-category entity
 				statefulness idempotent
+				additional-information {
+					location "file://W:\\Desgin\\CustomerManagementServiceSpec_v1.0.doc" section "3.1.1"
+				}
 				tags Customer
 			}
 			
@@ -84,6 +88,7 @@ org-namespace org.example shortname "ex" {
 				}
 				service-category activity
 				statefulness stateful
+				
 				tags Acquisition Customer
 			}
 			

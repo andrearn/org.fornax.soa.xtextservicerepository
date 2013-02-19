@@ -32,6 +32,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseTag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInfo" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//AdditionalInformation"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="providedServices" upperBound="-1"
         eType="#//ServiceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="providedNamespaces" upperBound="-1"

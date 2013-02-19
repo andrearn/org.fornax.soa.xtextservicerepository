@@ -163,7 +163,7 @@ public class BindingResolver {
             }
           };
         Iterable<AbstractServiceRef> _map = IterableExtensions.<ServiceRefBindingDescription, AbstractServiceRef>map(_filterNull, _function_1);
-        final List<AbstractServiceRef> svcRefsForEndpointQualifier = IterableExtensions.<AbstractServiceRef>toList(_map);
+        final List svcRefsForEndpointQualifier = IterableExtensions.<AbstractServiceRef>toList(_map);
         ServiceModuleRef _moduleRef_1 = usedModRef.getModuleRef();
         Module _module_1 = _moduleRef_1.getModule();
         final Set<ServiceRefBindingDescription> allImpModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(_module_1, targetEnvironment);

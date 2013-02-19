@@ -27,16 +27,12 @@ var envGenModel = "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/
 var profMetaModel="platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore"
 var profGenModel="platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.genmodel"
 
-var slaMetaModel = "platform:/resource/org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore"
-var slaGenModel = "platform:/resource/org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.genmodel"
-
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
 		uriMap = { to = baseMetaModel from = "http://www.fornax.org/soa/basedsl/SOABaseDsl" }
 		uriMap = { to = semMetaModel from = "http://www.fornax.org/soa/SemanticsDsl" }
 		uriMap = { to = svcMetaModel from = "http://www.fornax.org/soa/ServiceDsl" }
-		uriMap = { to = slaMetaModel from = "http://www.fornax.org/soa/SLADsl" }
 		uriMap = { to = modMetaModel from = "http://www.fornax.org/soa/moduledsl/ModuletDsl" }
 		uriMap = { to = envMetaModel from = "http://www.fornax.org/soa/EnvironmentDsl" }
 		uriMap = { to = profMetaModel from = "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" }
@@ -46,14 +42,12 @@ Workflow {
 		registerEcoreFile = modMetaModel
 		registerEcoreFile = envMetaModel
 		registerEcoreFile = profMetaModel
-		registerEcoreFile = slaMetaModel
 		registerGenModelFile = baseGenModel
 		registerGenModelFile = semGenModel
 		registerGenModelFile = svcGenModel
 		registerGenModelFile = modGenModel
 		registerGenModelFile = envGenModel
 		registerGenModelFile = profGenModel
-		registerGenModelFile = slaGenModel
 	}
 
 	component = DirectoryCleaner {
@@ -78,7 +72,7 @@ Workflow {
 
 			// generates Java API for the generated EPackages 
 			fragment = ecore.EcoreGeneratorFragment {
-				referencedGenModels = "${baseGenModel}, ${svcGenModel},${slaGenModel},${envGenModel},${semGenModel}"
+				referencedGenModels = "${baseGenModel}, ${svcGenModel},${envGenModel},${semGenModel}"
 			}
 
 			// the serialization component

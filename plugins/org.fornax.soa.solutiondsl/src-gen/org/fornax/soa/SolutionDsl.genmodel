@@ -26,6 +26,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/domain"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/version"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/productVersion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/additionalInfo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/requires"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/features"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/modules"/>
@@ -35,6 +36,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Module/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Module/kind"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/additionalInfo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/requires"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/features"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/modules"/>
@@ -45,11 +47,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Feature/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Feature/useCase"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Feature/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/additionalInfo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/usesCapabilities"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/requires"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/event"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/features"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/tags"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/features"/>
     </genClasses>
     <genClasses ecoreClass="SolutionDsl.ecore#//ServiceRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//ServiceRef/service"/>

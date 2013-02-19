@@ -8,7 +8,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.util.Modules2;
 import org.fornax.soa.BindingDslRuntimeModule;
 import org.fornax.soa.EnvironmentDslRuntimeModule;
-import org.fornax.soa.SLADslRuntimeModule;
 import org.fornax.soa.SemanticsDslRuntimeModule;
 import org.fornax.soa.ServiceDslRuntimeModule;
 import org.fornax.soa.SolutionDslRuntimeModule;
@@ -54,7 +53,6 @@ public class ServiceRepositoryActivator extends AbstractUIPlugin {
 							new SolutionDslRuntimeModule(),
 							new EnvironmentDslRuntimeModule(),
 							new ModuleDslRuntimeModule(),
-							new SLADslRuntimeModule(),
 							new ServiceDslRuntimeModule(),
 							new BindingDslRuntimeModule(),
 							Modules.override (Modules.override (

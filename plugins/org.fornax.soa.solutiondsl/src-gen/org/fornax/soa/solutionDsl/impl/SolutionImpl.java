@@ -22,6 +22,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.fornax.soa.basedsl.sOABaseDsl.AdditionalInformation;
+
 import org.fornax.soa.businessDsl.Domain;
 
 import org.fornax.soa.semanticsDsl.Tag;
@@ -44,6 +46,7 @@ import org.fornax.soa.solutionDsl.Version;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getDomain <em>Domain</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getProductVersion <em>Product Version</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getRequires <em>Requires</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getModules <em>Modules</em>}</li>
@@ -104,6 +107,16 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
    * @ordered
    */
   protected Version productVersion;
+
+  /**
+   * The cached value of the '{@link #getAdditionalInfo() <em>Additional Info</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAdditionalInfo()
+   * @generated
+   * @ordered
+   */
+  protected AdditionalInformation additionalInfo;
 
   /**
    * The cached value of the '{@link #getRequires() <em>Requires</em>}' containment reference list.
@@ -333,6 +346,54 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
    * <!-- end-user-doc -->
    * @generated
    */
+  public AdditionalInformation getAdditionalInfo()
+  {
+    return additionalInfo;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetAdditionalInfo(AdditionalInformation newAdditionalInfo, NotificationChain msgs)
+  {
+    AdditionalInformation oldAdditionalInfo = additionalInfo;
+    additionalInfo = newAdditionalInfo;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SolutionDslPackage.SOLUTION__ADDITIONAL_INFO, oldAdditionalInfo, newAdditionalInfo);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setAdditionalInfo(AdditionalInformation newAdditionalInfo)
+  {
+    if (newAdditionalInfo != additionalInfo)
+    {
+      NotificationChain msgs = null;
+      if (additionalInfo != null)
+        msgs = ((InternalEObject)additionalInfo).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SolutionDslPackage.SOLUTION__ADDITIONAL_INFO, null, msgs);
+      if (newAdditionalInfo != null)
+        msgs = ((InternalEObject)newAdditionalInfo).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SolutionDslPackage.SOLUTION__ADDITIONAL_INFO, null, msgs);
+      msgs = basicSetAdditionalInfo(newAdditionalInfo, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SolutionDslPackage.SOLUTION__ADDITIONAL_INFO, newAdditionalInfo, newAdditionalInfo));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<ServiceRef> getRequires()
   {
     if (requires == null)
@@ -398,6 +459,8 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
         return basicSetVersion(null, msgs);
       case SolutionDslPackage.SOLUTION__PRODUCT_VERSION:
         return basicSetProductVersion(null, msgs);
+      case SolutionDslPackage.SOLUTION__ADDITIONAL_INFO:
+        return basicSetAdditionalInfo(null, msgs);
       case SolutionDslPackage.SOLUTION__REQUIRES:
         return ((InternalEList<?>)getRequires()).basicRemove(otherEnd, msgs);
       case SolutionDslPackage.SOLUTION__FEATURES:
@@ -427,6 +490,8 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
         return getVersion();
       case SolutionDslPackage.SOLUTION__PRODUCT_VERSION:
         return getProductVersion();
+      case SolutionDslPackage.SOLUTION__ADDITIONAL_INFO:
+        return getAdditionalInfo();
       case SolutionDslPackage.SOLUTION__REQUIRES:
         return getRequires();
       case SolutionDslPackage.SOLUTION__FEATURES:
@@ -461,6 +526,9 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
         return;
       case SolutionDslPackage.SOLUTION__PRODUCT_VERSION:
         setProductVersion((Version)newValue);
+        return;
+      case SolutionDslPackage.SOLUTION__ADDITIONAL_INFO:
+        setAdditionalInfo((AdditionalInformation)newValue);
         return;
       case SolutionDslPackage.SOLUTION__REQUIRES:
         getRequires().clear();
@@ -504,6 +572,9 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
       case SolutionDslPackage.SOLUTION__PRODUCT_VERSION:
         setProductVersion((Version)null);
         return;
+      case SolutionDslPackage.SOLUTION__ADDITIONAL_INFO:
+        setAdditionalInfo((AdditionalInformation)null);
+        return;
       case SolutionDslPackage.SOLUTION__REQUIRES:
         getRequires().clear();
         return;
@@ -538,6 +609,8 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
         return version != null;
       case SolutionDslPackage.SOLUTION__PRODUCT_VERSION:
         return productVersion != null;
+      case SolutionDslPackage.SOLUTION__ADDITIONAL_INFO:
+        return additionalInfo != null;
       case SolutionDslPackage.SOLUTION__REQUIRES:
         return requires != null && !requires.isEmpty();
       case SolutionDslPackage.SOLUTION__FEATURES:

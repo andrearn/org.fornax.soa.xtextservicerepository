@@ -23,6 +23,8 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.fornax.soa.basedsl.sOABaseDsl.AdditionalInformation;
+
 import org.fornax.soa.semanticsDsl.Tag;
 
 import org.fornax.soa.solutionDsl.CapabilityRef;
@@ -42,11 +44,12 @@ import org.fornax.soa.solutionDsl.SolutionDslPackage;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getUseCase <em>Use Case</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getDescription <em>Description</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getUsesCapabilities <em>Uses Capabilities</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getRequires <em>Requires</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getEvent <em>Event</em>}</li>
- *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getFeatures <em>Features</em>}</li>
  * </ul>
  * </p>
  *
@@ -125,6 +128,16 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
   protected String description = DESCRIPTION_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getAdditionalInfo() <em>Additional Info</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAdditionalInfo()
+   * @generated
+   * @ordered
+   */
+  protected AdditionalInformation additionalInfo;
+
+  /**
    * The cached value of the '{@link #getUsesCapabilities() <em>Uses Capabilities</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -155,16 +168,6 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
   protected EList<EventRef> event;
 
   /**
-   * The cached value of the '{@link #getFeatures() <em>Features</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getFeatures()
-   * @generated
-   * @ordered
-   */
-  protected EList<Feature> features;
-
-  /**
    * The cached value of the '{@link #getTags() <em>Tags</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -173,6 +176,16 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * @ordered
    */
   protected EList<Tag> tags;
+
+  /**
+   * The cached value of the '{@link #getFeatures() <em>Features</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFeatures()
+   * @generated
+   * @ordered
+   */
+  protected EList<Feature> features;
 
   /**
    * <!-- begin-user-doc -->
@@ -283,6 +296,54 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * <!-- end-user-doc -->
    * @generated
    */
+  public AdditionalInformation getAdditionalInfo()
+  {
+    return additionalInfo;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetAdditionalInfo(AdditionalInformation newAdditionalInfo, NotificationChain msgs)
+  {
+    AdditionalInformation oldAdditionalInfo = additionalInfo;
+    additionalInfo = newAdditionalInfo;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SolutionDslPackage.FEATURE__ADDITIONAL_INFO, oldAdditionalInfo, newAdditionalInfo);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setAdditionalInfo(AdditionalInformation newAdditionalInfo)
+  {
+    if (newAdditionalInfo != additionalInfo)
+    {
+      NotificationChain msgs = null;
+      if (additionalInfo != null)
+        msgs = ((InternalEObject)additionalInfo).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SolutionDslPackage.FEATURE__ADDITIONAL_INFO, null, msgs);
+      if (newAdditionalInfo != null)
+        msgs = ((InternalEObject)newAdditionalInfo).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SolutionDslPackage.FEATURE__ADDITIONAL_INFO, null, msgs);
+      msgs = basicSetAdditionalInfo(newAdditionalInfo, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SolutionDslPackage.FEATURE__ADDITIONAL_INFO, newAdditionalInfo, newAdditionalInfo));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<CapabilityRef> getUsesCapabilities()
   {
     if (usesCapabilities == null)
@@ -325,20 +386,6 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Feature> getFeatures()
-  {
-    if (features == null)
-    {
-      features = new EObjectContainmentEList<Feature>(Feature.class, this, SolutionDslPackage.FEATURE__FEATURES);
-    }
-    return features;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Tag> getTags()
   {
     if (tags == null)
@@ -353,11 +400,27 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Feature> getFeatures()
+  {
+    if (features == null)
+    {
+      features = new EObjectContainmentEList<Feature>(Feature.class, this, SolutionDslPackage.FEATURE__FEATURES);
+    }
+    return features;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
+      case SolutionDslPackage.FEATURE__ADDITIONAL_INFO:
+        return basicSetAdditionalInfo(null, msgs);
       case SolutionDslPackage.FEATURE__USES_CAPABILITIES:
         return ((InternalEList<?>)getUsesCapabilities()).basicRemove(otherEnd, msgs);
       case SolutionDslPackage.FEATURE__REQUIRES:
@@ -388,16 +451,18 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return getUseCase();
       case SolutionDslPackage.FEATURE__DESCRIPTION:
         return getDescription();
+      case SolutionDslPackage.FEATURE__ADDITIONAL_INFO:
+        return getAdditionalInfo();
       case SolutionDslPackage.FEATURE__USES_CAPABILITIES:
         return getUsesCapabilities();
       case SolutionDslPackage.FEATURE__REQUIRES:
         return getRequires();
       case SolutionDslPackage.FEATURE__EVENT:
         return getEvent();
-      case SolutionDslPackage.FEATURE__FEATURES:
-        return getFeatures();
       case SolutionDslPackage.FEATURE__TAGS:
         return getTags();
+      case SolutionDslPackage.FEATURE__FEATURES:
+        return getFeatures();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -426,6 +491,9 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       case SolutionDslPackage.FEATURE__DESCRIPTION:
         setDescription((String)newValue);
         return;
+      case SolutionDslPackage.FEATURE__ADDITIONAL_INFO:
+        setAdditionalInfo((AdditionalInformation)newValue);
+        return;
       case SolutionDslPackage.FEATURE__USES_CAPABILITIES:
         getUsesCapabilities().clear();
         getUsesCapabilities().addAll((Collection<? extends CapabilityRef>)newValue);
@@ -438,13 +506,13 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         getEvent().clear();
         getEvent().addAll((Collection<? extends EventRef>)newValue);
         return;
-      case SolutionDslPackage.FEATURE__FEATURES:
-        getFeatures().clear();
-        getFeatures().addAll((Collection<? extends Feature>)newValue);
-        return;
       case SolutionDslPackage.FEATURE__TAGS:
         getTags().clear();
         getTags().addAll((Collection<? extends Tag>)newValue);
+        return;
+      case SolutionDslPackage.FEATURE__FEATURES:
+        getFeatures().clear();
+        getFeatures().addAll((Collection<? extends Feature>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -472,6 +540,9 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       case SolutionDslPackage.FEATURE__DESCRIPTION:
         setDescription(DESCRIPTION_EDEFAULT);
         return;
+      case SolutionDslPackage.FEATURE__ADDITIONAL_INFO:
+        setAdditionalInfo((AdditionalInformation)null);
+        return;
       case SolutionDslPackage.FEATURE__USES_CAPABILITIES:
         getUsesCapabilities().clear();
         return;
@@ -481,11 +552,11 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       case SolutionDslPackage.FEATURE__EVENT:
         getEvent().clear();
         return;
-      case SolutionDslPackage.FEATURE__FEATURES:
-        getFeatures().clear();
-        return;
       case SolutionDslPackage.FEATURE__TAGS:
         getTags().clear();
+        return;
+      case SolutionDslPackage.FEATURE__FEATURES:
+        getFeatures().clear();
         return;
     }
     super.eUnset(featureID);
@@ -509,16 +580,18 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return useCase != null && !useCase.isEmpty();
       case SolutionDslPackage.FEATURE__DESCRIPTION:
         return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
+      case SolutionDslPackage.FEATURE__ADDITIONAL_INFO:
+        return additionalInfo != null;
       case SolutionDslPackage.FEATURE__USES_CAPABILITIES:
         return usesCapabilities != null && !usesCapabilities.isEmpty();
       case SolutionDslPackage.FEATURE__REQUIRES:
         return requires != null && !requires.isEmpty();
       case SolutionDslPackage.FEATURE__EVENT:
         return event != null && !event.isEmpty();
-      case SolutionDslPackage.FEATURE__FEATURES:
-        return features != null && !features.isEmpty();
       case SolutionDslPackage.FEATURE__TAGS:
         return tags != null && !tags.isEmpty();
+      case SolutionDslPackage.FEATURE__FEATURES:
+        return features != null && !features.isEmpty();
     }
     return super.eIsSet(featureID);
   }

@@ -1,0 +1,38 @@
+import org.fornax.soa.solutionDsl.*
+import org.fornax.soa.serviceDsl.*
+import org.fornax.soa.profiledsl.sOAProfileDsl.*
+
+diagram SolutionDiagram type Solution {
+	
+	node FeatureNode for each features {
+		label FeatureNameLabel for this.name
+	}
+	
+	node ModuleNode for each this.modules {
+		label ModuleLabel for "<<Module>>"
+		label ModuleNameLabel for this.name
+		hidden edge NestedFeatureEdge for each this.features {
+			=> call NestedFeatureNode for this 
+		} 
+	} unless !(this instanceof Solution)
+	
+	
+	hidden node NestedFeatureNode for each features {
+		label FeatureLabel for "<<Feature>>"
+		label FeatureNameLabel for this.name
+		hidden edge NestedFeatureEdge for each features {
+			=> call NestedFeatureNode for this 
+		} 
+		hidden edge RequiredServiceEdge for each requires {
+			=> call RequiredServiceNode for this.service 
+			label RequiresEdgeLabel for "requires"
+		} 
+	} unless !(this instanceof Feature)
+	
+	hidden node RequiredServiceNode for this  as org.fornax.soa.serviceDsl.Service {
+		label ServiceLabel for "<<Service>>"
+		label ServiceNameLabel for this.name
+		label Version for "[v" + this.version?.version + " " + state?.name+"]"
+		
+	} unless !(this instanceof org.fornax.soa.serviceDsl.Service)
+}

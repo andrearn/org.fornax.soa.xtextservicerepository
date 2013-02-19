@@ -44,6 +44,7 @@ Module:
 			('release-tag' releaseTag = STRING)? &		// Tag in VCS
 			('source-location' source=STRING )? 		// Where can I get the sources? 
 		)
+		(additionalInfo=AdditionalInformation)?
 		/* Declares services provided by the module */
 		('provides' '{'
 			/*

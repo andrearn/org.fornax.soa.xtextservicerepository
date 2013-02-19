@@ -43,10 +43,6 @@
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.sladsl"
-         version="0.0.0"/>
-
-   <includes
          id="org.fornax.soa.solutiondsl"
          version="0.0.0"/>
 

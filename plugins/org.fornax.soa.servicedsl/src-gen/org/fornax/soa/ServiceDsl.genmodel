@@ -93,6 +93,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObject/superBusinessObject"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObject/replaces"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObject/governanceDecisions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObject/additionalInfo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObject/properties"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//QueryObject">
@@ -148,6 +149,7 @@
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//Enumeration">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Enumeration/replaces"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Enumeration/additionalInfo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Enumeration/literals"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//EnumLiteral">
@@ -169,12 +171,12 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/realizedCapabilities"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/supportedCapabilities"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/providedContractUrl"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/documentUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/releaseDate"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/retirementDate"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/requestMessageHeader"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/responseMessageHeader"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/publishMessageHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/additionalInfo"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/tags"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/operations"/>
     </genClasses>
@@ -245,6 +247,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//GlobalEvent/governanceDecisions"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//GlobalEvent/releaseDate"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//GlobalEvent/retirementDate"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//GlobalEvent/additionalInfo"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//OperationEvent"/>
     <genClasses ecoreClass="ServiceDsl.ecore#//EventRef">

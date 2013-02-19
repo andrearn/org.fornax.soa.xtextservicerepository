@@ -53,5 +53,12 @@
     <genClasses ecoreClass="SOABaseDsl.ecore#//AbstractType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//AbstractType/name"/>
     </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//AdditionalInformation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOABaseDsl.ecore#//AdditionalInformation/infoItems"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//InfoItem">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//InfoItem/documentLocation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//InfoItem/section"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

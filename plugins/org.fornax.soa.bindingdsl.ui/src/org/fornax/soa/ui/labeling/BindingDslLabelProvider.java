@@ -47,10 +47,6 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 		return m.getModule().getModule().getName() + " -> " + envBindResolver.resolveEnvironment(m).getName();
 	}
 	
-	String text (org.fornax.soa.sLADsl.SLA ele) {
-		return "SLA " + ele.getName();
-	}
-	
 	String text (SOAP ele) {
 		Server server = envBindResolver.resolveServer(ele);
 		SubNamespace ns = BindingDslHelper.getSubNamespace(ele);

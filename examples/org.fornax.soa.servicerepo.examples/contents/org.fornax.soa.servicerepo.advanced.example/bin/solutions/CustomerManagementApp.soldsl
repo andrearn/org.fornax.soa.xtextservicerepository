@@ -5,6 +5,10 @@ import org.example.sales.*
  */
 solution CustomerManagementApp {
 	version 1.0
+	additional-information {
+		location "file://W:\\CustomerManagement\\Requirements\\CustomerManagementApp-Requirements.doc"
+		location "file://W:\\CustomerManagement\\Design\\CustomerManagementApp-Design.doc"
+	}
 	
 	module Webapp {
 		

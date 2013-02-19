@@ -27,6 +27,7 @@ Solution:
 		('domain' domain = [businessDsl::Domain|QualifiedName] )?
 		version=Version
 		(productVersion=ProductVersion)?
+		(additionalInfo=AdditionalInformation)?
 		('requires' requires+=ServiceRef )*
 		(features+=Feature)*
 		(modules+=Module)*
@@ -37,6 +38,7 @@ Module:
 	'module' name=ID '{'
 		'kind' kind=ModuleKind 
 		(version=Version)?
+		(additionalInfo=AdditionalInformation)?
 		('requires' requires+=ServiceRef )*
 		(features+=Feature)*
 		(modules+=Module)*
@@ -47,15 +49,16 @@ enum ModuleKind : UI | BusinessLogic | Persistence | Security | Batch | OTHER;
 
 Feature:
 	(nonFunctional?='non-functional')? 'feature' name=ID '{'
-		('use cases' (useCase+=STRING)+ )?
+		('use-cases' (useCase+=STRING)+ )?
 		('description' description=STRING )?
-		('uses capabilities' '{'
+		(additionalInfo=AdditionalInformation)?
+		('uses-capabilities' '{'
 			(usesCapabilities+=CapabilityRef)+ 
 		'}')?
 		('requires' requires+=ServiceRef )*
-		('subscibes-to-event' (event+=EventRef)(',' event+=EventRef)* )?
-		(features+=Feature)*
+		('subscribes-to-event' (event+=EventRef)(',' event+=EventRef)* )?
 		('tags' (tags+=[semanticsDsl::Tag])+ )?
+		(features+=Feature)*
 	'}';
 	
 ServiceRef:

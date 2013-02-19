@@ -102,3 +102,13 @@ enum GovernanceDecisionResult:
 	
 
 AbstractType: {AbstractType} name=ID;
+
+AdditionalInformation: 
+	'additional-information' '{'
+		infoItems += InfoItem+
+	'}'
+;
+	
+InfoItem:
+	'location' documentLocation=STRING ('section' section=STRING)?
+;

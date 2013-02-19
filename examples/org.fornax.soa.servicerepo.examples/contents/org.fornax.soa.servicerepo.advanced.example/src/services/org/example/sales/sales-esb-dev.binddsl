@@ -53,9 +53,4 @@ bind-module org.example.sales.esb majorVersion 1 as org.example.sales.esb.dev
 		logging-policy header
 	}
 	
-	/**
-	 * By default the following Service Level Agreement applies
-	 */
-	default-SLAs SalesServicesSLA
-	
 }

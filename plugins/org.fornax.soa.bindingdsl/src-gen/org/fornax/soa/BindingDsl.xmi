@@ -16,9 +16,6 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="profileDsl">
       <ePackage href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#/"/>
     </metamodelDeclarations>
-    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="slaDsl">
-      <ePackage href="http://www.fornax.org/soa/SLADsl#/"/>
-    </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="semanticsDsl">
       <ePackage href="http://www.fornax.org/soa/SemanticsDsl#/"/>
     </metamodelDeclarations>
@@ -113,7 +110,7 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
@@ -135,26 +132,12 @@
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="default-SLAs"/>
-          <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.5">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-            </terminal>
+          <elements xsi:type="xtext:Keyword" value="default-assertions"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="assertions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
           </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value=","/>
-            <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.5">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="serviceBindings" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
@@ -191,7 +174,7 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
@@ -217,26 +200,12 @@
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="SLAs"/>
-          <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.5">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-            </terminal>
+          <elements xsi:type="xtext:Keyword" value="assertions"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="assertions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
           </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value=","/>
-            <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.5">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="references-module"/>
@@ -302,7 +271,7 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
@@ -338,26 +307,12 @@
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="SLAs"/>
-          <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.5">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-            </terminal>
+          <elements xsi:type="xtext:Keyword" value="assertions"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="assertions" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
           </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value=","/>
-            <elements xsi:type="xtext:Assignment" feature="sla" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.5">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SLADsl#//SLA"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -375,7 +330,7 @@
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -433,7 +388,7 @@
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -481,7 +436,7 @@
         <elements xsi:type="xtext:Keyword" value="EJB"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -501,7 +456,7 @@
         <elements xsi:type="xtext:Keyword" value="HTTP"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -529,7 +484,7 @@
         <elements xsi:type="xtext:Keyword" value="REST"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -638,7 +593,7 @@
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -678,7 +633,7 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRefs" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
       </alternatives>
     </rules>
@@ -692,7 +647,7 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRefs" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
       </alternatives>
     </rules>
@@ -712,7 +667,7 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -743,7 +698,7 @@
         <elements xsi:type="xtext:Keyword" value="FILE"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -771,7 +726,7 @@
         <elements xsi:type="xtext:Keyword" value="FTP"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -797,7 +752,7 @@
         <elements xsi:type="xtext:Keyword" value="IIOP"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -822,7 +777,7 @@
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointQualifierRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="endpointConnector" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.2"/>
@@ -1247,6 +1202,166 @@
         </elements>
       </alternatives>
     </rules>
+    <rules xsi:type="xtext:ParserRule" name="Assertion">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//Assertion"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.44"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.47"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.49"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.50"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="AvailabilityAssertion">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//AvailabilityAssertion"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="availability"/>
+        <elements xsi:type="xtext:Assignment" feature="availability" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="percentile"/>
+        <elements xsi:type="xtext:Assignment" feature="percentile" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="mean-time-between-failure"/>
+        <elements xsi:type="xtext:Assignment" feature="mtbf" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="mean-time-to-repair"/>
+        <elements xsi:type="xtext:Assignment" feature="mttr" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="mttrPercentile" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="LatencyAssertion">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//LatencyAssertion"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="latency"/>
+        <elements xsi:type="xtext:Assignment" feature="latency" operator="=">
+          <terminal xsi:type="xtext:Keyword" value="STRING"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="percentile"/>
+        <elements xsi:type="xtext:Assignment" feature="percentile" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="CapacityAssertion">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//CapacityAssertion"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//CapacityAssertion"/>
+          </type>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="num-of-requests"/>
+          <elements xsi:type="xtext:Assignment" feature="requestNum" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="per"/>
+          <elements xsi:type="xtext:Assignment" feature="timeUnit" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="message-size"/>
+          <elements xsi:type="xtext:Assignment" feature="messageSize" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="ReliablityAsserttion">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//ReliablityAsserttion"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="message-exchange-reliability"/>
+        <elements xsi:type="xtext:Assignment" feature="reliability" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.48"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="inOrderDelivery" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="in-order-delivery"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="ReliablilityKind">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/BindingDsl#//ReliablilityKind"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ReliablilityKind/EXACTLY_ONCE"/>
+          <literal value="exactly-once"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ReliablilityKind/AT_MOST_ONCE"/>
+          <literal value="at-most-once"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ReliablilityKind/AT_LEAST_ONCE"/>
+          <literal value="at-least-once"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/BindingDsl#//ReliablilityKind/BEST_EFFORT"/>
+          <literal value="best-effort"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="CostAssertion">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//CostAssertion"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="costs"/>
+        <elements xsi:type="xtext:Assignment" feature="costsAmount" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="billed-per-unit"/>
+        <elements xsi:type="xtext:Assignment" feature="billedUnit" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="AccuracyAssertion">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//AccuracyAssertion"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="max-error-rate"/>
+        <elements xsi:type="xtext:Assignment" feature="maxErrorRate" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Percentile">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//Percentile"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" feature="percentile" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value="."/>
+          <elements xsi:type="xtext:RuleCall" rule="/2/@rules.1"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="%"/>
+      </alternatives>
+    </rules>
     <rules xsi:type="xtext:ParserRule" name="EndpointQualifierRef">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//EndpointQualifierRef"/>
@@ -1255,7 +1370,7 @@
         <elements xsi:type="xtext:Keyword" value="endpoint-qualifier"/>
         <elements xsi:type="xtext:Assignment" feature="endpointQualifier" operator="=">
           <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.6">
+            <type metamodel="/0/@metamodelDeclarations.5">
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>

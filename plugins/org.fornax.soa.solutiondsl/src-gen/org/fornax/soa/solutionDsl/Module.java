@@ -9,6 +9,8 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.fornax.soa.basedsl.sOABaseDsl.AdditionalInformation;
+
 import org.fornax.soa.semanticsDsl.Tag;
 
 /**
@@ -22,6 +24,7 @@ import org.fornax.soa.semanticsDsl.Tag;
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getName <em>Name</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getKind <em>Kind</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getVersion <em>Version</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Module#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getRequires <em>Requires</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getModules <em>Modules</em>}</li>
@@ -115,6 +118,32 @@ public interface Module extends EObject
    * @generated
    */
   void setVersion(Version value);
+
+  /**
+   * Returns the value of the '<em><b>Additional Info</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Additional Info</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Additional Info</em>' containment reference.
+   * @see #setAdditionalInfo(AdditionalInformation)
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getModule_AdditionalInfo()
+   * @model containment="true"
+   * @generated
+   */
+  AdditionalInformation getAdditionalInfo();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.solutionDsl.Module#getAdditionalInfo <em>Additional Info</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Additional Info</em>' containment reference.
+   * @see #getAdditionalInfo()
+   * @generated
+   */
+  void setAdditionalInfo(AdditionalInformation value);
 
   /**
    * Returns the value of the '<em><b>Requires</b></em>' containment reference list.

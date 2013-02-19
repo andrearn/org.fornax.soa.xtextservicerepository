@@ -73,10 +73,10 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 	public void checkOnlyPrivateServiceHasProvidedWSDL (SOAP soap) {
 		if (soap.getProvidedWsdlUrl () != null) {
 			if (soap.eContainer () instanceof ModuleBinding) {
-				error ("SOAP may not define a provided-WSDL-Url for a domain level binding",
+				error ("SOAP may not define a provided-WSDL-Url for a module binding",
 						BindingDslPackage.Literals.SOAP__PROVIDED_WSDL_URL);
 			} else if (soap.eContainer () instanceof OperationBinding) {
-				error ("SOAP may not define a provided-WSDL-Url for a operation level binding",
+				error ("SOAP may not define a provided-WSDL-Url for an operation binding",
 						BindingDslPackage.Literals.SOAP__PROVIDED_WSDL_URL);
 			} else if (soap.eContainer () instanceof ServiceBinding
 					&& ((ServiceBinding) soap.eContainer ()).getService ()

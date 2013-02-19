@@ -32,8 +32,6 @@
       <import plugin="org.fornax.soa.semanticsdsl.ui" version="1.0.1" match="greaterOrEqual"/>
       <import plugin="org.fornax.soa.servicedsl" version="1.0.1" match="greaterOrEqual"/>
       <import plugin="org.fornax.soa.servicedsl.ui" version="1.0.1" match="greaterOrEqual"/>
-      <import plugin="org.fornax.soa.sladsl" version="1.0.1" match="greaterOrEqual"/>
-      <import plugin="org.fornax.soa.sladsl.ui" version="1.0.1" match="greaterOrEqual"/>
       <import plugin="org.fornax.soa.solutiondsl" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="org.fornax.soa.solutiondsl.ui" version="1.1.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.core.resources"/>
@@ -42,8 +40,6 @@
       <import plugin="org.eclipse.xtext.builder" version="1.0.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.common.types" version="1.0.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.ui" version="1.0.1" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xpand" version="1.0.1" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtend" version="1.0.1" match="greaterOrEqual"/>
       <import plugin="org.eclipse.xtext.ui.shared" version="1.0.1" match="greaterOrEqual"/>
       <import plugin="org.apache.log4j"/>
    </requires>

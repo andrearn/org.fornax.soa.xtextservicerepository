@@ -51,7 +51,7 @@ BusinessFunction :
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
 		('responsible' responsible = STRING)?
-		('docURL' docURL=STRING)? 
+		(additionalInfo=AdditionalInformation)?
 		('tags' (tags+=[semantics::Tag])+)?
 
 		('uses-capability' '{'
@@ -65,6 +65,7 @@ BusinessFunction :
 CapabilityGroup :
 	'capability-group' name=ID '{'
 		'description' description = STRING
+		(additionalInfo=AdditionalInformation)?
 		(capabilities+=Capability)*
 		(capabilityGroups+=CapabilityGroup)*
 	'}'
@@ -91,7 +92,7 @@ SimpleCapability :
 		'automation-level' automationLevel=CapabilityAutomationLevel
 		('business-value' businessValue=STRING)
 		('owner' owner=[Member|QualifiedName])?
-		('docURL' docURL=STRING)? 
+		(additionalInfo=AdditionalInformation)?
 		(	
 			'inputs' '{'
 				(inputs+=Input)*
@@ -113,14 +114,14 @@ SimpleCapability :
  * A variant of a capability describing what is varied.
  */
 CapabilityVariant:
-	(external?='external')? 'capability-variant' name=ID 'based on' basedOnCapabilty=[Capability|QualifiedName] '{'
+	(external?='external')? 'capability-variant' name=ID 'based-on' basedOnCapabilty=[Capability|QualifiedName] '{'
 		version=Version
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
 		'automation-level' automationLevel+=CapabilityAutomationLevel
 		('business-value' businessValue=STRING)
 		('owner' owner=[Member|QualifiedName])?
-		('docURL' docURL=STRING)?
+		(additionalInfo=AdditionalInformation)?
 		('adding' '{'
 			(additions += CapabilityVariation)+
 		'}')?
@@ -182,5 +183,5 @@ Outcome:
 Member :
 	'member' name=ID '{'
 		'fullname' fullname=STRING
-		'email' email=STRING
+		('email' email=STRING)?
 	'}';

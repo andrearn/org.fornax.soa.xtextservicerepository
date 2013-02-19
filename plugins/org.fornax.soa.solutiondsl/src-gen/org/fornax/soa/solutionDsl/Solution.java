@@ -9,6 +9,8 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.fornax.soa.basedsl.sOABaseDsl.AdditionalInformation;
+
 import org.fornax.soa.businessDsl.Domain;
 
 import org.fornax.soa.semanticsDsl.Tag;
@@ -25,6 +27,7 @@ import org.fornax.soa.semanticsDsl.Tag;
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getDomain <em>Domain</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getProductVersion <em>Product Version</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Solution#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getRequires <em>Requires</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getModules <em>Modules</em>}</li>
@@ -141,6 +144,32 @@ public interface Solution extends EObject
    * @generated
    */
   void setProductVersion(Version value);
+
+  /**
+   * Returns the value of the '<em><b>Additional Info</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Additional Info</em>' containment reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Additional Info</em>' containment reference.
+   * @see #setAdditionalInfo(AdditionalInformation)
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getSolution_AdditionalInfo()
+   * @model containment="true"
+   * @generated
+   */
+  AdditionalInformation getAdditionalInfo();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.solutionDsl.Solution#getAdditionalInfo <em>Additional Info</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Additional Info</em>' containment reference.
+   * @see #getAdditionalInfo()
+   * @generated
+   */
+  void setAdditionalInfo(AdditionalInformation value);
 
   /**
    * Returns the value of the '<em><b>Requires</b></em>' containment reference list.

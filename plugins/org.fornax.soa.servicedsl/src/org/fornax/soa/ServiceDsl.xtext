@@ -95,6 +95,7 @@ BusinessObject:
 			&	('retirement-on' retirementDate = STRING)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			)
+			(additionalInfo=AdditionalInformation)?
 			('tags' (tags+=[semanticsDsl::Tag])+)*
 		'}'
 		(properties+=Property)*
@@ -184,6 +185,7 @@ Enumeration:
 			&	('retirement-on' retirementDate = STRING )?
 			&	('provided-contract' providedContractUrl=STRING)?
 			)
+			(additionalInfo=AdditionalInformation)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(literals+=EnumLiteral )*
@@ -226,10 +228,6 @@ Service:
 				 */	
 			&	('provided-contract' providedContractUrl=STRING )? 
 				/*
-				 * Location of documentation or specification documents
-				 */
-			&	('document-location' documentUrl=STRING )?
-				/*
 				 * Date, when the service will be or has been released to production
 				 */
 			&	('release-on' releaseDate = STRING )?
@@ -244,6 +242,7 @@ Service:
 			&	('response-message-header' responseMessageHeader = MessageHeaderRef )?
 			&	('publish-message-header' publishMessageHeader = MessageHeaderRef )?
 			)
+			(additionalInfo=AdditionalInformation)?
 			/*
 			 * Semantic tagging
 			 */
@@ -366,6 +365,7 @@ GlobalEvent:
 			('release-on' releaseDate = STRING )?
 			('retirement-on' retirementDate = STRING )?
 			('provided-contract' providedContractUrl=STRING)?
+			(additionalInfo=AdditionalInformation)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(parameter+=Parameter )*

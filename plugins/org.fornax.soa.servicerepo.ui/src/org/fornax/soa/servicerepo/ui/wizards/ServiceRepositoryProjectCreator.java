@@ -20,7 +20,6 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 	protected static final String ENVIRONMENT_DSL_PROJECT_NAME = "org.fornax.soa.environmentdsl";
 	protected static final String MODULE_DSL_PROJECT_NAME = "org.fornax.soa.moduledsl";
 	protected static final String PROFILE_DSL_PROJECT_NAME = "org.fornax.soa.profiledsl";
-	protected static final String SLA_DSL_PROJECT_NAME = "org.fornax.soa.sladsl";
 	protected static final String SEMANTICS_DSL_PROJECT_NAME = "org.fornax.soa.semanticsdsl";
 	protected static final String SERVICE_DSL_PROJECT_NAME = "org.fornax.soa.servicedsl";
 	protected static final String SOLUTION_DSL_PROJECT_NAME = "org.fornax.soa.solutiondsl";
@@ -31,7 +30,6 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 	protected static final String ENVIRONMENT_DSL_UI_PROJECT_NAME = "org.fornax.soa.environmentdsl.ui";
 	protected static final String MODULE_DSL_UI_PROJECT_NAME = "org.fornax.soa.moduledsl.ui";
 	protected static final String PROFILE_DSL_UI_PROJECT_NAME = "org.fornax.soa.profiledsl.ui";
-	protected static final String SLA_DSL_UI_PROJECT_NAME = "org.fornax.soa.sladsl.ui";
 	protected static final String SEMANTICS_DSL_UI_PROJECT_NAME = "org.fornax.soa.semanticsdsl.ui";
 	protected static final String SERVICE_DSL_UI_PROJECT_NAME = "org.fornax.soa.servicedsl.ui";
 	protected static final String SOLUTION_DSL_UI_PROJECT_NAME = "org.fornax.soa.solutiondsl.ui";
@@ -66,6 +64,7 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 				"org.eclipse.xtext.generator",
 				"de.itemis.xtext.antlr;resolution:=optional",
 				"org.eclipse.emf.mwe2.launch;resolution:=optional",
+				"org.eclipse.xtext.graphview;resolution:=optional",
 				BASE_DSL_PROJECT_NAME,
 				BINDING_DSL_PROJECT_NAME,
 				BUSINESS_DSL_PROJECT_NAME,
@@ -74,7 +73,6 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 				PROFILE_DSL_PROJECT_NAME,
 				SEMANTICS_DSL_PROJECT_NAME,
 				SERVICE_DSL_PROJECT_NAME,
-				SLA_DSL_PROJECT_NAME,
 				SOLUTION_DSL_PROJECT_NAME,
 		
 				BASE_DSL_UI_PROJECT_NAME,
@@ -85,7 +83,6 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 				PROFILE_DSL_UI_PROJECT_NAME,
 				SEMANTICS_DSL_UI_PROJECT_NAME,
 				SERVICE_DSL_UI_PROJECT_NAME,
-				SLA_DSL_UI_PROJECT_NAME,
 				SOLUTION_DSL_UI_PROJECT_NAME);
 		return result;
 	}

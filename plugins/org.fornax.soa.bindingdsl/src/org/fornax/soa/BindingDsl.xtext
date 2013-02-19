@@ -17,7 +17,6 @@ import "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/Serv
 import "platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore" as moduleDsl
 import "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore" as environmentDsl
 import "platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore" as profileDsl
-import "platform:/resource/org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore" as slaDsl
 import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
 
 BindingModel:
@@ -54,7 +53,9 @@ ModuleBinding:
 		('default-policies' '{'
 			(policies+=Policy)*
 		'}')?
-		('default-SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
+		('default-assertions' '{'
+			(assertions+=Assertion)+
+		'}')?
 		(serviceBindings+=ServiceBinding)*
 	'}'
 ;
@@ -75,7 +76,9 @@ ServiceBinding:
 		('policies' '{'
 			(policies+=Policy)*
 		'}')?
-		('SLAs' (sla+=[slaDsl::SLA|QualifiedName])(',' sla+=[slaDsl::SLA|QualifiedName])* )?
+		('assertions' '{'
+			(assertions+=Assertion)+
+		'}')?
 		('references-module' referencedModule = ModuleRef)?
 		(operation+=OperationBinding)*
 	'}';
@@ -111,7 +114,9 @@ OperationBinding:
 		('provider-policies' '{'
 			(providerPolicies+=Policy)*
 		'}')?
-		('SLAs' (sla+=[slaDsl::SLA|QualifiedName]) (',' sla+=[slaDsl::SLA|QualifiedName])* )?
+		('assertions' '{'
+			(assertions+=Assertion)+
+		'}')?
 	'}';
 
 
@@ -307,6 +312,43 @@ enum CipherAlgorithmKind: NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_D
 enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
 
 enum LogPolicyKind: none | header | all;
+
+
+Assertion: AvailabilityAssertion | LatencyAssertion | CapacityAssertion | ReliablityAsserttion | CostAssertion | AccuracyAssertion;
+
+AvailabilityAssertion:
+	'availability' availability=STRING 'percentile' percentile=Percentile
+	'mean-time-between-failure' mtbf=STRING
+	'mean-time-to-repair' mttr=STRING (mttrPercentile=Percentile)?
+;
+
+LatencyAssertion:
+	'latency' latency="STRING" 'percentile' percentile=Percentile
+;
+
+CapacityAssertion:
+	{CapacityAssertion}
+	('num-of-requests' requestNum=STRING 'per' timeUnit=STRING)?
+	('message-size' messageSize=STRING)?
+;
+
+ReliablityAsserttion:
+	'message-exchange-reliability' reliability=ReliablilityKind
+	(inOrderDelivery ?= 'in-order-delivery')?
+;
+
+enum ReliablilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
+CostAssertion:
+	'costs' costsAmount=STRING
+	'billed-per-unit' billedUnit=STRING
+;
+
+AccuracyAssertion:
+	'max-error-rate' maxErrorRate=STRING
+;
+
+
+Percentile: percentile=INT('.'INT)*'%';
 
 EndpointQualifierRef:
 	'endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName]

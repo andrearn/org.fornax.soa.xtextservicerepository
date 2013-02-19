@@ -48,4 +48,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="AbstractType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AdditionalInformation">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="infoItems" upperBound="-1"
+        eType="#//InfoItem" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InfoItem">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="documentLocation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="section" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

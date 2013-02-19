@@ -20,8 +20,8 @@
         eType="#//BindingProtocol" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="policies" upperBound="-1"
         eType="#//Policy" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sla" unique="false" upperBound="-1"
-        eType="ecore:EClass ../../../../../org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore#//SLA"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assertions" upperBound="-1"
+        eType="#//Assertion" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConnectorQualifier">
     <eStructuralFeatures xsi:type="ecore:EReference" name="connectors" unique="false"
@@ -76,8 +76,8 @@
         eType="#//Policy" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="providerPolicies" upperBound="-1"
         eType="#//Policy" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sla" unique="false" upperBound="-1"
-        eType="ecore:EClass ../../../../../org.fornax.soa.sladsl/src-gen/org/fornax/soa/SLADsl.ecore#//SLA"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="assertions" upperBound="-1"
+        eType="#//Assertion" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SOAP" eSuperTypes="#//BindingProtocol">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="#//SOAPStyle"/>
@@ -262,6 +262,46 @@
     <eLiterals name="none" literal="none"/>
     <eLiterals name="header" value="1" literal="header"/>
     <eLiterals name="all" value="2" literal="all"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Assertion"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AvailabilityAssertion" eSuperTypes="#//Assertion">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="availability" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="percentile" eType="#//Percentile"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mtbf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mttr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mttrPercentile" eType="#//Percentile"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LatencyAssertion" eSuperTypes="#//Assertion">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="latency" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="percentile" eType="#//Percentile"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CapacityAssertion" eSuperTypes="#//Assertion">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requestNum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReliablityAsserttion" eSuperTypes="#//Assertion">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reliability" eType="#//ReliablilityKind"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inOrderDelivery" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ReliablilityKind">
+    <eLiterals name="EXACTLY_ONCE" literal="exactly-once"/>
+    <eLiterals name="AT_MOST_ONCE" value="1" literal="at-most-once"/>
+    <eLiterals name="AT_LEAST_ONCE" value="2" literal="at-least-once"/>
+    <eLiterals name="BEST_EFFORT" value="3" literal="best-effort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CostAssertion" eSuperTypes="#//Assertion">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="costsAmount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="billedUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AccuracyAssertion" eSuperTypes="#//Assertion">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxErrorRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Percentile">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="percentile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EndpointQualifierRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifier" eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Qualifier"/>
