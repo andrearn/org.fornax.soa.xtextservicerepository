@@ -422,7 +422,7 @@ class ServiceRepositoryNewProjectGenerator {
 			}
 			
 			style EnumNode as RoundedRectangleShape { 
-				backgroundColor = color(#fcefc8)
+				this.backgroundColor = color(#fcefc8)
 			}
 			style EnumNode {
 				this.opaque = true
