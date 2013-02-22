@@ -82,7 +82,7 @@ org-namespace org.example shortname "ex" {
 				service-category entity
 				statefulness idempotent
 				additional-information {
-					location "file://W:\\Desgin\\CustomerManagementServicesSpec_v1.0.doc" section "3.1.1"
+					location "file://W:\\Desgin\\CustomerManagementServicesSpec_v1.0.doc" reference "3.1.1"
 				}
 				tags Customer
 			}
