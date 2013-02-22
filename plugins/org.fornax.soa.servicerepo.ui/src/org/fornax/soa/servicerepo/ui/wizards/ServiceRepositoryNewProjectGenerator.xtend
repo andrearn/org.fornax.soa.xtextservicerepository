@@ -113,6 +113,15 @@ class ServiceRepositoryNewProjectGenerator {
 	
 	def generateSeriveViewMap (IFileSystemAccess fsa) {
 		val content='''
+			/*******************************************************************************
+			 * Copyright (c) 2012 developers of XtextServiceRepository and others.
+			 * All rights reserved. This script and the accompanying materials
+			 * are made available under the terms of the Eclipse Public License v1.0
+			 * which accompanies this distribution, and is available at
+			 * http://www.eclipse.org/legal/epl-v10.html
+			 * 
+			 * initial contribution:	André Arnold
+			 *******************************************************************************/
 			import org.fornax.soa.serviceDsl.*
 			
 			diagram ServiceDiagram type SubNamespace {
@@ -129,6 +138,11 @@ class ServiceRepositoryNewProjectGenerator {
 							(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
 						=> call BusinessObjectNode for (this as BusinessObject)
 					}
+					hidden edge QOEdge for each 
+						operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef).^type instanceof QueryObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+						=> call QueryObjectNode for (this as QueryObject)
+					}
 					hidden edge EnumEdge for each 
 						operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
 							(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
@@ -139,6 +153,11 @@ class ServiceRepositoryNewProjectGenerator {
 						operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
 							(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
 						=> call BusinessObjectNode for (this as BusinessObject)
+					}
+					hidden edge QOReturnEdge for each 
+						operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef).^type instanceof QueryObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+						=> call QueryObjectNode for (this as QueryObject)
 					}
 					hidden edge EnumReturnEdge for each 
 						operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
@@ -153,6 +172,11 @@ class ServiceRepositoryNewProjectGenerator {
 						operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer != t.exception.eContainer).map(e|e.exception).toSet {
 						=> call HiddenExceptionNode for this
 					}
+					
+					hidden edge RequiredServiceEdge for each operations.map(op | op.requires).flatten.map(req|req.service) {
+						=> call ServiceNode for this
+						label RequiresLabel for "requires"
+					}
 				}
 			
 				node BusinessObjectNode for this as BusinessObject {
@@ -164,26 +188,9 @@ class ServiceRepositoryNewProjectGenerator {
 					} unless properties.empty
 					
 					
-					edge ReferenceEdge for each 
-						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef)?.^type instanceof BusinessObject) && 
-							((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.BusinessObject).eContainer == p.eContainer?.eContainer && 
-							eContainer == p.eContainer?.eContainer) {
-						=> ref BusinessObjectNode for ((^type as VersionedTypeRef).^type as BusinessObject)
-						label HiddenEdgeLabel for name
-					} 
-					edge EnumReferenceEdge for each 
-						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-							((p.^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
-							eContainer == p.eContainer?.eContainer) {
-						=> ref EnumNode for ((^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)
-						label EdgeLabel for name
-					}
 					hidden edge HiddenReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
 							(p.^type as VersionedTypeRef)?.^type instanceof BusinessObject) &&
-							((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.BusinessObject)?.eContainer != p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
 						=> call BusinessObjectNode for ((^type as VersionedTypeRef)?.^type as BusinessObject)
 						label HiddenEdgeLabel for name
@@ -191,7 +198,6 @@ class ServiceRepositoryNewProjectGenerator {
 					hidden edge HiddenEnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
 							(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-							((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer != p.eContainer.eContainer && 
 							eContainer == p.eContainer.eContainer) {
 						=> call EnumNode for ((^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)
 						label EdgeLabel for name
@@ -200,6 +206,39 @@ class ServiceRepositoryNewProjectGenerator {
 					hidden edge InhertanceEdge for superBusinessObject?.^type {
 						=> call BusinessObjectNode for this
 					} unless superBusinessObject == null
+					
+					
+				} unless !(this instanceof BusinessObject)
+				
+				node QueryObjectNode for this as QueryObject {
+					label Name for name
+					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					
+					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
+						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
+					} unless properties.empty
+					
+					
+					hidden edge HiddenReferenceEdge for each 
+						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef)?.^type instanceof QueryObject) &&
+							eContainer == p.eContainer?.eContainer) {
+						=> call QueryObjectNode for ((^type as VersionedTypeRef)?.^type as QueryObject)
+						label HiddenEdgeLabel for name
+					} 
+					hidden edge HiddenEnumReferenceEdge for each 
+						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
+							eContainer == p.eContainer.eContainer) {
+						=> call EnumNode for ((^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)
+						label EdgeLabel for name
+					}
+					
+					hidden edge InhertanceEdge for superQueryObject?.^type {
+						=> call QueryObjectNode for this
+					} unless superQueryObject == null
+					
+					
 				} unless !(this instanceof BusinessObject)
 			
 			
@@ -256,6 +295,15 @@ class ServiceRepositoryNewProjectGenerator {
 	
 	def generateServiceViewStyle (IFileSystemAccess fsa) {
 		val content = '''
+			/*******************************************************************************
+			 * Copyright (c) 2012 developers of XtextServiceRepository and others.
+			 * All rights reserved. This style sheet and the accompanying materials
+			 * are made available under the terms of the Eclipse Public License v1.0
+			 * which accompanies this distribution, and is available at
+			 * http://www.eclipse.org/legal/epl-v10.html
+			 * 
+			 * initial contribution:	André Arnold
+			 *******************************************************************************/
 			import org.eclipse.xtext.graphview.shape.*
 			import org.eclipse.xtext.graphview.layout.*  
 			import org.eclipse.xtext.graphview.behavior.layout.*  
@@ -266,52 +314,57 @@ class ServiceRepositoryNewProjectGenerator {
 			stylesheet ServiceDiagram for ServiceDiagram
 			
 			style ServiceDiagram {
-				autoLayoutManager = new KielerAutoLayout() 
+				this.autoLayoutManager = new KielerAutoLayout() 
 			}
 			
 			style ServiceNode as RoundedRectangleShape { 
-				backgroundColor = color(#d8ffd8)
+				this.backgroundColor = color(#d8ffd8)
 			}
 			
 			
 			style ServiceNode { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + SWT::NONE
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 				)
 			}
 			style ServiceNode.Version { 
-				font = font("Helvetica", 12, SWT::CENTER 
+				this.font = font("Helvetica", 10, SWT::CENTER 
 				)
 			}
 			
 			style ServiceNode.OperationNode as RoundedRectangleShape {
-				outline = false
-				backgroundColor = color(#ffffff)
-				font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
 					(SWT::NONE)
 				)
+			}
+			
+			style ServiceNode.RequiredServiceEdge {
+				this.lineStyle = SWT::LINE_DASH
+				this.foregroundColor = color(#cccccc)
 			}
 			
 			
 			
 			style HiddenExceptionNode as RoundedRectangleShape { 
-				backgroundColor = color(#f8e8d8)
+				this.backgroundColor = color(#f8e8d8)
 			}
 			style HiddenExceptionNode { 
-				font = font("Helvetica", 12, SWT::CENTER 
+				this.font = font("Helvetica", 10, SWT::CENTER 
 				)
 			}
 			style HiddenExceptionNode.ExceptionLabel { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 				)
 			}
 			style HiddenExceptionNode.Name { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 				)
 			}
 			style HiddenExceptionNode.PropertiesNode as RoundedRectangleShape {
-				outline = false
-				backgroundColor = color(#ffffff)
-				font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
@@ -319,27 +372,27 @@ class ServiceRepositoryNewProjectGenerator {
 			
 			
 			style BusinessObjectNode { 
-				backgroundColor = color(#dfeff8)
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
+				this.backgroundColor = color(#dfeff8)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + 
 					(if (element.abstract) SWT::ITALIC else SWT::NONE)
 				)
 			}
 			style BusinessObjectNode.Version { 
-				font = font("Helvetica", 12, SWT::CENTER 
+				this.font = font("Helvetica", 10, SWT::CENTER 
 				)
 			}
 			
 			style BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
-				outline = false
-				backgroundColor = color(#ffffff)
-				font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
 			
 			style BusinessObjectNode.HiddenEnumReferenceEdge {
-				lineStyle = SWT::LINE_DASH
-				foregroundColor = color(#cccccc)
+				this.lineStyle = SWT::LINE_DASH
+				this.foregroundColor = color(#cccccc)
 			}
 			
 			style BusinessObjectNode.InhertanceEdge as ConnectionShape  {
@@ -347,29 +400,47 @@ class ServiceRepositoryNewProjectGenerator {
 				arrow.setScale(8,8)
 				arrow.backgroundColor = color(#ffffff)
 				arrow.lineWidth = 2
-				targetDecoration = arrow 
+				this.targetDecoration = arrow 
+			}
+			
+			style QueryObjectNode { 
+				this.backgroundColor = color(#eeeeee)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD
+				)
+			}
+			style QueryObjectNode.Version { 
+				this.font = font("Helvetica", 10, SWT::CENTER 
+				)
+			}
+			
+			style QueryObjectNode.PropertiesNode as RoundedRectangleShape {
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
+					(SWT::NONE)
+				)
 			}
 			
 			style EnumNode as RoundedRectangleShape { 
 				backgroundColor = color(#fcefc8)
 			}
 			style EnumNode {
-				opaque = true
-				font = font("Helvetica", 12, SWT::CENTER 
+				this.opaque = true
+				this.font = font("Helvetica", 10, SWT::CENTER 
 				)
 			}
 			style EnumNode.EnumLabel { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 				)
 			}
 			style EnumNode.Name { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 				)
 			}
 			style EnumNode.EnumLiteralNode as RoundedRectangleShape {
-				outline = false
-				backgroundColor = color(#ffffff)
-				font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
@@ -379,8 +450,17 @@ class ServiceRepositoryNewProjectGenerator {
 	
 	def generateBusinessObjectViewMap (IFileSystemAccess fsa) {
 		val content = '''
+			/*******************************************************************************
+			 * Copyright (c) 2012 developers of XtextServiceRepository and others.
+			 * All rights reserved. This style sheet and the accompanying materials
+			 * are made available under the terms of the Eclipse Public License v1.0
+			 * which accompanies this distribution, and is available at
+			 * http://www.eclipse.org/legal/epl-v10.html
+			 * 
+			 * initial contribution:	André Arnold
+			 *******************************************************************************/
 			import org.fornax.soa.serviceDsl.*
-
+			
 			diagram BusinessObjectDiagram type SubNamespace {
 				
 				node BusinessObjectNode for each types.filter (typeof (BusinessObject)) {
@@ -388,7 +468,10 @@ class ServiceRepositoryNewProjectGenerator {
 					label Version for "[v" + version?.version + ", " + state?.name + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
-						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type?.name + if (p.^type instanceof DataTypeRef && (p.^type as DataTypeRef)?.many)" []" else "") 
+						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type?.name + " {" +
+							{if (p.optional) "0" else "1"} +
+							{if (p.^type instanceof DataTypeRef && (p.^type as DataTypeRef)?.many) "..*" else "..1"} + "}"
+						) 
 					} unless properties.empty
 					
 					
@@ -398,7 +481,10 @@ class ServiceRepositoryNewProjectGenerator {
 							((p.^type as VersionedTypeRef)?.^type as BusinessObject)?.eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
 						=> ref BusinessObjectNode for ((^type as VersionedTypeRef)?.^type as BusinessObject)
-						label EdgeLabel for name + if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) " *" else "" 
+						label EdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
+							
 					}
 					edge EnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
@@ -406,7 +492,9 @@ class ServiceRepositoryNewProjectGenerator {
 							((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
 						=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
-						label EdgeLabel for name + if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) " *" else "" 
+						label EdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
 					}
 					
 					hidden edge HiddenReferenceEdge for each 
@@ -414,12 +502,18 @@ class ServiceRepositoryNewProjectGenerator {
 							(p.^type as VersionedTypeRef)?.^type instanceof BusinessObject) && 
 							(((p.^type as VersionedTypeRef)?.^type) as BusinessObject)?.eContainer != p?.eContainer.eContainer) {
 						=> call HiddenBusinessObjectNode for ((^type as VersionedTypeRef)?.^type as BusinessObject)
-						label HiddenEdgeLabel for name + if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) " *" else "" 
+						label HiddenEdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}" 
 					}
 					 
 					edge InhertanceEdge for superBusinessObject?.^type {
-						=> call BusinessObjectNode for this
-					} unless superBusinessObject == null
+						=> ref BusinessObjectNode for this
+					} unless superBusinessObject == null || superBusinessObject?.^type.eContainer != eContainer
+					
+					hidden edge HiddenInhertanceEdge for superBusinessObject?.^type {
+						=> call HiddenBusinessObjectNode for this
+					} unless superBusinessObject == null || superBusinessObject?.^type.eContainer == eContainer
 				}
 				
 				 
@@ -436,7 +530,10 @@ class ServiceRepositoryNewProjectGenerator {
 					label Version for "[v" + version?.version + ", " + state?.name + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
-						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name + if (p.^type instanceof DataTypeRef && (p.^type as DataTypeRef)?.many)" []" else "")
+						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name + " {" +
+							{if (p.optional) "0" else "1"} +
+							{if (p.^type instanceof DataTypeRef && (p.^type as DataTypeRef)?.many) "..*" else "..1"} + "}"
+						)
 					} unless properties.empty
 					
 					
@@ -444,7 +541,9 @@ class ServiceRepositoryNewProjectGenerator {
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
 							(p.^type as VersionedTypeRef)?.^type instanceof BusinessObject)) {
 						=> call HiddenBusinessObjectNode for ((^type as VersionedTypeRef)?.^type as BusinessObject)
-						label HiddenEdgeLabel for name + if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) " *" else "" 
+						label HiddenEdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}" 
 					}
 					hidden edge HiddenEnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
@@ -452,13 +551,115 @@ class ServiceRepositoryNewProjectGenerator {
 							((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
 						=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
-						label EdgeLabel for name + if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) " *" else "" 
+						label EdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
 					}
 					
 					hidden edge HiddenInhertanceEdge for superBusinessObject?.^type {
 						=> call BusinessObjectNode for this
 					} unless superBusinessObject == null
 				} unless !(this instanceof BusinessObject)
+			
+			
+				
+				node QueryObjectNode for each types.filter (typeof (QueryObject)) {
+					label Name for name
+					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					
+					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
+						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type?.name + " {" +
+							{if (p.optional) "0" else "1"} +
+							{if (p.^type instanceof DataTypeRef && (p.^type as DataTypeRef)?.many) "..*" else "..1"} + "}"
+						) 
+					} unless properties.empty
+					
+					
+					edge ReferenceEdge for each 
+						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef)?.^type instanceof QueryObject) && 
+							((p.^type as VersionedTypeRef)?.^type as QueryObject)?.eContainer == p.eContainer?.eContainer && 
+							eContainer == p.eContainer?.eContainer) {
+						=> ref QueryObjectNode for ((^type as VersionedTypeRef)?.^type as QueryObject)
+						label EdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
+							
+					}
+					edge EnumReferenceEdge for each 
+						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
+							((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
+							eContainer == p.eContainer?.eContainer) {
+						=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
+						label EdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
+					}
+					
+					hidden edge HiddenReferenceEdge for each 
+						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef)?.^type instanceof QueryObject) && 
+							(((p.^type as VersionedTypeRef)?.^type) as QueryObject)?.eContainer != p?.eContainer.eContainer) {
+						=> call HiddenQueryObjectNode for ((^type as VersionedTypeRef)?.^type as QueryObject)
+						label HiddenEdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}" 
+					}
+					 
+					edge InhertanceEdge for superQueryObject?.^type {
+						=> ref QueryObjectNode for this
+					} unless superQueryObject == null || superQueryObject?.^type.eContainer != eContainer
+					
+					hidden edge HiddenInhertanceEdge for superQueryObject?.^type {
+						=> call HiddenQueryObjectNode for this
+					} unless superQueryObject == null || superQueryObject?.^type.eContainer == eContainer
+				}
+				 
+				node HiddenQueryObjectNode for this as QueryObject {
+					label Name for name
+					label PackageName for "from " + if (eContainer.eContainer instanceof OrganizationNamespace) {
+						if ((eContainer.eContainer as OrganizationNamespace).prefix != null)
+							(eContainer.eContainer as OrganizationNamespace).prefix + "." + (eContainer as SubNamespace).name
+						else
+							(eContainer.eContainer as OrganizationNamespace).name + "." + (eContainer as SubNamespace).name
+					} else {
+						(eContainer as SubNamespace).name
+					}
+					label Version for "[v" + version?.version + ", " + state?.name?:"" + "]"
+					
+					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
+						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name + " {" +
+							{if (p.optional) "0" else "1"} +
+							{if (p.^type instanceof DataTypeRef && (p.^type as DataTypeRef)?.many) "..*" else "..1"} + "}"
+						)
+					} unless properties.empty
+					
+					
+					hidden edge HiddenReferenceEdge for each 
+						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef)?.^type instanceof QueryObject)) {
+						=> call HiddenQueryObjectNode for ((^type as VersionedTypeRef)?.^type as QueryObject)
+						label HiddenEdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}" 
+					}
+					hidden edge HiddenEnumReferenceEdge for each 
+						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
+							((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
+							eContainer == p.eContainer?.eContainer) {
+						=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
+						label EdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
+					}
+					
+					hidden edge HiddenInhertanceEdge for superQueryObject?.^type {
+						=> call QueryObjectNode for this
+					} unless superQueryObject == null
+				} unless !(this instanceof QueryObject)
+			
 			
 				node ExceptionNode for each exceptions {
 					label ExceptionLabel for "<<Exception>>"
@@ -474,7 +675,9 @@ class ServiceRepositoryNewProjectGenerator {
 							((p.^type as VersionedTypeRef)?.^type as BusinessObject)?.eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
 						=> ref BusinessObjectNode for ((^type as VersionedTypeRef)?.^type as BusinessObject)
-						label EdgeLabel for name + if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) " *" else "" 
+						label EdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
 					}
 					edge EnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
@@ -482,7 +685,9 @@ class ServiceRepositoryNewProjectGenerator {
 							((p.^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
 						=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
-						label EdgeLabel for name + if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) " *" else "" 
+						label EdgeLabel for name + " {" +
+							{if (optional) "0" else "1"} +
+							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
 					}
 					
 					hidden edge HiddenReferenceEdge for each 
@@ -521,6 +726,15 @@ class ServiceRepositoryNewProjectGenerator {
 	}
 	def generateBusinessObjectViewStyle (IFileSystemAccess fsa) {
 		val content = '''
+			/*******************************************************************************
+			 * Copyright (c) 2012 developers of XtextServiceRepository and others.
+			 * All rights reserved. This script and the accompanying materials
+			 * are made available under the terms of the Eclipse Public License v1.0
+			 * which accompanies this distribution, and is available at
+			 * http://www.eclipse.org/legal/epl-v10.html
+			 * 
+			 * initial contribution:	André Arnold
+			 *******************************************************************************/
 			import org.eclipse.xtext.graphview.shape.*
 			import org.eclipse.xtext.graphview.layout.*  
 			import org.eclipse.xtext.graphview.behavior.layout.*  
@@ -531,69 +745,127 @@ class ServiceRepositoryNewProjectGenerator {
 			stylesheet BusinessObjectDiagram for BusinessObjectDiagram
 			
 			style BusinessObjectDiagram {
-				autoLayoutManager = new KielerAutoLayout() 
+				this.autoLayoutManager = new KielerAutoLayout() 
 			}
 			
 			style BusinessObjectNode as RoundedRectangleShape { 
-				backgroundColor = color(#d8e8f8)
+				this.backgroundColor = color(#d8e8f8)
 			}
 			
 			
 			style BusinessObjectNode { 
-				font = font("Helvetica", 12, SWT::LEFT + 
+				this.font = font("Helvetica", 12, SWT::LEFT + 
 					(if (element.abstract) SWT::ITALIC else SWT::NONE)
 				)
 			}
 			style BusinessObjectNode.Name { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
+				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
 			}
 			style BusinessObjectNode.Version { 
-				font = font("Helvetica", 12, SWT::CENTER 
+				this.font = font("Helvetica", 12, SWT::CENTER 
 				)
 			}
 			
 			style BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
-				outline = false
-				backgroundColor = color(#ffffff)
-				font = font("Helvetica", 12, SWT::LEFT+ 
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 12, SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
 			
 			style BusinessObjectNode.EnumReferenceEdge {
-				lineStyle = SWT::LINE_DASH
-				foregroundColor = color(#cccccc)
+				this.lineStyle = SWT::LINE_DASH
+				this.foregroundColor = color(#cccccc)
 			}
+			
+			
+			//Q
+			style QueryObjectNode as RoundedRectangleShape { 
+				this.backgroundColor = color(#eeeeee)
+			}
+			
+			
+			style QueryObjectNode { 
+				this.font = font("Helvetica", 12, SWT::LEFT 
+				)
+			}
+			style QueryObjectNode.Name { 
+				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
+			}
+			style QueryObjectNode.Version { 
+				this.font = font("Helvetica", 12, SWT::CENTER 
+				)
+			}
+			
+			style QueryObjectNode.PropertiesNode as RoundedRectangleShape {
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 12, SWT::LEFT+ 
+					(SWT::NONE)
+				)
+			}
+			
+			style QueryObjectNode.EnumReferenceEdge {
+				this.lineStyle = SWT::LINE_DASH
+				this.foregroundColor = color(#cccccc)
+			}
+			
+			style HiddenQueryObjectNode as RoundedRectangleShape { 
+				this.backgroundColor = color(#eeeeee)
+			}
+			style HiddenQueryObjectNode { 
+				this.font = font("Helvetica", 12, SWT::LEFT 
+				)
+			}
+			style HiddenQueryObjectNode.Name { 
+				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
+			}
+			style HiddenQueryObjectNode.Version { 
+				this.font = font("Helvetica", 12, SWT::CENTER 
+				)
+			}
+			
+			style HiddenQueryObjectNode.PropertiesNode as RoundedRectangleShape {
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 12, SWT::LEFT+ 
+					(SWT::NONE)
+				)
+			}
+			
+			
+			
 			
 			
 			style HiddenBusinessObjectNode as RoundedRectangleShape { 
-				backgroundColor = color(#d8e8f8)
+				this.backgroundColor = color(#d8e8f8)
 			}
 			style HiddenBusinessObjectNode { 
-				font = font("Helvetica", 12, SWT::CENTER +
+				this.font = font("Helvetica", 12, SWT::CENTER +
 					(if (element.abstract) SWT::ITALIC else SWT::NONE)
 				)
 			}
 			style HiddenBusinessObjectNode.Name { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
 				)
 			}
 			
 			style HiddenBusinessObjectNode.PropertiesNode as RoundedRectangleShape {
-				outline = false
-				backgroundColor = color(#ffffff)
-				font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
 			
 			
 			style BusinessObjectNode.HiddenReferenceEdge.HiddenEdgeLabel {
-				connectionAlignment = ConnectionLocator::TARGET
+				this.connectionAlignment = ConnectionLocator::TARGET
 			}
 			style HiddenBusinessObjectNode.HiddenEnumReferenceEdge {
-				lineStyle = SWT::LINE_DASH
-				foregroundColor = color(#cccccc)
+				this.lineStyle = SWT::LINE_DASH
+				this.foregroundColor = color(#cccccc)
 			}
 			
 			style BusinessObjectNode.InhertanceEdge as ConnectionShape  {
@@ -601,62 +873,100 @@ class ServiceRepositoryNewProjectGenerator {
 				arrow.setScale(8,8)
 				arrow.backgroundColor = color(#ffffff)
 				arrow.lineWidth = 2
-				targetDecoration = arrow 
+				this.targetDecoration = arrow 
 			}
-			style HiddenBusinessObjectNode.HiddenInhertanceEdge as ConnectionShape  {
-				var hiddenArrow = new PolygonDecoration()
-				hiddenArrow.setScale(8,8)
-				hiddenArrow.backgroundColor = color(#ffffff)
-				hiddenArrow.lineWidth = 2
-				targetDecoration = hiddenArrow 
+			style BusinessObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+				var hiddenarrow = new PolygonDecoration()
+				hiddenarrow.setScale(8,8)
+				hiddenarrow.backgroundColor = color(#ffffff)
+				hiddenarrow.lineWidth = 2
+				this.targetDecoration = hiddenarrow 
+			}
+			style HiddenQueryObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+				var hiddenQueryArrow = new PolygonDecoration()
+				hiddenQueryArrow.setScale(8,8)
+				hiddenQueryArrow.backgroundColor = color(#ffffff)
+				hiddenQueryArrow.lineWidth = 2
+				this.targetDecoration = hiddenQueryArrow 
+			}
+			
+			
+			style BusinessObjectNode.HiddenReferenceEdge.HiddenEdgeLabel {
+				this.connectionAlignment = ConnectionLocator::TARGET
+			}
+			style HiddenBusinessObjectNode.HiddenEnumReferenceEdge {
+				this.lineStyle = SWT::LINE_DASH
+				this.foregroundColor = color(#cccccc)
+			}
+			
+			style QueryObjectNode.InhertanceEdge as ConnectionShape  {
+				var queryArrow = new PolygonDecoration()
+				queryArrow.setScale(8,8)
+				queryArrow.backgroundColor = color(#ffffff)
+				queryArrow.lineWidth = 2
+				this.targetDecoration = queryArrow 
+			}
+			style QueryObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+				var hiddenQueryArrow2 = new PolygonDecoration()
+				hiddenQueryArrow2.setScale(8,8)
+				hiddenQueryArrow2.backgroundColor = color(#ffffff)
+				hiddenQueryArrow2.lineWidth = 2
+				this.targetDecoration = hiddenQueryArrow2 
+			}
+			style HiddenQueryObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+				var hiddenArrow2 = new PolygonDecoration()
+				hiddenArrow2.setScale(8,8)
+				hiddenArrow2.backgroundColor = color(#ffffff)
+				hiddenArrow2.lineWidth = 2
+				this.targetDecoration = hiddenArrow2 
 			}
 			
 			
 			style EnumNode as RoundedRectangleShape { 
-				backgroundColor = color(#f8e8a8)
+				this.backgroundColor = color(#f8e8a8)
 			}
 			style EnumNode { 
-				font = font("Helvetica", 12, SWT::CENTER + 
+				this.font = font("Helvetica", 12, SWT::CENTER + 
 					 SWT::NONE
 				)
 			}
 			style EnumNode.Name { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
+				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
 					 SWT::NONE
 				)
 			}
 			style EnumNode.EnumLabel { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
+				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
 					 SWT::NONE
 				)
 			}
 			style EnumNode.EnumLiteralNode as RoundedRectangleShape {
-				outline = false
-				backgroundColor = color(#ffffff)
-				font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
 			
 			style ExceptionNode as RoundedRectangleShape { 
-				backgroundColor = color(#f8e8d8)
+				this.backgroundColor = color(#f8e8d8)
 			}
 			style ExceptionNode { 
-				font = font("Helvetica", 12, SWT::CENTER 
+				this.font = font("Helvetica", 12, SWT::CENTER 
 				)
 			}
 			style ExceptionNode.ExceptionLabel { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
 				)
 			}
 			style ExceptionNode.Name { 
-				font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
 				)
 			}
 			style ExceptionNode.PropertiesNode as RoundedRectangleShape {
-				outline = false
-				backgroundColor = color(#ffffff)
-				font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}

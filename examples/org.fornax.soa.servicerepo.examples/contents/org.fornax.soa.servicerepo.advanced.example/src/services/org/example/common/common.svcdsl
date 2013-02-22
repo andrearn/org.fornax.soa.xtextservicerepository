@@ -7,7 +7,12 @@ org-namespace org.example shortname "ex" {
 		businessObject Address {
 			metadata {
 				version 1.0
-				lifecycle-state development
+				lifecycle-state productive
+				governance-approval {
+					yes
+					decision-date "08.07.2012"
+					decision-by "John Doe"
+				}
 			}
 			city 		: string
 			zipcode 	: string
@@ -19,7 +24,12 @@ org-namespace org.example shortname "ex" {
 		businessObject Person {
 			metadata {
 				version 1.0
-				lifecycle-state development
+				lifecycle-state productive
+				governance-approval {
+					yes
+					decision-date "08.07.2012"
+					decision-by "John Doe"
+				}
 			}
 			firstname 	: string
 			lastname 	: string
@@ -31,11 +41,27 @@ org-namespace org.example shortname "ex" {
 		enum Sex {
 			metadata {
 				version 1.0
-				lifecycle-state development
+				lifecycle-state productive
+				governance-approval {
+					yes
+					decision-date "08.07.2012"
+					decision-by "John Doe"
+				}
 			}
 			UNDEFINED
 			FEMALE
 			MALE
+		}
+		
+		queryObject AddressQueryTemplate {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+				governance-approval {
+					no
+				}
+			}
+			
 		}
 		
 	}

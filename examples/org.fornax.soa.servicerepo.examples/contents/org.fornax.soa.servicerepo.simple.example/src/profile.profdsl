@@ -19,32 +19,24 @@ datatype anyType
  * A SOA architecture profile defines some basic rules
  */
 soa-profile SampleArchitectureProfile {
-	scope "Example Org"
 	
-	/** Example Org default asset lifecycle */
+	/** 
+	 * Example Org default asset lifecycle <br/><br/>
+	 * 
+	 * While the definition of a lifecycle is mandatory you may use a simpler lifecycle, 
+	 * even with only one state, which then must qualify assets for all environment types
+	 * that are being used
+	 */
 	lifecycle ExSOALifecycle {
-		
-		/**
-		 * The asset is proposal that is only discussed
-		 */
-		initial state proposed {
-			/**
-			 * One can play with the proposal only in a local environment (the local PC)
-			 */
-			qualifies-for Local-Environment
-			-> development 
-		}
-		
 		/**
 		 * The asset is under development
 		 */
-		state development {
+		initial state development {
 			/*
 			 * It becomes accesible in the development environment as well
 			 */
 			qualifies-for Local-Environment, Development-Environment
 			-> test
-			-> proposed
 		}
 		
 		/*
@@ -53,68 +45,16 @@ soa-profile SampleArchitectureProfile {
 		state test {
 			qualifies-for Local-Environment, Development-Environment, Test-Environment
 			-> productive
-			-> proposed
+			-> development
 		}
 		
 		/**
-		 * The is under productive use
+		 * The asset is under productive use
 		 */
 		state productive {
 			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
-			-> deprecated
-			-> proposed
+			-> development
 		}
-		
-		/**
-		 * The asset is deprecated and will be retired soon.
-		 */
-		state deprecated {
-			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
-			-> productive
-			-> proposed
-		}
-	}
-	
-	
-	
-	/**
-	 * Categorize services based on a standard category
-	 */
-	service-categories {
-		
-		/**
-		 * This is a <b>Business Activity Service</b> (BAS) <br/><br/>
-		 * 
-		 * A Service, that can execute an activity or function of the business logic.
-		 */
-		^activity base-category activity
-		
-		/* Categorizes a <b>Business Entity Service</b> (BES) <br/><br/>
-		 * 
-		 * The service accesses persistent data
-		 */
-		^entity base-category entity
-		
-		/** 
-		 * Categorizes a <b>Business Process Service</b> (BPS) <br/><br/>
-		 * 
-		 * The service represents a business process
-		 */
-		^process base-category process
-		
-		/**
-		 * Categorizes a <b>Business Rule Service</b> (BRS) <br/><br/>
-		 * 
-		 * The service represents a business rule
-		 */
-		^rule base-category rule
-		
-		/**
-		 * Categorizes a <b>Utility Service</b> (US)
-		 * 
-		 * A service that can be used for helper functions
-		 */
-		^utility base-category utility
 	}
 	
 	
@@ -124,13 +64,14 @@ soa-profile SampleArchitectureProfile {
 	 */
 	design-rules {
 		
-		
 		/* Rules for data types */
 		types {
+			
 			/*
-			 * Define how the evolution of backward compatible version is supported
+			 * Define how the evolution of backward compatible versions is supported
 			 */
 			version-evolution {
+				
 				/* XSDs will need a placeholder element for response messages. By default a list of "any"-elements */
 				extendible-properties
 				/* 

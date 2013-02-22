@@ -2,12 +2,14 @@ import SampleArchitectureProfile.ExSOALifecycle.*
 
 import org.example.sales.*
 
-/* A module for services of the sales domain */
+
+/* 
+ * A module for services of the sales domain
+ */
 module org.example.sales.esb {
 	version 1.0
 	lifecycle-state development
-	/* It is bundled as an SCA ESB module */
-	assembly-type SCA-Composite
+	
 	/*
 	 * Two services are provided by the module and we know exactly their versions
 	 */

@@ -13,27 +13,28 @@ style SolutionDiagram {
 
 style ModuleNode as RectangleShape { 
 	backgroundColor = color(#d8ffd8)
+	font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
+}
+style FeatureNode as RoundedRectangleShape { 
+	backgroundColor = color(#ffd8d8)
+	font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
 }
 style NestedFeatureNode as RoundedRectangleShape { 
 	backgroundColor = color(#ffd8d8)
+	font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
 }
 
 style RequiredServiceNode as RoundedRectangleShape {
 	backgroundColor = color(#d8ffff)
-}
-
-
-style FeatureNode { 
-	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + SWT::NONE
-	)
-}
-
-style NestedFeatureNode { 
-	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + SWT::NONE
-	)
-}
-
-style RequiredServiceNode { 
 	font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 	)
 }
+style HiddenRequiredServiceNode as RoundedRectangleShape {
+	backgroundColor = color(#d8ffff)
+	font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
+}
+

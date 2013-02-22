@@ -39,7 +39,6 @@ soa-profile SampleArchitectureProfile {
 		 * The asset is under development
 		 */
 		state development {
-			requires-approval
 			/*
 			 * It becomes accesible in the development environment as well
 			 */

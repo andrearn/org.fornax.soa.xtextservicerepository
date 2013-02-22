@@ -3,8 +3,15 @@ import SampleArchitectureProfile.*
 
 import org.example.common.*
 
+/*
+ * The toplevel namespace of the organization
+ */
 org-namespace org.example shortname "ex" {
 	
+	/*
+	 * The canonical namespace of the sales domain 
+	 * (canonical data model and services)
+	 */
 	domain-namespace sales shortname "sal" {
 		
 		
@@ -31,15 +38,13 @@ org-namespace org.example shortname "ex" {
 			metadata {
 				version 1.0
 				lifecycle-state development
-				service-category entity
-				statefulness idempotent
 			}
 			
 			/*
-			 * A synchronous operation, that looks for customers by their name and city. The firstname
+			 * An operation, that looks for customers by their name and city. The firstname
 			 * may not be known.
 			 */
-			sync findByNameAndCity (optional firstname : string, lastname : string, city : string) 
+			findByNameAndCity (optional firstname : string, lastname : string, city : string) 
 				returns optional customers : Customer [] majorVersion 1
 			{
 				
@@ -64,8 +69,6 @@ org-namespace org.example shortname "ex" {
 			metadata {
 				version 1.0
 				lifecycle-state development
-				service-category activity
-				statefulness stateful
 			}
 			
 			/*
@@ -86,7 +89,6 @@ org-namespace org.example shortname "ex" {
 				lifecycle-state development
 			}
 		}
-		
 		
 	}
 }

@@ -1,7 +1,14 @@
 import SampleArchitectureProfile.ExSOALifecycle.*
 
+/*
+ * The toplevel namespace of the organization
+ */
 org-namespace org.example shortname "ex" {
 	
+	/*
+	 * The canonical shared common namespace of domain 
+	 * (canonical data model and services)
+	 */
 	domain-namespace common shortname "cmn" {
 		
 		businessObject Address {

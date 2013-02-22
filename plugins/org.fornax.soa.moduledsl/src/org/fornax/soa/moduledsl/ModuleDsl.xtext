@@ -2,6 +2,7 @@ grammar org.fornax.soa.moduledsl.ModuleDsl with org.fornax.soa.basedsl.SOABaseDs
 
 generate moduleDsl "http://www.fornax.org/soa/moduledsl/ModuleDsl"
 
+import "http://www.fornax.org/soa/basedsl/SOABaseDsl"
 import "http://www.fornax.org/soa/ServiceDsl" as serviceDsl
 import "http://www.fornax.org/soa/EnvironmentDsl" as environmentDsl
 import "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" as profileDsl

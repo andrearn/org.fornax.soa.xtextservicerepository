@@ -1,3 +1,12 @@
+/*******************************************************************************
+ * Copyright (c) 2012 developers of XtextServiceRepository and others.
+ * All rights reserved. This script and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * initial contribution:	André Arnold
+ *******************************************************************************/
 import org.eclipse.xtext.graphview.shape.*
 import org.eclipse.xtext.graphview.layout.*  
 import org.eclipse.xtext.graphview.behavior.layout.*  
@@ -8,69 +17,127 @@ import BusinessObjectDiagram.*
 stylesheet BusinessObjectDiagram for BusinessObjectDiagram
 
 style BusinessObjectDiagram {
-	autoLayoutManager = new KielerAutoLayout() 
+	this.autoLayoutManager = new KielerAutoLayout() 
 }
 
 style BusinessObjectNode as RoundedRectangleShape { 
-	backgroundColor = color(#d8e8f8)
+	this.backgroundColor = color(#d8e8f8)
 }
 
 
 style BusinessObjectNode { 
-	font = font("Helvetica", 12, SWT::LEFT + 
+	this.font = font("Helvetica", 12, SWT::LEFT + 
 		(if (element.abstract) SWT::ITALIC else SWT::NONE)
 	)
 }
 style BusinessObjectNode.Name { 
-	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
+	this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
 }
 style BusinessObjectNode.Version { 
-	font = font("Helvetica", 12, SWT::CENTER 
+	this.font = font("Helvetica", 12, SWT::CENTER 
 	)
 }
 
 style BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
-	outline = false
-	backgroundColor = color(#ffffff)
-	font = font("Helvetica", 12, SWT::LEFT+ 
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 12, SWT::LEFT+ 
 		(SWT::NONE)
 	)
 }
 
 style BusinessObjectNode.EnumReferenceEdge {
-	lineStyle = SWT::LINE_DASH
-	foregroundColor = color(#cccccc)
+	this.lineStyle = SWT::LINE_DASH
+	this.foregroundColor = color(#cccccc)
 }
+
+
+//Q
+style QueryObjectNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#eeeeee)
+}
+
+
+style QueryObjectNode { 
+	this.font = font("Helvetica", 12, SWT::LEFT 
+	)
+}
+style QueryObjectNode.Name { 
+	this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
+}
+style QueryObjectNode.Version { 
+	this.font = font("Helvetica", 12, SWT::CENTER 
+	)
+}
+
+style QueryObjectNode.PropertiesNode as RoundedRectangleShape {
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 12, SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
+
+style QueryObjectNode.EnumReferenceEdge {
+	this.lineStyle = SWT::LINE_DASH
+	this.foregroundColor = color(#cccccc)
+}
+
+style HiddenQueryObjectNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#eeeeee)
+}
+style HiddenQueryObjectNode { 
+	this.font = font("Helvetica", 12, SWT::LEFT 
+	)
+}
+style HiddenQueryObjectNode.Name { 
+	this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
+}
+style HiddenQueryObjectNode.Version { 
+	this.font = font("Helvetica", 12, SWT::CENTER 
+	)
+}
+
+style HiddenQueryObjectNode.PropertiesNode as RoundedRectangleShape {
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 12, SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
+
+
+
 
 
 style HiddenBusinessObjectNode as RoundedRectangleShape { 
-	backgroundColor = color(#d8e8f8)
+	this.backgroundColor = color(#d8e8f8)
 }
 style HiddenBusinessObjectNode { 
-	font = font("Helvetica", 12, SWT::CENTER +
+	this.font = font("Helvetica", 12, SWT::CENTER +
 		(if (element.abstract) SWT::ITALIC else SWT::NONE)
 	)
 }
 style HiddenBusinessObjectNode.Name { 
-	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+	this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
 	)
 }
 
 style HiddenBusinessObjectNode.PropertiesNode as RoundedRectangleShape {
-	outline = false
-	backgroundColor = color(#ffffff)
-	font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
 		(SWT::NONE)
 	)
 }
 
 
 style BusinessObjectNode.HiddenReferenceEdge.HiddenEdgeLabel {
-	connectionAlignment = ConnectionLocator::TARGET
+	this.connectionAlignment = ConnectionLocator::TARGET
 }
 style HiddenBusinessObjectNode.HiddenEnumReferenceEdge {
-	lineStyle = SWT::LINE_DASH
-	foregroundColor = color(#cccccc)
+	this.lineStyle = SWT::LINE_DASH
+	this.foregroundColor = color(#cccccc)
 }
 
 style BusinessObjectNode.InhertanceEdge as ConnectionShape  {
@@ -78,62 +145,100 @@ style BusinessObjectNode.InhertanceEdge as ConnectionShape  {
 	arrow.setScale(8,8)
 	arrow.backgroundColor = color(#ffffff)
 	arrow.lineWidth = 2
-	targetDecoration = arrow 
+	this.targetDecoration = arrow 
 }
-style HiddenBusinessObjectNode.HiddenInhertanceEdge as ConnectionShape  {
-	var hiddenArrow = new PolygonDecoration()
-	hiddenArrow.setScale(8,8)
-	hiddenArrow.backgroundColor = color(#ffffff)
-	hiddenArrow.lineWidth = 2
-	targetDecoration = hiddenArrow 
+style BusinessObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+	var hiddenarrow = new PolygonDecoration()
+	hiddenarrow.setScale(8,8)
+	hiddenarrow.backgroundColor = color(#ffffff)
+	hiddenarrow.lineWidth = 2
+	this.targetDecoration = hiddenarrow 
+}
+style HiddenQueryObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+	var hiddenQueryArrow = new PolygonDecoration()
+	hiddenQueryArrow.setScale(8,8)
+	hiddenQueryArrow.backgroundColor = color(#ffffff)
+	hiddenQueryArrow.lineWidth = 2
+	this.targetDecoration = hiddenQueryArrow 
+}
+
+
+style BusinessObjectNode.HiddenReferenceEdge.HiddenEdgeLabel {
+	this.connectionAlignment = ConnectionLocator::TARGET
+}
+style HiddenBusinessObjectNode.HiddenEnumReferenceEdge {
+	this.lineStyle = SWT::LINE_DASH
+	this.foregroundColor = color(#cccccc)
+}
+
+style QueryObjectNode.InhertanceEdge as ConnectionShape  {
+	var queryArrow = new PolygonDecoration()
+	queryArrow.setScale(8,8)
+	queryArrow.backgroundColor = color(#ffffff)
+	queryArrow.lineWidth = 2
+	this.targetDecoration = queryArrow 
+}
+style QueryObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+	var hiddenQueryArrow2 = new PolygonDecoration()
+	hiddenQueryArrow2.setScale(8,8)
+	hiddenQueryArrow2.backgroundColor = color(#ffffff)
+	hiddenQueryArrow2.lineWidth = 2
+	this.targetDecoration = hiddenQueryArrow2 
+}
+style HiddenQueryObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+	var hiddenArrow2 = new PolygonDecoration()
+	hiddenArrow2.setScale(8,8)
+	hiddenArrow2.backgroundColor = color(#ffffff)
+	hiddenArrow2.lineWidth = 2
+	this.targetDecoration = hiddenArrow2 
 }
 
 
 style EnumNode as RoundedRectangleShape { 
-	backgroundColor = color(#f8e8a8)
+	this.backgroundColor = color(#f8e8a8)
 }
 style EnumNode { 
-	font = font("Helvetica", 12, SWT::CENTER + 
+	this.font = font("Helvetica", 12, SWT::CENTER + 
 		 SWT::NONE
 	)
 }
 style EnumNode.Name { 
-	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
+	this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
 		 SWT::NONE
 	)
 }
 style EnumNode.EnumLabel { 
-	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
+	this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
 		 SWT::NONE
 	)
 }
 style EnumNode.EnumLiteralNode as RoundedRectangleShape {
-	outline = false
-	backgroundColor = color(#ffffff)
-	font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
 		(SWT::NONE)
 	)
 }
 
 style ExceptionNode as RoundedRectangleShape { 
-	backgroundColor = color(#f8e8d8)
+	this.backgroundColor = color(#f8e8d8)
 }
 style ExceptionNode { 
-	font = font("Helvetica", 12, SWT::CENTER 
+	this.font = font("Helvetica", 12, SWT::CENTER 
 	)
 }
 style ExceptionNode.ExceptionLabel { 
-	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+	this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
 	)
 }
 style ExceptionNode.Name { 
-	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+	this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
 	)
 }
 style ExceptionNode.PropertiesNode as RoundedRectangleShape {
-	outline = false
-	backgroundColor = color(#ffffff)
-	font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
 		(SWT::NONE)
 	)
 }

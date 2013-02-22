@@ -1,3 +1,4 @@
+import SampleArchitectureProfile.ExSOALifecycle.*
 import org.example.sales.*
 
 /**
@@ -5,9 +6,16 @@ import org.example.sales.*
  */
 solution CustomerManagementApp {
 	version 1.0
+	lifecycle-state productive
+	
 	additional-information {
 		location "file://W:\\CustomerManagement\\Requirements\\CustomerManagementApp-Requirements.doc"
 		location "file://W:\\CustomerManagement\\Design\\CustomerManagementApp-Design.doc"
+	}
+	requires CustomerManagerBAS majorVersion 1
+	
+	feature SomeFeature {
+		requires CustomerLookupBES majorVersion 1
 	}
 	
 	module Webapp {
@@ -34,7 +42,7 @@ solution CustomerManagementApp {
 			// The feature uses this service to create the customer
 			requires CustomerManagerBAS majorVersion 1
 			// The feature uses a specific operation of this service to identify a customer i
-			requires CustomerLookupBES majorVersion 1 calling CustomerLookupBES.findByNameAndCity 
+			requires CustomerLookupBES majorVersion 1 calling CustomerLookupBES.findByQueryTemplate
 		}
 	}
 }

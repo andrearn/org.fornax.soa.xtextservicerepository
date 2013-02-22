@@ -4,6 +4,9 @@
     <metamodelDeclarations xsi:type="xtext:GeneratedMetamodel" name="moduleDsl">
       <ePackage href="http://www.fornax.org/soa/moduledsl/ModuleDsl#/"/>
     </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel">
+      <ePackage href="http://www.fornax.org/soa/basedsl/SOABaseDsl#/"/>
+    </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="serviceDsl">
       <ePackage href="http://www.fornax.org/soa/ServiceDsl#/"/>
     </metamodelDeclarations>
@@ -54,7 +57,7 @@
         <elements xsi:type="xtext:Keyword" value="lifecycle-state"/>
         <elements xsi:type="xtext:Assignment" feature="state" operator="=">
           <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.3">
+            <type metamodel="/0/@metamodelDeclarations.4">
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//LifecycleState"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
@@ -188,7 +191,7 @@
         <elements xsi:type="xtext:Keyword" value="service"/>
         <elements xsi:type="xtext:Assignment" feature="service" operator="=">
           <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.1">
+            <type metamodel="/0/@metamodelDeclarations.2">
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Service"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
@@ -207,7 +210,7 @@
         <elements xsi:type="xtext:Keyword" value="service"/>
         <elements xsi:type="xtext:Assignment" feature="service" operator="=">
           <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.1">
+            <type metamodel="/0/@metamodelDeclarations.2">
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Service"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
@@ -336,7 +339,7 @@
         <elements xsi:type="xtext:Keyword" value="namespace"/>
         <elements xsi:type="xtext:Assignment" feature="namespace" operator="=">
           <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.1">
+            <type metamodel="/0/@metamodelDeclarations.2">
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//SubNamespace"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
@@ -480,7 +483,7 @@
         <elements xsi:type="xtext:Keyword" value="qualifier"/>
         <elements xsi:type="xtext:Assignment" feature="qualifiers" operator="+=">
           <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.4">
+            <type metamodel="/0/@metamodelDeclarations.5">
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
@@ -490,7 +493,7 @@
           <elements xsi:type="xtext:Keyword" value=","/>
           <elements xsi:type="xtext:Assignment" feature="qualifiers" operator="+=">
             <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.4">
+              <type metamodel="/0/@metamodelDeclarations.5">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
               </type>
               <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
@@ -507,7 +510,7 @@
         <elements xsi:type="xtext:Keyword" value="endpoint-qualifier"/>
         <elements xsi:type="xtext:Assignment" feature="endpointQualifier" operator="=">
           <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.4">
+            <type metamodel="/0/@metamodelDeclarations.5">
               <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Qualifier"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
