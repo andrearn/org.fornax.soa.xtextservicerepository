@@ -272,6 +272,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mttr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mttrPercentile" eType="#//Percentile"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="regularDownTimes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LatencyAssertion" eSuperTypes="#//Assertion">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="latency" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

@@ -12,7 +12,7 @@ grammar org.fornax.soa.EnvironmentDsl with org.eclipse.xtext.common.Terminals
 
 generate environmentDsl "http://www.fornax.org/soa/EnvironmentDsl"
 
-import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as  semanticsDsl
+import "http://www.fornax.org/soa/SemanticsDsl" as  semanticsDsl
 
 EnvModel:
 	(imports+=EnvImport)*

@@ -1,7 +1,8 @@
-package org.fornax.soa.basedsl.scoping.versions;
+package org.fornax.soa.basedsl.version;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class VersionClassifierComparator {
 

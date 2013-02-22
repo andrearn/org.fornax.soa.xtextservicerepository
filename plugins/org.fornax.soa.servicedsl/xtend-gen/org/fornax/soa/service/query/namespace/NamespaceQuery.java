@@ -3,8 +3,7 @@ package org.fornax.soa.service.query.namespace;
 import com.google.inject.Inject;
 import java.util.Arrays;
 import org.eclipse.emf.ecore.EObject;
-import org.fornax.soa.basedsl.CommonStringExtensions;
-import org.fornax.soa.profiledsl.query.LifecycleQueries;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
@@ -28,10 +27,7 @@ import org.fornax.soa.serviceDsl.VersionedTypeRef;
 @SuppressWarnings("all")
 public class NamespaceQuery {
   @Inject
-  private LifecycleQueries _lifecycleQueries;
-  
-  @Inject
-  private CommonStringExtensions _commonStringExtensions;
+  private IEObjectLookup _iEObjectLookup;
   
   protected OrganizationNamespace _findOrgNamespace(final Object o) {
     return null;
@@ -151,7 +147,7 @@ public class NamespaceQuery {
    * Find the owning namespace of the owner of the type reference
    */
   protected SubNamespace _findRefOwnerSubdomain(final TypeRef t) {
-    EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(t);
+    EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
     EObject _eContainer = _statefulOwner==null?(EObject)null:_statefulOwner.eContainer();
     return ((SubNamespace) _eContainer);
   }
@@ -160,7 +156,7 @@ public class NamespaceQuery {
    * Find the owning namespace of the owner of the type reference
    */
   protected SubNamespace _findRefOwnerSubdomain(final VersionedTypeRef c) {
-    EObject _statefulOwner = c==null?(EObject)null:this._lifecycleQueries.getStatefulOwner(c);
+    EObject _statefulOwner = c==null?(EObject)null:this._iEObjectLookup.getStatefulOwner(c);
     EObject _eContainer = _statefulOwner==null?(EObject)null:_statefulOwner.eContainer();
     return ((SubNamespace) _eContainer);
   }
@@ -169,7 +165,7 @@ public class NamespaceQuery {
    * Find the owning namespace of the owner of the type reference
    */
   protected SubNamespace _findRefOwnerSubdomain(final BusinessObjectRef c) {
-    EObject _statefulOwner = c==null?(EObject)null:this._lifecycleQueries.getStatefulOwner(c);
+    EObject _statefulOwner = c==null?(EObject)null:this._iEObjectLookup.getStatefulOwner(c);
     EObject _eContainer = _statefulOwner==null?(EObject)null:_statefulOwner.eContainer();
     return ((SubNamespace) _eContainer);
   }
@@ -178,7 +174,7 @@ public class NamespaceQuery {
    * Find the owning namespace of the owner of the type reference
    */
   protected SubNamespace _findRefOwnerSubdomain(final EnumTypeRef c) {
-    EObject _statefulOwner = c==null?(EObject)null:this._lifecycleQueries.getStatefulOwner(c);
+    EObject _statefulOwner = c==null?(EObject)null:this._iEObjectLookup.getStatefulOwner(c);
     EObject _eContainer = _statefulOwner==null?(EObject)null:_statefulOwner.eContainer();
     return ((SubNamespace) _eContainer);
   }
@@ -187,7 +183,7 @@ public class NamespaceQuery {
    * Find the owning namespace of the owner of the exception reference
    */
   protected SubNamespace _findRefOwnerSubdomain(final ExceptionRef e) {
-    EObject _statefulOwner = e==null?(EObject)null:this._lifecycleQueries.getStatefulOwner(e);
+    EObject _statefulOwner = e==null?(EObject)null:this._iEObjectLookup.getStatefulOwner(e);
     EObject _eContainer = _statefulOwner==null?(EObject)null:_statefulOwner.eContainer();
     return ((SubNamespace) _eContainer);
   }
@@ -196,7 +192,7 @@ public class NamespaceQuery {
    * Find the owning namespace of the owner of the service reference
    */
   protected SubNamespace _findRefOwnerSubdomain(final ServiceRef s) {
-    EObject _statefulOwner = s==null?(EObject)null:this._lifecycleQueries.getStatefulOwner(s);
+    EObject _statefulOwner = s==null?(EObject)null:this._iEObjectLookup.getStatefulOwner(s);
     EObject _eContainer = _statefulOwner==null?(EObject)null:_statefulOwner.eContainer();
     return ((SubNamespace) _eContainer);
   }

@@ -9,6 +9,7 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.FilteringScope;
+import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 
 import com.google.common.collect.Lists;
 

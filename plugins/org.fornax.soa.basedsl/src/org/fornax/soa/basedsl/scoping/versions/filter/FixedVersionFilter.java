@@ -1,26 +1,33 @@
-package org.fornax.soa.basedsl.scoping.versions;
+package org.fornax.soa.basedsl.scoping.versions.filter;
 
 import java.util.Collections;
-import java.util.HashMap;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 
-public class LatestMinInclMaxExclRangeVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
+public class FixedVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 
-	protected String maxVersion;
-	protected String minVersion;
-	protected VersionResolver resolver;
+	private String version;
+	private IScopeVersionResolver resolver;
 
-	public LatestMinInclMaxExclRangeVersionFilter(VersionResolver resolver, String minVersion, String maxVersion) {
-		this.minVersion = minVersion;
-		this.maxVersion = maxVersion;
+	public FixedVersionFilter(IScopeVersionResolver resolver, String version) {
+		this.version = version;
 		this.resolver = resolver;
 	}
 	
+	public boolean matches(IEObjectDescription description) {
+		final String v = resolver.getVersionAsString(description);
+		if (v != null)
+			return VersionComparator.compare(v, version) == 0;
+		else
+			return true;
+	}
+
 	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames(
 			Iterable<IEObjectDescription> canditates, boolean ignoreCase) {
 		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
@@ -29,25 +36,18 @@ public class LatestMinInclMaxExclRangeVersionFilter<T> extends AbstractPredicate
 				if (matches(ieObjDesc)) {
 					QualifiedName objName = ieObjDesc.getName();
 					IEObjectDescription bestMatch = getCurrentBestMatch (matches, objName);
-					if (bestMatch == null)
+					if (bestMatch == null) {
 						matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+					}
 					else {
 						int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
-						if (c >= 0)
+						if (c == 0)
 							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
 					}
 				}
 			}
 		}
 		return matches;
-	}
-
-	public boolean matches(IEObjectDescription description) {
-		final String version = resolver.getVersion(description);
-		if (version != null)
-			return (VersionComparator.compare(version, maxVersion) < 0) && (VersionComparator.compare(version, minVersion) >= 0);
-		else
-			return true;
 	}
 
 	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifedNames(
@@ -58,13 +58,9 @@ public class LatestMinInclMaxExclRangeVersionFilter<T> extends AbstractPredicate
 				if (ieObjDesc != null && matches(ieObjDesc)) {
 					QualifiedName objName = ieObjDesc.getQualifiedName();
 					IEObjectDescription bestMatch = getCurrentBestMatch (matches, objName);
-					if (bestMatch == null)
+					int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
+					if (c == 0)
 						matches.replaceValues (objName, Collections.singleton(ieObjDesc));
-					else {
-						int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
-						if (c >= 0)
-							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
-					}
 				}
 			}
 		}
@@ -76,9 +72,8 @@ public class LatestMinInclMaxExclRangeVersionFilter<T> extends AbstractPredicate
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((maxVersion == null) ? 0 : maxVersion.hashCode());
-		result = prime * result
-				+ ((minVersion == null) ? 0 : minVersion.hashCode());
+				+ ((resolver == null) ? 0 : resolver.hashCode());
+		result = prime * result + ((version == null) ? 0 : version.hashCode());
 		return result;
 	}
 
@@ -88,22 +83,20 @@ public class LatestMinInclMaxExclRangeVersionFilter<T> extends AbstractPredicate
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof LatestMinInclMaxExclRangeVersionFilter))
+		if (!(obj instanceof FixedVersionFilter))
 			return false;
-		LatestMinInclMaxExclRangeVersionFilter other = (LatestMinInclMaxExclRangeVersionFilter) obj;
-		if (maxVersion == null) {
-			if (other.maxVersion != null)
+		FixedVersionFilter other = (FixedVersionFilter) obj;
+		if (resolver == null) {
+			if (other.resolver != null)
 				return false;
-		} else if (!maxVersion.equals(other.maxVersion))
+		} else if (!resolver.equals(other.resolver))
 			return false;
-		if (minVersion == null) {
-			if (other.minVersion != null)
+		if (version == null) {
+			if (other.version != null)
 				return false;
-		} else if (!minVersion.equals(other.minVersion))
+		} else if (!version.equals(other.version))
 			return false;
 		return true;
 	}
-	
-	
 
 }

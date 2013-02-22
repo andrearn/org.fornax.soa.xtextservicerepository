@@ -1,31 +1,28 @@
-package org.fornax.soa.basedsl.scoping.versions;
+package org.fornax.soa.basedsl.scoping.versions.filter;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
 
-public class LatestMinInclVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
+public class LatestMinInclMaxExclRangeVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 
+	protected String maxVersion;
 	protected String minVersion;
-	protected VersionResolver resolver;
+	protected IScopeVersionResolver resolver;
 
-	public LatestMinInclVersionFilter(VersionResolver resolver, String minVersion) {
+	public LatestMinInclMaxExclRangeVersionFilter(IScopeVersionResolver resolver, String minVersion, String maxVersion) {
 		this.minVersion = minVersion;
+		this.maxVersion = maxVersion;
 		this.resolver = resolver;
 	}
 	
-	public boolean matches(IEObjectDescription description) {
-		final String v = resolver.getVersion(description);
-		if (v != null)
-			return VersionComparator.compare(v, minVersion) >= 0;
-		else
-			return true;
-	}
-
 	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames(
 			Iterable<IEObjectDescription> canditates, boolean ignoreCase) {
 		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
@@ -45,6 +42,14 @@ public class LatestMinInclVersionFilter<T> extends AbstractPredicateVersionFilte
 			}
 		}
 		return matches;
+	}
+
+	public boolean matches(IEObjectDescription description) {
+		final String version = resolver.getVersionAsString(description);
+		if (version != null)
+			return (VersionComparator.compare(version, maxVersion) < 0) && (VersionComparator.compare(version, minVersion) >= 0);
+		else
+			return true;
 	}
 
 	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifedNames(
@@ -73,6 +78,8 @@ public class LatestMinInclVersionFilter<T> extends AbstractPredicateVersionFilte
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
+				+ ((maxVersion == null) ? 0 : maxVersion.hashCode());
+		result = prime * result
 				+ ((minVersion == null) ? 0 : minVersion.hashCode());
 		return result;
 	}
@@ -83,9 +90,14 @@ public class LatestMinInclVersionFilter<T> extends AbstractPredicateVersionFilte
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof LatestMinInclVersionFilter))
+		if (!(obj instanceof LatestMinInclMaxExclRangeVersionFilter))
 			return false;
-		LatestMinInclVersionFilter<T> other = (LatestMinInclVersionFilter<T>) obj;
+		LatestMinInclMaxExclRangeVersionFilter other = (LatestMinInclMaxExclRangeVersionFilter) obj;
+		if (maxVersion == null) {
+			if (other.maxVersion != null)
+				return false;
+		} else if (!maxVersion.equals(other.maxVersion))
+			return false;
 		if (minVersion == null) {
 			if (other.minVersion != null)
 				return false;
@@ -93,6 +105,7 @@ public class LatestMinInclVersionFilter<T> extends AbstractPredicateVersionFilte
 			return false;
 		return true;
 	}
+	
 	
 
 }

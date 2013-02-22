@@ -27,7 +27,7 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 	@Inject LifecycleQueries lifecycleQueries
 	
 	/**
-	 * Get all references to service used explicitly or implicitly by module import.
+	 * Get all references to services used explicitly or implicitly by module import.
 	 * Exclusion and inclusion rules for Module imports are respected
 	 */
 	override Set<? extends AbstractServiceRef> getAllUsedServiceRefs (Module module) {

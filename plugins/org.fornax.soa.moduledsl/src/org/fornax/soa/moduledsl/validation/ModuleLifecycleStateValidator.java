@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
-import org.fornax.soa.basedsl.metamodel.MetamodelAccess;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
@@ -19,8 +19,6 @@ import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
-import org.fornax.soa.service.query.VersionedObjectQueryHelper;
-import org.fornax.soa.serviceDsl.ServiceDslPackage;
 
 import com.google.inject.Inject;
 
@@ -29,7 +27,7 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	@Inject ReferencedStateChecker referencedStateChecker;
 	@Inject IStateMatcher stateMatcher;
 	@Inject LifecycleStateComparator stateComparator;
-	@Inject MetamodelAccess metamodelAccess;
+	@Inject IEObjectLookup objLookup;
 	
 
 	@Override
@@ -42,7 +40,7 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	
 	@Check (CheckType.FAST)
 	public void checkNotUsesLowerStateService(ImportServiceRef svcRef) {
-		EObject owner = metamodelAccess.getVersionedOwner(svcRef);
+		EObject owner = objLookup.getVersionedOwner(svcRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {
@@ -57,7 +55,7 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	
 	@Check (CheckType.FAST)
 	public void checkNotUsesLowerStateModule(ModuleRef modRef) {
-		EObject owner = metamodelAccess.getVersionedOwner(modRef);
+		EObject owner = objLookup.getVersionedOwner(modRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {
@@ -72,7 +70,7 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	
 	@Check (CheckType.FAST)
 	public void checkNotProvidesLowerStateService(ServiceRef svcRef) {
-		EObject owner = metamodelAccess.getVersionedOwner(svcRef);
+		EObject owner = objLookup.getVersionedOwner(svcRef);
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {

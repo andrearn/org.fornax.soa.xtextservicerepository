@@ -15,11 +15,10 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.version.VersionMatcher;
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions;
-import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions;
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions;
-import org.fornax.soa.profiledsl.query.LifecycleQueries;
 import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceQueries;
 import org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef;
 import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef;
@@ -77,9 +76,6 @@ public class SchemaTypeExtensions {
   private VersionQualifierExtensions _versionQualifierExtensions;
   
   @Inject
-  private LifecycleQueries _lifecycleQueries;
-  
-  @Inject
   private VersionQueries _versionQueries;
   
   @Inject
@@ -92,13 +88,13 @@ public class SchemaTypeExtensions {
   private IExceptionResolver _iExceptionResolver;
   
   @Inject
+  private IEObjectLookup _iEObjectLookup;
+  
+  @Inject
   private ProfileSchemaTypeExtensions profileSchemaTypes;
   
   @Inject
   private TechnicalNamespaceQueries profileNSQueries;
-  
-  @Inject
-  private ProfileSchemaNamespaceExtensions profileSchemaNSExt;
   
   /**
    * Return the XSD type name for a type reference including it's derived namespace prefix
@@ -163,7 +159,7 @@ public class SchemaTypeExtensions {
         if (!_and_1) {
           _and = false;
         } else {
-          EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(t);
+          EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
           boolean _not = (!(_statefulOwner instanceof Service));
           _and = (_and_1 && _not);
         }
@@ -273,7 +269,7 @@ public class SchemaTypeExtensions {
         if (!_and_1) {
           _and = false;
         } else {
-          EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(t);
+          EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
           boolean _not = (!(_statefulOwner instanceof Service));
           _and = (_and_1 && _not);
         }
@@ -332,7 +328,7 @@ public class SchemaTypeExtensions {
         if (!_and_1) {
           _and = false;
         } else {
-          EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(t);
+          EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
           boolean _not = (!(_statefulOwner instanceof Service));
           _and = (_and_1 && _not);
         }
@@ -391,7 +387,7 @@ public class SchemaTypeExtensions {
         if (!_and_1) {
           _and = false;
         } else {
-          EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(t);
+          EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
           boolean _not = (!(_statefulOwner instanceof Service));
           _and = (_and_1 && _not);
         }
@@ -450,7 +446,7 @@ public class SchemaTypeExtensions {
         if (!_and_1) {
           _and = false;
         } else {
-          EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(exRef);
+          EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(exRef);
           boolean _not = (!(_statefulOwner instanceof Service));
           _and = (_and_1 && _not);
         }
@@ -518,7 +514,7 @@ public class SchemaTypeExtensions {
     if (!_and_1) {
       _and = false;
     } else {
-      EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(t);
+      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
       boolean _not = (!(_statefulOwner instanceof Service));
       _and = (_and_1 && _not);
     }
@@ -568,7 +564,7 @@ public class SchemaTypeExtensions {
     if (!_and_1) {
       _and = false;
     } else {
-      EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(t);
+      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
       boolean _not = (!(_statefulOwner instanceof Service));
       _and = (_and_1 && _not);
     }
@@ -618,7 +614,7 @@ public class SchemaTypeExtensions {
     if (!_and_1) {
       _and = false;
     } else {
-      EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(t);
+      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
       boolean _not = (!(_statefulOwner instanceof Service));
       _and = (_and_1 && _not);
     }
@@ -668,7 +664,7 @@ public class SchemaTypeExtensions {
     if (!_and_1) {
       _and = false;
     } else {
-      EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(t);
+      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
       boolean _not = (!(_statefulOwner instanceof Service));
       _and = (_and_1 && _not);
     }
@@ -1217,7 +1213,7 @@ public class SchemaTypeExtensions {
     if (!_and_1) {
       _and = false;
     } else {
-      EObject _statefulOwner = this._lifecycleQueries.getStatefulOwner(t);
+      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
       boolean _not = (!(_statefulOwner instanceof Service));
       _and = (_and_1 && _not);
     }

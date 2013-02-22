@@ -1,4 +1,4 @@
-package org.fornax.soa.basedsl.scoping;
+package org.fornax.soa.basedsl.scoping.versions.filter;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
@@ -12,17 +12,10 @@ import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
-import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
-import org.fornax.soa.basedsl.scoping.versions.FixedVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LatestMajorVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.NullVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilteringScope;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
 import org.fornax.soa.basedsl.scoping.versions.VersioningContainerBasedScope;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.SimpleScopeVersionResolver;
 
 public abstract class VersionedImportedNamespaceAwareScopeProvider extends ImportedNamespaceAwareLocalScopeProvider {
 	
@@ -50,7 +43,7 @@ public abstract class VersionedImportedNamespaceAwareScopeProvider extends Impor
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner) {
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 		if (v != null) {
-			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
+			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
 			if (v instanceof MajorVersionRef)
 				return new LatestMajorVersionFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString());
 			if (v instanceof MaxVersionRef)

@@ -110,5 +110,5 @@ AdditionalInformation:
 ;
 	
 InfoItem:
-	'location' documentLocation=STRING ('section' section=STRING)?
+	'location' documentLocation=STRING ('reference' reference=STRING)?
 ;

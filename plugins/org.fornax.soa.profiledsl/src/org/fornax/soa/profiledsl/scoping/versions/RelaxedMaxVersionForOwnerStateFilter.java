@@ -4,9 +4,9 @@ import java.util.Collections;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.filter.LatestMaxExclVersionFilter;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
@@ -31,7 +31,7 @@ public class RelaxedMaxVersionForOwnerStateFilter<T> extends
 	@Inject
 	private LifecycleStateComparator stateComparator;
 	
-	public RelaxedMaxVersionForOwnerStateFilter (VersionResolver resolver, String maxVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public RelaxedMaxVersionForOwnerStateFilter (IScopeVersionResolver resolver, String maxVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
 		super (resolver, maxVersion);
 		this.ownerLifecycleState = ownerLifecycleState;
 		this.stateResolver = stateResolver;

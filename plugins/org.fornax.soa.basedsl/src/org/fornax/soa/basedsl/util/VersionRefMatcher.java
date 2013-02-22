@@ -6,9 +6,9 @@ import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
-import org.fornax.soa.basedsl.scoping.versions.LatestMajorVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
-import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.LatestMajorVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.VersionFilter;
+import org.fornax.soa.basedsl.version.VersionComparator;
 
 import com.google.inject.Singleton;
 

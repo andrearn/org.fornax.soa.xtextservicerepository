@@ -15,7 +15,7 @@ import org.eclipse.xtext.resource.impl.SimpleResourceDescriptionsBasedContainerM
 import org.eclipse.xtext.service.AbstractGenericModule;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
-import org.fornax.soa.basedsl.search.PredicateSearch;
+import org.fornax.soa.basedsl.search.DefaultPredicateSearch;
 
 import com.google.inject.Binder;
 import com.google.inject.name.Names;
@@ -44,6 +44,6 @@ public class ServiceRepositoryRuntimeModule extends DefaultRuntimeModule {
 	}
 	
 	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
-		return PredicateSearch.class;
+		return DefaultPredicateSearch.class;
 	}
 }

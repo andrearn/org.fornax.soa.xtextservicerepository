@@ -6,7 +6,9 @@ package org.fornax.soa;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
-import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
+import org.fornax.soa.basedsl.scoping.versions.VersionedGlobalScopeProvider;
+import org.fornax.soa.basedsl.search.IPredicateSearch;
+import org.fornax.soa.basedsl.search.DefaultPredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
 import org.fornax.soa.business.documentation.BusinessDslDocumentationProvider;
@@ -33,6 +35,10 @@ public class BusinessDslRuntimeModule extends org.fornax.soa.AbstractBusinessDsl
 	
 	public void configureIEObjectDocumentationProvider (Binder binder) {
 		binder.bind(IEObjectDocumentationProvider.class).to(BusinessDslDocumentationProvider.class);
+	}
+	
+	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
+		return DefaultPredicateSearch.class;
 	}
 
 }

@@ -2,6 +2,11 @@ package org.fornax.soa.moduledsl.query;
 
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 
+/**
+ * Checks whether two module version are compatible
+ * @author aarnold
+ *
+ */
 public interface IModuleVersionMatcher {
 	
 	/* 

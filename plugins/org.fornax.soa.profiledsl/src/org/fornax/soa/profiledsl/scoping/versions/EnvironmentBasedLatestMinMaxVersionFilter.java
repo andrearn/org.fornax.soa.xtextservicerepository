@@ -5,9 +5,9 @@ import java.util.Collections;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.filter.LatestMinInclMaxExclRangeVersionFilter;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
@@ -27,12 +27,12 @@ public class EnvironmentBasedLatestMinMaxVersionFilter<T> extends
 	@Inject
 	private	IStateMatcher stateMatcher;
 	
-	public EnvironmentBasedLatestMinMaxVersionFilter (VersionResolver resolver, String minVersion, String maxVersion, String environmentName, EnvironmentType envType) {
+	public EnvironmentBasedLatestMinMaxVersionFilter (IScopeVersionResolver resolver, String minVersion, String maxVersion, String environmentName, EnvironmentType envType) {
 		super (resolver, minVersion, maxVersion);
 		this.environmentName = environmentName;
 		this.environmentType = envType;
 	}
-	public EnvironmentBasedLatestMinMaxVersionFilter (VersionResolver resolver, String minVersion, String maxVersion, String environmentName, EnvironmentType envType, ResourceSet rs) {
+	public EnvironmentBasedLatestMinMaxVersionFilter (IScopeVersionResolver resolver, String minVersion, String maxVersion, String environmentName, EnvironmentType envType, ResourceSet rs) {
 		super (resolver, minVersion, maxVersion);
 		this.environmentName = environmentName;
 		this.environmentType = envType;

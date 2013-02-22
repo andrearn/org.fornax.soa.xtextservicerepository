@@ -1,4 +1,4 @@
-package org.fornax.soa.basedsl.scoping.versions;
+package org.fornax.soa.basedsl.scoping.versions.filter;
 
 import java.util.Collection;
 

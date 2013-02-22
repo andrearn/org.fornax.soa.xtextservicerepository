@@ -1220,24 +1220,41 @@
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//AvailabilityAssertion"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="availability"/>
-        <elements xsi:type="xtext:Assignment" feature="availability" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        <elements xsi:type="xtext:Action">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/BindingDsl#//AvailabilityAssertion"/>
+          </type>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="percentile"/>
-        <elements xsi:type="xtext:Assignment" feature="percentile" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="availability"/>
+          <elements xsi:type="xtext:Assignment" feature="availability" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="percentile"/>
+          <elements xsi:type="xtext:Assignment" feature="percentile" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          </elements>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="mean-time-between-failure"/>
-        <elements xsi:type="xtext:Assignment" feature="mtbf" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="mean-time-between-failure"/>
+          <elements xsi:type="xtext:Assignment" feature="mtbf" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="mean-time-to-repair"/>
-        <elements xsi:type="xtext:Assignment" feature="mttr" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="mean-time-to-repair"/>
+          <elements xsi:type="xtext:Assignment" feature="mttr" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" cardinality="?" feature="mttrPercentile" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+          </elements>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="mttrPercentile" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="regular-down-times"/>
+          <elements xsi:type="xtext:Assignment" feature="regularDownTimes" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
         </elements>
       </alternatives>
     </rules>
@@ -1632,6 +1649,36 @@
         </elements>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="AdditionalInformation">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//AdditionalInformation"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="additional-information"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="+" feature="infoItems" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.16"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="InfoItem">
+      <type metamodel="/1/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//InfoItem"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="location"/>
+        <elements xsi:type="xtext:Assignment" feature="documentLocation" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="reference"/>
+          <elements xsi:type="xtext:Assignment" feature="reference" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
         </elements>
       </alternatives>
     </rules>

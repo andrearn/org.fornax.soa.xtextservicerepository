@@ -4,9 +4,6 @@ import com.google.common.base.Objects;
 import com.google.inject.Inject;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -19,7 +16,7 @@ import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 
 /**
- * Queries for lifecycle states
+ * Queries for lifecycle states and stateful objects
  */
 @SuppressWarnings("all")
 public class LifecycleQueries {
@@ -169,23 +166,5 @@ public class LifecycleQueries {
       _switchResult = _minDevState_1;
     }
     return _switchResult;
-  }
-  
-  public EObject getStatefulOwner(final EObject o) {
-    EClass _eClass = o.eClass();
-    final EStructuralFeature stateFeature = _eClass.getEStructuralFeature(this.STATE_ATTR_NAME);
-    boolean _notEquals = (!Objects.equal(stateFeature, null));
-    if (_notEquals) {
-      return o;
-    } else {
-      EObject _eContainer = o.eContainer();
-      boolean _notEquals_1 = (!Objects.equal(_eContainer, null));
-      if (_notEquals_1) {
-        EObject _eContainer_1 = o.eContainer();
-        return this.getStatefulOwner(_eContainer_1);
-      } else {
-        return null;
-      }
-    }
   }
 }

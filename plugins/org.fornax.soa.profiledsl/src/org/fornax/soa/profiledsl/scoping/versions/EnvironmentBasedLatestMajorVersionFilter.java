@@ -5,9 +5,9 @@ import java.util.Collections;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
@@ -18,7 +18,7 @@ import com.google.inject.Inject;
 public class EnvironmentBasedLatestMajorVersionFilter<T> extends AbstractPredicateVersionFilter<T> {
 
 	private String majorVersion;
-	private VersionResolver resolver;
+	private IScopeVersionResolver resolver;
 	
 	@Inject
 	private LifecycleStateResolver stateResolver;
@@ -29,13 +29,13 @@ public class EnvironmentBasedLatestMajorVersionFilter<T> extends AbstractPredica
 	@Inject
 	private	IStateMatcher stateMatcher;
 	
-	public EnvironmentBasedLatestMajorVersionFilter (VersionResolver resolver, String majorVersion, String environmentName, EnvironmentType envType) {
+	public EnvironmentBasedLatestMajorVersionFilter (IScopeVersionResolver resolver, String majorVersion, String environmentName, EnvironmentType envType) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
 		this.environmentName = environmentName;
 		this.environmentType = envType;
 	}
-	public EnvironmentBasedLatestMajorVersionFilter (VersionResolver resolver, String majorVersion, String environmentName, EnvironmentType envType, ResourceSet rs) {
+	public EnvironmentBasedLatestMajorVersionFilter (IScopeVersionResolver resolver, String majorVersion, String environmentName, EnvironmentType envType, ResourceSet rs) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
 		this.environmentName = environmentName;
@@ -79,7 +79,7 @@ public class EnvironmentBasedLatestMajorVersionFilter<T> extends AbstractPredica
 	}
 
 	public boolean matches(IEObjectDescription description) {
-		final String v = resolver.getVersion(description);
+		final String v = resolver.getVersionAsString(description);
 		if (v != null)
 			return toMajorVersion (v).equals(majorVersion);
 		else

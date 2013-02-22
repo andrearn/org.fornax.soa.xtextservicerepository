@@ -779,24 +779,31 @@
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="service-category"/>
-        <elements xsi:type="xtext:Assignment" feature="category" operator="=">
-          <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.2">
-              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//ServiceCategory"/>
-            </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-          </terminal>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="service-category"/>
+          <elements xsi:type="xtext:Assignment" feature="category" operator="=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.2">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//ServiceCategory"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="statefulness"/>
-        <elements xsi:type="xtext:Assignment" feature="statefulness" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.25"/>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="statefulness"/>
+          <elements xsi:type="xtext:Assignment" feature="statefulness" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.25"/>
+          </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="persistence"/>
           <elements xsi:type="xtext:Assignment" feature="persistence" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.26"/>
           </elements>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="additionalInfo" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.15"/>
         </elements>
         <elements xsi:type="xtext:UnorderedGroup">
           <elements xsi:type="xtext:Group" cardinality="?">
@@ -857,9 +864,6 @@
               <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.37"/>
             </elements>
           </elements>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="additionalInfo" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.15"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:Keyword" value="tags"/>
@@ -2059,8 +2063,8 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="section"/>
-          <elements xsi:type="xtext:Assignment" feature="section" operator="=">
+          <elements xsi:type="xtext:Keyword" value="reference"/>
+          <elements xsi:type="xtext:Assignment" feature="reference" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
           </elements>
         </elements>

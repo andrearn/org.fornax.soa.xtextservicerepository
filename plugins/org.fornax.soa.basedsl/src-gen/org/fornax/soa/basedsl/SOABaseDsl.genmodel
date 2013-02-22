@@ -58,7 +58,7 @@
     </genClasses>
     <genClasses ecoreClass="SOABaseDsl.ecore#//InfoItem">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//InfoItem/documentLocation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//InfoItem/section"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//InfoItem/reference"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

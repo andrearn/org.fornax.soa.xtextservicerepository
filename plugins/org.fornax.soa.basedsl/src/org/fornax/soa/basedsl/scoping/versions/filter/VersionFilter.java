@@ -1,4 +1,4 @@
-package org.fornax.soa.basedsl.scoping.versions;
+package org.fornax.soa.basedsl.scoping.versions.filter;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;

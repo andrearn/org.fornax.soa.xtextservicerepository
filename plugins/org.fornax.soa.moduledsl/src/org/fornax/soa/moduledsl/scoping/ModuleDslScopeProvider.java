@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -18,19 +17,18 @@ import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
-import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvider;
-import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
-import org.fornax.soa.basedsl.scoping.versions.FixedVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LatestMaxExclVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LatestMinInclMaxExclRangeVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.FixedVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.SimpleScopeVersionResolver;
+import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
+import org.fornax.soa.moduledsl.query.IModuleServiceResolver;
 import org.fornax.soa.moduledsl.query.ModuleLookup;
 import org.fornax.soa.moduledsl.util.ModuleDslAccess;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
@@ -59,6 +57,7 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 	@Inject Injector injector;
 	
 	@Inject ModuleLookup modLookup;
+	@Inject IModuleServiceResolver modServiceResolver;
 
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
@@ -106,8 +105,8 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 		if (targetModule != null) {
 			if (targetModule.eIsProxy())
 				targetModule = (Module) EcoreUtil.resolve (targetModule, context.eResource().getResourceSet());
-			EList<ServiceRef> providedServiceRefs = targetModule.getProvidedServices();
-			for (ServiceRef svcRef : providedServiceRefs) {
+			Set<AbstractServiceRef> providedServiceRefs = modServiceResolver.getAllProvidedServiceRefs(targetModule);
+			for (AbstractServiceRef svcRef : providedServiceRefs) {
 				if (svcRef.eIsProxy()) {
 					svcRef = (ServiceRef) EcoreUtil.resolve (svcRef, context.eResource().getResourceSet());
 				}
@@ -121,7 +120,7 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner) {
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 		if (v != null) {
-			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
+			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
 			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 			if (v instanceof MajorVersionRef) {
@@ -153,7 +152,7 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner, List<Service> candidates) {
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 		if (v != null) {
-			VersionResolver verResolver = new BaseDslVersionResolver (v.eResource().getResourceSet());
+			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
 			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 			

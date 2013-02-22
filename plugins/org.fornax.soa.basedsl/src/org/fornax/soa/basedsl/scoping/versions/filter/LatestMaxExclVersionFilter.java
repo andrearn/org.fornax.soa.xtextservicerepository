@@ -1,10 +1,12 @@
-package org.fornax.soa.basedsl.scoping.versions;
+package org.fornax.soa.basedsl.scoping.versions.filter;
 
 import java.util.Collections;
 import java.util.HashMap;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
@@ -12,9 +14,9 @@ import com.google.common.collect.Multimap;
 public class LatestMaxExclVersionFilter<T> extends AbstractPredicateVersionFilter<T> {
 
 	protected String maxVersion;
-	protected VersionResolver resolver;
+	protected IScopeVersionResolver resolver;
 
-	public LatestMaxExclVersionFilter(VersionResolver resolver, String maxVersion) {
+	public LatestMaxExclVersionFilter(IScopeVersionResolver resolver, String maxVersion) {
 		this.maxVersion = maxVersion;
 		this.resolver = resolver;
 	}
@@ -41,9 +43,9 @@ public class LatestMaxExclVersionFilter<T> extends AbstractPredicateVersionFilte
 	}
 
 	public boolean matches(IEObjectDescription description) {
-		final String v = resolver.getVersion(description);
+		final String v = resolver.getVersionAsString(description);
 		if (v != null)
-			return VersionComparator.compare(resolver.getVersion(description), maxVersion) <= 0;
+			return VersionComparator.compare(resolver.getVersionAsString(description), maxVersion) <= 0;
 		else
 			return true;
 	}

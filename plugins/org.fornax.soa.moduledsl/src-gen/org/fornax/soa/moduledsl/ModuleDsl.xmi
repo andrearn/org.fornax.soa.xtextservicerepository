@@ -798,8 +798,8 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="section"/>
-          <elements xsi:type="xtext:Assignment" feature="section" operator="=">
+          <elements xsi:type="xtext:Keyword" value="reference"/>
+          <elements xsi:type="xtext:Assignment" feature="reference" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
           </elements>
         </elements>

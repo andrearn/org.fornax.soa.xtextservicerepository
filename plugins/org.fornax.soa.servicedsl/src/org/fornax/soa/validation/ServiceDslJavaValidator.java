@@ -305,7 +305,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		EObject o = svcRef.eContainer().eContainer();
 		if (o instanceof Service) {
 			Service s = (Service) svcRef.eContainer().eContainer();
-			if (s.getCategory().getBaseCategory () == ServiceBaseCategory.ENTITY) {
+			if (s.getCategory() != null && s.getCategory().getBaseCategory () == ServiceBaseCategory.ENTITY) {
 				if (svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
 					error("Business entity services may not call business process services",
 							ServiceDslPackage.Literals.OPERATION__REQUIRES);
@@ -432,8 +432,8 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		EObject o = svcRef.eContainer().eContainer();
 		if (o instanceof Service) {
 			Service s = (Service) o;
-			if (s.getCategory().getBaseCategory () == ServiceBaseCategory.ACTIVITY) {
-				if (svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
+			if (s.getCategory() != null && s.getCategory().getBaseCategory () == ServiceBaseCategory.ACTIVITY) {
+				if (svcRef.getService().getCategory()!= null && svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
 					error("Business entity services may not call business activity services",
 							ServiceDslPackage.Literals.OPERATION__REQUIRES);
 				}
@@ -446,8 +446,8 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		EObject o = svcRef.eContainer().eContainer();
 		if (o instanceof Service) {
 			Service s = (Service) svcRef.eContainer().eContainer();
-			if (s.getCategory().getBaseCategory () == ServiceBaseCategory.ACTIVITY) {
-				if (svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
+			if (s.getCategory() != null && s.getCategory().getBaseCategory () == ServiceBaseCategory.ACTIVITY) {
+				if (svcRef.getService().getCategory()!= null && svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
 					error("Business entity services may not call business rule services",
 							ServiceDslPackage.Literals.OPERATION__REQUIRES);
 				}
@@ -464,10 +464,10 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	@Check
-	public void checkProvidedDefOnInternalBOOnly(BusinessObject o) {
+	public void checkProvidedDefOnInternalBOOnly(VersionedType o) {
 		if (o.getProvidedContractUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
-			error("Only internal businessObjects may provide a predefined definition such as an XSD",
+			error("Only internal " + getObjectTypeName(o) + "s may provide a predefined definition such as an XSD",
 					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_CONTRACT_URL);
 	}
 
@@ -475,7 +475,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	public void checkProvidedDefOnInternalEnumOnly(Enumeration o) {
 		if (o.getProvidedContractUrl() != null
 				&& o.eContainer() instanceof DomainNamespace)
-			error("Only internal enums may provide a predefined definition such as an XSD",
+			error("Only internal " + getObjectTypeName(o) + "s may provide a predefined definition such as an XSD",
 					ServiceDslPackage.Literals.VERSIONED_TYPE__PROVIDED_CONTRACT_URL);
 	}
 
@@ -591,9 +591,12 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 
-	private String getObjectTypeName(EObject o) {
+
+	private String getObjectTypeName (EObject o) {
 		if (o instanceof BusinessObject)
 			return "businessObject";
+		else if (o instanceof QueryObject)
+			return "queryObject";
 		else if (o instanceof Enumeration)
 			return "enum";
 		else if (o instanceof org.fornax.soa.serviceDsl.Exception)
@@ -603,11 +606,13 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		else
 			return "";
 	}
-
-	private String getContainingObjectTypeName(EObject ele) {
+	
+	private String getContainingObjectTypeName (EObject ele) {
 		EObject o = ele.eContainer();
 		if (o instanceof BusinessObject)
 			return "businessObject";
+		else if (o instanceof QueryObject)
+			return "queryObject";
 		else if (o instanceof Enumeration)
 			return "enum";
 		else if (o instanceof org.fornax.soa.serviceDsl.Exception)
@@ -619,11 +624,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	}
 
 	private String getPubCanocicalName(GovernanceApproval g) {
-		EObject o = g.eContainer();
-		if (o instanceof Service)
-			return "public";
-		else
-			return "canonical";
+		return "canonical";
 	}
 	
 	private String getReferrerDependencyPath (DependencyDescription leaf, StringBuilder path) {

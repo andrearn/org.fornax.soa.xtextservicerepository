@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
@@ -99,6 +100,38 @@ public class EObjectLookup implements IEObjectLookup {
 			}
 		}
 		return ieObjDesc;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public <T> T getOwnerByType (EObject o, Class<T> c) {
+		if (c.isInstance(o))
+			return (T) o;
+		while (o.eContainer() != null) {
+			o = o.eContainer();
+			if (c.isInstance(o))
+				return (T) o;
+		}
+		return null;
+	}
+	
+	public EObject getStatefulOwner (EObject o) {
+		EStructuralFeature feature = o.eClass().getEStructuralFeature("state");
+		if (feature != null) 
+			return o;
+		else if (o.eContainer() != null)
+			return getStatefulOwner(o.eContainer());
+		else
+			return null;
+	}
+	
+	public EObject getVersionedOwner (EObject o) {
+		EStructuralFeature feature = o.eClass().getEStructuralFeature("version");
+		if (feature != null) 
+			return o;
+		else if (o.eContainer() != null)
+			return getStatefulOwner(o.eContainer());
+		else
+			return null;
 	}
 
 }

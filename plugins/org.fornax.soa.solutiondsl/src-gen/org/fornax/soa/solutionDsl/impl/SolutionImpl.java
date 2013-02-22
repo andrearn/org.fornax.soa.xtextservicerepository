@@ -26,6 +26,8 @@ import org.fornax.soa.basedsl.sOABaseDsl.AdditionalInformation;
 
 import org.fornax.soa.businessDsl.Domain;
 
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+
 import org.fornax.soa.semanticsDsl.Tag;
 
 import org.fornax.soa.solutionDsl.Feature;
@@ -45,6 +47,7 @@ import org.fornax.soa.solutionDsl.Version;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getDomain <em>Domain</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getVersion <em>Version</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getState <em>State</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getProductVersion <em>Product Version</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getRequires <em>Requires</em>}</li>
@@ -97,6 +100,16 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
    * @ordered
    */
   protected Version version;
+
+  /**
+   * The cached value of the '{@link #getState() <em>State</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getState()
+   * @generated
+   * @ordered
+   */
+  protected LifecycleState state;
 
   /**
    * The cached value of the '{@link #getProductVersion() <em>Product Version</em>}' containment reference.
@@ -298,6 +311,49 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
    * <!-- end-user-doc -->
    * @generated
    */
+  public LifecycleState getState()
+  {
+    if (state != null && state.eIsProxy())
+    {
+      InternalEObject oldState = (InternalEObject)state;
+      state = (LifecycleState)eResolveProxy(oldState);
+      if (state != oldState)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SolutionDslPackage.SOLUTION__STATE, oldState, state));
+      }
+    }
+    return state;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LifecycleState basicGetState()
+  {
+    return state;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setState(LifecycleState newState)
+  {
+    LifecycleState oldState = state;
+    state = newState;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SolutionDslPackage.SOLUTION__STATE, oldState, state));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Version getProductVersion()
   {
     return productVersion;
@@ -488,6 +544,9 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
         return basicGetDomain();
       case SolutionDslPackage.SOLUTION__VERSION:
         return getVersion();
+      case SolutionDslPackage.SOLUTION__STATE:
+        if (resolve) return getState();
+        return basicGetState();
       case SolutionDslPackage.SOLUTION__PRODUCT_VERSION:
         return getProductVersion();
       case SolutionDslPackage.SOLUTION__ADDITIONAL_INFO:
@@ -523,6 +582,9 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
         return;
       case SolutionDslPackage.SOLUTION__VERSION:
         setVersion((Version)newValue);
+        return;
+      case SolutionDslPackage.SOLUTION__STATE:
+        setState((LifecycleState)newValue);
         return;
       case SolutionDslPackage.SOLUTION__PRODUCT_VERSION:
         setProductVersion((Version)newValue);
@@ -569,6 +631,9 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
       case SolutionDslPackage.SOLUTION__VERSION:
         setVersion((Version)null);
         return;
+      case SolutionDslPackage.SOLUTION__STATE:
+        setState((LifecycleState)null);
+        return;
       case SolutionDslPackage.SOLUTION__PRODUCT_VERSION:
         setProductVersion((Version)null);
         return;
@@ -607,6 +672,8 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
         return domain != null;
       case SolutionDslPackage.SOLUTION__VERSION:
         return version != null;
+      case SolutionDslPackage.SOLUTION__STATE:
+        return state != null;
       case SolutionDslPackage.SOLUTION__PRODUCT_VERSION:
         return productVersion != null;
       case SolutionDslPackage.SOLUTION__ADDITIONAL_INFO:

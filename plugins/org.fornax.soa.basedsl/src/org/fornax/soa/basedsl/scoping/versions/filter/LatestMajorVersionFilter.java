@@ -1,29 +1,24 @@
-package org.fornax.soa.basedsl.scoping.versions;
+package org.fornax.soa.basedsl.scoping.versions.filter;
 
 import java.util.Collections;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 
 import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 
-public class FixedVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
-
-	private String version;
-	private VersionResolver resolver;
-
-	public FixedVersionFilter(VersionResolver resolver, String version) {
-		this.version = version;
-		this.resolver = resolver;
-	}
+public class LatestMajorVersionFilter<T> extends AbstractPredicateVersionFilter<T> {
 	
-	public boolean matches(IEObjectDescription description) {
-		final String v = resolver.getVersion(description);
-		if (v != null)
-			return VersionComparator.compare(v, version) == 0;
-		else
-			return true;
+	private String majorVersion;
+	private IScopeVersionResolver resolver;
+	
+	public LatestMajorVersionFilter(IScopeVersionResolver resolver, String majorVersion) {
+		this.majorVersion = majorVersion;
+		this.resolver = resolver;
 	}
 
 	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames(
@@ -31,16 +26,17 @@ public class FixedVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
 		if (canditates != null) {
 			for (IEObjectDescription ieObjDesc : canditates) {
-				if (matches(ieObjDesc)) {
+				if (ieObjDesc != null && matches(ieObjDesc)) {
 					QualifiedName objName = ieObjDesc.getName();
-					IEObjectDescription bestMatch = getCurrentBestMatch (matches, objName);
+					IEObjectDescription bestMatch = getCurrentBestMatch(matches, objName);
 					if (bestMatch == null) {
 						matches.replaceValues (objName, Collections.singleton(ieObjDesc));
 					}
 					else {
 						int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
-						if (c == 0)
+						if (c >= 0) {
 							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+						}
 					}
 				}
 			}
@@ -48,17 +44,37 @@ public class FixedVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 		return matches;
 	}
 
+	public boolean matches(IEObjectDescription description) {
+		final String v = resolver.getVersionAsString(description);
+		if (v != null)
+			return toMajorVersion (v).equals(majorVersion);
+		else
+			return true;
+	}
+
+	
+	public static String toMajorVersion (String v) {
+		String[] parts = v.split("\\.");
+		return parts[0];
+	}
+
 	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifedNames(
 			Iterable<IEObjectDescription> canditates, boolean ignoreCase) {
 		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
 		if (canditates != null) {
 			for (IEObjectDescription ieObjDesc : canditates) {
-				if (ieObjDesc != null && matches(ieObjDesc)) {
+				if (matches(ieObjDesc)) {
 					QualifiedName objName = ieObjDesc.getQualifiedName();
-					IEObjectDescription bestMatch = getCurrentBestMatch (matches, objName);
-					int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
-					if (c == 0)
+					IEObjectDescription bestMatch = getCurrentBestMatch(matches, objName);
+					if (bestMatch == null) {
 						matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+					}
+					else {
+						int c = VersionComparator.compare(ieObjDesc, bestMatch, resolver);
+						if (c >= 0) {
+							matches.replaceValues (objName, Collections.singleton(ieObjDesc));
+						}
+					}
 				}
 			}
 		}
@@ -70,8 +86,7 @@ public class FixedVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((resolver == null) ? 0 : resolver.hashCode());
-		result = prime * result + ((version == null) ? 0 : version.hashCode());
+				+ ((majorVersion == null) ? 0 : majorVersion.hashCode());
 		return result;
 	}
 
@@ -81,20 +96,16 @@ public class FixedVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 			return true;
 		if (obj == null)
 			return false;
-		if (!(obj instanceof FixedVersionFilter))
+		if (!(obj instanceof LatestMajorVersionFilter))
 			return false;
-		FixedVersionFilter other = (FixedVersionFilter) obj;
-		if (resolver == null) {
-			if (other.resolver != null)
+		LatestMajorVersionFilter other = (LatestMajorVersionFilter) obj;
+		if (majorVersion == null) {
+			if (other.majorVersion != null)
 				return false;
-		} else if (!resolver.equals(other.resolver))
-			return false;
-		if (version == null) {
-			if (other.version != null)
-				return false;
-		} else if (!version.equals(other.version))
+		} else if (!majorVersion.equals(other.majorVersion))
 			return false;
 		return true;
 	}
 
+	
 }

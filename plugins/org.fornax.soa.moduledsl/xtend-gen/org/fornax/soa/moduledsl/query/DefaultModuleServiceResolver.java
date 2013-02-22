@@ -54,7 +54,7 @@ public class DefaultModuleServiceResolver implements IModuleServiceResolver {
   private LifecycleQueries lifecycleQueries;
   
   /**
-   * Get all references to service used explicitly or implicitly by module import.
+   * Get all references to services used explicitly or implicitly by module import.
    * Exclusion and inclusion rules for Module imports are respected
    */
   public Set<? extends AbstractServiceRef> getAllUsedServiceRefs(final Module module) {

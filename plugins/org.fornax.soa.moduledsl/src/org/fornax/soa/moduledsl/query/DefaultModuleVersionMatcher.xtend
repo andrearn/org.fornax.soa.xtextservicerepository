@@ -2,7 +2,7 @@ package org.fornax.soa.moduledsl.query
 
 import org.fornax.soa.moduledsl.query.IModuleVersionMatcher
 import org.fornax.soa.moduledsl.moduleDsl.Module
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator
+import org.fornax.soa.basedsl.version.VersionComparator
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import com.google.inject.Inject
 import org.eclipse.xtext.naming.IQualifiedNameProvider

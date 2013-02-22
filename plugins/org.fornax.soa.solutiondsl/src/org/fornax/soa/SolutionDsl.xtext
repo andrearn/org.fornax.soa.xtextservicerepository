@@ -13,9 +13,10 @@ grammar org.fornax.soa.SolutionDsl with org.fornax.soa.basedsl.SOABaseDsl
 
 generate solutionDsl "http://www.fornax.org/soa/SolutionDsl"
 
-import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
-import "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore" as serviceDsl
-import "platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore" as businessDsl
+import "http://www.fornax.org/soa/SemanticsDsl" as semanticsDsl
+import "http://www.fornax.org/soa/ServiceDsl" as serviceDsl
+import "http://www.fornax.org/soa/BusinessDsl" as businessDsl
+import "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" as profileDsl
 
 Model:
 	(imports+=Import)*
@@ -26,6 +27,7 @@ Solution:
 	'solution' name=QualifiedName '{'
 		('domain' domain = [businessDsl::Domain|QualifiedName] )?
 		version=Version
+		'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 		(productVersion=ProductVersion)?
 		(additionalInfo=AdditionalInformation)?
 		('requires' requires+=ServiceRef )*

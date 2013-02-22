@@ -8,6 +8,8 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.ISelectable;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.SelectableBasedScope;
+import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.NullVersionFilter;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;

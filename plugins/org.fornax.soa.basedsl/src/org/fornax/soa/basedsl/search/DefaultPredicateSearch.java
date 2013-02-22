@@ -13,7 +13,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
-public class PredicateSearch implements IPredicateSearch {
+public class DefaultPredicateSearch implements IPredicateSearch {
 	
 	@Inject
 	private IResourceDescriptions resourceDescriptions;

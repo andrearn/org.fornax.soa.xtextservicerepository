@@ -13,6 +13,8 @@ import org.fornax.soa.basedsl.sOABaseDsl.AdditionalInformation;
 
 import org.fornax.soa.businessDsl.Domain;
 
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+
 import org.fornax.soa.semanticsDsl.Tag;
 
 /**
@@ -26,6 +28,7 @@ import org.fornax.soa.semanticsDsl.Tag;
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getName <em>Name</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getDomain <em>Domain</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getVersion <em>Version</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Solution#getState <em>State</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getProductVersion <em>Product Version</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Solution#getRequires <em>Requires</em>}</li>
@@ -118,6 +121,32 @@ public interface Solution extends EObject
    * @generated
    */
   void setVersion(Version value);
+
+  /**
+   * Returns the value of the '<em><b>State</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>State</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>State</em>' reference.
+   * @see #setState(LifecycleState)
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getSolution_State()
+   * @model
+   * @generated
+   */
+  LifecycleState getState();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.solutionDsl.Solution#getState <em>State</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>State</em>' reference.
+   * @see #getState()
+   * @generated
+   */
+  void setState(LifecycleState value);
 
   /**
    * Returns the value of the '<em><b>Product Version</b></em>' containment reference.

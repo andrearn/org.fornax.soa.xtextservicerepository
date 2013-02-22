@@ -14,7 +14,7 @@ grammar org.fornax.soa.BusinessDsl with org.fornax.soa.basedsl.SOABaseDsl
 
 generate businessDsl "http://www.fornax.org/soa/BusinessDsl"
 
-import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as  semantics
+import "http://www.fornax.org/soa/SemanticsDsl" as  semantics
 
 BusinessModel :
 	(imports+=Import)*

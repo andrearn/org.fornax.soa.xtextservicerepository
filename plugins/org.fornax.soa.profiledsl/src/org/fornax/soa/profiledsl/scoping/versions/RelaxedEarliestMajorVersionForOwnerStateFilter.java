@@ -4,9 +4,9 @@ import java.util.Collections;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
@@ -28,7 +28,7 @@ import com.google.inject.Inject;
 public class RelaxedEarliestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateVersionFilter<T> {
 	
 	private String majorVersion;
-	private VersionResolver resolver;
+	private IScopeVersionResolver resolver;
 	private LifecycleState ownerLifecycleState;
 	private LifecycleStateResolver stateResolver;
 	
@@ -41,7 +41,7 @@ public class RelaxedEarliestMajorVersionForOwnerStateFilter<T> extends AbstractP
 	@Inject
 	private LifecycleStateComparator stateComparator;
 	
-	public RelaxedEarliestMajorVersionForOwnerStateFilter (VersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public RelaxedEarliestMajorVersionForOwnerStateFilter (IScopeVersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
 		this.ownerLifecycleState = ownerLifecycleState;
@@ -84,7 +84,7 @@ public class RelaxedEarliestMajorVersionForOwnerStateFilter<T> extends AbstractP
 	}
 
 	public boolean matches(IEObjectDescription description) {
-		final String v = resolver.getVersion(description);
+		final String v = resolver.getVersionAsString(description);
 		if (v != null)
 			return toMajorVersion (v).equals(majorVersion);
 		else

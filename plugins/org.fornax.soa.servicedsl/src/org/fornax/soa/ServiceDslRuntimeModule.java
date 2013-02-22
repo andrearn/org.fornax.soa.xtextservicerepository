@@ -12,9 +12,9 @@ import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
 import org.fornax.soa.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
-import org.fornax.soa.basedsl.scoping.VersionedGlobalScopeProvider;
+import org.fornax.soa.basedsl.scoping.versions.VersionedGlobalScopeProvider;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
-import org.fornax.soa.basedsl.search.PredicateSearch;
+import org.fornax.soa.basedsl.search.DefaultPredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
@@ -67,7 +67,7 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 	}
 	
 	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
-		return PredicateSearch.class;
+		return DefaultPredicateSearch.class;
 	}
 	
 	@org.eclipse.xtext.service.SingletonBinding(eager=true)	

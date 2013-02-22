@@ -4,9 +4,9 @@ import java.util.Collections;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.fornax.soa.basedsl.scoping.versions.LatestMinInclVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.filter.LatestMinInclVersionFilter;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
@@ -30,7 +30,7 @@ public class RelaxedEarliestMinVersionForOwnerStateFilter<T> extends LatestMinIn
 	@Inject
 	private LifecycleStateComparator stateComparator;
 	
-	public RelaxedEarliestMinVersionForOwnerStateFilter (VersionResolver resolver, String minVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public RelaxedEarliestMinVersionForOwnerStateFilter (IScopeVersionResolver resolver, String minVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
 		super (resolver, minVersion);
 		this.ownerLifecycleState = ownerLifecycleState;
 		this.stateResolver = stateResolver;

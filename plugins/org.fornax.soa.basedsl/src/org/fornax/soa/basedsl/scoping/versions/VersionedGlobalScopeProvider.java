@@ -1,11 +1,10 @@
-package org.fornax.soa.basedsl.scoping;
+package org.fornax.soa.basedsl.scoping.versions;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.xtext.resource.IContainer;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
-import org.fornax.soa.basedsl.scoping.versions.VersioningContainerBasedScope;
 
 import com.google.common.base.Predicate;
 

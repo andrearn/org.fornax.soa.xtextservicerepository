@@ -28,7 +28,6 @@ public class CandidateServicesPredicate implements Predicate<IEObjectDescription
 	}
 
 	public boolean apply(final IEObjectDescription input) {
-		// TODO Auto-generated method stub
 		final String version = input.getUserData(VersionedResourceDescriptionStrategy.VERSION_KEY);
 		return Iterables.any(candidates, new Predicate<Service>(){
 

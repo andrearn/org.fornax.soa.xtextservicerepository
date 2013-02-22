@@ -18,9 +18,9 @@ grammar org.fornax.soa.ServiceDsl with org.fornax.soa.basedsl.SOABaseDsl
 generate serviceDsl "http://www.fornax.org/soa/ServiceDsl"
 
 import "http://www.fornax.org/soa/basedsl/SOABaseDsl"
-import "platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore" as profileDsl
-import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
-import "platform:/resource/org.fornax.soa.businessdsl/src-gen/org/fornax/soa/BusinessDsl.ecore" as businessDsl
+import "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" as profileDsl
+import "http://www.fornax.org/soa/SemanticsDsl" as semanticsDsl
+import "http://www.fornax.org/soa/BusinessDsl" as businessDsl
 
 ServiceModel:
 	(imports+=Import)*
@@ -209,11 +209,12 @@ Service:
 			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			'service-category' category=[profileDsl::ServiceCategory | QualifiedName]
+			('service-category' category=[profileDsl::ServiceCategory | QualifiedName])?
 			/* To what extend is a service stateful or stateless */ 
-			'statefulness' statefulness=Statefulness
+			('statefulness' statefulness=Statefulness)?
 			/* are data persisted by the service ? */ 
 			('persistence' persistence=Persistence )? 
+			(additionalInfo=AdditionalInformation)?
 			(
 				/* Who is responsible for the service? */
 				('service-owner' owner=STRING )?
@@ -242,7 +243,6 @@ Service:
 			&	('response-message-header' responseMessageHeader = MessageHeaderRef )?
 			&	('publish-message-header' publishMessageHeader = MessageHeaderRef )?
 			)
-			(additionalInfo=AdditionalInformation)?
 			/*
 			 * Semantic tagging
 			 */
@@ -257,7 +257,7 @@ Service:
 
 /* 
  * reflects SOA governance approval decisions
- * voteing until date will be part of the review ballots captured in the side store
+ * voting until date will be part of the review ballots captured in the side store
  */
 GovernanceApproval:
 	'governance-approval' '{'

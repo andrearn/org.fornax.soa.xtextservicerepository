@@ -21,7 +21,7 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
-import org.fornax.soa.basedsl.scoping.versions.VersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.VersionFilter;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.binding.EndpointQualifierDescriptor;
 import org.fornax.soa.binding.query.EndpointQualifierQueries;

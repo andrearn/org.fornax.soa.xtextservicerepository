@@ -9,6 +9,8 @@ import org.eclipse.xtext.validation.Check;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
 import org.fornax.soa.service.query.VersionedObjectQueryHelper;
 import org.fornax.soa.serviceDsl.ApprovalDecision;
@@ -16,8 +18,10 @@ import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.GovernanceApproval;
+import org.fornax.soa.serviceDsl.QueryObject;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
+import org.fornax.soa.serviceDsl.VersionedType;
 
 import com.google.inject.Inject;
 
@@ -37,8 +41,9 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	
 	@Check
 	public void checkPublicTmpToleratedAssetShouldHaveApproval (GovernanceApproval g) {
+		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
 		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& VersionedObjectQueryHelper.getLifecycleState(g).isRequiresApproval()
+				&& stateRes.getLifecycleState(g).isRequiresApproval()
 				&& g.getDecision() == ApprovalDecision.TEMPORARILY_TOLERATED)
 			warning("The temporarily tolerated "
 					+ getPubCanocicalName(g)
@@ -54,8 +59,9 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 
 	@Check
 	public void checkPublicToleratedAssetShouldHaveApproval (GovernanceApproval g) {
+		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
 		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& VersionedObjectQueryHelper.getLifecycleState(g).isRequiresApproval()
+				&& stateRes.getLifecycleState(g).isRequiresApproval()
 				&& g.getDecision() == ApprovalDecision.TOLERATED)
 			warning("The "
 					+ getPubCanocicalName(g)
@@ -92,8 +98,9 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	@Check
 	public void checkPublicAssetsMustHaveApproval (GovernanceApproval g) {
 
+		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
 		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& VersionedObjectQueryHelper.getLifecycleState(g).isRequiresApproval()
+				&& stateRes.getLifecycleState(g).isRequiresApproval()
 				&& (g.getDecision() == ApprovalDecision.NO || g.getDecision() == ApprovalDecision.DENIED))
 			error("A "
 					+ getPubCanocicalName(g)
@@ -117,20 +124,9 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	}
 	
 	@Check
-	public void checkApprovedAssetHasDate (BusinessObject bo) {
+	public void checkApprovedAssetHasDate (VersionedType bo) {
 		GovernanceApproval g = bo.getGovernanceApproval();
 		if (bo.eContainer() instanceof DomainNamespace
-				&& g.getDecision() != ApprovalDecision.NO
-				&& (g.getApprovalDate() == null || "".equals(g
-						.getApprovalDate())))
-			warning("Please provide the date of the governance decision!",
-					ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL);
-	}
-	
-	@Check
-	public void checkApprovedAssetHasDate (Enumeration e) {
-		GovernanceApproval g = e.getGovernanceApproval();
-		if (e.eContainer() instanceof DomainNamespace
 				&& g.getDecision() != ApprovalDecision.NO
 				&& (g.getApprovalDate() == null || "".equals(g
 						.getApprovalDate())))
@@ -161,7 +157,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	}
 	
 	@Check
-	public void checkApprovedAssetHasBy (BusinessObject bo) {
+	public void checkApprovedAssetHasBy (VersionedType bo) {
 		GovernanceApproval g = bo.getGovernanceApproval();
 		if (g.eContainer().eContainer() instanceof DomainNamespace
 				&& g.getDecision() != ApprovalDecision.NO
@@ -181,40 +177,20 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 					ServiceDslPackage.Literals.EXCEPTION__GOVERNANCE_APPROVAL);
 		}
 	}
-	
-	@Check
-	public void checkApprovedAssetHasBy (Enumeration e) {
-		GovernanceApproval g = e.getGovernanceApproval();
-		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& g.getDecision() != ApprovalDecision.NO
-				&& (g.getApprovedBy() == null || "".equals(g.getApprovedBy()))) {
-			warning("Please state who made the governance decision!",
-					ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL);
-		}
-	}
 
 	@Check
-	public void checkGovApprovalDeclared (BusinessObject o) {
+	public void checkGovApprovalDeclared (VersionedType o) {
 		if (o.eContainer() instanceof DomainNamespace
-				&& o.getState().isIsInitial()
+				&& o.getState().isRequiresApproval()
 				&& o.getGovernanceApproval() == null)
-			error("The state of the governance-approval for a canonical businessObject must be declared!",
-					ServiceDslPackage.Literals.VERSIONED_TYPE__STATE);
-	}
-
-	@Check
-	public void checkGovApprovalDeclared (Enumeration e) {
-		if (e.eContainer() instanceof DomainNamespace
-				&& e.getState().isIsInitial()
-				&& e.getGovernanceApproval() == null)
-			error("The state of the governance-approval for a canonical enum must be declared!",
+			error("The state of the governance-approval for a canonical " + getContainingObjectTypeName(o) + " must be declared!",
 					ServiceDslPackage.Literals.VERSIONED_TYPE__STATE);
 	}
 
 	@Check
 	public void checkGovApprovalDeclared (org.fornax.soa.serviceDsl.Exception ex) {
 		if (ex.eContainer() instanceof DomainNamespace
-				&& ex.getState().isIsInitial()
+				&& ex.getState().isRequiresApproval()
 				&& ex.getGovernanceApproval() == null)
 			error("The state of the governance-approval for a canonical exception must be declared!",
 					ServiceDslPackage.Literals.VERSIONED_TYPE__STATE);
@@ -223,9 +199,9 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	@Check
 	public void checkGovApprovalDeclared(Service s) {
 		if (s.eContainer() instanceof DomainNamespace
-				&& s.getState().isIsInitial()
+				&& s.getState().isRequiresApproval()
 				&& s.getGovernanceApproval() == null)
-			error("The state of the governance-approval for a public service must be declared!",
+			error("The state of the governance-approval for a canonical service must be declared!",
 					ServiceDslPackage.Literals.VERSIONED_TYPE__STATE);
 	}
 
@@ -233,6 +209,8 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	private String getObjectTypeName (EObject o) {
 		if (o instanceof BusinessObject)
 			return "businessObject";
+		else if (o instanceof QueryObject)
+			return "queryObject";
 		else if (o instanceof Enumeration)
 			return "enum";
 		else if (o instanceof org.fornax.soa.serviceDsl.Exception)
@@ -247,6 +225,8 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 		EObject o = ele.eContainer();
 		if (o instanceof BusinessObject)
 			return "businessObject";
+		else if (o instanceof QueryObject)
+			return "queryObject";
 		else if (o instanceof Enumeration)
 			return "enum";
 		else if (o instanceof org.fornax.soa.serviceDsl.Exception)
@@ -258,19 +238,13 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	}
 
 	private String getPubCanocicalName (GovernanceApproval g) {
-		EObject o = g.eContainer();
-		if (o instanceof Service)
-			return "public";
-		else
-			return "canonical";
+		return "canonical";
 	}
 	
 	private String getObjectName (GovernanceApproval g) {
 		EObject o = g.eContainer();
-		if (o instanceof BusinessObject)
-			return ((BusinessObject) o).getName();
-		else if (o instanceof Enumeration)
-			return ((Enumeration) o).getName();
+		if (o instanceof VersionedType)
+			return ((VersionedType) o).getName();
 		else if (o instanceof org.fornax.soa.serviceDsl.Exception)
 			return ((org.fornax.soa.serviceDsl.Exception) o).getName();
 		else if (o instanceof Service)

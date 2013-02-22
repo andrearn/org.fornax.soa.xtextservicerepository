@@ -5,7 +5,7 @@ import com.google.inject.Inject;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.moduledsl.query.IModuleVersionMatcher;

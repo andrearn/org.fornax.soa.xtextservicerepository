@@ -8,8 +8,18 @@ import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.serviceDsl.Service;
 
+/**
+ * Get and resolve service references from modules
+ * 
+ * @author aarnold
+ *
+ */
 public interface IModuleServiceResolver {
 	
+	/**
+	 * Get all references to services used explicitly or implicitly by module import.
+	 * Exclusion and inclusion rules for Module imports are respected
+	 */
 	public Set<? extends AbstractServiceRef> getAllUsedServiceRefs (Module module);
 	
 	/** 

@@ -317,9 +317,11 @@ enum LogPolicyKind: none | header | all;
 Assertion: AvailabilityAssertion | LatencyAssertion | CapacityAssertion | ReliablityAsserttion | CostAssertion | AccuracyAssertion;
 
 AvailabilityAssertion:
-	'availability' availability=STRING 'percentile' percentile=Percentile
-	'mean-time-between-failure' mtbf=STRING
-	'mean-time-to-repair' mttr=STRING (mttrPercentile=Percentile)?
+	{AvailabilityAssertion}
+	('availability' availability=STRING 'percentile' percentile=Percentile)?
+	('mean-time-between-failure' mtbf=STRING)?
+	('mean-time-to-repair' mttr=STRING (mttrPercentile=Percentile)?)?
+	('regular-down-times' regularDownTimes = STRING)?
 ;
 
 LatencyAssertion:

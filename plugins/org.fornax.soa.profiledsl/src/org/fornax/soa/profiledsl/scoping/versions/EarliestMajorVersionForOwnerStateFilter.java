@@ -4,9 +4,9 @@ import java.util.Collections;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
 import com.google.common.collect.LinkedHashMultimap;
@@ -16,14 +16,14 @@ import com.google.inject.Inject;
 public class EarliestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateVersionFilter<T> {
 	
 	private String majorVersion;
-	private VersionResolver resolver;
+	private IScopeVersionResolver resolver;
 	private LifecycleState ownerLifecycleState;
 	private LifecycleStateResolver stateResolver;
 	
 	@Inject
 	IStateMatcher stateMatcher;
 	
-	public EarliestMajorVersionForOwnerStateFilter(VersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public EarliestMajorVersionForOwnerStateFilter(IScopeVersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
 		this.ownerLifecycleState = ownerLifecycleState;
@@ -54,7 +54,7 @@ public class EarliestMajorVersionForOwnerStateFilter<T> extends AbstractPredicat
 	}
 
 	public boolean matches(IEObjectDescription description) {
-		final String v = resolver.getVersion(description);
+		final String v = resolver.getVersionAsString(description);
 		final LifecycleState state = stateResolver.getLifecycleState(description);
 		if (v != null)
 			if (state != null)

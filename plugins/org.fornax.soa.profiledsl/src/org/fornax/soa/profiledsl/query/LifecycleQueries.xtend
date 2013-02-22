@@ -15,7 +15,7 @@ import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateRe
 import org.eclipse.emf.ecore.EStructuralFeature
 
 /*
- * Queries for lifecycle states
+ * Queries for lifecycle states and stateful objects
  */
 class LifecycleQueries {
 	String STATE_ATTR_NAME = "state"
@@ -73,16 +73,6 @@ class LifecycleQueries {
 			case EnvironmentType::PROD :		l.minProdState
 			default:							l.minDevState
 		}
-	}
-	
-	def EObject getStatefulOwner (EObject o) {
-		val EStructuralFeature stateFeature = o.eClass().getEStructuralFeature(STATE_ATTR_NAME);
-		if (stateFeature != null)
-			return o
-		else if (o.eContainer != null)
-			return o.eContainer.statefulOwner
-		else
-			return null
 	}
 	
 }

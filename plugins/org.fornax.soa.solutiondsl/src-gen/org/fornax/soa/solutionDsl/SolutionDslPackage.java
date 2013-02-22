@@ -137,13 +137,22 @@ public interface SolutionDslPackage extends EPackage
   int SOLUTION__VERSION = 2;
 
   /**
+   * The feature id for the '<em><b>State</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SOLUTION__STATE = 3;
+
+  /**
    * The feature id for the '<em><b>Product Version</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SOLUTION__PRODUCT_VERSION = 3;
+  int SOLUTION__PRODUCT_VERSION = 4;
 
   /**
    * The feature id for the '<em><b>Additional Info</b></em>' containment reference.
@@ -152,7 +161,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__ADDITIONAL_INFO = 4;
+  int SOLUTION__ADDITIONAL_INFO = 5;
 
   /**
    * The feature id for the '<em><b>Requires</b></em>' containment reference list.
@@ -161,7 +170,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__REQUIRES = 5;
+  int SOLUTION__REQUIRES = 6;
 
   /**
    * The feature id for the '<em><b>Features</b></em>' containment reference list.
@@ -170,7 +179,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__FEATURES = 6;
+  int SOLUTION__FEATURES = 7;
 
   /**
    * The feature id for the '<em><b>Modules</b></em>' containment reference list.
@@ -179,7 +188,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__MODULES = 7;
+  int SOLUTION__MODULES = 8;
 
   /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
@@ -188,7 +197,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__TAGS = 8;
+  int SOLUTION__TAGS = 9;
 
   /**
    * The number of structural features of the '<em>Solution</em>' class.
@@ -197,7 +206,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION_FEATURE_COUNT = 9;
+  int SOLUTION_FEATURE_COUNT = 10;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.solutionDsl.impl.ModuleImpl <em>Module</em>}' class.
@@ -669,6 +678,17 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    */
   EReference getSolution_Version();
+
+  /**
+   * Returns the meta object for the reference '{@link org.fornax.soa.solutionDsl.Solution#getState <em>State</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>State</em>'.
+   * @see org.fornax.soa.solutionDsl.Solution#getState()
+   * @see #getSolution()
+   * @generated
+   */
+  EReference getSolution_State();
 
   /**
    * Returns the meta object for the containment reference '{@link org.fornax.soa.solutionDsl.Solution#getProductVersion <em>Product Version</em>}'.
@@ -1195,6 +1215,14 @@ public interface SolutionDslPackage extends EPackage
      * @generated
      */
     EReference SOLUTION__VERSION = eINSTANCE.getSolution_Version();
+
+    /**
+     * The meta object literal for the '<em><b>State</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SOLUTION__STATE = eINSTANCE.getSolution_State();
 
     /**
      * The meta object literal for the '<em><b>Product Version</b></em>' containment reference feature.

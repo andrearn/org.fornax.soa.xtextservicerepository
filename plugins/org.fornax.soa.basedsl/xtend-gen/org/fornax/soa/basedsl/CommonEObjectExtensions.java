@@ -1,11 +1,16 @@
 package org.fornax.soa.basedsl;
 
 import com.google.common.base.Objects;
+import com.google.inject.Inject;
 import org.eclipse.emf.ecore.EObject;
-import org.fornax.soa.basedsl.sOABaseDsl.Version;
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
 
 @SuppressWarnings("all")
 public class CommonEObjectExtensions {
+  @Inject
+  private IQualifiedNameProvider nameProvider;
+  
   public EObject eRootContainer(final EObject o) {
     EObject _xifexpression = null;
     EObject _eContainer = o.eContainer();
@@ -19,37 +24,9 @@ public class CommonEObjectExtensions {
     return _xifexpression;
   }
   
-  protected String _fqn(final EObject o) {
-    return null;
-  }
-  
-  protected EObject _getOwningType(final EObject o) {
-    EObject _eContainer = o.eContainer();
-    EObject _owningType = _eContainer==null?(EObject)null:this.getOwningType(_eContainer);
-    return _owningType;
-  }
-  
-  protected Version _getOwnerVersion(final EObject o) {
-    EObject _eContainer = o.eContainer();
-    Version _ownerVersion = _eContainer==null?(Version)null:this.getOwnerVersion(_eContainer);
-    return _ownerVersion;
-  }
-  
   public String fqn(final EObject o) {
-    {
-      return _fqn(o);
-    }
-  }
-  
-  public EObject getOwningType(final EObject o) {
-    {
-      return _getOwningType(o);
-    }
-  }
-  
-  public Version getOwnerVersion(final EObject o) {
-    {
-      return _getOwnerVersion(o);
-    }
+    QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(o);
+    String _string = _fullyQualifiedName.toString();
+    return _string;
   }
 }

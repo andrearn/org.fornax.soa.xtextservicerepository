@@ -1,7 +1,7 @@
 package org.fornax.soa.scoping.versions;
 
-import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.SimpleScopeVersionResolver;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LatestMajorVersionForOwnerStateFilter;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
@@ -9,9 +9,6 @@ import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateRe
 import org.fornax.soa.servicedsl.test.BaseServiceDslTest;
 import org.junit.Before;
 import org.junit.Test;
-
-import com.google.inject.Inject;
-import com.google.inject.Injector;
 
 public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTest {
 
@@ -25,7 +22,7 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		VersionResolver verRes = new BaseDslVersionResolver(null);
+		IScopeVersionResolver verRes = new SimpleScopeVersionResolver(null);
 		LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver(null);
 		String majorVersion = "1";
 		LifecycleState minDevLifecycleState = defined;

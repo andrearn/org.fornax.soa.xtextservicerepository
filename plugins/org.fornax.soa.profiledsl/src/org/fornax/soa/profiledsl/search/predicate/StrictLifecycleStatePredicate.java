@@ -2,8 +2,8 @@ package org.fornax.soa.profiledsl.search.predicate;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
-import org.fornax.soa.basedsl.scoping.versions.VersionResolver;
+import org.fornax.soa.basedsl.version.IScopeVersionResolver;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
@@ -16,7 +16,7 @@ public class StrictLifecycleStatePredicate implements Predicate<IEObjectDescript
 	@Inject LifecycleStateComparator stateComparator;
 	@Inject LifecycleStateResolver stateResolver;
 
-	@Inject VersionResolver versionResolver;
+	@Inject IScopeVersionResolver versionResolver;
 	
 	private LifecycleState minState;
 	private LifecycleState maxState;
@@ -98,7 +98,7 @@ public class StrictLifecycleStatePredicate implements Predicate<IEObjectDescript
 	private boolean versionMatches(IEObjectDescription input) {
 		if (minVersion == null && maxVersion == null)
 			return true;
-		String lifecycleState = versionResolver.getVersion(input);
+		String lifecycleState = versionResolver.getVersionAsString(input);
 		if (minVersion != null && maxVersion != null) {
 			int minVersionCmp = VersionComparator.compare(lifecycleState, minVersion);
 			int maxVersionCmp = VersionComparator.compare(lifecycleState, maxVersion);

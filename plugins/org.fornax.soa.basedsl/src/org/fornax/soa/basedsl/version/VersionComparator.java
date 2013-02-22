@@ -1,4 +1,4 @@
-package org.fornax.soa.basedsl.scoping.versions;
+package org.fornax.soa.basedsl.version;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,12 +57,12 @@ public class VersionComparator {
 		return classifierCmp;
 	}
 	
-	public static int compare (IEObjectDescription eObjDesc1, IEObjectDescription eObjDesc2, VersionResolver resolver) {
+	public static int compare (IEObjectDescription eObjDesc1, IEObjectDescription eObjDesc2, IScopeVersionResolver resolver) {
 		if (eObjDesc1 == null && eObjDesc2 != null)
 			return -1;
 		if (eObjDesc1 != null && eObjDesc2 == null)
 			return 1;
-		return compare (resolver.getVersion(eObjDesc1), resolver.getVersion(eObjDesc2));
+		return compare (resolver.getVersionAsString(eObjDesc1), resolver.getVersionAsString(eObjDesc2));
 	}
 
 	public static int compare (final Integer v1, final Integer v2) {

@@ -9,9 +9,9 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.service.util.TypeRefMatcher;
 
 import com.google.common.base.Predicate;

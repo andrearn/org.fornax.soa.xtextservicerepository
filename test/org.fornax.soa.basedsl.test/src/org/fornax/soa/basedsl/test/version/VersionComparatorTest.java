@@ -1,6 +1,6 @@
 package org.fornax.soa.basedsl.test.version;
 
-import org.fornax.soa.basedsl.scoping.versions.VersionComparator;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

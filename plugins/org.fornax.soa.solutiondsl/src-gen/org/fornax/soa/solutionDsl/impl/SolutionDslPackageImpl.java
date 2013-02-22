@@ -17,6 +17,8 @@ import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslPackage;
 
 import org.fornax.soa.businessDsl.BusinessDslPackage;
 
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
+
 import org.fornax.soa.semanticsDsl.SemanticsDslPackage;
 
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
@@ -253,7 +255,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSolution_ProductVersion()
+  public EReference getSolution_State()
   {
     return (EReference)solutionEClass.getEStructuralFeatures().get(3);
   }
@@ -263,7 +265,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSolution_AdditionalInfo()
+  public EReference getSolution_ProductVersion()
   {
     return (EReference)solutionEClass.getEStructuralFeatures().get(4);
   }
@@ -273,7 +275,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSolution_Requires()
+  public EReference getSolution_AdditionalInfo()
   {
     return (EReference)solutionEClass.getEStructuralFeatures().get(5);
   }
@@ -283,7 +285,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSolution_Features()
+  public EReference getSolution_Requires()
   {
     return (EReference)solutionEClass.getEStructuralFeatures().get(6);
   }
@@ -293,7 +295,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSolution_Modules()
+  public EReference getSolution_Features()
   {
     return (EReference)solutionEClass.getEStructuralFeatures().get(7);
   }
@@ -303,9 +305,19 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSolution_Tags()
+  public EReference getSolution_Modules()
   {
     return (EReference)solutionEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSolution_Tags()
+  {
+    return (EReference)solutionEClass.getEStructuralFeatures().get(9);
   }
 
   /**
@@ -696,6 +708,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     createEAttribute(solutionEClass, SOLUTION__NAME);
     createEReference(solutionEClass, SOLUTION__DOMAIN);
     createEReference(solutionEClass, SOLUTION__VERSION);
+    createEReference(solutionEClass, SOLUTION__STATE);
     createEReference(solutionEClass, SOLUTION__PRODUCT_VERSION);
     createEReference(solutionEClass, SOLUTION__ADDITIONAL_INFO);
     createEReference(solutionEClass, SOLUTION__REQUIRES);
@@ -775,6 +788,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     // Obtain other dependent packages
     SOABaseDslPackage theSOABaseDslPackage = (SOABaseDslPackage)EPackage.Registry.INSTANCE.getEPackage(SOABaseDslPackage.eNS_URI);
     BusinessDslPackage theBusinessDslPackage = (BusinessDslPackage)EPackage.Registry.INSTANCE.getEPackage(BusinessDslPackage.eNS_URI);
+    SOAProfileDslPackage theSOAProfileDslPackage = (SOAProfileDslPackage)EPackage.Registry.INSTANCE.getEPackage(SOAProfileDslPackage.eNS_URI);
     SemanticsDslPackage theSemanticsDslPackage = (SemanticsDslPackage)EPackage.Registry.INSTANCE.getEPackage(SemanticsDslPackage.eNS_URI);
     ServiceDslPackage theServiceDslPackage = (ServiceDslPackage)EPackage.Registry.INSTANCE.getEPackage(ServiceDslPackage.eNS_URI);
 
@@ -794,6 +808,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     initEAttribute(getSolution_Name(), ecorePackage.getEString(), "name", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_Domain(), theBusinessDslPackage.getDomain(), null, "domain", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_Version(), this.getVersion(), null, "version", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSolution_State(), theSOAProfileDslPackage.getLifecycleState(), null, "state", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_ProductVersion(), this.getVersion(), null, "productVersion", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_AdditionalInfo(), theSOABaseDslPackage.getAdditionalInformation(), null, "additionalInfo", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_Requires(), this.getServiceRef(), null, "requires", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

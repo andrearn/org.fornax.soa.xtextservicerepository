@@ -17,5 +17,7 @@ public interface IEObjectLookup {
 	public <T> T  getModelElementByNameAndVersion (String elementName, String version, ResourceSet resourceSet, String eClassName);
 	public EObject  getModelElementByURI (URI elementURI, ResourceSet resourceSet);
 	public IEObjectDescription  getIEOBjectDescriptionByURI (URI eObjectURI, ResourceSet resourceSet);
-	
+	public EObject getVersionedOwner(EObject o);
+	public EObject getStatefulOwner(EObject o);
+	public <T> T getOwnerByType (EObject o, Class<T> c);
 }

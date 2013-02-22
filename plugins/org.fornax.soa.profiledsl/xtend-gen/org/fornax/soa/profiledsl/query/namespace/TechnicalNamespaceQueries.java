@@ -2,7 +2,7 @@ package org.fornax.soa.profiledsl.query.namespace;
 
 import com.google.inject.Inject;
 import org.eclipse.emf.ecore.EObject;
-import org.fornax.soa.basedsl.CommonEObjectExtensions;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace;
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType;
 import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef;
@@ -10,12 +10,11 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef;
 @SuppressWarnings("all")
 public class TechnicalNamespaceQueries {
   @Inject
-  private CommonEObjectExtensions _commonEObjectExtensions;
+  private IEObjectLookup _iEObjectLookup;
   
   public TechnicalNamespace findOwnerSubdomain(final VersionedTypeRef c) {
-    EObject _owningType = c==null?(EObject)null:this._commonEObjectExtensions.getOwningType(c);
-    EObject _eContainer = _owningType==null?(EObject)null:_owningType.eContainer();
-    return ((TechnicalNamespace) _eContainer);
+    final TechnicalNamespace ns = this._iEObjectLookup.<TechnicalNamespace>getOwnerByType(c, TechnicalNamespace.class);
+    return ns;
   }
   
   public TechnicalNamespace findTechnicalNamespace(final VersionedType c) {

@@ -9,7 +9,7 @@ import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.impl.DefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.util.IAcceptor;
-import org.fornax.soa.basedsl.scoping.versions.BaseDslVersionResolver;
+import org.fornax.soa.basedsl.version.SimpleScopeVersionResolver;
 
 import com.google.common.collect.Maps;
 
@@ -29,7 +29,7 @@ public class VersionedResourceDescriptionStrategy extends
 			QualifiedName qualifiedName = getQualifiedNameProvider().getFullyQualifiedName(eObject);
 			if (qualifiedName != null) {
 				Map<String, String> userData = Maps.newHashMap();
-				String version = BaseDslVersionResolver.INSTANCE.getVersion(eObject);
+				String version = SimpleScopeVersionResolver.INSTANCE.getVersion(eObject);
 				if (version != null)
 					userData.put(VERSION_KEY, version);
 				acceptor.accept (EObjectDescription.create(qualifiedName, eObject, userData));

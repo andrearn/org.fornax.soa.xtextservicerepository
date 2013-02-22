@@ -1,4 +1,4 @@
-package org.fornax.soa.basedsl.scoping.versions;
+package org.fornax.soa.basedsl.version;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -8,19 +8,19 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 
-public class BaseDslVersionResolver implements VersionResolver {
+public class SimpleScopeVersionResolver implements IScopeVersionResolver {
 	
 	private final static String VERSION_ATTR_NAME = "version";
 
-	public final static BaseDslVersionResolver INSTANCE = new BaseDslVersionResolver();
+	public final static SimpleScopeVersionResolver INSTANCE = new SimpleScopeVersionResolver();
 	
 	
 	private ResourceSet resSet;
 	
-	public BaseDslVersionResolver() {
+	public SimpleScopeVersionResolver() {
 	}
 	
-	public BaseDslVersionResolver(ResourceSet rs) {
+	public SimpleScopeVersionResolver(ResourceSet rs) {
 		resSet = rs;
 	}
 	
@@ -48,7 +48,7 @@ public class BaseDslVersionResolver implements VersionResolver {
 		return null;
 	}
 	
-	public String getVersion(IEObjectDescription desc) {
+	public String getVersionAsString(IEObjectDescription desc) {
 		EObject o = desc.getEObjectOrProxy();
 		ResourceSet rs = resSet;
 		if (rs == null) {
@@ -77,7 +77,7 @@ public class BaseDslVersionResolver implements VersionResolver {
 		return null;
 	}
 	
-	public Version getVersionObject (IEObjectDescription desc) {
+	public Version getVersion (IEObjectDescription desc) {
 		EObject o = desc.getEObjectOrProxy();
 		ResourceSet rs = resSet;
 		if (rs == null) {

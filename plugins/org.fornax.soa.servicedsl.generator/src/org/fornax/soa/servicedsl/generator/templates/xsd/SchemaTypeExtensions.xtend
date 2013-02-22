@@ -41,6 +41,7 @@ import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.VersionedTypeRef
+import org.fornax.soa.basedsl.search.IEObjectLookup
 
 /* Extension functions Type representations and references in XSDs */
 class SchemaTypeExtensions {
@@ -50,15 +51,14 @@ class SchemaTypeExtensions {
 	@Inject extension NamespaceQuery
 	@Inject extension NamespaceSplitter
 	@Inject extension VersionQualifierExtensions
-	@Inject extension LifecycleQueries
 	@Inject extension VersionQueries
 	@Inject extension ITypeResolver
 	@Inject extension BusinessObjectQueries
 	@Inject extension IExceptionResolver
+	@Inject extension IEObjectLookup
 	
 	@Inject ProfileSchemaTypeExtensions profileSchemaTypes
 	@Inject TechnicalNamespaceQueries profileNSQueries
-	@Inject ProfileSchemaNamespaceExtensions profileSchemaNSExt
 	
 	/*
 	 *	Return the XSD type name for a type reference including it's derived namespace prefix

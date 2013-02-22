@@ -21,15 +21,14 @@ import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.VersionedTypeRef
+import org.fornax.soa.basedsl.search.IEObjectLookup
 
 /*
  * Namespace lookup functions
  */
 class NamespaceQuery {
 	
-	@Inject extension LifecycleQueries
-	@Inject extension CommonStringExtensions
-	
+	@Inject extension IEObjectLookup
 
 	def dispatch OrganizationNamespace findOrgNamespace (Object o) {
 	}

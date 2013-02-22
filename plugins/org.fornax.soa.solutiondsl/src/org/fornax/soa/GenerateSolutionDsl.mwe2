@@ -24,6 +24,9 @@ var bizGenModel="platform:/resource/org.fornax.soa.businessdsl/src-gen/org/forna
 var envMetaModel = "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore"
 var envGenModel = "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.genmodel"
 
+var profMetaModel="platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore"
+var profGenModel="platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.genmodel"
+
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
@@ -32,16 +35,19 @@ Workflow {
 		uriMap = { to = bizMetaModel from = "http://www.fornax.org/soa/BusinessDsl" }
 		uriMap = { to = baseMetaModel from = "http://www.fornax.org/soa/basedsl/SOABaseDsl" }
 		uriMap = { to = envMetaModel from = "http://www.fornax.org/soa/EnvironmentDsl" }
+		uriMap = { to = profMetaModel from = "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" }
 		registerEcoreFile = baseMetaModel
 		registerEcoreFile = semMetaModel
 		registerEcoreFile = svcMetaModel
 		registerEcoreFile = bizMetaModel
 		registerEcoreFile = envMetaModel
+		registerEcoreFile = profMetaModel
 		registerGenModelFile = baseGenModel
 		registerGenModelFile = semGenModel
 		registerGenModelFile = svcGenModel
 		registerGenModelFile = bizGenModel
 		registerGenModelFile = envGenModel
+		registerGenModelFile = profGenModel
 	}
 
 	component = DirectoryCleaner {

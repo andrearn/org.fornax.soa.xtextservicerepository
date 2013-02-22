@@ -7,11 +7,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
-import org.fornax.soa.basedsl.scoping.VersionedImportedNamespaceAwareScopeProvider;
-import org.fornax.soa.basedsl.scoping.versions.AbstractPredicateVersionFilter;
-import org.fornax.soa.business.metamodel.BusinessDslMetamodelAccess;
+import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.businessDsl.BusinessDslPackage;
 import org.fornax.soa.businessDsl.CapabilityRef;
+
+import com.google.inject.Inject;
 
 
 /**
@@ -23,13 +25,14 @@ import org.fornax.soa.businessDsl.CapabilityRef;
  */
 public class BusinessDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
 
+	@Inject IEObjectLookup objLookup;
 	
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
 			EObject ctx, EReference reference) {
 		if (reference==BusinessDslPackage.Literals.CAPABILITY_REF__VERSION_REF && ctx instanceof CapabilityRef) {
 			final VersionRef v = ((CapabilityRef) ctx).getVersionRef();
-			return createVersionFilter (v, BusinessDslMetamodelAccess.INSTANCE.getVersionedOwner(ctx));
+			return createVersionFilter (v, objLookup.getVersionedOwner(ctx));
 		}
 
 		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;

@@ -12,26 +12,11 @@ import org.fornax.soa.serviceDsl.VersionedType;
 
 public class VersionedObjectQueryHelper {
 
-	public static LifecycleState getLifecycleState(GovernanceApproval g) {
-		EObject o = g.eContainer();
-		if (o instanceof BusinessObject)
-			return ((BusinessObject) o).getState();
-		else if (o instanceof Enumeration)
-			return ((Enumeration) o).getState();
-		else if (o instanceof org.fornax.soa.serviceDsl.Exception)
-			return ((org.fornax.soa.serviceDsl.Exception) o).getState();
-		else if (o instanceof Service)
-			return ((Service) o).getState();
-		else
-			return null;
-	}
 
 	public static String getObjectName(GovernanceApproval g) {
 		EObject o = g.eContainer();
-		if (o instanceof BusinessObject)
+		if (o instanceof VersionedType)
 			return ((BusinessObject) o).getName();
-		else if (o instanceof Enumeration)
-			return ((Enumeration) o).getName();
 		else if (o instanceof org.fornax.soa.serviceDsl.Exception)
 			return ((org.fornax.soa.serviceDsl.Exception) o).getName();
 		else if (o instanceof Service)
@@ -52,16 +37,5 @@ public class VersionedObjectQueryHelper {
 			return ((Service) o).getVersion();
 		else
 			return null;
-	}
-	
-	public static boolean isStatefulServiceDslObject (EObject o) {
-		if (o instanceof SubNamespace || 
-				o instanceof VersionedType ||
-				o instanceof Service ||
-				o instanceof org.fornax.soa.serviceDsl.Exception) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 }

@@ -244,6 +244,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AvailabilityAssertion/mtbf"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AvailabilityAssertion/mttr"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AvailabilityAssertion/mttrPercentile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AvailabilityAssertion/regularDownTimes"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//LatencyAssertion">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//LatencyAssertion/latency"/>
