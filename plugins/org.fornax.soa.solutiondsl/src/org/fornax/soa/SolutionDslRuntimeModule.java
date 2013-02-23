@@ -6,6 +6,8 @@ package org.fornax.soa;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.scoping.versions.VersionedGlobalScopeProvider;
+import org.fornax.soa.basedsl.search.DefaultPredicateSearch;
+import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
 import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
@@ -56,6 +58,10 @@ public class SolutionDslRuntimeModule extends org.fornax.soa.AbstractSolutionDsl
 	@org.eclipse.xtext.service.SingletonBinding	
 	public Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector () {
 		return DefaultEnvironmentPerspectiveSelector.class;
+	}
+	
+	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
+		return DefaultPredicateSearch.class;
 	}
 
 

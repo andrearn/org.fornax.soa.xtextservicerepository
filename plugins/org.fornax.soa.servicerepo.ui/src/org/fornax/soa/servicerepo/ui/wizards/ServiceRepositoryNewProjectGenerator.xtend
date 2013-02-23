@@ -754,22 +754,22 @@ class ServiceRepositoryNewProjectGenerator {
 			
 			
 			style BusinessObjectNode { 
-				this.font = font("Helvetica", 12, SWT::LEFT + 
+				this.font = font("Helvetica", 10, SWT::LEFT + 
 					(if (element.abstract) SWT::ITALIC else SWT::NONE)
 				)
 			}
 			style BusinessObjectNode.Name { 
-				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD	)
 			}
 			style BusinessObjectNode.Version { 
-				this.font = font("Helvetica", 12, SWT::CENTER 
+				this.font = font("Helvetica", 10, SWT::CENTER 
 				)
 			}
 			
 			style BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
 				this.outline = false
 				this.backgroundColor = color(#ffffff)
-				this.font = font("Helvetica", 12, SWT::LEFT+ 
+				this.font = font("Helvetica", 10, SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
@@ -787,21 +787,21 @@ class ServiceRepositoryNewProjectGenerator {
 			
 			
 			style QueryObjectNode { 
-				this.font = font("Helvetica", 12, SWT::LEFT 
+				this.font = font("Helvetica", 10, SWT::LEFT 
 				)
 			}
 			style QueryObjectNode.Name { 
-				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD	)
 			}
 			style QueryObjectNode.Version { 
-				this.font = font("Helvetica", 12, SWT::CENTER 
+				this.font = font("Helvetica", 10, SWT::CENTER 
 				)
 			}
 			
 			style QueryObjectNode.PropertiesNode as RoundedRectangleShape {
 				this.outline = false
 				this.backgroundColor = color(#ffffff)
-				this.font = font("Helvetica", 12, SWT::LEFT+ 
+				this.font = font("Helvetica", 10, SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
@@ -815,21 +815,21 @@ class ServiceRepositoryNewProjectGenerator {
 				this.backgroundColor = color(#eeeeee)
 			}
 			style HiddenQueryObjectNode { 
-				this.font = font("Helvetica", 12, SWT::LEFT 
+				this.font = font("Helvetica", 10, SWT::LEFT 
 				)
 			}
 			style HiddenQueryObjectNode.Name { 
-				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD	)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD	)
 			}
 			style HiddenQueryObjectNode.Version { 
-				this.font = font("Helvetica", 12, SWT::CENTER 
+				this.font = font("Helvetica", 10, SWT::CENTER 
 				)
 			}
 			
 			style HiddenQueryObjectNode.PropertiesNode as RoundedRectangleShape {
 				this.outline = false
 				this.backgroundColor = color(#ffffff)
-				this.font = font("Helvetica", 12, SWT::LEFT+ 
+				this.font = font("Helvetica", 10, SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
@@ -842,19 +842,19 @@ class ServiceRepositoryNewProjectGenerator {
 				this.backgroundColor = color(#d8e8f8)
 			}
 			style HiddenBusinessObjectNode { 
-				this.font = font("Helvetica", 12, SWT::CENTER +
+				this.font = font("Helvetica", 10, SWT::CENTER +
 					(if (element.abstract) SWT::ITALIC else SWT::NONE)
 				)
 			}
 			style HiddenBusinessObjectNode.Name { 
-				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 				)
 			}
 			
 			style HiddenBusinessObjectNode.PropertiesNode as RoundedRectangleShape {
 				this.outline = false
 				this.backgroundColor = color(#ffffff)
-				this.font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+				this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
@@ -926,24 +926,24 @@ class ServiceRepositoryNewProjectGenerator {
 				this.backgroundColor = color(#f8e8a8)
 			}
 			style EnumNode { 
-				this.font = font("Helvetica", 12, SWT::CENTER + 
+				this.font = font("Helvetica", 10, SWT::CENTER + 
 					 SWT::NONE
 				)
 			}
 			style EnumNode.Name { 
-				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + 
 					 SWT::NONE
 				)
 			}
 			style EnumNode.EnumLabel { 
-				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + 
 					 SWT::NONE
 				)
 			}
 			style EnumNode.EnumLiteralNode as RoundedRectangleShape {
 				this.outline = false
 				this.backgroundColor = color(#ffffff)
-				this.font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+				this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
@@ -952,21 +952,21 @@ class ServiceRepositoryNewProjectGenerator {
 				this.backgroundColor = color(#f8e8d8)
 			}
 			style ExceptionNode { 
-				this.font = font("Helvetica", 12, SWT::CENTER 
+				this.font = font("Helvetica", 10, SWT::CENTER 
 				)
 			}
 			style ExceptionNode.ExceptionLabel { 
-				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 				)
 			}
 			style ExceptionNode.Name { 
-				this.font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD 
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 				)
 			}
 			style ExceptionNode.PropertiesNode as RoundedRectangleShape {
 				this.outline = false
 				this.backgroundColor = color(#ffffff)
-				this.font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
+				this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
 					(SWT::NONE)
 				)
 			}
