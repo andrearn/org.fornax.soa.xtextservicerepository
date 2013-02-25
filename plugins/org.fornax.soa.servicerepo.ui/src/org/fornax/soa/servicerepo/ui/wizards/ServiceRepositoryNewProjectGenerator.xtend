@@ -10,6 +10,8 @@ class ServiceRepositoryNewProjectGenerator {
 		generateBusinessObjectViewStyle (fsa)
 		generateServiceViewMap (fsa)
 		generateServiceViewStyle (fsa)
+		generateSolutionViewMap(fsa)
+		generateSolutionViewStyle(fsa)
 	}
 	
 	def generateProfile (IFileSystemAccess fsa) {
