@@ -4,7 +4,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.*
 
 diagram SolutionDiagram type Solution {
 	
-	node FeatureNode for each this.features {
+	node FeatureNode for each features {
 		label FeatureLabel for "<<Feature>>"
 		label FeatureNameLabel for this.name
 		hidden edge NestedFeatureEdge for each features {

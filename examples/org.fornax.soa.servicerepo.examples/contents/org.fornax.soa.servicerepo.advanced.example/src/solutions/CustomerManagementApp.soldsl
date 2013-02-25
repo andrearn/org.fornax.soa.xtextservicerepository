@@ -37,7 +37,7 @@ solution CustomerManagementApp {
 		 * There is another feature to create a customer from manually entered data
 		 */
 		feature AcquireCustomerManually {
-			description "Acquire a customer automatically manually in the customer management app"
+			description "Acquire a customer manually in the customer management app"
 			
 			// The feature uses this service to create the customer
 			requires CustomerManagerBAS majorVersion 1

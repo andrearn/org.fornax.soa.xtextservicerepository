@@ -8,7 +8,7 @@ class ServiceRepositoryNewProjectGenerator {
 		generateProfile (fsa)
 		generateBusinessObjectViewMap (fsa)
 		generateBusinessObjectViewStyle (fsa)
-		generateSeriveViewMap (fsa)
+		generateServiceViewMap (fsa)
 		generateServiceViewStyle (fsa)
 	}
 	
@@ -111,7 +111,7 @@ class ServiceRepositoryNewProjectGenerator {
 		fsa.generateFile("model/profile.profdsl", content)
 	}
 	
-	def generateSeriveViewMap (IFileSystemAccess fsa) {
+	def generateServiceViewMap (IFileSystemAccess fsa) {
 		val content='''
 			/*******************************************************************************
 			 * Copyright (c) 2012 developers of XtextServiceRepository and others.
@@ -972,6 +972,114 @@ class ServiceRepositoryNewProjectGenerator {
 			}
 		'''
 		fsa.generateFile("view/BusinessObjectView.gvstyle", content)
+	}
+	
+	def generateSolutionViewMap (IFileSystemAccess fsa) {
+		val content='''
+			import org.fornax.soa.solutionDsl.*
+			import org.fornax.soa.serviceDsl.*
+			import org.fornax.soa.profiledsl.sOAProfileDsl.*
+			
+			diagram SolutionDiagram type Solution {
+				
+				node FeatureNode for each this.features {
+					label FeatureLabel for "<<Feature>>"
+					label FeatureNameLabel for this.name
+					hidden edge NestedFeatureEdge for each features {
+						=> call NestedFeatureNode for this 
+					} 
+					edge RequiredServiceEdge for each requires {
+						=> ref RequiredServiceNode for this.service 
+						label RequiresEdgeLabel for "requires"
+					} 
+				}
+				
+				node ModuleNode for each this.modules {
+					label ModuleLabel for "<<Module>>"
+					label ModuleNameLabel for this.name
+					hidden edge NestedFeatureEdge for each this.features {
+						=> call NestedFeatureNode for this 
+					} 
+					edge RequiredServiceEdge for each requires {
+						=> ref RequiredServiceNode for this
+						label RequiresEdgeLabel for "requires"
+					} 
+				} 
+				
+				
+				hidden node NestedFeatureNode for each features {
+					label FeatureLabel for "<<Feature>>"
+					label FeatureNameLabel for this.name
+					hidden edge NestedFeatureEdge for each features {
+						=> call NestedFeatureNode for this 
+					} 
+					hidden edge RequiredServiceEdge for each requires.map (r|r.service) {
+						=> call HiddenRequiredServiceNode for this
+						label RequiresEdgeLabel for "requires"
+					} 
+				} unless !(this instanceof Feature)
+				
+				node RequiredServiceNode for each requires.map(r|r.service) {
+					label ServiceLabel for "<<Service>>"
+					label ServiceNameLabel for name
+					label Version for "[v" + version?.version+"]"
+					
+				}
+				
+				hidden node HiddenRequiredServiceNode for this  as org.fornax.soa.serviceDsl.Service {
+					label ServiceLabel for "<<Service>>"
+					label ServiceNameLabel for this.name
+					label Version for "[v" + this.version?.version+"]"
+					
+				} unless !(this instanceof org.fornax.soa.serviceDsl.Service)
+			}
+		'''
+		fsa.generateFile("view/SolutionView.gvmap", content)
+	}
+
+	def generateSolutionViewStyle (IFileSystemAccess fsa) {
+		val content = '''
+			import org.eclipse.xtext.graphview.shape.*
+			import org.eclipse.xtext.graphview.layout.*  
+			import org.eclipse.xtext.graphview.behavior.layout.*  
+			import org.eclipse.draw2d.*
+			import org.eclipse.swt.SWT
+			import SolutionDiagram.*
+			
+			stylesheet SolutionDiagram for SolutionDiagram
+			
+			style SolutionDiagram {
+				this.autoLayoutManager = new KielerAutoLayout() 
+			}
+			
+			style ModuleNode as RectangleShape { 
+				this.backgroundColor = color(#d8ffd8)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+				)
+			}
+			style FeatureNode as RoundedRectangleShape { 
+				this.backgroundColor = color(#ffd8d8)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+				)
+			}
+			style NestedFeatureNode as RoundedRectangleShape { 
+				this.backgroundColor = color(#ffd8d8)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+				)
+			}
+			
+			style RequiredServiceNode as RoundedRectangleShape {
+				this.backgroundColor = color(#d8ffff)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+				)
+			}
+			style HiddenRequiredServiceNode as RoundedRectangleShape {
+				this.backgroundColor = color(#d8ffff)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+				)
+			}
+		'''
+		fsa.generateFile("view/ServiceView.gvstyle", content)
 	}
 	
 }

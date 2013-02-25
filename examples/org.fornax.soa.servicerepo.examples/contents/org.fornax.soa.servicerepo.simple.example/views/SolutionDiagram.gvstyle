@@ -8,33 +8,33 @@ import SolutionDiagram.*
 stylesheet SolutionDiagram for SolutionDiagram
 
 style SolutionDiagram {
-	autoLayoutManager = new KielerAutoLayout() 
+	this.autoLayoutManager = new KielerAutoLayout() 
 }
 
 style ModuleNode as RectangleShape { 
-	backgroundColor = color(#d8ffd8)
-	font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	this.backgroundColor = color(#d8ffd8)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 	)
 }
 style FeatureNode as RoundedRectangleShape { 
-	backgroundColor = color(#ffd8d8)
-	font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	this.backgroundColor = color(#ffd8d8)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 	)
 }
 style NestedFeatureNode as RoundedRectangleShape { 
-	backgroundColor = color(#ffd8d8)
-	font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	this.backgroundColor = color(#ffd8d8)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 	)
 }
 
 style RequiredServiceNode as RoundedRectangleShape {
-	backgroundColor = color(#d8ffff)
-	font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	this.backgroundColor = color(#d8ffff)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 	)
 }
 style HiddenRequiredServiceNode as RoundedRectangleShape {
-	backgroundColor = color(#d8ffff)
-	font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	this.backgroundColor = color(#d8ffff)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 	)
 }
 
