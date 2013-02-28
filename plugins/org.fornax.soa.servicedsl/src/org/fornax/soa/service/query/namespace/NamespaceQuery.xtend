@@ -30,109 +30,55 @@ class NamespaceQuery {
 	
 	@Inject extension IEObjectLookup
 
-	def dispatch OrganizationNamespace findOrgNamespace (Object o) {
+	def dispatch OrganizationNamespace findOrgNamespace (EObject o) {
+		val OrganizationNamespace orgNs = o.getOwnerByType(typeof (OrganizationNamespace))
+		return orgNs
 	}
 
-	def dispatch OrganizationNamespace findOrgNamespace (Service o) {
-		o.eContainer.eContainer as org.fornax.soa.serviceDsl.OrganizationNamespace;
-	}
-	
-	def dispatch OrganizationNamespace findOrgNamespace (DomainNamespace o) { 
-		if (o.eContainer instanceof OrganizationNamespace)  
-			o.eContainer as OrganizationNamespace
-		else
-			this?.findOrgNamespace (o.eContainer as DomainNamespace) as OrganizationNamespace;
-	}
-	
-	def dispatch OrganizationNamespace findOrgNamespace (InternalNamespace o) { 
-		if (o.eContainer instanceof OrganizationNamespace)  
-			o.eContainer as OrganizationNamespace
-		else
-			this?.findOrgNamespace (o.eContainer as SubNamespace) as OrganizationNamespace;
-	}
-
-	def dispatch SubNamespace findSubdomain (Type t) {
-		null;
-	}
-	
-	def dispatch SubNamespace findSubdomain (VersionedType c) {
-		if (c.eContainer instanceof SubNamespace)
-			c.eContainer as SubNamespace
-		else
-			null;
-	}
-		
-	def dispatch SubNamespace findSubdomain (BusinessObject c) {
-		if (c.eContainer instanceof SubNamespace) 
-			c.eContainer as SubNamespace 
-		else 
-			null;
-	}
-	def dispatch SubNamespace findSubdomain (QueryObject c) {
-		if (c.eContainer instanceof SubNamespace) 
-			c.eContainer as SubNamespace 
-		else 
-			null;
-	}
-	def dispatch SubNamespace findSubdomain (Enumeration c) { 
-		if (c.eContainer instanceof SubNamespace) 
-			c.eContainer as SubNamespace 
-		else 
-			null;
-	}
-	def dispatch SubNamespace findSubdomain (org.fornax.soa.serviceDsl.Exception c) {
-			if (c.eContainer instanceof SubNamespace) 
-			c.eContainer as SubNamespace 
-		else 
-			null;
-	}
-		
-	def dispatch SubNamespace findSubdomain (Service c) {
-		if (c.eContainer instanceof SubNamespace) 
-			c.eContainer as SubNamespace 
-		else 
-			null;
+	def dispatch SubNamespace findSubdomain (EObject o) {
+		val SubNamespace ns = o.getOwnerByType(typeof (SubNamespace))
+		return ns
 	}
 
 	/**
 	 *	Find the owning namespace of the owner of the type reference
 	 */
-	def dispatch SubNamespace findRefOwnerSubdomain (TypeRef t) {
+	def dispatch SubNamespace findTypeRefOwnerSubdomain (TypeRef t) {
 		t.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
 	/**
 	 *	Find the owning namespace of the owner of the type reference
 	 */
-	def dispatch SubNamespace findRefOwnerSubdomain (VersionedTypeRef c) {
+	def dispatch SubNamespace findTypeRefOwnerSubdomain (VersionedTypeRef c) {
 		c?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
 	/**
 	 *	Find the owning namespace of the owner of the type reference
 	 */
-	def dispatch SubNamespace findRefOwnerSubdomain (BusinessObjectRef c) {
+	def dispatch SubNamespace findTypeRefOwnerSubdomain (BusinessObjectRef c) {
 		c?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
 	/**
 	 *	Find the owning namespace of the owner of the type reference
 	 */
-	def dispatch SubNamespace findRefOwnerSubdomain (EnumTypeRef c) {
+	def dispatch SubNamespace findTypeRefOwnerSubdomain (EnumTypeRef c) {
 		c?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
 	/**
 	 *	Find the owning namespace of the owner of the exception reference
 	 */
-	def dispatch SubNamespace findRefOwnerSubdomain (ExceptionRef e) {
+	def SubNamespace findExceptionRefOwnerSubdomain (ExceptionRef e) {
 		e?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
 	/**
 	 *	Find the owning namespace of the owner of the service reference
 	 */
-	def dispatch SubNamespace findRefOwnerSubdomain (ServiceRef s) {
+	def SubNamespace findServiceRefOwnerSubdomain (ServiceRef s) {
 		s?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 		

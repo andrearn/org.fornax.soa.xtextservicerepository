@@ -712,8 +712,7 @@ Example:
 code[BindingDSL][
 	import CoreDevelopment
 	
-	bind-module com.company.shop.invoicing fixedVersion 1.4.3 as com.company.shop.invoicing.dev to environment CoreDevelopment {
-		provided on DevESB
+	bind-module com.company.shop.invoicing fixedVersion 1.4.3 as com.company.shop.invoicing.dev to server CoreDevelopment.DevESB {
 		default-protocols {
 			SOAP {
 				style document/literal-wrapped

@@ -114,21 +114,6 @@ class NamespaceSplitter {
 		exceptions 	= (c.eContainer as SubNamespace).exceptions.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
 	}
 		
-//	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (org.fornax.soa.serviceDsl.Enumeration c) {
-//		if (c.eContainer instanceof SubNamespace)  {
-//			name 		= (c.eContainer as SubNamespace).name.stripXtextEscapes();
-//			shortName 	= (c.eContainer as SubNamespace).prefix?.stripXtextEscapes();		
-//		} else {
-//			name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
-//			shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
-//		}
-//		subdomain 	= c.eContainer;
-//		fqn 		= nameProvider.getFullyQualifiedName(c.eContainer).toString;
-//		version		= c.version.toMajorVersionNumber();
-//		types 		= (c.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).map (t|t as Type).toList;
-//		services 	= (c.eContainer as SubNamespace).services.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
-//		exceptions 	= (c.eContainer as SubNamespace).exceptions.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
-//	}
 	
 	/* 
 	 * Create a VersionedDomainNamespace for an Exception

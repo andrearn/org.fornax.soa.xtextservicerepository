@@ -14,6 +14,8 @@ public class ServiceRepositorySearchMessages extends NLS {
 	public static String SearchPage_maxState_label;
 	public static String SearchPage_minVersion_label;
 	public static String SearchPage_maxVersion_label;
+	public static String SearchPage_canonical_label;
+	public static String SearchPage_noncanonical_label;
 	public static String SearchPage_limitTo_label;
 	public static String ServiceRepositoryQuery_monitor;
 	public static String ServiceRepositorySearchResultContentProvider_label;
@@ -29,6 +31,8 @@ public class ServiceRepositorySearchMessages extends NLS {
 	public static String ServiceRepositorySearchViewPageActions_showNextMatch_tooltip;
 	public static String ServiceRepositorySearchViewPageActions_showPreviousMatch;
 	public static String ServiceRepositorySearchViewPageActions_showPreviousMatch_tooltip;
+	public static String ServiceRepositorySearchPage_btnCheckButton_text;
+	public static String ServiceRepositorySearchPage_btnCheckButton_text_1;
 	
 	
 	static {

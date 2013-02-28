@@ -16,47 +16,69 @@ import java.util.Map
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
 import org.fornax.soa.basedsl.util.TreeNode
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 
 class BusinessObjectQueries {
 	
 	@Inject
 	private BusinessObjectQueryInternal boQueryInt
 	
-	def List<BusinessObject> getAllSuperTypes (BusinessObject bo, List<BusinessObject> vistitedBOs) {
+	@Inject
+	private IStateMatcher stateMatcher
+	
+	
+	def dispatch List<BusinessObject> getAllSuperTypes (BusinessObject bo, List<BusinessObject> vistitedBOs) {
 		BusinessObjectQueryInternal::getAllSuperTypes(bo, vistitedBOs)
 	}
+	
+	/**
+	 * Get the root business object of the type hierarchy of the given BO
+	 */
 	def BusinessObject getRootBusinessObject (BusinessObject bo) {
 		boQueryInt.getRootBusinessObject (bo)
 	}
+
+	/**
+	 * all own and inherited properties visible on the type
+	 * @param bo The BusinessObject
+	 * @return all own and inherited properties visible on the type
+	 */
 	def List<Property> getAllVisibleProperties (BusinessObject bo) {
 		BusinessObjectQueryInternal::getAllVisibleProperties(bo)
 	}
+	
+	/**
+	 * all inherited properties visible on the type (own properties are excluded)
+	 * @param bo The BusinessObject
+	 * @return all own and inherited properties visible on the type
+	 */
 	def List<Property> getAllInheritedProperties (BusinessObject bo) {
 		BusinessObjectQueryInternal::getAllInheritedProperties(bo)
 	}
 	
-	def dispatch List<Property> findAllVisibleProperties (Object bo, LifecycleState minState) {newArrayList()}
+	def dispatch List<Property> getVisibleObjectProperties (Object bo, LifecycleState minState) {newArrayList()}
 
-	def dispatch List<Property> findAllVisibleProperties (BusinessObject bo, LifecycleState minState) {
-		bo.collectAllVisibleProperties (minState, newArrayList());
+	def dispatch List<Property> getVisibleObjectProperties (BusinessObject bo, LifecycleState minState) {
+		bo.collectVisibleObjectProperties (minState, newArrayList());
 	}
 		
-	def dispatch List<Property> collectAllVisibleProperties (BusinessObject bo, LifecycleState minState, List<Property> props) {
+	def List<Property> collectVisibleObjectProperties (BusinessObject bo, LifecycleState minState, List<Property> props) {
 		props.addAll (bo.properties);
-		props.addAll(bo.findAllInheritedProperties(minState));
+		props.addAll(bo.getAllInheritedProperties(minState));
 		props;
 	}
 		
-	def dispatch List<Property> findAllInheritedProperties (BusinessObject bo, LifecycleState minState) {
-		bo.findAllSuperTypes (minState).map (e|e.properties).flatten.toList;
+	def List<Property> getAllInheritedProperties (BusinessObject bo, LifecycleState minState) {
+		bo.getAllSuperTypes (minState).map (e|e.properties).flatten.toList;
 	}
 		
-	def dispatch List<BusinessObject> findAllSuperTypes (BusinessObject bo, LifecycleState minState) {
+	def dispatch List<BusinessObject> getAllSuperTypes (BusinessObject bo, LifecycleState minState) {
 		bo.collectAllSuperTypes (newArrayList(), minState);
 	}
 	
 	def private List<BusinessObject> collectAllSuperTypes (BusinessObject bo, List<BusinessObject> superTypes, LifecycleState minState) {
 		if (bo.superBusinessObject != null) {
+			if (stateMatcher.matches(minState, bo.superBusinessObject.type.state))
 			superTypes.add ( bo.superBusinessObject.type as BusinessObject);
 			superTypes;
 		} else {
@@ -64,9 +86,6 @@ class BusinessObjectQueries {
 		}
 	}
 	
-	def Iterable<IEObjectDescription> findUnapprovedBusinessObjects (ResourceSet res) {
-		
-	}
 	
 	/**
 	 * Find all transitive dependencies of the Property. The dependency graph is build from all properties transitively 

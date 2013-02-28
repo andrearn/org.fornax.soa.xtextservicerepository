@@ -101,9 +101,9 @@ public class BusinessObjectQueryInternal {
 	}
 	
 	/**
-	 * Get all super types of the business object in upward order
-	 * @param bo
-	 * @return super types in upward order
+	 * all inherited properties visible on the type (own properties are excluded)
+	 * @param bo The BusinessObject
+	 * @return all own and inherited properties visible on the type
 	 */
 	public static List<Property> getAllInheritedProperties (final BusinessObject bo) {
 		return collectAllInheritedProperties (bo, new ArrayList<Property>());

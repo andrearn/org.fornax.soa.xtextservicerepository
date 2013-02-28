@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jface.dialogs.DialogSettings;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.util.Modules2;
 import org.fornax.soa.BindingDslRuntimeModule;
@@ -31,6 +33,9 @@ public class ServiceRepositoryActivator extends AbstractUIPlugin {
 	private Map<String, Injector> injectors = new HashMap<String, Injector>();
 	private static ServiceRepositoryActivator INSTANCE;
 	public static final String PLUGIN_ID = "org.fornax.soa.servicerepo.ui"; //$NON-NLS-1$
+	public static final String DIALOG_SETTINGS_SECTION = "org.fornax.soa.servicerepo.ui";
+	
+	private IDialogSettings dialogSettings;
 
 	public Injector getInjector(String languageName) {
 		return injectors.get(languageName);
@@ -62,11 +67,15 @@ public class ServiceRepositoryActivator extends AbstractUIPlugin {
 					)
 				);
 			injectors.put(INJECTOR_NAME, injector);
-
+			dialogSettings = new DialogSettings(DIALOG_SETTINGS_SECTION);
 		} catch (Exception e) {
 			Logger.getLogger(getClass()).error(e.getMessage(), e);
 			throw e;
 		}
+	}
+	
+	public IDialogSettings getDialogSetting (String sectionName) {
+		return DialogSettings.getOrCreateSection(dialogSettings, sectionName);
 	}
 	
 	public static ServiceRepositoryActivator getInstance() {

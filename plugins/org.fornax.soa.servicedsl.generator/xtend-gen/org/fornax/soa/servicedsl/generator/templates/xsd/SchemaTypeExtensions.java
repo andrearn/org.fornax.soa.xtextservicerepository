@@ -24,7 +24,6 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef;
 import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef;
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataType;
 import org.fornax.soa.profiledsl.sOAProfileDsl.DesignRules;
-import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Type;
@@ -37,7 +36,6 @@ import org.fornax.soa.service.query.namespace.NamespaceQuery;
 import org.fornax.soa.service.query.type.BusinessObjectQueries;
 import org.fornax.soa.service.versioning.IExceptionResolver;
 import org.fornax.soa.service.versioning.ITypeResolver;
-import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.DataTypeRef;
@@ -47,7 +45,6 @@ import org.fornax.soa.serviceDsl.ExceptionRef;
 import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.QueryObject;
 import org.fornax.soa.serviceDsl.QueryObjectRef;
-import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.SubNamespace;
 import org.fornax.soa.serviceDsl.TypeRef;
@@ -141,10 +138,10 @@ public class SchemaTypeExtensions {
         String prefix = "tns";
         boolean _and = false;
         boolean _and_1 = false;
-        SubNamespace _findRefOwnerSubdomain = this._namespaceQuery.findRefOwnerSubdomain(t);
+        SubNamespace _findTypeRefOwnerSubdomain = this._namespaceQuery.findTypeRefOwnerSubdomain(t);
         VersionedType _type_1 = t.getType();
         SubNamespace _findSubdomain_1 = this._namespaceQuery.findSubdomain(_type_1);
-        boolean _equals = Objects.equal(_findRefOwnerSubdomain, _findSubdomain_1);
+        boolean _equals = Objects.equal(_findTypeRefOwnerSubdomain, _findSubdomain_1);
         if (!_equals) {
           _and_1 = false;
         } else {
@@ -251,10 +248,10 @@ public class SchemaTypeExtensions {
         String prefix = "tns";
         boolean _and = false;
         boolean _and_1 = false;
-        SubNamespace _findRefOwnerSubdomain = this._namespaceQuery.findRefOwnerSubdomain(t);
+        SubNamespace _findTypeRefOwnerSubdomain = this._namespaceQuery.findTypeRefOwnerSubdomain(t);
         BusinessObject _type_1 = t.getType();
         SubNamespace _findSubdomain_1 = this._namespaceQuery.findSubdomain(_type_1);
-        boolean _equals = Objects.equal(_findRefOwnerSubdomain, _findSubdomain_1);
+        boolean _equals = Objects.equal(_findTypeRefOwnerSubdomain, _findSubdomain_1);
         if (!_equals) {
           _and_1 = false;
         } else {
@@ -310,10 +307,10 @@ public class SchemaTypeExtensions {
         String prefix = "tns";
         boolean _and = false;
         boolean _and_1 = false;
-        SubNamespace _findRefOwnerSubdomain = this._namespaceQuery.findRefOwnerSubdomain(t);
+        SubNamespace _findTypeRefOwnerSubdomain = this._namespaceQuery.findTypeRefOwnerSubdomain(t);
         QueryObject _type_1 = t.getType();
         SubNamespace _findSubdomain_1 = this._namespaceQuery.findSubdomain(_type_1);
-        boolean _equals = Objects.equal(_findRefOwnerSubdomain, _findSubdomain_1);
+        boolean _equals = Objects.equal(_findTypeRefOwnerSubdomain, _findSubdomain_1);
         if (!_equals) {
           _and_1 = false;
         } else {
@@ -369,10 +366,10 @@ public class SchemaTypeExtensions {
         String prefix = "tns";
         boolean _and = false;
         boolean _and_1 = false;
-        SubNamespace _findRefOwnerSubdomain = this._namespaceQuery.findRefOwnerSubdomain(t);
+        SubNamespace _findTypeRefOwnerSubdomain = this._namespaceQuery.findTypeRefOwnerSubdomain(t);
         Enumeration _type_1 = t.getType();
         SubNamespace _findSubdomain_1 = this._namespaceQuery.findSubdomain(_type_1);
-        boolean _equals = Objects.equal(_findRefOwnerSubdomain, _findSubdomain_1);
+        boolean _equals = Objects.equal(_findTypeRefOwnerSubdomain, _findSubdomain_1);
         if (!_equals) {
           _and_1 = false;
         } else {
@@ -428,10 +425,10 @@ public class SchemaTypeExtensions {
         String prefix = "tns";
         boolean _and = false;
         boolean _and_1 = false;
-        SubNamespace _findRefOwnerSubdomain = this._namespaceQuery.findRefOwnerSubdomain(exRef);
+        SubNamespace _findExceptionRefOwnerSubdomain = this._namespaceQuery.findExceptionRefOwnerSubdomain(exRef);
         org.fornax.soa.serviceDsl.Exception _exception_1 = exRef.getException();
         SubNamespace _findSubdomain_1 = this._namespaceQuery.findSubdomain(_exception_1);
-        boolean _equals = Objects.equal(_findRefOwnerSubdomain, _findSubdomain_1);
+        boolean _equals = Objects.equal(_findExceptionRefOwnerSubdomain, _findSubdomain_1);
         if (!_equals) {
           _and_1 = false;
         } else {
@@ -869,326 +866,6 @@ public class SchemaTypeExtensions {
     return _switchResult;
   }
   
-  /**
-   * Resolve the type name of weak type reference, i.e. return the type name referenced type's businessKey
-   */
-  protected String _toWeakRefType(final TypeRef t) {
-    String _typeNameRef = this.toTypeNameRef(t);
-    return _typeNameRef;
-  }
-  
-  protected String _toWeakRefType(final VersionedTypeRef t) {
-    String _xifexpression = null;
-    org.fornax.soa.serviceDsl.Type _findMatchingType = this._iTypeResolver.findMatchingType(t);
-    if ((_findMatchingType instanceof BusinessObject)) {
-      org.fornax.soa.serviceDsl.Type _findMatchingType_1 = this._iTypeResolver.findMatchingType(t);
-      EList<Property> _properties = ((BusinessObject) _findMatchingType_1).getProperties();
-      final Function1<Property,Boolean> _function = new Function1<Property,Boolean>() {
-          public Boolean apply(final Property e) {
-            boolean _isIsBusinessKey = e.isIsBusinessKey();
-            return Boolean.valueOf(_isIsBusinessKey);
-          }
-        };
-      Iterable<Property> _filter = IterableExtensions.<Property>filter(_properties, _function);
-      Iterable<Attribute> _filter_1 = Iterables.<Attribute>filter(_filter, Attribute.class);
-      List<Attribute> _list = IterableExtensions.<Attribute>toList(_filter_1);
-      Attribute _head = IterableExtensions.<Attribute>head(_list);
-      TypeRef _type = _head.getType();
-      String _typeNameRef = this.toTypeNameRef(_type);
-      _xifexpression = _typeNameRef;
-    } else {
-      String _xifexpression_1 = null;
-      org.fornax.soa.serviceDsl.Type _findMatchingType_2 = this._iTypeResolver.findMatchingType(t);
-      if ((_findMatchingType_2 instanceof QueryObject)) {
-        org.fornax.soa.serviceDsl.Type _findMatchingType_3 = this._iTypeResolver.findMatchingType(t);
-        EList<Property> _properties_1 = ((QueryObject) _findMatchingType_3).getProperties();
-        final Function1<Property,Boolean> _function_1 = new Function1<Property,Boolean>() {
-            public Boolean apply(final Property e) {
-              boolean _isIsBusinessKey = e.isIsBusinessKey();
-              return Boolean.valueOf(_isIsBusinessKey);
-            }
-          };
-        Iterable<Property> _filter_2 = IterableExtensions.<Property>filter(_properties_1, _function_1);
-        Iterable<Attribute> _filter_3 = Iterables.<Attribute>filter(_filter_2, Attribute.class);
-        List<Attribute> _list_1 = IterableExtensions.<Attribute>toList(_filter_3);
-        Attribute _head_1 = IterableExtensions.<Attribute>head(_list_1);
-        TypeRef _type_1 = _head_1.getType();
-        String _typeNameRef_1 = this.toTypeNameRef(_type_1);
-        _xifexpression_1 = _typeNameRef_1;
-      } else {
-        String _typeNameRef_2 = this.toTypeNameRef(t);
-        _xifexpression_1 = _typeNameRef_2;
-      }
-      _xifexpression = _xifexpression_1;
-    }
-    return _xifexpression;
-  }
-  
-  protected String _toWeakRefType(final BusinessObjectRef t) {
-    org.fornax.soa.serviceDsl.Type _findMatchingType = this._iTypeResolver.findMatchingType(t);
-    EList<Property> _properties = ((BusinessObject) _findMatchingType).getProperties();
-    final Function1<Property,Boolean> _function = new Function1<Property,Boolean>() {
-        public Boolean apply(final Property e) {
-          boolean _isIsBusinessKey = e.isIsBusinessKey();
-          return Boolean.valueOf(_isIsBusinessKey);
-        }
-      };
-    Iterable<Property> _filter = IterableExtensions.<Property>filter(_properties, _function);
-    Iterable<Attribute> _filter_1 = Iterables.<Attribute>filter(_filter, Attribute.class);
-    List<Attribute> _list = IterableExtensions.<Attribute>toList(_filter_1);
-    Attribute _head = IterableExtensions.<Attribute>head(_list);
-    TypeRef _type = _head.getType();
-    String _typeNameRef = this.toTypeNameRef(_type);
-    return _typeNameRef;
-  }
-  
-  protected String _toWeakRefType(final QueryObjectRef t) {
-    org.fornax.soa.serviceDsl.Type _findMatchingType = this._iTypeResolver.findMatchingType(t);
-    EList<Property> _properties = ((QueryObject) _findMatchingType).getProperties();
-    final Function1<Property,Boolean> _function = new Function1<Property,Boolean>() {
-        public Boolean apply(final Property e) {
-          boolean _isIsBusinessKey = e.isIsBusinessKey();
-          return Boolean.valueOf(_isIsBusinessKey);
-        }
-      };
-    Iterable<Property> _filter = IterableExtensions.<Property>filter(_properties, _function);
-    Iterable<Attribute> _filter_1 = Iterables.<Attribute>filter(_filter, Attribute.class);
-    List<Attribute> _list = IterableExtensions.<Attribute>toList(_filter_1);
-    Attribute _head = IterableExtensions.<Attribute>head(_list);
-    TypeRef _type = _head.getType();
-    String _typeNameRef = this.toTypeNameRef(_type);
-    return _typeNameRef;
-  }
-  
-  protected String _toWeakRefKeyAttr(final TypeRef t) {
-    return null;
-  }
-  
-  protected String _toWeakRefKeyAttr(final BusinessObjectRef t) {
-    org.fornax.soa.serviceDsl.Type _findMatchingType = this._iTypeResolver.findMatchingType(t);
-    EList<Property> _properties = ((BusinessObject) _findMatchingType).getProperties();
-    final Function1<Property,Boolean> _function = new Function1<Property,Boolean>() {
-        public Boolean apply(final Property e) {
-          boolean _isIsBusinessKey = e.isIsBusinessKey();
-          return Boolean.valueOf(_isIsBusinessKey);
-        }
-      };
-    Iterable<Property> _filter = IterableExtensions.<Property>filter(_properties, _function);
-    Iterable<Attribute> _filter_1 = Iterables.<Attribute>filter(_filter, Attribute.class);
-    Attribute _head = IterableExtensions.<Attribute>head(_filter_1);
-    String _name = _head.getName();
-    return _name;
-  }
-  
-  protected String _toWeakRefKeyAttr(final QueryObjectRef t) {
-    org.fornax.soa.serviceDsl.Type _findMatchingType = this._iTypeResolver.findMatchingType(t);
-    EList<Property> _properties = ((BusinessObject) _findMatchingType).getProperties();
-    final Function1<Property,Boolean> _function = new Function1<Property,Boolean>() {
-        public Boolean apply(final Property e) {
-          boolean _isIsBusinessKey = e.isIsBusinessKey();
-          return Boolean.valueOf(_isIsBusinessKey);
-        }
-      };
-    Iterable<Property> _filter = IterableExtensions.<Property>filter(_properties, _function);
-    Iterable<Attribute> _filter_1 = Iterables.<Attribute>filter(_filter, Attribute.class);
-    Attribute _head = IterableExtensions.<Attribute>head(_filter_1);
-    String _name = _head.getName();
-    return _name;
-  }
-  
-  protected String _toWeakRefType(final TypeRef t, final LifecycleState minState) {
-    String _typeNameRef = this.toTypeNameRef(t);
-    return _typeNameRef;
-  }
-  
-  protected String _toWeakRefType(final VersionedTypeRef t, final LifecycleState minState) {
-    String _xifexpression = null;
-    boolean _and = false;
-    org.fornax.soa.serviceDsl.Type _findMatchingTypeByState = this._iTypeResolver.findMatchingTypeByState(t, minState);
-    if (!(_findMatchingTypeByState instanceof BusinessObject)) {
-      _and = false;
-    } else {
-      org.fornax.soa.serviceDsl.Type _findMatchingTypeByState_1 = this._iTypeResolver.findMatchingTypeByState(t, minState);
-      List<Property> _findAllVisibleProperties = this._businessObjectQueries.findAllVisibleProperties(((BusinessObject) _findMatchingTypeByState_1), minState);
-      final Function1<Property,Boolean> _function = new Function1<Property,Boolean>() {
-          public Boolean apply(final Property e) {
-            boolean _isIsBusinessKey = e.isIsBusinessKey();
-            return Boolean.valueOf(_isIsBusinessKey);
-          }
-        };
-      Iterable<Property> _filter = IterableExtensions.<Property>filter(_findAllVisibleProperties, _function);
-      Iterable<Attribute> _filter_1 = Iterables.<Attribute>filter(_filter, Attribute.class);
-      boolean _isEmpty = IterableExtensions.isEmpty(_filter_1);
-      boolean _not = (!_isEmpty);
-      _and = ((_findMatchingTypeByState instanceof BusinessObject) && _not);
-    }
-    if (_and) {
-      org.fornax.soa.serviceDsl.Type _findMatchingTypeByState_2 = this._iTypeResolver.findMatchingTypeByState(t, minState);
-      List<Property> _findAllVisibleProperties_1 = this._businessObjectQueries.findAllVisibleProperties(((BusinessObject) _findMatchingTypeByState_2), minState);
-      final Function1<Property,Boolean> _function_1 = new Function1<Property,Boolean>() {
-          public Boolean apply(final Property e) {
-            boolean _isIsBusinessKey = e.isIsBusinessKey();
-            return Boolean.valueOf(_isIsBusinessKey);
-          }
-        };
-      Iterable<Property> _filter_2 = IterableExtensions.<Property>filter(_findAllVisibleProperties_1, _function_1);
-      Iterable<Attribute> _filter_3 = Iterables.<Attribute>filter(_filter_2, Attribute.class);
-      List<Attribute> _list = IterableExtensions.<Attribute>toList(_filter_3);
-      Attribute _head = IterableExtensions.<Attribute>head(_list);
-      TypeRef _type = _head.getType();
-      String _typeNameRef = this.toTypeNameRef(_type);
-      _xifexpression = _typeNameRef;
-    } else {
-      String _typeNameRef_1 = this.toTypeNameRef(t);
-      _xifexpression = _typeNameRef_1;
-    }
-    return _xifexpression;
-  }
-  
-  protected String _toWeakRefType(final BusinessObjectRef t, final LifecycleState minState) {
-    String _xifexpression = null;
-    org.fornax.soa.serviceDsl.Type _findMatchingTypeByState = this._iTypeResolver.findMatchingTypeByState(t, minState);
-    List<Property> _findAllVisibleProperties = this._businessObjectQueries.findAllVisibleProperties(((BusinessObject) _findMatchingTypeByState), minState);
-    final Function1<Property,Boolean> _function = new Function1<Property,Boolean>() {
-        public Boolean apply(final Property e) {
-          boolean _isIsBusinessKey = e.isIsBusinessKey();
-          return Boolean.valueOf(_isIsBusinessKey);
-        }
-      };
-    Iterable<Property> _filter = IterableExtensions.<Property>filter(_findAllVisibleProperties, _function);
-    Iterable<Attribute> _filter_1 = Iterables.<Attribute>filter(_filter, Attribute.class);
-    boolean _isEmpty = IterableExtensions.isEmpty(_filter_1);
-    boolean _not = (!_isEmpty);
-    if (_not) {
-      org.fornax.soa.serviceDsl.Type _findMatchingTypeByState_1 = this._iTypeResolver.findMatchingTypeByState(t, minState);
-      List<Property> _findAllVisibleProperties_1 = this._businessObjectQueries.findAllVisibleProperties(((BusinessObject) _findMatchingTypeByState_1), minState);
-      final Function1<Property,Boolean> _function_1 = new Function1<Property,Boolean>() {
-          public Boolean apply(final Property e) {
-            boolean _isIsBusinessKey = e.isIsBusinessKey();
-            return Boolean.valueOf(_isIsBusinessKey);
-          }
-        };
-      Iterable<Property> _filter_2 = IterableExtensions.<Property>filter(_findAllVisibleProperties_1, _function_1);
-      Iterable<Attribute> _filter_3 = Iterables.<Attribute>filter(_filter_2, Attribute.class);
-      List<Attribute> _list = IterableExtensions.<Attribute>toList(_filter_3);
-      Attribute _head = IterableExtensions.<Attribute>head(_list);
-      TypeRef _type = _head.getType();
-      String _typeNameRef = this.toTypeNameRef(_type);
-      _xifexpression = _typeNameRef;
-    } else {
-      _xifexpression = null;
-    }
-    return _xifexpression;
-  }
-  
-  protected String _toWeakRefType(final QueryObjectRef t, final LifecycleState minState) {
-    String _xifexpression = null;
-    org.fornax.soa.serviceDsl.Type _findMatchingTypeByState = this._iTypeResolver.findMatchingTypeByState(t, minState);
-    List<Property> _findAllVisibleProperties = this._businessObjectQueries.findAllVisibleProperties(((QueryObject) _findMatchingTypeByState), minState);
-    final Function1<Property,Boolean> _function = new Function1<Property,Boolean>() {
-        public Boolean apply(final Property e) {
-          boolean _isIsBusinessKey = e.isIsBusinessKey();
-          return Boolean.valueOf(_isIsBusinessKey);
-        }
-      };
-    Iterable<Property> _filter = IterableExtensions.<Property>filter(_findAllVisibleProperties, _function);
-    Iterable<Attribute> _filter_1 = Iterables.<Attribute>filter(_filter, Attribute.class);
-    boolean _isEmpty = IterableExtensions.isEmpty(_filter_1);
-    boolean _not = (!_isEmpty);
-    if (_not) {
-      org.fornax.soa.serviceDsl.Type _findMatchingTypeByState_1 = this._iTypeResolver.findMatchingTypeByState(t, minState);
-      List<Property> _findAllVisibleProperties_1 = this._businessObjectQueries.findAllVisibleProperties(((QueryObject) _findMatchingTypeByState_1), minState);
-      final Function1<Property,Boolean> _function_1 = new Function1<Property,Boolean>() {
-          public Boolean apply(final Property e) {
-            boolean _isIsBusinessKey = e.isIsBusinessKey();
-            return Boolean.valueOf(_isIsBusinessKey);
-          }
-        };
-      Iterable<Property> _filter_2 = IterableExtensions.<Property>filter(_findAllVisibleProperties_1, _function_1);
-      Iterable<Attribute> _filter_3 = Iterables.<Attribute>filter(_filter_2, Attribute.class);
-      List<Attribute> _list = IterableExtensions.<Attribute>toList(_filter_3);
-      Attribute _head = IterableExtensions.<Attribute>head(_list);
-      TypeRef _type = _head.getType();
-      String _typeNameRef = this.toTypeNameRef(_type);
-      _xifexpression = _typeNameRef;
-    } else {
-      _xifexpression = null;
-    }
-    return _xifexpression;
-  }
-  
-  protected String _toWeakRefKeyAttr(final TypeRef t, final LifecycleState minState) {
-    return null;
-  }
-  
-  protected String _toWeakRefKeyAttr(final BusinessObjectRef t, final LifecycleState minState) {
-    String _xifexpression = null;
-    org.fornax.soa.serviceDsl.Type _findMatchingTypeByState = this._iTypeResolver.findMatchingTypeByState(t, minState);
-    List<Property> _findAllVisibleProperties = this._businessObjectQueries.findAllVisibleProperties(((BusinessObject) _findMatchingTypeByState), minState);
-    final Function1<Property,Boolean> _function = new Function1<Property,Boolean>() {
-        public Boolean apply(final Property e) {
-          boolean _isIsBusinessKey = e.isIsBusinessKey();
-          return Boolean.valueOf(_isIsBusinessKey);
-        }
-      };
-    Iterable<Property> _filter = IterableExtensions.<Property>filter(_findAllVisibleProperties, _function);
-    Iterable<Attribute> _filter_1 = Iterables.<Attribute>filter(_filter, Attribute.class);
-    boolean _isEmpty = IterableExtensions.isEmpty(_filter_1);
-    boolean _not = (!_isEmpty);
-    if (_not) {
-      org.fornax.soa.serviceDsl.Type _findMatchingTypeByState_1 = this._iTypeResolver.findMatchingTypeByState(t, minState);
-      List<Property> _findAllVisibleProperties_1 = this._businessObjectQueries.findAllVisibleProperties(((BusinessObject) _findMatchingTypeByState_1), minState);
-      final Function1<Property,Boolean> _function_1 = new Function1<Property,Boolean>() {
-          public Boolean apply(final Property e) {
-            boolean _isIsBusinessKey = e.isIsBusinessKey();
-            return Boolean.valueOf(_isIsBusinessKey);
-          }
-        };
-      Iterable<Property> _filter_2 = IterableExtensions.<Property>filter(_findAllVisibleProperties_1, _function_1);
-      Iterable<Attribute> _filter_3 = Iterables.<Attribute>filter(_filter_2, Attribute.class);
-      Attribute _head = IterableExtensions.<Attribute>head(_filter_3);
-      String _name = _head.getName();
-      _xifexpression = _name;
-    } else {
-      _xifexpression = null;
-    }
-    return _xifexpression;
-  }
-  
-  protected String _toWeakRefKeyAttr(final QueryObjectRef t, final LifecycleState minState) {
-    String _xifexpression = null;
-    org.fornax.soa.serviceDsl.Type _findMatchingTypeByState = this._iTypeResolver.findMatchingTypeByState(t, minState);
-    List<Property> _findAllVisibleProperties = this._businessObjectQueries.findAllVisibleProperties(((QueryObject) _findMatchingTypeByState), minState);
-    final Function1<Property,Boolean> _function = new Function1<Property,Boolean>() {
-        public Boolean apply(final Property e) {
-          boolean _isIsBusinessKey = e.isIsBusinessKey();
-          return Boolean.valueOf(_isIsBusinessKey);
-        }
-      };
-    Iterable<Property> _filter = IterableExtensions.<Property>filter(_findAllVisibleProperties, _function);
-    Iterable<Attribute> _filter_1 = Iterables.<Attribute>filter(_filter, Attribute.class);
-    boolean _isEmpty = IterableExtensions.isEmpty(_filter_1);
-    boolean _not = (!_isEmpty);
-    if (_not) {
-      org.fornax.soa.serviceDsl.Type _findMatchingTypeByState_1 = this._iTypeResolver.findMatchingTypeByState(t, minState);
-      List<Property> _findAllVisibleProperties_1 = this._businessObjectQueries.findAllVisibleProperties(((QueryObject) _findMatchingTypeByState_1), minState);
-      final Function1<Property,Boolean> _function_1 = new Function1<Property,Boolean>() {
-          public Boolean apply(final Property e) {
-            boolean _isIsBusinessKey = e.isIsBusinessKey();
-            return Boolean.valueOf(_isIsBusinessKey);
-          }
-        };
-      Iterable<Property> _filter_2 = IterableExtensions.<Property>filter(_findAllVisibleProperties_1, _function_1);
-      Iterable<Attribute> _filter_3 = Iterables.<Attribute>filter(_filter_2, Attribute.class);
-      Attribute _head = IterableExtensions.<Attribute>head(_filter_3);
-      String _name = _head.getName();
-      _xifexpression = _name;
-    } else {
-      _xifexpression = null;
-    }
-    return _xifexpression;
-  }
-  
   protected String _toExceptionNameRef(final ExceptionRef t, final VersionedDomainNamespace currNs) {
     String _xifexpression = null;
     boolean _and = false;
@@ -1239,19 +916,7 @@ public class SchemaTypeExtensions {
     return _xifexpression;
   }
   
-  protected boolean _isOptionalElement(final Property p) {
-    boolean _or = false;
-    boolean _isOptional = p.isOptional();
-    if (_isOptional) {
-      _or = true;
-    } else {
-      boolean _isIsProvidedKey = p.isIsProvidedKey();
-      _or = (_isOptional || _isIsProvidedKey);
-    }
-    return _or;
-  }
-  
-  protected boolean _isOptionalElement(final Attribute p) {
+  public boolean isOptionalElement(final Property p) {
     boolean _or = false;
     boolean _or_1 = false;
     boolean _isOptional = p.isOptional();
@@ -1268,11 +933,6 @@ public class SchemaTypeExtensions {
       _or = (_or_1 || _isIsProvidedKey);
     }
     return _or;
-  }
-  
-  protected boolean _isOptionalElement(final Reference p) {
-    boolean _isIsBusinessKey = p.isIsBusinessKey();
-    return (!_isIsBusinessKey);
   }
   
   protected boolean _isMany(final TypeRef t) {
@@ -1788,78 +1448,9 @@ public class SchemaTypeExtensions {
     }
   }
   
-  public String toWeakRefType(final TypeRef t) {
-    if (t instanceof BusinessObjectRef) {
-      return _toWeakRefType((BusinessObjectRef)t);
-    } else if (t instanceof QueryObjectRef) {
-      return _toWeakRefType((QueryObjectRef)t);
-    } else if (t instanceof VersionedTypeRef) {
-      return _toWeakRefType((VersionedTypeRef)t);
-    } else if (t != null) {
-      return _toWeakRefType(t);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(t).toString());
-    }
-  }
-  
-  public String toWeakRefKeyAttr(final TypeRef t) {
-    if (t instanceof BusinessObjectRef) {
-      return _toWeakRefKeyAttr((BusinessObjectRef)t);
-    } else if (t instanceof QueryObjectRef) {
-      return _toWeakRefKeyAttr((QueryObjectRef)t);
-    } else if (t != null) {
-      return _toWeakRefKeyAttr(t);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(t).toString());
-    }
-  }
-  
-  public String toWeakRefType(final TypeRef t, final LifecycleState minState) {
-    if (t instanceof BusinessObjectRef) {
-      return _toWeakRefType((BusinessObjectRef)t, minState);
-    } else if (t instanceof QueryObjectRef) {
-      return _toWeakRefType((QueryObjectRef)t, minState);
-    } else if (t instanceof VersionedTypeRef) {
-      return _toWeakRefType((VersionedTypeRef)t, minState);
-    } else if (t != null) {
-      return _toWeakRefType(t, minState);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(t, minState).toString());
-    }
-  }
-  
-  public String toWeakRefKeyAttr(final TypeRef t, final LifecycleState minState) {
-    if (t instanceof BusinessObjectRef) {
-      return _toWeakRefKeyAttr((BusinessObjectRef)t, minState);
-    } else if (t instanceof QueryObjectRef) {
-      return _toWeakRefKeyAttr((QueryObjectRef)t, minState);
-    } else if (t != null) {
-      return _toWeakRefKeyAttr(t, minState);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(t, minState).toString());
-    }
-  }
-  
   public String toExceptionNameRef(final ExceptionRef t, final VersionedDomainNamespace currNs) {
     {
       return _toExceptionNameRef(t, currNs);
-    }
-  }
-  
-  public boolean isOptionalElement(final Property p) {
-    if (p instanceof Attribute) {
-      return _isOptionalElement((Attribute)p);
-    } else if (p instanceof Reference) {
-      return _isOptionalElement((Reference)p);
-    } else if (p != null) {
-      return _isOptionalElement(p);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(p).toString());
     }
   }
   

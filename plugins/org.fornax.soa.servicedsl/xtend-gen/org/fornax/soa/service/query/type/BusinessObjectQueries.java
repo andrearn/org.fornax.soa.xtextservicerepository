@@ -20,6 +20,7 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.fornax.soa.basedsl.ref.DependencyDescription;
 import org.fornax.soa.basedsl.util.TreeNode;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
@@ -32,64 +33,80 @@ public class BusinessObjectQueries {
   @Inject
   private BusinessObjectQueryInternal boQueryInt;
   
-  public List<BusinessObject> getAllSuperTypes(final BusinessObject bo, final List<BusinessObject> vistitedBOs) {
+  @Inject
+  private IStateMatcher stateMatcher;
+  
+  protected List<BusinessObject> _getAllSuperTypes(final BusinessObject bo, final List<BusinessObject> vistitedBOs) {
     List<BusinessObject> _allSuperTypes = BusinessObjectQueryInternal.getAllSuperTypes(bo, vistitedBOs);
     return _allSuperTypes;
   }
   
+  /**
+   * Get the root business object of the type hierarchy of the given BO
+   */
   public BusinessObject getRootBusinessObject(final BusinessObject bo) {
     BusinessObject _rootBusinessObject = this.boQueryInt.getRootBusinessObject(bo);
     return _rootBusinessObject;
   }
   
+  /**
+   * all own and inherited properties visible on the type
+   * @param bo The BusinessObject
+   * @return all own and inherited properties visible on the type
+   */
   public List<Property> getAllVisibleProperties(final BusinessObject bo) {
     List<Property> _allVisibleProperties = BusinessObjectQueryInternal.getAllVisibleProperties(bo);
     return _allVisibleProperties;
   }
   
+  /**
+   * all inherited properties visible on the type (own properties are excluded)
+   * @param bo The BusinessObject
+   * @return all own and inherited properties visible on the type
+   */
   public List<Property> getAllInheritedProperties(final BusinessObject bo) {
     List<Property> _allInheritedProperties = BusinessObjectQueryInternal.getAllInheritedProperties(bo);
     return _allInheritedProperties;
   }
   
-  protected List<Property> _findAllVisibleProperties(final Object bo, final LifecycleState minState) {
+  protected List<Property> _getVisibleObjectProperties(final Object bo, final LifecycleState minState) {
     ArrayList<Property> _newArrayList = CollectionLiterals.<Property>newArrayList();
     return _newArrayList;
   }
   
-  protected List<Property> _findAllVisibleProperties(final BusinessObject bo, final LifecycleState minState) {
+  protected List<Property> _getVisibleObjectProperties(final BusinessObject bo, final LifecycleState minState) {
     ArrayList<Property> _newArrayList = CollectionLiterals.<Property>newArrayList();
-    List<Property> _collectAllVisibleProperties = this.collectAllVisibleProperties(bo, minState, _newArrayList);
-    return _collectAllVisibleProperties;
+    List<Property> _collectVisibleObjectProperties = this.collectVisibleObjectProperties(bo, minState, _newArrayList);
+    return _collectVisibleObjectProperties;
   }
   
-  protected List<Property> _collectAllVisibleProperties(final BusinessObject bo, final LifecycleState minState, final List<Property> props) {
+  public List<Property> collectVisibleObjectProperties(final BusinessObject bo, final LifecycleState minState, final List<Property> props) {
     List<Property> _xblockexpression = null;
     {
       EList<Property> _properties = bo.getProperties();
       props.addAll(_properties);
-      List<Property> _findAllInheritedProperties = this.findAllInheritedProperties(bo, minState);
-      props.addAll(_findAllInheritedProperties);
+      List<Property> _allInheritedProperties = this.getAllInheritedProperties(bo, minState);
+      props.addAll(_allInheritedProperties);
       _xblockexpression = (props);
     }
     return _xblockexpression;
   }
   
-  protected List<Property> _findAllInheritedProperties(final BusinessObject bo, final LifecycleState minState) {
-    List<BusinessObject> _findAllSuperTypes = this.findAllSuperTypes(bo, minState);
+  public List<Property> getAllInheritedProperties(final BusinessObject bo, final LifecycleState minState) {
+    List<BusinessObject> _allSuperTypes = this.getAllSuperTypes(bo, minState);
     final Function1<BusinessObject,EList<Property>> _function = new Function1<BusinessObject,EList<Property>>() {
         public EList<Property> apply(final BusinessObject e) {
           EList<Property> _properties = e.getProperties();
           return _properties;
         }
       };
-    List<EList<Property>> _map = ListExtensions.<BusinessObject, EList<Property>>map(_findAllSuperTypes, _function);
+    List<EList<Property>> _map = ListExtensions.<BusinessObject, EList<Property>>map(_allSuperTypes, _function);
     Iterable<Property> _flatten = Iterables.<Property>concat(_map);
     List<Property> _list = IterableExtensions.<Property>toList(_flatten);
     return _list;
   }
   
-  protected List<BusinessObject> _findAllSuperTypes(final BusinessObject bo, final LifecycleState minState) {
+  protected List<BusinessObject> _getAllSuperTypes(final BusinessObject bo, final LifecycleState minState) {
     ArrayList<BusinessObject> _newArrayList = CollectionLiterals.<BusinessObject>newArrayList();
     List<BusinessObject> _collectAllSuperTypes = this.collectAllSuperTypes(bo, _newArrayList, minState);
     return _collectAllSuperTypes;
@@ -104,7 +121,13 @@ public class BusinessObjectQueries {
       {
         BusinessObjectRef _superBusinessObject_1 = bo.getSuperBusinessObject();
         BusinessObject _type = _superBusinessObject_1.getType();
-        superTypes.add(((BusinessObject) _type));
+        LifecycleState _state = _type.getState();
+        boolean _matches = this.stateMatcher.matches(minState, _state);
+        if (_matches) {
+          BusinessObjectRef _superBusinessObject_2 = bo.getSuperBusinessObject();
+          BusinessObject _type_1 = _superBusinessObject_2.getType();
+          superTypes.add(((BusinessObject) _type_1));
+        }
         _xblockexpression = (superTypes);
       }
       _xifexpression = _xblockexpression;
@@ -112,10 +135,6 @@ public class BusinessObjectQueries {
       _xifexpression = superTypes;
     }
     return _xifexpression;
-  }
-  
-  public Iterable<IEObjectDescription> findUnapprovedBusinessObjects(final ResourceSet res) {
-    return null;
   }
   
   /**
@@ -157,32 +176,25 @@ public class BusinessObjectQueries {
     return _allSubTypesWithParent;
   }
   
-  public List<Property> findAllVisibleProperties(final Object bo, final LifecycleState minState) {
+  public List<BusinessObject> getAllSuperTypes(final BusinessObject bo, final Object vistitedBOs) {
+    if (vistitedBOs instanceof List) {
+      return _getAllSuperTypes(bo, (List<BusinessObject>)vistitedBOs);
+    } else if (vistitedBOs instanceof LifecycleState) {
+      return _getAllSuperTypes(bo, (LifecycleState)vistitedBOs);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(bo, vistitedBOs).toString());
+    }
+  }
+  
+  public List<Property> getVisibleObjectProperties(final Object bo, final LifecycleState minState) {
     if (bo instanceof BusinessObject) {
-      return _findAllVisibleProperties((BusinessObject)bo, minState);
+      return _getVisibleObjectProperties((BusinessObject)bo, minState);
     } else if (bo != null) {
-      return _findAllVisibleProperties(bo, minState);
+      return _getVisibleObjectProperties(bo, minState);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(bo, minState).toString());
-    }
-  }
-  
-  public List<Property> collectAllVisibleProperties(final BusinessObject bo, final LifecycleState minState, final List<Property> props) {
-    {
-      return _collectAllVisibleProperties(bo, minState, props);
-    }
-  }
-  
-  public List<Property> findAllInheritedProperties(final BusinessObject bo, final LifecycleState minState) {
-    {
-      return _findAllInheritedProperties(bo, minState);
-    }
-  }
-  
-  public List<BusinessObject> findAllSuperTypes(final BusinessObject bo, final LifecycleState minState) {
-    {
-      return _findAllSuperTypes(bo, minState);
     }
   }
 }

@@ -48,15 +48,22 @@ code[MWE2][
         register = org.fornax.soa.bindingdsl.generator.DefaultBindingContractGeneratorSetup {
 			moduleBindingName 	= 'com\\.example\\.salesmodulebinding'
 			moduleBindingName 	= 'com\\.example\\.billing\\.*'
-			
-			domainBindingName   = 'com\\.example\\.paymentDomainBindingName'
+
+			serviceModule = {
+				name = 'com.example.partner'
+				version = '1.0.1'
+				generateUsedServices = true
+				generateProvidedServices = false
+			}
 			
 			domainNamespace  	= 'de\\.countandcare\\.product.*'
 			internalNamespace = 'com.example.technical.internal.*'
 			namespace = 'com\\.example\\.anysubnamespace.*'
 			
+			/*generate for all dependencies*/
 			noDependencies = false
-			profileName = profile
+			/*use the rules for lifecycle definition etc. defined in profile ExSOAArchitectureProfile*/
+			profileName = 'ExSOAArchitectureProfile'
 			targetEnvironmentName = 'Prod'
 			forceRelativePaths = true
 		}
@@ -67,9 +74,11 @@ code[MWE2][
     }
 ]
 
-The will generate WSDLs and their imported XSDs for the given ModuleBindings and the DomainBinding that matches
-the name "com.example.paymentDomainBindingName". Additionaly all XSDs for all given DomainNamespaces, InternalNamespaces 
-and any SubNamespace having fully qualified names that match the given expressions.
+The generator will generate WSDLs and their imported XSDs for the given names of ModuleBindings. Further,
+WSDLs and their imported XSDs for all services used by module "com.example.partner" version "1.0.1" will be generated.
+Finally all XSDs for all DomainNamespaces matching the regular expression "de\\.countandcare\\.product.*", InternalNamespaces 
+matching "com.example.technical.internal.*" and any SubNamespace matching "com\\.example\\.anysubnamespace.*"
+are generated. Everything is generated for the "Prod" environment.
 
 section3[Configuring the generator]
 

@@ -110,10 +110,10 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 
 	override buildProvidedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef providerEndpointQualifier, SOAProfile profile) {
 		log.fine ("Generating WSDLs and XSDs for services provided by module " + module.name + " looking up binding for used module to environment " + targetEnvironment.name)
-		val bindingDescs = 	if (providerEndpointQualifier != null) 
+		val bindingDescs = 	/*if (providerEndpointQualifier != null)*/ 
 								bindingResolver.resolveCompatibleProvidedServiceBindings (module, targetEnvironment, providerEndpointQualifier)
-							else
-								bindingResolver.resolveCompatibleProvidedServiceBindings (module, targetEnvironment)
+							/*else
+								bindingResolver.resolveCompatibleProvidedServiceBindings (module, targetEnvironment)*/
 		for (specBindingDesc : bindingDescs) {
 			val svc = specBindingDesc.resolvedService
 			if (svc != null) {

@@ -23,7 +23,6 @@ import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.service.query.type.BusinessObjectQueries
 import org.fornax.soa.service.versioning.IExceptionResolver
 import org.fornax.soa.service.versioning.ITypeResolver
-import org.fornax.soa.serviceDsl.Attribute
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.BusinessObjectRef
 import org.fornax.soa.serviceDsl.DataTypeRef
@@ -34,7 +33,6 @@ import org.fornax.soa.serviceDsl.ExceptionRef
 import org.fornax.soa.serviceDsl.Property
 import org.fornax.soa.serviceDsl.QueryObject
 import org.fornax.soa.serviceDsl.QueryObjectRef
-import org.fornax.soa.serviceDsl.Reference
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
@@ -92,7 +90,7 @@ class SchemaTypeExtensions {
 	def dispatch String toTypeNameRef (VersionedTypeRef t) {
 		if (t.type.findSubdomain() != null) {
 			var prefix = "tns";
-			if (! (t.findRefOwnerSubdomain() == t.type.findSubdomain()
+			if (! (t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 			 	&& ! (t.getStatefulOwner() instanceof Service))
 			) {
@@ -121,7 +119,7 @@ class SchemaTypeExtensions {
 	def dispatch String toTypeNameRef (BusinessObjectRef t) { 
 		if (t.type.findSubdomain() != null) {
 			var prefix = "tns";
-			if (!(t.findRefOwnerSubdomain() == t.type.findSubdomain()
+			if (!(t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 				&& !(t.getStatefulOwner() instanceof Service))
 			)  {
@@ -136,7 +134,7 @@ class SchemaTypeExtensions {
 	def dispatch String toTypeNameRef (QueryObjectRef t) { 
 		if (t.type.findSubdomain() != null) {
 			var prefix = "tns";
-			if (!(t.findRefOwnerSubdomain() == t.type.findSubdomain()
+			if (!(t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 				&& !(t.getStatefulOwner() instanceof Service))
 			)  {
@@ -151,7 +149,7 @@ class SchemaTypeExtensions {
 	def dispatch String toTypeNameRef (EnumTypeRef t) { 
 		if (t.type.findSubdomain() != null) {
 			var prefix = "tns";
-			if (!(t.findRefOwnerSubdomain() == t.type.findSubdomain()
+			if (!(t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t. getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
 				&& ! (t.getStatefulOwner() instanceof Service))
 			) {
@@ -166,7 +164,7 @@ class SchemaTypeExtensions {
 	def String toExceptionNameRef (ExceptionRef exRef) {
 		if (exRef.exception.findSubdomain() != null) {
 			var prefix = "tns";
-			if (!(exRef.findRefOwnerSubdomain() == exRef.exception.findSubdomain()
+			if (!(exRef.findExceptionRefOwnerSubdomain() == exRef.exception.findSubdomain()
 			 && exRef.getOwnerVersion().toMajorVersionNumber() == exRef.exception.version.toMajorVersionNumber()
 			 && ! (exRef.getStatefulOwner() instanceof Service))
 			) {
@@ -303,97 +301,6 @@ class SchemaTypeExtensions {
 	}
 	 
 	
-	/*
-	 * Resolve the type name of weak type reference, i.e. return the type name referenced type's businessKey
-	 */ 
-	def dispatch String toWeakRefType (TypeRef t) {
-		t.toTypeNameRef();
-	}
-	def dispatch String toWeakRefType (VersionedTypeRef t) {
-		if (t.findMatchingType() instanceof BusinessObject) {
-			(t.findMatchingType() as BusinessObject).properties
-				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList().head().type.toTypeNameRef()
-		} else if (t.findMatchingType() instanceof QueryObject) {
-			(t.findMatchingType() as QueryObject).properties
-				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList().head().type.toTypeNameRef()
-		} else {
-			t.toTypeNameRef();
-		}
-	}
-	def dispatch String toWeakRefType (BusinessObjectRef t) {
-		(t.findMatchingType() as BusinessObject).properties.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList.head().type.toTypeNameRef();
-	}
-	def dispatch String toWeakRefType (QueryObjectRef t) {
-		(t.findMatchingType() as QueryObject).properties.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList.head().type.toTypeNameRef();
-	}
-	def dispatch String toWeakRefKeyAttr (TypeRef t) {
-		null;
-	}
-	def dispatch String toWeakRefKeyAttr (BusinessObjectRef t) {
-		(t.findMatchingType() as BusinessObject).properties.filter (e|e.isBusinessKey)
-			.filter (typeof (Attribute)).head().name;
-	}
-	def dispatch String toWeakRefKeyAttr (QueryObjectRef t) {
-		(t.findMatchingType() as BusinessObject).properties.filter (e|e.isBusinessKey)
-			.filter (typeof (Attribute)).head().name;
-	}
-	
-	def dispatch String toWeakRefType(TypeRef t, LifecycleState minState) {
-		t.toTypeNameRef();
-	}
-	def dispatch String toWeakRefType(VersionedTypeRef t, LifecycleState minState) {
-		if ((t.findMatchingTypeByState(minState) instanceof BusinessObject) 
-			&&	! (t.findMatchingTypeByState (minState) as BusinessObject).findAllVisibleProperties (minState).filter (e|e.isBusinessKey).filter (typeof (Attribute)).isEmpty)
-		{
-	 		(t.findMatchingTypeByState(minState) as BusinessObject).findAllVisibleProperties(minState)
-	 			.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList.head().type.toTypeNameRef();
-	 	} else {
-	 		t.toTypeNameRef();
-	 	}
-	}
-	def dispatch String toWeakRefType(BusinessObjectRef t, LifecycleState minState) {
-		if (! (t.findMatchingTypeByState (minState) as BusinessObject).findAllVisibleProperties(minState)
-			.filter (e|e.isBusinessKey).filter (typeof (Attribute)).isEmpty 
-		) {
-			(t.findMatchingTypeByState (minState) as BusinessObject).findAllVisibleProperties(minState)
-				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList.head().type.toTypeNameRef();
-		} else {
-			null;
-		}
-	}
-	def dispatch String toWeakRefType(QueryObjectRef t, LifecycleState minState) {
-		if (! (t.findMatchingTypeByState (minState) as QueryObject).findAllVisibleProperties(minState)
-			.filter (e|e.isBusinessKey).filter (typeof (Attribute)).isEmpty 
-		) {
-			(t.findMatchingTypeByState (minState) as QueryObject).findAllVisibleProperties(minState)
-				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).toList.head().type.toTypeNameRef();
-		} else {
-			null;
-		}
-	}
-	def dispatch String toWeakRefKeyAttr(TypeRef t, LifecycleState minState) {
-		null;
-	}
-	def dispatch String toWeakRefKeyAttr(BusinessObjectRef t, LifecycleState minState) { 
-		if (! (t.findMatchingTypeByState(minState) as BusinessObject).findAllVisibleProperties(minState)
-			.filter (e|e.isBusinessKey).filter (typeof (Attribute)).isEmpty
-		) {
-			(t.findMatchingTypeByState(minState) as BusinessObject).findAllVisibleProperties(minState)
-				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).head().name;
-		} else {
-			null;
-		}
-	}
-	def dispatch String toWeakRefKeyAttr(QueryObjectRef t, LifecycleState minState) { 
-		if (! (t.findMatchingTypeByState(minState) as QueryObject).findAllVisibleProperties(minState)
-			.filter (e|e.isBusinessKey).filter (typeof (Attribute)).isEmpty
-		) {
-			(t.findMatchingTypeByState(minState) as QueryObject).findAllVisibleProperties(minState)
-				.filter (e|e.isBusinessKey).filter (typeof (Attribute)).head().name;
-		} else {
-			null;
-		}
-	}
 		
 		
 	def dispatch String toExceptionNameRef (ExceptionRef t, VersionedDomainNamespace currNs) {
@@ -408,14 +315,8 @@ class SchemaTypeExtensions {
 		}
 	}
 	
-	def dispatch boolean isOptionalElement (Property p) {
-		return p.optional || p.isProvidedKey;
-	}		
-	def dispatch boolean isOptionalElement (Attribute p) {
+	def boolean isOptionalElement (Property p) {
 		return p.optional || p.weak || p.isProvidedKey;
-	}		
-	def dispatch boolean isOptionalElement (Reference p) {
-		return !p.isBusinessKey;
 	}		
 		
 	def dispatch boolean isMany (TypeRef t) {

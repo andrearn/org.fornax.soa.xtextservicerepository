@@ -4,11 +4,9 @@ import java.util.List;
 
 import org.fornax.soa.basedsl.util.VersionRefMatcher;
 import org.fornax.soa.service.query.TypePropertyQueries;
-import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.Property;
-import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.TypeRef;
 import org.fornax.soa.serviceDsl.VersionedType;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
@@ -59,46 +57,7 @@ public class TypeRefMatcher {
 	public TypeRefMatchResult matches (Property prop1, Property prop2) {
 		TypeRef ref1 = prop1.getType();
 		TypeRef ref2 = prop2.getType();
-		if (prop1 instanceof Attribute && prop2 instanceof Attribute) {
-			return matches (ref1, ref2);
-		} else if (prop1 instanceof Reference && prop2 instanceof Reference) {
-			BusinessObject bo1 = (BusinessObject)((VersionedTypeRef)ref1).getType();
-			List<Property> keys1 = typePropQueries.getBOBusinessKeys(bo1);
-			if (keys1 == null || keys1.isEmpty()) {
-				keys1 = typePropQueries.getBOProvidedKeys(bo1);
-			}
-			BusinessObject bo2 = (BusinessObject)((VersionedTypeRef)ref1).getType();
-			List<Property> keys2 = typePropQueries.getAllBOKeys(bo2);
-			if (keys2 == null || keys2.isEmpty()) {
-				keys2 = typePropQueries.getBOProvidedKeys(bo2);
-			}
-			if (keys1.size() != 1 && keys2.size() != 1)
-				return TypeRefMatchResult.NO_MATCH;
-			TypeRef key1TypeRef = keys1.get(0).getType();
-			TypeRef key2TypeRef = keys2.get(0).getType();
-			return matches (key1TypeRef, key2TypeRef);
-		} else if (prop1 instanceof Attribute && prop2 instanceof Reference) {
-			BusinessObject bo2 = (BusinessObject)((VersionedTypeRef)ref1).getType();
-			List<Property> keys2 = typePropQueries.getAllBOKeys(bo2);
-			if (keys2 == null || keys2.isEmpty()) {
-				keys2 = typePropQueries.getBOProvidedKeys(bo2);
-			}
-			if (keys2.size() != 1)
-				return TypeRefMatchResult.NO_MATCH;
-			TypeRef key2TypeRef = keys2.get(0).getType();
-			return matches (ref1, key2TypeRef);
-		} else if (prop1 instanceof Reference && prop2 instanceof Attribute) {
-			BusinessObject bo1 = (BusinessObject)((VersionedTypeRef)ref1).getType();
-			List<Property> keys1 = typePropQueries.getBOBusinessKeys(bo1);
-			if (keys1 == null || keys1.isEmpty()) {
-				keys1 = typePropQueries.getBOProvidedKeys(bo1);
-			}
-			if (keys1.size() != 1)
-				return TypeRefMatchResult.NO_MATCH;
-			TypeRef key1TypeRef = keys1.get(0).getType();
-			return matches (key1TypeRef, ref2);
-		}
-		return TypeRefMatchResult.NO_MATCH;
+		return matches (ref1, ref2);
 	}
 
 }

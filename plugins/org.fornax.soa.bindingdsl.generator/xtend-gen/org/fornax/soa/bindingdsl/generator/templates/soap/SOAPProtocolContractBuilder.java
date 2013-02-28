@@ -214,21 +214,12 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
     String _name_1 = targetEnvironment.getName();
     String _plus_2 = (_plus_1 + _name_1);
     this.log.fine(_plus_2);
-    Set<ServiceRefBindingDescription> _xifexpression = null;
-    boolean _notEquals = (!Objects.equal(providerEndpointQualifier, null));
-    if (_notEquals) {
-      Set<ServiceRefBindingDescription> _resolveCompatibleProvidedServiceBindings = this.bindingResolver.resolveCompatibleProvidedServiceBindings(module, targetEnvironment, providerEndpointQualifier);
-      _xifexpression = _resolveCompatibleProvidedServiceBindings;
-    } else {
-      Set<ServiceRefBindingDescription> _resolveCompatibleProvidedServiceBindings_1 = this.bindingResolver.resolveCompatibleProvidedServiceBindings(module, targetEnvironment);
-      _xifexpression = _resolveCompatibleProvidedServiceBindings_1;
-    }
-    final Set<ServiceRefBindingDescription> bindingDescs = _xifexpression;
+    final Set<ServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleProvidedServiceBindings(module, targetEnvironment, providerEndpointQualifier);
     for (final ServiceRefBindingDescription specBindingDesc : bindingDescs) {
       {
         final Service svc = specBindingDesc.getResolvedService();
-        boolean _notEquals_1 = (!Objects.equal(svc, null));
-        if (_notEquals_1) {
+        boolean _notEquals = (!Objects.equal(svc, null));
+        if (_notEquals) {
           try {
             Binding _applicableBinding = specBindingDesc.getApplicableBinding();
             boolean _supportsImportBindingProtocol = this.protocolMatcher.supportsImportBindingProtocol(_applicableBinding, ImportBindingProtocol.SOAP);

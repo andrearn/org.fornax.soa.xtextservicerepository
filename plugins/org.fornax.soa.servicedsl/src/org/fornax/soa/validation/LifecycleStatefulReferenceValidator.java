@@ -22,7 +22,6 @@ import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.ExceptionRef;
-import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceRef;
@@ -110,10 +109,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		if (owner != null && stateRes.definesState (owner)) {
 			if (!referencedStateChecker.stateMatches (verTypeRef.getType().getState(), owner))
-				if (verTypeRef.eContainer() instanceof Reference)
-					warning ("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the type.", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
-				else
-					error ("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the type", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
+				error ("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the type", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
 		}
 	}
 	@Check
@@ -122,10 +118,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		if (owner != null && stateRes.definesState (owner)) {
 			if (!referencedStateChecker.stateMatches (((BusinessObject)boRef.getType()).getState(), owner))
-				if (boRef.eContainer() instanceof Reference)
-					warning ("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
-				else
-					error ("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
+				error ("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
 		}
 	}
 
@@ -135,10 +128,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		if (owner != null && stateRes.definesState (owner)) {
 			if (!referencedStateChecker.stateMatches (((Enumeration)enumRef.getType()).getState(), owner))
-				if (enumRef.eContainer() instanceof Reference)
-					warning ("An enum with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the enum", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
-				else
-					error ("An enum with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the enum", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
+				error ("An enum with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the enum", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
 		}
 	}
 

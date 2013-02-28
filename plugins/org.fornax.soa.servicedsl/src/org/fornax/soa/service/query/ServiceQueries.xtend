@@ -38,10 +38,6 @@ class ServiceQueries {
 		ns.subdomain.servicesWithMinState (state);
 	}
 
-
-	def List<ExceptionRef> allReferencedExceptionRefs (Service s) {
-		s.operations.map (o|o.^throws).flatten.toList;
-	}
 	
 	def List<org.fornax.soa.serviceDsl.Exception> allExceptionsByMajorVersion (SubNamespace s, String majorVersion) {
 		s.exceptions.filter (e|e.version.version.split("\\.").head == majorVersion).toList;
@@ -53,10 +49,6 @@ class ServiceQueries {
 	
 	def List<org.fornax.soa.serviceDsl.Exception> allReferencedExceptions (Service s) {
 		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
-	}
-
-	def List<Service> allServicesByMajorVersionAndState (List<Service> s, LifecycleState minState) {
-		s.map(e|e.version.toMajorVersionNumber ().findMatchingServiceByMajorVersionAndState (s, minState));
 	}
 	
 	def List<EObject> findAllServiceConsumers (Service service) {

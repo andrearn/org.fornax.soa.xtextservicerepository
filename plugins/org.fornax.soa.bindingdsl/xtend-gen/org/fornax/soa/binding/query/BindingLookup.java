@@ -73,132 +73,98 @@ public class BindingLookup {
   @Inject
   private BindingServiceRefMatcher serviceRefMatcher;
   
-  public List<Binding> getAllBindings(final ResourceSet rs) {
-    Predicate<IEObjectDescription> _alwaysTrue = Predicates.<IEObjectDescription>alwaysTrue();
-    Iterable<IEObjectDescription> _search = this.lookup.search("ModuleBinding ", _alwaysTrue);
-    Set<IEObjectDescription> allBindingDescs = IterableExtensions.<IEObjectDescription>toSet(_search);
-    Predicate<IEObjectDescription> _alwaysTrue_1 = Predicates.<IEObjectDescription>alwaysTrue();
-    Iterable<IEObjectDescription> _search_1 = this.lookup.search("DomainBinding ", _alwaysTrue_1);
-    Iterables.<IEObjectDescription>addAll(allBindingDescs, _search_1);
-    Predicate<IEObjectDescription> _alwaysTrue_2 = Predicates.<IEObjectDescription>alwaysTrue();
-    Iterable<IEObjectDescription> _search_2 = this.lookup.search("ServiceBinding ", _alwaysTrue_2);
-    Iterables.<IEObjectDescription>addAll(allBindingDescs, _search_2);
-    Predicate<IEObjectDescription> _alwaysTrue_3 = Predicates.<IEObjectDescription>alwaysTrue();
-    Iterable<IEObjectDescription> _search_3 = this.lookup.search("OperationBinding ", _alwaysTrue_3);
-    Iterables.<IEObjectDescription>addAll(allBindingDescs, _search_3);
-    List<Binding> allBindings = CollectionLiterals.<Binding>newArrayList();
-    for (final IEObjectDescription bindingDesc : allBindingDescs) {
-      {
-        final EObject obj = bindingDesc.getEObjectOrProxy();
-        if ((obj instanceof Binding)) {
-          final Binding binding = ((Binding) obj);
-          boolean _eIsProxy = binding.eIsProxy();
+  /**
+   * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given
+   * target environment that satisfy the given endpoint qualifier or any endpoint qualifier in the binding if endpointQualifier
+   * is null
+   * 
+   * @param module 			The module to find a ModuleBinding for. Bindings to compatible module version are also considered
+   * @param targetEnvironment	The environment the bindings must bind to.
+   * @param endpointQualifier	Endpoint qualifier that must be effective in the binding. When null, endpoint qualifiers are ignored,
+   * 							i.e. all bindings that match the other criteria will be returned
+   */
+  public Set<ModuleBinding> findBindingsToCompatibleModuleEnvAndQualifier(final Module module, final Environment targetEnvironment, final Qualifier endpointQualifier) {
+    Resource _eResource = module.eResource();
+    ResourceSet _resourceSet = _eResource==null?(ResourceSet)null:_eResource.getResourceSet();
+    List<Binding> _allBindings = this.getAllBindings(_resourceSet);
+    final Iterable<ModuleBinding> allBindings = Iterables.<ModuleBinding>filter(_allBindings, ModuleBinding.class);
+    Iterable<Module> _findCompatibleModules = this.moduleLookup.findCompatibleModules(module);
+    final Set<Module> compatibleModules = IterableExtensions.<Module>toSet(_findCompatibleModules);
+    boolean _notEquals = (!Objects.equal(endpointQualifier, null));
+    if (_notEquals) {
+      final Set<ModuleBinding> modBindings = CollectionLiterals.<ModuleBinding>newHashSet();
+      for (final ModuleBinding b : allBindings) {
+        {
+          ModuleBinding bind = b;
+          boolean _eIsProxy = b.eIsProxy();
           if (_eIsProxy) {
-            EObject _resolve = EcoreUtil2.resolve(binding, rs);
-            final Binding resolvedBinding = ((Binding) _resolve);
-            boolean _eIsProxy_1 = resolvedBinding.eIsProxy();
-            boolean _not = (!_eIsProxy_1);
-            if (_not) {
-              allBindings.add(resolvedBinding);
-            }
+            Resource _eResource_1 = module.eResource();
+            ResourceSet _resourceSet_1 = _eResource_1==null?(ResourceSet)null:_eResource_1.getResourceSet();
+            EObject _resolve = EcoreUtil2.resolve(b, _resourceSet_1);
+            bind = ((ModuleBinding) _resolve);
+          }
+          boolean _and = false;
+          boolean _and_1 = false;
+          ModuleRef _module = bind.getModule();
+          Module _module_1 = _module.getModule();
+          boolean _contains = compatibleModules.contains(_module_1);
+          if (!_contains) {
+            _and_1 = false;
           } else {
-            allBindings.add(binding);
+            Environment _resolveEnvironment = this._environmentBindingResolver.resolveEnvironment(bind);
+            boolean _equals = Objects.equal(_resolveEnvironment, targetEnvironment);
+            _and_1 = (_contains && _equals);
+          }
+          if (!_and_1) {
+            _and = false;
+          } else {
+            boolean _or = false;
+            boolean _equals_1 = Objects.equal(endpointQualifier, null);
+            if (_equals_1) {
+              _or = true;
+            } else {
+              EndpointQualifierDescriptor _potentialEffectiveEndpointQualifiers = this._endpointQualifierQueries.getPotentialEffectiveEndpointQualifiers(bind);
+              boolean _containsEndpointQualifier = _potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier);
+              _or = (_equals_1 || _containsEndpointQualifier);
+            }
+            _and = (_and_1 && _or);
+          }
+          if (_and) {
+            modBindings.add(bind);
           }
         }
       }
-    }
-    return allBindings;
-  }
-  
-  public ModuleBinding getImportModuleBinding(final List<ModuleBinding> canditates, final Module importMod, final String envName) {
-    final Function1<ModuleBinding,Boolean> _function = new Function1<ModuleBinding,Boolean>() {
-        public Boolean apply(final ModuleBinding e) {
-          boolean _and = false;
-          ModuleRef _module = e.getModule();
-          Module _module_1 = _module.getModule();
-          boolean _equals = Objects.equal(_module_1, importMod);
-          if (!_equals) {
-            _and = false;
-          } else {
-            Environment _resolveEnvironment = BindingLookup.this._environmentBindingResolver.resolveEnvironment(e);
-            String _name = _resolveEnvironment.getName();
-            boolean _equals_1 = Objects.equal(_name, envName);
-            _and = (_equals && _equals_1);
-          }
-          return Boolean.valueOf(_and);
-        }
-      };
-    ModuleBinding _findFirst = IterableExtensions.<ModuleBinding>findFirst(canditates, _function);
-    return _findFirst;
-  }
-  
-  /**
-   * Find all ModuleBindings that directly refer to this module and bind it to the given
-   * target environment
-   */
-  public Set<ModuleBinding> findBindingsToModule(final Module module, final String envName) {
-    Set<ModuleBinding> _xblockexpression = null;
-    {
-      Resource _eResource = module.eResource();
-      ResourceSet _resourceSet = _eResource==null?(ResourceSet)null:_eResource.getResourceSet();
-      List<Binding> _allBindings = this.getAllBindings(_resourceSet);
-      final Iterable<ModuleBinding> allBindings = Iterables.<ModuleBinding>filter(_allBindings, ModuleBinding.class);
+      return modBindings;
+    } else {
       final Function1<ModuleBinding,Boolean> _function = new Function1<ModuleBinding,Boolean>() {
           public Boolean apply(final ModuleBinding e) {
             boolean _and = false;
             ModuleRef _module = e.getModule();
             Module _module_1 = _module.getModule();
-            boolean _equals = Objects.equal(_module_1, module);
-            if (!_equals) {
+            boolean _contains = compatibleModules.contains(_module_1);
+            if (!_contains) {
               _and = false;
             } else {
               Environment _resolveEnvironment = BindingLookup.this._environmentBindingResolver.resolveEnvironment(e);
-              String _name = _resolveEnvironment.getName();
-              boolean _equals_1 = Objects.equal(_name, envName);
-              _and = (_equals && _equals_1);
+              boolean _equals = Objects.equal(_resolveEnvironment, targetEnvironment);
+              _and = (_contains && _equals);
             }
             return Boolean.valueOf(_and);
           }
         };
       Iterable<ModuleBinding> _filter = IterableExtensions.<ModuleBinding>filter(allBindings, _function);
-      Set<ModuleBinding> _set = IterableExtensions.<ModuleBinding>toSet(_filter);
-      _xblockexpression = (_set);
+      return IterableExtensions.<ModuleBinding>toSet(_filter);
     }
-    return _xblockexpression;
-  }
-  
-  /**
-   * Find all ModuleBindings of the candidates that directly refer to this module and bind it to the given
-   * target environment
-   */
-  public Set<ModuleBinding> findBindingsToModule(final List<ModuleBinding> canditates, final Module importMod, final String envName) {
-    final Function1<ModuleBinding,Boolean> _function = new Function1<ModuleBinding,Boolean>() {
-        public Boolean apply(final ModuleBinding e) {
-          boolean _and = false;
-          ModuleRef _module = e.getModule();
-          Module _module_1 = _module.getModule();
-          boolean _equals = Objects.equal(_module_1, importMod);
-          if (!_equals) {
-            _and = false;
-          } else {
-            Environment _resolveEnvironment = BindingLookup.this._environmentBindingResolver.resolveEnvironment(e);
-            String _name = _resolveEnvironment.getName();
-            boolean _equals_1 = Objects.equal(_name, envName);
-            _and = (_equals && _equals_1);
-          }
-          return Boolean.valueOf(_and);
-        }
-      };
-    Iterable<ModuleBinding> _filter = IterableExtensions.<ModuleBinding>filter(canditates, _function);
-    Set<ModuleBinding> _set = IterableExtensions.<ModuleBinding>toSet(_filter);
-    return _set;
   }
   
   /**
    * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given
-   * target environment
+   * target environment. Endpoint qualifiers are ignored.
+   * 
+   * @param module 			The module to find a ModuleBinding for. Bindings to compatible module version are also considered
+   * @param targetEnvironment	The environment the bindings must bind to.
    */
-  public Set<ModuleBinding> findBindingsToCompatibleModule(final Module module, final Environment targetEnvironment) {
+  public Set<ModuleBinding> findBindingsToCompatibleModuleByEnv(final Module module, final Environment targetEnvironment) {
     Resource _eResource = module.eResource();
     ResourceSet _resourceSet = _eResource==null?(ResourceSet)null:_eResource.getResourceSet();
     List<Binding> _allBindings = this.getAllBindings(_resourceSet);
@@ -226,35 +192,8 @@ public class BindingLookup {
   }
   
   /**
-   * Find all ModuleBindings of the candidates that refer to this module or a compatible module and bind it to the given
-   * target environment
-   */
-  public Set<ModuleBinding> findAllBindingsToCompatibleModule(final List<ModuleBinding> canditates, final Module module, final Environment targetEnvironment) {
-    Iterable<Module> _findCompatibleModules = this.moduleLookup.findCompatibleModules(module);
-    final Set<Module> compatibleModules = IterableExtensions.<Module>toSet(_findCompatibleModules);
-    final Function1<ModuleBinding,Boolean> _function = new Function1<ModuleBinding,Boolean>() {
-        public Boolean apply(final ModuleBinding e) {
-          boolean _and = false;
-          ModuleRef _module = e.getModule();
-          Module _module_1 = _module.getModule();
-          boolean _contains = compatibleModules.contains(_module_1);
-          if (!_contains) {
-            _and = false;
-          } else {
-            Environment _resolveEnvironment = BindingLookup.this._environmentBindingResolver.resolveEnvironment(e);
-            boolean _equals = Objects.equal(_resolveEnvironment, targetEnvironment);
-            _and = (_contains && _equals);
-          }
-          return Boolean.valueOf(_and);
-        }
-      };
-    Iterable<ModuleBinding> _filter = IterableExtensions.<ModuleBinding>filter(canditates, _function);
-    return IterableExtensions.<ModuleBinding>toSet(_filter);
-  }
-  
-  /**
-   * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given
-   * target environment
+   * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to any
+   * target environment.
    */
   public Set<ModuleBinding> findAllBindingsToCompatibleModule(final Module module) {
     Resource _eResource = module.eResource();
@@ -276,7 +215,72 @@ public class BindingLookup {
   }
   
   /**
-   * Find all bindings for the given Service to an environment
+   * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to any
+   * target environment with the given endpoint qualifier or any endpoint qualifier in the binding if endpointQualifier
+   * is null.
+   */
+  public Set<ModuleBinding> findAllBindingsToCompatibleModule(final Module module, final Qualifier endpointQualifier) {
+    Resource _eResource = module.eResource();
+    ResourceSet _resourceSet = _eResource==null?(ResourceSet)null:_eResource.getResourceSet();
+    List<Binding> _allBindings = this.getAllBindings(_resourceSet);
+    final Iterable<ModuleBinding> allBindings = Iterables.<ModuleBinding>filter(_allBindings, ModuleBinding.class);
+    Iterable<Module> _findCompatibleModules = this.moduleLookup.findCompatibleModules(module);
+    final Set<Module> compatibleModules = IterableExtensions.<Module>toSet(_findCompatibleModules);
+    boolean _notEquals = (!Objects.equal(endpointQualifier, null));
+    if (_notEquals) {
+      final Set<ModuleBinding> modBindings = CollectionLiterals.<ModuleBinding>newHashSet();
+      for (final ModuleBinding b : allBindings) {
+        {
+          ModuleBinding bind = b;
+          boolean _eIsProxy = b.eIsProxy();
+          if (_eIsProxy) {
+            Resource _eResource_1 = module.eResource();
+            ResourceSet _resourceSet_1 = _eResource_1==null?(ResourceSet)null:_eResource_1.getResourceSet();
+            EObject _resolve = EcoreUtil2.resolve(b, _resourceSet_1);
+            bind = ((ModuleBinding) _resolve);
+          }
+          boolean _and = false;
+          ModuleRef _module = bind.getModule();
+          Module _module_1 = _module.getModule();
+          boolean _contains = compatibleModules.contains(_module_1);
+          if (!_contains) {
+            _and = false;
+          } else {
+            boolean _or = false;
+            boolean _equals = Objects.equal(endpointQualifier, null);
+            if (_equals) {
+              _or = true;
+            } else {
+              EndpointQualifierDescriptor _potentialEffectiveEndpointQualifiers = this._endpointQualifierQueries.getPotentialEffectiveEndpointQualifiers(bind);
+              boolean _containsEndpointQualifier = _potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier);
+              _or = (_equals || _containsEndpointQualifier);
+            }
+            _and = (_contains && _or);
+          }
+          if (_and) {
+            modBindings.add(bind);
+          }
+        }
+      }
+      return modBindings;
+    } else {
+      final Function1<ModuleBinding,Boolean> _function = new Function1<ModuleBinding,Boolean>() {
+          public Boolean apply(final ModuleBinding e) {
+            ModuleRef _module = e.getModule();
+            Module _module_1 = _module.getModule();
+            boolean _contains = compatibleModules.contains(_module_1);
+            return Boolean.valueOf(_contains);
+          }
+        };
+      Iterable<ModuleBinding> _filter = IterableExtensions.<ModuleBinding>filter(allBindings, _function);
+      return IterableExtensions.<ModuleBinding>toSet(_filter);
+    }
+  }
+  
+  /**
+   * Find all bindings for the given Service to an environment. The most specific bindings are returned. By default
+   * this is a ModuleBinding. However, if the ModuleBinding is overridden for a service with a ServiceBinding, the
+   * respective ServiceBinding will be returned.
    */
   public Iterable<Binding> findMostSpecificBindings(final Service service, final Environment env) {
     Resource _eResource = service.eResource();
@@ -333,8 +337,6 @@ public class BindingLookup {
         final Iterable<ModuleBinding> moduleBindings = IterableExtensions.<ModuleBinding>filter(_filter_1, _function_1);
         Iterables.<Binding>addAll(bindings, moduleBindings);
       }
-      EObject _eContainer = service.eContainer();
-      final SubNamespace serviceNamespace = ((SubNamespace) _eContainer);
     } else {
       Iterables.<Binding>addAll(bindings, serviceBindings);
     }
@@ -342,8 +344,9 @@ public class BindingLookup {
   }
   
   /**
-   * get the specific defined Binding of a Service to an Environment that support a protocol that matches the used
-   * ImportBindingProtocol
+   * Find all bindings for the given Service to an environment that provide an endpoint with the given protocol.
+   * The most specific bindings are returned. By default this is a ModuleBinding. However, if the ModuleBinding
+   * is overridden for a service with a ServiceBinding, the respective ServiceBinding will be returned.
    */
   public Iterable<Binding> findMostSpecificBindings(final Service service, final Environment env, final ImportBindingProtocol protocol) {
     Iterable<Binding> _findMostSpecificBindings = this.findMostSpecificBindings(service, env);
@@ -691,6 +694,11 @@ public class BindingLookup {
     return IterableExtensions.<Binding>filter(bindings, _function_2);
   }
   
+  /**
+   * Get the most specific binding for service matching the given endpoint qualifier. The most specific binding is by default
+   * the top level binding. This might be overridden in a nested binding declaration. If such an override is defined, it will be
+   * returned instead.
+   */
   protected Binding _getMostSpecificBinding(final Service service, final Binding binding, final EndpointQualifierRef endpointQualifier) {
     final Binding candBind = this.getMostSpecificBinding(service, binding);
     final EndpointQualifierDescriptor bindEndpointQualifiers = this._endpointQualifierQueries.getPotentialEffectiveEndpointQualifiers(candBind);
@@ -748,6 +756,43 @@ public class BindingLookup {
     } else {
       return null;
     }
+  }
+  
+  /**
+   * Get all Bindings defined in the model. This includes ModuleBindings, ServiceBindings and OperationBindings
+   */
+  public List<Binding> getAllBindings(final ResourceSet rs) {
+    Predicate<IEObjectDescription> _alwaysTrue = Predicates.<IEObjectDescription>alwaysTrue();
+    Iterable<IEObjectDescription> _search = this.lookup.search("ModuleBinding ", _alwaysTrue);
+    Set<IEObjectDescription> allBindingDescs = IterableExtensions.<IEObjectDescription>toSet(_search);
+    Predicate<IEObjectDescription> _alwaysTrue_1 = Predicates.<IEObjectDescription>alwaysTrue();
+    Iterable<IEObjectDescription> _search_1 = this.lookup.search("ServiceBinding ", _alwaysTrue_1);
+    Iterables.<IEObjectDescription>addAll(allBindingDescs, _search_1);
+    Predicate<IEObjectDescription> _alwaysTrue_2 = Predicates.<IEObjectDescription>alwaysTrue();
+    Iterable<IEObjectDescription> _search_2 = this.lookup.search("OperationBinding ", _alwaysTrue_2);
+    Iterables.<IEObjectDescription>addAll(allBindingDescs, _search_2);
+    List<Binding> allBindings = CollectionLiterals.<Binding>newArrayList();
+    for (final IEObjectDescription bindingDesc : allBindingDescs) {
+      {
+        final EObject obj = bindingDesc.getEObjectOrProxy();
+        if ((obj instanceof Binding)) {
+          final Binding binding = ((Binding) obj);
+          boolean _eIsProxy = binding.eIsProxy();
+          if (_eIsProxy) {
+            EObject _resolve = EcoreUtil2.resolve(binding, rs);
+            final Binding resolvedBinding = ((Binding) _resolve);
+            boolean _eIsProxy_1 = resolvedBinding.eIsProxy();
+            boolean _not = (!_eIsProxy_1);
+            if (_not) {
+              allBindings.add(resolvedBinding);
+            }
+          } else {
+            allBindings.add(binding);
+          }
+        }
+      }
+    }
+    return allBindings;
   }
   
   /**

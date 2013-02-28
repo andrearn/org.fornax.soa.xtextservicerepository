@@ -8,7 +8,6 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.basedsl.sOABaseDsl.Import;
-import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
@@ -20,8 +19,8 @@ import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Parameter;
+import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.QueryObject;
-import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.RequiredServiceRef;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceRef;
@@ -124,7 +123,7 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 		return "full/obj16/methpub_obj.gif";
 	}
 	
-	Object text (Attribute ele) {
+	Object text (Property ele) {
 		String name = ele.getName();
 		String typeName = getTypeName(ele.getType());
 		if (typeName != null) {
@@ -136,27 +135,10 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 			return ele.getName();
 		}
 	}
-	String image (Attribute ele) {
+	String image (Property ele) {
 		return "full/obj16/field_public_obj.gif";
 	}
-	
-	Object text (Reference ele) {
-		String name = ele.getName();
-		String typeName = getTypeName(ele.getType());
-		if (typeName != null) {
-			StyledString styledName = new StyledString (name);
-			StyledString styledTypeName = new StyledString (" : " + typeName, StyledString.DECORATIONS_STYLER);
-			styledName.append(styledTypeName);
-			return styledName;
-		} else {			
-			return ele.getName();
-		}
-	}
-
-	String image (Reference ele) {
-		return "full/obj16/field_public_obj.gif";
-	}
-	
+		
 	Object text (Parameter ele) {
 		String name = ele.getName();
 		String typeName = getTypeName(ele.getType());

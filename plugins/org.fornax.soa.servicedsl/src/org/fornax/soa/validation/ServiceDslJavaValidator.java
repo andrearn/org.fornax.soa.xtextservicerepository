@@ -23,7 +23,6 @@ import org.fornax.soa.service.validation.version.BusinessObjectVersionValidator;
 import org.fornax.soa.service.validation.version.EnumerationVersionValidator;
 import org.fornax.soa.service.validation.version.ExceptionVersionValidator;
 import org.fornax.soa.service.validation.version.ServiceVersionValidator;
-import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
@@ -34,7 +33,6 @@ import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Parameter;
 import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.QueryObject;
-import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceRef;
@@ -314,119 +312,6 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		}
 	}
 
-	@Check
-	public void checkWeakRefHasBusinessKey(final BusinessObjectRef b) {
-		if (b.eContainer() instanceof Reference) {
-			List<Property> props = new ArrayList<Property>();
-			props.addAll(b.getType().getProperties());
-			props.addAll(BusinessObjectQueryInternal.getAllInheritedProperties(b
-					.getType()));
-
-			Iterable<Property> keys = Iterables.filter(props,
-					new Predicate<Property>() {
-
-						public boolean apply(final Property input) {
-							return input.isIsBusinessKey();
-						}
-
-					});
-			if (Lists.newArrayList(keys).isEmpty())
-				error("The target businessObject of the weak-ref defines no business-key. "
-						+ "The business-key is required to represent and resolve the reference. "
-						+ "Remove the weak-ref qualifier or define a single business-key in the target businessObject",
-						ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
-		}
-	}
-
-	@Check
-	public void checkWeakRefHasKey(final VersionedTypeRef b) {
-		if (b.eContainer() instanceof Reference
-				&& b.getType() instanceof BusinessObject) {
-			List<Property> props = new ArrayList<Property>();
-			props.addAll(((BusinessObject) b.getType()).getProperties());
-			props.addAll(BusinessObjectQueryInternal
-					.getAllInheritedProperties((BusinessObject) b.getType()));
-
-			Iterable<Property> keys = Iterables.filter(props,
-					new Predicate<Property>() {
-
-						public boolean apply(final Property input) {
-							return input.isIsBusinessKey() || input.isIsProvidedKey ();
-						}
-
-					});
-			if (Lists.newArrayList(keys).isEmpty())
-				error("The target businessObject of the weak-ref defines no business-key or provided-key. "
-						+ "One of the keys is required to represent and resolve the reference. "
-						+ "Remove the weak-ref qualifier or define a single business-key or provided-key in the target businessObject",
-						ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
-		}
-	}
-
-	@Check
-	public void checkWeakRefTargetDefinesOnlyOneKey(
-			final BusinessObjectRef b) {
-		if (b.eContainer() instanceof Reference) {
-			Iterable<Property> bizKeys = Iterables.filter(b.getType()
-					.getProperties(), new Predicate<Property>() {
-
-				public boolean apply(final Property input) {
-					// TODO Auto-generated method stub
-					return input.isIsBusinessKey();
-				}
-
-			});
-			Iterable<Property> keys = Iterables.filter(b.getType()
-					.getProperties(), new Predicate<Property>() {
-
-				public boolean apply(final Property input) {
-					return input.isIsProvidedKey ();
-				}
-
-			});
-			if (!(Lists.newArrayList(keys).size() == 1 || Lists.newArrayList(bizKeys).size() == 1))
-				error("The target businessObject of the weak-ref does not define a single business-key or provided-key. "
-						+ "The key is required to represent and resolve the reference. "
-						+ "Remove the weak-ref qualifier or define a single business-key or provided-key in the target businessObject",
-						ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
-
-		}
-	}
-
-	@Check
-	public void checkWeakRefTargetDefinesOnlyOneKey(
-			final VersionedTypeRef b) {
-		if (b.eContainer() instanceof Reference
-				&& b.getType() instanceof BusinessObject) {
-			Iterable<Property> bizKeys = Iterables.filter(
-					((BusinessObject) b.getType()).getProperties(),
-					new Predicate<Property>() {
-
-						public boolean apply(final Property input) {
-							// TODO Auto-generated method stub
-							return input.isIsBusinessKey();
-						}
-
-					});
-			Iterable<Property> keys = Iterables.filter(
-					((BusinessObject) b.getType()).getProperties(),
-					new Predicate<Property>() {
-
-						public boolean apply(final Property input) {
-							// TODO Auto-generated method stub
-							return input.isIsProvidedKey ();
-						}
-
-					});
-			if (!(Lists.newArrayList(keys).size() == 1 || Lists.newArrayList(bizKeys).size() == 1))
-				error("The target businessObject of the weak-ref does not define a single business-key or provided-key. "
-						+ "The key is required to represent and resolve the reference. "
-						+ "Remove the weak-ref qualifier or define a single business-key or provided-key in the target businessObject",
-						ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
-
-		}
-	}
-
 	@Check(CheckType.NORMAL)
 	public void checkEntityServicesDontCallActivityServices(ServiceRef svcRef) {
 		EObject o = svcRef.eContainer().eContainer();
@@ -490,18 +375,12 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 
 	// Consistency
 	@Check
-	public void checkBusinessKeyIsMandatory(Attribute p) {
+	public void checkBusinessKeyIsMandatory(Property p) {
 		if (p.isIsBusinessKey() && p.isOptional())
 			error("A business-key attribute may not be optional.",
 					ServiceDslPackage.Literals.PROPERTY__IS_BUSINESS_KEY);
 	}
 
-	@Check
-	public void checkBusinessKeyIsMandatory(Reference p) {
-		if (p.isIsBusinessKey() && p.isOptional())
-			error("A business-key weak-ref attribute may not be optional.",
-					ServiceDslPackage.Literals.PROPERTY__IS_BUSINESS_KEY);
-	}
 
 	@Check
 	public void checkNoDirectNamespaceCycle(Property p) {

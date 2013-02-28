@@ -21,12 +21,14 @@ import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
-import org.fornax.soa.profiledsl.search.FindAssetsWithStateQuery;
-import org.fornax.soa.service.query.FindUnapprovedAssetsQuery;
+import org.fornax.soa.servicerepo.query.FindAssetsWithStateQuery;
+import org.fornax.soa.servicerepo.query.predicates.CanonicalOrNotPredicate;
+import org.fornax.soa.servicerepo.query.predicates.FindUnapprovedAssetsQuery;
 import org.fornax.soa.servicerepo.ui.internal.ServiceRepositoryActivator;
 import org.fornax.soa.servicerepo.ui.search.dialog.ServiceRepositorySearchMessages;
 
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.ibm.icu.text.MessageFormat;
@@ -113,40 +115,33 @@ public class ServiceRepositorySearchQuery implements ISearchQuery {
 
 	public Iterable<IEObjectDescription> doSearch(ResourceSet rs) {
 		Iterable<IEObjectDescription> result = new ArrayList<IEObjectDescription>();
+
+		String minStateName = querySpec.getMinState();
+		String maxStateName = querySpec.getMaxState();
+		LifecycleState minState = null;
+		if (minStateName != null && minStateName != "") {
+			minState = eObjectLookup.getModelElementByName(minStateName, rs, SOAProfileDslPackage.Literals.LIFECYCLE.getName());
+		}
+		LifecycleState maxState = null;
+		if (maxStateName != null && minStateName != "") {
+			maxState = eObjectLookup.getModelElementByName(maxStateName, rs, SOAProfileDslPackage.Literals.LIFECYCLE.getName());
+		}
+		String minVersion = null;
+		if (! "".equals(querySpec.getMinVersion()))
+			minVersion = querySpec.getMinVersion();
+		String maxVersion = null;
+		if (! "".equals(querySpec.getMaxVersion()))
+			maxVersion = querySpec.getMaxVersion();
 		
 		String queryName = querySpec.getQueryName();
+
 		if (FindUnapprovedAssetsQuery.class.getName().equals(queryName)) {
 			unApprovedServicesQuery = injector.getInstance (FindUnapprovedAssetsQuery.class);
-			result = unApprovedServicesQuery.search(pattern, assetType, rs);
-		} else if (FindAssetsWithStateQuery.class.getName().equals(queryName)) { 
+			result = unApprovedServicesQuery.search(pattern, assetType, minState, maxState, minVersion, maxVersion, querySpec.isCanonicalNamespaces(), querySpec.isNonCanonicalNamespaces(), rs);
+		} else { 
 			FindAssetsWithStateQuery query = injector.getInstance(FindAssetsWithStateQuery.class);
-			String minStateName = querySpec.getMinState();
-			String maxStateName = querySpec.getMaxState();
-			LifecycleState minState = null;
-			if (minStateName != null && minStateName != "") {
-				minState = eObjectLookup.getModelElementByName(minStateName, rs, SOAProfileDslPackage.Literals.LIFECYCLE.getName());
-			}
-			LifecycleState maxState = null;
-			if (maxStateName != null && minStateName != "") {
-				maxState = eObjectLookup.getModelElementByName(maxStateName, rs, SOAProfileDslPackage.Literals.LIFECYCLE.getName());
-			}
-			String minVersion = null;
-			if (! "".equals(querySpec.getMinVersion()))
-				minVersion = querySpec.getMinVersion();
-			String maxVersion = null;
-			if (! "".equals(querySpec.getMaxVersion()))
-				maxVersion = querySpec.getMaxVersion();
 				
-			result = query.search (pattern, assetType, minState, maxState, minVersion, maxVersion, rs);
-		} else {
-			result = predicateSearch.search(pattern, assetType, new Predicate<IEObjectDescription>() {
-				public boolean apply(IEObjectDescription input) {
-					if (input.getEObjectOrProxy().getClass().getCanonicalName().startsWith("org.fornax.soa."))
-						return true;
-					else
-						return false;
-				}
-			});
+			result = query.search (pattern, assetType, minState, maxState, minVersion, maxVersion, querySpec.isCanonicalNamespaces(), querySpec.isNonCanonicalNamespaces(), rs);
 		}
 		return result;
 	}

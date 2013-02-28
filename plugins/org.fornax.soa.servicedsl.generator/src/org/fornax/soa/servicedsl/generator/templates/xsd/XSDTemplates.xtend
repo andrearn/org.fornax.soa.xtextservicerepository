@@ -8,33 +8,26 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
+import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.namespace.NamespaceSplitter
 import org.fornax.soa.service.query.ExceptionFinder
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries
 import org.fornax.soa.service.versioning.IExceptionResolver
 import org.fornax.soa.service.versioning.ITypeResolver
-import org.fornax.soa.serviceDsl.Attribute
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.EnumLiteral
 import org.fornax.soa.serviceDsl.Enumeration
 import org.fornax.soa.serviceDsl.Exception
 import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.Property
-import org.fornax.soa.serviceDsl.Reference
+import org.fornax.soa.serviceDsl.QueryObject
 import org.fornax.soa.serviceDsl.SimpleAttribute
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
-import org.fornax.soa.basedsl.version.VersionMatcher
-import org.fornax.soa.service.query.type.ReferencedTypesFinder
-import org.fornax.soa.profiledsl.search.StateMatcher
-import org.fornax.soa.service.query.type.VersionedTypeFilter
-import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
-import org.fornax.soa.serviceDsl.QueryObject
 
 class XSDTemplates {
 
@@ -49,7 +42,6 @@ class XSDTemplates {
 	@Inject extension ITypeResolver
 	@Inject extension IStateMatcher
 	
-	@Inject ExceptionFinder exceptionFinder
 	@Inject IExceptionResolver exceptionResolver
 	
 	@Inject VersionQualifierExtensions versionQualifier
@@ -492,10 +484,8 @@ class XSDTemplates {
 		</xsd:complexType>
 	'''
 	
-	def dispatch toProperty (Property p, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) {
-	}
 	
-	def dispatch toProperty (Attribute attr, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
+	def dispatch toProperty (Property attr, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 		«IF docProvider.getDocumentation (attr) != null»
 			<xsd:element name="«attr.name»" «IF attr.optionalElement»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment()»«ENDIF» >
 				<xsd:annotation>
@@ -541,27 +531,6 @@ class XSDTemplates {
 		«ENDIF»
 	'''
 	
-	def dispatch toProperty (Reference ref, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
-		<xsd:element name="«ref.name»" «IF ref.optionalElement»minOccurs="0"«ENDIF» type="«ref.type.toWeakRefType (minState)»" >
-		   	<xsd:annotation>
-		   		<xsd:documentation>
-		   			<![CDATA[
-			   			References an instance of type «ref.type.toFullTypeNameRef(currNs)» using it's business-key «ref.type.toWeakRefKeyAttr(minState)»
-				   			«docProvider.getDocumentation (ref)»
-			    	]]>
-			    </xsd:documentation>
-				«/*
-			    <xsd:appinfo>
-					<jxb:property>
-						<jxb:javadoc>
-				   			<![CDATA[«doc?.stripCommentBraces()?.trim()»]]>
-						</jxb:javadoc>
-					</jxb:property>
-			    </xsd:appinfo>
-				*/»
-		   	</xsd:annotation>
-		</xsd:element>
-	'''
 	
 	def toEnumLiteral (EnumLiteral enumLit) '''
 		<xsd:enumeration value="«enumLit.name»"/>

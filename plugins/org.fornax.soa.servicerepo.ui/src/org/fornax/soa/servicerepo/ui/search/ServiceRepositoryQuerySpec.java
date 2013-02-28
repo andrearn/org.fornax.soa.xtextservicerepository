@@ -14,15 +14,25 @@ public class ServiceRepositoryQuerySpec {
     private String maxState;
     private String minVersion;
     private String maxVersion;
+    private boolean canonicalNamespaces;
+    private boolean nonCanonicalNamespaces;
 
 	
 	
 	public ServiceRepositoryQuerySpec(String pattern, String searchFor, String queryName, boolean caseSensitive, String scopeDescription) {
 		this.pattern = pattern;
+		if (pattern == null || "".equals(pattern)) {
+			this.pattern = "*";
+		}
 		this.searchFor = searchFor;
+		if (searchFor == null || "Any".equals(searchFor)) {
+			this.searchFor = "*";
+		}
 		this.queryName = queryName;
 		this.caseSensitive = caseSensitive;
 		this.scopeDescription = scopeDescription;
+		this.canonicalNamespaces = true;
+		this.nonCanonicalNamespaces = true;
 	}
 	
 	public String getPattern() {
@@ -104,5 +114,21 @@ public class ServiceRepositoryQuerySpec {
 
 	public String getMaxVersion() {
 		return maxVersion;
+	}
+
+	public boolean isCanonicalNamespaces() {
+		return canonicalNamespaces;
+	}
+
+	public void setCanonicalNamespaces(boolean canonicalNamespaces) {
+		this.canonicalNamespaces = canonicalNamespaces;
+	}
+
+	public boolean isNonCanonicalNamespaces() {
+		return nonCanonicalNamespaces;
+	}
+
+	public void setNonCanonicalNamespaces(boolean nonCanonicalNamespaces) {
+		this.nonCanonicalNamespaces = nonCanonicalNamespaces;
 	}
 }

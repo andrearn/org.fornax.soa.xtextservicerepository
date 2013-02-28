@@ -28,7 +28,7 @@ class LatestMinorVersionServiceResolver implements IServiceResolver {
 	}
 	
 	override Service findMatchingServiceByState (ServiceRef s, LifecycleState minState) {
-		s.findRefOwnerSubdomain().services
+		s.findServiceRefOwnerSubdomain().services
 			.filter (e|e.name == s.service.name && e.version.versionMatches (s.versionRef) && e.state.matchesMinStateLevel (minState))
 			.sortBy (e|e.version.version).last();
 	}

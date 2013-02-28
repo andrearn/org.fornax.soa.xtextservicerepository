@@ -30,6 +30,9 @@ solution CustomerManagementApp {
 			
 			// The feature uses this service to create the customer
 			requires CustomerManagerBAS majorVersion 1
+			feature ABC {
+				
+			}
 		}
 
 

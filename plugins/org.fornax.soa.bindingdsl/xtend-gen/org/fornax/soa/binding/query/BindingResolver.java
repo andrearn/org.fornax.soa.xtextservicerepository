@@ -27,7 +27,8 @@ import org.fornax.soa.semanticsDsl.Qualifier;
 import org.fornax.soa.serviceDsl.Service;
 
 /**
- * Resolves Bindings to explicit descriptions describing which Binding applies to which service an module
+ * Resolves Bindings of service/modules as explicit descriptions describing which Binding applies to which service
+ * provided or used by a module.
  */
 @SuppressWarnings("all")
 public class BindingResolver {
@@ -41,40 +42,19 @@ public class BindingResolver {
   private EndpointQualifierQueries endpointQualifierQuery;
   
   /**
-   * Resolve Bindings of services provided by a module or a compatible module version
-   */
-  public Set<ServiceRefBindingDescription> resolveCompatibleProvidedServiceBindings(final Module module, final Environment targetEnvironment) {
-    final Set<ModuleBinding> candBindings = this.bindingLookup.findBindingsToCompatibleModule(module, targetEnvironment);
-    Set<ServiceRefBindingDescription> svcBindDescs = CollectionLiterals.<ServiceRefBindingDescription>newHashSet();
-    final Set<AbstractServiceRef> providedServices = this.modServiceResolver.getAllProvidedServiceRefs(module);
-    for (final AbstractServiceRef provSvcRef : providedServices) {
-      {
-        final Service svc = this.modServiceResolver.resolveModuleServiceRef(provSvcRef, targetEnvironment);
-        for (final ModuleBinding bind : candBindings) {
-          {
-            final Binding specBind = this.bindingLookup.getMostSpecificBinding(svc, bind);
-            boolean _notEquals = (!Objects.equal(specBind, null));
-            if (_notEquals) {
-              ServiceRefBindingDescription _serviceRefBindingDescription = new ServiceRefBindingDescription();
-              final ServiceRefBindingDescription curSvcBindDesc = _serviceRefBindingDescription;
-              curSvcBindDesc.setApplicableBinding(specBind);
-              curSvcBindDesc.setResolvedService(svc);
-              curSvcBindDesc.setServiceRef(provSvcRef);
-              curSvcBindDesc.setProvidingModule(module);
-              svcBindDescs.add(curSvcBindDesc);
-            }
-          }
-        }
-      }
-    }
-    return svcBindDescs;
-  }
-  
-  /**
-   * Resolve Bindings of services provided by a module or a compatible module version
+   * Resolve Bindings of all services provided by a module in the given environment. Endpoint qualifiers in the module definition that select used endpoints of used services
+   * are used as additional filter criteria on the selected bindings. For each applicable binding and provided service
+   * a ServiceBindingDescription is returned.
+   * 
+   * @param module 				the module, for which ServiceBindingDescriptions are to be build for all used services
+   * @param targetEnvironment 	the environment a binding applicable for the used service must bind to
+   * @param endpointQualifier 	selects an endpoint of a service by selecting the most specific binding for
+   * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
+   * 								have any or no potentially effective endpoint qualifier
    */
   public Set<ServiceRefBindingDescription> resolveCompatibleProvidedServiceBindings(final Module module, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifier) {
-    final Set<ModuleBinding> candBindings = this.bindingLookup.findBindingsToCompatibleModule(module, targetEnvironment);
+    Qualifier _endpointQualifier = endpointQualifier==null?(Qualifier)null:endpointQualifier.getEndpointQualifier();
+    final Set<ModuleBinding> candBindings = this.bindingLookup.findBindingsToCompatibleModuleEnvAndQualifier(module, targetEnvironment, _endpointQualifier);
     Set<ServiceRefBindingDescription> svcBindDescs = CollectionLiterals.<ServiceRefBindingDescription>newHashSet();
     final Set<AbstractServiceRef> providedServices = this.modServiceResolver.getAllProvidedServiceRefs(module);
     for (final AbstractServiceRef provSvcRef : providedServices) {
@@ -91,8 +71,8 @@ public class BindingResolver {
               curSvcBindDesc.setResolvedService(svc);
               curSvcBindDesc.setServiceRef(provSvcRef);
               curSvcBindDesc.setProvidingModule(module);
-              Qualifier _endpointQualifier = endpointQualifier==null?(Qualifier)null:endpointQualifier.getEndpointQualifier();
-              curSvcBindDesc.setEndpointQualifier(_endpointQualifier);
+              Qualifier _endpointQualifier_1 = endpointQualifier==null?(Qualifier)null:endpointQualifier.getEndpointQualifier();
+              curSvcBindDesc.setEndpointQualifier(_endpointQualifier_1);
               svcBindDescs.add(curSvcBindDesc);
             }
           }
@@ -103,9 +83,15 @@ public class BindingResolver {
   }
   
   /**
-   * Resolve Bindings of services used by a module. Endpoint qualifiers in the module definition that select used endpoints of used services
-   * are used as additional filter criteria on the selected bindings. If an endpoint qualifier is defined, the selected specific binding for the service
-   * must declare the endpoint qualifier itself or in one of it's supported protocols.
+   * Resolve Bindings of services used by a module in the given environment. Endpoint qualifiers in the module definition that select used endpoints of used services
+   * are used as additional filter criteria on the selected bindings.  For each applicable binding and provided service
+   * a ServiceBindingDescription is returned.
+   * 
+   * @param module 				the module, for which ServiceBindingDescriptions are to be build for all used services
+   * @param targetEnvironment 	the environment a binding applicable for the used service must bind to
+   * @param endpointQualifier 	selects an endpoint of a service by selecting the most specific binding for
+   * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
+   * 								have any or no potentially effective endpoint qualifier
    */
   public Set<ServiceRefBindingDescription> resolveCompatibleUsedServiceBindings(final Module module, final Environment targetEnvironment) {
     final Set<? extends AbstractServiceRef> usedServiceRefs = this.modServiceResolver.getAllUsedServiceRefs(module);
@@ -166,7 +152,7 @@ public class BindingResolver {
         final List svcRefsForEndpointQualifier = IterableExtensions.<AbstractServiceRef>toList(_map);
         ServiceModuleRef _moduleRef_1 = usedModRef.getModuleRef();
         Module _module_1 = _moduleRef_1.getModule();
-        final Set<ServiceRefBindingDescription> allImpModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(_module_1, targetEnvironment);
+        final Set<ServiceRefBindingDescription> allImpModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(_module_1, targetEnvironment, selectingEndpointQualifierRef);
         for (final ServiceRefBindingDescription curBindDesc : allImpModSvcBindDescs) {
           boolean _and = false;
           AbstractServiceRef _serviceRef = curBindDesc.getServiceRef();
@@ -227,20 +213,21 @@ public class BindingResolver {
         final List<Module> canditateModules = ListExtensions.<ServiceModuleRef, Module>map(_modules, _function);
         for (final Module candMod : canditateModules) {
           {
-            final Set<ModuleBinding> candBindings = this.bindingLookup.findBindingsToCompatibleModule(candMod, targetEnvironment);
+            EndpointQualifierRef _xifexpression = null;
+            EndpointQualifierRef _endpointQualifierRef = svcRef.getEndpointQualifierRef();
+            boolean _notEquals = (!Objects.equal(_endpointQualifierRef, null));
+            if (_notEquals) {
+              EndpointQualifierRef _endpointQualifierRef_1 = svcRef.getEndpointQualifierRef();
+              _xifexpression = _endpointQualifierRef_1;
+            } else {
+              EndpointQualifierRef _endpointQualifierRef_2 = module.getEndpointQualifierRef();
+              _xifexpression = _endpointQualifierRef_2;
+            }
+            final EndpointQualifierRef selectingEndpointQualifierRef = _xifexpression;
+            Qualifier _endpointQualifier = selectingEndpointQualifierRef==null?(Qualifier)null:selectingEndpointQualifierRef.getEndpointQualifier();
+            final Set<ModuleBinding> candBindings = this.bindingLookup.findBindingsToCompatibleModuleEnvAndQualifier(candMod, targetEnvironment, _endpointQualifier);
             for (final ModuleBinding bind : candBindings) {
               {
-                EndpointQualifierRef _xifexpression = null;
-                EndpointQualifierRef _endpointQualifierRef = svcRef.getEndpointQualifierRef();
-                boolean _notEquals = (!Objects.equal(_endpointQualifierRef, null));
-                if (_notEquals) {
-                  EndpointQualifierRef _endpointQualifierRef_1 = svcRef.getEndpointQualifierRef();
-                  _xifexpression = _endpointQualifierRef_1;
-                } else {
-                  EndpointQualifierRef _endpointQualifierRef_2 = module.getEndpointQualifierRef();
-                  _xifexpression = _endpointQualifierRef_2;
-                }
-                final EndpointQualifierRef selectingEndpointQualifierRef = _xifexpression;
                 Binding specBind = this.bindingLookup.getMostSpecificBinding(svc, bind, selectingEndpointQualifierRef);
                 ServiceRefBindingDescription _serviceRefBindingDescription = new ServiceRefBindingDescription();
                 final ServiceRefBindingDescription curSvcBindDesc = _serviceRefBindingDescription;
@@ -249,8 +236,8 @@ public class BindingResolver {
                 curSvcBindDesc.setServiceRef(svcRef);
                 curSvcBindDesc.setProvidingModule(candMod);
                 EndpointQualifierRef _endpointQualifierRef_3 = svcRef.getEndpointQualifierRef();
-                Qualifier _endpointQualifier = _endpointQualifierRef_3==null?(Qualifier)null:_endpointQualifierRef_3.getEndpointQualifier();
-                curSvcBindDesc.setEndpointQualifier(_endpointQualifier);
+                Qualifier _endpointQualifier_1 = _endpointQualifierRef_3==null?(Qualifier)null:_endpointQualifierRef_3.getEndpointQualifier();
+                curSvcBindDesc.setEndpointQualifier(_endpointQualifier_1);
                 svcBindDescs.add(curSvcBindDesc);
               }
             }

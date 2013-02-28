@@ -101,8 +101,8 @@ public class LatestMinorVersionServiceResolver implements IServiceResolver {
   }
   
   public Service findMatchingServiceByState(final ServiceRef s, final LifecycleState minState) {
-    SubNamespace _findRefOwnerSubdomain = this._namespaceQuery.findRefOwnerSubdomain(s);
-    EList<Service> _services = _findRefOwnerSubdomain.getServices();
+    SubNamespace _findServiceRefOwnerSubdomain = this._namespaceQuery.findServiceRefOwnerSubdomain(s);
+    EList<Service> _services = _findServiceRefOwnerSubdomain.getServices();
     final Function1<Service,Boolean> _function = new Function1<Service,Boolean>() {
         public Boolean apply(final Service e) {
           boolean _and = false;

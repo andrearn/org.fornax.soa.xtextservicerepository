@@ -1,23 +1,18 @@
 package org.fornax.soa.validation;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.xtext.resource.IReferenceDescription;
-import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.binding.query.BindingLookup;
+import org.fornax.soa.binding.query.EndpointQualifierQueries;
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.environment.query.EnvironmentLookup;
@@ -28,10 +23,10 @@ import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef;
 import org.fornax.soa.moduledsl.query.ModuleLookup;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
+import org.fornax.soa.semanticsDsl.Qualifier;
 import org.fornax.soa.util.BindingDslHelper;
 
 import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
@@ -61,6 +56,9 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 	@Inject
 	BindingLookup bindLookup;
 	
+	@Inject
+	EndpointQualifierQueries endpointQualifierQueries;
+	
 	@Override
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
@@ -74,13 +72,13 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 		return false;
 	}
 
-	@Check (CheckType.NORMAL)
+	@Check (CheckType.FAST)
 	public void checkUsedModuleHasBinding(org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef modRef) {
 		if (modRef.eResource() != null && !moduleLookup.findAllModules(modRef.eResource().getResourceSet()).isEmpty()) {
 			Module usedModule = modRef.getModule();
 			if (usedModule != null && usedModule.eResource() != null) {
-//				final Set<ModuleBinding> usedModuleBindings = bindingDslHelper.getBindingsForModule(usedModule);
-				final Set<ModuleBinding> usedModuleBindings = bindLookup.findAllBindingsToCompatibleModule (usedModule);
+				Qualifier effectiveEndpointQualifier = endpointQualifierQueries.getEffectiveEndpointQualifier(modRef);
+				final Set<ModuleBinding> usedModuleBindings = bindLookup.findAllBindingsToCompatibleModule (usedModule, effectiveEndpointQualifier);
 				if (usedModuleBindings.isEmpty()) {
 					warning("The used module " + usedModule.getName() + " has no binding. You should define a binding to use it from another module", ModuleDslPackage.Literals.SERVICE_MODULE_REF__MODULE);
 				} else {

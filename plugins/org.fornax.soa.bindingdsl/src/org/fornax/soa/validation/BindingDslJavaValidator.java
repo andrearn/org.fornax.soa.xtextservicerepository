@@ -9,6 +9,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.Check;
+import org.eclipse.xtext.validation.CheckType;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
@@ -69,7 +70,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		return result;
 	}
 
-	@Check
+	@Check (CheckType.FAST)
 	public void checkOnlyPrivateServiceHasProvidedWSDL (SOAP soap) {
 		if (soap.getProvidedWsdlUrl () != null) {
 			if (soap.eContainer () instanceof ModuleBinding) {
@@ -87,7 +88,7 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 		}
 	}
 
-	@Check
+	@Check 
 	public void checkNotRefsLowerStateService (ModuleRef moduleRef) {
 		EObject owner = moduleRef.eContainer ();
 		if (owner instanceof ModuleBinding) {

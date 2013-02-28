@@ -16,6 +16,11 @@ import java.util.Set
 import com.google.common.base.Predicates
 import java.util.List
 import org.fornax.soa.binding.EndpointQualifierDescriptor
+import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef
+import org.fornax.soa.basedsl.search.IEObjectLookup
+import org.fornax.soa.moduledsl.moduleDsl.Module
+import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef
 
 class EndpointQualifierQueries {
 	
@@ -23,7 +28,15 @@ class EndpointQualifierQueries {
 	private BindingConnectorResolver connectorResolver
 	@Inject
 	private EnvironmentBindingResolver envResolver
+	@Inject
+	private IEObjectLookup objLookup
 	
+	def dispatch Qualifier getEffectiveEndpointQualifier (EObject o) {
+		if (o.eContainer != null)
+			o.eContainer.effectiveEndpointQualifier
+		else
+			return null
+	}
 	/**
 	 * Get the effective endpoint qualifier. An endpoint qualifier on a more specific binding
 	 * overrides an endpoint qualifier from a higher level more general binding definition. 
@@ -50,6 +63,28 @@ class EndpointQualifierQueries {
 			return getEffectiveEndpointQualifier (prot.eContainer as Binding)
 		else
 			return null
+	}
+	
+	def dispatch Qualifier getEffectiveEndpointQualifier (ServiceModuleRef ref) {
+		ref.eContainer.getEffectiveEndpointQualifier
+	}
+	
+	def dispatch Qualifier getEffectiveEndpointQualifier (ModuleRef ref) {
+		if (ref.endpointQualifierRef != null)
+			return ref.endpointQualifierRef.endpointQualifier
+		else {
+			val Module mod = objLookup.getOwnerByType(ref, typeof (Module))
+			return mod.endpointQualifierRef?.endpointQualifier
+		}
+	}
+	
+	def dispatch Qualifier getEffectiveEndpointQualifier (ImportServiceRef ref) {
+		if (ref.endpointQualifierRef != null)
+			return ref.endpointQualifierRef.endpointQualifier
+		else {
+			val Module mod = objLookup.getOwnerByType(ref, typeof (Module))
+			return mod.endpointQualifierRef?.endpointQualifier
+		}
 	}
 	
 	/**

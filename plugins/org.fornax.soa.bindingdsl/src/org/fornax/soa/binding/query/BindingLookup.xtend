@@ -48,81 +48,87 @@ class BindingLookup {
 	@Inject 
 	private BindingServiceRefMatcher serviceRefMatcher
 	
-	def getAllBindings (ResourceSet rs) {
-		var Set<IEObjectDescription> allBindingDescs = lookup.search("ModuleBinding ", Predicates::alwaysTrue).toSet
-		allBindingDescs.addAll (lookup.search("DomainBinding ", Predicates::alwaysTrue))
-		allBindingDescs.addAll (lookup.search("ServiceBinding ", Predicates::alwaysTrue))
-		allBindingDescs.addAll (lookup.search("OperationBinding ", Predicates::alwaysTrue))
-		var List<Binding> allBindings = newArrayList()
-		for (bindingDesc : allBindingDescs) {
-			val obj = bindingDesc.EObjectOrProxy
-			if (obj instanceof Binding) {
-				val binding = obj as Binding	
-				if (binding.eIsProxy) {
-					val resolvedBinding = EcoreUtil2::resolve (binding, rs) as Binding
-					if (!resolvedBinding.eIsProxy) {
-						allBindings.add (resolvedBinding)
-					}
-				} else {
-					allBindings.add (binding)
+	/**
+	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given 
+	 * target environment that satisfy the given endpoint qualifier or any endpoint qualifier in the binding if endpointQualifier
+	 * is null
+	 * 
+	 * @param module 			The module to find a ModuleBinding for. Bindings to compatible module version are also considered
+	 * @param targetEnvironment	The environment the bindings must bind to.
+	 * @param endpointQualifier	Endpoint qualifier that must be effective in the binding. When null, endpoint qualifiers are ignored,
+	 * 							i.e. all bindings that match the other criteria will be returned	 
+	 */
+	def Set<ModuleBinding> findBindingsToCompatibleModuleEnvAndQualifier (Module module, Environment targetEnvironment, Qualifier endpointQualifier) {
+		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
+		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
+		if (endpointQualifier != null) {
+			val Set<ModuleBinding> modBindings = newHashSet()
+			for (b : allBindings) {
+				var ModuleBinding bind = b
+				if (b.eIsProxy) {
+					bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
+				}
+				if (compatibleModules.contains (bind.module.module) && bind.resolveEnvironment == targetEnvironment && (endpointQualifier == null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
+					modBindings.add(bind)
 				}
 			}
-		}
-		return allBindings
+			return modBindings
+		} else  
+			return allBindings.filter (e|compatibleModules.contains (e.module.module) && e.resolveEnvironment == targetEnvironment ).toSet;
 	}
 	
-	
-	def ModuleBinding getImportModuleBinding (List<ModuleBinding> canditates, Module importMod, String envName) {
-		canditates.findFirst (e|e.module.module == importMod && e.resolveEnvironment.name == envName );
-	}
-	
-	/*
-	 * Find all ModuleBindings that directly refer to this module and bind it to the given 
-	 * target environment
-	 */
-	def Set<ModuleBinding> findBindingsToModule (Module module, String envName) {
-		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
-		allBindings.filter (e|e.module.module == module && e.resolveEnvironment.name == envName ).toSet;
-	}
-	
-	/*
-	 * Find all ModuleBindings of the candidates that directly refer to this module and bind it to the given 
-	 * target environment
-	 */
-	def Set<ModuleBinding> findBindingsToModule (List<ModuleBinding> canditates, Module importMod, String envName) {
-		canditates.filter (e|e.module.module == importMod && e.resolveEnvironment.name == envName ).toSet;
-	}
-
-	/*
+	/**
 	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given 
-	 * target environment
+	 * target environment. Endpoint qualifiers are ignored.
+	 * 
+	 * @param module 			The module to find a ModuleBinding for. Bindings to compatible module version are also considered
+	 * @param targetEnvironment	The environment the bindings must bind to.
 	 */
-	def Set<ModuleBinding> findBindingsToCompatibleModule (Module module, Environment targetEnvironment) {
+	def Set<ModuleBinding> findBindingsToCompatibleModuleByEnv (Module module, Environment targetEnvironment) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
 		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
 		return allBindings.filter (e|compatibleModules.contains (e.module.module) && e.resolveEnvironment == targetEnvironment ).toSet;
 	}
 	
-	/*
-	 * Find all ModuleBindings of the candidates that refer to this module or a compatible module and bind it to the given 
-	 * target environment
-	 */
-	def Set<ModuleBinding> findAllBindingsToCompatibleModule (List<ModuleBinding> canditates, Module module, Environment targetEnvironment) {
-		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
-		return canditates.filter (e|compatibleModules.contains (e.module.module) && e.resolveEnvironment == targetEnvironment ).toSet;
-	}
-	/*
-	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given 
-	 * target environment
+	/**
+	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to any 
+	 * target environment.
 	 */
 	def Set<ModuleBinding> findAllBindingsToCompatibleModule (Module module) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
 		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
-		return allBindings.filter (e|compatibleModules.contains (e.module.module)).toSet;
+		return allBindings.filter (e|compatibleModules.contains (e.module.module)).toSet
 	}
 	
 	/**
-	 * Find all bindings for the given Service to an environment
+	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to any 
+	 * target environment with the given endpoint qualifier or any endpoint qualifier in the binding if endpointQualifier
+	 * is null.
+	 */
+	def Set<ModuleBinding> findAllBindingsToCompatibleModule (Module module, Qualifier endpointQualifier) {
+		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
+		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
+		if (endpointQualifier != null) {
+			val Set<ModuleBinding> modBindings = newHashSet()
+			for (b : allBindings) {
+				var ModuleBinding bind = b
+				if (b.eIsProxy) {
+					bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
+				}
+				if (compatibleModules.contains (bind.module.module) && (endpointQualifier == null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
+					modBindings.add(bind)
+				}
+			}
+			return modBindings
+		}
+		else 
+			return allBindings.filter (e|compatibleModules.contains (e.module.module)).toSet
+	}
+	
+	/**
+	 * Find all bindings for the given Service to an environment. The most specific bindings are returned. By default
+	 * this is a ModuleBinding. However, if the ModuleBinding is overridden for a service with a ServiceBinding, the 
+	 * respective ServiceBinding will be returned.
 	 */
 	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env) {
 		val allBindings = getAllBindings(service.eResource?.resourceSet)
@@ -134,7 +140,6 @@ class BindingLookup {
 				val moduleBindings = allBindings.filter (typeof (ModuleBinding)).filter (b|b.resolveEnvironment == env && providingModules.exists(m|m == b.module.module))
 				bindings.addAll(moduleBindings)
 			}
-			val serviceNamespace = service.eContainer as SubNamespace
 		} else {
 			bindings.addAll(serviceBindings)
 		}
@@ -142,8 +147,9 @@ class BindingLookup {
 	}
 	
 	/*
-	 * get the specific defined Binding of a Service to an Environment that support a protocol that matches the used 
-	 * ImportBindingProtocol
+	 * Find all bindings for the given Service to an environment that provide an endpoint with the given protocol. 
+	 * The most specific bindings are returned. By default this is a ModuleBinding. However, if the ModuleBinding 
+	 * is overridden for a service with a ServiceBinding, the respective ServiceBinding will be returned.
 	 */
 	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env, ImportBindingProtocol protocol) {
 		return service.findMostSpecificBindings (env).filter (p|protocolMatcher.supportsImportBindingProtocol (p, protocol))
@@ -226,6 +232,11 @@ class BindingLookup {
 		return bindings.filter (p|protocolMatcher.supportsImportBindingProtocol (p, protocol))
 	}
 	
+	/**
+	 * Get the most specific binding for service matching the given endpoint qualifier. The most specific binding is by default
+	 * the top level binding. This might be overridden in a nested binding declaration. If such an override is defined, it will be
+	 * returned instead.
+	 */
 	def dispatch Binding getMostSpecificBinding (Service service, Binding binding, EndpointQualifierRef endpointQualifier) {
 		val candBind = service.getMostSpecificBinding (binding)
 		val bindEndpointQualifiers = candBind.getPotentialEffectiveEndpointQualifiers
@@ -254,6 +265,31 @@ class BindingLookup {
 			return binding
 		else
 			return null
+	}
+	
+	/**
+	 * Get all Bindings defined in the model. This includes ModuleBindings, ServiceBindings and OperationBindings
+	 */
+	def getAllBindings (ResourceSet rs) {
+		var Set<IEObjectDescription> allBindingDescs = lookup.search("ModuleBinding ", Predicates::alwaysTrue).toSet
+		allBindingDescs.addAll (lookup.search("ServiceBinding ", Predicates::alwaysTrue))
+		allBindingDescs.addAll (lookup.search("OperationBinding ", Predicates::alwaysTrue))
+		var List<Binding> allBindings = newArrayList()
+		for (bindingDesc : allBindingDescs) {
+			val obj = bindingDesc.EObjectOrProxy
+			if (obj instanceof Binding) {
+				val binding = obj as Binding	
+				if (binding.eIsProxy) {
+					val resolvedBinding = EcoreUtil2::resolve (binding, rs) as Binding
+					if (!resolvedBinding.eIsProxy) {
+						allBindings.add (resolvedBinding)
+					}
+				} else {
+					allBindings.add (binding)
+				}
+			}
+		}
+		return allBindings
 	}
 	
 	/*

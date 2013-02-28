@@ -1055,28 +1055,28 @@ class ServiceRepositoryNewProjectGenerator {
 			}
 			
 			style ModuleNode as RectangleShape { 
-				this.backgroundColor = color(#d8ffd8)
+				this.backgroundColor = color(#fff8b8)
 				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 				)
 			}
 			style FeatureNode as RoundedRectangleShape { 
-				this.backgroundColor = color(#ffd8d8)
+				this.backgroundColor = color(#c8f8b8)
 				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 				)
 			}
 			style NestedFeatureNode as RoundedRectangleShape { 
-				this.backgroundColor = color(#ffd8d8)
+				this.backgroundColor = color(#d8ffc8)
 				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 				)
 			}
 			
 			style RequiredServiceNode as RoundedRectangleShape {
-				this.backgroundColor = color(#d8ffff)
+				this.backgroundColor = color(#eeeeee)
 				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 				)
 			}
 			style HiddenRequiredServiceNode as RoundedRectangleShape {
-				this.backgroundColor = color(#d8ffff)
+				this.backgroundColor = color(#eeeeee)
 				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 				)
 			}

@@ -61,20 +61,6 @@ public class ServiceQueries {
     return _servicesWithMinState;
   }
   
-  public List<ExceptionRef> allReferencedExceptionRefs(final Service s) {
-    EList<Operation> _operations = s.getOperations();
-    final Function1<Operation,EList<ExceptionRef>> _function = new Function1<Operation,EList<ExceptionRef>>() {
-        public EList<ExceptionRef> apply(final Operation o) {
-          EList<ExceptionRef> _throws = o.getThrows();
-          return _throws;
-        }
-      };
-    List<EList<ExceptionRef>> _map = ListExtensions.<Operation, EList<ExceptionRef>>map(_operations, _function);
-    Iterable<ExceptionRef> _flatten = Iterables.<ExceptionRef>concat(_map);
-    List<ExceptionRef> _list = IterableExtensions.<ExceptionRef>toList(_flatten);
-    return _list;
-  }
-  
   public List<org.fornax.soa.serviceDsl.Exception> allExceptionsByMajorVersion(final SubNamespace s, final String majorVersion) {
     EList<org.fornax.soa.serviceDsl.Exception> _exceptions = s.getExceptions();
     final Function1<org.fornax.soa.serviceDsl.Exception,Boolean> _function = new Function1<org.fornax.soa.serviceDsl.Exception,Boolean>() {
@@ -129,19 +115,6 @@ public class ServiceQueries {
     Iterable<org.fornax.soa.serviceDsl.Exception> _map_1 = IterableExtensions.<ExceptionRef, org.fornax.soa.serviceDsl.Exception>map(_flatten, _function_1);
     List<org.fornax.soa.serviceDsl.Exception> _list = IterableExtensions.<org.fornax.soa.serviceDsl.Exception>toList(_map_1);
     return _list;
-  }
-  
-  public List<Service> allServicesByMajorVersionAndState(final List<Service> s, final LifecycleState minState) {
-    final Function1<Service,Service> _function = new Function1<Service,Service>() {
-        public Service apply(final Service e) {
-          Version _version = e.getVersion();
-          String _majorVersionNumber = ServiceQueries.this._versionQualifierExtensions.toMajorVersionNumber(_version);
-          Service _findMatchingServiceByMajorVersionAndState = ServiceQueries.this.findMatchingServiceByMajorVersionAndState(_majorVersionNumber, s, minState);
-          return _findMatchingServiceByMajorVersionAndState;
-        }
-      };
-    List<Service> _map = ListExtensions.<Service, Service>map(s, _function);
-    return _map;
   }
   
   public List<EObject> findAllServiceConsumers(final Service service) {

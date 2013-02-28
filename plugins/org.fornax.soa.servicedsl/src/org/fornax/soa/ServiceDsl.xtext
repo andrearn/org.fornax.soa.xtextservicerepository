@@ -149,10 +149,6 @@ QueryObjectRef:
 
 /* A property field of an BusinessObject or QueryObject */	
 Property:
-	Attribute | Reference;
-
-/* A simple attribute */	
-Attribute:
 	(deprecated?='@deprecated')? 
 	(
 		(((optional?='optional')? (weak?='weak')?) | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
@@ -161,14 +157,6 @@ Attribute:
 	((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? 
 	name=ID ':' type=TypeRef ;
 	
-/* links to a target businessObject but uses it's business-key to resolve a reference, hence it is a weak reference */
-Reference:
-	(deprecated?='@deprecated')? 
-	(
-		(((optional?='optional')? (weak?='weak')?) | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?)
-		(readonly?='read-only')?
-	) 
-	'weak-ref' (historized?='historized')? name=ID ':' type=TypeRef; 
 	
 SimpleAttribute:
 	(deprecated?='@deprecated')? (optional?='optional')? name=ID ':' type=TypeRef;

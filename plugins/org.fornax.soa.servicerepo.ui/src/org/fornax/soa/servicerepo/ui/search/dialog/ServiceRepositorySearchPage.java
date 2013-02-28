@@ -9,8 +9,10 @@ import java.util.List;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jdt.core.compiler.IScanner;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.DialogPage;
+import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.search.ui.ISearchPage;
 import org.eclipse.search.ui.ISearchPageContainer;
@@ -38,8 +40,8 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
-import org.fornax.soa.profiledsl.search.FindAssetsWithStateQuery;
-import org.fornax.soa.service.query.FindUnapprovedAssetsQuery;
+import org.fornax.soa.servicerepo.query.FindAssetsWithStateQuery;
+import org.fornax.soa.servicerepo.query.predicates.FindUnapprovedAssetsQuery;
 import org.fornax.soa.servicerepo.ui.internal.ServiceRepositoryActivator;
 import org.fornax.soa.servicerepo.ui.search.ServiceRepositoryQuerySpec;
 import org.fornax.soa.servicerepo.ui.search.ServiceRepositorySearchQuery;
@@ -55,7 +57,9 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 	private static final String ANY_ASSET_QUERY = "Any asset";
 	private static final String DEFAULT_PATTERN = ".*";
 	private static final String DEFAULT_ASSET_TYPE = "org.fornax.soa.serviceDsl.Service";
-	
+
+	public static final String DIALOG_SETTINGS_SECTION = "org.fornax.soa.servicerepo.ui.search";
+
 	private static Injector injector;
 
     private boolean fFirstTime= true;
@@ -87,6 +91,8 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 	private Combo maxStateCombo;
 	private Text minVersionText;
 	private Text maxVersionText;
+	private Button canonicalCheckButton;
+	private Button nonCanonicalCheckButton;
 	private Composite result_1;
 	private IPredicateSearch predicateSearch;
 
@@ -203,13 +209,22 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         });
         new Label(result, SWT.NONE);
         
-        createLimitTo(parent);
+        Control limitToControl = createLimitTo(parent);
+        limitToControl.setVisible(true);
+        
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
         new Label(limitToGroup, SWT.NONE);
         new Label(limitToGroup, SWT.NONE);
         new Label(limitToGroup, SWT.NONE);
         new Label(limitToGroup, SWT.NONE);
 
         setControl(result);
+        
         return result;
 	}
 	
@@ -242,14 +257,6 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 
         new Label(limitToGroup, SWT.NONE);
         
-        Label maxStateLabel = new Label (limitToGroup, SWT.NONE);
-        maxStateLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        maxStateLabel.setText (ServiceRepositorySearchMessages.SearchPage_maxState_label);
-        
-        maxStateCombo = new Combo(limitToGroup, SWT.NONE);
-        maxStateCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-        
-        
         Label minVersionLabel = new Label (limitToGroup, SWT.NONE);
         GridData gd_minVersionLabel = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         gd_minVersionLabel.widthHint = 121;
@@ -257,7 +264,17 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         minVersionLabel.setText (ServiceRepositorySearchMessages.SearchPage_minVersion_label);
         
         minVersionText = new Text (limitToGroup, SWT.NONE);
-        minVersionText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        GridData gd_minVersionText = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
+        gd_minVersionText.widthHint = 245;
+        minVersionText.setLayoutData(gd_minVersionText);
+
+        Label maxStateLabel = new Label (limitToGroup, SWT.NONE);
+        maxStateLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        maxStateLabel.setText (ServiceRepositorySearchMessages.SearchPage_maxState_label);
+        
+        maxStateCombo = new Combo(limitToGroup, SWT.NONE);
+        maxStateCombo.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        
 
         new Label(limitToGroup, SWT.NONE);
 
@@ -269,8 +286,28 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         maxVersionText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         initializeStates();
+
+        
+//        new Label(limitToGroup, SWT.NONE);
+
+        Button canonicalCheckButton = new Button(limitToGroup, SWT.CHECK);
+        canonicalCheckButton.setText(ServiceRepositorySearchMessages.SearchPage_canonical_label);
+        
+//        new Label(limitToGroup, SWT.NONE);
+        
+//        new Label(limitToGroup, SWT.NONE);
+
         
         new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+
+        nonCanonicalCheckButton = new Button(limitToGroup, SWT.CHECK);
+        nonCanonicalCheckButton.setText(ServiceRepositorySearchMessages.SearchPage_noncanonical_label);
+        canonicalCheckButton.setSelection(true);
+        nonCanonicalCheckButton.setSelection(true);
+
         Dialog.applyDialogFont(limitToGroup); // re-apply font as we disposed the previous widgets
         limitToGroup.layout();
 	}
@@ -281,11 +318,12 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     }
     
     private void initializeSearchFor () {
-        searchForCombo.setItems(new String[] {"Any", "Service ", "BusinessObject ", "Enumeration ", "Type ", "Module ", "ModuleBinding ", "DomainBinding ", "Environment ", "ESB ", "AppServer ", "Host ", "SLA ", "Solution "});
+        searchForCombo.setItems(new String[] {"Any", "Service ", "Operation ", "BusinessObject ", "QueryObject ", "Enumeration ", "Exception ", "Type ", "Module ", "ModuleBinding ", "Environment ", "ESB ", "AppServer ", "Host ", "Solution "});
     }
     
     private void initializeQuery () {
-        queryCombo.setItems(new String[] {"Any asset", "Unapproved assets", "Assets with lifecycle state"});
+        queryCombo.setItems(new String[] {"Any asset", "Unapproved assets"});
+        queryCombo.select(0);
     }
     
     private void initializeStates () {
@@ -354,11 +392,6 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     }
 
 	protected void handleQueryNameSelected() {
-		if ("Assets with lifecycle state".equals(getQueryName()))
-			limitToGroup.setVisible(true);
-		else {
-			limitToGroup.setVisible(false);
-		}
 	}
 
 	private void doSearchForModified() {
@@ -398,12 +431,19 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
             }
         }
 
-       	ServiceRepositoryQuerySpec querySpec= new ServiceRepositoryQuerySpec (data.getPattern(), data.getSearchFor(), data.getQueryName(), data.isCaseSensitive(), scopeDescription);
+       	ServiceRepositoryQuerySpec querySpec= new ServiceRepositoryQuerySpec (
+       			data.getPattern(), 
+       			data.getSearchFor(), 
+       			data.getQueryName(), 
+       			data.isCaseSensitive(), 
+       			scopeDescription);
        	
        	querySpec.setMinState(getMinState());
        	querySpec.setMaxState(getMaxState());
        	querySpec.setMinVersion(getMinVersion());
        	querySpec.setMaxVersion(getMaxVersion());
+       	querySpec.setCanonicalNamespaces(inclCanonicalModel());
+       	querySpec.setNonCanonicalNamespaces(inclNonCanonicalModel());
 
         ServiceRepositorySearchQuery textSearchJob= injector.getInstance (ServiceRepositorySearchQuery.class);
         textSearchJob.init (querySpec);
@@ -433,6 +473,18 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     
     private String getMaxVersion () {
     	return maxVersionText.getText();
+    }
+    
+    private boolean inclCanonicalModel() {
+    	if(canonicalCheckButton == null)
+    		return true;
+    	return canonicalCheckButton.getSelection();
+    }
+    
+    private boolean inclNonCanonicalModel() {
+    	if(nonCanonicalCheckButton == null)
+    		return true;
+    	return nonCanonicalCheckButton.getSelection();
     }
     
     private String getSearchFor() {
@@ -466,10 +518,8 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 		String queryName = "Any";
 		if ("Unapproved assets".equals(getQueryName())) {
 			queryName = FindUnapprovedAssetsQuery.class.getName();
-		} else if ("Assets with lifecycle state".equals(getQueryName())) {
-			queryName = FindAssetsWithStateQuery.class.getName();
 		} else {
-			queryName = IPredicateSearch.class.getName();
+			queryName = FindAssetsWithStateQuery.class.getName();
 		}
 		match = new ServiceRepositoryQueryData(
 				queryName,
@@ -523,7 +573,8 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
      */
     private IDialogSettings getDialogSettings() {
         if (fDialogSettings == null) {
-//            fDialogSettings= JavaPlugin.getDefault().getDialogSettingsSection(PAGE_NAME);
+        	fDialogSettings = DialogSettings.getOrCreateSection (
+        			ServiceRepositoryActivator.getInstance().getDialogSetting(DIALOG_SETTINGS_SECTION), DIALOG_SETTINGS_SECTION);
         }
         return fDialogSettings;
     }
@@ -532,39 +583,39 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
      * Initializes itself from the stored page settings.
      */
     private void readConfiguration() {
-//        IDialogSettings s= getDialogSettings();
-//        fIsCaseSensitive= s.getBoolean(STORE_CASE_SENSITIVE);
-//
-//        try {
-//            int historySize= s.getInt(STORE_HISTORY_SIZE);
-//            for (int i= 0; i < historySize; i++) {
-//                IDialogSettings histSettings= s.getSection(STORE_HISTORY + i);
-//                if (histSettings != null) {
-//                	ServiceRepositoryQueryData data= ServiceRepositoryQueryData.create(histSettings);
-//                    if (data != null) {
-//                        fPreviousSearchPatterns.add(data);
-//                    }
-//                }
-//            }
-//        } catch (NumberFormatException e) {
-//            // ignore
-//        }
+        IDialogSettings s= getDialogSettings();
+        fIsCaseSensitive= s.getBoolean(STORE_CASE_SENSITIVE);
+
+        try {
+            int historySize= s.getInt(STORE_HISTORY_SIZE);
+            for (int i= 0; i < historySize; i++) {
+                IDialogSettings histSettings= s.getSection(STORE_HISTORY + i);
+                if (histSettings != null) {
+                	ServiceRepositoryQueryData data= ServiceRepositoryQueryData.create(histSettings);
+                    if (data != null) {
+                        fPreviousSearchPatterns.add(data);
+                    }
+                }
+            }
+        } catch (NumberFormatException e) {
+            // ignore
+        }
     }
 
     /**
      * Stores the current configuration in the dialog store.
      */
     private void writeConfiguration() {
-//        IDialogSettings s= getDialogSettings();
-//        s.put(STORE_CASE_SENSITIVE, fIsCaseSensitive);
-//
-//        int historySize= Math.min(fPreviousSearchPatterns.size(), HISTORY_SIZE);
-//        s.put(STORE_HISTORY_SIZE, historySize);
-//        for (int i= 0; i < historySize; i++) {
-//            IDialogSettings histSettings= s.addNewSection(STORE_HISTORY + i);
-//            ServiceRepositoryQueryData data= ((ServiceRepositoryQueryData) fPreviousSearchPatterns.get(i));
-//            data.store(histSettings);
-//        }
+        IDialogSettings s= getDialogSettings();
+        s.put(STORE_CASE_SENSITIVE, fIsCaseSensitive);
+
+        int historySize= Math.min(fPreviousSearchPatterns.size(), HISTORY_SIZE);
+        s.put(STORE_HISTORY_SIZE, historySize);
+        for (int i= 0; i < historySize; i++) {
+            IDialogSettings histSettings= s.addNewSection(STORE_HISTORY + i);
+            ServiceRepositoryQueryData data= ((ServiceRepositoryQueryData) fPreviousSearchPatterns.get(i));
+            data.store(histSettings);
+        }
     }
 
 

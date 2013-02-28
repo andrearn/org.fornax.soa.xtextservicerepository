@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.Map;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.binding.EndpointQualifierDescriptor;
 import org.fornax.soa.binding.query.environment.BindingConnectorResolver;
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
@@ -16,6 +17,10 @@ import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.environmentDsl.Connector;
 import org.fornax.soa.environmentDsl.EndpointVisibility;
 import org.fornax.soa.environmentDsl.Server;
+import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
+import org.fornax.soa.moduledsl.moduleDsl.Module;
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef;
+import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef;
 import org.fornax.soa.semanticsDsl.Qualifier;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.Visibility;
@@ -27,6 +32,23 @@ public class EndpointQualifierQueries {
   
   @Inject
   private EnvironmentBindingResolver envResolver;
+  
+  @Inject
+  private IEObjectLookup objLookup;
+  
+  protected Qualifier _getEffectiveEndpointQualifier(final EObject o) {
+    Qualifier _xifexpression = null;
+    EObject _eContainer = o.eContainer();
+    boolean _notEquals = (!Objects.equal(_eContainer, null));
+    if (_notEquals) {
+      EObject _eContainer_1 = o.eContainer();
+      Qualifier _effectiveEndpointQualifier = this.getEffectiveEndpointQualifier(_eContainer_1);
+      _xifexpression = _effectiveEndpointQualifier;
+    } else {
+      return null;
+    }
+    return _xifexpression;
+  }
   
   /**
    * Get the effective endpoint qualifier. An endpoint qualifier on a more specific binding
@@ -77,6 +99,38 @@ public class EndpointQualifierQueries {
       } else {
         return null;
       }
+    }
+  }
+  
+  protected Qualifier _getEffectiveEndpointQualifier(final ServiceModuleRef ref) {
+    EObject _eContainer = ref.eContainer();
+    Qualifier _effectiveEndpointQualifier = this.getEffectiveEndpointQualifier(_eContainer);
+    return _effectiveEndpointQualifier;
+  }
+  
+  protected Qualifier _getEffectiveEndpointQualifier(final ModuleRef ref) {
+    org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef _endpointQualifierRef = ref.getEndpointQualifierRef();
+    boolean _notEquals = (!Objects.equal(_endpointQualifierRef, null));
+    if (_notEquals) {
+      org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef _endpointQualifierRef_1 = ref.getEndpointQualifierRef();
+      return _endpointQualifierRef_1.getEndpointQualifier();
+    } else {
+      final Module mod = this.objLookup.<Module>getOwnerByType(ref, Module.class);
+      org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef _endpointQualifierRef_2 = mod.getEndpointQualifierRef();
+      return _endpointQualifierRef_2==null?(Qualifier)null:_endpointQualifierRef_2.getEndpointQualifier();
+    }
+  }
+  
+  protected Qualifier _getEffectiveEndpointQualifier(final ImportServiceRef ref) {
+    org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef _endpointQualifierRef = ref.getEndpointQualifierRef();
+    boolean _notEquals = (!Objects.equal(_endpointQualifierRef, null));
+    if (_notEquals) {
+      org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef _endpointQualifierRef_1 = ref.getEndpointQualifierRef();
+      return _endpointQualifierRef_1.getEndpointQualifier();
+    } else {
+      final Module mod = this.objLookup.<Module>getOwnerByType(ref, Module.class);
+      org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef _endpointQualifierRef_2 = mod.getEndpointQualifierRef();
+      return _endpointQualifierRef_2==null?(Qualifier)null:_endpointQualifierRef_2.getEndpointQualifier();
     }
   }
   
@@ -186,14 +240,22 @@ public class EndpointQualifierQueries {
     return _or;
   }
   
-  public Qualifier getEffectiveEndpointQualifier(final EObject binding) {
-    if (binding instanceof Binding) {
-      return _getEffectiveEndpointQualifier((Binding)binding);
-    } else if (binding instanceof BindingProtocol) {
-      return _getEffectiveEndpointQualifier((BindingProtocol)binding);
+  public Qualifier getEffectiveEndpointQualifier(final EObject ref) {
+    if (ref instanceof ImportServiceRef) {
+      return _getEffectiveEndpointQualifier((ImportServiceRef)ref);
+    } else if (ref instanceof Binding) {
+      return _getEffectiveEndpointQualifier((Binding)ref);
+    } else if (ref instanceof BindingProtocol) {
+      return _getEffectiveEndpointQualifier((BindingProtocol)ref);
+    } else if (ref instanceof ModuleRef) {
+      return _getEffectiveEndpointQualifier((ModuleRef)ref);
+    } else if (ref instanceof ServiceModuleRef) {
+      return _getEffectiveEndpointQualifier((ServiceModuleRef)ref);
+    } else if (ref != null) {
+      return _getEffectiveEndpointQualifier(ref);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(binding).toString());
+        Arrays.<Object>asList(ref).toString());
     }
   }
 }

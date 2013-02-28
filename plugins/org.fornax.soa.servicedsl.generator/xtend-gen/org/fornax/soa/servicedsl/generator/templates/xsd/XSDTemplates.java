@@ -28,11 +28,9 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.service.VersionedDomainNamespace;
 import org.fornax.soa.service.namespace.NamespaceSplitter;
-import org.fornax.soa.service.query.ExceptionFinder;
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries;
 import org.fornax.soa.service.versioning.IExceptionResolver;
 import org.fornax.soa.service.versioning.ITypeResolver;
-import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.EnumLiteral;
@@ -42,7 +40,6 @@ import org.fornax.soa.serviceDsl.OrganizationNamespace;
 import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.QueryObject;
 import org.fornax.soa.serviceDsl.QueryObjectRef;
-import org.fornax.soa.serviceDsl.Reference;
 import org.fornax.soa.serviceDsl.SimpleAttribute;
 import org.fornax.soa.serviceDsl.SubNamespace;
 import org.fornax.soa.serviceDsl.Type;
@@ -75,9 +72,6 @@ public class XSDTemplates {
   
   @Inject
   private IStateMatcher _iStateMatcher;
-  
-  @Inject
-  private ExceptionFinder exceptionFinder;
   
   @Inject
   private IExceptionResolver exceptionResolver;
@@ -1421,11 +1415,7 @@ public class XSDTemplates {
     return _builder;
   }
   
-  protected CharSequence _toProperty(final Property p, final VersionedDomainNamespace currNs, final SOAProfile profile, final LifecycleState minState) {
-    return null;
-  }
-  
-  protected CharSequence _toProperty(final Attribute attr, final VersionedDomainNamespace currNs, final SOAProfile profile, final LifecycleState minState) {
+  protected CharSequence _toProperty(final Property attr, final VersionedDomainNamespace currNs, final SOAProfile profile, final LifecycleState minState) {
     StringConcatenation _builder = new StringConcatenation();
     {
       String _documentation = this.docProvider.getDocumentation(attr);
@@ -1629,63 +1619,6 @@ public class XSDTemplates {
     return _builder;
   }
   
-  protected CharSequence _toProperty(final Reference ref, final VersionedDomainNamespace currNs, final SOAProfile profile, final LifecycleState minState) {
-    StringConcatenation _builder = new StringConcatenation();
-    _builder.append("<xsd:element name=\"");
-    String _name = ref.getName();
-    _builder.append(_name, "");
-    _builder.append("\" ");
-    {
-      boolean _isOptionalElement = this._schemaTypeExtensions.isOptionalElement(ref);
-      if (_isOptionalElement) {
-        _builder.append("minOccurs=\"0\"");
-      }
-    }
-    _builder.append(" type=\"");
-    TypeRef _type = ref.getType();
-    String _weakRefType = this._schemaTypeExtensions.toWeakRefType(_type, minState);
-    _builder.append(_weakRefType, "");
-    _builder.append("\" >");
-    _builder.newLineIfNotEmpty();
-    _builder.append("   \t");
-    _builder.append("<xsd:annotation>");
-    _builder.newLine();
-    _builder.append("   \t\t");
-    _builder.append("<xsd:documentation>");
-    _builder.newLine();
-    _builder.append("   \t\t\t");
-    _builder.append("<![CDATA[");
-    _builder.newLine();
-    _builder.append("\t   \t\t\t");
-    _builder.append("References an instance of type ");
-    TypeRef _type_1 = ref.getType();
-    String _fullTypeNameRef = this._schemaTypeExtensions.toFullTypeNameRef(_type_1, currNs);
-    _builder.append(_fullTypeNameRef, "	   			");
-    _builder.append(" using it\'s business-key ");
-    TypeRef _type_2 = ref.getType();
-    String _weakRefKeyAttr = this._schemaTypeExtensions.toWeakRefKeyAttr(_type_2, minState);
-    _builder.append(_weakRefKeyAttr, "	   			");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t\t   \t\t\t");
-    String _documentation = this.docProvider.getDocumentation(ref);
-    _builder.append(_documentation, "		   			");
-    _builder.newLineIfNotEmpty();
-    _builder.append("\t    \t");
-    _builder.append("]]>");
-    _builder.newLine();
-    _builder.append("\t    ");
-    _builder.append("</xsd:documentation>");
-    _builder.newLine();
-    _builder.append("\t\t");
-    _builder.newLine();
-    _builder.append("   \t");
-    _builder.append("</xsd:annotation>");
-    _builder.newLine();
-    _builder.append("</xsd:element>");
-    _builder.newLine();
-    return _builder;
-  }
-  
   public CharSequence toEnumLiteral(final EnumLiteral enumLit) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<xsd:enumeration value=\"");
@@ -1762,11 +1695,7 @@ public class XSDTemplates {
   }
   
   public CharSequence toProperty(final EObject attr, final VersionedDomainNamespace currNs, final SOAProfile profile, final LifecycleState minState) {
-    if (attr instanceof Attribute) {
-      return _toProperty((Attribute)attr, currNs, profile, minState);
-    } else if (attr instanceof Reference) {
-      return _toProperty((Reference)attr, currNs, profile, minState);
-    } else if (attr instanceof Property) {
+    if (attr instanceof Property) {
       return _toProperty((Property)attr, currNs, profile, minState);
     } else if (attr instanceof SimpleAttribute) {
       return _toProperty((SimpleAttribute)attr, currNs, profile, minState);
