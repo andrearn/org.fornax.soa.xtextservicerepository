@@ -4,6 +4,7 @@
 package org.fornax.soa.servicerepo.ui.search;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IWorkspace;
@@ -22,8 +23,8 @@ import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
 import org.fornax.soa.servicerepo.query.FindAssetsWithStateQuery;
+import org.fornax.soa.servicerepo.query.FindUnapprovedAssetsQuery;
 import org.fornax.soa.servicerepo.query.predicates.CanonicalOrNotPredicate;
-import org.fornax.soa.servicerepo.query.predicates.FindUnapprovedAssetsQuery;
 import org.fornax.soa.servicerepo.ui.internal.ServiceRepositoryActivator;
 import org.fornax.soa.servicerepo.ui.search.dialog.ServiceRepositorySearchMessages;
 
@@ -140,8 +141,11 @@ public class ServiceRepositorySearchQuery implements ISearchQuery {
 			result = unApprovedServicesQuery.search(pattern, assetType, minState, maxState, minVersion, maxVersion, querySpec.isCanonicalNamespaces(), querySpec.isNonCanonicalNamespaces(), rs);
 		} else { 
 			FindAssetsWithStateQuery query = injector.getInstance(FindAssetsWithStateQuery.class);
-				
-			result = query.search (pattern, assetType, minState, maxState, minVersion, maxVersion, querySpec.isCanonicalNamespaces(), querySpec.isNonCanonicalNamespaces(), rs);
+			result = query.search (pattern, assetType, 
+					minState, maxState, 
+					minVersion, maxVersion, 
+					querySpec.isCanonicalNamespaces(), querySpec.isNonCanonicalNamespaces(), 
+					querySpec.getTagNames(), querySpec.isAllTags(), querySpec.isWithTagsFromParent(), rs);
 		}
 		return result;
 	}

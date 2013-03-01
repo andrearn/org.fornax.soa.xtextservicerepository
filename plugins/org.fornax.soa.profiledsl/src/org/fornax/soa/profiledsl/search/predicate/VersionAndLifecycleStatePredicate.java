@@ -1,9 +1,14 @@
 package org.fornax.soa.profiledsl.search.predicate;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.sOABaseDsl.Version;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.version.IScopeVersionResolver;
 import org.fornax.soa.basedsl.version.VersionComparator;
+import org.fornax.soa.profiledsl.query.LifecycleQueries;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
@@ -11,10 +16,11 @@ import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
 import com.google.common.base.Predicate;
 import com.google.inject.Inject;
 
-public class StrictLifecycleStatePredicate implements Predicate<IEObjectDescription> {
+public class VersionAndLifecycleStatePredicate implements Predicate<IEObjectDescription> {
 	
 	@Inject LifecycleStateComparator stateComparator;
 	@Inject LifecycleStateResolver stateResolver;
+	@Inject IEObjectLookup objLookup;
 
 	@Inject IScopeVersionResolver versionResolver;
 	
@@ -30,7 +36,7 @@ public class StrictLifecycleStatePredicate implements Predicate<IEObjectDescript
 	private ResourceSet resourceSet;
 	
 	
-	public StrictLifecycleStatePredicate(LifecycleState minState, LifecycleState maxState, String minVersion, String maxVersion, ResourceSet rs) {
+	public VersionAndLifecycleStatePredicate(LifecycleState minState, LifecycleState maxState, String minVersion, String maxVersion, ResourceSet rs) {
 		this.minState = minState;
 		this.maxState = maxState;
 		this.includingMinState = true;
@@ -42,7 +48,7 @@ public class StrictLifecycleStatePredicate implements Predicate<IEObjectDescript
 		this.resourceSet = rs;
 	}
 
-	public StrictLifecycleStatePredicate(LifecycleState minState, boolean includingMinState, LifecycleState maxState, boolean includingMaxState, String minVersion, String maxVersion, boolean includingMinVersion, boolean includingMaxVersion, ResourceSet rs) {
+	public VersionAndLifecycleStatePredicate(LifecycleState minState, boolean includingMinState, LifecycleState maxState, boolean includingMaxState, String minVersion, String maxVersion, boolean includingMinVersion, boolean includingMaxVersion, ResourceSet rs) {
 		this.minState = minState;
 		this.maxState = maxState;
 		this.includingMinState = includingMinState;
@@ -57,12 +63,20 @@ public class StrictLifecycleStatePredicate implements Predicate<IEObjectDescript
 	}
 
 	private boolean stateMatches(IEObjectDescription input) {
-		if (! stateResolver.definesState(input)) {
-			return false;
+		EObject o = input.getEObjectOrProxy();
+		if (o.eIsProxy()) {
+			o = EcoreUtil2.resolve(o, resourceSet);
+		}
+		EObject statefulObj = objLookup.getStatefulOwner(o);
+		if (statefulObj == null) {
+			return minState == null && maxState == null;
+		}
+		if (! stateResolver.definesState(statefulObj)) {
+			return true;
 		}
 		if (minState == null && maxState == null)
 			return true;
-		LifecycleState lifecycleState = stateResolver.getLifecycleState(input, resourceSet);
+		LifecycleState lifecycleState = stateResolver.getLifecycleState(statefulObj);
 		if (minState != null && maxState != null) {
 			int minStateCmp = stateComparator.compare(lifecycleState, minState);
 			int maxStateCmp = stateComparator.compare(lifecycleState, maxState);
@@ -96,9 +110,17 @@ public class StrictLifecycleStatePredicate implements Predicate<IEObjectDescript
 	}
 	
 	private boolean versionMatches(IEObjectDescription input) {
+		EObject o = input.getEObjectOrProxy();
+		if (o.eIsProxy()) {
+			o = EcoreUtil2.resolve(o, resourceSet);
+		}
+		EObject versionedObj = objLookup.getVersionedOwner(o);
+		if (versionedObj == null) {
+			return minVersion == null && maxVersion == null;
+		}
 		if (minVersion == null && maxVersion == null)
 			return true;
-		String lifecycleState = versionResolver.getVersionAsString(input);
+		String lifecycleState = versionResolver.getVersionAsString(versionedObj);
 		if (minVersion != null && maxVersion != null) {
 			int minVersionCmp = VersionComparator.compare(lifecycleState, minVersion);
 			int maxVersionCmp = VersionComparator.compare(lifecycleState, maxVersion);

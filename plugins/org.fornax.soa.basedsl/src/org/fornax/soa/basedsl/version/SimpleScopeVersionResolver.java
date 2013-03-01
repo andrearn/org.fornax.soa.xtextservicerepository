@@ -24,7 +24,7 @@ public class SimpleScopeVersionResolver implements IScopeVersionResolver {
 		resSet = rs;
 	}
 	
-	public String getVersion(EObject o) {
+	public String getVersionAsString(EObject o) {
 		ResourceSet rs = resSet;
 		if (rs == null) {
 			if (o.eResource() != null) {
@@ -79,6 +79,29 @@ public class SimpleScopeVersionResolver implements IScopeVersionResolver {
 	
 	public Version getVersion (IEObjectDescription desc) {
 		EObject o = desc.getEObjectOrProxy();
+		ResourceSet rs = resSet;
+		if (rs == null) {
+			if (o.eResource() != null) {
+				rs = o.eResource().getResourceSet();
+				if (o.eIsProxy()) {
+					o = EcoreUtil.resolve (o, resSet);
+				}
+			}
+		}
+		if (!o.eIsProxy()) {
+			final EStructuralFeature verFeature1 = o.eClass()
+					.getEStructuralFeature(VERSION_ATTR_NAME);
+			if (verFeature1 != null && o.eIsSet(verFeature1)) {
+				Object verObj = o.eGet (verFeature1, true);
+				if (verObj instanceof Version) {
+					return (Version) verObj;
+				}
+			}
+		}
+		return null;
+	}
+	
+	public Version getVersion (EObject o) {
 		ResourceSet rs = resSet;
 		if (rs == null) {
 			if (o.eResource() != null) {

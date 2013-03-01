@@ -4,8 +4,11 @@
 package org.fornax.soa.servicerepo.ui.search.dialog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.swing.ButtonGroup;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
@@ -41,7 +44,7 @@ import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
 import org.fornax.soa.servicerepo.query.FindAssetsWithStateQuery;
-import org.fornax.soa.servicerepo.query.predicates.FindUnapprovedAssetsQuery;
+import org.fornax.soa.servicerepo.query.FindUnapprovedAssetsQuery;
 import org.fornax.soa.servicerepo.ui.internal.ServiceRepositoryActivator;
 import org.fornax.soa.servicerepo.ui.search.ServiceRepositoryQuerySpec;
 import org.fornax.soa.servicerepo.ui.search.ServiceRepositorySearchQuery;
@@ -91,10 +94,15 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 	private Combo maxStateCombo;
 	private Text minVersionText;
 	private Text maxVersionText;
+	private Text tagsText;
 	private Button canonicalCheckButton;
 	private Button nonCanonicalCheckButton;
+	private Button withTagsFromParentButton;
 	private Composite result_1;
 	private IPredicateSearch predicateSearch;
+	private Button oneOfTagsRadioButton;
+	private Button allOfTagsRadioButton;
+	private boolean allTags;
 
     public ServiceRepositorySearchPage() {
 		fPreviousSearchPatterns = new ArrayList();
@@ -212,17 +220,14 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         Control limitToControl = createLimitTo(parent);
         limitToControl.setVisible(true);
         
+        
         new Label(limitToGroup, SWT.NONE);
         new Label(limitToGroup, SWT.NONE);
         
         new Label(limitToGroup, SWT.NONE);
         new Label(limitToGroup, SWT.NONE);
         new Label(limitToGroup, SWT.NONE);
-        new Label(limitToGroup, SWT.NONE);
-        new Label(limitToGroup, SWT.NONE);
-        new Label(limitToGroup, SWT.NONE);
-        new Label(limitToGroup, SWT.NONE);
-
+        
         setControl(result);
         
         return result;
@@ -286,32 +291,59 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         maxVersionText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         initializeStates();
-
         
-//        new Label(limitToGroup, SWT.NONE);
-
-        Button canonicalCheckButton = new Button(limitToGroup, SWT.CHECK);
+        canonicalCheckButton = new Button(limitToGroup, SWT.CHECK);
         canonicalCheckButton.setText(ServiceRepositorySearchMessages.SearchPage_canonical_label);
-        
-//        new Label(limitToGroup, SWT.NONE);
-        
-//        new Label(limitToGroup, SWT.NONE);
 
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
         
-        new Label(limitToGroup, SWT.NONE);
-        new Label(limitToGroup, SWT.NONE);
-        new Label(limitToGroup, SWT.NONE);
-        new Label(limitToGroup, SWT.NONE);
+        Label tagsLabel = new Label (limitToGroup, SWT.NONE);
+        tagsLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
+        tagsLabel.setText (ServiceRepositorySearchMessages.SearchPage_tags_label);
+        
+        tagsText = new Text (limitToGroup, SWT.NONE);
+        tagsText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         nonCanonicalCheckButton = new Button(limitToGroup, SWT.CHECK);
         nonCanonicalCheckButton.setText(ServiceRepositorySearchMessages.SearchPage_noncanonical_label);
+
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        oneOfTagsRadioButton = new Button(limitToGroup, SWT.RADIO);
+        oneOfTagsRadioButton.addSelectionListener(new SelectionAdapter() {
+        	
+        	public void widgetSelected(SelectionEvent e) {
+        		allTags = false; 
+        	}
+        });
+        oneOfTagsRadioButton.setText(ServiceRepositorySearchMessages.ServiceRepositorySearchPage_oneOfTagsRadioButton_text);
+        oneOfTagsRadioButton.setSelection(true);
+        withTagsFromParentButton = new Button(limitToGroup, SWT.CHECK);
+        withTagsFromParentButton.setText(ServiceRepositorySearchMessages.SearchPage_parentTags_label);
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        new Label(limitToGroup, SWT.NONE);
+        allOfTagsRadioButton = new Button(limitToGroup, SWT.RADIO);
+        allOfTagsRadioButton.addSelectionListener(new SelectionAdapter() {
+        	
+        	public void widgetSelected(SelectionEvent e) {
+        		allTags = true;
+        	}
+        });
+        allOfTagsRadioButton.setText(ServiceRepositorySearchMessages.ServiceRepositorySearchPage_allOfTagsRadioButton_text);
+        allOfTagsRadioButton.setSelection(false);
+
+        new Label(limitToGroup, SWT.NONE);
+
         canonicalCheckButton.setSelection(true);
         nonCanonicalCheckButton.setSelection(true);
 
         Dialog.applyDialogFont(limitToGroup); // re-apply font as we disposed the previous widgets
         limitToGroup.layout();
 	}
-	
+
+
     public void dispose() {
         writeConfiguration();
         super.dispose();
@@ -430,7 +462,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 //                SearchUtil.updateLRUWorkingSets(workingSets);
             }
         }
-
+        
        	ServiceRepositoryQuerySpec querySpec= new ServiceRepositoryQuerySpec (
        			data.getPattern(), 
        			data.getSearchFor(), 
@@ -438,12 +470,15 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
        			data.isCaseSensitive(), 
        			scopeDescription);
        	
-       	querySpec.setMinState(getMinState());
-       	querySpec.setMaxState(getMaxState());
-       	querySpec.setMinVersion(getMinVersion());
-       	querySpec.setMaxVersion(getMaxVersion());
-       	querySpec.setCanonicalNamespaces(inclCanonicalModel());
-       	querySpec.setNonCanonicalNamespaces(inclNonCanonicalModel());
+       	querySpec.setMinState (getMinState());
+       	querySpec.setMaxState (getMaxState());
+       	querySpec.setMinVersion (getMinVersion());
+       	querySpec.setMaxVersion (getMaxVersion());
+       	querySpec.setCanonicalNamespaces (inclCanonicalModel());
+       	querySpec.setNonCanonicalNamespaces (inclNonCanonicalModel());
+       	querySpec.setTagNames (getTagNames());
+       	querySpec.setWithTagsFromParent (isWithTagsFromParent());
+       	querySpec.setAllTags(isAllTags());
 
         ServiceRepositorySearchQuery textSearchJob= injector.getInstance (ServiceRepositorySearchQuery.class);
         textSearchJob.init (querySpec);
@@ -485,6 +520,28 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     	if(nonCanonicalCheckButton == null)
     		return true;
     	return nonCanonicalCheckButton.getSelection();
+    }
+    
+    private boolean isWithTagsFromParent() {
+    	if (withTagsFromParentButton == null)
+    		return false;
+    	return withTagsFromParentButton.getSelection();
+    }
+    
+    private boolean isAllTags () {
+    	return allTags;
+    }
+    
+    private List<String> getTagNames () {
+    	String tagString = tagsText.getText();
+    	tagString = tagString.replaceAll("  ", " ");
+    	tagString = tagString.replaceAll(",", " ");
+    	String[] tagArray = tagString.split(" ");
+    	List tagNames = new ArrayList<String>();
+    	for (String tag : tagArray) {
+			tagNames.add (tag);
+		}
+    	return tagNames;
     }
     
     private String getSearchFor() {

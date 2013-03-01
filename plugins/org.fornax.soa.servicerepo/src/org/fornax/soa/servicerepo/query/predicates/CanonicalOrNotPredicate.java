@@ -32,11 +32,13 @@ public class CanonicalOrNotPredicate implements Predicate<IEObjectDescription> {
 			o = EcoreUtil2.resolve(o, resourceSet);
 		}
 		SubNamespace ns = objLookup.getOwnerByType(o, SubNamespace.class);
-		if (ns instanceof DomainNamespace) {
-			return inclCanonicalModel;
-		}
-		if (ns instanceof InternalNamespace) {
-			return inclNonCanonicalModel;
+		if (ns != null) {
+			if (ns instanceof DomainNamespace) {
+				return inclCanonicalModel;
+			}
+			if (ns instanceof InternalNamespace) {
+				return inclNonCanonicalModel;
+			}
 		}
 		return true;
 	}

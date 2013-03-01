@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
@@ -15,6 +16,7 @@ public class LifecycleStatePredicate implements Predicate<IEObjectDescription> {
 	
 	@Inject LifecycleStateComparator stateComparator;
 	@Inject LifecycleStateResolver stateResolver;
+	@Inject IEObjectLookup objLookup;
 	
 	private LifecycleState minState;
 	private LifecycleState maxState;
@@ -42,13 +44,22 @@ public class LifecycleStatePredicate implements Predicate<IEObjectDescription> {
 	}
 
 	public boolean apply(IEObjectDescription input) {
+		return stateMatches(input);
+	}
+
+
+	private boolean stateMatches(IEObjectDescription input) {
+		EObject o = input.getEObjectOrProxy();
+		if (o.eIsProxy()) {
+			o = EcoreUtil2.resolve(o, resourceSet);
+		}
+		EObject statefulObj = objLookup.getStatefulOwner(o);
+		if (! stateResolver.definesState(statefulObj)) {
+			return true;
+		}
 		if (minState == null && maxState == null)
 			return true;
-		EObject eObjectOrProxy = input.getEObjectOrProxy();
-		if (eObjectOrProxy.eIsProxy()) {
-			eObjectOrProxy = EcoreUtil2.resolve (eObjectOrProxy, resourceSet);
-		}
-		LifecycleState lifecycleState = stateResolver.getLifecycleState(eObjectOrProxy);
+		LifecycleState lifecycleState = stateResolver.getLifecycleState(statefulObj);
 		if (minState != null && maxState != null) {
 			int minStateCmp = stateComparator.compare(lifecycleState, minState);
 			int maxStateCmp = stateComparator.compare(lifecycleState, maxState);

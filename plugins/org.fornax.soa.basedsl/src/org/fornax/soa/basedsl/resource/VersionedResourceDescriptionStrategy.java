@@ -29,7 +29,7 @@ public class VersionedResourceDescriptionStrategy extends
 			QualifiedName qualifiedName = getQualifiedNameProvider().getFullyQualifiedName(eObject);
 			if (qualifiedName != null) {
 				Map<String, String> userData = Maps.newHashMap();
-				String version = SimpleScopeVersionResolver.INSTANCE.getVersion(eObject);
+				String version = SimpleScopeVersionResolver.INSTANCE.getVersionAsString(eObject);
 				if (version != null)
 					userData.put(VERSION_KEY, version);
 				acceptor.accept (EObjectDescription.create(qualifiedName, eObject, userData));

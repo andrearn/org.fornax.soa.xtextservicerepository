@@ -3,6 +3,9 @@
  */
 package org.fornax.soa.servicerepo.ui.search;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ServiceRepositoryQuerySpec {
 	
 	private String pattern;
@@ -16,7 +19,9 @@ public class ServiceRepositoryQuerySpec {
     private String maxVersion;
     private boolean canonicalNamespaces;
     private boolean nonCanonicalNamespaces;
-
+    private List<String> tagNames;
+    private boolean withTagsFromParent;
+    private boolean allTags;
 	
 	
 	public ServiceRepositoryQuerySpec(String pattern, String searchFor, String queryName, boolean caseSensitive, String scopeDescription) {
@@ -33,6 +38,10 @@ public class ServiceRepositoryQuerySpec {
 		this.scopeDescription = scopeDescription;
 		this.canonicalNamespaces = true;
 		this.nonCanonicalNamespaces = true;
+		this.setTagNames(tagNames);
+		if (this.getTagNames() == null) {
+			this.setTagNames(new ArrayList<String>());
+		}
 	}
 	
 	public String getPattern() {
@@ -130,5 +139,29 @@ public class ServiceRepositoryQuerySpec {
 
 	public void setNonCanonicalNamespaces(boolean nonCanonicalNamespaces) {
 		this.nonCanonicalNamespaces = nonCanonicalNamespaces;
+	}
+
+	public List<String> getTagNames() {
+		return this.tagNames;
+	}
+
+	public void setTagNames(List<String> tagNames) {
+		this.tagNames = tagNames;
+	}
+
+	public boolean isWithTagsFromParent() {
+		return withTagsFromParent;
+	}
+
+	public void setWithTagsFromParent(boolean withTagsFromParent) {
+		this.withTagsFromParent = withTagsFromParent;
+	}
+
+	public boolean isAllTags() {
+		return allTags;
+	}
+
+	public void setAllTags(boolean allTags) {
+		this.allTags = allTags;
 	}
 }

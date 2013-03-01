@@ -1,4 +1,4 @@
-package org.fornax.soa.servicerepo.query.predicates;
+package org.fornax.soa.servicerepo.query;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -7,10 +7,11 @@ import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
-import org.fornax.soa.profiledsl.search.predicate.StrictLifecycleStatePredicate;
+import org.fornax.soa.profiledsl.search.predicate.VersionAndLifecycleStatePredicate;
 import org.fornax.soa.serviceDsl.ApprovalDecision;
 import org.fornax.soa.serviceDsl.GovernanceApproval;
 import org.fornax.soa.serviceDsl.InternalNamespace;
+import org.fornax.soa.servicerepo.query.predicates.CanonicalOrNotPredicate;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
@@ -53,7 +54,7 @@ public class FindUnapprovedAssetsQuery {
 			}
 			
 		};
-		StrictLifecycleStatePredicate statePredicate = new StrictLifecycleStatePredicate(minState, maxState, minVersion, maxVersion, resourceSet);
+		VersionAndLifecycleStatePredicate statePredicate = new VersionAndLifecycleStatePredicate(minState, maxState, minVersion, maxVersion, resourceSet);
 		injector.injectMembers(statePredicate);
 		CanonicalOrNotPredicate canonicalPredicate = new CanonicalOrNotPredicate(inclCanonicalModel, inclNonCanonicalModel, resourceSet);
 		injector.injectMembers(canonicalPredicate);

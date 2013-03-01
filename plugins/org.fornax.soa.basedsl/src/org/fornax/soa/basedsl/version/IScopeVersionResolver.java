@@ -5,11 +5,13 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 
 public interface IScopeVersionResolver {
-	
-	public abstract String getVersionAsString (IEObjectDescription desc);
 
 	public abstract Version getVersion(IEObjectDescription desc);
+	
+	public abstract String getVersionAsString (IEObjectDescription desc);
+	
+	public abstract Version getVersion(EObject o);
 
-	public abstract String getVersion(EObject o);
+	public abstract String getVersionAsString(EObject o);
 
 }
