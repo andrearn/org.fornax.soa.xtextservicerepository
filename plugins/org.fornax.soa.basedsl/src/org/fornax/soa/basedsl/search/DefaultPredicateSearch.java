@@ -14,7 +14,10 @@ import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 public class DefaultPredicateSearch implements IPredicateSearch {
+
 	
+	private static final String XSR_ASSETTYPE_PREFIX = "org.fornax.soa";
+
 	@Inject
 	private IResourceDescriptions resourceDescriptions;
 
@@ -55,7 +58,8 @@ public class DefaultPredicateSearch implements IPredicateSearch {
 		return new Predicate<IEObjectDescription> () {
 			
 			public boolean apply (IEObjectDescription input) {
-				if (typeSearchPattern.matches (input.getEClass ().getName ())) {
+				if (typeSearchPattern.matches (input.getEClass ().getName ()) 
+						&& input.getEObjectOrProxy().getClass().getCanonicalName().startsWith (XSR_ASSETTYPE_PREFIX)) {
 					return predicate.apply (input);
 				}
 				return false;
@@ -75,7 +79,8 @@ public class DefaultPredicateSearch implements IPredicateSearch {
 			public boolean apply (IEObjectDescription input) {
 				if (isNameMatches (searchPattern, input, namespaceDelimiters)
 						&& typeSearchPattern.matches (input.getEClass ()
-								.getName ())) {
+								.getName ())
+						&& input.getEObjectOrProxy().getClass().getCanonicalName().startsWith (XSR_ASSETTYPE_PREFIX)) {
 					return predicate.apply (input);
 				}
 				return false;

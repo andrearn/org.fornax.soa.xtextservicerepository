@@ -34,7 +34,6 @@ public class HasTagPredicate implements Predicate<IEObjectDescription> {
 		this.withTagsFromParent = withTagsFromParent;
 		tagToTagNameConverter = new Function<Tag, String>() {
 			
-			@Override
 			public String apply(Tag input) {
 				return input.getName();
 			}

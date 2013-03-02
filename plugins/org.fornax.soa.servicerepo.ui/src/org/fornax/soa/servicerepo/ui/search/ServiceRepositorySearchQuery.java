@@ -37,6 +37,8 @@ import com.ibm.icu.text.MessageFormat;
 
 public class ServiceRepositorySearchQuery implements ISearchQuery {
 	
+	private static final String XSR_ASSETTYPE_PREFIX = "org.fornax.soa";
+
 	@Inject
 	private Injector injector;
 	
@@ -135,7 +137,7 @@ public class ServiceRepositorySearchQuery implements ISearchQuery {
 			maxVersion = querySpec.getMaxVersion();
 		
 		String queryName = querySpec.getQueryName();
-
+			
 		if (FindUnapprovedAssetsQuery.class.getName().equals(queryName)) {
 			unApprovedServicesQuery = injector.getInstance (FindUnapprovedAssetsQuery.class);
 			result = unApprovedServicesQuery.search(pattern, assetType, minState, maxState, minVersion, maxVersion, querySpec.isCanonicalNamespaces(), querySpec.isNonCanonicalNamespaces(), rs);

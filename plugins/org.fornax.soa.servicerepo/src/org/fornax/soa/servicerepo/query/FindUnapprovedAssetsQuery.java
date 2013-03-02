@@ -21,6 +21,8 @@ import com.google.inject.Injector;
 
 public class FindUnapprovedAssetsQuery {
 	
+	private static final String GOVERNANCE_APPROVAL = "governanceApproval";
+
 	@Inject IPredicateSearch search;
 	
 	@Inject Injector injector;
@@ -32,7 +34,7 @@ public class FindUnapprovedAssetsQuery {
 
 			public boolean apply (final IEObjectDescription objDesc) {
 				EObject eObjectOrProxy = objDesc.getEObjectOrProxy ();
-				final EStructuralFeature approvalFeature = objDesc.getEClass().getEStructuralFeature("governanceApproval");
+				final EStructuralFeature approvalFeature = objDesc.getEClass().getEStructuralFeature(GOVERNANCE_APPROVAL);
 				if (approvalFeature != null) {
 					if (eObjectOrProxy.eIsProxy ()) {
 						eObjectOrProxy = EcoreUtil2.resolve (eObjectOrProxy, resourceSet);

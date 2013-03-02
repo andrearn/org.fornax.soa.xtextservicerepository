@@ -26,6 +26,7 @@ public class CanonicalOrNotPredicate implements Predicate<IEObjectDescription> {
 		this.resourceSet = rs;
 		
 	}
+	
 	public boolean apply(IEObjectDescription input) {
 		EObject o = input.getEObjectOrProxy();
 		if (o.eIsProxy()) {

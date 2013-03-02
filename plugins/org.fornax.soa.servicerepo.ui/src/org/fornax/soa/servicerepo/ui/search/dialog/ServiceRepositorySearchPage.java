@@ -40,6 +40,7 @@ import org.eclipse.ui.IWorkingSetManager;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.contentassist.FQNPrefixMatcher;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
@@ -58,7 +59,7 @@ import com.google.inject.Injector;
 public class ServiceRepositorySearchPage extends DialogPage implements ISearchPage {
 	
 	private static final String ANY_ASSET_QUERY = "Any asset";
-	private static final String DEFAULT_PATTERN = ".*";
+	private static final String DEFAULT_PATTERN = "*";
 	private static final String DEFAULT_ASSET_TYPE = "org.fornax.soa.serviceDsl.Service";
 
 	public static final String DIALOG_SETTINGS_SECTION = "org.fornax.soa.servicerepo.ui.search";
@@ -88,6 +89,9 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     private final static String STORE_INCLUDE_MASK= "INCLUDE_MASK"; //$NON-NLS-1$
     private final static String STORE_HISTORY= "HISTORY"; //$NON-NLS-1$
     private final static String STORE_HISTORY_SIZE= "HISTORY_SIZE"; //$NON-NLS-1$
+	private static final String STORE_PATTERN = "PATTERN";
+	private static final String STORE_QUERY = "QUERY";
+	private static final String STORE_SEARCH_FOR = "SCOPE";
 
     private final List fPreviousSearchPatterns;
 	private Combo minStateCombo;
@@ -106,6 +110,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 
     public ServiceRepositorySearchPage() {
 		fPreviousSearchPatterns = new ArrayList();
+		fDialogSettings = ServiceRepositoryActivator.getInstance().getDialogSetting(DIALOG_SETTINGS_SECTION);
 	}
 
 	public void createControl(Composite parent) {
@@ -128,6 +133,8 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         data.heightHint= convertHeightInCharsToPixels(1) / 3;
         separator.setLayoutData(data);
         new Label(result_1, SWT.NONE);
+        
+        readConfiguration ();
 	}
 	
 	public boolean performAction() {
@@ -374,7 +381,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
 			maxStateCombo.add(state);
 		}
     }
-
+    
     private String[] getPreviousSearchPatterns() {
         // Search results are not persistent
         int patternCount= fPreviousSearchPatterns.size();
@@ -448,7 +455,6 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
             case ISearchPageContainer.WORKSPACE_SCOPE:
                 break;
             case ISearchPageContainer.SELECTION_SCOPE:
-//                IJavaElement[] javaElements= factory.getJavaElements(getContainer().getSelection());
                 break;
             case ISearchPageContainer.SELECTED_PROJECTS_SCOPE: {
                 String[] projectNames= getContainer().getSelectedProjectNames();
@@ -537,9 +543,12 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     	tagString = tagString.replaceAll("  ", " ");
     	tagString = tagString.replaceAll(",", " ");
     	String[] tagArray = tagString.split(" ");
-    	List tagNames = new ArrayList<String>();
+    	List<String> tagNames = new ArrayList<String>();
     	for (String tag : tagArray) {
-			tagNames.add (tag);
+    		String trimmedTagName = tag.trim();
+    		if (!"".equals(trimmedTagName)) {
+    			tagNames.add (trimmedTagName);
+    		}
 		}
     	return tagNames;
     }
@@ -642,6 +651,18 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     private void readConfiguration() {
         IDialogSettings s= getDialogSettings();
         fIsCaseSensitive= s.getBoolean(STORE_CASE_SENSITIVE);
+        String pattern = s.get(STORE_PATTERN);
+        if (pattern != null) {
+        	fPattern.setText(s.get(STORE_PATTERN));
+        }
+        String query = s.get(STORE_QUERY);
+        if (query != null) {
+        	queryCombo.setText(query);
+        }
+        String searchFor = s.get(STORE_SEARCH_FOR);
+        if (searchFor != null) {
+        	searchForCombo.setText(searchFor);
+        }
 
         try {
             int historySize= s.getInt(STORE_HISTORY_SIZE);
@@ -664,6 +685,9 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
      */
     private void writeConfiguration() {
         IDialogSettings s= getDialogSettings();
+        s.put(STORE_PATTERN, fPattern.getText());
+        s.put(STORE_QUERY, queryCombo.getText());
+        s.put(STORE_SEARCH_FOR, searchForCombo.getText());
         s.put(STORE_CASE_SENSITIVE, fIsCaseSensitive);
 
         int historySize= Math.min(fPreviousSearchPatterns.size(), HISTORY_SIZE);
@@ -777,13 +801,6 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
                 return null;
             }
             EObject elem= null;
-            String handleId= settings.get("element"); //$NON-NLS-1$
-            if (handleId != null && handleId.length() > 0) {
-//                INode restored= JavaCore.create(handleId);
-//                if (restored != null && isSearchableType(restored) && restored.exists()) {
-//                    elem= restored;
-//                }
-            }
             String[] wsIds= settings.getArray("workingSets"); //$NON-NLS-1$
             IWorkingSet[] workingSets= null;
             if (wsIds != null && wsIds.length > 0) {
