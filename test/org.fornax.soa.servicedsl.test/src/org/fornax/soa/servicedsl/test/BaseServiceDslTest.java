@@ -10,7 +10,6 @@ import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslFactory;
-import org.fornax.soa.serviceDsl.Attribute;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
@@ -22,6 +21,7 @@ import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Parameter;
+import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslFactory;
 import org.fornax.soa.serviceDsl.SimpleConsiderationPropertyRef;
@@ -35,9 +35,9 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 	protected Service s;
 	protected org.fornax.soa.serviceDsl.Exception ex;
 	protected BusinessObject bo1;
-	protected Attribute attrBo1;
-	protected Attribute attrBo3;
-	protected Attribute attrBo4;
+	protected Property attrBo1;
+	protected Property attrBo3;
+	protected Property attrBo4;
 	protected DataTypeRef stringTypeRef;
 	protected BusinessObject bo2;
 	protected BusinessObject bo3;
@@ -51,8 +51,8 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 	protected VersionedTypeRef bo2_1_TypeRef;
 	protected BusinessObjectRef bo1_3_SuperTypeRef;
 	protected BusinessObjectRef bo3_4_SuperTypeRef;
-	protected Attribute attr2Bos1;
-	protected Attribute attr1Bos2;
+	protected Property attr2Bos1;
+	protected Property attr1Bos2;
 	
 	protected LifecycleState proposed;
 	protected LifecycleState defined;
@@ -134,7 +134,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		org.fornax.soa.profiledsl.sOAProfileDsl.DataType stringType = profDslFactory.createDataType();
 		stringType.setName("string");
 		
-		attrBo1 = dslFactory.createAttribute();
+		attrBo1 = dslFactory.createProperty();
 		attrBo1.setName("attr1");
 		stringTypeRef = dslFactory.createDataTypeRef();
 		stringTypeRef.setType(stringType);
@@ -162,12 +162,12 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		verRef2.setMajorVersion(1);
 		bo2_1_TypeRef.setVersionRef(verRef);
 
-		attr2Bos1 = dslFactory.createAttribute();
+		attr2Bos1 = dslFactory.createProperty();
 		attr2Bos1.setName("attr2Bo1");
 		attr2Bos1.setType(bo1_2_TypeRef);
 		bo1.getProperties().add(attr2Bos1);
 
-		attr1Bos2 = dslFactory.createAttribute();
+		attr1Bos2 = dslFactory.createProperty();
 		attr1Bos2.setName("attr1Bo2");
 		attr1Bos2.setType(bo2_1_TypeRef);
 		bo2.getProperties().add(attr1Bos2);
@@ -179,7 +179,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		bo3.setVersion(v3);
 		bo3.setState(development);
 
-		attrBo3 = dslFactory.createAttribute();
+		attrBo3 = dslFactory.createProperty();
 		attrBo3.setName("attr3");
 		DataTypeRef string3TypeRef = dslFactory.createDataTypeRef();
 		string3TypeRef.setType(stringType);
@@ -187,7 +187,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		
 		bo3.getProperties().add(attrBo3);
 
-		attrBo4 = dslFactory.createAttribute();
+		attrBo4 = dslFactory.createProperty();
 		attrBo4.setName("attr4");
 		DataTypeRef string4TypeRef = dslFactory.createDataTypeRef();
 		string4TypeRef.setType(stringType);

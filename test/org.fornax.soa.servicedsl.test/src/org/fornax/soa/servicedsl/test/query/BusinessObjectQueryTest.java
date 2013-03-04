@@ -75,7 +75,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	@Test
 	public void testGetAllSuperTypes () {
 		List<BusinessObject> superTypes = Lists.newArrayList();
-		List<BusinessObject> allSuperTypes = BusinessObjectQueryInternal.getAllSuperTypes (bo1, superTypes);
+		List<BusinessObject> allSuperTypes = boQuery.getAllSuperTypes (bo1, superTypes);
 		assertTrue (superTypes.contains (bo3));
 		assertTrue (superTypes.contains (bo4));
 		assertFalse(superTypes.contains (bo1));
