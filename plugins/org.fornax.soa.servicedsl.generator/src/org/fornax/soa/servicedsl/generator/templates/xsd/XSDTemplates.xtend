@@ -28,6 +28,7 @@ import org.fornax.soa.serviceDsl.QueryObject
 import org.fornax.soa.serviceDsl.SimpleAttribute
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
+import org.fornax.soa.serviceDsl.DataTypeRef
 
 class XSDTemplates {
 
@@ -487,7 +488,7 @@ class XSDTemplates {
 	
 	def dispatch toProperty (Property attr, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 		«IF docProvider.getDocumentation (attr) != null»
-			<xsd:element name="«attr.name»" «IF attr.optionalElement»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment()»«ENDIF» >
+			<xsd:element name="«attr.name»" «attr.toElementCardinality» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isMimeContent()»«attr.type.toMimeFragment()»«ENDIF» >
 				<xsd:annotation>
 					<xsd:documentation>
 						<![CDATA[«docProvider.getDocumentation (attr)»]]>
@@ -504,15 +505,15 @@ class XSDTemplates {
 				</xsd:annotation>
 			</xsd:element>
 		«ELSE»
-			<xsd:element name="«attr.name»" «IF attr.optionalElement»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment ()»«ENDIF» />
+			<xsd:element name="«attr.name»" «attr.toElementCardinality» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isMimeContent()»«attr.type.toMimeFragment ()»«ENDIF» />
 		«ENDIF»
 	'''
 	
 	def dispatch toProperty (SimpleAttribute attr, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 		«IF docProvider.getDocumentation (attr) == null»
-			<xsd:element name="«attr.name»" «IF attr.optional»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment ()»«ENDIF»/>
+			<xsd:element name="«attr.name»" «attr.toElementCardinality» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isMimeContent()»«attr.type.toMimeFragment ()»«ENDIF»/>
 		«ELSE»
-			<xsd:element name="«attr.name»" «IF attr.optional»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isAttachment()»«attr.type.toAttachmentMimeFragment () »«ENDIF»>
+			<xsd:element name="«attr.name»" «attr.toElementCardinality» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isMimeContent()»«attr.type.toMimeFragment () »«ENDIF»>
 				<xsd:annotation>
 					<xsd:documentation>
 						<![CDATA[«docProvider.getDocumentation (attr)»]]>
@@ -530,13 +531,31 @@ class XSDTemplates {
 			</xsd:element>
 		«ENDIF»
 	'''
+
+	def private toElementCardinality (Property attr) '''
+		«IF attr.optionalElement»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF»
+	'''
+	def private toElementCardinality (SimpleAttribute attr) '''
+		«IF attr.optional»minOccurs="0"«ENDIF» «IF attr.type.isMany()»maxOccurs="unbounded"«ENDIF»
+	'''
+	
 	
 	
 	def toEnumLiteral (EnumLiteral enumLit) '''
 		<xsd:enumeration value="«enumLit.name»"/>
 	'''
 	
-	def toAttachmentMimeFragment (TypeRef t) '''
+	def toMimeFragment (TypeRef t) '''
 		xmime:expectedContentTypes="application/octet-stream"
 	'''
+	
+	def toAttachmentMimeFragment (DataTypeRef t) {
+	'''
+		«IF t.contentType != null»
+		xmime:expectedContentTypes="«t.contentType»"
+		«ELSE»
+		xmime:expectedContentTypes="application/octet-stream"
+		«ENDIF»
+	'''
+	}
 }

@@ -33,6 +33,7 @@ import org.fornax.soa.service.versioning.IExceptionResolver;
 import org.fornax.soa.service.versioning.ITypeResolver;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
+import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.EnumLiteral;
 import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.ExceptionRef;
@@ -1425,32 +1426,20 @@ public class XSDTemplates {
         String _name = attr.getName();
         _builder.append(_name, "");
         _builder.append("\" ");
-        {
-          boolean _isOptionalElement = this._schemaTypeExtensions.isOptionalElement(attr);
-          if (_isOptionalElement) {
-            _builder.append("minOccurs=\"0\"");
-          }
-        }
-        _builder.append(" ");
-        {
-          TypeRef _type = attr.getType();
-          boolean _isMany = this._schemaTypeExtensions.isMany(_type);
-          if (_isMany) {
-            _builder.append("maxOccurs=\"unbounded\"");
-          }
-        }
+        CharSequence _elementCardinality = this.toElementCardinality(attr);
+        _builder.append(_elementCardinality, "");
         _builder.append(" type=\"");
-        TypeRef _type_1 = attr.getType();
-        String _typeNameRef = this._schemaTypeExtensions.toTypeNameRef(_type_1, currNs);
+        TypeRef _type = attr.getType();
+        String _typeNameRef = this._schemaTypeExtensions.toTypeNameRef(_type, currNs);
         _builder.append(_typeNameRef, "");
         _builder.append("\" ");
         {
-          TypeRef _type_2 = attr.getType();
-          boolean _isAttachment = this._schemaTypeExtensions.isAttachment(_type_2);
-          if (_isAttachment) {
-            TypeRef _type_3 = attr.getType();
-            CharSequence _attachmentMimeFragment = this.toAttachmentMimeFragment(_type_3);
-            _builder.append(_attachmentMimeFragment, "");
+          TypeRef _type_1 = attr.getType();
+          boolean _isMimeContent = this._schemaTypeExtensions.isMimeContent(_type_1);
+          if (_isMimeContent) {
+            TypeRef _type_2 = attr.getType();
+            CharSequence _mimeFragment = this.toMimeFragment(_type_2);
+            _builder.append(_mimeFragment, "");
           }
         }
         _builder.append(" >");
@@ -1482,32 +1471,20 @@ public class XSDTemplates {
         String _name_1 = attr.getName();
         _builder.append(_name_1, "");
         _builder.append("\" ");
-        {
-          boolean _isOptionalElement_1 = this._schemaTypeExtensions.isOptionalElement(attr);
-          if (_isOptionalElement_1) {
-            _builder.append("minOccurs=\"0\"");
-          }
-        }
-        _builder.append(" ");
-        {
-          TypeRef _type_4 = attr.getType();
-          boolean _isMany_1 = this._schemaTypeExtensions.isMany(_type_4);
-          if (_isMany_1) {
-            _builder.append("maxOccurs=\"unbounded\"");
-          }
-        }
+        CharSequence _elementCardinality_1 = this.toElementCardinality(attr);
+        _builder.append(_elementCardinality_1, "");
         _builder.append(" type=\"");
-        TypeRef _type_5 = attr.getType();
-        String _typeNameRef_1 = this._schemaTypeExtensions.toTypeNameRef(_type_5, currNs);
+        TypeRef _type_3 = attr.getType();
+        String _typeNameRef_1 = this._schemaTypeExtensions.toTypeNameRef(_type_3, currNs);
         _builder.append(_typeNameRef_1, "");
         _builder.append("\" ");
         {
-          TypeRef _type_6 = attr.getType();
-          boolean _isAttachment_1 = this._schemaTypeExtensions.isAttachment(_type_6);
-          if (_isAttachment_1) {
-            TypeRef _type_7 = attr.getType();
-            CharSequence _attachmentMimeFragment_1 = this.toAttachmentMimeFragment(_type_7);
-            _builder.append(_attachmentMimeFragment_1, "");
+          TypeRef _type_4 = attr.getType();
+          boolean _isMimeContent_1 = this._schemaTypeExtensions.isMimeContent(_type_4);
+          if (_isMimeContent_1) {
+            TypeRef _type_5 = attr.getType();
+            CharSequence _mimeFragment_1 = this.toMimeFragment(_type_5);
+            _builder.append(_mimeFragment_1, "");
           }
         }
         _builder.append(" />");
@@ -1527,32 +1504,20 @@ public class XSDTemplates {
         String _name = attr.getName();
         _builder.append(_name, "");
         _builder.append("\" ");
-        {
-          boolean _isOptional = attr.isOptional();
-          if (_isOptional) {
-            _builder.append("minOccurs=\"0\"");
-          }
-        }
-        _builder.append(" ");
-        {
-          TypeRef _type = attr.getType();
-          boolean _isMany = this._schemaTypeExtensions.isMany(_type);
-          if (_isMany) {
-            _builder.append("maxOccurs=\"unbounded\"");
-          }
-        }
+        CharSequence _elementCardinality = this.toElementCardinality(attr);
+        _builder.append(_elementCardinality, "");
         _builder.append(" type=\"");
-        TypeRef _type_1 = attr.getType();
-        String _typeNameRef = this._schemaTypeExtensions.toTypeNameRef(_type_1, currNs);
+        TypeRef _type = attr.getType();
+        String _typeNameRef = this._schemaTypeExtensions.toTypeNameRef(_type, currNs);
         _builder.append(_typeNameRef, "");
         _builder.append("\" ");
         {
-          TypeRef _type_2 = attr.getType();
-          boolean _isAttachment = this._schemaTypeExtensions.isAttachment(_type_2);
-          if (_isAttachment) {
-            TypeRef _type_3 = attr.getType();
-            CharSequence _attachmentMimeFragment = this.toAttachmentMimeFragment(_type_3);
-            _builder.append(_attachmentMimeFragment, "");
+          TypeRef _type_1 = attr.getType();
+          boolean _isMimeContent = this._schemaTypeExtensions.isMimeContent(_type_1);
+          if (_isMimeContent) {
+            TypeRef _type_2 = attr.getType();
+            CharSequence _mimeFragment = this.toMimeFragment(_type_2);
+            _builder.append(_mimeFragment, "");
           }
         }
         _builder.append("/>");
@@ -1562,32 +1527,20 @@ public class XSDTemplates {
         String _name_1 = attr.getName();
         _builder.append(_name_1, "");
         _builder.append("\" ");
-        {
-          boolean _isOptional_1 = attr.isOptional();
-          if (_isOptional_1) {
-            _builder.append("minOccurs=\"0\"");
-          }
-        }
-        _builder.append(" ");
-        {
-          TypeRef _type_4 = attr.getType();
-          boolean _isMany_1 = this._schemaTypeExtensions.isMany(_type_4);
-          if (_isMany_1) {
-            _builder.append("maxOccurs=\"unbounded\"");
-          }
-        }
+        CharSequence _elementCardinality_1 = this.toElementCardinality(attr);
+        _builder.append(_elementCardinality_1, "");
         _builder.append(" type=\"");
-        TypeRef _type_5 = attr.getType();
-        String _typeNameRef_1 = this._schemaTypeExtensions.toTypeNameRef(_type_5, currNs);
+        TypeRef _type_3 = attr.getType();
+        String _typeNameRef_1 = this._schemaTypeExtensions.toTypeNameRef(_type_3, currNs);
         _builder.append(_typeNameRef_1, "");
         _builder.append("\" ");
         {
-          TypeRef _type_6 = attr.getType();
-          boolean _isAttachment_1 = this._schemaTypeExtensions.isAttachment(_type_6);
-          if (_isAttachment_1) {
-            TypeRef _type_7 = attr.getType();
-            CharSequence _attachmentMimeFragment_1 = this.toAttachmentMimeFragment(_type_7);
-            _builder.append(_attachmentMimeFragment_1, "");
+          TypeRef _type_4 = attr.getType();
+          boolean _isMimeContent_1 = this._schemaTypeExtensions.isMimeContent(_type_4);
+          if (_isMimeContent_1) {
+            TypeRef _type_5 = attr.getType();
+            CharSequence _mimeFragment_1 = this.toMimeFragment(_type_5);
+            _builder.append(_mimeFragment_1, "");
           }
         }
         _builder.append(">");
@@ -1619,6 +1572,46 @@ public class XSDTemplates {
     return _builder;
   }
   
+  private CharSequence toElementCardinality(final Property attr) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      boolean _isOptionalElement = this._schemaTypeExtensions.isOptionalElement(attr);
+      if (_isOptionalElement) {
+        _builder.append("minOccurs=\"0\"");
+      }
+    }
+    _builder.append(" ");
+    {
+      TypeRef _type = attr.getType();
+      boolean _isMany = this._schemaTypeExtensions.isMany(_type);
+      if (_isMany) {
+        _builder.append("maxOccurs=\"unbounded\"");
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+  
+  private CharSequence toElementCardinality(final SimpleAttribute attr) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      boolean _isOptional = attr.isOptional();
+      if (_isOptional) {
+        _builder.append("minOccurs=\"0\"");
+      }
+    }
+    _builder.append(" ");
+    {
+      TypeRef _type = attr.getType();
+      boolean _isMany = this._schemaTypeExtensions.isMany(_type);
+      if (_isMany) {
+        _builder.append("maxOccurs=\"unbounded\"");
+      }
+    }
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+  
   public CharSequence toEnumLiteral(final EnumLiteral enumLit) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<xsd:enumeration value=\"");
@@ -1629,10 +1622,29 @@ public class XSDTemplates {
     return _builder;
   }
   
-  public CharSequence toAttachmentMimeFragment(final TypeRef t) {
+  public CharSequence toMimeFragment(final TypeRef t) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("xmime:expectedContentTypes=\"application/octet-stream\"");
     _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence toAttachmentMimeFragment(final DataTypeRef t) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      String _contentType = t.getContentType();
+      boolean _notEquals = (!Objects.equal(_contentType, null));
+      if (_notEquals) {
+        _builder.append("xmime:expectedContentTypes=\"");
+        String _contentType_1 = t.getContentType();
+        _builder.append(_contentType_1, "");
+        _builder.append("\"");
+        _builder.newLineIfNotEmpty();
+      } else {
+        _builder.append("xmime:expectedContentTypes=\"application/octet-stream\"");
+        _builder.newLine();
+      }
+    }
     return _builder;
   }
   

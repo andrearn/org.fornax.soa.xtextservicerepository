@@ -40,6 +40,7 @@ class WSDLTemplates {
 	@Inject extension HeaderFinder
 	@Inject extension NamespaceImportQueries
 	@Inject extension XSDTemplates
+	@Inject extension WsdlParameterExtensions
 
 	@Inject TechnicalNamespaceImportQueries techNsImportQueries
 	@Inject VersionQualifierExtensions versionQualifier
@@ -88,6 +89,8 @@ class WSDLTemplates {
 			xmlns:tns="«s.toTargetNamespace()»"
 			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd
+
 		«/*	
 			xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
 		*/»
@@ -116,6 +119,7 @@ class WSDLTemplates {
 		'''
 		<wsdl:types>
 			<xsd:schema targetNamespace="«s.toTargetNamespace()»"
+				xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd"
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber (s.version), minState) »
 					xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber (imp.version)»="«imp.toNamespace()»"
 				«ENDFOR»
@@ -127,6 +131,10 @@ class WSDLTemplates {
 				elementFormDefault="qualified"
 				attributeFormDefault="unqualified"
 			>
+				<xsd:import namespace="http://ws-i.org/profiles/basic/1.1/xsd" />
+				«/*<xsd:import
+					namespace="http://ws-i.org/profiles/basic/1.1/xsd"
+					schemaLocation="http://ws-i.org/profiles/basic/1.1/xsd"/>*/»
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
 					<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
 						namespace="«imp.toNamespace ()»"/>
@@ -200,8 +208,12 @@ class WSDLTemplates {
 	
 	
 	def dispatch toParameter (Parameter p) '''
-		<xsd:element name="«p.name»" type="«p.type.toTypeNameRef ()»" «IF p.optional»minOccurs="0" «ENDIF»«IF p.type.isMany()»maxOccurs="unbounded"«ENDIF» «IF p.type.isAttachment()»«p.type.toAttachmentMimeFragment»«ENDIF»></xsd:element>
+		<xsd:element name="«p.name»" type="«p.toElementType ()»" «IF p.type.isMimeContentAttachment()»«p.type.toMimeFragment»«ELSE»«p.toElementCardinality»«ENDIF»></xsd:element>
 	'''
+	
+	def private toElementCardinality(Parameter param) {
+		'''«IF param.optional»minOccurs="0"«ENDIF»	«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF»'''
+	}
 	
 	
 	def dispatch toParameter (org.fornax.soa.profiledsl.sOAProfileDsl.Property prop) '''

@@ -13,17 +13,27 @@ import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.ExceptionRef
 import org.fornax.soa.serviceDsl.Service
 
+/**
+ * Derive Java class names from types and type references
+ */
 class JavaTypeExtensions {
-	@Inject QualifiedNameProvider nameProvider
+	
+	
+	@Inject 
+	private QualifiedNameProvider nameProvider
+	
 	@Inject extension SchemaNamespaceExtensions
 	
-	/*
+	/**
 	 * Returns the fully qualified java class name for a Type.
 	 */
-	def dispatch toQualifiedJavaTypeName (Type type, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (Type type, boolean optionalField) {
 		
 	}
 	
+	/**
+	 * Returns the fully qualified java class name for a Type.
+	 */
 	def dispatch String toQualifiedJavaTypeName (DataType type, boolean optionalField) {
 		switch (type.name) {
 			case "date":			"java.util.Date"
@@ -45,20 +55,37 @@ class JavaTypeExtensions {
 		}
 	}
 	
+	/**
+	 * Returns the fully qualified java class name for a Type.
+	 */
 	def dispatch String toQualifiedJavaTypeName (VersionedType type, boolean optionalField) {
 		nameProvider.getFullyQualifiedName(type.eContainer).toString + "." + type.version.toVersionPostfix + "." + type.name
 	}
-	def String toQualifiedJavaTypeName (Service service, boolean optionalField) {
+
+	/**
+	 * Returns the fully qualified java class name for a Type.
+	 */
+	def dispatch String toQualifiedJavaTypeName (Service service, boolean optionalField) {
 		nameProvider.getFullyQualifiedName(service.eContainer).toString + "." + service.version.toVersionPostfix + "." + service.name
 	}
-	def String toQualifiedJavaTypeName (org.fornax.soa.serviceDsl.Exception exception, boolean optionalField) {
+
+	/**
+	 * Returns the fully qualified java class name for a Type.
+	 */
+	def dispatch String toQualifiedJavaTypeName (org.fornax.soa.serviceDsl.Exception exception, boolean optionalField) {
 		nameProvider.getFullyQualifiedName(exception.eContainer).toString + "." + exception.version.toVersionPostfix + "." + exception.name
 	}
 	
-	
+	/**
+	 * Get the full qualified of the Java type derived from the Service DSL type reference
+	 */
 	def dispatch String toQualifiedJavaTypeName (TypeRef typeRef, boolean optionalField) {
 		
 	}
+	
+	/**
+	 * Get the full qualified of the Java type derived from the Service DSL type reference
+	 */
 	def dispatch String toQualifiedJavaTypeName (DataTypeRef typeRef, boolean optionalField) {
 		if (typeRef.many)
 			if (typeRef.set)
@@ -68,6 +95,10 @@ class JavaTypeExtensions {
 		else
 			typeRef.type.toQualifiedJavaTypeName(optionalField)
 	}
+	
+	/**
+	 * Get the full qualified of the Java type derived from the Service DSL type reference
+	 */
 	def dispatch String toQualifiedJavaTypeName (VersionedTypeRef typeRef, boolean optionalField) {
 		if (typeRef.many)
 			if (typeRef.set)
@@ -78,7 +109,10 @@ class JavaTypeExtensions {
 			typeRef.type.toQualifiedJavaTypeName(optionalField)
 	}
 	
-	def String toQualifiedJavaTypeName (ExceptionRef exRef, boolean optionalField) {
+	/**
+	 * Get the full qualified of the Java type derived from the Service DSL type reference
+	 */
+	def dispatch String toQualifiedJavaTypeName (ExceptionRef exRef, boolean optionalField) {
 		exRef.exception.toQualifiedJavaTypeName(optionalField)
 	}
 	
@@ -90,16 +124,17 @@ class JavaTypeExtensions {
 	}
 	
 	
-	
-	
-	/*
+	/**
 	 * Returns the Java class name for a Type.
 	 */
-	def dispatch toJavaTypeName (Type type, boolean optionalField) {
+	def dispatch String toJavaTypeName (Type type, boolean optionalField) {
 		
 	}
 	
-	def dispatch toJavaTypeName (DataType type, boolean optionalField) {
+	/**
+	 * Returns the Java class name for a Type.
+	 */
+	def dispatch String toJavaTypeName (DataType type, boolean optionalField) {
 		switch (type.name) {
 			case "date":			"Date"
 			case "datetime":		"Date"
@@ -120,14 +155,23 @@ class JavaTypeExtensions {
 		}
 	}
 	
+	/**
+	 * Returns the Java class name for a Type.
+	 */
 	def dispatch String toJavaTypeName (VersionedType type, boolean optionalField) {
 		type.name
 	}
 	
-	
+	/**
+	 * Returns the Java class name for a Type.
+	 */
 	def dispatch String toJavaTypeName (TypeRef typeRef, boolean optionalField) {
 		
 	}
+
+	/**
+	 * Returns the Java class name for a Type.
+	 */
 	def dispatch String toJavaTypeName (DataTypeRef typeRef, boolean optionalField) {
 		if (typeRef.many)
 			if (typeRef.set)
@@ -137,6 +181,10 @@ class JavaTypeExtensions {
 		else
 			return typeRef.type.toJavaTypeName(optionalField)
 	}
+
+	/**
+	 * Returns the Java class name for a Type.
+	 */
 	def dispatch String toJavaTypeName (VersionedTypeRef typeRef, boolean optionalField) {
 		if (typeRef.many)
 			if (typeRef.set)
@@ -146,17 +194,86 @@ class JavaTypeExtensions {
 		else
 			return typeRef.type.toJavaTypeName(optionalField)
 	}
-	def String toJavaTypeName (Service service, boolean optionalField) {
+
+	/**
+	 * Returns the Java class name for a Type.
+	 */
+	def dispatch String toJavaTypeName (Service service, boolean optionalField) {
 		service.name
 	}
-	def String toJavaTypeName (org.fornax.soa.serviceDsl.Exception exception, boolean optionalField) {
+
+	/**
+	 * Returns the Java class name for a Type.
+	 */
+	def dispatch String toJavaTypeName (org.fornax.soa.serviceDsl.Exception exception, boolean optionalField) {
 		exception.name
+	}
+
+	/**
+	 * Returns the Java class name of an implementation class of the collection class of a many TypeRef.
+	 */
+	def dispatch String toImplJavaTypeName (TypeRef typeRef, boolean optionalField) {
+		
+	}
+
+	/**
+	 * Returns the Java class name of an implementation class of the collection class of a many TypeRef.
+	 */
+	def dispatch String toImplJavaTypeName (DataTypeRef typeRef, boolean optionalField) {
+		if (typeRef.many)
+			if (typeRef.set)
+				return "HashSet<" + typeRef.type.toJavaTypeName(true) + ">"
+			else
+				return "ArrayList<" + typeRef.type.toJavaTypeName(true) + ">"
+		else
+			return typeRef.type.toJavaTypeName(optionalField)
+	}
+	/**
+	 * Returns the Java class name of an implementation class of the collection class of a many TypeRef.
+	 */
+	def dispatch String toImplJavaTypeName (VersionedTypeRef typeRef, boolean optionalField) {
+		if (typeRef.many)
+			if (typeRef.set)
+				return "HashSet<" + typeRef.type.toJavaTypeName(true) + ">"
+			else
+				return "ArrayList<" + typeRef.type.toJavaTypeName(true) + ">"
+		else
+			return typeRef.type.toJavaTypeName(optionalField)
 	}
 	
 	/*
 	 * returns the Java type name of the property's type
 	 */
-	def toJavaTypeName (Property property) {
+	def String toJavaTypeName (Property property) {
 		property.type.toJavaTypeName(property.optional)
 	}
+	
+	/**
+	 * Get the java file name of a class representing a Type
+	 */
+	def String toJavaFileName (Type type) {
+		type.toQualifiedJavaTypeName (false).replaceAll("\\.", "/") + ".java"
+	}
+	
+	/**
+	 * Get the java file name of a class representing a Service
+	 */
+	def String toJavaFileName (Service type) {
+		type.toQualifiedJavaTypeName (false).replaceAll("\\.", "/") + ".java"
+	}
+	
+	/**
+	 * Get the java file name of a class representing the referenced Type
+	 */
+	def String toJavaFileName (TypeRef typeRef, boolean isOptional) {
+		typeRef.toQualifiedJavaTypeName (isOptional).replaceAll("\\.", "/") + ".java"
+	}
+	
+	/**
+	 * Get the java file name of the exception wrapper class representing the referenced Exception 
+	 */
+	def String toJavaFileName (ExceptionRef typeRef) {
+		typeRef.toQualifiedJavaTypeName (false).replaceAll("\\.", "/") + ".java"
+	}
+	
 }

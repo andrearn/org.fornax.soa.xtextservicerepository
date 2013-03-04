@@ -585,11 +585,11 @@ public class WrappedWsdlTemplates {
     _builder.append(" ");
     {
       TypeRef _type_2 = param.getType();
-      boolean _isAttachment = this._schemaTypeExtensions.isAttachment(_type_2);
-      if (_isAttachment) {
+      boolean _isMimeContentAttachment = this._schemaTypeExtensions.isMimeContentAttachment(_type_2);
+      if (_isMimeContentAttachment) {
         TypeRef _type_3 = param.getType();
-        CharSequence _attachmentMimeFragment = this._xSDTemplates.toAttachmentMimeFragment(_type_3);
-        _builder.append(_attachmentMimeFragment, "");
+        CharSequence _mimeFragment = this._xSDTemplates.toMimeFragment(_type_3);
+        _builder.append(_mimeFragment, "");
       }
     }
     _builder.append("></xsd:element>");

@@ -14,6 +14,15 @@
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SOAPStyle/rpclit"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SOAPStyle/rpcenc"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SOAPTransport">
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SOAPTransport/HTTP"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SOAPTransport/JMS"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SOAPTransport/SMTP"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SOAPProtocolVersion">
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SOAPProtocolVersion/SOAP11"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SOAPProtocolVersion/SOAP12"/>
+    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SAPTransport">
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SAPTransport/IDOC"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SAPTransport/RFC"/>
@@ -144,6 +153,8 @@
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//SOAP">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/style"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/protocolVersion"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/transport"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/contextRoot"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//SOAP/providedWsdlUrl"/>
     </genClasses>

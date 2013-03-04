@@ -81,6 +81,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SOAP" eSuperTypes="#//BindingProtocol">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="style" eType="#//SOAPStyle"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="protocolVersion" eType="#//SOAPProtocolVersion"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="transport" eType="#//SOAPTransport"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contextRoot" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="providedWsdlUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -88,6 +90,15 @@
     <eLiterals name="doclitwrap" literal="document/literal-wrapped"/>
     <eLiterals name="rpclit" value="1" literal="rpc/literal"/>
     <eLiterals name="rpcenc" value="2" literal="rpc/encoded"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SOAPTransport">
+    <eLiterals name="HTTP" literal="HTTP"/>
+    <eLiterals name="JMS" value="1" literal="JMS"/>
+    <eLiterals name="SMTP" value="2" literal="SMTP"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="SOAPProtocolVersion">
+    <eLiterals name="SOAP11" literal="SOAP-v1.1"/>
+    <eLiterals name="SOAP12" value="1" literal="SOAP-v1.2"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SAP" eSuperTypes="#//BindingProtocol">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="transport" eType="#//SAPTransport"/>

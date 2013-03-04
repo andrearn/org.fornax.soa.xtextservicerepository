@@ -440,6 +440,12 @@
             <terminal xsi:type="xtext:Keyword" value="as set"/>
           </elements>
         </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="content-type"/>
+          <elements xsi:type="xtext:Assignment" feature="contentType" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="AbstractVersionedTypeRef">
@@ -1583,6 +1589,9 @@
         <elements xsi:type="xtext:Keyword" value=":"/>
         <elements xsi:type="xtext:Assignment" feature="type" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="attachmentRef" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="as-attachment-ref"/>
         </elements>
       </alternatives>
     </rules>

@@ -38,6 +38,7 @@ import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.SubNamespace;
 import org.fornax.soa.serviceDsl.TypeRef;
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions;
+import org.fornax.soa.servicedsl.generator.templates.webservice.WsdlParameterExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates;
@@ -67,6 +68,9 @@ public class WSDLTemplates {
   
   @Inject
   private XSDTemplates _xSDTemplates;
+  
+  @Inject
+  private WsdlParameterExtensions _wsdlParameterExtensions;
   
   @Inject
   private TechnicalNamespaceImportQueries techNsImportQueries;
@@ -230,6 +234,10 @@ public class WSDLTemplates {
     _builder.append("\t");
     _builder.append("xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"");
     _builder.newLine();
+    _builder.append("\t");
+    _builder.append("xmlns:ref=\"http://ws-i.org/profiles/basic/1.1/xsd");
+    _builder.newLine();
+    _builder.newLine();
     _builder.newLine();
     _builder.append("\t");
     _builder.append("name=\"");
@@ -338,6 +346,9 @@ public class WSDLTemplates {
       _builder.append(_targetNamespace, "	");
       _builder.append("\"");
       _builder.newLineIfNotEmpty();
+      _builder.append("\t\t");
+      _builder.append("xmlns:ref=\"http://ws-i.org/profiles/basic/1.1/xsd\"");
+      _builder.newLine();
       {
         Version _version = s.getVersion();
         String _majorVersionNumber = this.versionQualifier.toMajorVersionNumber(_version);
@@ -387,6 +398,11 @@ public class WSDLTemplates {
       _builder.newLine();
       _builder.append("\t");
       _builder.append(">");
+      _builder.newLine();
+      _builder.append("\t\t");
+      _builder.append("<xsd:import namespace=\"http://ws-i.org/profiles/basic/1.1/xsd\" />");
+      _builder.newLine();
+      _builder.append("\t\t");
       _builder.newLine();
       {
         Version _version_3 = s.getVersion();
@@ -664,35 +680,42 @@ public class WSDLTemplates {
     String _name = p.getName();
     _builder.append(_name, "");
     _builder.append("\" type=\"");
-    TypeRef _type = p.getType();
-    String _typeNameRef = this._schemaTypeExtensions.toTypeNameRef(_type);
-    _builder.append(_typeNameRef, "");
+    String _elementType = this._wsdlParameterExtensions.toElementType(p);
+    _builder.append(_elementType, "");
     _builder.append("\" ");
     {
-      boolean _isOptional = p.isOptional();
-      if (_isOptional) {
-        _builder.append("minOccurs=\"0\" ");
-      }
-    }
-    {
-      TypeRef _type_1 = p.getType();
-      boolean _isMany = this._schemaTypeExtensions.isMany(_type_1);
-      if (_isMany) {
-        _builder.append("maxOccurs=\"unbounded\"");
-      }
-    }
-    _builder.append(" ");
-    {
-      TypeRef _type_2 = p.getType();
-      boolean _isAttachment = this._schemaTypeExtensions.isAttachment(_type_2);
-      if (_isAttachment) {
-        TypeRef _type_3 = p.getType();
-        CharSequence _attachmentMimeFragment = this._xSDTemplates.toAttachmentMimeFragment(_type_3);
-        _builder.append(_attachmentMimeFragment, "");
+      TypeRef _type = p.getType();
+      boolean _isMimeContentAttachment = this._schemaTypeExtensions.isMimeContentAttachment(_type);
+      if (_isMimeContentAttachment) {
+        TypeRef _type_1 = p.getType();
+        CharSequence _mimeFragment = this._xSDTemplates.toMimeFragment(_type_1);
+        _builder.append(_mimeFragment, "");
+      } else {
+        CharSequence _elementCardinality = this.toElementCardinality(p);
+        _builder.append(_elementCardinality, "");
       }
     }
     _builder.append("></xsd:element>");
     _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+  
+  private CharSequence toElementCardinality(final Parameter param) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      boolean _isOptional = param.isOptional();
+      if (_isOptional) {
+        _builder.append("minOccurs=\"0\"");
+      }
+    }
+    _builder.append("\t");
+    {
+      TypeRef _type = param.getType();
+      boolean _isMany = this._schemaTypeExtensions.isMany(_type);
+      if (_isMany) {
+        _builder.append("maxOccurs=\"unbounded\"");
+      }
+    }
     return _builder;
   }
   

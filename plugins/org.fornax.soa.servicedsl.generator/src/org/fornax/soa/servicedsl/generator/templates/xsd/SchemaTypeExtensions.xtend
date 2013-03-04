@@ -40,8 +40,12 @@ import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.VersionedTypeRef
 import org.fornax.soa.basedsl.search.IEObjectLookup
+import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 
-/* Extension functions Type representations and references in XSDs */
+/**
+ * Extension functions for 
+ * Type representations and references in XSDs
+ */
 class SchemaTypeExtensions {
 	
 	@Inject extension VersionMatcher
@@ -84,8 +88,6 @@ class SchemaTypeExtensions {
 	def dispatch String toTypeNameRef (org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef t) {
 		t.type.toTypeNameRef();
 	}
-	
-//	t.getLatestMatchingType () .getTypeNameRef();
 	
 	def dispatch String toTypeNameRef (VersionedTypeRef t) {
 		if (t.type.findSubdomain() != null) {
@@ -288,16 +290,26 @@ class SchemaTypeExtensions {
 			default : "xsd:" + t.name
 		}
 	}
-		
-	def dispatch boolean isAttachment (TypeRef t) {
+			
+	def dispatch boolean isMimeContent (TypeRef t) {
 		false;
 	}
-	def dispatch boolean isAttachment (DataTypeRef t) {
-		switch (t.type.name) {
-			case "base64Binary": 	true
-			case "attachment":		true
-			default:				false
-		};
+	def dispatch boolean isMimeContent (DataTypeRef t) {
+		return t.contentType != null
+	}
+	
+	def dispatch boolean isMimeContentAttachment (TypeRef t) {
+		false;
+	}
+	def dispatch boolean isMimeContentAttachment (DataTypeRef t) {
+		if (t.contentType != null) {
+			switch (t.type.name) {
+				case "attachment":		true
+				default:				false
+			};
+		} else {
+			false
+		}
 	}
 	 
 	

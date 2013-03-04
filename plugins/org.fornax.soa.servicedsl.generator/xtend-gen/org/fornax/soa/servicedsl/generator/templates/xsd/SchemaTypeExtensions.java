@@ -53,7 +53,8 @@ import org.fornax.soa.serviceDsl.VersionedTypeRef;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
 
 /**
- * Extension functions Type representations and references in XSDs
+ * Extension functions for
+ * Type representations and references in XSDs
  */
 @SuppressWarnings("all")
 public class SchemaTypeExtensions {
@@ -838,32 +839,43 @@ public class SchemaTypeExtensions {
     return _switchResult;
   }
   
-  protected boolean _isAttachment(final TypeRef t) {
+  protected boolean _isMimeContent(final TypeRef t) {
     return false;
   }
   
-  protected boolean _isAttachment(final DataTypeRef t) {
-    boolean _switchResult = false;
-    DataType _type = t.getType();
-    String _name = _type.getName();
-    final String _switchValue = _name;
-    boolean _matched = false;
-    if (!_matched) {
-      if (Objects.equal(_switchValue,"base64Binary")) {
-        _matched=true;
-        _switchResult = true;
+  protected boolean _isMimeContent(final DataTypeRef t) {
+    String _contentType = t.getContentType();
+    return (!Objects.equal(_contentType, null));
+  }
+  
+  protected boolean _isMimeContentAttachment(final TypeRef t) {
+    return false;
+  }
+  
+  protected boolean _isMimeContentAttachment(final DataTypeRef t) {
+    boolean _xifexpression = false;
+    String _contentType = t.getContentType();
+    boolean _notEquals = (!Objects.equal(_contentType, null));
+    if (_notEquals) {
+      boolean _switchResult = false;
+      DataType _type = t.getType();
+      String _name = _type.getName();
+      final String _switchValue = _name;
+      boolean _matched = false;
+      if (!_matched) {
+        if (Objects.equal(_switchValue,"attachment")) {
+          _matched=true;
+          _switchResult = true;
+        }
       }
-    }
-    if (!_matched) {
-      if (Objects.equal(_switchValue,"attachment")) {
-        _matched=true;
-        _switchResult = true;
+      if (!_matched) {
+        _switchResult = false;
       }
+      _xifexpression = _switchResult;
+    } else {
+      _xifexpression = false;
     }
-    if (!_matched) {
-      _switchResult = false;
-    }
-    return _switchResult;
+    return _xifexpression;
   }
   
   protected String _toExceptionNameRef(final ExceptionRef t, final VersionedDomainNamespace currNs) {
@@ -1437,11 +1449,22 @@ public class SchemaTypeExtensions {
     }
   }
   
-  public boolean isAttachment(final TypeRef t) {
+  public boolean isMimeContent(final TypeRef t) {
     if (t instanceof DataTypeRef) {
-      return _isAttachment((DataTypeRef)t);
+      return _isMimeContent((DataTypeRef)t);
     } else if (t != null) {
-      return _isAttachment(t);
+      return _isMimeContent(t);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(t).toString());
+    }
+  }
+  
+  public boolean isMimeContentAttachment(final TypeRef t) {
+    if (t instanceof DataTypeRef) {
+      return _isMimeContentAttachment((DataTypeRef)t);
+    } else if (t != null) {
+      return _isMimeContentAttachment(t);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(t).toString());

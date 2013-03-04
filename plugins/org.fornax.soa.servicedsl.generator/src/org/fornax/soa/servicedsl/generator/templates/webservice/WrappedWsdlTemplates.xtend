@@ -174,7 +174,7 @@ class WrappedWsdlTemplates {
 	}
 	
 	def protected dispatch toParameter (Parameter param) '''
-		<xsd:element name="«param.name»" type="«param.type.toTypeNameRef ()»" «IF param.optional»minOccurs="0" «ENDIF»«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF» «IF param.type.isAttachment()»«param.type.toAttachmentMimeFragment()»«ENDIF»></xsd:element>
+		<xsd:element name="«param.name»" type="«param.type.toTypeNameRef ()»" «IF param.optional»minOccurs="0" «ENDIF»«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF» «IF param.type.isMimeContentAttachment()»«param.type.toMimeFragment()»«ENDIF»></xsd:element>
 	'''
 	
 	def protected dispatch toParameter (Property prop) '''
