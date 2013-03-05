@@ -102,7 +102,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 			logger.severe ("No profileName has been supplied to the Generator. Please provide the name an architecture profile to be applied.")
 			hasValidParameters = false
 		}
-		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
+		var SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
 		if (profile == null) {
 			logger.severe ("No profile found mathing the name " + profileName)
 			hasValidParameters = false

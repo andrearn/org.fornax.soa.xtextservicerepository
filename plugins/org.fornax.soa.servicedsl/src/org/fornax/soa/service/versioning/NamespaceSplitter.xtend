@@ -1,4 +1,4 @@
-package org.fornax.soa.service.namespace
+package org.fornax.soa.service.versioning
 
 import com.google.inject.Inject
 import java.util.Set
@@ -83,10 +83,10 @@ class NamespaceSplitter {
 	def VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (SubNamespace ns, Version v) {
 		if (ns.eContainer   instanceof SubNamespace ) {
 			name 		= (ns.eContainer as SubNamespace).name.stripXtextEscapes();
-			shortName 	= (ns.eContainer as SubNamespace)?.prefix.stripXtextEscapes();		
+			shortName 	= (ns.eContainer as SubNamespace)?.prefix?.stripXtextEscapes();		
 		} else {
 			name 		= (ns.eContainer as OrganizationNamespace).name.stripXtextEscapes();
-			shortName 	= (ns.eContainer as OrganizationNamespace)?.prefix.stripXtextEscapes();
+			shortName 	= (ns.eContainer as OrganizationNamespace)?.prefix?.stripXtextEscapes();
 		} 
 		subdomain 	= ns;
 		fqn 		= nameProvider.getFullyQualifiedName(ns).toString;

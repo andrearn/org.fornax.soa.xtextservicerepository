@@ -19,8 +19,8 @@ import org.fornax.soa.serviceDsl.Service;
 public class HeaderFinder {
   protected MessageHeader _findBestMatchingRequestHeader(final EObject o, final SOAProfile p) {
     Messaging _messaging = p.getMessaging();
-    MessageHeaderRef _defaultRequestHeader = _messaging.getDefaultRequestHeader();
-    MessageHeader _header = _defaultRequestHeader.getHeader();
+    MessageHeaderRef _defaultRequestHeader = _messaging==null?(MessageHeaderRef)null:_messaging.getDefaultRequestHeader();
+    MessageHeader _header = _defaultRequestHeader==null?(MessageHeader)null:_defaultRequestHeader.getHeader();
     return _header;
   }
   
@@ -60,8 +60,8 @@ public class HeaderFinder {
   
   protected MessageHeader _findBestMatchingResponseHeader(final EObject o, final SOAProfile p) {
     Messaging _messaging = p.getMessaging();
-    MessageHeaderRef _defaultResponseHeader = _messaging.getDefaultResponseHeader();
-    MessageHeader _header = _defaultResponseHeader.getHeader();
+    MessageHeaderRef _defaultResponseHeader = _messaging==null?(MessageHeaderRef)null:_messaging.getDefaultResponseHeader();
+    MessageHeader _header = _defaultResponseHeader==null?(MessageHeader)null:_defaultResponseHeader.getHeader();
     return _header;
   }
   
@@ -101,8 +101,8 @@ public class HeaderFinder {
   
   protected MessageHeader _findBestMatchingPublishHeader(final EObject o, final SOAProfile p) {
     Messaging _messaging = p.getMessaging();
-    MessageHeaderRef _defaultPublishHeader = _messaging.getDefaultPublishHeader();
-    MessageHeader _header = _defaultPublishHeader.getHeader();
+    MessageHeaderRef _defaultPublishHeader = _messaging==null?(MessageHeaderRef)null:_messaging.getDefaultPublishHeader();
+    MessageHeader _header = _defaultPublishHeader==null?(MessageHeader)null:_defaultPublishHeader.getHeader();
     return _header;
   }
   
@@ -142,7 +142,7 @@ public class HeaderFinder {
   
   public List<MessageHeader> getLatestMajorVersions(final SOAProfile p) {
     Messaging _messaging = p.getMessaging();
-    EList<MessageHeader> _messageHeaders = _messaging.getMessageHeaders();
+    EList<MessageHeader> _messageHeaders = _messaging==null?(EList<MessageHeader>)null:_messaging.getMessageHeaders();
     return _messageHeaders;
   }
   

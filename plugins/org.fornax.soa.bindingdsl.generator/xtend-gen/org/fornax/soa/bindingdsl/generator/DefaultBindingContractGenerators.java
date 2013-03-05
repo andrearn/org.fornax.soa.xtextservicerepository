@@ -144,7 +144,7 @@ public class DefaultBindingContractGenerators implements IGenerator {
       this.logger.severe("No profileName has been supplied to the Generator. Please provide the name an architecture profile to be applied.");
       hasValidParameters = false;
     }
-    final SOAProfile profile = this.eObjectLookup.<SOAProfile>getModelElementByName(this.profileName, resource, "SOAProfile");
+    SOAProfile profile = this.eObjectLookup.<SOAProfile>getModelElementByName(this.profileName, resource, "SOAProfile");
     boolean _equals_4 = Objects.equal(profile, null);
     if (_equals_4) {
       String _plus = ("No profile found mathing the name " + this.profileName);

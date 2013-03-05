@@ -162,7 +162,7 @@ public class TechnicalNamespaceSplitter {
       it.setName(_stripXtextEscapes);
       EObject _eContainer_2 = c.eContainer();
       String _prefix = ((TechnicalNamespace) _eContainer_2).getPrefix();
-      String _stripXtextEscapes_1 = this._commonStringExtensions.stripXtextEscapes(_prefix);
+      String _stripXtextEscapes_1 = _prefix==null?(String)null:this._commonStringExtensions.stripXtextEscapes(_prefix);
       it.setShortName(_stripXtextEscapes_1);
     } else {
       EObject _eContainer_3 = c.eContainer();
@@ -210,7 +210,7 @@ public class TechnicalNamespaceSplitter {
       it.setName(_stripXtextEscapes);
       EObject _eContainer_2 = c.eContainer();
       String _prefix = ((TechnicalNamespace) _eContainer_2).getPrefix();
-      String _stripXtextEscapes_1 = this._commonStringExtensions.stripXtextEscapes(_prefix);
+      String _stripXtextEscapes_1 = _prefix==null?(String)null:this._commonStringExtensions.stripXtextEscapes(_prefix);
       it.setShortName(_stripXtextEscapes_1);
     } else {
       EObject _eContainer_3 = c.eContainer();

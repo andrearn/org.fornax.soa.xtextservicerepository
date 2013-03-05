@@ -157,8 +157,8 @@ public class ConcreteWsdlGenerator {
     _builder.append(_targetNamespace_2, "    ");
     _builder.append("\" location=\"");
     String _registryBaseUrl = this._bindingExtensions.getRegistryBaseUrl(svcBind);
-    String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(svc, _registryBaseUrl);
-    _builder.append(_registryAssetUrl, "    ");
+    String _schemaAssetUrl = this._schemaNamespaceExtensions.toSchemaAssetUrl(svc, _registryBaseUrl);
+    _builder.append(_schemaAssetUrl, "    ");
     _builder.append(".wsdl\"></wsdl:import>");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -261,8 +261,8 @@ public class ConcreteWsdlGenerator {
     _builder.append(_targetNamespace_2, "    ");
     _builder.append("\" location=\"");
     String _registryBaseUrl = this._bindingExtensions.getRegistryBaseUrl(modBind);
-    String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(svc, _registryBaseUrl);
-    _builder.append(_registryAssetUrl, "    ");
+    String _schemaAssetUrl = this._schemaNamespaceExtensions.toSchemaAssetUrl(svc, _registryBaseUrl);
+    _builder.append(_schemaAssetUrl, "    ");
     _builder.append(".wsdl\"></wsdl:import>");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");

@@ -53,7 +53,7 @@ class TechnicalNamespaceSplitter {
 	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType c) {
 		if (c.eContainer instanceof TechnicalNamespace) {
 			name 		= (c.eContainer as org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as TechnicalNamespace).prefix.stripXtextEscapes();		
+			shortName 	= (c.eContainer as TechnicalNamespace).prefix?.stripXtextEscapes();		
 		} 
 		else 	
 		{
@@ -68,7 +68,7 @@ class TechnicalNamespaceSplitter {
 	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (org.fornax.soa.profiledsl.sOAProfileDsl.Type c) {
 		if (c.eContainer instanceof TechnicalNamespace) {
 			name 		= (c.eContainer as org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as TechnicalNamespace).prefix.stripXtextEscapes();		
+			shortName 	= (c.eContainer as TechnicalNamespace).prefix?.stripXtextEscapes();		
 		} 
 		else 	
 		{

@@ -11,7 +11,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataType
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.service.VersionedDomainNamespace
-import org.fornax.soa.service.namespace.NamespaceSplitter
+import org.fornax.soa.service.versioning.NamespaceSplitter
 import org.fornax.soa.service.query.VersionQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.service.versioning.IExceptionResolver

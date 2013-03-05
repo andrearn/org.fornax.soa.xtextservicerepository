@@ -14,7 +14,7 @@ class HeaderFinder {
 	
 	
 	def dispatch MessageHeader findBestMatchingRequestHeader (EObject o, SOAProfile p ) { 
-		p.messaging.defaultRequestHeader.header;
+		p.messaging?.defaultRequestHeader?.header;
 	}
 		
 	def dispatch MessageHeader findBestMatchingRequestHeader (Operation o, SOAProfile p ) {
@@ -34,7 +34,7 @@ class HeaderFinder {
 	}
 	
 	def dispatch MessageHeader findBestMatchingResponseHeader (EObject o, SOAProfile p ) { 
-		p.messaging.defaultResponseHeader.header;
+		p.messaging?.defaultResponseHeader?.header;
 	}
 		
 	def dispatch MessageHeader findBestMatchingResponseHeader (Operation o, SOAProfile p ) {
@@ -54,7 +54,7 @@ class HeaderFinder {
 	}
 	
 	def dispatch MessageHeader findBestMatchingPublishHeader (EObject o, SOAProfile p ) { 
-		p.messaging.defaultPublishHeader.header;
+		p.messaging?.defaultPublishHeader?.header;
 	}
 		
 	def dispatch MessageHeader findBestMatchingPublishHeader (Operation o, SOAProfile p ) {
@@ -74,7 +74,7 @@ class HeaderFinder {
 	}
 	
 	def List<MessageHeader> getLatestMajorVersions (SOAProfile p) {
-		p.messaging.messageHeaders;
+		p.messaging?.messageHeaders;
 	}
 	
 	

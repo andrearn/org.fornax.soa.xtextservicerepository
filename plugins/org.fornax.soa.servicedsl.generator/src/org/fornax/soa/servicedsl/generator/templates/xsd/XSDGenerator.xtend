@@ -13,7 +13,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.service.VersionedDomainNamespace
-import org.fornax.soa.service.namespace.NamespaceSplitter
+import org.fornax.soa.service.versioning.NamespaceSplitter
 import org.fornax.soa.service.query.ExceptionFinder
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries
 import org.fornax.soa.service.versioning.IExceptionResolver
@@ -234,7 +234,7 @@ class XSDGenerator {
 	'''
 	
 	def toImportDeclaration (VersionedDomainNamespace vns, String registryBaseUrl) '''
-		<xsd:import schemaLocation="«vns.toRegistryAssetUrl (registryBaseUrl)».xsd"
+		<xsd:import schemaLocation="«vns.toSchemaAssetUrl (registryBaseUrl)».xsd"
 			namespace="«vns.toNamespace()»"></xsd:import>
 	'''
 	

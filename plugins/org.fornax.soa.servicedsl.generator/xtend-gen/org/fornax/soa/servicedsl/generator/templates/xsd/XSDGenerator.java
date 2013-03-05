@@ -27,10 +27,10 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.service.VersionedDomainNamespace;
-import org.fornax.soa.service.namespace.NamespaceSplitter;
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries;
 import org.fornax.soa.service.versioning.IExceptionResolver;
 import org.fornax.soa.service.versioning.ITypeResolver;
+import org.fornax.soa.service.versioning.NamespaceSplitter;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.DataTypeRef;
@@ -836,8 +836,8 @@ public class XSDGenerator {
   public CharSequence toImportDeclaration(final VersionedDomainNamespace vns, final String registryBaseUrl) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<xsd:import schemaLocation=\"");
-    String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(vns, registryBaseUrl);
-    _builder.append(_registryAssetUrl, "");
+    String _schemaAssetUrl = this._schemaNamespaceExtensions.toSchemaAssetUrl(vns, registryBaseUrl);
+    _builder.append(_schemaAssetUrl, "");
     _builder.append(".xsd\"");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");

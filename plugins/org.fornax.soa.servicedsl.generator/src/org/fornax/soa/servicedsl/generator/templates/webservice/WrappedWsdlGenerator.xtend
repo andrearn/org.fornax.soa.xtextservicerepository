@@ -136,7 +136,7 @@ class WrappedWsdlGenerator {
 				attributeFormDefault="unqualified"
 			>
 				«FOR imp : svc.importedVersionedNS(svc.version.toMajorVersionNumber(), minState) »
-					<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+					<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
 						namespace="«imp.toNamespace()»"/>
 				«ENDFOR»
 				<xsd:import schemaLocation="«svc.getRegisteredOperationWrapperUrl (registryBaseUrl)»"

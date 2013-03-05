@@ -30,13 +30,13 @@ import com.google.inject.name.Names;
 
 public class IBMScaExportsGeneratorSetup implements ISetup {
 
-	private String profileName;
+	private String profileName = "*";
 	private List<String> moduleBindingNames = new ArrayList<String>();
 	private Boolean noDependencies = false;
 	private Boolean includeSubNamespaces = false;
 	private Boolean useNestedPaths = false;
 	private Boolean forceRelativePaths = false;
-	private String targetEnvironmentName = ".*";
+	private String targetEnvironmentName = "*";
 
 	public Injector createInjectorAndDoEMFRegistration () {
 		Injector injector = Guice.createInjector (Modules2.mixin (

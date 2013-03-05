@@ -165,34 +165,34 @@ class SchemaNamespaceExtensions {
 	}
 
 
-	def dispatch String toRegistryAssetUrl (Service s, String registryUrl) { 
+	def dispatch String toSchemaAssetUrl (Service s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
 	}
 		
-	def dispatch String toRegistryAssetUrl (OrganizationNamespace s, String registryUrl) { 
+	def dispatch String toSchemaAssetUrl (OrganizationNamespace s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
 	}
 			
-	def dispatch String toRegistryAssetUrl (DomainNamespace s, String registryUrl) { 
+	def dispatch String toSchemaAssetUrl (DomainNamespace s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
 	} 
 	
-	def dispatch String toRegistryAssetUrl (InternalNamespace s, String registryUrl) {
+	def dispatch String toSchemaAssetUrl (InternalNamespace s, String registryUrl) {
 		if (registryUrl != null && !forceRelativePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
 	}
-	def dispatch String toRegistryAssetUrl (VersionedDomainNamespace s, String registryUrl) { 
+	def dispatch String toSchemaAssetUrl (VersionedDomainNamespace s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths() ) 
 			registryUrl + "/" +s.toFileNameFragment() 
 		else
@@ -200,27 +200,27 @@ class SchemaNamespaceExtensions {
 	}
 	
 	
-	def dispatch String toRegistryAssetUrl (EObject o, Void registryUrl) {
+	def dispatch String toSchemaAssetUrl (EObject o, Void registryUrl) {
 		null;
 	}
 	
-	def dispatch String toRegistryAssetUrl (Service s, Void registryUrl) { 
+	def dispatch String toSchemaAssetUrl (Service s, Void registryUrl) { 
 		s.toFileNameFragment();
 	}
 		
-	def dispatch String toRegistryAssetUrl (OrganizationNamespace s, Void registryUrl) { 
+	def dispatch String toSchemaAssetUrl (OrganizationNamespace s, Void registryUrl) { 
 		s.toFileNameFragment(); 
 	}
 	
-	def dispatch String toRegistryAssetUrl (DomainNamespace s, Void registryUrl) {
+	def dispatch String toSchemaAssetUrl (DomainNamespace s, Void registryUrl) {
 		s.toFileNameFragment();
 	}
 	
-	def dispatch String toRegistryAssetUrl (InternalNamespace s, Void registryUrl) { 
+	def dispatch String toSchemaAssetUrl (InternalNamespace s, Void registryUrl) { 
 		s.toFileNameFragment(); 
 	}
 	
-	def dispatch String toRegistryAssetUrl (VersionedDomainNamespace s, Void registryUrl) { 
+	def dispatch String toSchemaAssetUrl (VersionedDomainNamespace s, Void registryUrl) { 
 		s.toFileNameFragment();
 	}
 	

@@ -74,12 +74,12 @@ class EventXSDGenerator {
 			>
 			
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+				<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
 					namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
-					<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+					<xsd:import schemaLocation="«headerImp.toSchemaAssetUrl (registryBaseUrl)».xsd"
 						namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
 			«ENDIF»
@@ -120,12 +120,12 @@ class EventXSDGenerator {
 			>
 			
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+				<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
 					namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
-					<xsd:import schemaLocation="«headerImp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+					<xsd:import schemaLocation="«headerImp.toSchemaAssetUrl (registryBaseUrl)».xsd"
 						namespace="«headerImp.toNamespace()»"/>
 				«ENDFOR»
 			«ENDIF»

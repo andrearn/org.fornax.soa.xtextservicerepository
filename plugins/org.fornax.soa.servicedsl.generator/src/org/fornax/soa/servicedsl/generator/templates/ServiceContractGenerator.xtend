@@ -5,7 +5,7 @@ import com.google.inject.name.Named
 import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
-import org.fornax.soa.service.namespace.NamespaceSplitter
+import org.fornax.soa.service.versioning.NamespaceSplitter
 import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.InternalNamespace

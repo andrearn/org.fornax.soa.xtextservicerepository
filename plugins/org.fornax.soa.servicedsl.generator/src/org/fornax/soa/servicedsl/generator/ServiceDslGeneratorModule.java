@@ -18,7 +18,7 @@ import org.fornax.soa.service.query.type.BusinessObjectQueries;
 import org.fornax.soa.service.query.type.ReferencedTypesFinder;
 import org.fornax.soa.service.query.type.TypesByLifecycleStateFinder;
 import org.fornax.soa.service.query.type.VersionedTypeFilter;
-import org.fornax.soa.service.namespace.NamespaceSplitter;
+import org.fornax.soa.service.versioning.NamespaceSplitter;
 import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions;
 import org.fornax.soa.servicedsl.generator.templates.ServiceContractGenerator;
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions;

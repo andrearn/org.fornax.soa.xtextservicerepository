@@ -86,7 +86,7 @@ class OperationWrapperTypesGenerator {
 			>
 			
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
-				<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+				<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
 					namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»
@@ -131,7 +131,7 @@ class OperationWrapperTypesGenerator {
 			>
 			
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
-			<xsd:import schemaLocation="«imp.toRegistryAssetUrl (registryBaseUrl)».xsd"
+			<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
 				namespace="«imp.toNamespace()»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»

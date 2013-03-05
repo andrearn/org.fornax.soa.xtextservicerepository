@@ -170,8 +170,8 @@ public class EventXSDGenerator {
       for(final VersionedDomainNamespace imp_1 : _allImportedVersionedNS_1) {
         _builder.append("\t");
         _builder.append("<xsd:import schemaLocation=\"");
-        String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(imp_1, registryBaseUrl);
-        _builder.append(_registryAssetUrl, "	");
+        String _schemaAssetUrl = this._schemaNamespaceExtensions.toSchemaAssetUrl(imp_1, registryBaseUrl);
+        _builder.append(_schemaAssetUrl, "	");
         _builder.append(".xsd\"");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -191,8 +191,8 @@ public class EventXSDGenerator {
           for(final VersionedTechnicalNamespace headerImp_1 : headerImports) {
             _builder.append("\t");
             _builder.append("<xsd:import schemaLocation=\"");
-            String _registryAssetUrl_1 = this._schemaNamespaceExtensions.toRegistryAssetUrl(headerImp_1, registryBaseUrl);
-            _builder.append(_registryAssetUrl_1, "	");
+            String _schemaAssetUrl_1 = this._schemaNamespaceExtensions.toSchemaAssetUrl(headerImp_1, registryBaseUrl);
+            _builder.append(_schemaAssetUrl_1, "	");
             _builder.append(".xsd\"");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
@@ -325,8 +325,8 @@ public class EventXSDGenerator {
       for(final VersionedDomainNamespace imp_1 : _allImportedVersionedNS_1) {
         _builder.append("\t");
         _builder.append("<xsd:import schemaLocation=\"");
-        String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(imp_1, registryBaseUrl);
-        _builder.append(_registryAssetUrl, "	");
+        String _schemaAssetUrl = this._schemaNamespaceExtensions.toSchemaAssetUrl(imp_1, registryBaseUrl);
+        _builder.append(_schemaAssetUrl, "	");
         _builder.append(".xsd\"");
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
@@ -346,8 +346,8 @@ public class EventXSDGenerator {
           for(final VersionedTechnicalNamespace headerImp_1 : headerImports) {
             _builder.append("\t");
             _builder.append("<xsd:import schemaLocation=\"");
-            String _registryAssetUrl_1 = this._schemaNamespaceExtensions.toRegistryAssetUrl(headerImp_1, registryBaseUrl);
-            _builder.append(_registryAssetUrl_1, "	");
+            String _schemaAssetUrl_1 = this._schemaNamespaceExtensions.toSchemaAssetUrl(headerImp_1, registryBaseUrl);
+            _builder.append(_schemaAssetUrl_1, "	");
             _builder.append(".xsd\"");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");

@@ -170,18 +170,24 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
                     };
                   IterableExtensions.<VersionedDomainNamespace>forEach(verNamespaces, _function_2);
                   final MessageHeader requestHeader = this._headerFinder.findBestMatchingRequestHeader(svc, profile);
-                  if ((this.forceRelativePaths).booleanValue()) {
-                    String _registryBaseUrl_1 = this._bindingExtensions.getRegistryBaseUrl(binding);
-                    this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, _registryBaseUrl_1);
-                  } else {
-                    this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile);
+                  boolean _notEquals_1 = (!Objects.equal(requestHeader, null));
+                  if (_notEquals_1) {
+                    if ((this.forceRelativePaths).booleanValue()) {
+                      String _registryBaseUrl_1 = this._bindingExtensions.getRegistryBaseUrl(binding);
+                      this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, _registryBaseUrl_1);
+                    } else {
+                      this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile);
+                    }
                   }
                   final MessageHeader responseHeader = this._headerFinder.findBestMatchingResponseHeader(svc, profile);
-                  if ((this.forceRelativePaths).booleanValue()) {
-                    String _registryBaseUrl_2 = this._bindingExtensions.getRegistryBaseUrl(binding);
-                    this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, _registryBaseUrl_2);
-                  } else {
-                    this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile);
+                  boolean _notEquals_2 = (!Objects.equal(responseHeader, null));
+                  if (_notEquals_2) {
+                    if ((this.forceRelativePaths).booleanValue()) {
+                      String _registryBaseUrl_2 = this._bindingExtensions.getRegistryBaseUrl(binding);
+                      this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, _registryBaseUrl_2);
+                    } else {
+                      this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile);
+                    }
                   }
                 }
               }
@@ -372,18 +378,24 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
               };
             IterableExtensions.<VersionedDomainNamespace>forEach(verNamespaces, _function_2);
             final MessageHeader requestHeader = this._headerFinder.findBestMatchingRequestHeader(service, profile);
-            if ((this.forceRelativePaths).booleanValue()) {
-              String _registryBaseUrl_1 = this._bindingExtensions.getRegistryBaseUrl(specBinding);
-              this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, _registryBaseUrl_1);
-            } else {
-              this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile);
+            boolean _notEquals = (!Objects.equal(requestHeader, null));
+            if (_notEquals) {
+              if ((this.forceRelativePaths).booleanValue()) {
+                String _registryBaseUrl_1 = this._bindingExtensions.getRegistryBaseUrl(specBinding);
+                this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, _registryBaseUrl_1);
+              } else {
+                this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile);
+              }
             }
             final MessageHeader responseHeader = this._headerFinder.findBestMatchingRequestHeader(service, profile);
-            if ((this.forceRelativePaths).booleanValue()) {
-              String _registryBaseUrl_2 = this._bindingExtensions.getRegistryBaseUrl(specBinding);
-              this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, _registryBaseUrl_2);
-            } else {
-              this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile);
+            boolean _notEquals_1 = (!Objects.equal(responseHeader, null));
+            if (_notEquals_1) {
+              if ((this.forceRelativePaths).booleanValue()) {
+                String _registryBaseUrl_2 = this._bindingExtensions.getRegistryBaseUrl(specBinding);
+                this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, _registryBaseUrl_2);
+              } else {
+                this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile);
+              }
             }
           }
         }

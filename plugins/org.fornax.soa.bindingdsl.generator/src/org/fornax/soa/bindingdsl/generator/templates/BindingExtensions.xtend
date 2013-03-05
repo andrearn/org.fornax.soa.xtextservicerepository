@@ -28,17 +28,18 @@ class BindingExtensions {
 	}
 	
 	def dispatch String getRegistryBaseUrl (ModuleBinding b) {
-		b.resolveEnvironment.registryBaseUrl
+		b.resolveEnvironment?.registryBaseUrl
 	}
 	
 	def dispatch String getRegistryBaseUrl (Environment env) {
-		var regConnector = env.defaultRegistry?.connectors.filter(typeof(HTTP)).filter (c | c.isDefault).head
-		if (regConnector != null) {
-			var path = "/"+regConnector.contextRoot
-			path.replaceAll("//","/")
-			var baseUrl = "http://" + env.defaultRegistry.host.fqn + ":" + regConnector.port + path
-			baseUrl.stripTrailingSlash();
-		
+		if (env.defaultRegistry != null) {
+			var regConnector = env.defaultRegistry.connectors.filter (typeof(HTTP)).filter (c | c.isDefault).head
+			if (regConnector != null) {
+				var path = "/"+regConnector?.contextRoot ?: ""
+				path.replaceAll("//","/")
+				var baseUrl = "http://" + env.defaultRegistry.host?.fqn ?: "" + ":" + regConnector.port?:"" + path ?: ""
+				baseUrl.stripTrailingSlash();
+			}
 		}
 	}
 	

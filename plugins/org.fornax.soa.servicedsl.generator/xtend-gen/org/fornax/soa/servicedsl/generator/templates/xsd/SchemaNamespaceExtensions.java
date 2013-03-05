@@ -276,7 +276,7 @@ public class SchemaNamespaceExtensions {
     return _xifexpression;
   }
   
-  protected String _toRegistryAssetUrl(final Service s, final String registryUrl) {
+  protected String _toSchemaAssetUrl(final Service s, final String registryUrl) {
     String _xifexpression = null;
     boolean _and = false;
     boolean _notEquals = (!Objects.equal(registryUrl, null));
@@ -299,7 +299,7 @@ public class SchemaNamespaceExtensions {
     return _xifexpression;
   }
   
-  protected String _toRegistryAssetUrl(final OrganizationNamespace s, final String registryUrl) {
+  protected String _toSchemaAssetUrl(final OrganizationNamespace s, final String registryUrl) {
     String _xifexpression = null;
     boolean _and = false;
     boolean _notEquals = (!Objects.equal(registryUrl, null));
@@ -322,7 +322,7 @@ public class SchemaNamespaceExtensions {
     return _xifexpression;
   }
   
-  protected String _toRegistryAssetUrl(final DomainNamespace s, final String registryUrl) {
+  protected String _toSchemaAssetUrl(final DomainNamespace s, final String registryUrl) {
     String _xifexpression = null;
     boolean _and = false;
     boolean _notEquals = (!Objects.equal(registryUrl, null));
@@ -345,7 +345,7 @@ public class SchemaNamespaceExtensions {
     return _xifexpression;
   }
   
-  protected String _toRegistryAssetUrl(final InternalNamespace s, final String registryUrl) {
+  protected String _toSchemaAssetUrl(final InternalNamespace s, final String registryUrl) {
     String _xifexpression = null;
     boolean _and = false;
     boolean _notEquals = (!Objects.equal(registryUrl, null));
@@ -368,7 +368,7 @@ public class SchemaNamespaceExtensions {
     return _xifexpression;
   }
   
-  protected String _toRegistryAssetUrl(final VersionedDomainNamespace s, final String registryUrl) {
+  protected String _toSchemaAssetUrl(final VersionedDomainNamespace s, final String registryUrl) {
     String _xifexpression = null;
     boolean _and = false;
     boolean _notEquals = (!Objects.equal(registryUrl, null));
@@ -391,31 +391,31 @@ public class SchemaNamespaceExtensions {
     return _xifexpression;
   }
   
-  protected String _toRegistryAssetUrl(final EObject o, final Void registryUrl) {
+  protected String _toSchemaAssetUrl(final EObject o, final Void registryUrl) {
     return null;
   }
   
-  protected String _toRegistryAssetUrl(final Service s, final Void registryUrl) {
+  protected String _toSchemaAssetUrl(final Service s, final Void registryUrl) {
     String _fileNameFragment = this.toFileNameFragment(s);
     return _fileNameFragment;
   }
   
-  protected String _toRegistryAssetUrl(final OrganizationNamespace s, final Void registryUrl) {
+  protected String _toSchemaAssetUrl(final OrganizationNamespace s, final Void registryUrl) {
     String _fileNameFragment = this.toFileNameFragment(s);
     return _fileNameFragment;
   }
   
-  protected String _toRegistryAssetUrl(final DomainNamespace s, final Void registryUrl) {
+  protected String _toSchemaAssetUrl(final DomainNamespace s, final Void registryUrl) {
     String _fileNameFragment = this.toFileNameFragment(s);
     return _fileNameFragment;
   }
   
-  protected String _toRegistryAssetUrl(final InternalNamespace s, final Void registryUrl) {
+  protected String _toSchemaAssetUrl(final InternalNamespace s, final Void registryUrl) {
     String _fileNameFragment = this.toFileNameFragment(s);
     return _fileNameFragment;
   }
   
-  protected String _toRegistryAssetUrl(final VersionedDomainNamespace s, final Void registryUrl) {
+  protected String _toSchemaAssetUrl(final VersionedDomainNamespace s, final Void registryUrl) {
     String _fileNameFragment = this.toFileNameFragment(s);
     return _fileNameFragment;
   }
@@ -679,40 +679,40 @@ public class SchemaNamespaceExtensions {
     }
   }
   
-  public String toRegistryAssetUrl(final Object s, final String registryUrl) {
+  public String toSchemaAssetUrl(final Object s, final String registryUrl) {
     if (s instanceof DomainNamespace
          && registryUrl != null) {
-      return _toRegistryAssetUrl((DomainNamespace)s, registryUrl);
+      return _toSchemaAssetUrl((DomainNamespace)s, registryUrl);
     } else if (s instanceof InternalNamespace
          && registryUrl != null) {
-      return _toRegistryAssetUrl((InternalNamespace)s, registryUrl);
+      return _toSchemaAssetUrl((InternalNamespace)s, registryUrl);
     } else if (s instanceof DomainNamespace
          && registryUrl == null) {
-      return _toRegistryAssetUrl((DomainNamespace)s, (Void)null);
+      return _toSchemaAssetUrl((DomainNamespace)s, (Void)null);
     } else if (s instanceof InternalNamespace
          && registryUrl == null) {
-      return _toRegistryAssetUrl((InternalNamespace)s, (Void)null);
+      return _toSchemaAssetUrl((InternalNamespace)s, (Void)null);
     } else if (s instanceof OrganizationNamespace
          && registryUrl != null) {
-      return _toRegistryAssetUrl((OrganizationNamespace)s, registryUrl);
+      return _toSchemaAssetUrl((OrganizationNamespace)s, registryUrl);
     } else if (s instanceof Service
          && registryUrl != null) {
-      return _toRegistryAssetUrl((Service)s, registryUrl);
+      return _toSchemaAssetUrl((Service)s, registryUrl);
     } else if (s instanceof OrganizationNamespace
          && registryUrl == null) {
-      return _toRegistryAssetUrl((OrganizationNamespace)s, (Void)null);
+      return _toSchemaAssetUrl((OrganizationNamespace)s, (Void)null);
     } else if (s instanceof Service
          && registryUrl == null) {
-      return _toRegistryAssetUrl((Service)s, (Void)null);
+      return _toSchemaAssetUrl((Service)s, (Void)null);
     } else if (s instanceof EObject
          && registryUrl == null) {
-      return _toRegistryAssetUrl((EObject)s, (Void)null);
+      return _toSchemaAssetUrl((EObject)s, (Void)null);
     } else if (s instanceof VersionedDomainNamespace
          && registryUrl != null) {
-      return _toRegistryAssetUrl((VersionedDomainNamespace)s, registryUrl);
+      return _toSchemaAssetUrl((VersionedDomainNamespace)s, registryUrl);
     } else if (s instanceof VersionedDomainNamespace
          && registryUrl == null) {
-      return _toRegistryAssetUrl((VersionedDomainNamespace)s, (Void)null);
+      return _toSchemaAssetUrl((VersionedDomainNamespace)s, (Void)null);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(s, registryUrl).toString());

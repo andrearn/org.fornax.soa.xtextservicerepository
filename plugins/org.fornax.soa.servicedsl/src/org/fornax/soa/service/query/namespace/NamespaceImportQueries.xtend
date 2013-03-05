@@ -5,7 +5,7 @@ import java.util.HashSet
 import java.util.Set
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.service.VersionedDomainNamespace
-import org.fornax.soa.service.namespace.NamespaceSplitter
+import org.fornax.soa.service.versioning.NamespaceSplitter
 import org.fornax.soa.service.query.ExceptionFinder
 import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.service.query.type.ReferencedTypesFinder

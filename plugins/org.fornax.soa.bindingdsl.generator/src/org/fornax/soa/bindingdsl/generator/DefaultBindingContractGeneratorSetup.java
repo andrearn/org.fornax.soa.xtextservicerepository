@@ -29,7 +29,7 @@ import com.google.inject.name.Names;
 
 public class DefaultBindingContractGeneratorSetup implements ISetup {
 
-	private String profileName = ".*";
+	private String profileName = "*";
 	private List<String> moduleBindingNames = new ArrayList<String>();
 	private List<VersionedModuleSelector> modules = new ArrayList<VersionedModuleSelector>();
 	private List<String> namespaces = new ArrayList<String>();
@@ -39,7 +39,7 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 	private Boolean includeSubNamespaces = false;
 	private Boolean useNestedPaths = false;
 	private Boolean forceRelativePaths = false;
-	private String targetEnvironmentName = ".*";
+	private String targetEnvironmentName = "*";
 	private Boolean ignoreEndpointQualifierNames = false;
 
 	public Injector createInjectorAndDoEMFRegistration() {

@@ -74,7 +74,7 @@ class ConcreteWsdlGenerator {
 				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
 
-		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
+		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toSchemaAssetUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 			
 			«svcBind.protocol.filter (typeof(SOAP)).map (p|p.toSOAPBinding (svc)).join»
 
@@ -102,7 +102,7 @@ class ConcreteWsdlGenerator {
 				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
 
-		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toRegistryAssetUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
+		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toSchemaAssetUrl (modBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
 			
 			«prot.toSOAPBinding (svc, modBind.getEndpointQualifierName(svc, prot))»
 

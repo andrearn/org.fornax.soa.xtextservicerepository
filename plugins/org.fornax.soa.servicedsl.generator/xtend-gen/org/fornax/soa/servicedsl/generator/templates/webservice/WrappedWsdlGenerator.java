@@ -388,8 +388,8 @@ public class WrappedWsdlGenerator {
       for(final VersionedDomainNamespace imp_1 : _importedVersionedNS_1) {
         _builder.append("\t\t");
         _builder.append("<xsd:import schemaLocation=\"");
-        String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(imp_1, registryBaseUrl);
-        _builder.append(_registryAssetUrl, "		");
+        String _schemaAssetUrl = this._schemaNamespaceExtensions.toSchemaAssetUrl(imp_1, registryBaseUrl);
+        _builder.append(_schemaAssetUrl, "		");
         _builder.append(".xsd\"");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");

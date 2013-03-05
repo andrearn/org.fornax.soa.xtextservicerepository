@@ -86,16 +86,20 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 								verNamespaces.forEach (n | xsdGenerator.toXSD(n, minState, binding, profile));
 										
 								val requestHeader = svc.findBestMatchingRequestHeader (profile);
-								if (forceRelativePaths)
-									msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, binding.getRegistryBaseUrl())
-								else 
-									msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile)
-
+								if (requestHeader != null) {
+									if (forceRelativePaths)
+										msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, binding.getRegistryBaseUrl())
+									else 
+										msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile)
+								}
+								
 								val responseHeader = svc.findBestMatchingResponseHeader (profile);
-								if (forceRelativePaths)
-									msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, binding.getRegistryBaseUrl())
-								else 
-									msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile)
+								if (responseHeader != null) {
+									if (forceRelativePaths)
+										msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, binding.getRegistryBaseUrl())
+									else 
+										msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile)
+								}
 							}
 						}
 					}
@@ -170,16 +174,20 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 						verNamespaces.forEach (n | xsdGenerator.toXSD(n, minState, specBinding, profile));
 								
 						val requestHeader = service.findBestMatchingRequestHeader (profile);
-						if (forceRelativePaths)
-							msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, specBinding.getRegistryBaseUrl())
-						else 
-							msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile)
+						if (requestHeader != null) {
+							if (forceRelativePaths)
+								msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, specBinding.getRegistryBaseUrl())
+							else 
+								msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile)
+						}
 
 						val responseHeader = service.findBestMatchingRequestHeader (profile);
-						if (forceRelativePaths)
-							msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, specBinding.getRegistryBaseUrl())
-						else 
-							msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile)
+						if (responseHeader != null) {
+							if (forceRelativePaths)
+								msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, specBinding.getRegistryBaseUrl())
+							else 
+								msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile)
+						}
 					}
 				}
 			} catch (Exception ex) {
