@@ -21,13 +21,13 @@ import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Parameter
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.generator.templates.xsd.OperationWrapperTemplates
+import org.fornax.soa.servicedsl.generator.templates.xsd.OperationWrapperTypesGenerator
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
-import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator
 
-class WrappedWsdlTemplates {
+class WrappedWsdlGenerator {
 	
 	
 	@Inject IFileSystemAccess fsa
@@ -38,8 +38,8 @@ class WrappedWsdlTemplates {
 	@Inject extension VersionQualifierExtensions
 	@Inject extension NamespaceQuery
 	@Inject extension NamespaceImportQueries
-	@Inject extension XSDTemplates
-	@Inject extension OperationWrapperTemplates
+	@Inject extension XSDGenerator
+	@Inject extension OperationWrapperTypesGenerator
 	
 	@Inject IEObjectDocumentationProvider docProvider
 	
@@ -174,7 +174,7 @@ class WrappedWsdlTemplates {
 	}
 	
 	def protected dispatch toParameter (Parameter param) '''
-		<xsd:element name="«param.name»" type="«param.type.toTypeNameRef ()»" «IF param.optional»minOccurs="0" «ENDIF»«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF» «IF param.type.isMimeContentAttachment()»«param.type.toMimeFragment()»«ENDIF»></xsd:element>
+		<xsd:element name="«param.name»" type="«param.type.toTypeNameRef ()»" «IF param.optional»minOccurs="0" «ENDIF»«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF» «IF param.type.isMimeContentMultiPartAttachment()»«param.type.toMimeFragment()»«ENDIF»></xsd:element>
 	'''
 	
 	def protected dispatch toParameter (Property prop) '''

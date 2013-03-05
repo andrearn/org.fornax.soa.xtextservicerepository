@@ -27,7 +27,7 @@ import org.fornax.soa.bindingDsl.ModuleRef;
 import org.fornax.soa.bindingDsl.SOAP;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
-import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlTemplates;
+import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlGenerator;
 import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDTemplates;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef;
@@ -47,7 +47,7 @@ import org.fornax.soa.service.query.namespace.NamespaceImportQueries;
 import org.fornax.soa.service.query.namespace.NamespaceQuery;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.SubNamespace;
-import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates;
+import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLGenerator;
 
 /**
  * Generates WSDLs and XSDs for SOAP based service endpoints
@@ -76,13 +76,13 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
   private EnvironmentBindingResolver _environmentBindingResolver;
   
   @Inject
-  private WSDLTemplates wsdlGenerator;
+  private WSDLGenerator wsdlGenerator;
   
   @Inject
   private XSDTemplates xsdGenerator;
   
   @Inject
-  private ConcreteWsdlTemplates concreteWsdlGenerator;
+  private ConcreteWsdlGenerator concreteWsdlGenerator;
   
   @Inject
   private MessageHeaderXSDTemplates msgHeaderGenerator;

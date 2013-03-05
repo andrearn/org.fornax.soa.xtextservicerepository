@@ -23,12 +23,12 @@ import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.OrganizationNamespace;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.SubNamespace;
-import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates;
+import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLGenerator;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
-import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates;
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator;
 
 @SuppressWarnings("all")
-public class ServiceTemplates {
+public class ServiceContractGenerator {
   @Inject
   private CommonStringExtensions _commonStringExtensions;
   
@@ -45,10 +45,10 @@ public class ServiceTemplates {
   private IServiceResolver _iServiceResolver;
   
   @Inject
-  private WSDLTemplates _wSDLTemplates;
+  private WSDLGenerator _wSDLGenerator;
   
   @Inject
-  private XSDTemplates _xSDTemplates;
+  private XSDGenerator _xSDGenerator;
   
   @Inject
   @Named(value = "noDependencies")
@@ -58,7 +58,7 @@ public class ServiceTemplates {
     EList<SubNamespace> _subNamespaces = orgNs.getSubNamespaces();
     final Procedure1<SubNamespace> _function = new Procedure1<SubNamespace>() {
         public void apply(final SubNamespace n) {
-          ServiceTemplates.this.toSubNamespace(n, minState, profile, registryBaseUrl);
+          ServiceContractGenerator.this.toSubNamespace(n, minState, profile, registryBaseUrl);
         }
       };
     IterableExtensions.<SubNamespace>forEach(_subNamespaces, _function);
@@ -71,20 +71,20 @@ public class ServiceTemplates {
     EList<InternalNamespace> _interalNamespaces = ns.getInteralNamespaces();
     final Procedure1<InternalNamespace> _function = new Procedure1<InternalNamespace>() {
         public void apply(final InternalNamespace n) {
-          ServiceTemplates.this.toSubNamespace(n, minState, profile, registryBaseUrl);
+          ServiceContractGenerator.this.toSubNamespace(n, minState, profile, registryBaseUrl);
         }
       };
     IterableExtensions.<InternalNamespace>forEach(_interalNamespaces, _function);
     final Set<VersionedDomainNamespace> verNs = this._namespaceSplitter.splitNamespaceByMajorVersion(ns);
     final Procedure1<VersionedDomainNamespace> _function_1 = new Procedure1<VersionedDomainNamespace>() {
         public void apply(final VersionedDomainNamespace v) {
-          List _servicesWithMinState = ServiceTemplates.this._serviceQueries.servicesWithMinState(v, minState);
+          List _servicesWithMinState = ServiceContractGenerator.this._serviceQueries.servicesWithMinState(v, minState);
           Iterable<Service> _filter = Iterables.<Service>filter(_servicesWithMinState, Service.class);
           final Function1<Service,Boolean> _function = new Function1<Service,Boolean>() {
               public Boolean apply(final Service e) {
                 String _version = v.getVersion();
-                Integer _asInteger = ServiceTemplates.this._commonStringExtensions.asInteger(_version);
-                boolean _isMatchingService = ServiceTemplates.this._iServiceResolver.isMatchingService(e, (_asInteger).intValue(), minState);
+                Integer _asInteger = ServiceContractGenerator.this._commonStringExtensions.asInteger(_version);
+                boolean _isMatchingService = ServiceContractGenerator.this._iServiceResolver.isMatchingService(e, (_asInteger).intValue(), minState);
                 return Boolean.valueOf(_isMatchingService);
               }
             };
@@ -99,7 +99,7 @@ public class ServiceTemplates {
           Iterable<Service> _filter_2 = IterableExtensions.<Service>filter(_filter_1, _function_1);
           final Procedure1<Service> _function_2 = new Procedure1<Service>() {
               public void apply(final Service s) {
-                ServiceTemplates.this.toService(s, ns, minState, profile, registryBaseUrl);
+                ServiceContractGenerator.this.toService(s, ns, minState, profile, registryBaseUrl);
               }
             };
           IterableExtensions.<Service>forEach(_filter_2, _function_2);
@@ -116,13 +116,13 @@ public class ServiceTemplates {
     final Set<VersionedDomainNamespace> verNs = this._namespaceSplitter.splitNamespaceByMajorVersion(ns);
     final Procedure1<VersionedDomainNamespace> _function = new Procedure1<VersionedDomainNamespace>() {
         public void apply(final VersionedDomainNamespace v) {
-          List _servicesWithMinState = ServiceTemplates.this._serviceQueries.servicesWithMinState(v, minState);
+          List _servicesWithMinState = ServiceContractGenerator.this._serviceQueries.servicesWithMinState(v, minState);
           Iterable<Service> _filter = Iterables.<Service>filter(_servicesWithMinState, Service.class);
           final Function1<Service,Boolean> _function = new Function1<Service,Boolean>() {
               public Boolean apply(final Service e) {
                 String _version = v.getVersion();
-                Integer _asInteger = ServiceTemplates.this._commonStringExtensions.asInteger(_version);
-                boolean _isMatchingService = ServiceTemplates.this._iServiceResolver.isMatchingService(e, (_asInteger).intValue(), minState);
+                Integer _asInteger = ServiceContractGenerator.this._commonStringExtensions.asInteger(_version);
+                boolean _isMatchingService = ServiceContractGenerator.this._iServiceResolver.isMatchingService(e, (_asInteger).intValue(), minState);
                 return Boolean.valueOf(_isMatchingService);
               }
             };
@@ -137,7 +137,7 @@ public class ServiceTemplates {
           Iterable<Service> _filter_2 = IterableExtensions.<Service>filter(_filter_1, _function_1);
           final Procedure1<Service> _function_2 = new Procedure1<Service>() {
               public void apply(final Service s) {
-                ServiceTemplates.this.toService(s, ns, minState, profile, registryBaseUrl);
+                ServiceContractGenerator.this.toService(s, ns, minState, profile, registryBaseUrl);
               }
             };
           IterableExtensions.<Service>forEach(_filter_2, _function_2);
@@ -151,19 +151,19 @@ public class ServiceTemplates {
   }
   
   protected void _toService(final Service s, final DomainNamespace subDom, final LifecycleState minState, final SOAProfile profile, final String registryBaseUrl) {
-    this._wSDLTemplates.toWSDL(s, subDom, minState, profile, registryBaseUrl);
+    this._wSDLGenerator.toWSDL(s, subDom, minState, profile, registryBaseUrl);
   }
   
   protected void _toService(final Service s, final InternalNamespace subDom, final LifecycleState minState, final SOAProfile profile, final String registryBaseUrl) {
-    this._wSDLTemplates.toWSDL(s, subDom, minState, profile, registryBaseUrl);
+    this._wSDLGenerator.toWSDL(s, subDom, minState, profile, registryBaseUrl);
   }
   
   protected void _toBusinessObject(final DomainNamespace ns, final LifecycleState minState, final SOAProfile profile, final String registryBaseUrl) {
-    this._xSDTemplates.toXSD(ns, minState, profile, registryBaseUrl);
+    this._xSDGenerator.toXSD(ns, minState, profile, registryBaseUrl);
   }
   
   protected void _toBusinessObject(final InternalNamespace ns, final LifecycleState minState, final SOAProfile profile, final String registryBaseUrl) {
-    this._xSDTemplates.toXSD(ns, minState, profile, registryBaseUrl);
+    this._xSDGenerator.toXSD(ns, minState, profile, registryBaseUrl);
   }
   
   public void toSubNamespace(final SubNamespace ns, final LifecycleState minState, final SOAProfile profile, final String registryBaseUrl) {

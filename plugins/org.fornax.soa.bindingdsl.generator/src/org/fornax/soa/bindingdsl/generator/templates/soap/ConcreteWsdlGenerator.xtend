@@ -30,7 +30,7 @@ import org.fornax.soa.bindingDsl.Binding
  * Each concrete WSDL imports the abstract WSDL of the respective service. Generation of the abstract WSDL is being 
  * delegated to the Service DSL generator.
  */
-class ConcreteWsdlTemplates {
+class ConcreteWsdlGenerator {
 	
 	@Inject extension BindingExtensions
 	@Inject extension ConcreteWsdlFileNameProvider

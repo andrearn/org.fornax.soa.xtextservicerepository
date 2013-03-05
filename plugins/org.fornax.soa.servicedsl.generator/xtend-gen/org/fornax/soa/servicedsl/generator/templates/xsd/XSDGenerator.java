@@ -48,8 +48,11 @@ import org.fornax.soa.serviceDsl.TypeRef;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions;
 
+/**
+ * Templates for XSD generation
+ */
 @SuppressWarnings("all")
-public class XSDTemplates {
+public class XSDGenerator {
   @Inject
   private IFileSystemAccess fsa;
   
@@ -140,9 +143,9 @@ public class XSDTemplates {
                   _and = false;
                 } else {
                   String _version = e.getVersion();
-                  String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
+                  String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
                   String _version_1 = nsVer.getVersion();
-                  String _majorVersionNumber_1 = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version_1);
+                  String _majorVersionNumber_1 = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version_1);
                   boolean _equals_1 = Objects.equal(_majorVersionNumber, _majorVersionNumber_1);
                   _and = (_equals && _equals_1);
                 }
@@ -153,7 +156,7 @@ public class XSDTemplates {
           Iterable<VersionedDomainNamespace> _filter_1 = IterableExtensions.<VersionedDomainNamespace>filter(_filter, _function);
           final Procedure1<VersionedDomainNamespace> _function_1 = new Procedure1<VersionedDomainNamespace>() {
               public void apply(final VersionedDomainNamespace e) {
-                XSDTemplates.this.toXSDVersion(e, minState, profile, registryBaseUrl);
+                XSDGenerator.this.toXSDVersion(e, minState, profile, registryBaseUrl);
               }
             };
           IterableExtensions.<VersionedDomainNamespace>forEach(_filter_1, _function_1);
@@ -185,9 +188,9 @@ public class XSDTemplates {
                   _and = false;
                 } else {
                   String _version = e.getVersion();
-                  String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
+                  String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
                   String _version_1 = nsVer.getVersion();
-                  String _majorVersionNumber_1 = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version_1);
+                  String _majorVersionNumber_1 = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version_1);
                   boolean _equals_1 = Objects.equal(_majorVersionNumber, _majorVersionNumber_1);
                   _and = (_equals && _equals_1);
                 }
@@ -198,7 +201,7 @@ public class XSDTemplates {
           Iterable<VersionedDomainNamespace> _filter_1 = IterableExtensions.<VersionedDomainNamespace>filter(_filter, _function);
           final Procedure1<VersionedDomainNamespace> _function_1 = new Procedure1<VersionedDomainNamespace>() {
               public void apply(final VersionedDomainNamespace e) {
-                XSDTemplates.this.toXSDVersion(e, minState, profile, registryBaseUrl, noDeps, includeSubNamespaces);
+                XSDGenerator.this.toXSDVersion(e, minState, profile, registryBaseUrl, noDeps, includeSubNamespaces);
               }
             };
           IterableExtensions.<VersionedDomainNamespace>forEach(_filter_1, _function_1);
@@ -221,9 +224,9 @@ public class XSDTemplates {
             _and = false;
           } else {
             String _version = e.getVersion();
-            String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
+            String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
             String _version_1 = ns.getVersion();
-            String _majorVersionNumber_1 = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version_1);
+            String _majorVersionNumber_1 = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version_1);
             boolean _equals_1 = Objects.equal(_majorVersionNumber, _majorVersionNumber_1);
             _and = (_equals && _equals_1);
           }
@@ -234,7 +237,7 @@ public class XSDTemplates {
     Iterable<VersionedDomainNamespace> _filter_1 = IterableExtensions.<VersionedDomainNamespace>filter(_filter, _function);
     final Procedure1<VersionedDomainNamespace> _function_1 = new Procedure1<VersionedDomainNamespace>() {
         public void apply(final VersionedDomainNamespace e) {
-          XSDTemplates.this.toXSDVersion(e, minState, profile, registryBaseUrl);
+          XSDGenerator.this.toXSDVersion(e, minState, profile, registryBaseUrl);
         }
       };
     IterableExtensions.<VersionedDomainNamespace>forEach(_filter_1, _function_1);
@@ -262,9 +265,9 @@ public class XSDTemplates {
                 _and = false;
               } else {
                 String _version = e.getVersion();
-                String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
+                String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
                 String _version_1 = nsVer.getVersion();
-                String _majorVersionNumber_1 = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version_1);
+                String _majorVersionNumber_1 = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version_1);
                 boolean _equals_1 = Objects.equal(_majorVersionNumber, _majorVersionNumber_1);
                 _and = (_equals && _equals_1);
               }
@@ -275,7 +278,7 @@ public class XSDTemplates {
         Iterable<VersionedDomainNamespace> _filter_1 = IterableExtensions.<VersionedDomainNamespace>filter(_filter, _function);
         final Procedure1<VersionedDomainNamespace> _function_1 = new Procedure1<VersionedDomainNamespace>() {
             public void apply(final VersionedDomainNamespace e) {
-              XSDTemplates.this.toXSDVersion(e, minState, profile, registryBaseUrl);
+              XSDGenerator.this.toXSDVersion(e, minState, profile, registryBaseUrl);
             }
           };
         IterableExtensions.<VersionedDomainNamespace>forEach(_filter_1, _function_1);
@@ -291,8 +294,8 @@ public class XSDTemplates {
     Set<VersionedDomainNamespace> _importedVersionedNS = this._namespaceImportQueries.importedVersionedNS(vns, minState);
     final Function1<VersionedDomainNamespace,Boolean> _function = new Function1<VersionedDomainNamespace,Boolean>() {
         public Boolean apply(final VersionedDomainNamespace e) {
-          String _namespace = XSDTemplates.this._schemaTypeExtensions.toNamespace(e);
-          String _namespace_1 = XSDTemplates.this._schemaTypeExtensions.toNamespace(vns);
+          String _namespace = XSDGenerator.this._schemaTypeExtensions.toNamespace(e);
+          String _namespace_1 = XSDGenerator.this._schemaTypeExtensions.toNamespace(vns);
           boolean _notEquals = (!Objects.equal(_namespace, _namespace_1));
           return Boolean.valueOf(_notEquals);
         }
@@ -313,14 +316,14 @@ public class XSDTemplates {
         public Boolean apply(final BusinessObject e) {
           boolean _and = false;
           LifecycleState _state = e.getState();
-          boolean _matches = XSDTemplates.this._iStateMatcher.matches(minState, _state);
+          boolean _matches = XSDGenerator.this._iStateMatcher.matches(minState, _state);
           if (!_matches) {
             _and = false;
           } else {
             String _version = vns.getVersion();
-            String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
-            Integer _asInteger = XSDTemplates.this._commonStringExtensions.asInteger(_majorVersionNumber);
-            boolean _isMatchingType = XSDTemplates.this._iTypeResolver.isMatchingType(e, _asInteger, minState);
+            String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
+            Integer _asInteger = XSDGenerator.this._commonStringExtensions.asInteger(_majorVersionNumber);
+            boolean _isMatchingType = XSDGenerator.this._iTypeResolver.isMatchingType(e, _asInteger, minState);
             _and = (_matches && _isMatchingType);
           }
           return Boolean.valueOf(_and);
@@ -342,14 +345,14 @@ public class XSDTemplates {
         public Boolean apply(final QueryObject e) {
           boolean _and = false;
           LifecycleState _state = e.getState();
-          boolean _matches = XSDTemplates.this._iStateMatcher.matches(minState, _state);
+          boolean _matches = XSDGenerator.this._iStateMatcher.matches(minState, _state);
           if (!_matches) {
             _and = false;
           } else {
             String _version = vns.getVersion();
-            String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
-            Integer _asInteger = XSDTemplates.this._commonStringExtensions.asInteger(_majorVersionNumber);
-            boolean _isMatchingType = XSDTemplates.this._iTypeResolver.isMatchingType(e, _asInteger, minState);
+            String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
+            Integer _asInteger = XSDGenerator.this._commonStringExtensions.asInteger(_majorVersionNumber);
+            boolean _isMatchingType = XSDGenerator.this._iTypeResolver.isMatchingType(e, _asInteger, minState);
             _and = (_matches && _isMatchingType);
           }
           return Boolean.valueOf(_and);
@@ -362,14 +365,14 @@ public class XSDTemplates {
         public Boolean apply(final Enumeration en) {
           boolean _and = false;
           LifecycleState _state = en.getState();
-          boolean _matches = XSDTemplates.this._iStateMatcher.matches(minState, _state);
+          boolean _matches = XSDGenerator.this._iStateMatcher.matches(minState, _state);
           if (!_matches) {
             _and = false;
           } else {
             String _version = vns.getVersion();
-            String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
-            Integer _asInteger = XSDTemplates.this._commonStringExtensions.asInteger(_majorVersionNumber);
-            boolean _isMatchingType = XSDTemplates.this._iTypeResolver.isMatchingType(en, _asInteger, minState);
+            String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
+            Integer _asInteger = XSDGenerator.this._commonStringExtensions.asInteger(_majorVersionNumber);
+            boolean _isMatchingType = XSDGenerator.this._iTypeResolver.isMatchingType(en, _asInteger, minState);
             _and = (_matches && _isMatchingType);
           }
           return Boolean.valueOf(_and);
@@ -382,14 +385,14 @@ public class XSDTemplates {
         public Boolean apply(final org.fornax.soa.serviceDsl.Exception ex) {
           boolean _and = false;
           LifecycleState _state = ex.getState();
-          boolean _matches = XSDTemplates.this._iStateMatcher.matches(minState, _state);
+          boolean _matches = XSDGenerator.this._iStateMatcher.matches(minState, _state);
           if (!_matches) {
             _and = false;
           } else {
             String _version = vns.getVersion();
-            String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
-            Integer _asInteger = XSDTemplates.this._commonStringExtensions.asInteger(_majorVersionNumber);
-            boolean _isMatchingException = XSDTemplates.this.exceptionResolver.isMatchingException(ex, _asInteger, minState);
+            String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
+            Integer _asInteger = XSDGenerator.this._commonStringExtensions.asInteger(_majorVersionNumber);
+            boolean _isMatchingException = XSDGenerator.this.exceptionResolver.isMatchingException(ex, _asInteger, minState);
             _and = (_matches && _isMatchingException);
           }
           return Boolean.valueOf(_and);
@@ -435,7 +438,7 @@ public class XSDTemplates {
       Set<VersionedDomainNamespace> _importedVersionedNS_1 = this._namespaceImportQueries.importedVersionedNS(vns, minState);
       final Function1<VersionedDomainNamespace,CharSequence> _function_7 = new Function1<VersionedDomainNamespace,CharSequence>() {
           public CharSequence apply(final VersionedDomainNamespace e) {
-            CharSequence _namespaceDeclaration = XSDTemplates.this.toNamespaceDeclaration(e);
+            CharSequence _namespaceDeclaration = XSDGenerator.this.toNamespaceDeclaration(e);
             return _namespaceDeclaration;
           }
         };
@@ -476,7 +479,7 @@ public class XSDTemplates {
       _builder.append("\t");
       final Function1<VersionedDomainNamespace,CharSequence> _function_8 = new Function1<VersionedDomainNamespace,CharSequence>() {
           public CharSequence apply(final VersionedDomainNamespace e) {
-            CharSequence _importDeclaration = XSDTemplates.this.toImportDeclaration(e, registryBaseUrl);
+            CharSequence _importDeclaration = XSDGenerator.this.toImportDeclaration(e, registryBaseUrl);
             return _importDeclaration;
           }
         };
@@ -491,7 +494,7 @@ public class XSDTemplates {
           _builder.append("\t");
           final Function1<BusinessObject,CharSequence> _function_9 = new Function1<BusinessObject,CharSequence>() {
               public CharSequence apply(final BusinessObject e) {
-                CharSequence _complexType = XSDTemplates.this.toComplexType(e, vns, profile, minState);
+                CharSequence _complexType = XSDGenerator.this.toComplexType(e, vns, profile, minState);
                 return _complexType;
               }
             };
@@ -502,7 +505,7 @@ public class XSDTemplates {
           _builder.append("\t");
           final Function1<QueryObject,CharSequence> _function_10 = new Function1<QueryObject,CharSequence>() {
               public CharSequence apply(final QueryObject e) {
-                CharSequence _complexType = XSDTemplates.this.toComplexType(e, vns, profile, minState);
+                CharSequence _complexType = XSDGenerator.this.toComplexType(e, vns, profile, minState);
                 return _complexType;
               }
             };
@@ -513,7 +516,7 @@ public class XSDTemplates {
           _builder.append("\t");
           final Function1<Enumeration,CharSequence> _function_11 = new Function1<Enumeration,CharSequence>() {
               public CharSequence apply(final Enumeration e) {
-                CharSequence _simpleType = XSDTemplates.this.toSimpleType(e, minState);
+                CharSequence _simpleType = XSDGenerator.this.toSimpleType(e, minState);
                 return _simpleType;
               }
             };
@@ -524,7 +527,7 @@ public class XSDTemplates {
           _builder.append("\t");
           final Function1<org.fornax.soa.serviceDsl.Exception,CharSequence> _function_12 = new Function1<org.fornax.soa.serviceDsl.Exception,CharSequence>() {
               public CharSequence apply(final org.fornax.soa.serviceDsl.Exception e) {
-                CharSequence _faultType = XSDTemplates.this.toFaultType(e, vns, profile, minState);
+                CharSequence _faultType = XSDGenerator.this.toFaultType(e, vns, profile, minState);
                 return _faultType;
               }
             };
@@ -557,8 +560,8 @@ public class XSDTemplates {
     Set<VersionedDomainNamespace> _importedVersionedNS = this._namespaceImportQueries.importedVersionedNS(vns, minState);
     final Function1<VersionedDomainNamespace,Boolean> _function = new Function1<VersionedDomainNamespace,Boolean>() {
         public Boolean apply(final VersionedDomainNamespace e) {
-          String _namespace = XSDTemplates.this._schemaTypeExtensions.toNamespace(e);
-          String _namespace_1 = XSDTemplates.this._schemaTypeExtensions.toNamespace(vns);
+          String _namespace = XSDGenerator.this._schemaTypeExtensions.toNamespace(e);
+          String _namespace_1 = XSDGenerator.this._schemaTypeExtensions.toNamespace(vns);
           boolean _notEquals = (!Objects.equal(_namespace, _namespace_1));
           return Boolean.valueOf(_notEquals);
         }
@@ -579,14 +582,14 @@ public class XSDTemplates {
         public Boolean apply(final BusinessObject e) {
           boolean _and = false;
           LifecycleState _state = e.getState();
-          boolean _matches = XSDTemplates.this._iStateMatcher.matches(minState, _state);
+          boolean _matches = XSDGenerator.this._iStateMatcher.matches(minState, _state);
           if (!_matches) {
             _and = false;
           } else {
             String _version = vns.getVersion();
-            String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
-            Integer _asInteger = XSDTemplates.this._commonStringExtensions.asInteger(_majorVersionNumber);
-            boolean _isMatchingType = XSDTemplates.this._iTypeResolver.isMatchingType(e, _asInteger, minState);
+            String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
+            Integer _asInteger = XSDGenerator.this._commonStringExtensions.asInteger(_majorVersionNumber);
+            boolean _isMatchingType = XSDGenerator.this._iTypeResolver.isMatchingType(e, _asInteger, minState);
             _and = (_matches && _isMatchingType);
           }
           return Boolean.valueOf(_and);
@@ -608,14 +611,14 @@ public class XSDTemplates {
         public Boolean apply(final QueryObject e) {
           boolean _and = false;
           LifecycleState _state = e.getState();
-          boolean _matches = XSDTemplates.this._iStateMatcher.matches(minState, _state);
+          boolean _matches = XSDGenerator.this._iStateMatcher.matches(minState, _state);
           if (!_matches) {
             _and = false;
           } else {
             String _version = vns.getVersion();
-            String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
-            Integer _asInteger = XSDTemplates.this._commonStringExtensions.asInteger(_majorVersionNumber);
-            boolean _isMatchingType = XSDTemplates.this._iTypeResolver.isMatchingType(e, _asInteger, minState);
+            String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
+            Integer _asInteger = XSDGenerator.this._commonStringExtensions.asInteger(_majorVersionNumber);
+            boolean _isMatchingType = XSDGenerator.this._iTypeResolver.isMatchingType(e, _asInteger, minState);
             _and = (_matches && _isMatchingType);
           }
           return Boolean.valueOf(_and);
@@ -628,14 +631,14 @@ public class XSDTemplates {
         public Boolean apply(final Enumeration en) {
           boolean _and = false;
           LifecycleState _state = en.getState();
-          boolean _matches = XSDTemplates.this._iStateMatcher.matches(minState, _state);
+          boolean _matches = XSDGenerator.this._iStateMatcher.matches(minState, _state);
           if (!_matches) {
             _and = false;
           } else {
             String _version = vns.getVersion();
-            String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
-            Integer _asInteger = XSDTemplates.this._commonStringExtensions.asInteger(_majorVersionNumber);
-            boolean _isMatchingType = XSDTemplates.this._iTypeResolver.isMatchingType(en, _asInteger, minState);
+            String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
+            Integer _asInteger = XSDGenerator.this._commonStringExtensions.asInteger(_majorVersionNumber);
+            boolean _isMatchingType = XSDGenerator.this._iTypeResolver.isMatchingType(en, _asInteger, minState);
             _and = (_matches && _isMatchingType);
           }
           return Boolean.valueOf(_and);
@@ -648,14 +651,14 @@ public class XSDTemplates {
         public Boolean apply(final org.fornax.soa.serviceDsl.Exception e) {
           boolean _and = false;
           LifecycleState _state = e.getState();
-          boolean _matches = XSDTemplates.this._iStateMatcher.matches(minState, _state);
+          boolean _matches = XSDGenerator.this._iStateMatcher.matches(minState, _state);
           if (!_matches) {
             _and = false;
           } else {
             String _version = vns.getVersion();
-            String _majorVersionNumber = XSDTemplates.this.versionQualifier.toMajorVersionNumber(_version);
-            Integer _asInteger = XSDTemplates.this._commonStringExtensions.asInteger(_majorVersionNumber);
-            boolean _isMatchingException = XSDTemplates.this.exceptionResolver.isMatchingException(e, _asInteger, minState);
+            String _majorVersionNumber = XSDGenerator.this.versionQualifier.toMajorVersionNumber(_version);
+            Integer _asInteger = XSDGenerator.this._commonStringExtensions.asInteger(_majorVersionNumber);
+            boolean _isMatchingException = XSDGenerator.this.exceptionResolver.isMatchingException(e, _asInteger, minState);
             _and = (_matches && _isMatchingException);
           }
           return Boolean.valueOf(_and);
@@ -701,7 +704,7 @@ public class XSDTemplates {
       Set<VersionedDomainNamespace> _importedVersionedNS_1 = this._namespaceImportQueries.importedVersionedNS(vns, minState);
       final Function1<VersionedDomainNamespace,CharSequence> _function_7 = new Function1<VersionedDomainNamespace,CharSequence>() {
           public CharSequence apply(final VersionedDomainNamespace e) {
-            CharSequence _namespaceDeclaration = XSDTemplates.this.toNamespaceDeclaration(e);
+            CharSequence _namespaceDeclaration = XSDGenerator.this.toNamespaceDeclaration(e);
             return _namespaceDeclaration;
           }
         };
@@ -741,7 +744,7 @@ public class XSDTemplates {
       _builder.append("\t");
       final Function1<VersionedDomainNamespace,CharSequence> _function_8 = new Function1<VersionedDomainNamespace,CharSequence>() {
           public CharSequence apply(final VersionedDomainNamespace e) {
-            CharSequence _importDeclaration = XSDTemplates.this.toImportDeclaration(e, registryBaseUrl);
+            CharSequence _importDeclaration = XSDGenerator.this.toImportDeclaration(e, registryBaseUrl);
             return _importDeclaration;
           }
         };
@@ -756,7 +759,7 @@ public class XSDTemplates {
           _builder.append("\t");
           final Function1<BusinessObject,CharSequence> _function_9 = new Function1<BusinessObject,CharSequence>() {
               public CharSequence apply(final BusinessObject e) {
-                CharSequence _complexType = XSDTemplates.this.toComplexType(e, vns, profile, minState);
+                CharSequence _complexType = XSDGenerator.this.toComplexType(e, vns, profile, minState);
                 return _complexType;
               }
             };
@@ -767,7 +770,7 @@ public class XSDTemplates {
           _builder.append("\t");
           final Function1<QueryObject,CharSequence> _function_10 = new Function1<QueryObject,CharSequence>() {
               public CharSequence apply(final QueryObject e) {
-                CharSequence _complexType = XSDTemplates.this.toComplexType(e, vns, profile, minState);
+                CharSequence _complexType = XSDGenerator.this.toComplexType(e, vns, profile, minState);
                 return _complexType;
               }
             };
@@ -778,7 +781,7 @@ public class XSDTemplates {
           _builder.append("\t");
           final Function1<Enumeration,CharSequence> _function_11 = new Function1<Enumeration,CharSequence>() {
               public CharSequence apply(final Enumeration e) {
-                CharSequence _simpleType = XSDTemplates.this.toSimpleType(e, minState);
+                CharSequence _simpleType = XSDGenerator.this.toSimpleType(e, minState);
                 return _simpleType;
               }
             };
@@ -789,7 +792,7 @@ public class XSDTemplates {
           _builder.append("\t");
           final Function1<org.fornax.soa.serviceDsl.Exception,CharSequence> _function_12 = new Function1<org.fornax.soa.serviceDsl.Exception,CharSequence>() {
               public CharSequence apply(final org.fornax.soa.serviceDsl.Exception e) {
-                CharSequence _faultType = XSDTemplates.this.toFaultType(e, vns, profile, minState);
+                CharSequence _faultType = XSDGenerator.this.toFaultType(e, vns, profile, minState);
                 return _faultType;
               }
             };
@@ -1077,7 +1080,7 @@ public class XSDTemplates {
     EList<Property> _properties = bo.getProperties();
     final Function1<Property,CharSequence> _function = new Function1<Property,CharSequence>() {
         public CharSequence apply(final Property e) {
-          CharSequence _property = XSDTemplates.this.toProperty(e, currNs, profile, minState);
+          CharSequence _property = XSDGenerator.this.toProperty(e, currNs, profile, minState);
           return _property;
         }
       };
@@ -1115,7 +1118,7 @@ public class XSDTemplates {
     EList<Property> _properties = qo.getProperties();
     final Function1<Property,CharSequence> _function = new Function1<Property,CharSequence>() {
         public CharSequence apply(final Property e) {
-          CharSequence _property = XSDTemplates.this.toProperty(e, currNs, profile, minState);
+          CharSequence _property = XSDGenerator.this.toProperty(e, currNs, profile, minState);
           return _property;
         }
       };
@@ -1153,7 +1156,7 @@ public class XSDTemplates {
     EList<Property> _properties = bo.getProperties();
     final Function1<Property,CharSequence> _function = new Function1<Property,CharSequence>() {
         public CharSequence apply(final Property e) {
-          CharSequence _property = XSDTemplates.this.toProperty(e, currNs, profile, minState);
+          CharSequence _property = XSDGenerator.this.toProperty(e, currNs, profile, minState);
           return _property;
         }
       };
@@ -1182,7 +1185,7 @@ public class XSDTemplates {
     EList<Property> _properties = qo.getProperties();
     final Function1<Property,CharSequence> _function = new Function1<Property,CharSequence>() {
         public CharSequence apply(final Property e) {
-          CharSequence _property = XSDTemplates.this.toProperty(e, currNs, profile, minState);
+          CharSequence _property = XSDGenerator.this.toProperty(e, currNs, profile, minState);
           return _property;
         }
       };
@@ -1203,7 +1206,7 @@ public class XSDTemplates {
     EList<SimpleAttribute> _properties = ex.getProperties();
     final Function1<SimpleAttribute,CharSequence> _function = new Function1<SimpleAttribute,CharSequence>() {
         public CharSequence apply(final SimpleAttribute e) {
-          CharSequence _property = XSDTemplates.this.toProperty(e, currNs, profile, minState);
+          CharSequence _property = XSDGenerator.this.toProperty(e, currNs, profile, minState);
           return _property;
         }
       };
@@ -1233,7 +1236,7 @@ public class XSDTemplates {
     EList<SimpleAttribute> _properties = ex.getProperties();
     final Function1<SimpleAttribute,CharSequence> _function = new Function1<SimpleAttribute,CharSequence>() {
         public CharSequence apply(final SimpleAttribute e) {
-          CharSequence _property = XSDTemplates.this.toProperty(e, currNs, profile, minState);
+          CharSequence _property = XSDGenerator.this.toProperty(e, currNs, profile, minState);
           return _property;
         }
       };
@@ -1297,7 +1300,7 @@ public class XSDTemplates {
     EList<EnumLiteral> _literals = en.getLiterals();
     final Function1<EnumLiteral,CharSequence> _function = new Function1<EnumLiteral,CharSequence>() {
         public CharSequence apply(final EnumLiteral e) {
-          CharSequence _enumLiteral = XSDTemplates.this.toEnumLiteral(e);
+          CharSequence _enumLiteral = XSDGenerator.this.toEnumLiteral(e);
           return _enumLiteral;
         }
       };

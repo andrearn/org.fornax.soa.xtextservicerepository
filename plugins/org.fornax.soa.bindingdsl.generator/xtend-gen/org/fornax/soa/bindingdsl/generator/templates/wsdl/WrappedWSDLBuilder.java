@@ -18,15 +18,15 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.SubNamespace;
-import org.fornax.soa.servicedsl.generator.templates.webservice.WrappedWsdlTemplates;
+import org.fornax.soa.servicedsl.generator.templates.webservice.WrappedWsdlGenerator;
 
 /**
  * Generate a WSDL where all input and output parameters are wrapped into a Wrappertype.
  */
 @SuppressWarnings("all")
-public class WrappedWSDLTemplates {
+public class WrappedWSDLBuilder {
   @Inject
-  private WrappedWsdlTemplates _wrappedWsdlTemplates;
+  private WrappedWsdlGenerator _wrappedWsdlGenerator;
   
   @Inject
   private BindingExtensions _bindingExtensions;
@@ -50,14 +50,14 @@ public class WrappedWSDLTemplates {
     EList<Service> _services = ns.getServices();
     final Function1<Service,Boolean> _function = new Function1<Service,Boolean>() {
         public Boolean apply(final Service s) {
-          boolean _isEligibleForEnvironment = WrappedWSDLTemplates.this._bindingServiceQueries.isEligibleForEnvironment(s, targetEnvironment);
+          boolean _isEligibleForEnvironment = WrappedWSDLBuilder.this._bindingServiceQueries.isEligibleForEnvironment(s, targetEnvironment);
           return Boolean.valueOf(_isEligibleForEnvironment);
         }
       };
     Iterable<Service> _filter = IterableExtensions.<Service>filter(_services, _function);
     final Procedure1<Service> _function_1 = new Procedure1<Service>() {
         public void apply(final Service e) {
-          WrappedWSDLTemplates.this.toWrappedWSDL(e, profileName, targetEnvironment);
+          WrappedWSDLBuilder.this.toWrappedWSDL(e, profileName, targetEnvironment);
         }
       };
     IterableExtensions.<Service>forEach(_filter, _function_1);
@@ -83,14 +83,14 @@ public class WrappedWSDLTemplates {
     EList<Service> _services = ns.getServices();
     final Function1<Service,Boolean> _function_2 = new Function1<Service,Boolean>() {
         public Boolean apply(final Service s) {
-          boolean _isEligibleForEnvironment = WrappedWSDLTemplates.this._bindingServiceQueries.isEligibleForEnvironment(s, env);
+          boolean _isEligibleForEnvironment = WrappedWSDLBuilder.this._bindingServiceQueries.isEligibleForEnvironment(s, env);
           return Boolean.valueOf(_isEligibleForEnvironment);
         }
       };
     Iterable<Service> _filter = IterableExtensions.<Service>filter(_services, _function_2);
     final Procedure1<Service> _function_3 = new Procedure1<Service>() {
         public void apply(final Service e) {
-          WrappedWSDLTemplates.this.toWrappedWSDL(e, prof, env);
+          WrappedWSDLBuilder.this.toWrappedWSDL(e, prof, env);
         }
       };
     IterableExtensions.<Service>forEach(_filter, _function_3);
@@ -120,7 +120,7 @@ public class WrappedWSDLTemplates {
     Lifecycle _lifecycle = profile.getLifecycle();
     LifecycleState _minLifecycleState = this._lifecycleQueries.getMinLifecycleState(environment, _lifecycle);
     String _registryBaseUrl = this._bindingExtensions.getRegistryBaseUrl(environment);
-    this._wrappedWsdlTemplates.toWrappedWSDL(svc, _minLifecycleState, profile, _registryBaseUrl);
+    this._wrappedWsdlGenerator.toWrappedWSDL(svc, _minLifecycleState, profile, _registryBaseUrl);
   }
   
   public void toWrappedWSDL(final EObject svc, final SOAProfile profile, final Environment environment) {

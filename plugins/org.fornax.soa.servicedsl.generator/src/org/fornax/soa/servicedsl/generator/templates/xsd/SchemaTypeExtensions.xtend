@@ -1,26 +1,19 @@
 package org.fornax.soa.servicedsl.generator.templates.xsd
 
 import com.google.inject.Inject
-import java.util.HashSet
-import java.util.List
-import java.util.Set
-import org.fornax.soa.basedsl.sOABaseDsl.AbstractType
+import org.fornax.soa.basedsl.search.IEObjectLookup
 import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
-import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaNamespaceExtensions
 import org.fornax.soa.profiledsl.generator.schema.ProfileSchemaTypeExtensions
-import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceQueries
 import org.fornax.soa.profiledsl.sOAProfileDsl.AttributeDataTypeRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataType
-import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.namespace.NamespaceSplitter
 import org.fornax.soa.service.query.VersionQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
-import org.fornax.soa.service.query.type.BusinessObjectQueries
 import org.fornax.soa.service.versioning.IExceptionResolver
 import org.fornax.soa.service.versioning.ITypeResolver
 import org.fornax.soa.serviceDsl.BusinessObject
@@ -39,8 +32,6 @@ import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.VersionedTypeRef
-import org.fornax.soa.basedsl.search.IEObjectLookup
-import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 
 /**
  * Extension functions for 
@@ -51,7 +42,6 @@ class SchemaTypeExtensions {
 	@Inject extension VersionMatcher
 	@Inject extension SchemaNamespaceExtensions
 	@Inject extension NamespaceQuery
-	@Inject extension NamespaceSplitter
 	@Inject extension VersionQualifierExtensions
 	@Inject extension VersionQueries
 	@Inject extension ITypeResolver
@@ -61,7 +51,7 @@ class SchemaTypeExtensions {
 	@Inject ProfileSchemaTypeExtensions profileSchemaTypes
 	@Inject TechnicalNamespaceQueries profileNSQueries
 	
-	/*
+	/**
 	 *	Return the XSD type name for a type reference including it's derived namespace prefix
 	 */
 	def dispatch String toTypeNameRef (TypeRef t) {
@@ -180,102 +170,171 @@ class SchemaTypeExtensions {
 	}
 	
 
-	def dispatch String toTypeNameRef (TypeRef t, VersionedDomainNamespace currNs) {
+	/**
+	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
+	 * qualified by namespace prefixes
+	 */
+	def dispatch String toTypeNameRef (TypeRef typeRef, VersionedDomainNamespace currNs) {
 		null;
 	}
-	def dispatch String toTypeNameRef (org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef t, VersionedDomainNamespace currNs) {
+	/**
+	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
+	 * qualified by namespace prefixes
+	 */
+	def dispatch String toTypeNameRef (org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef typeRef, VersionedDomainNamespace currNs) {
 		null;
 	}
 	
-	def dispatch String toTypeNameRef (DataTypeRef t, VersionedDomainNamespace currentDomNs) {
-		t.findMatchingType ().toTypeNameRef();
+	/**
+	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
+	 * qualified by namespace prefixes
+	 */
+	def dispatch String toTypeNameRef (DataTypeRef typeRef, VersionedDomainNamespace currentDomNs) {
+		typeRef.findMatchingType ().toTypeNameRef();
 	}
 		
-	def dispatch String toTypeNameRef (VersionedTypeRef t, VersionedDomainNamespace currNs) { 
-		if (t.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
-			&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
-			&& ! (t.getStatefulOwner() instanceof Service)
+	/**
+	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
+	 * qualified by namespace prefixes
+	 */
+	def dispatch String toTypeNameRef (VersionedTypeRef typeRef, VersionedDomainNamespace currNs) { 
+		if (typeRef.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
+			&& typeRef.getOwnerVersion().toMajorVersionNumber() == typeRef.type.version.toMajorVersionNumber()
+			&& ! (typeRef.getStatefulOwner() instanceof Service)
 		
 		) {
-			"tns:" +t.type.name;
+			"tns:" +typeRef.type.name;
 		} else {
-			t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+			typeRef.type.findSubdomain().toShortName() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
 		}
 	}
 		
-	def dispatch String toTypeNameRef (BusinessObjectRef t, VersionedDomainNamespace currNs) { 
-		if (t.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()
-			&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
-			&& !(t.getStatefulOwner() instanceof Service)
+	/**
+	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
+	 * qualified by namespace prefixes
+	 */
+	def dispatch String toTypeNameRef (BusinessObjectRef typeRef, VersionedDomainNamespace currNs) { 
+		if (typeRef.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()
+			&& typeRef.getOwnerVersion().toMajorVersionNumber() == typeRef.type.version.toMajorVersionNumber()
+			&& !(typeRef.getStatefulOwner() instanceof Service)
 		) {
-			"tns:" +t.type.name;
+			"tns:" +typeRef.type.name;
 		} else {
-			t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+			typeRef.type.findSubdomain().toShortName() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
 		}
 	}
 			
-	def dispatch String toTypeNameRef (QueryObjectRef t, VersionedDomainNamespace currNs) { 
-		if (t.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()
-			&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
-			&& !(t.getStatefulOwner() instanceof Service)
+	/**
+	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
+	 * qualified by namespace prefixes
+	 */
+	def dispatch String toTypeNameRef (QueryObjectRef typeRef, VersionedDomainNamespace currNs) { 
+		if (typeRef.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()
+			&& typeRef.getOwnerVersion().toMajorVersionNumber() == typeRef.type.version.toMajorVersionNumber()
+			&& !(typeRef.getStatefulOwner() instanceof Service)
 		) {
-			"tns:" +t.type.name;
+			"tns:" +typeRef.type.name;
 		} else {
-			t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+			typeRef.type.findSubdomain().toShortName() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
 		}
 	}
 			
-	def dispatch String toTypeNameRef (EnumTypeRef t, VersionedDomainNamespace currNs) { 
-		if (t.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
-			&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
-			&& !(t.getStatefulOwner() instanceof Service) 
+	/**
+	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
+	 * qualified by namespace prefixes
+	 */
+	def dispatch String toTypeNameRef (EnumTypeRef typeRef, VersionedDomainNamespace currNs) { 
+		if (typeRef.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
+			&& typeRef.getOwnerVersion().toMajorVersionNumber() == typeRef.type.version.toMajorVersionNumber()
+			&& !(typeRef.getStatefulOwner() instanceof Service) 
 		) {
-			"tns:" +t.type.name;
+			"tns:" +typeRef.type.name;
 		} else {
-			t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+			typeRef.type.findSubdomain().toShortName() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
 		}
 	}
 	
-	def dispatch String toTypeNameRef (Type t) {
+	/**
+	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
+	 * qualified by namespace prefixes
+	 */
+	def dispatch String toTypeNameRef (Type type) {
 		"";
 	}
 	
-	
-	def dispatch String toTypeNameRef (ClassRef t, VersionedDomainNamespace currNs) {
-		if (t.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(t.versionRef)) {
-			"tns:" +t.type.name
+	/**
+	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
+	 * qualified by namespace prefixes
+	 */
+	def dispatch String toTypeNameRef (ClassRef typeRef, VersionedDomainNamespace currNs) {
+		if (typeRef.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(typeRef.versionRef)) {
+			"tns:" +typeRef.type.name
 		} else {
-			t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber() + ":" +t.type.name;
+			typeRef.type.findSubdomain().toShortName() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
 		}
 	}
 	
+
+	/**
+	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
+	 * with a namespace alias calculate from the (major) versioned namespace
+	 */
 	def dispatch String toNsPrefixedTypeNameRef (TypeRef t, VersionedDomainNamespace currNs) {
 		null;
 	}
 	
+	/**
+	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
+	 * with a namespace alias calculate from the (major) versioned namespace
+	 */
 	def dispatch String toNsPrefixedTypeNameRef (DataTypeRef t, VersionedDomainNamespace currentDomNs) { 
 		t.findMatchingType () .toNsPrefixedTypeNameRef();
 	}
 		
+	/**
+	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
+	 * with a namespace alias calculate from the (major) versioned namespace
+	 */
 	def dispatch String toNsPrefixedTypeNameRef (VersionedTypeRef t, VersionedDomainNamespace currNs) { 
 		t.toNamespace() + t.type.name;
 	}
 		
+	/**
+	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
+	 * with a namespace alias calculate from the (major) versioned namespace
+	 */
 	def dispatch String toNsPrefixedTypeNameRef (BusinessObjectRef t, VersionedDomainNamespace currNs) { 
 		t.toNamespace() + t.type.name;
 	}
 		
+	/**
+	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
+	 * with a namespace alias calculate from the (major) versioned namespace
+	 */
 	def dispatch String toNsPrefixedTypeNameRef (QueryObjectRef t, VersionedDomainNamespace currNs) { 
 		t.toNamespace() + t.type.name;
 	}
 			
+	/**
+	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
+	 * with a namespace alias calculate from the (major) versioned namespace
+	 */
 	def dispatch String toNsPrefixedTypeNameRef (EnumTypeRef t, VersionedDomainNamespace currNs) { 
 		t.toNamespace() + t.type.name;
 	}
 	
+	/**
+	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
+	 * with a namespace alias calculate from the (major) versioned namespace
+	 */
 	def dispatch String toNsPrefixedTypeNameRef (Type t) {
 		"";
 	}
+
+	/**
+	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
+	 * with a namespace alias calculate from the (major) versioned namespace
+	 */
 	def dispatch String toNsPrefixedTypeNameRef (org.fornax.soa.profiledsl.sOAProfileDsl.DataType t) {
 	 	switch (t.name) {
 	 		case "attachment":		"xsd:base64Binary"
@@ -289,18 +348,21 @@ class SchemaTypeExtensions {
 			default : "xsd:" + t.name
 		}
 	}
+	
 			
 	def dispatch boolean isMimeContent (TypeRef t) {
 		false;
 	}
+	
 	def dispatch boolean isMimeContent (DataTypeRef t) {
 		return t.contentType != null
 	}
 	
-	def dispatch boolean isMimeContentAttachment (TypeRef t) {
+	def dispatch boolean isMimeContentMultiPartAttachment (TypeRef t) {
 		false;
 	}
-	def dispatch boolean isMimeContentAttachment (DataTypeRef t) {
+	
+	def dispatch boolean isMimeContentMultiPartAttachment (DataTypeRef t) {
 		if (t.contentType != null) {
 			switch (t.type.name) {
 				case "attachment":		true
@@ -323,95 +385,115 @@ class SchemaTypeExtensions {
 			t.exception.findSubdomain().toShortName() + t.exception.version.toMajorVersionNumber() + ":" +t.exception.name;
 		}
 	}
-	
+	  
+	/**
+	 * Is the XSD element optional? Returns true, when flagged with one of the keywords:
+	 * <ul>
+	 * 	<li><b>optional</b> 		- optional for business reasons</li>
+	 * 	<li><b>weak</b> 			- optional for technical reasons, such as not loaded under some conditions</li>
+	 * 	<li><b>provided-key</b> 	- a key generated in the backend, that is not always set, such as when the object has just been created, but not yet persisted</li>
+	 * </ul>
+	 */
 	def boolean isOptionalElement (Property p) {
 		return p.optional || p.weak || p.isProvidedKey;
 	}		
-		
+	
+	
+	/**
+	 * Has the type reference a many cardinality?
+	 */	
 	def dispatch boolean isMany (TypeRef t) {
 		false;
 	}
+	/**
+	 * Has the type reference a many cardinality?
+	 */	
 	def dispatch boolean isMany (DataTypeRef t) {
 		t.many;
 	}
+	/**
+	 * Has the type reference a many cardinality?
+	 */	
 	def dispatch boolean isMany (BusinessObjectRef t) {
 		false;
 	}
+	/**
+	 * Has the type reference a many cardinality?
+	 */	
 	def dispatch boolean isMany (QueryObjectRef t) {
 		false;
 	}
+	/**
+	 * Has the type reference a many cardinality?
+	 */	
 	def dispatch boolean isMany (VersionedTypeRef t) {
 		t.many;
 	}
 	
 	
-	def dispatch String getXsdFilename (BusinessObject c) {
-		c.findSubdomain().toFileNameFragment() + "-v" + c.version.toMajorVersionNumber() + ".xsd";
-	}
-	
-	
-	/*
-	 *	Get the namespaces a given namespace (or element declared in that namespace) imports
-	 *  splitting the resultingnamespace with regard to their major versions
-	 */
-	def dispatch Set<VersionedDomainNamespace> getImportedSubdomains (Object s) {
-		null;
-	}
-	
-	def dispatch Set<VersionedDomainNamespace> getImportedSubdomains (VersionedDomainNamespace s) {
-		(s.subdomain as SubNamespace).getImportedSubdomains();
-	} 
-	def dispatch Set<VersionedDomainNamespace> getImportedSubdomains (SubNamespace s) {
-		var ns = new HashSet<VersionedDomainNamespace>();
-		// all refs from a BO property to a BO  
-		ns.addAll (s.types.filter (typeof (BusinessObject)).map(t|t.properties).flatten
-			.map(p|p.type).filter (typeof (VersionedTypeRef))
-			.map(r|r.findMatchingType()).filter (e|e!=null).map(e|e.createVersionedDomainNamespace())
-		);
-		// all refs from a QO property to a QO  
-		ns.addAll (s.types.filter (typeof (QueryObject)).map(t|t.properties).flatten
-			.map(p|p.type).filter (typeof (VersionedTypeRef))
-			.map(r|r.findMatchingType()).filter (e|e!=null).map(e|e.createVersionedDomainNamespace())
-		);
-		// all refs from a BO to it's superBO  
-		ns.addAll (s.types.filter (typeof (BusinessObject)).filter (e|e.superBusinessObject != null)
-			.map(b|b.superBusinessObject.findMatchingType().createVersionedDomainNamespace()));
-		// all refs from exceptions to their super exceptions
-		ns.addAll (s.exceptions.filter (e|e.superException != null).map (ex|ex.superException.findMatchingException().createVersionedDomainNamespace()));
-		return ns;
-	}
-//	
-//	def dispatch Set<VersionedDomainNamespace> getImportedSubdomains (List<TypeRef> c) { 
-//		c.map(e|e.findMatchingType().createVersionedDomainNamespace()).toSet();
+//	def dispatch String getXsdFilename (BusinessObject c) {
+//		c.findSubdomain().toFileNameFragment() + "-v" + c.version.toMajorVersionNumber() + ".xsd";
 //	}
-		
-	
+//			
+	/**
+	 * Calculate the namespace URL
+	 */
 	def dispatch String toNamespace (TypeRef t) {
 	}
+	/**
+	 * Calculate the namespace URL
+	 */
 	def dispatch String toNamespace (VersionedTypeRef t) { 
-		t.type.eContainer.toUnversionedNamespace()+"/"+(t.findMatchingType() as VersionedType).version.toVersionPostfix() + "/";
+		t.type.eContainer.toUnversionedNamespace() + "/"
+			+ (t.findMatchingType() as VersionedType).version.toVersionPostfix() + "/";
 	}
+	/**
+	 * Calculate the namespace URL
+	 */
 	def dispatch String toNamespace (BusinessObjectRef t) { 
-		t.type.eContainer.toUnversionedNamespace()+"/"+(t.findMatchingType() as BusinessObject).version.toVersionPostfix() + "/";
+		t.type.eContainer.toUnversionedNamespace() + "/"
+			+ (t.findMatchingType() as BusinessObject).version.toVersionPostfix() + "/";
 	}
+	/**
+	 * Calculate the namespace URL
+	 */
 	def dispatch String toNamespace (QueryObjectRef t) { 
-		t.type.eContainer.toUnversionedNamespace()+"/"+(t.findMatchingType() as QueryObject).version.toVersionPostfix() + "/";
+		t.type.eContainer.toUnversionedNamespace() + "/"
+			+ (t.findMatchingType() as QueryObject).version.toVersionPostfix() + "/";
 	}
+	/**
+	 * Calculate the namespace URL
+	 */
 	def dispatch String toNamespace (EnumTypeRef t) {
-		t.type.eContainer.toUnversionedNamespace()+"/"+(t.findMatchingType() as Enumeration).version.toVersionPostfix() + "/";
+		t.type.eContainer.toUnversionedNamespace() + "/"
+			+ (t.findMatchingType() as Enumeration).version.toVersionPostfix() + "/";
 	}
+	/**
+	 * Calculate the namespace URL
+	 */
 	def dispatch String toNamespace (ExceptionRef t) {
-		t.exception.eContainer.toUnversionedNamespace()+"/"+(t.findMatchingException() as org.fornax.soa.serviceDsl.Exception).version.toVersionPostfix() + "/";
+		t.exception.eContainer.toUnversionedNamespace() + "/"
+			+ (t.findMatchingException() as org.fornax.soa.serviceDsl.Exception).version.toVersionPostfix() + "/";
 	}
 	
+	/**
+	 * Calculate the namespace URL
+	 */
 	def dispatch String toNamespace (SubNamespace ns) {
 		ns.toUnversionedNamespace()+"/"
 	}
 	
+	/**
+	 * Calculate the namespace URL
+	 */
 	def dispatch String toNamespace (VersionedDomainNamespace ns) {
 		ns.toUnversionedNamespace() + "/" + ns.version.toMajorVersionNumber.toVersionPostfix + "/"
 	}
 	
+	/**
+	 * Determine, whether XSD type definitions should be made extendible for unknown elements in
+	 * the complexType  
+	 */
 	def boolean typesUseExtendibleProperties (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
@@ -422,6 +504,10 @@ class SchemaTypeExtensions {
 		}
 		
 	}
+	
+	/**
+	 * Determine, whether XSD type definitions should be made extendible for unknown XML attributes 
+	 */
 	def boolean typesUseExtendibleXMLAttributes (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
@@ -431,6 +517,11 @@ class SchemaTypeExtensions {
 			return false
 		}
 	}
+	
+	/**
+	 * Determine, whether XSD type definitions, that subtype another type definition, 
+	 * should be made extendible for unknown XML elements or attributes 
+	 */
 	def boolean useExtendibleSubtypes (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
@@ -442,6 +533,10 @@ class SchemaTypeExtensions {
 		
 	}
 	
+	/**
+	 * Get the XSD any clause that makes complexTypes backward compatible allowing additional 
+	 * optional elements
+	 */
 	def String getTypesExtendiblePropertiesClause (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
 		if (p.typesUseExtendibleProperties) {
 			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause != null) {
@@ -458,6 +553,11 @@ class SchemaTypeExtensions {
 		}
 		
 	}
+
+	/**
+	 * Get the XSD anyAttribute clause that makes complexTypes backward compatible allowing additional 
+	 * optional XML attributes in the type
+	 */
 	def String getTypesExtendibleXMLAttributesClause (org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile p) {
 		if (p.typesUseExtendibleXMLAttributes) {
 			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributeClause != null) {

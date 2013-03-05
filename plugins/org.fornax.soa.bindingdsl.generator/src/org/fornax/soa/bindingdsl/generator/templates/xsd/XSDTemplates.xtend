@@ -17,6 +17,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import java.util.logging.Level
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.profiledsl.query.LifecycleQueries
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator
 
 /*
  * Generate an XSD for a SubNamespace. Types and exceptions are filtered by their lifecycle state, determining whether it
@@ -29,7 +30,7 @@ class XSDTemplates {
 	@Inject extension LifecycleQueries
 		
 	
-	@Inject org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates 					xsdGenerator
+	@Inject XSDGenerator 					xsdGenerator
 	@Inject IQualifiedNameProvider 			nameProvider
 	
 	@Inject @Named ("noDependencies") 		

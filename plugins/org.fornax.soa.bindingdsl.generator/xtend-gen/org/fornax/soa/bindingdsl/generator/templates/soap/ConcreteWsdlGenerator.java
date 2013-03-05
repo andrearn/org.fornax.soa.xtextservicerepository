@@ -48,7 +48,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions;
  * delegated to the Service DSL generator.
  */
 @SuppressWarnings("all")
-public class ConcreteWsdlTemplates {
+public class ConcreteWsdlGenerator {
   @Inject
   private BindingExtensions _bindingExtensions;
   
@@ -168,7 +168,7 @@ public class ConcreteWsdlTemplates {
     Iterable<SOAP> _filter = Iterables.<SOAP>filter(_protocol, SOAP.class);
     final Function1<SOAP,Object> _function = new Function1<SOAP,Object>() {
         public Object apply(final SOAP p) {
-          Object _sOAPBinding = ConcreteWsdlTemplates.this.toSOAPBinding(p, svc);
+          Object _sOAPBinding = ConcreteWsdlGenerator.this.toSOAPBinding(p, svc);
           return _sOAPBinding;
         }
       };
@@ -182,8 +182,8 @@ public class ConcreteWsdlTemplates {
     Iterable<SOAP> _filter_1 = Iterables.<SOAP>filter(_protocol_1, SOAP.class);
     final Function1<SOAP,Object> _function_1 = new Function1<SOAP,Object>() {
         public Object apply(final SOAP p) {
-          Server _resolveServer = ConcreteWsdlTemplates.this._environmentBindingResolver.resolveServer(svcBind);
-          Object _wsdlService = ConcreteWsdlTemplates.this.toWsdlService(p, svc, _resolveServer, svcBind);
+          Server _resolveServer = ConcreteWsdlGenerator.this._environmentBindingResolver.resolveServer(svcBind);
+          Object _wsdlService = ConcreteWsdlGenerator.this.toWsdlService(p, svc, _resolveServer, svcBind);
           return _wsdlService;
         }
       };
@@ -316,7 +316,7 @@ public class ConcreteWsdlTemplates {
     EList<Operation> _operations = svc.getOperations();
     final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation o) {
-          CharSequence _sOAPBindingOperation = ConcreteWsdlTemplates.this.toSOAPBindingOperation(o, protocol);
+          CharSequence _sOAPBindingOperation = ConcreteWsdlGenerator.this.toSOAPBindingOperation(o, protocol);
           return _sOAPBindingOperation;
         }
       };
@@ -355,7 +355,7 @@ public class ConcreteWsdlTemplates {
     EList<Operation> _operations = svc.getOperations();
     final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation o) {
-          CharSequence _sOAPBindingOperation = ConcreteWsdlTemplates.this.toSOAPBindingOperation(o, protocol);
+          CharSequence _sOAPBindingOperation = ConcreteWsdlGenerator.this.toSOAPBindingOperation(o, protocol);
           return _sOAPBindingOperation;
         }
       };

@@ -34,13 +34,13 @@ import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.SubNamespace;
 import org.fornax.soa.serviceDsl.TypeRef;
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions;
-import org.fornax.soa.servicedsl.generator.templates.xsd.OperationWrapperTemplates;
+import org.fornax.soa.servicedsl.generator.templates.xsd.OperationWrapperTypesGenerator;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions;
-import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates;
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator;
 
 @SuppressWarnings("all")
-public class WrappedWsdlTemplates {
+public class WrappedWsdlGenerator {
   @Inject
   private IFileSystemAccess fsa;
   
@@ -63,10 +63,10 @@ public class WrappedWsdlTemplates {
   private NamespaceImportQueries _namespaceImportQueries;
   
   @Inject
-  private XSDTemplates _xSDTemplates;
+  private XSDGenerator _xSDGenerator;
   
   @Inject
-  private OperationWrapperTemplates _operationWrapperTemplates;
+  private OperationWrapperTypesGenerator _operationWrapperTypesGenerator;
   
   @Inject
   private IEObjectDocumentationProvider docProvider;
@@ -104,7 +104,7 @@ public class WrappedWsdlTemplates {
       };
     List<EList<ExceptionRef>> _map = ListExtensions.<Operation, EList<ExceptionRef>>map(_operations, _function);
     final Iterable<ExceptionRef> allServiceExceptionRefs = Iterables.<ExceptionRef>concat(_map);
-    this._operationWrapperTemplates.toOperationWrappers(svc, subDom, minState, profile, registryBaseUrl);
+    this._operationWrapperTypesGenerator.toOperationWrappers(svc, subDom, minState, profile, registryBaseUrl);
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
     _builder.newLine();
@@ -172,7 +172,7 @@ public class WrappedWsdlTemplates {
     EList<Operation> _operations_1 = svc.getOperations();
     final Function1<Operation,CharSequence> _function_1 = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation o) {
-          CharSequence _messages = WrappedWsdlTemplates.this.toMessages(o);
+          CharSequence _messages = WrappedWsdlGenerator.this.toMessages(o);
           return _messages;
         }
       };
@@ -193,7 +193,7 @@ public class WrappedWsdlTemplates {
     final Function1<String,CharSequence> _function_3 = new Function1<String,CharSequence>() {
         public CharSequence apply(final String n) {
           List<ExceptionRef> _list = IterableExtensions.<ExceptionRef>toList(allServiceExceptionRefs);
-          CharSequence _faultMessages = WrappedWsdlTemplates.this.toFaultMessages(n, _list);
+          CharSequence _faultMessages = WrappedWsdlGenerator.this.toFaultMessages(n, _list);
           return _faultMessages;
         }
       };
@@ -222,7 +222,7 @@ public class WrappedWsdlTemplates {
       };
     List<EList<ExceptionRef>> _map = ListExtensions.<Operation, EList<ExceptionRef>>map(_operations, _function);
     final Iterable<ExceptionRef> allServiceExceptionRefs = Iterables.<ExceptionRef>concat(_map);
-    this._operationWrapperTemplates.toOperationWrappers(svc, subDom, minState, profile, registryBaseUrl);
+    this._operationWrapperTypesGenerator.toOperationWrappers(svc, subDom, minState, profile, registryBaseUrl);
     String _fileNameFragment = this._schemaNamespaceExtensions.toFileNameFragment(subDom);
     String _plus = (_fileNameFragment + "-");
     String _name = svc.getName();
@@ -298,7 +298,7 @@ public class WrappedWsdlTemplates {
     EList<Operation> _operations_1 = svc.getOperations();
     final Function1<Operation,CharSequence> _function_1 = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation o) {
-          CharSequence _messages = WrappedWsdlTemplates.this.toMessages(o);
+          CharSequence _messages = WrappedWsdlGenerator.this.toMessages(o);
           return _messages;
         }
       };
@@ -319,7 +319,7 @@ public class WrappedWsdlTemplates {
     final Function1<String,CharSequence> _function_3 = new Function1<String,CharSequence>() {
         public CharSequence apply(final String n) {
           List<ExceptionRef> _list = IterableExtensions.<ExceptionRef>toList(allServiceExceptionRefs);
-          CharSequence _faultMessages = WrappedWsdlTemplates.this.toFaultMessages(n, _list);
+          CharSequence _faultMessages = WrappedWsdlGenerator.this.toFaultMessages(n, _list);
           return _faultMessages;
         }
       };
@@ -417,7 +417,7 @@ public class WrappedWsdlTemplates {
     EList<Operation> _operations = svc.getOperations();
     final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation o) {
-          CharSequence _operationWrapperTypes = WrappedWsdlTemplates.this.toOperationWrapperTypes(o, profile);
+          CharSequence _operationWrapperTypes = WrappedWsdlGenerator.this.toOperationWrapperTypes(o, profile);
           return _operationWrapperTypes;
         }
       };
@@ -456,7 +456,7 @@ public class WrappedWsdlTemplates {
           List<EList<ExceptionRef>> _map = ListExtensions.<Operation, EList<ExceptionRef>>map(_operations, _function);
           Iterable<ExceptionRef> _flatten = Iterables.<ExceptionRef>concat(_map);
           List<ExceptionRef> _list = IterableExtensions.<ExceptionRef>toList(_flatten);
-          CharSequence _operationFaultWrapperTypes = WrappedWsdlTemplates.this.toOperationFaultWrapperTypes(n, _list);
+          CharSequence _operationFaultWrapperTypes = WrappedWsdlGenerator.this.toOperationFaultWrapperTypes(n, _list);
           return _operationFaultWrapperTypes;
         }
       };
@@ -585,10 +585,10 @@ public class WrappedWsdlTemplates {
     _builder.append(" ");
     {
       TypeRef _type_2 = param.getType();
-      boolean _isMimeContentAttachment = this._schemaTypeExtensions.isMimeContentAttachment(_type_2);
-      if (_isMimeContentAttachment) {
+      boolean _isMimeContentMultiPartAttachment = this._schemaTypeExtensions.isMimeContentMultiPartAttachment(_type_2);
+      if (_isMimeContentMultiPartAttachment) {
         TypeRef _type_3 = param.getType();
-        CharSequence _mimeFragment = this._xSDTemplates.toMimeFragment(_type_3);
+        CharSequence _mimeFragment = this._xSDGenerator.toMimeFragment(_type_3);
         _builder.append(_mimeFragment, "");
       }
     }
@@ -630,7 +630,7 @@ public class WrappedWsdlTemplates {
     EList<Property> _parameters = header.getParameters();
     final Function1<Property,CharSequence> _function = new Function1<Property,CharSequence>() {
         public CharSequence apply(final Property p) {
-          CharSequence _parameter = WrappedWsdlTemplates.this.toParameter(p);
+          CharSequence _parameter = WrappedWsdlGenerator.this.toParameter(p);
           return _parameter;
         }
       };
@@ -710,7 +710,7 @@ public class WrappedWsdlTemplates {
     EList<Operation> _operations = svc.getOperations();
     final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation o) {
-          CharSequence _operation = WrappedWsdlTemplates.this.toOperation(o);
+          CharSequence _operation = WrappedWsdlGenerator.this.toOperation(o);
           return _operation;
         }
       };
@@ -856,7 +856,7 @@ public class WrappedWsdlTemplates {
     EList<Operation> _operations = svc.getOperations();
     final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation o) {
-          CharSequence _bindingOperation = WrappedWsdlTemplates.this.toBindingOperation(o);
+          CharSequence _bindingOperation = WrappedWsdlGenerator.this.toBindingOperation(o);
           return _bindingOperation;
         }
       };

@@ -1,16 +1,10 @@
 package org.fornax.soa.servicedsl.generator.templates.xsd;
 
 import com.google.common.base.Objects;
-import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
-import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
@@ -28,7 +22,6 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Type;
 import org.fornax.soa.profiledsl.sOAProfileDsl.TypeDefPolicy;
 import org.fornax.soa.profiledsl.sOAProfileDsl.TypeVersionEvolution;
 import org.fornax.soa.service.VersionedDomainNamespace;
-import org.fornax.soa.service.namespace.NamespaceSplitter;
 import org.fornax.soa.service.query.VersionQueries;
 import org.fornax.soa.service.query.namespace.NamespaceQuery;
 import org.fornax.soa.service.versioning.IExceptionResolver;
@@ -63,9 +56,6 @@ public class SchemaTypeExtensions {
   
   @Inject
   private NamespaceQuery _namespaceQuery;
-  
-  @Inject
-  private NamespaceSplitter _namespaceSplitter;
   
   @Inject
   private VersionQualifierExtensions _versionQualifierExtensions;
@@ -468,25 +458,41 @@ public class SchemaTypeExtensions {
     return _xifexpression;
   }
   
-  protected String _toTypeNameRef(final TypeRef t, final VersionedDomainNamespace currNs) {
+  /**
+   * Calculate the plain type name used when a type needs to be referenced. The type name is not
+   * qualified by namespace prefixes
+   */
+  protected String _toTypeNameRef(final TypeRef typeRef, final VersionedDomainNamespace currNs) {
     return null;
   }
   
-  protected String _toTypeNameRef(final org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef t, final VersionedDomainNamespace currNs) {
+  /**
+   * Calculate the plain type name used when a type needs to be referenced. The type name is not
+   * qualified by namespace prefixes
+   */
+  protected String _toTypeNameRef(final org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef typeRef, final VersionedDomainNamespace currNs) {
     return null;
   }
   
-  protected String _toTypeNameRef(final DataTypeRef t, final VersionedDomainNamespace currentDomNs) {
-    Type _findMatchingType = this._iTypeResolver.findMatchingType(t);
+  /**
+   * Calculate the plain type name used when a type needs to be referenced. The type name is not
+   * qualified by namespace prefixes
+   */
+  protected String _toTypeNameRef(final DataTypeRef typeRef, final VersionedDomainNamespace currentDomNs) {
+    Type _findMatchingType = this._iTypeResolver.findMatchingType(typeRef);
     String _typeNameRef = this.toTypeNameRef(_findMatchingType);
     return _typeNameRef;
   }
   
-  protected String _toTypeNameRef(final VersionedTypeRef t, final VersionedDomainNamespace currNs) {
+  /**
+   * Calculate the plain type name used when a type needs to be referenced. The type name is not
+   * qualified by namespace prefixes
+   */
+  protected String _toTypeNameRef(final VersionedTypeRef typeRef, final VersionedDomainNamespace currNs) {
     String _xifexpression = null;
     boolean _and = false;
     boolean _and_1 = false;
-    VersionedType _type = t.getType();
+    VersionedType _type = typeRef.getType();
     SubNamespace _findSubdomain = this._namespaceQuery.findSubdomain(_type);
     String _unversionedNamespace = this._schemaNamespaceExtensions.toUnversionedNamespace(_findSubdomain);
     EObject _subdomain = currNs.getSubdomain();
@@ -495,9 +501,9 @@ public class SchemaTypeExtensions {
     if (!_equals) {
       _and_1 = false;
     } else {
-      Version _ownerVersion = this._versionQueries.getOwnerVersion(t);
+      Version _ownerVersion = this._versionQueries.getOwnerVersion(typeRef);
       String _majorVersionNumber = this._versionQualifierExtensions.toMajorVersionNumber(_ownerVersion);
-      VersionedType _type_1 = t.getType();
+      VersionedType _type_1 = typeRef.getType();
       Version _version = _type_1.getVersion();
       String _majorVersionNumber_1 = this._versionQualifierExtensions.toMajorVersionNumber(_version);
       boolean _equals_1 = Objects.equal(_majorVersionNumber, _majorVersionNumber_1);
@@ -506,25 +512,25 @@ public class SchemaTypeExtensions {
     if (!_and_1) {
       _and = false;
     } else {
-      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
+      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(typeRef);
       boolean _not = (!(_statefulOwner instanceof Service));
       _and = (_and_1 && _not);
     }
     if (_and) {
-      VersionedType _type_2 = t.getType();
+      VersionedType _type_2 = typeRef.getType();
       String _name = _type_2.getName();
       String _plus = ("tns:" + _name);
       _xifexpression = _plus;
     } else {
-      VersionedType _type_3 = t.getType();
+      VersionedType _type_3 = typeRef.getType();
       SubNamespace _findSubdomain_1 = this._namespaceQuery.findSubdomain(_type_3);
       String _shortName = this._schemaNamespaceExtensions.toShortName(_findSubdomain_1);
-      VersionedType _type_4 = t.getType();
+      VersionedType _type_4 = typeRef.getType();
       Version _version_1 = _type_4.getVersion();
       String _majorVersionNumber_2 = this._versionQualifierExtensions.toMajorVersionNumber(_version_1);
       String _plus_1 = (_shortName + _majorVersionNumber_2);
       String _plus_2 = (_plus_1 + ":");
-      VersionedType _type_5 = t.getType();
+      VersionedType _type_5 = typeRef.getType();
       String _name_1 = _type_5.getName();
       String _plus_3 = (_plus_2 + _name_1);
       _xifexpression = _plus_3;
@@ -532,11 +538,15 @@ public class SchemaTypeExtensions {
     return _xifexpression;
   }
   
-  protected String _toTypeNameRef(final BusinessObjectRef t, final VersionedDomainNamespace currNs) {
+  /**
+   * Calculate the plain type name used when a type needs to be referenced. The type name is not
+   * qualified by namespace prefixes
+   */
+  protected String _toTypeNameRef(final BusinessObjectRef typeRef, final VersionedDomainNamespace currNs) {
     String _xifexpression = null;
     boolean _and = false;
     boolean _and_1 = false;
-    BusinessObject _type = t.getType();
+    BusinessObject _type = typeRef.getType();
     SubNamespace _findSubdomain = this._namespaceQuery.findSubdomain(_type);
     String _unversionedNamespace = this._schemaNamespaceExtensions.toUnversionedNamespace(_findSubdomain);
     EObject _subdomain = currNs.getSubdomain();
@@ -545,9 +555,9 @@ public class SchemaTypeExtensions {
     if (!_equals) {
       _and_1 = false;
     } else {
-      Version _ownerVersion = this._versionQueries.getOwnerVersion(t);
+      Version _ownerVersion = this._versionQueries.getOwnerVersion(typeRef);
       String _majorVersionNumber = this._versionQualifierExtensions.toMajorVersionNumber(_ownerVersion);
-      BusinessObject _type_1 = t.getType();
+      BusinessObject _type_1 = typeRef.getType();
       Version _version = _type_1.getVersion();
       String _majorVersionNumber_1 = this._versionQualifierExtensions.toMajorVersionNumber(_version);
       boolean _equals_1 = Objects.equal(_majorVersionNumber, _majorVersionNumber_1);
@@ -556,25 +566,25 @@ public class SchemaTypeExtensions {
     if (!_and_1) {
       _and = false;
     } else {
-      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
+      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(typeRef);
       boolean _not = (!(_statefulOwner instanceof Service));
       _and = (_and_1 && _not);
     }
     if (_and) {
-      BusinessObject _type_2 = t.getType();
+      BusinessObject _type_2 = typeRef.getType();
       String _name = _type_2.getName();
       String _plus = ("tns:" + _name);
       _xifexpression = _plus;
     } else {
-      BusinessObject _type_3 = t.getType();
+      BusinessObject _type_3 = typeRef.getType();
       SubNamespace _findSubdomain_1 = this._namespaceQuery.findSubdomain(_type_3);
       String _shortName = this._schemaNamespaceExtensions.toShortName(_findSubdomain_1);
-      BusinessObject _type_4 = t.getType();
+      BusinessObject _type_4 = typeRef.getType();
       Version _version_1 = _type_4.getVersion();
       String _majorVersionNumber_2 = this._versionQualifierExtensions.toMajorVersionNumber(_version_1);
       String _plus_1 = (_shortName + _majorVersionNumber_2);
       String _plus_2 = (_plus_1 + ":");
-      BusinessObject _type_5 = t.getType();
+      BusinessObject _type_5 = typeRef.getType();
       String _name_1 = _type_5.getName();
       String _plus_3 = (_plus_2 + _name_1);
       _xifexpression = _plus_3;
@@ -582,11 +592,15 @@ public class SchemaTypeExtensions {
     return _xifexpression;
   }
   
-  protected String _toTypeNameRef(final QueryObjectRef t, final VersionedDomainNamespace currNs) {
+  /**
+   * Calculate the plain type name used when a type needs to be referenced. The type name is not
+   * qualified by namespace prefixes
+   */
+  protected String _toTypeNameRef(final QueryObjectRef typeRef, final VersionedDomainNamespace currNs) {
     String _xifexpression = null;
     boolean _and = false;
     boolean _and_1 = false;
-    QueryObject _type = t.getType();
+    QueryObject _type = typeRef.getType();
     SubNamespace _findSubdomain = this._namespaceQuery.findSubdomain(_type);
     String _unversionedNamespace = this._schemaNamespaceExtensions.toUnversionedNamespace(_findSubdomain);
     EObject _subdomain = currNs.getSubdomain();
@@ -595,9 +609,9 @@ public class SchemaTypeExtensions {
     if (!_equals) {
       _and_1 = false;
     } else {
-      Version _ownerVersion = this._versionQueries.getOwnerVersion(t);
+      Version _ownerVersion = this._versionQueries.getOwnerVersion(typeRef);
       String _majorVersionNumber = this._versionQualifierExtensions.toMajorVersionNumber(_ownerVersion);
-      QueryObject _type_1 = t.getType();
+      QueryObject _type_1 = typeRef.getType();
       Version _version = _type_1.getVersion();
       String _majorVersionNumber_1 = this._versionQualifierExtensions.toMajorVersionNumber(_version);
       boolean _equals_1 = Objects.equal(_majorVersionNumber, _majorVersionNumber_1);
@@ -606,25 +620,25 @@ public class SchemaTypeExtensions {
     if (!_and_1) {
       _and = false;
     } else {
-      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
+      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(typeRef);
       boolean _not = (!(_statefulOwner instanceof Service));
       _and = (_and_1 && _not);
     }
     if (_and) {
-      QueryObject _type_2 = t.getType();
+      QueryObject _type_2 = typeRef.getType();
       String _name = _type_2.getName();
       String _plus = ("tns:" + _name);
       _xifexpression = _plus;
     } else {
-      QueryObject _type_3 = t.getType();
+      QueryObject _type_3 = typeRef.getType();
       SubNamespace _findSubdomain_1 = this._namespaceQuery.findSubdomain(_type_3);
       String _shortName = this._schemaNamespaceExtensions.toShortName(_findSubdomain_1);
-      QueryObject _type_4 = t.getType();
+      QueryObject _type_4 = typeRef.getType();
       Version _version_1 = _type_4.getVersion();
       String _majorVersionNumber_2 = this._versionQualifierExtensions.toMajorVersionNumber(_version_1);
       String _plus_1 = (_shortName + _majorVersionNumber_2);
       String _plus_2 = (_plus_1 + ":");
-      QueryObject _type_5 = t.getType();
+      QueryObject _type_5 = typeRef.getType();
       String _name_1 = _type_5.getName();
       String _plus_3 = (_plus_2 + _name_1);
       _xifexpression = _plus_3;
@@ -632,11 +646,15 @@ public class SchemaTypeExtensions {
     return _xifexpression;
   }
   
-  protected String _toTypeNameRef(final EnumTypeRef t, final VersionedDomainNamespace currNs) {
+  /**
+   * Calculate the plain type name used when a type needs to be referenced. The type name is not
+   * qualified by namespace prefixes
+   */
+  protected String _toTypeNameRef(final EnumTypeRef typeRef, final VersionedDomainNamespace currNs) {
     String _xifexpression = null;
     boolean _and = false;
     boolean _and_1 = false;
-    Enumeration _type = t.getType();
+    Enumeration _type = typeRef.getType();
     SubNamespace _findSubdomain = this._namespaceQuery.findSubdomain(_type);
     String _unversionedNamespace = this._schemaNamespaceExtensions.toUnversionedNamespace(_findSubdomain);
     EObject _subdomain = currNs.getSubdomain();
@@ -645,9 +663,9 @@ public class SchemaTypeExtensions {
     if (!_equals) {
       _and_1 = false;
     } else {
-      Version _ownerVersion = this._versionQueries.getOwnerVersion(t);
+      Version _ownerVersion = this._versionQueries.getOwnerVersion(typeRef);
       String _majorVersionNumber = this._versionQualifierExtensions.toMajorVersionNumber(_ownerVersion);
-      Enumeration _type_1 = t.getType();
+      Enumeration _type_1 = typeRef.getType();
       Version _version = _type_1.getVersion();
       String _majorVersionNumber_1 = this._versionQualifierExtensions.toMajorVersionNumber(_version);
       boolean _equals_1 = Objects.equal(_majorVersionNumber, _majorVersionNumber_1);
@@ -656,25 +674,25 @@ public class SchemaTypeExtensions {
     if (!_and_1) {
       _and = false;
     } else {
-      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(t);
+      EObject _statefulOwner = this._iEObjectLookup.getStatefulOwner(typeRef);
       boolean _not = (!(_statefulOwner instanceof Service));
       _and = (_and_1 && _not);
     }
     if (_and) {
-      Enumeration _type_2 = t.getType();
+      Enumeration _type_2 = typeRef.getType();
       String _name = _type_2.getName();
       String _plus = ("tns:" + _name);
       _xifexpression = _plus;
     } else {
-      Enumeration _type_3 = t.getType();
+      Enumeration _type_3 = typeRef.getType();
       SubNamespace _findSubdomain_1 = this._namespaceQuery.findSubdomain(_type_3);
       String _shortName = this._schemaNamespaceExtensions.toShortName(_findSubdomain_1);
-      Enumeration _type_4 = t.getType();
+      Enumeration _type_4 = typeRef.getType();
       Version _version_1 = _type_4.getVersion();
       String _majorVersionNumber_2 = this._versionQualifierExtensions.toMajorVersionNumber(_version_1);
       String _plus_1 = (_shortName + _majorVersionNumber_2);
       String _plus_2 = (_plus_1 + ":");
-      Enumeration _type_5 = t.getType();
+      Enumeration _type_5 = typeRef.getType();
       String _name_1 = _type_5.getName();
       String _plus_3 = (_plus_2 + _name_1);
       _xifexpression = _plus_3;
@@ -682,14 +700,22 @@ public class SchemaTypeExtensions {
     return _xifexpression;
   }
   
-  protected String _toTypeNameRef(final org.fornax.soa.serviceDsl.Type t) {
+  /**
+   * Calculate the plain type name used when a type needs to be referenced. The type name is not
+   * qualified by namespace prefixes
+   */
+  protected String _toTypeNameRef(final org.fornax.soa.serviceDsl.Type type) {
     return "";
   }
   
-  protected String _toTypeNameRef(final ClassRef t, final VersionedDomainNamespace currNs) {
+  /**
+   * Calculate the plain type name used when a type needs to be referenced. The type name is not
+   * qualified by namespace prefixes
+   */
+  protected String _toTypeNameRef(final ClassRef typeRef, final VersionedDomainNamespace currNs) {
     String _xifexpression = null;
     boolean _and = false;
-    org.fornax.soa.profiledsl.sOAProfileDsl.Class _type = t.getType();
+    org.fornax.soa.profiledsl.sOAProfileDsl.Class _type = typeRef.getType();
     SubNamespace _findSubdomain = this._namespaceQuery.findSubdomain(_type);
     String _unversionedNamespace = this._schemaNamespaceExtensions.toUnversionedNamespace(_findSubdomain);
     EObject _subdomain = currNs.getSubdomain();
@@ -700,25 +726,25 @@ public class SchemaTypeExtensions {
     } else {
       String _version = currNs.getVersion();
       Version _version_1 = this._versionQualifierExtensions.toVersion(_version);
-      VersionRef _versionRef = t.getVersionRef();
+      VersionRef _versionRef = typeRef.getVersionRef();
       boolean _versionMatches = this._versionMatcher.versionMatches(_version_1, _versionRef);
       _and = (_equals && _versionMatches);
     }
     if (_and) {
-      org.fornax.soa.profiledsl.sOAProfileDsl.Class _type_1 = t.getType();
+      org.fornax.soa.profiledsl.sOAProfileDsl.Class _type_1 = typeRef.getType();
       String _name = _type_1.getName();
       String _plus = ("tns:" + _name);
       _xifexpression = _plus;
     } else {
-      org.fornax.soa.profiledsl.sOAProfileDsl.Class _type_2 = t.getType();
+      org.fornax.soa.profiledsl.sOAProfileDsl.Class _type_2 = typeRef.getType();
       SubNamespace _findSubdomain_1 = this._namespaceQuery.findSubdomain(_type_2);
       String _shortName = this._schemaNamespaceExtensions.toShortName(_findSubdomain_1);
-      org.fornax.soa.profiledsl.sOAProfileDsl.Class _type_3 = t.getType();
+      org.fornax.soa.profiledsl.sOAProfileDsl.Class _type_3 = typeRef.getType();
       Version _version_2 = _type_3.getVersion();
       String _majorVersionNumber = this._versionQualifierExtensions.toMajorVersionNumber(_version_2);
       String _plus_1 = (_shortName + _majorVersionNumber);
       String _plus_2 = (_plus_1 + ":");
-      org.fornax.soa.profiledsl.sOAProfileDsl.Class _type_4 = t.getType();
+      org.fornax.soa.profiledsl.sOAProfileDsl.Class _type_4 = typeRef.getType();
       String _name_1 = _type_4.getName();
       String _plus_3 = (_plus_2 + _name_1);
       _xifexpression = _plus_3;
@@ -726,16 +752,28 @@ public class SchemaTypeExtensions {
     return _xifexpression;
   }
   
+  /**
+   * Calculate the type name used when a type needs to be referenced. The type name is prefixed
+   * with a namespace alias calculate from the (major) versioned namespace
+   */
   protected String _toNsPrefixedTypeNameRef(final TypeRef t, final VersionedDomainNamespace currNs) {
     return null;
   }
   
+  /**
+   * Calculate the type name used when a type needs to be referenced. The type name is prefixed
+   * with a namespace alias calculate from the (major) versioned namespace
+   */
   protected String _toNsPrefixedTypeNameRef(final DataTypeRef t, final VersionedDomainNamespace currentDomNs) {
     Type _findMatchingType = this._iTypeResolver.findMatchingType(t);
     String _nsPrefixedTypeNameRef = this.toNsPrefixedTypeNameRef(_findMatchingType);
     return _nsPrefixedTypeNameRef;
   }
   
+  /**
+   * Calculate the type name used when a type needs to be referenced. The type name is prefixed
+   * with a namespace alias calculate from the (major) versioned namespace
+   */
   protected String _toNsPrefixedTypeNameRef(final VersionedTypeRef t, final VersionedDomainNamespace currNs) {
     String _namespace = this.toNamespace(t);
     VersionedType _type = t.getType();
@@ -744,6 +782,10 @@ public class SchemaTypeExtensions {
     return _plus;
   }
   
+  /**
+   * Calculate the type name used when a type needs to be referenced. The type name is prefixed
+   * with a namespace alias calculate from the (major) versioned namespace
+   */
   protected String _toNsPrefixedTypeNameRef(final BusinessObjectRef t, final VersionedDomainNamespace currNs) {
     String _namespace = this.toNamespace(t);
     BusinessObject _type = t.getType();
@@ -752,6 +794,10 @@ public class SchemaTypeExtensions {
     return _plus;
   }
   
+  /**
+   * Calculate the type name used when a type needs to be referenced. The type name is prefixed
+   * with a namespace alias calculate from the (major) versioned namespace
+   */
   protected String _toNsPrefixedTypeNameRef(final QueryObjectRef t, final VersionedDomainNamespace currNs) {
     String _namespace = this.toNamespace(t);
     QueryObject _type = t.getType();
@@ -760,6 +806,10 @@ public class SchemaTypeExtensions {
     return _plus;
   }
   
+  /**
+   * Calculate the type name used when a type needs to be referenced. The type name is prefixed
+   * with a namespace alias calculate from the (major) versioned namespace
+   */
   protected String _toNsPrefixedTypeNameRef(final EnumTypeRef t, final VersionedDomainNamespace currNs) {
     String _namespace = this.toNamespace(t);
     Enumeration _type = t.getType();
@@ -768,10 +818,18 @@ public class SchemaTypeExtensions {
     return _plus;
   }
   
+  /**
+   * Calculate the type name used when a type needs to be referenced. The type name is prefixed
+   * with a namespace alias calculate from the (major) versioned namespace
+   */
   protected String _toNsPrefixedTypeNameRef(final org.fornax.soa.serviceDsl.Type t) {
     return "";
   }
   
+  /**
+   * Calculate the type name used when a type needs to be referenced. The type name is prefixed
+   * with a namespace alias calculate from the (major) versioned namespace
+   */
   protected String _toNsPrefixedTypeNameRef(final DataType t) {
     String _switchResult = null;
     String _name = t.getName();
@@ -842,11 +900,11 @@ public class SchemaTypeExtensions {
     return (!Objects.equal(_contentType, null));
   }
   
-  protected boolean _isMimeContentAttachment(final TypeRef t) {
+  protected boolean _isMimeContentMultiPartAttachment(final TypeRef t) {
     return false;
   }
   
-  protected boolean _isMimeContentAttachment(final DataTypeRef t) {
+  protected boolean _isMimeContentMultiPartAttachment(final DataTypeRef t) {
     boolean _xifexpression = false;
     String _contentType = t.getContentType();
     boolean _notEquals = (!Objects.equal(_contentType, null));
@@ -922,6 +980,14 @@ public class SchemaTypeExtensions {
     return _xifexpression;
   }
   
+  /**
+   * Is the XSD element optional? Returns true, when flagged with one of the keywords:
+   * <ul>
+   * 	<li><b>optional</b> 		- optional for business reasons</li>
+   * 	<li><b>weak</b> 			- optional for technical reasons, such as not loaded under some conditions</li>
+   * 	<li><b>provided-key</b> 	- a key generated in the backend, that is not always set, such as when the object has just been created, but not yet persisted</li>
+   * </ul>
+   */
   public boolean isOptionalElement(final Property p) {
     boolean _or = false;
     boolean _or_1 = false;
@@ -941,182 +1007,53 @@ public class SchemaTypeExtensions {
     return _or;
   }
   
+  /**
+   * Has the type reference a many cardinality?
+   */
   protected boolean _isMany(final TypeRef t) {
     return false;
   }
   
+  /**
+   * Has the type reference a many cardinality?
+   */
   protected boolean _isMany(final DataTypeRef t) {
     boolean _isMany = t.isMany();
     return _isMany;
   }
   
+  /**
+   * Has the type reference a many cardinality?
+   */
   protected boolean _isMany(final BusinessObjectRef t) {
     return false;
   }
   
+  /**
+   * Has the type reference a many cardinality?
+   */
   protected boolean _isMany(final QueryObjectRef t) {
     return false;
   }
   
+  /**
+   * Has the type reference a many cardinality?
+   */
   protected boolean _isMany(final VersionedTypeRef t) {
     boolean _isMany = t.isMany();
     return _isMany;
   }
   
-  protected String _getXsdFilename(final BusinessObject c) {
-    SubNamespace _findSubdomain = this._namespaceQuery.findSubdomain(c);
-    String _fileNameFragment = this._schemaNamespaceExtensions.toFileNameFragment(_findSubdomain);
-    String _plus = (_fileNameFragment + "-v");
-    Version _version = c.getVersion();
-    String _majorVersionNumber = this._versionQualifierExtensions.toMajorVersionNumber(_version);
-    String _plus_1 = (_plus + _majorVersionNumber);
-    String _plus_2 = (_plus_1 + ".xsd");
-    return _plus_2;
-  }
-  
   /**
-   * Get the namespaces a given namespace (or element declared in that namespace) imports
-   *  splitting the resultingnamespace with regard to their major versions
+   * Calculate the namespace URL
    */
-  protected Set<VersionedDomainNamespace> _getImportedSubdomains(final Object s) {
-    return null;
-  }
-  
-  protected Set<VersionedDomainNamespace> _getImportedSubdomains(final VersionedDomainNamespace s) {
-    EObject _subdomain = s.getSubdomain();
-    Set<VersionedDomainNamespace> _importedSubdomains = this.getImportedSubdomains(((SubNamespace) _subdomain));
-    return _importedSubdomains;
-  }
-  
-  protected Set<VersionedDomainNamespace> _getImportedSubdomains(final SubNamespace s) {
-    HashSet<VersionedDomainNamespace> _hashSet = new HashSet<VersionedDomainNamespace>();
-    HashSet<VersionedDomainNamespace> ns = _hashSet;
-    EList<org.fornax.soa.serviceDsl.Type> _types = s.getTypes();
-    Iterable<BusinessObject> _filter = Iterables.<BusinessObject>filter(_types, BusinessObject.class);
-    final Function1<BusinessObject,EList<Property>> _function = new Function1<BusinessObject,EList<Property>>() {
-        public EList<Property> apply(final BusinessObject t) {
-          EList<Property> _properties = t.getProperties();
-          return _properties;
-        }
-      };
-    Iterable<EList<Property>> _map = IterableExtensions.<BusinessObject, EList<Property>>map(_filter, _function);
-    Iterable<Property> _flatten = Iterables.<Property>concat(_map);
-    final Function1<Property,TypeRef> _function_1 = new Function1<Property,TypeRef>() {
-        public TypeRef apply(final Property p) {
-          TypeRef _type = p.getType();
-          return _type;
-        }
-      };
-    Iterable<TypeRef> _map_1 = IterableExtensions.<Property, TypeRef>map(_flatten, _function_1);
-    Iterable<VersionedTypeRef> _filter_1 = Iterables.<VersionedTypeRef>filter(_map_1, VersionedTypeRef.class);
-    final Function1<VersionedTypeRef,org.fornax.soa.serviceDsl.Type> _function_2 = new Function1<VersionedTypeRef,org.fornax.soa.serviceDsl.Type>() {
-        public org.fornax.soa.serviceDsl.Type apply(final VersionedTypeRef r) {
-          org.fornax.soa.serviceDsl.Type _findMatchingType = SchemaTypeExtensions.this._iTypeResolver.findMatchingType(r);
-          return _findMatchingType;
-        }
-      };
-    Iterable<org.fornax.soa.serviceDsl.Type> _map_2 = IterableExtensions.<VersionedTypeRef, org.fornax.soa.serviceDsl.Type>map(_filter_1, _function_2);
-    final Function1<org.fornax.soa.serviceDsl.Type,Boolean> _function_3 = new Function1<org.fornax.soa.serviceDsl.Type,Boolean>() {
-        public Boolean apply(final org.fornax.soa.serviceDsl.Type e) {
-          boolean _notEquals = (!Objects.equal(e, null));
-          return Boolean.valueOf(_notEquals);
-        }
-      };
-    Iterable<org.fornax.soa.serviceDsl.Type> _filter_2 = IterableExtensions.<org.fornax.soa.serviceDsl.Type>filter(_map_2, _function_3);
-    final Function1<org.fornax.soa.serviceDsl.Type,VersionedDomainNamespace> _function_4 = new Function1<org.fornax.soa.serviceDsl.Type,VersionedDomainNamespace>() {
-        public VersionedDomainNamespace apply(final org.fornax.soa.serviceDsl.Type e) {
-          VersionedDomainNamespace _createVersionedDomainNamespace = SchemaTypeExtensions.this._namespaceSplitter.createVersionedDomainNamespace(e);
-          return _createVersionedDomainNamespace;
-        }
-      };
-    Iterable<VersionedDomainNamespace> _map_3 = IterableExtensions.<org.fornax.soa.serviceDsl.Type, VersionedDomainNamespace>map(_filter_2, _function_4);
-    Iterables.<VersionedDomainNamespace>addAll(ns, _map_3);
-    EList<org.fornax.soa.serviceDsl.Type> _types_1 = s.getTypes();
-    Iterable<QueryObject> _filter_3 = Iterables.<QueryObject>filter(_types_1, QueryObject.class);
-    final Function1<QueryObject,EList<Property>> _function_5 = new Function1<QueryObject,EList<Property>>() {
-        public EList<Property> apply(final QueryObject t) {
-          EList<Property> _properties = t.getProperties();
-          return _properties;
-        }
-      };
-    Iterable<EList<Property>> _map_4 = IterableExtensions.<QueryObject, EList<Property>>map(_filter_3, _function_5);
-    Iterable<Property> _flatten_1 = Iterables.<Property>concat(_map_4);
-    final Function1<Property,TypeRef> _function_6 = new Function1<Property,TypeRef>() {
-        public TypeRef apply(final Property p) {
-          TypeRef _type = p.getType();
-          return _type;
-        }
-      };
-    Iterable<TypeRef> _map_5 = IterableExtensions.<Property, TypeRef>map(_flatten_1, _function_6);
-    Iterable<VersionedTypeRef> _filter_4 = Iterables.<VersionedTypeRef>filter(_map_5, VersionedTypeRef.class);
-    final Function1<VersionedTypeRef,org.fornax.soa.serviceDsl.Type> _function_7 = new Function1<VersionedTypeRef,org.fornax.soa.serviceDsl.Type>() {
-        public org.fornax.soa.serviceDsl.Type apply(final VersionedTypeRef r) {
-          org.fornax.soa.serviceDsl.Type _findMatchingType = SchemaTypeExtensions.this._iTypeResolver.findMatchingType(r);
-          return _findMatchingType;
-        }
-      };
-    Iterable<org.fornax.soa.serviceDsl.Type> _map_6 = IterableExtensions.<VersionedTypeRef, org.fornax.soa.serviceDsl.Type>map(_filter_4, _function_7);
-    final Function1<org.fornax.soa.serviceDsl.Type,Boolean> _function_8 = new Function1<org.fornax.soa.serviceDsl.Type,Boolean>() {
-        public Boolean apply(final org.fornax.soa.serviceDsl.Type e) {
-          boolean _notEquals = (!Objects.equal(e, null));
-          return Boolean.valueOf(_notEquals);
-        }
-      };
-    Iterable<org.fornax.soa.serviceDsl.Type> _filter_5 = IterableExtensions.<org.fornax.soa.serviceDsl.Type>filter(_map_6, _function_8);
-    final Function1<org.fornax.soa.serviceDsl.Type,VersionedDomainNamespace> _function_9 = new Function1<org.fornax.soa.serviceDsl.Type,VersionedDomainNamespace>() {
-        public VersionedDomainNamespace apply(final org.fornax.soa.serviceDsl.Type e) {
-          VersionedDomainNamespace _createVersionedDomainNamespace = SchemaTypeExtensions.this._namespaceSplitter.createVersionedDomainNamespace(e);
-          return _createVersionedDomainNamespace;
-        }
-      };
-    Iterable<VersionedDomainNamespace> _map_7 = IterableExtensions.<org.fornax.soa.serviceDsl.Type, VersionedDomainNamespace>map(_filter_5, _function_9);
-    Iterables.<VersionedDomainNamespace>addAll(ns, _map_7);
-    EList<org.fornax.soa.serviceDsl.Type> _types_2 = s.getTypes();
-    Iterable<BusinessObject> _filter_6 = Iterables.<BusinessObject>filter(_types_2, BusinessObject.class);
-    final Function1<BusinessObject,Boolean> _function_10 = new Function1<BusinessObject,Boolean>() {
-        public Boolean apply(final BusinessObject e) {
-          BusinessObjectRef _superBusinessObject = e.getSuperBusinessObject();
-          boolean _notEquals = (!Objects.equal(_superBusinessObject, null));
-          return Boolean.valueOf(_notEquals);
-        }
-      };
-    Iterable<BusinessObject> _filter_7 = IterableExtensions.<BusinessObject>filter(_filter_6, _function_10);
-    final Function1<BusinessObject,VersionedDomainNamespace> _function_11 = new Function1<BusinessObject,VersionedDomainNamespace>() {
-        public VersionedDomainNamespace apply(final BusinessObject b) {
-          BusinessObjectRef _superBusinessObject = b.getSuperBusinessObject();
-          org.fornax.soa.serviceDsl.Type _findMatchingType = SchemaTypeExtensions.this._iTypeResolver.findMatchingType(_superBusinessObject);
-          VersionedDomainNamespace _createVersionedDomainNamespace = SchemaTypeExtensions.this._namespaceSplitter.createVersionedDomainNamespace(_findMatchingType);
-          return _createVersionedDomainNamespace;
-        }
-      };
-    Iterable<VersionedDomainNamespace> _map_8 = IterableExtensions.<BusinessObject, VersionedDomainNamespace>map(_filter_7, _function_11);
-    Iterables.<VersionedDomainNamespace>addAll(ns, _map_8);
-    EList<org.fornax.soa.serviceDsl.Exception> _exceptions = s.getExceptions();
-    final Function1<org.fornax.soa.serviceDsl.Exception,Boolean> _function_12 = new Function1<org.fornax.soa.serviceDsl.Exception,Boolean>() {
-        public Boolean apply(final org.fornax.soa.serviceDsl.Exception e) {
-          ExceptionRef _superException = e.getSuperException();
-          boolean _notEquals = (!Objects.equal(_superException, null));
-          return Boolean.valueOf(_notEquals);
-        }
-      };
-    Iterable<org.fornax.soa.serviceDsl.Exception> _filter_8 = IterableExtensions.<org.fornax.soa.serviceDsl.Exception>filter(_exceptions, _function_12);
-    final Function1<org.fornax.soa.serviceDsl.Exception,VersionedDomainNamespace> _function_13 = new Function1<org.fornax.soa.serviceDsl.Exception,VersionedDomainNamespace>() {
-        public VersionedDomainNamespace apply(final org.fornax.soa.serviceDsl.Exception ex) {
-          ExceptionRef _superException = ex.getSuperException();
-          org.fornax.soa.serviceDsl.Exception _findMatchingException = SchemaTypeExtensions.this._iExceptionResolver.findMatchingException(_superException);
-          VersionedDomainNamespace _createVersionedDomainNamespace = SchemaTypeExtensions.this._namespaceSplitter.createVersionedDomainNamespace(_findMatchingException);
-          return _createVersionedDomainNamespace;
-        }
-      };
-    Iterable<VersionedDomainNamespace> _map_9 = IterableExtensions.<org.fornax.soa.serviceDsl.Exception, VersionedDomainNamespace>map(_filter_8, _function_13);
-    Iterables.<VersionedDomainNamespace>addAll(ns, _map_9);
-    return ns;
-  }
-  
   protected String _toNamespace(final TypeRef t) {
     return null;
   }
   
+  /**
+   * Calculate the namespace URL
+   */
   protected String _toNamespace(final VersionedTypeRef t) {
     VersionedType _type = t.getType();
     EObject _eContainer = _type.eContainer();
@@ -1130,6 +1067,9 @@ public class SchemaTypeExtensions {
     return _plus_2;
   }
   
+  /**
+   * Calculate the namespace URL
+   */
   protected String _toNamespace(final BusinessObjectRef t) {
     BusinessObject _type = t.getType();
     EObject _eContainer = _type.eContainer();
@@ -1143,6 +1083,9 @@ public class SchemaTypeExtensions {
     return _plus_2;
   }
   
+  /**
+   * Calculate the namespace URL
+   */
   protected String _toNamespace(final QueryObjectRef t) {
     QueryObject _type = t.getType();
     EObject _eContainer = _type.eContainer();
@@ -1156,6 +1099,9 @@ public class SchemaTypeExtensions {
     return _plus_2;
   }
   
+  /**
+   * Calculate the namespace URL
+   */
   protected String _toNamespace(final EnumTypeRef t) {
     Enumeration _type = t.getType();
     EObject _eContainer = _type.eContainer();
@@ -1169,6 +1115,9 @@ public class SchemaTypeExtensions {
     return _plus_2;
   }
   
+  /**
+   * Calculate the namespace URL
+   */
   protected String _toNamespace(final ExceptionRef t) {
     org.fornax.soa.serviceDsl.Exception _exception = t.getException();
     EObject _eContainer = _exception.eContainer();
@@ -1182,12 +1131,18 @@ public class SchemaTypeExtensions {
     return _plus_2;
   }
   
+  /**
+   * Calculate the namespace URL
+   */
   protected String _toNamespace(final SubNamespace ns) {
     String _unversionedNamespace = this._schemaNamespaceExtensions.toUnversionedNamespace(ns);
     String _plus = (_unversionedNamespace + "/");
     return _plus;
   }
   
+  /**
+   * Calculate the namespace URL
+   */
   protected String _toNamespace(final VersionedDomainNamespace ns) {
     String _unversionedNamespace = this._schemaNamespaceExtensions.toUnversionedNamespace(ns);
     String _plus = (_unversionedNamespace + "/");
@@ -1199,6 +1154,10 @@ public class SchemaTypeExtensions {
     return _plus_2;
   }
   
+  /**
+   * Determine, whether XSD type definitions should be made extendible for unknown elements in
+   * the complexType
+   */
   public boolean typesUseExtendibleProperties(final SOAProfile p) {
     boolean _and = false;
     boolean _and_1 = false;
@@ -1231,6 +1190,9 @@ public class SchemaTypeExtensions {
     }
   }
   
+  /**
+   * Determine, whether XSD type definitions should be made extendible for unknown XML attributes
+   */
   public boolean typesUseExtendibleXMLAttributes(final SOAProfile p) {
     boolean _and = false;
     boolean _and_1 = false;
@@ -1263,6 +1225,10 @@ public class SchemaTypeExtensions {
     }
   }
   
+  /**
+   * Determine, whether XSD type definitions, that subtype another type definition,
+   * should be made extendible for unknown XML elements or attributes
+   */
   public boolean useExtendibleSubtypes(final SOAProfile p) {
     boolean _and = false;
     boolean _and_1 = false;
@@ -1295,6 +1261,10 @@ public class SchemaTypeExtensions {
     }
   }
   
+  /**
+   * Get the XSD any clause that makes complexTypes backward compatible allowing additional
+   * optional elements
+   */
   public String getTypesExtendiblePropertiesClause(final SOAProfile p) {
     boolean _typesUseExtendibleProperties = this.typesUseExtendibleProperties(p);
     if (_typesUseExtendibleProperties) {
@@ -1322,6 +1292,10 @@ public class SchemaTypeExtensions {
     }
   }
   
+  /**
+   * Get the XSD anyAttribute clause that makes complexTypes backward compatible allowing additional
+   * optional XML attributes in the type
+   */
   public String getTypesExtendibleXMLAttributesClause(final SOAProfile p) {
     boolean _typesUseExtendibleXMLAttributes = this.typesUseExtendibleXMLAttributes(p);
     if (_typesUseExtendibleXMLAttributes) {
@@ -1377,26 +1351,26 @@ public class SchemaTypeExtensions {
     }
   }
   
-  public String toTypeNameRef(final EObject t, final VersionedDomainNamespace currNs) {
-    if (t instanceof BusinessObjectRef) {
-      return _toTypeNameRef((BusinessObjectRef)t, currNs);
-    } else if (t instanceof EnumTypeRef) {
-      return _toTypeNameRef((EnumTypeRef)t, currNs);
-    } else if (t instanceof QueryObjectRef) {
-      return _toTypeNameRef((QueryObjectRef)t, currNs);
-    } else if (t instanceof VersionedTypeRef) {
-      return _toTypeNameRef((VersionedTypeRef)t, currNs);
-    } else if (t instanceof DataTypeRef) {
-      return _toTypeNameRef((DataTypeRef)t, currNs);
-    } else if (t instanceof ClassRef) {
-      return _toTypeNameRef((ClassRef)t, currNs);
-    } else if (t instanceof org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef) {
-      return _toTypeNameRef((org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef)t, currNs);
-    } else if (t instanceof TypeRef) {
-      return _toTypeNameRef((TypeRef)t, currNs);
+  public String toTypeNameRef(final EObject typeRef, final VersionedDomainNamespace currNs) {
+    if (typeRef instanceof BusinessObjectRef) {
+      return _toTypeNameRef((BusinessObjectRef)typeRef, currNs);
+    } else if (typeRef instanceof EnumTypeRef) {
+      return _toTypeNameRef((EnumTypeRef)typeRef, currNs);
+    } else if (typeRef instanceof QueryObjectRef) {
+      return _toTypeNameRef((QueryObjectRef)typeRef, currNs);
+    } else if (typeRef instanceof VersionedTypeRef) {
+      return _toTypeNameRef((VersionedTypeRef)typeRef, currNs);
+    } else if (typeRef instanceof DataTypeRef) {
+      return _toTypeNameRef((DataTypeRef)typeRef, currNs);
+    } else if (typeRef instanceof ClassRef) {
+      return _toTypeNameRef((ClassRef)typeRef, currNs);
+    } else if (typeRef instanceof org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef) {
+      return _toTypeNameRef((org.fornax.soa.profiledsl.sOAProfileDsl.TypeRef)typeRef, currNs);
+    } else if (typeRef instanceof TypeRef) {
+      return _toTypeNameRef((TypeRef)typeRef, currNs);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(t, currNs).toString());
+        Arrays.<Object>asList(typeRef, currNs).toString());
     }
   }
   
@@ -1441,11 +1415,11 @@ public class SchemaTypeExtensions {
     }
   }
   
-  public boolean isMimeContentAttachment(final TypeRef t) {
+  public boolean isMimeContentMultiPartAttachment(final TypeRef t) {
     if (t instanceof DataTypeRef) {
-      return _isMimeContentAttachment((DataTypeRef)t);
+      return _isMimeContentMultiPartAttachment((DataTypeRef)t);
     } else if (t != null) {
-      return _isMimeContentAttachment(t);
+      return _isMimeContentMultiPartAttachment(t);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(t).toString());
@@ -1466,25 +1440,6 @@ public class SchemaTypeExtensions {
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(t).toString());
-    }
-  }
-  
-  public String getXsdFilename(final BusinessObject c) {
-    {
-      return _getXsdFilename(c);
-    }
-  }
-  
-  public Set<VersionedDomainNamespace> getImportedSubdomains(final Object s) {
-    if (s instanceof SubNamespace) {
-      return _getImportedSubdomains((SubNamespace)s);
-    } else if (s instanceof VersionedDomainNamespace) {
-      return _getImportedSubdomains((VersionedDomainNamespace)s);
-    } else if (s != null) {
-      return _getImportedSubdomains(s);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(s).toString());
     }
   }
   

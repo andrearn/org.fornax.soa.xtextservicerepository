@@ -313,12 +313,12 @@ public class ServiceTemplateExtensions {
     }
     if (_and) {
       String _plus = (registryUrl + "/");
-      String _opWrapperXSDFileName = this._schemaTemplateExtensions.toOpWrapperXSDFileName(s);
-      String _plus_1 = (_plus + _opWrapperXSDFileName);
+      String _operationWrapperXSDFileName = this._schemaTemplateExtensions.toOperationWrapperXSDFileName(s);
+      String _plus_1 = (_plus + _operationWrapperXSDFileName);
       _xifexpression = _plus_1;
     } else {
-      String _opWrapperXSDFileName_1 = this._schemaTemplateExtensions.toOpWrapperXSDFileName(s);
-      _xifexpression = _opWrapperXSDFileName_1;
+      String _operationWrapperXSDFileName_1 = this._schemaTemplateExtensions.toOperationWrapperXSDFileName(s);
+      _xifexpression = _operationWrapperXSDFileName_1;
     }
     return _xifexpression;
   }

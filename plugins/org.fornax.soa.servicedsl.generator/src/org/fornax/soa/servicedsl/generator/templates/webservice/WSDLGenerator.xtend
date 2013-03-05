@@ -22,7 +22,7 @@ import org.fornax.soa.serviceDsl.Parameter
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
-import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator
 import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceImportQueries
 import java.util.Set
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
@@ -30,7 +30,7 @@ import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 /*
  * Template class for generation of abstract WSDLs
  */
-class WSDLTemplates {
+class WSDLGenerator {
 	
 	@Inject IFileSystemAccess fsa
 
@@ -39,7 +39,7 @@ class WSDLTemplates {
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension HeaderFinder
 	@Inject extension NamespaceImportQueries
-	@Inject extension XSDTemplates
+	@Inject extension XSDGenerator
 	@Inject extension WsdlParameterExtensions
 
 	@Inject TechnicalNamespaceImportQueries techNsImportQueries
@@ -208,7 +208,7 @@ class WSDLTemplates {
 	
 	
 	def dispatch toParameter (Parameter p) '''
-		<xsd:element name="«p.name»" type="«p.toElementType ()»" «IF p.type.isMimeContentAttachment()»«p.type.toMimeFragment»«ELSE»«p.toElementCardinality»«ENDIF»></xsd:element>
+		<xsd:element name="«p.name»" type="«p.toElementType ()»" «IF p.type.isMimeContentMultiPartAttachment()»«p.type.toMimeFragment»«ELSE»«p.toElementCardinality»«ENDIF»></xsd:element>
 	'''
 	
 	def private toElementCardinality(Parameter param) {

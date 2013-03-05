@@ -12,13 +12,13 @@ import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.naming.DefaultEndpointQualifierNameProvider;
 import org.fornax.soa.bindingdsl.generator.templates.naming.IEndpointQualifierNameProvider;
-import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlTemplates;
+import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlGenerator;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SOAPProtocolContractBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SoapBindingResolver;
 import org.fornax.soa.bindingdsl.generator.templates.soap.SoapVendorEndpointAddressResolver;
 import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportExtension;
 import org.fornax.soa.bindingdsl.generator.templates.vendor.ibm.SCAExportTemplates;
-import org.fornax.soa.bindingdsl.generator.templates.wsdl.WrappedWSDLTemplates;
+import org.fornax.soa.bindingdsl.generator.templates.wsdl.WrappedWSDLBuilder;
 import org.fornax.soa.profiledsl.generator.ProfileGeneratorConstants;
 
 import com.google.inject.Binder;
@@ -39,8 +39,8 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		return BindingBuilder.class;
 	}
 	
-	public Class<? extends ConcreteWsdlTemplates> bindConcreteWsdlTemplates () {
-		return ConcreteWsdlTemplates.class;
+	public Class<? extends ConcreteWsdlGenerator> bindConcreteWsdlTemplates () {
+		return ConcreteWsdlGenerator.class;
 	}
 	
 	public Class<? extends SoapBindingResolver> bindSoapBindingResolver () {
@@ -59,8 +59,8 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		return SCAExportTemplates.class;
 	}
 	
-	public Class<? extends WrappedWSDLTemplates> bindWrappedWSDLTemplates () {
-		return WrappedWSDLTemplates.class;
+	public Class<? extends WrappedWSDLBuilder> bindWrappedWSDLTemplates () {
+		return WrappedWSDLBuilder.class;
 	}
 	
 	public Class<? extends IEndpointQualifierNameProvider> bindIEndpointQualifierNameProvider() {

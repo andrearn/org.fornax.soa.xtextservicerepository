@@ -25,6 +25,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.service.VersionedDomainNamespace;
 import org.fornax.soa.serviceDsl.SubNamespace;
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator;
 
 /**
  * Generate an XSD for a SubNamespace. Types and exceptions are filtered by their lifecycle state, determining whether it
@@ -42,7 +43,7 @@ public class XSDTemplates {
   private LifecycleQueries _lifecycleQueries;
   
   @Inject
-  private org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates xsdGenerator;
+  private XSDGenerator xsdGenerator;
   
   @Inject
   private IQualifiedNameProvider nameProvider;

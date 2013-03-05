@@ -30,7 +30,11 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.DataTypeRef
 
-class XSDTemplates {
+
+/**
+ * Templates for XSD generation
+ */
+class XSDGenerator {
 
 
 	@Inject IFileSystemAccess fsa

@@ -9,7 +9,7 @@ public class SchemaTemplateExtensions {
   @Inject
   private SchemaNamespaceExtensions _schemaNamespaceExtensions;
   
-  public String toOpWrapperXSDFileName(final Service s) {
+  public String toOperationWrapperXSDFileName(final Service s) {
     String _fileNameFragment = this._schemaNamespaceExtensions.toFileNameFragment(s);
     String _plus = (_fileNameFragment + "-OpWrappers.xsd");
     return _plus;

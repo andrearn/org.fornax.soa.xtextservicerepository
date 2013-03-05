@@ -13,20 +13,20 @@ import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.ServiceModel
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
+import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLGenerator
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator
 import org.fornax.soa.service.versioning.IServiceResolver
 
-class ServiceTemplates {
+class ServiceContractGenerator {
 	
 	@Inject extension CommonStringExtensions
 	@Inject extension NamespaceSplitter
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension ServiceQueries
 	@Inject extension IServiceResolver
-	@Inject extension WSDLTemplates
-	@Inject extension XSDTemplates
+	@Inject extension WSDLGenerator
+	@Inject extension XSDGenerator
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies

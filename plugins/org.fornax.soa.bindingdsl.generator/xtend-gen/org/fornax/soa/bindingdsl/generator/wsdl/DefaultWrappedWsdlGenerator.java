@@ -22,7 +22,7 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
-import org.fornax.soa.bindingdsl.generator.templates.wsdl.WrappedWSDLTemplates;
+import org.fornax.soa.bindingdsl.generator.templates.wsdl.WrappedWSDLBuilder;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.serviceDsl.DomainNamespace;
@@ -34,7 +34,7 @@ import org.fornax.soa.serviceDsl.SubNamespace;
 @SuppressWarnings("all")
 public class DefaultWrappedWsdlGenerator implements IGenerator {
   @Inject
-  private WrappedWSDLTemplates wsdlTpl;
+  private WrappedWSDLBuilder wsdlTpl;
   
   @Inject
   private BindingExtensions bindingExt;

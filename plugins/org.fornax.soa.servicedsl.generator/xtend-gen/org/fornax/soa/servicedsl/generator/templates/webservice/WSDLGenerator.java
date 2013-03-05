@@ -41,13 +41,13 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateE
 import org.fornax.soa.servicedsl.generator.templates.webservice.WsdlParameterExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions;
-import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates;
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator;
 
 /**
  * Template class for generation of abstract WSDLs
  */
 @SuppressWarnings("all")
-public class WSDLTemplates {
+public class WSDLGenerator {
   @Inject
   private IFileSystemAccess fsa;
   
@@ -67,7 +67,7 @@ public class WSDLTemplates {
   private NamespaceImportQueries _namespaceImportQueries;
   
   @Inject
-  private XSDTemplates _xSDTemplates;
+  private XSDGenerator _xSDGenerator;
   
   @Inject
   private WsdlParameterExtensions _wsdlParameterExtensions;
@@ -167,7 +167,7 @@ public class WSDLTemplates {
     EList<Operation> _operations_1 = s.getOperations();
     final Function1<Operation,CharSequence> _function_1 = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation e) {
-          CharSequence _messages = WSDLTemplates.this.toMessages(e);
+          CharSequence _messages = WSDLGenerator.this.toMessages(e);
           return _messages;
         }
       };
@@ -188,7 +188,7 @@ public class WSDLTemplates {
     final Function1<String,CharSequence> _function_3 = new Function1<String,CharSequence>() {
         public CharSequence apply(final String e) {
           List<ExceptionRef> _list = IterableExtensions.<ExceptionRef>toList(allServiceExceptionRefs);
-          CharSequence _faultMessages = WSDLTemplates.this.toFaultMessages(e, _list);
+          CharSequence _faultMessages = WSDLGenerator.this.toFaultMessages(e, _list);
           return _faultMessages;
         }
       };
@@ -286,7 +286,7 @@ public class WSDLTemplates {
     EList<Operation> _operations_1 = s.getOperations();
     final Function1<Operation,CharSequence> _function_1 = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation e) {
-          CharSequence _messages = WSDLTemplates.this.toMessages(e);
+          CharSequence _messages = WSDLGenerator.this.toMessages(e);
           return _messages;
         }
       };
@@ -307,7 +307,7 @@ public class WSDLTemplates {
     final Function1<String,CharSequence> _function_3 = new Function1<String,CharSequence>() {
         public CharSequence apply(final String e) {
           List<ExceptionRef> _list = IterableExtensions.<ExceptionRef>toList(allServiceExceptionRefs);
-          CharSequence _faultMessages = WSDLTemplates.this.toFaultMessages(e, _list);
+          CharSequence _faultMessages = WSDLGenerator.this.toFaultMessages(e, _list);
           return _faultMessages;
         }
       };
@@ -451,7 +451,7 @@ public class WSDLTemplates {
       EList<Operation> _operations = s.getOperations();
       final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
           public CharSequence apply(final Operation e) {
-            CharSequence _operationWrapperTypes = WSDLTemplates.this.toOperationWrapperTypes(e, profile);
+            CharSequence _operationWrapperTypes = WSDLGenerator.this.toOperationWrapperTypes(e, profile);
             return _operationWrapperTypes;
           }
         };
@@ -490,7 +490,7 @@ public class WSDLTemplates {
             List<EList<ExceptionRef>> _map = ListExtensions.<Operation, EList<ExceptionRef>>map(_operations, _function);
             Iterable<ExceptionRef> _flatten = Iterables.<ExceptionRef>concat(_map);
             List<ExceptionRef> _list = IterableExtensions.<ExceptionRef>toList(_flatten);
-            CharSequence _operationFaultWrapperTypes = WSDLTemplates.this.toOperationFaultWrapperTypes(e, _list);
+            CharSequence _operationFaultWrapperTypes = WSDLGenerator.this.toOperationFaultWrapperTypes(e, _list);
             return _operationFaultWrapperTypes;
           }
         };
@@ -536,7 +536,7 @@ public class WSDLTemplates {
     EList<Parameter> _parameters = o.getParameters();
     final Function1<Parameter,CharSequence> _function = new Function1<Parameter,CharSequence>() {
         public CharSequence apply(final Parameter p) {
-          CharSequence _parameter = WSDLTemplates.this.toParameter(p);
+          CharSequence _parameter = WSDLGenerator.this.toParameter(p);
           return _parameter;
         }
       };
@@ -600,7 +600,7 @@ public class WSDLTemplates {
     EList<Parameter> _return = o.getReturn();
     final Function1<Parameter,CharSequence> _function_1 = new Function1<Parameter,CharSequence>() {
         public CharSequence apply(final Parameter r) {
-          CharSequence _parameter = WSDLTemplates.this.toParameter(r);
+          CharSequence _parameter = WSDLGenerator.this.toParameter(r);
           return _parameter;
         }
       };
@@ -685,10 +685,10 @@ public class WSDLTemplates {
     _builder.append("\" ");
     {
       TypeRef _type = p.getType();
-      boolean _isMimeContentAttachment = this._schemaTypeExtensions.isMimeContentAttachment(_type);
-      if (_isMimeContentAttachment) {
+      boolean _isMimeContentMultiPartAttachment = this._schemaTypeExtensions.isMimeContentMultiPartAttachment(_type);
+      if (_isMimeContentMultiPartAttachment) {
         TypeRef _type_1 = p.getType();
-        CharSequence _mimeFragment = this._xSDTemplates.toMimeFragment(_type_1);
+        CharSequence _mimeFragment = this._xSDGenerator.toMimeFragment(_type_1);
         _builder.append(_mimeFragment, "");
       } else {
         CharSequence _elementCardinality = this.toElementCardinality(p);
@@ -752,7 +752,7 @@ public class WSDLTemplates {
     EList<Property> _parameters = header.getParameters();
     final Function1<Property,CharSequence> _function = new Function1<Property,CharSequence>() {
         public CharSequence apply(final Property p) {
-          CharSequence _parameter = WSDLTemplates.this.toParameter(p);
+          CharSequence _parameter = WSDLGenerator.this.toParameter(p);
           return _parameter;
         }
       };
@@ -836,7 +836,7 @@ public class WSDLTemplates {
     EList<Operation> _operations = s.getOperations();
     final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation e) {
-          CharSequence _operation = WSDLTemplates.this.toOperation(e);
+          CharSequence _operation = WSDLGenerator.this.toOperation(e);
           return _operation;
         }
       };
@@ -973,7 +973,7 @@ public class WSDLTemplates {
     EList<Operation> _operations = s.getOperations();
     final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation o) {
-          CharSequence _bindingOperation = WSDLTemplates.this.toBindingOperation(o);
+          CharSequence _bindingOperation = WSDLGenerator.this.toBindingOperation(o);
           return _bindingOperation;
         }
       };

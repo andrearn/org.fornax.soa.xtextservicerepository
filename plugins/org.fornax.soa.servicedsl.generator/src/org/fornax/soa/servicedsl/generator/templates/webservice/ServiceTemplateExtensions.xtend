@@ -127,9 +127,9 @@ class ServiceTemplateExtensions {
 	}
 	def String getRegisteredOperationWrapperUrl (Service s, String registryUrl) { 
 		if (registryUrl != null && !forceRelativePaths()) {
-			registryUrl + "/" + s.toOpWrapperXSDFileName();
+			registryUrl + "/" + s.toOperationWrapperXSDFileName();
 		} else {
-			s.toOpWrapperXSDFileName();
+			s.toOperationWrapperXSDFileName();
 		}
 	}
 	

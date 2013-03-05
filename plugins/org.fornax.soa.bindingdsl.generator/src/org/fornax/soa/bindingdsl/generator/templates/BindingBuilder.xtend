@@ -10,7 +10,7 @@ import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates
+import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDGenerator
 import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
 
@@ -25,7 +25,7 @@ class BindingBuilder {
 		
 	
 	@Inject BindingServiceContractBuilder	contractBuilder
-	@Inject EventXSDTemplates 				eventXsdGenerator
+	@Inject EventXSDGenerator 				eventXsdGenerator
 	@Inject IQualifiedNameProvider			nameProvider
 	
 	@Inject @Named ("noDependencies") 		

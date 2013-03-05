@@ -26,7 +26,7 @@ import org.fornax.soa.service.query.HeaderFinder
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates
+import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLGenerator
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 import org.fornax.soa.binding.query.BindingLookup
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
@@ -46,9 +46,9 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	@Inject extension EnvironmentBindingResolver		
 		
 	
-	@Inject WSDLTemplates 					wsdlGenerator
+	@Inject WSDLGenerator 					wsdlGenerator
 	@Inject XSDTemplates 					xsdGenerator
-	@Inject ConcreteWsdlTemplates 			concreteWsdlGenerator
+	@Inject ConcreteWsdlGenerator 			concreteWsdlGenerator
 	@Inject MessageHeaderXSDTemplates 		msgHeaderGenerator
 	@Inject BindingResolver					bindingResolver
 	@Inject IQualifiedNameProvider			nameProvider

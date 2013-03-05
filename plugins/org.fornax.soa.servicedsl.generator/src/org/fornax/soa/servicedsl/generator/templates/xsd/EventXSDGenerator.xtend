@@ -23,7 +23,7 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateE
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 import java.util.Set
 
-class EventXSDTemplates {
+class EventXSDGenerator {
 	
 
 	@Inject IFileSystemAccess fsa
@@ -56,7 +56,8 @@ class EventXSDTemplates {
 	
 	def dispatch toEvents (Service svc, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val Set<VersionedTechnicalNamespace> headerImports = svc.collectTechnicalVersionedNamespaceImports (profile)
-		val content = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		val content = '''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<xsd:schema targetNamespace="«svc.toTargetNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
@@ -102,7 +103,8 @@ class EventXSDTemplates {
 	
 	def dispatch toEvents (Service svc, InternalNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val Set<VersionedTechnicalNamespace> headerImports = svc.collectTechnicalVersionedNamespaceImports (profile)
-		val content = '''<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		val content = '''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<xsd:schema targetNamespace="«svc.toTargetNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»

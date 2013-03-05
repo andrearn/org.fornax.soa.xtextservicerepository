@@ -20,16 +20,16 @@ import org.fornax.soa.service.query.type.TypesByLifecycleStateFinder;
 import org.fornax.soa.service.query.type.VersionedTypeFilter;
 import org.fornax.soa.service.namespace.NamespaceSplitter;
 import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions;
-import org.fornax.soa.servicedsl.generator.templates.ServiceTemplates;
+import org.fornax.soa.servicedsl.generator.templates.ServiceContractGenerator;
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions;
-import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates;
-import org.fornax.soa.servicedsl.generator.templates.webservice.WrappedWsdlTemplates;
-import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates;
-import org.fornax.soa.servicedsl.generator.templates.xsd.OperationWrapperTemplates;
+import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLGenerator;
+import org.fornax.soa.servicedsl.generator.templates.webservice.WrappedWsdlGenerator;
+import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDGenerator;
+import org.fornax.soa.servicedsl.generator.templates.xsd.OperationWrapperTypesGenerator;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions;
-import org.fornax.soa.servicedsl.generator.templates.xsd.XSDTemplates;
+import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator;
 import org.fornax.soa.xtextservicerepo.generator.XtextServiceRepositoryGeneratorConstants;
 
 import com.google.inject.Binder;
@@ -87,20 +87,20 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 	
 	
 	
-	public Class<? extends ServiceTemplates> bindServiceTemplates () {
-		return ServiceTemplates.class;
+	public Class<? extends ServiceContractGenerator> bindServiceTemplates () {
+		return ServiceContractGenerator.class;
 	}
 	
-	public Class<? extends EventXSDTemplates> bindEventXSDTemplates () {
-		return EventXSDTemplates.class;
+	public Class<? extends EventXSDGenerator> bindEventXSDTemplates () {
+		return EventXSDGenerator.class;
 	}
 	
 	public Class<? extends MessageHeaderXSDTemplates> bindMessageHeaderXSDTemplates () {
 		return MessageHeaderXSDTemplates.class;
 	}
 	
-	public Class<? extends OperationWrapperTemplates> bindOperationWrapperTemplates () {
-		return OperationWrapperTemplates.class;
+	public Class<? extends OperationWrapperTypesGenerator> bindOperationWrapperTemplates () {
+		return OperationWrapperTypesGenerator.class;
 	}
 	
 	public Class<? extends SchemaNamespaceExtensions> bindSchemaNamespaceExtensions () {
@@ -115,20 +115,20 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 		return SchemaTypeExtensions.class;
 	}
 	
-	public Class<? extends XSDTemplates> bindXSDTemplates () {
-		return XSDTemplates.class;
+	public Class<? extends XSDGenerator> bindXSDTemplates () {
+		return XSDGenerator.class;
 	}
 	
 	public Class<? extends ServiceTemplateExtensions> bindServiceTemplateExtensions () {
 		return ServiceTemplateExtensions.class;
 	}
 	
-	public Class<? extends WrappedWsdlTemplates> bindWrappedWsdlTemplates () {
-		return WrappedWsdlTemplates.class;
+	public Class<? extends WrappedWsdlGenerator> bindWrappedWsdlTemplates () {
+		return WrappedWsdlGenerator.class;
 	}
 	
-	public Class<? extends WSDLTemplates> bindWSDLTemplates () {
-		return WSDLTemplates.class;
+	public Class<? extends WSDLGenerator> bindWSDLTemplates () {
+		return WSDLGenerator.class;
 	}
 	
 	public void configureNoDependencies (Binder binder) {

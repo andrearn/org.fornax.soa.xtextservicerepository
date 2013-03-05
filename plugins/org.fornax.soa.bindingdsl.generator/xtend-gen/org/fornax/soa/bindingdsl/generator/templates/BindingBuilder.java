@@ -21,7 +21,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.serviceDsl.SubNamespace;
-import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDTemplates;
+import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDGenerator;
 
 /**
  * Builds all technical artifacts that represent a binding (WSDLs/XSDs etc.).
@@ -38,7 +38,7 @@ public class BindingBuilder {
   private BindingServiceContractBuilder contractBuilder;
   
   @Inject
-  private EventXSDTemplates eventXsdGenerator;
+  private EventXSDGenerator eventXsdGenerator;
   
   @Inject
   private IQualifiedNameProvider nameProvider;

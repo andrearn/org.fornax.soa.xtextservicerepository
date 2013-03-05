@@ -26,7 +26,10 @@ import java.util.Set
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 
 
-class OperationWrapperTemplates {
+/**
+ * Create XSDs defining wrapper types for service operations
+ */
+class OperationWrapperTypesGenerator {
 	
 	@Inject IFileSystemAccess fsa
 
@@ -105,7 +108,7 @@ class OperationWrapperTemplates {
 			«service.toOperationWrapperMessages (minState, profile)»
 		</xsd:schema>
 		''';
-		val xsdFileName = service.toOpWrapperXSDFileName();
+		val xsdFileName = service.toOperationWrapperXSDFileName();
 		fsa.generateFile (xsdFileName, content);
 	}
 	
@@ -151,7 +154,7 @@ class OperationWrapperTemplates {
 		</xsd:schema>
 		'''
 		
-		val xsdFileName = service.toOpWrapperXSDFileName();
+		val xsdFileName = service.toOperationWrapperXSDFileName();
 		fsa .generateFile (xsdFileName, content);
 	}
 	

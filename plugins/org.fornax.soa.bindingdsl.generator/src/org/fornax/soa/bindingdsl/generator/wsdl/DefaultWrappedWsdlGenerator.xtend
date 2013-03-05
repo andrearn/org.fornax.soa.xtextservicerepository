@@ -2,7 +2,7 @@ package org.fornax.soa.bindingdsl.generator.wsdl
 
 import org.eclipse.xtext.generator.IGenerator
 import com.google.inject.Inject
-import org.fornax.soa.bindingdsl.generator.templates.wsdl.WrappedWSDLTemplates
+import org.fornax.soa.bindingdsl.generator.templates.wsdl.WrappedWSDLBuilder
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import com.google.inject.name.Named
 import java.util.List
@@ -24,7 +24,7 @@ import java.util.logging.Logger
 
 class DefaultWrappedWsdlGenerator implements IGenerator {
 
-	@Inject WrappedWSDLTemplates wsdlTpl
+	@Inject WrappedWSDLBuilder wsdlTpl
 	
 	@Inject BindingExtensions bindingExt
 	

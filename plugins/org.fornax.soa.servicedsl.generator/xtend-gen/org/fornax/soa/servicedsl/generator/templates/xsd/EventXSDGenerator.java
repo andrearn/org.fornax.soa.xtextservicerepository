@@ -40,7 +40,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions;
 
 @SuppressWarnings("all")
-public class EventXSDTemplates {
+public class EventXSDGenerator {
   @Inject
   private IFileSystemAccess fsa;
   
@@ -86,7 +86,7 @@ public class EventXSDTemplates {
     EList<Service> _services = ns.getServices();
     final Procedure1<Service> _function = new Procedure1<Service>() {
         public void apply(final Service s) {
-          EventXSDTemplates.this.toEvents(s, ns, minState, profile, registryBaseUrl);
+          EventXSDGenerator.this.toEvents(s, ns, minState, profile, registryBaseUrl);
         }
       };
     IterableExtensions.<Service>forEach(_services, _function);
@@ -100,16 +100,15 @@ public class EventXSDTemplates {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
     _builder.newLine();
-    _builder.append("\t\t");
     _builder.append("<xsd:schema targetNamespace=\"");
     String _targetNamespace = this._serviceTemplateExtensions.toTargetNamespace(svc);
-    _builder.append(_targetNamespace, "		");
+    _builder.append(_targetNamespace, "");
     _builder.append("\"");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append("xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append("xmlns:jxb=\"http://java.sun.com/xml/ns/jaxb\"");
     _builder.newLine();
     {
@@ -117,16 +116,16 @@ public class EventXSDTemplates {
       String _majorVersionNumber = this._versionQualifierExtensions.toMajorVersionNumber(_version);
       Set<VersionedDomainNamespace> _allImportedVersionedNS = this._namespaceImportQueries.allImportedVersionedNS(svc, _majorVersionNumber, minState);
       for(final VersionedDomainNamespace imp : _allImportedVersionedNS) {
-        _builder.append("\t\t\t");
+        _builder.append("\t");
         _builder.append("xmlns:");
         String _prefix = this._schemaNamespaceExtensions.toPrefix(imp);
         String _version_1 = imp.getVersion();
         String _majorVersionNumber_1 = this._versionQualifierExtensions.toMajorVersionNumber(_version_1);
         String _plus = (_prefix + _majorVersionNumber_1);
-        _builder.append(_plus, "			");
+        _builder.append(_plus, "	");
         _builder.append("=\"");
         String _namespace = this._schemaTypeExtensions.toNamespace(imp);
-        _builder.append(_namespace, "			");
+        _builder.append(_namespace, "	");
         _builder.append("\"");
         _builder.newLineIfNotEmpty();
       }
@@ -137,49 +136,49 @@ public class EventXSDTemplates {
       if (_not) {
         {
           for(final VersionedTechnicalNamespace headerImp : headerImports) {
-            _builder.append("\t\t\t");
+            _builder.append("\t");
             _builder.append("xmlns:");
             String _prefix_1 = this._schemaNamespaceExtensions.toPrefix(headerImp);
             String _version_2 = headerImp.getVersion();
             String _majorVersionNumber_2 = this._versionQualifierExtensions.toMajorVersionNumber(_version_2);
             String _plus_1 = (_prefix_1 + _majorVersionNumber_2);
-            _builder.append(_plus_1, "			");
+            _builder.append(_plus_1, "	");
             _builder.append("=\"");
             String _namespace_1 = this._schemaTypeExtensions.toNamespace(headerImp);
-            _builder.append(_namespace_1, "			");
+            _builder.append(_namespace_1, "	");
             _builder.append("\"");
             _builder.newLineIfNotEmpty();
           }
         }
       }
     }
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append("elementFormDefault=\"qualified\"");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append("attributeFormDefault=\"unqualified\"");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append(">");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.newLine();
     {
       Version _version_3 = svc.getVersion();
       String _majorVersionNumber_3 = this._versionQualifierExtensions.toMajorVersionNumber(_version_3);
       Set<VersionedDomainNamespace> _allImportedVersionedNS_1 = this._namespaceImportQueries.allImportedVersionedNS(svc, _majorVersionNumber_3, minState);
       for(final VersionedDomainNamespace imp_1 : _allImportedVersionedNS_1) {
-        _builder.append("\t\t\t");
+        _builder.append("\t");
         _builder.append("<xsd:import schemaLocation=\"");
         String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(imp_1, registryBaseUrl);
-        _builder.append(_registryAssetUrl, "			");
+        _builder.append(_registryAssetUrl, "	");
         _builder.append(".xsd\"");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t\t\t");
+        _builder.append("\t");
         _builder.append("\t");
         _builder.append("namespace=\"");
         String _namespace_2 = this._schemaTypeExtensions.toNamespace(imp_1);
-        _builder.append(_namespace_2, "				");
+        _builder.append(_namespace_2, "		");
         _builder.append("\"/>");
         _builder.newLineIfNotEmpty();
       }
@@ -190,63 +189,62 @@ public class EventXSDTemplates {
       if (_not_1) {
         {
           for(final VersionedTechnicalNamespace headerImp_1 : headerImports) {
-            _builder.append("\t\t\t");
+            _builder.append("\t");
             _builder.append("<xsd:import schemaLocation=\"");
             String _registryAssetUrl_1 = this._schemaNamespaceExtensions.toRegistryAssetUrl(headerImp_1, registryBaseUrl);
-            _builder.append(_registryAssetUrl_1, "			");
+            _builder.append(_registryAssetUrl_1, "	");
             _builder.append(".xsd\"");
             _builder.newLineIfNotEmpty();
-            _builder.append("\t\t\t");
+            _builder.append("\t");
             _builder.append("\t");
             _builder.append("namespace=\"");
             String _namespace_3 = this._schemaTypeExtensions.toNamespace(headerImp_1);
-            _builder.append(_namespace_3, "				");
+            _builder.append(_namespace_3, "		");
             _builder.append("\"/>");
             _builder.newLineIfNotEmpty();
           }
         }
       }
     }
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append("<xsd:annotation>");
     _builder.newLine();
-    _builder.append("\t\t   \t\t");
+    _builder.append("   \t\t");
     _builder.append("<xsd:documentation>");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t");
     _builder.append("<![CDATA[Version ");
     Version _version_4 = svc.getVersion();
     String _versionNumber = this._versionQualifierExtensions.toVersionNumber(_version_4);
-    _builder.append(_versionNumber, "					");
+    _builder.append(_versionNumber, "			");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t");
     _builder.append("Lifecycle state: ");
     LifecycleState _state = svc.getState();
     String _name = _state.getName();
-    _builder.append(_name, "					");
+    _builder.append(_name, "			");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t");
     String _documentation = this.docProvider.getDocumentation(svc);
-    _builder.append(_documentation, "					");
+    _builder.append(_documentation, "			");
     _builder.append("]]>");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t   \t");
+    _builder.append("\t   \t");
     _builder.append("</xsd:documentation>");
     _builder.newLine();
-    _builder.append("\t\t   \t");
+    _builder.append("   \t");
     _builder.append("</xsd:annotation>");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     CharSequence _eventMessages = this.toEventMessages(svc, minState, profile);
-    _builder.append(_eventMessages, "			");
+    _builder.append(_eventMessages, "	");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
     _builder.append("</xsd:schema>");
     _builder.newLine();
     final CharSequence content = _builder;
@@ -260,13 +258,12 @@ public class EventXSDTemplates {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>");
     _builder.newLine();
-    _builder.append("\t\t");
     _builder.append("<xsd:schema targetNamespace=\"");
     String _targetNamespace = this._serviceTemplateExtensions.toTargetNamespace(svc);
-    _builder.append(_targetNamespace, "		");
+    _builder.append(_targetNamespace, "");
     _builder.append("\"");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append("xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\"");
     _builder.newLine();
     {
@@ -274,16 +271,16 @@ public class EventXSDTemplates {
       String _majorVersionNumber = this._versionQualifierExtensions.toMajorVersionNumber(_version);
       Set<VersionedDomainNamespace> _allImportedVersionedNS = this._namespaceImportQueries.allImportedVersionedNS(svc, _majorVersionNumber, minState);
       for(final VersionedDomainNamespace imp : _allImportedVersionedNS) {
-        _builder.append("\t\t\t");
+        _builder.append("\t");
         _builder.append("xmlns:");
         String _prefix = this._schemaNamespaceExtensions.toPrefix(imp);
         String _version_1 = imp.getVersion();
         String _majorVersionNumber_1 = this._versionQualifierExtensions.toMajorVersionNumber(_version_1);
         String _plus = (_prefix + _majorVersionNumber_1);
-        _builder.append(_plus, "			");
+        _builder.append(_plus, "	");
         _builder.append("=\"");
         String _namespace = this._schemaTypeExtensions.toNamespace(imp);
-        _builder.append(_namespace, "			");
+        _builder.append(_namespace, "	");
         _builder.append("\"");
         _builder.newLineIfNotEmpty();
       }
@@ -294,49 +291,49 @@ public class EventXSDTemplates {
       if (_not) {
         {
           for(final VersionedTechnicalNamespace headerImp : headerImports) {
-            _builder.append("\t\t\t");
+            _builder.append("\t");
             _builder.append("xmlns:");
             String _prefix_1 = this._schemaNamespaceExtensions.toPrefix(headerImp);
             String _version_2 = headerImp.getVersion();
             String _majorVersionNumber_2 = this._versionQualifierExtensions.toMajorVersionNumber(_version_2);
             String _plus_1 = (_prefix_1 + _majorVersionNumber_2);
-            _builder.append(_plus_1, "			");
+            _builder.append(_plus_1, "	");
             _builder.append("=\"");
             String _namespace_1 = this._schemaTypeExtensions.toNamespace(headerImp);
-            _builder.append(_namespace_1, "			");
+            _builder.append(_namespace_1, "	");
             _builder.append("\"");
             _builder.newLineIfNotEmpty();
           }
         }
       }
     }
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append("elementFormDefault=\"qualified\"");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append("attributeFormDefault=\"unqualified\"");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append(">");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.newLine();
     {
       Version _version_3 = svc.getVersion();
       String _majorVersionNumber_3 = this._versionQualifierExtensions.toMajorVersionNumber(_version_3);
       Set<VersionedDomainNamespace> _allImportedVersionedNS_1 = this._namespaceImportQueries.allImportedVersionedNS(svc, _majorVersionNumber_3, minState);
       for(final VersionedDomainNamespace imp_1 : _allImportedVersionedNS_1) {
-        _builder.append("\t\t\t");
+        _builder.append("\t");
         _builder.append("<xsd:import schemaLocation=\"");
         String _registryAssetUrl = this._schemaNamespaceExtensions.toRegistryAssetUrl(imp_1, registryBaseUrl);
-        _builder.append(_registryAssetUrl, "			");
+        _builder.append(_registryAssetUrl, "	");
         _builder.append(".xsd\"");
         _builder.newLineIfNotEmpty();
-        _builder.append("\t\t\t");
+        _builder.append("\t");
         _builder.append("\t");
         _builder.append("namespace=\"");
         String _namespace_2 = this._schemaTypeExtensions.toNamespace(imp_1);
-        _builder.append(_namespace_2, "				");
+        _builder.append(_namespace_2, "		");
         _builder.append("\"/>");
         _builder.newLineIfNotEmpty();
       }
@@ -347,63 +344,62 @@ public class EventXSDTemplates {
       if (_not_1) {
         {
           for(final VersionedTechnicalNamespace headerImp_1 : headerImports) {
-            _builder.append("\t\t\t");
+            _builder.append("\t");
             _builder.append("<xsd:import schemaLocation=\"");
             String _registryAssetUrl_1 = this._schemaNamespaceExtensions.toRegistryAssetUrl(headerImp_1, registryBaseUrl);
-            _builder.append(_registryAssetUrl_1, "			");
+            _builder.append(_registryAssetUrl_1, "	");
             _builder.append(".xsd\"");
             _builder.newLineIfNotEmpty();
-            _builder.append("\t\t\t");
+            _builder.append("\t");
             _builder.append("\t");
             _builder.append("namespace=\"");
             String _namespace_3 = this._schemaTypeExtensions.toNamespace(headerImp_1);
-            _builder.append(_namespace_3, "				");
+            _builder.append(_namespace_3, "		");
             _builder.append("\"/>");
             _builder.newLineIfNotEmpty();
           }
         }
       }
     }
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.append("<xsd:annotation>");
     _builder.newLine();
-    _builder.append("\t\t    \t");
+    _builder.append("    \t");
     _builder.append("<xsd:documentation>");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t");
     _builder.append("<![CDATA[Version ");
     Version _version_4 = svc.getVersion();
     String _versionNumber = this._versionQualifierExtensions.toVersionNumber(_version_4);
-    _builder.append(_versionNumber, "					");
+    _builder.append(_versionNumber, "			");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t");
     _builder.append("Lifecycle state: ");
     LifecycleState _state = svc.getState();
     String _name = _state.getName();
-    _builder.append(_name, "					");
+    _builder.append(_name, "			");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t");
     _builder.newLine();
-    _builder.append("\t\t\t\t\t");
+    _builder.append("\t\t\t");
     String _documentation = this.docProvider.getDocumentation(svc);
-    _builder.append(_documentation, "					");
+    _builder.append(_documentation, "			");
     _builder.append("]]>");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t    \t");
+    _builder.append("    \t");
     _builder.append("</xsd:documentation>");
     _builder.newLine();
-    _builder.append("\t\t    ");
+    _builder.append("    ");
     _builder.append("</xsd:annotation>");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     _builder.newLine();
-    _builder.append("\t\t\t");
+    _builder.append("\t");
     CharSequence _eventMessages = this.toEventMessages(svc, minState, profile);
-    _builder.append(_eventMessages, "			");
+    _builder.append(_eventMessages, "	");
     _builder.newLineIfNotEmpty();
-    _builder.append("\t\t");
     _builder.append("</xsd:schema>");
     _builder.newLine();
     final CharSequence content = _builder;
@@ -424,7 +420,7 @@ public class EventXSDTemplates {
     EList<Operation> _operations = svc.getOperations();
     final Function1<Operation,CharSequence> _function = new Function1<Operation,CharSequence>() {
         public CharSequence apply(final Operation o) {
-          CharSequence _operationWrapperTypes = EventXSDTemplates.this.toOperationWrapperTypes(o, profile);
+          CharSequence _operationWrapperTypes = EventXSDGenerator.this.toOperationWrapperTypes(o, profile);
           return _operationWrapperTypes;
         }
       };
@@ -462,7 +458,7 @@ public class EventXSDTemplates {
           List<EList<ExceptionRef>> _map = ListExtensions.<Operation, EList<ExceptionRef>>map(_operations, _function);
           Iterable<ExceptionRef> _flatten = Iterables.<ExceptionRef>concat(_map);
           List<ExceptionRef> _list = IterableExtensions.<ExceptionRef>toList(_flatten);
-          CharSequence _operationFaultWrapperTypes = EventXSDTemplates.this.toOperationFaultWrapperTypes(o, _list);
+          CharSequence _operationFaultWrapperTypes = EventXSDGenerator.this.toOperationFaultWrapperTypes(o, _list);
           return _operationFaultWrapperTypes;
         }
       };
@@ -502,7 +498,7 @@ public class EventXSDTemplates {
     EList<Parameter> _parameters = op.getParameters();
     final Function1<Parameter,CharSequence> _function = new Function1<Parameter,CharSequence>() {
         public CharSequence apply(final Parameter p) {
-          CharSequence _parameter = EventXSDTemplates.this.toParameter(p);
+          CharSequence _parameter = EventXSDGenerator.this.toParameter(p);
           return _parameter;
         }
       };
@@ -545,7 +541,7 @@ public class EventXSDTemplates {
     EList<Parameter> _return = op.getReturn();
     final Function1<Parameter,CharSequence> _function_1 = new Function1<Parameter,CharSequence>() {
         public CharSequence apply(final Parameter r) {
-          CharSequence _parameter = EventXSDTemplates.this.toParameter(r);
+          CharSequence _parameter = EventXSDGenerator.this.toParameter(r);
           return _parameter;
         }
       };
@@ -657,7 +653,7 @@ public class EventXSDTemplates {
     EList<Property> _parameters = header.getParameters();
     final Function1<Property,CharSequence> _function = new Function1<Property,CharSequence>() {
         public CharSequence apply(final Property p) {
-          CharSequence _parameter = EventXSDTemplates.this.toParameter(p);
+          CharSequence _parameter = EventXSDGenerator.this.toParameter(p);
           return _parameter;
         }
       };

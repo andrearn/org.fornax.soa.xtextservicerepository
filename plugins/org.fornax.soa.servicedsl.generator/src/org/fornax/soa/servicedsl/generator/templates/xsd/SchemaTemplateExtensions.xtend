@@ -8,7 +8,7 @@ class SchemaTemplateExtensions {
 	
 	@Inject extension SchemaNamespaceExtensions
 	
-	def String toOpWrapperXSDFileName (Service s) {
+	def String toOperationWrapperXSDFileName (Service s) {
 		s.toFileNameFragment() + "-OpWrappers.xsd";
 	}
 }
