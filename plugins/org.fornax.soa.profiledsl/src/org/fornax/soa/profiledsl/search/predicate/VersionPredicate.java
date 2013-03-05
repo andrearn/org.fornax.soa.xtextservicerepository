@@ -11,7 +11,7 @@ import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.profiledsl.query.LifecycleQueries;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 
 import com.google.common.base.Predicate;
 import com.google.inject.Inject;
@@ -19,7 +19,7 @@ import com.google.inject.Inject;
 public class VersionPredicate implements Predicate<IEObjectDescription> {
 	
 	@Inject LifecycleStateComparator stateComparator;
-	@Inject LifecycleStateResolver stateResolver;
+	@Inject ILifecycleStateResolver stateResolver;
 	@Inject IEObjectLookup objLookup;
 
 	@Inject IScopeVersionResolver versionResolver;

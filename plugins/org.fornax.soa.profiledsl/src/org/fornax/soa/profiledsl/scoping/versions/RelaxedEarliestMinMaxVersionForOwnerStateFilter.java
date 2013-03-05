@@ -19,7 +19,7 @@ import com.google.inject.Inject;
 public class RelaxedEarliestMinMaxVersionForOwnerStateFilter<T> extends LatestMinInclMaxExclRangeVersionFilter<T> {
 	
 	private LifecycleState ownerLifecycleState;
-	private LifecycleStateResolver stateResolver;
+	private ILifecycleStateResolver stateResolver;
 	
 	@Inject
 	private	IStateMatcher stateMatcher;
@@ -30,7 +30,7 @@ public class RelaxedEarliestMinMaxVersionForOwnerStateFilter<T> extends LatestMi
 	@Inject
 	private LifecycleStateComparator stateComparator;
 	
-	public RelaxedEarliestMinMaxVersionForOwnerStateFilter (IScopeVersionResolver resolver, String minVersion, String maxVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public RelaxedEarliestMinMaxVersionForOwnerStateFilter (IScopeVersionResolver resolver, String minVersion, String maxVersion, ILifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
 		super (resolver, minVersion, maxVersion);
 		this.ownerLifecycleState = ownerLifecycleState;
 		this.stateResolver = stateResolver;

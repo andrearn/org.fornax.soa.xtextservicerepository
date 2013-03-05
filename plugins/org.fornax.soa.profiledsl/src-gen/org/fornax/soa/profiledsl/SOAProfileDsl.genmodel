@@ -60,11 +60,12 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/isEnd"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/requiresApproval"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/freezesAsset"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/strictChecks"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/qualifiesFor"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//LifecycleState/qualifiesForEnvironment"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/buildQualifiesFor"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//LifecycleState/buildQualifiesForEnvironment"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//LifecycleState/qualifiesBuildFor"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//LifecycleState/qualifiesBuildForEnvironment"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//LifecycleState/transitions"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Transition">

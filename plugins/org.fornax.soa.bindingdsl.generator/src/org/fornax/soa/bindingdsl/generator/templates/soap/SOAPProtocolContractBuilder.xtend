@@ -30,7 +30,7 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLGenerator
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 import org.fornax.soa.binding.query.BindingLookup
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
-import org.fornax.soa.binding.query.services.BindingServiceQueries
+import org.fornax.soa.binding.query.environment.AssetStateEnvironmentEligibilityChecker
 
 /** 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -39,22 +39,22 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	
 	@Inject extension NamespaceQuery
 	@Inject extension BindingExtensions
-	@Inject extension BindingServiceQueries
+	@Inject extension AssetStateEnvironmentEligibilityChecker
 	@Inject extension BindingLookup
 	@Inject extension NamespaceImportQueries
 	@Inject extension HeaderFinder
 	@Inject extension EnvironmentBindingResolver		
 		
 	
-	@Inject WSDLGenerator 					wsdlGenerator
+	@Inject WSDLGenerator 				wsdlGenerator
 	@Inject XSDBuilder 					xsdGenerator
-	@Inject ConcreteWsdlGenerator 			concreteWsdlGenerator
-	@Inject MessageHeaderXSDTemplates 		msgHeaderGenerator
-	@Inject BindingResolver					bindingResolver
-	@Inject IQualifiedNameProvider			nameProvider
-	@Inject ProtocolMatcher					protocolMatcher
-	@Inject LifecycleQueries 				lifecycleQueries
-	@Inject IModuleServiceResolver 			modServiceResolver
+	@Inject ConcreteWsdlGenerator 		concreteWsdlGenerator
+	@Inject MessageHeaderXSDTemplates 	msgHeaderGenerator
+	@Inject BindingResolver				bindingResolver
+	@Inject IQualifiedNameProvider		nameProvider
+	@Inject ProtocolMatcher				protocolMatcher
+	@Inject LifecycleQueries 			lifecycleQueries
+	@Inject IModuleServiceResolver 		modServiceResolver
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies

@@ -18,12 +18,12 @@ public class EarliestMajorVersionForOwnerStateFilter<T> extends AbstractPredicat
 	private String majorVersion;
 	private IScopeVersionResolver resolver;
 	private LifecycleState ownerLifecycleState;
-	private LifecycleStateResolver stateResolver;
+	private ILifecycleStateResolver stateResolver;
 	
 	@Inject
 	IStateMatcher stateMatcher;
 	
-	public EarliestMajorVersionForOwnerStateFilter(IScopeVersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public EarliestMajorVersionForOwnerStateFilter(IScopeVersionResolver resolver, String majorVersion, ILifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
 		this.ownerLifecycleState = ownerLifecycleState;

@@ -20,7 +20,7 @@ public class RelaxedEarliestMaxVersionForOwnerStateFilter<T> extends
 		LatestMaxExclVersionFilter<T> {
 	
 	private LifecycleState ownerLifecycleState;
-	private LifecycleStateResolver stateResolver;
+	private ILifecycleStateResolver stateResolver;
 	
 	@Inject
 	private	IStateMatcher stateMatcher;
@@ -31,7 +31,7 @@ public class RelaxedEarliestMaxVersionForOwnerStateFilter<T> extends
 	@Inject
 	private LifecycleStateComparator stateComparator;
 	
-	public RelaxedEarliestMaxVersionForOwnerStateFilter (IScopeVersionResolver resolver, String maxVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public RelaxedEarliestMaxVersionForOwnerStateFilter (IScopeVersionResolver resolver, String maxVersion, ILifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
 		super (resolver, maxVersion);
 		this.ownerLifecycleState = ownerLifecycleState;
 		this.stateResolver = stateResolver;

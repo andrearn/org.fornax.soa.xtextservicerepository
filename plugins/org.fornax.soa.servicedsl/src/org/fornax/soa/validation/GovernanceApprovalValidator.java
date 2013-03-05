@@ -9,7 +9,7 @@ import org.eclipse.xtext.validation.Check;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
 import org.fornax.soa.service.query.VersionedObjectQueryHelper;
@@ -41,7 +41,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	
 	@Check
 	public void checkPublicTmpToleratedAssetShouldHaveApproval (GovernanceApproval g) {
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
 		if (g.eContainer().eContainer() instanceof DomainNamespace
 				&& stateRes.getLifecycleState(g).isRequiresApproval()
 				&& g.getDecision() == ApprovalDecision.TEMPORARILY_TOLERATED)
@@ -59,7 +59,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 
 	@Check
 	public void checkPublicToleratedAssetShouldHaveApproval (GovernanceApproval g) {
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
 		if (g.eContainer().eContainer() instanceof DomainNamespace
 				&& stateRes.getLifecycleState(g).isRequiresApproval()
 				&& g.getDecision() == ApprovalDecision.TOLERATED)
@@ -98,7 +98,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	@Check
 	public void checkPublicAssetsMustHaveApproval (GovernanceApproval g) {
 
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
 		if (g.eContainer().eContainer() instanceof DomainNamespace
 				&& stateRes.getLifecycleState(g).isRequiresApproval()
 				&& (g.getDecision() == ApprovalDecision.NO || g.getDecision() == ApprovalDecision.DENIED))

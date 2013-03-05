@@ -1,18 +1,16 @@
 package org.fornax.soa.profiledsl.query
 
-import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
-import org.fornax.soa.basedsl.search.EObjectLookup
 import com.google.inject.Inject
-import org.eclipse.emf.ecore.resource.Resource
-import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator
-import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.fornax.soa.environmentDsl.EnvironmentType
-import org.fornax.soa.environmentDsl.Environment
 import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver
-import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver
-import org.eclipse.emf.ecore.EStructuralFeature
+import org.eclipse.emf.ecore.resource.Resource
+import org.fornax.soa.basedsl.search.EObjectLookup
+import org.fornax.soa.environmentDsl.Environment
+import org.fornax.soa.environmentDsl.EnvironmentType
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator
 
 /*
  * Queries for lifecycle states and stateful objects
@@ -23,6 +21,7 @@ class LifecycleQueries {
 	@Inject EObjectLookup lookup
 	@Inject extension LifecycleStateComparator stateComparator
 	@Inject extension IStateMatcher
+	@Inject ILifecycleStateResolver stateResolver
 	
 	def LifecycleState stateByName (String state, Resource res) {
 		lookup.getModelElementByName (state, res, "LifecycleState");
@@ -73,6 +72,14 @@ class LifecycleQueries {
 			case EnvironmentType::PROD :		l.minProdState
 			default:							l.minDevState
 		}
+	}
+	
+	def LifecycleState getAssetLifecycleState (EObject asset) {
+		stateResolver.getLifecycleState (asset)
+	}
+	
+	def boolean hasLifecycleState (EObject asset) {
+		stateResolver.definesState (asset)
 	}
 	
 }

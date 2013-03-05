@@ -8,7 +8,7 @@ import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
-public interface LifecycleStateResolver {
+public interface ILifecycleStateResolver {
 
 	public LifecycleState getLifecycleState (IEObjectDescription ieDesc);
 	

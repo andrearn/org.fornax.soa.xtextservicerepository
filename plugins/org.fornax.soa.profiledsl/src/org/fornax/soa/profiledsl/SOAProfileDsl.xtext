@@ -62,14 +62,37 @@ Lifecycle:
  */
 LifecycleState:
 	(isInitial?='initial' | isEnd?='end')? 'state' name = ID '{'
+		/**
+		 * Is governance-approval required for this state?
+		 */
 		(requiresApproval?='requires-approval')?
+		/**
+		 * An asset in this state is frozen, i.e. changes that change it's semantics are no longer allowed.
+		 * This should be set in states, that mark use in a production environment
+		 */
+		(freezesAsset?='freezes-asset')?
+		/**
+		 * Checks, yielding warnings by default will yield errors instead
+		 */
 		(strictChecks?='strict-checks')?
 		//Runtime view
+		/*
+		 * Assets in this state can be used in environments with one of the given environment-types at runtime
+		 */
 		('qualifies-for' (qualifiesFor+=EnvironmentType)(',' qualifiesFor+=EnvironmentType)*)?
+		/*
+		 * Assets in this state can be used in the given environments at runtime
+		 */
 		('qualifies-for-environment' (qualifiesForEnvironment+=[environmentDsl::Environment])(',' qualifiesForEnvironment+=[environmentDsl::Environment])*)?
 		// Development- and built-time view
-		('build-qualifies-for' (buildQualifiesFor+=EnvironmentType)(',' buildQualifiesFor+=EnvironmentType)*)?
-		('build-qualifies-for-environment' (buildQualifiesForEnvironment+=[environmentDsl::Environment])(',' buildQualifiesForEnvironment+=[environmentDsl::Environment])*)?
+		/*
+		 * Artifacts can be generated from assets in this state for environments with one of the given environment-types at runtime
+		 */
+		('qualifies-build-for' (qualifiesBuildFor+=EnvironmentType)(',' qualifiesBuildFor+=EnvironmentType)*)?
+		/*
+		 * Artifacts can be generated from assets in this state for the given environments
+		 */
+		('qualifies-build-for-environment' (qualifiesBuildForEnvironment+=[environmentDsl::Environment])(',' qualifiesBuildForEnvironment+=[environmentDsl::Environment])*)?
 		(transitions+=Transition)*
 	'}';
 	

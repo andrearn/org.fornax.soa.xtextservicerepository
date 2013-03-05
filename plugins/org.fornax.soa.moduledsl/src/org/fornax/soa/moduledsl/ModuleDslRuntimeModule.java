@@ -20,7 +20,7 @@ import org.fornax.soa.moduledsl.query.IModuleVersionMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
 import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
@@ -50,7 +50,7 @@ public class ModuleDslRuntimeModule extends org.fornax.soa.moduledsl.AbstractMod
 		return LifecycleStateComparator.class;
 	}
 	
-	public Class<? extends LifecycleStateResolver> bindLifecycleStateResolver () {
+	public Class<? extends ILifecycleStateResolver> bindLifecycleStateResolver () {
 		return StateAttributeLifecycleStateResolver.class;
 	}
 	

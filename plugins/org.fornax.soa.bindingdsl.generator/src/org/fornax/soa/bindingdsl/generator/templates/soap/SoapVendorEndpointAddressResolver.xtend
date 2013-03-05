@@ -1,12 +1,12 @@
 package org.fornax.soa.bindingdsl.generator.templates.soap
 
 import com.google.inject.Inject
-import org.fornax.soa.basedsl.version.VersionQualifierExtensions
+import org.fornax.soa.binding.IContextRootProvider
 import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingDsl.ServiceBinding
-import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
+import org.fornax.soa.bindingdsl.generator.templates.naming.IEndpointQualifierNameProvider
 import org.fornax.soa.environmentDsl.AppServer
 import org.fornax.soa.environmentDsl.Broker
 import org.fornax.soa.environmentDsl.Database
@@ -20,16 +20,13 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
-import org.fornax.soa.binding.ContextRootProvider
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-import org.fornax.soa.bindingdsl.generator.templates.naming.DefaultEndpointQualifierNameProvider
-import org.fornax.soa.bindingdsl.generator.templates.naming.IEndpointQualifierNameProvider
 
 class SoapVendorEndpointAddressResolver {
 	
 	@Inject extension IEndpointQualifierNameProvider
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-	@Inject ContextRootProvider ctxRootProvider
+	@Inject IContextRootProvider ctxRootProvider
 	@Inject SoapBindingResolver soapBindRes
 	
 	

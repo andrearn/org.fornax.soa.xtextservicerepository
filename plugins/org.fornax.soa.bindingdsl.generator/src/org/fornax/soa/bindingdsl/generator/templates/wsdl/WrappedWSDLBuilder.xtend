@@ -8,7 +8,7 @@ import org.fornax.soa.serviceDsl.Service
 import com.google.inject.Inject
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.profiledsl.query.LifecycleQueries
-import org.fornax.soa.binding.query.services.BindingServiceQueries
+import org.fornax.soa.binding.query.environment.AssetStateEnvironmentEligibilityChecker
 import org.fornax.soa.servicedsl.generator.templates.webservice.WrappedWsdlGenerator
 
 /*
@@ -20,7 +20,7 @@ class WrappedWSDLBuilder {
 	@Inject extension WrappedWsdlGenerator
 	@Inject extension BindingExtensions
 	@Inject extension LifecycleQueries
-	@Inject extension BindingServiceQueries
+	@Inject extension AssetStateEnvironmentEligibilityChecker
 	
 	
 	/*

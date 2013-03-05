@@ -32,7 +32,7 @@ import org.fornax.soa.moduledsl.query.IModuleServiceResolver;
 import org.fornax.soa.moduledsl.query.ModuleLookup;
 import org.fornax.soa.moduledsl.util.ModuleDslAccess;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
 import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMinMaxVersionForOwnerStateFilter;
 import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMinVersionForOwnerStateFilter;
@@ -121,7 +121,7 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
-			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
+			ILifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 			if (v instanceof MajorVersionRef) {
 				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState);
@@ -153,7 +153,7 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
-			LifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
+			ILifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 			
 			if (candidates != null && !candidates.isEmpty()) {

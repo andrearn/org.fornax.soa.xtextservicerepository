@@ -17,8 +17,8 @@ import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.binding.query.BindingLookup;
 import org.fornax.soa.binding.query.BindingResolver;
 import org.fornax.soa.binding.query.ProtocolMatcher;
+import org.fornax.soa.binding.query.environment.AssetStateEnvironmentEligibilityChecker;
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
-import org.fornax.soa.binding.query.services.BindingServiceQueries;
 import org.fornax.soa.binding.query.services.ServiceRefBindingDescription;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingProtocol;
@@ -61,7 +61,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
   private BindingExtensions _bindingExtensions;
   
   @Inject
-  private BindingServiceQueries _bindingServiceQueries;
+  private AssetStateEnvironmentEligibilityChecker _assetStateEnvironmentEligibilityChecker;
   
   @Inject
   private BindingLookup _bindingLookup;
@@ -149,7 +149,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
                 _and = false;
               } else {
                 Environment _resolveEnvironment_1 = this._environmentBindingResolver.resolveEnvironment(binding);
-                boolean _isEligibleForEnvironment = this._bindingServiceQueries.isEligibleForEnvironment(svc, _resolveEnvironment_1);
+                boolean _isEligibleForEnvironment = this._assetStateEnvironmentEligibilityChecker.isEligibleForEnvironment(svc, _resolveEnvironment_1);
                 _and = (_equals && _isEligibleForEnvironment);
               }
               if (_and) {
@@ -351,7 +351,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
           _and = false;
         } else {
           Environment _resolveEnvironment = this._environmentBindingResolver.resolveEnvironment(specBinding);
-          boolean _isEligibleForEnvironment = this._bindingServiceQueries.isEligibleForEnvironment(service, _resolveEnvironment);
+          boolean _isEligibleForEnvironment = this._assetStateEnvironmentEligibilityChecker.isEligibleForEnvironment(service, _resolveEnvironment);
           _and = (_equals && _isEligibleForEnvironment);
         }
         if (_and) {

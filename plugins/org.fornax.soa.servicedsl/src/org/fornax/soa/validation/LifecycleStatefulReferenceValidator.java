@@ -12,7 +12,7 @@ import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
 import org.fornax.soa.service.query.VersionedObjectQueryHelper;
@@ -46,7 +46,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check
 	public void checkDoesNotRefRetiredService(ServiceRef svcRef) {
 		EObject owner = objLookup.getVersionedOwner(svcRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState(owner) && ownerState.isIsEnd() 
 				&& svcRef.getService().getState().isIsEnd()) 
@@ -56,7 +56,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check
 	public void checkDoesNotRefRetiredBO(BusinessObjectRef boRef) {
 		EObject owner = objLookup.getVersionedOwner(boRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState(owner) && ownerState.isIsEnd()
 				&& boRef.getType().getState().isIsEnd())
@@ -66,7 +66,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check
 	public void checkDoesNotRefRetiredEnumeration(EnumTypeRef enumRef) {
 		EObject owner = objLookup.getVersionedOwner(enumRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner) && ownerState.isIsEnd()
 				&& enumRef.getType().getState().isIsEnd())
@@ -76,7 +76,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check
 	public void checkExDoesNotRefRetiredException(ExceptionRef exRef) {
 		EObject owner = objLookup.getVersionedOwner(exRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner) && ownerState.isIsEnd()
 				&& exRef.getException().getState().isIsEnd())
@@ -86,7 +86,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check
 	public void checkServiceOpDoesNotRefRetiredException(ExceptionRef exRef) {
 		EObject owner = objLookup.getVersionedOwner(exRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner) && ownerState.isIsEnd()
 				&& exRef.getException().getState().isIsEnd())
@@ -97,7 +97,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check
 	public void checkRefsServiceInMatchingState (ServiceRef svcRef) {
 		EObject owner = objLookup.getVersionedOwner(svcRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		if (owner != null && stateRes.definesState (owner)) {
 			if(!referencedStateChecker.stateMatches(svcRef.getService().getState(), owner))
 				error ("A Service with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the service.", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
@@ -106,7 +106,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check
 	public void checkRefsVersionedTypeInMatchingState (VersionedTypeRef verTypeRef) {
 		EObject owner = objLookup.getVersionedOwner(verTypeRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		if (owner != null && stateRes.definesState (owner)) {
 			if (!referencedStateChecker.stateMatches (verTypeRef.getType().getState(), owner))
 				error ("A " + getObjectTypeName(verTypeRef.getType()) + " with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the type", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
@@ -115,7 +115,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check
 	public void checkRefsBOInMatchingState (BusinessObjectRef boRef) {
 		EObject owner = objLookup.getVersionedOwner(boRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		if (owner != null && stateRes.definesState (owner)) {
 			if (!referencedStateChecker.stateMatches (((BusinessObject)boRef.getType()).getState(), owner))
 				error ("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
@@ -125,7 +125,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check
 	public void checkRefsEnumerationInMatchingState (EnumTypeRef enumRef) {
 		EObject owner = objLookup.getVersionedOwner(enumRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		if (owner != null && stateRes.definesState (owner)) {
 			if (!referencedStateChecker.stateMatches (((Enumeration)enumRef.getType()).getState(), owner))
 				error ("An enum with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the enum", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
@@ -137,7 +137,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check
 	public void checkRefsExceptionInMatchingState (ExceptionRef exRef) {
 		EObject owner = objLookup.getVersionedOwner(exRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		if (owner != null && stateRes.definesState (owner)) {
 			if (!referencedStateChecker.stateMatches (exRef.getException().getState(), owner))
 				error ("An exception with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the exception", ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION);
@@ -148,7 +148,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateService(ServiceRef svcRef) {
 		EObject owner = objLookup.getVersionedOwner(svcRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner)) {
 			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !ownerState.isIsEnd())
@@ -158,7 +158,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateBO(BusinessObjectRef boRef) {
 		EObject owner = objLookup.getVersionedOwner(boRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {
 			if (stateComparator.compare (ownerState, ((BusinessObject)boRef.getType()).getState()) > 0 && !ownerState.isIsEnd())
@@ -168,7 +168,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateBO(VersionedTypeRef boRef) {
 		EObject owner = objLookup.getVersionedOwner(boRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {
 			if (stateComparator.compare (ownerState, boRef.getType().getState()) > 0 && !ownerState.isIsEnd())
@@ -179,7 +179,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateEnumeration(EnumTypeRef enumRef) {
 		EObject owner = objLookup.getVersionedOwner(enumRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner)) {
 			if (stateComparator.compare (ownerState, enumRef.getType().getState()) > 0 && !ownerState.isIsEnd())
@@ -192,7 +192,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateException(ExceptionRef exRef) {
 		EObject owner = objLookup.getVersionedOwner(exRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner)) {
 			if (stateComparator.compare(ownerState, exRef.getException().getState()) > 0 && !ownerState.isIsEnd())

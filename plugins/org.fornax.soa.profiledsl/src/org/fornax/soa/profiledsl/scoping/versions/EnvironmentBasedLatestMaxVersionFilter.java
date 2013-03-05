@@ -18,7 +18,7 @@ import com.google.inject.Inject;
 public class EnvironmentBasedLatestMaxVersionFilter<T> extends
 		LatestMaxExclVersionFilter<T> {
 	@Inject
-	private LifecycleStateResolver stateResolver;
+	private ILifecycleStateResolver stateResolver;
 	private String environmentName;
 	private EnvironmentType environmentType;
 	private ResourceSet resSet;

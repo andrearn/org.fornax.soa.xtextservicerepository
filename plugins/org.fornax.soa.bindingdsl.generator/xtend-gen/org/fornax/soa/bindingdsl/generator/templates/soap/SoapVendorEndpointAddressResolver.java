@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import org.eclipse.xtext.xbase.lib.Conversions;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
-import org.fornax.soa.binding.ContextRootProvider;
+import org.fornax.soa.binding.IContextRootProvider;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingProtocol;
 import org.fornax.soa.bindingDsl.SOAP;
@@ -37,7 +37,7 @@ public class SoapVendorEndpointAddressResolver {
   private SchemaNamespaceExtensions _schemaNamespaceExtensions;
   
   @Inject
-  private ContextRootProvider ctxRootProvider;
+  private IContextRootProvider ctxRootProvider;
   
   @Inject
   private SoapBindingResolver soapBindRes;

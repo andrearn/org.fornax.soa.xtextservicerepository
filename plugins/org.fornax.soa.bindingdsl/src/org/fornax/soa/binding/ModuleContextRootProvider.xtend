@@ -7,10 +7,19 @@ import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.bindingDsl.ServiceBinding
 
-class ContextRootProvider {
+
+/**
+ * Provide context root paths based on  
+ * <ul>
+ * 	<li>module name</li>
+ * 	<li>server type</li> 
+ * 	<li>and the assembly type (only relevant for WebSphere's SCA modules)</li>
+ * <ul>
+ */
+class ModuleContextRootProvider implements IContextRootProvider {
 	
 	
-	def String getContextRoot (Module mod, String serverTypeName, BindingProtocol prot ) {
+	override String getContextRoot (Module mod, String serverTypeName, BindingProtocol prot ) {
 		val ctxRoot = prot.getContextRootByProtocol
 		if (ctxRoot != null) {
 			"/" + ctxRoot
@@ -19,7 +28,7 @@ class ContextRootProvider {
 		}
 	}
 	
-	def String getContextRoot (Module mod, String serverTypeName, String serverVersion, BindingProtocol prot) {
+	override String getContextRoot (Module mod, String serverTypeName, String serverVersion, BindingProtocol prot) {
 		val ctxRoot = prot.getContextRootByProtocol
 		if (ctxRoot != null) {
 			"/" + ctxRoot
@@ -28,7 +37,7 @@ class ContextRootProvider {
 		}
 	}
 				
-	def dispatch String getContextRoot (ServiceBinding b) {
+	override String getContextRoot (ServiceBinding b) {
 		val soapBindings = b.protocol.filter ( typeof (SOAP));
 		if (!soapBindings.empty  
 			&& soapBindings.head.contextRoot != null)
@@ -39,8 +48,8 @@ class ContextRootProvider {
 		}
 	}
 	
-	def String getCtxRootByAssemblyType (Module mod, String serverType) {
-		if (serverType.toLowerCase.trim == "webmethods") {
+	override String getCtxRootByAssemblyType (Module mod, String serverType) {
+		if (serverType != null && serverType.toLowerCase.trim == "webmethods") {
 			""
 		} else {
 			switch (mod.assemblyType) {
@@ -50,8 +59,8 @@ class ContextRootProvider {
 		}
 	}
 	
-	def String getCtxRootByAssemblyType (Module mod, String serverType, String serverVersion) {
-		if (serverType.toLowerCase.trim == "webmethods") {
+	override String getCtxRootByAssemblyType (Module mod, String serverType, String serverVersion) {
+		if (serverType != null && serverType.toLowerCase.trim == "webmethods") {
 			""
 		} else {
 			switch (mod.assemblyType) {
@@ -61,13 +70,17 @@ class ContextRootProvider {
 		}
 	}
 	
-	def dispatch String getContextRootByProtocol (BindingProtocol prot) {
+	override String getContextRootByProtocol (BindingProtocol prot) {
+		prot.contextRootByProtocolInternal
+	}
+	
+	def dispatch String getContextRootByProtocolInternal (BindingProtocol prot) {
 		return null;
 	}
-	def dispatch String getContextRootByProtocol (SOAP prot) {
+	def dispatch String getContextRootByProtocolInternal (SOAP prot) {
 		return prot.contextRoot
 	}
-	def dispatch String getContextRootByProtocol (REST prot) {
+	def dispatch String getContextRootByProtocolInternal (REST prot) {
 		return prot.path
 	}
 	

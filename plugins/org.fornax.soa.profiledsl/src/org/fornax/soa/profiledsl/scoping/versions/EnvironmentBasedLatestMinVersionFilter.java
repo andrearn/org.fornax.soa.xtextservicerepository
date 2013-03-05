@@ -19,7 +19,7 @@ public class EnvironmentBasedLatestMinVersionFilter<T> extends
 		LatestMinInclVersionFilter<T> {
 
 	@Inject
-	private LifecycleStateResolver stateResolver;
+	private ILifecycleStateResolver stateResolver;
 	private String environmentName;
 	private EnvironmentType environmentType;
 	private ResourceSet resSet;

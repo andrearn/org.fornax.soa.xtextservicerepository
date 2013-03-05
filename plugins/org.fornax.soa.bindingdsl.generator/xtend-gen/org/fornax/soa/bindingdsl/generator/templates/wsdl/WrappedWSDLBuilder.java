@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
-import org.fornax.soa.binding.query.services.BindingServiceQueries;
+import org.fornax.soa.binding.query.environment.AssetStateEnvironmentEligibilityChecker;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.profiledsl.query.LifecycleQueries;
@@ -35,7 +35,7 @@ public class WrappedWSDLBuilder {
   private LifecycleQueries _lifecycleQueries;
   
   @Inject
-  private BindingServiceQueries _bindingServiceQueries;
+  private AssetStateEnvironmentEligibilityChecker _assetStateEnvironmentEligibilityChecker;
   
   /**
    * <b>CARTRIDGE ENTRYPOINT</b> for generation of abstract wrapped  WSDLs
@@ -50,7 +50,7 @@ public class WrappedWSDLBuilder {
     EList<Service> _services = ns.getServices();
     final Function1<Service,Boolean> _function = new Function1<Service,Boolean>() {
         public Boolean apply(final Service s) {
-          boolean _isEligibleForEnvironment = WrappedWSDLBuilder.this._bindingServiceQueries.isEligibleForEnvironment(s, targetEnvironment);
+          boolean _isEligibleForEnvironment = WrappedWSDLBuilder.this._assetStateEnvironmentEligibilityChecker.isEligibleForEnvironment(s, targetEnvironment);
           return Boolean.valueOf(_isEligibleForEnvironment);
         }
       };
@@ -83,7 +83,7 @@ public class WrappedWSDLBuilder {
     EList<Service> _services = ns.getServices();
     final Function1<Service,Boolean> _function_2 = new Function1<Service,Boolean>() {
         public Boolean apply(final Service s) {
-          boolean _isEligibleForEnvironment = WrappedWSDLBuilder.this._bindingServiceQueries.isEligibleForEnvironment(s, env);
+          boolean _isEligibleForEnvironment = WrappedWSDLBuilder.this._assetStateEnvironmentEligibilityChecker.isEligibleForEnvironment(s, env);
           return Boolean.valueOf(_isEligibleForEnvironment);
         }
       };

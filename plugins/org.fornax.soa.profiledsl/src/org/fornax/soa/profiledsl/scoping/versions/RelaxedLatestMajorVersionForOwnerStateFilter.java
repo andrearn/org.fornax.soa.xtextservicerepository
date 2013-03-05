@@ -30,7 +30,7 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 	private String majorVersion;
 	private IScopeVersionResolver resolver;
 	private LifecycleState ownerLifecycleState;
-	private LifecycleStateResolver stateResolver;
+	private ILifecycleStateResolver stateResolver;
 	
 	@Inject
 	private	IStateMatcher stateMatcher;
@@ -41,7 +41,7 @@ public class RelaxedLatestMajorVersionForOwnerStateFilter<T> extends AbstractPre
 	@Inject
 	private LifecycleStateComparator stateComparator;
 	
-	public RelaxedLatestMajorVersionForOwnerStateFilter (IScopeVersionResolver resolver, String majorVersion, LifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public RelaxedLatestMajorVersionForOwnerStateFilter (IScopeVersionResolver resolver, String majorVersion, ILifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
 		this.ownerLifecycleState = ownerLifecycleState;

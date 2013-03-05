@@ -10,7 +10,7 @@ import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
-public class StateAttributeLifecycleStateResolver implements LifecycleStateResolver {
+public class StateAttributeLifecycleStateResolver implements ILifecycleStateResolver {
 
 	private final static String STATE_ATTR_NAME = "state";
 	

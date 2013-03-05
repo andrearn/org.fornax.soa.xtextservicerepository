@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.inject.Inject;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -12,6 +13,7 @@ import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.environmentDsl.EnvironmentType;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 
@@ -30,6 +32,9 @@ public class LifecycleQueries {
   
   @Inject
   private IStateMatcher _iStateMatcher;
+  
+  @Inject
+  private ILifecycleStateResolver stateResolver;
   
   public LifecycleState stateByName(final String state, final Resource res) {
     LifecycleState _modelElementByName = this.lookup.<LifecycleState>getModelElementByName(state, res, "LifecycleState");
@@ -166,5 +171,15 @@ public class LifecycleQueries {
       _switchResult = _minDevState_1;
     }
     return _switchResult;
+  }
+  
+  public LifecycleState getAssetLifecycleState(final EObject asset) {
+    LifecycleState _lifecycleState = this.stateResolver.getLifecycleState(asset);
+    return _lifecycleState;
+  }
+  
+  public boolean hasLifecycleState(final EObject asset) {
+    boolean _definesState = this.stateResolver.definesState(asset);
+    return _definesState;
   }
 }

@@ -21,7 +21,7 @@ public class EnvironmentBasedLatestMajorVersionFilter<T> extends AbstractPredica
 	private IScopeVersionResolver resolver;
 	
 	@Inject
-	private LifecycleStateResolver stateResolver;
+	private ILifecycleStateResolver stateResolver;
 	private String environmentName;
 	private EnvironmentType environmentType;
 	private ResourceSet resSet;

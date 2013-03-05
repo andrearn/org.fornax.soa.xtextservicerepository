@@ -7,7 +7,7 @@ import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.profiledsl.query.LifecycleQueries;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
-import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.Visibility;
@@ -22,7 +22,7 @@ import com.google.inject.Inject;
 public class SolutionDslJavaValidator extends AbstractSolutionDslJavaValidator {
 	
 	@Inject LifecycleStateComparator stateComparator;
-	@Inject LifecycleStateResolver stateResolver;
+	@Inject ILifecycleStateResolver stateResolver;
 	@Inject LifecycleQueries stateQueries;
 	@Inject IEObjectLookup objLookup;
 
@@ -43,7 +43,7 @@ public class SolutionDslJavaValidator extends AbstractSolutionDslJavaValidator {
 	@Check (CheckType.NORMAL)
 	public void checkNotRefsLowerStateService(ServiceRef svcRef) {
 		EObject owner = objLookup.getStatefulOwner(svcRef);
-		LifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
+		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateResolver.definesState (owner)) {
 			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !ownerState.isIsEnd())
