@@ -20,6 +20,7 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
+import org.fornax.soa.binding.ContextRootProvider
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.bindingdsl.generator.templates.naming.DefaultEndpointQualifierNameProvider
 import org.fornax.soa.bindingdsl.generator.templates.naming.IEndpointQualifierNameProvider

@@ -28,7 +28,7 @@ import org.fornax.soa.bindingDsl.SOAP;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.soap.ConcreteWsdlGenerator;
-import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDTemplates;
+import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDBuilder;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef;
@@ -79,7 +79,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
   private WSDLGenerator wsdlGenerator;
   
   @Inject
-  private XSDTemplates xsdGenerator;
+  private XSDBuilder xsdGenerator;
   
   @Inject
   private ConcreteWsdlGenerator concreteWsdlGenerator;

@@ -32,7 +32,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator;
  * is supported by the given target environment.
  */
 @SuppressWarnings("all")
-public class XSDTemplates {
+public class XSDBuilder {
   @Inject
   private BindingExtensions _bindingExtensions;
   

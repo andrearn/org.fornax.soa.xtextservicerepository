@@ -1,4 +1,4 @@
-package org.fornax.soa.bindingdsl.generator.templates.soap
+package org.fornax.soa.binding
 
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.REST

@@ -23,7 +23,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator
  * Generate an XSD for a SubNamespace. Types and exceptions are filtered by their lifecycle state, determining whether it
  * is supported by the given target environment.
  */
-class XSDTemplates {
+class XSDBuilder {
 
 	@Inject extension BindingExtensions
 	@Inject extension EnvironmentBindingResolver		

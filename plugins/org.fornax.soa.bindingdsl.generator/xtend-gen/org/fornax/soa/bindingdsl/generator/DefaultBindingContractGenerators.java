@@ -27,7 +27,7 @@ import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingModel;
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder;
-import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDTemplates;
+import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDBuilder;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.moduledsl.generator.VersionedModuleSelector;
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef;
@@ -58,7 +58,7 @@ public class DefaultBindingContractGenerators implements IGenerator {
   private BindingBuilder bindingTpl;
   
   @Inject
-  private XSDTemplates xsdGen;
+  private XSDBuilder xsdGen;
   
   @Inject
   @Named(value = "profileName")

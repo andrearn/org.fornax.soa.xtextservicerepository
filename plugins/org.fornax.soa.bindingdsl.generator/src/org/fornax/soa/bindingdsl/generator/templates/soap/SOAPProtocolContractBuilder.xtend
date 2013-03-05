@@ -13,7 +13,7 @@ import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder
-import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDTemplates
+import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDBuilder
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
 import org.fornax.soa.moduledsl.moduleDsl.Module
@@ -47,7 +47,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 		
 	
 	@Inject WSDLGenerator 					wsdlGenerator
-	@Inject XSDTemplates 					xsdGenerator
+	@Inject XSDBuilder 					xsdGenerator
 	@Inject ConcreteWsdlGenerator 			concreteWsdlGenerator
 	@Inject MessageHeaderXSDTemplates 		msgHeaderGenerator
 	@Inject BindingResolver					bindingResolver
