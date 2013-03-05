@@ -55,7 +55,6 @@ class SchemaTypeExtensions {
 	@Inject extension VersionQualifierExtensions
 	@Inject extension VersionQueries
 	@Inject extension ITypeResolver
-	@Inject extension BusinessObjectQueries
 	@Inject extension IExceptionResolver
 	@Inject extension IEObjectLookup
 	
@@ -250,34 +249,34 @@ class SchemaTypeExtensions {
 		}
 	}
 	
-	def dispatch String toFullTypeNameRef (TypeRef t, VersionedDomainNamespace currNs) {
+	def dispatch String toNsPrefixedTypeNameRef (TypeRef t, VersionedDomainNamespace currNs) {
 		null;
 	}
 	
-	def dispatch String toFullTypeNameRef (DataTypeRef t, VersionedDomainNamespace currentDomNs) { 
-		t.findMatchingType () .toFullTypeNameRef();
+	def dispatch String toNsPrefixedTypeNameRef (DataTypeRef t, VersionedDomainNamespace currentDomNs) { 
+		t.findMatchingType () .toNsPrefixedTypeNameRef();
 	}
 		
-	def dispatch String toFullTypeNameRef (VersionedTypeRef t, VersionedDomainNamespace currNs) { 
+	def dispatch String toNsPrefixedTypeNameRef (VersionedTypeRef t, VersionedDomainNamespace currNs) { 
 		t.toNamespace() + t.type.name;
 	}
 		
-	def dispatch String toFullTypeNameRef (BusinessObjectRef t, VersionedDomainNamespace currNs) { 
+	def dispatch String toNsPrefixedTypeNameRef (BusinessObjectRef t, VersionedDomainNamespace currNs) { 
 		t.toNamespace() + t.type.name;
 	}
 		
-	def dispatch String toFullTypeNameRef (QueryObjectRef t, VersionedDomainNamespace currNs) { 
+	def dispatch String toNsPrefixedTypeNameRef (QueryObjectRef t, VersionedDomainNamespace currNs) { 
 		t.toNamespace() + t.type.name;
 	}
 			
-	def dispatch String toFullTypeNameRef (EnumTypeRef t, VersionedDomainNamespace currNs) { 
+	def dispatch String toNsPrefixedTypeNameRef (EnumTypeRef t, VersionedDomainNamespace currNs) { 
 		t.toNamespace() + t.type.name;
 	}
 	
-	def dispatch String toFullTypeNameRef (Type t) {
+	def dispatch String toNsPrefixedTypeNameRef (Type t) {
 		"";
 	}
-	def dispatch String toFullTypeNameRef (org.fornax.soa.profiledsl.sOAProfileDsl.DataType t) {
+	def dispatch String toNsPrefixedTypeNameRef (org.fornax.soa.profiledsl.sOAProfileDsl.DataType t) {
 	 	switch (t.name) {
 	 		case "attachment":		"xsd:base64Binary"
 	 		case "binary":			"xsd:hexBinary"
@@ -313,9 +312,7 @@ class SchemaTypeExtensions {
 	}
 	 
 	
-		
-		
-	def dispatch String toExceptionNameRef (ExceptionRef t, VersionedDomainNamespace currNs) {
+	def String toExceptionNameRef (ExceptionRef t, VersionedDomainNamespace currNs) {
 		if (t.exception.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
 			&& t.getOwnerVersion().toMajorVersionNumber() == t.exception.version.toMajorVersionNumber()
 			&& ! (t.getStatefulOwner() instanceof Service)
@@ -383,10 +380,10 @@ class SchemaTypeExtensions {
 		ns.addAll (s.exceptions.filter (e|e.superException != null).map (ex|ex.superException.findMatchingException().createVersionedDomainNamespace()));
 		return ns;
 	}
-	
-	def dispatch Set<VersionedDomainNamespace> getImportedSubdomains (List<TypeRef> c) { 
-		c.map(e|e.findMatchingType().createVersionedDomainNamespace()).toSet();
-	}
+//	
+//	def dispatch Set<VersionedDomainNamespace> getImportedSubdomains (List<TypeRef> c) { 
+//		c.map(e|e.findMatchingType().createVersionedDomainNamespace()).toSet();
+//	}
 		
 	
 	def dispatch String toNamespace (TypeRef t) {

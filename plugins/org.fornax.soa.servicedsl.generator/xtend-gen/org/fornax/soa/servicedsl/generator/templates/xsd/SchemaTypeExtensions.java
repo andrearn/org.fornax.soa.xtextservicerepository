@@ -5,14 +5,12 @@ import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
@@ -33,7 +31,6 @@ import org.fornax.soa.service.VersionedDomainNamespace;
 import org.fornax.soa.service.namespace.NamespaceSplitter;
 import org.fornax.soa.service.query.VersionQueries;
 import org.fornax.soa.service.query.namespace.NamespaceQuery;
-import org.fornax.soa.service.query.type.BusinessObjectQueries;
 import org.fornax.soa.service.versioning.IExceptionResolver;
 import org.fornax.soa.service.versioning.ITypeResolver;
 import org.fornax.soa.serviceDsl.BusinessObject;
@@ -78,9 +75,6 @@ public class SchemaTypeExtensions {
   
   @Inject
   private ITypeResolver _iTypeResolver;
-  
-  @Inject
-  private BusinessObjectQueries _businessObjectQueries;
   
   @Inject
   private IExceptionResolver _iExceptionResolver;
@@ -732,17 +726,17 @@ public class SchemaTypeExtensions {
     return _xifexpression;
   }
   
-  protected String _toFullTypeNameRef(final TypeRef t, final VersionedDomainNamespace currNs) {
+  protected String _toNsPrefixedTypeNameRef(final TypeRef t, final VersionedDomainNamespace currNs) {
     return null;
   }
   
-  protected String _toFullTypeNameRef(final DataTypeRef t, final VersionedDomainNamespace currentDomNs) {
+  protected String _toNsPrefixedTypeNameRef(final DataTypeRef t, final VersionedDomainNamespace currentDomNs) {
     Type _findMatchingType = this._iTypeResolver.findMatchingType(t);
-    String _fullTypeNameRef = this.toFullTypeNameRef(_findMatchingType);
-    return _fullTypeNameRef;
+    String _nsPrefixedTypeNameRef = this.toNsPrefixedTypeNameRef(_findMatchingType);
+    return _nsPrefixedTypeNameRef;
   }
   
-  protected String _toFullTypeNameRef(final VersionedTypeRef t, final VersionedDomainNamespace currNs) {
+  protected String _toNsPrefixedTypeNameRef(final VersionedTypeRef t, final VersionedDomainNamespace currNs) {
     String _namespace = this.toNamespace(t);
     VersionedType _type = t.getType();
     String _name = _type.getName();
@@ -750,7 +744,7 @@ public class SchemaTypeExtensions {
     return _plus;
   }
   
-  protected String _toFullTypeNameRef(final BusinessObjectRef t, final VersionedDomainNamespace currNs) {
+  protected String _toNsPrefixedTypeNameRef(final BusinessObjectRef t, final VersionedDomainNamespace currNs) {
     String _namespace = this.toNamespace(t);
     BusinessObject _type = t.getType();
     String _name = _type.getName();
@@ -758,7 +752,7 @@ public class SchemaTypeExtensions {
     return _plus;
   }
   
-  protected String _toFullTypeNameRef(final QueryObjectRef t, final VersionedDomainNamespace currNs) {
+  protected String _toNsPrefixedTypeNameRef(final QueryObjectRef t, final VersionedDomainNamespace currNs) {
     String _namespace = this.toNamespace(t);
     QueryObject _type = t.getType();
     String _name = _type.getName();
@@ -766,7 +760,7 @@ public class SchemaTypeExtensions {
     return _plus;
   }
   
-  protected String _toFullTypeNameRef(final EnumTypeRef t, final VersionedDomainNamespace currNs) {
+  protected String _toNsPrefixedTypeNameRef(final EnumTypeRef t, final VersionedDomainNamespace currNs) {
     String _namespace = this.toNamespace(t);
     Enumeration _type = t.getType();
     String _name = _type.getName();
@@ -774,11 +768,11 @@ public class SchemaTypeExtensions {
     return _plus;
   }
   
-  protected String _toFullTypeNameRef(final org.fornax.soa.serviceDsl.Type t) {
+  protected String _toNsPrefixedTypeNameRef(final org.fornax.soa.serviceDsl.Type t) {
     return "";
   }
   
-  protected String _toFullTypeNameRef(final DataType t) {
+  protected String _toNsPrefixedTypeNameRef(final DataType t) {
     String _switchResult = null;
     String _name = t.getName();
     final String _switchValue = _name;
@@ -878,7 +872,7 @@ public class SchemaTypeExtensions {
     return _xifexpression;
   }
   
-  protected String _toExceptionNameRef(final ExceptionRef t, final VersionedDomainNamespace currNs) {
+  public String toExceptionNameRef(final ExceptionRef t, final VersionedDomainNamespace currNs) {
     String _xifexpression = null;
     boolean _and = false;
     boolean _and_1 = false;
@@ -1117,19 +1111,6 @@ public class SchemaTypeExtensions {
     Iterable<VersionedDomainNamespace> _map_9 = IterableExtensions.<org.fornax.soa.serviceDsl.Exception, VersionedDomainNamespace>map(_filter_8, _function_13);
     Iterables.<VersionedDomainNamespace>addAll(ns, _map_9);
     return ns;
-  }
-  
-  protected Set<VersionedDomainNamespace> _getImportedSubdomains(final List<TypeRef> c) {
-    final Function1<TypeRef,VersionedDomainNamespace> _function = new Function1<TypeRef,VersionedDomainNamespace>() {
-        public VersionedDomainNamespace apply(final TypeRef e) {
-          org.fornax.soa.serviceDsl.Type _findMatchingType = SchemaTypeExtensions.this._iTypeResolver.findMatchingType(e);
-          VersionedDomainNamespace _createVersionedDomainNamespace = SchemaTypeExtensions.this._namespaceSplitter.createVersionedDomainNamespace(_findMatchingType);
-          return _createVersionedDomainNamespace;
-        }
-      };
-    List<VersionedDomainNamespace> _map = ListExtensions.<TypeRef, VersionedDomainNamespace>map(c, _function);
-    Set<VersionedDomainNamespace> _set = IterableExtensions.<VersionedDomainNamespace>toSet(_map);
-    return _set;
   }
   
   protected String _toNamespace(final TypeRef t) {
@@ -1419,30 +1400,30 @@ public class SchemaTypeExtensions {
     }
   }
   
-  public String toFullTypeNameRef(final TypeRef t, final VersionedDomainNamespace currNs) {
+  public String toNsPrefixedTypeNameRef(final TypeRef t, final VersionedDomainNamespace currNs) {
     if (t instanceof BusinessObjectRef) {
-      return _toFullTypeNameRef((BusinessObjectRef)t, currNs);
+      return _toNsPrefixedTypeNameRef((BusinessObjectRef)t, currNs);
     } else if (t instanceof EnumTypeRef) {
-      return _toFullTypeNameRef((EnumTypeRef)t, currNs);
+      return _toNsPrefixedTypeNameRef((EnumTypeRef)t, currNs);
     } else if (t instanceof QueryObjectRef) {
-      return _toFullTypeNameRef((QueryObjectRef)t, currNs);
+      return _toNsPrefixedTypeNameRef((QueryObjectRef)t, currNs);
     } else if (t instanceof VersionedTypeRef) {
-      return _toFullTypeNameRef((VersionedTypeRef)t, currNs);
+      return _toNsPrefixedTypeNameRef((VersionedTypeRef)t, currNs);
     } else if (t instanceof DataTypeRef) {
-      return _toFullTypeNameRef((DataTypeRef)t, currNs);
+      return _toNsPrefixedTypeNameRef((DataTypeRef)t, currNs);
     } else if (t != null) {
-      return _toFullTypeNameRef(t, currNs);
+      return _toNsPrefixedTypeNameRef(t, currNs);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(t, currNs).toString());
     }
   }
   
-  public String toFullTypeNameRef(final EObject t) {
+  public String toNsPrefixedTypeNameRef(final EObject t) {
     if (t instanceof DataType) {
-      return _toFullTypeNameRef((DataType)t);
+      return _toNsPrefixedTypeNameRef((DataType)t);
     } else if (t instanceof org.fornax.soa.serviceDsl.Type) {
-      return _toFullTypeNameRef((org.fornax.soa.serviceDsl.Type)t);
+      return _toNsPrefixedTypeNameRef((org.fornax.soa.serviceDsl.Type)t);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(t).toString());
@@ -1471,12 +1452,6 @@ public class SchemaTypeExtensions {
     }
   }
   
-  public String toExceptionNameRef(final ExceptionRef t, final VersionedDomainNamespace currNs) {
-    {
-      return _toExceptionNameRef(t, currNs);
-    }
-  }
-  
   public boolean isMany(final TypeRef t) {
     if (t instanceof BusinessObjectRef) {
       return _isMany((BusinessObjectRef)t);
@@ -1500,18 +1475,16 @@ public class SchemaTypeExtensions {
     }
   }
   
-  public Set<VersionedDomainNamespace> getImportedSubdomains(final Object c) {
-    if (c instanceof List) {
-      return _getImportedSubdomains((List<TypeRef>)c);
-    } else if (c instanceof SubNamespace) {
-      return _getImportedSubdomains((SubNamespace)c);
-    } else if (c instanceof VersionedDomainNamespace) {
-      return _getImportedSubdomains((VersionedDomainNamespace)c);
-    } else if (c != null) {
-      return _getImportedSubdomains(c);
+  public Set<VersionedDomainNamespace> getImportedSubdomains(final Object s) {
+    if (s instanceof SubNamespace) {
+      return _getImportedSubdomains((SubNamespace)s);
+    } else if (s instanceof VersionedDomainNamespace) {
+      return _getImportedSubdomains((VersionedDomainNamespace)s);
+    } else if (s != null) {
+      return _getImportedSubdomains(s);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(c).toString());
+        Arrays.<Object>asList(s).toString());
     }
   }
   

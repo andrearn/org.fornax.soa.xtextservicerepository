@@ -35,13 +35,10 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 class SchemaNamespaceExtensions {
 	
 	@Inject extension CommonEObjectExtensions
-
 	@Inject extension CommonStringExtensions
-	@Inject VersionQualifierExtensions versionQualifier
 	@Inject extension NamespaceQuery
-	@Inject extension TypesByLifecycleStateFinder
-	@Inject extension ServiceQueries
-	@Inject extension ExceptionFinder
+
+	@Inject VersionQualifierExtensions versionQualifier
 	
 	@Inject @Named ("forceRelativePaths") 
 	Boolean forceRelativePaths
@@ -157,17 +154,6 @@ class SchemaNamespaceExtensions {
 			return domList.filter (typeof (SubNamespace)).toList().reverse();
 		}
 	}
-
-
-
-
-
-	/*List[sOAProfileDsl::TechnicalNamespace] getNamespacePath (List[SubNamespace] nsList) : 
-		SubNamespace.isInstance(nsList.last().eContainer) ? 
-			getNamespacePath (nsList.add ((SubNamespace)nsList.last().eContainer) -> nsList)
-		: 
-			nsList.typeSelect(SubNamespace).reverse();*/
-		
 
 		
 	def dispatch String toShortName(SubNamespace s) {
@@ -306,45 +292,6 @@ class SchemaNamespaceExtensions {
 		} else {
 			nameProvider.getFullyQualifiedName(s.subdomain as EObject).segments.map (e|e.substring(0,1)).join;
 		}
-	}
-	
-	def List<ServiceModel> getAllServiceModels (ServiceModel m) {
-		var Set<ServiceModel> models = newHashSet(m);
-		var TreeIterator<EObject> eAllContIt = m.eAllContents;
-		while (eAllContIt.hasNext()) {
-			var EObject o = eAllContIt.next();
-			if (o instanceof BusinessObjectRef && (o as BusinessObjectRef).type.eRootContainer instanceof ServiceModel) {
-				models.add (o as ServiceModel);
-			} else if (o instanceof EnumTypeRef && (o as EnumTypeRef).type.eRootContainer instanceof ServiceModel) {
-				models.add (o as ServiceModel);
-			}
-		}
-		val List<ServiceModel> result = models.toList();
-		return result;
-	}
-	
-	def dispatch boolean hasTypesInMinState (SubNamespace ns, LifecycleState state) {
-		ns.typesWithMinState (state).size > 0;
-	}
-	
-	def dispatch boolean hasServicesInMinState (SubNamespace ns, LifecycleState state) {
-		ns.servicesWithMinState (state).size > 0;
-	}
-	
-	def dispatch boolean hasExceptionsInMinState (SubNamespace ns, LifecycleState state) {
-		ns.exceptionsWithMinState (state).size > 0;
-	}
-	
-	def dispatch boolean hasTypesInMinState (VersionedDomainNamespace ns, LifecycleState state) {
-		ns.typesWithMinState (state).size > 0;
-	}
-	
-	def dispatch boolean hasServicesInMinState (VersionedDomainNamespace ns, LifecycleState state) {
-		ns.servicesWithMinState (state).size > 0;
-	}
-	
-	def dispatch boolean hasExceptionsInMinState (VersionedDomainNamespace ns, LifecycleState state) {
-		ns.exceptionsWithMinState (state).size > 0;
 	}
 	
 }

@@ -31,10 +31,6 @@ class ServiceTemplates {
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
 
-	def void main (ServiceModel model, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
-		model.getAllServiceModels().map (m|m.orgNamespaces).flatten.forEach (o|o.toOrganizationNamespace (minState, profile, registryBaseUrl));
-	}
-
 	def void toOrganizationNamespace (OrganizationNamespace orgNs, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		orgNs.subNamespaces.forEach (n|n.toSubNamespace (minState, profile, registryBaseUrl));
 	}

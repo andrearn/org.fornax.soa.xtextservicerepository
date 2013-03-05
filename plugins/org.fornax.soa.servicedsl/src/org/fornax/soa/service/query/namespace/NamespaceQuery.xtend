@@ -22,6 +22,11 @@ import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.VersionedTypeRef
 import org.fornax.soa.basedsl.search.IEObjectLookup
+import org.fornax.soa.service.query.type.TypesByLifecycleStateFinder
+import org.fornax.soa.service.query.ServiceQueries
+import org.fornax.soa.service.query.ExceptionFinder
+import org.fornax.soa.service.VersionedDomainNamespace
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 /*
  * Namespace lookup functions
@@ -29,6 +34,9 @@ import org.fornax.soa.basedsl.search.IEObjectLookup
 class NamespaceQuery {
 	
 	@Inject extension IEObjectLookup
+	@Inject extension TypesByLifecycleStateFinder
+	@Inject extension ServiceQueries
+	@Inject extension ExceptionFinder
 
 	def dispatch OrganizationNamespace findOrgNamespace (EObject o) {
 		val OrganizationNamespace orgNs = o.getOwnerByType(typeof (OrganizationNamespace))
@@ -80,6 +88,31 @@ class NamespaceQuery {
 	 */
 	def SubNamespace findServiceRefOwnerSubdomain (ServiceRef s) {
 		s?.getStatefulOwner()?.eContainer as SubNamespace;
+	}
+
+	
+	def dispatch boolean hasTypesInMinState (SubNamespace ns, LifecycleState state) {
+		ns.typesWithMinState (state).size > 0;
+	}
+	
+	def dispatch boolean hasServicesInMinState (SubNamespace ns, LifecycleState state) {
+		ns.servicesWithMinState (state).size > 0;
+	}
+	
+	def dispatch boolean hasExceptionsInMinState (SubNamespace ns, LifecycleState state) {
+		ns.exceptionsWithMinState (state).size > 0;
+	}
+	
+	def dispatch boolean hasTypesInMinState (VersionedDomainNamespace ns, LifecycleState state) {
+		ns.typesWithMinState (state).size > 0;
+	}
+	
+	def dispatch boolean hasServicesInMinState (VersionedDomainNamespace ns, LifecycleState state) {
+		ns.servicesWithMinState (state).size > 0;
+	}
+	
+	def dispatch boolean hasExceptionsInMinState (VersionedDomainNamespace ns, LifecycleState state) {
+		ns.exceptionsWithMinState (state).size > 0;
 	}
 		
 }

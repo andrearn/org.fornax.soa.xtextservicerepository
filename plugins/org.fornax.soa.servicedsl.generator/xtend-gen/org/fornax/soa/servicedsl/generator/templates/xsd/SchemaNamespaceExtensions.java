@@ -7,8 +7,6 @@ import com.google.inject.name.Named;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
-import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
@@ -21,24 +19,14 @@ import org.fornax.soa.basedsl.CommonEObjectExtensions;
 import org.fornax.soa.basedsl.CommonStringExtensions;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions;
-import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace;
 import org.fornax.soa.service.VersionedDomainNamespace;
-import org.fornax.soa.service.query.ExceptionFinder;
-import org.fornax.soa.service.query.ServiceQueries;
 import org.fornax.soa.service.query.namespace.NamespaceQuery;
-import org.fornax.soa.service.query.type.TypesByLifecycleStateFinder;
-import org.fornax.soa.serviceDsl.BusinessObject;
-import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
-import org.fornax.soa.serviceDsl.EnumTypeRef;
-import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.OrganizationNamespace;
 import org.fornax.soa.serviceDsl.Service;
-import org.fornax.soa.serviceDsl.ServiceModel;
 import org.fornax.soa.serviceDsl.SubNamespace;
-import org.fornax.soa.serviceDsl.Type;
 
 /**
  * domains.ext
@@ -52,19 +40,10 @@ public class SchemaNamespaceExtensions {
   private CommonStringExtensions _commonStringExtensions;
   
   @Inject
-  private VersionQualifierExtensions versionQualifier;
-  
-  @Inject
   private NamespaceQuery _namespaceQuery;
   
   @Inject
-  private TypesByLifecycleStateFinder _typesByLifecycleStateFinder;
-  
-  @Inject
-  private ServiceQueries _serviceQueries;
-  
-  @Inject
-  private ExceptionFinder _exceptionFinder;
+  private VersionQualifierExtensions versionQualifier;
   
   @Inject
   @Named(value = "forceRelativePaths")
@@ -269,13 +248,6 @@ public class SchemaNamespaceExtensions {
     }
   }
   
-  /**
-   * List[sOAProfileDsl::TechnicalNamespace] getNamespacePath (List[SubNamespace] nsList) :
-   * SubNamespace.isInstance(nsList.last().eContainer) ?
-   * getNamespacePath (nsList.add ((SubNamespace)nsList.last().eContainer) -> nsList)
-   * :
-   * nsList.typeSelect(SubNamespace).reverse();
-   */
   protected String _toShortName(final SubNamespace s) {
     String _xifexpression = null;
     String _prefix = s.getPrefix();
@@ -629,87 +601,6 @@ public class SchemaNamespaceExtensions {
     return _xifexpression;
   }
   
-  public List<ServiceModel> getAllServiceModels(final ServiceModel m) {
-    Set<ServiceModel> models = CollectionLiterals.<ServiceModel>newHashSet(m);
-    TreeIterator<EObject> eAllContIt = m.eAllContents();
-    boolean _hasNext = eAllContIt.hasNext();
-    boolean _while = _hasNext;
-    while (_while) {
-      {
-        EObject o = eAllContIt.next();
-        boolean _and = false;
-        if (!(o instanceof BusinessObjectRef)) {
-          _and = false;
-        } else {
-          BusinessObject _type = ((BusinessObjectRef) o).getType();
-          EObject _eRootContainer = this._commonEObjectExtensions.eRootContainer(_type);
-          _and = ((o instanceof BusinessObjectRef) && (_eRootContainer instanceof ServiceModel));
-        }
-        if (_and) {
-          models.add(((ServiceModel) o));
-        } else {
-          boolean _and_1 = false;
-          if (!(o instanceof EnumTypeRef)) {
-            _and_1 = false;
-          } else {
-            Enumeration _type_1 = ((EnumTypeRef) o).getType();
-            EObject _eRootContainer_1 = this._commonEObjectExtensions.eRootContainer(_type_1);
-            _and_1 = ((o instanceof EnumTypeRef) && (_eRootContainer_1 instanceof ServiceModel));
-          }
-          if (_and_1) {
-            models.add(((ServiceModel) o));
-          }
-        }
-      }
-      boolean _hasNext_1 = eAllContIt.hasNext();
-      _while = _hasNext_1;
-    }
-    final List<ServiceModel> result = IterableExtensions.<ServiceModel>toList(models);
-    return result;
-  }
-  
-  protected boolean _hasTypesInMinState(final SubNamespace ns, final LifecycleState state) {
-    List<Type> _typesWithMinState = this._typesByLifecycleStateFinder.typesWithMinState(ns, state);
-    int _size = _typesWithMinState.size();
-    boolean _greaterThan = (_size > 0);
-    return _greaterThan;
-  }
-  
-  protected boolean _hasServicesInMinState(final SubNamespace ns, final LifecycleState state) {
-    List _servicesWithMinState = this._serviceQueries.servicesWithMinState(ns, state);
-    int _size = _servicesWithMinState.size();
-    boolean _greaterThan = (_size > 0);
-    return _greaterThan;
-  }
-  
-  protected boolean _hasExceptionsInMinState(final SubNamespace ns, final LifecycleState state) {
-    List _exceptionsWithMinState = this._exceptionFinder.exceptionsWithMinState(ns, state);
-    int _size = _exceptionsWithMinState.size();
-    boolean _greaterThan = (_size > 0);
-    return _greaterThan;
-  }
-  
-  protected boolean _hasTypesInMinState(final VersionedDomainNamespace ns, final LifecycleState state) {
-    List<Type> _typesWithMinState = this._typesByLifecycleStateFinder.typesWithMinState(ns, state);
-    int _size = _typesWithMinState.size();
-    boolean _greaterThan = (_size > 0);
-    return _greaterThan;
-  }
-  
-  protected boolean _hasServicesInMinState(final VersionedDomainNamespace ns, final LifecycleState state) {
-    List _servicesWithMinState = this._serviceQueries.servicesWithMinState(ns, state);
-    int _size = _servicesWithMinState.size();
-    boolean _greaterThan = (_size > 0);
-    return _greaterThan;
-  }
-  
-  protected boolean _hasExceptionsInMinState(final VersionedDomainNamespace ns, final LifecycleState state) {
-    List _exceptionsWithMinState = this._exceptionFinder.exceptionsWithMinState(ns, state);
-    int _size = _exceptionsWithMinState.size();
-    boolean _greaterThan = (_size > 0);
-    return _greaterThan;
-  }
-  
   public String toUnversionedNamespace(final Object domain) {
     if (domain instanceof OrganizationNamespace) {
       return _toUnversionedNamespace((OrganizationNamespace)domain);
@@ -859,39 +750,6 @@ public class SchemaNamespaceExtensions {
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(o).toString());
-    }
-  }
-  
-  public boolean hasTypesInMinState(final Object ns, final LifecycleState state) {
-    if (ns instanceof SubNamespace) {
-      return _hasTypesInMinState((SubNamespace)ns, state);
-    } else if (ns instanceof VersionedDomainNamespace) {
-      return _hasTypesInMinState((VersionedDomainNamespace)ns, state);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(ns, state).toString());
-    }
-  }
-  
-  public boolean hasServicesInMinState(final Object ns, final LifecycleState state) {
-    if (ns instanceof SubNamespace) {
-      return _hasServicesInMinState((SubNamespace)ns, state);
-    } else if (ns instanceof VersionedDomainNamespace) {
-      return _hasServicesInMinState((VersionedDomainNamespace)ns, state);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(ns, state).toString());
-    }
-  }
-  
-  public boolean hasExceptionsInMinState(final Object ns, final LifecycleState state) {
-    if (ns instanceof SubNamespace) {
-      return _hasExceptionsInMinState((SubNamespace)ns, state);
-    } else if (ns instanceof VersionedDomainNamespace) {
-      return _hasExceptionsInMinState((VersionedDomainNamespace)ns, state);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(ns, state).toString());
     }
   }
 }

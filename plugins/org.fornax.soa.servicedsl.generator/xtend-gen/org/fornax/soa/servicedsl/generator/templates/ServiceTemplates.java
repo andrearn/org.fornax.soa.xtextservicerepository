@@ -10,7 +10,6 @@ import java.util.Set;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.fornax.soa.basedsl.CommonStringExtensions;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
@@ -23,7 +22,6 @@ import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.OrganizationNamespace;
 import org.fornax.soa.serviceDsl.Service;
-import org.fornax.soa.serviceDsl.ServiceModel;
 import org.fornax.soa.serviceDsl.SubNamespace;
 import org.fornax.soa.servicedsl.generator.templates.webservice.WSDLTemplates;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
@@ -55,24 +53,6 @@ public class ServiceTemplates {
   @Inject
   @Named(value = "noDependencies")
   private Boolean noDependencies;
-  
-  public void main(final ServiceModel model, final LifecycleState minState, final SOAProfile profile, final String registryBaseUrl) {
-    List<ServiceModel> _allServiceModels = this._schemaNamespaceExtensions.getAllServiceModels(model);
-    final Function1<ServiceModel,EList<OrganizationNamespace>> _function = new Function1<ServiceModel,EList<OrganizationNamespace>>() {
-        public EList<OrganizationNamespace> apply(final ServiceModel m) {
-          EList<OrganizationNamespace> _orgNamespaces = m.getOrgNamespaces();
-          return _orgNamespaces;
-        }
-      };
-    List<EList<OrganizationNamespace>> _map = ListExtensions.<ServiceModel, EList<OrganizationNamespace>>map(_allServiceModels, _function);
-    Iterable<OrganizationNamespace> _flatten = Iterables.<OrganizationNamespace>concat(_map);
-    final Procedure1<OrganizationNamespace> _function_1 = new Procedure1<OrganizationNamespace>() {
-        public void apply(final OrganizationNamespace o) {
-          ServiceTemplates.this.toOrganizationNamespace(o, minState, profile, registryBaseUrl);
-        }
-      };
-    IterableExtensions.<OrganizationNamespace>forEach(_flatten, _function_1);
-  }
   
   public void toOrganizationNamespace(final OrganizationNamespace orgNs, final LifecycleState minState, final SOAProfile profile, final String registryBaseUrl) {
     EList<SubNamespace> _subNamespaces = orgNs.getSubNamespaces();
