@@ -33,13 +33,15 @@
 
 	<extension point="org.eclipse.emf.common.ui.examples">
 	    <example wizardID="org.fornax.soa.servicerepo.NewSimpleExampleWizard" pageImage="icons/genproject.gif">
-		 <projectDescriptor name="org.fornax.soa.servicerepo.simple.example" contentURI="contents/org.fornax.soa.servicerepo.simple.example.zip" description="%simple.example.repoproject.description"/>
+		 	<projectDescriptor name="org.fornax.soa.servicerepo.simple.example" contentURI="contents/org.fornax.soa.servicerepo.simple.example.zip" description="%simple.example.repoproject.description"/>
+		 	<projectDescriptor name="org.fornax.soa.servicerepo.simple.generator.example" contentURI="contents/org.fornax.soa.servicerepo.simple.generator.example.zip" description="%simple.example.generatorproject.description"/>
 	    </example>
 	</extension>
 	
 	<extension point="org.eclipse.emf.common.ui.examples">
 	    <example wizardID="org.fornax.soa.servicerepo.NewAdvancedExampleWizard" pageImage="icons/genproject.gif">
-		 <projectDescriptor name="org.fornax.soa.servicerepo.advanced.example" contentURI="contents/org.fornax.soa.servicerepo.advanced.example.zip" description="%advanced.example.repoproject.description"/>
+			<projectDescriptor name="org.fornax.soa.servicerepo.advanced.example" contentURI="contents/org.fornax.soa.servicerepo.advanced.example.zip" description="%advanced.example.repoproject.description"/>
+			<projectDescriptor name="org.fornax.soa.servicerepo.advanced.generator.example" contentURI="contents/org.fornax.soa.servicerepo.advanced.generator.example.zip" description="%advanced.example.generatorproject.description"/>
 	    </example>
 	</extension>   
    

@@ -1,0 +1,49 @@
+module org.fornax.soa.servicerepo.simple.generator.WSDLGenerator
+
+var modelPath = "../org.fornax.soa.servicerepo.simple.example/src"
+var profile = "SampleArchitectureProfile"
+
+var resSrcGenPath = "src-gen"
+
+Workflow {
+	component = org.eclipse.xtext.mwe.Reader {
+	    path = modelPath
+	    register = org.fornax.soa.ServiceDslStandaloneSetup {}
+	    register = org.fornax.soa.SemanticsDslStandaloneSetup {}
+	    register = org.fornax.soa.BusinessDslStandaloneSetup {}
+	    register = org.fornax.soa.BindingDslStandaloneSetup {}
+	    register = org.fornax.soa.EnvironmentDslStandaloneSetup {}
+	    register = org.fornax.soa.basedsl.SOABaseDslStandaloneSetup {}
+	    register = org.fornax.soa.profiledsl.SOAProfileDslStandaloneSetup {}
+	    register = org.fornax.soa.moduledsl.ModuleDslStandaloneSetup {}
+	    loadResource = {
+	        slot = 'model'
+	    }
+	}
+	
+	component = org.eclipse.emf.mwe.utils.DirectoryCleaner {
+		directory = resSrcGenPath
+	}
+	
+	component = org.eclipse.xtext.generator.GeneratorComponent {
+		register = org.fornax.soa.bindingdsl.generator.DefaultBindingContractGeneratorSetup {
+			moduleBindingName = "org.example.sales.esb.dev"
+			serviceModule = {
+				name = "org.example.sales.esb"
+				version = "1.0"
+				generateProvidedServices = true
+				generateUsedServices = false
+			}
+			targetEnvironmentName = 'Dev'
+			profileName = profile
+			forceRelativePaths = true
+			ignoreEndpointQualifierNames = false
+			
+		}
+		slot = 'model'
+		outlet = {
+			path = "${resSrcGenPath}/contracts"
+		}
+	}
+	
+}

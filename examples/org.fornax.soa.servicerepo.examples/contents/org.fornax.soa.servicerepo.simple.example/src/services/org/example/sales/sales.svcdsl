@@ -28,7 +28,6 @@ org-namespace org.example shortname "ex" {
 			person : Person majorVersion 1
 			address : Address majorVersion 1
 		}
-		
 
 		/*
 		 * A business entity service to find customers. As it is public, it can be used by 

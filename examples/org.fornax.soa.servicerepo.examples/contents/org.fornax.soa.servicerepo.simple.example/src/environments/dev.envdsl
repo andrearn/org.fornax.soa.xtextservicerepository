@@ -18,6 +18,7 @@ environment Dev of type Development-Environment {
 		host dev_airport
 		connectors {
 			default SOAP/HTTP defaultSoap {
+				endpoint-visibility public
 				port 8080
 				secured-port 8443
 				context-root "sca"

@@ -25,7 +25,9 @@
 	<target name="zip_all_examples">
 		<!-- run task "generate_self" to compose this list -->
 		<zip_example name="org.fornax.soa.servicerepo.simple.example" />
+		<zip_example name="org.fornax.soa.servicerepo.simple.generator.example" />
 		<zip_example name="org.fornax.soa.servicerepo.advanced.example" />
+		<zip_example name="org.fornax.soa.servicerepo.advanced.generator.example" />
 	</target>
 
 	<target name="generate_self">

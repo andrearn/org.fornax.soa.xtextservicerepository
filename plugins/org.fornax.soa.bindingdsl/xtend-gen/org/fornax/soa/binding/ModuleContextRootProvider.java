@@ -1,10 +1,11 @@
-package org.fornax.soa.bindingdsl.generator.templates.soap;
+package org.fornax.soa.binding;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
 import java.util.Arrays;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.fornax.soa.binding.IContextRootProvider;
 import org.fornax.soa.bindingDsl.BindingProtocol;
 import org.fornax.soa.bindingDsl.REST;
 import org.fornax.soa.bindingDsl.SOAP;
@@ -12,8 +13,16 @@ import org.fornax.soa.bindingDsl.ServiceBinding;
 import org.fornax.soa.moduledsl.moduleDsl.AssemblyType;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 
+/**
+ * Provide context root paths based on
+ * <ul>
+ * 	<li>module name</li>
+ * 	<li>server type</li>
+ * 	<li>and the assembly type (only relevant for WebSphere's SCA modules)</li>
+ * <ul>
+ */
 @SuppressWarnings("all")
-public class ContextRootProvider {
+public class ModuleContextRootProvider implements IContextRootProvider {
   public String getContextRoot(final Module mod, final String serverTypeName, final BindingProtocol prot) {
     String _xblockexpression = null;
     {
@@ -52,7 +61,7 @@ public class ContextRootProvider {
     return _xblockexpression;
   }
   
-  protected String _getContextRoot(final ServiceBinding b) {
+  public String getContextRoot(final ServiceBinding b) {
     String _xblockexpression = null;
     {
       EList<BindingProtocol> _protocol = b.getProtocol();
@@ -85,10 +94,17 @@ public class ContextRootProvider {
   
   public String getCtxRootByAssemblyType(final Module mod, final String serverType) {
     String _xifexpression = null;
-    String _lowerCase = serverType.toLowerCase();
-    String _trim = _lowerCase.trim();
-    boolean _equals = Objects.equal(_trim, "webmethods");
-    if (_equals) {
+    boolean _and = false;
+    boolean _notEquals = (!Objects.equal(serverType, null));
+    if (!_notEquals) {
+      _and = false;
+    } else {
+      String _lowerCase = serverType.toLowerCase();
+      String _trim = _lowerCase.trim();
+      boolean _equals = Objects.equal(_trim, "webmethods");
+      _and = (_notEquals && _equals);
+    }
+    if (_and) {
       _xifexpression = "";
     } else {
       String _switchResult = null;
@@ -115,10 +131,17 @@ public class ContextRootProvider {
   
   public String getCtxRootByAssemblyType(final Module mod, final String serverType, final String serverVersion) {
     String _xifexpression = null;
-    String _lowerCase = serverType.toLowerCase();
-    String _trim = _lowerCase.trim();
-    boolean _equals = Objects.equal(_trim, "webmethods");
-    if (_equals) {
+    boolean _and = false;
+    boolean _notEquals = (!Objects.equal(serverType, null));
+    if (!_notEquals) {
+      _and = false;
+    } else {
+      String _lowerCase = serverType.toLowerCase();
+      String _trim = _lowerCase.trim();
+      boolean _equals = Objects.equal(_trim, "webmethods");
+      _and = (_notEquals && _equals);
+    }
+    if (_and) {
       _xifexpression = "";
     } else {
       String _switchResult = null;
@@ -143,15 +166,20 @@ public class ContextRootProvider {
     return _xifexpression;
   }
   
-  protected String _getContextRootByProtocol(final BindingProtocol prot) {
+  public String getContextRootByProtocol(final BindingProtocol prot) {
+    String _contextRootByProtocolInternal = this.getContextRootByProtocolInternal(prot);
+    return _contextRootByProtocolInternal;
+  }
+  
+  protected String _getContextRootByProtocolInternal(final BindingProtocol prot) {
     return null;
   }
   
-  protected String _getContextRootByProtocol(final SOAP prot) {
+  protected String _getContextRootByProtocolInternal(final SOAP prot) {
     return prot.getContextRoot();
   }
   
-  protected String _getContextRootByProtocol(final REST prot) {
+  protected String _getContextRootByProtocolInternal(final REST prot) {
     return prot.getPath();
   }
   
@@ -165,19 +193,13 @@ public class ContextRootProvider {
     }
   }
   
-  public String getContextRoot(final ServiceBinding b) {
-    {
-      return _getContextRoot(b);
-    }
-  }
-  
-  public String getContextRootByProtocol(final BindingProtocol prot) {
+  public String getContextRootByProtocolInternal(final BindingProtocol prot) {
     if (prot instanceof REST) {
-      return _getContextRootByProtocol((REST)prot);
+      return _getContextRootByProtocolInternal((REST)prot);
     } else if (prot instanceof SOAP) {
-      return _getContextRootByProtocol((SOAP)prot);
+      return _getContextRootByProtocolInternal((SOAP)prot);
     } else if (prot != null) {
-      return _getContextRootByProtocol(prot);
+      return _getContextRootByProtocolInternal(prot);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(prot).toString());

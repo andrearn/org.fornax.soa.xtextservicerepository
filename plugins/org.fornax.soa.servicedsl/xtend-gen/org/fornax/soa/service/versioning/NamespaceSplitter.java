@@ -1,4 +1,4 @@
-package org.fornax.soa.service.namespace;
+package org.fornax.soa.service.versioning;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.Iterables;
@@ -224,7 +224,7 @@ public class NamespaceSplitter {
       it.setName(_stripXtextEscapes);
       EObject _eContainer_2 = ns.eContainer();
       String _prefix = ((SubNamespace) _eContainer_2)==null?(String)null:((SubNamespace) _eContainer_2).getPrefix();
-      String _stripXtextEscapes_1 = this._commonStringExtensions.stripXtextEscapes(_prefix);
+      String _stripXtextEscapes_1 = _prefix==null?(String)null:this._commonStringExtensions.stripXtextEscapes(_prefix);
       it.setShortName(_stripXtextEscapes_1);
     } else {
       EObject _eContainer_3 = ns.eContainer();
@@ -233,7 +233,7 @@ public class NamespaceSplitter {
       it.setName(_stripXtextEscapes_2);
       EObject _eContainer_4 = ns.eContainer();
       String _prefix_1 = ((OrganizationNamespace) _eContainer_4)==null?(String)null:((OrganizationNamespace) _eContainer_4).getPrefix();
-      String _stripXtextEscapes_3 = this._commonStringExtensions.stripXtextEscapes(_prefix_1);
+      String _stripXtextEscapes_3 = _prefix_1==null?(String)null:this._commonStringExtensions.stripXtextEscapes(_prefix_1);
       it.setShortName(_stripXtextEscapes_3);
     }
     it.setSubdomain(ns);
