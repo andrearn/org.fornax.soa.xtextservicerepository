@@ -15,8 +15,8 @@ class ProfileSchemaNamespaceExtensions {
 	@Inject extension CommonStringExtensions
 	@Inject VersionQualifierExtensions versionQualifier
 	
-	@Inject @Named ("forceRelativePaths") 
-	Boolean forceRelativePaths
+	@Inject @Named ("useRegistryBasedFilePaths") 
+	Boolean useRegistryBasedFilePaths
 	
 	@Inject @Named ("useNestedPaths") 
 	Boolean useNestedPaths
@@ -148,13 +148,13 @@ class ProfileSchemaNamespaceExtensions {
 
 	 
 	def dispatch String toRegistryAssetUrl (TechnicalNamespace s, String registryUrl) { 
-		if (registryUrl != null && !forceRelativePaths ) 
+		if (registryUrl != null && useRegistryBasedFilePaths ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
 	} 
 	def dispatch String toRegistryAssetUrl (VersionedTechnicalNamespace s, String registryUrl) { 
-		if (registryUrl != null && !forceRelativePaths ) 
+		if (registryUrl != null && useRegistryBasedFilePaths ) 
 			registryUrl + "/" +s.toFileNameFragment() 
 		else
 			s.toFileNameFragment(); 

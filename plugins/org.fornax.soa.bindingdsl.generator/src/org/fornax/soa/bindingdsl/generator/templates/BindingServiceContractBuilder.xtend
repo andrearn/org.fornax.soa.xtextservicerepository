@@ -20,8 +20,8 @@ class BindingServiceContractBuilder {
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
 	
-	@Inject @Named ("forceRelativePaths") 		
-	Boolean forceRelativePaths
+	@Inject @Named ("useRegistryBasedFilePaths") 		
+	Boolean useRegistryBasedFilePaths
 	
 	@Inject Logger log
 

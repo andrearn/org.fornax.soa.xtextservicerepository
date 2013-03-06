@@ -38,7 +38,7 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 	private Boolean noDependencies = false;
 	private Boolean includeSubNamespaces = false;
 	private Boolean useNestedPaths = false;
-	private Boolean forceRelativePaths = false;
+	private Boolean useRegistryBasedFilePaths = false;
 	private String targetEnvironmentName = "*";
 	private Boolean ignoreEndpointQualifierNames = false;
 
@@ -61,8 +61,8 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 						bind (Boolean.class)
 								.annotatedWith (
-										Names.named (XtextServiceRepositoryGeneratorConstants.FORCE_RELATIVE_PATHS))
-								.toInstance (forceRelativePaths);
+										Names.named (XtextServiceRepositoryGeneratorConstants.USE_REGISTRY_BASED_FILE_PATHS))
+								.toInstance (useRegistryBasedFilePaths);
 						bind (Boolean.class)
 								.annotatedWith (
 										Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
@@ -186,14 +186,14 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 
 
-	public Boolean getForceRelativePaths () {
-		return forceRelativePaths;
+	public Boolean getUseRegistryBasedFilePaths () {
+		return useRegistryBasedFilePaths;
 	}
 
 
 
-	public void setForceRelativePaths (Boolean forceRelativePaths) {
-		this.forceRelativePaths = forceRelativePaths;
+	public void setUseRegistryBasedFilePaths (Boolean useRegistryBasedFilePaths) {
+		this.useRegistryBasedFilePaths = useRegistryBasedFilePaths;
 	}
 
 	public void setTargetEnvironmentName (String environmentName) {

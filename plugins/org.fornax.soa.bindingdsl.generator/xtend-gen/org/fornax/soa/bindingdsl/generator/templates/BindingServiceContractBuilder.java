@@ -23,8 +23,8 @@ public class BindingServiceContractBuilder {
   private Boolean noDependencies;
   
   @Inject
-  @Named(value = "forceRelativePaths")
-  private Boolean forceRelativePaths;
+  @Named(value = "useRegistryBasedFilePaths")
+  private Boolean useRegistryBasedFilePaths;
   
   @Inject
   private Logger log;

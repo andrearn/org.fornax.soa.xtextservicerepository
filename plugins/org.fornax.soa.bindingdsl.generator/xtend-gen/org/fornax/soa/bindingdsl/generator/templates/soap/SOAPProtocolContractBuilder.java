@@ -107,8 +107,8 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
   private Boolean noDependencies;
   
   @Inject
-  @Named(value = "forceRelativePaths")
-  private Boolean forceRelativePaths;
+  @Named(value = "useRegistryBasedFilePaths")
+  private Boolean useRegistryBasedFilePaths;
   
   @Inject
   private Logger log;
@@ -172,7 +172,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
                   final MessageHeader requestHeader = this._headerFinder.findBestMatchingRequestHeader(svc, profile);
                   boolean _notEquals_1 = (!Objects.equal(requestHeader, null));
                   if (_notEquals_1) {
-                    if ((this.forceRelativePaths).booleanValue()) {
+                    if ((this.useRegistryBasedFilePaths).booleanValue()) {
                       String _registryBaseUrl_1 = this._bindingExtensions.getRegistryBaseUrl(binding);
                       this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, _registryBaseUrl_1);
                     } else {
@@ -182,7 +182,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
                   final MessageHeader responseHeader = this._headerFinder.findBestMatchingResponseHeader(svc, profile);
                   boolean _notEquals_2 = (!Objects.equal(responseHeader, null));
                   if (_notEquals_2) {
-                    if ((this.forceRelativePaths).booleanValue()) {
+                    if ((this.useRegistryBasedFilePaths).booleanValue()) {
                       String _registryBaseUrl_2 = this._bindingExtensions.getRegistryBaseUrl(binding);
                       this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, _registryBaseUrl_2);
                     } else {
@@ -380,7 +380,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
             final MessageHeader requestHeader = this._headerFinder.findBestMatchingRequestHeader(service, profile);
             boolean _notEquals = (!Objects.equal(requestHeader, null));
             if (_notEquals) {
-              if ((this.forceRelativePaths).booleanValue()) {
+              if ((this.useRegistryBasedFilePaths).booleanValue()) {
                 String _registryBaseUrl_1 = this._bindingExtensions.getRegistryBaseUrl(specBinding);
                 this.msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, _registryBaseUrl_1);
               } else {
@@ -390,7 +390,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
             final MessageHeader responseHeader = this._headerFinder.findBestMatchingRequestHeader(service, profile);
             boolean _notEquals_1 = (!Objects.equal(responseHeader, null));
             if (_notEquals_1) {
-              if ((this.forceRelativePaths).booleanValue()) {
+              if ((this.useRegistryBasedFilePaths).booleanValue()) {
                 String _registryBaseUrl_2 = this._bindingExtensions.getRegistryBaseUrl(specBinding);
                 this.msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, _registryBaseUrl_2);
               } else {

@@ -27,7 +27,6 @@ Workflow {
 	
 	component = org.eclipse.xtext.generator.GeneratorComponent {
 		register = org.fornax.soa.bindingdsl.generator.DefaultBindingContractGeneratorSetup {
-			moduleBindingName = "org.example.sales.esb.dev"
 			serviceModule = {
 				name = "org.example.sales.esb"
 				version = "1.0"
@@ -35,10 +34,6 @@ Workflow {
 				generateUsedServices = false
 			}
 			targetEnvironmentName = 'Dev'
-			profileName = profile
-			forceRelativePaths = true
-			ignoreEndpointQualifierNames = false
-			
 		}
 		slot = 'model'
 		outlet = {

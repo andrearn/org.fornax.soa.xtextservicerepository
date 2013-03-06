@@ -35,7 +35,6 @@ Workflow {
 			}
 			targetEnvironmentName = 'Dev'
 			profileName = profile
-			forceRelativePaths = true
 			ignoreEndpointQualifierNames = false
 			
 		}

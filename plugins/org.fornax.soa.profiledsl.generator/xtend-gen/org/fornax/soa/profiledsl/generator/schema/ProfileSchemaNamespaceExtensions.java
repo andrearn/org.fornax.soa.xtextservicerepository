@@ -32,8 +32,8 @@ public class ProfileSchemaNamespaceExtensions {
   private VersionQualifierExtensions versionQualifier;
   
   @Inject
-  @Named(value = "forceRelativePaths")
-  private Boolean forceRelativePaths;
+  @Named(value = "useRegistryBasedFilePaths")
+  private Boolean useRegistryBasedFilePaths;
   
   @Inject
   @Named(value = "useNestedPaths")
@@ -349,8 +349,7 @@ public class ProfileSchemaNamespaceExtensions {
     if (!_notEquals) {
       _and = false;
     } else {
-      boolean _not = (!this.forceRelativePaths);
-      _and = (_notEquals && _not);
+      _and = (_notEquals && (this.useRegistryBasedFilePaths).booleanValue());
     }
     if (_and) {
       String _plus = (registryUrl + "/");
@@ -371,8 +370,7 @@ public class ProfileSchemaNamespaceExtensions {
     if (!_notEquals) {
       _and = false;
     } else {
-      boolean _not = (!this.forceRelativePaths);
-      _and = (_notEquals && _not);
+      _and = (_notEquals && (this.useRegistryBasedFilePaths).booleanValue());
     }
     if (_and) {
       String _plus = (registryUrl + "/");

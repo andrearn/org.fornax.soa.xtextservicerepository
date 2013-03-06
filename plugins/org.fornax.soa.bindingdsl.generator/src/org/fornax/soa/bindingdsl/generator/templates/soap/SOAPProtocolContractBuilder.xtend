@@ -58,8 +58,8 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
-	@Inject @Named ("forceRelativePaths") 		
-	Boolean forceRelativePaths
+	@Inject @Named ("useRegistryBasedFilePaths") 		
+	Boolean useRegistryBasedFilePaths
 	
 	@Inject Logger log
 
@@ -87,7 +87,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 										
 								val requestHeader = svc.findBestMatchingRequestHeader (profile);
 								if (requestHeader != null) {
-									if (forceRelativePaths)
+									if (useRegistryBasedFilePaths)
 										msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, binding.getRegistryBaseUrl())
 									else 
 										msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile)
@@ -95,7 +95,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 								
 								val responseHeader = svc.findBestMatchingResponseHeader (profile);
 								if (responseHeader != null) {
-									if (forceRelativePaths)
+									if (useRegistryBasedFilePaths)
 										msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, binding.getRegistryBaseUrl())
 									else 
 										msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile)
@@ -175,7 +175,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 								
 						val requestHeader = service.findBestMatchingRequestHeader (profile);
 						if (requestHeader != null) {
-							if (forceRelativePaths)
+							if (useRegistryBasedFilePaths)
 								msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, specBinding.getRegistryBaseUrl())
 							else 
 								msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile)
@@ -183,7 +183,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 
 						val responseHeader = service.findBestMatchingRequestHeader (profile);
 						if (responseHeader != null) {
-							if (forceRelativePaths)
+							if (useRegistryBasedFilePaths)
 								msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, specBinding.getRegistryBaseUrl())
 							else 
 								msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile)

@@ -65,7 +65,6 @@ code[MWE2][
 			/*use the rules for lifecycle definition etc. defined in profile ExSOAArchitectureProfile*/
 			profileName = 'ExSOAArchitectureProfile'
 			targetEnvironmentName = 'Prod'
-			forceRelativePaths = true
 		}
         slot = 'model'
       	outlet = {
@@ -95,11 +94,6 @@ table[
 		e[targetNamespace]. ModuleBindings bind a Module to an Environment.]
 	]
 	tr[		
-		td[domainBindingName]	td[String]	td[0..*]		td[]	td[Generate service contracts
-		for any e[DomainBinding] whose name matches the given regular expression and binds to the given
-		e[targetNamespace] DomainBindings bind a namespace to an Environment.]
-	]
-	tr[		
 		td[moduleName]			td[String]	td[0..*]		td[]	td[Generate service contracts
 		for any used module or used service defined in the module. The generator looks up a e[Binding]
 		that provides the service and matches the constraints and qualifiers defined in the usage reference.]
@@ -117,12 +111,13 @@ table[
 		whose name matches the given regular expression.]
 	]
 	tr[		
-		td[noDependecies]		td[boolean]	td[1..1]		td[false]	td[Also generate artefacts
+		td[noDependecies]		td[boolean]	td[0..1]		td[false]	td[Also generate artefacts
 		imported by generated artefacts? If true, no imported artefacts are generated]
 	]
 	tr[		
-		td[profileName]			td[String]	td[1..1]		td[]		td[The name of the architecture
-		profile, that defines the architectural rules to be applied on generation]
+		td[profileName]			td[String]	td[0..1]		td[]		td[The name of the architecture
+		profile, that defines the architectural rules to be applied on generation. This property is not
+		required, if only one architecture profile is defined in the model.]
 	]
 	tr[		
 		td[targetEnvironmentName]	td[String] td[1..1]		td[]		td[The of the Environment
@@ -133,9 +128,10 @@ table[
 	]
 	
 	tr[		
-		td[forceRelativePaths]		td[boolean]	td[0..1]	td[false]		td[Whether imported artefacts
-		in generated contracts shall be resolved using relative paths. If true, relative paths will be
-		used. Otherwise a fully qualified name is being used resolved using the location of the registry
+		td[useRegistryBasedFilePaths]		td[boolean]	td[0..1]	td[false]		td[Whether imported artefacts
+		in generated contracts shall be resolved using absolute paths based on the location of the service
+		registry. If true, absolute paths will be used. Otherwise a relative paths will be used e.g.
+		for XSD import location URLs.
 		as base URL]
 	]
 ]

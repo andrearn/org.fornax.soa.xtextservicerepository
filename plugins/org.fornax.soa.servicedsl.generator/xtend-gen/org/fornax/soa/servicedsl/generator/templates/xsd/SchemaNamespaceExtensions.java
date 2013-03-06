@@ -46,8 +46,8 @@ public class SchemaNamespaceExtensions {
   private VersionQualifierExtensions versionQualifier;
   
   @Inject
-  @Named(value = "forceRelativePaths")
-  private Boolean forceRelativePaths;
+  @Named(value = "useRegistryBasedFilePaths")
+  private Boolean useRegistryBasedFilePaths;
   
   @Inject
   @Named(value = "useNestedPaths")
@@ -56,8 +56,8 @@ public class SchemaNamespaceExtensions {
   @Inject
   private IQualifiedNameProvider nameProvider;
   
-  public boolean forceRelativePaths() {
-    return (this.forceRelativePaths).booleanValue();
+  public boolean useRegistryBasedFilePaths() {
+    return (this.useRegistryBasedFilePaths).booleanValue();
   }
   
   protected String _toUnversionedNamespace(final Object o) {
@@ -283,8 +283,8 @@ public class SchemaNamespaceExtensions {
     if (!_notEquals) {
       _and = false;
     } else {
-      boolean _forceRelativePaths = this.forceRelativePaths();
-      boolean _not = (!_forceRelativePaths);
+      boolean _useRegistryBasedFilePaths = this.useRegistryBasedFilePaths();
+      boolean _not = (!_useRegistryBasedFilePaths);
       _and = (_notEquals && _not);
     }
     if (_and) {
@@ -306,8 +306,8 @@ public class SchemaNamespaceExtensions {
     if (!_notEquals) {
       _and = false;
     } else {
-      boolean _forceRelativePaths = this.forceRelativePaths();
-      boolean _not = (!_forceRelativePaths);
+      boolean _useRegistryBasedFilePaths = this.useRegistryBasedFilePaths();
+      boolean _not = (!_useRegistryBasedFilePaths);
       _and = (_notEquals && _not);
     }
     if (_and) {
@@ -329,8 +329,8 @@ public class SchemaNamespaceExtensions {
     if (!_notEquals) {
       _and = false;
     } else {
-      boolean _forceRelativePaths = this.forceRelativePaths();
-      boolean _not = (!_forceRelativePaths);
+      boolean _useRegistryBasedFilePaths = this.useRegistryBasedFilePaths();
+      boolean _not = (!_useRegistryBasedFilePaths);
       _and = (_notEquals && _not);
     }
     if (_and) {
@@ -352,8 +352,8 @@ public class SchemaNamespaceExtensions {
     if (!_notEquals) {
       _and = false;
     } else {
-      boolean _forceRelativePaths = this.forceRelativePaths();
-      boolean _not = (!_forceRelativePaths);
+      boolean _useRegistryBasedFilePaths = this.useRegistryBasedFilePaths();
+      boolean _not = (!_useRegistryBasedFilePaths);
       _and = (_notEquals && _not);
     }
     if (_and) {
@@ -375,8 +375,8 @@ public class SchemaNamespaceExtensions {
     if (!_notEquals) {
       _and = false;
     } else {
-      boolean _forceRelativePaths = this.forceRelativePaths();
-      boolean _not = (!_forceRelativePaths);
+      boolean _useRegistryBasedFilePaths = this.useRegistryBasedFilePaths();
+      boolean _not = (!_useRegistryBasedFilePaths);
       _and = (_notEquals && _not);
     }
     if (_and) {

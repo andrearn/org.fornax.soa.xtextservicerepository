@@ -307,9 +307,8 @@ public class ServiceTemplateExtensions {
     if (!_notEquals) {
       _and = false;
     } else {
-      boolean _forceRelativePaths = this._schemaNamespaceExtensions.forceRelativePaths();
-      boolean _not = (!_forceRelativePaths);
-      _and = (_notEquals && _not);
+      boolean _useRegistryBasedFilePaths = this._schemaNamespaceExtensions.useRegistryBasedFilePaths();
+      _and = (_notEquals && _useRegistryBasedFilePaths);
     }
     if (_and) {
       String _plus = (registryUrl + "/");

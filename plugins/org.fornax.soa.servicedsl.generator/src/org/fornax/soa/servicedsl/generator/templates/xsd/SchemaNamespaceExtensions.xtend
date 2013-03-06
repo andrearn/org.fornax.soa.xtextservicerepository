@@ -40,8 +40,8 @@ class SchemaNamespaceExtensions {
 
 	@Inject VersionQualifierExtensions versionQualifier
 	
-	@Inject @Named ("forceRelativePaths") 
-	Boolean forceRelativePaths
+	@Inject @Named ("useRegistryBasedFilePaths") 
+	Boolean useRegistryBasedFilePaths
 	
 	@Inject @Named ("useNestedPaths") 
 	Boolean useNestedPaths
@@ -50,8 +50,8 @@ class SchemaNamespaceExtensions {
 
 
 
-	def boolean forceRelativePaths () {
-		forceRelativePaths;
+	def boolean useRegistryBasedFilePaths () {
+		useRegistryBasedFilePaths;
 	}
 
 	def dispatch String toUnversionedNamespace (Object o) {
@@ -166,34 +166,34 @@ class SchemaNamespaceExtensions {
 
 
 	def dispatch String toSchemaAssetUrl (Service s, String registryUrl) { 
-		if (registryUrl != null && !forceRelativePaths() ) 
+		if (registryUrl != null && !useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
 	}
 		
 	def dispatch String toSchemaAssetUrl (OrganizationNamespace s, String registryUrl) { 
-		if (registryUrl != null && !forceRelativePaths() ) 
+		if (registryUrl != null && !useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
 	}
 			
 	def dispatch String toSchemaAssetUrl (DomainNamespace s, String registryUrl) { 
-		if (registryUrl != null && !forceRelativePaths() ) 
+		if (registryUrl != null && !useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
 	} 
 	
 	def dispatch String toSchemaAssetUrl (InternalNamespace s, String registryUrl) {
-		if (registryUrl != null && !forceRelativePaths() ) 
+		if (registryUrl != null && !useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
 	}
 	def dispatch String toSchemaAssetUrl (VersionedDomainNamespace s, String registryUrl) { 
-		if (registryUrl != null && !forceRelativePaths() ) 
+		if (registryUrl != null && !useRegistryBasedFilePaths() ) 
 			registryUrl + "/" +s.toFileNameFragment() 
 		else
 			s.toFileNameFragment(); 

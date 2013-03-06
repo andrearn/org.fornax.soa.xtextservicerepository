@@ -23,7 +23,7 @@ public class DefaultProfileContractsGeneratorSetup implements ISetup {
 	private String profileName;
 	private Boolean noDependencies = false;
 	private Boolean useNestedPaths = false;
-	private Boolean forceRelativePaths = false;
+	private Boolean useRegistryBasedFilePaths = false;
 
 	public Injector createInjectorAndDoEMFRegistration () {
 		Injector injector = Guice.createInjector (Modules2.mixin (
@@ -40,8 +40,8 @@ public class DefaultProfileContractsGeneratorSetup implements ISetup {
 
 						bind (Boolean.class)
 								.annotatedWith (
-										Names.named (XtextServiceRepositoryGeneratorConstants.FORCE_RELATIVE_PATHS))
-								.toInstance (forceRelativePaths);
+										Names.named (XtextServiceRepositoryGeneratorConstants.USE_REGISTRY_BASED_FILE_PATHS))
+								.toInstance (useRegistryBasedFilePaths);
 						bind (Boolean.class)
 								.annotatedWith (
 										Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
@@ -90,12 +90,12 @@ public class DefaultProfileContractsGeneratorSetup implements ISetup {
 		this.useNestedPaths = useNestedPaths;
 	}
 
-	public Boolean getForceRelativePaths () {
-		return forceRelativePaths;
+	public Boolean getUseRegistryBasedFilePaths () {
+		return useRegistryBasedFilePaths;
 	}
 
-	public void setForceRelativePaths (Boolean forceRelativePaths) {
-		this.forceRelativePaths = forceRelativePaths;
+	public void setUseRegistryBasedFilePaths (Boolean useRegistryBasedFilePaths) {
+		this.useRegistryBasedFilePaths = useRegistryBasedFilePaths;
 	}
 
 }

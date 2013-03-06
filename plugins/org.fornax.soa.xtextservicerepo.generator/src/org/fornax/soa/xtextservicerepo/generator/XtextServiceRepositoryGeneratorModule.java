@@ -21,9 +21,9 @@ public class XtextServiceRepositoryGeneratorModule extends AbstractGenericModule
 		binder.bind (ResourceSetBasedResourceDescriptions.class).toInstance (resourceDescriptions);
 	}
 	
-	public void configureForceRelativePaths (Binder binder) {
+	public void configureUseRegistryBasedFilePaths (Binder binder) {
 		binder.bind(Boolean.class).
-			annotatedWith (Names.named(XtextServiceRepositoryGeneratorConstants.FORCE_RELATIVE_PATHS)).
+			annotatedWith (Names.named(XtextServiceRepositoryGeneratorConstants.USE_REGISTRY_BASED_FILE_PATHS)).
 					toInstance(false);
 	}
 

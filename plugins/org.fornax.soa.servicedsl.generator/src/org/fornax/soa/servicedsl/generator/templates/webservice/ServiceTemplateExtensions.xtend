@@ -126,7 +126,7 @@ class ServiceTemplateExtensions {
 		s.toFileNameFragment() + "-Wrapped";
 	}
 	def String getRegisteredOperationWrapperUrl (Service s, String registryUrl) { 
-		if (registryUrl != null && !forceRelativePaths()) {
+		if (registryUrl != null && useRegistryBasedFilePaths()) {
 			registryUrl + "/" + s.toOperationWrapperXSDFileName();
 		} else {
 			s.toOperationWrapperXSDFileName();
