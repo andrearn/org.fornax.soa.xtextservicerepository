@@ -76,7 +76,7 @@ public class LatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateV
 		return parts[0];
 	}
 
-	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifedNames(
+	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifiedNames(
 			Iterable<IEObjectDescription> canditates, boolean ignoreCase) {
 		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
 		if (canditates != null) {

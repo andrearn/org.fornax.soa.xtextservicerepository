@@ -50,7 +50,7 @@ public class FixedVersionFilter<T> extends AbstractPredicateVersionFilter<T>  {
 		return matches;
 	}
 
-	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifedNames(
+	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifiedNames(
 			Iterable<IEObjectDescription> canditates, boolean ignoreCase) {
 		Multimap<QualifiedName, IEObjectDescription> matches = LinkedHashMultimap.create(5,2);
 		if (canditates != null) {

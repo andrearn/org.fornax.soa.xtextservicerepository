@@ -1,9 +1,13 @@
 package org.fornax.soa.moduledsl.query;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef;
+import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
 /**
- * Checks whether two module version are compatible
+ * Checks whether two module versions are compatible
  * @author aarnold
  *
  */

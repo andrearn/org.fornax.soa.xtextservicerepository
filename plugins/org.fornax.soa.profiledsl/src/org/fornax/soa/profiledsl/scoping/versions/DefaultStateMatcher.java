@@ -91,7 +91,10 @@ public class DefaultStateMatcher implements IStateMatcher {
 			
 		}));
 		Collections.sort (eligibleStates, stateComparator);
-		return eligibleStates.get (0);
+		if (!eligibleStates.isEmpty())
+			return eligibleStates.get (0);
+		else 
+			return null;
 	}
 
 	public void setStateComparator(LifecycleStateComparator stateComparator) {

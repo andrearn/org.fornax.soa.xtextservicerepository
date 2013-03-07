@@ -5,6 +5,7 @@ import com.google.inject.Inject;
 import java.util.List;
 import java.util.Set;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
@@ -22,7 +23,10 @@ import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef;
+import org.fornax.soa.moduledsl.query.IModuleReferenceResolver;
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver;
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.semanticsDsl.Qualifier;
 import org.fornax.soa.serviceDsl.Service;
 
@@ -40,6 +44,9 @@ public class BindingResolver {
   
   @Inject
   private EndpointQualifierQueries endpointQualifierQuery;
+  
+  @Inject
+  private IModuleReferenceResolver modRefResolver;
   
   /**
    * Resolve Bindings of all services provided by a module in the given environment. Endpoint qualifiers in the module definition that select used endpoints of used services
@@ -95,6 +102,9 @@ public class BindingResolver {
    */
   public Set<ServiceRefBindingDescription> resolveCompatibleUsedServiceBindings(final Module module, final Environment targetEnvironment) {
     final Set<? extends AbstractServiceRef> usedServiceRefs = this.modServiceResolver.getAllUsedServiceRefs(module);
+    LifecycleState _state = module.getState();
+    EObject _eContainer = _state.eContainer();
+    final Lifecycle lifecycle = ((Lifecycle) _eContainer);
     final Set<ServiceRefBindingDescription> svcBindDescs = CollectionLiterals.<ServiceRefBindingDescription>newHashSet();
     EList<ModuleRef> _usedModules = module.getUsedModules();
     for (final ModuleRef usedModRef : _usedModules) {
@@ -111,9 +121,8 @@ public class BindingResolver {
           _xifexpression = _endpointQualifierRef_2;
         }
         final EndpointQualifierRef selectingEndpointQualifierRef = _xifexpression;
-        ServiceModuleRef _moduleRef = usedModRef.getModuleRef();
-        Module _module = _moduleRef.getModule();
-        final Set<ServiceRefBindingDescription> impModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(_module, targetEnvironment, selectingEndpointQualifierRef);
+        final Module providerModule = this.modRefResolver.resolveModuleRef(usedModRef, targetEnvironment, lifecycle);
+        final Set<ServiceRefBindingDescription> impModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(providerModule, targetEnvironment, selectingEndpointQualifierRef);
         final Function1<ServiceRefBindingDescription,Boolean> _function = new Function1<ServiceRefBindingDescription,Boolean>() {
             public Boolean apply(final ServiceRefBindingDescription d) {
               AbstractServiceRef _serviceRef = d.getServiceRef();
@@ -150,9 +159,9 @@ public class BindingResolver {
           };
         Iterable<AbstractServiceRef> _map = IterableExtensions.<ServiceRefBindingDescription, AbstractServiceRef>map(_filterNull, _function_1);
         final List svcRefsForEndpointQualifier = IterableExtensions.<AbstractServiceRef>toList(_map);
-        ServiceModuleRef _moduleRef_1 = usedModRef.getModuleRef();
-        Module _module_1 = _moduleRef_1.getModule();
-        final Set<ServiceRefBindingDescription> allImpModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(_module_1, targetEnvironment, selectingEndpointQualifierRef);
+        ServiceModuleRef _moduleRef = usedModRef.getModuleRef();
+        Module _module = _moduleRef.getModule();
+        final Set<ServiceRefBindingDescription> allImpModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(_module, targetEnvironment, selectingEndpointQualifierRef);
         for (final ServiceRefBindingDescription curBindDesc : allImpModSvcBindDescs) {
           boolean _and = false;
           AbstractServiceRef _serviceRef = curBindDesc.getServiceRef();
@@ -206,8 +215,8 @@ public class BindingResolver {
         EList<ServiceModuleRef> _modules = svcRef.getModules();
         final Function1<ServiceModuleRef,Module> _function = new Function1<ServiceModuleRef,Module>() {
             public Module apply(final ServiceModuleRef m) {
-              Module _module = m.getModule();
-              return _module;
+              Module _resolveModuleServiceRef = BindingResolver.this.modRefResolver.resolveModuleServiceRef(m, targetEnvironment, lifecycle);
+              return _resolveModuleServiceRef;
             }
           };
         final List<Module> canditateModules = ListExtensions.<ServiceModuleRef, Module>map(_modules, _function);

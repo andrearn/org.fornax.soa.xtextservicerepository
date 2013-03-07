@@ -7,6 +7,11 @@ import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver
+import org.fornax.soa.moduledsl.query.IModuleReferenceResolver
+import org.fornax.soa.service.query.VersionQueries
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 
 /**
  * Resolves Bindings of service/modules as explicit descriptions describing which Binding applies to which service 
@@ -17,6 +22,7 @@ class BindingResolver {
 	@Inject IModuleServiceResolver modServiceResolver
 	@Inject BindingLookup bindingLookup
 	@Inject EndpointQualifierQueries endpointQualifierQuery
+	@Inject IModuleReferenceResolver modRefResolver
 	
 	/**
 	 * Resolve Bindings of all services provided by a module in the given environment. Endpoint qualifiers in the module definition that select used endpoints of used services
@@ -65,18 +71,23 @@ class BindingResolver {
 	 */
 	def Set<ServiceRefBindingDescription> resolveCompatibleUsedServiceBindings (Module module, Environment targetEnvironment) {
 		val usedServiceRefs = modServiceResolver.getAllUsedServiceRefs(module)
+		val lifecycle = module.state.eContainer as Lifecycle
 		val Set<ServiceRefBindingDescription> svcBindDescs= newHashSet
 		for (usedModRef : module.usedModules) {
 			val selectingEndpointQualifierRef = if (usedModRef.endpointQualifierRef?.endpointQualifier != null) usedModRef.endpointQualifierRef else module.endpointQualifierRef
-			val impModSvcBindDescs = resolveCompatibleProvidedServiceBindings (usedModRef.moduleRef.module, targetEnvironment, selectingEndpointQualifierRef)
+			val providerModule = modRefResolver.resolveModuleRef (usedModRef, targetEnvironment, lifecycle)
+			val impModSvcBindDescs = resolveCompatibleProvidedServiceBindings (providerModule, targetEnvironment, selectingEndpointQualifierRef)
+			
 			for (curDesc : impModSvcBindDescs.filter (d | usedServiceRefs.contains (d.serviceRef))) {
 				val curEndpointQualifiers = endpointQualifierQuery.getPotentialEffectiveEndpointQualifiers (curDesc.applicableBinding)
 				if (curDesc.endpointQualifier == null || curEndpointQualifiers.containsEndpointQualifier (curDesc.endpointQualifier)) {
 					svcBindDescs.add (curDesc)
 				}
 			}
+			
 			val svcRefsForEndpointQualifier = svcBindDescs.filterNull.map(d|d.serviceRef).toList
 			val allImpModSvcBindDescs = resolveCompatibleProvidedServiceBindings (usedModRef.moduleRef.module, targetEnvironment, selectingEndpointQualifierRef)
+			
 			for (curBindDesc : allImpModSvcBindDescs) {
 				if (!svcRefsForEndpointQualifier.contains(curBindDesc.serviceRef) && (selectingEndpointQualifierRef == null || selectingEndpointQualifierRef.acceptOtherEndpoints)) {
 					if (curBindDesc != null && !svcBindDescs.filterNull.map(d|d.serviceRef).toList.contains(curBindDesc.serviceRef)) {
@@ -88,10 +99,12 @@ class BindingResolver {
 		for (svcRef : module.usedServices) {
 			if (usedServiceRefs.contains(svcRef)) {
 				val svc = modServiceResolver.resolveModuleServiceRef (svcRef, targetEnvironment)
-				val canditateModules = svcRef.modules.map (m|m.module)
+				val canditateModules = svcRef.modules.map (m|modRefResolver.resolveModuleServiceRef(m, targetEnvironment, lifecycle))
+				
 				for (candMod : canditateModules) {
 					val selectingEndpointQualifierRef = if (svcRef.endpointQualifierRef != null) svcRef.endpointQualifierRef else module.endpointQualifierRef
 					val candBindings = bindingLookup.findBindingsToCompatibleModuleEnvAndQualifier (candMod, targetEnvironment, selectingEndpointQualifierRef?.endpointQualifier)
+				
 					for (bind : candBindings) {
 					 	var specBind = bindingLookup.getMostSpecificBinding(svc, bind, selectingEndpointQualifierRef)
 					 	val curSvcBindDesc = new ServiceRefBindingDescription

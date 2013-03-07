@@ -68,6 +68,34 @@ public class ModuleLookup {
     return IterableExtensions.<Module>toSet(_filter);
   }
   
+  public Set<Module> findAllModuleVersionsByName(final String moduleName, final ResourceSet resourceSet) {
+    Predicate<IEObjectDescription> _alwaysTrue = Predicates.<IEObjectDescription>alwaysTrue();
+    Iterable<IEObjectDescription> moduleDescs = this.search.search(moduleName, "Module ", _alwaysTrue);
+    List<Module> allModules = CollectionLiterals.<Module>newArrayList();
+    for (final IEObjectDescription moduleDesc : moduleDescs) {
+      {
+        final EObject obj = moduleDesc.getEObjectOrProxy();
+        if ((obj instanceof Module)) {
+          final Module module = ((Module) obj);
+          boolean _eIsProxy = module.eIsProxy();
+          if (_eIsProxy) {
+            EObject _resolve = EcoreUtil2.resolve(module, resourceSet);
+            final Module resolvedModule = ((Module) _resolve);
+            boolean _eIsProxy_1 = resolvedModule.eIsProxy();
+            boolean _not = (!_eIsProxy_1);
+            if (_not) {
+              allModules.add(resolvedModule);
+            }
+          } else {
+            allModules.add(module);
+          }
+        }
+      }
+    }
+    Iterable<Module> _filter = Iterables.<Module>filter(allModules, Module.class);
+    return IterableExtensions.<Module>toSet(_filter);
+  }
+  
   public Iterable<Module> findCompatibleModules(final Module module) {
     Iterable<Module> _xblockexpression = null;
     {

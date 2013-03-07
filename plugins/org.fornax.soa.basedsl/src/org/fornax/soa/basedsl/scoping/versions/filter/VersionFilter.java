@@ -10,6 +10,6 @@ public interface VersionFilter<T> extends Predicate<T> {
 	
 	public abstract boolean matches (IEObjectDescription description);
 	public abstract Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames(Iterable<IEObjectDescription> canditates, boolean ignoreCase);
-	public abstract Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifedNames(Iterable<IEObjectDescription> canditates, boolean ignoreCase);
+	public abstract Multimap<QualifiedName, IEObjectDescription> getBestMatchByQualifiedNames(Iterable<IEObjectDescription> canditates, boolean ignoreCase);
 
 }

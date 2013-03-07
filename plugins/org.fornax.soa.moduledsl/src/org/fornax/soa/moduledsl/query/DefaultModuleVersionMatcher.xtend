@@ -6,6 +6,12 @@ import org.fornax.soa.basedsl.version.VersionComparator
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import com.google.inject.Inject
 import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef
+import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.basedsl.search.IEObjectLookup
+import org.fornax.soa.basedsl.search.IPredicateSearch
 
 /*
  * Checks, whether to two module versions are compatible.<br/>
@@ -20,8 +26,7 @@ class DefaultModuleVersionMatcher implements IModuleVersionMatcher {
 	
 	@Inject extension VersionQualifierExtensions
 	@Inject extension IQualifiedNameProvider
-	
-	
+
 	/* 
 	 * Check, whether the Module module is compatible to Module originalModule based on thein versions
 	 * 

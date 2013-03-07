@@ -20,7 +20,27 @@ class ModuleLookup {
 	@Inject extension IModuleVersionMatcher
 	
 	def findAllModules (ResourceSet resourceSet) {
-		var moduleDescs = search.search("Module ", Predicates::alwaysTrue)
+		var moduleDescs = search.search ("Module ", Predicates::alwaysTrue)
+		var List<Module> allModules = newArrayList()
+		for (moduleDesc : moduleDescs) {
+			val obj = moduleDesc.EObjectOrProxy
+			if (obj instanceof Module) {
+				val module = obj as Module
+				if (module.eIsProxy) {
+					val resolvedModule = EcoreUtil2::resolve (module, resourceSet) as Module
+					if (!resolvedModule.eIsProxy) {
+						allModules.add (resolvedModule)
+					}
+				} else {
+					allModules.add (module)
+				}
+			}
+		}
+		return allModules.filter (typeof (Module)).toSet
+	}
+	
+	def findAllModuleVersionsByName (String moduleName, ResourceSet resourceSet) {
+		var moduleDescs = search.search (moduleName, "Module ", Predicates::alwaysTrue)
 		var List<Module> allModules = newArrayList()
 		for (moduleDesc : moduleDescs) {
 			val obj = moduleDesc.EObjectOrProxy
