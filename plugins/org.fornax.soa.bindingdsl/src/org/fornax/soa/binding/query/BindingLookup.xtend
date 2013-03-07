@@ -25,7 +25,12 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.binding.query.EndpointQualifierQueries
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
+import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 
+
+/**
+ * Lookup of Bindings for different criteria, e.g. find a binding for a module to an environment
+ */
 class BindingLookup {
 	
 	@Inject extension EnvironmentBindingResolver
@@ -40,6 +45,8 @@ class BindingLookup {
 	private IVersionFilterProvider versionFilterProvider
 	@Inject
 	private ModuleLookup moduleLookup
+	@Inject 
+	private IModuleServiceResolver modServiceResolver
 	@Inject
 	private extension EndpointQualifierQueries	
 	
@@ -53,7 +60,7 @@ class BindingLookup {
 	 * target environment that satisfy the given endpoint qualifier or any endpoint qualifier in the binding if endpointQualifier
 	 * is null
 	 * 
-	 * @param module 			The module to find a ModuleBinding for. Bindings to compatible module version are also considered
+	 * @param module 			The module to find a ModuleBinding for. Bindings to a compatible module version are also considered
 	 * @param targetEnvironment	The environment the bindings must bind to.
 	 * @param endpointQualifier	Endpoint qualifier that must be effective in the binding. When null, endpoint qualifiers are ignored,
 	 * 							i.e. all bindings that match the other criteria will be returned	 
@@ -91,8 +98,10 @@ class BindingLookup {
 	}
 	
 	/**
-	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to any 
+	 * Find all ModuleBindings that <b>directly</b> refer to this module or a compatible module and bind it to any 
 	 * target environment.
+	 * 
+	 * @param module The module to find bindings for, that directly refer to this module
 	 */
 	def Set<ModuleBinding> findAllBindingsToCompatibleModule (Module module) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
@@ -101,9 +110,12 @@ class BindingLookup {
 	}
 	
 	/**
-	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to any 
+	 * Find all ModuleBindings that <b>directly</b> refer to this module or a compatible module and bind it to any 
 	 * target environment with the given endpoint qualifier or any endpoint qualifier in the binding if endpointQualifier
 	 * is null.
+	 * 
+	 * @param module The module to find bindings for, that directly refer to this module
+	 * @param endpointQualifier The endpointQualifier with which the Bindings must be tagged
 	 */
 	def Set<ModuleBinding> findAllBindingsToCompatibleModule (Module module, Qualifier endpointQualifier) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
@@ -125,119 +137,13 @@ class BindingLookup {
 			return allBindings.filter (e|compatibleModules.contains (e.module.module)).toSet
 	}
 	
-	/**
-	 * Find all bindings for the given Service to an environment. The most specific bindings are returned. By default
-	 * this is a ModuleBinding. However, if the ModuleBinding is overridden for a service with a ServiceBinding, the 
-	 * respective ServiceBinding will be returned.
-	 */
-	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env) {
-		val allBindings = getAllBindings(service.eResource?.resourceSet)
-		var Set<Binding> bindings = newHashSet()
-		val serviceBindings = allBindings.filter (typeof (ServiceBinding)).filter (b|b.resolveEnvironment == env && b.service.service == service)
-		if (serviceBindings.empty) {
-			val providingModules = moduleLookup.findProvidingModules(service)
-			if (!providingModules.empty) {
-				val moduleBindings = allBindings.filter (typeof (ModuleBinding)).filter (b|b.resolveEnvironment == env && providingModules.exists(m|m == b.module.module))
-				bindings.addAll(moduleBindings)
-			}
-		} else {
-			bindings.addAll(serviceBindings)
-		}
-		return bindings
-	}
-	
-	/*
-	 * Find all bindings for the given Service to an environment that provide an endpoint with the given protocol. 
-	 * The most specific bindings are returned. By default this is a ModuleBinding. However, if the ModuleBinding 
-	 * is overridden for a service with a ServiceBinding, the respective ServiceBinding will be returned.
-	 */
-	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env, ImportBindingProtocol protocol) {
-		return service.findMostSpecificBindings (env).filter (p|protocolMatcher.supportsImportBindingProtocol (p, protocol))
-	}
-	
-	/*
-	 * Find the most specific Bindings of a Service to an Environment that support a protocol that matches the used 
-	 * ImportBindingProtocol and the given endpoint qualifier. An endpoint qualifier is matched, if the Binding declares 
-	 * it as one of it's endpoint qualifiers.
-	 */
-	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env, ImportBindingProtocol protocol, EndpointQualifierRef endpointQualifier) {
-		var Set<Binding> bindings = newHashSet()
-		val serviceBindings = service.findMostSpecificBindings(env).filter (typeof (ServiceBinding))
-		val moduleBindings = service.findMostSpecificBindings(env).filter (typeof (ModuleBinding))
-		val serviceBindingsWithBindingQualifier = serviceBindings.filter (b | 
-			b.eContainer instanceof ModuleBinding && 
-			protocolMatcher.supportsImportBindingProtocol (b, protocol) &&
-			(endpointQualifier == null || (b.eContainer as ModuleBinding).protocol.exists(p|p.effectiveEndpointQualifier == endpointQualifier?.endpointQualifier))
-		)
-		bindings.addAll (serviceBindingsWithBindingQualifier)
-		if (bindings.empty) {
-			val moduleBindingsWithBindingQualifier = moduleBindings.filter (b | 
-				protocolMatcher.supportsImportBindingProtocol (b, protocol) &&
-				(endpointQualifier == null || b.protocol.exists(p|p.endpointQualifierRef != null && p.effectiveEndpointQualifier == endpointQualifier?.endpointQualifier))
-			)
-			bindings.addAll (moduleBindingsWithBindingQualifier)
-		}
-		return bindings.filter (p|protocolMatcher.supportsImportBindingProtocol (p, protocol))
-	}
-	
-	/*
-	 * Find all bindings for the given Service to any environment, where the service is provided by one of
-	 * the candidate modules
-	 */
-	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env, Iterable<Module> canditateModules) {
-		val allBindings = getAllBindings(service.eResource?.resourceSet)
-		var Set<Binding> bindings = newHashSet()
-		val serviceBindings = allBindings.filter (typeof (ServiceBinding)).filter (b|b.resolveEnvironment == env && b.service.service == service)
-		if (serviceBindings.empty) {
-			val providingModules = moduleLookup.findProvidingModules(service, canditateModules)
-			if (!providingModules.empty) {
-				val moduleBindings = allBindings.filter (typeof (ModuleBinding)).filter (b|b.resolveEnvironment == env && providingModules.exists(m|m == b.module.module))
-				bindings.addAll(moduleBindings)
-			}
-			val serviceNamespace = service.eContainer as SubNamespace
-		} else {
-			bindings.addAll(serviceBindings)
-		}
-		return bindings
-	}
-	
-	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env, ImportBindingProtocol protocol, Iterable<Module> canditateModules) {
-		return service.findMostSpecificBindings(env, canditateModules).filter (p|protocolMatcher.supportsImportBindingProtocol (p, protocol))
-	}
-	
-	
-	//TODO REVIEW resolution when unqualified
-	def Iterable<Binding> findMostSpecificBindings (Service service, Environment env, ImportBindingProtocol protocol, EndpointQualifierRef endpointQualifierRef, Iterable<Module> scopedProviderModules) {
-		var Set<Binding> bindings = newHashSet()
-		val serviceBindings = service.findMostSpecificBindings(env).filter (typeof (ServiceBinding))
-		val moduleBindings = service.findMostSpecificBindings(env).filter (typeof (ModuleBinding))
-		val serviceBindingsWithBindingQualifier = serviceBindings.filter (b | 
-				b.eContainer instanceof ModuleBinding && 
-				protocolMatcher.supportsImportBindingProtocol (b, protocol) && 
-				(endpointQualifierRef == null || b.protocol.exists (p|p.endpointQualifierRef != null && p.effectiveEndpointQualifier == endpointQualifierRef.endpointQualifier)) &&
-				(scopedProviderModules.nullOrEmpty || scopedProviderModules.exists (m|m == (b.eContainer as ModuleBinding).module.module))
-		)
-		if (!serviceBindingsWithBindingQualifier.nullOrEmpty) {
-			bindings.addAll (serviceBindingsWithBindingQualifier)
-		}
-		if (bindings.empty) {
-			val moduleBindingsWithBindingQualifier = moduleBindings.filter (b | 
-				protocolMatcher.supportsImportBindingProtocol (b, protocol) && 
-				(scopedProviderModules.nullOrEmpty || scopedProviderModules.exists (m| m == b.module.module)) && 
-				(endpointQualifierRef == null || b.protocol.exists(p|p.endpointQualifierRef != null && p.effectiveEndpointQualifier == endpointQualifierRef.endpointQualifier)))
-			if (!moduleBindingsWithBindingQualifier.nullOrEmpty) {
-				bindings.addAll (moduleBindingsWithBindingQualifier)
-			}
-		}
-		return bindings.filter (p|protocolMatcher.supportsImportBindingProtocol (p, protocol))
-	}
 	
 	/**
-	 * Get the most specific binding for service matching the given endpoint qualifier. The most specific binding is by default
-	 * the top level binding. This might be overridden in a nested binding declaration. If such an override is defined, it will be
-	 * returned instead.
+	 * Get the most specific binding for the service matching that is tagged with the given endpoint qualifier. 
+	 * The most specific binding is by default the top level binding. This might be overridden in a nested binding 
+	 * declaration. If such an override is defined, it will be returned instead.
 	 */
-	def dispatch Binding getMostSpecificBinding (Service service, Binding binding, EndpointQualifierRef endpointQualifier) {
+	def Binding getMostSpecificBinding (Service service, Binding binding, EndpointQualifierRef endpointQualifier) {
 		val candBind = service.getMostSpecificBinding (binding)
 		val bindEndpointQualifiers = candBind.getPotentialEffectiveEndpointQualifiers
 		if (endpointQualifier != null && candBind != null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
@@ -300,7 +206,8 @@ class BindingLookup {
 	}
 	
 	/*
-	 * Check, whether the given Binding applies to the given Module
+	 * Check, whether the given Binding applies to the given Module. The Binding is applicable,
+	 * if it references the given module or a later compatible version
 	 */
 	def dispatch isBindingApplicable (ModuleBinding bind, Module mod) {
 		var versionFilter = versionFilterProvider.createVersionFilter (bind.module.versionRef)
@@ -316,14 +223,15 @@ class BindingLookup {
 	}
 	
 	/*
-	 * Check, whether the given Binding applies to the given Module and Service
+	 * Check, whether the given Binding applies to the given Module and Service The Binding is applicable,
+	 * if it references the given module or a later compatible version and the module provides the service.
 	 */
 	def isBindingApplicable (ModuleBinding bind, Module mod, Service svc) {
 		var versionFilter = versionFilterProvider.createVersionFilter (bind.module.versionRef)
-		if (bind.module.module == mod || 
+		if ((bind.module.module == mod || 
 			(nameProvider.getFullyQualifiedName(bind.module.module) == nameProvider.getFullyQualifiedName(mod)
 				&& versionFilter.matches (descBuilder.buildDescription (mod))
-			)
+			) && modServiceResolver.getAllProvidedServiceRefs(bind.module.module).map(r|r.service).toList.contains(svc))
 		) {
 			return true
 		} else {
@@ -337,7 +245,7 @@ class BindingLookup {
 	def dispatch isBindingApplicable (ModuleBinding bind, Service svc) {
 		var candModules = moduleLookup.findProvidingModules (svc)
 		var versionFilter = versionFilterProvider.createVersionFilter (bind.module.versionRef)
-		for (mod : candModules)
+		for (mod : candModules) {
 			if (bind.module.module == mod || 
 				(nameProvider.getFullyQualifiedName (bind.module.module) == nameProvider.getFullyQualifiedName(mod)
 					&& versionFilter.matches (descBuilder.buildDescription (mod))
@@ -345,6 +253,7 @@ class BindingLookup {
 			) {
 				return true
 			}
+		}
 		return false
 	}
 	

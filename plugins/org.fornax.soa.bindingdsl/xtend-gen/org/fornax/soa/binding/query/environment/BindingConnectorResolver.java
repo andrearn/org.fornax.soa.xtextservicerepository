@@ -11,10 +11,13 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.fornax.soa.binding.query.ServerNotConnectableException;
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
+import org.fornax.soa.bindingDsl.AMQP;
 import org.fornax.soa.bindingDsl.BindingProtocol;
 import org.fornax.soa.bindingDsl.ConnectorQualifier;
 import org.fornax.soa.bindingDsl.EJB;
+import org.fornax.soa.bindingDsl.FTP;
 import org.fornax.soa.bindingDsl.ModuleBinding;
+import org.fornax.soa.bindingDsl.SAP;
 import org.fornax.soa.bindingDsl.SCA;
 import org.fornax.soa.bindingDsl.SOAP;
 import org.fornax.soa.bindingDsl.ServiceBinding;
@@ -27,6 +30,7 @@ import org.fornax.soa.environmentDsl.IIOP;
 import org.fornax.soa.environmentDsl.JMS;
 import org.fornax.soa.environmentDsl.ProcessServer;
 import org.fornax.soa.environmentDsl.REST;
+import org.fornax.soa.environmentDsl.RFC;
 import org.fornax.soa.environmentDsl.RMI;
 import org.fornax.soa.environmentDsl.SOAPHTTP;
 import org.fornax.soa.environmentDsl.Server;
@@ -223,7 +227,13 @@ public class BindingConnectorResolver {
       if (prot instanceof SOAP) {
         final SOAP _sOAP = (SOAP)prot;
         _matched=true;
-        _switchResult = (con instanceof SOAPHTTP);
+        boolean _or = false;
+        if ((con instanceof SOAPHTTP)) {
+          _or = true;
+        } else {
+          _or = ((con instanceof SOAPHTTP) || (con instanceof HTTP));
+        }
+        _switchResult = _or;
       }
     }
     if (!_matched) {
@@ -263,14 +273,60 @@ public class BindingConnectorResolver {
       if (prot instanceof REST) {
         final REST _rEST = (REST)prot;
         _matched=true;
-        _switchResult = (con instanceof REST);
+        boolean _or = false;
+        if ((con instanceof REST)) {
+          _or = true;
+        } else {
+          _or = ((con instanceof REST) || (con instanceof HTTP));
+        }
+        _switchResult = _or;
       }
     }
     if (!_matched) {
-      if (prot instanceof HTTP) {
-        final HTTP _hTTP = (HTTP)prot;
+      if (prot instanceof org.fornax.soa.bindingDsl.HTTP) {
+        final org.fornax.soa.bindingDsl.HTTP _hTTP = (org.fornax.soa.bindingDsl.HTTP)prot;
         _matched=true;
         _switchResult = (con instanceof HTTP);
+      }
+    }
+    if (!_matched) {
+      if (prot instanceof FTP) {
+        final FTP _fTP = (FTP)prot;
+        _matched=true;
+        _switchResult = (con instanceof org.fornax.soa.environmentDsl.FTP);
+      }
+    }
+    if (!_matched) {
+      if (prot instanceof AMQP) {
+        final AMQP _aMQP = (AMQP)prot;
+        _matched=true;
+        _switchResult = (con instanceof org.fornax.soa.environmentDsl.AMQP);
+      }
+    }
+    if (!_matched) {
+      if (prot instanceof SCA) {
+        final SCA _sCA = (SCA)prot;
+        _matched=true;
+        boolean _or = false;
+        boolean _or_1 = false;
+        if ((con instanceof IIOP)) {
+          _or_1 = true;
+        } else {
+          _or_1 = ((con instanceof IIOP) || (con instanceof RMI));
+        }
+        if (_or_1) {
+          _or = true;
+        } else {
+          _or = (_or_1 || (con instanceof EJB));
+        }
+        _switchResult = _or;
+      }
+    }
+    if (!_matched) {
+      if (prot instanceof SAP) {
+        final SAP _sAP = (SAP)prot;
+        _matched=true;
+        _switchResult = (con instanceof RFC);
       }
     }
     if (!_matched) {

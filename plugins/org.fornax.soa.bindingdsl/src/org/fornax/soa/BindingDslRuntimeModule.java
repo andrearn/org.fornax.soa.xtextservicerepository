@@ -14,7 +14,9 @@ import org.fornax.soa.basedsl.search.PredicateReferenceSearch;
 import org.fornax.soa.basedsl.search.DefaultPredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
+import org.fornax.soa.moduledsl.query.DefaultModuleServiceResolver;
 import org.fornax.soa.moduledsl.query.DefaultModuleVersionMatcher;
+import org.fornax.soa.moduledsl.query.IModuleServiceResolver;
 import org.fornax.soa.moduledsl.query.IModuleVersionMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.DefaultVersionFilterProvider;
@@ -85,6 +87,10 @@ public class BindingDslRuntimeModule extends org.fornax.soa.AbstractBindingDslRu
 	@SuppressWarnings("rawtypes")
 	public Class<? extends IVersionFilterProvider> bindIVersionFilterProvider () {
 		return DefaultVersionFilterProvider.class;
+	}
+	
+	public Class<? extends IModuleServiceResolver> bindIModuleServiceResolver () {
+		return DefaultModuleServiceResolver.class;
 	}
 
 }

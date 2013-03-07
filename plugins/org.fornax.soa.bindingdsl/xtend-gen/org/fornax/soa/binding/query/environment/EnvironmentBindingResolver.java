@@ -25,6 +25,9 @@ import org.fornax.soa.environmentDsl.Server;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.moduledsl.query.ModuleLookup;
 
+/**
+ * Resolver, that resolves environment assets such as servers from Bindings
+ */
 @SuppressWarnings("all")
 public class EnvironmentBindingResolver {
   @Inject
@@ -35,48 +38,6 @@ public class EnvironmentBindingResolver {
   
   @Inject
   private EnvironmentLookup envLookup;
-  
-  /**
-   * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given
-   * target environment
-   */
-  public Set<Environment> findUnboundEnvironmentForCompatibleModule(final Module module) {
-    Resource _eResource = module.eResource();
-    ResourceSet _resourceSet = _eResource==null?(ResourceSet)null:_eResource.getResourceSet();
-    List<Binding> _allBindings = this.bindingLookup.getAllBindings(_resourceSet);
-    final Iterable<ModuleBinding> allBindings = Iterables.<ModuleBinding>filter(_allBindings, ModuleBinding.class);
-    Iterable<Module> _findCompatibleModules = this.moduleLookup.findCompatibleModules(module);
-    final Set<Module> compatibleModules = IterableExtensions.<Module>toSet(_findCompatibleModules);
-    final Function1<ModuleBinding,Boolean> _function = new Function1<ModuleBinding,Boolean>() {
-        public Boolean apply(final ModuleBinding e) {
-          ModuleRef _module = e.getModule();
-          boolean _contains = compatibleModules.contains(_module);
-          return Boolean.valueOf(_contains);
-        }
-      };
-    Iterable<ModuleBinding> _filter = IterableExtensions.<ModuleBinding>filter(allBindings, _function);
-    final Set<ModuleBinding> bindings = IterableExtensions.<ModuleBinding>toSet(_filter);
-    final Function1<ModuleBinding,Environment> _function_1 = new Function1<ModuleBinding,Environment>() {
-        public Environment apply(final ModuleBinding b) {
-          Environment _resolveEnvironment = EnvironmentBindingResolver.this.resolveEnvironment(b);
-          return _resolveEnvironment;
-        }
-      };
-    Iterable<Environment> _map = IterableExtensions.<ModuleBinding, Environment>map(bindings, _function_1);
-    final Set<Environment> boundEnvironments = IterableExtensions.<Environment>toSet(_map);
-    Resource _eResource_1 = module.eResource();
-    ResourceSet _resourceSet_1 = _eResource_1==null?(ResourceSet)null:_eResource_1.getResourceSet();
-    final Set<Environment> allEnvironments = this.envLookup.findAllEnvironments(_resourceSet_1);
-    final Function1<Environment,Boolean> _function_2 = new Function1<Environment,Boolean>() {
-        public Boolean apply(final Environment e) {
-          boolean _contains = boundEnvironments.contains(e);
-          boolean _not = (!_contains);
-          return Boolean.valueOf(_not);
-        }
-      };
-    Iterable<Environment> _filter_1 = IterableExtensions.<Environment>filter(allEnvironments, _function_2);
-    return IterableExtensions.<Environment>toSet(_filter_1);
-  }
   
   protected Server _resolveServer(final Binding bind, final BindingProtocol prot) {
     UnsupportedOperationException _unsupportedOperationException = new UnsupportedOperationException();
@@ -182,16 +143,45 @@ public class EnvironmentBindingResolver {
     return _xifexpression;
   }
   
-  protected Environment _getEnvironment(final ServiceBinding bind) {
-    EObject _eContainer = bind.eContainer();
-    Environment _resolveEnvironment = this.resolveEnvironment(((Binding) _eContainer));
-    return _resolveEnvironment;
-  }
-  
-  protected Environment _getEnvironment(final OperationBinding bind) {
-    EObject _eContainer = bind.eContainer();
-    Environment _resolveEnvironment = this.resolveEnvironment(((Binding) _eContainer));
-    return _resolveEnvironment;
+  /**
+   * Get all environments to which the module is not bound
+   */
+  public Set<Environment> findUnboundEnvironmentForCompatibleModule(final Module module) {
+    Resource _eResource = module.eResource();
+    ResourceSet _resourceSet = _eResource==null?(ResourceSet)null:_eResource.getResourceSet();
+    List<Binding> _allBindings = this.bindingLookup.getAllBindings(_resourceSet);
+    final Iterable<ModuleBinding> allBindings = Iterables.<ModuleBinding>filter(_allBindings, ModuleBinding.class);
+    Iterable<Module> _findCompatibleModules = this.moduleLookup.findCompatibleModules(module);
+    final Set<Module> compatibleModules = IterableExtensions.<Module>toSet(_findCompatibleModules);
+    final Function1<ModuleBinding,Boolean> _function = new Function1<ModuleBinding,Boolean>() {
+        public Boolean apply(final ModuleBinding e) {
+          ModuleRef _module = e.getModule();
+          boolean _contains = compatibleModules.contains(_module);
+          return Boolean.valueOf(_contains);
+        }
+      };
+    Iterable<ModuleBinding> _filter = IterableExtensions.<ModuleBinding>filter(allBindings, _function);
+    final Set<ModuleBinding> bindings = IterableExtensions.<ModuleBinding>toSet(_filter);
+    final Function1<ModuleBinding,Environment> _function_1 = new Function1<ModuleBinding,Environment>() {
+        public Environment apply(final ModuleBinding b) {
+          Environment _resolveEnvironment = EnvironmentBindingResolver.this.resolveEnvironment(b);
+          return _resolveEnvironment;
+        }
+      };
+    Iterable<Environment> _map = IterableExtensions.<ModuleBinding, Environment>map(bindings, _function_1);
+    final Set<Environment> boundEnvironments = IterableExtensions.<Environment>toSet(_map);
+    Resource _eResource_1 = module.eResource();
+    ResourceSet _resourceSet_1 = _eResource_1==null?(ResourceSet)null:_eResource_1.getResourceSet();
+    final Set<Environment> allEnvironments = this.envLookup.findAllEnvironments(_resourceSet_1);
+    final Function1<Environment,Boolean> _function_2 = new Function1<Environment,Boolean>() {
+        public Boolean apply(final Environment e) {
+          boolean _contains = boundEnvironments.contains(e);
+          boolean _not = (!_contains);
+          return Boolean.valueOf(_not);
+        }
+      };
+    Iterable<Environment> _filter_1 = IterableExtensions.<Environment>filter(allEnvironments, _function_2);
+    return IterableExtensions.<Environment>toSet(_filter_1);
   }
   
   public Server resolveServer(final EObject bind, final BindingProtocol prot) {
@@ -235,17 +225,6 @@ public class EnvironmentBindingResolver {
       return _resolveEnvironment((Server)bind);
     } else if (bind != null) {
       return _resolveEnvironment(bind);
-    } else {
-      throw new IllegalArgumentException("Unhandled parameter types: " +
-        Arrays.<Object>asList(bind).toString());
-    }
-  }
-  
-  public Environment getEnvironment(final EObject bind) {
-    if (bind instanceof ServiceBinding) {
-      return _getEnvironment((ServiceBinding)bind);
-    } else if (bind instanceof OperationBinding) {
-      return _getEnvironment((OperationBinding)bind);
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(bind).toString());

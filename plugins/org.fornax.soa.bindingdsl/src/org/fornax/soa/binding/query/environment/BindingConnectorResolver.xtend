@@ -5,6 +5,7 @@ import java.util.logging.Logger
 import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.bindingDsl.BindingProtocol
 import org.fornax.soa.bindingDsl.EJB
+import org.fornax.soa.bindingDsl.HTTP
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.SCA
 import org.fornax.soa.bindingDsl.SOAP
@@ -13,7 +14,6 @@ import org.fornax.soa.environmentDsl.AppServer
 import org.fornax.soa.environmentDsl.Broker
 import org.fornax.soa.environmentDsl.Connector
 import org.fornax.soa.environmentDsl.ESB
-import org.fornax.soa.environmentDsl.HTTP
 import org.fornax.soa.environmentDsl.IIOP
 import org.fornax.soa.environmentDsl.JMS
 import org.fornax.soa.environmentDsl.ProcessServer
@@ -23,6 +23,10 @@ import org.fornax.soa.environmentDsl.SOAPHTTP
 import org.fornax.soa.environmentDsl.Server
 import org.fornax.soa.environmentDsl.WebServer
 import org.fornax.soa.binding.query.ServerNotConnectableException
+import org.fornax.soa.bindingDsl.FTP
+import org.fornax.soa.bindingDsl.AMQP
+import org.fornax.soa.environmentDsl.RFC
+import org.fornax.soa.bindingDsl.SAP
 
 
 /*
@@ -108,12 +112,16 @@ class BindingConnectorResolver {
 	 */
 	def boolean supportsProtocol (Connector con, BindingProtocol prot) {
 		switch (prot) {
-			SOAP: 		con instanceof SOAPHTTP
+			SOAP: 		con instanceof SOAPHTTP || con instanceof org.fornax.soa.environmentDsl.HTTP
 			EJB:		con instanceof RMI || con instanceof IIOP
 			SCA:		con instanceof RMI || con instanceof IIOP
 			JMS:		con instanceof org.fornax.soa.environmentDsl.JMS
-			REST:		con instanceof org.fornax.soa.environmentDsl.REST
+			REST:		con instanceof org.fornax.soa.environmentDsl.REST || con instanceof org.fornax.soa.environmentDsl.HTTP
 			HTTP:		con instanceof org.fornax.soa.environmentDsl.HTTP
+			FTP:		con instanceof org.fornax.soa.environmentDsl.FTP
+			AMQP:		con instanceof org.fornax.soa.environmentDsl.AMQP
+			SCA:		con instanceof org.fornax.soa.environmentDsl.IIOP || con instanceof RMI || con instanceof EJB
+			SAP:		con instanceof RFC
 			default: 	false
 		}
 	}

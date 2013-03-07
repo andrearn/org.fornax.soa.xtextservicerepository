@@ -1,19 +1,19 @@
 package org.fornax.soa.binding.query
 
+import org.fornax.soa.bindingDsl.AMQP
 import org.fornax.soa.bindingDsl.Binding
+import org.fornax.soa.bindingDsl.BindingProtocol
+import org.fornax.soa.bindingDsl.EJB
+import org.fornax.soa.bindingDsl.FILE
+import org.fornax.soa.bindingDsl.FTP
+import org.fornax.soa.bindingDsl.HTTP
+import org.fornax.soa.bindingDsl.IIOP
+import org.fornax.soa.bindingDsl.JMS
+import org.fornax.soa.bindingDsl.REST
+import org.fornax.soa.bindingDsl.SAP
+import org.fornax.soa.bindingDsl.SCA
 import org.fornax.soa.bindingDsl.SOAP
 import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
-import org.fornax.soa.bindingDsl.BindingProtocol
-import org.fornax.soa.bindingDsl.REST
-import org.fornax.soa.bindingDsl.HTTP
-import org.fornax.soa.bindingDsl.AMQP
-import org.fornax.soa.bindingDsl.IIOP
-import org.fornax.soa.bindingDsl.FTP
-import org.fornax.soa.bindingDsl.FILE
-import org.fornax.soa.bindingDsl.JMS
-import org.fornax.soa.bindingDsl.SAP
-import org.fornax.soa.bindingDsl.EJB
-import org.fornax.soa.bindingDsl.SCA
 
 /*
  * Matches BindingProtocols of the Binding DSL to the respective Connector protocol

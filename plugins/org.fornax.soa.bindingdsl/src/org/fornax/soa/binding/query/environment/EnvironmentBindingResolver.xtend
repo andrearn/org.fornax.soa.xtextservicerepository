@@ -15,6 +15,9 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.query.ModuleLookup
 import org.eclipse.emf.ecore.EObject
 
+/**
+ * Resolver, that resolves environment assets such as servers from Bindings
+ */
 class EnvironmentBindingResolver {
 
 	@Inject
@@ -24,19 +27,6 @@ class EnvironmentBindingResolver {
 	@Inject
 	private EnvironmentLookup envLookup
 	
-	
-	/*
-	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given 
-	 * target environment
-	 */
-	def Set<Environment> findUnboundEnvironmentForCompatibleModule (Module module) {
-		val allBindings = bindingLookup.getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
-		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
-		val bindings = allBindings.filter (e|compatibleModules.contains (e.module)).toSet;
-		val boundEnvironments = bindings.map(b|b.resolveEnvironment).toSet
-		val allEnvironments = envLookup.findAllEnvironments(module.eResource?.resourceSet)
-		return allEnvironments.filter(e| !boundEnvironments.contains(e)).toSet
-	}
 
 	def dispatch Server resolveServer (Binding bind, BindingProtocol prot) {
 		throw new UnsupportedOperationException ()
@@ -98,11 +88,17 @@ class EnvironmentBindingResolver {
 			bind.environment
 		}
 	}
-	def dispatch Environment getEnvironment (ServiceBinding bind) {
-		(bind.eContainer as Binding).resolveEnvironment
-	}
-	def dispatch Environment getEnvironment (OperationBinding bind) {
-		(bind.eContainer as Binding).resolveEnvironment
+	
+	/*
+	 * Get all environments to which the module is not bound
+	 */
+	def Set<Environment> findUnboundEnvironmentForCompatibleModule (Module module) {
+		val allBindings = bindingLookup.getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
+		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
+		val bindings = allBindings.filter (e|compatibleModules.contains (e.module)).toSet;
+		val boundEnvironments = bindings.map(b|b.resolveEnvironment).toSet
+		val allEnvironments = envLookup.findAllEnvironments(module.eResource?.resourceSet)
+		return allEnvironments.filter(e| !boundEnvironments.contains(e)).toSet
 	}
 
 }
