@@ -7,8 +7,9 @@ import java.util.Set;
 
 import org.fornax.soa.BindingDslRuntimeModule;
 import org.fornax.soa.binding.query.BindingLookup;
-import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder;
+import org.fornax.soa.bindingdsl.generator.templates.TechnicalContractArtifactsBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
+import org.fornax.soa.bindingdsl.generator.templates.IArtifactBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.naming.DefaultEndpointQualifierNameProvider;
 import org.fornax.soa.bindingdsl.generator.templates.naming.IEndpointQualifierNameProvider;
@@ -35,8 +36,8 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 		return BindingExtensions.class;
 	}
 	
-	public Class<? extends BindingBuilder> bindBindingTemplates () {
-		return BindingBuilder.class;
+	public Class<? extends IArtifactBuilder> bindBindingTemplates () {
+		return TechnicalContractArtifactsBuilder.class;
 	}
 	
 	public Class<? extends ConcreteWsdlGenerator> bindConcreteWsdlTemplates () {

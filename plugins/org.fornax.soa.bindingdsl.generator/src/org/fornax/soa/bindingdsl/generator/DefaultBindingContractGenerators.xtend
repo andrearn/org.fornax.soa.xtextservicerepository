@@ -14,7 +14,7 @@ import org.fornax.soa.basedsl.search.IPredicateSearch
 import org.fornax.soa.bindingDsl.BindingModel
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
-import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder
+import org.fornax.soa.bindingdsl.generator.templates.TechnicalContractArtifactsBuilder
 import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDBuilder
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
@@ -30,6 +30,7 @@ import org.fornax.soa.moduledsl.generator.VersionedModuleSelector
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslFactory
 import org.fornax.soa.semanticsDsl.Qualifier
+import org.fornax.soa.bindingdsl.generator.templates.IArtifactBuilder
 
 /*
  * Generate technical service and datamodel contract artifacts like WSDLs, XSDs or IDLs for ModuleBindings
@@ -44,7 +45,7 @@ import org.fornax.soa.semanticsDsl.Qualifier
 class DefaultBindingContractGenerators implements IGenerator {
 	
 	
-	@Inject org.fornax.soa.bindingdsl.generator.templates.BindingBuilder bindingTpl
+	@Inject IArtifactBuilder bindingBuilder
 	@Inject XSDBuilder xsdGen
 
 	
@@ -158,9 +159,9 @@ class DefaultBindingContractGenerators implements IGenerator {
 	def protected compile (ModuleBinding bind, SOAProfile profile) {
 		logger.info("Generating contracts for module binding " + bind.name)
 		if (noDependencies != null && includeSubNamespaces != null)
-			bindingTpl.toBinding (bind, profile, noDependencies, includeSubNamespaces)
+			bindingBuilder.build (bind, profile, noDependencies, includeSubNamespaces)
 		else
-			bindingTpl.toBinding (bind, profile);
+			bindingBuilder.build (bind, profile);
 	}
 		
 	def protected compile (Module mod, VersionedModuleSelector moduleSelector, SOAProfile profile, Resource resource) {
@@ -171,18 +172,18 @@ class DefaultBindingContractGenerators implements IGenerator {
 		if (!generateProvidedServices && !generateUsedServices)
 			generateUsedServices = true
 		if (env != null) {
-			if (moduleSelector.getProviderEndpointQualifier != null && moduleSelector.generateProvidedServices) {
-				val providerEndpointQualifier =  ModuleDslFactory::eINSTANCE.createEndpointQualifierRef
-				val Qualifier endpointQualifier = eObjectLookup.getModelElementByName(moduleSelector.getProviderEndpointQualifier, resource, "Qualifier")
-				if (endpointQualifier != null) {
-					providerEndpointQualifier.setEndpointQualifier(endpointQualifier)
-					bindingTpl.toBinding(mod, env, generateProvidedServices, generateUsedServices, providerEndpointQualifier, profile)
+			if (moduleSelector.endpointQualifier != null) {
+				val endpointQualifierRef =  ModuleDslFactory::eINSTANCE.createEndpointQualifierRef
+				val Qualifier endpointQualifier = eObjectLookup.getModelElementByName(moduleSelector.endpointQualifier, resource, "Qualifier")
+				if (endpointQualifierRef != null) {
+					endpointQualifierRef.setEndpointQualifier(endpointQualifier)
+					bindingBuilder.build(mod, env, generateProvidedServices, generateUsedServices, endpointQualifierRef, profile)
 				} else {
-					logger.severe("The provider endpoint-qualifier " + moduleSelector.getProviderEndpointQualifier + " is not defined.")
+					logger.severe("The provider endpoint-qualifier " + moduleSelector.endpointQualifier + " is not defined.")
 				}
 			
 			} else {
-				bindingTpl.toBinding(mod, env, generateProvidedServices, generateUsedServices, null, profile)
+				bindingBuilder.build(mod, env, generateProvidedServices, generateUsedServices, null, profile)
 			}
 			
 		} else {

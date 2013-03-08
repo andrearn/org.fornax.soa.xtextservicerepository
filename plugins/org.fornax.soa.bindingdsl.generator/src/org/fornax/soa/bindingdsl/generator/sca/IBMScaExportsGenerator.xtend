@@ -3,7 +3,7 @@ package org.fornax.soa.bindingdsl.generator.sca
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
-import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder
+import org.fornax.soa.bindingdsl.generator.templates.TechnicalContractArtifactsBuilder
 import com.google.inject.Inject
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions
 import com.google.inject.name.Named

@@ -27,8 +27,8 @@ public class ProvidedProtocolContractBuilder implements IProtocolContractBuilder
 		provider.get().buildProvidedServiceContracts (module, targetEnvironment, providerEndpointQualifier, profile);
 	}
 	
-	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, SOAProfile profile) {
-		provider.get().buildUsedServiceContracts (module, targetEnvironment, profile);
+	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifier, SOAProfile profile) {
+		provider.get().buildUsedServiceContracts (module, targetEnvironment, endpointQualifier, profile);
 	}
 
 	public void buildTypeDefinitions (SubNamespace namespace, Environment env,

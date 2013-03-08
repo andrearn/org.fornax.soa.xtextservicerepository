@@ -26,7 +26,7 @@ import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingModel;
 import org.fornax.soa.bindingDsl.ModuleBinding;
-import org.fornax.soa.bindingdsl.generator.templates.BindingBuilder;
+import org.fornax.soa.bindingdsl.generator.templates.IArtifactBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDBuilder;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.moduledsl.generator.VersionedModuleSelector;
@@ -55,7 +55,7 @@ import org.fornax.soa.serviceDsl.SubNamespace;
 @SuppressWarnings("all")
 public class DefaultBindingContractGenerators implements IGenerator {
   @Inject
-  private BindingBuilder bindingTpl;
+  private IArtifactBuilder bindingBuilder;
   
   @Inject
   private XSDBuilder xsdGen;
@@ -344,9 +344,9 @@ public class DefaultBindingContractGenerators implements IGenerator {
       _and = (_notEquals && _notEquals_1);
     }
     if (_and) {
-      this.bindingTpl.toBinding(bind, profile, (this.noDependencies).booleanValue(), (this.includeSubNamespaces).booleanValue());
+      this.bindingBuilder.build(bind, profile, (this.noDependencies).booleanValue(), (this.includeSubNamespaces).booleanValue());
     } else {
-      this.bindingTpl.toBinding(bind, profile);
+      this.bindingBuilder.build(bind, profile);
     }
   }
   
@@ -374,31 +374,24 @@ public class DefaultBindingContractGenerators implements IGenerator {
     }
     boolean _notEquals = (!Objects.equal(env, null));
     if (_notEquals) {
-      boolean _and_1 = false;
-      String _providerEndpointQualifier = moduleSelector.getProviderEndpointQualifier();
-      boolean _notEquals_1 = (!Objects.equal(_providerEndpointQualifier, null));
-      if (!_notEquals_1) {
-        _and_1 = false;
-      } else {
-        boolean _isGenerateProvidedServices = moduleSelector.isGenerateProvidedServices();
-        _and_1 = (_notEquals_1 && _isGenerateProvidedServices);
-      }
-      if (_and_1) {
-        final EndpointQualifierRef providerEndpointQualifier = ModuleDslFactory.eINSTANCE.createEndpointQualifierRef();
-        String _providerEndpointQualifier_1 = moduleSelector.getProviderEndpointQualifier();
-        final Qualifier endpointQualifier = this.eObjectLookup.<Qualifier>getModelElementByName(_providerEndpointQualifier_1, resource, "Qualifier");
-        boolean _notEquals_2 = (!Objects.equal(endpointQualifier, null));
+      String _endpointQualifier = moduleSelector.getEndpointQualifier();
+      boolean _notEquals_1 = (!Objects.equal(_endpointQualifier, null));
+      if (_notEquals_1) {
+        final EndpointQualifierRef endpointQualifierRef = ModuleDslFactory.eINSTANCE.createEndpointQualifierRef();
+        String _endpointQualifier_1 = moduleSelector.getEndpointQualifier();
+        final Qualifier endpointQualifier = this.eObjectLookup.<Qualifier>getModelElementByName(_endpointQualifier_1, resource, "Qualifier");
+        boolean _notEquals_2 = (!Objects.equal(endpointQualifierRef, null));
         if (_notEquals_2) {
-          providerEndpointQualifier.setEndpointQualifier(endpointQualifier);
-          this.bindingTpl.toBinding(mod, env, generateProvidedServices, generateUsedServices, providerEndpointQualifier, profile);
+          endpointQualifierRef.setEndpointQualifier(endpointQualifier);
+          this.bindingBuilder.build(mod, env, generateProvidedServices, generateUsedServices, endpointQualifierRef, profile);
         } else {
-          String _providerEndpointQualifier_2 = moduleSelector.getProviderEndpointQualifier();
-          String _plus_3 = ("The provider endpoint-qualifier " + _providerEndpointQualifier_2);
+          String _endpointQualifier_2 = moduleSelector.getEndpointQualifier();
+          String _plus_3 = ("The provider endpoint-qualifier " + _endpointQualifier_2);
           String _plus_4 = (_plus_3 + " is not defined.");
           this.logger.severe(_plus_4);
         }
       } else {
-        this.bindingTpl.toBinding(mod, env, generateProvidedServices, generateUsedServices, null, profile);
+        this.bindingBuilder.build(mod, env, generateProvidedServices, generateUsedServices, null, profile);
       }
     } else {
       String _plus_5 = ("No environment found matching the name expression " + this.targetEnvironmentName);

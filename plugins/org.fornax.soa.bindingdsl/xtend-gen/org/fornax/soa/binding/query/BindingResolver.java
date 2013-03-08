@@ -4,6 +4,7 @@ import com.google.common.base.Objects;
 import com.google.inject.Inject;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
@@ -47,6 +48,9 @@ public class BindingResolver {
   
   @Inject
   private IModuleReferenceResolver modRefResolver;
+  
+  @Inject
+  private Logger log;
   
   /**
    * Resolve Bindings of all services provided by a module in the given environment. Endpoint qualifiers in the module definition that select used endpoints of used services
@@ -100,7 +104,7 @@ public class BindingResolver {
    * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
    * 								have any or no potentially effective endpoint qualifier
    */
-  public Set<ServiceRefBindingDescription> resolveCompatibleUsedServiceBindings(final Module module, final Environment targetEnvironment) {
+  public Set<ServiceRefBindingDescription> resolveCompatibleUsedServiceBindings(final Module module, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifierRef) {
     final Set<? extends AbstractServiceRef> usedServiceRefs = this.modServiceResolver.getAllUsedServiceRefs(module);
     LifecycleState _state = module.getState();
     EObject _eContainer = _state.eContainer();
@@ -109,18 +113,7 @@ public class BindingResolver {
     EList<ModuleRef> _usedModules = module.getUsedModules();
     for (final ModuleRef usedModRef : _usedModules) {
       {
-        EndpointQualifierRef _xifexpression = null;
-        EndpointQualifierRef _endpointQualifierRef = usedModRef.getEndpointQualifierRef();
-        Qualifier _endpointQualifier = _endpointQualifierRef==null?(Qualifier)null:_endpointQualifierRef.getEndpointQualifier();
-        boolean _notEquals = (!Objects.equal(_endpointQualifier, null));
-        if (_notEquals) {
-          EndpointQualifierRef _endpointQualifierRef_1 = usedModRef.getEndpointQualifierRef();
-          _xifexpression = _endpointQualifierRef_1;
-        } else {
-          EndpointQualifierRef _endpointQualifierRef_2 = module.getEndpointQualifierRef();
-          _xifexpression = _endpointQualifierRef_2;
-        }
-        final EndpointQualifierRef selectingEndpointQualifierRef = _xifexpression;
+        final EndpointQualifierRef selectingEndpointQualifierRef = this.getSelectingEndpointQualifier(usedModRef, module, endpointQualifierRef);
         final Module providerModule = this.modRefResolver.resolveModuleRef(usedModRef, targetEnvironment, lifecycle);
         final Set<ServiceRefBindingDescription> impModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(providerModule, targetEnvironment, selectingEndpointQualifierRef);
         final Function1<ServiceRefBindingDescription,Boolean> _function = new Function1<ServiceRefBindingDescription,Boolean>() {
@@ -136,13 +129,13 @@ public class BindingResolver {
             Binding _applicableBinding = curDesc.getApplicableBinding();
             final EndpointQualifierDescriptor curEndpointQualifiers = this.endpointQualifierQuery.getPotentialEffectiveEndpointQualifiers(_applicableBinding);
             boolean _or = false;
-            Qualifier _endpointQualifier_1 = curDesc.getEndpointQualifier();
-            boolean _equals = Objects.equal(_endpointQualifier_1, null);
+            Qualifier _endpointQualifier = curDesc.getEndpointQualifier();
+            boolean _equals = Objects.equal(_endpointQualifier, null);
             if (_equals) {
               _or = true;
             } else {
-              Qualifier _endpointQualifier_2 = curDesc.getEndpointQualifier();
-              boolean _containsEndpointQualifier = curEndpointQualifiers.containsEndpointQualifier(_endpointQualifier_2);
+              Qualifier _endpointQualifier_1 = curDesc.getEndpointQualifier();
+              boolean _containsEndpointQualifier = curEndpointQualifiers.containsEndpointQualifier(_endpointQualifier_1);
               _or = (_equals || _containsEndpointQualifier);
             }
             if (_or) {
@@ -182,8 +175,8 @@ public class BindingResolver {
           }
           if (_and) {
             boolean _and_1 = false;
-            boolean _notEquals_1 = (!Objects.equal(curBindDesc, null));
-            if (!_notEquals_1) {
+            boolean _notEquals = (!Objects.equal(curBindDesc, null));
+            if (!_notEquals) {
               _and_1 = false;
             } else {
               Iterable<ServiceRefBindingDescription> _filterNull_1 = IterableExtensions.<ServiceRefBindingDescription>filterNull(svcBindDescs);
@@ -198,7 +191,7 @@ public class BindingResolver {
               AbstractServiceRef _serviceRef_1 = curBindDesc.getServiceRef();
               boolean _contains_1 = _list.contains(_serviceRef_1);
               boolean _not_1 = (!_contains_1);
-              _and_1 = (_notEquals_1 && _not_1);
+              _and_1 = (_notEquals && _not_1);
             }
             if (_and_1) {
               svcBindDescs.add(curBindDesc);
@@ -255,5 +248,68 @@ public class BindingResolver {
       }
     }
     return svcBindDescs;
+  }
+  
+  private EndpointQualifierRef getSelectingEndpointQualifier(final ModuleRef usedModRef, final Module module, final EndpointQualifierRef endpointQualifierRef) {
+    EndpointQualifierRef _xifexpression = null;
+    EndpointQualifierRef _endpointQualifierRef = usedModRef.getEndpointQualifierRef();
+    Qualifier _endpointQualifier = _endpointQualifierRef==null?(Qualifier)null:_endpointQualifierRef.getEndpointQualifier();
+    boolean _notEquals = (!Objects.equal(_endpointQualifier, null));
+    if (_notEquals) {
+      EndpointQualifierRef _endpointQualifierRef_1 = usedModRef.getEndpointQualifierRef();
+      _xifexpression = _endpointQualifierRef_1;
+    } else {
+      EndpointQualifierRef _endpointQualifierRef_2 = module.getEndpointQualifierRef();
+      _xifexpression = _endpointQualifierRef_2;
+    }
+    final EndpointQualifierRef moduleEndpointQualifierRef = _xifexpression;
+    EndpointQualifierRef _xifexpression_1 = null;
+    boolean _and = false;
+    boolean _notEquals_1 = (!Objects.equal(endpointQualifierRef, null));
+    if (!_notEquals_1) {
+      _and = false;
+    } else {
+      Qualifier _endpointQualifier_1 = moduleEndpointQualifierRef==null?(Qualifier)null:moduleEndpointQualifierRef.getEndpointQualifier();
+      String _name = _endpointQualifier_1==null?(String)null:_endpointQualifier_1.getName();
+      boolean _notEquals_2 = (!Objects.equal(_name, null));
+      _and = (_notEquals_1 && _notEquals_2);
+    }
+    if (_and) {
+      EndpointQualifierRef _xblockexpression = null;
+      {
+        Qualifier _endpointQualifier_2 = endpointQualifierRef.getEndpointQualifier();
+        String _name_1 = _endpointQualifier_2.getName();
+        Qualifier _endpointQualifier_3 = moduleEndpointQualifierRef==null?(Qualifier)null:moduleEndpointQualifierRef.getEndpointQualifier();
+        String _name_2 = _endpointQualifier_3==null?(String)null:_endpointQualifier_3.getName();
+        boolean _equals = _name_1.equals(_name_2);
+        boolean _not = (!_equals);
+        if (_not) {
+          Qualifier _endpointQualifier_4 = moduleEndpointQualifierRef==null?(Qualifier)null:moduleEndpointQualifierRef.getEndpointQualifier();
+          String _name_3 = _endpointQualifier_4==null?(String)null:_endpointQualifier_4.getName();
+          String _plus = ("The modules endpoint qualifier " + _name_3);
+          String _plus_1 = (_plus + 
+            " has been overridden with the endpoint qualifier ");
+          Qualifier _endpointQualifier_5 = endpointQualifierRef.getEndpointQualifier();
+          String _name_4 = _endpointQualifier_5.getName();
+          String _plus_2 = (_plus_1 + _name_4);
+          this.log.warning(_plus_2);
+        }
+        EndpointQualifierRef _endpointQualifierRef_3 = usedModRef.getEndpointQualifierRef();
+        _xblockexpression = (_endpointQualifierRef_3);
+      }
+      _xifexpression_1 = _xblockexpression;
+    } else {
+      EndpointQualifierRef _xifexpression_2 = null;
+      boolean _notEquals_3 = (!Objects.equal(endpointQualifierRef, null));
+      if (_notEquals_3) {
+        _xifexpression_2 = endpointQualifierRef;
+      } else {
+        EndpointQualifierRef _endpointQualifierRef_3 = module.getEndpointQualifierRef();
+        _xifexpression_2 = _endpointQualifierRef_3;
+      }
+      _xifexpression_1 = _xifexpression_2;
+    }
+    final EndpointQualifierRef selectingEndpointQualifierRef = _xifexpression_1;
+    return selectingEndpointQualifierRef;
   }
 }

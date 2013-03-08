@@ -11,6 +11,7 @@ import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.eclipse.xtext.generator.OutputConfiguration;
 import org.eclipse.xtext.util.Modules2;
 import org.fornax.soa.basedsl.generator.BaseDslGeneratorModule;
+import org.fornax.soa.bindingdsl.generator.templates.IProtocolContractBuilder;
 import org.fornax.soa.environmentdsl.generator.EnvironmentDslGeneratorModule;
 import org.fornax.soa.moduledsl.generator.ModuleDslGeneratorModule;
 import org.fornax.soa.moduledsl.generator.VersionedModuleSelector;

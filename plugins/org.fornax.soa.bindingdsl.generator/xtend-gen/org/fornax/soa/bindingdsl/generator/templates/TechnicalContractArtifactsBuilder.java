@@ -12,7 +12,8 @@ import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.bindingdsl.generator.templates.BindingExtensions;
-import org.fornax.soa.bindingdsl.generator.templates.BindingServiceContractBuilder;
+import org.fornax.soa.bindingdsl.generator.templates.IArtifactBuilder;
+import org.fornax.soa.bindingdsl.generator.templates.ServiceContractBuilder;
 import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
@@ -27,7 +28,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDGenerator;
  * Builds all technical artifacts that represent a binding (WSDLs/XSDs etc.).
  */
 @SuppressWarnings("all")
-public class BindingBuilder {
+public class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
   @Inject
   private BindingExtensions _bindingExtensions;
   
@@ -35,7 +36,7 @@ public class BindingBuilder {
   private LifecycleQueries _lifecycleQueries;
   
   @Inject
-  private BindingServiceContractBuilder contractBuilder;
+  private ServiceContractBuilder contractBuilder;
   
   @Inject
   private EventXSDGenerator eventXsdGenerator;
@@ -60,7 +61,7 @@ public class BindingBuilder {
    * 	LifecycleState derived from the profile's Environment and the minimal required LifecycleState
    * 	of the respective Service / owning SubNamespace
    */
-  public void toBinding(final ModuleBinding binding, final SOAProfile profile) {
+  public void build(final ModuleBinding binding, final SOAProfile profile) {
     String _name = binding.getName();
     String _plus = ("Generating technical service contracts for binding " + _name);
     this.log.info(_plus);
@@ -81,7 +82,7 @@ public class BindingBuilder {
     }
   }
   
-  public void toBinding(final ModuleBinding binding, final SOAProfile profile, final boolean noDeps, final boolean includeSubNamespaces) {
+  public void build(final ModuleBinding binding, final SOAProfile profile, final boolean noDeps, final boolean includeSubNamespaces) {
     String _name = binding.getName();
     String _plus = ("Generating technical service contracts for binding " + _name);
     this.log.info(_plus);
@@ -102,7 +103,7 @@ public class BindingBuilder {
     }
   }
   
-  public void toBinding(final Module module, final Environment environment, final boolean generateProvidedServices, final boolean generateUsedServices, final EndpointQualifierRef providerEndpointQualifier, final SOAProfile profile) {
+  public void build(final Module module, final Environment environment, final boolean generateProvidedServices, final boolean generateUsedServices, final EndpointQualifierRef endpointQualifierRef, final SOAProfile profile) {
     String _name = module.getName();
     String _plus = ("Generating technical service contracts for services used by module " + _name);
     String _plus_1 = (_plus + " with modules providing the services bound to environment ");
@@ -110,7 +111,7 @@ public class BindingBuilder {
     String _plus_2 = (_plus_1 + _name_1);
     this.log.info(_plus_2);
     try {
-      this.contractBuilder.build(module, environment, generateProvidedServices, generateUsedServices, providerEndpointQualifier, profile);
+      this.contractBuilder.build(module, environment, generateProvidedServices, generateUsedServices, endpointQualifierRef, profile);
     } catch (final Throwable _t) {
       if (_t instanceof Exception) {
         final Exception ex = (Exception)_t;
@@ -132,7 +133,7 @@ public class BindingBuilder {
   /**
    * Event XSDs for Services having an request and an response event for each service operation
    */
-  public void toEventsInclSubNamespaces(final String namespaceName, final List<SubNamespace> namespaces, final List<Environment> environments, final String targetEnv, final List<SOAProfile> profiles, final String profileName) {
+  public void buildEventsInclSubNamespaces(final String namespaceName, final List<SubNamespace> namespaces, final List<Environment> environments, final String targetEnv, final List<SOAProfile> profiles, final String profileName) {
     boolean _notEquals = (!Objects.equal(namespaceName, null));
     if (_notEquals) {
       final Function1<SubNamespace,Boolean> _function = new Function1<SubNamespace,Boolean>() {
@@ -144,14 +145,14 @@ public class BindingBuilder {
         };
       Iterable<SubNamespace> _filter = IterableExtensions.<SubNamespace>filter(namespaces, _function);
       for (final SubNamespace ns : _filter) {
-        this.toEvents(ns, environments, targetEnv, profiles, profileName);
+        this.buildEvents(ns, environments, targetEnv, profiles, profileName);
       }
     } else {
       this.log.severe("No namespace name expression has been supplied");
     }
   }
   
-  public void toEvents(final SubNamespace ns, final List<Environment> environments, final String targetEnv, final List<SOAProfile> profiles, final String profileName) {
+  public void buildEvents(final SubNamespace ns, final List<Environment> environments, final String targetEnv, final List<SOAProfile> profiles, final String profileName) {
     final Function1<Environment,Boolean> _function = new Function1<Environment,Boolean>() {
         public Boolean apply(final Environment e) {
           String _name = e.getName();

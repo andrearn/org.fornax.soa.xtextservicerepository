@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+   <extension-point id="SLADSLValidator" name="Pluggable SLA DSL validator" schema="schema/SLADSLValidator.exsd"/>
+
+	<extension
+         point="org.eclipse.team.core.fileTypes">
+      <fileTypes
+            type="text"
+            extension="sladsl">
+      </fileTypes>
+   	</extension>
+   	<extension
+	      point = "org.eclipse.ui.newWizards">
+		 <wizard
+         category="org.fornax.soa.sladsl.ui.newWizards"
+         class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.fornax.soa.sladsl.ui.wizard.NewSLADslFileWizard"
+         hasPages="true"
+
+         id="org.fornax.soa.ui.wizard.NewSLADslFileWizard"
+         name="SLA DSL file">
+	       <description>Create a new Service Level Agreement DSL file</description>
+		   <selection class="org.eclipse.core.resources.IResource"/>
+		</wizard>
+	</extension>
+    <extension
+            point="org.eclipse.ui.editors">
+        <editor
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
+            default="true"
+            extensions="sladsl"
+            id="org.fornax.soa.sladsl.SLADsl"
+            name="SLADsl Editor">
+        </editor>
+    </extension>
+    <extension
+        point="org.eclipse.ui.handlers">
+        <handler
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
+            <activeWhen>
+                <reference
+                    definitionId="org.fornax.soa.sladsl.SLADsl.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+        <handler
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="org.fornax.soa.sladsl.SLADsl.validate">
+         <activeWhen>
+            <reference
+                    definitionId="org.fornax.soa.sladsl.SLADsl.Editor.opened">
+            </reference>
+         </activeWhen>
+      </handler>
+    </extension>
+    <extension point="org.eclipse.core.expressions.definitions">
+        <definition id="org.fornax.soa.sladsl.SLADsl.Editor.opened">
+            <and>
+                <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
+                <with variable="activeEditor">
+                    <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
+                        value="org.fornax.soa.sladsl.SLADsl" 
+                        forcePluginActivation="true"/>
+                </with>        
+            </and>
+        </definition>
+    </extension>
+    <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.fornax.soa.sladsl.SLADsl"
+            name="SLADsl">
+            <keywordReference id="org.fornax.soa.sladsl.ui.keyword_SLADsl"/>
+        </page>
+        <page
+            category="org.fornax.soa.sladsl.SLADsl"
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="org.fornax.soa.sladsl.SLADsl.coloring"
+            name="Syntax Coloring">
+            <keywordReference id="org.fornax.soa.sladsl.ui.keyword_SLADsl"/>
+        </page>
+        <page
+            category="org.fornax.soa.sladsl.SLADsl"
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="org.fornax.soa.sladsl.SLADsl.templates"
+            name="Templates">
+            <keywordReference id="org.fornax.soa.sladsl.ui.keyword_SLADsl"/>
+        </page>
+    </extension>
+    <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.fornax.soa.sladsl.SLADsl"
+            name="SLADsl">
+            <keywordReference id="org.fornax.soa.sladsl.ui.keyword_SLADsl"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
+    <extension
+        point="org.eclipse.ui.keywords">
+        <keyword
+            id="org.fornax.soa.sladsl.ui.keyword_SLADsl"
+            label="SLADsl"/>
+    </extension>
+    <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Trigger expensive validation"
+            id="org.fornax.soa.sladsl.SLADsl.validate"
+            name="Validate">
+      </command>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+        <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+             <command
+                 commandId="org.fornax.soa.sladsl.SLADsl.validate"
+                 style="push"
+                 tooltip="Trigger expensive validation">
+            <visibleWhen checkEnabled="false">
+                <reference
+                    definitionId="org.fornax.soa.sladsl.SLADsl.Editor.opened">
+                </reference>
+            </visibleWhen>
+         </command>  
+         </menuContribution>
+    </extension>
+    <extension point="org.eclipse.ui.menus">
+		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
+			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
+				<visibleWhen checkEnabled="false">
+                	<reference definitionId="org.fornax.soa.sladsl.SLADsl.Editor.opened">
+                	</reference>
+            	</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+	<extension point="org.eclipse.ui.handlers">
+	    <handler
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            commandId="org.eclipse.xtext.ui.editor.FindReferences">
+            <activeWhen>
+                <reference
+                    definitionId="org.fornax.soa.sladsl.SLADsl.Editor.opened">
+                </reference>
+            </activeWhen>
+        </handler>
+    </extension>   
+
+<!-- adding resource factories -->
+
+	<extension
+		point="org.eclipse.emf.ecore.extension_parser">
+		<parser
+			class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="sladsl">
+		</parser>
+	</extension>
+	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
+        <resourceServiceProvider
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="sladsl">
+        </resourceServiceProvider>
+    </extension>
+
+
+    <!-- marker definitions for org.fornax.soa.sladsl.SLADsl -->
+    <extension
+            id="sladsl.check.fast"
+            name="SLADsl Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.fast"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="sladsl.check.normal"
+            name="SLADsl Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.normal"/>
+        <persistent value="true"/>
+    </extension>
+    <extension
+            id="sladsl.check.expensive"
+            name="SLADsl Problem"
+            point="org.eclipse.core.resources.markers">
+        <super type="org.eclipse.xtext.ui.check.expensive"/>
+        <persistent value="true"/>
+    </extension>
+
+	<!-- Quick Outline -->
+	<extension
+		point="org.eclipse.ui.handlers">
+		<handler 
+			class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
+			<activeWhen>
+				<reference
+					definitionId="org.fornax.soa.sladsl.SLADsl.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+	<extension
+		point="org.eclipse.ui.commands">
+		<command
+			description="Open the quick outline."
+			id="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+			name="Quick Outline">
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:#TextEditorContext?after=group.open">
+			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+				style="push"
+				tooltip="Open Quick Outline">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="org.fornax.soa.sladsl.SLADsl.Editor.opened"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
+    <!-- quickfix marker resolution generator for org.fornax.soa.sladsl.SLADsl -->
+    <extension
+            point="org.eclipse.ui.ide.markerResolution">
+        <markerResolutionGenerator
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.fornax.soa.sladsl.ui.sladsl.check.fast">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.fornax.soa.sladsl.ui.sladsl.check.normal">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+        <markerResolutionGenerator
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.fornax.soa.sladsl.ui.sladsl.check.expensive">
+            <attribute
+                name="FIXABLE_KEY"
+                value="true">
+            </attribute>
+        </markerResolutionGenerator>
+    </extension>
+
+  <extension point="org.eclipse.compare.contentViewers">
+    <viewer id="org.fornax.soa.sladsl.SLADsl.compare.contentViewers"
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="sladsl">
+    </viewer>
+  </extension>
+  <extension point="org.eclipse.compare.contentMergeViewers">
+    <viewer id="org.fornax.soa.sladsl.SLADsl.compare.contentMergeViewers"
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="sladsl" label="SLADsl Compare">
+     </viewer>
+  </extension>
+  <extension point="org.eclipse.ui.editors.documentProviders">
+    <provider id="org.fornax.soa.sladsl.SLADsl.editors.documentProviders"
+            class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="sladsl">
+    </provider>
+  </extension>
+   	<!-- Rename Refactoring -->
+	<extension point="org.eclipse.ui.handlers">
+		<handler 
+			class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.IRenameElementHandler"
+			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
+			<activeWhen>
+				<reference
+					definitionId="org.fornax.soa.sladsl.SLADsl.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
+	</extension>
+    <extension point="org.eclipse.ui.menus">
+         <menuContribution
+            locationURI="popup:#TextEditorContext?after=group.edit">
+         <command commandId="org.eclipse.xtext.ui.refactoring.RenameElement"
+               style="push">
+            <visibleWhen checkEnabled="false">
+               <reference
+                     definitionId="org.fornax.soa.sladsl.SLADsl.Editor.opened">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   <extension point="org.eclipse.ui.preferencePages">
+	    <page
+	        category="org.fornax.soa.sladsl.SLADsl"
+	        class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="org.fornax.soa.sladsl.SLADsl.refactoring"
+	        name="Refactoring">
+	        <keywordReference id="org.fornax.soa.sladsl.ui.keyword_SLADsl"/>
+	    </page>
+	</extension>
+
+</plugin>

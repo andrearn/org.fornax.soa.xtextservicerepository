@@ -213,14 +213,14 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
     }
   }
   
-  public void buildProvidedServiceContracts(final Module module, final Environment targetEnvironment, final EndpointQualifierRef providerEndpointQualifier, final SOAProfile profile) {
+  public void buildProvidedServiceContracts(final Module module, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifierRef, final SOAProfile profile) {
     String _name = module.getName();
     String _plus = ("Generating WSDLs and XSDs for services provided by module " + _name);
     String _plus_1 = (_plus + " looking up binding for used module to environment ");
     String _name_1 = targetEnvironment.getName();
     String _plus_2 = (_plus_1 + _name_1);
     this.log.fine(_plus_2);
-    final Set<ServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleProvidedServiceBindings(module, targetEnvironment, providerEndpointQualifier);
+    final Set<ServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleProvidedServiceBindings(module, targetEnvironment, endpointQualifierRef);
     for (final ServiceRefBindingDescription specBindingDesc : bindingDescs) {
       {
         final Service svc = specBindingDesc.getResolvedService();
@@ -272,14 +272,14 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
     }
   }
   
-  public void buildUsedServiceContracts(final Module module, final Environment targetEnvironment, final SOAProfile profile) {
+  public void buildUsedServiceContracts(final Module module, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifierRef, final SOAProfile profile) {
     String _name = module.getName();
     String _plus = ("Generating WSDLs and XSDs for used services in module " + _name);
     String _plus_1 = (_plus + " looking up binding for used module to environment ");
     String _name_1 = targetEnvironment.getName();
     String _plus_2 = (_plus_1 + _name_1);
     this.log.fine(_plus_2);
-    final Set<ServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleUsedServiceBindings(module, targetEnvironment);
+    final Set<ServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleUsedServiceBindings(module, targetEnvironment, endpointQualifierRef);
     for (final ServiceRefBindingDescription specBindingDesc : bindingDescs) {
       {
         final Service svc = specBindingDesc.getResolvedService();
