@@ -12,6 +12,8 @@ import org.fornax.soa.service.query.VersionQueries
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
+import java.util.logging.Logger
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef
 
 /**
  * Resolves Bindings of service/modules as explicit descriptions describing which Binding applies to which service 
@@ -23,6 +25,7 @@ class BindingResolver {
 	@Inject BindingLookup bindingLookup
 	@Inject EndpointQualifierQueries endpointQualifierQuery
 	@Inject IModuleReferenceResolver modRefResolver
+	@Inject Logger log
 	
 	/**
 	 * Resolve Bindings of all services provided by a module in the given environment. Endpoint qualifiers in the module definition that select used endpoints of used services
@@ -69,12 +72,12 @@ class BindingResolver {
 	 * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
 	 * 								have any or no potentially effective endpoint qualifier
 	 */
-	def Set<ServiceRefBindingDescription> resolveCompatibleUsedServiceBindings (Module module, Environment targetEnvironment) {
+	def Set<ServiceRefBindingDescription> resolveCompatibleUsedServiceBindings (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifierRef) {
 		val usedServiceRefs = modServiceResolver.getAllUsedServiceRefs(module)
 		val lifecycle = module.state.eContainer as Lifecycle
 		val Set<ServiceRefBindingDescription> svcBindDescs= newHashSet
 		for (usedModRef : module.usedModules) {
-			val selectingEndpointQualifierRef = if (usedModRef.endpointQualifierRef?.endpointQualifier != null) usedModRef.endpointQualifierRef else module.endpointQualifierRef
+			val selectingEndpointQualifierRef = getSelectingEndpointQualifier (usedModRef, module, endpointQualifierRef)
 			val providerModule = modRefResolver.resolveModuleRef (usedModRef, targetEnvironment, lifecycle)
 			val impModSvcBindDescs = resolveCompatibleProvidedServiceBindings (providerModule, targetEnvironment, selectingEndpointQualifierRef)
 			
@@ -121,5 +124,28 @@ class BindingResolver {
 		return svcBindDescs
 	}
 	
+	def private EndpointQualifierRef getSelectingEndpointQualifier (ModuleRef usedModRef, Module module, EndpointQualifierRef endpointQualifierRef) {
+		val moduleEndpointQualifierRef = 	if (usedModRef.endpointQualifierRef?.endpointQualifier != null) 
+													usedModRef.endpointQualifierRef 
+												else 
+													module.endpointQualifierRef
+		val selectingEndpointQualifierRef = if (endpointQualifierRef != null 
+														&& moduleEndpointQualifierRef?.endpointQualifier?.name != null
+												) {
+													if (!endpointQualifierRef.endpointQualifier.name.equals(moduleEndpointQualifierRef?.endpointQualifier?.name)) {
+														log.warning ("The modules endpoint qualifier " + 
+															moduleEndpointQualifierRef?.endpointQualifier?.name + 
+															" has been overridden with the endpoint qualifier " + 
+															endpointQualifierRef.endpointQualifier.name
+														)
+													}
+													usedModRef.endpointQualifierRef 
+												} else if (endpointQualifierRef != null)  {
+													endpointQualifierRef 
+												} else { 
+													module.endpointQualifierRef
+												}
+		return selectingEndpointQualifierRef	
+	}
 	
 }
