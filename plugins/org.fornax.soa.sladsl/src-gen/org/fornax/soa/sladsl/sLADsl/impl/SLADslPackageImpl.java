@@ -529,7 +529,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSLA_ServiceQualityProperties()
+  public EReference getSLA_Costs()
   {
     return (EReference)slaEClass.getEStructuralFeatures().get(8);
   }
@@ -539,7 +539,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSLA_Costs()
+  public EReference getSLA_ServiceQualityProperties()
   {
     return (EReference)slaEClass.getEStructuralFeatures().get(9);
   }
@@ -1856,8 +1856,8 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     createEAttribute(slaEClass, SLA__DESCRIPTION);
     createEAttribute(slaEClass, SLA__SCOPE);
     createEReference(slaEClass, SLA__APPLIES_TO);
-    createEReference(slaEClass, SLA__SERVICE_QUALITY_PROPERTIES);
     createEReference(slaEClass, SLA__COSTS);
+    createEReference(slaEClass, SLA__SERVICE_QUALITY_PROPERTIES);
     createEAttribute(slaEClass, SLA__DATA_SEC_PROT_CLAUSE);
     createEReference(slaEClass, SLA__SECURITY_REQUIREMENTS);
     createEAttribute(slaEClass, SLA__RESTRICTIONS);
@@ -2083,8 +2083,8 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     initEAttribute(getSLA_Description(), ecorePackage.getEString(), "description", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_Scope(), ecorePackage.getEString(), "scope", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_AppliesTo(), this.getAssetRef(), null, "appliesTo", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSLA_ServiceQualityProperties(), this.getServiceQualityProperty(), null, "serviceQualityProperties", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_Costs(), this.getCost(), null, "costs", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSLA_ServiceQualityProperties(), this.getServiceQualityProperty(), null, "serviceQualityProperties", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_DataSecProtClause(), ecorePackage.getEString(), "dataSecProtClause", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_SecurityRequirements(), this.getSecurityRequirement(), null, "securityRequirements", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_Restrictions(), ecorePackage.getEString(), "restrictions", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

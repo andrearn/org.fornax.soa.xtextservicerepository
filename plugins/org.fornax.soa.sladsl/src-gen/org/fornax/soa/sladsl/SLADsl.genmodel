@@ -77,8 +77,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/description"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/scope"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/appliesTo"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/serviceQualityProperties"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/costs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/serviceQualityProperties"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/dataSecProtClause"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/securityRequirements"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/restrictions"/>

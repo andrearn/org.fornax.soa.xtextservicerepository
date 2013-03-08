@@ -29,8 +29,11 @@ SLA:
 			('applies-to' '{'
 				appliesTo += AssetRef* 
 			'}')
-			(serviceQualityProperties += ServiceQualityProperty)*
 			(costs = Cost )?
+			('service-quality-requirements' '{'
+				(serviceQualityProperties += ServiceQualityProperty)*
+			'}'
+			)
 			('data-security-and-protection' '{'
 					('general-security-terms' dataSecProtClause = STRING)?
 					('security-requirements' '{' 

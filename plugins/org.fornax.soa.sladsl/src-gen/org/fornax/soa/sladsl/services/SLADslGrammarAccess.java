@@ -71,10 +71,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cAppliesToAssignment_10_2 = (Assignment)cGroup_10.eContents().get(2);
 		private final RuleCall cAppliesToAssetRefParserRuleCall_10_2_0 = (RuleCall)cAppliesToAssignment_10_2.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_10_3 = (Keyword)cGroup_10.eContents().get(3);
-		private final Assignment cServiceQualityPropertiesAssignment_11 = (Assignment)cGroup.eContents().get(11);
-		private final RuleCall cServiceQualityPropertiesServiceQualityPropertyParserRuleCall_11_0 = (RuleCall)cServiceQualityPropertiesAssignment_11.eContents().get(0);
-		private final Assignment cCostsAssignment_12 = (Assignment)cGroup.eContents().get(12);
-		private final RuleCall cCostsCostParserRuleCall_12_0 = (RuleCall)cCostsAssignment_12.eContents().get(0);
+		private final Assignment cCostsAssignment_11 = (Assignment)cGroup.eContents().get(11);
+		private final RuleCall cCostsCostParserRuleCall_11_0 = (RuleCall)cCostsAssignment_11.eContents().get(0);
+		private final Group cGroup_12 = (Group)cGroup.eContents().get(12);
+		private final Keyword cServiceQualityRequirementsKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_12_1 = (Keyword)cGroup_12.eContents().get(1);
+		private final Assignment cServiceQualityPropertiesAssignment_12_2 = (Assignment)cGroup_12.eContents().get(2);
+		private final RuleCall cServiceQualityPropertiesServiceQualityPropertyParserRuleCall_12_2_0 = (RuleCall)cServiceQualityPropertiesAssignment_12_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_12_3 = (Keyword)cGroup_12.eContents().get(3);
 		private final Group cGroup_13 = (Group)cGroup.eContents().get(13);
 		private final Keyword cDataSecurityAndProtectionKeyword_13_0 = (Keyword)cGroup_13.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_13_1 = (Keyword)cGroup_13.eContents().get(1);
@@ -127,24 +131,24 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//SLA:
 		//	"service-level-agreement" name=QualifiedName "{" ("owner" owner=STRING)? "effective-date" effectiveDate=STRING
 		//	("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
-		//	scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}") serviceQualityProperties+=ServiceQualityProperty*
-		//	costs=Cost? ("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)?
-		//	("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")? ("restrictions"
-		//	restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation? ("additional-services"
-		//	additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)? ("extraordinary-cancellation"
-		//	extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)? reports+=Report* ("tags"
-		//	tags+=[semanticsDsl::Tag]+)* "}";
+		//	scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}") costs=Cost? ("service-quality-requirements" "{"
+		//	serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
+		//	dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
+		//	("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
+		//	("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
+		//	("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
+		//	reports+=Report* ("tags" tags+=[semanticsDsl::Tag]+)* "}";
 		public ParserRule getRule() { return rule; }
 
 		//"service-level-agreement" name=QualifiedName "{" ("owner" owner=STRING)? "effective-date" effectiveDate=STRING
 		//("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
-		//scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}") serviceQualityProperties+=ServiceQualityProperty*
-		//costs=Cost? ("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)?
-		//("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")? ("restrictions"
-		//restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation? ("additional-services"
-		//additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)? ("extraordinary-cancellation"
-		//extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)? reports+=Report* ("tags"
-		//tags+=[semanticsDsl::Tag]+)* "}"
+		//scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}") costs=Cost? ("service-quality-requirements" "{"
+		//serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
+		//dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
+		//("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
+		//("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
+		//("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
+		//reports+=Report* ("tags" tags+=[semanticsDsl::Tag]+)* "}"
 		public Group getGroup() { return cGroup; }
 
 		//"service-level-agreement"
@@ -246,17 +250,29 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_10_3() { return cRightCurlyBracketKeyword_10_3; }
 
-		//serviceQualityProperties+=ServiceQualityProperty*
-		public Assignment getServiceQualityPropertiesAssignment_11() { return cServiceQualityPropertiesAssignment_11; }
-
-		//ServiceQualityProperty
-		public RuleCall getServiceQualityPropertiesServiceQualityPropertyParserRuleCall_11_0() { return cServiceQualityPropertiesServiceQualityPropertyParserRuleCall_11_0; }
-
 		//costs=Cost?
-		public Assignment getCostsAssignment_12() { return cCostsAssignment_12; }
+		public Assignment getCostsAssignment_11() { return cCostsAssignment_11; }
 
 		//Cost
-		public RuleCall getCostsCostParserRuleCall_12_0() { return cCostsCostParserRuleCall_12_0; }
+		public RuleCall getCostsCostParserRuleCall_11_0() { return cCostsCostParserRuleCall_11_0; }
+
+		//"service-quality-requirements" "{" serviceQualityProperties+=ServiceQualityProperty* "}"
+		public Group getGroup_12() { return cGroup_12; }
+
+		//"service-quality-requirements"
+		public Keyword getServiceQualityRequirementsKeyword_12_0() { return cServiceQualityRequirementsKeyword_12_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_12_1() { return cLeftCurlyBracketKeyword_12_1; }
+
+		//serviceQualityProperties+=ServiceQualityProperty*
+		public Assignment getServiceQualityPropertiesAssignment_12_2() { return cServiceQualityPropertiesAssignment_12_2; }
+
+		//ServiceQualityProperty
+		public RuleCall getServiceQualityPropertiesServiceQualityPropertyParserRuleCall_12_2_0() { return cServiceQualityPropertiesServiceQualityPropertyParserRuleCall_12_2_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_12_3() { return cRightCurlyBracketKeyword_12_3; }
 
 		//("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)? ("security-requirements" "{"
 		//securityRequirements+=SecurityRequirement* "}") "}")?
@@ -2728,13 +2744,13 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	//SLA:
 	//	"service-level-agreement" name=QualifiedName "{" ("owner" owner=STRING)? "effective-date" effectiveDate=STRING
 	//	("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
-	//	scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}") serviceQualityProperties+=ServiceQualityProperty*
-	//	costs=Cost? ("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)?
-	//	("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")? ("restrictions"
-	//	restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation? ("additional-services"
-	//	additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)? ("extraordinary-cancellation"
-	//	extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)? reports+=Report* ("tags"
-	//	tags+=[semanticsDsl::Tag]+)* "}";
+	//	scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}") costs=Cost? ("service-quality-requirements" "{"
+	//	serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
+	//	dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
+	//	("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
+	//	("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
+	//	("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
+	//	reports+=Report* ("tags" tags+=[semanticsDsl::Tag]+)* "}";
 	public SLAElements getSLAAccess() {
 		return (pSLA != null) ? pSLA : (pSLA = new SLAElements());
 	}

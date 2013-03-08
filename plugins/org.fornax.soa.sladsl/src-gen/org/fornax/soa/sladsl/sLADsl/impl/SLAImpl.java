@@ -50,8 +50,8 @@ import org.fornax.soa.sladsl.sLADsl.ServiceQualityProperty;
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getScope <em>Scope</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getAppliesTo <em>Applies To</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getServiceQualityProperties <em>Service Quality Properties</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getCosts <em>Costs</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getServiceQualityProperties <em>Service Quality Properties</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getDataSecProtClause <em>Data Sec Prot Clause</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getSecurityRequirements <em>Security Requirements</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getRestrictions <em>Restrictions</em>}</li>
@@ -222,16 +222,6 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
   protected EList<AssetRef> appliesTo;
 
   /**
-   * The cached value of the '{@link #getServiceQualityProperties() <em>Service Quality Properties</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getServiceQualityProperties()
-   * @generated
-   * @ordered
-   */
-  protected EList<ServiceQualityProperty> serviceQualityProperties;
-
-  /**
    * The cached value of the '{@link #getCosts() <em>Costs</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -240,6 +230,16 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * @ordered
    */
   protected Cost costs;
+
+  /**
+   * The cached value of the '{@link #getServiceQualityProperties() <em>Service Quality Properties</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getServiceQualityProperties()
+   * @generated
+   * @ordered
+   */
+  protected EList<ServiceQualityProperty> serviceQualityProperties;
 
   /**
    * The default value of the '{@link #getDataSecProtClause() <em>Data Sec Prot Clause</em>}' attribute.
@@ -622,20 +622,6 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<ServiceQualityProperty> getServiceQualityProperties()
-  {
-    if (serviceQualityProperties == null)
-    {
-      serviceQualityProperties = new EObjectContainmentEList<ServiceQualityProperty>(ServiceQualityProperty.class, this, SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES);
-    }
-    return serviceQualityProperties;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Cost getCosts()
   {
     return costs;
@@ -677,6 +663,20 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
     }
     else if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__COSTS, newCosts, newCosts));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<ServiceQualityProperty> getServiceQualityProperties()
+  {
+    if (serviceQualityProperties == null)
+    {
+      serviceQualityProperties = new EObjectContainmentEList<ServiceQualityProperty>(ServiceQualityProperty.class, this, SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES);
+    }
+    return serviceQualityProperties;
   }
 
   /**
@@ -947,10 +947,10 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
     {
       case SLADslPackage.SLA__APPLIES_TO:
         return ((InternalEList<?>)getAppliesTo()).basicRemove(otherEnd, msgs);
-      case SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES:
-        return ((InternalEList<?>)getServiceQualityProperties()).basicRemove(otherEnd, msgs);
       case SLADslPackage.SLA__COSTS:
         return basicSetCosts(null, msgs);
+      case SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES:
+        return ((InternalEList<?>)getServiceQualityProperties()).basicRemove(otherEnd, msgs);
       case SLADslPackage.SLA__SECURITY_REQUIREMENTS:
         return ((InternalEList<?>)getSecurityRequirements()).basicRemove(otherEnd, msgs);
       case SLADslPackage.SLA__PRIORITIES:
@@ -991,10 +991,10 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         return getScope();
       case SLADslPackage.SLA__APPLIES_TO:
         return getAppliesTo();
-      case SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES:
-        return getServiceQualityProperties();
       case SLADslPackage.SLA__COSTS:
         return getCosts();
+      case SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES:
+        return getServiceQualityProperties();
       case SLADslPackage.SLA__DATA_SEC_PROT_CLAUSE:
         return getDataSecProtClause();
       case SLADslPackage.SLA__SECURITY_REQUIREMENTS:
@@ -1059,12 +1059,12 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         getAppliesTo().clear();
         getAppliesTo().addAll((Collection<? extends AssetRef>)newValue);
         return;
+      case SLADslPackage.SLA__COSTS:
+        setCosts((Cost)newValue);
+        return;
       case SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES:
         getServiceQualityProperties().clear();
         getServiceQualityProperties().addAll((Collection<? extends ServiceQualityProperty>)newValue);
-        return;
-      case SLADslPackage.SLA__COSTS:
-        setCosts((Cost)newValue);
         return;
       case SLADslPackage.SLA__DATA_SEC_PROT_CLAUSE:
         setDataSecProtClause((String)newValue);
@@ -1145,11 +1145,11 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
       case SLADslPackage.SLA__APPLIES_TO:
         getAppliesTo().clear();
         return;
-      case SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES:
-        getServiceQualityProperties().clear();
-        return;
       case SLADslPackage.SLA__COSTS:
         setCosts((Cost)null);
+        return;
+      case SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES:
+        getServiceQualityProperties().clear();
         return;
       case SLADslPackage.SLA__DATA_SEC_PROT_CLAUSE:
         setDataSecProtClause(DATA_SEC_PROT_CLAUSE_EDEFAULT);
@@ -1217,10 +1217,10 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         return SCOPE_EDEFAULT == null ? scope != null : !SCOPE_EDEFAULT.equals(scope);
       case SLADslPackage.SLA__APPLIES_TO:
         return appliesTo != null && !appliesTo.isEmpty();
-      case SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES:
-        return serviceQualityProperties != null && !serviceQualityProperties.isEmpty();
       case SLADslPackage.SLA__COSTS:
         return costs != null;
+      case SLADslPackage.SLA__SERVICE_QUALITY_PROPERTIES:
+        return serviceQualityProperties != null && !serviceQualityProperties.isEmpty();
       case SLADslPackage.SLA__DATA_SEC_PROT_CLAUSE:
         return DATA_SEC_PROT_CLAUSE_EDEFAULT == null ? dataSecProtClause != null : !DATA_SEC_PROT_CLAUSE_EDEFAULT.equals(dataSecProtClause);
       case SLADslPackage.SLA__SECURITY_REQUIREMENTS:

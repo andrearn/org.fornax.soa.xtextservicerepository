@@ -171,22 +171,22 @@ public interface SLADslPackage extends EPackage
   int SLA__APPLIES_TO = 7;
 
   /**
-   * The feature id for the '<em><b>Service Quality Properties</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SLA__SERVICE_QUALITY_PROPERTIES = 8;
-
-  /**
    * The feature id for the '<em><b>Costs</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SLA__COSTS = 9;
+  int SLA__COSTS = 8;
+
+  /**
+   * The feature id for the '<em><b>Service Quality Properties</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SLA__SERVICE_QUALITY_PROPERTIES = 9;
 
   /**
    * The feature id for the '<em><b>Data Sec Prot Clause</b></em>' attribute.
@@ -1913,17 +1913,6 @@ public interface SLADslPackage extends EPackage
   EReference getSLA_AppliesTo();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.fornax.soa.sladsl.sLADsl.SLA#getServiceQualityProperties <em>Service Quality Properties</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Service Quality Properties</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.SLA#getServiceQualityProperties()
-   * @see #getSLA()
-   * @generated
-   */
-  EReference getSLA_ServiceQualityProperties();
-
-  /**
    * Returns the meta object for the containment reference '{@link org.fornax.soa.sladsl.sLADsl.SLA#getCosts <em>Costs</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1933,6 +1922,17 @@ public interface SLADslPackage extends EPackage
    * @generated
    */
   EReference getSLA_Costs();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.fornax.soa.sladsl.sLADsl.SLA#getServiceQualityProperties <em>Service Quality Properties</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Service Quality Properties</em>'.
+   * @see org.fornax.soa.sladsl.sLADsl.SLA#getServiceQualityProperties()
+   * @see #getSLA()
+   * @generated
+   */
+  EReference getSLA_ServiceQualityProperties();
 
   /**
    * Returns the meta object for the attribute '{@link org.fornax.soa.sladsl.sLADsl.SLA#getDataSecProtClause <em>Data Sec Prot Clause</em>}'.
@@ -3409,20 +3409,20 @@ public interface SLADslPackage extends EPackage
     EReference SLA__APPLIES_TO = eINSTANCE.getSLA_AppliesTo();
 
     /**
-     * The meta object literal for the '<em><b>Service Quality Properties</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SLA__SERVICE_QUALITY_PROPERTIES = eINSTANCE.getSLA_ServiceQualityProperties();
-
-    /**
      * The meta object literal for the '<em><b>Costs</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference SLA__COSTS = eINSTANCE.getSLA_Costs();
+
+    /**
+     * The meta object literal for the '<em><b>Service Quality Properties</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SLA__SERVICE_QUALITY_PROPERTIES = eINSTANCE.getSLA_ServiceQualityProperties();
 
     /**
      * The meta object literal for the '<em><b>Data Sec Prot Clause</b></em>' attribute feature.

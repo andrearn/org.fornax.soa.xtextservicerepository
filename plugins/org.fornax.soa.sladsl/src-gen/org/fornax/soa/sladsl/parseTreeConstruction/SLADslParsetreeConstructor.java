@@ -144,25 +144,25 @@ protected class SlaModel_AgreementsAssignment extends AssignmentToken  {
  * SLA:
  * 	"service-level-agreement" name=QualifiedName "{" ("owner" owner=STRING)? "effective-date" effectiveDate=STRING
  * 	("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
- * 	scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}") serviceQualityProperties+=ServiceQualityProperty*
- * 	costs=Cost? ("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)?
- * 	("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")? ("restrictions"
- * 	restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation? ("additional-services"
- * 	additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)? ("extraordinary-cancellation"
- * 	extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)? reports+=Report* ("tags"
- * 	tags+=[semanticsDsl::Tag]+)* "}";
+ * 	scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}") costs=Cost? ("service-quality-requirements" "{"
+ * 	serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
+ * 	dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
+ * 	("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
+ * 	("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
+ * 	("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
+ * 	reports+=Report* ("tags" tags+=[semanticsDsl::Tag]+)* "}";
  *
  **/
 
 // "service-level-agreement" name=QualifiedName "{" ("owner" owner=STRING)? "effective-date" effectiveDate=STRING
 // ("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
-// scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}") serviceQualityProperties+=ServiceQualityProperty*
-// costs=Cost? ("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)?
-// ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")? ("restrictions"
-// restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation? ("additional-services"
-// additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)? ("extraordinary-cancellation"
-// extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)? reports+=Report* ("tags"
-// tags+=[semanticsDsl::Tag]+)* "}"
+// scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}") costs=Cost? ("service-quality-requirements" "{"
+// serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
+// dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
+// ("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
+// ("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
+// ("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
+// reports+=Report* ("tags" tags+=[semanticsDsl::Tag]+)* "}"
 protected class SLA_Group extends GroupToken {
 	
 	public SLA_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -867,63 +867,16 @@ protected class SLA_RightCurlyBracketKeyword_10_3 extends KeywordToken  {
 }
 
 
-// serviceQualityProperties+=ServiceQualityProperty*
-protected class SLA_ServiceQualityPropertiesAssignment_11 extends AssignmentToken  {
-	
-	public SLA_ServiceQualityPropertiesAssignment_11(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getSLAAccess().getServiceQualityPropertiesAssignment_11();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new ServiceQualityProperty_Alternatives(this, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("serviceQualityProperties",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("serviceQualityProperties");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getServiceQualityPropertyRule().getType().getClassifier())) {
-				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getSLAAccess().getServiceQualityPropertiesServiceQualityPropertyParserRuleCall_11_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-    @Override
-	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
-		if(value == inst.getEObject() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, next, actIndex, consumed);
-			case 1: return new SLA_Group_10(lastRuleCallOrigin, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
 // costs=Cost?
-protected class SLA_CostsAssignment_12 extends AssignmentToken  {
+protected class SLA_CostsAssignment_11 extends AssignmentToken  {
 	
-	public SLA_CostsAssignment_12(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public SLA_CostsAssignment_11(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getSLAAccess().getCostsAssignment_12();
+		return grammarAccess.getSLAAccess().getCostsAssignment_11();
 	}
 
     @Override
@@ -942,7 +895,7 @@ protected class SLA_CostsAssignment_12 extends AssignmentToken  {
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
 			if(param.isInstanceOf(grammarAccess.getCostRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getSLAAccess().getCostsCostParserRuleCall_12_0(); 
+				element = grammarAccess.getSLAAccess().getCostsCostParserRuleCall_11_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -954,12 +907,149 @@ protected class SLA_CostsAssignment_12 extends AssignmentToken  {
 	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
 		if(value == inst.getEObject() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, next, actIndex, consumed);
-			case 1: return new SLA_Group_10(lastRuleCallOrigin, next, actIndex, consumed);
+			case 0: return new SLA_Group_10(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
 }
+
+// "service-quality-requirements" "{" serviceQualityProperties+=ServiceQualityProperty* "}"
+protected class SLA_Group_12 extends GroupToken {
+	
+	public SLA_Group_12(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getSLAAccess().getGroup_12();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new SLA_RightCurlyBracketKeyword_12_3(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "service-quality-requirements"
+protected class SLA_ServiceQualityRequirementsKeyword_12_0 extends KeywordToken  {
+	
+	public SLA_ServiceQualityRequirementsKeyword_12_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getSLAAccess().getServiceQualityRequirementsKeyword_12_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new SLA_CostsAssignment_11(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new SLA_Group_10(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "{"
+protected class SLA_LeftCurlyBracketKeyword_12_1 extends KeywordToken  {
+	
+	public SLA_LeftCurlyBracketKeyword_12_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getSLAAccess().getLeftCurlyBracketKeyword_12_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new SLA_ServiceQualityRequirementsKeyword_12_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// serviceQualityProperties+=ServiceQualityProperty*
+protected class SLA_ServiceQualityPropertiesAssignment_12_2 extends AssignmentToken  {
+	
+	public SLA_ServiceQualityPropertiesAssignment_12_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getSLAAccess().getServiceQualityPropertiesAssignment_12_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new ServiceQualityProperty_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("serviceQualityProperties",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("serviceQualityProperties");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getServiceQualityPropertyRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getSLAAccess().getServiceQualityPropertiesServiceQualityPropertyParserRuleCall_12_2_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new SLA_ServiceQualityPropertiesAssignment_12_2(lastRuleCallOrigin, next, actIndex, consumed);
+			case 1: return new SLA_LeftCurlyBracketKeyword_12_1(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+// "}"
+protected class SLA_RightCurlyBracketKeyword_12_3 extends KeywordToken  {
+	
+	public SLA_RightCurlyBracketKeyword_12_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getSLAAccess().getRightCurlyBracketKeyword_12_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new SLA_ServiceQualityPropertiesAssignment_12_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new SLA_LeftCurlyBracketKeyword_12_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
 
 // ("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)? ("security-requirements" "{"
 // securityRequirements+=SecurityRequirement* "}") "}")?
@@ -999,9 +1089,7 @@ protected class SLA_DataSecurityAndProtectionKeyword_13_0 extends KeywordToken  
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new SLA_CostsAssignment_12(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, this, 1, inst);
-			case 2: return new SLA_Group_10(lastRuleCallOrigin, this, 2, inst);
+			case 0: return new SLA_Group_12(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -1308,9 +1396,7 @@ protected class SLA_RestrictionsKeyword_14_0 extends KeywordToken  {
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
 			case 0: return new SLA_Group_13(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new SLA_CostsAssignment_12(lastRuleCallOrigin, this, 1, inst);
-			case 2: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new SLA_Group_10(lastRuleCallOrigin, this, 3, inst);
+			case 1: return new SLA_Group_12(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
 	}
@@ -1395,9 +1481,7 @@ protected class SLA_PrioritiesAssignment_15 extends AssignmentToken  {
 			case 0: return new SLA_PrioritiesAssignment_15(lastRuleCallOrigin, next, actIndex, consumed);
 			case 1: return new SLA_Group_14(lastRuleCallOrigin, next, actIndex, consumed);
 			case 2: return new SLA_Group_13(lastRuleCallOrigin, next, actIndex, consumed);
-			case 3: return new SLA_CostsAssignment_12(lastRuleCallOrigin, next, actIndex, consumed);
-			case 4: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, next, actIndex, consumed);
-			case 5: return new SLA_Group_10(lastRuleCallOrigin, next, actIndex, consumed);
+			case 3: return new SLA_Group_12(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -1446,9 +1530,7 @@ protected class SLA_EscalationProcedureAssignment_16 extends AssignmentToken  {
 			case 0: return new SLA_PrioritiesAssignment_15(lastRuleCallOrigin, next, actIndex, consumed);
 			case 1: return new SLA_Group_14(lastRuleCallOrigin, next, actIndex, consumed);
 			case 2: return new SLA_Group_13(lastRuleCallOrigin, next, actIndex, consumed);
-			case 3: return new SLA_CostsAssignment_12(lastRuleCallOrigin, next, actIndex, consumed);
-			case 4: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, next, actIndex, consumed);
-			case 5: return new SLA_Group_10(lastRuleCallOrigin, next, actIndex, consumed);
+			case 3: return new SLA_Group_12(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -1495,9 +1577,7 @@ protected class SLA_AdditionalServicesKeyword_17_0 extends KeywordToken  {
 			case 1: return new SLA_PrioritiesAssignment_15(lastRuleCallOrigin, this, 1, inst);
 			case 2: return new SLA_Group_14(lastRuleCallOrigin, this, 2, inst);
 			case 3: return new SLA_Group_13(lastRuleCallOrigin, this, 3, inst);
-			case 4: return new SLA_CostsAssignment_12(lastRuleCallOrigin, this, 4, inst);
-			case 5: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, this, 5, inst);
-			case 6: return new SLA_Group_10(lastRuleCallOrigin, this, 6, inst);
+			case 4: return new SLA_Group_12(lastRuleCallOrigin, this, 4, inst);
 			default: return null;
 		}	
 	}
@@ -1585,9 +1665,7 @@ protected class SLA_PartiesAssignment_18 extends AssignmentToken  {
 			case 3: return new SLA_PrioritiesAssignment_15(lastRuleCallOrigin, next, actIndex, consumed);
 			case 4: return new SLA_Group_14(lastRuleCallOrigin, next, actIndex, consumed);
 			case 5: return new SLA_Group_13(lastRuleCallOrigin, next, actIndex, consumed);
-			case 6: return new SLA_CostsAssignment_12(lastRuleCallOrigin, next, actIndex, consumed);
-			case 7: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, next, actIndex, consumed);
-			case 8: return new SLA_Group_10(lastRuleCallOrigin, next, actIndex, consumed);
+			case 6: return new SLA_Group_12(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -1636,9 +1714,7 @@ protected class SLA_CancellationKeyword_19_0 extends KeywordToken  {
 			case 3: return new SLA_PrioritiesAssignment_15(lastRuleCallOrigin, this, 3, inst);
 			case 4: return new SLA_Group_14(lastRuleCallOrigin, this, 4, inst);
 			case 5: return new SLA_Group_13(lastRuleCallOrigin, this, 5, inst);
-			case 6: return new SLA_CostsAssignment_12(lastRuleCallOrigin, this, 6, inst);
-			case 7: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, this, 7, inst);
-			case 8: return new SLA_Group_10(lastRuleCallOrigin, this, 8, inst);
+			case 6: return new SLA_Group_12(lastRuleCallOrigin, this, 6, inst);
 			default: return null;
 		}	
 	}
@@ -1724,9 +1800,7 @@ protected class SLA_ExtraordinaryCancellationKeyword_20_0 extends KeywordToken  
 			case 4: return new SLA_PrioritiesAssignment_15(lastRuleCallOrigin, this, 4, inst);
 			case 5: return new SLA_Group_14(lastRuleCallOrigin, this, 5, inst);
 			case 6: return new SLA_Group_13(lastRuleCallOrigin, this, 6, inst);
-			case 7: return new SLA_CostsAssignment_12(lastRuleCallOrigin, this, 7, inst);
-			case 8: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, this, 8, inst);
-			case 9: return new SLA_Group_10(lastRuleCallOrigin, this, 9, inst);
+			case 7: return new SLA_Group_12(lastRuleCallOrigin, this, 7, inst);
 			default: return null;
 		}	
 	}
@@ -1813,9 +1887,7 @@ protected class SLA_EffortAccountingKeyword_21_0 extends KeywordToken  {
 			case 5: return new SLA_PrioritiesAssignment_15(lastRuleCallOrigin, this, 5, inst);
 			case 6: return new SLA_Group_14(lastRuleCallOrigin, this, 6, inst);
 			case 7: return new SLA_Group_13(lastRuleCallOrigin, this, 7, inst);
-			case 8: return new SLA_CostsAssignment_12(lastRuleCallOrigin, this, 8, inst);
-			case 9: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, this, 9, inst);
-			case 10: return new SLA_Group_10(lastRuleCallOrigin, this, 10, inst);
+			case 8: return new SLA_Group_12(lastRuleCallOrigin, this, 8, inst);
 			default: return null;
 		}	
 	}
@@ -1907,9 +1979,7 @@ protected class SLA_ReportsAssignment_22 extends AssignmentToken  {
 			case 7: return new SLA_PrioritiesAssignment_15(lastRuleCallOrigin, next, actIndex, consumed);
 			case 8: return new SLA_Group_14(lastRuleCallOrigin, next, actIndex, consumed);
 			case 9: return new SLA_Group_13(lastRuleCallOrigin, next, actIndex, consumed);
-			case 10: return new SLA_CostsAssignment_12(lastRuleCallOrigin, next, actIndex, consumed);
-			case 11: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, next, actIndex, consumed);
-			case 12: return new SLA_Group_10(lastRuleCallOrigin, next, actIndex, consumed);
+			case 10: return new SLA_Group_12(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -1962,9 +2032,7 @@ protected class SLA_TagsKeyword_23_0 extends KeywordToken  {
 			case 7: return new SLA_PrioritiesAssignment_15(lastRuleCallOrigin, this, 7, inst);
 			case 8: return new SLA_Group_14(lastRuleCallOrigin, this, 8, inst);
 			case 9: return new SLA_Group_13(lastRuleCallOrigin, this, 9, inst);
-			case 10: return new SLA_CostsAssignment_12(lastRuleCallOrigin, this, 10, inst);
-			case 11: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, this, 11, inst);
-			case 12: return new SLA_Group_10(lastRuleCallOrigin, this, 12, inst);
+			case 10: return new SLA_Group_12(lastRuleCallOrigin, this, 10, inst);
 			default: return null;
 		}	
 	}
@@ -2036,9 +2104,7 @@ protected class SLA_RightCurlyBracketKeyword_24 extends KeywordToken  {
 			case 8: return new SLA_PrioritiesAssignment_15(lastRuleCallOrigin, this, 8, inst);
 			case 9: return new SLA_Group_14(lastRuleCallOrigin, this, 9, inst);
 			case 10: return new SLA_Group_13(lastRuleCallOrigin, this, 10, inst);
-			case 11: return new SLA_CostsAssignment_12(lastRuleCallOrigin, this, 11, inst);
-			case 12: return new SLA_ServiceQualityPropertiesAssignment_11(lastRuleCallOrigin, this, 12, inst);
-			case 13: return new SLA_Group_10(lastRuleCallOrigin, this, 13, inst);
+			case 11: return new SLA_Group_12(lastRuleCallOrigin, this, 11, inst);
 			default: return null;
 		}	
 	}

@@ -27,8 +27,8 @@ import org.fornax.soa.semanticsDsl.Tag;
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getDescription <em>Description</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getScope <em>Scope</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getAppliesTo <em>Applies To</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getServiceQualityProperties <em>Service Quality Properties</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getCosts <em>Costs</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getServiceQualityProperties <em>Service Quality Properties</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getDataSecProtClause <em>Data Sec Prot Clause</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getSecurityRequirements <em>Security Requirements</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getRestrictions <em>Restrictions</em>}</li>
@@ -249,22 +249,6 @@ public interface SLA extends EObject
   EList<AssetRef> getAppliesTo();
 
   /**
-   * Returns the value of the '<em><b>Service Quality Properties</b></em>' containment reference list.
-   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.ServiceQualityProperty}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Service Quality Properties</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Service Quality Properties</em>' containment reference list.
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_ServiceQualityProperties()
-   * @model containment="true"
-   * @generated
-   */
-  EList<ServiceQualityProperty> getServiceQualityProperties();
-
-  /**
    * Returns the value of the '<em><b>Costs</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
@@ -289,6 +273,22 @@ public interface SLA extends EObject
    * @generated
    */
   void setCosts(Cost value);
+
+  /**
+   * Returns the value of the '<em><b>Service Quality Properties</b></em>' containment reference list.
+   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.ServiceQualityProperty}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Service Quality Properties</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Service Quality Properties</em>' containment reference list.
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_ServiceQualityProperties()
+   * @model containment="true"
+   * @generated
+   */
+  EList<ServiceQualityProperty> getServiceQualityProperties();
 
   /**
    * Returns the value of the '<em><b>Data Sec Prot Clause</b></em>' attribute.
