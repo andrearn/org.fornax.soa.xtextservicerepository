@@ -28,7 +28,7 @@ public class AbstractModelBasedTest extends AbstractXtextTests {
 		reader.addRegister (new org.fornax.soa.BusinessDslStandaloneSetup ());
 		reader.addRegister (new org.fornax.soa.BindingDslStandaloneSetup ());
 		reader.addRegister (new org.fornax.soa.EnvironmentDslStandaloneSetup ());
-		reader.addRegister (new org.fornax.soa.SLADslStandaloneSetup ());
+		reader.addRegister (new org.fornax.soa.sladsl.SLADslStandaloneSetup ());
 		reader.addRegister (new org.fornax.soa.basedsl.SOABaseDslStandaloneSetup ());
 		reader.addRegister (new org.fornax.soa.profiledsl.SOAProfileDslStandaloneSetup ());
 		reader.addRegister (new org.fornax.soa.moduledsl.ModuleDslStandaloneSetup ());
