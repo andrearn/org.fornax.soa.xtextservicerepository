@@ -247,13 +247,6 @@ public class SLADslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SLADslPackage.CONTACT:
-      {
-        Contact contact = (Contact)theEObject;
-        T result = caseContact(contact);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SLADslPackage.PARTY:
       {
         Party party = (Party)theEObject;
@@ -690,22 +683,6 @@ public class SLADslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEscalation(Escalation object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Contact</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Contact</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseContact(Contact object)
   {
     return null;
   }

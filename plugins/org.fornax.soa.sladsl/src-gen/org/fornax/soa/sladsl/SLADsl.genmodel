@@ -70,7 +70,7 @@
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//SLA">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/owner"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/effectiveDate"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/effectiveUntil"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/preample"/>
@@ -90,6 +90,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/extraordinaryCancellation"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/effortAccounting"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/reports"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/subscriptions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/tags"/>
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//AssetRef">
@@ -188,13 +192,8 @@
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//Escalation">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Escalation/cause"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Escalation/escalationTargets"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Escalation/escalationTargets"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Escalation/procedure"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//Contact">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Contact/fullname"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Contact/phone"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Contact/email"/>
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//Party">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Party/name"/>

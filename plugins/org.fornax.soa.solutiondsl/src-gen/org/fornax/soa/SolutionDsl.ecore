@@ -26,6 +26,12 @@
         eType="#//Feature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
         eType="#//Module" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
@@ -42,6 +48,12 @@
         eType="#//Feature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
         eType="#//Module" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
@@ -67,6 +79,12 @@
         eType="#//ServiceRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="event" upperBound="-1"
         eType="#//EventRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"

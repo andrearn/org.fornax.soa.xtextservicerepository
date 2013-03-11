@@ -22,6 +22,9 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.fornax.soa.basedsl.sOABaseDsl.User;
+import org.fornax.soa.basedsl.sOABaseDsl.Version;
+
 import org.fornax.soa.semanticsDsl.Tag;
 
 import org.fornax.soa.sladsl.sLADsl.AssetRef;
@@ -43,7 +46,7 @@ import org.fornax.soa.sladsl.sLADsl.ServiceQualityProperty;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getOwner <em>Owner</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getEffectiveDate <em>Effective Date</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getEffectiveUntil <em>Effective Until</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getPreample <em>Preample</em>}</li>
@@ -63,6 +66,10 @@ import org.fornax.soa.sladsl.sLADsl.ServiceQualityProperty;
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getExtraordinaryCancellation <em>Extraordinary Cancellation</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getEffortAccounting <em>Effort Accounting</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getReports <em>Reports</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getOwner <em>Owner</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getResponsible <em>Responsible</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getBudgeting <em>Budgeting</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getSubscriptions <em>Subscriptions</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getTags <em>Tags</em>}</li>
  * </ul>
  * </p>
@@ -92,24 +99,14 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getOwner() <em>Owner</em>}' attribute.
+   * The cached value of the '{@link #getVersion() <em>Version</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOwner()
+   * @see #getVersion()
    * @generated
    * @ordered
    */
-  protected static final String OWNER_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getOwner() <em>Owner</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOwner()
-   * @generated
-   * @ordered
-   */
-  protected String owner = OWNER_EDEFAULT;
+  protected Version version;
 
   /**
    * The default value of the '{@link #getEffectiveDate() <em>Effective Date</em>}' attribute.
@@ -412,6 +409,46 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
   protected EList<Report> reports;
 
   /**
+   * The cached value of the '{@link #getOwner() <em>Owner</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOwner()
+   * @generated
+   * @ordered
+   */
+  protected User owner;
+
+  /**
+   * The cached value of the '{@link #getResponsible() <em>Responsible</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getResponsible()
+   * @generated
+   * @ordered
+   */
+  protected EList<User> responsible;
+
+  /**
+   * The cached value of the '{@link #getBudgeting() <em>Budgeting</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getBudgeting()
+   * @generated
+   * @ordered
+   */
+  protected User budgeting;
+
+  /**
+   * The cached value of the '{@link #getSubscriptions() <em>Subscriptions</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSubscriptions()
+   * @generated
+   * @ordered
+   */
+  protected EList<User> subscriptions;
+
+  /**
    * The cached value of the '{@link #getTags() <em>Tags</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -470,9 +507,9 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getOwner()
+  public Version getVersion()
   {
-    return owner;
+    return version;
   }
 
   /**
@@ -480,12 +517,37 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOwner(String newOwner)
+  public NotificationChain basicSetVersion(Version newVersion, NotificationChain msgs)
   {
-    String oldOwner = owner;
-    owner = newOwner;
+    Version oldVersion = version;
+    version = newVersion;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__OWNER, oldOwner, owner));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__VERSION, oldVersion, newVersion);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setVersion(Version newVersion)
+  {
+    if (newVersion != version)
+    {
+      NotificationChain msgs = null;
+      if (version != null)
+        msgs = ((InternalEObject)version).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SLADslPackage.SLA__VERSION, null, msgs);
+      if (newVersion != null)
+        msgs = ((InternalEObject)newVersion).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SLADslPackage.SLA__VERSION, null, msgs);
+      msgs = basicSetVersion(newVersion, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__VERSION, newVersion, newVersion));
   }
 
   /**
@@ -926,6 +988,120 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
+  public User getOwner()
+  {
+    if (owner != null && owner.eIsProxy())
+    {
+      InternalEObject oldOwner = (InternalEObject)owner;
+      owner = (User)eResolveProxy(oldOwner);
+      if (owner != oldOwner)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SLADslPackage.SLA__OWNER, oldOwner, owner));
+      }
+    }
+    return owner;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public User basicGetOwner()
+  {
+    return owner;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setOwner(User newOwner)
+  {
+    User oldOwner = owner;
+    owner = newOwner;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__OWNER, oldOwner, owner));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<User> getResponsible()
+  {
+    if (responsible == null)
+    {
+      responsible = new EObjectResolvingEList<User>(User.class, this, SLADslPackage.SLA__RESPONSIBLE);
+    }
+    return responsible;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public User getBudgeting()
+  {
+    if (budgeting != null && budgeting.eIsProxy())
+    {
+      InternalEObject oldBudgeting = (InternalEObject)budgeting;
+      budgeting = (User)eResolveProxy(oldBudgeting);
+      if (budgeting != oldBudgeting)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SLADslPackage.SLA__BUDGETING, oldBudgeting, budgeting));
+      }
+    }
+    return budgeting;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public User basicGetBudgeting()
+  {
+    return budgeting;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setBudgeting(User newBudgeting)
+  {
+    User oldBudgeting = budgeting;
+    budgeting = newBudgeting;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__BUDGETING, oldBudgeting, budgeting));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<User> getSubscriptions()
+  {
+    if (subscriptions == null)
+    {
+      subscriptions = new EObjectResolvingEList<User>(User.class, this, SLADslPackage.SLA__SUBSCRIPTIONS);
+    }
+    return subscriptions;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Tag> getTags()
   {
     if (tags == null)
@@ -945,6 +1121,8 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
   {
     switch (featureID)
     {
+      case SLADslPackage.SLA__VERSION:
+        return basicSetVersion(null, msgs);
       case SLADslPackage.SLA__APPLIES_TO:
         return ((InternalEList<?>)getAppliesTo()).basicRemove(otherEnd, msgs);
       case SLADslPackage.SLA__COSTS:
@@ -977,8 +1155,8 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
     {
       case SLADslPackage.SLA__NAME:
         return getName();
-      case SLADslPackage.SLA__OWNER:
-        return getOwner();
+      case SLADslPackage.SLA__VERSION:
+        return getVersion();
       case SLADslPackage.SLA__EFFECTIVE_DATE:
         return getEffectiveDate();
       case SLADslPackage.SLA__EFFECTIVE_UNTIL:
@@ -1017,6 +1195,16 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         return getEffortAccounting();
       case SLADslPackage.SLA__REPORTS:
         return getReports();
+      case SLADslPackage.SLA__OWNER:
+        if (resolve) return getOwner();
+        return basicGetOwner();
+      case SLADslPackage.SLA__RESPONSIBLE:
+        return getResponsible();
+      case SLADslPackage.SLA__BUDGETING:
+        if (resolve) return getBudgeting();
+        return basicGetBudgeting();
+      case SLADslPackage.SLA__SUBSCRIPTIONS:
+        return getSubscriptions();
       case SLADslPackage.SLA__TAGS:
         return getTags();
     }
@@ -1037,8 +1225,8 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
       case SLADslPackage.SLA__NAME:
         setName((String)newValue);
         return;
-      case SLADslPackage.SLA__OWNER:
-        setOwner((String)newValue);
+      case SLADslPackage.SLA__VERSION:
+        setVersion((Version)newValue);
         return;
       case SLADslPackage.SLA__EFFECTIVE_DATE:
         setEffectiveDate((String)newValue);
@@ -1103,6 +1291,20 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         getReports().clear();
         getReports().addAll((Collection<? extends Report>)newValue);
         return;
+      case SLADslPackage.SLA__OWNER:
+        setOwner((User)newValue);
+        return;
+      case SLADslPackage.SLA__RESPONSIBLE:
+        getResponsible().clear();
+        getResponsible().addAll((Collection<? extends User>)newValue);
+        return;
+      case SLADslPackage.SLA__BUDGETING:
+        setBudgeting((User)newValue);
+        return;
+      case SLADslPackage.SLA__SUBSCRIPTIONS:
+        getSubscriptions().clear();
+        getSubscriptions().addAll((Collection<? extends User>)newValue);
+        return;
       case SLADslPackage.SLA__TAGS:
         getTags().clear();
         getTags().addAll((Collection<? extends Tag>)newValue);
@@ -1124,8 +1326,8 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
       case SLADslPackage.SLA__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case SLADslPackage.SLA__OWNER:
-        setOwner(OWNER_EDEFAULT);
+      case SLADslPackage.SLA__VERSION:
+        setVersion((Version)null);
         return;
       case SLADslPackage.SLA__EFFECTIVE_DATE:
         setEffectiveDate(EFFECTIVE_DATE_EDEFAULT);
@@ -1184,6 +1386,18 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
       case SLADslPackage.SLA__REPORTS:
         getReports().clear();
         return;
+      case SLADslPackage.SLA__OWNER:
+        setOwner((User)null);
+        return;
+      case SLADslPackage.SLA__RESPONSIBLE:
+        getResponsible().clear();
+        return;
+      case SLADslPackage.SLA__BUDGETING:
+        setBudgeting((User)null);
+        return;
+      case SLADslPackage.SLA__SUBSCRIPTIONS:
+        getSubscriptions().clear();
+        return;
       case SLADslPackage.SLA__TAGS:
         getTags().clear();
         return;
@@ -1203,8 +1417,8 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
     {
       case SLADslPackage.SLA__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case SLADslPackage.SLA__OWNER:
-        return OWNER_EDEFAULT == null ? owner != null : !OWNER_EDEFAULT.equals(owner);
+      case SLADslPackage.SLA__VERSION:
+        return version != null;
       case SLADslPackage.SLA__EFFECTIVE_DATE:
         return EFFECTIVE_DATE_EDEFAULT == null ? effectiveDate != null : !EFFECTIVE_DATE_EDEFAULT.equals(effectiveDate);
       case SLADslPackage.SLA__EFFECTIVE_UNTIL:
@@ -1243,6 +1457,14 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         return EFFORT_ACCOUNTING_EDEFAULT == null ? effortAccounting != null : !EFFORT_ACCOUNTING_EDEFAULT.equals(effortAccounting);
       case SLADslPackage.SLA__REPORTS:
         return reports != null && !reports.isEmpty();
+      case SLADslPackage.SLA__OWNER:
+        return owner != null;
+      case SLADslPackage.SLA__RESPONSIBLE:
+        return responsible != null && !responsible.isEmpty();
+      case SLADslPackage.SLA__BUDGETING:
+        return budgeting != null;
+      case SLADslPackage.SLA__SUBSCRIPTIONS:
+        return subscriptions != null && !subscriptions.isEmpty();
       case SLADslPackage.SLA__TAGS:
         return tags != null && !tags.isEmpty();
     }
@@ -1262,8 +1484,6 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", owner: ");
-    result.append(owner);
     result.append(", effectiveDate: ");
     result.append(effectiveDate);
     result.append(", effectiveUntil: ");

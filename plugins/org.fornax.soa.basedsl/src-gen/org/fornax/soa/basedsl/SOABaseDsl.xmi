@@ -286,6 +286,96 @@
         </elements>
       </alternatives>
     </rules>
+    <rules xsi:type="xtext:ParserRule" name="User">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="firstname" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="lastname" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="org" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="orgUnit" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="email" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="phone" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="roles" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.18"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="RoleRef">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//RoleRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" feature="role" operator="=">
+        <terminal xsi:type="xtext:CrossReference">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Role"/>
+          </type>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+        </terminal>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Role">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Role"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.2"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="grants" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="PrivilegeRef">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//PrivilegeRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Assignment" feature="privilege" operator="=">
+        <terminal xsi:type="xtext:CrossReference">
+          <type metamodel="/0/@metamodelDeclarations.0">
+            <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Privilege"/>
+          </type>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+        </terminal>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Privilege">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//Privilege"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="readACL" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="writeACL" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="executeACL" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.11"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
   </xtext:Grammar>
   <xtext:Grammar name="org.eclipse.xtext.common.Terminals" definesHiddenTokens="true" hiddenTokens="/1/@rules.5 /1/@rules.3 /1/@rules.4">
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">

@@ -13,6 +13,7 @@ grammar org.fornax.soa.profiledsl.SOAProfileDsl with org.fornax.soa.basedsl.SOAB
 
 generate sOAProfileDsl "http://www.fornax.org/soa/profiledsl/SOAProfileDsl"
 
+import "http://www.fornax.org/soa/basedsl/SOABaseDsl" as basedsl
 import "http://www.fornax.org/soa/EnvironmentDsl" as  environmentDsl
 
 SOAProfileModel:
@@ -46,7 +47,14 @@ SOAProfile:
 		(namespaceRules = NamespaceRules)?
 		(scopedBasicTypes+=BasicTypes)*
 		(governanceDecisions+=GovernanceDecision)*
-		
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		)?
 	'}';
 
 /*
@@ -172,6 +180,14 @@ BaseNamespaceAlias :
  */
 OrganizationNamespace:
 	'org-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		)?
 		(subNamespaces+=TechnicalNamespace)*
 	'}' ;
 
@@ -181,6 +197,14 @@ OrganizationNamespace:
 TechnicalNamespace: 
 	'namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		)?
 		(types+=Type)*
 	'}';
  

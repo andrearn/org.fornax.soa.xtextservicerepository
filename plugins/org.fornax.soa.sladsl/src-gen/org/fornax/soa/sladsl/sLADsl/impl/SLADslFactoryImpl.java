@@ -91,7 +91,6 @@ public class SLADslFactoryImpl extends EFactoryImpl implements SLADslFactory
       case SLADslPackage.ENCRYPTION_REQUIREMENT: return createEncryptionRequirement();
       case SLADslPackage.PRIORITY_DECLARATION: return createPriorityDeclaration();
       case SLADslPackage.ESCALATION: return createEscalation();
-      case SLADslPackage.CONTACT: return createContact();
       case SLADslPackage.PARTY: return createParty();
       case SLADslPackage.CUSTOMER_PARTY: return createCustomerParty();
       case SLADslPackage.PROVIDER_PARTY: return createProviderParty();
@@ -415,17 +414,6 @@ public class SLADslFactoryImpl extends EFactoryImpl implements SLADslFactory
   {
     EscalationImpl escalation = new EscalationImpl();
     return escalation;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Contact createContact()
-  {
-    ContactImpl contact = new ContactImpl();
-    return contact;
   }
 
   /**

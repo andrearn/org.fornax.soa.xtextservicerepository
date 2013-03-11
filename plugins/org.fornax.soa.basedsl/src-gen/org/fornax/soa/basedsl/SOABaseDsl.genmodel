@@ -60,5 +60,31 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//InfoItem/documentLocation"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//InfoItem/reference"/>
     </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//User">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//User/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//User/firstname"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//User/lastname"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//User/org"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//User/orgUnit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//User/email"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//User/phone"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOABaseDsl.ecore#//User/roles"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//RoleRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOABaseDsl.ecore#//RoleRef/role"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//Role">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Role/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOABaseDsl.ecore#//Role/grants"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//PrivilegeRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOABaseDsl.ecore#//PrivilegeRef/privilege"/>
+    </genClasses>
+    <genClasses ecoreClass="SOABaseDsl.ecore#//Privilege">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Privilege/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Privilege/readACL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Privilege/writeACL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOABaseDsl.ecore#//Privilege/executeACL"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

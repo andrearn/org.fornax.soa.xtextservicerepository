@@ -9,7 +9,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SLA">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="owner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="effectiveDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="effectiveUntil" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="preample" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -38,6 +39,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="effortAccounting" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reports" upperBound="-1"
         eType="#//Report" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
@@ -212,14 +219,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Escalation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="escalationTargets" upperBound="-1"
-        eType="#//Contact" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="escalationTargets" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="procedure" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Contact">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phone" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Party">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

@@ -108,13 +108,13 @@ public interface SLADslPackage extends EPackage
   int SLA__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Owner</b></em>' attribute.
+   * The feature id for the '<em><b>Version</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SLA__OWNER = 1;
+  int SLA__VERSION = 1;
 
   /**
    * The feature id for the '<em><b>Effective Date</b></em>' attribute.
@@ -288,13 +288,49 @@ public interface SLADslPackage extends EPackage
   int SLA__REPORTS = 20;
 
   /**
+   * The feature id for the '<em><b>Owner</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SLA__OWNER = 21;
+
+  /**
+   * The feature id for the '<em><b>Responsible</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SLA__RESPONSIBLE = 22;
+
+  /**
+   * The feature id for the '<em><b>Budgeting</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SLA__BUDGETING = 23;
+
+  /**
+   * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SLA__SUBSCRIPTIONS = 24;
+
+  /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SLA__TAGS = 21;
+  int SLA__TAGS = 25;
 
   /**
    * The number of structural features of the '<em>SLA</em>' class.
@@ -303,7 +339,7 @@ public interface SLADslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SLA_FEATURE_COUNT = 22;
+  int SLA_FEATURE_COUNT = 26;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.impl.AssetRefImpl <em>Asset Ref</em>}' class.
@@ -1209,7 +1245,7 @@ public interface SLADslPackage extends EPackage
   int ESCALATION__CAUSE = 0;
 
   /**
-   * The feature id for the '<em><b>Escalation Targets</b></em>' containment reference list.
+   * The feature id for the '<em><b>Escalation Targets</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -1236,52 +1272,6 @@ public interface SLADslPackage extends EPackage
   int ESCALATION_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.impl.ContactImpl <em>Contact</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.fornax.soa.sladsl.sLADsl.impl.ContactImpl
-   * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getContact()
-   * @generated
-   */
-  int CONTACT = 23;
-
-  /**
-   * The feature id for the '<em><b>Fullname</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTACT__FULLNAME = 0;
-
-  /**
-   * The feature id for the '<em><b>Phone</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTACT__PHONE = 1;
-
-  /**
-   * The feature id for the '<em><b>Email</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTACT__EMAIL = 2;
-
-  /**
-   * The number of structural features of the '<em>Contact</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int CONTACT_FEATURE_COUNT = 3;
-
-  /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.impl.PartyImpl <em>Party</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1289,7 +1279,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getParty()
    * @generated
    */
-  int PARTY = 24;
+  int PARTY = 23;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1335,7 +1325,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getCustomerParty()
    * @generated
    */
-  int CUSTOMER_PARTY = 25;
+  int CUSTOMER_PARTY = 24;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1381,7 +1371,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getProviderParty()
    * @generated
    */
-  int PROVIDER_PARTY = 26;
+  int PROVIDER_PARTY = 25;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1427,7 +1417,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getThirdParty()
    * @generated
    */
-  int THIRD_PARTY = 27;
+  int THIRD_PARTY = 26;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1482,7 +1472,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getRepesentative()
    * @generated
    */
-  int REPESENTATIVE = 28;
+  int REPESENTATIVE = 27;
 
   /**
    * The feature id for the '<em><b>Fullname</b></em>' attribute.
@@ -1528,7 +1518,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getResponsibility()
    * @generated
    */
-  int RESPONSIBILITY = 29;
+  int RESPONSIBILITY = 28;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1574,7 +1564,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getSimpleResponsibility()
    * @generated
    */
-  int SIMPLE_RESPONSIBILITY = 30;
+  int SIMPLE_RESPONSIBILITY = 29;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1629,7 +1619,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getReport()
    * @generated
    */
-  int REPORT = 31;
+  int REPORT = 30;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1675,7 +1665,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getReportingResponsibility()
    * @generated
    */
-  int REPORTING_RESPONSIBILITY = 32;
+  int REPORTING_RESPONSIBILITY = 31;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1730,7 +1720,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getHashAlgKind()
    * @generated
    */
-  int HASH_ALG_KIND = 33;
+  int HASH_ALG_KIND = 32;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.MessagePartRefKind <em>Message Part Ref Kind</em>}' enum.
@@ -1740,7 +1730,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getMessagePartRefKind()
    * @generated
    */
-  int MESSAGE_PART_REF_KIND = 34;
+  int MESSAGE_PART_REF_KIND = 33;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.SigningAlgothm <em>Signing Algothm</em>}' enum.
@@ -1750,7 +1740,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getSigningAlgothm()
    * @generated
    */
-  int SIGNING_ALGOTHM = 35;
+  int SIGNING_ALGOTHM = 34;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.CipherAlgorithmKind <em>Cipher Algorithm Kind</em>}' enum.
@@ -1760,7 +1750,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getCipherAlgorithmKind()
    * @generated
    */
-  int CIPHER_ALGORITHM_KIND = 36;
+  int CIPHER_ALGORITHM_KIND = 35;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.AuthTokenKind <em>Auth Token Kind</em>}' enum.
@@ -1770,7 +1760,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getAuthTokenKind()
    * @generated
    */
-  int AUTH_TOKEN_KIND = 37;
+  int AUTH_TOKEN_KIND = 36;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.LogRequirementKind <em>Log Requirement Kind</em>}' enum.
@@ -1780,7 +1770,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getLogRequirementKind()
    * @generated
    */
-  int LOG_REQUIREMENT_KIND = 38;
+  int LOG_REQUIREMENT_KIND = 37;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.ReliablilityKind <em>Reliablility Kind</em>}' enum.
@@ -1790,7 +1780,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getReliablilityKind()
    * @generated
    */
-  int RELIABLILITY_KIND = 39;
+  int RELIABLILITY_KIND = 38;
 
 
   /**
@@ -1836,15 +1826,15 @@ public interface SLADslPackage extends EPackage
   EAttribute getSLA_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link org.fornax.soa.sladsl.sLADsl.SLA#getOwner <em>Owner</em>}'.
+   * Returns the meta object for the containment reference '{@link org.fornax.soa.sladsl.sLADsl.SLA#getVersion <em>Version</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Owner</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.SLA#getOwner()
+   * @return the meta object for the containment reference '<em>Version</em>'.
+   * @see org.fornax.soa.sladsl.sLADsl.SLA#getVersion()
    * @see #getSLA()
    * @generated
    */
-  EAttribute getSLA_Owner();
+  EReference getSLA_Version();
 
   /**
    * Returns the meta object for the attribute '{@link org.fornax.soa.sladsl.sLADsl.SLA#getEffectiveDate <em>Effective Date</em>}'.
@@ -2054,6 +2044,50 @@ public interface SLADslPackage extends EPackage
    * @generated
    */
   EReference getSLA_Reports();
+
+  /**
+   * Returns the meta object for the reference '{@link org.fornax.soa.sladsl.sLADsl.SLA#getOwner <em>Owner</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Owner</em>'.
+   * @see org.fornax.soa.sladsl.sLADsl.SLA#getOwner()
+   * @see #getSLA()
+   * @generated
+   */
+  EReference getSLA_Owner();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.sladsl.sLADsl.SLA#getResponsible <em>Responsible</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Responsible</em>'.
+   * @see org.fornax.soa.sladsl.sLADsl.SLA#getResponsible()
+   * @see #getSLA()
+   * @generated
+   */
+  EReference getSLA_Responsible();
+
+  /**
+   * Returns the meta object for the reference '{@link org.fornax.soa.sladsl.sLADsl.SLA#getBudgeting <em>Budgeting</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Budgeting</em>'.
+   * @see org.fornax.soa.sladsl.sLADsl.SLA#getBudgeting()
+   * @see #getSLA()
+   * @generated
+   */
+  EReference getSLA_Budgeting();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.sladsl.sLADsl.SLA#getSubscriptions <em>Subscriptions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Subscriptions</em>'.
+   * @see org.fornax.soa.sladsl.sLADsl.SLA#getSubscriptions()
+   * @see #getSLA()
+   * @generated
+   */
+  EReference getSLA_Subscriptions();
 
   /**
    * Returns the meta object for the reference list '{@link org.fornax.soa.sladsl.sLADsl.SLA#getTags <em>Tags</em>}'.
@@ -2904,10 +2938,10 @@ public interface SLADslPackage extends EPackage
   EAttribute getEscalation_Cause();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.fornax.soa.sladsl.sLADsl.Escalation#getEscalationTargets <em>Escalation Targets</em>}'.
+   * Returns the meta object for the reference list '{@link org.fornax.soa.sladsl.sLADsl.Escalation#getEscalationTargets <em>Escalation Targets</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Escalation Targets</em>'.
+   * @return the meta object for the reference list '<em>Escalation Targets</em>'.
    * @see org.fornax.soa.sladsl.sLADsl.Escalation#getEscalationTargets()
    * @see #getEscalation()
    * @generated
@@ -2924,49 +2958,6 @@ public interface SLADslPackage extends EPackage
    * @generated
    */
   EAttribute getEscalation_Procedure();
-
-  /**
-   * Returns the meta object for class '{@link org.fornax.soa.sladsl.sLADsl.Contact <em>Contact</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Contact</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.Contact
-   * @generated
-   */
-  EClass getContact();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.fornax.soa.sladsl.sLADsl.Contact#getFullname <em>Fullname</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Fullname</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.Contact#getFullname()
-   * @see #getContact()
-   * @generated
-   */
-  EAttribute getContact_Fullname();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.fornax.soa.sladsl.sLADsl.Contact#getPhone <em>Phone</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Phone</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.Contact#getPhone()
-   * @see #getContact()
-   * @generated
-   */
-  EAttribute getContact_Phone();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.fornax.soa.sladsl.sLADsl.Contact#getEmail <em>Email</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Email</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.Contact#getEmail()
-   * @see #getContact()
-   * @generated
-   */
-  EAttribute getContact_Email();
 
   /**
    * Returns the meta object for class '{@link org.fornax.soa.sladsl.sLADsl.Party <em>Party</em>}'.
@@ -3353,12 +3344,12 @@ public interface SLADslPackage extends EPackage
     EAttribute SLA__NAME = eINSTANCE.getSLA_Name();
 
     /**
-     * The meta object literal for the '<em><b>Owner</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Version</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SLA__OWNER = eINSTANCE.getSLA_Owner();
+    EReference SLA__VERSION = eINSTANCE.getSLA_Version();
 
     /**
      * The meta object literal for the '<em><b>Effective Date</b></em>' attribute feature.
@@ -3511,6 +3502,38 @@ public interface SLADslPackage extends EPackage
      * @generated
      */
     EReference SLA__REPORTS = eINSTANCE.getSLA_Reports();
+
+    /**
+     * The meta object literal for the '<em><b>Owner</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SLA__OWNER = eINSTANCE.getSLA_Owner();
+
+    /**
+     * The meta object literal for the '<em><b>Responsible</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SLA__RESPONSIBLE = eINSTANCE.getSLA_Responsible();
+
+    /**
+     * The meta object literal for the '<em><b>Budgeting</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SLA__BUDGETING = eINSTANCE.getSLA_Budgeting();
+
+    /**
+     * The meta object literal for the '<em><b>Subscriptions</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SLA__SUBSCRIPTIONS = eINSTANCE.getSLA_Subscriptions();
 
     /**
      * The meta object literal for the '<em><b>Tags</b></em>' reference list feature.
@@ -4187,7 +4210,7 @@ public interface SLADslPackage extends EPackage
     EAttribute ESCALATION__CAUSE = eINSTANCE.getEscalation_Cause();
 
     /**
-     * The meta object literal for the '<em><b>Escalation Targets</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Escalation Targets</b></em>' reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
@@ -4201,40 +4224,6 @@ public interface SLADslPackage extends EPackage
      * @generated
      */
     EAttribute ESCALATION__PROCEDURE = eINSTANCE.getEscalation_Procedure();
-
-    /**
-     * The meta object literal for the '{@link org.fornax.soa.sladsl.sLADsl.impl.ContactImpl <em>Contact</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.fornax.soa.sladsl.sLADsl.impl.ContactImpl
-     * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getContact()
-     * @generated
-     */
-    EClass CONTACT = eINSTANCE.getContact();
-
-    /**
-     * The meta object literal for the '<em><b>Fullname</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute CONTACT__FULLNAME = eINSTANCE.getContact_Fullname();
-
-    /**
-     * The meta object literal for the '<em><b>Phone</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute CONTACT__PHONE = eINSTANCE.getContact_Phone();
-
-    /**
-     * The meta object literal for the '<em><b>Email</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute CONTACT__EMAIL = eINSTANCE.getContact_Email();
 
     /**
      * The meta object literal for the '{@link org.fornax.soa.sladsl.sLADsl.impl.PartyImpl <em>Party</em>}' class.

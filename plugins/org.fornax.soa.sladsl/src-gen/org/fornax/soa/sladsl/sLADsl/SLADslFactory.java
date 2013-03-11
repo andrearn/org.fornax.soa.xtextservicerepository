@@ -233,15 +233,6 @@ public interface SLADslFactory extends EFactory
   Escalation createEscalation();
 
   /**
-   * Returns a new object of class '<em>Contact</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Contact</em>'.
-   * @generated
-   */
-  Contact createContact();
-
-  /**
    * Returns a new object of class '<em>Party</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

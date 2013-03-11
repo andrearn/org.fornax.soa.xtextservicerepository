@@ -8,20 +8,18 @@ package org.fornax.soa.sladsl.sLADsl.impl;
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
-import org.fornax.soa.sladsl.sLADsl.Contact;
+import org.fornax.soa.basedsl.sOABaseDsl.User;
+
 import org.fornax.soa.sladsl.sLADsl.Escalation;
 import org.fornax.soa.sladsl.sLADsl.SLADslPackage;
 
@@ -63,14 +61,14 @@ public class EscalationImpl extends MinimalEObjectImpl.Container implements Esca
   protected String cause = CAUSE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getEscalationTargets() <em>Escalation Targets</em>}' containment reference list.
+   * The cached value of the '{@link #getEscalationTargets() <em>Escalation Targets</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getEscalationTargets()
    * @generated
    * @ordered
    */
-  protected EList<Contact> escalationTargets;
+  protected EList<User> escalationTargets;
 
   /**
    * The default value of the '{@link #getProcedure() <em>Procedure</em>}' attribute.
@@ -141,11 +139,11 @@ public class EscalationImpl extends MinimalEObjectImpl.Container implements Esca
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Contact> getEscalationTargets()
+  public EList<User> getEscalationTargets()
   {
     if (escalationTargets == null)
     {
-      escalationTargets = new EObjectContainmentEList<Contact>(Contact.class, this, SLADslPackage.ESCALATION__ESCALATION_TARGETS);
+      escalationTargets = new EObjectResolvingEList<User>(User.class, this, SLADslPackage.ESCALATION__ESCALATION_TARGETS);
     }
     return escalationTargets;
   }
@@ -171,22 +169,6 @@ public class EscalationImpl extends MinimalEObjectImpl.Container implements Esca
     procedure = newProcedure;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.ESCALATION__PROCEDURE, oldProcedure, procedure));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case SLADslPackage.ESCALATION__ESCALATION_TARGETS:
-        return ((InternalEList<?>)getEscalationTargets()).basicRemove(otherEnd, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -225,7 +207,7 @@ public class EscalationImpl extends MinimalEObjectImpl.Container implements Esca
         return;
       case SLADslPackage.ESCALATION__ESCALATION_TARGETS:
         getEscalationTargets().clear();
-        getEscalationTargets().addAll((Collection<? extends Contact>)newValue);
+        getEscalationTargets().addAll((Collection<? extends User>)newValue);
         return;
       case SLADslPackage.ESCALATION__PROCEDURE:
         setProcedure((String)newValue);

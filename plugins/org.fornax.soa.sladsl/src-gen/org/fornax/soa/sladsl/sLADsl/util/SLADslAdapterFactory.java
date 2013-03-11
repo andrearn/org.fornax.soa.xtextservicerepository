@@ -193,11 +193,6 @@ public class SLADslAdapterFactory extends AdapterFactoryImpl
         return createEscalationAdapter();
       }
       @Override
-      public Adapter caseContact(Contact object)
-      {
-        return createContactAdapter();
-      }
-      @Override
       public Adapter caseParty(Party object)
       {
         return createPartyAdapter();
@@ -605,21 +600,6 @@ public class SLADslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEscalationAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.fornax.soa.sladsl.sLADsl.Contact <em>Contact</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.fornax.soa.sladsl.sLADsl.Contact
-   * @generated
-   */
-  public Adapter createContactAdapter()
   {
     return null;
   }

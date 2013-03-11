@@ -9,6 +9,9 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.fornax.soa.basedsl.sOABaseDsl.User;
+import org.fornax.soa.basedsl.sOABaseDsl.Version;
+
 import org.fornax.soa.semanticsDsl.Tag;
 
 /**
@@ -20,7 +23,7 @@ import org.fornax.soa.semanticsDsl.Tag;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getName <em>Name</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getOwner <em>Owner</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getEffectiveDate <em>Effective Date</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getEffectiveUntil <em>Effective Until</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getPreample <em>Preample</em>}</li>
@@ -40,6 +43,10 @@ import org.fornax.soa.semanticsDsl.Tag;
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getExtraordinaryCancellation <em>Extraordinary Cancellation</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getEffortAccounting <em>Effort Accounting</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getReports <em>Reports</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getOwner <em>Owner</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getResponsible <em>Responsible</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getBudgeting <em>Budgeting</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getSubscriptions <em>Subscriptions</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getTags <em>Tags</em>}</li>
  * </ul>
  * </p>
@@ -77,30 +84,30 @@ public interface SLA extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Owner</b></em>' attribute.
+   * Returns the value of the '<em><b>Version</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Owner</em>' attribute isn't clear,
+   * If the meaning of the '<em>Version</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Owner</em>' attribute.
-   * @see #setOwner(String)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Owner()
-   * @model
+   * @return the value of the '<em>Version</em>' containment reference.
+   * @see #setVersion(Version)
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Version()
+   * @model containment="true"
    * @generated
    */
-  String getOwner();
+  Version getVersion();
 
   /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getOwner <em>Owner</em>}' attribute.
+   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getVersion <em>Version</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Owner</em>' attribute.
-   * @see #getOwner()
+   * @param value the new value of the '<em>Version</em>' containment reference.
+   * @see #getVersion()
    * @generated
    */
-  void setOwner(String value);
+  void setVersion(Version value);
 
   /**
    * Returns the value of the '<em><b>Effective Date</b></em>' attribute.
@@ -535,6 +542,90 @@ public interface SLA extends EObject
    * @generated
    */
   EList<Report> getReports();
+
+  /**
+   * Returns the value of the '<em><b>Owner</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Owner</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Owner</em>' reference.
+   * @see #setOwner(User)
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Owner()
+   * @model
+   * @generated
+   */
+  User getOwner();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getOwner <em>Owner</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Owner</em>' reference.
+   * @see #getOwner()
+   * @generated
+   */
+  void setOwner(User value);
+
+  /**
+   * Returns the value of the '<em><b>Responsible</b></em>' reference list.
+   * The list contents are of type {@link org.fornax.soa.basedsl.sOABaseDsl.User}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Responsible</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Responsible</em>' reference list.
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Responsible()
+   * @model
+   * @generated
+   */
+  EList<User> getResponsible();
+
+  /**
+   * Returns the value of the '<em><b>Budgeting</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Budgeting</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Budgeting</em>' reference.
+   * @see #setBudgeting(User)
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Budgeting()
+   * @model
+   * @generated
+   */
+  User getBudgeting();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getBudgeting <em>Budgeting</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Budgeting</em>' reference.
+   * @see #getBudgeting()
+   * @generated
+   */
+  void setBudgeting(User value);
+
+  /**
+   * Returns the value of the '<em><b>Subscriptions</b></em>' reference list.
+   * The list contents are of type {@link org.fornax.soa.basedsl.sOABaseDsl.User}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Subscriptions</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Subscriptions</em>' reference list.
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Subscriptions()
+   * @model
+   * @generated
+   */
+  EList<User> getSubscriptions();
 
   /**
    * Returns the value of the '<em><b>Tags</b></em>' reference list.

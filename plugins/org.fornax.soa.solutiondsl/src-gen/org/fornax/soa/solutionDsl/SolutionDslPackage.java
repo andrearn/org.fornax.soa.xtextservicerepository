@@ -191,13 +191,49 @@ public interface SolutionDslPackage extends EPackage
   int SOLUTION__MODULES = 8;
 
   /**
+   * The feature id for the '<em><b>Owner</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SOLUTION__OWNER = 9;
+
+  /**
+   * The feature id for the '<em><b>Responsible</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SOLUTION__RESPONSIBLE = 10;
+
+  /**
+   * The feature id for the '<em><b>Budgeting</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SOLUTION__BUDGETING = 11;
+
+  /**
+   * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SOLUTION__SUBSCRIPTIONS = 12;
+
+  /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SOLUTION__TAGS = 9;
+  int SOLUTION__TAGS = 13;
 
   /**
    * The number of structural features of the '<em>Solution</em>' class.
@@ -206,7 +242,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION_FEATURE_COUNT = 10;
+  int SOLUTION_FEATURE_COUNT = 14;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.solutionDsl.impl.ModuleImpl <em>Module</em>}' class.
@@ -282,13 +318,49 @@ public interface SolutionDslPackage extends EPackage
   int MODULE__MODULES = 6;
 
   /**
+   * The feature id for the '<em><b>Owner</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE__OWNER = 7;
+
+  /**
+   * The feature id for the '<em><b>Responsible</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE__RESPONSIBLE = 8;
+
+  /**
+   * The feature id for the '<em><b>Budgeting</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE__BUDGETING = 9;
+
+  /**
+   * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE__SUBSCRIPTIONS = 10;
+
+  /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODULE__TAGS = 7;
+  int MODULE__TAGS = 11;
 
   /**
    * The number of structural features of the '<em>Module</em>' class.
@@ -297,7 +369,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE_FEATURE_COUNT = 8;
+  int MODULE_FEATURE_COUNT = 12;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.solutionDsl.impl.FeatureImpl <em>Feature</em>}' class.
@@ -382,13 +454,49 @@ public interface SolutionDslPackage extends EPackage
   int FEATURE__EVENT = 7;
 
   /**
+   * The feature id for the '<em><b>Owner</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FEATURE__OWNER = 8;
+
+  /**
+   * The feature id for the '<em><b>Responsible</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FEATURE__RESPONSIBLE = 9;
+
+  /**
+   * The feature id for the '<em><b>Budgeting</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FEATURE__BUDGETING = 10;
+
+  /**
+   * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FEATURE__SUBSCRIPTIONS = 11;
+
+  /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FEATURE__TAGS = 8;
+  int FEATURE__TAGS = 12;
 
   /**
    * The feature id for the '<em><b>Features</b></em>' containment reference list.
@@ -397,7 +505,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FEATURE__FEATURES = 9;
+  int FEATURE__FEATURES = 13;
 
   /**
    * The number of structural features of the '<em>Feature</em>' class.
@@ -406,7 +514,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FEATURE_FEATURE_COUNT = 10;
+  int FEATURE_FEATURE_COUNT = 14;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.solutionDsl.impl.ServiceRefImpl <em>Service Ref</em>}' class.
@@ -746,6 +854,50 @@ public interface SolutionDslPackage extends EPackage
   EReference getSolution_Modules();
 
   /**
+   * Returns the meta object for the reference '{@link org.fornax.soa.solutionDsl.Solution#getOwner <em>Owner</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Owner</em>'.
+   * @see org.fornax.soa.solutionDsl.Solution#getOwner()
+   * @see #getSolution()
+   * @generated
+   */
+  EReference getSolution_Owner();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Solution#getResponsible <em>Responsible</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Responsible</em>'.
+   * @see org.fornax.soa.solutionDsl.Solution#getResponsible()
+   * @see #getSolution()
+   * @generated
+   */
+  EReference getSolution_Responsible();
+
+  /**
+   * Returns the meta object for the reference '{@link org.fornax.soa.solutionDsl.Solution#getBudgeting <em>Budgeting</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Budgeting</em>'.
+   * @see org.fornax.soa.solutionDsl.Solution#getBudgeting()
+   * @see #getSolution()
+   * @generated
+   */
+  EReference getSolution_Budgeting();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Solution#getSubscriptions <em>Subscriptions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Subscriptions</em>'.
+   * @see org.fornax.soa.solutionDsl.Solution#getSubscriptions()
+   * @see #getSolution()
+   * @generated
+   */
+  EReference getSolution_Subscriptions();
+
+  /**
    * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Solution#getTags <em>Tags</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -842,6 +994,50 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    */
   EReference getModule_Modules();
+
+  /**
+   * Returns the meta object for the reference '{@link org.fornax.soa.solutionDsl.Module#getOwner <em>Owner</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Owner</em>'.
+   * @see org.fornax.soa.solutionDsl.Module#getOwner()
+   * @see #getModule()
+   * @generated
+   */
+  EReference getModule_Owner();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Module#getResponsible <em>Responsible</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Responsible</em>'.
+   * @see org.fornax.soa.solutionDsl.Module#getResponsible()
+   * @see #getModule()
+   * @generated
+   */
+  EReference getModule_Responsible();
+
+  /**
+   * Returns the meta object for the reference '{@link org.fornax.soa.solutionDsl.Module#getBudgeting <em>Budgeting</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Budgeting</em>'.
+   * @see org.fornax.soa.solutionDsl.Module#getBudgeting()
+   * @see #getModule()
+   * @generated
+   */
+  EReference getModule_Budgeting();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Module#getSubscriptions <em>Subscriptions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Subscriptions</em>'.
+   * @see org.fornax.soa.solutionDsl.Module#getSubscriptions()
+   * @see #getModule()
+   * @generated
+   */
+  EReference getModule_Subscriptions();
 
   /**
    * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Module#getTags <em>Tags</em>}'.
@@ -951,6 +1147,50 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    */
   EReference getFeature_Event();
+
+  /**
+   * Returns the meta object for the reference '{@link org.fornax.soa.solutionDsl.Feature#getOwner <em>Owner</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Owner</em>'.
+   * @see org.fornax.soa.solutionDsl.Feature#getOwner()
+   * @see #getFeature()
+   * @generated
+   */
+  EReference getFeature_Owner();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Feature#getResponsible <em>Responsible</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Responsible</em>'.
+   * @see org.fornax.soa.solutionDsl.Feature#getResponsible()
+   * @see #getFeature()
+   * @generated
+   */
+  EReference getFeature_Responsible();
+
+  /**
+   * Returns the meta object for the reference '{@link org.fornax.soa.solutionDsl.Feature#getBudgeting <em>Budgeting</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Budgeting</em>'.
+   * @see org.fornax.soa.solutionDsl.Feature#getBudgeting()
+   * @see #getFeature()
+   * @generated
+   */
+  EReference getFeature_Budgeting();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Feature#getSubscriptions <em>Subscriptions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Subscriptions</em>'.
+   * @see org.fornax.soa.solutionDsl.Feature#getSubscriptions()
+   * @see #getFeature()
+   * @generated
+   */
+  EReference getFeature_Subscriptions();
 
   /**
    * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Feature#getTags <em>Tags</em>}'.
@@ -1265,6 +1505,38 @@ public interface SolutionDslPackage extends EPackage
     EReference SOLUTION__MODULES = eINSTANCE.getSolution_Modules();
 
     /**
+     * The meta object literal for the '<em><b>Owner</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SOLUTION__OWNER = eINSTANCE.getSolution_Owner();
+
+    /**
+     * The meta object literal for the '<em><b>Responsible</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SOLUTION__RESPONSIBLE = eINSTANCE.getSolution_Responsible();
+
+    /**
+     * The meta object literal for the '<em><b>Budgeting</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SOLUTION__BUDGETING = eINSTANCE.getSolution_Budgeting();
+
+    /**
+     * The meta object literal for the '<em><b>Subscriptions</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SOLUTION__SUBSCRIPTIONS = eINSTANCE.getSolution_Subscriptions();
+
+    /**
      * The meta object literal for the '<em><b>Tags</b></em>' reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1337,6 +1609,38 @@ public interface SolutionDslPackage extends EPackage
      * @generated
      */
     EReference MODULE__MODULES = eINSTANCE.getModule_Modules();
+
+    /**
+     * The meta object literal for the '<em><b>Owner</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODULE__OWNER = eINSTANCE.getModule_Owner();
+
+    /**
+     * The meta object literal for the '<em><b>Responsible</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODULE__RESPONSIBLE = eINSTANCE.getModule_Responsible();
+
+    /**
+     * The meta object literal for the '<em><b>Budgeting</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODULE__BUDGETING = eINSTANCE.getModule_Budgeting();
+
+    /**
+     * The meta object literal for the '<em><b>Subscriptions</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODULE__SUBSCRIPTIONS = eINSTANCE.getModule_Subscriptions();
 
     /**
      * The meta object literal for the '<em><b>Tags</b></em>' reference list feature.
@@ -1419,6 +1723,38 @@ public interface SolutionDslPackage extends EPackage
      * @generated
      */
     EReference FEATURE__EVENT = eINSTANCE.getFeature_Event();
+
+    /**
+     * The meta object literal for the '<em><b>Owner</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FEATURE__OWNER = eINSTANCE.getFeature_Owner();
+
+    /**
+     * The meta object literal for the '<em><b>Responsible</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FEATURE__RESPONSIBLE = eINSTANCE.getFeature_Responsible();
+
+    /**
+     * The meta object literal for the '<em><b>Budgeting</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FEATURE__BUDGETING = eINSTANCE.getFeature_Budgeting();
+
+    /**
+     * The meta object literal for the '<em><b>Subscriptions</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FEATURE__SUBSCRIPTIONS = eINSTANCE.getFeature_Subscriptions();
 
     /**
      * The meta object literal for the '<em><b>Tags</b></em>' reference list feature.

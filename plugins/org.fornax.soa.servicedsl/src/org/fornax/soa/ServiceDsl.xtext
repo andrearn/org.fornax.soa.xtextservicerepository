@@ -17,7 +17,7 @@ grammar org.fornax.soa.ServiceDsl with org.fornax.soa.basedsl.SOABaseDsl
 
 generate serviceDsl "http://www.fornax.org/soa/ServiceDsl"
 
-import "http://www.fornax.org/soa/basedsl/SOABaseDsl"
+import "http://www.fornax.org/soa/basedsl/SOABaseDsl" as basedsl
 import "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" as profileDsl
 import "http://www.fornax.org/soa/SemanticsDsl" as semanticsDsl
 import "http://www.fornax.org/soa/BusinessDsl" as businessDsl
@@ -44,9 +44,16 @@ DomainNamespace:
 		('metadata' '{'
 			('domain' domain=[businessDsl::Domain|QualifiedName])?
 			(version=Version  )?
-			('namespace-owner' owner=STRING)?
 			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
-			('tags' (tags+=[semanticsDsl::Tag])+)*
+			('contacts' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('subscriptions' '{'
+					subscriptions += [basedsl::User|QualifiedName]*
+				'}')?
+			)?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
 		'}')?
 		(types+=Type)*
 		(services+=Service)*
@@ -63,7 +70,15 @@ InternalNamespace:
 			(version=Version)?
 			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
 			('namespace-url' namespaceUrl = STRING)
-			('tags' (tags+=[semanticsDsl::Tag])+)*
+			('contacts' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('subscriptions' '{'
+					subscriptions += [basedsl::User|QualifiedName]*
+				'}')?
+			)?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
 		'}')?
 		(types+=Type)*
 		(services+=Service)*
@@ -96,7 +111,15 @@ BusinessObject:
 			&	('provided-contract' providedContractUrl=STRING)?
 			)
 			(additionalInfo=AdditionalInformation)?
-			('tags' (tags+=[semanticsDsl::Tag])+)*
+			('contacts' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('subscriptions' '{'
+					subscriptions += [basedsl::User|QualifiedName]*
+				'}')?
+			)?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
 		'}'
 		(properties+=Property)*
 	'}';
@@ -117,7 +140,15 @@ QueryObject:
 			&	('retirement-on' retirementDate = STRING)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			)
-			('tags' (tags+=[semanticsDsl::Tag])+)*
+			('contacts' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('subscriptions' '{'
+					subscriptions += [basedsl::User|QualifiedName]*
+				'}')?
+			)?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
 		'}'
 		(properties+=Property)*
 	'}';
@@ -174,7 +205,15 @@ Enumeration:
 			&	('provided-contract' providedContractUrl=STRING)?
 			)
 			(additionalInfo=AdditionalInformation)?
-			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			('contacts' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('subscriptions' '{'
+					subscriptions += [basedsl::User|QualifiedName]*
+				'}')?
+			)?
+			('tags' (tags+=[semanticsDsl::Tag])+ )?
 		'}'
 		(literals+=EnumLiteral )*
 	'}';
@@ -204,10 +243,8 @@ Service:
 			('persistence' persistence=Persistence )? 
 			(additionalInfo=AdditionalInformation)?
 			(
-				/* Who is responsible for the service? */
-				('service-owner' owner=STRING )?
 				/* The business capabilities the service fully implements */
-			&	('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?
+				('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?
 				/* The business capabilities that are supported but not fully implemented by this service alone */	
 			&	('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?
 				/* 
@@ -231,10 +268,19 @@ Service:
 			&	('response-message-header' responseMessageHeader = MessageHeaderRef )?
 			&	('publish-message-header' publishMessageHeader = MessageHeaderRef )?
 			)
+			('contacts' '{'
+				/* Who is responsible for the service? */
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('subscriptions' '{'
+					subscriptions += [basedsl::User|QualifiedName]*
+				'}')?
+			)?
 			/*
 			 * Semantic tagging
 			 */
-			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			('tags' (tags+=[semanticsDsl::Tag])+)?
 		'}'
 		/*
 		 * The service operations
@@ -354,6 +400,14 @@ GlobalEvent:
 			('retirement-on' retirementDate = STRING )?
 			('provided-contract' providedContractUrl=STRING)?
 			(additionalInfo=AdditionalInformation)?
+			('contacts' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('subscriptions' '{'
+					subscriptions += [basedsl::User|QualifiedName]*
+				'}')?
+			)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(parameter+=Parameter )*
@@ -476,6 +530,14 @@ Exception:
 			('release-on' releaseDate = STRING )?
 			('retirement-on' retirementDate = STRING )?
 			('provided-contract' providedContractUrl=STRING)?
+			('contacts' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('subscriptions' '{'
+					subscriptions += [basedsl::User|QualifiedName]*
+				'}')?
+			)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(properties+=SimpleAttribute)*

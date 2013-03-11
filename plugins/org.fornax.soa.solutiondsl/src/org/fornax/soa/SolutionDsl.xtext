@@ -13,6 +13,7 @@ grammar org.fornax.soa.SolutionDsl with org.fornax.soa.basedsl.SOABaseDsl
 
 generate solutionDsl "http://www.fornax.org/soa/SolutionDsl"
 
+import "http://www.fornax.org/soa/basedsl/SOABaseDsl" as basedsl
 import "http://www.fornax.org/soa/SemanticsDsl" as semanticsDsl
 import "http://www.fornax.org/soa/ServiceDsl" as serviceDsl
 import "http://www.fornax.org/soa/BusinessDsl" as businessDsl
@@ -33,6 +34,14 @@ Solution:
 		('requires' requires+=ServiceRef )*
 		(features+=Feature)*
 		(modules+=Module)*
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )?
 	'}';
 
@@ -44,6 +53,14 @@ Module:
 		('requires' requires+=ServiceRef )*
 		(features+=Feature)*
 		(modules+=Module)*
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )?
 	'}';
 	
@@ -59,6 +76,14 @@ Feature:
 		'}')?
 		('requires' requires+=ServiceRef )*
 		('subscribes-to-event' (event+=EventRef)(',' event+=EventRef)* )?
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		)?
 		('tags' (tags+=[semanticsDsl::Tag])+ )?
 		(features+=Feature)*
 	'}';

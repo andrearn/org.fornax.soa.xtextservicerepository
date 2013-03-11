@@ -12,15 +12,15 @@ grammar org.fornax.soa.sladsl.SLADsl with org.fornax.soa.basedsl.SOABaseDsl
 
 generate sLADsl "http://www.fornax.org/soa/sladsl/SLADsl"
 
-import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
-import "http://www.eclipse.org/emf/2002/Ecore"
+import "http://www.fornax.org/soa/basedsl/SOABaseDsl" as basedsl
+import "http://www.fornax.org/soa/SemanticsDsl" as semanticsDsl
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 SlaModel:
 	agreements+=SLA*;
 	
 SLA:
-	'service-level-agreement' name=QualifiedName '{'
-			('owner' owner=STRING)? 
+	'service-level-agreement' name=QualifiedName (version=Version)? '{'
 			'effective-date' effectiveDate = STRING 
 			('effective-until' effectiveUntil = STRING )?
 			('preample' preample = STRING )?
@@ -28,7 +28,7 @@ SLA:
 			('scope' scope = STRING)?
 			('applies-to' '{'
 				appliesTo += AssetRef* 
-			'}')
+			'}')?
 			(costs = Cost )?
 			('service-quality-requirements' '{'
 				(serviceQualityProperties += ServiceQualityProperty)*
@@ -50,10 +50,18 @@ SLA:
 			('extraordinary-cancellation' extraordinaryCancellation = STRING )?
 			('effort-accounting' effortAccounting = STRING )?
 			(reports+=Report)*
+			('contacts' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('subscriptions' '{'
+					subscriptions += [basedsl::User|QualifiedName]*
+				'}')?
+			)?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
-AssetRef: asset = [EObject|QualifiedName] (versionRef=VersionRef)?;
+AssetRef: asset = [ecore::EObject|QualifiedName] (versionRef=VersionRef)?;
 
 Cost:
 	'costs' '{'
@@ -197,18 +205,11 @@ Escalation :
 	'escalation' '{'
 		('cause' cause=STRING )?
 		'escalate-to' '{'
-			(escalationTargets+=Contact)+
+			(escalationTargets+=[basedsl::User|QualifiedName])+
 		'}'
 		('procedure' procedure=STRING )?
 	'}';
-		
-Contact :
-	'contact' '{'
-		'name' fullname=STRING 
-		('phone' phone=STRING)? 
-		('email' email=STRING)?
-	'}';
-		
+				
 Party: CustomerParty | ProviderParty | ThirdParty;
 
 CustomerParty:

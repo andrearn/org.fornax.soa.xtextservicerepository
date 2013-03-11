@@ -315,9 +315,49 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSolution_Tags()
+  public EReference getSolution_Owner()
   {
     return (EReference)solutionEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSolution_Responsible()
+  {
+    return (EReference)solutionEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSolution_Budgeting()
+  {
+    return (EReference)solutionEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSolution_Subscriptions()
+  {
+    return (EReference)solutionEClass.getEStructuralFeatures().get(12);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSolution_Tags()
+  {
+    return (EReference)solutionEClass.getEStructuralFeatures().get(13);
   }
 
   /**
@@ -405,9 +445,49 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModule_Tags()
+  public EReference getModule_Owner()
   {
     return (EReference)moduleEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getModule_Responsible()
+  {
+    return (EReference)moduleEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getModule_Budgeting()
+  {
+    return (EReference)moduleEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getModule_Subscriptions()
+  {
+    return (EReference)moduleEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getModule_Tags()
+  {
+    return (EReference)moduleEClass.getEStructuralFeatures().get(11);
   }
 
   /**
@@ -505,7 +585,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFeature_Tags()
+  public EReference getFeature_Owner()
   {
     return (EReference)featureEClass.getEStructuralFeatures().get(8);
   }
@@ -515,9 +595,49 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFeature_Features()
+  public EReference getFeature_Responsible()
   {
     return (EReference)featureEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFeature_Budgeting()
+  {
+    return (EReference)featureEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFeature_Subscriptions()
+  {
+    return (EReference)featureEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFeature_Tags()
+  {
+    return (EReference)featureEClass.getEStructuralFeatures().get(12);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFeature_Features()
+  {
+    return (EReference)featureEClass.getEStructuralFeatures().get(13);
   }
 
   /**
@@ -714,6 +834,10 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     createEReference(solutionEClass, SOLUTION__REQUIRES);
     createEReference(solutionEClass, SOLUTION__FEATURES);
     createEReference(solutionEClass, SOLUTION__MODULES);
+    createEReference(solutionEClass, SOLUTION__OWNER);
+    createEReference(solutionEClass, SOLUTION__RESPONSIBLE);
+    createEReference(solutionEClass, SOLUTION__BUDGETING);
+    createEReference(solutionEClass, SOLUTION__SUBSCRIPTIONS);
     createEReference(solutionEClass, SOLUTION__TAGS);
 
     moduleEClass = createEClass(MODULE);
@@ -724,6 +848,10 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     createEReference(moduleEClass, MODULE__REQUIRES);
     createEReference(moduleEClass, MODULE__FEATURES);
     createEReference(moduleEClass, MODULE__MODULES);
+    createEReference(moduleEClass, MODULE__OWNER);
+    createEReference(moduleEClass, MODULE__RESPONSIBLE);
+    createEReference(moduleEClass, MODULE__BUDGETING);
+    createEReference(moduleEClass, MODULE__SUBSCRIPTIONS);
     createEReference(moduleEClass, MODULE__TAGS);
 
     featureEClass = createEClass(FEATURE);
@@ -735,6 +863,10 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     createEReference(featureEClass, FEATURE__USES_CAPABILITIES);
     createEReference(featureEClass, FEATURE__REQUIRES);
     createEReference(featureEClass, FEATURE__EVENT);
+    createEReference(featureEClass, FEATURE__OWNER);
+    createEReference(featureEClass, FEATURE__RESPONSIBLE);
+    createEReference(featureEClass, FEATURE__BUDGETING);
+    createEReference(featureEClass, FEATURE__SUBSCRIPTIONS);
     createEReference(featureEClass, FEATURE__TAGS);
     createEReference(featureEClass, FEATURE__FEATURES);
 
@@ -814,6 +946,10 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     initEReference(getSolution_Requires(), this.getServiceRef(), null, "requires", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_Features(), this.getFeature(), null, "features", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_Modules(), this.getModule(), null, "modules", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSolution_Owner(), theSOABaseDslPackage.getUser(), null, "owner", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSolution_Responsible(), theSOABaseDslPackage.getUser(), null, "responsible", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSolution_Budgeting(), theSOABaseDslPackage.getUser(), null, "budgeting", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSolution_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_Tags(), theSemanticsDslPackage.getTag(), null, "tags", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -824,6 +960,10 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     initEReference(getModule_Requires(), this.getServiceRef(), null, "requires", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModule_Features(), this.getFeature(), null, "features", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModule_Modules(), this.getModule(), null, "modules", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModule_Owner(), theSOABaseDslPackage.getUser(), null, "owner", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModule_Responsible(), theSOABaseDslPackage.getUser(), null, "responsible", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModule_Budgeting(), theSOABaseDslPackage.getUser(), null, "budgeting", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModule_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModule_Tags(), theSemanticsDslPackage.getTag(), null, "tags", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(featureEClass, Feature.class, "Feature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -835,6 +975,10 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     initEReference(getFeature_UsesCapabilities(), this.getCapabilityRef(), null, "usesCapabilities", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFeature_Requires(), this.getServiceRef(), null, "requires", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFeature_Event(), this.getEventRef(), null, "event", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFeature_Owner(), theSOABaseDslPackage.getUser(), null, "owner", null, 0, 1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFeature_Responsible(), theSOABaseDslPackage.getUser(), null, "responsible", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFeature_Budgeting(), theSOABaseDslPackage.getUser(), null, "budgeting", null, 0, 1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFeature_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFeature_Tags(), theSemanticsDslPackage.getTag(), null, "tags", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFeature_Features(), this.getFeature(), null, "features", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

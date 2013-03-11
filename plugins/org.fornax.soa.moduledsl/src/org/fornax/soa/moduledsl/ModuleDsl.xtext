@@ -2,7 +2,7 @@ grammar org.fornax.soa.moduledsl.ModuleDsl with org.fornax.soa.basedsl.SOABaseDs
 
 generate moduleDsl "http://www.fornax.org/soa/moduledsl/ModuleDsl"
 
-import "http://www.fornax.org/soa/basedsl/SOABaseDsl"
+import "http://www.fornax.org/soa/basedsl/SOABaseDsl" as basedsl
 import "http://www.fornax.org/soa/ServiceDsl" as serviceDsl
 import "http://www.fornax.org/soa/EnvironmentDsl" as environmentDsl
 import "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" as profileDsl
@@ -30,7 +30,6 @@ Module:
 		(governanceDecisions+=GovernanceDecision)*
 		/* An additional named Qualifier of the module, may be referred to by bindings or other modules using this module */
 		(qualifiers=QualifierRefs)?
-		('owner' owner = STRING)?
 		/*
 		 * How is the module packaged? SCA, EAR etc.
 		 */
@@ -46,6 +45,14 @@ Module:
 			('source-location' source=STRING )? 		// Where can I get the sources? 
 		)
 		(additionalInfo=AdditionalInformation)?
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		)?
 		/* Declares services provided by the module */
 		('provides' '{'
 			/*

@@ -78,23 +78,52 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cModulesAssignment_11 = (Assignment)cGroup.eContents().get(11);
 		private final RuleCall cModulesModuleParserRuleCall_11_0 = (RuleCall)cModulesAssignment_11.eContents().get(0);
 		private final Group cGroup_12 = (Group)cGroup.eContents().get(12);
-		private final Keyword cTagsKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
-		private final Assignment cTagsAssignment_12_1 = (Assignment)cGroup_12.eContents().get(1);
-		private final CrossReference cTagsTagCrossReference_12_1_0 = (CrossReference)cTagsAssignment_12_1.eContents().get(0);
-		private final RuleCall cTagsTagIDTerminalRuleCall_12_1_0_1 = (RuleCall)cTagsTagCrossReference_12_1_0.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_13 = (Keyword)cGroup.eContents().get(13);
+		private final Keyword cContactsKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_12_1 = (Keyword)cGroup_12.eContents().get(1);
+		private final Group cGroup_12_2 = (Group)cGroup_12.eContents().get(2);
+		private final Keyword cOwnerKeyword_12_2_0 = (Keyword)cGroup_12_2.eContents().get(0);
+		private final Assignment cOwnerAssignment_12_2_1 = (Assignment)cGroup_12_2.eContents().get(1);
+		private final CrossReference cOwnerUserCrossReference_12_2_1_0 = (CrossReference)cOwnerAssignment_12_2_1.eContents().get(0);
+		private final RuleCall cOwnerUserQualifiedNameParserRuleCall_12_2_1_0_1 = (RuleCall)cOwnerUserCrossReference_12_2_1_0.eContents().get(1);
+		private final Group cGroup_12_3 = (Group)cGroup_12.eContents().get(3);
+		private final Keyword cResponsibleKeyword_12_3_0 = (Keyword)cGroup_12_3.eContents().get(0);
+		private final Assignment cResponsibleAssignment_12_3_1 = (Assignment)cGroup_12_3.eContents().get(1);
+		private final CrossReference cResponsibleUserCrossReference_12_3_1_0 = (CrossReference)cResponsibleAssignment_12_3_1.eContents().get(0);
+		private final RuleCall cResponsibleUserQualifiedNameParserRuleCall_12_3_1_0_1 = (RuleCall)cResponsibleUserCrossReference_12_3_1_0.eContents().get(1);
+		private final Group cGroup_12_4 = (Group)cGroup_12.eContents().get(4);
+		private final Keyword cBudgetingKeyword_12_4_0 = (Keyword)cGroup_12_4.eContents().get(0);
+		private final Assignment cBudgetingAssignment_12_4_1 = (Assignment)cGroup_12_4.eContents().get(1);
+		private final CrossReference cBudgetingUserCrossReference_12_4_1_0 = (CrossReference)cBudgetingAssignment_12_4_1.eContents().get(0);
+		private final RuleCall cBudgetingUserQualifiedNameParserRuleCall_12_4_1_0_1 = (RuleCall)cBudgetingUserCrossReference_12_4_1_0.eContents().get(1);
+		private final Group cGroup_12_5 = (Group)cGroup_12.eContents().get(5);
+		private final Keyword cSubscriptionsKeyword_12_5_0 = (Keyword)cGroup_12_5.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_12_5_1 = (Keyword)cGroup_12_5.eContents().get(1);
+		private final Assignment cSubscriptionsAssignment_12_5_2 = (Assignment)cGroup_12_5.eContents().get(2);
+		private final CrossReference cSubscriptionsUserCrossReference_12_5_2_0 = (CrossReference)cSubscriptionsAssignment_12_5_2.eContents().get(0);
+		private final RuleCall cSubscriptionsUserQualifiedNameParserRuleCall_12_5_2_0_1 = (RuleCall)cSubscriptionsUserCrossReference_12_5_2_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_12_5_3 = (Keyword)cGroup_12_5.eContents().get(3);
+		private final Group cGroup_13 = (Group)cGroup.eContents().get(13);
+		private final Keyword cTagsKeyword_13_0 = (Keyword)cGroup_13.eContents().get(0);
+		private final Assignment cTagsAssignment_13_1 = (Assignment)cGroup_13.eContents().get(1);
+		private final CrossReference cTagsTagCrossReference_13_1_0 = (CrossReference)cTagsAssignment_13_1.eContents().get(0);
+		private final RuleCall cTagsTagIDTerminalRuleCall_13_1_0_1 = (RuleCall)cTagsTagCrossReference_13_1_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_14 = (Keyword)cGroup.eContents().get(14);
 		
 		//Solution:
 		//	"solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
 		//	"lifecycle-state" state=[profileDsl::LifecycleState|QualifiedName] productVersion=ProductVersion?
-		//	additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* features+=Feature* modules+=Module* ("tags"
-		//	tags+=[semanticsDsl::Tag]+)? "}";
+		//	additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* features+=Feature* modules+=Module*
+		//	("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
 		//"lifecycle-state" state=[profileDsl::LifecycleState|QualifiedName] productVersion=ProductVersion?
-		//additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* features+=Feature* modules+=Module* ("tags"
-		//tags+=[semanticsDsl::Tag]+)? "}"
+		//additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* features+=Feature* modules+=Module*
+		//("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}"
 		public Group getGroup() { return cGroup; }
 
 		//"solution"
@@ -178,23 +207,100 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		//Module
 		public RuleCall getModulesModuleParserRuleCall_11_0() { return cModulesModuleParserRuleCall_11_0; }
 
-		//("tags" tags+=[semanticsDsl::Tag]+)?
+		//("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
 		public Group getGroup_12() { return cGroup_12; }
 
-		//"tags"
-		public Keyword getTagsKeyword_12_0() { return cTagsKeyword_12_0; }
+		//"contacts"
+		public Keyword getContactsKeyword_12_0() { return cContactsKeyword_12_0; }
 
-		//tags+=[semanticsDsl::Tag]+
-		public Assignment getTagsAssignment_12_1() { return cTagsAssignment_12_1; }
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_12_1() { return cLeftCurlyBracketKeyword_12_1; }
 
-		//[semanticsDsl::Tag]
-		public CrossReference getTagsTagCrossReference_12_1_0() { return cTagsTagCrossReference_12_1_0; }
+		//("owner" owner=[basedsl::User|QualifiedName])?
+		public Group getGroup_12_2() { return cGroup_12_2; }
 
-		//ID
-		public RuleCall getTagsTagIDTerminalRuleCall_12_1_0_1() { return cTagsTagIDTerminalRuleCall_12_1_0_1; }
+		//"owner"
+		public Keyword getOwnerKeyword_12_2_0() { return cOwnerKeyword_12_2_0; }
+
+		//owner=[basedsl::User|QualifiedName]
+		public Assignment getOwnerAssignment_12_2_1() { return cOwnerAssignment_12_2_1; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getOwnerUserCrossReference_12_2_1_0() { return cOwnerUserCrossReference_12_2_1_0; }
+
+		//QualifiedName
+		public RuleCall getOwnerUserQualifiedNameParserRuleCall_12_2_1_0_1() { return cOwnerUserQualifiedNameParserRuleCall_12_2_1_0_1; }
+
+		//("responsible" responsible+=[basedsl::User|QualifiedName])*
+		public Group getGroup_12_3() { return cGroup_12_3; }
+
+		//"responsible"
+		public Keyword getResponsibleKeyword_12_3_0() { return cResponsibleKeyword_12_3_0; }
+
+		//responsible+=[basedsl::User|QualifiedName]
+		public Assignment getResponsibleAssignment_12_3_1() { return cResponsibleAssignment_12_3_1; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getResponsibleUserCrossReference_12_3_1_0() { return cResponsibleUserCrossReference_12_3_1_0; }
+
+		//QualifiedName
+		public RuleCall getResponsibleUserQualifiedNameParserRuleCall_12_3_1_0_1() { return cResponsibleUserQualifiedNameParserRuleCall_12_3_1_0_1; }
+
+		//("budgeting" budgeting=[basedsl::User|QualifiedName])?
+		public Group getGroup_12_4() { return cGroup_12_4; }
+
+		//"budgeting"
+		public Keyword getBudgetingKeyword_12_4_0() { return cBudgetingKeyword_12_4_0; }
+
+		//budgeting=[basedsl::User|QualifiedName]
+		public Assignment getBudgetingAssignment_12_4_1() { return cBudgetingAssignment_12_4_1; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getBudgetingUserCrossReference_12_4_1_0() { return cBudgetingUserCrossReference_12_4_1_0; }
+
+		//QualifiedName
+		public RuleCall getBudgetingUserQualifiedNameParserRuleCall_12_4_1_0_1() { return cBudgetingUserQualifiedNameParserRuleCall_12_4_1_0_1; }
+
+		//("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
+		public Group getGroup_12_5() { return cGroup_12_5; }
+
+		//"subscriptions"
+		public Keyword getSubscriptionsKeyword_12_5_0() { return cSubscriptionsKeyword_12_5_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_12_5_1() { return cLeftCurlyBracketKeyword_12_5_1; }
+
+		//subscriptions+=[basedsl::User|QualifiedName]*
+		public Assignment getSubscriptionsAssignment_12_5_2() { return cSubscriptionsAssignment_12_5_2; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getSubscriptionsUserCrossReference_12_5_2_0() { return cSubscriptionsUserCrossReference_12_5_2_0; }
+
+		//QualifiedName
+		public RuleCall getSubscriptionsUserQualifiedNameParserRuleCall_12_5_2_0_1() { return cSubscriptionsUserQualifiedNameParserRuleCall_12_5_2_0_1; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_13() { return cRightCurlyBracketKeyword_13; }
+		public Keyword getRightCurlyBracketKeyword_12_5_3() { return cRightCurlyBracketKeyword_12_5_3; }
+
+		//("tags" tags+=[semanticsDsl::Tag]+)?
+		public Group getGroup_13() { return cGroup_13; }
+
+		//"tags"
+		public Keyword getTagsKeyword_13_0() { return cTagsKeyword_13_0; }
+
+		//tags+=[semanticsDsl::Tag]+
+		public Assignment getTagsAssignment_13_1() { return cTagsAssignment_13_1; }
+
+		//[semanticsDsl::Tag]
+		public CrossReference getTagsTagCrossReference_13_1_0() { return cTagsTagCrossReference_13_1_0; }
+
+		//ID
+		public RuleCall getTagsTagIDTerminalRuleCall_13_1_0_1() { return cTagsTagIDTerminalRuleCall_13_1_0_1; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_14() { return cRightCurlyBracketKeyword_14; }
 	}
 
 	public class ModuleElements extends AbstractParserRuleElementFinder {
@@ -220,19 +326,50 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cModulesAssignment_9 = (Assignment)cGroup.eContents().get(9);
 		private final RuleCall cModulesModuleParserRuleCall_9_0 = (RuleCall)cModulesAssignment_9.eContents().get(0);
 		private final Group cGroup_10 = (Group)cGroup.eContents().get(10);
-		private final Keyword cTagsKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
-		private final Assignment cTagsAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
-		private final CrossReference cTagsTagCrossReference_10_1_0 = (CrossReference)cTagsAssignment_10_1.eContents().get(0);
-		private final RuleCall cTagsTagIDTerminalRuleCall_10_1_0_1 = (RuleCall)cTagsTagCrossReference_10_1_0.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_11 = (Keyword)cGroup.eContents().get(11);
+		private final Keyword cContactsKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_10_1 = (Keyword)cGroup_10.eContents().get(1);
+		private final Group cGroup_10_2 = (Group)cGroup_10.eContents().get(2);
+		private final Keyword cOwnerKeyword_10_2_0 = (Keyword)cGroup_10_2.eContents().get(0);
+		private final Assignment cOwnerAssignment_10_2_1 = (Assignment)cGroup_10_2.eContents().get(1);
+		private final CrossReference cOwnerUserCrossReference_10_2_1_0 = (CrossReference)cOwnerAssignment_10_2_1.eContents().get(0);
+		private final RuleCall cOwnerUserQualifiedNameParserRuleCall_10_2_1_0_1 = (RuleCall)cOwnerUserCrossReference_10_2_1_0.eContents().get(1);
+		private final Group cGroup_10_3 = (Group)cGroup_10.eContents().get(3);
+		private final Keyword cResponsibleKeyword_10_3_0 = (Keyword)cGroup_10_3.eContents().get(0);
+		private final Assignment cResponsibleAssignment_10_3_1 = (Assignment)cGroup_10_3.eContents().get(1);
+		private final CrossReference cResponsibleUserCrossReference_10_3_1_0 = (CrossReference)cResponsibleAssignment_10_3_1.eContents().get(0);
+		private final RuleCall cResponsibleUserQualifiedNameParserRuleCall_10_3_1_0_1 = (RuleCall)cResponsibleUserCrossReference_10_3_1_0.eContents().get(1);
+		private final Group cGroup_10_4 = (Group)cGroup_10.eContents().get(4);
+		private final Keyword cBudgetingKeyword_10_4_0 = (Keyword)cGroup_10_4.eContents().get(0);
+		private final Assignment cBudgetingAssignment_10_4_1 = (Assignment)cGroup_10_4.eContents().get(1);
+		private final CrossReference cBudgetingUserCrossReference_10_4_1_0 = (CrossReference)cBudgetingAssignment_10_4_1.eContents().get(0);
+		private final RuleCall cBudgetingUserQualifiedNameParserRuleCall_10_4_1_0_1 = (RuleCall)cBudgetingUserCrossReference_10_4_1_0.eContents().get(1);
+		private final Group cGroup_10_5 = (Group)cGroup_10.eContents().get(5);
+		private final Keyword cSubscriptionsKeyword_10_5_0 = (Keyword)cGroup_10_5.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_10_5_1 = (Keyword)cGroup_10_5.eContents().get(1);
+		private final Assignment cSubscriptionsAssignment_10_5_2 = (Assignment)cGroup_10_5.eContents().get(2);
+		private final CrossReference cSubscriptionsUserCrossReference_10_5_2_0 = (CrossReference)cSubscriptionsAssignment_10_5_2.eContents().get(0);
+		private final RuleCall cSubscriptionsUserQualifiedNameParserRuleCall_10_5_2_0_1 = (RuleCall)cSubscriptionsUserCrossReference_10_5_2_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_10_5_3 = (Keyword)cGroup_10_5.eContents().get(3);
+		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
+		private final Keyword cTagsKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
+		private final Assignment cTagsAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
+		private final CrossReference cTagsTagCrossReference_11_1_0 = (CrossReference)cTagsAssignment_11_1.eContents().get(0);
+		private final RuleCall cTagsTagIDTerminalRuleCall_11_1_0_1 = (RuleCall)cTagsTagCrossReference_11_1_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_12 = (Keyword)cGroup.eContents().get(12);
 		
 		//Module:
 		//	"module" name=ID "{" "kind" kind=ModuleKind version=Version? additionalInfo=AdditionalInformation? ("requires"
-		//	requires+=ServiceRef)* features+=Feature* modules+=Module* ("tags" tags+=[semanticsDsl::Tag]+)? "}";
+		//	requires+=ServiceRef)* features+=Feature* modules+=Module* ("contacts" "{" ("owner"
+		//	owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])* ("budgeting"
+		//	budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
+		//	("tags" tags+=[semanticsDsl::Tag]+)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"module" name=ID "{" "kind" kind=ModuleKind version=Version? additionalInfo=AdditionalInformation? ("requires"
-		//requires+=ServiceRef)* features+=Feature* modules+=Module* ("tags" tags+=[semanticsDsl::Tag]+)? "}"
+		//requires+=ServiceRef)* features+=Feature* modules+=Module* ("contacts" "{" ("owner"
+		//owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])* ("budgeting"
+		//budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
+		//("tags" tags+=[semanticsDsl::Tag]+)? "}"
 		public Group getGroup() { return cGroup; }
 
 		//"module"
@@ -292,23 +429,100 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		//Module
 		public RuleCall getModulesModuleParserRuleCall_9_0() { return cModulesModuleParserRuleCall_9_0; }
 
-		//("tags" tags+=[semanticsDsl::Tag]+)?
+		//("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
 		public Group getGroup_10() { return cGroup_10; }
 
-		//"tags"
-		public Keyword getTagsKeyword_10_0() { return cTagsKeyword_10_0; }
+		//"contacts"
+		public Keyword getContactsKeyword_10_0() { return cContactsKeyword_10_0; }
 
-		//tags+=[semanticsDsl::Tag]+
-		public Assignment getTagsAssignment_10_1() { return cTagsAssignment_10_1; }
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_10_1() { return cLeftCurlyBracketKeyword_10_1; }
 
-		//[semanticsDsl::Tag]
-		public CrossReference getTagsTagCrossReference_10_1_0() { return cTagsTagCrossReference_10_1_0; }
+		//("owner" owner=[basedsl::User|QualifiedName])?
+		public Group getGroup_10_2() { return cGroup_10_2; }
 
-		//ID
-		public RuleCall getTagsTagIDTerminalRuleCall_10_1_0_1() { return cTagsTagIDTerminalRuleCall_10_1_0_1; }
+		//"owner"
+		public Keyword getOwnerKeyword_10_2_0() { return cOwnerKeyword_10_2_0; }
+
+		//owner=[basedsl::User|QualifiedName]
+		public Assignment getOwnerAssignment_10_2_1() { return cOwnerAssignment_10_2_1; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getOwnerUserCrossReference_10_2_1_0() { return cOwnerUserCrossReference_10_2_1_0; }
+
+		//QualifiedName
+		public RuleCall getOwnerUserQualifiedNameParserRuleCall_10_2_1_0_1() { return cOwnerUserQualifiedNameParserRuleCall_10_2_1_0_1; }
+
+		//("responsible" responsible+=[basedsl::User|QualifiedName])*
+		public Group getGroup_10_3() { return cGroup_10_3; }
+
+		//"responsible"
+		public Keyword getResponsibleKeyword_10_3_0() { return cResponsibleKeyword_10_3_0; }
+
+		//responsible+=[basedsl::User|QualifiedName]
+		public Assignment getResponsibleAssignment_10_3_1() { return cResponsibleAssignment_10_3_1; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getResponsibleUserCrossReference_10_3_1_0() { return cResponsibleUserCrossReference_10_3_1_0; }
+
+		//QualifiedName
+		public RuleCall getResponsibleUserQualifiedNameParserRuleCall_10_3_1_0_1() { return cResponsibleUserQualifiedNameParserRuleCall_10_3_1_0_1; }
+
+		//("budgeting" budgeting=[basedsl::User|QualifiedName])?
+		public Group getGroup_10_4() { return cGroup_10_4; }
+
+		//"budgeting"
+		public Keyword getBudgetingKeyword_10_4_0() { return cBudgetingKeyword_10_4_0; }
+
+		//budgeting=[basedsl::User|QualifiedName]
+		public Assignment getBudgetingAssignment_10_4_1() { return cBudgetingAssignment_10_4_1; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getBudgetingUserCrossReference_10_4_1_0() { return cBudgetingUserCrossReference_10_4_1_0; }
+
+		//QualifiedName
+		public RuleCall getBudgetingUserQualifiedNameParserRuleCall_10_4_1_0_1() { return cBudgetingUserQualifiedNameParserRuleCall_10_4_1_0_1; }
+
+		//("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
+		public Group getGroup_10_5() { return cGroup_10_5; }
+
+		//"subscriptions"
+		public Keyword getSubscriptionsKeyword_10_5_0() { return cSubscriptionsKeyword_10_5_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_10_5_1() { return cLeftCurlyBracketKeyword_10_5_1; }
+
+		//subscriptions+=[basedsl::User|QualifiedName]*
+		public Assignment getSubscriptionsAssignment_10_5_2() { return cSubscriptionsAssignment_10_5_2; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getSubscriptionsUserCrossReference_10_5_2_0() { return cSubscriptionsUserCrossReference_10_5_2_0; }
+
+		//QualifiedName
+		public RuleCall getSubscriptionsUserQualifiedNameParserRuleCall_10_5_2_0_1() { return cSubscriptionsUserQualifiedNameParserRuleCall_10_5_2_0_1; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_11() { return cRightCurlyBracketKeyword_11; }
+		public Keyword getRightCurlyBracketKeyword_10_5_3() { return cRightCurlyBracketKeyword_10_5_3; }
+
+		//("tags" tags+=[semanticsDsl::Tag]+)?
+		public Group getGroup_11() { return cGroup_11; }
+
+		//"tags"
+		public Keyword getTagsKeyword_11_0() { return cTagsKeyword_11_0; }
+
+		//tags+=[semanticsDsl::Tag]+
+		public Assignment getTagsAssignment_11_1() { return cTagsAssignment_11_1; }
+
+		//[semanticsDsl::Tag]
+		public CrossReference getTagsTagCrossReference_11_1_0() { return cTagsTagCrossReference_11_1_0; }
+
+		//ID
+		public RuleCall getTagsTagIDTerminalRuleCall_11_1_0_1() { return cTagsTagIDTerminalRuleCall_11_1_0_1; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_12() { return cRightCurlyBracketKeyword_12; }
 	}
 
 	public class FeatureElements extends AbstractParserRuleElementFinder {
@@ -349,25 +563,54 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEventAssignment_9_2_1 = (Assignment)cGroup_9_2.eContents().get(1);
 		private final RuleCall cEventEventRefParserRuleCall_9_2_1_0 = (RuleCall)cEventAssignment_9_2_1.eContents().get(0);
 		private final Group cGroup_10 = (Group)cGroup.eContents().get(10);
-		private final Keyword cTagsKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
-		private final Assignment cTagsAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
-		private final CrossReference cTagsTagCrossReference_10_1_0 = (CrossReference)cTagsAssignment_10_1.eContents().get(0);
-		private final RuleCall cTagsTagIDTerminalRuleCall_10_1_0_1 = (RuleCall)cTagsTagCrossReference_10_1_0.eContents().get(1);
-		private final Assignment cFeaturesAssignment_11 = (Assignment)cGroup.eContents().get(11);
-		private final RuleCall cFeaturesFeatureParserRuleCall_11_0 = (RuleCall)cFeaturesAssignment_11.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_12 = (Keyword)cGroup.eContents().get(12);
+		private final Keyword cContactsKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_10_1 = (Keyword)cGroup_10.eContents().get(1);
+		private final Group cGroup_10_2 = (Group)cGroup_10.eContents().get(2);
+		private final Keyword cOwnerKeyword_10_2_0 = (Keyword)cGroup_10_2.eContents().get(0);
+		private final Assignment cOwnerAssignment_10_2_1 = (Assignment)cGroup_10_2.eContents().get(1);
+		private final CrossReference cOwnerUserCrossReference_10_2_1_0 = (CrossReference)cOwnerAssignment_10_2_1.eContents().get(0);
+		private final RuleCall cOwnerUserQualifiedNameParserRuleCall_10_2_1_0_1 = (RuleCall)cOwnerUserCrossReference_10_2_1_0.eContents().get(1);
+		private final Group cGroup_10_3 = (Group)cGroup_10.eContents().get(3);
+		private final Keyword cResponsibleKeyword_10_3_0 = (Keyword)cGroup_10_3.eContents().get(0);
+		private final Assignment cResponsibleAssignment_10_3_1 = (Assignment)cGroup_10_3.eContents().get(1);
+		private final CrossReference cResponsibleUserCrossReference_10_3_1_0 = (CrossReference)cResponsibleAssignment_10_3_1.eContents().get(0);
+		private final RuleCall cResponsibleUserQualifiedNameParserRuleCall_10_3_1_0_1 = (RuleCall)cResponsibleUserCrossReference_10_3_1_0.eContents().get(1);
+		private final Group cGroup_10_4 = (Group)cGroup_10.eContents().get(4);
+		private final Keyword cBudgetingKeyword_10_4_0 = (Keyword)cGroup_10_4.eContents().get(0);
+		private final Assignment cBudgetingAssignment_10_4_1 = (Assignment)cGroup_10_4.eContents().get(1);
+		private final CrossReference cBudgetingUserCrossReference_10_4_1_0 = (CrossReference)cBudgetingAssignment_10_4_1.eContents().get(0);
+		private final RuleCall cBudgetingUserQualifiedNameParserRuleCall_10_4_1_0_1 = (RuleCall)cBudgetingUserCrossReference_10_4_1_0.eContents().get(1);
+		private final Group cGroup_10_5 = (Group)cGroup_10.eContents().get(5);
+		private final Keyword cSubscriptionsKeyword_10_5_0 = (Keyword)cGroup_10_5.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_10_5_1 = (Keyword)cGroup_10_5.eContents().get(1);
+		private final Assignment cSubscriptionsAssignment_10_5_2 = (Assignment)cGroup_10_5.eContents().get(2);
+		private final CrossReference cSubscriptionsUserCrossReference_10_5_2_0 = (CrossReference)cSubscriptionsAssignment_10_5_2.eContents().get(0);
+		private final RuleCall cSubscriptionsUserQualifiedNameParserRuleCall_10_5_2_0_1 = (RuleCall)cSubscriptionsUserCrossReference_10_5_2_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_10_5_3 = (Keyword)cGroup_10_5.eContents().get(3);
+		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
+		private final Keyword cTagsKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
+		private final Assignment cTagsAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
+		private final CrossReference cTagsTagCrossReference_11_1_0 = (CrossReference)cTagsAssignment_11_1.eContents().get(0);
+		private final RuleCall cTagsTagIDTerminalRuleCall_11_1_0_1 = (RuleCall)cTagsTagCrossReference_11_1_0.eContents().get(1);
+		private final Assignment cFeaturesAssignment_12 = (Assignment)cGroup.eContents().get(12);
+		private final RuleCall cFeaturesFeatureParserRuleCall_12_0 = (RuleCall)cFeaturesAssignment_12.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_13 = (Keyword)cGroup.eContents().get(13);
 		
 		//Feature:
 		//	nonFunctional?="non-functional"? "feature" name=ID "{" ("use-cases" useCase+=STRING+)? ("description"
 		//	description=STRING)? additionalInfo=AdditionalInformation? ("uses-capabilities" "{" usesCapabilities+=CapabilityRef+
-		//	"}")? ("requires" requires+=ServiceRef)* ("subscribes-to-event" event+=EventRef ("," event+=EventRef)*)? ("tags"
-		//	tags+=[semanticsDsl::Tag]+)? features+=Feature* "}";
+		//	"}")? ("requires" requires+=ServiceRef)* ("subscribes-to-event" event+=EventRef ("," event+=EventRef)*)? ("contacts"
+		//	"{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])*
+		//	("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{"
+		//	subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? features+=Feature* "}";
 		public ParserRule getRule() { return rule; }
 
 		//nonFunctional?="non-functional"? "feature" name=ID "{" ("use-cases" useCase+=STRING+)? ("description"
 		//description=STRING)? additionalInfo=AdditionalInformation? ("uses-capabilities" "{" usesCapabilities+=CapabilityRef+
-		//"}")? ("requires" requires+=ServiceRef)* ("subscribes-to-event" event+=EventRef ("," event+=EventRef)*)? ("tags"
-		//tags+=[semanticsDsl::Tag]+)? features+=Feature* "}"
+		//"}")? ("requires" requires+=ServiceRef)* ("subscribes-to-event" event+=EventRef ("," event+=EventRef)*)? ("contacts"
+		//"{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])*
+		//("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{"
+		//subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? features+=Feature* "}"
 		public Group getGroup() { return cGroup; }
 
 		//nonFunctional?="non-functional"?
@@ -472,29 +715,106 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		//EventRef
 		public RuleCall getEventEventRefParserRuleCall_9_2_1_0() { return cEventEventRefParserRuleCall_9_2_1_0; }
 
-		//("tags" tags+=[semanticsDsl::Tag]+)?
+		//("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
 		public Group getGroup_10() { return cGroup_10; }
 
-		//"tags"
-		public Keyword getTagsKeyword_10_0() { return cTagsKeyword_10_0; }
+		//"contacts"
+		public Keyword getContactsKeyword_10_0() { return cContactsKeyword_10_0; }
 
-		//tags+=[semanticsDsl::Tag]+
-		public Assignment getTagsAssignment_10_1() { return cTagsAssignment_10_1; }
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_10_1() { return cLeftCurlyBracketKeyword_10_1; }
 
-		//[semanticsDsl::Tag]
-		public CrossReference getTagsTagCrossReference_10_1_0() { return cTagsTagCrossReference_10_1_0; }
+		//("owner" owner=[basedsl::User|QualifiedName])?
+		public Group getGroup_10_2() { return cGroup_10_2; }
 
-		//ID
-		public RuleCall getTagsTagIDTerminalRuleCall_10_1_0_1() { return cTagsTagIDTerminalRuleCall_10_1_0_1; }
+		//"owner"
+		public Keyword getOwnerKeyword_10_2_0() { return cOwnerKeyword_10_2_0; }
 
-		//features+=Feature*
-		public Assignment getFeaturesAssignment_11() { return cFeaturesAssignment_11; }
+		//owner=[basedsl::User|QualifiedName]
+		public Assignment getOwnerAssignment_10_2_1() { return cOwnerAssignment_10_2_1; }
 
-		//Feature
-		public RuleCall getFeaturesFeatureParserRuleCall_11_0() { return cFeaturesFeatureParserRuleCall_11_0; }
+		//[basedsl::User|QualifiedName]
+		public CrossReference getOwnerUserCrossReference_10_2_1_0() { return cOwnerUserCrossReference_10_2_1_0; }
+
+		//QualifiedName
+		public RuleCall getOwnerUserQualifiedNameParserRuleCall_10_2_1_0_1() { return cOwnerUserQualifiedNameParserRuleCall_10_2_1_0_1; }
+
+		//("responsible" responsible+=[basedsl::User|QualifiedName])*
+		public Group getGroup_10_3() { return cGroup_10_3; }
+
+		//"responsible"
+		public Keyword getResponsibleKeyword_10_3_0() { return cResponsibleKeyword_10_3_0; }
+
+		//responsible+=[basedsl::User|QualifiedName]
+		public Assignment getResponsibleAssignment_10_3_1() { return cResponsibleAssignment_10_3_1; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getResponsibleUserCrossReference_10_3_1_0() { return cResponsibleUserCrossReference_10_3_1_0; }
+
+		//QualifiedName
+		public RuleCall getResponsibleUserQualifiedNameParserRuleCall_10_3_1_0_1() { return cResponsibleUserQualifiedNameParserRuleCall_10_3_1_0_1; }
+
+		//("budgeting" budgeting=[basedsl::User|QualifiedName])?
+		public Group getGroup_10_4() { return cGroup_10_4; }
+
+		//"budgeting"
+		public Keyword getBudgetingKeyword_10_4_0() { return cBudgetingKeyword_10_4_0; }
+
+		//budgeting=[basedsl::User|QualifiedName]
+		public Assignment getBudgetingAssignment_10_4_1() { return cBudgetingAssignment_10_4_1; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getBudgetingUserCrossReference_10_4_1_0() { return cBudgetingUserCrossReference_10_4_1_0; }
+
+		//QualifiedName
+		public RuleCall getBudgetingUserQualifiedNameParserRuleCall_10_4_1_0_1() { return cBudgetingUserQualifiedNameParserRuleCall_10_4_1_0_1; }
+
+		//("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
+		public Group getGroup_10_5() { return cGroup_10_5; }
+
+		//"subscriptions"
+		public Keyword getSubscriptionsKeyword_10_5_0() { return cSubscriptionsKeyword_10_5_0; }
+
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_10_5_1() { return cLeftCurlyBracketKeyword_10_5_1; }
+
+		//subscriptions+=[basedsl::User|QualifiedName]*
+		public Assignment getSubscriptionsAssignment_10_5_2() { return cSubscriptionsAssignment_10_5_2; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getSubscriptionsUserCrossReference_10_5_2_0() { return cSubscriptionsUserCrossReference_10_5_2_0; }
+
+		//QualifiedName
+		public RuleCall getSubscriptionsUserQualifiedNameParserRuleCall_10_5_2_0_1() { return cSubscriptionsUserQualifiedNameParserRuleCall_10_5_2_0_1; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_12() { return cRightCurlyBracketKeyword_12; }
+		public Keyword getRightCurlyBracketKeyword_10_5_3() { return cRightCurlyBracketKeyword_10_5_3; }
+
+		//("tags" tags+=[semanticsDsl::Tag]+)?
+		public Group getGroup_11() { return cGroup_11; }
+
+		//"tags"
+		public Keyword getTagsKeyword_11_0() { return cTagsKeyword_11_0; }
+
+		//tags+=[semanticsDsl::Tag]+
+		public Assignment getTagsAssignment_11_1() { return cTagsAssignment_11_1; }
+
+		//[semanticsDsl::Tag]
+		public CrossReference getTagsTagCrossReference_11_1_0() { return cTagsTagCrossReference_11_1_0; }
+
+		//ID
+		public RuleCall getTagsTagIDTerminalRuleCall_11_1_0_1() { return cTagsTagIDTerminalRuleCall_11_1_0_1; }
+
+		//features+=Feature*
+		public Assignment getFeaturesAssignment_12() { return cFeaturesAssignment_12; }
+
+		//Feature
+		public RuleCall getFeaturesFeatureParserRuleCall_12_0() { return cFeaturesFeatureParserRuleCall_12_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_13() { return cRightCurlyBracketKeyword_13; }
 	}
 
 	public class ServiceRefElements extends AbstractParserRuleElementFinder {
@@ -827,8 +1147,10 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	//Solution:
 	//	"solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
 	//	"lifecycle-state" state=[profileDsl::LifecycleState|QualifiedName] productVersion=ProductVersion?
-	//	additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* features+=Feature* modules+=Module* ("tags"
-	//	tags+=[semanticsDsl::Tag]+)? "}";
+	//	additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* features+=Feature* modules+=Module*
+	//	("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+	//	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+	//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}";
 	public SolutionElements getSolutionAccess() {
 		return (pSolution != null) ? pSolution : (pSolution = new SolutionElements());
 	}
@@ -839,7 +1161,10 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Module:
 	//	"module" name=ID "{" "kind" kind=ModuleKind version=Version? additionalInfo=AdditionalInformation? ("requires"
-	//	requires+=ServiceRef)* features+=Feature* modules+=Module* ("tags" tags+=[semanticsDsl::Tag]+)? "}";
+	//	requires+=ServiceRef)* features+=Feature* modules+=Module* ("contacts" "{" ("owner"
+	//	owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])* ("budgeting"
+	//	budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
+	//	("tags" tags+=[semanticsDsl::Tag]+)? "}";
 	public ModuleElements getModuleAccess() {
 		return (pModule != null) ? pModule : (pModule = new ModuleElements());
 	}
@@ -861,8 +1186,10 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	//Feature:
 	//	nonFunctional?="non-functional"? "feature" name=ID "{" ("use-cases" useCase+=STRING+)? ("description"
 	//	description=STRING)? additionalInfo=AdditionalInformation? ("uses-capabilities" "{" usesCapabilities+=CapabilityRef+
-	//	"}")? ("requires" requires+=ServiceRef)* ("subscribes-to-event" event+=EventRef ("," event+=EventRef)*)? ("tags"
-	//	tags+=[semanticsDsl::Tag]+)? features+=Feature* "}";
+	//	"}")? ("requires" requires+=ServiceRef)* ("subscribes-to-event" event+=EventRef ("," event+=EventRef)*)? ("contacts"
+	//	"{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])*
+	//	("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{"
+	//	subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? features+=Feature* "}";
 	public FeatureElements getFeatureAccess() {
 		return (pFeature != null) ? pFeature : (pFeature = new FeatureElements());
 	}
@@ -1117,6 +1444,57 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getInfoItemRule() {
 		return getInfoItemAccess().getRule();
+	}
+
+	//User:
+	//	name=QualifiedName firstname=STRING? lastname=STRING? org=STRING? orgUnit=STRING? email=STRING? phone=STRING?
+	//	roles+=RoleRef*;
+	public SOABaseDslGrammarAccess.UserElements getUserAccess() {
+		return gaSOABaseDsl.getUserAccess();
+	}
+	
+	public ParserRule getUserRule() {
+		return getUserAccess().getRule();
+	}
+
+	//RoleRef:
+	//	role=[Role|QualifiedName];
+	public SOABaseDslGrammarAccess.RoleRefElements getRoleRefAccess() {
+		return gaSOABaseDsl.getRoleRefAccess();
+	}
+	
+	public ParserRule getRoleRefRule() {
+		return getRoleRefAccess().getRule();
+	}
+
+	//Role:
+	//	name=STRING grants+=PrivilegeRef*;
+	public SOABaseDslGrammarAccess.RoleElements getRoleAccess() {
+		return gaSOABaseDsl.getRoleAccess();
+	}
+	
+	public ParserRule getRoleRule() {
+		return getRoleAccess().getRule();
+	}
+
+	//PrivilegeRef:
+	//	privilege=[Privilege|QualifiedName];
+	public SOABaseDslGrammarAccess.PrivilegeRefElements getPrivilegeRefAccess() {
+		return gaSOABaseDsl.getPrivilegeRefAccess();
+	}
+	
+	public ParserRule getPrivilegeRefRule() {
+		return getPrivilegeRefAccess().getRule();
+	}
+
+	//Privilege:
+	//	name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName* "}";
+	public SOABaseDslGrammarAccess.PrivilegeElements getPrivilegeAccess() {
+		return gaSOABaseDsl.getPrivilegeAccess();
+	}
+	
+	public ParserRule getPrivilegeRule() {
+		return getPrivilegeAccess().getRule();
 	}
 
 	//terminal ID:

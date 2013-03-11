@@ -112,3 +112,35 @@ AdditionalInformation:
 InfoItem:
 	'location' documentLocation=STRING ('reference' reference=STRING)?
 ;
+
+User:
+	name = QualifiedName
+	(firstname = STRING)?
+	(lastname = STRING)?
+	(org = STRING)?
+	(orgUnit = STRING)?
+	(email = STRING)?
+	(phone = STRING)?
+	(roles += RoleRef)*
+;
+
+RoleRef:
+	role = [Role|QualifiedName]
+;
+
+Role:
+	name = STRING
+	grants += PrivilegeRef*
+;
+
+PrivilegeRef:
+	privilege = [Privilege|QualifiedName]
+;
+
+Privilege:
+	name=QualifiedName
+		(readACL += QualifiedName)*
+		(writeACL += QualifiedName)*
+		(executeACL += QualifiedName)*
+	'}';
+

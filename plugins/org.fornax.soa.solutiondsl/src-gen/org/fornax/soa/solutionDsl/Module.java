@@ -10,6 +10,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 import org.fornax.soa.basedsl.sOABaseDsl.AdditionalInformation;
+import org.fornax.soa.basedsl.sOABaseDsl.User;
 
 import org.fornax.soa.semanticsDsl.Tag;
 
@@ -28,6 +29,10 @@ import org.fornax.soa.semanticsDsl.Tag;
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getRequires <em>Requires</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getModules <em>Modules</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Module#getOwner <em>Owner</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Module#getResponsible <em>Responsible</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Module#getBudgeting <em>Budgeting</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Module#getSubscriptions <em>Subscriptions</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getTags <em>Tags</em>}</li>
  * </ul>
  * </p>
@@ -192,6 +197,90 @@ public interface Module extends EObject
    * @generated
    */
   EList<Module> getModules();
+
+  /**
+   * Returns the value of the '<em><b>Owner</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Owner</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Owner</em>' reference.
+   * @see #setOwner(User)
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getModule_Owner()
+   * @model
+   * @generated
+   */
+  User getOwner();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.solutionDsl.Module#getOwner <em>Owner</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Owner</em>' reference.
+   * @see #getOwner()
+   * @generated
+   */
+  void setOwner(User value);
+
+  /**
+   * Returns the value of the '<em><b>Responsible</b></em>' reference list.
+   * The list contents are of type {@link org.fornax.soa.basedsl.sOABaseDsl.User}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Responsible</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Responsible</em>' reference list.
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getModule_Responsible()
+   * @model
+   * @generated
+   */
+  EList<User> getResponsible();
+
+  /**
+   * Returns the value of the '<em><b>Budgeting</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Budgeting</em>' reference isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Budgeting</em>' reference.
+   * @see #setBudgeting(User)
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getModule_Budgeting()
+   * @model
+   * @generated
+   */
+  User getBudgeting();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.solutionDsl.Module#getBudgeting <em>Budgeting</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Budgeting</em>' reference.
+   * @see #getBudgeting()
+   * @generated
+   */
+  void setBudgeting(User value);
+
+  /**
+   * Returns the value of the '<em><b>Subscriptions</b></em>' reference list.
+   * The list contents are of type {@link org.fornax.soa.basedsl.sOABaseDsl.User}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Subscriptions</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Subscriptions</em>' reference list.
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getModule_Subscriptions()
+   * @model
+   * @generated
+   */
+  EList<User> getSubscriptions();
 
   /**
    * Returns the value of the '<em><b>Tags</b></em>' reference list.

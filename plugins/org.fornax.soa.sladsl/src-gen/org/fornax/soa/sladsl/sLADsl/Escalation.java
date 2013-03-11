@@ -9,6 +9,8 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.fornax.soa.basedsl.sOABaseDsl.User;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Escalation</b></em>'.
@@ -56,20 +58,20 @@ public interface Escalation extends EObject
   void setCause(String value);
 
   /**
-   * Returns the value of the '<em><b>Escalation Targets</b></em>' containment reference list.
-   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.Contact}.
+   * Returns the value of the '<em><b>Escalation Targets</b></em>' reference list.
+   * The list contents are of type {@link org.fornax.soa.basedsl.sOABaseDsl.User}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Escalation Targets</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Escalation Targets</em>' reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Escalation Targets</em>' containment reference list.
+   * @return the value of the '<em>Escalation Targets</em>' reference list.
    * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getEscalation_EscalationTargets()
-   * @model containment="true"
+   * @model
    * @generated
    */
-  EList<Contact> getEscalationTargets();
+  EList<User> getEscalationTargets();
 
   /**
    * Returns the value of the '<em><b>Procedure</b></em>' attribute.

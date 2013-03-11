@@ -14,28 +14,32 @@ grammar org.fornax.soa.BusinessDsl with org.fornax.soa.basedsl.SOABaseDsl
 
 generate businessDsl "http://www.fornax.org/soa/BusinessDsl"
 
+import "http://www.fornax.org/soa/basedsl/SOABaseDsl" as basedsl
 import "http://www.fornax.org/soa/SemanticsDsl" as  semantics
 
 BusinessModel :
 	(imports+=Import)*
+	(domains+=Domain)*
 	(organizations+=Organization)*
-	(domains+=Domain)*;
+	(roles+=Role)
+	(users+=User)*
+	(privileges+=Privilege);
 		
 Organization :
 	'org' name=QualifiedName '{'
 		('competence' competence=STRING)?
-		('head' bizLead=[Member|QualifiedName])?
+		('head' bizLead=[basedsl::User|QualifiedName])?
 		(businessFunctions+=BusinessFunction)*
 		(subOrganizations+=[Organization|QualifiedName])*
-		(members+=Member)*
+		(members+=User)*
 	'}';
 	
 Domain :
 	'domain' name=QualifiedName '{'
 		('competence' competence=STRING)?
-		('head' bizLead=[Member|QualifiedName])?
-		('technical-lead' techLead=[Member|QualifiedName])?
-		('service-management-lead' svcMgmtLead=[Member|QualifiedName])?
+		('head' bizLead=[basedsl::User|QualifiedName])?
+		('technical-lead' techLead=[basedsl::User|QualifiedName])?
+		('service-management-lead' svcMgmtLead=[basedsl::User|QualifiedName])?
 		('tags' (tags+=[semantics::Tag])+)?
 
 		(domains+=Domain)*
@@ -50,7 +54,8 @@ BusinessFunction :
 	'business-function' name=ID '{' 
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
-		('responsible' responsible = STRING)?
+		('responsible' responsible += [basedsl::User|QualifiedName])*
+		('budgeting' budgeting = [basedsl::User|QualifiedName])?
 		(additionalInfo=AdditionalInformation)?
 		('tags' (tags+=[semantics::Tag])+)?
 
@@ -65,6 +70,8 @@ BusinessFunction :
 CapabilityGroup :
 	'capability-group' name=ID '{'
 		'description' description = STRING
+		('responsible' responsible += [basedsl::User|QualifiedName])*
+		('budgeting' budgeting = [basedsl::User|QualifiedName])?
 		(additionalInfo=AdditionalInformation)?
 		(capabilities+=Capability)*
 		(capabilityGroups+=CapabilityGroup)*
@@ -89,9 +96,11 @@ SimpleCapability :
 		version=Version
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
+		('responsible' responsible += [basedsl::User|QualifiedName])*
+		('budgeting' budgeting = [basedsl::User|QualifiedName])?
 		'automation-level' automationLevel=CapabilityAutomationLevel
 		('business-value' businessValue=STRING)
-		('owner' owner=[Member|QualifiedName])?
+		('owner' owner=[basedsl::User|QualifiedName])?
 		(additionalInfo=AdditionalInformation)?
 		(	
 			'inputs' '{'
@@ -120,7 +129,7 @@ CapabilityVariant:
 		('description' description=STRING)?
 		'automation-level' automationLevel+=CapabilityAutomationLevel
 		('business-value' businessValue=STRING)
-		('owner' owner=[Member|QualifiedName])?
+		('owner' owner=[basedsl::User|QualifiedName])?
 		(additionalInfo=AdditionalInformation)?
 		('adding' '{'
 			(additions += CapabilityVariation)+
@@ -180,8 +189,34 @@ Outcome:
 ;
 
 	
-Member :
-	'member' name=ID '{'
-		'fullname' fullname=STRING
-		('email' email=STRING)?
+User returns basedsl::User:
+	'user' name=QualifiedName '{'
+		(firstname = STRING)?
+		(lastname = STRING)?
+		(org = STRING)?
+		(orgUnit = STRING)?
+		(email = STRING)?
+		(phone = STRING)?
+		(roles += RoleRef)*
 	'}';
+
+Role returns basedsl::Role:
+	'role' name=QualifiedName '{'
+		'grant' '{'
+			grants += PrivilegeRef*
+		'}'
+	'}';
+		
+Privilege returns basedsl::Privilege: 
+	'privilege' name=QualifiedName '{'
+		'read' '{'
+			(readACL += QualifiedName)*
+		'}'
+		'write'  '{'
+			(writeACL += QualifiedName)*
+		'}'
+		'execute'  '{'
+			(executeACL += QualifiedName)*
+		'}'
+	'}'
+;

@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.fornax.soa.basedsl.sOABaseDsl.AdditionalInformation;
+import org.fornax.soa.basedsl.sOABaseDsl.User;
 
 import org.fornax.soa.semanticsDsl.Tag;
 
@@ -48,6 +49,10 @@ import org.fornax.soa.solutionDsl.SolutionDslPackage;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getUsesCapabilities <em>Uses Capabilities</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getRequires <em>Requires</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getEvent <em>Event</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getOwner <em>Owner</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getResponsible <em>Responsible</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getBudgeting <em>Budgeting</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getSubscriptions <em>Subscriptions</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getTags <em>Tags</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getFeatures <em>Features</em>}</li>
  * </ul>
@@ -166,6 +171,46 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * @ordered
    */
   protected EList<EventRef> event;
+
+  /**
+   * The cached value of the '{@link #getOwner() <em>Owner</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getOwner()
+   * @generated
+   * @ordered
+   */
+  protected User owner;
+
+  /**
+   * The cached value of the '{@link #getResponsible() <em>Responsible</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getResponsible()
+   * @generated
+   * @ordered
+   */
+  protected EList<User> responsible;
+
+  /**
+   * The cached value of the '{@link #getBudgeting() <em>Budgeting</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getBudgeting()
+   * @generated
+   * @ordered
+   */
+  protected User budgeting;
+
+  /**
+   * The cached value of the '{@link #getSubscriptions() <em>Subscriptions</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSubscriptions()
+   * @generated
+   * @ordered
+   */
+  protected EList<User> subscriptions;
 
   /**
    * The cached value of the '{@link #getTags() <em>Tags</em>}' reference list.
@@ -386,6 +431,120 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * <!-- end-user-doc -->
    * @generated
    */
+  public User getOwner()
+  {
+    if (owner != null && owner.eIsProxy())
+    {
+      InternalEObject oldOwner = (InternalEObject)owner;
+      owner = (User)eResolveProxy(oldOwner);
+      if (owner != oldOwner)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SolutionDslPackage.FEATURE__OWNER, oldOwner, owner));
+      }
+    }
+    return owner;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public User basicGetOwner()
+  {
+    return owner;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setOwner(User newOwner)
+  {
+    User oldOwner = owner;
+    owner = newOwner;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SolutionDslPackage.FEATURE__OWNER, oldOwner, owner));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<User> getResponsible()
+  {
+    if (responsible == null)
+    {
+      responsible = new EObjectResolvingEList<User>(User.class, this, SolutionDslPackage.FEATURE__RESPONSIBLE);
+    }
+    return responsible;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public User getBudgeting()
+  {
+    if (budgeting != null && budgeting.eIsProxy())
+    {
+      InternalEObject oldBudgeting = (InternalEObject)budgeting;
+      budgeting = (User)eResolveProxy(oldBudgeting);
+      if (budgeting != oldBudgeting)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SolutionDslPackage.FEATURE__BUDGETING, oldBudgeting, budgeting));
+      }
+    }
+    return budgeting;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public User basicGetBudgeting()
+  {
+    return budgeting;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setBudgeting(User newBudgeting)
+  {
+    User oldBudgeting = budgeting;
+    budgeting = newBudgeting;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SolutionDslPackage.FEATURE__BUDGETING, oldBudgeting, budgeting));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<User> getSubscriptions()
+  {
+    if (subscriptions == null)
+    {
+      subscriptions = new EObjectResolvingEList<User>(User.class, this, SolutionDslPackage.FEATURE__SUBSCRIPTIONS);
+    }
+    return subscriptions;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Tag> getTags()
   {
     if (tags == null)
@@ -459,6 +618,16 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return getRequires();
       case SolutionDslPackage.FEATURE__EVENT:
         return getEvent();
+      case SolutionDslPackage.FEATURE__OWNER:
+        if (resolve) return getOwner();
+        return basicGetOwner();
+      case SolutionDslPackage.FEATURE__RESPONSIBLE:
+        return getResponsible();
+      case SolutionDslPackage.FEATURE__BUDGETING:
+        if (resolve) return getBudgeting();
+        return basicGetBudgeting();
+      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
+        return getSubscriptions();
       case SolutionDslPackage.FEATURE__TAGS:
         return getTags();
       case SolutionDslPackage.FEATURE__FEATURES:
@@ -506,6 +675,20 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         getEvent().clear();
         getEvent().addAll((Collection<? extends EventRef>)newValue);
         return;
+      case SolutionDslPackage.FEATURE__OWNER:
+        setOwner((User)newValue);
+        return;
+      case SolutionDslPackage.FEATURE__RESPONSIBLE:
+        getResponsible().clear();
+        getResponsible().addAll((Collection<? extends User>)newValue);
+        return;
+      case SolutionDslPackage.FEATURE__BUDGETING:
+        setBudgeting((User)newValue);
+        return;
+      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
+        getSubscriptions().clear();
+        getSubscriptions().addAll((Collection<? extends User>)newValue);
+        return;
       case SolutionDslPackage.FEATURE__TAGS:
         getTags().clear();
         getTags().addAll((Collection<? extends Tag>)newValue);
@@ -552,6 +735,18 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       case SolutionDslPackage.FEATURE__EVENT:
         getEvent().clear();
         return;
+      case SolutionDslPackage.FEATURE__OWNER:
+        setOwner((User)null);
+        return;
+      case SolutionDslPackage.FEATURE__RESPONSIBLE:
+        getResponsible().clear();
+        return;
+      case SolutionDslPackage.FEATURE__BUDGETING:
+        setBudgeting((User)null);
+        return;
+      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
+        getSubscriptions().clear();
+        return;
       case SolutionDslPackage.FEATURE__TAGS:
         getTags().clear();
         return;
@@ -588,6 +783,14 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return requires != null && !requires.isEmpty();
       case SolutionDslPackage.FEATURE__EVENT:
         return event != null && !event.isEmpty();
+      case SolutionDslPackage.FEATURE__OWNER:
+        return owner != null;
+      case SolutionDslPackage.FEATURE__RESPONSIBLE:
+        return responsible != null && !responsible.isEmpty();
+      case SolutionDslPackage.FEATURE__BUDGETING:
+        return budgeting != null;
+      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
+        return subscriptions != null && !subscriptions.isEmpty();
       case SolutionDslPackage.FEATURE__TAGS:
         return tags != null && !tags.isEmpty();
       case SolutionDslPackage.FEATURE__FEATURES:
