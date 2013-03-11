@@ -23,7 +23,7 @@ BusinessModel :
 	(organizations+=Organization)*
 	(roles+=Role)*
 	(users+=User)*
-	(privileges+=Privilege);
+	(privileges+=Privilege)*;
 		
 Organization :
 	'org' name=QualifiedName '{'

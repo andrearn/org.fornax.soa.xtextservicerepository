@@ -30,7 +30,7 @@
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="users" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.14"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" feature="privileges" operator="+=">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="privileges" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.16"/>
         </elements>
       </alternatives>
