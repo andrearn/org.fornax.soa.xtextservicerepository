@@ -22,6 +22,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
         eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiresChannel" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Channel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
         eType="#//Feature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
@@ -44,6 +46,8 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
         eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiresChannel" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Channel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
         eType="#//Feature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
@@ -77,8 +81,8 @@
         eType="#//CapabilityRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
         eType="#//ServiceRef" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="event" upperBound="-1"
-        eType="#//EventRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiresChannel" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Channel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
         upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>

@@ -29,16 +29,17 @@
         eType="#//BusinessFunction" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subOrganizations" unique="false"
         upperBound="-1" eType="#//Organization"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
-        eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Domain">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="competence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="bizLead" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="techLead" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="svcMgmtLead" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="svcMgmt" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="domains" upperBound="-1"
@@ -52,9 +53,12 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="shortDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
         upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInfo" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//AdditionalInformation"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
@@ -65,9 +69,12 @@
   <eClassifiers xsi:type="ecore:EClass" name="CapabilityGroup">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
         upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInfo" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//AdditionalInformation"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="capabilities" upperBound="-1"
@@ -82,8 +89,10 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="shortDescription" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="businessValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInfo" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//AdditionalInformation"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inputs" upperBound="-1"
@@ -92,13 +101,13 @@
         eType="#//Outcome" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="uses" upperBound="-1" eType="#//CapabilityRef"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SimpleCapability" eSuperTypes="#//Capability">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
-        upperBound="-1" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass ../../../../../org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="automationLevel" eType="#//CapabilityAutomationLevel"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="CapabilityVariant" eSuperTypes="#//Capability">

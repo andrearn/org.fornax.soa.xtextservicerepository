@@ -16,6 +16,9 @@
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="businessDsl">
       <ePackage href="http://www.fornax.org/soa/BusinessDsl#/"/>
     </metamodelDeclarations>
+    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
+      <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
+    </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="ServiceModel">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//ServiceModel"/>
@@ -167,6 +170,7 @@
               </elements>
               <elements xsi:type="xtext:Keyword" value="}"/>
             </elements>
+            <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="tags"/>
@@ -187,14 +191,14 @@
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="services" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="channels" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
-        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="exceptions" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.50"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.23"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="events" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="channels" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.42"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="interalNamespaces" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
@@ -290,6 +294,7 @@
               </elements>
               <elements xsi:type="xtext:Keyword" value="}"/>
             </elements>
+            <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="tags"/>
@@ -311,10 +316,13 @@
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.20"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="exceptions" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.50"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.23"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="events" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="channels" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.42"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="interalNamespaces" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
@@ -378,7 +386,7 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="governanceApproval" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
@@ -455,6 +463,7 @@
             </elements>
             <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="tags"/>
@@ -511,7 +520,7 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="governanceApproval" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
@@ -585,6 +594,7 @@
             </elements>
             <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="tags"/>
@@ -833,7 +843,7 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="governanceApproval" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
         </elements>
         <elements xsi:type="xtext:UnorderedGroup">
           <elements xsi:type="xtext:Group" cardinality="?">
@@ -907,6 +917,7 @@
             </elements>
             <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="tags"/>
@@ -945,7 +956,7 @@
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="visibility" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.53"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.44"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="service"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
@@ -960,7 +971,7 @@
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="replaces"/>
           <elements xsi:type="xtext:Assignment" feature="replaces" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.25"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.29"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="lifecycle-state"/>
@@ -973,7 +984,7 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="governanceApproval" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
@@ -992,13 +1003,13 @@
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="statefulness"/>
           <elements xsi:type="xtext:Assignment" feature="statefulness" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.23"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.27"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="persistence"/>
           <elements xsi:type="xtext:Assignment" feature="persistence" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="additionalInfo" operator="=">
@@ -1009,7 +1020,7 @@
             <elements xsi:type="xtext:Keyword" value="realizes-capability"/>
             <elements xsi:type="xtext:Keyword" value="{"/>
             <elements xsi:type="xtext:Assignment" cardinality="+" feature="realizedCapabilities" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
             </elements>
             <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
@@ -1017,7 +1028,7 @@
             <elements xsi:type="xtext:Keyword" value="supports-capability"/>
             <elements xsi:type="xtext:Keyword" value="{"/>
             <elements xsi:type="xtext:Assignment" cardinality="+" feature="supportedCapabilities" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
             </elements>
             <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
@@ -1040,22 +1051,27 @@
             </elements>
           </elements>
           <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="request-message-header"/>
-            <elements xsi:type="xtext:Assignment" feature="requestMessageHeader" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
+            <elements xsi:type="xtext:Keyword" value="message-headers"/>
+            <elements xsi:type="xtext:Keyword" value="{"/>
+            <elements xsi:type="xtext:Group" cardinality="?">
+              <elements xsi:type="xtext:Keyword" value="request-message-header"/>
+              <elements xsi:type="xtext:Assignment" feature="requestMessageHeader" operator="=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+              </elements>
             </elements>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="response-message-header"/>
-            <elements xsi:type="xtext:Assignment" feature="responseMessageHeader" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
+            <elements xsi:type="xtext:Group" cardinality="?">
+              <elements xsi:type="xtext:Keyword" value="response-message-header"/>
+              <elements xsi:type="xtext:Assignment" feature="responseMessageHeader" operator="=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+              </elements>
             </elements>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="publish-message-header"/>
-            <elements xsi:type="xtext:Assignment" feature="publishMessageHeader" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
+            <elements xsi:type="xtext:Group" cardinality="?">
+              <elements xsi:type="xtext:Keyword" value="publish-message-header"/>
+              <elements xsi:type="xtext:Assignment" feature="publishMessageHeader" operator="=">
+                <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+              </elements>
             </elements>
+            <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -1107,6 +1123,7 @@
             </elements>
             <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="tags"/>
@@ -1121,66 +1138,378 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="operations" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.44"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="GovernanceApproval">
+    <rules xsi:type="xtext:ParserRule" name="Operation">
       <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//GovernanceApproval"/>
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Operation"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="governance-approval"/>
-        <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" feature="decision" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="deprecated" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="@deprecated"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="mep" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.25"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="transactional" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="transactional"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="("/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="parameters" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.22"/>
         </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value=","/>
+          <elements xsi:type="xtext:Assignment" feature="parameters" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.22"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=")"/>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="justification-doc"/>
-          <elements xsi:type="xtext:Assignment" feature="justificationOrDocURL" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          <elements xsi:type="xtext:Keyword" value="returns"/>
+          <elements xsi:type="xtext:Assignment" feature="return" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.22"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="return" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.22"/>
+            </elements>
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="decision-date"/>
-          <elements xsi:type="xtext:Assignment" feature="approvalDate" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          <elements xsi:type="xtext:Keyword" value="throws"/>
+          <elements xsi:type="xtext:Assignment" cardinality="?" feature="throws" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value=","/>
+            <elements xsi:type="xtext:Assignment" feature="throws" operator="+=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
+            </elements>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="considerationSpec" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.33"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="statefulness"/>
+          <elements xsi:type="xtext:Assignment" feature="statefulness" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.27"/>
+          </elements>
+          <elements xsi:type="xtext:Assignment" cardinality="?" feature="updating" operator="?=">
+            <terminal xsi:type="xtext:Keyword" value="updating"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="decision-by"/>
-          <elements xsi:type="xtext:Assignment" feature="approvedBy" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          <elements xsi:type="xtext:Keyword" value="transaction-spec"/>
+          <elements xsi:type="xtext:Assignment" feature="transactionSpec" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.26"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="persistence"/>
+          <elements xsi:type="xtext:Assignment" feature="persistence" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="message-headers"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="request-message-header"/>
+            <elements xsi:type="xtext:Assignment" feature="requestMessageHeader" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="response-message-header"/>
+            <elements xsi:type="xtext:Assignment" feature="responseMessageHeader" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="publish-message-header"/>
+            <elements xsi:type="xtext:Assignment" feature="publishMessageHeader" operator="=">
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value="requires"/>
+          <elements xsi:type="xtext:Assignment" feature="requires" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.30"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value="requires-channel"/>
+          <elements xsi:type="xtext:Assignment" feature="requiresChannel" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.0">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Channel"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="compensated-by"/>
+          <elements xsi:type="xtext:Assignment" feature="compensatedBy" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.31"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="realizes-capability"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="realizedCapabilities" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="supports-capability"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="supportedCapabilities" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value="tags"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="tags" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.3">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+            </terminal>
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:EnumRule" name="ApprovalDecision">
+    <rules xsi:type="xtext:ParserRule" name="Parameter">
       <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision"/>
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Parameter"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="optional" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="optional"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value=":"/>
+        <elements xsi:type="xtext:Assignment" feature="type" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="attachmentRef" operator="?=">
+          <terminal xsi:type="xtext:Keyword" value="as-attachment-ref"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="Exception">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Exception"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="exception"/>
+        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="extends"/>
+          <elements xsi:type="xtext:Assignment" feature="superException" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Keyword" value="metadata"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" feature="version" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="replaces"/>
+          <elements xsi:type="xtext:Assignment" feature="replaces" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="lifecycle-state"/>
+        <elements xsi:type="xtext:Assignment" feature="state" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.2">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//LifecycleState"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="governanceApproval" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
+        </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="release-on"/>
+          <elements xsi:type="xtext:Assignment" feature="releaseDate" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="retirement-on"/>
+          <elements xsi:type="xtext:Assignment" feature="retirementDate" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="provided-contract"/>
+          <elements xsi:type="xtext:Assignment" feature="providedContractUrl" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="contacts"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="owner"/>
+            <elements xsi:type="xtext:Assignment" feature="owner" operator="=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.1">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="*">
+            <elements xsi:type="xtext:Keyword" value="responsible"/>
+            <elements xsi:type="xtext:Assignment" feature="responsible" operator="+=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.1">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="budgeting"/>
+            <elements xsi:type="xtext:Assignment" feature="budgeting" operator="=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.1">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Keyword" value="subscriptions"/>
+            <elements xsi:type="xtext:Keyword" value="{"/>
+            <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
+              <terminal xsi:type="xtext:CrossReference">
+                <type metamodel="/0/@metamodelDeclarations.1">
+                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+                </type>
+                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+              </terminal>
+            </elements>
+            <elements xsi:type="xtext:Keyword" value="}"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="*">
+          <elements xsi:type="xtext:Keyword" value="tags"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="tags" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.3">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+            </terminal>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="properties" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.17"/>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="ExceptionRef">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//ExceptionRef"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" feature="exception" operator="=">
+          <terminal xsi:type="xtext:CrossReference">
+            <type metamodel="/0/@metamodelDeclarations.0">
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Exception"/>
+            </type>
+            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+          </terminal>
+        </elements>
+        <elements xsi:type="xtext:Assignment" feature="version" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="MEP">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/ServiceDsl#//MEP"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision/no"/>
-          <literal value="no"/>
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/sync"/>
+          <literal value="sync"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision/yes"/>
-          <literal value="yes"/>
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/async"/>
+          <literal value="async"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision/temporarily_tolerated"/>
-          <literal value="temporarily-tolerated"/>
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/oneway"/>
+          <literal value="oneway"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision/tolerated"/>
-          <literal value="tolerated"/>
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/fireForget"/>
+          <literal value="fire+forget"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision/denied"/>
-          <literal value="denied"/>
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/deferredResponse"/>
+          <literal value="deferred"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/syncAsync"/>
+          <literal value="sync+async"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="TransactionSpec">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/ServiceDsl#//TransactionSpec"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//TransactionSpec/requiresNew"/>
+          <literal value="requires-new"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//TransactionSpec/requires"/>
+          <literal value="requires"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//TransactionSpec/mandatory"/>
+          <literal value="mandatory"/>
         </elements>
       </alternatives>
     </rules>
@@ -1273,12 +1602,12 @@
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="calling"/>
           <elements xsi:type="xtext:Assignment" feature="calledOperations" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.32"/>
           </elements>
           <elements xsi:type="xtext:Group" cardinality="*">
             <elements xsi:type="xtext:Keyword" value=","/>
             <elements xsi:type="xtext:Assignment" feature="calledOperations" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.28"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.32"/>
             </elements>
           </elements>
         </elements>
@@ -1315,24 +1644,6 @@
         </terminal>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="PropertyRef">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//PropertyRef"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="property" operator="=">
-          <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Property"/>
-            </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-          </terminal>
-        </elements>
-        <elements xsi:type="xtext:Assignment" feature="versionRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
-        </elements>
-      </alternatives>
-    </rules>
     <rules xsi:type="xtext:ParserRule" name="ConsiderationSpec">
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//ConsiderationSpec"/>
@@ -1341,7 +1652,7 @@
         <elements xsi:type="xtext:Keyword" value="considers"/>
         <elements xsi:type="xtext:Keyword" value="{"/>
         <elements xsi:type="xtext:Assignment" cardinality="+" feature="consideredParam" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.31"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.34"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -1368,7 +1679,7 @@
             <elements xsi:type="xtext:Keyword" value="->"/>
             <elements xsi:type="xtext:Keyword" value="{"/>
             <elements xsi:type="xtext:Assignment" cardinality="+" feature="propertyRef" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.32"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
             </elements>
             <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
@@ -1380,8 +1691,8 @@
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//ConsiderationPropertyRef"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.33"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.34"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
+        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.37"/>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:ParserRule" name="SimpleConsiderationPropertyRef">
@@ -1418,7 +1729,7 @@
             <elements xsi:type="xtext:Keyword" value="->"/>
             <elements xsi:type="xtext:Keyword" value="{"/>
             <elements xsi:type="xtext:Assignment" cardinality="+" feature="nestedPropertyRef" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.32"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
             </elements>
             <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
@@ -1465,15 +1776,6 @@
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Event"/>
       </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.38"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="GlobalEvent">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//GlobalEvent"/>
-      </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Keyword" value="event"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
@@ -1488,7 +1790,7 @@
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="replaces"/>
           <elements xsi:type="xtext:Assignment" feature="replaces" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.41"/>
           </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="lifecycle-state"/>
@@ -1501,7 +1803,7 @@
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="governanceApproval" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
@@ -1576,6 +1878,7 @@
             </elements>
             <elements xsi:type="xtext:Keyword" value="}"/>
           </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="*">
           <elements xsi:type="xtext:Keyword" value="tags"/>
@@ -1590,45 +1893,7 @@
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="parameter" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.49"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="}"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="OperationEvent">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//OperationEvent"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="event"/>
-        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="metadata"/>
-          <elements xsi:type="xtext:Keyword" value="{"/>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="provided-contract"/>
-            <elements xsi:type="xtext:Assignment" feature="providedContractUrl" operator="=">
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
-            </elements>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value="tags"/>
-            <elements xsi:type="xtext:Assignment" cardinality="+" feature="tags" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.3">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-              </terminal>
-            </elements>
-          </elements>
-          <elements xsi:type="xtext:Keyword" value="}"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="parameter" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.49"/>
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.22"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -1637,44 +1902,11 @@
       <type metamodel="/0/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//EventRef"/>
       </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.41"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.42"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="OperationEventRef">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//OperationEventRef"/>
-      </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="event" operator="=">
           <terminal xsi:type="xtext:CrossReference">
             <type metamodel="/0/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//OperationEvent"/>
-            </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-          </terminal>
-        </elements>
-        <elements xsi:type="xtext:Assignment" feature="versionRef" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="subType"/>
-          <elements xsi:type="xtext:Assignment" feature="subType" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-          </elements>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="GlobalEventRef">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//GlobalEventRef"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="event" operator="=">
-          <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//GlobalEvent"/>
+              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Event"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
           </terminal>
@@ -1702,411 +1934,41 @@
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
         </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="Operation">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Operation"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="deprecated" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="@deprecated"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="mep" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.52"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="transactional" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="transactional"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="("/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="parameters" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.49"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Keyword" value=","/>
-          <elements xsi:type="xtext:Assignment" feature="parameters" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.49"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value=")"/>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="returns"/>
-          <elements xsi:type="xtext:Assignment" feature="return" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.49"/>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value=","/>
-            <elements xsi:type="xtext:Assignment" feature="return" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.49"/>
-            </elements>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="throws"/>
-          <elements xsi:type="xtext:Assignment" cardinality="?" feature="throws" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value=","/>
-            <elements xsi:type="xtext:Assignment" feature="throws" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
-            </elements>
-          </elements>
-        </elements>
         <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="considerationSpec" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.30"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="statefulness"/>
-          <elements xsi:type="xtext:Assignment" feature="statefulness" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.23"/>
-          </elements>
-          <elements xsi:type="xtext:Assignment" cardinality="?" feature="updating" operator="?=">
-            <terminal xsi:type="xtext:Keyword" value="updating"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="transaction-spec"/>
-          <elements xsi:type="xtext:Assignment" feature="transactionSpec" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="persistence"/>
-          <elements xsi:type="xtext:Assignment" feature="persistence" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.24"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="request-message-header"/>
-          <elements xsi:type="xtext:Assignment" feature="requestMessageHeader" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="response-message-header"/>
-          <elements xsi:type="xtext:Assignment" feature="responseMessageHeader" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="publish-message-header"/>
-          <elements xsi:type="xtext:Assignment" feature="publishMessageHeader" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.35"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="callback-listener-for"/>
-          <elements xsi:type="xtext:Assignment" feature="callbackForOperation" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.27"/>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value=","/>
-            <elements xsi:type="xtext:Assignment" feature="callbackForOperation" operator="+=">
-              <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.27"/>
-            </elements>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="publishes"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="subscribers"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="publishes" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
+          <elements xsi:type="xtext:Assignment" feature="subscribers" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.43"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="subscribes-to"/>
+        <elements xsi:type="xtext:Group">
+          <elements xsi:type="xtext:Keyword" value="transmits-events"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
-          <elements xsi:type="xtext:Assignment" feature="subscribes" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.40"/>
+          <elements xsi:type="xtext:Assignment" feature="transmitsEvents" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.41"/>
           </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="compensated-by"/>
-          <elements xsi:type="xtext:Assignment" feature="compensatedBy" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.27"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Keyword" value="requires"/>
-          <elements xsi:type="xtext:Assignment" feature="requires" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.26"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="realizes-capability"/>
-          <elements xsi:type="xtext:Keyword" value="{"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="realizedCapabilities" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
-          </elements>
-          <elements xsi:type="xtext:Keyword" value="}"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="supports-capability"/>
-          <elements xsi:type="xtext:Keyword" value="{"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="supportedCapabilities" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.36"/>
-          </elements>
-          <elements xsi:type="xtext:Keyword" value="}"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Keyword" value="tags"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="tags" operator="+=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.3">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-            </terminal>
-          </elements>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:EnumRule" name="TransactionSpec">
+    <rules xsi:type="xtext:ParserRule" name="Subscriber">
       <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/ServiceDsl#//TransactionSpec"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//TransactionSpec/requiresNew"/>
-          <literal value="requires-new"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//TransactionSpec/requires"/>
-          <literal value="requires"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//TransactionSpec/mandatory"/>
-          <literal value="mandatory"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="PublishedEvent">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//PublishedEvent"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.48"/>
-        <elements xsi:type="xtext:RuleCall" rule="/0/@rules.47"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="PublishedOperationEvent">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//PublishedOperationEvent"/>
-      </type>
-      <alternatives xsi:type="xtext:Assignment" feature="publishesOpEvent" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.39"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="PublishedGlobalEvent">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//PublishedGlobalEvent"/>
-      </type>
-      <alternatives xsi:type="xtext:Assignment" feature="publishesGlobalEvent" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.42"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="Parameter">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Parameter"/>
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Subscriber"/>
       </type>
       <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="optional" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="optional"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value=":"/>
-        <elements xsi:type="xtext:Assignment" feature="type" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.9"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="attachmentRef" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="as-attachment-ref"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="Exception">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Exception"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Keyword" value="exception"/>
-        <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="extends"/>
-          <elements xsi:type="xtext:Assignment" feature="superException" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Keyword" value="metadata"/>
-        <elements xsi:type="xtext:Keyword" value="{"/>
-        <elements xsi:type="xtext:Assignment" feature="version" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.3"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="replaces"/>
-          <elements xsi:type="xtext:Assignment" feature="replaces" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.51"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="lifecycle-state"/>
-        <elements xsi:type="xtext:Assignment" feature="state" operator="=">
+        <elements xsi:type="xtext:Assignment" feature="subscriber" operator="=">
           <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.2">
-              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/profiledsl/SOAProfileDsl#//LifecycleState"/>
-            </type>
-            <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-          </terminal>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="?" feature="governanceApproval" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.21"/>
-        </elements>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="governanceDecisions" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.12"/>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="release-on"/>
-          <elements xsi:type="xtext:Assignment" feature="releaseDate" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="retirement-on"/>
-          <elements xsi:type="xtext:Assignment" feature="retirementDate" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="provided-contract"/>
-          <elements xsi:type="xtext:Assignment" feature="providedContractUrl" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="contacts"/>
-          <elements xsi:type="xtext:Keyword" value="{"/>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="owner"/>
-            <elements xsi:type="xtext:Assignment" feature="owner" operator="=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.1">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="*">
-            <elements xsi:type="xtext:Keyword" value="responsible"/>
-            <elements xsi:type="xtext:Assignment" feature="responsible" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.1">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="budgeting"/>
-            <elements xsi:type="xtext:Assignment" feature="budgeting" operator="=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.1">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="subscriptions"/>
-            <elements xsi:type="xtext:Keyword" value="{"/>
-            <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.1">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-            <elements xsi:type="xtext:Keyword" value="}"/>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Group" cardinality="*">
-          <elements xsi:type="xtext:Keyword" value="tags"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="tags" operator="+=">
-            <terminal xsi:type="xtext:CrossReference">
-              <type metamodel="/0/@metamodelDeclarations.3">
-                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
-              </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
-            </terminal>
-          </elements>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="}"/>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="properties" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.17"/>
-        </elements>
-        <elements xsi:type="xtext:Keyword" value="}"/>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:ParserRule" name="ExceptionRef">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//ExceptionRef"/>
-      </type>
-      <alternatives xsi:type="xtext:Group">
-        <elements xsi:type="xtext:Assignment" feature="exception" operator="=">
-          <terminal xsi:type="xtext:CrossReference">
-            <type metamodel="/0/@metamodelDeclarations.0">
-              <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//Exception"/>
+            <type metamodel="/0/@metamodelDeclarations.5">
+              <classifier xsi:type="ecore:EClass" href="http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
           </terminal>
         </elements>
         <elements xsi:type="xtext:Assignment" feature="version" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
-        </elements>
-      </alternatives>
-    </rules>
-    <rules xsi:type="xtext:EnumRule" name="MEP">
-      <type metamodel="/0/@metamodelDeclarations.0">
-        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/ServiceDsl#//MEP"/>
-      </type>
-      <alternatives xsi:type="xtext:Alternatives">
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/sync"/>
-          <literal value="sync"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/async"/>
-          <literal value="async"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/oneway"/>
-          <literal value="oneway"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/fireForget"/>
-          <literal value="fire+forget"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/deferredResponse"/>
-          <literal value="deferred"/>
-        </elements>
-        <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//MEP/syncAsync"/>
-          <literal value="sync+async"/>
         </elements>
       </alternatives>
     </rules>
@@ -2126,6 +1988,64 @@
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//Visibility/private"/>
           <literal value="private"/>
+        </elements>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:ParserRule" name="GovernanceApproval">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/ServiceDsl#//GovernanceApproval"/>
+      </type>
+      <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Keyword" value="governance-approval"/>
+        <elements xsi:type="xtext:Keyword" value="{"/>
+        <elements xsi:type="xtext:Assignment" feature="decision" operator="=">
+          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.46"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="justification-doc"/>
+          <elements xsi:type="xtext:Assignment" feature="justificationOrDocURL" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="decision-date"/>
+          <elements xsi:type="xtext:Assignment" feature="approvalDate" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="decision-by"/>
+          <elements xsi:type="xtext:Assignment" feature="approvedBy" operator="=">
+            <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
+          </elements>
+        </elements>
+        <elements xsi:type="xtext:Keyword" value="}"/>
+      </alternatives>
+    </rules>
+    <rules xsi:type="xtext:EnumRule" name="ApprovalDecision">
+      <type metamodel="/0/@metamodelDeclarations.0">
+        <classifier xsi:type="ecore:EEnum" href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision"/>
+      </type>
+      <alternatives xsi:type="xtext:Alternatives">
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision/no"/>
+          <literal value="no"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision/yes"/>
+          <literal value="yes"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision/temporarily_tolerated"/>
+          <literal value="temporarily-tolerated"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision/tolerated"/>
+          <literal value="tolerated"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://www.fornax.org/soa/ServiceDsl#//ApprovalDecision/denied"/>
+          <literal value="denied"/>
         </elements>
       </alternatives>
     </rules>
@@ -2503,7 +2423,6 @@
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="executeACL" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
         </elements>
-        <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
     </rules>
   </xtext:Grammar>

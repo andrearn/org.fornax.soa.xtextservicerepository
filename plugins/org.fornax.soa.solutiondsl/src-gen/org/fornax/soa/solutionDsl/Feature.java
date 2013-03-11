@@ -14,6 +14,8 @@ import org.fornax.soa.basedsl.sOABaseDsl.User;
 
 import org.fornax.soa.semanticsDsl.Tag;
 
+import org.fornax.soa.serviceDsl.Channel;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Feature</b></em>'.
@@ -29,7 +31,7 @@ import org.fornax.soa.semanticsDsl.Tag;
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getUsesCapabilities <em>Uses Capabilities</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getRequires <em>Requires</em>}</li>
- *   <li>{@link org.fornax.soa.solutionDsl.Feature#getEvent <em>Event</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Feature#getRequiresChannel <em>Requires Channel</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getOwner <em>Owner</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getResponsible <em>Responsible</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getBudgeting <em>Budgeting</em>}</li>
@@ -198,20 +200,20 @@ public interface Feature extends EObject
   EList<ServiceRef> getRequires();
 
   /**
-   * Returns the value of the '<em><b>Event</b></em>' containment reference list.
-   * The list contents are of type {@link org.fornax.soa.solutionDsl.EventRef}.
+   * Returns the value of the '<em><b>Requires Channel</b></em>' reference list.
+   * The list contents are of type {@link org.fornax.soa.serviceDsl.Channel}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Event</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Requires Channel</em>' reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Event</em>' containment reference list.
-   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getFeature_Event()
-   * @model containment="true"
+   * @return the value of the '<em>Requires Channel</em>' reference list.
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getFeature_RequiresChannel()
+   * @model
    * @generated
    */
-  EList<EventRef> getEvent();
+  EList<Channel> getRequiresChannel();
 
   /**
    * Returns the value of the '<em><b>Owner</b></em>' reference.

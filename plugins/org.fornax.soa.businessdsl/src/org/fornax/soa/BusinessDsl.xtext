@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2011 André Arnold and others.
+Copyright (c) 2010-2013 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -21,7 +21,7 @@ BusinessModel :
 	(imports+=Import)*
 	(domains+=Domain)*
 	(organizations+=Organization)*
-	(roles+=Role)
+	(roles+=Role)*
 	(users+=User)*
 	(privileges+=Privilege);
 		
@@ -31,15 +31,20 @@ Organization :
 		('head' bizLead=[basedsl::User|QualifiedName])?
 		(businessFunctions+=BusinessFunction)*
 		(subOrganizations+=[Organization|QualifiedName])*
-		(members+=User)*
 	'}';
 	
 Domain :
 	'domain' name=QualifiedName '{'
 		('competence' competence=STRING)?
-		('head' bizLead=[basedsl::User|QualifiedName])?
-		('technical-lead' techLead=[basedsl::User|QualifiedName])?
-		('service-management-lead' svcMgmtLead=[basedsl::User|QualifiedName])?
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('service-management' svcMgmt=[basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}')?
 		('tags' (tags+=[semantics::Tag])+)?
 
 		(domains+=Domain)*
@@ -54,8 +59,14 @@ BusinessFunction :
 	'business-function' name=ID '{' 
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
-		('responsible' responsible += [basedsl::User|QualifiedName])*
-		('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}')?
 		(additionalInfo=AdditionalInformation)?
 		('tags' (tags+=[semantics::Tag])+)?
 
@@ -70,8 +81,14 @@ BusinessFunction :
 CapabilityGroup :
 	'capability-group' name=ID '{'
 		'description' description = STRING
-		('responsible' responsible += [basedsl::User|QualifiedName])*
-		('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}')?
 		(additionalInfo=AdditionalInformation)?
 		(capabilities+=Capability)*
 		(capabilityGroups+=CapabilityGroup)*
@@ -100,7 +117,6 @@ SimpleCapability :
 		('budgeting' budgeting = [basedsl::User|QualifiedName])?
 		'automation-level' automationLevel=CapabilityAutomationLevel
 		('business-value' businessValue=STRING)
-		('owner' owner=[basedsl::User|QualifiedName])?
 		(additionalInfo=AdditionalInformation)?
 		(	
 			'inputs' '{'
@@ -116,7 +132,15 @@ SimpleCapability :
 			(uses+=CapabilityRef)+
 		'}'
 		)? 
-		('tags' tags+=[semantics::Tag|QualifiedName])*
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}')?
+		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
 	'}';
 
 /**
@@ -129,7 +153,6 @@ CapabilityVariant:
 		('description' description=STRING)?
 		'automation-level' automationLevel+=CapabilityAutomationLevel
 		('business-value' businessValue=STRING)
-		('owner' owner=[basedsl::User|QualifiedName])?
 		(additionalInfo=AdditionalInformation)?
 		('adding' '{'
 			(additions += CapabilityVariation)+
@@ -154,7 +177,15 @@ CapabilityVariant:
 			(uses+=CapabilityRef)+
 		'}'
 		)? 
-		('tags' tags+=[semantics::Tag|QualifiedName])*
+		('contacts' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}')?
+		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
 	'}';
 
 CapabilityVariation:

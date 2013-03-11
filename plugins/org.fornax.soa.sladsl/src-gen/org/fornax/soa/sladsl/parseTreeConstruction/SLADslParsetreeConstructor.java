@@ -13805,11 +13805,11 @@ protected class PrivilegeRef_PrivilegeAssignment extends AssignmentToken  {
 /************ begin Rule Privilege ****************
  *
  * Privilege:
- * 	name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName* "}";
+ * 	name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName*;
  *
  **/
 
-// name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName* "}"
+// name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName*
 protected class Privilege_Group extends GroupToken {
 	
 	public Privilege_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -13824,7 +13824,10 @@ protected class Privilege_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Privilege_RightCurlyBracketKeyword_4(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Privilege_ExecuteACLAssignment_3(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Privilege_WriteACLAssignment_2(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Privilege_ReadACLAssignment_1(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new Privilege_NameAssignment_0(lastRuleCallOrigin, this, 3, inst);
 			default: return null;
 		}	
 	}
@@ -13975,31 +13978,6 @@ protected class Privilege_ExecuteACLAssignment_3 extends AssignmentToken  {
 			return obj;
 		}
 		return null;
-	}
-
-}
-
-// "}"
-protected class Privilege_RightCurlyBracketKeyword_4 extends KeywordToken  {
-	
-	public Privilege_RightCurlyBracketKeyword_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getPrivilegeAccess().getRightCurlyBracketKeyword_4();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Privilege_ExecuteACLAssignment_3(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Privilege_WriteACLAssignment_2(lastRuleCallOrigin, this, 1, inst);
-			case 2: return new Privilege_ReadACLAssignment_1(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new Privilege_NameAssignment_0(lastRuleCallOrigin, this, 3, inst);
-			default: return null;
-		}	
 	}
 
 }

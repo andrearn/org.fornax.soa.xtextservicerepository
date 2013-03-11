@@ -31,6 +31,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
 import org.fornax.soa.semanticsDsl.Tag;
 
+import org.fornax.soa.serviceDsl.Channel;
+
 import org.fornax.soa.solutionDsl.Feature;
 import org.fornax.soa.solutionDsl.Module;
 import org.fornax.soa.solutionDsl.ServiceRef;
@@ -52,6 +54,7 @@ import org.fornax.soa.solutionDsl.Version;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getProductVersion <em>Product Version</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getRequires <em>Requires</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getRequiresChannel <em>Requires Channel</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getModules <em>Modules</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.SolutionImpl#getOwner <em>Owner</em>}</li>
@@ -145,6 +148,16 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
    * @ordered
    */
   protected EList<ServiceRef> requires;
+
+  /**
+   * The cached value of the '{@link #getRequiresChannel() <em>Requires Channel</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRequiresChannel()
+   * @generated
+   * @ordered
+   */
+  protected EList<Channel> requiresChannel;
 
   /**
    * The cached value of the '{@link #getFeatures() <em>Features</em>}' containment reference list.
@@ -509,6 +522,20 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Channel> getRequiresChannel()
+  {
+    if (requiresChannel == null)
+    {
+      requiresChannel = new EObjectResolvingEList<Channel>(Channel.class, this, SolutionDslPackage.SOLUTION__REQUIRES_CHANNEL);
+    }
+    return requiresChannel;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Feature> getFeatures()
   {
     if (features == null)
@@ -712,6 +739,8 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
         return getAdditionalInfo();
       case SolutionDslPackage.SOLUTION__REQUIRES:
         return getRequires();
+      case SolutionDslPackage.SOLUTION__REQUIRES_CHANNEL:
+        return getRequiresChannel();
       case SolutionDslPackage.SOLUTION__FEATURES:
         return getFeatures();
       case SolutionDslPackage.SOLUTION__MODULES:
@@ -764,6 +793,10 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
       case SolutionDslPackage.SOLUTION__REQUIRES:
         getRequires().clear();
         getRequires().addAll((Collection<? extends ServiceRef>)newValue);
+        return;
+      case SolutionDslPackage.SOLUTION__REQUIRES_CHANNEL:
+        getRequiresChannel().clear();
+        getRequiresChannel().addAll((Collection<? extends Channel>)newValue);
         return;
       case SolutionDslPackage.SOLUTION__FEATURES:
         getFeatures().clear();
@@ -826,6 +859,9 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
       case SolutionDslPackage.SOLUTION__REQUIRES:
         getRequires().clear();
         return;
+      case SolutionDslPackage.SOLUTION__REQUIRES_CHANNEL:
+        getRequiresChannel().clear();
+        return;
       case SolutionDslPackage.SOLUTION__FEATURES:
         getFeatures().clear();
         return;
@@ -875,6 +911,8 @@ public class SolutionImpl extends MinimalEObjectImpl.Container implements Soluti
         return additionalInfo != null;
       case SolutionDslPackage.SOLUTION__REQUIRES:
         return requires != null && !requires.isEmpty();
+      case SolutionDslPackage.SOLUTION__REQUIRES_CHANNEL:
+        return requiresChannel != null && !requiresChannel.isEmpty();
       case SolutionDslPackage.SOLUTION__FEATURES:
         return features != null && !features.isEmpty();
       case SolutionDslPackage.SOLUTION__MODULES:

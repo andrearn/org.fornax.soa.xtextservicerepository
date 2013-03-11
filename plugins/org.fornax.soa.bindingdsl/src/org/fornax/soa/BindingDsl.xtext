@@ -13,11 +13,11 @@ grammar org.fornax.soa.BindingDsl with org.fornax.soa.basedsl.SOABaseDsl
 
 generate bindingDsl "http://www.fornax.org/soa/BindingDsl"
 
-import "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore" as serviceDsl
-import "platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore" as moduleDsl
-import "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore" as environmentDsl
-import "platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore" as profileDsl
-import "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore" as semanticsDsl
+import "http://www.fornax.org/soa/ServiceDsl" as serviceDsl
+import "http://www.fornax.org/soa/moduledsl/ModuleDsl" as moduleDsl
+import "http://www.fornax.org/soa/EnvironmentDsl" as environmentDsl
+import "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" as profileDsl
+import "http://www.fornax.org/soa/SemanticsDsl" as semanticsDsl
 
 BindingModel:
 	(imports+=Import)*

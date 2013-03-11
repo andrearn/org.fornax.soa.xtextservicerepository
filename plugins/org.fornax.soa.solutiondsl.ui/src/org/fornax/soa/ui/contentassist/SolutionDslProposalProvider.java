@@ -120,7 +120,7 @@ public class SolutionDslProposalProvider extends AbstractSolutionDslProposalProv
 						nameParts.append (curNode.getText());
 				}
 				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
-				final List<String> classNames = Lists.newArrayList (ServiceDslPackage.Literals.GLOBAL_EVENT.getName(), ServiceDslPackage.Literals.OPERATION_EVENT.getName());
+				final List<String> classNames = Lists.newArrayList (ServiceDslPackage.Literals.EVENT.getName(), ServiceDslPackage.Literals.EVENT.getName());
 				Iterable<String> canditateVersions = getCanditateVersions (typeName, classNames, importedNamespaces, majorVersionsOnly);
 				for (String version : canditateVersions) {
 					acceptor.accept (createCompletionProposal (version, context));

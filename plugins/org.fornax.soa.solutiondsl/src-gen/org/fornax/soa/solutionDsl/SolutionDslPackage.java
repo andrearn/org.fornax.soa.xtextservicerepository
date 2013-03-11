@@ -173,13 +173,22 @@ public interface SolutionDslPackage extends EPackage
   int SOLUTION__REQUIRES = 6;
 
   /**
+   * The feature id for the '<em><b>Requires Channel</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SOLUTION__REQUIRES_CHANNEL = 7;
+
+  /**
    * The feature id for the '<em><b>Features</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SOLUTION__FEATURES = 7;
+  int SOLUTION__FEATURES = 8;
 
   /**
    * The feature id for the '<em><b>Modules</b></em>' containment reference list.
@@ -188,7 +197,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__MODULES = 8;
+  int SOLUTION__MODULES = 9;
 
   /**
    * The feature id for the '<em><b>Owner</b></em>' reference.
@@ -197,7 +206,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__OWNER = 9;
+  int SOLUTION__OWNER = 10;
 
   /**
    * The feature id for the '<em><b>Responsible</b></em>' reference list.
@@ -206,7 +215,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__RESPONSIBLE = 10;
+  int SOLUTION__RESPONSIBLE = 11;
 
   /**
    * The feature id for the '<em><b>Budgeting</b></em>' reference.
@@ -215,7 +224,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__BUDGETING = 11;
+  int SOLUTION__BUDGETING = 12;
 
   /**
    * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
@@ -224,7 +233,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__SUBSCRIPTIONS = 12;
+  int SOLUTION__SUBSCRIPTIONS = 13;
 
   /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
@@ -233,7 +242,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION__TAGS = 13;
+  int SOLUTION__TAGS = 14;
 
   /**
    * The number of structural features of the '<em>Solution</em>' class.
@@ -242,7 +251,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SOLUTION_FEATURE_COUNT = 14;
+  int SOLUTION_FEATURE_COUNT = 15;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.solutionDsl.impl.ModuleImpl <em>Module</em>}' class.
@@ -300,13 +309,22 @@ public interface SolutionDslPackage extends EPackage
   int MODULE__REQUIRES = 4;
 
   /**
+   * The feature id for the '<em><b>Requires Channel</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE__REQUIRES_CHANNEL = 5;
+
+  /**
    * The feature id for the '<em><b>Features</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODULE__FEATURES = 5;
+  int MODULE__FEATURES = 6;
 
   /**
    * The feature id for the '<em><b>Modules</b></em>' containment reference list.
@@ -315,7 +333,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__MODULES = 6;
+  int MODULE__MODULES = 7;
 
   /**
    * The feature id for the '<em><b>Owner</b></em>' reference.
@@ -324,7 +342,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__OWNER = 7;
+  int MODULE__OWNER = 8;
 
   /**
    * The feature id for the '<em><b>Responsible</b></em>' reference list.
@@ -333,7 +351,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__RESPONSIBLE = 8;
+  int MODULE__RESPONSIBLE = 9;
 
   /**
    * The feature id for the '<em><b>Budgeting</b></em>' reference.
@@ -342,7 +360,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__BUDGETING = 9;
+  int MODULE__BUDGETING = 10;
 
   /**
    * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
@@ -351,7 +369,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__SUBSCRIPTIONS = 10;
+  int MODULE__SUBSCRIPTIONS = 11;
 
   /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
@@ -360,7 +378,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE__TAGS = 11;
+  int MODULE__TAGS = 12;
 
   /**
    * The number of structural features of the '<em>Module</em>' class.
@@ -369,7 +387,7 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MODULE_FEATURE_COUNT = 12;
+  int MODULE_FEATURE_COUNT = 13;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.solutionDsl.impl.FeatureImpl <em>Feature</em>}' class.
@@ -445,13 +463,13 @@ public interface SolutionDslPackage extends EPackage
   int FEATURE__REQUIRES = 6;
 
   /**
-   * The feature id for the '<em><b>Event</b></em>' containment reference list.
+   * The feature id for the '<em><b>Requires Channel</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FEATURE__EVENT = 7;
+  int FEATURE__REQUIRES_CHANNEL = 7;
 
   /**
    * The feature id for the '<em><b>Owner</b></em>' reference.
@@ -832,6 +850,17 @@ public interface SolutionDslPackage extends EPackage
   EReference getSolution_Requires();
 
   /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Solution#getRequiresChannel <em>Requires Channel</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Requires Channel</em>'.
+   * @see org.fornax.soa.solutionDsl.Solution#getRequiresChannel()
+   * @see #getSolution()
+   * @generated
+   */
+  EReference getSolution_RequiresChannel();
+
+  /**
    * Returns the meta object for the containment reference list '{@link org.fornax.soa.solutionDsl.Solution#getFeatures <em>Features</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -972,6 +1001,17 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    */
   EReference getModule_Requires();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Module#getRequiresChannel <em>Requires Channel</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Requires Channel</em>'.
+   * @see org.fornax.soa.solutionDsl.Module#getRequiresChannel()
+   * @see #getModule()
+   * @generated
+   */
+  EReference getModule_RequiresChannel();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.fornax.soa.solutionDsl.Module#getFeatures <em>Features</em>}'.
@@ -1138,15 +1178,15 @@ public interface SolutionDslPackage extends EPackage
   EReference getFeature_Requires();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.fornax.soa.solutionDsl.Feature#getEvent <em>Event</em>}'.
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Feature#getRequiresChannel <em>Requires Channel</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Event</em>'.
-   * @see org.fornax.soa.solutionDsl.Feature#getEvent()
+   * @return the meta object for the reference list '<em>Requires Channel</em>'.
+   * @see org.fornax.soa.solutionDsl.Feature#getRequiresChannel()
    * @see #getFeature()
    * @generated
    */
-  EReference getFeature_Event();
+  EReference getFeature_RequiresChannel();
 
   /**
    * Returns the meta object for the reference '{@link org.fornax.soa.solutionDsl.Feature#getOwner <em>Owner</em>}'.
@@ -1489,6 +1529,14 @@ public interface SolutionDslPackage extends EPackage
     EReference SOLUTION__REQUIRES = eINSTANCE.getSolution_Requires();
 
     /**
+     * The meta object literal for the '<em><b>Requires Channel</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SOLUTION__REQUIRES_CHANNEL = eINSTANCE.getSolution_RequiresChannel();
+
+    /**
      * The meta object literal for the '<em><b>Features</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1593,6 +1641,14 @@ public interface SolutionDslPackage extends EPackage
      * @generated
      */
     EReference MODULE__REQUIRES = eINSTANCE.getModule_Requires();
+
+    /**
+     * The meta object literal for the '<em><b>Requires Channel</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODULE__REQUIRES_CHANNEL = eINSTANCE.getModule_RequiresChannel();
 
     /**
      * The meta object literal for the '<em><b>Features</b></em>' containment reference list feature.
@@ -1717,12 +1773,12 @@ public interface SolutionDslPackage extends EPackage
     EReference FEATURE__REQUIRES = eINSTANCE.getFeature_Requires();
 
     /**
-     * The meta object literal for the '<em><b>Event</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Requires Channel</b></em>' reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference FEATURE__EVENT = eINSTANCE.getFeature_Event();
+    EReference FEATURE__REQUIRES_CHANNEL = eINSTANCE.getFeature_RequiresChannel();
 
     /**
      * The meta object literal for the '<em><b>Owner</b></em>' reference feature.

@@ -47,10 +47,8 @@ import org.fornax.soa.serviceDsl.ConsiderationSpec;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.EventRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
-import org.fornax.soa.serviceDsl.GlobalEventRef;
 import org.fornax.soa.serviceDsl.MessageHeaderRef;
 import org.fornax.soa.serviceDsl.Operation;
-import org.fornax.soa.serviceDsl.OperationEventRef;
 import org.fornax.soa.serviceDsl.OperationRef;
 import org.fornax.soa.serviceDsl.Parameter;
 import org.fornax.soa.serviceDsl.RequiredServiceRef;
@@ -144,16 +142,11 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			final VersionRef v = ((ExceptionRef) ctx).getVersion();
 			return createVersionFilter (v, objLookup.getVersionedOwner(ctx));
 
-		} else if (reference == ServiceDslPackage.Literals.GLOBAL_EVENT_REF__EVENT 
-				&& ctx instanceof GlobalEventRef) {
+		} else if (reference == ServiceDslPackage.Literals.EVENT_REF__EVENT 
+				&& ctx instanceof EventRef) {
 			final VersionRef v = ((EventRef) ctx).getVersionRef();
 			return createVersionFilter(v, objLookup.getVersionedOwner(ctx));
 		
-		} else if (reference == ServiceDslPackage.Literals.OPERATION_EVENT_REF__EVENT 
-				&& ctx instanceof OperationEventRef) {
-			final VersionRef v = ((EventRef) ctx).getVersionRef();
-			return createVersionFilter(v, objLookup.getVersionedOwner(ctx));
-
 		} else if (reference == ServiceDslPackage.Literals.OPERATION_REF__OPERATION 
 				&& ctx instanceof OperationRef) {
 			final VersionRef v = ((OperationRef) ctx).getVersionRef();

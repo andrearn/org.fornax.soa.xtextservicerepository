@@ -27,6 +27,8 @@ import org.fornax.soa.basedsl.sOABaseDsl.User;
 
 import org.fornax.soa.semanticsDsl.Tag;
 
+import org.fornax.soa.serviceDsl.Channel;
+
 import org.fornax.soa.solutionDsl.Feature;
 import org.fornax.soa.solutionDsl.Module;
 import org.fornax.soa.solutionDsl.ModuleKind;
@@ -46,6 +48,7 @@ import org.fornax.soa.solutionDsl.Version;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getRequires <em>Requires</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getRequiresChannel <em>Requires Channel</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getModules <em>Modules</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getOwner <em>Owner</em>}</li>
@@ -129,6 +132,16 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * @ordered
    */
   protected EList<ServiceRef> requires;
+
+  /**
+   * The cached value of the '{@link #getRequiresChannel() <em>Requires Channel</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRequiresChannel()
+   * @generated
+   * @ordered
+   */
+  protected EList<Channel> requiresChannel;
 
   /**
    * The cached value of the '{@link #getFeatures() <em>Features</em>}' containment reference list.
@@ -382,6 +395,20 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Channel> getRequiresChannel()
+  {
+    if (requiresChannel == null)
+    {
+      requiresChannel = new EObjectResolvingEList<Channel>(Channel.class, this, SolutionDslPackage.MODULE__REQUIRES_CHANNEL);
+    }
+    return requiresChannel;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EList<Feature> getFeatures()
   {
     if (features == null)
@@ -577,6 +604,8 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return getAdditionalInfo();
       case SolutionDslPackage.MODULE__REQUIRES:
         return getRequires();
+      case SolutionDslPackage.MODULE__REQUIRES_CHANNEL:
+        return getRequiresChannel();
       case SolutionDslPackage.MODULE__FEATURES:
         return getFeatures();
       case SolutionDslPackage.MODULE__MODULES:
@@ -623,6 +652,10 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       case SolutionDslPackage.MODULE__REQUIRES:
         getRequires().clear();
         getRequires().addAll((Collection<? extends ServiceRef>)newValue);
+        return;
+      case SolutionDslPackage.MODULE__REQUIRES_CHANNEL:
+        getRequiresChannel().clear();
+        getRequiresChannel().addAll((Collection<? extends Channel>)newValue);
         return;
       case SolutionDslPackage.MODULE__FEATURES:
         getFeatures().clear();
@@ -679,6 +712,9 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       case SolutionDslPackage.MODULE__REQUIRES:
         getRequires().clear();
         return;
+      case SolutionDslPackage.MODULE__REQUIRES_CHANNEL:
+        getRequiresChannel().clear();
+        return;
       case SolutionDslPackage.MODULE__FEATURES:
         getFeatures().clear();
         return;
@@ -724,6 +760,8 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return additionalInfo != null;
       case SolutionDslPackage.MODULE__REQUIRES:
         return requires != null && !requires.isEmpty();
+      case SolutionDslPackage.MODULE__REQUIRES_CHANNEL:
+        return requiresChannel != null && !requiresChannel.isEmpty();
       case SolutionDslPackage.MODULE__FEATURES:
         return features != null && !features.isEmpty();
       case SolutionDslPackage.MODULE__MODULES:

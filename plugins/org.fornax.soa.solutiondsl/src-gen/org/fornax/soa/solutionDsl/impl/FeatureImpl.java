@@ -28,8 +28,9 @@ import org.fornax.soa.basedsl.sOABaseDsl.User;
 
 import org.fornax.soa.semanticsDsl.Tag;
 
+import org.fornax.soa.serviceDsl.Channel;
+
 import org.fornax.soa.solutionDsl.CapabilityRef;
-import org.fornax.soa.solutionDsl.EventRef;
 import org.fornax.soa.solutionDsl.Feature;
 import org.fornax.soa.solutionDsl.ServiceRef;
 import org.fornax.soa.solutionDsl.SolutionDslPackage;
@@ -48,7 +49,7 @@ import org.fornax.soa.solutionDsl.SolutionDslPackage;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getUsesCapabilities <em>Uses Capabilities</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getRequires <em>Requires</em>}</li>
- *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getEvent <em>Event</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getRequiresChannel <em>Requires Channel</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getOwner <em>Owner</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getResponsible <em>Responsible</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getBudgeting <em>Budgeting</em>}</li>
@@ -163,14 +164,14 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
   protected EList<ServiceRef> requires;
 
   /**
-   * The cached value of the '{@link #getEvent() <em>Event</em>}' containment reference list.
+   * The cached value of the '{@link #getRequiresChannel() <em>Requires Channel</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEvent()
+   * @see #getRequiresChannel()
    * @generated
    * @ordered
    */
-  protected EList<EventRef> event;
+  protected EList<Channel> requiresChannel;
 
   /**
    * The cached value of the '{@link #getOwner() <em>Owner</em>}' reference.
@@ -417,13 +418,13 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<EventRef> getEvent()
+  public EList<Channel> getRequiresChannel()
   {
-    if (event == null)
+    if (requiresChannel == null)
     {
-      event = new EObjectContainmentEList<EventRef>(EventRef.class, this, SolutionDslPackage.FEATURE__EVENT);
+      requiresChannel = new EObjectResolvingEList<Channel>(Channel.class, this, SolutionDslPackage.FEATURE__REQUIRES_CHANNEL);
     }
-    return event;
+    return requiresChannel;
   }
 
   /**
@@ -584,8 +585,6 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return ((InternalEList<?>)getUsesCapabilities()).basicRemove(otherEnd, msgs);
       case SolutionDslPackage.FEATURE__REQUIRES:
         return ((InternalEList<?>)getRequires()).basicRemove(otherEnd, msgs);
-      case SolutionDslPackage.FEATURE__EVENT:
-        return ((InternalEList<?>)getEvent()).basicRemove(otherEnd, msgs);
       case SolutionDslPackage.FEATURE__FEATURES:
         return ((InternalEList<?>)getFeatures()).basicRemove(otherEnd, msgs);
     }
@@ -616,8 +615,8 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return getUsesCapabilities();
       case SolutionDslPackage.FEATURE__REQUIRES:
         return getRequires();
-      case SolutionDslPackage.FEATURE__EVENT:
-        return getEvent();
+      case SolutionDslPackage.FEATURE__REQUIRES_CHANNEL:
+        return getRequiresChannel();
       case SolutionDslPackage.FEATURE__OWNER:
         if (resolve) return getOwner();
         return basicGetOwner();
@@ -671,9 +670,9 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         getRequires().clear();
         getRequires().addAll((Collection<? extends ServiceRef>)newValue);
         return;
-      case SolutionDslPackage.FEATURE__EVENT:
-        getEvent().clear();
-        getEvent().addAll((Collection<? extends EventRef>)newValue);
+      case SolutionDslPackage.FEATURE__REQUIRES_CHANNEL:
+        getRequiresChannel().clear();
+        getRequiresChannel().addAll((Collection<? extends Channel>)newValue);
         return;
       case SolutionDslPackage.FEATURE__OWNER:
         setOwner((User)newValue);
@@ -732,8 +731,8 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       case SolutionDslPackage.FEATURE__REQUIRES:
         getRequires().clear();
         return;
-      case SolutionDslPackage.FEATURE__EVENT:
-        getEvent().clear();
+      case SolutionDslPackage.FEATURE__REQUIRES_CHANNEL:
+        getRequiresChannel().clear();
         return;
       case SolutionDslPackage.FEATURE__OWNER:
         setOwner((User)null);
@@ -781,8 +780,8 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return usesCapabilities != null && !usesCapabilities.isEmpty();
       case SolutionDslPackage.FEATURE__REQUIRES:
         return requires != null && !requires.isEmpty();
-      case SolutionDslPackage.FEATURE__EVENT:
-        return event != null && !event.isEmpty();
+      case SolutionDslPackage.FEATURE__REQUIRES_CHANNEL:
+        return requiresChannel != null && !requiresChannel.isEmpty();
       case SolutionDslPackage.FEATURE__OWNER:
         return owner != null;
       case SolutionDslPackage.FEATURE__RESPONSIBLE:

@@ -14,6 +14,8 @@ import org.fornax.soa.basedsl.sOABaseDsl.User;
 
 import org.fornax.soa.semanticsDsl.Tag;
 
+import org.fornax.soa.serviceDsl.Channel;
+
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Module</b></em>'.
@@ -27,6 +29,7 @@ import org.fornax.soa.semanticsDsl.Tag;
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getAdditionalInfo <em>Additional Info</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getRequires <em>Requires</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Module#getRequiresChannel <em>Requires Channel</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getFeatures <em>Features</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getModules <em>Modules</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Module#getOwner <em>Owner</em>}</li>
@@ -165,6 +168,22 @@ public interface Module extends EObject
    * @generated
    */
   EList<ServiceRef> getRequires();
+
+  /**
+   * Returns the value of the '<em><b>Requires Channel</b></em>' reference list.
+   * The list contents are of type {@link org.fornax.soa.serviceDsl.Channel}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Requires Channel</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Requires Channel</em>' reference list.
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getModule_RequiresChannel()
+   * @model
+   * @generated
+   */
+  EList<Channel> getRequiresChannel();
 
   /**
    * Returns the value of the '<em><b>Features</b></em>' containment reference list.

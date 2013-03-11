@@ -21,6 +21,7 @@ import "http://www.fornax.org/soa/basedsl/SOABaseDsl" as basedsl
 import "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" as profileDsl
 import "http://www.fornax.org/soa/SemanticsDsl" as semanticsDsl
 import "http://www.fornax.org/soa/BusinessDsl" as businessDsl
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 ServiceModel:
 	(imports+=Import)*
@@ -52,14 +53,14 @@ DomainNamespace:
 				('subscriptions' '{'
 					subscriptions += [basedsl::User|QualifiedName]*
 				'}')?
-			)?
+			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+)?
 		'}')?
 		(types+=Type)*
 		(services+=Service)*
-		(channels+=Channel)*
 		(exceptions+=Exception)*
-		(events+=GlobalEvent)*
+		(events+=Event)*
+		(channels+=Channel)*
 		(interalNamespaces+=InternalNamespace)*
 	'}';
 
@@ -77,13 +78,14 @@ InternalNamespace:
 				('subscriptions' '{'
 					subscriptions += [basedsl::User|QualifiedName]*
 				'}')?
-			)?
+			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+)?
 		'}')?
 		(types+=Type)*
 		(services+=Service)*
 		(exceptions+=Exception)*
-		(events+=GlobalEvent)*
+		(events+=Event)*
+		(channels+=Channel)*
 		(interalNamespaces+=InternalNamespace)*
 	'}';
 		
@@ -118,7 +120,7 @@ BusinessObject:
 				('subscriptions' '{'
 					subscriptions += [basedsl::User|QualifiedName]*
 				'}')?
-			)?
+			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+)?
 		'}'
 		(properties+=Property)*
@@ -147,7 +149,7 @@ QueryObject:
 				('subscriptions' '{'
 					subscriptions += [basedsl::User|QualifiedName]*
 				'}')?
-			)?
+			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+)?
 		'}'
 		(properties+=Property)*
@@ -212,7 +214,7 @@ Enumeration:
 				('subscriptions' '{'
 					subscriptions += [basedsl::User|QualifiedName]*
 				'}')?
-			)?
+			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+ )?
 		'}'
 		(literals+=EnumLiteral )*
@@ -264,9 +266,13 @@ Service:
 				/*
 				 * The message header definition being used. Overrides the default from the architecture profile
 				 */
-			&	('request-message-header' requestMessageHeader = MessageHeaderRef )?
-			&	('response-message-header' responseMessageHeader = MessageHeaderRef )?
-			&	('publish-message-header' publishMessageHeader = MessageHeaderRef )?
+			&			
+			('message-headers' '{'
+				('request-message-header' requestMessageHeader = MessageHeaderRef )?
+				('response-message-header' responseMessageHeader = MessageHeaderRef )?
+				('publish-message-header' publishMessageHeader = MessageHeaderRef )?
+			'}')?
+
 			)
 			('contacts' '{'
 				/* Who is responsible for the service? */
@@ -276,7 +282,7 @@ Service:
 				('subscriptions' '{'
 					subscriptions += [basedsl::User|QualifiedName]*
 				'}')?
-			)?
+			'}')?
 			/*
 			 * Semantic tagging
 			 */
@@ -287,21 +293,92 @@ Service:
 		 */
 		(operations+=Operation)*
 	'}';
-	
 
-/* 
- * reflects SOA governance approval decisions
- * voting until date will be part of the review ballots captured in the side store
- */
-GovernanceApproval:
-	'governance-approval' '{'
-		decision=ApprovalDecision 
-		('justification-doc' justificationOrDocURL=STRING )?
-		('decision-date' approvalDate=STRING )? 
-		('decision-by' approvedBy=STRING )?
-	'}'; 
+
 	
-enum ApprovalDecision: no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated | denied;
+/*
+ * A service operation
+ */
+Operation:
+	(deprecated?='@deprecated')? (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
+		(considerationSpec=ConsiderationSpec)?
+		('statefulness' statefulness=Statefulness (updating?='updating')? )?
+		('transaction-spec' transactionSpec=TransactionSpec)?
+		/*
+		 * overrides the default from the service
+		 */ 
+		('persistence' persistence=Persistence )? 
+		/*
+		 * Overrides the message header declaration from the architecture profile or service for this operation
+		 */
+		('message-headers' '{'
+			('request-message-header' requestMessageHeader = MessageHeaderRef )?
+			('response-message-header' responseMessageHeader = MessageHeaderRef )?
+			('publish-message-header' publishMessageHeader = MessageHeaderRef )?
+		'}')?
+		/*
+		 * Services used by this service
+		 */
+		('requires' requires+=RequiredServiceRef )*
+		('requires-channel' requiresChannel+=[Channel|QualifiedName] )*
+		/*
+		 * The operation that is capabale to revert/compensate the effect of this operation
+		 */
+		('compensated-by' compensatedBy+=OperationRef )?
+		('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?	
+		('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?	
+		('tags' (tags+=[semanticsDsl::Tag])+)*
+	'}';
+	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
+
+
+/*
+ * An operation (return) parameter
+ */	 
+Parameter:
+	(optional?='optional')? name=ID ':' type=TypeRef  (attachmentRef?='as-attachment-ref' )?;
+
+/*
+ * Declared service operation exceptions
+ */
+Exception:
+	'exception' name=ID ('extends' superException=ExceptionRef)? '{' 
+		'metadata' '{'
+			version=Version  
+			('replaces' replaces=ExceptionRef )?
+			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] 
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			('release-on' releaseDate = STRING )?
+			('retirement-on' retirementDate = STRING )?
+			('provided-contract' providedContractUrl=STRING)?
+			('contacts' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('subscriptions' '{'
+					subscriptions += [basedsl::User|QualifiedName]*
+				'}')?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
+		'}'
+		(properties+=SimpleAttribute)*
+	'}';
+
+ExceptionRef:
+	exception=[Exception|QualifiedName] version=VersionRef;
+	
+/* the message exchange pattern */
+enum MEP : 
+	sync | async | oneway | fireForget='fire+forget' | deferredResponse='deferred' | syncAsync='sync+async'; 
+
+/*
+ * Specification of transactional behaviour
+ */
+enum TransactionSpec:
+	requiresNew = "requires-new" | requires='requires' | mandatory
+;
+	
 	
 enum Statefulness: 
 	/* same result, no matter how often the operation has been called with the same parameters*/
@@ -336,10 +413,6 @@ OperationRef:
  */	
 SimpleOperationRef: 
 	operation=[Operation|QualifiedName];
-	
-PropertyRef:
-	property=[Property|QualifiedName] versionRef=VersionRef;
-
 
 /* defines the execution of an operation in terms of considered parameters */
 ConsiderationSpec:
@@ -383,12 +456,12 @@ MessageHeaderRef:
 CapabilityRef:
 	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
 
-Event:	GlobalEvent | OperationEvent;
+
 
 /*
  * Event, that is not scoped to an operation
  */
-GlobalEvent:
+Event:
 	'event' name=ID '{'
 		'metadata' '{'
 			version=Version  
@@ -407,149 +480,33 @@ GlobalEvent:
 				('subscriptions' '{'
 					subscriptions += [basedsl::User|QualifiedName]*
 				'}')?
-			)?
+			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 		'}'
 		(parameter+=Parameter )*
 	'}';
 
-/*
- * Event that is scoped to an operation
- */
-OperationEvent:
-	'event' name=ID '{'
-		('metadata' '{'
-			('provided-contract' providedContractUrl=STRING)?
-			('tags' (tags+=[semanticsDsl::Tag])+ )*
-		'}')?
-		(parameter+=Parameter )*
-	'}';
-	
-EventRef:	OperationEventRef | GlobalEventRef ;
 
-OperationEventRef:
-	event=[OperationEvent|QualifiedName] versionRef=VersionRef ('subType' subType=ID)?;
-
-GlobalEventRef:
-	event=[GlobalEvent|QualifiedName] versionRef=VersionRef ('subType' subType=ID)?;
+EventRef:
+	event=[Event|QualifiedName] versionRef=VersionRef ('subType' subType=ID)?;
 
 /*
  * Channel used to publish events to or to watch for events
  */
 Channel:
-	(isTopic?='topic')? 'channel' name=QualifiedName  ;
-	
-/*
- * A service operation
- */
-Operation:
-	(deprecated?='@deprecated')? (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
-		(considerationSpec=ConsiderationSpec)?
-		('statefulness' statefulness=Statefulness (updating?='updating')? )?
-		('transaction-spec' transactionSpec=TransactionSpec)?
-		/*
-		 * overrides the default from the service
-		 */ 
-		('persistence' persistence=Persistence )? 
-		/*
-		 * Overrides the message header declaration from the architecture profile or service for this operation
-		 */
-		('request-message-header' requestMessageHeader = MessageHeaderRef )?
-		('response-message-header' responseMessageHeader = MessageHeaderRef )?
-		('publish-message-header' publishMessageHeader = MessageHeaderRef )?
-		/*
-		 * Listens for callback from the given operations. Used, when one of the operations has been called asynchronously.
-		 * The operation must correlate the asynch response to the original request
-		 */
-		('callback-listener-for' (callbackForOperation+=OperationRef) (',' callbackForOperation+=OperationRef)*)?
-		/* The following event are published, when the operation is called */
-		('publishes' '{'
-				(publishes+=PublishedEvent )+ 
-		'}')?
-		/*
-		 * The operation is automaitically invoked, when one of the given events occurs
-		 */ 
-		('subscribes-to' '{'
-			(subscribes+=EventRef )
-		'}')? 
-		/*
-		 * The operation that is capabale to revert/compensate the effect of this operation
-		 */
-		('compensated-by' compensatedBy+=OperationRef )?
-		/*
-		 * Services used by this service
-		 */
-		('requires' requires+=RequiredServiceRef )*
-		('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?	
-		('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?	
-		('tags' (tags+=[semanticsDsl::Tag])+)*
+	(isTopic?='topic')? 'channel' name=QualifiedName  '{'
+		('subscribers' '{'
+			subscribers+=Subscriber
+		'}')
+		('transmits-events'  '{'
+			transmitsEvents += EventRef
+		'}')
 	'}';
-	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
-
-/*
- * Specification of transactional behaviour
- */
-enum TransactionSpec:
-	requiresNew = "requires-new" | requires='requires' | mandatory
+	
+Subscriber:
+	subscriber = [ecore::EObject|QualifiedName] version=VersionRef
 ;
-
-/*
- * Declares the publishing of an event.
- */
-PublishedEvent : PublishedGlobalEvent | PublishedOperationEvent;
-
-/*
- * An event published by the operation
- */
-PublishedOperationEvent: 
-	publishesOpEvent = OperationEvent;
-
-/*
- * Declares an event being published. Not scoped to the service operation.
- */
-PublishedGlobalEvent:
-	 publishesGlobalEvent = GlobalEventRef ;
-
-/*
- * An operation (return) parameter
- */	 
-Parameter:
-	(optional?='optional')? name=ID ':' type=TypeRef  (attachmentRef?='as-attachment-ref' )?;
-
-/*
- * Declared service operation exceptions
- */
-Exception:
-	'exception' name=ID ('extends' superException=ExceptionRef)? '{' 
-		'metadata' '{'
-			version=Version  
-			('replaces' replaces=ExceptionRef )?
-			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] 
-			(governanceApproval=GovernanceApproval)?
-			(governanceDecisions+=GovernanceDecision)*
-			('release-on' releaseDate = STRING )?
-			('retirement-on' retirementDate = STRING )?
-			('provided-contract' providedContractUrl=STRING)?
-			('contacts' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
-				('subscriptions' '{'
-					subscriptions += [basedsl::User|QualifiedName]*
-				'}')?
-			)?
-			('tags' (tags+=[semanticsDsl::Tag])+ )*
-		'}'
-		(properties+=SimpleAttribute)*
-	'}';
-
-ExceptionRef:
-	exception=[Exception|QualifiedName] version=VersionRef;
 	
-/* the message exchange pattern */
-enum MEP : 
-	sync | async | oneway | fireForget='fire+forget' | deferredResponse='deferred' | syncAsync='sync+async'; 
-
 /**
  * The Visibility of a service etc. <br/><br/>
  * 
@@ -560,3 +517,17 @@ enum MEP :
  * </ul>
  */	
 enum Visibility : public | domain | private; 
+
+/* 
+ * reflects SOA governance approval decisions
+ * voting until date will be part of the review ballots captured in the side store
+ */
+GovernanceApproval:
+	'governance-approval' '{'
+		decision=ApprovalDecision 
+		('justification-doc' justificationOrDocURL=STRING )?
+		('decision-date' approvalDate=STRING )? 
+		('decision-by' approvedBy=STRING )?
+	'}'; 
+	
+enum ApprovalDecision: no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated | denied;

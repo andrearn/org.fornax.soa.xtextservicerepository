@@ -3427,7 +3427,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Privilege:
-	//	name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName* "}";
+	//	name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName*;
 	public SOABaseDslGrammarAccess.PrivilegeElements getPrivilegeAccess() {
 		return gaSOABaseDsl.getPrivilegeAccess();
 	}

@@ -29,14 +29,15 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Organization/bizLead"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Organization/businessFunctions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Organization/subOrganizations"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Organization/members"/>
     </genClasses>
     <genClasses ecoreClass="BusinessDsl.ecore#//Domain">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Domain/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Domain/competence"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/bizLead"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/techLead"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/svcMgmtLead"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/svcMgmt"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/subscriptions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/tags"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/domains"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/capabilityGroups"/>
@@ -46,8 +47,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//BusinessFunction/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//BusinessFunction/shortDescription"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//BusinessFunction/description"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/owner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/responsible"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/subscriptions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/additionalInfo"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/tags"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/capabilties"/>
@@ -55,8 +58,10 @@
     <genClasses ecoreClass="BusinessDsl.ecore#//CapabilityGroup">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//CapabilityGroup/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//CapabilityGroup/description"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/owner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/responsible"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/subscriptions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/additionalInfo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/capabilities"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/capabilityGroups"/>
@@ -67,17 +72,18 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/version"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Capability/shortDescription"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Capability/description"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/budgeting"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Capability/businessValue"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/owner"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/additionalInfo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/inputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/outcomes"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/uses"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/subscriptions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/tags"/>
     </genClasses>
     <genClasses ecoreClass="BusinessDsl.ecore#//SimpleCapability">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//SimpleCapability/responsible"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//SimpleCapability/budgeting"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//SimpleCapability/automationLevel"/>
     </genClasses>
     <genClasses ecoreClass="BusinessDsl.ecore#//CapabilityVariant">

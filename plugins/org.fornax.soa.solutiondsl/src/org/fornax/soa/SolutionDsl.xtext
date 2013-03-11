@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2011 André Arnold and others.
+Copyright (c) 2010-2013 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -32,6 +32,7 @@ Solution:
 		(productVersion=ProductVersion)?
 		(additionalInfo=AdditionalInformation)?
 		('requires' requires+=ServiceRef )*
+		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		(features+=Feature)*
 		(modules+=Module)*
 		('contacts' '{'
@@ -51,6 +52,7 @@ Module:
 		(version=Version)?
 		(additionalInfo=AdditionalInformation)?
 		('requires' requires+=ServiceRef )*
+		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		(features+=Feature)*
 		(modules+=Module)*
 		('contacts' '{'
@@ -75,7 +77,7 @@ Feature:
 			(usesCapabilities+=CapabilityRef)+ 
 		'}')?
 		('requires' requires+=ServiceRef )*
-		('subscribes-to-event' (event+=EventRef)(',' event+=EventRef)* )?
+		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		('contacts' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
