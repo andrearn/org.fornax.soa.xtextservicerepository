@@ -1528,6 +1528,16 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		return getPrivilegeAccess().getRule();
 	}
 
+	//AssetRef:
+	//	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
+	public SOABaseDslGrammarAccess.AssetRefElements getAssetRefAccess() {
+		return gaSOABaseDsl.getAssetRefAccess();
+	}
+	
+	public ParserRule getAssetRefRule() {
+		return getAssetRefAccess().getRule();
+	}
+
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {

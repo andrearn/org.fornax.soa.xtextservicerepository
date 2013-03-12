@@ -70,7 +70,6 @@ public class SLADslFactoryImpl extends EFactoryImpl implements SLADslFactory
     {
       case SLADslPackage.SLA_MODEL: return createSlaModel();
       case SLADslPackage.SLA: return createSLA();
-      case SLADslPackage.ASSET_REF: return createAssetRef();
       case SLADslPackage.COST: return createCost();
       case SLADslPackage.SERVICE_QUALITY_PROPERTY: return createServiceQualityProperty();
       case SLADslPackage.AVAILABILITY: return createAvailability();
@@ -183,17 +182,6 @@ public class SLADslFactoryImpl extends EFactoryImpl implements SLADslFactory
   {
     SLAImpl sla = new SLAImpl();
     return sla;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public AssetRef createAssetRef()
-  {
-    AssetRefImpl assetRef = new AssetRefImpl();
-    return assetRef;
   }
 
   /**

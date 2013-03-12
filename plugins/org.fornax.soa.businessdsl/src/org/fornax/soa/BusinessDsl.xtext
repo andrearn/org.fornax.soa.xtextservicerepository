@@ -222,13 +222,13 @@ Outcome:
 	
 User returns basedsl::User:
 	'user' name=QualifiedName '{'
-		(firstname = STRING)?
-		(lastname = STRING)?
-		(org = STRING)?
-		(orgUnit = STRING)?
-		(email = STRING)?
-		(phone = STRING)?
-		(roles += RoleRef)*
+		('firstname' firstname = STRING)?
+		('lastname' lastname = STRING)?
+		('org' org = STRING)?
+		('orgUnit' orgUnit = STRING)?
+		('email' email = STRING)?
+		('phone' phone = STRING)?
+		('roles' (roles += RoleRef)+)?
 	'}';
 
 Role returns basedsl::Role:

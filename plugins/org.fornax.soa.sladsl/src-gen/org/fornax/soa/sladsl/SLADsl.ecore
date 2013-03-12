@@ -17,7 +17,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="appliesTo" upperBound="-1"
-        eType="#//AssetRef" containment="true"/>
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//AssetRef"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="costs" eType="#//Cost"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serviceQualityProperties"
@@ -47,11 +48,6 @@
         upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass ../../../../../../org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore#//Tag"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AssetRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="asset" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
-        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Cost">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="costsAmount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

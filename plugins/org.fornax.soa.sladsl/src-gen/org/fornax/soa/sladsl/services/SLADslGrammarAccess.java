@@ -518,38 +518,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_25() { return cRightCurlyBracketKeyword_25; }
 	}
 
-	public class AssetRefElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AssetRef");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cAssetAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cAssetEObjectCrossReference_0_0 = (CrossReference)cAssetAssignment_0.eContents().get(0);
-		private final RuleCall cAssetEObjectQualifiedNameParserRuleCall_0_0_1 = (RuleCall)cAssetEObjectCrossReference_0_0.eContents().get(1);
-		private final Assignment cVersionRefAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cVersionRefVersionRefParserRuleCall_1_0 = (RuleCall)cVersionRefAssignment_1.eContents().get(0);
-		
-		//AssetRef:
-		//	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
-		public ParserRule getRule() { return rule; }
-
-		//asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?
-		public Group getGroup() { return cGroup; }
-
-		//asset=[ecore::EObject|QualifiedName]
-		public Assignment getAssetAssignment_0() { return cAssetAssignment_0; }
-
-		//[ecore::EObject|QualifiedName]
-		public CrossReference getAssetEObjectCrossReference_0_0() { return cAssetEObjectCrossReference_0_0; }
-
-		//QualifiedName
-		public RuleCall getAssetEObjectQualifiedNameParserRuleCall_0_0_1() { return cAssetEObjectQualifiedNameParserRuleCall_0_0_1; }
-
-		//versionRef=VersionRef?
-		public Assignment getVersionRefAssignment_1() { return cVersionRefAssignment_1; }
-
-		//VersionRef
-		public RuleCall getVersionRefVersionRefParserRuleCall_1_0() { return cVersionRefVersionRefParserRuleCall_1_0; }
-	}
-
 	public class CostElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Cost");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2203,21 +2171,12 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPenaltySTRINGTerminalRuleCall_7_0 = (RuleCall)cPenaltyAssignment_7.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
-		////QualifiedNameWithWildCard:
-		////	QualifiedName '.*'?;
-		////
-		////QualifiedName:
-		////	ID ('.' ID)*;
 		//ReportingResponsibility:
 		//	"reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING
 		//	"}";
 		public ParserRule getRule() { return rule; }
 
-		//"reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING "}" //QualifiedNameWithWildCard:
-		////	QualifiedName '.*'?;
-		////
-		////QualifiedName:
-		////	ID ('.' ID)*;
+		//"reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING "}"
 		public Group getGroup() { return cGroup; }
 
 		//"reporting-responsibility"
@@ -2256,11 +2215,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getPenaltySTRINGTerminalRuleCall_7_0() { return cPenaltySTRINGTerminalRuleCall_7_0; }
 
-		////QualifiedNameWithWildCard:
-		////	QualifiedName '.*'?;
-		////
-		////QualifiedName:
-		////	ID ('.' ID)*;
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_8() { return cRightCurlyBracketKeyword_8; }
 	}
@@ -2688,7 +2642,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private SlaModelElements pSlaModel;
 	private SLAElements pSLA;
-	private AssetRefElements pAssetRef;
 	private CostElements pCost;
 	private ServiceQualityPropertyElements pServiceQualityProperty;
 	private AvailabilityElements pAvailability;
@@ -2792,16 +2745,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSLARule() {
 		return getSLAAccess().getRule();
-	}
-
-	//AssetRef:
-	//	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
-	public AssetRefElements getAssetRefAccess() {
-		return (pAssetRef != null) ? pAssetRef : (pAssetRef = new AssetRefElements());
-	}
-	
-	public ParserRule getAssetRefRule() {
-		return getAssetRefAccess().getRule();
 	}
 
 	//Cost:
@@ -3170,11 +3113,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		return getReportAccess().getRule();
 	}
 
-	////QualifiedNameWithWildCard:
-	////	QualifiedName '.*'?;
-	////
-	////QualifiedName:
-	////	ID ('.' ID)*;
 	//ReportingResponsibility:
 	//	"reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING
 	//	"}";
@@ -3434,6 +3372,16 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getPrivilegeRule() {
 		return getPrivilegeAccess().getRule();
+	}
+
+	//AssetRef:
+	//	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
+	public SOABaseDslGrammarAccess.AssetRefElements getAssetRefAccess() {
+		return gaSOABaseDsl.getAssetRefAccess();
+	}
+	
+	public ParserRule getAssetRefRule() {
+		return getAssetRefAccess().getRule();
 	}
 
 	//terminal ID:

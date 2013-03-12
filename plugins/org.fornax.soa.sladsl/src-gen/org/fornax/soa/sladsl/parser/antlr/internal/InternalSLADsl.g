@@ -736,63 +736,6 @@ ruleSLA returns [EObject current=null]
 
 
 
-// Entry rule entryRuleAssetRef
-entryRuleAssetRef returns [EObject current=null] 
-	:
-	{ newCompositeNode(grammarAccess.getAssetRefRule()); }
-	 iv_ruleAssetRef=ruleAssetRef 
-	 { $current=$iv_ruleAssetRef.current; } 
-	 EOF 
-;
-
-// Rule AssetRef
-ruleAssetRef returns [EObject current=null] 
-    @init { enterRule(); 
-    }
-    @after { leaveRule(); }:
-((
-(
-		{ 
-		  /* */ 
-		}
-		{
-			if ($current==null) {
-	            $current = createModelElement(grammarAccess.getAssetRefRule());
-	        }
-        }
-		{ 
-	        newCompositeNode(grammarAccess.getAssetRefAccess().getAssetEObjectCrossReference_0_0()); 
-	    }
-		ruleQualifiedName		{ 
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(
-(
-		{ 
-	        newCompositeNode(grammarAccess.getAssetRefAccess().getVersionRefVersionRefParserRuleCall_1_0()); 
-	    }
-		lv_versionRef_1_0=ruleVersionRef		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getAssetRefRule());
-	        }
-       		set(
-       			$current, 
-       			"versionRef",
-        		lv_versionRef_1_0, 
-        		"VersionRef");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)?)
-;
-
-
-
-
-
 // Entry rule entryRuleCost
 entryRuleCost returns [EObject current=null] 
 	:
@@ -4254,6 +4197,63 @@ rulePrivilegeRef returns [EObject current=null]
 ;
 
 
+
+
+
+
+
+// Entry rule entryRuleAssetRef
+entryRuleAssetRef returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getAssetRefRule()); }
+	 iv_ruleAssetRef=ruleAssetRef 
+	 { $current=$iv_ruleAssetRef.current; } 
+	 EOF 
+;
+
+// Rule AssetRef
+ruleAssetRef returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+((
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getAssetRefRule());
+	        }
+        }
+		{ 
+	        newCompositeNode(grammarAccess.getAssetRefAccess().getAssetEObjectCrossReference_0_0()); 
+	    }
+		ruleQualifiedName		{ 
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getAssetRefAccess().getVersionRefVersionRefParserRuleCall_1_0()); 
+	    }
+		lv_versionRef_1_0=ruleVersionRef		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getAssetRefRule());
+	        }
+       		set(
+       			$current, 
+       			"versionRef",
+        		lv_versionRef_1_0, 
+        		"VersionRef");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)?)
+;
 
 
 

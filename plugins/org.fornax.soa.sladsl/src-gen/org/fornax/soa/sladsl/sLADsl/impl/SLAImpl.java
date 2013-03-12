@@ -22,12 +22,12 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
+import org.fornax.soa.basedsl.sOABaseDsl.AssetRef;
 import org.fornax.soa.basedsl.sOABaseDsl.User;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 
 import org.fornax.soa.semanticsDsl.Tag;
 
-import org.fornax.soa.sladsl.sLADsl.AssetRef;
 import org.fornax.soa.sladsl.sLADsl.Cost;
 import org.fornax.soa.sladsl.sLADsl.Escalation;
 import org.fornax.soa.sladsl.sLADsl.Party;

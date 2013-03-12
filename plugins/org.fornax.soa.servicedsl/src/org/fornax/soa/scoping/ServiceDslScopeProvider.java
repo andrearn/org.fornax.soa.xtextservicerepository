@@ -11,11 +11,13 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
+import org.fornax.soa.basedsl.sOABaseDsl.AssetRef;
 import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
+import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslPackage;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.basedsl.scoping.versions.VersionFilteringScope;
 import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
@@ -264,9 +266,11 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			} catch (Throwable ex) {
 //				logger.debug("Error resolving a ComplexConsiderationProperty parentPropertyRef of a ComplexConsiderationPropertyRef", ex);
 			}
+		} else if (reference == SOABaseDslPackage.Literals.ASSET_REF__ASSET
+				&& ctx instanceof AssetRef) {
+			final VersionRef v = ((AssetRef) ctx).getVersionRef();
+			return createVersionFilter (v);
 		}
-		
-
 		return new NullVersionFilter<IEObjectDescription>();
 	}
 

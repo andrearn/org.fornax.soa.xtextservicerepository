@@ -33,54 +33,54 @@ protected class ThisRootNode extends RootToken {
 		switch(index) {
 			case 0: return new SlaModel_AgreementsAssignment(this, this, 0, inst);
 			case 1: return new SLA_Group(this, this, 1, inst);
-			case 2: return new AssetRef_Group(this, this, 2, inst);
-			case 3: return new Cost_Group(this, this, 3, inst);
-			case 4: return new ServiceQualityProperty_Alternatives(this, this, 4, inst);
-			case 5: return new Availability_Group(this, this, 5, inst);
-			case 6: return new Throughput_Group(this, this, 6, inst);
-			case 7: return new Latency_Group(this, this, 7, inst);
-			case 8: return new MaxDownTime_Group(this, this, 8, inst);
-			case 9: return new CapacityRequirement_Group(this, this, 9, inst);
-			case 10: return new ReliablityRequirement_Group(this, this, 10, inst);
-			case 11: return new AccuracyRequirement_Group(this, this, 11, inst);
-			case 12: return new LogRequirement_Group(this, this, 12, inst);
-			case 13: return new Percentile_Group(this, this, 13, inst);
-			case 14: return new SecurityRequirement_Alternatives(this, this, 14, inst);
-			case 15: return new AuthenticationRequirement_Group(this, this, 15, inst);
-			case 16: return new AuthToken_Group(this, this, 16, inst);
-			case 17: return new HashAlgorithm_Group(this, this, 17, inst);
-			case 18: return new SigningRequirement_Group(this, this, 18, inst);
-			case 19: return new MessagePartRef_Group(this, this, 19, inst);
-			case 20: return new EncryptionRequirement_Group(this, this, 20, inst);
-			case 21: return new PriorityDeclaration_Group(this, this, 21, inst);
-			case 22: return new Escalation_Group(this, this, 22, inst);
-			case 23: return new Party_Alternatives(this, this, 23, inst);
-			case 24: return new CustomerParty_Group(this, this, 24, inst);
-			case 25: return new ProviderParty_Group(this, this, 25, inst);
-			case 26: return new ThirdParty_Group(this, this, 26, inst);
-			case 27: return new Repesentative_Group(this, this, 27, inst);
-			case 28: return new Responsibility_Alternatives(this, this, 28, inst);
-			case 29: return new SimpleResponsibility_Group(this, this, 29, inst);
-			case 30: return new Report_Group(this, this, 30, inst);
-			case 31: return new ReportingResponsibility_Group(this, this, 31, inst);
-			case 32: return new Import_Group(this, this, 32, inst);
-			case 33: return new VersionedName_Alternatives(this, this, 33, inst);
-			case 34: return new Version_Group(this, this, 34, inst);
-			case 35: return new VersionRef_Alternatives(this, this, 35, inst);
-			case 36: return new MinVersionRef_Group(this, this, 36, inst);
-			case 37: return new MaxVersionRef_Group(this, this, 37, inst);
-			case 38: return new LowerBoundRangeVersionRef_Group(this, this, 38, inst);
-			case 39: return new MajorVersionRef_Group(this, this, 39, inst);
-			case 40: return new FixedVersionRef_Group(this, this, 40, inst);
-			case 41: return new GovernanceDecision_Group(this, this, 41, inst);
-			case 42: return new AbstractType_Group(this, this, 42, inst);
-			case 43: return new AdditionalInformation_Group(this, this, 43, inst);
-			case 44: return new InfoItem_Group(this, this, 44, inst);
-			case 45: return new User_Group(this, this, 45, inst);
-			case 46: return new RoleRef_RoleAssignment(this, this, 46, inst);
-			case 47: return new Role_Group(this, this, 47, inst);
-			case 48: return new PrivilegeRef_PrivilegeAssignment(this, this, 48, inst);
-			case 49: return new Privilege_Group(this, this, 49, inst);
+			case 2: return new Cost_Group(this, this, 2, inst);
+			case 3: return new ServiceQualityProperty_Alternatives(this, this, 3, inst);
+			case 4: return new Availability_Group(this, this, 4, inst);
+			case 5: return new Throughput_Group(this, this, 5, inst);
+			case 6: return new Latency_Group(this, this, 6, inst);
+			case 7: return new MaxDownTime_Group(this, this, 7, inst);
+			case 8: return new CapacityRequirement_Group(this, this, 8, inst);
+			case 9: return new ReliablityRequirement_Group(this, this, 9, inst);
+			case 10: return new AccuracyRequirement_Group(this, this, 10, inst);
+			case 11: return new LogRequirement_Group(this, this, 11, inst);
+			case 12: return new Percentile_Group(this, this, 12, inst);
+			case 13: return new SecurityRequirement_Alternatives(this, this, 13, inst);
+			case 14: return new AuthenticationRequirement_Group(this, this, 14, inst);
+			case 15: return new AuthToken_Group(this, this, 15, inst);
+			case 16: return new HashAlgorithm_Group(this, this, 16, inst);
+			case 17: return new SigningRequirement_Group(this, this, 17, inst);
+			case 18: return new MessagePartRef_Group(this, this, 18, inst);
+			case 19: return new EncryptionRequirement_Group(this, this, 19, inst);
+			case 20: return new PriorityDeclaration_Group(this, this, 20, inst);
+			case 21: return new Escalation_Group(this, this, 21, inst);
+			case 22: return new Party_Alternatives(this, this, 22, inst);
+			case 23: return new CustomerParty_Group(this, this, 23, inst);
+			case 24: return new ProviderParty_Group(this, this, 24, inst);
+			case 25: return new ThirdParty_Group(this, this, 25, inst);
+			case 26: return new Repesentative_Group(this, this, 26, inst);
+			case 27: return new Responsibility_Alternatives(this, this, 27, inst);
+			case 28: return new SimpleResponsibility_Group(this, this, 28, inst);
+			case 29: return new Report_Group(this, this, 29, inst);
+			case 30: return new ReportingResponsibility_Group(this, this, 30, inst);
+			case 31: return new Import_Group(this, this, 31, inst);
+			case 32: return new VersionedName_Alternatives(this, this, 32, inst);
+			case 33: return new Version_Group(this, this, 33, inst);
+			case 34: return new VersionRef_Alternatives(this, this, 34, inst);
+			case 35: return new MinVersionRef_Group(this, this, 35, inst);
+			case 36: return new MaxVersionRef_Group(this, this, 36, inst);
+			case 37: return new LowerBoundRangeVersionRef_Group(this, this, 37, inst);
+			case 38: return new MajorVersionRef_Group(this, this, 38, inst);
+			case 39: return new FixedVersionRef_Group(this, this, 39, inst);
+			case 40: return new GovernanceDecision_Group(this, this, 40, inst);
+			case 41: return new AbstractType_Group(this, this, 41, inst);
+			case 42: return new AdditionalInformation_Group(this, this, 42, inst);
+			case 43: return new InfoItem_Group(this, this, 43, inst);
+			case 44: return new User_Group(this, this, 44, inst);
+			case 45: return new RoleRef_RoleAssignment(this, this, 45, inst);
+			case 46: return new Role_Group(this, this, 46, inst);
+			case 47: return new PrivilegeRef_PrivilegeAssignment(this, this, 47, inst);
+			case 48: return new Privilege_Group(this, this, 48, inst);
+			case 49: return new AssetRef_Group(this, this, 49, inst);
 			default: return null;
 		}	
 	}	
@@ -2561,129 +2561,6 @@ protected class SLA_RightCurlyBracketKeyword_25 extends KeywordToken  {
 
 
 /************ end Rule SLA ****************/
-
-
-/************ begin Rule AssetRef ****************
- *
- * AssetRef:
- * 	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
- *
- **/
-
-// asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?
-protected class AssetRef_Group extends GroupToken {
-	
-	public AssetRef_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getAssetRefAccess().getGroup();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new AssetRef_VersionRefAssignment_1(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new AssetRef_AssetAssignment_0(lastRuleCallOrigin, this, 1, inst);
-			default: return null;
-		}	
-	}
-
-    @Override
-	public IEObjectConsumer tryConsume() {
-		if(getEObject().eClass() != grammarAccess.getAssetRefRule().getType().getClassifier())
-			return null;
-		return eObjectConsumer;
-	}
-
-}
-
-// asset=[ecore::EObject|QualifiedName]
-protected class AssetRef_AssetAssignment_0 extends AssignmentToken  {
-	
-	public AssetRef_AssetAssignment_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getAssetRefAccess().getAssetAssignment_0();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("asset",true)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("asset");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
-			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getAssetRefAccess().getAssetEObjectCrossReference_0_0().getType().getClassifier())) {
-				type = AssignmentType.CROSS_REFERENCE;
-				element = grammarAccess.getAssetRefAccess().getAssetEObjectCrossReference_0_0(); 
-				return obj;
-			}
-		}
-		return null;
-	}
-
-}
-
-// versionRef=VersionRef?
-protected class AssetRef_VersionRefAssignment_1 extends AssignmentToken  {
-	
-	public AssetRef_VersionRefAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getAssetRefAccess().getVersionRefAssignment_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new VersionRef_Alternatives(this, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("versionRef",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("versionRef");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getVersionRefRule().getType().getClassifier())) {
-				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getAssetRefAccess().getVersionRefVersionRefParserRuleCall_1_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-    @Override
-	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
-		if(value == inst.getEObject() && !inst.isConsumed()) return null;
-		switch(index) {
-			case 0: return new AssetRef_AssetAssignment_0(lastRuleCallOrigin, next, actIndex, consumed);
-			default: return null;
-		}	
-	}	
-}
-
-
-/************ end Rule AssetRef ****************/
 
 
 /************ begin Rule Cost ****************
@@ -10545,22 +10422,13 @@ protected class Report_RightCurlyBracketKeyword_7 extends KeywordToken  {
 
 /************ begin Rule ReportingResponsibility ****************
  *
- * //QualifiedNameWithWildCard:
- * //	QualifiedName '.*'?;
- * //
- * //QualifiedName:
- * //	ID ('.' ID)*;
  * ReportingResponsibility:
  * 	"reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING
  * 	"}";
  *
  **/
 
-// "reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING "}" //QualifiedNameWithWildCard:
-// //	QualifiedName '.*'?;
-// //
-// //QualifiedName:
-// //	ID ('.' ID)*;
+// "reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING "}"
 protected class ReportingResponsibility_Group extends GroupToken {
 	
 	public ReportingResponsibility_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -10825,11 +10693,6 @@ protected class ReportingResponsibility_PenaltyAssignment_7 extends AssignmentTo
 
 }
 
-// //QualifiedNameWithWildCard:
-// //	QualifiedName '.*'?;
-// //
-// //QualifiedName:
-// //	ID ('.' ID)*;
 // "}"
 protected class ReportingResponsibility_RightCurlyBracketKeyword_8 extends KeywordToken  {
 	
@@ -13984,5 +13847,128 @@ protected class Privilege_ExecuteACLAssignment_3 extends AssignmentToken  {
 
 
 /************ end Rule Privilege ****************/
+
+
+/************ begin Rule AssetRef ****************
+ *
+ * AssetRef:
+ * 	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
+ *
+ **/
+
+// asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?
+protected class AssetRef_Group extends GroupToken {
+	
+	public AssetRef_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getAssetRefAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new AssetRef_VersionRefAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new AssetRef_AssetAssignment_0(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getAssetRefRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// asset=[ecore::EObject|QualifiedName]
+protected class AssetRef_AssetAssignment_0 extends AssignmentToken  {
+	
+	public AssetRef_AssetAssignment_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getAssetRefAccess().getAssetAssignment_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("asset",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("asset");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getAssetRefAccess().getAssetEObjectCrossReference_0_0().getType().getClassifier())) {
+				type = AssignmentType.CROSS_REFERENCE;
+				element = grammarAccess.getAssetRefAccess().getAssetEObjectCrossReference_0_0(); 
+				return obj;
+			}
+		}
+		return null;
+	}
+
+}
+
+// versionRef=VersionRef?
+protected class AssetRef_VersionRefAssignment_1 extends AssignmentToken  {
+	
+	public AssetRef_VersionRefAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getAssetRefAccess().getVersionRefAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new VersionRef_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("versionRef",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("versionRef");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getVersionRefRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getAssetRefAccess().getVersionRefVersionRefParserRuleCall_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new AssetRef_AssetAssignment_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+/************ end Rule AssetRef ****************/
 
 }

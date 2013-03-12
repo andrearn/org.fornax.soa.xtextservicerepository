@@ -61,7 +61,6 @@ SLA:
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
-AssetRef: asset = [ecore::EObject|QualifiedName] (versionRef=VersionRef)?;
 
 Cost:
 	'costs' '{'
@@ -263,9 +262,4 @@ ReportingResponsibility:
 		(penalty=STRING) 
 	'}';
 	
-//QualifiedNameWithWildCard:
-//	QualifiedName '.*'?;
-//
-//QualifiedName:
-//	ID ('.' ID)*;
 	

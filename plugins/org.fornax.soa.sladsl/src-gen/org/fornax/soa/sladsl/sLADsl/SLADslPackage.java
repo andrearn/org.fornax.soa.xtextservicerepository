@@ -342,43 +342,6 @@ public interface SLADslPackage extends EPackage
   int SLA_FEATURE_COUNT = 26;
 
   /**
-   * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.impl.AssetRefImpl <em>Asset Ref</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.fornax.soa.sladsl.sLADsl.impl.AssetRefImpl
-   * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getAssetRef()
-   * @generated
-   */
-  int ASSET_REF = 2;
-
-  /**
-   * The feature id for the '<em><b>Asset</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSET_REF__ASSET = 0;
-
-  /**
-   * The feature id for the '<em><b>Version Ref</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSET_REF__VERSION_REF = 1;
-
-  /**
-   * The number of structural features of the '<em>Asset Ref</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSET_REF_FEATURE_COUNT = 2;
-
-  /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.impl.CostImpl <em>Cost</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -386,7 +349,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getCost()
    * @generated
    */
-  int COST = 3;
+  int COST = 2;
 
   /**
    * The feature id for the '<em><b>Costs Amount</b></em>' attribute.
@@ -441,7 +404,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getServiceQualityProperty()
    * @generated
    */
-  int SERVICE_QUALITY_PROPERTY = 4;
+  int SERVICE_QUALITY_PROPERTY = 3;
 
   /**
    * The number of structural features of the '<em>Service Quality Property</em>' class.
@@ -460,7 +423,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getAvailability()
    * @generated
    */
-  int AVAILABILITY = 5;
+  int AVAILABILITY = 4;
 
   /**
    * The feature id for the '<em><b>Availability</b></em>' attribute.
@@ -533,7 +496,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getThroughput()
    * @generated
    */
-  int THROUGHPUT = 6;
+  int THROUGHPUT = 5;
 
   /**
    * The feature id for the '<em><b>Definition</b></em>' attribute.
@@ -588,7 +551,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getLatency()
    * @generated
    */
-  int LATENCY = 7;
+  int LATENCY = 6;
 
   /**
    * The feature id for the '<em><b>Latency</b></em>' attribute.
@@ -643,7 +606,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getMaxDownTime()
    * @generated
    */
-  int MAX_DOWN_TIME = 8;
+  int MAX_DOWN_TIME = 7;
 
   /**
    * The feature id for the '<em><b>Definition</b></em>' attribute.
@@ -689,7 +652,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getCapacityRequirement()
    * @generated
    */
-  int CAPACITY_REQUIREMENT = 9;
+  int CAPACITY_REQUIREMENT = 8;
 
   /**
    * The feature id for the '<em><b>Request Num</b></em>' attribute.
@@ -753,7 +716,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getReliablityRequirement()
    * @generated
    */
-  int RELIABLITY_REQUIREMENT = 10;
+  int RELIABLITY_REQUIREMENT = 9;
 
   /**
    * The feature id for the '<em><b>Reliability</b></em>' attribute.
@@ -790,7 +753,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getAccuracyRequirement()
    * @generated
    */
-  int ACCURACY_REQUIREMENT = 11;
+  int ACCURACY_REQUIREMENT = 10;
 
   /**
    * The feature id for the '<em><b>Max Error Rate</b></em>' attribute.
@@ -836,7 +799,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getLogRequirement()
    * @generated
    */
-  int LOG_REQUIREMENT = 12;
+  int LOG_REQUIREMENT = 11;
 
   /**
    * The feature id for the '<em><b>Log Level</b></em>' attribute.
@@ -873,7 +836,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getPercentile()
    * @generated
    */
-  int PERCENTILE = 13;
+  int PERCENTILE = 12;
 
   /**
    * The feature id for the '<em><b>Percentile</b></em>' attribute.
@@ -901,7 +864,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getSecurityRequirement()
    * @generated
    */
-  int SECURITY_REQUIREMENT = 14;
+  int SECURITY_REQUIREMENT = 13;
 
   /**
    * The number of structural features of the '<em>Security Requirement</em>' class.
@@ -920,7 +883,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getAuthenticationRequirement()
    * @generated
    */
-  int AUTHENTICATION_REQUIREMENT = 15;
+  int AUTHENTICATION_REQUIREMENT = 14;
 
   /**
    * The feature id for the '<em><b>Optional</b></em>' attribute.
@@ -984,7 +947,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getAuthToken()
    * @generated
    */
-  int AUTH_TOKEN = 16;
+  int AUTH_TOKEN = 15;
 
   /**
    * The feature id for the '<em><b>Optional</b></em>' attribute.
@@ -1021,7 +984,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getHashAlgorithm()
    * @generated
    */
-  int HASH_ALGORITHM = 17;
+  int HASH_ALGORITHM = 16;
 
   /**
    * The feature id for the '<em><b>Optional</b></em>' attribute.
@@ -1067,7 +1030,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getSigningRequirement()
    * @generated
    */
-  int SIGNING_REQUIREMENT = 18;
+  int SIGNING_REQUIREMENT = 17;
 
   /**
    * The feature id for the '<em><b>Supported Signing Algorithms</b></em>' attribute list.
@@ -1113,7 +1076,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getMessagePartRef()
    * @generated
    */
-  int MESSAGE_PART_REF = 19;
+  int MESSAGE_PART_REF = 18;
 
   /**
    * The feature id for the '<em><b>Message Part Ref</b></em>' attribute.
@@ -1150,7 +1113,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getEncryptionRequirement()
    * @generated
    */
-  int ENCRYPTION_REQUIREMENT = 20;
+  int ENCRYPTION_REQUIREMENT = 19;
 
   /**
    * The feature id for the '<em><b>Supported Cipher Algorithms</b></em>' attribute list.
@@ -1196,7 +1159,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getPriorityDeclaration()
    * @generated
    */
-  int PRIORITY_DECLARATION = 21;
+  int PRIORITY_DECLARATION = 20;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1233,7 +1196,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getEscalation()
    * @generated
    */
-  int ESCALATION = 22;
+  int ESCALATION = 21;
 
   /**
    * The feature id for the '<em><b>Cause</b></em>' attribute.
@@ -1279,7 +1242,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getParty()
    * @generated
    */
-  int PARTY = 23;
+  int PARTY = 22;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1325,7 +1288,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getCustomerParty()
    * @generated
    */
-  int CUSTOMER_PARTY = 24;
+  int CUSTOMER_PARTY = 23;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1371,7 +1334,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getProviderParty()
    * @generated
    */
-  int PROVIDER_PARTY = 25;
+  int PROVIDER_PARTY = 24;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1417,7 +1380,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getThirdParty()
    * @generated
    */
-  int THIRD_PARTY = 26;
+  int THIRD_PARTY = 25;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1472,7 +1435,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getRepesentative()
    * @generated
    */
-  int REPESENTATIVE = 27;
+  int REPESENTATIVE = 26;
 
   /**
    * The feature id for the '<em><b>Fullname</b></em>' attribute.
@@ -1518,7 +1481,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getResponsibility()
    * @generated
    */
-  int RESPONSIBILITY = 28;
+  int RESPONSIBILITY = 27;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1564,7 +1527,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getSimpleResponsibility()
    * @generated
    */
-  int SIMPLE_RESPONSIBILITY = 29;
+  int SIMPLE_RESPONSIBILITY = 28;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1619,7 +1582,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getReport()
    * @generated
    */
-  int REPORT = 30;
+  int REPORT = 29;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1665,7 +1628,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getReportingResponsibility()
    * @generated
    */
-  int REPORTING_RESPONSIBILITY = 31;
+  int REPORTING_RESPONSIBILITY = 30;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1720,7 +1683,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getHashAlgKind()
    * @generated
    */
-  int HASH_ALG_KIND = 32;
+  int HASH_ALG_KIND = 31;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.MessagePartRefKind <em>Message Part Ref Kind</em>}' enum.
@@ -1730,7 +1693,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getMessagePartRefKind()
    * @generated
    */
-  int MESSAGE_PART_REF_KIND = 33;
+  int MESSAGE_PART_REF_KIND = 32;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.SigningAlgothm <em>Signing Algothm</em>}' enum.
@@ -1740,7 +1703,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getSigningAlgothm()
    * @generated
    */
-  int SIGNING_ALGOTHM = 34;
+  int SIGNING_ALGOTHM = 33;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.CipherAlgorithmKind <em>Cipher Algorithm Kind</em>}' enum.
@@ -1750,7 +1713,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getCipherAlgorithmKind()
    * @generated
    */
-  int CIPHER_ALGORITHM_KIND = 35;
+  int CIPHER_ALGORITHM_KIND = 34;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.AuthTokenKind <em>Auth Token Kind</em>}' enum.
@@ -1760,7 +1723,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getAuthTokenKind()
    * @generated
    */
-  int AUTH_TOKEN_KIND = 36;
+  int AUTH_TOKEN_KIND = 35;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.LogRequirementKind <em>Log Requirement Kind</em>}' enum.
@@ -1770,7 +1733,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getLogRequirementKind()
    * @generated
    */
-  int LOG_REQUIREMENT_KIND = 37;
+  int LOG_REQUIREMENT_KIND = 36;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.ReliablilityKind <em>Reliablility Kind</em>}' enum.
@@ -1780,7 +1743,7 @@ public interface SLADslPackage extends EPackage
    * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getReliablilityKind()
    * @generated
    */
-  int RELIABLILITY_KIND = 38;
+  int RELIABLILITY_KIND = 37;
 
 
   /**
@@ -2099,38 +2062,6 @@ public interface SLADslPackage extends EPackage
    * @generated
    */
   EReference getSLA_Tags();
-
-  /**
-   * Returns the meta object for class '{@link org.fornax.soa.sladsl.sLADsl.AssetRef <em>Asset Ref</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Asset Ref</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.AssetRef
-   * @generated
-   */
-  EClass getAssetRef();
-
-  /**
-   * Returns the meta object for the reference '{@link org.fornax.soa.sladsl.sLADsl.AssetRef#getAsset <em>Asset</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Asset</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.AssetRef#getAsset()
-   * @see #getAssetRef()
-   * @generated
-   */
-  EReference getAssetRef_Asset();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.fornax.soa.sladsl.sLADsl.AssetRef#getVersionRef <em>Version Ref</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Version Ref</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.AssetRef#getVersionRef()
-   * @see #getAssetRef()
-   * @generated
-   */
-  EReference getAssetRef_VersionRef();
 
   /**
    * Returns the meta object for class '{@link org.fornax.soa.sladsl.sLADsl.Cost <em>Cost</em>}'.
@@ -3542,32 +3473,6 @@ public interface SLADslPackage extends EPackage
      * @generated
      */
     EReference SLA__TAGS = eINSTANCE.getSLA_Tags();
-
-    /**
-     * The meta object literal for the '{@link org.fornax.soa.sladsl.sLADsl.impl.AssetRefImpl <em>Asset Ref</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.fornax.soa.sladsl.sLADsl.impl.AssetRefImpl
-     * @see org.fornax.soa.sladsl.sLADsl.impl.SLADslPackageImpl#getAssetRef()
-     * @generated
-     */
-    EClass ASSET_REF = eINSTANCE.getAssetRef();
-
-    /**
-     * The meta object literal for the '<em><b>Asset</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ASSET_REF__ASSET = eINSTANCE.getAssetRef_Asset();
-
-    /**
-     * The meta object literal for the '<em><b>Version Ref</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference ASSET_REF__VERSION_REF = eINSTANCE.getAssetRef_VersionRef();
 
     /**
      * The meta object literal for the '{@link org.fornax.soa.sladsl.sLADsl.impl.CostImpl <em>Cost</em>}' class.

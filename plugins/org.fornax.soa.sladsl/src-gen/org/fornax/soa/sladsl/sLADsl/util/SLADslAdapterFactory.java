@@ -88,11 +88,6 @@ public class SLADslAdapterFactory extends AdapterFactoryImpl
         return createSLAAdapter();
       }
       @Override
-      public Adapter caseAssetRef(AssetRef object)
-      {
-        return createAssetRefAdapter();
-      }
-      @Override
       public Adapter caseCost(Cost object)
       {
         return createCostAdapter();
@@ -285,21 +280,6 @@ public class SLADslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSLAAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.fornax.soa.sladsl.sLADsl.AssetRef <em>Asset Ref</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.fornax.soa.sladsl.sLADsl.AssetRef
-   * @generated
-   */
-  public Adapter createAssetRefAdapter()
   {
     return null;
   }

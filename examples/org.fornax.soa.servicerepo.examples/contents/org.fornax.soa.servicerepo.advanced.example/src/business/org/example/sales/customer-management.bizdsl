@@ -7,7 +7,7 @@ domain Org.Example.Sales {
 	 * A group of business capabilities similar to a use case package dealing with management of customers
 	 */
 	capability-group CustomerManagement {
-		description "Capabilities for operational caustomer management"
+		description "Capabilities for operational customer management"
 		
 		/**
 		 * A capability to acquire an create customers
@@ -33,4 +33,5 @@ domain Org.Example.Sales {
 			business-value "low"
 		}
 	}
+	
 }

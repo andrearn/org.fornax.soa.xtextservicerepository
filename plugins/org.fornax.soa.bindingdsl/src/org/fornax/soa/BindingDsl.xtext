@@ -24,7 +24,7 @@ BindingModel:
 	(bindings+=Binding)*;
 
 
-Binding: ModuleBinding | ServiceBinding ;
+Binding: ModuleBinding | ServiceBinding | ChannelBinding;
 
 
 
@@ -32,7 +32,7 @@ Binding: ModuleBinding | ServiceBinding ;
  * Providers are server connetors to outbound endpoints, when using a service
  */	
 ConnectorQualifier:
-	'on' 'connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*;
+	'on-connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*;
 
 /*
  * Binds the referenced module to the given target environment. All services provided by the module become available in the
@@ -63,10 +63,13 @@ ModuleBinding:
 ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
 
 /*
- * Overrides the binding of a parent DomainBinding or ModuleBinding for the given Service
+ * Overrides the binding of a parent ModuleBinding for the given Service
  */
 ServiceBinding:
-	'bind-service' service=ServiceRef '{'
+	'bind-service' service=ServiceRef ('to' 
+		(('environment' environment=[environmentDsl::Environment|QualifiedName]) | 
+		 ('server' provServer = [environmentDsl::Server|QualifiedName])
+		))? '{'
 		(endpointQualifierRef=EndpointQualifierRef)?
 		(governanceDecisions+=GovernanceDecision)*
 		('provided-contract' providedContract=STRING)?
@@ -84,11 +87,33 @@ ServiceBinding:
 	'}';
 
 /*
- * References a service constained by the VersionRef constraint
+ * References a service by  qualified name and a VersionRef constraint
  */	
 ServiceRef:
 	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
 	
+/*
+ * Overrides the binding of a parent ModuleBinding for the given Channel
+ */
+ChannelBinding:
+	'bind-channel' channel=[serviceDsl::Channel|QualifiedName] ('to' 
+		(('environment' environment=[environmentDsl::Environment|QualifiedName]) | 
+		 ('server' provServer = [environmentDsl::Server|QualifiedName])
+		))? '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(governanceDecisions+=GovernanceDecision)*
+		'protocols' '{'
+			(protocol+=BindingProtocol)+
+		'}'
+		('policies' '{'
+			(policies+=Policy)*
+		'}')?
+		('assertions' '{'
+			(assertions+=Assertion)+
+		'}')?
+		('references-module' referencedModule = ModuleRef)?
+	'}';
+
 
 /*
  * The endpoint protocol of the entpoint on which the service is provided

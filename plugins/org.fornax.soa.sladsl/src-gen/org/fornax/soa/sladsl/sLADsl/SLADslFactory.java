@@ -44,15 +44,6 @@ public interface SLADslFactory extends EFactory
   SLA createSLA();
 
   /**
-   * Returns a new object of class '<em>Asset Ref</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Asset Ref</em>'.
-   * @generated
-   */
-  AssetRef createAssetRef();
-
-  /**
    * Returns a new object of class '<em>Cost</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

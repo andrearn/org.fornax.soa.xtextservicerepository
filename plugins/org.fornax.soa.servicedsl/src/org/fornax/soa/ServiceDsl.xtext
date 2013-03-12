@@ -496,16 +496,16 @@ EventRef:
 Channel:
 	(isTopic?='topic')? 'channel' name=QualifiedName  '{'
 		('subscribers' '{'
-			subscribers+=Subscriber
+			subscribers += AssetRef*
+		'}')
+		('publishers' '{'
+			publisher += AssetRef*
 		'}')
 		('transmits-events'  '{'
-			transmitsEvents += EventRef
+			transmitsEvents += EventRef*
 		'}')
 	'}';
 	
-Subscriber:
-	subscriber = [ecore::EObject|QualifiedName] version=VersionRef
-;
 	
 /**
  * The Visibility of a service etc. <br/><br/>

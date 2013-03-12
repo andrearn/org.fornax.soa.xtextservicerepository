@@ -9,6 +9,7 @@ import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.fornax.soa.basedsl.sOABaseDsl.AssetRef;
 import org.fornax.soa.basedsl.sOABaseDsl.User;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 
@@ -241,7 +242,7 @@ public interface SLA extends EObject
 
   /**
    * Returns the value of the '<em><b>Applies To</b></em>' containment reference list.
-   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.AssetRef}.
+   * The list contents are of type {@link org.fornax.soa.basedsl.sOABaseDsl.AssetRef}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Applies To</em>' containment reference list isn't clear,

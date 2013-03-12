@@ -3,7 +3,15 @@
  */
 package org.fornax.soa.basedsl.scoping;
 
-import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.sOABaseDsl.AssetRef;
+import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslPackage;
+import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
+import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.NullVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
 
 /**
  * This class contains custom scoping description.
@@ -12,6 +20,17 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
  * on how and when to use it 
  *
  */
-public class SOABaseDslScopeProvider extends AbstractDeclarativeScopeProvider {
+public class SOABaseDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
+	
+	@Override
+	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext (
+			EObject ctx, final EReference reference) {
+		if (reference == SOABaseDslPackage.Literals.ASSET_REF__ASSET
+				&& ctx instanceof AssetRef) {
+			final VersionRef v = ((AssetRef) ctx).getVersionRef();
+			return createVersionFilter (v);
+		}
+		return new NullVersionFilter<IEObjectDescription>();
+	}
 
 }

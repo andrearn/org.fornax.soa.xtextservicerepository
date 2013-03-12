@@ -18,7 +18,6 @@ import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslPackage;
 import org.fornax.soa.semanticsDsl.SemanticsDslPackage;
 
 import org.fornax.soa.sladsl.sLADsl.AccuracyRequirement;
-import org.fornax.soa.sladsl.sLADsl.AssetRef;
 import org.fornax.soa.sladsl.sLADsl.AuthToken;
 import org.fornax.soa.sladsl.sLADsl.AuthTokenKind;
 import org.fornax.soa.sladsl.sLADsl.AuthenticationRequirement;
@@ -79,13 +78,6 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * @generated
    */
   private EClass slaEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass assetRefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -694,36 +686,6 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
   public EReference getSLA_Tags()
   {
     return (EReference)slaEClass.getEStructuralFeatures().get(25);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getAssetRef()
-  {
-    return assetRefEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAssetRef_Asset()
-  {
-    return (EReference)assetRefEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAssetRef_VersionRef()
-  {
-    return (EReference)assetRefEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1867,10 +1829,6 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     createEReference(slaEClass, SLA__SUBSCRIPTIONS);
     createEReference(slaEClass, SLA__TAGS);
 
-    assetRefEClass = createEClass(ASSET_REF);
-    createEReference(assetRefEClass, ASSET_REF__ASSET);
-    createEReference(assetRefEClass, ASSET_REF__VERSION_REF);
-
     costEClass = createEClass(COST);
     createEAttribute(costEClass, COST__COSTS_AMOUNT);
     createEAttribute(costEClass, COST__BILLED_UNIT);
@@ -2073,7 +2031,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     initEAttribute(getSLA_Preample(), ecorePackage.getEString(), "preample", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_Description(), ecorePackage.getEString(), "description", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_Scope(), ecorePackage.getEString(), "scope", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSLA_AppliesTo(), this.getAssetRef(), null, "appliesTo", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSLA_AppliesTo(), theSOABaseDslPackage.getAssetRef(), null, "appliesTo", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_Costs(), this.getCost(), null, "costs", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_ServiceQualityProperties(), this.getServiceQualityProperty(), null, "serviceQualityProperties", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_DataSecProtClause(), ecorePackage.getEString(), "dataSecProtClause", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2092,10 +2050,6 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     initEReference(getSLA_Budgeting(), theSOABaseDslPackage.getUser(), null, "budgeting", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_Tags(), theSemanticsDslPackage.getTag(), null, "tags", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(assetRefEClass, AssetRef.class, "AssetRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAssetRef_Asset(), ecorePackage.getEObject(), null, "asset", null, 0, 1, AssetRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAssetRef_VersionRef(), theSOABaseDslPackage.getVersionRef(), null, "versionRef", null, 0, 1, AssetRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(costEClass, Cost.class, "Cost", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCost_CostsAmount(), ecorePackage.getEString(), "costsAmount", null, 0, 1, Cost.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

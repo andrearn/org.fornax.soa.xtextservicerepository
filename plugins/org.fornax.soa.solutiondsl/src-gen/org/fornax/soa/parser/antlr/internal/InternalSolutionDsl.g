@@ -2160,6 +2160,8 @@ rulePrivilegeRef returns [EObject current=null]
 
 
 
+
+
 // Rule ModuleKind
 ruleModuleKind returns [Enumerator current=null] 
     @init { enterRule(); }

@@ -11,6 +11,8 @@
         eType="#//Binding" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Binding">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="environment" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="provServer" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRef" eType="#//EndpointQualifierRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
@@ -31,8 +33,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//ModuleRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="environment" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Environment"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="provServer" eType="ecore:EClass ../../../../../org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore#//Server"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serviceBindings" upperBound="-1"
         eType="#//ServiceBinding" containment="true"/>
   </eClassifiers>
@@ -53,6 +53,11 @@
   <eClassifiers xsi:type="ecore:EClass" name="ServiceRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Service"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ChannelBinding" eSuperTypes="#//Binding">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="channel" eType="ecore:EClass ../../../../../org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore#//Channel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referencedModule" eType="#//ModuleRef"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BindingProtocol">

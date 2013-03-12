@@ -58,6 +58,7 @@ protected class ThisRootNode extends RootToken {
 			case 24: return new Role_Group(this, this, 24, inst);
 			case 25: return new PrivilegeRef_PrivilegeAssignment(this, this, 25, inst);
 			case 26: return new Privilege_Group(this, this, 26, inst);
+			case 27: return new AssetRef_Group(this, this, 27, inst);
 			default: return null;
 		}	
 	}	
@@ -7788,5 +7789,128 @@ protected class Privilege_ExecuteACLAssignment_3 extends AssignmentToken  {
 
 
 /************ end Rule Privilege ****************/
+
+
+/************ begin Rule AssetRef ****************
+ *
+ * AssetRef:
+ * 	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
+ *
+ **/
+
+// asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?
+protected class AssetRef_Group extends GroupToken {
+	
+	public AssetRef_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getAssetRefAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new AssetRef_VersionRefAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new AssetRef_AssetAssignment_0(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getAssetRefRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// asset=[ecore::EObject|QualifiedName]
+protected class AssetRef_AssetAssignment_0 extends AssignmentToken  {
+	
+	public AssetRef_AssetAssignment_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getAssetRefAccess().getAssetAssignment_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("asset",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("asset");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getAssetRefAccess().getAssetEObjectCrossReference_0_0().getType().getClassifier())) {
+				type = AssignmentType.CROSS_REFERENCE;
+				element = grammarAccess.getAssetRefAccess().getAssetEObjectCrossReference_0_0(); 
+				return obj;
+			}
+		}
+		return null;
+	}
+
+}
+
+// versionRef=VersionRef?
+protected class AssetRef_VersionRefAssignment_1 extends AssignmentToken  {
+	
+	public AssetRef_VersionRefAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getAssetRefAccess().getVersionRefAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new VersionRef_Alternatives(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("versionRef",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("versionRef");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getVersionRefRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getAssetRefAccess().getVersionRefVersionRefParserRuleCall_1_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new AssetRef_AssetAssignment_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+
+/************ end Rule AssetRef ****************/
 
 }

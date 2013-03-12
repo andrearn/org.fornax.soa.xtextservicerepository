@@ -96,10 +96,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/subscriptions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/tags"/>
     </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//AssetRef">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//AssetRef/asset"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//AssetRef/versionRef"/>
-    </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//Cost">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Cost/costsAmount"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Cost/billedUnit"/>
