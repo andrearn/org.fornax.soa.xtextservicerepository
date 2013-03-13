@@ -17,55 +17,110 @@ import org.fornax.soa.basedsl.search.IEObjectLookup
 import org.fornax.soa.serviceDsl.SubNamespace
 
 class JaxWsTypeExtensions {
-	@Inject QualifiedNameProvider nameProvider
 	@Inject extension SchemaNamespaceExtensions
+	@Inject extension JavaTypeExtensions
+	@Inject QualifiedNameProvider nameProvider
 	@Inject JavaTypeExtensions javaTypeExt
 	@Inject IEObjectLookup objLookup
 	
-	/*
-	 * Returns the fully qualified java class name for a Type.
+	/**
+	 * Returns the fully qualified JAX-WS-style java class name for a Service.
 	 */
-	def String toQualifiedJaxWsTypeName (Service service, boolean optionalField) {
-		nameProvider.getFullyQualifiedName(service.eContainer).toString + "." + service.name.toLowerCase + "." + service.version.toVersionPostfix + "." + service.name
+	def String toJaxWsQualifiedTypeName (Service service) {
+		service.toJaxWsServicePackageName + "." + service.name
 	}
-	def String toQualifiedJaxWsTypeName (org.fornax.soa.serviceDsl.Exception exception, Operation throwingOperation, boolean optionalField) {
+	/**
+	 * Returns the fully qualified JAX-WS-style java class name for an Exception.
+	 */
+	def String toJaxWsQualifiedTypeName (org.fornax.soa.serviceDsl.Exception exception, Operation throwingOperation) {
 		val service = throwingOperation.eContainer as Service
-		nameProvider.getFullyQualifiedName(exception.eContainer).toString + "." + service.name.toLowerCase + "." + exception.version.toVersionPostfix + "." + exception.name
+		service.toJaxWsServicePackageName + "." + exception.name
 	}
+	
+	
+	/**
+	 * Returns the simple JAX-WS-style java class name for a Service.
+	 */
 	def String toJaxWsTypeName (Service service, boolean optionalField) {
 		service.name
 	}
-	def String toJaxWsTypeName (org.fornax.soa.serviceDsl.Exception exception, boolean optionalField) {
+	/**
+	 * Returns the simple JAX-WS-style java class name for an Exception.
+	 */
+	def String toJaxWsTypeName (org.fornax.soa.serviceDsl.Exception exception) {
 		exception.name
 	}
 	
-	def String toJaxWsTypeName (ExceptionRef exRef, boolean optionalField) {
-		exRef.exception.toJaxWsTypeName(optionalField)
+	/**
+	 * Returns the simple JAX-WS-style java class name for the Exception referenced by an ExceptionRef .
+	 */
+	def String toJaxWsTypeName (ExceptionRef exRef) {
+		exRef.exception.toJaxWsTypeName
 	}
 
 	/**
-	 * Get the qualified class name 
+	 * Get the simple class name JAX-WS-style operation request parameter wrapper type
 	 */
-	def String toJaxWsRequestTypeName (Operation operation, boolean optionalField) {
+	def String toJaxWsRequestTypeName (Operation operation) {
 		operation.name.toFirstUpper
 	}
 	
-	def String toJaxWsResponseTypeName (Operation operation, boolean optionalField) {
+	/**
+	 * Get the simple class name JAX-WS-style operation response parameter wrapper type
+	 */
+	def String toJaxWsResponseTypeName (Operation operation) {
 		operation.name.toFirstUpper + "Response"
 	}
 
 	/**
-	 * Get the qualified class name 
+	 * Get the fully qualified class name JAX-WS-style operation request parameter wrapper type
 	 */
-	def String toQualifiedJaxWsRequestTypeName (Operation operation, boolean optionalField) {
+	def String toJaxWsQualifiedRequestTypeName (Operation operation) {
 		val Service service = objLookup.getOwnerByType(operation, typeof (Service))
-		nameProvider.getFullyQualifiedName(service).toString + "." + service.name.toLowerCase + "." + service.version.toVersionPostfix + "." + operation.name.toFirstUpper
+		service.toJaxWsServicePackageName + "." + operation.name.toFirstUpper
 	}
 	
-	def String toQualifiedJaxWsResponseTypeName (Operation operation, boolean optionalField) {
+	/**
+	 * Get the fully qualified class name JAX-WS-style operation response parameter wrapper type
+	 */
+	def String toJaxWsQualifiedResponseTypeName (Operation operation) {
 		val Service service = objLookup.getOwnerByType(operation, typeof (Service))
-		val SubNamespace namespace = objLookup.getOwnerByType(operation, typeof (SubNamespace))
-		nameProvider.getFullyQualifiedName (namespace).toString + "." + service.name.toLowerCase + "." + service.version.toVersionPostfix + "." + operation.name.toFirstUpper + "Response"
+		service.toJaxWsServicePackageName + "." + operation.name.toFirstUpper + "Response"
+	}
+	
+	/**
+	 * Get the Java package name of a Service
+	 */
+	def String toJaxWsServicePackageName (Service service) {
+		nameProvider.getFullyQualifiedName(service.eContainer).toString + "." + service.name.toLowerCase + "." + service.version.toVersionPostfix
+	}
+
+
+	// JAX-WS Java file names
+
+	def String toJaxWsRequestJavaFileName (Operation operation) {
+		operation.toJaxWsQualifiedRequestTypeName.toJavaFileName
+	}
+	
+	def String toJaxWsResponseJavaFileName (Operation operation) {
+		operation.toJaxWsQualifiedResponseTypeName.toJavaFileName
+	}
+	
+	def String toJaxWsJavaFileName (org.fornax.soa.serviceDsl.Exception exception, Operation throwingOperation) {
+		exception.toJaxWsQualifiedTypeName(throwingOperation).toJavaFileName
+	}
+	
+	def String toJaxWsJavaFileName (Service service) {
+		service.toJaxWsQualifiedTypeName.toJavaFileName
+	}
+	
+	
+	def String toJaxWsJavaFileName (Type type) {
+		return null
+	}
+	
+	def String toJaxWsJavaFileName (VersionedType type) {
+		type.toQualifiedJavaTypeName.toJavaFileName
 	}
 
 }

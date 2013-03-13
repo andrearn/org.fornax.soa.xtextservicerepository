@@ -12,6 +12,8 @@ import com.google.inject.Inject
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.ExceptionRef
 import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
+import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef
 
 /**
  * Derive Java class names from types and type references
@@ -27,6 +29,9 @@ class JavaTypeExtensions {
 	/**
 	 * Returns the fully qualified java class name for a Type.
 	 */
+	def dispatch String toQualifiedJavaTypeName (Type type) {
+		
+	}
 	def dispatch String toQualifiedJavaTypeName (Type type, boolean optionalField) {
 		
 	}
@@ -58,21 +63,21 @@ class JavaTypeExtensions {
 	/**
 	 * Returns the fully qualified java class name for a Type.
 	 */
-	def dispatch String toQualifiedJavaTypeName (VersionedType type, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (VersionedType type) {
 		nameProvider.getFullyQualifiedName(type.eContainer).toString + "." + type.version.toVersionPostfix + "." + type.name
 	}
 
 	/**
 	 * Returns the fully qualified java class name for a Type.
 	 */
-	def dispatch String toQualifiedJavaTypeName (Service service, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (Service service) {
 		nameProvider.getFullyQualifiedName(service.eContainer).toString + "." + service.version.toVersionPostfix + "." + service.name
 	}
 
 	/**
 	 * Returns the fully qualified java class name for a Type.
 	 */
-	def dispatch String toQualifiedJavaTypeName (org.fornax.soa.serviceDsl.Exception exception, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (org.fornax.soa.serviceDsl.Exception exception) {
 		nameProvider.getFullyQualifiedName(exception.eContainer).toString + "." + exception.version.toVersionPostfix + "." + exception.name
 	}
 	
@@ -119,7 +124,7 @@ class JavaTypeExtensions {
 	/*
 	 * returns the Java type name of the property's type
 	 */
-	def String toQualifiedJavaTypeName (Property property) {
+	def dispatch String toQualifiedJavaTypeName (Property property) {
 		property.type.toQualifiedJavaTypeName(property.optional)
 	}
 	
@@ -248,32 +253,67 @@ class JavaTypeExtensions {
 		property.type.toJavaTypeName(property.optional)
 	}
 	
+	def dispatch String toPackageName (Type type) {
+		return null
+	}
+	def dispatch String toPackageName (VersionedType type) {
+		nameProvider.getFullyQualifiedName(type.eContainer).toString + "." + type.version.toVersionPostfix
+	}
+	def dispatch String toPackageName (org.fornax.soa.serviceDsl.Exception exception) {
+		nameProvider.getFullyQualifiedName(exception.eContainer).toString + "." + exception.version.toVersionPostfix
+	}
+	def dispatch String toPackageName (org.fornax.soa.profiledsl.sOAProfileDsl.Class type) {
+		nameProvider.getFullyQualifiedName(type.eContainer).toString + "." + type.version.toVersionPostfix
+	}
+	def dispatch String toPackageName (TypeRef typeRef) {
+		return null
+	}
+	def dispatch String toPackageName (VersionedTypeRef typeRef) {
+		typeRef.type.toPackageName
+	}
+	def dispatch String toPackageName (ClassRef typeRef) {
+		typeRef.type.toPackageName
+	}
+	def dispatch String toPackageName (Service svc) {
+		nameProvider.getFullyQualifiedName(svc.eContainer).toString + "." + svc.version.toVersionPostfix
+	}
+
+
+	// Java file names
+	
+	/**
+	 * Convert a fully qualified class name to the Java file name
+	 */
+	def String toJavaFileName (String qualifiedClassName) {
+		qualifiedClassName.replaceAll("\\.", "/") + ".java"
+	}
+	
 	/**
 	 * Get the java file name of a class representing a Type
 	 */
 	def String toJavaFileName (Type type) {
-		type.toQualifiedJavaTypeName (false).replaceAll("\\.", "/") + ".java"
+		type.toQualifiedJavaTypeName (false).toJavaFileName
 	}
 	
 	/**
 	 * Get the java file name of a class representing a Service
 	 */
 	def String toJavaFileName (Service type) {
-		type.toQualifiedJavaTypeName (false).replaceAll("\\.", "/") + ".java"
+		type.toQualifiedJavaTypeName (false).toJavaFileName
 	}
 	
 	/**
 	 * Get the java file name of a class representing the referenced Type
 	 */
 	def String toJavaFileName (TypeRef typeRef, boolean isOptional) {
-		typeRef.toQualifiedJavaTypeName (isOptional).replaceAll("\\.", "/") + ".java"
+		typeRef.toQualifiedJavaTypeName (isOptional).toJavaFileName
 	}
 	
 	/**
 	 * Get the java file name of the exception wrapper class representing the referenced Exception 
 	 */
 	def String toJavaFileName (ExceptionRef typeRef) {
-		typeRef.toQualifiedJavaTypeName (false).replaceAll("\\.", "/") + ".java"
+		typeRef.toQualifiedJavaTypeName (false).toJavaFileName
 	}
 	
 }

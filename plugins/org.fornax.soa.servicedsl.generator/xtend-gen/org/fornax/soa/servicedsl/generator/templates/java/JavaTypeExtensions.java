@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.mwe2.language.scoping.QualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
+import org.fornax.soa.profiledsl.sOAProfileDsl.ClassRef;
 import org.fornax.soa.profiledsl.sOAProfileDsl.DataType;
 import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
@@ -32,6 +33,10 @@ public class JavaTypeExtensions {
   /**
    * Returns the fully qualified java class name for a Type.
    */
+  protected String _toQualifiedJavaTypeName(final Type type) {
+    return null;
+  }
+  
   protected String _toQualifiedJavaTypeName(final Type type, final boolean optionalField) {
     return null;
   }
@@ -183,7 +188,7 @@ public class JavaTypeExtensions {
   /**
    * Returns the fully qualified java class name for a Type.
    */
-  protected String _toQualifiedJavaTypeName(final VersionedType type, final boolean optionalField) {
+  protected String _toQualifiedJavaTypeName(final VersionedType type) {
     EObject _eContainer = type.eContainer();
     QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(_eContainer);
     String _string = _fullyQualifiedName.toString();
@@ -200,7 +205,7 @@ public class JavaTypeExtensions {
   /**
    * Returns the fully qualified java class name for a Type.
    */
-  protected String _toQualifiedJavaTypeName(final Service service, final boolean optionalField) {
+  protected String _toQualifiedJavaTypeName(final Service service) {
     EObject _eContainer = service.eContainer();
     QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(_eContainer);
     String _string = _fullyQualifiedName.toString();
@@ -217,7 +222,7 @@ public class JavaTypeExtensions {
   /**
    * Returns the fully qualified java class name for a Type.
    */
-  protected String _toQualifiedJavaTypeName(final org.fornax.soa.serviceDsl.Exception exception, final boolean optionalField) {
+  protected String _toQualifiedJavaTypeName(final org.fornax.soa.serviceDsl.Exception exception) {
     EObject _eContainer = exception.eContainer();
     QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(_eContainer);
     String _string = _fullyQualifiedName.toString();
@@ -304,7 +309,7 @@ public class JavaTypeExtensions {
   /**
    * returns the Java type name of the property's type
    */
-  public String toQualifiedJavaTypeName(final Property property) {
+  protected String _toQualifiedJavaTypeName(final Property property) {
     TypeRef _type = property.getType();
     boolean _isOptional = property.isOptional();
     String _qualifiedJavaTypeName = this.toQualifiedJavaTypeName(_type, _isOptional);
@@ -606,14 +611,86 @@ public class JavaTypeExtensions {
     return _javaTypeName;
   }
   
+  protected String _toPackageName(final Type type) {
+    return null;
+  }
+  
+  protected String _toPackageName(final VersionedType type) {
+    EObject _eContainer = type.eContainer();
+    QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(_eContainer);
+    String _string = _fullyQualifiedName.toString();
+    String _plus = (_string + ".");
+    Version _version = type.getVersion();
+    String _versionPostfix = this._schemaNamespaceExtensions.toVersionPostfix(_version);
+    String _plus_1 = (_plus + _versionPostfix);
+    return _plus_1;
+  }
+  
+  protected String _toPackageName(final org.fornax.soa.serviceDsl.Exception exception) {
+    EObject _eContainer = exception.eContainer();
+    QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(_eContainer);
+    String _string = _fullyQualifiedName.toString();
+    String _plus = (_string + ".");
+    Version _version = exception.getVersion();
+    String _versionPostfix = this._schemaNamespaceExtensions.toVersionPostfix(_version);
+    String _plus_1 = (_plus + _versionPostfix);
+    return _plus_1;
+  }
+  
+  protected String _toPackageName(final org.fornax.soa.profiledsl.sOAProfileDsl.Class type) {
+    EObject _eContainer = type.eContainer();
+    QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(_eContainer);
+    String _string = _fullyQualifiedName.toString();
+    String _plus = (_string + ".");
+    Version _version = type.getVersion();
+    String _versionPostfix = this._schemaNamespaceExtensions.toVersionPostfix(_version);
+    String _plus_1 = (_plus + _versionPostfix);
+    return _plus_1;
+  }
+  
+  protected String _toPackageName(final TypeRef typeRef) {
+    return null;
+  }
+  
+  protected String _toPackageName(final VersionedTypeRef typeRef) {
+    VersionedType _type = typeRef.getType();
+    String _packageName = this.toPackageName(_type);
+    return _packageName;
+  }
+  
+  protected String _toPackageName(final ClassRef typeRef) {
+    org.fornax.soa.profiledsl.sOAProfileDsl.Class _type = typeRef.getType();
+    String _packageName = this.toPackageName(_type);
+    return _packageName;
+  }
+  
+  protected String _toPackageName(final Service svc) {
+    EObject _eContainer = svc.eContainer();
+    QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(_eContainer);
+    String _string = _fullyQualifiedName.toString();
+    String _plus = (_string + ".");
+    Version _version = svc.getVersion();
+    String _versionPostfix = this._schemaNamespaceExtensions.toVersionPostfix(_version);
+    String _plus_1 = (_plus + _versionPostfix);
+    return _plus_1;
+  }
+  
+  /**
+   * Convert a fully qualified class name to the Java file name
+   */
+  public String toJavaFileName(final String qualifiedClassName) {
+    String _replaceAll = qualifiedClassName.replaceAll("\\.", "/");
+    String _plus = (_replaceAll + ".java");
+    return _plus;
+  }
+  
   /**
    * Get the java file name of a class representing a Type
    */
   public String toJavaFileName(final Type type) {
     String _qualifiedJavaTypeName = this.toQualifiedJavaTypeName(type, false);
-    String _replaceAll = _qualifiedJavaTypeName.replaceAll("\\.", "/");
-    String _plus = (_replaceAll + ".java");
-    return _plus;
+    String _javaFileName = this.toJavaFileName(_qualifiedJavaTypeName);
+    return _javaFileName;
   }
   
   /**
@@ -621,9 +698,8 @@ public class JavaTypeExtensions {
    */
   public String toJavaFileName(final Service type) {
     String _qualifiedJavaTypeName = this.toQualifiedJavaTypeName(type, false);
-    String _replaceAll = _qualifiedJavaTypeName.replaceAll("\\.", "/");
-    String _plus = (_replaceAll + ".java");
-    return _plus;
+    String _javaFileName = this.toJavaFileName(_qualifiedJavaTypeName);
+    return _javaFileName;
   }
   
   /**
@@ -631,9 +707,8 @@ public class JavaTypeExtensions {
    */
   public String toJavaFileName(final TypeRef typeRef, final boolean isOptional) {
     String _qualifiedJavaTypeName = this.toQualifiedJavaTypeName(typeRef, isOptional);
-    String _replaceAll = _qualifiedJavaTypeName.replaceAll("\\.", "/");
-    String _plus = (_replaceAll + ".java");
-    return _plus;
+    String _javaFileName = this.toJavaFileName(_qualifiedJavaTypeName);
+    return _javaFileName;
   }
   
   /**
@@ -641,9 +716,25 @@ public class JavaTypeExtensions {
    */
   public String toJavaFileName(final ExceptionRef typeRef) {
     String _qualifiedJavaTypeName = this.toQualifiedJavaTypeName(typeRef, false);
-    String _replaceAll = _qualifiedJavaTypeName.replaceAll("\\.", "/");
-    String _plus = (_replaceAll + ".java");
-    return _plus;
+    String _javaFileName = this.toJavaFileName(_qualifiedJavaTypeName);
+    return _javaFileName;
+  }
+  
+  public String toQualifiedJavaTypeName(final EObject type) {
+    if (type instanceof VersionedType) {
+      return _toQualifiedJavaTypeName((VersionedType)type);
+    } else if (type instanceof org.fornax.soa.serviceDsl.Exception) {
+      return _toQualifiedJavaTypeName((org.fornax.soa.serviceDsl.Exception)type);
+    } else if (type instanceof Property) {
+      return _toQualifiedJavaTypeName((Property)type);
+    } else if (type instanceof Service) {
+      return _toQualifiedJavaTypeName((Service)type);
+    } else if (type instanceof Type) {
+      return _toQualifiedJavaTypeName((Type)type);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(type).toString());
+    }
   }
   
   public String toQualifiedJavaTypeName(final EObject typeRef, final boolean optionalField) {
@@ -653,14 +744,8 @@ public class JavaTypeExtensions {
       return _toQualifiedJavaTypeName((DataType)typeRef, optionalField);
     } else if (typeRef instanceof DataTypeRef) {
       return _toQualifiedJavaTypeName((DataTypeRef)typeRef, optionalField);
-    } else if (typeRef instanceof VersionedType) {
-      return _toQualifiedJavaTypeName((VersionedType)typeRef, optionalField);
-    } else if (typeRef instanceof org.fornax.soa.serviceDsl.Exception) {
-      return _toQualifiedJavaTypeName((org.fornax.soa.serviceDsl.Exception)typeRef, optionalField);
     } else if (typeRef instanceof ExceptionRef) {
       return _toQualifiedJavaTypeName((ExceptionRef)typeRef, optionalField);
-    } else if (typeRef instanceof Service) {
-      return _toQualifiedJavaTypeName((Service)typeRef, optionalField);
     } else if (typeRef instanceof Type) {
       return _toQualifiedJavaTypeName((Type)typeRef, optionalField);
     } else if (typeRef instanceof TypeRef) {
@@ -704,6 +789,29 @@ public class JavaTypeExtensions {
     } else {
       throw new IllegalArgumentException("Unhandled parameter types: " +
         Arrays.<Object>asList(typeRef, optionalField).toString());
+    }
+  }
+  
+  public String toPackageName(final EObject type) {
+    if (type instanceof org.fornax.soa.profiledsl.sOAProfileDsl.Class) {
+      return _toPackageName((org.fornax.soa.profiledsl.sOAProfileDsl.Class)type);
+    } else if (type instanceof VersionedTypeRef) {
+      return _toPackageName((VersionedTypeRef)type);
+    } else if (type instanceof VersionedType) {
+      return _toPackageName((VersionedType)type);
+    } else if (type instanceof ClassRef) {
+      return _toPackageName((ClassRef)type);
+    } else if (type instanceof org.fornax.soa.serviceDsl.Exception) {
+      return _toPackageName((org.fornax.soa.serviceDsl.Exception)type);
+    } else if (type instanceof Service) {
+      return _toPackageName((Service)type);
+    } else if (type instanceof Type) {
+      return _toPackageName((Type)type);
+    } else if (type instanceof TypeRef) {
+      return _toPackageName((TypeRef)type);
+    } else {
+      throw new IllegalArgumentException("Unhandled parameter types: " +
+        Arrays.<Object>asList(type).toString());
     }
   }
 }

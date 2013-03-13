@@ -10,17 +10,21 @@ import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.serviceDsl.ExceptionRef;
 import org.fornax.soa.serviceDsl.Operation;
 import org.fornax.soa.serviceDsl.Service;
-import org.fornax.soa.serviceDsl.SubNamespace;
+import org.fornax.soa.serviceDsl.Type;
+import org.fornax.soa.serviceDsl.VersionedType;
 import org.fornax.soa.servicedsl.generator.templates.java.JavaTypeExtensions;
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions;
 
 @SuppressWarnings("all")
 public class JaxWsTypeExtensions {
   @Inject
-  private QualifiedNameProvider nameProvider;
+  private SchemaNamespaceExtensions _schemaNamespaceExtensions;
   
   @Inject
-  private SchemaNamespaceExtensions _schemaNamespaceExtensions;
+  private JavaTypeExtensions _javaTypeExtensions;
+  
+  @Inject
+  private QualifiedNameProvider nameProvider;
   
   @Inject
   private JavaTypeExtensions javaTypeExt;
@@ -29,9 +33,116 @@ public class JaxWsTypeExtensions {
   private IEObjectLookup objLookup;
   
   /**
-   * Returns the fully qualified java class name for a Type.
+   * Returns the fully qualified JAX-WS-style java class name for a Service.
    */
-  public String toQualifiedJaxWsTypeName(final Service service, final boolean optionalField) {
+  public String toJaxWsQualifiedTypeName(final Service service) {
+    String _jaxWsServicePackageName = this.toJaxWsServicePackageName(service);
+    String _plus = (_jaxWsServicePackageName + ".");
+    String _name = service.getName();
+    String _plus_1 = (_plus + _name);
+    return _plus_1;
+  }
+  
+  /**
+   * Returns the fully qualified JAX-WS-style java class name for an Exception.
+   */
+  public String toJaxWsQualifiedTypeName(final org.fornax.soa.serviceDsl.Exception exception, final Operation throwingOperation) {
+    String _xblockexpression = null;
+    {
+      EObject _eContainer = throwingOperation.eContainer();
+      final Service service = ((Service) _eContainer);
+      String _jaxWsServicePackageName = this.toJaxWsServicePackageName(service);
+      String _plus = (_jaxWsServicePackageName + ".");
+      String _name = exception.getName();
+      String _plus_1 = (_plus + _name);
+      _xblockexpression = (_plus_1);
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * Returns the simple JAX-WS-style java class name for a Service.
+   */
+  public String toJaxWsTypeName(final Service service, final boolean optionalField) {
+    String _name = service.getName();
+    return _name;
+  }
+  
+  /**
+   * Returns the simple JAX-WS-style java class name for an Exception.
+   */
+  public String toJaxWsTypeName(final org.fornax.soa.serviceDsl.Exception exception) {
+    String _name = exception.getName();
+    return _name;
+  }
+  
+  /**
+   * Returns the simple JAX-WS-style java class name for the Exception referenced by an ExceptionRef .
+   */
+  public String toJaxWsTypeName(final ExceptionRef exRef) {
+    org.fornax.soa.serviceDsl.Exception _exception = exRef.getException();
+    String _jaxWsTypeName = this.toJaxWsTypeName(_exception);
+    return _jaxWsTypeName;
+  }
+  
+  /**
+   * Get the simple class name JAX-WS-style operation request parameter wrapper type
+   */
+  public String toJaxWsRequestTypeName(final Operation operation) {
+    String _name = operation.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    return _firstUpper;
+  }
+  
+  /**
+   * Get the simple class name JAX-WS-style operation response parameter wrapper type
+   */
+  public String toJaxWsResponseTypeName(final Operation operation) {
+    String _name = operation.getName();
+    String _firstUpper = StringExtensions.toFirstUpper(_name);
+    String _plus = (_firstUpper + "Response");
+    return _plus;
+  }
+  
+  /**
+   * Get the fully qualified class name JAX-WS-style operation request parameter wrapper type
+   */
+  public String toJaxWsQualifiedRequestTypeName(final Operation operation) {
+    String _xblockexpression = null;
+    {
+      final Service service = this.objLookup.<Service>getOwnerByType(operation, Service.class);
+      String _jaxWsServicePackageName = this.toJaxWsServicePackageName(service);
+      String _plus = (_jaxWsServicePackageName + ".");
+      String _name = operation.getName();
+      String _firstUpper = StringExtensions.toFirstUpper(_name);
+      String _plus_1 = (_plus + _firstUpper);
+      _xblockexpression = (_plus_1);
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * Get the fully qualified class name JAX-WS-style operation response parameter wrapper type
+   */
+  public String toJaxWsQualifiedResponseTypeName(final Operation operation) {
+    String _xblockexpression = null;
+    {
+      final Service service = this.objLookup.<Service>getOwnerByType(operation, Service.class);
+      String _jaxWsServicePackageName = this.toJaxWsServicePackageName(service);
+      String _plus = (_jaxWsServicePackageName + ".");
+      String _name = operation.getName();
+      String _firstUpper = StringExtensions.toFirstUpper(_name);
+      String _plus_1 = (_plus + _firstUpper);
+      String _plus_2 = (_plus_1 + "Response");
+      _xblockexpression = (_plus_2);
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * Get the Java package name of a Service
+   */
+  public String toJaxWsServicePackageName(final Service service) {
     EObject _eContainer = service.eContainer();
     QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(_eContainer);
     String _string = _fullyQualifiedName.toString();
@@ -43,116 +154,40 @@ public class JaxWsTypeExtensions {
     Version _version = service.getVersion();
     String _versionPostfix = this._schemaNamespaceExtensions.toVersionPostfix(_version);
     String _plus_3 = (_plus_2 + _versionPostfix);
-    String _plus_4 = (_plus_3 + ".");
-    String _name_1 = service.getName();
-    String _plus_5 = (_plus_4 + _name_1);
-    return _plus_5;
+    return _plus_3;
   }
   
-  public String toQualifiedJaxWsTypeName(final org.fornax.soa.serviceDsl.Exception exception, final Operation throwingOperation, final boolean optionalField) {
-    String _xblockexpression = null;
-    {
-      EObject _eContainer = throwingOperation.eContainer();
-      final Service service = ((Service) _eContainer);
-      EObject _eContainer_1 = exception.eContainer();
-      QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(_eContainer_1);
-      String _string = _fullyQualifiedName.toString();
-      String _plus = (_string + ".");
-      String _name = service.getName();
-      String _lowerCase = _name.toLowerCase();
-      String _plus_1 = (_plus + _lowerCase);
-      String _plus_2 = (_plus_1 + ".");
-      Version _version = exception.getVersion();
-      String _versionPostfix = this._schemaNamespaceExtensions.toVersionPostfix(_version);
-      String _plus_3 = (_plus_2 + _versionPostfix);
-      String _plus_4 = (_plus_3 + ".");
-      String _name_1 = exception.getName();
-      String _plus_5 = (_plus_4 + _name_1);
-      _xblockexpression = (_plus_5);
-    }
-    return _xblockexpression;
+  public String toJaxWsRequestJavaFileName(final Operation operation) {
+    String _jaxWsQualifiedRequestTypeName = this.toJaxWsQualifiedRequestTypeName(operation);
+    String _javaFileName = this._javaTypeExtensions.toJavaFileName(_jaxWsQualifiedRequestTypeName);
+    return _javaFileName;
   }
   
-  public String toJaxWsTypeName(final Service service, final boolean optionalField) {
-    String _name = service.getName();
-    return _name;
+  public String toJaxWsResponseJavaFileName(final Operation operation) {
+    String _jaxWsQualifiedResponseTypeName = this.toJaxWsQualifiedResponseTypeName(operation);
+    String _javaFileName = this._javaTypeExtensions.toJavaFileName(_jaxWsQualifiedResponseTypeName);
+    return _javaFileName;
   }
   
-  public String toJaxWsTypeName(final org.fornax.soa.serviceDsl.Exception exception, final boolean optionalField) {
-    String _name = exception.getName();
-    return _name;
+  public String toJaxWsJavaFileName(final org.fornax.soa.serviceDsl.Exception exception, final Operation throwingOperation) {
+    String _jaxWsQualifiedTypeName = this.toJaxWsQualifiedTypeName(exception, throwingOperation);
+    String _javaFileName = this._javaTypeExtensions.toJavaFileName(_jaxWsQualifiedTypeName);
+    return _javaFileName;
   }
   
-  public String toJaxWsTypeName(final ExceptionRef exRef, final boolean optionalField) {
-    org.fornax.soa.serviceDsl.Exception _exception = exRef.getException();
-    String _jaxWsTypeName = this.toJaxWsTypeName(_exception, optionalField);
-    return _jaxWsTypeName;
+  public String toJaxWsJavaFileName(final Service service) {
+    String _jaxWsQualifiedTypeName = this.toJaxWsQualifiedTypeName(service);
+    String _javaFileName = this._javaTypeExtensions.toJavaFileName(_jaxWsQualifiedTypeName);
+    return _javaFileName;
   }
   
-  /**
-   * Get the qualified class name
-   */
-  public String toJaxWsRequestTypeName(final Operation operation, final boolean optionalField) {
-    String _name = operation.getName();
-    String _firstUpper = StringExtensions.toFirstUpper(_name);
-    return _firstUpper;
+  public String toJaxWsJavaFileName(final Type type) {
+    return null;
   }
   
-  public String toJaxWsResponseTypeName(final Operation operation, final boolean optionalField) {
-    String _name = operation.getName();
-    String _firstUpper = StringExtensions.toFirstUpper(_name);
-    String _plus = (_firstUpper + "Response");
-    return _plus;
-  }
-  
-  /**
-   * Get the qualified class name
-   */
-  public String toQualifiedJaxWsRequestTypeName(final Operation operation, final boolean optionalField) {
-    String _xblockexpression = null;
-    {
-      final Service service = this.objLookup.<Service>getOwnerByType(operation, Service.class);
-      QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(service);
-      String _string = _fullyQualifiedName.toString();
-      String _plus = (_string + ".");
-      String _name = service.getName();
-      String _lowerCase = _name.toLowerCase();
-      String _plus_1 = (_plus + _lowerCase);
-      String _plus_2 = (_plus_1 + ".");
-      Version _version = service.getVersion();
-      String _versionPostfix = this._schemaNamespaceExtensions.toVersionPostfix(_version);
-      String _plus_3 = (_plus_2 + _versionPostfix);
-      String _plus_4 = (_plus_3 + ".");
-      String _name_1 = operation.getName();
-      String _firstUpper = StringExtensions.toFirstUpper(_name_1);
-      String _plus_5 = (_plus_4 + _firstUpper);
-      _xblockexpression = (_plus_5);
-    }
-    return _xblockexpression;
-  }
-  
-  public String toQualifiedJaxWsResponseTypeName(final Operation operation, final boolean optionalField) {
-    String _xblockexpression = null;
-    {
-      final Service service = this.objLookup.<Service>getOwnerByType(operation, Service.class);
-      final SubNamespace namespace = this.objLookup.<SubNamespace>getOwnerByType(operation, SubNamespace.class);
-      QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(namespace);
-      String _string = _fullyQualifiedName.toString();
-      String _plus = (_string + ".");
-      String _name = service.getName();
-      String _lowerCase = _name.toLowerCase();
-      String _plus_1 = (_plus + _lowerCase);
-      String _plus_2 = (_plus_1 + ".");
-      Version _version = service.getVersion();
-      String _versionPostfix = this._schemaNamespaceExtensions.toVersionPostfix(_version);
-      String _plus_3 = (_plus_2 + _versionPostfix);
-      String _plus_4 = (_plus_3 + ".");
-      String _name_1 = operation.getName();
-      String _firstUpper = StringExtensions.toFirstUpper(_name_1);
-      String _plus_5 = (_plus_4 + _firstUpper);
-      String _plus_6 = (_plus_5 + "Response");
-      _xblockexpression = (_plus_6);
-    }
-    return _xblockexpression;
+  public String toJaxWsJavaFileName(final VersionedType type) {
+    String _qualifiedJavaTypeName = this._javaTypeExtensions.toQualifiedJavaTypeName(type);
+    String _javaFileName = this._javaTypeExtensions.toJavaFileName(_qualifiedJavaTypeName);
+    return _javaFileName;
   }
 }
