@@ -8,6 +8,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.eclipse.xtext.ui.wizard.AbstractPluginProjectCreator;
+import org.fornax.soa.servicerepo.ui.internal.ServiceRepositoryActivator;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -89,7 +90,7 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 
 	protected void enhanceProject(final IProject project, final IProgressMonitor monitor) throws CoreException {
 		ServiceRepositoryNewProjectGenerator gen = new ServiceRepositoryNewProjectGenerator();
-		JavaIoFileSystemAccess fsa = new JavaIoFileSystemAccess();
+		JavaIoFileSystemAccess fsa = ServiceRepositoryActivator.getInstance().getInjector().getInstance(JavaIoFileSystemAccess.class);
 		fsa.setOutputPath(project.getLocation().makeAbsolute().toOSString());
 		gen.generateProject(fsa);
 		

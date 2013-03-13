@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package org.fornax.soa.sladsl.sLADsl.impl;
 
@@ -25,7 +26,6 @@ import org.fornax.soa.sladsl.sLADsl.SLADslPackage;
  * The following features are implemented:
  * <ul>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.AvailabilityImpl#getAvailability <em>Availability</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.AvailabilityImpl#getPercentile <em>Percentile</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.AvailabilityImpl#getMtbf <em>Mtbf</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.AvailabilityImpl#getMttr <em>Mttr</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.AvailabilityImpl#getMttrPercentile <em>Mttr Percentile</em>}</li>
@@ -56,16 +56,6 @@ public class AvailabilityImpl extends ServiceQualityPropertyImpl implements Avai
    * @ordered
    */
   protected String availability = AVAILABILITY_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getPercentile() <em>Percentile</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPercentile()
-   * @generated
-   * @ordered
-   */
-  protected Percentile percentile;
 
   /**
    * The default value of the '{@link #getMtbf() <em>Mtbf</em>}' attribute.
@@ -179,54 +169,6 @@ public class AvailabilityImpl extends ServiceQualityPropertyImpl implements Avai
     availability = newAvailability;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.AVAILABILITY__AVAILABILITY, oldAvailability, availability));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Percentile getPercentile()
-  {
-    return percentile;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetPercentile(Percentile newPercentile, NotificationChain msgs)
-  {
-    Percentile oldPercentile = percentile;
-    percentile = newPercentile;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SLADslPackage.AVAILABILITY__PERCENTILE, oldPercentile, newPercentile);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setPercentile(Percentile newPercentile)
-  {
-    if (newPercentile != percentile)
-    {
-      NotificationChain msgs = null;
-      if (percentile != null)
-        msgs = ((InternalEObject)percentile).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SLADslPackage.AVAILABILITY__PERCENTILE, null, msgs);
-      if (newPercentile != null)
-        msgs = ((InternalEObject)newPercentile).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SLADslPackage.AVAILABILITY__PERCENTILE, null, msgs);
-      msgs = basicSetPercentile(newPercentile, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.AVAILABILITY__PERCENTILE, newPercentile, newPercentile));
   }
 
   /**
@@ -356,8 +298,6 @@ public class AvailabilityImpl extends ServiceQualityPropertyImpl implements Avai
   {
     switch (featureID)
     {
-      case SLADslPackage.AVAILABILITY__PERCENTILE:
-        return basicSetPercentile(null, msgs);
       case SLADslPackage.AVAILABILITY__MTTR_PERCENTILE:
         return basicSetMttrPercentile(null, msgs);
     }
@@ -376,8 +316,6 @@ public class AvailabilityImpl extends ServiceQualityPropertyImpl implements Avai
     {
       case SLADslPackage.AVAILABILITY__AVAILABILITY:
         return getAvailability();
-      case SLADslPackage.AVAILABILITY__PERCENTILE:
-        return getPercentile();
       case SLADslPackage.AVAILABILITY__MTBF:
         return getMtbf();
       case SLADslPackage.AVAILABILITY__MTTR:
@@ -402,9 +340,6 @@ public class AvailabilityImpl extends ServiceQualityPropertyImpl implements Avai
     {
       case SLADslPackage.AVAILABILITY__AVAILABILITY:
         setAvailability((String)newValue);
-        return;
-      case SLADslPackage.AVAILABILITY__PERCENTILE:
-        setPercentile((Percentile)newValue);
         return;
       case SLADslPackage.AVAILABILITY__MTBF:
         setMtbf((String)newValue);
@@ -435,9 +370,6 @@ public class AvailabilityImpl extends ServiceQualityPropertyImpl implements Avai
       case SLADslPackage.AVAILABILITY__AVAILABILITY:
         setAvailability(AVAILABILITY_EDEFAULT);
         return;
-      case SLADslPackage.AVAILABILITY__PERCENTILE:
-        setPercentile((Percentile)null);
-        return;
       case SLADslPackage.AVAILABILITY__MTBF:
         setMtbf(MTBF_EDEFAULT);
         return;
@@ -466,8 +398,6 @@ public class AvailabilityImpl extends ServiceQualityPropertyImpl implements Avai
     {
       case SLADslPackage.AVAILABILITY__AVAILABILITY:
         return AVAILABILITY_EDEFAULT == null ? availability != null : !AVAILABILITY_EDEFAULT.equals(availability);
-      case SLADslPackage.AVAILABILITY__PERCENTILE:
-        return percentile != null;
       case SLADslPackage.AVAILABILITY__MTBF:
         return MTBF_EDEFAULT == null ? mtbf != null : !MTBF_EDEFAULT.equals(mtbf);
       case SLADslPackage.AVAILABILITY__MTTR:

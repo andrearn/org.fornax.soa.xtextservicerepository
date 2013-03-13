@@ -28,6 +28,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSolutionSolutionParserRuleCall_1_0 = (RuleCall)cSolutionAssignment_1.eContents().get(0);
 		
 		//Model:
+		//
 		//	imports+=Import* solution+=Solution*;
 		public ParserRule getRule() { return rule; }
 
@@ -83,7 +84,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cModulesAssignment_12 = (Assignment)cGroup.eContents().get(12);
 		private final RuleCall cModulesModuleParserRuleCall_12_0 = (RuleCall)cModulesAssignment_12.eContents().get(0);
 		private final Group cGroup_13 = (Group)cGroup.eContents().get(13);
-		private final Keyword cContactsKeyword_13_0 = (Keyword)cGroup_13.eContents().get(0);
+		private final Keyword cContactInfoKeyword_13_0 = (Keyword)cGroup_13.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_13_1 = (Keyword)cGroup_13.eContents().get(1);
 		private final Group cGroup_13_2 = (Group)cGroup_13.eContents().get(2);
 		private final Keyword cOwnerKeyword_13_2_0 = (Keyword)cGroup_13_2.eContents().get(0);
@@ -115,22 +116,35 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_15 = (Keyword)cGroup.eContents().get(15);
 		
 		//Solution:
+		//
 		//	"solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
+		//
 		//	"lifecycle-state" state=[profileDsl::LifecycleState|QualifiedName] productVersion=ProductVersion?
+		//
 		//	additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* ("requires-channel"
-		//	requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature* modules+=Module* ("contacts" "{" ("owner"
-		//	owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])* ("budgeting"
-		//	budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
-		//	("tags" tags+=[semanticsDsl::Tag]+)? "}";
+		//
+		//	requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature* modules+=Module* ("contact-info" "{"
+		//
+		//	("owner" owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])*
+		//
+		//	("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{"
+		//
+		//	subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
+		//
 		//"lifecycle-state" state=[profileDsl::LifecycleState|QualifiedName] productVersion=ProductVersion?
+		//
 		//additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* ("requires-channel"
-		//requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature* modules+=Module* ("contacts" "{" ("owner"
-		//owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])* ("budgeting"
-		//budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
-		//("tags" tags+=[semanticsDsl::Tag]+)? "}"
+		//
+		//requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature* modules+=Module* ("contact-info" "{"
+		//
+		//("owner" owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])*
+		//
+		//("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{"
+		//
+		//subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}"
 		public Group getGroup() { return cGroup; }
 
 		//"solution"
@@ -229,13 +243,15 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		//Module
 		public RuleCall getModulesModuleParserRuleCall_12_0() { return cModulesModuleParserRuleCall_12_0; }
 
-		//("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
 		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//
 		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
 		public Group getGroup_13() { return cGroup_13; }
 
-		//"contacts"
-		public Keyword getContactsKeyword_13_0() { return cContactsKeyword_13_0; }
+		//"contact-info"
+		public Keyword getContactInfoKeyword_13_0() { return cContactInfoKeyword_13_0; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_13_1() { return cLeftCurlyBracketKeyword_13_1; }
@@ -353,7 +369,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cModulesAssignment_10 = (Assignment)cGroup.eContents().get(10);
 		private final RuleCall cModulesModuleParserRuleCall_10_0 = (RuleCall)cModulesAssignment_10.eContents().get(0);
 		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
-		private final Keyword cContactsKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
+		private final Keyword cContactInfoKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_11_1 = (Keyword)cGroup_11.eContents().get(1);
 		private final Group cGroup_11_2 = (Group)cGroup_11.eContents().get(2);
 		private final Keyword cOwnerKeyword_11_2_0 = (Keyword)cGroup_11_2.eContents().get(0);
@@ -385,17 +401,26 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_13 = (Keyword)cGroup.eContents().get(13);
 		
 		//Module:
+		//
 		//	"module" name=ID "{" "kind" kind=ModuleKind version=Version? additionalInfo=AdditionalInformation? ("requires"
+		//
 		//	requires+=ServiceRef)* ("requires-channel" requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature*
-		//	modules+=Module* ("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
+		//	modules+=Module* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
 		//	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//
 		//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"module" name=ID "{" "kind" kind=ModuleKind version=Version? additionalInfo=AdditionalInformation? ("requires"
+		//
 		//requires+=ServiceRef)* ("requires-channel" requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature*
-		//modules+=Module* ("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
+		//modules+=Module* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
 		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//
 		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -471,13 +496,15 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		//Module
 		public RuleCall getModulesModuleParserRuleCall_10_0() { return cModulesModuleParserRuleCall_10_0; }
 
-		//("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
 		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//
 		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
 		public Group getGroup_11() { return cGroup_11; }
 
-		//"contacts"
-		public Keyword getContactsKeyword_11_0() { return cContactsKeyword_11_0; }
+		//"contact-info"
+		public Keyword getContactInfoKeyword_11_0() { return cContactInfoKeyword_11_0; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_11_1() { return cLeftCurlyBracketKeyword_11_1; }
@@ -602,7 +629,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final CrossReference cRequiresChannelChannelCrossReference_9_1_0 = (CrossReference)cRequiresChannelAssignment_9_1.eContents().get(0);
 		private final RuleCall cRequiresChannelChannelQualifiedNameParserRuleCall_9_1_0_1 = (RuleCall)cRequiresChannelChannelCrossReference_9_1_0.eContents().get(1);
 		private final Group cGroup_10 = (Group)cGroup.eContents().get(10);
-		private final Keyword cContactsKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
+		private final Keyword cContactInfoKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_10_1 = (Keyword)cGroup_10.eContents().get(1);
 		private final Group cGroup_10_2 = (Group)cGroup_10.eContents().get(2);
 		private final Keyword cOwnerKeyword_10_2_0 = (Keyword)cGroup_10_2.eContents().get(0);
@@ -636,19 +663,32 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_13 = (Keyword)cGroup.eContents().get(13);
 		
 		//Feature:
+		//
 		//	nonFunctional?="non-functional"? "feature" name=ID "{" ("use-cases" useCase+=STRING+)? ("description"
+		//
 		//	description=STRING)? additionalInfo=AdditionalInformation? ("uses-capabilities" "{" usesCapabilities+=CapabilityRef+
+		//
 		//	"}")? ("requires" requires+=ServiceRef)* ("requires-channel" requiresChannel+=[serviceDsl::Channel|QualifiedName])*
-		//	("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
+		//	("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
 		//	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-		//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? features+=Feature* "}";
+		//
+		//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? features+=Feature*
+		//
+		//	"}";
 		public ParserRule getRule() { return rule; }
 
 		//nonFunctional?="non-functional"? "feature" name=ID "{" ("use-cases" useCase+=STRING+)? ("description"
+		//
 		//description=STRING)? additionalInfo=AdditionalInformation? ("uses-capabilities" "{" usesCapabilities+=CapabilityRef+
+		//
 		//"}")? ("requires" requires+=ServiceRef)* ("requires-channel" requiresChannel+=[serviceDsl::Channel|QualifiedName])*
-		//("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
+		//("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
 		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//
 		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? features+=Feature* "}"
 		public Group getGroup() { return cGroup; }
 
@@ -745,13 +785,15 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedName
 		public RuleCall getRequiresChannelChannelQualifiedNameParserRuleCall_9_1_0_1() { return cRequiresChannelChannelQualifiedNameParserRuleCall_9_1_0_1; }
 
-		//("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
 		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//
 		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
 		public Group getGroup_10() { return cGroup_10; }
 
-		//"contacts"
-		public Keyword getContactsKeyword_10_0() { return cContactsKeyword_10_0; }
+		//"contact-info"
+		public Keyword getContactInfoKeyword_10_0() { return cContactInfoKeyword_10_0; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_10_1() { return cLeftCurlyBracketKeyword_10_1; }
@@ -867,11 +909,14 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCalledOperationsSimpleOperationRefParserRuleCall_3_2_1_0 = (RuleCall)cCalledOperationsAssignment_3_2_1.eContents().get(0);
 		
 		//ServiceRef:
+		//
 		//	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"? ("calling"
+		//
 		//	calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?;
 		public ParserRule getRule() { return rule; }
 
 		//service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"? ("calling"
+		//
 		//calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?
 		public Group getGroup() { return cGroup; }
 
@@ -928,6 +973,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOperationOperationQualifiedNameParserRuleCall_0_1 = (RuleCall)cOperationOperationCrossReference_0.eContents().get(1);
 		
 		//SimpleOperationRef:
+		//
 		//	operation=[serviceDsl::Operation|QualifiedName];
 		public ParserRule getRule() { return rule; }
 
@@ -951,6 +997,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVersionRefVersionRefParserRuleCall_1_0 = (RuleCall)cVersionRefAssignment_1.eContents().get(0);
 		
 		//CapabilityRef:
+		//
 		//	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
 		public ParserRule getRule() { return rule; }
 
@@ -981,6 +1028,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVersionVersionIdParserRuleCall_1_0 = (RuleCall)cVersionAssignment_1.eContents().get(0);
 		
 		//Version:
+		//
 		//	"version" version=VersionId;
 		public ParserRule getRule() { return rule; }
 
@@ -1005,6 +1053,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVersionVersionIdParserRuleCall_1_0 = (RuleCall)cVersionAssignment_1.eContents().get(0);
 		
 		//ProductVersion returns Version:
+		//
 		//	"product-version" version=VersionId;
 		public ParserRule getRule() { return rule; }
 
@@ -1031,6 +1080,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVersionRefVersionRefParserRuleCall_1_0 = (RuleCall)cVersionRefAssignment_1.eContents().get(0);
 		
 		//EventRef:
+		//
 		//	event=[serviceDsl::Event|QualifiedName] versionRef=VersionRef;
 		public ParserRule getRule() { return rule; }
 
@@ -1071,6 +1121,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOTHEROTHERKeyword_5_0 = (Keyword)cOTHEREnumLiteralDeclaration_5.eContents().get(0);
 		
 		//enum ModuleKind:
+		//
 		//	UI | BusinessLogic | Persistence | Security | Batch | OTHER;
 		public EnumRule getRule() { return rule; }
 
@@ -1165,6 +1216,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Model:
+	//
 	//	imports+=Import* solution+=Solution*;
 	public ModelElements getModelAccess() {
 		return (pModel != null) ? pModel : (pModel = new ModelElements());
@@ -1175,13 +1227,20 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Solution:
+	//
 	//	"solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
+	//
 	//	"lifecycle-state" state=[profileDsl::LifecycleState|QualifiedName] productVersion=ProductVersion?
+	//
 	//	additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* ("requires-channel"
-	//	requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature* modules+=Module* ("contacts" "{" ("owner"
-	//	owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])* ("budgeting"
-	//	budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
-	//	("tags" tags+=[semanticsDsl::Tag]+)? "}";
+	//
+	//	requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature* modules+=Module* ("contact-info" "{"
+	//
+	//	("owner" owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])*
+	//
+	//	("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{"
+	//
+	//	subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}";
 	public SolutionElements getSolutionAccess() {
 		return (pSolution != null) ? pSolution : (pSolution = new SolutionElements());
 	}
@@ -1191,10 +1250,15 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Module:
+	//
 	//	"module" name=ID "{" "kind" kind=ModuleKind version=Version? additionalInfo=AdditionalInformation? ("requires"
+	//
 	//	requires+=ServiceRef)* ("requires-channel" requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature*
-	//	modules+=Module* ("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+	//
+	//	modules+=Module* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+	//
 	//	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+	//
 	//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}";
 	public ModuleElements getModuleAccess() {
 		return (pModule != null) ? pModule : (pModule = new ModuleElements());
@@ -1205,6 +1269,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum ModuleKind:
+	//
 	//	UI | BusinessLogic | Persistence | Security | Batch | OTHER;
 	public ModuleKindElements getModuleKindAccess() {
 		return (unknownRuleModuleKind != null) ? unknownRuleModuleKind : (unknownRuleModuleKind = new ModuleKindElements());
@@ -1215,12 +1280,20 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Feature:
+	//
 	//	nonFunctional?="non-functional"? "feature" name=ID "{" ("use-cases" useCase+=STRING+)? ("description"
+	//
 	//	description=STRING)? additionalInfo=AdditionalInformation? ("uses-capabilities" "{" usesCapabilities+=CapabilityRef+
+	//
 	//	"}")? ("requires" requires+=ServiceRef)* ("requires-channel" requiresChannel+=[serviceDsl::Channel|QualifiedName])*
-	//	("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+	//
+	//	("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+	//
 	//	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-	//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? features+=Feature* "}";
+	//
+	//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? features+=Feature*
+	//
+	//	"}";
 	public FeatureElements getFeatureAccess() {
 		return (pFeature != null) ? pFeature : (pFeature = new FeatureElements());
 	}
@@ -1230,7 +1303,9 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ServiceRef:
+	//
 	//	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"? ("calling"
+	//
 	//	calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?;
 	public ServiceRefElements getServiceRefAccess() {
 		return (pServiceRef != null) ? pServiceRef : (pServiceRef = new ServiceRefElements());
@@ -1241,6 +1316,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SimpleOperationRef:
+	//
 	//	operation=[serviceDsl::Operation|QualifiedName];
 	public SimpleOperationRefElements getSimpleOperationRefAccess() {
 		return (pSimpleOperationRef != null) ? pSimpleOperationRef : (pSimpleOperationRef = new SimpleOperationRefElements());
@@ -1251,6 +1327,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CapabilityRef:
+	//
 	//	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
 	public CapabilityRefElements getCapabilityRefAccess() {
 		return (pCapabilityRef != null) ? pCapabilityRef : (pCapabilityRef = new CapabilityRefElements());
@@ -1261,6 +1338,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Version:
+	//
 	//	"version" version=VersionId;
 	public VersionElements getVersionAccess() {
 		return (pVersion != null) ? pVersion : (pVersion = new VersionElements());
@@ -1271,6 +1349,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ProductVersion returns Version:
+	//
 	//	"product-version" version=VersionId;
 	public ProductVersionElements getProductVersionAccess() {
 		return (pProductVersion != null) ? pProductVersion : (pProductVersion = new ProductVersionElements());
@@ -1281,6 +1360,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//EventRef:
+	//
 	//	event=[serviceDsl::Event|QualifiedName] versionRef=VersionRef;
 	public EventRefElements getEventRefAccess() {
 		return (pEventRef != null) ? pEventRef : (pEventRef = new EventRefElements());
@@ -1291,6 +1371,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * Java like imports * / Import:
+	//
 	//	"import" importedNamespace=QualifiedNameWithWildCard;
 	public SOABaseDslGrammarAccess.ImportElements getImportAccess() {
 		return gaSOABaseDsl.getImportAccess();
@@ -1310,7 +1391,10 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	// * 	<li>Alpha:		alpha, may end with a number</li>
 	// * 	<li>Milestone:	milestone release, may end with a number</li>
 	// * </ul>
-	// * / VersionId:
+	// * /
+	//
+	//VersionId:
+	//
 	//	INT ("." INT)* (("." | "-") ID)*;
 	public SOABaseDslGrammarAccess.VersionIdElements getVersionIdAccess() {
 		return gaSOABaseDsl.getVersionIdAccess();
@@ -1321,6 +1405,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VersionedName:
+	//
 	//	{VersionedName} QualifiedName | ID WS* version=VersionId;
 	public SOABaseDslGrammarAccess.VersionedNameElements getVersionedNameAccess() {
 		return gaSOABaseDsl.getVersionedNameAccess();
@@ -1333,6 +1418,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Version constraints applied to referenced assets
 	// * / VersionRef:
+	//
 	//	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
 	public SOABaseDslGrammarAccess.VersionRefElements getVersionRefAccess() {
 		return gaSOABaseDsl.getVersionRefAccess();
@@ -1345,6 +1431,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Assets, where the version is lesser than maximal version: asset version >= minVersion
 	// * / MinVersionRef:
+	//
 	//	"minVersion" minVersion=VersionId;
 	public SOABaseDslGrammarAccess.MinVersionRefElements getMinVersionRefAccess() {
 		return gaSOABaseDsl.getMinVersionRefAccess();
@@ -1357,6 +1444,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Assets, that match a minimal version: asset version >= minVersion
 	// * / MaxVersionRef:
+	//
 	//	"maxVersion" maxVersion=VersionId;
 	public SOABaseDslGrammarAccess.MaxVersionRefElements getMaxVersionRefAccess() {
 		return gaSOABaseDsl.getMaxVersionRefAccess();
@@ -1369,6 +1457,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Matches version in the half open range [minVersion, maxVersion)
 	// * / LowerBoundRangeVersionRef:
+	//
 	//	("minVersion" ">=") minVersion=VersionId "," ("maxVersion" "<") maxVersion=VersionId;
 	public SOABaseDslGrammarAccess.LowerBoundRangeVersionRefElements getLowerBoundRangeVersionRefAccess() {
 		return gaSOABaseDsl.getLowerBoundRangeVersionRefAccess();
@@ -1380,7 +1469,10 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// *
 	// * Constraint matches assets with any version with the same major version, i.e. the first INT until the first '.' is equal
-	// * / MajorVersionRef:
+	// * /
+	//
+	//MajorVersionRef:
+	//
 	//	"majorVersion" majorVersion=INT;
 	public SOABaseDslGrammarAccess.MajorVersionRefElements getMajorVersionRefAccess() {
 		return gaSOABaseDsl.getMajorVersionRefAccess();
@@ -1393,6 +1485,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Constraint that matches an asset version  explicitely
 	// * / FixedVersionRef:
+	//
 	//	"fixedVersion" fixedVersion=VersionId;
 	public SOABaseDslGrammarAccess.FixedVersionRefElements getFixedVersionRefAccess() {
 		return gaSOABaseDsl.getFixedVersionRefAccess();
@@ -1403,6 +1496,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QualifiedNameWithWildCard:
+	//
 	//	QualifiedName ".*"?;
 	public SOABaseDslGrammarAccess.QualifiedNameWithWildCardElements getQualifiedNameWithWildCardAccess() {
 		return gaSOABaseDsl.getQualifiedNameWithWildCardAccess();
@@ -1413,6 +1507,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QualifiedName:
+	//
 	//	ID ("." ID)*;
 	public SOABaseDslGrammarAccess.QualifiedNameElements getQualifiedNameAccess() {
 		return gaSOABaseDsl.getQualifiedNameAccess();
@@ -1425,9 +1520,14 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Expresses SOA governance decisions
 	// * voteing until date will be part of the review ballots captured in the side store
-	// * / GovernanceDecision:
+	// * /
+	//
+	//GovernanceDecision:
+	//
 	//	"governance-decision" "{" ("subject" subject=STRING) ("decision-result" decisionResult=GovernanceDecisionResult)
+	//
 	//	("specific-result" specificResult=STRING)? ("justification-doc" justificationOrDocURL=STRING)? ("decision-date"
+	//
 	//	approvalDate=STRING)? ("decision-by" approvedBy=STRING)? ("effective-date" effectiveDate=STRING)? "}";
 	public SOABaseDslGrammarAccess.GovernanceDecisionElements getGovernanceDecisionAccess() {
 		return gaSOABaseDsl.getGovernanceDecisionAccess();
@@ -1438,6 +1538,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum GovernanceDecisionResult:
+	//
 	//	pending | accepted | denied | specific;
 	public SOABaseDslGrammarAccess.GovernanceDecisionResultElements getGovernanceDecisionResultAccess() {
 		return gaSOABaseDsl.getGovernanceDecisionResultAccess();
@@ -1448,6 +1549,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AbstractType:
+	//
 	//	{AbstractType} name=ID;
 	public SOABaseDslGrammarAccess.AbstractTypeElements getAbstractTypeAccess() {
 		return gaSOABaseDsl.getAbstractTypeAccess();
@@ -1458,6 +1560,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AdditionalInformation:
+	//
 	//	"additional-information" "{" infoItems+=InfoItem+ "}";
 	public SOABaseDslGrammarAccess.AdditionalInformationElements getAdditionalInformationAccess() {
 		return gaSOABaseDsl.getAdditionalInformationAccess();
@@ -1468,6 +1571,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//InfoItem:
+	//
 	//	"location" documentLocation=STRING ("reference" reference=STRING)?;
 	public SOABaseDslGrammarAccess.InfoItemElements getInfoItemAccess() {
 		return gaSOABaseDsl.getInfoItemAccess();
@@ -1478,7 +1582,9 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//User:
+	//
 	//	name=QualifiedName firstname=STRING? lastname=STRING? org=STRING? orgUnit=STRING? email=STRING? phone=STRING?
+	//
 	//	roles+=RoleRef*;
 	public SOABaseDslGrammarAccess.UserElements getUserAccess() {
 		return gaSOABaseDsl.getUserAccess();
@@ -1489,6 +1595,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RoleRef:
+	//
 	//	role=[Role|QualifiedName];
 	public SOABaseDslGrammarAccess.RoleRefElements getRoleRefAccess() {
 		return gaSOABaseDsl.getRoleRefAccess();
@@ -1499,6 +1606,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Role:
+	//
 	//	name=STRING grants+=PrivilegeRef*;
 	public SOABaseDslGrammarAccess.RoleElements getRoleAccess() {
 		return gaSOABaseDsl.getRoleAccess();
@@ -1509,6 +1617,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PrivilegeRef:
+	//
 	//	privilege=[Privilege|QualifiedName];
 	public SOABaseDslGrammarAccess.PrivilegeRefElements getPrivilegeRefAccess() {
 		return gaSOABaseDsl.getPrivilegeRefAccess();
@@ -1519,6 +1628,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Privilege:
+	//
 	//	name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName*;
 	public SOABaseDslGrammarAccess.PrivilegeElements getPrivilegeAccess() {
 		return gaSOABaseDsl.getPrivilegeAccess();
@@ -1529,6 +1639,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AssetRef:
+	//
 	//	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
 	public SOABaseDslGrammarAccess.AssetRefElements getAssetRefAccess() {
 		return gaSOABaseDsl.getAssetRefAccess();
@@ -1539,43 +1650,51 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal ID:
+	//
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaSOABaseDsl.getIDRule();
 	} 
 
 	//terminal INT returns ecore::EInt:
+	//
 	//	"0".."9"+;
 	public TerminalRule getINTRule() {
 		return gaSOABaseDsl.getINTRule();
 	} 
 
 	//terminal STRING:
+	//
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" |
+	//
 	//	"n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
 		return gaSOABaseDsl.getSTRINGRule();
 	} 
 
 	//terminal ML_COMMENT:
+	//
 	//	"/ *"->"* /";
 	public TerminalRule getML_COMMENTRule() {
 		return gaSOABaseDsl.getML_COMMENTRule();
 	} 
 
 	//terminal SL_COMMENT:
+	//
 	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaSOABaseDsl.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
+	//
 	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
 		return gaSOABaseDsl.getWSRule();
 	} 
 
 	//terminal ANY_OTHER:
+	//
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return gaSOABaseDsl.getANY_OTHERRule();

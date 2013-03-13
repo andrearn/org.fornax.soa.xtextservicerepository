@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package org.fornax.soa.sladsl.sLADsl;
 
@@ -435,22 +436,13 @@ public interface SLADslPackage extends EPackage
   int AVAILABILITY__AVAILABILITY = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Percentile</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AVAILABILITY__PERCENTILE = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 1;
-
-  /**
    * The feature id for the '<em><b>Mtbf</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AVAILABILITY__MTBF = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 2;
+  int AVAILABILITY__MTBF = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Mttr</b></em>' attribute.
@@ -459,7 +451,7 @@ public interface SLADslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AVAILABILITY__MTTR = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 3;
+  int AVAILABILITY__MTTR = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Mttr Percentile</b></em>' containment reference.
@@ -468,7 +460,7 @@ public interface SLADslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AVAILABILITY__MTTR_PERCENTILE = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 4;
+  int AVAILABILITY__MTTR_PERCENTILE = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Regular Down Times</b></em>' attribute.
@@ -477,7 +469,7 @@ public interface SLADslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AVAILABILITY__REGULAR_DOWN_TIMES = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 5;
+  int AVAILABILITY__REGULAR_DOWN_TIMES = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Availability</em>' class.
@@ -486,7 +478,7 @@ public interface SLADslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AVAILABILITY_FEATURE_COUNT = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 6;
+  int AVAILABILITY_FEATURE_COUNT = SERVICE_QUALITY_PROPERTY_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.impl.ThroughputImpl <em>Throughput</em>}' class.
@@ -2149,17 +2141,6 @@ public interface SLADslPackage extends EPackage
   EAttribute getAvailability_Availability();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.fornax.soa.sladsl.sLADsl.Availability#getPercentile <em>Percentile</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Percentile</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.Availability#getPercentile()
-   * @see #getAvailability()
-   * @generated
-   */
-  EReference getAvailability_Percentile();
-
-  /**
    * Returns the meta object for the attribute '{@link org.fornax.soa.sladsl.sLADsl.Availability#getMtbf <em>Mtbf</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3543,14 +3524,6 @@ public interface SLADslPackage extends EPackage
      * @generated
      */
     EAttribute AVAILABILITY__AVAILABILITY = eINSTANCE.getAvailability_Availability();
-
-    /**
-     * The meta object literal for the '<em><b>Percentile</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference AVAILABILITY__PERCENTILE = eINSTANCE.getAvailability_Percentile();
 
     /**
      * The meta object literal for the '<em><b>Mtbf</b></em>' attribute feature.

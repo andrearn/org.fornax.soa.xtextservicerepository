@@ -18450,7 +18450,8 @@ public class InternalBindingDslParser extends AbstractInternalAntlrParser {
     static final String DFA116_acceptS =
         "\15\uffff\1\1\1\3\1\2\1\4\1\5\1\6";
     static final String DFA116_specialS =
-        "\1\uffff\1\2\1\0\1\4\1\12\1\6\1\3\1\1\1\13\1\10\1\7\1\11\1\5\6\uffff}>";
+        "\1\uffff\1\2\1\0\1\4\1\12\1\6\1\3\1\1\1\13\1\10\1\7\1\11\1\5\6"+
+        "\uffff}>";
     static final String[] DFA116_transitionS = {
             "\1\5\76\uffff\1\1\1\uffff\1\2\1\3\1\4\1\6\1\uffff\1\7\1\uffff"+
             "\1\10\1\11\1\uffff\1\12\1\uffff\1\13",

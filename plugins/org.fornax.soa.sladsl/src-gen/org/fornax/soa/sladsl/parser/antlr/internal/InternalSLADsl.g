@@ -601,9 +601,9 @@ ruleSLA returns [EObject current=null]
 	    }
 
 )
-)*(	otherlv_46='contacts' 
+)*(	otherlv_46='contact-info' 
     {
-    	newLeafNode(otherlv_46, grammarAccess.getSLAAccess().getContactsKeyword_23_0());
+    	newLeafNode(otherlv_46, grammarAccess.getSLAAccess().getContactInfoKeyword_23_0());
     }
 	otherlv_47='{' 
     {
@@ -1021,37 +1021,15 @@ ruleAvailability returns [EObject current=null]
 	    }
 
 )
-)	otherlv_4='percentile' 
+)(	otherlv_4='mean-time-between-failure' 
     {
-    	newLeafNode(otherlv_4, grammarAccess.getAvailabilityAccess().getPercentileKeyword_4());
+    	newLeafNode(otherlv_4, grammarAccess.getAvailabilityAccess().getMeanTimeBetweenFailureKeyword_4_0());
     }
 (
 (
-		{ 
-	        newCompositeNode(grammarAccess.getAvailabilityAccess().getPercentilePercentileParserRuleCall_5_0()); 
-	    }
-		lv_percentile_5_0=rulePercentile		{
-	        if ($current==null) {
-	            $current = createModelElementForParent(grammarAccess.getAvailabilityRule());
-	        }
-       		set(
-       			$current, 
-       			"percentile",
-        		lv_percentile_5_0, 
-        		"Percentile");
-	        afterParserOrEnumRuleCall();
-	    }
-
-)
-)(	otherlv_6='mean-time-between-failure' 
-    {
-    	newLeafNode(otherlv_6, grammarAccess.getAvailabilityAccess().getMeanTimeBetweenFailureKeyword_6_0());
-    }
-(
-(
-		lv_mtbf_7_0=RULE_STRING
+		lv_mtbf_5_0=RULE_STRING
 		{
-			newLeafNode(lv_mtbf_7_0, grammarAccess.getAvailabilityAccess().getMtbfSTRINGTerminalRuleCall_6_1_0()); 
+			newLeafNode(lv_mtbf_5_0, grammarAccess.getAvailabilityAccess().getMtbfSTRINGTerminalRuleCall_4_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1060,20 +1038,20 @@ ruleAvailability returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"mtbf",
-        		lv_mtbf_7_0, 
+        		lv_mtbf_5_0, 
         		"STRING");
 	    }
 
 )
-))?(	otherlv_8='mean-time-to-repair' 
+))?(	otherlv_6='mean-time-to-repair' 
     {
-    	newLeafNode(otherlv_8, grammarAccess.getAvailabilityAccess().getMeanTimeToRepairKeyword_7_0());
+    	newLeafNode(otherlv_6, grammarAccess.getAvailabilityAccess().getMeanTimeToRepairKeyword_5_0());
     }
 (
 (
-		lv_mttr_9_0=RULE_STRING
+		lv_mttr_7_0=RULE_STRING
 		{
-			newLeafNode(lv_mttr_9_0, grammarAccess.getAvailabilityAccess().getMttrSTRINGTerminalRuleCall_7_1_0()); 
+			newLeafNode(lv_mttr_7_0, grammarAccess.getAvailabilityAccess().getMttrSTRINGTerminalRuleCall_5_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1082,7 +1060,7 @@ ruleAvailability returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"mttr",
-        		lv_mttr_9_0, 
+        		lv_mttr_7_0, 
         		"STRING");
 	    }
 
@@ -1090,30 +1068,30 @@ ruleAvailability returns [EObject current=null]
 )(
 (
 		{ 
-	        newCompositeNode(grammarAccess.getAvailabilityAccess().getMttrPercentilePercentileParserRuleCall_7_2_0()); 
+	        newCompositeNode(grammarAccess.getAvailabilityAccess().getMttrPercentilePercentileParserRuleCall_5_2_0()); 
 	    }
-		lv_mttrPercentile_10_0=rulePercentile		{
+		lv_mttrPercentile_8_0=rulePercentile		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getAvailabilityRule());
 	        }
        		set(
        			$current, 
        			"mttrPercentile",
-        		lv_mttrPercentile_10_0, 
+        		lv_mttrPercentile_8_0, 
         		"Percentile");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)?)?(	otherlv_11='regular-down-times' 
+)?)?(	otherlv_9='regular-down-times' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getAvailabilityAccess().getRegularDownTimesKeyword_8_0());
+    	newLeafNode(otherlv_9, grammarAccess.getAvailabilityAccess().getRegularDownTimesKeyword_6_0());
     }
 (
 (
-		lv_regularDownTimes_12_0=RULE_STRING
+		lv_regularDownTimes_10_0=RULE_STRING
 		{
-			newLeafNode(lv_regularDownTimes_12_0, grammarAccess.getAvailabilityAccess().getRegularDownTimesSTRINGTerminalRuleCall_8_1_0()); 
+			newLeafNode(lv_regularDownTimes_10_0, grammarAccess.getAvailabilityAccess().getRegularDownTimesSTRINGTerminalRuleCall_6_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1122,14 +1100,14 @@ ruleAvailability returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"regularDownTimes",
-        		lv_regularDownTimes_12_0, 
+        		lv_regularDownTimes_10_0, 
         		"STRING");
 	    }
 
 )
-))?	otherlv_13='}' 
+))?	otherlv_11='}' 
     {
-    	newLeafNode(otherlv_13, grammarAccess.getAvailabilityAccess().getRightCurlyBracketKeyword_9());
+    	newLeafNode(otherlv_11, grammarAccess.getAvailabilityAccess().getRightCurlyBracketKeyword_7());
     }
 )
 ;

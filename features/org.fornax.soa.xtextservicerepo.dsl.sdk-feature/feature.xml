@@ -19,6 +19,7 @@
 
    <url>
       <update label="%updateSiteName" url="http://download.eclipse.org/modeling/m2t/updates/"/>
+      <discovery label="Xtext Composite Update Site (Releases)" url="http://download.itemis.de/updates/releases"/>
    </url>
 
    <includes

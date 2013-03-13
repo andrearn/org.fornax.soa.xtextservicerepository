@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package org.fornax.soa.sladsl.sLADsl;
 
@@ -15,7 +16,6 @@ package org.fornax.soa.sladsl.sLADsl;
  * The following features are supported:
  * <ul>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.Availability#getAvailability <em>Availability</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.Availability#getPercentile <em>Percentile</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.Availability#getMtbf <em>Mtbf</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.Availability#getMttr <em>Mttr</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.Availability#getMttrPercentile <em>Mttr Percentile</em>}</li>
@@ -54,32 +54,6 @@ public interface Availability extends ServiceQualityProperty
    * @generated
    */
   void setAvailability(String value);
-
-  /**
-   * Returns the value of the '<em><b>Percentile</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Percentile</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Percentile</em>' containment reference.
-   * @see #setPercentile(Percentile)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getAvailability_Percentile()
-   * @model containment="true"
-   * @generated
-   */
-  Percentile getPercentile();
-
-  /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.Availability#getPercentile <em>Percentile</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Percentile</em>' containment reference.
-   * @see #getPercentile()
-   * @generated
-   */
-  void setPercentile(Percentile value);
 
   /**
    * Returns the value of the '<em><b>Mtbf</b></em>' attribute.

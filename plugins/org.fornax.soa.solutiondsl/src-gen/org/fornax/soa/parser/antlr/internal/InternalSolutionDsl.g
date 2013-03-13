@@ -345,9 +345,9 @@ ruleSolution returns [EObject current=null]
 	    }
 
 )
-)*(	otherlv_16='contacts' 
+)*(	otherlv_16='contact-info' 
     {
-    	newLeafNode(otherlv_16, grammarAccess.getSolutionAccess().getContactsKeyword_13_0());
+    	newLeafNode(otherlv_16, grammarAccess.getSolutionAccess().getContactInfoKeyword_13_0());
     }
 	otherlv_17='{' 
     {
@@ -658,9 +658,9 @@ ruleModule returns [EObject current=null]
 	    }
 
 )
-)*(	otherlv_13='contacts' 
+)*(	otherlv_13='contact-info' 
     {
-    	newLeafNode(otherlv_13, grammarAccess.getModuleAccess().getContactsKeyword_11_0());
+    	newLeafNode(otherlv_13, grammarAccess.getModuleAccess().getContactInfoKeyword_11_0());
     }
 	otherlv_14='{' 
     {
@@ -984,9 +984,9 @@ ruleFeature returns [EObject current=null]
 	    }
 
 )
-))*(	otherlv_17='contacts' 
+))*(	otherlv_17='contact-info' 
     {
-    	newLeafNode(otherlv_17, grammarAccess.getFeatureAccess().getContactsKeyword_10_0());
+    	newLeafNode(otherlv_17, grammarAccess.getFeatureAccess().getContactInfoKeyword_10_0());
     }
 	otherlv_18='{' 
     {

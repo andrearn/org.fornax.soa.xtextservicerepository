@@ -25,6 +25,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAgreementsSLAParserRuleCall_0 = (RuleCall)cAgreementsAssignment.eContents().get(0);
 		
 		//SlaModel:
+		//
 		//	agreements+=SLA*;
 		public ParserRule getRule() { return rule; }
 
@@ -120,7 +121,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cReportsAssignment_22 = (Assignment)cGroup.eContents().get(22);
 		private final RuleCall cReportsReportParserRuleCall_22_0 = (RuleCall)cReportsAssignment_22.eContents().get(0);
 		private final Group cGroup_23 = (Group)cGroup.eContents().get(23);
-		private final Keyword cContactsKeyword_23_0 = (Keyword)cGroup_23.eContents().get(0);
+		private final Keyword cContactInfoKeyword_23_0 = (Keyword)cGroup_23.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_23_1 = (Keyword)cGroup_23.eContents().get(1);
 		private final Group cGroup_23_2 = (Group)cGroup_23.eContents().get(2);
 		private final Keyword cOwnerKeyword_23_2_0 = (Keyword)cGroup_23_2.eContents().get(0);
@@ -152,29 +153,50 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_25 = (Keyword)cGroup.eContents().get(25);
 		
 		//SLA:
+		//
 		//	"service-level-agreement" name=QualifiedName version=Version? "{" "effective-date" effectiveDate=STRING
+		//
 		//	("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
+		//
 		//	scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
+		//
 		//	serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
+		//
 		//	dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
+		//
 		//	("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
+		//
 		//	("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
+		//
 		//	("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
-		//	reports+=Report* ("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
+		//	reports+=Report* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
 		//	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//
 		//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)* "}";
 		public ParserRule getRule() { return rule; }
 
 		//"service-level-agreement" name=QualifiedName version=Version? "{" "effective-date" effectiveDate=STRING
+		//
 		//("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
+		//
 		//scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
+		//
 		//serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
+		//
 		//dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
+		//
 		//("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
+		//
 		//("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
+		//
 		//("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
-		//reports+=Report* ("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
+		//reports+=Report* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
 		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//
 		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)* "}"
 		public Group getGroup() { return cGroup; }
 
@@ -296,6 +318,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_12_3() { return cRightCurlyBracketKeyword_12_3; }
 
 		//("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)? ("security-requirements" "{"
+		//
 		//securityRequirements+=SecurityRequirement* "}") "}")?
 		public Group getGroup_13() { return cGroup_13; }
 
@@ -422,13 +445,15 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//Report
 		public RuleCall getReportsReportParserRuleCall_22_0() { return cReportsReportParserRuleCall_22_0; }
 
-		//("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+		//
 		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+		//
 		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
 		public Group getGroup_23() { return cGroup_23; }
 
-		//"contacts"
-		public Keyword getContactsKeyword_23_0() { return cContactsKeyword_23_0; }
+		//"contact-info"
+		public Keyword getContactInfoKeyword_23_0() { return cContactInfoKeyword_23_0; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_23_1() { return cLeftCurlyBracketKeyword_23_1; }
@@ -538,11 +563,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Cost:
+		//
 		//	"costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING escalation=Escalation? ("penalty"
+		//
 		//	penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING escalation=Escalation? ("penalty"
+		//
 		//penalty=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -605,11 +633,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLogRequirementParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		
 		//ServiceQualityProperty:
+		//
 		//	Availability | Throughput | Latency | MaxDownTime | CapacityRequirement | AccuracyRequirement | ReliablityRequirement
+		//
 		//	| LogRequirement;
 		public ParserRule getRule() { return rule; }
 
 		//Availability | Throughput | Latency | MaxDownTime | CapacityRequirement | AccuracyRequirement | ReliablityRequirement |
+		//
 		//LogRequirement
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -646,34 +677,32 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAvailabilityKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cAvailabilityAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cAvailabilitySTRINGTerminalRuleCall_3_0 = (RuleCall)cAvailabilityAssignment_3.eContents().get(0);
-		private final Keyword cPercentileKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cPercentileAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cPercentilePercentileParserRuleCall_5_0 = (RuleCall)cPercentileAssignment_5.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cMeanTimeBetweenFailureKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cMtbfAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cMtbfSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cMtbfAssignment_4_1.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cMeanTimeToRepairKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cMttrAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cMttrSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cMttrAssignment_5_1.eContents().get(0);
+		private final Assignment cMttrPercentileAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
+		private final RuleCall cMttrPercentilePercentileParserRuleCall_5_2_0 = (RuleCall)cMttrPercentileAssignment_5_2.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cMeanTimeBetweenFailureKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cMtbfAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cMtbfSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cMtbfAssignment_6_1.eContents().get(0);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cMeanTimeToRepairKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cMttrAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cMttrSTRINGTerminalRuleCall_7_1_0 = (RuleCall)cMttrAssignment_7_1.eContents().get(0);
-		private final Assignment cMttrPercentileAssignment_7_2 = (Assignment)cGroup_7.eContents().get(2);
-		private final RuleCall cMttrPercentilePercentileParserRuleCall_7_2_0 = (RuleCall)cMttrPercentileAssignment_7_2.eContents().get(0);
-		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cRegularDownTimesKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cRegularDownTimesAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cRegularDownTimesSTRINGTerminalRuleCall_8_1_0 = (RuleCall)cRegularDownTimesAssignment_8_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		private final Keyword cRegularDownTimesKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cRegularDownTimesAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cRegularDownTimesSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cRegularDownTimesAssignment_6_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Availability:
-		//	"availability" "{" "availability" availability=STRING "percentile" percentile=Percentile ("mean-time-between-failure"
-		//	mtbf=STRING)? ("mean-time-to-repair" mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times"
-		//	regularDownTimes=STRING)? "}";
+		//
+		//	"availability" "{" "availability" availability=STRING ("mean-time-between-failure" mtbf=STRING)?
+		//
+		//	("mean-time-to-repair" mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times" regularDownTimes=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
-		//"availability" "{" "availability" availability=STRING "percentile" percentile=Percentile ("mean-time-between-failure"
-		//mtbf=STRING)? ("mean-time-to-repair" mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times"
-		//regularDownTimes=STRING)? "}"
+		//"availability" "{" "availability" availability=STRING ("mean-time-between-failure" mtbf=STRING)? ("mean-time-to-repair"
+		//
+		//mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times" regularDownTimes=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
 		//"availability"
@@ -691,59 +720,50 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getAvailabilitySTRINGTerminalRuleCall_3_0() { return cAvailabilitySTRINGTerminalRuleCall_3_0; }
 
-		//"percentile"
-		public Keyword getPercentileKeyword_4() { return cPercentileKeyword_4; }
-
-		//percentile=Percentile
-		public Assignment getPercentileAssignment_5() { return cPercentileAssignment_5; }
-
-		//Percentile
-		public RuleCall getPercentilePercentileParserRuleCall_5_0() { return cPercentilePercentileParserRuleCall_5_0; }
-
 		//("mean-time-between-failure" mtbf=STRING)?
-		public Group getGroup_6() { return cGroup_6; }
+		public Group getGroup_4() { return cGroup_4; }
 
 		//"mean-time-between-failure"
-		public Keyword getMeanTimeBetweenFailureKeyword_6_0() { return cMeanTimeBetweenFailureKeyword_6_0; }
+		public Keyword getMeanTimeBetweenFailureKeyword_4_0() { return cMeanTimeBetweenFailureKeyword_4_0; }
 
 		//mtbf=STRING
-		public Assignment getMtbfAssignment_6_1() { return cMtbfAssignment_6_1; }
+		public Assignment getMtbfAssignment_4_1() { return cMtbfAssignment_4_1; }
 
 		//STRING
-		public RuleCall getMtbfSTRINGTerminalRuleCall_6_1_0() { return cMtbfSTRINGTerminalRuleCall_6_1_0; }
+		public RuleCall getMtbfSTRINGTerminalRuleCall_4_1_0() { return cMtbfSTRINGTerminalRuleCall_4_1_0; }
 
 		//("mean-time-to-repair" mttr=STRING mttrPercentile=Percentile?)?
-		public Group getGroup_7() { return cGroup_7; }
+		public Group getGroup_5() { return cGroup_5; }
 
 		//"mean-time-to-repair"
-		public Keyword getMeanTimeToRepairKeyword_7_0() { return cMeanTimeToRepairKeyword_7_0; }
+		public Keyword getMeanTimeToRepairKeyword_5_0() { return cMeanTimeToRepairKeyword_5_0; }
 
 		//mttr=STRING
-		public Assignment getMttrAssignment_7_1() { return cMttrAssignment_7_1; }
+		public Assignment getMttrAssignment_5_1() { return cMttrAssignment_5_1; }
 
 		//STRING
-		public RuleCall getMttrSTRINGTerminalRuleCall_7_1_0() { return cMttrSTRINGTerminalRuleCall_7_1_0; }
+		public RuleCall getMttrSTRINGTerminalRuleCall_5_1_0() { return cMttrSTRINGTerminalRuleCall_5_1_0; }
 
 		//mttrPercentile=Percentile?
-		public Assignment getMttrPercentileAssignment_7_2() { return cMttrPercentileAssignment_7_2; }
+		public Assignment getMttrPercentileAssignment_5_2() { return cMttrPercentileAssignment_5_2; }
 
 		//Percentile
-		public RuleCall getMttrPercentilePercentileParserRuleCall_7_2_0() { return cMttrPercentilePercentileParserRuleCall_7_2_0; }
+		public RuleCall getMttrPercentilePercentileParserRuleCall_5_2_0() { return cMttrPercentilePercentileParserRuleCall_5_2_0; }
 
 		//("regular-down-times" regularDownTimes=STRING)?
-		public Group getGroup_8() { return cGroup_8; }
+		public Group getGroup_6() { return cGroup_6; }
 
 		//"regular-down-times"
-		public Keyword getRegularDownTimesKeyword_8_0() { return cRegularDownTimesKeyword_8_0; }
+		public Keyword getRegularDownTimesKeyword_6_0() { return cRegularDownTimesKeyword_6_0; }
 
 		//regularDownTimes=STRING
-		public Assignment getRegularDownTimesAssignment_8_1() { return cRegularDownTimesAssignment_8_1; }
+		public Assignment getRegularDownTimesAssignment_6_1() { return cRegularDownTimesAssignment_6_1; }
 
 		//STRING
-		public RuleCall getRegularDownTimesSTRINGTerminalRuleCall_8_1_0() { return cRegularDownTimesSTRINGTerminalRuleCall_8_1_0; }
+		public RuleCall getRegularDownTimesSTRINGTerminalRuleCall_6_1_0() { return cRegularDownTimesSTRINGTerminalRuleCall_6_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_9() { return cRightCurlyBracketKeyword_9; }
+		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
 	}
 
 	public class ThroughputElements extends AbstractParserRuleElementFinder {
@@ -766,11 +786,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Throughput:
+		//
 		//	"throughput" "{" "throughput" definition=STRING "score-to-be-kept" score=STRING escalation=Escalation? ("penalty"
+		//
 		//	penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"throughput" "{" "throughput" definition=STRING "score-to-be-kept" score=STRING escalation=Escalation? ("penalty"
+		//
 		//penalty=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -840,11 +863,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Latency:
+		//
 		//	"latency" "{" "latency" latency="STRING" "percentile" percentile=Percentile escalation=Escalation? ("penalty"
+		//
 		//	penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"latency" "{" "latency" latency="STRING" "percentile" percentile=Percentile escalation=Escalation? ("penalty"
+		//
 		//penalty=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -911,6 +937,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//MaxDownTime:
+		//
 		//	"max-downtime" "{" "duration" definition=STRING escalation=Escalation? ("penalty" penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
@@ -980,11 +1007,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//CapacityRequirement:
+		//
 		//	"capacity" "{" {CapacityRequirement} ("num-of-requests" requestNum=STRING "per" timeUnit=STRING)? ("message-size"
+		//
 		//	messageSize=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"capacity" "{" {CapacityRequirement} ("num-of-requests" requestNum=STRING "per" timeUnit=STRING)? ("message-size"
+		//
 		//messageSize=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1064,6 +1094,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ReliablityRequirement:
+		//
 		//	"message-exchange-reliability" "{" reliability=ReliablilityKind inOrderDelivery?="in-order-delivery"? "}";
 		public ParserRule getRule() { return rule; }
 
@@ -1109,6 +1140,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//AccuracyRequirement:
+		//
 		//	"accuracy" "{" "max-error-rate" maxErrorRate=STRING escalation=Escalation? ("penalty" penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
@@ -1165,11 +1197,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAdditionalLoggingRequirementSTRINGTerminalRuleCall_5_0 = (RuleCall)cAdditionalLoggingRequirementAssignment_5.eContents().get(0);
 		
 		//LogRequirement:
+		//
 		//	"logging" "{" "message-log-level" logLevel=LogRequirementKind "additional-logging-requirements"
+		//
 		//	additionalLoggingRequirement=STRING;
 		public ParserRule getRule() { return rule; }
 
 		//"logging" "{" "message-log-level" logLevel=LogRequirementKind "additional-logging-requirements"
+		//
 		//additionalLoggingRequirement=STRING
 		public Group getGroup() { return cGroup; }
 
@@ -1209,6 +1244,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPercentSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
 		//Percentile:
+		//
 		//	percentile=INT ("." INT)* "%";
 		public ParserRule getRule() { return rule; }
 
@@ -1242,6 +1278,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEncryptionRequirementParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		/// * Security policy to be applied to the services * / SecurityRequirement:
+		//
 		//	AuthenticationRequirement | SigningRequirement | EncryptionRequirement;
 		public ParserRule getRule() { return rule; }
 
@@ -1285,13 +1322,18 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_14 = (Keyword)cGroup.eContents().get(14);
 		
 		/// * Requirement, that defines how consumer are authenticated * / AuthenticationRequirement:
+		//
 		//	{AuthenticationRequirement} "authentication-procedure" optional?="optional"? "{" "auth-tokens" "{"
+		//
 		//	authTokens+=AuthToken+ "}" "hash-algorithms" "{" hashAlgorithms+=HashAlgorithm* "}" useNonce?="use-nonce"? ("issuer"
+		//
 		//	issuer=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//{AuthenticationRequirement} "authentication-procedure" optional?="optional"? "{" "auth-tokens" "{"
+		//
 		//authTokens+=AuthToken+ "}" "hash-algorithms" "{" hashAlgorithms+=HashAlgorithm* "}" useNonce?="use-nonce"? ("issuer"
+		//
 		//issuer=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1371,6 +1413,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cKindAuthTokenKindEnumRuleCall_1_0 = (RuleCall)cKindAssignment_1.eContents().get(0);
 		
 		//AuthToken:
+		//
 		//	optional?="optional"? kind=AuthTokenKind;
 		public ParserRule getRule() { return rule; }
 
@@ -1401,6 +1444,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cKindHashAlgKindEnumRuleCall_2_0 = (RuleCall)cKindAssignment_2.eContents().get(0);
 		
 		//HashAlgorithm:
+		//
 		//	optional?="optional"? useBase64?="Base64-encoded"? kind=HashAlgKind;
 		public ParserRule getRule() { return rule; }
 
@@ -1451,13 +1495,18 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		/// * How messages are signed, to verify their authenticity * / SigningRequirement:
+		//
 		//	{SigningRequirement} "signing-policy" "{" ("supported-algorithms" supportedSigningAlgorithms+=SigningAlgothm+)?
+		//
 		//	("requires-algorithm" requiredSigningAlgorithm=SigningAlgothm)? ("signed-message-parts" signedParts+=MessagePartRef
+		//
 		//	("," signedParts+=MessagePartRef)*)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//{SigningRequirement} "signing-policy" "{" ("supported-algorithms" supportedSigningAlgorithms+=SigningAlgothm+)?
+		//
 		//("requires-algorithm" requiredSigningAlgorithm=SigningAlgothm)? ("signed-message-parts" signedParts+=MessagePartRef
+		//
 		//("," signedParts+=MessagePartRef)*)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1533,6 +1582,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPartRefExpressionSTRINGTerminalRuleCall_1_1_0 = (RuleCall)cPartRefExpressionAssignment_1_1.eContents().get(0);
 		
 		//MessagePartRef:
+		//
 		//	messagePartRef=MessagePartRefKind ("expression" partRefExpression=STRING)?;
 		public ParserRule getRule() { return rule; }
 
@@ -1583,13 +1633,18 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		/// * How messages are encrypted * / EncryptionRequirement:
+		//
 		//	{EncryptionRequirement} "encryption-policy" "{" ("supported-algorithms"
+		//
 		//	supportedCipherAlgorithms+=CipherAlgorithmKind+)? ("requires-algorithm" requiredCipherAlgorithm=CipherAlgorithmKind)?
+		//
 		//	("encrypted-message-parts" encryptedParts+=MessagePartRef ("," encryptedParts+=MessagePartRef)*)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//{EncryptionRequirement} "encryption-policy" "{" ("supported-algorithms"
+		//
 		//supportedCipherAlgorithms+=CipherAlgorithmKind+)? ("requires-algorithm" requiredCipherAlgorithm=CipherAlgorithmKind)?
+		//
 		//("encrypted-message-parts" encryptedParts+=MessagePartRef ("," encryptedParts+=MessagePartRef)*)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1665,6 +1720,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDescriptionSTRINGTerminalRuleCall_3_0 = (RuleCall)cDescriptionAssignment_3.eContents().get(0);
 		
 		//PriorityDeclaration:
+		//
 		//	"priority" name=ID "description" description=STRING;
 		public ParserRule getRule() { return rule; }
 
@@ -1712,11 +1768,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Escalation:
+		//
 		//	"escalation" "{" ("cause" cause=STRING)? "escalate-to" "{" escalationTargets+=[basedsl::User|QualifiedName]+ "}"
+		//
 		//	("procedure" procedure=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"escalation" "{" ("cause" cause=STRING)? "escalate-to" "{" escalationTargets+=[basedsl::User|QualifiedName]+ "}"
+		//
 		//("procedure" procedure=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1780,6 +1839,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cThirdPartyParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Party:
+		//
 		//	CustomerParty | ProviderParty | ThirdParty;
 		public ParserRule getRule() { return rule; }
 
@@ -1810,6 +1870,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//CustomerParty:
+		//
 		//	"customer-party" name=QualifiedName "{" representatives+=Repesentative+ responsibilities+=Responsibility+ "}";
 		public ParserRule getRule() { return rule; }
 
@@ -1858,6 +1919,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//ProviderParty:
+		//
 		//	"provider-party" name=QualifiedName "{" representatives+=Repesentative+ responsibilities+=Responsibility+ "}";
 		public ParserRule getRule() { return rule; }
 
@@ -1909,11 +1971,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//ThirdParty:
+		//
 		//	"third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Repesentative+
+		//
 		//	responsibilities+=Responsibility+ "}";
 		public ParserRule getRule() { return rule; }
 
 		//"third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Repesentative+
+		//
 		//responsibilities+=Responsibility+ "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1973,6 +2038,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//Repesentative:
+		//
 		//	"representative" "{" "name" fullname=STRING ("phone" phone=STRING)? ("email" email=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
@@ -2029,6 +2095,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cReportingResponsibilityParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//Responsibility:
+		//
 		//	SimpleResponsibility | ReportingResponsibility;
 		public ParserRule getRule() { return rule; }
 
@@ -2058,6 +2125,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//SimpleResponsibility:
+		//
 		//	"responsibility" name=QualifiedName "{" description=STRING escalations+=Escalation+ penalty=STRING "}";
 		public ParserRule getRule() { return rule; }
 
@@ -2114,6 +2182,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Report:
+		//
 		//	"report" name=ID "{" "report-to" reportTo=STRING "contents" content=STRING "}";
 		public ParserRule getRule() { return rule; }
 
@@ -2172,7 +2241,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//ReportingResponsibility:
+		//
 		//	"reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING
+		//
 		//	"}";
 		public ParserRule getRule() { return rule; }
 
@@ -2235,6 +2306,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPlainTextPlainTextKeyword_4_0 = (Keyword)cPlainTextEnumLiteralDeclaration_4.eContents().get(0);
 		
 		//enum HashAlgKind:
+		//
 		//	MD5 | SHA1 | SHA256 | RSA | PlainText;
 		public EnumRule getRule() { return rule; }
 
@@ -2287,6 +2359,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cExpressionExpressionKeyword_4_0 = (Keyword)cExpressionEnumLiteralDeclaration_4.eContents().get(0);
 		
 		//enum MessagePartRefKind:
+		//
 		//	header | body | attachments | all | expression;
 		public EnumRule getRule() { return rule; }
 
@@ -2345,6 +2418,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAES256AES256Keyword_7_0 = (Keyword)cAES256EnumLiteralDeclaration_7.eContents().get(0);
 		
 		//enum SigningAlgothm:
+		//
 		//	NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
 		public EnumRule getRule() { return rule; }
 
@@ -2421,6 +2495,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAES256AES256Keyword_7_0 = (Keyword)cAES256EnumLiteralDeclaration_7.eContents().get(0);
 		
 		//enum CipherAlgorithmKind:
+		//
 		//	NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES="3DES" | AES128 | AES256;
 		public EnumRule getRule() { return rule; }
 
@@ -2499,6 +2574,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOAuth2OAuth2Keyword_8_0 = (Keyword)cOAuth2EnumLiteralDeclaration_8.eContents().get(0);
 		
 		//enum AuthTokenKind:
+		//
 		//	UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
 		public EnumRule getRule() { return rule; }
 
@@ -2571,6 +2647,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAllAllKeyword_2_0 = (Keyword)cAllEnumLiteralDeclaration_2.eContents().get(0);
 		
 		//enum LogRequirementKind:
+		//
 		//	none | header | all;
 		public EnumRule getRule() { return rule; }
 
@@ -2609,7 +2686,10 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cBEST_EFFORTBestEffortKeyword_3_0 = (Keyword)cBEST_EFFORTEnumLiteralDeclaration_3.eContents().get(0);
 		
 		//enum ReliablilityKind:
-		//	EXACTLY_ONCE="exactly-once" | AT_MOST_ONCE="at-most-once" | AT_LEAST_ONCE="at-least-once" | BEST_EFFORT="best-effort";
+		//
+		//	EXACTLY_ONCE="exactly-once" | AT_MOST_ONCE="at-most-once" | AT_LEAST_ONCE="at-least-once" |
+		//
+		//	BEST_EFFORT="best-effort";
 		public EnumRule getRule() { return rule; }
 
 		//EXACTLY_ONCE="exactly-once" | AT_MOST_ONCE="at-most-once" | AT_LEAST_ONCE="at-least-once" | BEST_EFFORT="best-effort"
@@ -2718,6 +2798,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//SlaModel:
+	//
 	//	agreements+=SLA*;
 	public SlaModelElements getSlaModelAccess() {
 		return (pSlaModel != null) ? pSlaModel : (pSlaModel = new SlaModelElements());
@@ -2728,16 +2809,27 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SLA:
+	//
 	//	"service-level-agreement" name=QualifiedName version=Version? "{" "effective-date" effectiveDate=STRING
+	//
 	//	("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
+	//
 	//	scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
+	//
 	//	serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
+	//
 	//	dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
+	//
 	//	("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
+	//
 	//	("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
+	//
 	//	("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
-	//	reports+=Report* ("contacts" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+	//
+	//	reports+=Report* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
+	//
 	//	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
+	//
 	//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)* "}";
 	public SLAElements getSLAAccess() {
 		return (pSLA != null) ? pSLA : (pSLA = new SLAElements());
@@ -2748,7 +2840,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Cost:
+	//
 	//	"costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING escalation=Escalation? ("penalty"
+	//
 	//	penalty=STRING)? "}";
 	public CostElements getCostAccess() {
 		return (pCost != null) ? pCost : (pCost = new CostElements());
@@ -2759,7 +2853,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ServiceQualityProperty:
+	//
 	//	Availability | Throughput | Latency | MaxDownTime | CapacityRequirement | AccuracyRequirement | ReliablityRequirement
+	//
 	//	| LogRequirement;
 	public ServiceQualityPropertyElements getServiceQualityPropertyAccess() {
 		return (pServiceQualityProperty != null) ? pServiceQualityProperty : (pServiceQualityProperty = new ServiceQualityPropertyElements());
@@ -2770,9 +2866,10 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Availability:
-	//	"availability" "{" "availability" availability=STRING "percentile" percentile=Percentile ("mean-time-between-failure"
-	//	mtbf=STRING)? ("mean-time-to-repair" mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times"
-	//	regularDownTimes=STRING)? "}";
+	//
+	//	"availability" "{" "availability" availability=STRING ("mean-time-between-failure" mtbf=STRING)?
+	//
+	//	("mean-time-to-repair" mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times" regularDownTimes=STRING)? "}";
 	public AvailabilityElements getAvailabilityAccess() {
 		return (pAvailability != null) ? pAvailability : (pAvailability = new AvailabilityElements());
 	}
@@ -2782,7 +2879,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Throughput:
+	//
 	//	"throughput" "{" "throughput" definition=STRING "score-to-be-kept" score=STRING escalation=Escalation? ("penalty"
+	//
 	//	penalty=STRING)? "}";
 	public ThroughputElements getThroughputAccess() {
 		return (pThroughput != null) ? pThroughput : (pThroughput = new ThroughputElements());
@@ -2793,7 +2892,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Latency:
+	//
 	//	"latency" "{" "latency" latency="STRING" "percentile" percentile=Percentile escalation=Escalation? ("penalty"
+	//
 	//	penalty=STRING)? "}";
 	public LatencyElements getLatencyAccess() {
 		return (pLatency != null) ? pLatency : (pLatency = new LatencyElements());
@@ -2804,6 +2905,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MaxDownTime:
+	//
 	//	"max-downtime" "{" "duration" definition=STRING escalation=Escalation? ("penalty" penalty=STRING)? "}";
 	public MaxDownTimeElements getMaxDownTimeAccess() {
 		return (pMaxDownTime != null) ? pMaxDownTime : (pMaxDownTime = new MaxDownTimeElements());
@@ -2814,7 +2916,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CapacityRequirement:
+	//
 	//	"capacity" "{" {CapacityRequirement} ("num-of-requests" requestNum=STRING "per" timeUnit=STRING)? ("message-size"
+	//
 	//	messageSize=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}";
 	public CapacityRequirementElements getCapacityRequirementAccess() {
 		return (pCapacityRequirement != null) ? pCapacityRequirement : (pCapacityRequirement = new CapacityRequirementElements());
@@ -2825,6 +2929,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReliablityRequirement:
+	//
 	//	"message-exchange-reliability" "{" reliability=ReliablilityKind inOrderDelivery?="in-order-delivery"? "}";
 	public ReliablityRequirementElements getReliablityRequirementAccess() {
 		return (pReliablityRequirement != null) ? pReliablityRequirement : (pReliablityRequirement = new ReliablityRequirementElements());
@@ -2835,6 +2940,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AccuracyRequirement:
+	//
 	//	"accuracy" "{" "max-error-rate" maxErrorRate=STRING escalation=Escalation? ("penalty" penalty=STRING)? "}";
 	public AccuracyRequirementElements getAccuracyRequirementAccess() {
 		return (pAccuracyRequirement != null) ? pAccuracyRequirement : (pAccuracyRequirement = new AccuracyRequirementElements());
@@ -2845,7 +2951,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//LogRequirement:
+	//
 	//	"logging" "{" "message-log-level" logLevel=LogRequirementKind "additional-logging-requirements"
+	//
 	//	additionalLoggingRequirement=STRING;
 	public LogRequirementElements getLogRequirementAccess() {
 		return (pLogRequirement != null) ? pLogRequirement : (pLogRequirement = new LogRequirementElements());
@@ -2856,6 +2964,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Percentile:
+	//
 	//	percentile=INT ("." INT)* "%";
 	public PercentileElements getPercentileAccess() {
 		return (pPercentile != null) ? pPercentile : (pPercentile = new PercentileElements());
@@ -2866,6 +2975,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * Security policy to be applied to the services * / SecurityRequirement:
+	//
 	//	AuthenticationRequirement | SigningRequirement | EncryptionRequirement;
 	public SecurityRequirementElements getSecurityRequirementAccess() {
 		return (pSecurityRequirement != null) ? pSecurityRequirement : (pSecurityRequirement = new SecurityRequirementElements());
@@ -2876,8 +2986,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * Requirement, that defines how consumer are authenticated * / AuthenticationRequirement:
+	//
 	//	{AuthenticationRequirement} "authentication-procedure" optional?="optional"? "{" "auth-tokens" "{"
+	//
 	//	authTokens+=AuthToken+ "}" "hash-algorithms" "{" hashAlgorithms+=HashAlgorithm* "}" useNonce?="use-nonce"? ("issuer"
+	//
 	//	issuer=STRING)? "}";
 	public AuthenticationRequirementElements getAuthenticationRequirementAccess() {
 		return (pAuthenticationRequirement != null) ? pAuthenticationRequirement : (pAuthenticationRequirement = new AuthenticationRequirementElements());
@@ -2888,6 +3001,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AuthToken:
+	//
 	//	optional?="optional"? kind=AuthTokenKind;
 	public AuthTokenElements getAuthTokenAccess() {
 		return (pAuthToken != null) ? pAuthToken : (pAuthToken = new AuthTokenElements());
@@ -2898,6 +3012,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//HashAlgorithm:
+	//
 	//	optional?="optional"? useBase64?="Base64-encoded"? kind=HashAlgKind;
 	public HashAlgorithmElements getHashAlgorithmAccess() {
 		return (pHashAlgorithm != null) ? pHashAlgorithm : (pHashAlgorithm = new HashAlgorithmElements());
@@ -2908,6 +3023,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum HashAlgKind:
+	//
 	//	MD5 | SHA1 | SHA256 | RSA | PlainText;
 	public HashAlgKindElements getHashAlgKindAccess() {
 		return (unknownRuleHashAlgKind != null) ? unknownRuleHashAlgKind : (unknownRuleHashAlgKind = new HashAlgKindElements());
@@ -2918,8 +3034,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * How messages are signed, to verify their authenticity * / SigningRequirement:
+	//
 	//	{SigningRequirement} "signing-policy" "{" ("supported-algorithms" supportedSigningAlgorithms+=SigningAlgothm+)?
+	//
 	//	("requires-algorithm" requiredSigningAlgorithm=SigningAlgothm)? ("signed-message-parts" signedParts+=MessagePartRef
+	//
 	//	("," signedParts+=MessagePartRef)*)? "}";
 	public SigningRequirementElements getSigningRequirementAccess() {
 		return (pSigningRequirement != null) ? pSigningRequirement : (pSigningRequirement = new SigningRequirementElements());
@@ -2930,6 +3049,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MessagePartRef:
+	//
 	//	messagePartRef=MessagePartRefKind ("expression" partRefExpression=STRING)?;
 	public MessagePartRefElements getMessagePartRefAccess() {
 		return (pMessagePartRef != null) ? pMessagePartRef : (pMessagePartRef = new MessagePartRefElements());
@@ -2940,6 +3060,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum MessagePartRefKind:
+	//
 	//	header | body | attachments | all | expression;
 	public MessagePartRefKindElements getMessagePartRefKindAccess() {
 		return (unknownRuleMessagePartRefKind != null) ? unknownRuleMessagePartRefKind : (unknownRuleMessagePartRefKind = new MessagePartRefKindElements());
@@ -2950,6 +3071,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum SigningAlgothm:
+	//
 	//	NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
 	public SigningAlgothmElements getSigningAlgothmAccess() {
 		return (unknownRuleSigningAlgothm != null) ? unknownRuleSigningAlgothm : (unknownRuleSigningAlgothm = new SigningAlgothmElements());
@@ -2960,8 +3082,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * How messages are encrypted * / EncryptionRequirement:
+	//
 	//	{EncryptionRequirement} "encryption-policy" "{" ("supported-algorithms"
+	//
 	//	supportedCipherAlgorithms+=CipherAlgorithmKind+)? ("requires-algorithm" requiredCipherAlgorithm=CipherAlgorithmKind)?
+	//
 	//	("encrypted-message-parts" encryptedParts+=MessagePartRef ("," encryptedParts+=MessagePartRef)*)? "}";
 	public EncryptionRequirementElements getEncryptionRequirementAccess() {
 		return (pEncryptionRequirement != null) ? pEncryptionRequirement : (pEncryptionRequirement = new EncryptionRequirementElements());
@@ -2972,6 +3097,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum CipherAlgorithmKind:
+	//
 	//	NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES="3DES" | AES128 | AES256;
 	public CipherAlgorithmKindElements getCipherAlgorithmKindAccess() {
 		return (unknownRuleCipherAlgorithmKind != null) ? unknownRuleCipherAlgorithmKind : (unknownRuleCipherAlgorithmKind = new CipherAlgorithmKindElements());
@@ -2982,6 +3108,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum AuthTokenKind:
+	//
 	//	UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
 	public AuthTokenKindElements getAuthTokenKindAccess() {
 		return (unknownRuleAuthTokenKind != null) ? unknownRuleAuthTokenKind : (unknownRuleAuthTokenKind = new AuthTokenKindElements());
@@ -2992,6 +3119,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum LogRequirementKind:
+	//
 	//	none | header | all;
 	public LogRequirementKindElements getLogRequirementKindAccess() {
 		return (unknownRuleLogRequirementKind != null) ? unknownRuleLogRequirementKind : (unknownRuleLogRequirementKind = new LogRequirementKindElements());
@@ -3002,7 +3130,10 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum ReliablilityKind:
-	//	EXACTLY_ONCE="exactly-once" | AT_MOST_ONCE="at-most-once" | AT_LEAST_ONCE="at-least-once" | BEST_EFFORT="best-effort";
+	//
+	//	EXACTLY_ONCE="exactly-once" | AT_MOST_ONCE="at-most-once" | AT_LEAST_ONCE="at-least-once" |
+	//
+	//	BEST_EFFORT="best-effort";
 	public ReliablilityKindElements getReliablilityKindAccess() {
 		return (unknownRuleReliablilityKind != null) ? unknownRuleReliablilityKind : (unknownRuleReliablilityKind = new ReliablilityKindElements());
 	}
@@ -3012,6 +3143,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PriorityDeclaration:
+	//
 	//	"priority" name=ID "description" description=STRING;
 	public PriorityDeclarationElements getPriorityDeclarationAccess() {
 		return (pPriorityDeclaration != null) ? pPriorityDeclaration : (pPriorityDeclaration = new PriorityDeclarationElements());
@@ -3022,7 +3154,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Escalation:
+	//
 	//	"escalation" "{" ("cause" cause=STRING)? "escalate-to" "{" escalationTargets+=[basedsl::User|QualifiedName]+ "}"
+	//
 	//	("procedure" procedure=STRING)? "}";
 	public EscalationElements getEscalationAccess() {
 		return (pEscalation != null) ? pEscalation : (pEscalation = new EscalationElements());
@@ -3033,6 +3167,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Party:
+	//
 	//	CustomerParty | ProviderParty | ThirdParty;
 	public PartyElements getPartyAccess() {
 		return (pParty != null) ? pParty : (pParty = new PartyElements());
@@ -3043,6 +3178,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CustomerParty:
+	//
 	//	"customer-party" name=QualifiedName "{" representatives+=Repesentative+ responsibilities+=Responsibility+ "}";
 	public CustomerPartyElements getCustomerPartyAccess() {
 		return (pCustomerParty != null) ? pCustomerParty : (pCustomerParty = new CustomerPartyElements());
@@ -3053,6 +3189,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ProviderParty:
+	//
 	//	"provider-party" name=QualifiedName "{" representatives+=Repesentative+ responsibilities+=Responsibility+ "}";
 	public ProviderPartyElements getProviderPartyAccess() {
 		return (pProviderParty != null) ? pProviderParty : (pProviderParty = new ProviderPartyElements());
@@ -3063,7 +3200,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ThirdParty:
+	//
 	//	"third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Repesentative+
+	//
 	//	responsibilities+=Responsibility+ "}";
 	public ThirdPartyElements getThirdPartyAccess() {
 		return (pThirdParty != null) ? pThirdParty : (pThirdParty = new ThirdPartyElements());
@@ -3074,6 +3213,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Repesentative:
+	//
 	//	"representative" "{" "name" fullname=STRING ("phone" phone=STRING)? ("email" email=STRING)? "}";
 	public RepesentativeElements getRepesentativeAccess() {
 		return (pRepesentative != null) ? pRepesentative : (pRepesentative = new RepesentativeElements());
@@ -3084,6 +3224,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Responsibility:
+	//
 	//	SimpleResponsibility | ReportingResponsibility;
 	public ResponsibilityElements getResponsibilityAccess() {
 		return (pResponsibility != null) ? pResponsibility : (pResponsibility = new ResponsibilityElements());
@@ -3094,6 +3235,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SimpleResponsibility:
+	//
 	//	"responsibility" name=QualifiedName "{" description=STRING escalations+=Escalation+ penalty=STRING "}";
 	public SimpleResponsibilityElements getSimpleResponsibilityAccess() {
 		return (pSimpleResponsibility != null) ? pSimpleResponsibility : (pSimpleResponsibility = new SimpleResponsibilityElements());
@@ -3104,6 +3246,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Report:
+	//
 	//	"report" name=ID "{" "report-to" reportTo=STRING "contents" content=STRING "}";
 	public ReportElements getReportAccess() {
 		return (pReport != null) ? pReport : (pReport = new ReportElements());
@@ -3114,7 +3257,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReportingResponsibility:
+	//
 	//	"reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING
+	//
 	//	"}";
 	public ReportingResponsibilityElements getReportingResponsibilityAccess() {
 		return (pReportingResponsibility != null) ? pReportingResponsibility : (pReportingResponsibility = new ReportingResponsibilityElements());
@@ -3125,6 +3270,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * Java like imports * / Import:
+	//
 	//	"import" importedNamespace=QualifiedNameWithWildCard;
 	public SOABaseDslGrammarAccess.ImportElements getImportAccess() {
 		return gaSOABaseDsl.getImportAccess();
@@ -3144,7 +3290,10 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	// * 	<li>Alpha:		alpha, may end with a number</li>
 	// * 	<li>Milestone:	milestone release, may end with a number</li>
 	// * </ul>
-	// * / VersionId:
+	// * /
+	//
+	//VersionId:
+	//
 	//	INT ("." INT)* (("." | "-") ID)*;
 	public SOABaseDslGrammarAccess.VersionIdElements getVersionIdAccess() {
 		return gaSOABaseDsl.getVersionIdAccess();
@@ -3155,6 +3304,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VersionedName:
+	//
 	//	{VersionedName} QualifiedName | ID WS* version=VersionId;
 	public SOABaseDslGrammarAccess.VersionedNameElements getVersionedNameAccess() {
 		return gaSOABaseDsl.getVersionedNameAccess();
@@ -3167,6 +3317,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * A version qualifier for versioned assets
 	// * / Version:
+	//
 	//	"version" version=VersionId;
 	public SOABaseDslGrammarAccess.VersionElements getVersionAccess() {
 		return gaSOABaseDsl.getVersionAccess();
@@ -3179,6 +3330,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Version constraints applied to referenced assets
 	// * / VersionRef:
+	//
 	//	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
 	public SOABaseDslGrammarAccess.VersionRefElements getVersionRefAccess() {
 		return gaSOABaseDsl.getVersionRefAccess();
@@ -3191,6 +3343,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Assets, where the version is lesser than maximal version: asset version >= minVersion
 	// * / MinVersionRef:
+	//
 	//	"minVersion" minVersion=VersionId;
 	public SOABaseDslGrammarAccess.MinVersionRefElements getMinVersionRefAccess() {
 		return gaSOABaseDsl.getMinVersionRefAccess();
@@ -3203,6 +3356,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Assets, that match a minimal version: asset version >= minVersion
 	// * / MaxVersionRef:
+	//
 	//	"maxVersion" maxVersion=VersionId;
 	public SOABaseDslGrammarAccess.MaxVersionRefElements getMaxVersionRefAccess() {
 		return gaSOABaseDsl.getMaxVersionRefAccess();
@@ -3215,6 +3369,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Matches version in the half open range [minVersion, maxVersion)
 	// * / LowerBoundRangeVersionRef:
+	//
 	//	("minVersion" ">=") minVersion=VersionId "," ("maxVersion" "<") maxVersion=VersionId;
 	public SOABaseDslGrammarAccess.LowerBoundRangeVersionRefElements getLowerBoundRangeVersionRefAccess() {
 		return gaSOABaseDsl.getLowerBoundRangeVersionRefAccess();
@@ -3226,7 +3381,10 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// *
 	// * Constraint matches assets with any version with the same major version, i.e. the first INT until the first '.' is equal
-	// * / MajorVersionRef:
+	// * /
+	//
+	//MajorVersionRef:
+	//
 	//	"majorVersion" majorVersion=INT;
 	public SOABaseDslGrammarAccess.MajorVersionRefElements getMajorVersionRefAccess() {
 		return gaSOABaseDsl.getMajorVersionRefAccess();
@@ -3239,6 +3397,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Constraint that matches an asset version  explicitely
 	// * / FixedVersionRef:
+	//
 	//	"fixedVersion" fixedVersion=VersionId;
 	public SOABaseDslGrammarAccess.FixedVersionRefElements getFixedVersionRefAccess() {
 		return gaSOABaseDsl.getFixedVersionRefAccess();
@@ -3249,6 +3408,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QualifiedNameWithWildCard:
+	//
 	//	QualifiedName ".*"?;
 	public SOABaseDslGrammarAccess.QualifiedNameWithWildCardElements getQualifiedNameWithWildCardAccess() {
 		return gaSOABaseDsl.getQualifiedNameWithWildCardAccess();
@@ -3259,6 +3419,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QualifiedName:
+	//
 	//	ID ("." ID)*;
 	public SOABaseDslGrammarAccess.QualifiedNameElements getQualifiedNameAccess() {
 		return gaSOABaseDsl.getQualifiedNameAccess();
@@ -3271,9 +3432,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Expresses SOA governance decisions
 	// * voteing until date will be part of the review ballots captured in the side store
-	// * / GovernanceDecision:
+	// * /
+	//
+	//GovernanceDecision:
+	//
 	//	"governance-decision" "{" ("subject" subject=STRING) ("decision-result" decisionResult=GovernanceDecisionResult)
+	//
 	//	("specific-result" specificResult=STRING)? ("justification-doc" justificationOrDocURL=STRING)? ("decision-date"
+	//
 	//	approvalDate=STRING)? ("decision-by" approvedBy=STRING)? ("effective-date" effectiveDate=STRING)? "}";
 	public SOABaseDslGrammarAccess.GovernanceDecisionElements getGovernanceDecisionAccess() {
 		return gaSOABaseDsl.getGovernanceDecisionAccess();
@@ -3284,6 +3450,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum GovernanceDecisionResult:
+	//
 	//	pending | accepted | denied | specific;
 	public SOABaseDslGrammarAccess.GovernanceDecisionResultElements getGovernanceDecisionResultAccess() {
 		return gaSOABaseDsl.getGovernanceDecisionResultAccess();
@@ -3294,6 +3461,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AbstractType:
+	//
 	//	{AbstractType} name=ID;
 	public SOABaseDslGrammarAccess.AbstractTypeElements getAbstractTypeAccess() {
 		return gaSOABaseDsl.getAbstractTypeAccess();
@@ -3304,6 +3472,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AdditionalInformation:
+	//
 	//	"additional-information" "{" infoItems+=InfoItem+ "}";
 	public SOABaseDslGrammarAccess.AdditionalInformationElements getAdditionalInformationAccess() {
 		return gaSOABaseDsl.getAdditionalInformationAccess();
@@ -3314,6 +3483,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//InfoItem:
+	//
 	//	"location" documentLocation=STRING ("reference" reference=STRING)?;
 	public SOABaseDslGrammarAccess.InfoItemElements getInfoItemAccess() {
 		return gaSOABaseDsl.getInfoItemAccess();
@@ -3324,7 +3494,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//User:
+	//
 	//	name=QualifiedName firstname=STRING? lastname=STRING? org=STRING? orgUnit=STRING? email=STRING? phone=STRING?
+	//
 	//	roles+=RoleRef*;
 	public SOABaseDslGrammarAccess.UserElements getUserAccess() {
 		return gaSOABaseDsl.getUserAccess();
@@ -3335,6 +3507,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RoleRef:
+	//
 	//	role=[Role|QualifiedName];
 	public SOABaseDslGrammarAccess.RoleRefElements getRoleRefAccess() {
 		return gaSOABaseDsl.getRoleRefAccess();
@@ -3345,6 +3518,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Role:
+	//
 	//	name=STRING grants+=PrivilegeRef*;
 	public SOABaseDslGrammarAccess.RoleElements getRoleAccess() {
 		return gaSOABaseDsl.getRoleAccess();
@@ -3355,6 +3529,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PrivilegeRef:
+	//
 	//	privilege=[Privilege|QualifiedName];
 	public SOABaseDslGrammarAccess.PrivilegeRefElements getPrivilegeRefAccess() {
 		return gaSOABaseDsl.getPrivilegeRefAccess();
@@ -3365,6 +3540,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Privilege:
+	//
 	//	name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName*;
 	public SOABaseDslGrammarAccess.PrivilegeElements getPrivilegeAccess() {
 		return gaSOABaseDsl.getPrivilegeAccess();
@@ -3375,6 +3551,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AssetRef:
+	//
 	//	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
 	public SOABaseDslGrammarAccess.AssetRefElements getAssetRefAccess() {
 		return gaSOABaseDsl.getAssetRefAccess();
@@ -3385,43 +3562,51 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal ID:
+	//
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaSOABaseDsl.getIDRule();
 	} 
 
 	//terminal INT returns ecore::EInt:
+	//
 	//	"0".."9"+;
 	public TerminalRule getINTRule() {
 		return gaSOABaseDsl.getINTRule();
 	} 
 
 	//terminal STRING:
+	//
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" |
+	//
 	//	"n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
 		return gaSOABaseDsl.getSTRINGRule();
 	} 
 
 	//terminal ML_COMMENT:
+	//
 	//	"/ *"->"* /";
 	public TerminalRule getML_COMMENTRule() {
 		return gaSOABaseDsl.getML_COMMENTRule();
 	} 
 
 	//terminal SL_COMMENT:
+	//
 	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaSOABaseDsl.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
+	//
 	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
 		return gaSOABaseDsl.getWSRule();
 	} 
 
 	//terminal ANY_OTHER:
+	//
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return gaSOABaseDsl.getANY_OTHERRule();

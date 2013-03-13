@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package org.fornax.soa.sladsl.sLADsl.impl;
 
@@ -773,19 +774,9 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAvailability_Percentile()
-  {
-    return (EReference)availabilityEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getAvailability_Mtbf()
   {
-    return (EAttribute)availabilityEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)availabilityEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -795,7 +786,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    */
   public EAttribute getAvailability_Mttr()
   {
-    return (EAttribute)availabilityEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)availabilityEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -805,7 +796,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    */
   public EReference getAvailability_MttrPercentile()
   {
-    return (EReference)availabilityEClass.getEStructuralFeatures().get(4);
+    return (EReference)availabilityEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -815,7 +806,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    */
   public EAttribute getAvailability_RegularDownTimes()
   {
-    return (EAttribute)availabilityEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)availabilityEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1839,7 +1830,6 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
 
     availabilityEClass = createEClass(AVAILABILITY);
     createEAttribute(availabilityEClass, AVAILABILITY__AVAILABILITY);
-    createEReference(availabilityEClass, AVAILABILITY__PERCENTILE);
     createEAttribute(availabilityEClass, AVAILABILITY__MTBF);
     createEAttribute(availabilityEClass, AVAILABILITY__MTTR);
     createEReference(availabilityEClass, AVAILABILITY__MTTR_PERCENTILE);
@@ -2061,7 +2051,6 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
 
     initEClass(availabilityEClass, Availability.class, "Availability", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAvailability_Availability(), ecorePackage.getEString(), "availability", null, 0, 1, Availability.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAvailability_Percentile(), this.getPercentile(), null, "percentile", null, 0, 1, Availability.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAvailability_Mtbf(), ecorePackage.getEString(), "mtbf", null, 0, 1, Availability.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAvailability_Mttr(), ecorePackage.getEString(), "mttr", null, 0, 1, Availability.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAvailability_MttrPercentile(), this.getPercentile(), null, "mttrPercentile", null, 0, 1, Availability.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

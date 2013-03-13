@@ -35,7 +35,7 @@ Solution:
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		(features+=Feature)*
 		(modules+=Module)*
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -55,7 +55,7 @@ Module:
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		(features+=Feature)*
 		(modules+=Module)*
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -78,7 +78,7 @@ Feature:
 		'}')?
 		('requires' requires+=ServiceRef )*
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?

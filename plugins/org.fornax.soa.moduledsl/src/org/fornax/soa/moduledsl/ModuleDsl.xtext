@@ -55,7 +55,7 @@ Module:
 			('source-location' source=STRING )? 		// Where can I get the sources? 
 		)
 		(additionalInfo=AdditionalInformation)?
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?

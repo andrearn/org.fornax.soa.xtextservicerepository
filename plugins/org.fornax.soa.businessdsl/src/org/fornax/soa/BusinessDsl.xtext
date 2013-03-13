@@ -36,7 +36,7 @@ Organization :
 Domain :
 	'domain' name=QualifiedName '{'
 		('competence' competence=STRING)?
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -59,7 +59,7 @@ BusinessFunction :
 	'business-function' name=ID '{' 
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -81,7 +81,7 @@ BusinessFunction :
 CapabilityGroup :
 	'capability-group' name=ID '{'
 		'description' description = STRING
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -132,7 +132,7 @@ SimpleCapability :
 			(uses+=CapabilityRef)+
 		'}'
 		)? 
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -177,7 +177,7 @@ CapabilityVariant:
 			(uses+=CapabilityRef)+
 		'}'
 		)? 
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?

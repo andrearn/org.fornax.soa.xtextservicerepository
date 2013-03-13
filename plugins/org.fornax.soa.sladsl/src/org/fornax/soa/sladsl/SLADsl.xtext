@@ -50,7 +50,7 @@ SLA:
 			('extraordinary-cancellation' extraordinaryCancellation = STRING )?
 			('effort-accounting' effortAccounting = STRING )?
 			(reports+=Report)*
-			('contacts' '{'
+			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -75,7 +75,7 @@ ServiceQualityProperty : Availability | Throughput | Latency  | MaxDownTime | Ca
 
 Availability : 
 	'availability' '{'
-		'availability' availability=STRING 'percentile' percentile=Percentile
+		'availability' availability=STRING
 		('mean-time-between-failure' mtbf=STRING)?
 		('mean-time-to-repair' mttr=STRING (mttrPercentile=Percentile)?)?
 		('regular-down-times' regularDownTimes = STRING)?

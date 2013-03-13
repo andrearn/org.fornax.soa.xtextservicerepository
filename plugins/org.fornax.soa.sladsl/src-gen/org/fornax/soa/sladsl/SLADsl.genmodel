@@ -105,7 +105,6 @@
     <genClasses ecoreClass="SLADsl.ecore#//ServiceQualityProperty"/>
     <genClasses ecoreClass="SLADsl.ecore#//Availability">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/availability"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Availability/percentile"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/mtbf"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/mttr"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Availability/mttrPercentile"/>

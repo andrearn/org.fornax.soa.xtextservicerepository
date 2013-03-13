@@ -46,7 +46,7 @@ DomainNamespace:
 			('domain' domain=[businessDsl::Domain|QualifiedName])?
 			(version=Version  )?
 			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
-			('contacts' '{'
+			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -71,7 +71,7 @@ InternalNamespace:
 			(version=Version)?
 			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
 			('namespace-url' namespaceUrl = STRING)
-			('contacts' '{'
+			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -113,7 +113,7 @@ BusinessObject:
 			&	('provided-contract' providedContractUrl=STRING)?
 			)
 			(additionalInfo=AdditionalInformation)?
-			('contacts' '{'
+			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -142,7 +142,7 @@ QueryObject:
 			&	('retirement-on' retirementDate = STRING)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			)
-			('contacts' '{'
+			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -207,7 +207,7 @@ Enumeration:
 			&	('provided-contract' providedContractUrl=STRING)?
 			)
 			(additionalInfo=AdditionalInformation)?
-			('contacts' '{'
+			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -274,7 +274,7 @@ Service:
 			'}')?
 
 			)
-			('contacts' '{'
+			('contact-info' '{'
 				/* Who is responsible for the service? */
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
@@ -352,7 +352,7 @@ Exception:
 			('release-on' releaseDate = STRING )?
 			('retirement-on' retirementDate = STRING )?
 			('provided-contract' providedContractUrl=STRING)?
-			('contacts' '{'
+			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -473,7 +473,7 @@ Event:
 			('retirement-on' retirementDate = STRING )?
 			('provided-contract' providedContractUrl=STRING)?
 			(additionalInfo=AdditionalInformation)?
-			('contacts' '{'
+			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?

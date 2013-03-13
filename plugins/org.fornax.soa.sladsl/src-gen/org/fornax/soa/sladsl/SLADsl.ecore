@@ -59,8 +59,6 @@
   <eClassifiers xsi:type="ecore:EClass" name="ServiceQualityProperty"/>
   <eClassifiers xsi:type="ecore:EClass" name="Availability" eSuperTypes="#//ServiceQualityProperty">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="availability" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="percentile" eType="#//Percentile"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mtbf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="mttr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mttrPercentile" eType="#//Percentile"

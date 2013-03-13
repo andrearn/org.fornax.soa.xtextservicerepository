@@ -56,12 +56,16 @@ class ServiceRepositoryNewProjectGenerator {
 						-> proposed
 					}
 					state productive {
+						requires-approval
+						freezes-asset
 						qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
 						-> deprecated
 						-> test
 						-> proposed
 					}
 					state deprecated {
+						requires-approval
+						freezes-asset
 						qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
 						-> retired
 						-> productive
@@ -92,8 +96,10 @@ class ServiceRepositoryNewProjectGenerator {
 					}
 					
 					types {
-						extendable-properties
-						extendable-XML-attributes
+						version-evolution {
+							extendible-properties
+							extendible-XML-attributes
+						}
 						allow-enums
 						allow-inheritance
 						allow-polymorphism
@@ -1081,7 +1087,7 @@ class ServiceRepositoryNewProjectGenerator {
 				)
 			}
 		'''
-		fsa.generateFile("view/ServiceView.gvstyle", content)
+		fsa.generateFile("view/SolutionView.gvstyle", content)
 	}
 	
 }

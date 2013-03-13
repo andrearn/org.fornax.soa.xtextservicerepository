@@ -47,7 +47,7 @@ SOAProfile:
 		(namespaceRules = NamespaceRules)?
 		(scopedBasicTypes+=BasicTypes)*
 		(governanceDecisions+=GovernanceDecision)*
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -181,7 +181,7 @@ BaseNamespaceAlias :
  */
 OrganizationNamespace:
 	'org-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
@@ -198,7 +198,7 @@ OrganizationNamespace:
 TechnicalNamespace: 
 	'namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
-		('contacts' '{'
+		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
