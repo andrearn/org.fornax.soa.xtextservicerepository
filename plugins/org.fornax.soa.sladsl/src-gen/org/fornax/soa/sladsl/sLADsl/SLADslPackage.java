@@ -1467,22 +1467,13 @@ public interface SLADslPackage extends EPackage
   int INLINE_REPRESENTATIVE__LASTNAME = REPRESENTATIVE_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Org</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int INLINE_REPRESENTATIVE__ORG = REPRESENTATIVE_FEATURE_COUNT + 2;
-
-  /**
    * The feature id for the '<em><b>Org Unit</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int INLINE_REPRESENTATIVE__ORG_UNIT = REPRESENTATIVE_FEATURE_COUNT + 3;
+  int INLINE_REPRESENTATIVE__ORG_UNIT = REPRESENTATIVE_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Email</b></em>' attribute.
@@ -1491,7 +1482,7 @@ public interface SLADslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INLINE_REPRESENTATIVE__EMAIL = REPRESENTATIVE_FEATURE_COUNT + 4;
+  int INLINE_REPRESENTATIVE__EMAIL = REPRESENTATIVE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Phone</b></em>' attribute.
@@ -1500,7 +1491,7 @@ public interface SLADslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INLINE_REPRESENTATIVE__PHONE = REPRESENTATIVE_FEATURE_COUNT + 5;
+  int INLINE_REPRESENTATIVE__PHONE = REPRESENTATIVE_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Inline Representative</em>' class.
@@ -1509,7 +1500,7 @@ public interface SLADslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int INLINE_REPRESENTATIVE_FEATURE_COUNT = REPRESENTATIVE_FEATURE_COUNT + 6;
+  int INLINE_REPRESENTATIVE_FEATURE_COUNT = REPRESENTATIVE_FEATURE_COUNT + 5;
 
   /**
    * The meta object id for the '{@link org.fornax.soa.sladsl.sLADsl.impl.ResponsibilityImpl <em>Responsibility</em>}' class.
@@ -2904,17 +2895,6 @@ public interface SLADslPackage extends EPackage
   EAttribute getInlineRepresentative_Lastname();
 
   /**
-   * Returns the meta object for the attribute '{@link org.fornax.soa.sladsl.sLADsl.InlineRepresentative#getOrg <em>Org</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Org</em>'.
-   * @see org.fornax.soa.sladsl.sLADsl.InlineRepresentative#getOrg()
-   * @see #getInlineRepresentative()
-   * @generated
-   */
-  EAttribute getInlineRepresentative_Org();
-
-  /**
    * Returns the meta object for the attribute '{@link org.fornax.soa.sladsl.sLADsl.InlineRepresentative#getOrgUnit <em>Org Unit</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -4089,14 +4069,6 @@ public interface SLADslPackage extends EPackage
      * @generated
      */
     EAttribute INLINE_REPRESENTATIVE__LASTNAME = eINSTANCE.getInlineRepresentative_Lastname();
-
-    /**
-     * The meta object literal for the '<em><b>Org</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute INLINE_REPRESENTATIVE__ORG = eINSTANCE.getInlineRepresentative_Org();
 
     /**
      * The meta object literal for the '<em><b>Org Unit</b></em>' attribute feature.

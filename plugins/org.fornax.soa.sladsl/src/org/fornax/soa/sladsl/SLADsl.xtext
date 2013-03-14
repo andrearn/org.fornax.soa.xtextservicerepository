@@ -232,9 +232,8 @@ UserRef: representative = [basedsl::User|QualifiedName];
 InlineRepresentative:
 	{InlineRepresentative}
 	'representative' '{'
-		('firstname' firstname = STRING)?
-		('lastname' lastname = STRING)?
-		('org' org = STRING)?
+		('first-name' firstname = STRING)?
+		('last-name' lastname = STRING)?
 		('org-unit' orgUnit = STRING)?
 		('email' email = STRING)?
 		('phone' phone = STRING)?

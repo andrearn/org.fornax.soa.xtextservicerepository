@@ -23,7 +23,6 @@ import org.fornax.soa.sladsl.sLADsl.SLADslPackage;
  * <ul>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.InlineRepresentativeImpl#getFirstname <em>Firstname</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.InlineRepresentativeImpl#getLastname <em>Lastname</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.InlineRepresentativeImpl#getOrg <em>Org</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.InlineRepresentativeImpl#getOrgUnit <em>Org Unit</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.InlineRepresentativeImpl#getEmail <em>Email</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.InlineRepresentativeImpl#getPhone <em>Phone</em>}</li>
@@ -73,26 +72,6 @@ public class InlineRepresentativeImpl extends RepresentativeImpl implements Inli
    * @ordered
    */
   protected String lastname = LASTNAME_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getOrg() <em>Org</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOrg()
-   * @generated
-   * @ordered
-   */
-  protected static final String ORG_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getOrg() <em>Org</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOrg()
-   * @generated
-   * @ordered
-   */
-  protected String org = ORG_EDEFAULT;
 
   /**
    * The default value of the '{@link #getOrgUnit() <em>Org Unit</em>}' attribute.
@@ -226,29 +205,6 @@ public class InlineRepresentativeImpl extends RepresentativeImpl implements Inli
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getOrg()
-  {
-    return org;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setOrg(String newOrg)
-  {
-    String oldOrg = org;
-    org = newOrg;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.INLINE_REPRESENTATIVE__ORG, oldOrg, org));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public String getOrgUnit()
   {
     return orgUnit;
@@ -327,8 +283,6 @@ public class InlineRepresentativeImpl extends RepresentativeImpl implements Inli
         return getFirstname();
       case SLADslPackage.INLINE_REPRESENTATIVE__LASTNAME:
         return getLastname();
-      case SLADslPackage.INLINE_REPRESENTATIVE__ORG:
-        return getOrg();
       case SLADslPackage.INLINE_REPRESENTATIVE__ORG_UNIT:
         return getOrgUnit();
       case SLADslPackage.INLINE_REPRESENTATIVE__EMAIL:
@@ -354,9 +308,6 @@ public class InlineRepresentativeImpl extends RepresentativeImpl implements Inli
         return;
       case SLADslPackage.INLINE_REPRESENTATIVE__LASTNAME:
         setLastname((String)newValue);
-        return;
-      case SLADslPackage.INLINE_REPRESENTATIVE__ORG:
-        setOrg((String)newValue);
         return;
       case SLADslPackage.INLINE_REPRESENTATIVE__ORG_UNIT:
         setOrgUnit((String)newValue);
@@ -387,9 +338,6 @@ public class InlineRepresentativeImpl extends RepresentativeImpl implements Inli
       case SLADslPackage.INLINE_REPRESENTATIVE__LASTNAME:
         setLastname(LASTNAME_EDEFAULT);
         return;
-      case SLADslPackage.INLINE_REPRESENTATIVE__ORG:
-        setOrg(ORG_EDEFAULT);
-        return;
       case SLADslPackage.INLINE_REPRESENTATIVE__ORG_UNIT:
         setOrgUnit(ORG_UNIT_EDEFAULT);
         return;
@@ -417,8 +365,6 @@ public class InlineRepresentativeImpl extends RepresentativeImpl implements Inli
         return FIRSTNAME_EDEFAULT == null ? firstname != null : !FIRSTNAME_EDEFAULT.equals(firstname);
       case SLADslPackage.INLINE_REPRESENTATIVE__LASTNAME:
         return LASTNAME_EDEFAULT == null ? lastname != null : !LASTNAME_EDEFAULT.equals(lastname);
-      case SLADslPackage.INLINE_REPRESENTATIVE__ORG:
-        return ORG_EDEFAULT == null ? org != null : !ORG_EDEFAULT.equals(org);
       case SLADslPackage.INLINE_REPRESENTATIVE__ORG_UNIT:
         return ORG_UNIT_EDEFAULT == null ? orgUnit != null : !ORG_UNIT_EDEFAULT.equals(orgUnit);
       case SLADslPackage.INLINE_REPRESENTATIVE__EMAIL:
@@ -444,8 +390,6 @@ public class InlineRepresentativeImpl extends RepresentativeImpl implements Inli
     result.append(firstname);
     result.append(", lastname: ");
     result.append(lastname);
-    result.append(", org: ");
-    result.append(org);
     result.append(", orgUnit: ");
     result.append(orgUnit);
     result.append(", email: ");

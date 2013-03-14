@@ -204,7 +204,6 @@
     <genClasses ecoreClass="SLADsl.ecore#//InlineRepresentative">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//InlineRepresentative/firstname"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//InlineRepresentative/lastname"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//InlineRepresentative/org"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//InlineRepresentative/orgUnit"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//InlineRepresentative/email"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//InlineRepresentative/phone"/>

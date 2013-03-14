@@ -1563,7 +1563,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getInlineRepresentative_Org()
+  public EAttribute getInlineRepresentative_OrgUnit()
   {
     return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(2);
   }
@@ -1573,7 +1573,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getInlineRepresentative_OrgUnit()
+  public EAttribute getInlineRepresentative_Email()
   {
     return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(3);
   }
@@ -1583,19 +1583,9 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getInlineRepresentative_Email()
-  {
-    return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getInlineRepresentative_Phone()
   {
-    return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1902,7 +1892,6 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     inlineRepresentativeEClass = createEClass(INLINE_REPRESENTATIVE);
     createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__FIRSTNAME);
     createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__LASTNAME);
-    createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__ORG);
     createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__ORG_UNIT);
     createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__EMAIL);
     createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__PHONE);
@@ -2120,7 +2109,6 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     initEClass(inlineRepresentativeEClass, InlineRepresentative.class, "InlineRepresentative", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getInlineRepresentative_Firstname(), ecorePackage.getEString(), "firstname", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getInlineRepresentative_Lastname(), ecorePackage.getEString(), "lastname", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getInlineRepresentative_Org(), ecorePackage.getEString(), "org", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getInlineRepresentative_OrgUnit(), ecorePackage.getEString(), "orgUnit", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getInlineRepresentative_Email(), ecorePackage.getEString(), "email", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getInlineRepresentative_Phone(), ecorePackage.getEString(), "phone", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

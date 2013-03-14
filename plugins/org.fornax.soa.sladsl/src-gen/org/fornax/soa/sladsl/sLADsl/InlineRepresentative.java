@@ -16,7 +16,6 @@ package org.fornax.soa.sladsl.sLADsl;
  * <ul>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.InlineRepresentative#getFirstname <em>Firstname</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.InlineRepresentative#getLastname <em>Lastname</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.InlineRepresentative#getOrg <em>Org</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.InlineRepresentative#getOrgUnit <em>Org Unit</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.InlineRepresentative#getEmail <em>Email</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.InlineRepresentative#getPhone <em>Phone</em>}</li>
@@ -80,32 +79,6 @@ public interface InlineRepresentative extends Representative
    * @generated
    */
   void setLastname(String value);
-
-  /**
-   * Returns the value of the '<em><b>Org</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Org</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Org</em>' attribute.
-   * @see #setOrg(String)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getInlineRepresentative_Org()
-   * @model
-   * @generated
-   */
-  String getOrg();
-
-  /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.InlineRepresentative#getOrg <em>Org</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Org</em>' attribute.
-   * @see #getOrg()
-   * @generated
-   */
-  void setOrg(String value);
 
   /**
    * Returns the value of the '<em><b>Org Unit</b></em>' attribute.

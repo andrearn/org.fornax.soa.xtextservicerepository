@@ -9230,13 +9230,13 @@ protected class UserRef_RepresentativeAssignment extends AssignmentToken  {
 /************ begin Rule InlineRepresentative ****************
  *
  * InlineRepresentative:
- * 	{InlineRepresentative} "representative" "{" ("firstname" firstname=STRING)? ("lastname" lastname=STRING)? ("org"
- * 	org=STRING)? ("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}";
+ * 	{InlineRepresentative} "representative" "{" ("first-name" firstname=STRING)? ("last-name" lastname=STRING)?
+ * 	("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}";
  *
  **/
 
-// {InlineRepresentative} "representative" "{" ("firstname" firstname=STRING)? ("lastname" lastname=STRING)? ("org"
-// org=STRING)? ("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}"
+// {InlineRepresentative} "representative" "{" ("first-name" firstname=STRING)? ("last-name" lastname=STRING)? ("org-unit"
+// orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}"
 protected class InlineRepresentative_Group extends GroupToken {
 	
 	public InlineRepresentative_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9251,7 +9251,7 @@ protected class InlineRepresentative_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new InlineRepresentative_RightCurlyBracketKeyword_9(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new InlineRepresentative_RightCurlyBracketKeyword_8(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -9335,7 +9335,7 @@ protected class InlineRepresentative_LeftCurlyBracketKeyword_2 extends KeywordTo
 
 }
 
-// ("firstname" firstname=STRING)?
+// ("first-name" firstname=STRING)?
 protected class InlineRepresentative_Group_3 extends GroupToken {
 	
 	public InlineRepresentative_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9357,16 +9357,16 @@ protected class InlineRepresentative_Group_3 extends GroupToken {
 
 }
 
-// "firstname"
-protected class InlineRepresentative_FirstnameKeyword_3_0 extends KeywordToken  {
+// "first-name"
+protected class InlineRepresentative_FirstNameKeyword_3_0 extends KeywordToken  {
 	
-	public InlineRepresentative_FirstnameKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public InlineRepresentative_FirstNameKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getFirstnameKeyword_3_0();
+		return grammarAccess.getInlineRepresentativeAccess().getFirstNameKeyword_3_0();
 	}
 
     @Override
@@ -9394,7 +9394,7 @@ protected class InlineRepresentative_FirstnameAssignment_3_1 extends AssignmentT
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new InlineRepresentative_FirstnameKeyword_3_0(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new InlineRepresentative_FirstNameKeyword_3_0(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -9414,7 +9414,7 @@ protected class InlineRepresentative_FirstnameAssignment_3_1 extends AssignmentT
 }
 
 
-// ("lastname" lastname=STRING)?
+// ("last-name" lastname=STRING)?
 protected class InlineRepresentative_Group_4 extends GroupToken {
 	
 	public InlineRepresentative_Group_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9436,16 +9436,16 @@ protected class InlineRepresentative_Group_4 extends GroupToken {
 
 }
 
-// "lastname"
-protected class InlineRepresentative_LastnameKeyword_4_0 extends KeywordToken  {
+// "last-name"
+protected class InlineRepresentative_LastNameKeyword_4_0 extends KeywordToken  {
 	
-	public InlineRepresentative_LastnameKeyword_4_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public InlineRepresentative_LastNameKeyword_4_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getLastnameKeyword_4_0();
+		return grammarAccess.getInlineRepresentativeAccess().getLastNameKeyword_4_0();
 	}
 
     @Override
@@ -9474,7 +9474,7 @@ protected class InlineRepresentative_LastnameAssignment_4_1 extends AssignmentTo
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new InlineRepresentative_LastnameKeyword_4_0(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new InlineRepresentative_LastNameKeyword_4_0(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -9494,7 +9494,7 @@ protected class InlineRepresentative_LastnameAssignment_4_1 extends AssignmentTo
 }
 
 
-// ("org" org=STRING)?
+// ("org-unit" orgUnit=STRING)?
 protected class InlineRepresentative_Group_5 extends GroupToken {
 	
 	public InlineRepresentative_Group_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9509,23 +9509,23 @@ protected class InlineRepresentative_Group_5 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new InlineRepresentative_OrgAssignment_5_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new InlineRepresentative_OrgUnitAssignment_5_1(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
 
 }
 
-// "org"
-protected class InlineRepresentative_OrgKeyword_5_0 extends KeywordToken  {
+// "org-unit"
+protected class InlineRepresentative_OrgUnitKeyword_5_0 extends KeywordToken  {
 	
-	public InlineRepresentative_OrgKeyword_5_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public InlineRepresentative_OrgUnitKeyword_5_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getOrgKeyword_5_0();
+		return grammarAccess.getInlineRepresentativeAccess().getOrgUnitKeyword_5_0();
 	}
 
     @Override
@@ -9540,33 +9540,33 @@ protected class InlineRepresentative_OrgKeyword_5_0 extends KeywordToken  {
 
 }
 
-// org=STRING
-protected class InlineRepresentative_OrgAssignment_5_1 extends AssignmentToken  {
+// orgUnit=STRING
+protected class InlineRepresentative_OrgUnitAssignment_5_1 extends AssignmentToken  {
 	
-	public InlineRepresentative_OrgAssignment_5_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public InlineRepresentative_OrgUnitAssignment_5_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getOrgAssignment_5_1();
+		return grammarAccess.getInlineRepresentativeAccess().getOrgUnitAssignment_5_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new InlineRepresentative_OrgKeyword_5_0(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new InlineRepresentative_OrgUnitKeyword_5_0(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("org",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("org");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getInlineRepresentativeAccess().getOrgSTRINGTerminalRuleCall_5_1_0(), value, null)) {
+		if((value = eObjectConsumer.getConsumable("orgUnit",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("orgUnit");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getInlineRepresentativeAccess().getOrgUnitSTRINGTerminalRuleCall_5_1_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getInlineRepresentativeAccess().getOrgSTRINGTerminalRuleCall_5_1_0();
+			element = grammarAccess.getInlineRepresentativeAccess().getOrgUnitSTRINGTerminalRuleCall_5_1_0();
 			return obj;
 		}
 		return null;
@@ -9575,7 +9575,7 @@ protected class InlineRepresentative_OrgAssignment_5_1 extends AssignmentToken  
 }
 
 
-// ("org-unit" orgUnit=STRING)?
+// ("email" email=STRING)?
 protected class InlineRepresentative_Group_6 extends GroupToken {
 	
 	public InlineRepresentative_Group_6(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9590,23 +9590,23 @@ protected class InlineRepresentative_Group_6 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new InlineRepresentative_OrgUnitAssignment_6_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new InlineRepresentative_EmailAssignment_6_1(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
 
 }
 
-// "org-unit"
-protected class InlineRepresentative_OrgUnitKeyword_6_0 extends KeywordToken  {
+// "email"
+protected class InlineRepresentative_EmailKeyword_6_0 extends KeywordToken  {
 	
-	public InlineRepresentative_OrgUnitKeyword_6_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public InlineRepresentative_EmailKeyword_6_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getOrgUnitKeyword_6_0();
+		return grammarAccess.getInlineRepresentativeAccess().getEmailKeyword_6_0();
 	}
 
     @Override
@@ -9622,33 +9622,33 @@ protected class InlineRepresentative_OrgUnitKeyword_6_0 extends KeywordToken  {
 
 }
 
-// orgUnit=STRING
-protected class InlineRepresentative_OrgUnitAssignment_6_1 extends AssignmentToken  {
+// email=STRING
+protected class InlineRepresentative_EmailAssignment_6_1 extends AssignmentToken  {
 	
-	public InlineRepresentative_OrgUnitAssignment_6_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public InlineRepresentative_EmailAssignment_6_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getOrgUnitAssignment_6_1();
+		return grammarAccess.getInlineRepresentativeAccess().getEmailAssignment_6_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new InlineRepresentative_OrgUnitKeyword_6_0(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new InlineRepresentative_EmailKeyword_6_0(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("orgUnit",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("orgUnit");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getInlineRepresentativeAccess().getOrgUnitSTRINGTerminalRuleCall_6_1_0(), value, null)) {
+		if((value = eObjectConsumer.getConsumable("email",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("email");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getInlineRepresentativeAccess().getEmailSTRINGTerminalRuleCall_6_1_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getInlineRepresentativeAccess().getOrgUnitSTRINGTerminalRuleCall_6_1_0();
+			element = grammarAccess.getInlineRepresentativeAccess().getEmailSTRINGTerminalRuleCall_6_1_0();
 			return obj;
 		}
 		return null;
@@ -9657,7 +9657,7 @@ protected class InlineRepresentative_OrgUnitAssignment_6_1 extends AssignmentTok
 }
 
 
-// ("email" email=STRING)?
+// ("phone" phone=STRING)?
 protected class InlineRepresentative_Group_7 extends GroupToken {
 	
 	public InlineRepresentative_Group_7(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9672,23 +9672,23 @@ protected class InlineRepresentative_Group_7 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new InlineRepresentative_EmailAssignment_7_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new InlineRepresentative_PhoneAssignment_7_1(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
 
 }
 
-// "email"
-protected class InlineRepresentative_EmailKeyword_7_0 extends KeywordToken  {
+// "phone"
+protected class InlineRepresentative_PhoneKeyword_7_0 extends KeywordToken  {
 	
-	public InlineRepresentative_EmailKeyword_7_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public InlineRepresentative_PhoneKeyword_7_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getEmailKeyword_7_0();
+		return grammarAccess.getInlineRepresentativeAccess().getPhoneKeyword_7_0();
 	}
 
     @Override
@@ -9705,33 +9705,33 @@ protected class InlineRepresentative_EmailKeyword_7_0 extends KeywordToken  {
 
 }
 
-// email=STRING
-protected class InlineRepresentative_EmailAssignment_7_1 extends AssignmentToken  {
+// phone=STRING
+protected class InlineRepresentative_PhoneAssignment_7_1 extends AssignmentToken  {
 	
-	public InlineRepresentative_EmailAssignment_7_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public InlineRepresentative_PhoneAssignment_7_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getEmailAssignment_7_1();
+		return grammarAccess.getInlineRepresentativeAccess().getPhoneAssignment_7_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new InlineRepresentative_EmailKeyword_7_0(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new InlineRepresentative_PhoneKeyword_7_0(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("email",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("email");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getInlineRepresentativeAccess().getEmailSTRINGTerminalRuleCall_7_1_0(), value, null)) {
+		if((value = eObjectConsumer.getConsumable("phone",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("phone");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getInlineRepresentativeAccess().getPhoneSTRINGTerminalRuleCall_7_1_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getInlineRepresentativeAccess().getEmailSTRINGTerminalRuleCall_7_1_0();
+			element = grammarAccess.getInlineRepresentativeAccess().getPhoneSTRINGTerminalRuleCall_7_1_0();
 			return obj;
 		}
 		return null;
@@ -9740,38 +9740,16 @@ protected class InlineRepresentative_EmailAssignment_7_1 extends AssignmentToken
 }
 
 
-// ("phone" phone=STRING)?
-protected class InlineRepresentative_Group_8 extends GroupToken {
+// "}"
+protected class InlineRepresentative_RightCurlyBracketKeyword_8 extends KeywordToken  {
 	
-	public InlineRepresentative_Group_8(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getGroup_8();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new InlineRepresentative_PhoneAssignment_8_1(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// "phone"
-protected class InlineRepresentative_PhoneKeyword_8_0 extends KeywordToken  {
-	
-	public InlineRepresentative_PhoneKeyword_8_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public InlineRepresentative_RightCurlyBracketKeyword_8(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getPhoneKeyword_8_0();
+		return grammarAccess.getInlineRepresentativeAccess().getRightCurlyBracketKeyword_8();
 	}
 
     @Override
@@ -9783,69 +9761,6 @@ protected class InlineRepresentative_PhoneKeyword_8_0 extends KeywordToken  {
 			case 3: return new InlineRepresentative_Group_4(lastRuleCallOrigin, this, 3, inst);
 			case 4: return new InlineRepresentative_Group_3(lastRuleCallOrigin, this, 4, inst);
 			case 5: return new InlineRepresentative_LeftCurlyBracketKeyword_2(lastRuleCallOrigin, this, 5, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// phone=STRING
-protected class InlineRepresentative_PhoneAssignment_8_1 extends AssignmentToken  {
-	
-	public InlineRepresentative_PhoneAssignment_8_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getPhoneAssignment_8_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new InlineRepresentative_PhoneKeyword_8_0(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("phone",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("phone");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getInlineRepresentativeAccess().getPhoneSTRINGTerminalRuleCall_8_1_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getInlineRepresentativeAccess().getPhoneSTRINGTerminalRuleCall_8_1_0();
-			return obj;
-		}
-		return null;
-	}
-
-}
-
-
-// "}"
-protected class InlineRepresentative_RightCurlyBracketKeyword_9 extends KeywordToken  {
-	
-	public InlineRepresentative_RightCurlyBracketKeyword_9(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getInlineRepresentativeAccess().getRightCurlyBracketKeyword_9();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new InlineRepresentative_Group_8(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new InlineRepresentative_Group_7(lastRuleCallOrigin, this, 1, inst);
-			case 2: return new InlineRepresentative_Group_6(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new InlineRepresentative_Group_5(lastRuleCallOrigin, this, 3, inst);
-			case 4: return new InlineRepresentative_Group_4(lastRuleCallOrigin, this, 4, inst);
-			case 5: return new InlineRepresentative_Group_3(lastRuleCallOrigin, this, 5, inst);
-			case 6: return new InlineRepresentative_LeftCurlyBracketKeyword_2(lastRuleCallOrigin, this, 6, inst);
 			default: return null;
 		}	
 	}

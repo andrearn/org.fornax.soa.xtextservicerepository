@@ -1382,10 +1382,6 @@
           <elements xsi:type="xtext:Assignment" feature="availability" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
           </elements>
-          <elements xsi:type="xtext:Keyword" value="percentile"/>
-          <elements xsi:type="xtext:Assignment" feature="percentile" operator="=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.54"/>
-          </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="mean-time-between-failure"/>

@@ -1909,38 +1909,34 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRepresentativeKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cFirstnameKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Keyword cFirstNameKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cFirstnameAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
 		private final RuleCall cFirstnameSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cFirstnameAssignment_3_1.eContents().get(0);
 		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cLastnameKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Keyword cLastNameKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
 		private final Assignment cLastnameAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
 		private final RuleCall cLastnameSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cLastnameAssignment_4_1.eContents().get(0);
 		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cOrgKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cOrgAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cOrgSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cOrgAssignment_5_1.eContents().get(0);
+		private final Keyword cOrgUnitKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cOrgUnitAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cOrgUnitSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cOrgUnitAssignment_5_1.eContents().get(0);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
-		private final Keyword cOrgUnitKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
-		private final Assignment cOrgUnitAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
-		private final RuleCall cOrgUnitSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cOrgUnitAssignment_6_1.eContents().get(0);
+		private final Keyword cEmailKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cEmailAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cEmailSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cEmailAssignment_6_1.eContents().get(0);
 		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cEmailKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cEmailAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cEmailSTRINGTerminalRuleCall_7_1_0 = (RuleCall)cEmailAssignment_7_1.eContents().get(0);
-		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cPhoneKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cPhoneAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cPhoneSTRINGTerminalRuleCall_8_1_0 = (RuleCall)cPhoneAssignment_8_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		private final Keyword cPhoneKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cPhoneAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cPhoneSTRINGTerminalRuleCall_7_1_0 = (RuleCall)cPhoneAssignment_7_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//InlineRepresentative:
-		//	{InlineRepresentative} "representative" "{" ("firstname" firstname=STRING)? ("lastname" lastname=STRING)? ("org"
-		//	org=STRING)? ("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}";
+		//	{InlineRepresentative} "representative" "{" ("first-name" firstname=STRING)? ("last-name" lastname=STRING)?
+		//	("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
-		//{InlineRepresentative} "representative" "{" ("firstname" firstname=STRING)? ("lastname" lastname=STRING)? ("org"
-		//org=STRING)? ("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}"
+		//{InlineRepresentative} "representative" "{" ("first-name" firstname=STRING)? ("last-name" lastname=STRING)? ("org-unit"
+		//orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
 		//{InlineRepresentative}
@@ -1952,11 +1948,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//("firstname" firstname=STRING)?
+		//("first-name" firstname=STRING)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//"firstname"
-		public Keyword getFirstnameKeyword_3_0() { return cFirstnameKeyword_3_0; }
+		//"first-name"
+		public Keyword getFirstNameKeyword_3_0() { return cFirstNameKeyword_3_0; }
 
 		//firstname=STRING
 		public Assignment getFirstnameAssignment_3_1() { return cFirstnameAssignment_3_1; }
@@ -1964,11 +1960,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getFirstnameSTRINGTerminalRuleCall_3_1_0() { return cFirstnameSTRINGTerminalRuleCall_3_1_0; }
 
-		//("lastname" lastname=STRING)?
+		//("last-name" lastname=STRING)?
 		public Group getGroup_4() { return cGroup_4; }
 
-		//"lastname"
-		public Keyword getLastnameKeyword_4_0() { return cLastnameKeyword_4_0; }
+		//"last-name"
+		public Keyword getLastNameKeyword_4_0() { return cLastNameKeyword_4_0; }
 
 		//lastname=STRING
 		public Assignment getLastnameAssignment_4_1() { return cLastnameAssignment_4_1; }
@@ -1976,56 +1972,44 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getLastnameSTRINGTerminalRuleCall_4_1_0() { return cLastnameSTRINGTerminalRuleCall_4_1_0; }
 
-		//("org" org=STRING)?
+		//("org-unit" orgUnit=STRING)?
 		public Group getGroup_5() { return cGroup_5; }
 
-		//"org"
-		public Keyword getOrgKeyword_5_0() { return cOrgKeyword_5_0; }
-
-		//org=STRING
-		public Assignment getOrgAssignment_5_1() { return cOrgAssignment_5_1; }
-
-		//STRING
-		public RuleCall getOrgSTRINGTerminalRuleCall_5_1_0() { return cOrgSTRINGTerminalRuleCall_5_1_0; }
-
-		//("org-unit" orgUnit=STRING)?
-		public Group getGroup_6() { return cGroup_6; }
-
 		//"org-unit"
-		public Keyword getOrgUnitKeyword_6_0() { return cOrgUnitKeyword_6_0; }
+		public Keyword getOrgUnitKeyword_5_0() { return cOrgUnitKeyword_5_0; }
 
 		//orgUnit=STRING
-		public Assignment getOrgUnitAssignment_6_1() { return cOrgUnitAssignment_6_1; }
+		public Assignment getOrgUnitAssignment_5_1() { return cOrgUnitAssignment_5_1; }
 
 		//STRING
-		public RuleCall getOrgUnitSTRINGTerminalRuleCall_6_1_0() { return cOrgUnitSTRINGTerminalRuleCall_6_1_0; }
+		public RuleCall getOrgUnitSTRINGTerminalRuleCall_5_1_0() { return cOrgUnitSTRINGTerminalRuleCall_5_1_0; }
 
 		//("email" email=STRING)?
-		public Group getGroup_7() { return cGroup_7; }
+		public Group getGroup_6() { return cGroup_6; }
 
 		//"email"
-		public Keyword getEmailKeyword_7_0() { return cEmailKeyword_7_0; }
+		public Keyword getEmailKeyword_6_0() { return cEmailKeyword_6_0; }
 
 		//email=STRING
-		public Assignment getEmailAssignment_7_1() { return cEmailAssignment_7_1; }
+		public Assignment getEmailAssignment_6_1() { return cEmailAssignment_6_1; }
 
 		//STRING
-		public RuleCall getEmailSTRINGTerminalRuleCall_7_1_0() { return cEmailSTRINGTerminalRuleCall_7_1_0; }
+		public RuleCall getEmailSTRINGTerminalRuleCall_6_1_0() { return cEmailSTRINGTerminalRuleCall_6_1_0; }
 
 		//("phone" phone=STRING)?
-		public Group getGroup_8() { return cGroup_8; }
+		public Group getGroup_7() { return cGroup_7; }
 
 		//"phone"
-		public Keyword getPhoneKeyword_8_0() { return cPhoneKeyword_8_0; }
+		public Keyword getPhoneKeyword_7_0() { return cPhoneKeyword_7_0; }
 
 		//phone=STRING
-		public Assignment getPhoneAssignment_8_1() { return cPhoneAssignment_8_1; }
+		public Assignment getPhoneAssignment_7_1() { return cPhoneAssignment_7_1; }
 
 		//STRING
-		public RuleCall getPhoneSTRINGTerminalRuleCall_8_1_0() { return cPhoneSTRINGTerminalRuleCall_8_1_0; }
+		public RuleCall getPhoneSTRINGTerminalRuleCall_7_1_0() { return cPhoneSTRINGTerminalRuleCall_7_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_9() { return cRightCurlyBracketKeyword_9; }
+		public Keyword getRightCurlyBracketKeyword_8() { return cRightCurlyBracketKeyword_8; }
 	}
 
 	public class ResponsibilityElements extends AbstractParserRuleElementFinder {
@@ -2984,8 +2968,8 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//InlineRepresentative:
-	//	{InlineRepresentative} "representative" "{" ("firstname" firstname=STRING)? ("lastname" lastname=STRING)? ("org"
-	//	org=STRING)? ("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}";
+	//	{InlineRepresentative} "representative" "{" ("first-name" firstname=STRING)? ("last-name" lastname=STRING)?
+	//	("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}";
 	public InlineRepresentativeElements getInlineRepresentativeAccess() {
 		return (pInlineRepresentative != null) ? pInlineRepresentative : (pInlineRepresentative = new InlineRepresentativeElements());
 	}

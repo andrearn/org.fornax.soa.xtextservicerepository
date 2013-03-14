@@ -255,7 +255,6 @@
     <genClasses ecoreClass="BindingDsl.ecore#//Assertion"/>
     <genClasses ecoreClass="BindingDsl.ecore#//AvailabilityAssertion">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AvailabilityAssertion/availability"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AvailabilityAssertion/percentile"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AvailabilityAssertion/mtbf"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//AvailabilityAssertion/mttr"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//AvailabilityAssertion/mttrPercentile"/>

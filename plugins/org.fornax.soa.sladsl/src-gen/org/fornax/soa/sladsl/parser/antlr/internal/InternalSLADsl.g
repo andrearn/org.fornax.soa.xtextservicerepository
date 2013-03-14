@@ -3088,9 +3088,9 @@ ruleInlineRepresentative returns [EObject current=null]
     {
     	newLeafNode(otherlv_2, grammarAccess.getInlineRepresentativeAccess().getLeftCurlyBracketKeyword_2());
     }
-(	otherlv_3='firstname' 
+(	otherlv_3='first-name' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getInlineRepresentativeAccess().getFirstnameKeyword_3_0());
+    	newLeafNode(otherlv_3, grammarAccess.getInlineRepresentativeAccess().getFirstNameKeyword_3_0());
     }
 (
 (
@@ -3110,9 +3110,9 @@ ruleInlineRepresentative returns [EObject current=null]
 	    }
 
 )
-))?(	otherlv_5='lastname' 
+))?(	otherlv_5='last-name' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getInlineRepresentativeAccess().getLastnameKeyword_4_0());
+    	newLeafNode(otherlv_5, grammarAccess.getInlineRepresentativeAccess().getLastNameKeyword_4_0());
     }
 (
 (
@@ -3132,37 +3132,15 @@ ruleInlineRepresentative returns [EObject current=null]
 	    }
 
 )
-))?(	otherlv_7='org' 
+))?(	otherlv_7='org-unit' 
     {
-    	newLeafNode(otherlv_7, grammarAccess.getInlineRepresentativeAccess().getOrgKeyword_5_0());
+    	newLeafNode(otherlv_7, grammarAccess.getInlineRepresentativeAccess().getOrgUnitKeyword_5_0());
     }
 (
 (
-		lv_org_8_0=RULE_STRING
+		lv_orgUnit_8_0=RULE_STRING
 		{
-			newLeafNode(lv_org_8_0, grammarAccess.getInlineRepresentativeAccess().getOrgSTRINGTerminalRuleCall_5_1_0()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getInlineRepresentativeRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"org",
-        		lv_org_8_0, 
-        		"STRING");
-	    }
-
-)
-))?(	otherlv_9='org-unit' 
-    {
-    	newLeafNode(otherlv_9, grammarAccess.getInlineRepresentativeAccess().getOrgUnitKeyword_6_0());
-    }
-(
-(
-		lv_orgUnit_10_0=RULE_STRING
-		{
-			newLeafNode(lv_orgUnit_10_0, grammarAccess.getInlineRepresentativeAccess().getOrgUnitSTRINGTerminalRuleCall_6_1_0()); 
+			newLeafNode(lv_orgUnit_8_0, grammarAccess.getInlineRepresentativeAccess().getOrgUnitSTRINGTerminalRuleCall_5_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -3171,20 +3149,20 @@ ruleInlineRepresentative returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"orgUnit",
-        		lv_orgUnit_10_0, 
+        		lv_orgUnit_8_0, 
         		"STRING");
 	    }
 
 )
-))?(	otherlv_11='email' 
+))?(	otherlv_9='email' 
     {
-    	newLeafNode(otherlv_11, grammarAccess.getInlineRepresentativeAccess().getEmailKeyword_7_0());
+    	newLeafNode(otherlv_9, grammarAccess.getInlineRepresentativeAccess().getEmailKeyword_6_0());
     }
 (
 (
-		lv_email_12_0=RULE_STRING
+		lv_email_10_0=RULE_STRING
 		{
-			newLeafNode(lv_email_12_0, grammarAccess.getInlineRepresentativeAccess().getEmailSTRINGTerminalRuleCall_7_1_0()); 
+			newLeafNode(lv_email_10_0, grammarAccess.getInlineRepresentativeAccess().getEmailSTRINGTerminalRuleCall_6_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -3193,20 +3171,20 @@ ruleInlineRepresentative returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"email",
-        		lv_email_12_0, 
+        		lv_email_10_0, 
         		"STRING");
 	    }
 
 )
-))?(	otherlv_13='phone' 
+))?(	otherlv_11='phone' 
     {
-    	newLeafNode(otherlv_13, grammarAccess.getInlineRepresentativeAccess().getPhoneKeyword_8_0());
+    	newLeafNode(otherlv_11, grammarAccess.getInlineRepresentativeAccess().getPhoneKeyword_7_0());
     }
 (
 (
-		lv_phone_14_0=RULE_STRING
+		lv_phone_12_0=RULE_STRING
 		{
-			newLeafNode(lv_phone_14_0, grammarAccess.getInlineRepresentativeAccess().getPhoneSTRINGTerminalRuleCall_8_1_0()); 
+			newLeafNode(lv_phone_12_0, grammarAccess.getInlineRepresentativeAccess().getPhoneSTRINGTerminalRuleCall_7_1_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -3215,14 +3193,14 @@ ruleInlineRepresentative returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"phone",
-        		lv_phone_14_0, 
+        		lv_phone_12_0, 
         		"STRING");
 	    }
 
 )
-))?	otherlv_15='}' 
+))?	otherlv_13='}' 
     {
-    	newLeafNode(otherlv_15, grammarAccess.getInlineRepresentativeAccess().getRightCurlyBracketKeyword_9());
+    	newLeafNode(otherlv_13, grammarAccess.getInlineRepresentativeAccess().getRightCurlyBracketKeyword_8());
     }
 )
 ;
