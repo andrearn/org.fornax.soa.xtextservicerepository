@@ -65,8 +65,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/owner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/responsible"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/budgeting"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/subscriptions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/subscriptions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/types"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/services"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/exceptions"/>
@@ -92,8 +92,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/owner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/responsible"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/budgeting"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/subscriptions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/subscriptions"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//BusinessObject">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//BusinessObject/abstract"/>
@@ -184,8 +184,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/owner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/responsible"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/budgeting"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/subscriptions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/subscriptions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/operations"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//Operation">
@@ -231,8 +231,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/owner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/responsible"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/budgeting"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/subscriptions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/subscriptions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/properties"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//ExceptionRef">
@@ -296,8 +296,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/owner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/responsible"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/budgeting"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/subscriptions"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/subscriptions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/parameter"/>
     </genClasses>
     <genClasses ecoreClass="ServiceDsl.ecore#//EventRef">

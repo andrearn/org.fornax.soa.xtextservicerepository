@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl.impl;
 
@@ -23,7 +22,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.fornax.soa.sladsl.sLADsl.Party;
-import org.fornax.soa.sladsl.sLADsl.Repesentative;
+import org.fornax.soa.sladsl.sLADsl.Representative;
 import org.fornax.soa.sladsl.sLADsl.Responsibility;
 import org.fornax.soa.sladsl.sLADsl.SLADslPackage;
 
@@ -72,7 +71,7 @@ public class PartyImpl extends MinimalEObjectImpl.Container implements Party
    * @generated
    * @ordered
    */
-  protected EList<Repesentative> representatives;
+  protected EList<Representative> representatives;
 
   /**
    * The cached value of the '{@link #getResponsibilities() <em>Responsibilities</em>}' containment reference list.
@@ -133,11 +132,11 @@ public class PartyImpl extends MinimalEObjectImpl.Container implements Party
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Repesentative> getRepresentatives()
+  public EList<Representative> getRepresentatives()
   {
     if (representatives == null)
     {
-      representatives = new EObjectContainmentEList<Repesentative>(Repesentative.class, this, SLADslPackage.PARTY__REPRESENTATIVES);
+      representatives = new EObjectContainmentEList<Representative>(Representative.class, this, SLADslPackage.PARTY__REPRESENTATIVES);
     }
     return representatives;
   }
@@ -210,7 +209,7 @@ public class PartyImpl extends MinimalEObjectImpl.Container implements Party
         return;
       case SLADslPackage.PARTY__REPRESENTATIVES:
         getRepresentatives().clear();
-        getRepresentatives().addAll((Collection<? extends Repesentative>)newValue);
+        getRepresentatives().addAll((Collection<? extends Representative>)newValue);
         return;
       case SLADslPackage.PARTY__RESPONSIBILITIES:
         getResponsibilities().clear();

@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl.impl;
 
@@ -50,26 +49,22 @@ import org.fornax.soa.sladsl.sLADsl.ServiceQualityProperty;
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getEffectiveDate <em>Effective Date</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getEffectiveUntil <em>Effective Until</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getParties <em>Parties</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getScope <em>Scope</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getPreample <em>Preample</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getDescription <em>Description</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getScope <em>Scope</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getRestrictions <em>Restrictions</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getPriorities <em>Priorities</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getAppliesTo <em>Applies To</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getCosts <em>Costs</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getServiceQualityProperties <em>Service Quality Properties</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getDataSecProtClause <em>Data Sec Prot Clause</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getSecurityRequirements <em>Security Requirements</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getRestrictions <em>Restrictions</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getPriorities <em>Priorities</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getEscalationProcedure <em>Escalation Procedure</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getAdditionalServices <em>Additional Services</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getParties <em>Parties</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getEscalationProcedure <em>Escalation Procedure</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getCancellation <em>Cancellation</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getExtraordinaryCancellation <em>Extraordinary Cancellation</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getEffortAccounting <em>Effort Accounting</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getReports <em>Reports</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getOwner <em>Owner</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getResponsible <em>Responsible</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getBudgeting <em>Budgeting</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getSubscriptions <em>Subscriptions</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.SLAImpl#getTags <em>Tags</em>}</li>
  * </ul>
@@ -150,6 +145,36 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
   protected String effectiveUntil = EFFECTIVE_UNTIL_EDEFAULT;
 
   /**
+   * The cached value of the '{@link #getParties() <em>Parties</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getParties()
+   * @generated
+   * @ordered
+   */
+  protected EList<Party> parties;
+
+  /**
+   * The default value of the '{@link #getScope() <em>Scope</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getScope()
+   * @generated
+   * @ordered
+   */
+  protected static final String SCOPE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getScope() <em>Scope</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getScope()
+   * @generated
+   * @ordered
+   */
+  protected String scope = SCOPE_EDEFAULT;
+
+  /**
    * The default value of the '{@link #getPreample() <em>Preample</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -190,24 +215,34 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
   protected String description = DESCRIPTION_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getScope() <em>Scope</em>}' attribute.
+   * The default value of the '{@link #getRestrictions() <em>Restrictions</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getScope()
+   * @see #getRestrictions()
    * @generated
    * @ordered
    */
-  protected static final String SCOPE_EDEFAULT = null;
+  protected static final String RESTRICTIONS_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getScope() <em>Scope</em>}' attribute.
+   * The cached value of the '{@link #getRestrictions() <em>Restrictions</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getScope()
+   * @see #getRestrictions()
    * @generated
    * @ordered
    */
-  protected String scope = SCOPE_EDEFAULT;
+  protected String restrictions = RESTRICTIONS_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getPriorities() <em>Priorities</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getPriorities()
+   * @generated
+   * @ordered
+   */
+  protected EList<PriorityDeclaration> priorities;
 
   /**
    * The cached value of the '{@link #getAppliesTo() <em>Applies To</em>}' containment reference list.
@@ -270,46 +305,6 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
   protected EList<SecurityRequirement> securityRequirements;
 
   /**
-   * The default value of the '{@link #getRestrictions() <em>Restrictions</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRestrictions()
-   * @generated
-   * @ordered
-   */
-  protected static final String RESTRICTIONS_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getRestrictions() <em>Restrictions</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getRestrictions()
-   * @generated
-   * @ordered
-   */
-  protected String restrictions = RESTRICTIONS_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getPriorities() <em>Priorities</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPriorities()
-   * @generated
-   * @ordered
-   */
-  protected EList<PriorityDeclaration> priorities;
-
-  /**
-   * The cached value of the '{@link #getEscalationProcedure() <em>Escalation Procedure</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEscalationProcedure()
-   * @generated
-   * @ordered
-   */
-  protected Escalation escalationProcedure;
-
-  /**
    * The default value of the '{@link #getAdditionalServices() <em>Additional Services</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -330,14 +325,14 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
   protected String additionalServices = ADDITIONAL_SERVICES_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getParties() <em>Parties</em>}' containment reference list.
+   * The cached value of the '{@link #getEscalationProcedure() <em>Escalation Procedure</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getParties()
+   * @see #getEscalationProcedure()
    * @generated
    * @ordered
    */
-  protected EList<Party> parties;
+  protected Escalation escalationProcedure;
 
   /**
    * The default value of the '{@link #getCancellation() <em>Cancellation</em>}' attribute.
@@ -380,26 +375,6 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
   protected String extraordinaryCancellation = EXTRAORDINARY_CANCELLATION_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getEffortAccounting() <em>Effort Accounting</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEffortAccounting()
-   * @generated
-   * @ordered
-   */
-  protected static final String EFFORT_ACCOUNTING_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getEffortAccounting() <em>Effort Accounting</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEffortAccounting()
-   * @generated
-   * @ordered
-   */
-  protected String effortAccounting = EFFORT_ACCOUNTING_EDEFAULT;
-
-  /**
    * The cached value of the '{@link #getReports() <em>Reports</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -408,36 +383,6 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * @ordered
    */
   protected EList<Report> reports;
-
-  /**
-   * The cached value of the '{@link #getOwner() <em>Owner</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOwner()
-   * @generated
-   * @ordered
-   */
-  protected User owner;
-
-  /**
-   * The cached value of the '{@link #getResponsible() <em>Responsible</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getResponsible()
-   * @generated
-   * @ordered
-   */
-  protected EList<User> responsible;
-
-  /**
-   * The cached value of the '{@link #getBudgeting() <em>Budgeting</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getBudgeting()
-   * @generated
-   * @ordered
-   */
-  protected User budgeting;
 
   /**
    * The cached value of the '{@link #getSubscriptions() <em>Subscriptions</em>}' reference list.
@@ -602,6 +547,43 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<Party> getParties()
+  {
+    if (parties == null)
+    {
+      parties = new EObjectContainmentEList<Party>(Party.class, this, SLADslPackage.SLA__PARTIES);
+    }
+    return parties;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getScope()
+  {
+    return scope;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setScope(String newScope)
+  {
+    String oldScope = scope;
+    scope = newScope;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__SCOPE, oldScope, scope));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getPreample()
   {
     return preample;
@@ -648,9 +630,9 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getScope()
+  public String getRestrictions()
   {
-    return scope;
+    return restrictions;
   }
 
   /**
@@ -658,12 +640,26 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setScope(String newScope)
+  public void setRestrictions(String newRestrictions)
   {
-    String oldScope = scope;
-    scope = newScope;
+    String oldRestrictions = restrictions;
+    restrictions = newRestrictions;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__SCOPE, oldScope, scope));
+      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__RESTRICTIONS, oldRestrictions, restrictions));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<PriorityDeclaration> getPriorities()
+  {
+    if (priorities == null)
+    {
+      priorities = new EObjectContainmentEList<PriorityDeclaration>(PriorityDeclaration.class, this, SLADslPackage.SLA__PRIORITIES);
+    }
+    return priorities;
   }
 
   /**
@@ -784,9 +780,9 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getRestrictions()
+  public String getAdditionalServices()
   {
-    return restrictions;
+    return additionalServices;
   }
 
   /**
@@ -794,26 +790,12 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setRestrictions(String newRestrictions)
+  public void setAdditionalServices(String newAdditionalServices)
   {
-    String oldRestrictions = restrictions;
-    restrictions = newRestrictions;
+    String oldAdditionalServices = additionalServices;
+    additionalServices = newAdditionalServices;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__RESTRICTIONS, oldRestrictions, restrictions));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<PriorityDeclaration> getPriorities()
-  {
-    if (priorities == null)
-    {
-      priorities = new EObjectContainmentEList<PriorityDeclaration>(PriorityDeclaration.class, this, SLADslPackage.SLA__PRIORITIES);
-    }
-    return priorities;
+      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__ADDITIONAL_SERVICES, oldAdditionalServices, additionalServices));
   }
 
   /**
@@ -869,43 +851,6 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getAdditionalServices()
-  {
-    return additionalServices;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setAdditionalServices(String newAdditionalServices)
-  {
-    String oldAdditionalServices = additionalServices;
-    additionalServices = newAdditionalServices;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__ADDITIONAL_SERVICES, oldAdditionalServices, additionalServices));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<Party> getParties()
-  {
-    if (parties == null)
-    {
-      parties = new EObjectContainmentEList<Party>(Party.class, this, SLADslPackage.SLA__PARTIES);
-    }
-    return parties;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public String getCancellation()
   {
     return cancellation;
@@ -952,29 +897,6 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getEffortAccounting()
-  {
-    return effortAccounting;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setEffortAccounting(String newEffortAccounting)
-  {
-    String oldEffortAccounting = effortAccounting;
-    effortAccounting = newEffortAccounting;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__EFFORT_ACCOUNTING, oldEffortAccounting, effortAccounting));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Report> getReports()
   {
     if (reports == null)
@@ -982,106 +904,6 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
       reports = new EObjectContainmentEList<Report>(Report.class, this, SLADslPackage.SLA__REPORTS);
     }
     return reports;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public User getOwner()
-  {
-    if (owner != null && owner.eIsProxy())
-    {
-      InternalEObject oldOwner = (InternalEObject)owner;
-      owner = (User)eResolveProxy(oldOwner);
-      if (owner != oldOwner)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SLADslPackage.SLA__OWNER, oldOwner, owner));
-      }
-    }
-    return owner;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public User basicGetOwner()
-  {
-    return owner;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setOwner(User newOwner)
-  {
-    User oldOwner = owner;
-    owner = newOwner;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__OWNER, oldOwner, owner));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<User> getResponsible()
-  {
-    if (responsible == null)
-    {
-      responsible = new EObjectResolvingEList<User>(User.class, this, SLADslPackage.SLA__RESPONSIBLE);
-    }
-    return responsible;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public User getBudgeting()
-  {
-    if (budgeting != null && budgeting.eIsProxy())
-    {
-      InternalEObject oldBudgeting = (InternalEObject)budgeting;
-      budgeting = (User)eResolveProxy(oldBudgeting);
-      if (budgeting != oldBudgeting)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SLADslPackage.SLA__BUDGETING, oldBudgeting, budgeting));
-      }
-    }
-    return budgeting;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public User basicGetBudgeting()
-  {
-    return budgeting;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setBudgeting(User newBudgeting)
-  {
-    User oldBudgeting = budgeting;
-    budgeting = newBudgeting;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.SLA__BUDGETING, oldBudgeting, budgeting));
   }
 
   /**
@@ -1124,6 +946,10 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
     {
       case SLADslPackage.SLA__VERSION:
         return basicSetVersion(null, msgs);
+      case SLADslPackage.SLA__PARTIES:
+        return ((InternalEList<?>)getParties()).basicRemove(otherEnd, msgs);
+      case SLADslPackage.SLA__PRIORITIES:
+        return ((InternalEList<?>)getPriorities()).basicRemove(otherEnd, msgs);
       case SLADslPackage.SLA__APPLIES_TO:
         return ((InternalEList<?>)getAppliesTo()).basicRemove(otherEnd, msgs);
       case SLADslPackage.SLA__COSTS:
@@ -1132,12 +958,8 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         return ((InternalEList<?>)getServiceQualityProperties()).basicRemove(otherEnd, msgs);
       case SLADslPackage.SLA__SECURITY_REQUIREMENTS:
         return ((InternalEList<?>)getSecurityRequirements()).basicRemove(otherEnd, msgs);
-      case SLADslPackage.SLA__PRIORITIES:
-        return ((InternalEList<?>)getPriorities()).basicRemove(otherEnd, msgs);
       case SLADslPackage.SLA__ESCALATION_PROCEDURE:
         return basicSetEscalationProcedure(null, msgs);
-      case SLADslPackage.SLA__PARTIES:
-        return ((InternalEList<?>)getParties()).basicRemove(otherEnd, msgs);
       case SLADslPackage.SLA__REPORTS:
         return ((InternalEList<?>)getReports()).basicRemove(otherEnd, msgs);
     }
@@ -1162,12 +984,18 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         return getEffectiveDate();
       case SLADslPackage.SLA__EFFECTIVE_UNTIL:
         return getEffectiveUntil();
+      case SLADslPackage.SLA__PARTIES:
+        return getParties();
+      case SLADslPackage.SLA__SCOPE:
+        return getScope();
       case SLADslPackage.SLA__PREAMPLE:
         return getPreample();
       case SLADslPackage.SLA__DESCRIPTION:
         return getDescription();
-      case SLADslPackage.SLA__SCOPE:
-        return getScope();
+      case SLADslPackage.SLA__RESTRICTIONS:
+        return getRestrictions();
+      case SLADslPackage.SLA__PRIORITIES:
+        return getPriorities();
       case SLADslPackage.SLA__APPLIES_TO:
         return getAppliesTo();
       case SLADslPackage.SLA__COSTS:
@@ -1178,32 +1006,16 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         return getDataSecProtClause();
       case SLADslPackage.SLA__SECURITY_REQUIREMENTS:
         return getSecurityRequirements();
-      case SLADslPackage.SLA__RESTRICTIONS:
-        return getRestrictions();
-      case SLADslPackage.SLA__PRIORITIES:
-        return getPriorities();
-      case SLADslPackage.SLA__ESCALATION_PROCEDURE:
-        return getEscalationProcedure();
       case SLADslPackage.SLA__ADDITIONAL_SERVICES:
         return getAdditionalServices();
-      case SLADslPackage.SLA__PARTIES:
-        return getParties();
+      case SLADslPackage.SLA__ESCALATION_PROCEDURE:
+        return getEscalationProcedure();
       case SLADslPackage.SLA__CANCELLATION:
         return getCancellation();
       case SLADslPackage.SLA__EXTRAORDINARY_CANCELLATION:
         return getExtraordinaryCancellation();
-      case SLADslPackage.SLA__EFFORT_ACCOUNTING:
-        return getEffortAccounting();
       case SLADslPackage.SLA__REPORTS:
         return getReports();
-      case SLADslPackage.SLA__OWNER:
-        if (resolve) return getOwner();
-        return basicGetOwner();
-      case SLADslPackage.SLA__RESPONSIBLE:
-        return getResponsible();
-      case SLADslPackage.SLA__BUDGETING:
-        if (resolve) return getBudgeting();
-        return basicGetBudgeting();
       case SLADslPackage.SLA__SUBSCRIPTIONS:
         return getSubscriptions();
       case SLADslPackage.SLA__TAGS:
@@ -1235,14 +1047,25 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
       case SLADslPackage.SLA__EFFECTIVE_UNTIL:
         setEffectiveUntil((String)newValue);
         return;
+      case SLADslPackage.SLA__PARTIES:
+        getParties().clear();
+        getParties().addAll((Collection<? extends Party>)newValue);
+        return;
+      case SLADslPackage.SLA__SCOPE:
+        setScope((String)newValue);
+        return;
       case SLADslPackage.SLA__PREAMPLE:
         setPreample((String)newValue);
         return;
       case SLADslPackage.SLA__DESCRIPTION:
         setDescription((String)newValue);
         return;
-      case SLADslPackage.SLA__SCOPE:
-        setScope((String)newValue);
+      case SLADslPackage.SLA__RESTRICTIONS:
+        setRestrictions((String)newValue);
+        return;
+      case SLADslPackage.SLA__PRIORITIES:
+        getPriorities().clear();
+        getPriorities().addAll((Collection<? extends PriorityDeclaration>)newValue);
         return;
       case SLADslPackage.SLA__APPLIES_TO:
         getAppliesTo().clear();
@@ -1262,22 +1085,11 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         getSecurityRequirements().clear();
         getSecurityRequirements().addAll((Collection<? extends SecurityRequirement>)newValue);
         return;
-      case SLADslPackage.SLA__RESTRICTIONS:
-        setRestrictions((String)newValue);
-        return;
-      case SLADslPackage.SLA__PRIORITIES:
-        getPriorities().clear();
-        getPriorities().addAll((Collection<? extends PriorityDeclaration>)newValue);
-        return;
-      case SLADslPackage.SLA__ESCALATION_PROCEDURE:
-        setEscalationProcedure((Escalation)newValue);
-        return;
       case SLADslPackage.SLA__ADDITIONAL_SERVICES:
         setAdditionalServices((String)newValue);
         return;
-      case SLADslPackage.SLA__PARTIES:
-        getParties().clear();
-        getParties().addAll((Collection<? extends Party>)newValue);
+      case SLADslPackage.SLA__ESCALATION_PROCEDURE:
+        setEscalationProcedure((Escalation)newValue);
         return;
       case SLADslPackage.SLA__CANCELLATION:
         setCancellation((String)newValue);
@@ -1285,22 +1097,9 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
       case SLADslPackage.SLA__EXTRAORDINARY_CANCELLATION:
         setExtraordinaryCancellation((String)newValue);
         return;
-      case SLADslPackage.SLA__EFFORT_ACCOUNTING:
-        setEffortAccounting((String)newValue);
-        return;
       case SLADslPackage.SLA__REPORTS:
         getReports().clear();
         getReports().addAll((Collection<? extends Report>)newValue);
-        return;
-      case SLADslPackage.SLA__OWNER:
-        setOwner((User)newValue);
-        return;
-      case SLADslPackage.SLA__RESPONSIBLE:
-        getResponsible().clear();
-        getResponsible().addAll((Collection<? extends User>)newValue);
-        return;
-      case SLADslPackage.SLA__BUDGETING:
-        setBudgeting((User)newValue);
         return;
       case SLADslPackage.SLA__SUBSCRIPTIONS:
         getSubscriptions().clear();
@@ -1336,14 +1135,23 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
       case SLADslPackage.SLA__EFFECTIVE_UNTIL:
         setEffectiveUntil(EFFECTIVE_UNTIL_EDEFAULT);
         return;
+      case SLADslPackage.SLA__PARTIES:
+        getParties().clear();
+        return;
+      case SLADslPackage.SLA__SCOPE:
+        setScope(SCOPE_EDEFAULT);
+        return;
       case SLADslPackage.SLA__PREAMPLE:
         setPreample(PREAMPLE_EDEFAULT);
         return;
       case SLADslPackage.SLA__DESCRIPTION:
         setDescription(DESCRIPTION_EDEFAULT);
         return;
-      case SLADslPackage.SLA__SCOPE:
-        setScope(SCOPE_EDEFAULT);
+      case SLADslPackage.SLA__RESTRICTIONS:
+        setRestrictions(RESTRICTIONS_EDEFAULT);
+        return;
+      case SLADslPackage.SLA__PRIORITIES:
+        getPriorities().clear();
         return;
       case SLADslPackage.SLA__APPLIES_TO:
         getAppliesTo().clear();
@@ -1360,20 +1168,11 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
       case SLADslPackage.SLA__SECURITY_REQUIREMENTS:
         getSecurityRequirements().clear();
         return;
-      case SLADslPackage.SLA__RESTRICTIONS:
-        setRestrictions(RESTRICTIONS_EDEFAULT);
-        return;
-      case SLADslPackage.SLA__PRIORITIES:
-        getPriorities().clear();
-        return;
-      case SLADslPackage.SLA__ESCALATION_PROCEDURE:
-        setEscalationProcedure((Escalation)null);
-        return;
       case SLADslPackage.SLA__ADDITIONAL_SERVICES:
         setAdditionalServices(ADDITIONAL_SERVICES_EDEFAULT);
         return;
-      case SLADslPackage.SLA__PARTIES:
-        getParties().clear();
+      case SLADslPackage.SLA__ESCALATION_PROCEDURE:
+        setEscalationProcedure((Escalation)null);
         return;
       case SLADslPackage.SLA__CANCELLATION:
         setCancellation(CANCELLATION_EDEFAULT);
@@ -1381,20 +1180,8 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
       case SLADslPackage.SLA__EXTRAORDINARY_CANCELLATION:
         setExtraordinaryCancellation(EXTRAORDINARY_CANCELLATION_EDEFAULT);
         return;
-      case SLADslPackage.SLA__EFFORT_ACCOUNTING:
-        setEffortAccounting(EFFORT_ACCOUNTING_EDEFAULT);
-        return;
       case SLADslPackage.SLA__REPORTS:
         getReports().clear();
-        return;
-      case SLADslPackage.SLA__OWNER:
-        setOwner((User)null);
-        return;
-      case SLADslPackage.SLA__RESPONSIBLE:
-        getResponsible().clear();
-        return;
-      case SLADslPackage.SLA__BUDGETING:
-        setBudgeting((User)null);
         return;
       case SLADslPackage.SLA__SUBSCRIPTIONS:
         getSubscriptions().clear();
@@ -1424,12 +1211,18 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         return EFFECTIVE_DATE_EDEFAULT == null ? effectiveDate != null : !EFFECTIVE_DATE_EDEFAULT.equals(effectiveDate);
       case SLADslPackage.SLA__EFFECTIVE_UNTIL:
         return EFFECTIVE_UNTIL_EDEFAULT == null ? effectiveUntil != null : !EFFECTIVE_UNTIL_EDEFAULT.equals(effectiveUntil);
+      case SLADslPackage.SLA__PARTIES:
+        return parties != null && !parties.isEmpty();
+      case SLADslPackage.SLA__SCOPE:
+        return SCOPE_EDEFAULT == null ? scope != null : !SCOPE_EDEFAULT.equals(scope);
       case SLADslPackage.SLA__PREAMPLE:
         return PREAMPLE_EDEFAULT == null ? preample != null : !PREAMPLE_EDEFAULT.equals(preample);
       case SLADslPackage.SLA__DESCRIPTION:
         return DESCRIPTION_EDEFAULT == null ? description != null : !DESCRIPTION_EDEFAULT.equals(description);
-      case SLADslPackage.SLA__SCOPE:
-        return SCOPE_EDEFAULT == null ? scope != null : !SCOPE_EDEFAULT.equals(scope);
+      case SLADslPackage.SLA__RESTRICTIONS:
+        return RESTRICTIONS_EDEFAULT == null ? restrictions != null : !RESTRICTIONS_EDEFAULT.equals(restrictions);
+      case SLADslPackage.SLA__PRIORITIES:
+        return priorities != null && !priorities.isEmpty();
       case SLADslPackage.SLA__APPLIES_TO:
         return appliesTo != null && !appliesTo.isEmpty();
       case SLADslPackage.SLA__COSTS:
@@ -1440,30 +1233,16 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
         return DATA_SEC_PROT_CLAUSE_EDEFAULT == null ? dataSecProtClause != null : !DATA_SEC_PROT_CLAUSE_EDEFAULT.equals(dataSecProtClause);
       case SLADslPackage.SLA__SECURITY_REQUIREMENTS:
         return securityRequirements != null && !securityRequirements.isEmpty();
-      case SLADslPackage.SLA__RESTRICTIONS:
-        return RESTRICTIONS_EDEFAULT == null ? restrictions != null : !RESTRICTIONS_EDEFAULT.equals(restrictions);
-      case SLADslPackage.SLA__PRIORITIES:
-        return priorities != null && !priorities.isEmpty();
-      case SLADslPackage.SLA__ESCALATION_PROCEDURE:
-        return escalationProcedure != null;
       case SLADslPackage.SLA__ADDITIONAL_SERVICES:
         return ADDITIONAL_SERVICES_EDEFAULT == null ? additionalServices != null : !ADDITIONAL_SERVICES_EDEFAULT.equals(additionalServices);
-      case SLADslPackage.SLA__PARTIES:
-        return parties != null && !parties.isEmpty();
+      case SLADslPackage.SLA__ESCALATION_PROCEDURE:
+        return escalationProcedure != null;
       case SLADslPackage.SLA__CANCELLATION:
         return CANCELLATION_EDEFAULT == null ? cancellation != null : !CANCELLATION_EDEFAULT.equals(cancellation);
       case SLADslPackage.SLA__EXTRAORDINARY_CANCELLATION:
         return EXTRAORDINARY_CANCELLATION_EDEFAULT == null ? extraordinaryCancellation != null : !EXTRAORDINARY_CANCELLATION_EDEFAULT.equals(extraordinaryCancellation);
-      case SLADslPackage.SLA__EFFORT_ACCOUNTING:
-        return EFFORT_ACCOUNTING_EDEFAULT == null ? effortAccounting != null : !EFFORT_ACCOUNTING_EDEFAULT.equals(effortAccounting);
       case SLADslPackage.SLA__REPORTS:
         return reports != null && !reports.isEmpty();
-      case SLADslPackage.SLA__OWNER:
-        return owner != null;
-      case SLADslPackage.SLA__RESPONSIBLE:
-        return responsible != null && !responsible.isEmpty();
-      case SLADslPackage.SLA__BUDGETING:
-        return budgeting != null;
       case SLADslPackage.SLA__SUBSCRIPTIONS:
         return subscriptions != null && !subscriptions.isEmpty();
       case SLADslPackage.SLA__TAGS:
@@ -1489,24 +1268,22 @@ public class SLAImpl extends MinimalEObjectImpl.Container implements SLA
     result.append(effectiveDate);
     result.append(", effectiveUntil: ");
     result.append(effectiveUntil);
+    result.append(", scope: ");
+    result.append(scope);
     result.append(", preample: ");
     result.append(preample);
     result.append(", description: ");
     result.append(description);
-    result.append(", scope: ");
-    result.append(scope);
-    result.append(", dataSecProtClause: ");
-    result.append(dataSecProtClause);
     result.append(", restrictions: ");
     result.append(restrictions);
+    result.append(", dataSecProtClause: ");
+    result.append(dataSecProtClause);
     result.append(", additionalServices: ");
     result.append(additionalServices);
     result.append(", cancellation: ");
     result.append(cancellation);
     result.append(", extraordinaryCancellation: ");
     result.append(extraordinaryCancellation);
-    result.append(", effortAccounting: ");
-    result.append(effortAccounting);
     result.append(')');
     return result.toString();
   }

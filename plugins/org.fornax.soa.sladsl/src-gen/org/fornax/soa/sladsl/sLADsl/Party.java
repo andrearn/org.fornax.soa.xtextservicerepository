@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl;
 
@@ -58,7 +57,7 @@ public interface Party extends EObject
 
   /**
    * Returns the value of the '<em><b>Representatives</b></em>' containment reference list.
-   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.Repesentative}.
+   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.Representative}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Representatives</em>' containment reference list isn't clear,
@@ -70,7 +69,7 @@ public interface Party extends EObject
    * @model containment="true"
    * @generated
    */
-  EList<Repesentative> getRepresentatives();
+  EList<Representative> getRepresentatives();
 
   /**
    * Returns the value of the '<em><b>Responsibilities</b></em>' containment reference list.

@@ -3,7 +3,7 @@
  * </copyright>
  *
  */
-package org.fornax.soa.solutionDsl.impl;
+package org.fornax.soa.sladsl.sLADsl.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -11,44 +11,43 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.fornax.soa.serviceDsl.Operation;
+import org.fornax.soa.basedsl.sOABaseDsl.User;
 
-import org.fornax.soa.solutionDsl.SimpleOperationRef;
-import org.fornax.soa.solutionDsl.SolutionDslPackage;
+import org.fornax.soa.sladsl.sLADsl.SLADslPackage;
+import org.fornax.soa.sladsl.sLADsl.UserRef;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Simple Operation Ref</b></em>'.
+ * An implementation of the model object '<em><b>User Ref</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link org.fornax.soa.solutionDsl.impl.SimpleOperationRefImpl#getOperation <em>Operation</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.UserRefImpl#getRepresentative <em>Representative</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class SimpleOperationRefImpl extends MinimalEObjectImpl.Container implements SimpleOperationRef
+public class UserRefImpl extends RepresentativeImpl implements UserRef
 {
   /**
-   * The cached value of the '{@link #getOperation() <em>Operation</em>}' reference.
+   * The cached value of the '{@link #getRepresentative() <em>Representative</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getOperation()
+   * @see #getRepresentative()
    * @generated
    * @ordered
    */
-  protected Operation operation;
+  protected User representative;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected SimpleOperationRefImpl()
+  protected UserRefImpl()
   {
     super();
   }
@@ -61,7 +60,7 @@ public class SimpleOperationRefImpl extends MinimalEObjectImpl.Container impleme
   @Override
   protected EClass eStaticClass()
   {
-    return SolutionDslPackage.Literals.SIMPLE_OPERATION_REF;
+    return SLADslPackage.Literals.USER_REF;
   }
 
   /**
@@ -69,19 +68,19 @@ public class SimpleOperationRefImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  public Operation getOperation()
+  public User getRepresentative()
   {
-    if (operation != null && operation.eIsProxy())
+    if (representative != null && representative.eIsProxy())
     {
-      InternalEObject oldOperation = (InternalEObject)operation;
-      operation = (Operation)eResolveProxy(oldOperation);
-      if (operation != oldOperation)
+      InternalEObject oldRepresentative = (InternalEObject)representative;
+      representative = (User)eResolveProxy(oldRepresentative);
+      if (representative != oldRepresentative)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SolutionDslPackage.SIMPLE_OPERATION_REF__OPERATION, oldOperation, operation));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SLADslPackage.USER_REF__REPRESENTATIVE, oldRepresentative, representative));
       }
     }
-    return operation;
+    return representative;
   }
 
   /**
@@ -89,9 +88,9 @@ public class SimpleOperationRefImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  public Operation basicGetOperation()
+  public User basicGetRepresentative()
   {
-    return operation;
+    return representative;
   }
 
   /**
@@ -99,12 +98,12 @@ public class SimpleOperationRefImpl extends MinimalEObjectImpl.Container impleme
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setOperation(Operation newOperation)
+  public void setRepresentative(User newRepresentative)
   {
-    Operation oldOperation = operation;
-    operation = newOperation;
+    User oldRepresentative = representative;
+    representative = newRepresentative;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SolutionDslPackage.SIMPLE_OPERATION_REF__OPERATION, oldOperation, operation));
+      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.USER_REF__REPRESENTATIVE, oldRepresentative, representative));
   }
 
   /**
@@ -117,9 +116,9 @@ public class SimpleOperationRefImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case SolutionDslPackage.SIMPLE_OPERATION_REF__OPERATION:
-        if (resolve) return getOperation();
-        return basicGetOperation();
+      case SLADslPackage.USER_REF__REPRESENTATIVE:
+        if (resolve) return getRepresentative();
+        return basicGetRepresentative();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -134,8 +133,8 @@ public class SimpleOperationRefImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case SolutionDslPackage.SIMPLE_OPERATION_REF__OPERATION:
-        setOperation((Operation)newValue);
+      case SLADslPackage.USER_REF__REPRESENTATIVE:
+        setRepresentative((User)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -151,8 +150,8 @@ public class SimpleOperationRefImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case SolutionDslPackage.SIMPLE_OPERATION_REF__OPERATION:
-        setOperation((Operation)null);
+      case SLADslPackage.USER_REF__REPRESENTATIVE:
+        setRepresentative((User)null);
         return;
     }
     super.eUnset(featureID);
@@ -168,10 +167,10 @@ public class SimpleOperationRefImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case SolutionDslPackage.SIMPLE_OPERATION_REF__OPERATION:
-        return operation != null;
+      case SLADslPackage.USER_REF__REPRESENTATIVE:
+        return representative != null;
     }
     return super.eIsSet(featureID);
   }
 
-} //SimpleOperationRefImpl
+} //UserRefImpl

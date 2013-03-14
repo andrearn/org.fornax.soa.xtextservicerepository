@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.solutionDsl.impl;
 
@@ -356,7 +355,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSolution_Subscriptions()
+  public EReference getSolution_Tags()
   {
     return (EReference)solutionEClass.getEStructuralFeatures().get(13);
   }
@@ -366,7 +365,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSolution_Tags()
+  public EReference getSolution_Subscriptions()
   {
     return (EReference)solutionEClass.getEStructuralFeatures().get(14);
   }
@@ -496,7 +495,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModule_Subscriptions()
+  public EReference getModule_Tags()
   {
     return (EReference)moduleEClass.getEStructuralFeatures().get(11);
   }
@@ -506,7 +505,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getModule_Tags()
+  public EReference getModule_Subscriptions()
   {
     return (EReference)moduleEClass.getEStructuralFeatures().get(12);
   }
@@ -636,7 +635,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFeature_Subscriptions()
+  public EReference getFeature_Tags()
   {
     return (EReference)featureEClass.getEStructuralFeatures().get(11);
   }
@@ -646,7 +645,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFeature_Tags()
+  public EReference getFeature_Features()
   {
     return (EReference)featureEClass.getEStructuralFeatures().get(12);
   }
@@ -656,7 +655,7 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFeature_Features()
+  public EReference getFeature_Subscriptions()
   {
     return (EReference)featureEClass.getEStructuralFeatures().get(13);
   }
@@ -859,8 +858,8 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     createEReference(solutionEClass, SOLUTION__OWNER);
     createEReference(solutionEClass, SOLUTION__RESPONSIBLE);
     createEReference(solutionEClass, SOLUTION__BUDGETING);
-    createEReference(solutionEClass, SOLUTION__SUBSCRIPTIONS);
     createEReference(solutionEClass, SOLUTION__TAGS);
+    createEReference(solutionEClass, SOLUTION__SUBSCRIPTIONS);
 
     moduleEClass = createEClass(MODULE);
     createEAttribute(moduleEClass, MODULE__NAME);
@@ -874,8 +873,8 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     createEReference(moduleEClass, MODULE__OWNER);
     createEReference(moduleEClass, MODULE__RESPONSIBLE);
     createEReference(moduleEClass, MODULE__BUDGETING);
-    createEReference(moduleEClass, MODULE__SUBSCRIPTIONS);
     createEReference(moduleEClass, MODULE__TAGS);
+    createEReference(moduleEClass, MODULE__SUBSCRIPTIONS);
 
     featureEClass = createEClass(FEATURE);
     createEAttribute(featureEClass, FEATURE__NON_FUNCTIONAL);
@@ -889,9 +888,9 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     createEReference(featureEClass, FEATURE__OWNER);
     createEReference(featureEClass, FEATURE__RESPONSIBLE);
     createEReference(featureEClass, FEATURE__BUDGETING);
-    createEReference(featureEClass, FEATURE__SUBSCRIPTIONS);
     createEReference(featureEClass, FEATURE__TAGS);
     createEReference(featureEClass, FEATURE__FEATURES);
+    createEReference(featureEClass, FEATURE__SUBSCRIPTIONS);
 
     serviceRefEClass = createEClass(SERVICE_REF);
     createEReference(serviceRefEClass, SERVICE_REF__SERVICE);
@@ -973,8 +972,8 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     initEReference(getSolution_Owner(), theSOABaseDslPackage.getUser(), null, "owner", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_Responsible(), theSOABaseDslPackage.getUser(), null, "responsible", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_Budgeting(), theSOABaseDslPackage.getUser(), null, "budgeting", null, 0, 1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSolution_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSolution_Tags(), theSemanticsDslPackage.getTag(), null, "tags", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSolution_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, Solution.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(moduleEClass, Module.class, "Module", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModule_Name(), ecorePackage.getEString(), "name", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -988,8 +987,8 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     initEReference(getModule_Owner(), theSOABaseDslPackage.getUser(), null, "owner", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModule_Responsible(), theSOABaseDslPackage.getUser(), null, "responsible", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModule_Budgeting(), theSOABaseDslPackage.getUser(), null, "budgeting", null, 0, 1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getModule_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getModule_Tags(), theSemanticsDslPackage.getTag(), null, "tags", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModule_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, Module.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(featureEClass, Feature.class, "Feature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getFeature_NonFunctional(), ecorePackage.getEBoolean(), "nonFunctional", null, 0, 1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1003,9 +1002,9 @@ public class SolutionDslPackageImpl extends EPackageImpl implements SolutionDslP
     initEReference(getFeature_Owner(), theSOABaseDslPackage.getUser(), null, "owner", null, 0, 1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFeature_Responsible(), theSOABaseDslPackage.getUser(), null, "responsible", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFeature_Budgeting(), theSOABaseDslPackage.getUser(), null, "budgeting", null, 0, 1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFeature_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFeature_Tags(), theSemanticsDslPackage.getTag(), null, "tags", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFeature_Features(), this.getFeature(), null, "features", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFeature_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, Feature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(serviceRefEClass, ServiceRef.class, "ServiceRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getServiceRef_Service(), theServiceDslPackage.getService(), null, "service", null, 0, 1, ServiceRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

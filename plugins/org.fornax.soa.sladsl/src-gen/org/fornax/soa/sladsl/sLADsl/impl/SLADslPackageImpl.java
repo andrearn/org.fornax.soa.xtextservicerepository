@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl.impl;
 
@@ -31,6 +30,7 @@ import org.fornax.soa.sladsl.sLADsl.EncryptionRequirement;
 import org.fornax.soa.sladsl.sLADsl.Escalation;
 import org.fornax.soa.sladsl.sLADsl.HashAlgKind;
 import org.fornax.soa.sladsl.sLADsl.HashAlgorithm;
+import org.fornax.soa.sladsl.sLADsl.InlineRepresentative;
 import org.fornax.soa.sladsl.sLADsl.Latency;
 import org.fornax.soa.sladsl.sLADsl.LogRequirement;
 import org.fornax.soa.sladsl.sLADsl.LogRequirementKind;
@@ -43,9 +43,8 @@ import org.fornax.soa.sladsl.sLADsl.PriorityDeclaration;
 import org.fornax.soa.sladsl.sLADsl.ProviderParty;
 import org.fornax.soa.sladsl.sLADsl.ReliablilityKind;
 import org.fornax.soa.sladsl.sLADsl.ReliablityRequirement;
-import org.fornax.soa.sladsl.sLADsl.Repesentative;
 import org.fornax.soa.sladsl.sLADsl.Report;
-import org.fornax.soa.sladsl.sLADsl.ReportingResponsibility;
+import org.fornax.soa.sladsl.sLADsl.Representative;
 import org.fornax.soa.sladsl.sLADsl.Responsibility;
 import org.fornax.soa.sladsl.sLADsl.SLADslFactory;
 import org.fornax.soa.sladsl.sLADsl.SLADslPackage;
@@ -53,10 +52,10 @@ import org.fornax.soa.sladsl.sLADsl.SecurityRequirement;
 import org.fornax.soa.sladsl.sLADsl.ServiceQualityProperty;
 import org.fornax.soa.sladsl.sLADsl.SigningAlgothm;
 import org.fornax.soa.sladsl.sLADsl.SigningRequirement;
-import org.fornax.soa.sladsl.sLADsl.SimpleResponsibility;
 import org.fornax.soa.sladsl.sLADsl.SlaModel;
 import org.fornax.soa.sladsl.sLADsl.ThirdParty;
 import org.fornax.soa.sladsl.sLADsl.Throughput;
+import org.fornax.soa.sladsl.sLADsl.UserRef;
 
 /**
  * <!-- begin-user-doc -->
@@ -253,7 +252,21 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass repesentativeEClass = null;
+  private EClass representativeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass userRefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass inlineRepresentativeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -267,21 +280,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass simpleResponsibilityEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass reportEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass reportingResponsibilityEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -474,19 +473,9 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSLA_Preample()
+  public EReference getSLA_Parties()
   {
-    return (EAttribute)slaEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSLA_Description()
-  {
-    return (EAttribute)slaEClass.getEStructuralFeatures().get(5);
+    return (EReference)slaEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -496,6 +485,16 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    */
   public EAttribute getSLA_Scope()
   {
+    return (EAttribute)slaEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSLA_Preample()
+  {
     return (EAttribute)slaEClass.getEStructuralFeatures().get(6);
   }
 
@@ -504,49 +503,9 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSLA_AppliesTo()
+  public EAttribute getSLA_Description()
   {
-    return (EReference)slaEClass.getEStructuralFeatures().get(7);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSLA_Costs()
-  {
-    return (EReference)slaEClass.getEStructuralFeatures().get(8);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSLA_ServiceQualityProperties()
-  {
-    return (EReference)slaEClass.getEStructuralFeatures().get(9);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSLA_DataSecProtClause()
-  {
-    return (EAttribute)slaEClass.getEStructuralFeatures().get(10);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSLA_SecurityRequirements()
-  {
-    return (EReference)slaEClass.getEStructuralFeatures().get(11);
+    return (EAttribute)slaEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -556,7 +515,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    */
   public EAttribute getSLA_Restrictions()
   {
-    return (EAttribute)slaEClass.getEStructuralFeatures().get(12);
+    return (EAttribute)slaEClass.getEStructuralFeatures().get(8);
   }
 
   /**
@@ -566,7 +525,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    */
   public EReference getSLA_Priorities()
   {
-    return (EReference)slaEClass.getEStructuralFeatures().get(13);
+    return (EReference)slaEClass.getEStructuralFeatures().get(9);
   }
 
   /**
@@ -574,7 +533,47 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSLA_EscalationProcedure()
+  public EReference getSLA_AppliesTo()
+  {
+    return (EReference)slaEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSLA_Costs()
+  {
+    return (EReference)slaEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSLA_ServiceQualityProperties()
+  {
+    return (EReference)slaEClass.getEStructuralFeatures().get(12);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSLA_DataSecProtClause()
+  {
+    return (EAttribute)slaEClass.getEStructuralFeatures().get(13);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSLA_SecurityRequirements()
   {
     return (EReference)slaEClass.getEStructuralFeatures().get(14);
   }
@@ -594,7 +593,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSLA_Parties()
+  public EReference getSLA_EscalationProcedure()
   {
     return (EReference)slaEClass.getEStructuralFeatures().get(16);
   }
@@ -624,49 +623,9 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSLA_EffortAccounting()
-  {
-    return (EAttribute)slaEClass.getEStructuralFeatures().get(19);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getSLA_Reports()
   {
-    return (EReference)slaEClass.getEStructuralFeatures().get(20);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSLA_Owner()
-  {
-    return (EReference)slaEClass.getEStructuralFeatures().get(21);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSLA_Responsible()
-  {
-    return (EReference)slaEClass.getEStructuralFeatures().get(22);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSLA_Budgeting()
-  {
-    return (EReference)slaEClass.getEStructuralFeatures().get(23);
+    return (EReference)slaEClass.getEStructuralFeatures().get(19);
   }
 
   /**
@@ -676,7 +635,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    */
   public EReference getSLA_Subscriptions()
   {
-    return (EReference)slaEClass.getEStructuralFeatures().get(24);
+    return (EReference)slaEClass.getEStructuralFeatures().get(20);
   }
 
   /**
@@ -686,7 +645,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    */
   public EReference getSLA_Tags()
   {
-    return (EReference)slaEClass.getEStructuralFeatures().get(25);
+    return (EReference)slaEClass.getEStructuralFeatures().get(21);
   }
 
   /**
@@ -724,9 +683,19 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getCost_EffortAccounting()
+  {
+    return (EAttribute)costEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getCost_Escalation()
   {
-    return (EReference)costEClass.getEStructuralFeatures().get(2);
+    return (EReference)costEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -736,7 +705,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    */
   public EAttribute getCost_Penalty()
   {
-    return (EAttribute)costEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)costEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -1534,9 +1503,9 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getRepesentative()
+  public EClass getRepresentative()
   {
-    return repesentativeEClass;
+    return representativeEClass;
   }
 
   /**
@@ -1544,9 +1513,9 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getRepesentative_Fullname()
+  public EClass getUserRef()
   {
-    return (EAttribute)repesentativeEClass.getEStructuralFeatures().get(0);
+    return userRefEClass;
   }
 
   /**
@@ -1554,9 +1523,9 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getRepesentative_Phone()
+  public EReference getUserRef_Representative()
   {
-    return (EAttribute)repesentativeEClass.getEStructuralFeatures().get(1);
+    return (EReference)userRefEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1564,9 +1533,69 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getRepesentative_Email()
+  public EClass getInlineRepresentative()
   {
-    return (EAttribute)repesentativeEClass.getEStructuralFeatures().get(2);
+    return inlineRepresentativeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getInlineRepresentative_Firstname()
+  {
+    return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getInlineRepresentative_Lastname()
+  {
+    return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getInlineRepresentative_Org()
+  {
+    return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getInlineRepresentative_OrgUnit()
+  {
+    return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getInlineRepresentative_Email()
+  {
+    return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getInlineRepresentative_Phone()
+  {
+    return (EAttribute)inlineRepresentativeEClass.getEStructuralFeatures().get(5);
   }
 
   /**
@@ -1584,49 +1613,9 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getResponsibility_Name()
+  public EAttribute getResponsibility_Description()
   {
     return (EAttribute)responsibilityEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getResponsibility_Escalations()
-  {
-    return (EReference)responsibilityEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getResponsibility_Penalty()
-  {
-    return (EAttribute)responsibilityEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getSimpleResponsibility()
-  {
-    return simpleResponsibilityEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSimpleResponsibility_Description()
-  {
-    return (EAttribute)simpleResponsibilityEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1654,9 +1643,9 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getReport_ReportTo()
+  public EReference getReport_ReportTo()
   {
-    return (EAttribute)reportEClass.getEStructuralFeatures().get(1);
+    return (EReference)reportEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1667,26 +1656,6 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
   public EAttribute getReport_Content()
   {
     return (EAttribute)reportEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getReportingResponsibility()
-  {
-    return reportingResponsibilityEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getReportingResponsibility_Content()
-  {
-    return (EAttribute)reportingResponsibilityEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1797,32 +1766,29 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     createEReference(slaEClass, SLA__VERSION);
     createEAttribute(slaEClass, SLA__EFFECTIVE_DATE);
     createEAttribute(slaEClass, SLA__EFFECTIVE_UNTIL);
+    createEReference(slaEClass, SLA__PARTIES);
+    createEAttribute(slaEClass, SLA__SCOPE);
     createEAttribute(slaEClass, SLA__PREAMPLE);
     createEAttribute(slaEClass, SLA__DESCRIPTION);
-    createEAttribute(slaEClass, SLA__SCOPE);
+    createEAttribute(slaEClass, SLA__RESTRICTIONS);
+    createEReference(slaEClass, SLA__PRIORITIES);
     createEReference(slaEClass, SLA__APPLIES_TO);
     createEReference(slaEClass, SLA__COSTS);
     createEReference(slaEClass, SLA__SERVICE_QUALITY_PROPERTIES);
     createEAttribute(slaEClass, SLA__DATA_SEC_PROT_CLAUSE);
     createEReference(slaEClass, SLA__SECURITY_REQUIREMENTS);
-    createEAttribute(slaEClass, SLA__RESTRICTIONS);
-    createEReference(slaEClass, SLA__PRIORITIES);
-    createEReference(slaEClass, SLA__ESCALATION_PROCEDURE);
     createEAttribute(slaEClass, SLA__ADDITIONAL_SERVICES);
-    createEReference(slaEClass, SLA__PARTIES);
+    createEReference(slaEClass, SLA__ESCALATION_PROCEDURE);
     createEAttribute(slaEClass, SLA__CANCELLATION);
     createEAttribute(slaEClass, SLA__EXTRAORDINARY_CANCELLATION);
-    createEAttribute(slaEClass, SLA__EFFORT_ACCOUNTING);
     createEReference(slaEClass, SLA__REPORTS);
-    createEReference(slaEClass, SLA__OWNER);
-    createEReference(slaEClass, SLA__RESPONSIBLE);
-    createEReference(slaEClass, SLA__BUDGETING);
     createEReference(slaEClass, SLA__SUBSCRIPTIONS);
     createEReference(slaEClass, SLA__TAGS);
 
     costEClass = createEClass(COST);
     createEAttribute(costEClass, COST__COSTS_AMOUNT);
     createEAttribute(costEClass, COST__BILLED_UNIT);
+    createEAttribute(costEClass, COST__EFFORT_ACCOUNTING);
     createEReference(costEClass, COST__ESCALATION);
     createEAttribute(costEClass, COST__PENALTY);
 
@@ -1928,26 +1894,26 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     thirdPartyEClass = createEClass(THIRD_PARTY);
     createEAttribute(thirdPartyEClass, THIRD_PARTY__ROLE);
 
-    repesentativeEClass = createEClass(REPESENTATIVE);
-    createEAttribute(repesentativeEClass, REPESENTATIVE__FULLNAME);
-    createEAttribute(repesentativeEClass, REPESENTATIVE__PHONE);
-    createEAttribute(repesentativeEClass, REPESENTATIVE__EMAIL);
+    representativeEClass = createEClass(REPRESENTATIVE);
+
+    userRefEClass = createEClass(USER_REF);
+    createEReference(userRefEClass, USER_REF__REPRESENTATIVE);
+
+    inlineRepresentativeEClass = createEClass(INLINE_REPRESENTATIVE);
+    createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__FIRSTNAME);
+    createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__LASTNAME);
+    createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__ORG);
+    createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__ORG_UNIT);
+    createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__EMAIL);
+    createEAttribute(inlineRepresentativeEClass, INLINE_REPRESENTATIVE__PHONE);
 
     responsibilityEClass = createEClass(RESPONSIBILITY);
-    createEAttribute(responsibilityEClass, RESPONSIBILITY__NAME);
-    createEReference(responsibilityEClass, RESPONSIBILITY__ESCALATIONS);
-    createEAttribute(responsibilityEClass, RESPONSIBILITY__PENALTY);
-
-    simpleResponsibilityEClass = createEClass(SIMPLE_RESPONSIBILITY);
-    createEAttribute(simpleResponsibilityEClass, SIMPLE_RESPONSIBILITY__DESCRIPTION);
+    createEAttribute(responsibilityEClass, RESPONSIBILITY__DESCRIPTION);
 
     reportEClass = createEClass(REPORT);
     createEAttribute(reportEClass, REPORT__NAME);
-    createEAttribute(reportEClass, REPORT__REPORT_TO);
+    createEReference(reportEClass, REPORT__REPORT_TO);
     createEAttribute(reportEClass, REPORT__CONTENT);
-
-    reportingResponsibilityEClass = createEClass(REPORTING_RESPONSIBILITY);
-    createEAttribute(reportingResponsibilityEClass, REPORTING_RESPONSIBILITY__CONTENT);
 
     // Create enums
     hashAlgKindEEnum = createEEnum(HASH_ALG_KIND);
@@ -2006,8 +1972,8 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     customerPartyEClass.getESuperTypes().add(this.getParty());
     providerPartyEClass.getESuperTypes().add(this.getParty());
     thirdPartyEClass.getESuperTypes().add(this.getParty());
-    simpleResponsibilityEClass.getESuperTypes().add(this.getResponsibility());
-    reportingResponsibilityEClass.getESuperTypes().add(this.getResponsibility());
+    userRefEClass.getESuperTypes().add(this.getRepresentative());
+    inlineRepresentativeEClass.getESuperTypes().add(this.getRepresentative());
 
     // Initialize classes and features; add operations and parameters
     initEClass(slaModelEClass, SlaModel.class, "SlaModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2018,32 +1984,29 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     initEReference(getSLA_Version(), theSOABaseDslPackage.getVersion(), null, "version", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_EffectiveDate(), ecorePackage.getEString(), "effectiveDate", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_EffectiveUntil(), ecorePackage.getEString(), "effectiveUntil", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSLA_Parties(), this.getParty(), null, "parties", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSLA_Scope(), ecorePackage.getEString(), "scope", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_Preample(), ecorePackage.getEString(), "preample", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_Description(), ecorePackage.getEString(), "description", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSLA_Scope(), ecorePackage.getEString(), "scope", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSLA_Restrictions(), ecorePackage.getEString(), "restrictions", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSLA_Priorities(), this.getPriorityDeclaration(), null, "priorities", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_AppliesTo(), theSOABaseDslPackage.getAssetRef(), null, "appliesTo", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_Costs(), this.getCost(), null, "costs", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_ServiceQualityProperties(), this.getServiceQualityProperty(), null, "serviceQualityProperties", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_DataSecProtClause(), ecorePackage.getEString(), "dataSecProtClause", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_SecurityRequirements(), this.getSecurityRequirement(), null, "securityRequirements", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSLA_Restrictions(), ecorePackage.getEString(), "restrictions", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSLA_Priorities(), this.getPriorityDeclaration(), null, "priorities", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSLA_EscalationProcedure(), this.getEscalation(), null, "escalationProcedure", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_AdditionalServices(), ecorePackage.getEString(), "additionalServices", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSLA_Parties(), this.getParty(), null, "parties", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSLA_EscalationProcedure(), this.getEscalation(), null, "escalationProcedure", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_Cancellation(), ecorePackage.getEString(), "cancellation", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSLA_ExtraordinaryCancellation(), ecorePackage.getEString(), "extraordinaryCancellation", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSLA_EffortAccounting(), ecorePackage.getEString(), "effortAccounting", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_Reports(), this.getReport(), null, "reports", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSLA_Owner(), theSOABaseDslPackage.getUser(), null, "owner", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSLA_Responsible(), theSOABaseDslPackage.getUser(), null, "responsible", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSLA_Budgeting(), theSOABaseDslPackage.getUser(), null, "budgeting", null, 0, 1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_Subscriptions(), theSOABaseDslPackage.getUser(), null, "subscriptions", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSLA_Tags(), theSemanticsDslPackage.getTag(), null, "tags", null, 0, -1, org.fornax.soa.sladsl.sLADsl.SLA.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(costEClass, Cost.class, "Cost", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getCost_CostsAmount(), ecorePackage.getEString(), "costsAmount", null, 0, 1, Cost.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCost_BilledUnit(), ecorePackage.getEString(), "billedUnit", null, 0, 1, Cost.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCost_EffortAccounting(), ecorePackage.getEString(), "effortAccounting", null, 0, 1, Cost.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getCost_Escalation(), this.getEscalation(), null, "escalation", null, 0, 1, Cost.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getCost_Penalty(), ecorePackage.getEString(), "penalty", null, 0, 1, Cost.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -2139,7 +2102,7 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
 
     initEClass(partyEClass, Party.class, "Party", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getParty_Name(), ecorePackage.getEString(), "name", null, 0, 1, Party.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getParty_Representatives(), this.getRepesentative(), null, "representatives", null, 0, -1, Party.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getParty_Representatives(), this.getRepresentative(), null, "representatives", null, 0, -1, Party.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getParty_Responsibilities(), this.getResponsibility(), null, "responsibilities", null, 0, -1, Party.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(customerPartyEClass, CustomerParty.class, "CustomerParty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2149,26 +2112,26 @@ public class SLADslPackageImpl extends EPackageImpl implements SLADslPackage
     initEClass(thirdPartyEClass, ThirdParty.class, "ThirdParty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getThirdParty_Role(), ecorePackage.getEString(), "role", null, 0, 1, ThirdParty.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(repesentativeEClass, Repesentative.class, "Repesentative", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getRepesentative_Fullname(), ecorePackage.getEString(), "fullname", null, 0, 1, Repesentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getRepesentative_Phone(), ecorePackage.getEString(), "phone", null, 0, 1, Repesentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getRepesentative_Email(), ecorePackage.getEString(), "email", null, 0, 1, Repesentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(representativeEClass, Representative.class, "Representative", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(userRefEClass, UserRef.class, "UserRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getUserRef_Representative(), theSOABaseDslPackage.getUser(), null, "representative", null, 0, 1, UserRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(inlineRepresentativeEClass, InlineRepresentative.class, "InlineRepresentative", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getInlineRepresentative_Firstname(), ecorePackage.getEString(), "firstname", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInlineRepresentative_Lastname(), ecorePackage.getEString(), "lastname", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInlineRepresentative_Org(), ecorePackage.getEString(), "org", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInlineRepresentative_OrgUnit(), ecorePackage.getEString(), "orgUnit", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInlineRepresentative_Email(), ecorePackage.getEString(), "email", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getInlineRepresentative_Phone(), ecorePackage.getEString(), "phone", null, 0, 1, InlineRepresentative.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(responsibilityEClass, Responsibility.class, "Responsibility", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getResponsibility_Name(), ecorePackage.getEString(), "name", null, 0, 1, Responsibility.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getResponsibility_Escalations(), this.getEscalation(), null, "escalations", null, 0, -1, Responsibility.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResponsibility_Penalty(), ecorePackage.getEString(), "penalty", null, 0, 1, Responsibility.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(simpleResponsibilityEClass, SimpleResponsibility.class, "SimpleResponsibility", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSimpleResponsibility_Description(), ecorePackage.getEString(), "description", null, 0, 1, SimpleResponsibility.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResponsibility_Description(), ecorePackage.getEString(), "description", null, 0, 1, Responsibility.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(reportEClass, Report.class, "Report", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getReport_Name(), ecorePackage.getEString(), "name", null, 0, 1, Report.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getReport_ReportTo(), ecorePackage.getEString(), "reportTo", null, 0, 1, Report.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReport_ReportTo(), theSOABaseDslPackage.getUser(), null, "reportTo", null, 0, 1, Report.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReport_Content(), ecorePackage.getEString(), "content", null, 0, 1, Report.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(reportingResponsibilityEClass, ReportingResponsibility.class, "ReportingResponsibility", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getReportingResponsibility_Content(), ecorePackage.getEString(), "content", null, 0, 1, ReportingResponsibility.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(hashAlgKindEEnum, HashAlgKind.class, "HashAlgKind");

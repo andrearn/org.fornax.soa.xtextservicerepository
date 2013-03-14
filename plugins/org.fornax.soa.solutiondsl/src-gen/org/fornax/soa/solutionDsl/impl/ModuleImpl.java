@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.solutionDsl.impl;
 
@@ -55,8 +54,8 @@ import org.fornax.soa.solutionDsl.Version;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getOwner <em>Owner</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getResponsible <em>Responsible</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getBudgeting <em>Budgeting</em>}</li>
- *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getSubscriptions <em>Subscriptions</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getTags <em>Tags</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.ModuleImpl#getSubscriptions <em>Subscriptions</em>}</li>
  * </ul>
  * </p>
  *
@@ -195,16 +194,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
   protected User budgeting;
 
   /**
-   * The cached value of the '{@link #getSubscriptions() <em>Subscriptions</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSubscriptions()
-   * @generated
-   * @ordered
-   */
-  protected EList<User> subscriptions;
-
-  /**
    * The cached value of the '{@link #getTags() <em>Tags</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -213,6 +202,16 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * @ordered
    */
   protected EList<Tag> tags;
+
+  /**
+   * The cached value of the '{@link #getSubscriptions() <em>Subscriptions</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSubscriptions()
+   * @generated
+   * @ordered
+   */
+  protected EList<User> subscriptions;
 
   /**
    * <!-- begin-user-doc -->
@@ -538,20 +537,6 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<User> getSubscriptions()
-  {
-    if (subscriptions == null)
-    {
-      subscriptions = new EObjectResolvingEList<User>(User.class, this, SolutionDslPackage.MODULE__SUBSCRIPTIONS);
-    }
-    return subscriptions;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Tag> getTags()
   {
     if (tags == null)
@@ -559,6 +544,20 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       tags = new EObjectResolvingEList<Tag>(Tag.class, this, SolutionDslPackage.MODULE__TAGS);
     }
     return tags;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<User> getSubscriptions()
+  {
+    if (subscriptions == null)
+    {
+      subscriptions = new EObjectResolvingEList<User>(User.class, this, SolutionDslPackage.MODULE__SUBSCRIPTIONS);
+    }
+    return subscriptions;
   }
 
   /**
@@ -619,10 +618,10 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       case SolutionDslPackage.MODULE__BUDGETING:
         if (resolve) return getBudgeting();
         return basicGetBudgeting();
-      case SolutionDslPackage.MODULE__SUBSCRIPTIONS:
-        return getSubscriptions();
       case SolutionDslPackage.MODULE__TAGS:
         return getTags();
+      case SolutionDslPackage.MODULE__SUBSCRIPTIONS:
+        return getSubscriptions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -676,13 +675,13 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       case SolutionDslPackage.MODULE__BUDGETING:
         setBudgeting((User)newValue);
         return;
-      case SolutionDslPackage.MODULE__SUBSCRIPTIONS:
-        getSubscriptions().clear();
-        getSubscriptions().addAll((Collection<? extends User>)newValue);
-        return;
       case SolutionDslPackage.MODULE__TAGS:
         getTags().clear();
         getTags().addAll((Collection<? extends Tag>)newValue);
+        return;
+      case SolutionDslPackage.MODULE__SUBSCRIPTIONS:
+        getSubscriptions().clear();
+        getSubscriptions().addAll((Collection<? extends User>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -731,11 +730,11 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
       case SolutionDslPackage.MODULE__BUDGETING:
         setBudgeting((User)null);
         return;
-      case SolutionDslPackage.MODULE__SUBSCRIPTIONS:
-        getSubscriptions().clear();
-        return;
       case SolutionDslPackage.MODULE__TAGS:
         getTags().clear();
+        return;
+      case SolutionDslPackage.MODULE__SUBSCRIPTIONS:
+        getSubscriptions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -773,10 +772,10 @@ public class ModuleImpl extends MinimalEObjectImpl.Container implements Module
         return responsible != null && !responsible.isEmpty();
       case SolutionDslPackage.MODULE__BUDGETING:
         return budgeting != null;
-      case SolutionDslPackage.MODULE__SUBSCRIPTIONS:
-        return subscriptions != null && !subscriptions.isEmpty();
       case SolutionDslPackage.MODULE__TAGS:
         return tags != null && !tags.isEmpty();
+      case SolutionDslPackage.MODULE__SUBSCRIPTIONS:
+        return subscriptions != null && !subscriptions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

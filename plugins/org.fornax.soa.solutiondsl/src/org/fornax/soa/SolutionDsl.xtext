@@ -39,11 +39,11 @@ Solution:
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
-		)?
-		('tags' (tags+=[semanticsDsl::Tag])+ )?
+		'}')?
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])*)?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
 	'}';
 
 Module:
@@ -59,11 +59,11 @@ Module:
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
-		)?
-		('tags' (tags+=[semanticsDsl::Tag])+ )?
+		'}')?
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])*)?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
 	'}';
 	
 enum ModuleKind : UI | BusinessLogic | Persistence | Security | Batch | OTHER;
@@ -82,12 +82,12 @@ Feature:
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
-		)?
-		('tags' (tags+=[semanticsDsl::Tag])+ )?
+		'}')?
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])*)?
 		(features+=Feature)*
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
 	'}';
 	
 ServiceRef:

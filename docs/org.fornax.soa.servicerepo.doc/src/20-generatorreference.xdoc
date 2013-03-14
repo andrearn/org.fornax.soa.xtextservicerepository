@@ -94,9 +94,9 @@ table[
 		e[targetNamespace]. ModuleBindings bind a Module to an Environment.]
 	]
 	tr[		
-		td[moduleName]			td[String]	td[0..*]		td[]	td[Generate service contracts
-		for any used module or used service defined in the module. The generator looks up a e[Binding]
-		that provides the service and matches the constraints and qualifiers defined in the usage reference.]
+		td[serviceModule]		td[VersionedServiceModuleSelector]	td[0..*]		td[]	td[Generate service contracts
+		for any service used or provided by the module. The generator looks up a e[Binding]
+		that provides the service and matches the version constraints and endpoint qualifiers if defined in the usage reference.]
 	]
 	tr[		
 		td[domainNamespace]		td[String]	td[0..*]		td[]	td[Generate XSDs for a code[ServiceDSL][domain-namespace]
@@ -136,8 +136,39 @@ table[
 	]
 ]
 
+Structure of a VersionedServiceModuleSelector:
+
+table[
+	tr[
+		td[Parameter name]		td[Type]	td[Cardinality]	td[Default]	td[Description]
+	]
+	tr[
+		td[name]	td[String]	td[1..1]	td[] td[The module name to generate assets for]
+	]
+	tr[
+		td[version]	td[String]	td[1..1]	td[] td[The module version to generate assets for]
+	]
+	tr[
+		td[generatedUsedServices]	td[boolean]	td[1..1]	td[false] td[Whether services used
+		by the module shall be generated]
+	]
+	tr[
+		td[generatedProvidedServices]	td[boolean]	td[1..1]	td[false] td[Whether services provided
+		by the module shall be generated]
+	]
+	tr[
+		td[endpointQualifier]	td[String]	td[0..1]	td[] td[The name of an endpoint qualifier
+		to select a proper binding]
+	]
+	tr[
+		td[ignoreEndpointQualifierNames]	td[String]	td[0..1]	td[false] td[By default artifact
+		names contain the name of an endpoint qualifier either defined in the selected binding for the
+		module, if one has been defined. If "ignoreEndpointQualifier" is set to true, endpoint qualifier
+		names will not be part of artifact names etc.]
+	]
+]
+
 
 section[Generate business objects for a platform]
 
-section[Generator API reference]
 

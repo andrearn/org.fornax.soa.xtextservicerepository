@@ -13,9 +13,14 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="effectiveDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="effectiveUntil" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parties" upperBound="-1"
+        eType="#//Party" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="preample" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="restrictions" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="priorities" upperBound="-1"
+        eType="#//PriorityDeclaration" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="appliesTo" upperBound="-1"
         eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//AssetRef"
         containment="true"/>
@@ -26,24 +31,14 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataSecProtClause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="securityRequirements" upperBound="-1"
         eType="#//SecurityRequirement" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="restrictions" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="priorities" upperBound="-1"
-        eType="#//PriorityDeclaration" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="additionalServices" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="escalationProcedure" eType="#//Escalation"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="additionalServices" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parties" upperBound="-1"
-        eType="#//Party" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cancellation" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="extraordinaryCancellation"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="effortAccounting" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="reports" upperBound="-1"
         eType="#//Report" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
-        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
         upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
@@ -52,6 +47,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Cost">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="costsAmount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="billedUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="effortAccounting" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="escalation" eType="#//Escalation"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -220,7 +216,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Party">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="representatives" upperBound="-1"
-        eType="#//Repesentative" containment="true"/>
+        eType="#//Representative" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="responsibilities" upperBound="-1"
         eType="#//Responsibility" containment="true"/>
   </eClassifiers>
@@ -229,26 +225,24 @@
   <eClassifiers xsi:type="ecore:EClass" name="ThirdParty" eSuperTypes="#//Party">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="role" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Repesentative">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phone" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Representative"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UserRef" eSuperTypes="#//Representative">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="representative" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="InlineRepresentative" eSuperTypes="#//Representative">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="lastname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="org" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="orgUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="email" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="phone" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Responsibility">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="escalations" upperBound="-1"
-        eType="#//Escalation" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SimpleResponsibility" eSuperTypes="#//Responsibility">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Report">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reportTo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ReportingResponsibility" eSuperTypes="#//Responsibility">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reportTo" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

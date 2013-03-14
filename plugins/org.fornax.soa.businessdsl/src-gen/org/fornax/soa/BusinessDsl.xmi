@@ -93,7 +93,7 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="contacts"/>
+          <elements xsi:type="xtext:Keyword" value="contact-info"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="owner"/>
@@ -128,40 +128,16 @@
               </terminal>
             </elements>
           </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="service-management"/>
-            <elements xsi:type="xtext:Assignment" feature="svcMgmt" operator="=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.1">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-          </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="subscriptions"/>
-            <elements xsi:type="xtext:Keyword" value="{"/>
-            <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.1">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-            <elements xsi:type="xtext:Keyword" value="}"/>
-          </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="tags"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="tags" operator="+=">
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="tags" operator="+=">
             <terminal xsi:type="xtext:CrossReference">
               <type metamodel="/0/@metamodelDeclarations.2">
                 <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/SemanticsDsl#//Tag"/>
               </type>
-              <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.0"/>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
         </elements>
@@ -173,6 +149,19 @@
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="capabilites" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.5"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="subscriptions"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.1">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -198,7 +187,7 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="contacts"/>
+          <elements xsi:type="xtext:Keyword" value="contact-info"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="owner"/>
@@ -233,23 +222,18 @@
               </terminal>
             </elements>
           </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="subscriptions"/>
-            <elements xsi:type="xtext:Keyword" value="{"/>
-            <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.1">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-            <elements xsi:type="xtext:Keyword" value="}"/>
-          </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="additionalInfo" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.15"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="uses-capability"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="+" feature="capabilties" operator="+=">
+            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
           <elements xsi:type="xtext:Keyword" value="tags"/>
@@ -263,10 +247,15 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="uses-capability"/>
+          <elements xsi:type="xtext:Keyword" value="subscriptions"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
-          <elements xsi:type="xtext:Assignment" cardinality="+" feature="capabilties" operator="+=">
-            <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.10"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.1">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
           </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
@@ -288,7 +277,7 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="contacts"/>
+          <elements xsi:type="xtext:Keyword" value="contact-info"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="owner"/>
@@ -323,19 +312,6 @@
               </terminal>
             </elements>
           </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="subscriptions"/>
-            <elements xsi:type="xtext:Keyword" value="{"/>
-            <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.1">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-            <elements xsi:type="xtext:Keyword" value="}"/>
-          </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="additionalInfo" operator="=">
@@ -346,6 +322,19 @@
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="capabilityGroups" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.4"/>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="subscriptions"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.1">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -445,7 +434,7 @@
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="contacts"/>
+          <elements xsi:type="xtext:Keyword" value="contact-info"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="owner"/>
@@ -480,19 +469,6 @@
               </terminal>
             </elements>
           </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="subscriptions"/>
-            <elements xsi:type="xtext:Keyword" value="{"/>
-            <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.1">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-            <elements xsi:type="xtext:Keyword" value="}"/>
-          </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -505,6 +481,19 @@
               <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="subscriptions"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.1">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -606,7 +595,7 @@
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="contacts"/>
+          <elements xsi:type="xtext:Keyword" value="contact-info"/>
           <elements xsi:type="xtext:Keyword" value="{"/>
           <elements xsi:type="xtext:Group" cardinality="?">
             <elements xsi:type="xtext:Keyword" value="owner"/>
@@ -641,19 +630,6 @@
               </terminal>
             </elements>
           </elements>
-          <elements xsi:type="xtext:Group" cardinality="?">
-            <elements xsi:type="xtext:Keyword" value="subscriptions"/>
-            <elements xsi:type="xtext:Keyword" value="{"/>
-            <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
-              <terminal xsi:type="xtext:CrossReference">
-                <type metamodel="/0/@metamodelDeclarations.1">
-                  <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
-                </type>
-                <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
-              </terminal>
-            </elements>
-            <elements xsi:type="xtext:Keyword" value="}"/>
-          </elements>
           <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -666,6 +642,19 @@
               <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
             </terminal>
           </elements>
+        </elements>
+        <elements xsi:type="xtext:Group" cardinality="?">
+          <elements xsi:type="xtext:Keyword" value="subscriptions"/>
+          <elements xsi:type="xtext:Keyword" value="{"/>
+          <elements xsi:type="xtext:Assignment" cardinality="*" feature="subscriptions" operator="+=">
+            <terminal xsi:type="xtext:CrossReference">
+              <type metamodel="/0/@metamodelDeclarations.1">
+                <classifier xsi:type="ecore:EClass" href="http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+              </type>
+              <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.11"/>
+            </terminal>
+          </elements>
+          <elements xsi:type="xtext:Keyword" value="}"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value="}"/>
       </alternatives>
@@ -802,7 +791,7 @@
           </elements>
         </elements>
         <elements xsi:type="xtext:Group" cardinality="?">
-          <elements xsi:type="xtext:Keyword" value="orgUnit"/>
+          <elements xsi:type="xtext:Keyword" value="org-unit"/>
           <elements xsi:type="xtext:Assignment" feature="orgUnit" operator="=">
             <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.2"/>
           </elements>

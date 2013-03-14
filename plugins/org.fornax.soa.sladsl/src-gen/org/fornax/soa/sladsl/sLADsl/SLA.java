@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl;
 
@@ -28,26 +27,22 @@ import org.fornax.soa.semanticsDsl.Tag;
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getVersion <em>Version</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getEffectiveDate <em>Effective Date</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getEffectiveUntil <em>Effective Until</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getParties <em>Parties</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getScope <em>Scope</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getPreample <em>Preample</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getDescription <em>Description</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getScope <em>Scope</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getRestrictions <em>Restrictions</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getPriorities <em>Priorities</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getAppliesTo <em>Applies To</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getCosts <em>Costs</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getServiceQualityProperties <em>Service Quality Properties</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getDataSecProtClause <em>Data Sec Prot Clause</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getSecurityRequirements <em>Security Requirements</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getRestrictions <em>Restrictions</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getPriorities <em>Priorities</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getEscalationProcedure <em>Escalation Procedure</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getAdditionalServices <em>Additional Services</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getParties <em>Parties</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getEscalationProcedure <em>Escalation Procedure</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getCancellation <em>Cancellation</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getExtraordinaryCancellation <em>Extraordinary Cancellation</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getEffortAccounting <em>Effort Accounting</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getReports <em>Reports</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getOwner <em>Owner</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getResponsible <em>Responsible</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getBudgeting <em>Budgeting</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getSubscriptions <em>Subscriptions</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.SLA#getTags <em>Tags</em>}</li>
  * </ul>
@@ -164,6 +159,48 @@ public interface SLA extends EObject
   void setEffectiveUntil(String value);
 
   /**
+   * Returns the value of the '<em><b>Parties</b></em>' containment reference list.
+   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.Party}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Parties</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Parties</em>' containment reference list.
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Parties()
+   * @model containment="true"
+   * @generated
+   */
+  EList<Party> getParties();
+
+  /**
+   * Returns the value of the '<em><b>Scope</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Scope</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Scope</em>' attribute.
+   * @see #setScope(String)
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Scope()
+   * @model
+   * @generated
+   */
+  String getScope();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getScope <em>Scope</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Scope</em>' attribute.
+   * @see #getScope()
+   * @generated
+   */
+  void setScope(String value);
+
+  /**
    * Returns the value of the '<em><b>Preample</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
@@ -216,30 +253,46 @@ public interface SLA extends EObject
   void setDescription(String value);
 
   /**
-   * Returns the value of the '<em><b>Scope</b></em>' attribute.
+   * Returns the value of the '<em><b>Restrictions</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Scope</em>' attribute isn't clear,
+   * If the meaning of the '<em>Restrictions</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Scope</em>' attribute.
-   * @see #setScope(String)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Scope()
+   * @return the value of the '<em>Restrictions</em>' attribute.
+   * @see #setRestrictions(String)
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Restrictions()
    * @model
    * @generated
    */
-  String getScope();
+  String getRestrictions();
 
   /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getScope <em>Scope</em>}' attribute.
+   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getRestrictions <em>Restrictions</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Scope</em>' attribute.
-   * @see #getScope()
+   * @param value the new value of the '<em>Restrictions</em>' attribute.
+   * @see #getRestrictions()
    * @generated
    */
-  void setScope(String value);
+  void setRestrictions(String value);
+
+  /**
+   * Returns the value of the '<em><b>Priorities</b></em>' containment reference list.
+   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.PriorityDeclaration}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Priorities</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Priorities</em>' containment reference list.
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Priorities()
+   * @model containment="true"
+   * @generated
+   */
+  EList<PriorityDeclaration> getPriorities();
 
   /**
    * Returns the value of the '<em><b>Applies To</b></em>' containment reference list.
@@ -342,74 +395,6 @@ public interface SLA extends EObject
   EList<SecurityRequirement> getSecurityRequirements();
 
   /**
-   * Returns the value of the '<em><b>Restrictions</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Restrictions</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Restrictions</em>' attribute.
-   * @see #setRestrictions(String)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Restrictions()
-   * @model
-   * @generated
-   */
-  String getRestrictions();
-
-  /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getRestrictions <em>Restrictions</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Restrictions</em>' attribute.
-   * @see #getRestrictions()
-   * @generated
-   */
-  void setRestrictions(String value);
-
-  /**
-   * Returns the value of the '<em><b>Priorities</b></em>' containment reference list.
-   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.PriorityDeclaration}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Priorities</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Priorities</em>' containment reference list.
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Priorities()
-   * @model containment="true"
-   * @generated
-   */
-  EList<PriorityDeclaration> getPriorities();
-
-  /**
-   * Returns the value of the '<em><b>Escalation Procedure</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Escalation Procedure</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Escalation Procedure</em>' containment reference.
-   * @see #setEscalationProcedure(Escalation)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_EscalationProcedure()
-   * @model containment="true"
-   * @generated
-   */
-  Escalation getEscalationProcedure();
-
-  /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getEscalationProcedure <em>Escalation Procedure</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Escalation Procedure</em>' containment reference.
-   * @see #getEscalationProcedure()
-   * @generated
-   */
-  void setEscalationProcedure(Escalation value);
-
-  /**
    * Returns the value of the '<em><b>Additional Services</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
@@ -436,20 +421,30 @@ public interface SLA extends EObject
   void setAdditionalServices(String value);
 
   /**
-   * Returns the value of the '<em><b>Parties</b></em>' containment reference list.
-   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.Party}.
+   * Returns the value of the '<em><b>Escalation Procedure</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Parties</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Escalation Procedure</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Parties</em>' containment reference list.
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Parties()
+   * @return the value of the '<em>Escalation Procedure</em>' containment reference.
+   * @see #setEscalationProcedure(Escalation)
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_EscalationProcedure()
    * @model containment="true"
    * @generated
    */
-  EList<Party> getParties();
+  Escalation getEscalationProcedure();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getEscalationProcedure <em>Escalation Procedure</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Escalation Procedure</em>' containment reference.
+   * @see #getEscalationProcedure()
+   * @generated
+   */
+  void setEscalationProcedure(Escalation value);
 
   /**
    * Returns the value of the '<em><b>Cancellation</b></em>' attribute.
@@ -504,32 +499,6 @@ public interface SLA extends EObject
   void setExtraordinaryCancellation(String value);
 
   /**
-   * Returns the value of the '<em><b>Effort Accounting</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Effort Accounting</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Effort Accounting</em>' attribute.
-   * @see #setEffortAccounting(String)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_EffortAccounting()
-   * @model
-   * @generated
-   */
-  String getEffortAccounting();
-
-  /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getEffortAccounting <em>Effort Accounting</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Effort Accounting</em>' attribute.
-   * @see #getEffortAccounting()
-   * @generated
-   */
-  void setEffortAccounting(String value);
-
-  /**
    * Returns the value of the '<em><b>Reports</b></em>' containment reference list.
    * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.Report}.
    * <!-- begin-user-doc -->
@@ -544,74 +513,6 @@ public interface SLA extends EObject
    * @generated
    */
   EList<Report> getReports();
-
-  /**
-   * Returns the value of the '<em><b>Owner</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Owner</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Owner</em>' reference.
-   * @see #setOwner(User)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Owner()
-   * @model
-   * @generated
-   */
-  User getOwner();
-
-  /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getOwner <em>Owner</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Owner</em>' reference.
-   * @see #getOwner()
-   * @generated
-   */
-  void setOwner(User value);
-
-  /**
-   * Returns the value of the '<em><b>Responsible</b></em>' reference list.
-   * The list contents are of type {@link org.fornax.soa.basedsl.sOABaseDsl.User}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Responsible</em>' reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Responsible</em>' reference list.
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Responsible()
-   * @model
-   * @generated
-   */
-  EList<User> getResponsible();
-
-  /**
-   * Returns the value of the '<em><b>Budgeting</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Budgeting</em>' reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Budgeting</em>' reference.
-   * @see #setBudgeting(User)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getSLA_Budgeting()
-   * @model
-   * @generated
-   */
-  User getBudgeting();
-
-  /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.SLA#getBudgeting <em>Budgeting</em>}' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Budgeting</em>' reference.
-   * @see #getBudgeting()
-   * @generated
-   */
-  void setBudgeting(User value);
 
   /**
    * Returns the value of the '<em><b>Subscriptions</b></em>' reference list.

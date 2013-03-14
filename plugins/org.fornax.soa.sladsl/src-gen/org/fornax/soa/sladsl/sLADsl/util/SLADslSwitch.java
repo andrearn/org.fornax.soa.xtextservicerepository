@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl.util;
 
@@ -272,10 +271,26 @@ public class SLADslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SLADslPackage.REPESENTATIVE:
+      case SLADslPackage.REPRESENTATIVE:
       {
-        Repesentative repesentative = (Repesentative)theEObject;
-        T result = caseRepesentative(repesentative);
+        Representative representative = (Representative)theEObject;
+        T result = caseRepresentative(representative);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SLADslPackage.USER_REF:
+      {
+        UserRef userRef = (UserRef)theEObject;
+        T result = caseUserRef(userRef);
+        if (result == null) result = caseRepresentative(userRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SLADslPackage.INLINE_REPRESENTATIVE:
+      {
+        InlineRepresentative inlineRepresentative = (InlineRepresentative)theEObject;
+        T result = caseInlineRepresentative(inlineRepresentative);
+        if (result == null) result = caseRepresentative(inlineRepresentative);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -286,26 +301,10 @@ public class SLADslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SLADslPackage.SIMPLE_RESPONSIBILITY:
-      {
-        SimpleResponsibility simpleResponsibility = (SimpleResponsibility)theEObject;
-        T result = caseSimpleResponsibility(simpleResponsibility);
-        if (result == null) result = caseResponsibility(simpleResponsibility);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SLADslPackage.REPORT:
       {
         Report report = (Report)theEObject;
         T result = caseReport(report);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SLADslPackage.REPORTING_RESPONSIBILITY:
-      {
-        ReportingResponsibility reportingResponsibility = (ReportingResponsibility)theEObject;
-        T result = caseReportingResponsibility(reportingResponsibility);
-        if (result == null) result = caseResponsibility(reportingResponsibility);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -730,17 +729,49 @@ public class SLADslSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Repesentative</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Representative</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Repesentative</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Representative</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseRepesentative(Repesentative object)
+  public T caseRepresentative(Representative object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>User Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>User Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUserRef(UserRef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Inline Representative</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Inline Representative</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseInlineRepresentative(InlineRepresentative object)
   {
     return null;
   }
@@ -762,22 +793,6 @@ public class SLADslSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Simple Responsibility</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Simple Responsibility</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSimpleResponsibility(SimpleResponsibility object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Report</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -789,22 +804,6 @@ public class SLADslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseReport(Report object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Reporting Responsibility</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Reporting Responsibility</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseReportingResponsibility(ReportingResponsibility object)
   {
     return null;
   }

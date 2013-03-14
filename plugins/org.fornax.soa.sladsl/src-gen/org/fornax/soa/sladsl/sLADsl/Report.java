@@ -2,11 +2,12 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl;
 
 import org.eclipse.emf.ecore.EObject;
+
+import org.fornax.soa.basedsl.sOABaseDsl.User;
 
 /**
  * <!-- begin-user-doc -->
@@ -55,30 +56,30 @@ public interface Report extends EObject
   void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Report To</b></em>' attribute.
+   * Returns the value of the '<em><b>Report To</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Report To</em>' attribute isn't clear,
+   * If the meaning of the '<em>Report To</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Report To</em>' attribute.
-   * @see #setReportTo(String)
+   * @return the value of the '<em>Report To</em>' reference.
+   * @see #setReportTo(User)
    * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getReport_ReportTo()
    * @model
    * @generated
    */
-  String getReportTo();
+  User getReportTo();
 
   /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.Report#getReportTo <em>Report To</em>}' attribute.
+   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.Report#getReportTo <em>Report To</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Report To</em>' attribute.
+   * @param value the new value of the '<em>Report To</em>' reference.
    * @see #getReportTo()
    * @generated
    */
-  void setReportTo(String value);
+  void setReportTo(User value);
 
   /**
    * Returns the value of the '<em><b>Content</b></em>' attribute.

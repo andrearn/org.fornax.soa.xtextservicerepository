@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.solutionDsl;
 
@@ -36,9 +35,9 @@ import org.fornax.soa.serviceDsl.Channel;
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getOwner <em>Owner</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getResponsible <em>Responsible</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getBudgeting <em>Budgeting</em>}</li>
- *   <li>{@link org.fornax.soa.solutionDsl.Feature#getSubscriptions <em>Subscriptions</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getTags <em>Tags</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.Feature#getFeatures <em>Features</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.Feature#getSubscriptions <em>Subscriptions</em>}</li>
  * </ul>
  * </p>
  *
@@ -285,22 +284,6 @@ public interface Feature extends EObject
   void setBudgeting(User value);
 
   /**
-   * Returns the value of the '<em><b>Subscriptions</b></em>' reference list.
-   * The list contents are of type {@link org.fornax.soa.basedsl.sOABaseDsl.User}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Subscriptions</em>' reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Subscriptions</em>' reference list.
-   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getFeature_Subscriptions()
-   * @model
-   * @generated
-   */
-  EList<User> getSubscriptions();
-
-  /**
    * Returns the value of the '<em><b>Tags</b></em>' reference list.
    * The list contents are of type {@link org.fornax.soa.semanticsDsl.Tag}.
    * <!-- begin-user-doc -->
@@ -331,5 +314,21 @@ public interface Feature extends EObject
    * @generated
    */
   EList<Feature> getFeatures();
+
+  /**
+   * Returns the value of the '<em><b>Subscriptions</b></em>' reference list.
+   * The list contents are of type {@link org.fornax.soa.basedsl.sOABaseDsl.User}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Subscriptions</em>' reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Subscriptions</em>' reference list.
+   * @see org.fornax.soa.solutionDsl.SolutionDslPackage#getFeature_Subscriptions()
+   * @model
+   * @generated
+   */
+  EList<User> getSubscriptions();
 
 } // Feature

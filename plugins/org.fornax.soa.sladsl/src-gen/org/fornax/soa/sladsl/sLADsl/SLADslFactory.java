@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl;
 
@@ -261,13 +260,31 @@ public interface SLADslFactory extends EFactory
   ThirdParty createThirdParty();
 
   /**
-   * Returns a new object of class '<em>Repesentative</em>'.
+   * Returns a new object of class '<em>Representative</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Repesentative</em>'.
+   * @return a new object of class '<em>Representative</em>'.
    * @generated
    */
-  Repesentative createRepesentative();
+  Representative createRepresentative();
+
+  /**
+   * Returns a new object of class '<em>User Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>User Ref</em>'.
+   * @generated
+   */
+  UserRef createUserRef();
+
+  /**
+   * Returns a new object of class '<em>Inline Representative</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Inline Representative</em>'.
+   * @generated
+   */
+  InlineRepresentative createInlineRepresentative();
 
   /**
    * Returns a new object of class '<em>Responsibility</em>'.
@@ -279,15 +296,6 @@ public interface SLADslFactory extends EFactory
   Responsibility createResponsibility();
 
   /**
-   * Returns a new object of class '<em>Simple Responsibility</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Simple Responsibility</em>'.
-   * @generated
-   */
-  SimpleResponsibility createSimpleResponsibility();
-
-  /**
    * Returns a new object of class '<em>Report</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -295,15 +303,6 @@ public interface SLADslFactory extends EFactory
    * @generated
    */
   Report createReport();
-
-  /**
-   * Returns a new object of class '<em>Reporting Responsibility</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Reporting Responsibility</em>'.
-   * @generated
-   */
-  ReportingResponsibility createReportingResponsibility();
 
   /**
    * Returns the package supported by this factory.

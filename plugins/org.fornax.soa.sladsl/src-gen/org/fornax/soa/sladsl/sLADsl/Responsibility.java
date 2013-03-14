@@ -2,11 +2,8 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -18,9 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.Responsibility#getName <em>Name</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.Responsibility#getEscalations <em>Escalations</em>}</li>
- *   <li>{@link org.fornax.soa.sladsl.sLADsl.Responsibility#getPenalty <em>Penalty</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.Responsibility#getDescription <em>Description</em>}</li>
  * </ul>
  * </p>
  *
@@ -31,71 +26,29 @@ import org.eclipse.emf.ecore.EObject;
 public interface Responsibility extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Description</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Name</em>' attribute isn't clear,
+   * If the meaning of the '<em>Description</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Name</em>' attribute.
-   * @see #setName(String)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getResponsibility_Name()
+   * @return the value of the '<em>Description</em>' attribute.
+   * @see #setDescription(String)
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getResponsibility_Description()
    * @model
    * @generated
    */
-  String getName();
+  String getDescription();
 
   /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.Responsibility#getName <em>Name</em>}' attribute.
+   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.Responsibility#getDescription <em>Description</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Name</em>' attribute.
-   * @see #getName()
+   * @param value the new value of the '<em>Description</em>' attribute.
+   * @see #getDescription()
    * @generated
    */
-  void setName(String value);
-
-  /**
-   * Returns the value of the '<em><b>Escalations</b></em>' containment reference list.
-   * The list contents are of type {@link org.fornax.soa.sladsl.sLADsl.Escalation}.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Escalations</em>' containment reference list isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Escalations</em>' containment reference list.
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getResponsibility_Escalations()
-   * @model containment="true"
-   * @generated
-   */
-  EList<Escalation> getEscalations();
-
-  /**
-   * Returns the value of the '<em><b>Penalty</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Penalty</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Penalty</em>' attribute.
-   * @see #setPenalty(String)
-   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getResponsibility_Penalty()
-   * @model
-   * @generated
-   */
-  String getPenalty();
-
-  /**
-   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.Responsibility#getPenalty <em>Penalty</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Penalty</em>' attribute.
-   * @see #getPenalty()
-   * @generated
-   */
-  void setPenalty(String value);
+  void setDescription(String value);
 
 } // Responsibility

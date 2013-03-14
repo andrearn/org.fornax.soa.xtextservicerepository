@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.solutionDsl.impl;
 
@@ -54,9 +53,9 @@ import org.fornax.soa.solutionDsl.SolutionDslPackage;
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getOwner <em>Owner</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getResponsible <em>Responsible</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getBudgeting <em>Budgeting</em>}</li>
- *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getSubscriptions <em>Subscriptions</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getTags <em>Tags</em>}</li>
  *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getFeatures <em>Features</em>}</li>
+ *   <li>{@link org.fornax.soa.solutionDsl.impl.FeatureImpl#getSubscriptions <em>Subscriptions</em>}</li>
  * </ul>
  * </p>
  *
@@ -205,16 +204,6 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
   protected User budgeting;
 
   /**
-   * The cached value of the '{@link #getSubscriptions() <em>Subscriptions</em>}' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSubscriptions()
-   * @generated
-   * @ordered
-   */
-  protected EList<User> subscriptions;
-
-  /**
    * The cached value of the '{@link #getTags() <em>Tags</em>}' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -233,6 +222,16 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * @ordered
    */
   protected EList<Feature> features;
+
+  /**
+   * The cached value of the '{@link #getSubscriptions() <em>Subscriptions</em>}' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSubscriptions()
+   * @generated
+   * @ordered
+   */
+  protected EList<User> subscriptions;
 
   /**
    * <!-- begin-user-doc -->
@@ -533,20 +532,6 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<User> getSubscriptions()
-  {
-    if (subscriptions == null)
-    {
-      subscriptions = new EObjectResolvingEList<User>(User.class, this, SolutionDslPackage.FEATURE__SUBSCRIPTIONS);
-    }
-    return subscriptions;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<Tag> getTags()
   {
     if (tags == null)
@@ -568,6 +553,20 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       features = new EObjectContainmentEList<Feature>(Feature.class, this, SolutionDslPackage.FEATURE__FEATURES);
     }
     return features;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EList<User> getSubscriptions()
+  {
+    if (subscriptions == null)
+    {
+      subscriptions = new EObjectResolvingEList<User>(User.class, this, SolutionDslPackage.FEATURE__SUBSCRIPTIONS);
+    }
+    return subscriptions;
   }
 
   /**
@@ -626,12 +625,12 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       case SolutionDslPackage.FEATURE__BUDGETING:
         if (resolve) return getBudgeting();
         return basicGetBudgeting();
-      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
-        return getSubscriptions();
       case SolutionDslPackage.FEATURE__TAGS:
         return getTags();
       case SolutionDslPackage.FEATURE__FEATURES:
         return getFeatures();
+      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
+        return getSubscriptions();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -685,10 +684,6 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       case SolutionDslPackage.FEATURE__BUDGETING:
         setBudgeting((User)newValue);
         return;
-      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
-        getSubscriptions().clear();
-        getSubscriptions().addAll((Collection<? extends User>)newValue);
-        return;
       case SolutionDslPackage.FEATURE__TAGS:
         getTags().clear();
         getTags().addAll((Collection<? extends Tag>)newValue);
@@ -696,6 +691,10 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       case SolutionDslPackage.FEATURE__FEATURES:
         getFeatures().clear();
         getFeatures().addAll((Collection<? extends Feature>)newValue);
+        return;
+      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
+        getSubscriptions().clear();
+        getSubscriptions().addAll((Collection<? extends User>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -744,14 +743,14 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
       case SolutionDslPackage.FEATURE__BUDGETING:
         setBudgeting((User)null);
         return;
-      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
-        getSubscriptions().clear();
-        return;
       case SolutionDslPackage.FEATURE__TAGS:
         getTags().clear();
         return;
       case SolutionDslPackage.FEATURE__FEATURES:
         getFeatures().clear();
+        return;
+      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
+        getSubscriptions().clear();
         return;
     }
     super.eUnset(featureID);
@@ -789,12 +788,12 @@ public class FeatureImpl extends MinimalEObjectImpl.Container implements Feature
         return responsible != null && !responsible.isEmpty();
       case SolutionDslPackage.FEATURE__BUDGETING:
         return budgeting != null;
-      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
-        return subscriptions != null && !subscriptions.isEmpty();
       case SolutionDslPackage.FEATURE__TAGS:
         return tags != null && !tags.isEmpty();
       case SolutionDslPackage.FEATURE__FEATURES:
         return features != null && !features.isEmpty();
+      case SolutionDslPackage.FEATURE__SUBSCRIPTIONS:
+        return subscriptions != null && !subscriptions.isEmpty();
     }
     return super.eIsSet(featureID);
   }

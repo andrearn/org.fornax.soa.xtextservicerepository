@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl.impl;
 
@@ -28,6 +27,7 @@ import org.fornax.soa.sladsl.sLADsl.SLADslPackage;
  * <ul>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.CostImpl#getCostsAmount <em>Costs Amount</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.CostImpl#getBilledUnit <em>Billed Unit</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.CostImpl#getEffortAccounting <em>Effort Accounting</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.CostImpl#getEscalation <em>Escalation</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.impl.CostImpl#getPenalty <em>Penalty</em>}</li>
  * </ul>
@@ -76,6 +76,26 @@ public class CostImpl extends MinimalEObjectImpl.Container implements Cost
    * @ordered
    */
   protected String billedUnit = BILLED_UNIT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getEffortAccounting() <em>Effort Accounting</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEffortAccounting()
+   * @generated
+   * @ordered
+   */
+  protected static final String EFFORT_ACCOUNTING_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getEffortAccounting() <em>Effort Accounting</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEffortAccounting()
+   * @generated
+   * @ordered
+   */
+  protected String effortAccounting = EFFORT_ACCOUNTING_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getEscalation() <em>Escalation</em>}' containment reference.
@@ -179,6 +199,29 @@ public class CostImpl extends MinimalEObjectImpl.Container implements Cost
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getEffortAccounting()
+  {
+    return effortAccounting;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEffortAccounting(String newEffortAccounting)
+  {
+    String oldEffortAccounting = effortAccounting;
+    effortAccounting = newEffortAccounting;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.COST__EFFORT_ACCOUNTING, oldEffortAccounting, effortAccounting));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Escalation getEscalation()
   {
     return escalation;
@@ -275,6 +318,8 @@ public class CostImpl extends MinimalEObjectImpl.Container implements Cost
         return getCostsAmount();
       case SLADslPackage.COST__BILLED_UNIT:
         return getBilledUnit();
+      case SLADslPackage.COST__EFFORT_ACCOUNTING:
+        return getEffortAccounting();
       case SLADslPackage.COST__ESCALATION:
         return getEscalation();
       case SLADslPackage.COST__PENALTY:
@@ -298,6 +343,9 @@ public class CostImpl extends MinimalEObjectImpl.Container implements Cost
         return;
       case SLADslPackage.COST__BILLED_UNIT:
         setBilledUnit((String)newValue);
+        return;
+      case SLADslPackage.COST__EFFORT_ACCOUNTING:
+        setEffortAccounting((String)newValue);
         return;
       case SLADslPackage.COST__ESCALATION:
         setEscalation((Escalation)newValue);
@@ -325,6 +373,9 @@ public class CostImpl extends MinimalEObjectImpl.Container implements Cost
       case SLADslPackage.COST__BILLED_UNIT:
         setBilledUnit(BILLED_UNIT_EDEFAULT);
         return;
+      case SLADslPackage.COST__EFFORT_ACCOUNTING:
+        setEffortAccounting(EFFORT_ACCOUNTING_EDEFAULT);
+        return;
       case SLADslPackage.COST__ESCALATION:
         setEscalation((Escalation)null);
         return;
@@ -349,6 +400,8 @@ public class CostImpl extends MinimalEObjectImpl.Container implements Cost
         return COSTS_AMOUNT_EDEFAULT == null ? costsAmount != null : !COSTS_AMOUNT_EDEFAULT.equals(costsAmount);
       case SLADslPackage.COST__BILLED_UNIT:
         return BILLED_UNIT_EDEFAULT == null ? billedUnit != null : !BILLED_UNIT_EDEFAULT.equals(billedUnit);
+      case SLADslPackage.COST__EFFORT_ACCOUNTING:
+        return EFFORT_ACCOUNTING_EDEFAULT == null ? effortAccounting != null : !EFFORT_ACCOUNTING_EDEFAULT.equals(effortAccounting);
       case SLADslPackage.COST__ESCALATION:
         return escalation != null;
       case SLADslPackage.COST__PENALTY:
@@ -372,6 +425,8 @@ public class CostImpl extends MinimalEObjectImpl.Container implements Cost
     result.append(costsAmount);
     result.append(", billedUnit: ");
     result.append(billedUnit);
+    result.append(", effortAccounting: ");
+    result.append(effortAccounting);
     result.append(", penalty: ");
     result.append(penalty);
     result.append(')');

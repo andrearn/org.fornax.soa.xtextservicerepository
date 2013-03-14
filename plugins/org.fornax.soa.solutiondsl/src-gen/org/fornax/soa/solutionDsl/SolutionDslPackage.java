@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.solutionDsl;
 
@@ -228,22 +227,22 @@ public interface SolutionDslPackage extends EPackage
   int SOLUTION__BUDGETING = 12;
 
   /**
-   * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SOLUTION__SUBSCRIPTIONS = 13;
-
-  /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SOLUTION__TAGS = 14;
+  int SOLUTION__TAGS = 13;
+
+  /**
+   * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SOLUTION__SUBSCRIPTIONS = 14;
 
   /**
    * The number of structural features of the '<em>Solution</em>' class.
@@ -364,22 +363,22 @@ public interface SolutionDslPackage extends EPackage
   int MODULE__BUDGETING = 10;
 
   /**
-   * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODULE__SUBSCRIPTIONS = 11;
-
-  /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODULE__TAGS = 12;
+  int MODULE__TAGS = 11;
+
+  /**
+   * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE__SUBSCRIPTIONS = 12;
 
   /**
    * The number of structural features of the '<em>Module</em>' class.
@@ -500,22 +499,13 @@ public interface SolutionDslPackage extends EPackage
   int FEATURE__BUDGETING = 10;
 
   /**
-   * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FEATURE__SUBSCRIPTIONS = 11;
-
-  /**
    * The feature id for the '<em><b>Tags</b></em>' reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FEATURE__TAGS = 12;
+  int FEATURE__TAGS = 11;
 
   /**
    * The feature id for the '<em><b>Features</b></em>' containment reference list.
@@ -524,7 +514,16 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FEATURE__FEATURES = 13;
+  int FEATURE__FEATURES = 12;
+
+  /**
+   * The feature id for the '<em><b>Subscriptions</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FEATURE__SUBSCRIPTIONS = 13;
 
   /**
    * The number of structural features of the '<em>Feature</em>' class.
@@ -917,17 +916,6 @@ public interface SolutionDslPackage extends EPackage
   EReference getSolution_Budgeting();
 
   /**
-   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Solution#getSubscriptions <em>Subscriptions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Subscriptions</em>'.
-   * @see org.fornax.soa.solutionDsl.Solution#getSubscriptions()
-   * @see #getSolution()
-   * @generated
-   */
-  EReference getSolution_Subscriptions();
-
-  /**
    * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Solution#getTags <em>Tags</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -937,6 +925,17 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    */
   EReference getSolution_Tags();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Solution#getSubscriptions <em>Subscriptions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Subscriptions</em>'.
+   * @see org.fornax.soa.solutionDsl.Solution#getSubscriptions()
+   * @see #getSolution()
+   * @generated
+   */
+  EReference getSolution_Subscriptions();
 
   /**
    * Returns the meta object for class '{@link org.fornax.soa.solutionDsl.Module <em>Module</em>}'.
@@ -1070,17 +1069,6 @@ public interface SolutionDslPackage extends EPackage
   EReference getModule_Budgeting();
 
   /**
-   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Module#getSubscriptions <em>Subscriptions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Subscriptions</em>'.
-   * @see org.fornax.soa.solutionDsl.Module#getSubscriptions()
-   * @see #getModule()
-   * @generated
-   */
-  EReference getModule_Subscriptions();
-
-  /**
    * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Module#getTags <em>Tags</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1090,6 +1078,17 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    */
   EReference getModule_Tags();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Module#getSubscriptions <em>Subscriptions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Subscriptions</em>'.
+   * @see org.fornax.soa.solutionDsl.Module#getSubscriptions()
+   * @see #getModule()
+   * @generated
+   */
+  EReference getModule_Subscriptions();
 
   /**
    * Returns the meta object for class '{@link org.fornax.soa.solutionDsl.Feature <em>Feature</em>}'.
@@ -1223,17 +1222,6 @@ public interface SolutionDslPackage extends EPackage
   EReference getFeature_Budgeting();
 
   /**
-   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Feature#getSubscriptions <em>Subscriptions</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Subscriptions</em>'.
-   * @see org.fornax.soa.solutionDsl.Feature#getSubscriptions()
-   * @see #getFeature()
-   * @generated
-   */
-  EReference getFeature_Subscriptions();
-
-  /**
    * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Feature#getTags <em>Tags</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1254,6 +1242,17 @@ public interface SolutionDslPackage extends EPackage
    * @generated
    */
   EReference getFeature_Features();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.fornax.soa.solutionDsl.Feature#getSubscriptions <em>Subscriptions</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Subscriptions</em>'.
+   * @see org.fornax.soa.solutionDsl.Feature#getSubscriptions()
+   * @see #getFeature()
+   * @generated
+   */
+  EReference getFeature_Subscriptions();
 
   /**
    * Returns the meta object for class '{@link org.fornax.soa.solutionDsl.ServiceRef <em>Service Ref</em>}'.
@@ -1578,20 +1577,20 @@ public interface SolutionDslPackage extends EPackage
     EReference SOLUTION__BUDGETING = eINSTANCE.getSolution_Budgeting();
 
     /**
-     * The meta object literal for the '<em><b>Subscriptions</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SOLUTION__SUBSCRIPTIONS = eINSTANCE.getSolution_Subscriptions();
-
-    /**
      * The meta object literal for the '<em><b>Tags</b></em>' reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference SOLUTION__TAGS = eINSTANCE.getSolution_Tags();
+
+    /**
+     * The meta object literal for the '<em><b>Subscriptions</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SOLUTION__SUBSCRIPTIONS = eINSTANCE.getSolution_Subscriptions();
 
     /**
      * The meta object literal for the '{@link org.fornax.soa.solutionDsl.impl.ModuleImpl <em>Module</em>}' class.
@@ -1692,20 +1691,20 @@ public interface SolutionDslPackage extends EPackage
     EReference MODULE__BUDGETING = eINSTANCE.getModule_Budgeting();
 
     /**
-     * The meta object literal for the '<em><b>Subscriptions</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MODULE__SUBSCRIPTIONS = eINSTANCE.getModule_Subscriptions();
-
-    /**
      * The meta object literal for the '<em><b>Tags</b></em>' reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference MODULE__TAGS = eINSTANCE.getModule_Tags();
+
+    /**
+     * The meta object literal for the '<em><b>Subscriptions</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODULE__SUBSCRIPTIONS = eINSTANCE.getModule_Subscriptions();
 
     /**
      * The meta object literal for the '{@link org.fornax.soa.solutionDsl.impl.FeatureImpl <em>Feature</em>}' class.
@@ -1806,14 +1805,6 @@ public interface SolutionDslPackage extends EPackage
     EReference FEATURE__BUDGETING = eINSTANCE.getFeature_Budgeting();
 
     /**
-     * The meta object literal for the '<em><b>Subscriptions</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference FEATURE__SUBSCRIPTIONS = eINSTANCE.getFeature_Subscriptions();
-
-    /**
      * The meta object literal for the '<em><b>Tags</b></em>' reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1828,6 +1819,14 @@ public interface SolutionDslPackage extends EPackage
      * @generated
      */
     EReference FEATURE__FEATURES = eINSTANCE.getFeature_Features();
+
+    /**
+     * The meta object literal for the '<em><b>Subscriptions</b></em>' reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FEATURE__SUBSCRIPTIONS = eINSTANCE.getFeature_Subscriptions();
 
     /**
      * The meta object literal for the '{@link org.fornax.soa.solutionDsl.impl.ServiceRefImpl <em>Service Ref</em>}' class.

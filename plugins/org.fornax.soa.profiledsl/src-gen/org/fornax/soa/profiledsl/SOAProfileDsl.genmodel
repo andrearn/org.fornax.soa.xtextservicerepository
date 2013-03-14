@@ -113,8 +113,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//OrganizationNamespace/owner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//OrganizationNamespace/responsible"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//OrganizationNamespace/budgeting"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//OrganizationNamespace/subscriptions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//OrganizationNamespace/subNamespaces"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//OrganizationNamespace/subscriptions"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//TechnicalNamespace">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//TechnicalNamespace/name"/>
@@ -123,8 +123,8 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//TechnicalNamespace/owner"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//TechnicalNamespace/responsible"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//TechnicalNamespace/budgeting"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//TechnicalNamespace/subscriptions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//TechnicalNamespace/types"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//TechnicalNamespace/subscriptions"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//MessageHeader">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//MessageHeader/name"/>

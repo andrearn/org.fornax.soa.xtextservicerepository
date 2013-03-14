@@ -9,26 +9,26 @@ import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.fornax.soa.sladsl.sLADsl.Representative;
 import org.fornax.soa.sladsl.sLADsl.SLADslPackage;
-import org.fornax.soa.sladsl.sLADsl.ServiceQualityProperty;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Service Quality Property</b></em>'.
+ * An implementation of the model object '<em><b>Representative</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public class ServiceQualityPropertyImpl extends MinimalEObjectImpl.Container implements ServiceQualityProperty
+public class RepresentativeImpl extends MinimalEObjectImpl.Container implements Representative
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ServiceQualityPropertyImpl()
+  protected RepresentativeImpl()
   {
     super();
   }
@@ -41,7 +41,7 @@ public class ServiceQualityPropertyImpl extends MinimalEObjectImpl.Container imp
   @Override
   protected EClass eStaticClass()
   {
-    return SLADslPackage.Literals.SERVICE_QUALITY_PROPERTY;
+    return SLADslPackage.Literals.REPRESENTATIVE;
   }
 
-} //ServiceQualityPropertyImpl
+} //RepresentativeImpl

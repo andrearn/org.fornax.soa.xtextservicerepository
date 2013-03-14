@@ -51,11 +51,10 @@ SOAProfile:
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
-		'}'
-		)?
+		'}')?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
 	'}';
 
 /*
@@ -185,11 +184,11 @@ OrganizationNamespace:
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
 		'}')?
 		(subNamespaces+=TechnicalNamespace)*
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
 	'}' ;
 
 /*
@@ -202,11 +201,11 @@ TechnicalNamespace:
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
 		'}')?
 		(types+=Type)*
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
 	'}';
  
 /*

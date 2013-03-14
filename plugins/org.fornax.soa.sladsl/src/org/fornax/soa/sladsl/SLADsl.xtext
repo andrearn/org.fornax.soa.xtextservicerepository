@@ -23,9 +23,12 @@ SLA:
 	'service-level-agreement' name=QualifiedName (version=Version)? '{'
 			'effective-date' effectiveDate = STRING 
 			('effective-until' effectiveUntil = STRING )?
+			(parties+=Party)*
+			('scope' scope = STRING)?
 			('preample' preample = STRING )?
 			('description' description = STRING )?
-			('scope' scope = STRING)?
+			('restrictions' restrictions=STRING )?
+			(priorities+=PriorityDeclaration)*
 			('applies-to' '{'
 				appliesTo += AssetRef* 
 			'}')?
@@ -41,23 +44,14 @@ SLA:
 					'}')
 				'}'
 			)?
-			('restrictions' restrictions=STRING )?
-			(priorities+=PriorityDeclaration)*
-			(escalationProcedure=Escalation )?
 			('additional-services' additionalServices = STRING )?
-			(parties+=Party)*
+			(escalationProcedure=Escalation )?
 			('cancellation' cancellation = STRING )?
 			('extraordinary-cancellation' extraordinaryCancellation = STRING )?
-			('effort-accounting' effortAccounting = STRING )?
 			(reports+=Report)*
-			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
-				('subscriptions' '{'
-					subscriptions += [basedsl::User|QualifiedName]*
-				'}')?
-			)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
 	'}';
 
@@ -66,6 +60,7 @@ Cost:
 	'costs' '{'
 		'amount' costsAmount=STRING
 		'billed-per-unit' billedUnit=STRING
+		('effort-accounting' effortAccounting = STRING )?
 		(escalation = Escalation)?
 		('penalty' penalty = STRING )?
 	'}'
@@ -213,53 +208,46 @@ Party: CustomerParty | ProviderParty | ThirdParty;
 
 CustomerParty:
 	'customer-party' name=QualifiedName '{'
-		(representatives+=Repesentative)+
+		(representatives+=Representative)+
 		(responsibilities+=Responsibility)+
 	'}'; 
 	
 ProviderParty:
 	'provider-party' name=QualifiedName '{'
-		(representatives+=Repesentative)+
+		(representatives+=Representative)+
 		(responsibilities+=Responsibility)+
 	'}';
 	
 ThirdParty:
 	'third-party' name=QualifiedName '{'
 		'participation-role' role=STRING 
-		(representatives+=Repesentative)+
+		(representatives+=Representative)+
 		(responsibilities+=Responsibility)+
 	'}';
-	
 
-Repesentative:
+Representative: UserRef | InlineRepresentative;
+
+UserRef: representative = [basedsl::User|QualifiedName];
+
+InlineRepresentative:
+	{InlineRepresentative}
 	'representative' '{'
-		'name' fullname=STRING 
-		('phone' phone=STRING)? 
-		('email' email=STRING)?
+		('firstname' firstname = STRING)?
+		('lastname' lastname = STRING)?
+		('org' org = STRING)?
+		('org-unit' orgUnit = STRING)?
+		('email' email = STRING)?
+		('phone' phone = STRING)?
 	'}';
 
-Responsibility: SimpleResponsibility | ReportingResponsibility;
 
-SimpleResponsibility:
-	'responsibility' name=QualifiedName '{'
-		description=STRING 
-		(escalations+=Escalation)+
-		(penalty=STRING) 
-	'}';
+Responsibility:
+	'responsibility' description=STRING 
+;
 	
 
 Report:
 	'report' name=ID '{'
-		'report-to' reportTo=STRING
+		'report-to' reportTo=[basedsl::User|QualifiedName]
 		'contents' content=STRING
 	'}';
-	
-ReportingResponsibility:
-	'reporting-responsibility' name=ID '{'
-		'report-to' 
-		'contents' content=STRING
-		(escalations+=Escalation)+
-		(penalty=STRING) 
-	'}';
-	
-	

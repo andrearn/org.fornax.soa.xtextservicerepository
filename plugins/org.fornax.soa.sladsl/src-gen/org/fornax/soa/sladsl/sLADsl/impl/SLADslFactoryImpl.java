@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl.impl;
 
@@ -95,11 +94,11 @@ public class SLADslFactoryImpl extends EFactoryImpl implements SLADslFactory
       case SLADslPackage.CUSTOMER_PARTY: return createCustomerParty();
       case SLADslPackage.PROVIDER_PARTY: return createProviderParty();
       case SLADslPackage.THIRD_PARTY: return createThirdParty();
-      case SLADslPackage.REPESENTATIVE: return createRepesentative();
+      case SLADslPackage.REPRESENTATIVE: return createRepresentative();
+      case SLADslPackage.USER_REF: return createUserRef();
+      case SLADslPackage.INLINE_REPRESENTATIVE: return createInlineRepresentative();
       case SLADslPackage.RESPONSIBILITY: return createResponsibility();
-      case SLADslPackage.SIMPLE_RESPONSIBILITY: return createSimpleResponsibility();
       case SLADslPackage.REPORT: return createReport();
-      case SLADslPackage.REPORTING_RESPONSIBILITY: return createReportingResponsibility();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -454,10 +453,32 @@ public class SLADslFactoryImpl extends EFactoryImpl implements SLADslFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public Repesentative createRepesentative()
+  public Representative createRepresentative()
   {
-    RepesentativeImpl repesentative = new RepesentativeImpl();
-    return repesentative;
+    RepresentativeImpl representative = new RepresentativeImpl();
+    return representative;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public UserRef createUserRef()
+  {
+    UserRefImpl userRef = new UserRefImpl();
+    return userRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InlineRepresentative createInlineRepresentative()
+  {
+    InlineRepresentativeImpl inlineRepresentative = new InlineRepresentativeImpl();
+    return inlineRepresentative;
   }
 
   /**
@@ -476,32 +497,10 @@ public class SLADslFactoryImpl extends EFactoryImpl implements SLADslFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public SimpleResponsibility createSimpleResponsibility()
-  {
-    SimpleResponsibilityImpl simpleResponsibility = new SimpleResponsibilityImpl();
-    return simpleResponsibility;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public Report createReport()
   {
     ReportImpl report = new ReportImpl();
     return report;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ReportingResponsibility createReportingResponsibility()
-  {
-    ReportingResponsibilityImpl reportingResponsibility = new ReportingResponsibilityImpl();
-    return reportingResponsibility;
   }
 
   /**

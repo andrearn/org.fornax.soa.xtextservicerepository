@@ -40,16 +40,16 @@ Domain :
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('service-management' svcMgmt=[basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
 		'}')?
-		('tags' (tags+=[semantics::Tag])+)?
+		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
 
 		(domains+=Domain)*
 		(capabilityGroups+=CapabilityGroup)*
 		(capabilites+=Capability)*
+		
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
 	'}';
 	
 /**
@@ -63,15 +63,16 @@ BusinessFunction :
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
 		'}')?
 		(additionalInfo=AdditionalInformation)?
-		('tags' (tags+=[semantics::Tag])+)?
 
 		('uses-capability' '{'
 			(capabilties+=CapabilityRef)+
+		'}')?
+
+		('tags' (tags+=[semantics::Tag])+)?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
 		'}')?
 	'}' ; 
 	
@@ -85,13 +86,13 @@ CapabilityGroup :
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
 		'}')?
 		(additionalInfo=AdditionalInformation)?
 		(capabilities+=Capability)*
 		(capabilityGroups+=CapabilityGroup)*
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
 	'}'
 ;
 
@@ -136,11 +137,11 @@ SimpleCapability :
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
 		'}')?
 		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
 	'}';
 
 /**
@@ -181,11 +182,11 @@ CapabilityVariant:
 			('owner' owner=[basedsl::User|QualifiedName])?
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
 		'}')?
 		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
 	'}';
 
 CapabilityVariation:
@@ -225,7 +226,7 @@ User returns basedsl::User:
 		('firstname' firstname = STRING)?
 		('lastname' lastname = STRING)?
 		('org' org = STRING)?
-		('orgUnit' orgUnit = STRING)?
+		('org-unit' orgUnit = STRING)?
 		('email' email = STRING)?
 		('phone' phone = STRING)?
 		('roles' (roles += RoleRef)+)?

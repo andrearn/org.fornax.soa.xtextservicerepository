@@ -2,16 +2,18 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl.impl;
 
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
+import org.fornax.soa.basedsl.sOABaseDsl.User;
 
 import org.fornax.soa.sladsl.sLADsl.Report;
 import org.fornax.soa.sladsl.sLADsl.SLADslPackage;
@@ -54,24 +56,14 @@ public class ReportImpl extends MinimalEObjectImpl.Container implements Report
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getReportTo() <em>Report To</em>}' attribute.
+   * The cached value of the '{@link #getReportTo() <em>Report To</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getReportTo()
    * @generated
    * @ordered
    */
-  protected static final String REPORT_TO_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getReportTo() <em>Report To</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getReportTo()
-   * @generated
-   * @ordered
-   */
-  protected String reportTo = REPORT_TO_EDEFAULT;
+  protected User reportTo;
 
   /**
    * The default value of the '{@link #getContent() <em>Content</em>}' attribute.
@@ -142,7 +134,27 @@ public class ReportImpl extends MinimalEObjectImpl.Container implements Report
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getReportTo()
+  public User getReportTo()
+  {
+    if (reportTo != null && reportTo.eIsProxy())
+    {
+      InternalEObject oldReportTo = (InternalEObject)reportTo;
+      reportTo = (User)eResolveProxy(oldReportTo);
+      if (reportTo != oldReportTo)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SLADslPackage.REPORT__REPORT_TO, oldReportTo, reportTo));
+      }
+    }
+    return reportTo;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public User basicGetReportTo()
   {
     return reportTo;
   }
@@ -152,9 +164,9 @@ public class ReportImpl extends MinimalEObjectImpl.Container implements Report
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setReportTo(String newReportTo)
+  public void setReportTo(User newReportTo)
   {
-    String oldReportTo = reportTo;
+    User oldReportTo = reportTo;
     reportTo = newReportTo;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SLADslPackage.REPORT__REPORT_TO, oldReportTo, reportTo));
@@ -196,7 +208,8 @@ public class ReportImpl extends MinimalEObjectImpl.Container implements Report
       case SLADslPackage.REPORT__NAME:
         return getName();
       case SLADslPackage.REPORT__REPORT_TO:
-        return getReportTo();
+        if (resolve) return getReportTo();
+        return basicGetReportTo();
       case SLADslPackage.REPORT__CONTENT:
         return getContent();
     }
@@ -217,7 +230,7 @@ public class ReportImpl extends MinimalEObjectImpl.Container implements Report
         setName((String)newValue);
         return;
       case SLADslPackage.REPORT__REPORT_TO:
-        setReportTo((String)newValue);
+        setReportTo((User)newValue);
         return;
       case SLADslPackage.REPORT__CONTENT:
         setContent((String)newValue);
@@ -240,7 +253,7 @@ public class ReportImpl extends MinimalEObjectImpl.Container implements Report
         setName(NAME_EDEFAULT);
         return;
       case SLADslPackage.REPORT__REPORT_TO:
-        setReportTo(REPORT_TO_EDEFAULT);
+        setReportTo((User)null);
         return;
       case SLADslPackage.REPORT__CONTENT:
         setContent(CONTENT_EDEFAULT);
@@ -262,7 +275,7 @@ public class ReportImpl extends MinimalEObjectImpl.Container implements Report
       case SLADslPackage.REPORT__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SLADslPackage.REPORT__REPORT_TO:
-        return REPORT_TO_EDEFAULT == null ? reportTo != null : !REPORT_TO_EDEFAULT.equals(reportTo);
+        return reportTo != null;
       case SLADslPackage.REPORT__CONTENT:
         return CONTENT_EDEFAULT == null ? content != null : !CONTENT_EDEFAULT.equals(content);
     }
@@ -282,8 +295,6 @@ public class ReportImpl extends MinimalEObjectImpl.Container implements Report
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", reportTo: ");
-    result.append(reportTo);
     result.append(", content: ");
     result.append(content);
     result.append(')');

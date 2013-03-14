@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl.util;
 
@@ -209,9 +208,19 @@ public class SLADslAdapterFactory extends AdapterFactoryImpl
         return createThirdPartyAdapter();
       }
       @Override
-      public Adapter caseRepesentative(Repesentative object)
+      public Adapter caseRepresentative(Representative object)
       {
-        return createRepesentativeAdapter();
+        return createRepresentativeAdapter();
+      }
+      @Override
+      public Adapter caseUserRef(UserRef object)
+      {
+        return createUserRefAdapter();
+      }
+      @Override
+      public Adapter caseInlineRepresentative(InlineRepresentative object)
+      {
+        return createInlineRepresentativeAdapter();
       }
       @Override
       public Adapter caseResponsibility(Responsibility object)
@@ -219,19 +228,9 @@ public class SLADslAdapterFactory extends AdapterFactoryImpl
         return createResponsibilityAdapter();
       }
       @Override
-      public Adapter caseSimpleResponsibility(SimpleResponsibility object)
-      {
-        return createSimpleResponsibilityAdapter();
-      }
-      @Override
       public Adapter caseReport(Report object)
       {
         return createReportAdapter();
-      }
-      @Override
-      public Adapter caseReportingResponsibility(ReportingResponsibility object)
-      {
-        return createReportingResponsibilityAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -646,16 +645,46 @@ public class SLADslAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.fornax.soa.sladsl.sLADsl.Repesentative <em>Repesentative</em>}'.
+   * Creates a new adapter for an object of class '{@link org.fornax.soa.sladsl.sLADsl.Representative <em>Representative</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.fornax.soa.sladsl.sLADsl.Repesentative
+   * @see org.fornax.soa.sladsl.sLADsl.Representative
    * @generated
    */
-  public Adapter createRepesentativeAdapter()
+  public Adapter createRepresentativeAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.fornax.soa.sladsl.sLADsl.UserRef <em>User Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.fornax.soa.sladsl.sLADsl.UserRef
+   * @generated
+   */
+  public Adapter createUserRefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.fornax.soa.sladsl.sLADsl.InlineRepresentative <em>Inline Representative</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.fornax.soa.sladsl.sLADsl.InlineRepresentative
+   * @generated
+   */
+  public Adapter createInlineRepresentativeAdapter()
   {
     return null;
   }
@@ -676,21 +705,6 @@ public class SLADslAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.fornax.soa.sladsl.sLADsl.SimpleResponsibility <em>Simple Responsibility</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.fornax.soa.sladsl.sLADsl.SimpleResponsibility
-   * @generated
-   */
-  public Adapter createSimpleResponsibilityAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.fornax.soa.sladsl.sLADsl.Report <em>Report</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -701,21 +715,6 @@ public class SLADslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createReportAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.fornax.soa.sladsl.sLADsl.ReportingResponsibility <em>Reporting Responsibility</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.fornax.soa.sladsl.sLADsl.ReportingResponsibility
-   * @generated
-   */
-  public Adapter createReportingResponsibilityAdapter()
   {
     return null;
   }

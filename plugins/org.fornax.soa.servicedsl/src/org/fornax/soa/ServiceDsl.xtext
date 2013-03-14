@@ -50,11 +50,11 @@ DomainNamespace:
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
-				('subscriptions' '{'
-					subscriptions += [basedsl::User|QualifiedName]*
-				'}')?
 			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
 		'}')?
 		(types+=Type)*
 		(services+=Service)*
@@ -75,11 +75,11 @@ InternalNamespace:
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
-				('subscriptions' '{'
-					subscriptions += [basedsl::User|QualifiedName]*
-				'}')?
 			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
 		'}')?
 		(types+=Type)*
 		(services+=Service)*
@@ -117,11 +117,11 @@ BusinessObject:
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
-				('subscriptions' '{'
-					subscriptions += [basedsl::User|QualifiedName]*
-				'}')?
 			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
 		'}'
 		(properties+=Property)*
 	'}';
@@ -146,11 +146,11 @@ QueryObject:
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
-				('subscriptions' '{'
-					subscriptions += [basedsl::User|QualifiedName]*
-				'}')?
 			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
 		'}'
 		(properties+=Property)*
 	'}';
@@ -211,11 +211,11 @@ Enumeration:
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
-				('subscriptions' '{'
-					subscriptions += [basedsl::User|QualifiedName]*
-				'}')?
 			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+ )?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
 		'}'
 		(literals+=EnumLiteral )*
 	'}';
@@ -275,18 +275,17 @@ Service:
 
 			)
 			('contact-info' '{'
-				/* Who is responsible for the service? */
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
-				('subscriptions' '{'
-					subscriptions += [basedsl::User|QualifiedName]*
-				'}')?
 			'}')?
 			/*
 			 * Semantic tagging
 			 */
 			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
 		'}'
 		/*
 		 * The service operations
@@ -356,11 +355,11 @@ Exception:
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
-				('subscriptions' '{'
-					subscriptions += [basedsl::User|QualifiedName]*
-				'}')?
 			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
 		'}'
 		(properties+=SimpleAttribute)*
 	'}';
@@ -477,11 +476,11 @@ Event:
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
 				('budgeting' budgeting = [basedsl::User|QualifiedName])?
-				('subscriptions' '{'
-					subscriptions += [basedsl::User|QualifiedName]*
-				'}')?
 			'}')?
 			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
 		'}'
 		(parameter+=Parameter )*
 	'}';

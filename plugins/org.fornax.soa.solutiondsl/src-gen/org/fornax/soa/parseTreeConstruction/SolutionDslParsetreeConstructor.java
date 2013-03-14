@@ -68,7 +68,6 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule Model ****************
  *
  * Model:
- * 
  * 	imports+=Import* solution+=Solution*;
  *
  **/
@@ -203,36 +202,23 @@ protected class Model_SolutionAssignment_1 extends AssignmentToken  {
 /************ begin Rule Solution ****************
  *
  * Solution:
- * 
  * 	"solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
- * 
  * 	"lifecycle-state" state=[profileDsl::LifecycleState|QualifiedName] productVersion=ProductVersion?
- * 
  * 	additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* ("requires-channel"
- * 
  * 	requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature* modules+=Module* ("contact-info" "{"
- * 
  * 	("owner" owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])*
- * 
- * 	("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{"
- * 
- * 	subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}";
+ * 	("budgeting" budgeting=[basedsl::User|QualifiedName])? "}")? ("tags" tags+=[semanticsDsl::Tag|QualifiedName]*)?
+ * 	("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")? "}";
  *
  **/
 
 // "solution" name=QualifiedName "{" ("domain" domain=[businessDsl::Domain|QualifiedName])? version=Version
-// 
 // "lifecycle-state" state=[profileDsl::LifecycleState|QualifiedName] productVersion=ProductVersion?
-// 
 // additionalInfo=AdditionalInformation? ("requires" requires+=ServiceRef)* ("requires-channel"
-// 
-// requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature* modules+=Module* ("contact-info" "{"
-// 
-// ("owner" owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])*
-// 
-// ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions" "{"
-// 
-// subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}"
+// requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature* modules+=Module* ("contact-info" "{" ("owner"
+// owner=[basedsl::User|QualifiedName])? ("responsible" responsible+=[basedsl::User|QualifiedName])* ("budgeting"
+// budgeting=[basedsl::User|QualifiedName])? "}")? ("tags" tags+=[semanticsDsl::Tag|QualifiedName]*)? ("subscriptions" "{"
+// subscriptions+=[basedsl::User|QualifiedName]* "}")? "}"
 protected class Solution_Group extends GroupToken {
 	
 	public Solution_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -247,7 +233,7 @@ protected class Solution_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Solution_RightCurlyBracketKeyword_15(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Solution_RightCurlyBracketKeyword_16(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -903,10 +889,7 @@ protected class Solution_ModulesAssignment_12 extends AssignmentToken  {
 }
 
 // ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
-// 
-// responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-// 
-// "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
+// responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? "}")?
 protected class Solution_Group_13 extends GroupToken {
 	
 	public Solution_Group_13(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -921,10 +904,7 @@ protected class Solution_Group_13 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Solution_Group_13_5(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Solution_Group_13_4(lastRuleCallOrigin, this, 1, inst);
-			case 2: return new Solution_Group_13_3(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new Solution_Group_13_2(lastRuleCallOrigin, this, 3, inst);
+			case 0: return new Solution_RightCurlyBracketKeyword_13_5(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -1231,38 +1211,16 @@ protected class Solution_BudgetingAssignment_13_4_1 extends AssignmentToken  {
 }
 
 
-// ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
-protected class Solution_Group_13_5 extends GroupToken {
+// "}"
+protected class Solution_RightCurlyBracketKeyword_13_5 extends KeywordToken  {
 	
-	public Solution_Group_13_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getSolutionAccess().getGroup_13_5();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Solution_RightCurlyBracketKeyword_13_5_3(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// "subscriptions"
-protected class Solution_SubscriptionsKeyword_13_5_0 extends KeywordToken  {
-	
-	public Solution_SubscriptionsKeyword_13_5_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Solution_RightCurlyBracketKeyword_13_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getSolutionAccess().getSubscriptionsKeyword_13_5_0();
+		return grammarAccess.getSolutionAccess().getRightCurlyBracketKeyword_13_5();
 	}
 
     @Override
@@ -1271,89 +1229,6 @@ protected class Solution_SubscriptionsKeyword_13_5_0 extends KeywordToken  {
 			case 0: return new Solution_Group_13_4(lastRuleCallOrigin, this, 0, inst);
 			case 1: return new Solution_Group_13_3(lastRuleCallOrigin, this, 1, inst);
 			case 2: return new Solution_Group_13_2(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new Solution_LeftCurlyBracketKeyword_13_1(lastRuleCallOrigin, this, 3, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// "{"
-protected class Solution_LeftCurlyBracketKeyword_13_5_1 extends KeywordToken  {
-	
-	public Solution_LeftCurlyBracketKeyword_13_5_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getSolutionAccess().getLeftCurlyBracketKeyword_13_5_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Solution_SubscriptionsKeyword_13_5_0(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// subscriptions+=[basedsl::User|QualifiedName]*
-protected class Solution_SubscriptionsAssignment_13_5_2 extends AssignmentToken  {
-	
-	public Solution_SubscriptionsAssignment_13_5_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getSolutionAccess().getSubscriptionsAssignment_13_5_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Solution_SubscriptionsAssignment_13_5_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Solution_LeftCurlyBracketKeyword_13_5_1(lastRuleCallOrigin, this, 1, inst);
-			default: return null;
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("subscriptions",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("subscriptions");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
-			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getSolutionAccess().getSubscriptionsUserCrossReference_13_5_2_0().getType().getClassifier())) {
-				type = AssignmentType.CROSS_REFERENCE;
-				element = grammarAccess.getSolutionAccess().getSubscriptionsUserCrossReference_13_5_2_0(); 
-				return obj;
-			}
-		}
-		return null;
-	}
-
-}
-
-// "}"
-protected class Solution_RightCurlyBracketKeyword_13_5_3 extends KeywordToken  {
-	
-	public Solution_RightCurlyBracketKeyword_13_5_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getSolutionAccess().getRightCurlyBracketKeyword_13_5_3();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Solution_SubscriptionsAssignment_13_5_2(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -1361,8 +1236,7 @@ protected class Solution_RightCurlyBracketKeyword_13_5_3 extends KeywordToken  {
 }
 
 
-
-// ("tags" tags+=[semanticsDsl::Tag]+)?
+// ("tags" tags+=[semanticsDsl::Tag|QualifiedName]*)?
 protected class Solution_Group_14 extends GroupToken {
 	
 	public Solution_Group_14(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1413,7 +1287,7 @@ protected class Solution_TagsKeyword_14_0 extends KeywordToken  {
 
 }
 
-// tags+=[semanticsDsl::Tag]+
+// tags+=[semanticsDsl::Tag|QualifiedName]*
 protected class Solution_TagsAssignment_14_1 extends AssignmentToken  {
 	
 	public Solution_TagsAssignment_14_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1452,16 +1326,38 @@ protected class Solution_TagsAssignment_14_1 extends AssignmentToken  {
 }
 
 
-// "}"
-protected class Solution_RightCurlyBracketKeyword_15 extends KeywordToken  {
+// ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
+protected class Solution_Group_15 extends GroupToken {
 	
-	public Solution_RightCurlyBracketKeyword_15(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Solution_Group_15(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getSolutionAccess().getGroup_15();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Solution_RightCurlyBracketKeyword_15_3(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "subscriptions"
+protected class Solution_SubscriptionsKeyword_15_0 extends KeywordToken  {
+	
+	public Solution_SubscriptionsKeyword_15_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getSolutionAccess().getRightCurlyBracketKeyword_15();
+		return grammarAccess.getSolutionAccess().getSubscriptionsKeyword_15_0();
 	}
 
     @Override
@@ -1482,6 +1378,120 @@ protected class Solution_RightCurlyBracketKeyword_15 extends KeywordToken  {
 
 }
 
+// "{"
+protected class Solution_LeftCurlyBracketKeyword_15_1 extends KeywordToken  {
+	
+	public Solution_LeftCurlyBracketKeyword_15_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getSolutionAccess().getLeftCurlyBracketKeyword_15_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Solution_SubscriptionsKeyword_15_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// subscriptions+=[basedsl::User|QualifiedName]*
+protected class Solution_SubscriptionsAssignment_15_2 extends AssignmentToken  {
+	
+	public Solution_SubscriptionsAssignment_15_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getSolutionAccess().getSubscriptionsAssignment_15_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Solution_SubscriptionsAssignment_15_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Solution_LeftCurlyBracketKeyword_15_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("subscriptions",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("subscriptions");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getSolutionAccess().getSubscriptionsUserCrossReference_15_2_0().getType().getClassifier())) {
+				type = AssignmentType.CROSS_REFERENCE;
+				element = grammarAccess.getSolutionAccess().getSubscriptionsUserCrossReference_15_2_0(); 
+				return obj;
+			}
+		}
+		return null;
+	}
+
+}
+
+// "}"
+protected class Solution_RightCurlyBracketKeyword_15_3 extends KeywordToken  {
+	
+	public Solution_RightCurlyBracketKeyword_15_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getSolutionAccess().getRightCurlyBracketKeyword_15_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Solution_SubscriptionsAssignment_15_2(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+
+// "}"
+protected class Solution_RightCurlyBracketKeyword_16 extends KeywordToken  {
+	
+	public Solution_RightCurlyBracketKeyword_16(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getSolutionAccess().getRightCurlyBracketKeyword_16();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Solution_Group_15(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Solution_Group_14(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Solution_Group_13(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new Solution_ModulesAssignment_12(lastRuleCallOrigin, this, 3, inst);
+			case 4: return new Solution_FeaturesAssignment_11(lastRuleCallOrigin, this, 4, inst);
+			case 5: return new Solution_Group_10(lastRuleCallOrigin, this, 5, inst);
+			case 6: return new Solution_Group_9(lastRuleCallOrigin, this, 6, inst);
+			case 7: return new Solution_AdditionalInfoAssignment_8(lastRuleCallOrigin, this, 7, inst);
+			case 8: return new Solution_ProductVersionAssignment_7(lastRuleCallOrigin, this, 8, inst);
+			case 9: return new Solution_StateAssignment_6(lastRuleCallOrigin, this, 9, inst);
+			default: return null;
+		}	
+	}
+
+}
+
 
 /************ end Rule Solution ****************/
 
@@ -1489,28 +1499,20 @@ protected class Solution_RightCurlyBracketKeyword_15 extends KeywordToken  {
 /************ begin Rule Module ****************
  *
  * Module:
- * 
  * 	"module" name=ID "{" "kind" kind=ModuleKind version=Version? additionalInfo=AdditionalInformation? ("requires"
- * 
  * 	requires+=ServiceRef)* ("requires-channel" requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature*
- * 
  * 	modules+=Module* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
- * 
- * 	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
- * 
- * 	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}";
+ * 	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? "}")? ("tags"
+ * 	tags+=[semanticsDsl::Tag|QualifiedName]*)? ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
+ * 	"}";
  *
  **/
 
 // "module" name=ID "{" "kind" kind=ModuleKind version=Version? additionalInfo=AdditionalInformation? ("requires"
-// 
 // requires+=ServiceRef)* ("requires-channel" requiresChannel+=[serviceDsl::Channel|QualifiedName])* features+=Feature*
-// 
 // modules+=Module* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
-// 
-// responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-// 
-// "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? "}"
+// responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? "}")? ("tags"
+// tags+=[semanticsDsl::Tag|QualifiedName]*)? ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")? "}"
 protected class Module_Group extends GroupToken {
 	
 	public Module_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -1525,7 +1527,7 @@ protected class Module_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Module_RightCurlyBracketKeyword_13(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Module_RightCurlyBracketKeyword_14(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -2049,10 +2051,7 @@ protected class Module_ModulesAssignment_10 extends AssignmentToken  {
 }
 
 // ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
-// 
-// responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-// 
-// "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
+// responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? "}")?
 protected class Module_Group_11 extends GroupToken {
 	
 	public Module_Group_11(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2067,10 +2066,7 @@ protected class Module_Group_11 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Module_Group_11_5(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Module_Group_11_4(lastRuleCallOrigin, this, 1, inst);
-			case 2: return new Module_Group_11_3(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new Module_Group_11_2(lastRuleCallOrigin, this, 3, inst);
+			case 0: return new Module_RightCurlyBracketKeyword_11_5(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -2377,38 +2373,16 @@ protected class Module_BudgetingAssignment_11_4_1 extends AssignmentToken  {
 }
 
 
-// ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
-protected class Module_Group_11_5 extends GroupToken {
+// "}"
+protected class Module_RightCurlyBracketKeyword_11_5 extends KeywordToken  {
 	
-	public Module_Group_11_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getModuleAccess().getGroup_11_5();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Module_RightCurlyBracketKeyword_11_5_3(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// "subscriptions"
-protected class Module_SubscriptionsKeyword_11_5_0 extends KeywordToken  {
-	
-	public Module_SubscriptionsKeyword_11_5_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Module_RightCurlyBracketKeyword_11_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getModuleAccess().getSubscriptionsKeyword_11_5_0();
+		return grammarAccess.getModuleAccess().getRightCurlyBracketKeyword_11_5();
 	}
 
     @Override
@@ -2417,89 +2391,6 @@ protected class Module_SubscriptionsKeyword_11_5_0 extends KeywordToken  {
 			case 0: return new Module_Group_11_4(lastRuleCallOrigin, this, 0, inst);
 			case 1: return new Module_Group_11_3(lastRuleCallOrigin, this, 1, inst);
 			case 2: return new Module_Group_11_2(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new Module_LeftCurlyBracketKeyword_11_1(lastRuleCallOrigin, this, 3, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// "{"
-protected class Module_LeftCurlyBracketKeyword_11_5_1 extends KeywordToken  {
-	
-	public Module_LeftCurlyBracketKeyword_11_5_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getModuleAccess().getLeftCurlyBracketKeyword_11_5_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Module_SubscriptionsKeyword_11_5_0(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// subscriptions+=[basedsl::User|QualifiedName]*
-protected class Module_SubscriptionsAssignment_11_5_2 extends AssignmentToken  {
-	
-	public Module_SubscriptionsAssignment_11_5_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getModuleAccess().getSubscriptionsAssignment_11_5_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Module_SubscriptionsAssignment_11_5_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Module_LeftCurlyBracketKeyword_11_5_1(lastRuleCallOrigin, this, 1, inst);
-			default: return null;
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("subscriptions",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("subscriptions");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
-			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getModuleAccess().getSubscriptionsUserCrossReference_11_5_2_0().getType().getClassifier())) {
-				type = AssignmentType.CROSS_REFERENCE;
-				element = grammarAccess.getModuleAccess().getSubscriptionsUserCrossReference_11_5_2_0(); 
-				return obj;
-			}
-		}
-		return null;
-	}
-
-}
-
-// "}"
-protected class Module_RightCurlyBracketKeyword_11_5_3 extends KeywordToken  {
-	
-	public Module_RightCurlyBracketKeyword_11_5_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getModuleAccess().getRightCurlyBracketKeyword_11_5_3();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Module_SubscriptionsAssignment_11_5_2(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -2507,8 +2398,7 @@ protected class Module_RightCurlyBracketKeyword_11_5_3 extends KeywordToken  {
 }
 
 
-
-// ("tags" tags+=[semanticsDsl::Tag]+)?
+// ("tags" tags+=[semanticsDsl::Tag|QualifiedName]*)?
 protected class Module_Group_12 extends GroupToken {
 	
 	public Module_Group_12(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2559,7 +2449,7 @@ protected class Module_TagsKeyword_12_0 extends KeywordToken  {
 
 }
 
-// tags+=[semanticsDsl::Tag]+
+// tags+=[semanticsDsl::Tag|QualifiedName]*
 protected class Module_TagsAssignment_12_1 extends AssignmentToken  {
 	
 	public Module_TagsAssignment_12_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2598,16 +2488,38 @@ protected class Module_TagsAssignment_12_1 extends AssignmentToken  {
 }
 
 
-// "}"
-protected class Module_RightCurlyBracketKeyword_13 extends KeywordToken  {
+// ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
+protected class Module_Group_13 extends GroupToken {
 	
-	public Module_RightCurlyBracketKeyword_13(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Module_Group_13(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getModuleAccess().getGroup_13();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Module_RightCurlyBracketKeyword_13_3(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "subscriptions"
+protected class Module_SubscriptionsKeyword_13_0 extends KeywordToken  {
+	
+	public Module_SubscriptionsKeyword_13_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getModuleAccess().getRightCurlyBracketKeyword_13();
+		return grammarAccess.getModuleAccess().getSubscriptionsKeyword_13_0();
 	}
 
     @Override
@@ -2628,6 +2540,120 @@ protected class Module_RightCurlyBracketKeyword_13 extends KeywordToken  {
 
 }
 
+// "{"
+protected class Module_LeftCurlyBracketKeyword_13_1 extends KeywordToken  {
+	
+	public Module_LeftCurlyBracketKeyword_13_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getModuleAccess().getLeftCurlyBracketKeyword_13_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Module_SubscriptionsKeyword_13_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// subscriptions+=[basedsl::User|QualifiedName]*
+protected class Module_SubscriptionsAssignment_13_2 extends AssignmentToken  {
+	
+	public Module_SubscriptionsAssignment_13_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getModuleAccess().getSubscriptionsAssignment_13_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Module_SubscriptionsAssignment_13_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Module_LeftCurlyBracketKeyword_13_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("subscriptions",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("subscriptions");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getModuleAccess().getSubscriptionsUserCrossReference_13_2_0().getType().getClassifier())) {
+				type = AssignmentType.CROSS_REFERENCE;
+				element = grammarAccess.getModuleAccess().getSubscriptionsUserCrossReference_13_2_0(); 
+				return obj;
+			}
+		}
+		return null;
+	}
+
+}
+
+// "}"
+protected class Module_RightCurlyBracketKeyword_13_3 extends KeywordToken  {
+	
+	public Module_RightCurlyBracketKeyword_13_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getModuleAccess().getRightCurlyBracketKeyword_13_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Module_SubscriptionsAssignment_13_2(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+
+// "}"
+protected class Module_RightCurlyBracketKeyword_14 extends KeywordToken  {
+	
+	public Module_RightCurlyBracketKeyword_14(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getModuleAccess().getRightCurlyBracketKeyword_14();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Module_Group_13(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Module_Group_12(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Module_Group_11(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new Module_ModulesAssignment_10(lastRuleCallOrigin, this, 3, inst);
+			case 4: return new Module_FeaturesAssignment_9(lastRuleCallOrigin, this, 4, inst);
+			case 5: return new Module_Group_8(lastRuleCallOrigin, this, 5, inst);
+			case 6: return new Module_Group_7(lastRuleCallOrigin, this, 6, inst);
+			case 7: return new Module_AdditionalInfoAssignment_6(lastRuleCallOrigin, this, 7, inst);
+			case 8: return new Module_VersionAssignment_5(lastRuleCallOrigin, this, 8, inst);
+			case 9: return new Module_KindAssignment_4(lastRuleCallOrigin, this, 9, inst);
+			default: return null;
+		}	
+	}
+
+}
+
 
 /************ end Rule Module ****************/
 
@@ -2635,34 +2661,23 @@ protected class Module_RightCurlyBracketKeyword_13 extends KeywordToken  {
 /************ begin Rule Feature ****************
  *
  * Feature:
- * 
  * 	nonFunctional?="non-functional"? "feature" name=ID "{" ("use-cases" useCase+=STRING+)? ("description"
- * 
  * 	description=STRING)? additionalInfo=AdditionalInformation? ("uses-capabilities" "{" usesCapabilities+=CapabilityRef+
- * 
  * 	"}")? ("requires" requires+=ServiceRef)* ("requires-channel" requiresChannel+=[serviceDsl::Channel|QualifiedName])*
- * 
  * 	("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
- * 
- * 	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
- * 
- * 	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? features+=Feature*
- * 
- * 	"}";
+ * 	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? "}")? ("tags"
+ * 	tags+=[semanticsDsl::Tag|QualifiedName]*)? features+=Feature* ("subscriptions" "{"
+ * 	subscriptions+=[basedsl::User|QualifiedName]* "}")? "}";
  *
  **/
 
 // nonFunctional?="non-functional"? "feature" name=ID "{" ("use-cases" useCase+=STRING+)? ("description"
-// 
 // description=STRING)? additionalInfo=AdditionalInformation? ("uses-capabilities" "{" usesCapabilities+=CapabilityRef+
-// 
 // "}")? ("requires" requires+=ServiceRef)* ("requires-channel" requiresChannel+=[serviceDsl::Channel|QualifiedName])*
-// 
 // ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
-// 
-// responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-// 
-// "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)? features+=Feature* "}"
+// responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? "}")? ("tags"
+// tags+=[semanticsDsl::Tag|QualifiedName]*)? features+=Feature* ("subscriptions" "{"
+// subscriptions+=[basedsl::User|QualifiedName]* "}")? "}"
 protected class Feature_Group extends GroupToken {
 	
 	public Feature_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -2677,7 +2692,7 @@ protected class Feature_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Feature_RightCurlyBracketKeyword_13(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Feature_RightCurlyBracketKeyword_14(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -3334,10 +3349,7 @@ protected class Feature_RequiresChannelAssignment_9_1 extends AssignmentToken  {
 
 
 // ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
-// 
-// responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-// 
-// "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
+// responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? "}")?
 protected class Feature_Group_10 extends GroupToken {
 	
 	public Feature_Group_10(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3352,10 +3364,7 @@ protected class Feature_Group_10 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Feature_Group_10_5(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Feature_Group_10_4(lastRuleCallOrigin, this, 1, inst);
-			case 2: return new Feature_Group_10_3(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new Feature_Group_10_2(lastRuleCallOrigin, this, 3, inst);
+			case 0: return new Feature_RightCurlyBracketKeyword_10_5(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -3662,38 +3671,16 @@ protected class Feature_BudgetingAssignment_10_4_1 extends AssignmentToken  {
 }
 
 
-// ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
-protected class Feature_Group_10_5 extends GroupToken {
+// "}"
+protected class Feature_RightCurlyBracketKeyword_10_5 extends KeywordToken  {
 	
-	public Feature_Group_10_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Group getGrammarElement() {
-		return grammarAccess.getFeatureAccess().getGroup_10_5();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Feature_RightCurlyBracketKeyword_10_5_3(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// "subscriptions"
-protected class Feature_SubscriptionsKeyword_10_5_0 extends KeywordToken  {
-	
-	public Feature_SubscriptionsKeyword_10_5_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Feature_RightCurlyBracketKeyword_10_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getFeatureAccess().getSubscriptionsKeyword_10_5_0();
+		return grammarAccess.getFeatureAccess().getRightCurlyBracketKeyword_10_5();
 	}
 
     @Override
@@ -3702,89 +3689,6 @@ protected class Feature_SubscriptionsKeyword_10_5_0 extends KeywordToken  {
 			case 0: return new Feature_Group_10_4(lastRuleCallOrigin, this, 0, inst);
 			case 1: return new Feature_Group_10_3(lastRuleCallOrigin, this, 1, inst);
 			case 2: return new Feature_Group_10_2(lastRuleCallOrigin, this, 2, inst);
-			case 3: return new Feature_LeftCurlyBracketKeyword_10_1(lastRuleCallOrigin, this, 3, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// "{"
-protected class Feature_LeftCurlyBracketKeyword_10_5_1 extends KeywordToken  {
-	
-	public Feature_LeftCurlyBracketKeyword_10_5_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getFeatureAccess().getLeftCurlyBracketKeyword_10_5_1();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Feature_SubscriptionsKeyword_10_5_0(lastRuleCallOrigin, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-}
-
-// subscriptions+=[basedsl::User|QualifiedName]*
-protected class Feature_SubscriptionsAssignment_10_5_2 extends AssignmentToken  {
-	
-	public Feature_SubscriptionsAssignment_10_5_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getFeatureAccess().getSubscriptionsAssignment_10_5_2();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Feature_SubscriptionsAssignment_10_5_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Feature_LeftCurlyBracketKeyword_10_5_1(lastRuleCallOrigin, this, 1, inst);
-			default: return null;
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("subscriptions",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("subscriptions");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
-			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getFeatureAccess().getSubscriptionsUserCrossReference_10_5_2_0().getType().getClassifier())) {
-				type = AssignmentType.CROSS_REFERENCE;
-				element = grammarAccess.getFeatureAccess().getSubscriptionsUserCrossReference_10_5_2_0(); 
-				return obj;
-			}
-		}
-		return null;
-	}
-
-}
-
-// "}"
-protected class Feature_RightCurlyBracketKeyword_10_5_3 extends KeywordToken  {
-	
-	public Feature_RightCurlyBracketKeyword_10_5_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Keyword getGrammarElement() {
-		return grammarAccess.getFeatureAccess().getRightCurlyBracketKeyword_10_5_3();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new Feature_SubscriptionsAssignment_10_5_2(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -3792,8 +3696,7 @@ protected class Feature_RightCurlyBracketKeyword_10_5_3 extends KeywordToken  {
 }
 
 
-
-// ("tags" tags+=[semanticsDsl::Tag]+)?
+// ("tags" tags+=[semanticsDsl::Tag|QualifiedName]*)?
 protected class Feature_Group_11 extends GroupToken {
 	
 	public Feature_Group_11(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3844,7 +3747,7 @@ protected class Feature_TagsKeyword_11_0 extends KeywordToken  {
 
 }
 
-// tags+=[semanticsDsl::Tag]+
+// tags+=[semanticsDsl::Tag|QualifiedName]*
 protected class Feature_TagsAssignment_11_1 extends AssignmentToken  {
 	
 	public Feature_TagsAssignment_11_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3938,16 +3841,38 @@ protected class Feature_FeaturesAssignment_12 extends AssignmentToken  {
 	}	
 }
 
-// "}"
-protected class Feature_RightCurlyBracketKeyword_13 extends KeywordToken  {
+// ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
+protected class Feature_Group_13 extends GroupToken {
 	
-	public Feature_RightCurlyBracketKeyword_13(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Feature_Group_13(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getFeatureAccess().getGroup_13();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Feature_RightCurlyBracketKeyword_13_3(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// "subscriptions"
+protected class Feature_SubscriptionsKeyword_13_0 extends KeywordToken  {
+	
+	public Feature_SubscriptionsKeyword_13_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getFeatureAccess().getRightCurlyBracketKeyword_13();
+		return grammarAccess.getFeatureAccess().getSubscriptionsKeyword_13_0();
 	}
 
     @Override
@@ -3969,6 +3894,121 @@ protected class Feature_RightCurlyBracketKeyword_13 extends KeywordToken  {
 
 }
 
+// "{"
+protected class Feature_LeftCurlyBracketKeyword_13_1 extends KeywordToken  {
+	
+	public Feature_LeftCurlyBracketKeyword_13_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getFeatureAccess().getLeftCurlyBracketKeyword_13_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Feature_SubscriptionsKeyword_13_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// subscriptions+=[basedsl::User|QualifiedName]*
+protected class Feature_SubscriptionsAssignment_13_2 extends AssignmentToken  {
+	
+	public Feature_SubscriptionsAssignment_13_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getFeatureAccess().getSubscriptionsAssignment_13_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Feature_SubscriptionsAssignment_13_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Feature_LeftCurlyBracketKeyword_13_1(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("subscriptions",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("subscriptions");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getFeatureAccess().getSubscriptionsUserCrossReference_13_2_0().getType().getClassifier())) {
+				type = AssignmentType.CROSS_REFERENCE;
+				element = grammarAccess.getFeatureAccess().getSubscriptionsUserCrossReference_13_2_0(); 
+				return obj;
+			}
+		}
+		return null;
+	}
+
+}
+
+// "}"
+protected class Feature_RightCurlyBracketKeyword_13_3 extends KeywordToken  {
+	
+	public Feature_RightCurlyBracketKeyword_13_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getFeatureAccess().getRightCurlyBracketKeyword_13_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Feature_SubscriptionsAssignment_13_2(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+
+// "}"
+protected class Feature_RightCurlyBracketKeyword_14 extends KeywordToken  {
+	
+	public Feature_RightCurlyBracketKeyword_14(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getFeatureAccess().getRightCurlyBracketKeyword_14();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Feature_Group_13(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Feature_FeaturesAssignment_12(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Feature_Group_11(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new Feature_Group_10(lastRuleCallOrigin, this, 3, inst);
+			case 4: return new Feature_Group_9(lastRuleCallOrigin, this, 4, inst);
+			case 5: return new Feature_Group_8(lastRuleCallOrigin, this, 5, inst);
+			case 6: return new Feature_Group_7(lastRuleCallOrigin, this, 6, inst);
+			case 7: return new Feature_AdditionalInfoAssignment_6(lastRuleCallOrigin, this, 7, inst);
+			case 8: return new Feature_Group_5(lastRuleCallOrigin, this, 8, inst);
+			case 9: return new Feature_Group_4(lastRuleCallOrigin, this, 9, inst);
+			case 10: return new Feature_LeftCurlyBracketKeyword_3(lastRuleCallOrigin, this, 10, inst);
+			default: return null;
+		}	
+	}
+
+}
+
 
 /************ end Rule Feature ****************/
 
@@ -3976,15 +4016,12 @@ protected class Feature_RightCurlyBracketKeyword_13 extends KeywordToken  {
 /************ begin Rule ServiceRef ****************
  *
  * ServiceRef:
- * 
  * 	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"? ("calling"
- * 
  * 	calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?;
  *
  **/
 
 // service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef isResponseHandler?="handling responses"? ("calling"
-// 
 // calledOperations+=SimpleOperationRef ("," calledOperations+=SimpleOperationRef)*)?
 protected class ServiceRef_Group extends GroupToken {
 	
@@ -4324,7 +4361,6 @@ protected class ServiceRef_CalledOperationsAssignment_3_2_1 extends AssignmentTo
 /************ begin Rule SimpleOperationRef ****************
  *
  * SimpleOperationRef:
- * 
  * 	operation=[serviceDsl::Operation|QualifiedName];
  *
  **/
@@ -4373,7 +4409,6 @@ protected class SimpleOperationRef_OperationAssignment extends AssignmentToken  
 /************ begin Rule CapabilityRef ****************
  *
  * CapabilityRef:
- * 
  * 	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
  *
  **/
@@ -4496,7 +4531,6 @@ protected class CapabilityRef_VersionRefAssignment_1 extends AssignmentToken  {
 /************ begin Rule Version ****************
  *
  * Version:
- * 
  * 	"version" version=VersionId;
  *
  **/
@@ -4592,7 +4626,6 @@ protected class Version_VersionAssignment_1 extends AssignmentToken  {
 /************ begin Rule ProductVersion ****************
  *
  * ProductVersion returns Version:
- * 
  * 	"product-version" version=VersionId;
  *
  **/
@@ -4688,7 +4721,6 @@ protected class ProductVersion_VersionAssignment_1 extends AssignmentToken  {
 /************ begin Rule EventRef ****************
  *
  * EventRef:
- * 
  * 	event=[serviceDsl::Event|QualifiedName] versionRef=VersionRef;
  *
  **/
@@ -4811,7 +4843,6 @@ protected class EventRef_VersionRefAssignment_1 extends AssignmentToken  {
 /************ begin Rule Import ****************
  *
  * / * Java like imports * / Import:
- * 
  * 	"import" importedNamespace=QualifiedNameWithWildCard;
  *
  **/
@@ -4908,7 +4939,6 @@ protected class Import_ImportedNamespaceAssignment_1 extends AssignmentToken  {
 /************ begin Rule VersionedName ****************
  *
  * VersionedName:
- * 
  * 	{VersionedName} QualifiedName | ID WS* version=VersionId;
  *
  **/
@@ -5101,7 +5131,6 @@ protected class VersionedName_VersionAssignment_1_2 extends AssignmentToken  {
  * / *
  *  * Version constraints applied to referenced assets
  *  * / VersionRef:
- * 
  * 	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
  *
  **/
@@ -5332,7 +5361,6 @@ protected class VersionRef_FixedVersionRefParserRuleCall_4 extends RuleCallToken
  * / *
  *  * Assets, where the version is lesser than maximal version: asset version >= minVersion
  *  * / MinVersionRef:
- * 
  * 	"minVersion" minVersion=VersionId;
  *
  **/
@@ -5430,7 +5458,6 @@ protected class MinVersionRef_MinVersionAssignment_1 extends AssignmentToken  {
  * / *
  *  * Assets, that match a minimal version: asset version >= minVersion
  *  * / MaxVersionRef:
- * 
  * 	"maxVersion" maxVersion=VersionId;
  *
  **/
@@ -5528,7 +5555,6 @@ protected class MaxVersionRef_MaxVersionAssignment_1 extends AssignmentToken  {
  * / *
  *  * Matches version in the half open range [minVersion, maxVersion)
  *  * / LowerBoundRangeVersionRef:
- * 
  * 	("minVersion" ">=") minVersion=VersionId "," ("maxVersion" "<") maxVersion=VersionId;
  *
  **/
@@ -5793,10 +5819,7 @@ protected class LowerBoundRangeVersionRef_MaxVersionAssignment_4 extends Assignm
  *
  * / *
  *  * Constraint matches assets with any version with the same major version, i.e. the first INT until the first '.' is equal
- *  * /
- * 
- * MajorVersionRef:
- * 
+ *  * / MajorVersionRef:
  * 	"majorVersion" majorVersion=INT;
  *
  **/
@@ -5894,7 +5917,6 @@ protected class MajorVersionRef_MajorVersionAssignment_1 extends AssignmentToken
  * / *
  *  * Constraint that matches an asset version  explicitely
  *  * / FixedVersionRef:
- * 
  * 	"fixedVersion" fixedVersion=VersionId;
  *
  **/
@@ -5994,22 +6016,15 @@ protected class FixedVersionRef_FixedVersionAssignment_1 extends AssignmentToken
  * / *
  *  * Expresses SOA governance decisions
  *  * voteing until date will be part of the review ballots captured in the side store
- *  * /
- * 
- * GovernanceDecision:
- * 
+ *  * / GovernanceDecision:
  * 	"governance-decision" "{" ("subject" subject=STRING) ("decision-result" decisionResult=GovernanceDecisionResult)
- * 
  * 	("specific-result" specificResult=STRING)? ("justification-doc" justificationOrDocURL=STRING)? ("decision-date"
- * 
  * 	approvalDate=STRING)? ("decision-by" approvedBy=STRING)? ("effective-date" effectiveDate=STRING)? "}";
  *
  **/
 
 // "governance-decision" "{" ("subject" subject=STRING) ("decision-result" decisionResult=GovernanceDecisionResult)
-// 
 // ("specific-result" specificResult=STRING)? ("justification-doc" justificationOrDocURL=STRING)? ("decision-date"
-// 
 // approvalDate=STRING)? ("decision-by" approvedBy=STRING)? ("effective-date" effectiveDate=STRING)? "}"
 protected class GovernanceDecision_Group extends GroupToken {
 	
@@ -6679,7 +6694,6 @@ protected class GovernanceDecision_RightCurlyBracketKeyword_9 extends KeywordTok
 /************ begin Rule AbstractType ****************
  *
  * AbstractType:
- * 
  * 	{AbstractType} name=ID;
  *
  **/
@@ -6780,7 +6794,6 @@ protected class AbstractType_NameAssignment_1 extends AssignmentToken  {
 /************ begin Rule AdditionalInformation ****************
  *
  * AdditionalInformation:
- * 
  * 	"additional-information" "{" infoItems+=InfoItem+ "}";
  *
  **/
@@ -6933,7 +6946,6 @@ protected class AdditionalInformation_RightCurlyBracketKeyword_3 extends Keyword
 /************ begin Rule InfoItem ****************
  *
  * InfoItem:
- * 
  * 	"location" documentLocation=STRING ("reference" reference=STRING)?;
  *
  **/
@@ -7109,15 +7121,12 @@ protected class InfoItem_ReferenceAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule User ****************
  *
  * User:
- * 
  * 	name=QualifiedName firstname=STRING? lastname=STRING? org=STRING? orgUnit=STRING? email=STRING? phone=STRING?
- * 
  * 	roles+=RoleRef*;
  *
  **/
 
 // name=QualifiedName firstname=STRING? lastname=STRING? org=STRING? orgUnit=STRING? email=STRING? phone=STRING?
-// 
 // roles+=RoleRef*
 protected class User_Group extends GroupToken {
 	
@@ -7466,7 +7475,6 @@ protected class User_RolesAssignment_7 extends AssignmentToken  {
 /************ begin Rule RoleRef ****************
  *
  * RoleRef:
- * 
  * 	role=[Role|QualifiedName];
  *
  **/
@@ -7515,7 +7523,6 @@ protected class RoleRef_RoleAssignment extends AssignmentToken  {
 /************ begin Rule Role ****************
  *
  * Role:
- * 
  * 	name=STRING grants+=PrivilegeRef*;
  *
  **/
@@ -7637,7 +7644,6 @@ protected class Role_GrantsAssignment_1 extends AssignmentToken  {
 /************ begin Rule PrivilegeRef ****************
  *
  * PrivilegeRef:
- * 
  * 	privilege=[Privilege|QualifiedName];
  *
  **/
@@ -7686,7 +7692,6 @@ protected class PrivilegeRef_PrivilegeAssignment extends AssignmentToken  {
 /************ begin Rule Privilege ****************
  *
  * Privilege:
- * 
  * 	name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName*;
  *
  **/
@@ -7871,7 +7876,6 @@ protected class Privilege_ExecuteACLAssignment_3 extends AssignmentToken  {
 /************ begin Rule AssetRef ****************
  *
  * AssetRef:
- * 
  * 	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
  *
  **/

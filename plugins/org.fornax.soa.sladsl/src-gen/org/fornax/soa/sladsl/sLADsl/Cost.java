@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package org.fornax.soa.sladsl.sLADsl;
 
@@ -18,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.Cost#getCostsAmount <em>Costs Amount</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.Cost#getBilledUnit <em>Billed Unit</em>}</li>
+ *   <li>{@link org.fornax.soa.sladsl.sLADsl.Cost#getEffortAccounting <em>Effort Accounting</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.Cost#getEscalation <em>Escalation</em>}</li>
  *   <li>{@link org.fornax.soa.sladsl.sLADsl.Cost#getPenalty <em>Penalty</em>}</li>
  * </ul>
@@ -80,6 +80,32 @@ public interface Cost extends EObject
    * @generated
    */
   void setBilledUnit(String value);
+
+  /**
+   * Returns the value of the '<em><b>Effort Accounting</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Effort Accounting</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Effort Accounting</em>' attribute.
+   * @see #setEffortAccounting(String)
+   * @see org.fornax.soa.sladsl.sLADsl.SLADslPackage#getCost_EffortAccounting()
+   * @model
+   * @generated
+   */
+  String getEffortAccounting();
+
+  /**
+   * Sets the value of the '{@link org.fornax.soa.sladsl.sLADsl.Cost#getEffortAccounting <em>Effort Accounting</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Effort Accounting</em>' attribute.
+   * @see #getEffortAccounting()
+   * @generated
+   */
+  void setEffortAccounting(String value);
 
   /**
    * Returns the value of the '<em><b>Escalation</b></em>' containment reference.

@@ -352,15 +352,66 @@ td[provided-definition-URL]	td[STRING with technical contract URL]	td[code[Servi
 
 section4:langBoProperties[Properties]
 
-Properties may be of one of the following types:
-ul[
-	item[Attributes - Attributes are the basic kind of property. The referenced type is being fully resolved, i.e. an 
-						instance being transferred contains all properties of the referenced type. 
-						]
-	item[Weak references - Contrary to an attribute a weak reference does not resolve to the properties of a referenced type. 
-						Instead the businesskey of the referenced type is being used. Weak references are prefixed by the keyword "weak-ref"
-						]
+Properties are use by business and query objects. A property is defined as:
+
+code[Xtext][
+Property:
+	(deprecated?='@deprecated')? 
+	(
+		(((optional?='optional')? (weak?='weak')?) | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
+		(readonly?='read-only')?
+	)
+	((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? 
+	name=ID ':' type=TypeRef ;
 ]
+	
+Properties have a name and a type reference. Further cardinalities
+ans some som qualifiers can be defined. If a property is optional, the keyword code[ServiceDSL][optional]
+is being. If a property has multiple cardinality brackets are used in the type reference after the type
+name, e.g. 
+
+contract : Contract e[\[\]] majorVersion 1
+
+If the collection type is a set instead of a list it can be expressed like this:
+
+contract : Contract e[\[\] as set] majorVersion 1
+
+
+Property qualifier keywords:
+table[
+
+tr[ 
+	td[Keyword] 	td[Description]
+]
+tr[ 
+	td[optional] 	td[The property is optional. It may be null.]
+]
+tr[ 
+	td[weak] 		td[Though the property is mandatory from a business point of view, it is not always
+	set for technical reasons, such as query performance.]
+]
+tr[ 
+	td[business-key] 	td[The property is a business-key. All business keys together identify an object.
+	Business keys must be always defined. However it is not necessary that a business object has a business
+	key.]
+]
+tr[ 
+	td[provided-key] 	td[The property is a key generated or provided from somewhere else, as e.g. a
+	backend system. In contrast to a business key a provided key may not always be set.]
+]
+tr[ 
+	td[historized] 	td[The property is a historized relationship. Hence a set key attributes, the
+	historizing keys are required on the referenced type to resolve the reference. All historized 
+	versions of a BO share the	same version independant key]
+]
+tr[ 
+	td[historing-key] 	td[The property is a key used to resolve historized references to this BO.]
+]
+tr[ 
+	td[version-independant-key] 	td[The property is a key shared by all versions of a historized BO.]
+]
+]
+						
 
 Common features of Properties:
 
@@ -393,6 +444,54 @@ code[ServiceDSL][
 	contracts : Contract \[\] majorVersion 1
 ]
 The BusinessObject has a collection of at least one Contract in major version 1.
+
+
+
+Property qualifier keywords:
+
+table[
+
+tr[ 
+	td[Keyword] 	td[Description]
+]
+tr[ 
+	td[optional] 	td[The property is optional. It may be null.]
+]
+tr[ 
+	td[weak] 		td[Though the property is mandatory from a business point of view, it is not always
+	set for technical reasons, such as query performance.]
+]
+tr[ 
+	td[business-key] 	td[The property is a business-key. All business keys together identify an object.
+	Business keys must be always defined. However it is not necessary that a business object has a business
+	key.]
+]
+tr[ 
+	td[provided-key] 	td[The property is a key generated or provided from somewhere else, as e.g. a
+	backend system. In contrast to a business key a provided key may not always be set.]
+]
+tr[ 
+	td[historized] 	td[The property is a historized relationship. Hence a set key attributes, the
+	historizing keys are required on the referenced type to resolve the reference. All historized 
+	versions of a BO share the	same version independant key]
+]
+tr[ 
+	td[historing-key] 	td[The property is a key used to resolve historized references to this BO.]
+]
+tr[ 
+	td[version-independant-key] 	td[The property is a key shared by all versions of a historized BO.]
+]
+]
+						
+
+Common features of Properties:
+
+
+Property name and type:
+
+Each property has a name and a type. The name and the type are separated by <code>:</code>. Types may be
+BusinessObjects, Enumerations or DataTypes, i.e. primitive types defined in the SOAProfile. As BusinessObjects and 
+Enumerations are versioned, the type reference of the attribute must declare a version constraint.
 
 
 section3:langEnum[Enumerations]
@@ -430,7 +529,7 @@ td[retirement-on]	td[STRING literal with a date] td[code[ServiceDSL][retirement-
 td[The (planned) date of retirement of the enumeration.]
 ]
 tr[
-td[provided-definition-URL]	td[STRING with technical contract URL]	td[code[ServiceDSL][provided-definition-URL "http://somehost:8080/some.xsd"]]
+td[provided-contract]	td[STRING with technical contract URL]	td[code[ServiceDSL][provided-definition-URL "http://somehost:8080/some.xsd"]]
 td[Only for enumerations defined in internal namespaces. The location where the already existing definition of the business object can be found.]
 ]
 ]
@@ -535,9 +634,6 @@ tr[
 td[persistence]	td[read | write | read/write | none]	td[code[ServiceDSL][persistence read/write]]	td[Whether data treaded by the service are persistent and read and/or written to a persistent store.]
 ]
 tr[
-td[service-owner]	td[STRING with the name of the service owner]	td[code[ServiceDSL][service-owner "Anna Morris"]]	td[Who is responsible for the service?]
-]
-tr[
 td[realizes-capabilty]	td[(QualifiedCapabilityName VersionConstraint)+]	td[code[ServiceDSL][realizes-capabilty InvoiceCustomer fixedVersion 1 InvoiceMail fixedVersion 2]]
 td[Reference to one or more business capabilities that are fully realized by the service.]
 ]
@@ -546,7 +642,7 @@ td[supports-capabilty]	td[QualifiedCapabilityName VersionConstraint)+]	td[code[S
 td[Reference to one or more business capabilities that are supported, but not fully realized by the service.]
 ]
 tr[
-td[provided-Contract-URL]	td[STRING]	td[code[ServiceDSL][provided-Contract-URL "http://somehost:someport/some.wsdl"]]
+td[provided-contract]	td[STRING]	td[code[ServiceDSL][provided-Contract-URL "http://somehost:someport/some.wsdl"]]
 td[Only for private services defined in internal namespaces. The location where the already existing contract of the service can be found.]
 ]
 tr[

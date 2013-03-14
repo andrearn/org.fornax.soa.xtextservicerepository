@@ -25,7 +25,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAgreementsSLAParserRuleCall_0 = (RuleCall)cAgreementsAssignment.eContents().get(0);
 		
 		//SlaModel:
-		//
 		//	agreements+=SLA*;
 		public ParserRule getRule() { return rule; }
 
@@ -52,60 +51,60 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEffectiveUntilKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
 		private final Assignment cEffectiveUntilAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
 		private final RuleCall cEffectiveUntilSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cEffectiveUntilAssignment_6_1.eContents().get(0);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cPreampleKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cPreampleAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cPreampleSTRINGTerminalRuleCall_7_1_0 = (RuleCall)cPreampleAssignment_7_1.eContents().get(0);
+		private final Assignment cPartiesAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cPartiesPartyParserRuleCall_7_0 = (RuleCall)cPartiesAssignment_7.eContents().get(0);
 		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
-		private final Keyword cDescriptionKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
-		private final Assignment cDescriptionAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
-		private final RuleCall cDescriptionSTRINGTerminalRuleCall_8_1_0 = (RuleCall)cDescriptionAssignment_8_1.eContents().get(0);
+		private final Keyword cScopeKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cScopeAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cScopeSTRINGTerminalRuleCall_8_1_0 = (RuleCall)cScopeAssignment_8_1.eContents().get(0);
 		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
-		private final Keyword cScopeKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
-		private final Assignment cScopeAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
-		private final RuleCall cScopeSTRINGTerminalRuleCall_9_1_0 = (RuleCall)cScopeAssignment_9_1.eContents().get(0);
+		private final Keyword cPreampleKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
+		private final Assignment cPreampleAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
+		private final RuleCall cPreampleSTRINGTerminalRuleCall_9_1_0 = (RuleCall)cPreampleAssignment_9_1.eContents().get(0);
 		private final Group cGroup_10 = (Group)cGroup.eContents().get(10);
-		private final Keyword cAppliesToKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_10_1 = (Keyword)cGroup_10.eContents().get(1);
-		private final Assignment cAppliesToAssignment_10_2 = (Assignment)cGroup_10.eContents().get(2);
-		private final RuleCall cAppliesToAssetRefParserRuleCall_10_2_0 = (RuleCall)cAppliesToAssignment_10_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_10_3 = (Keyword)cGroup_10.eContents().get(3);
-		private final Assignment cCostsAssignment_11 = (Assignment)cGroup.eContents().get(11);
-		private final RuleCall cCostsCostParserRuleCall_11_0 = (RuleCall)cCostsAssignment_11.eContents().get(0);
-		private final Group cGroup_12 = (Group)cGroup.eContents().get(12);
-		private final Keyword cServiceQualityRequirementsKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_12_1 = (Keyword)cGroup_12.eContents().get(1);
-		private final Assignment cServiceQualityPropertiesAssignment_12_2 = (Assignment)cGroup_12.eContents().get(2);
-		private final RuleCall cServiceQualityPropertiesServiceQualityPropertyParserRuleCall_12_2_0 = (RuleCall)cServiceQualityPropertiesAssignment_12_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_12_3 = (Keyword)cGroup_12.eContents().get(3);
+		private final Keyword cDescriptionKeyword_10_0 = (Keyword)cGroup_10.eContents().get(0);
+		private final Assignment cDescriptionAssignment_10_1 = (Assignment)cGroup_10.eContents().get(1);
+		private final RuleCall cDescriptionSTRINGTerminalRuleCall_10_1_0 = (RuleCall)cDescriptionAssignment_10_1.eContents().get(0);
+		private final Group cGroup_11 = (Group)cGroup.eContents().get(11);
+		private final Keyword cRestrictionsKeyword_11_0 = (Keyword)cGroup_11.eContents().get(0);
+		private final Assignment cRestrictionsAssignment_11_1 = (Assignment)cGroup_11.eContents().get(1);
+		private final RuleCall cRestrictionsSTRINGTerminalRuleCall_11_1_0 = (RuleCall)cRestrictionsAssignment_11_1.eContents().get(0);
+		private final Assignment cPrioritiesAssignment_12 = (Assignment)cGroup.eContents().get(12);
+		private final RuleCall cPrioritiesPriorityDeclarationParserRuleCall_12_0 = (RuleCall)cPrioritiesAssignment_12.eContents().get(0);
 		private final Group cGroup_13 = (Group)cGroup.eContents().get(13);
-		private final Keyword cDataSecurityAndProtectionKeyword_13_0 = (Keyword)cGroup_13.eContents().get(0);
+		private final Keyword cAppliesToKeyword_13_0 = (Keyword)cGroup_13.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_13_1 = (Keyword)cGroup_13.eContents().get(1);
-		private final Group cGroup_13_2 = (Group)cGroup_13.eContents().get(2);
-		private final Keyword cGeneralSecurityTermsKeyword_13_2_0 = (Keyword)cGroup_13_2.eContents().get(0);
-		private final Assignment cDataSecProtClauseAssignment_13_2_1 = (Assignment)cGroup_13_2.eContents().get(1);
-		private final RuleCall cDataSecProtClauseSTRINGTerminalRuleCall_13_2_1_0 = (RuleCall)cDataSecProtClauseAssignment_13_2_1.eContents().get(0);
-		private final Group cGroup_13_3 = (Group)cGroup_13.eContents().get(3);
-		private final Keyword cSecurityRequirementsKeyword_13_3_0 = (Keyword)cGroup_13_3.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_13_3_1 = (Keyword)cGroup_13_3.eContents().get(1);
-		private final Assignment cSecurityRequirementsAssignment_13_3_2 = (Assignment)cGroup_13_3.eContents().get(2);
-		private final RuleCall cSecurityRequirementsSecurityRequirementParserRuleCall_13_3_2_0 = (RuleCall)cSecurityRequirementsAssignment_13_3_2.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_13_3_3 = (Keyword)cGroup_13_3.eContents().get(3);
-		private final Keyword cRightCurlyBracketKeyword_13_4 = (Keyword)cGroup_13.eContents().get(4);
-		private final Group cGroup_14 = (Group)cGroup.eContents().get(14);
-		private final Keyword cRestrictionsKeyword_14_0 = (Keyword)cGroup_14.eContents().get(0);
-		private final Assignment cRestrictionsAssignment_14_1 = (Assignment)cGroup_14.eContents().get(1);
-		private final RuleCall cRestrictionsSTRINGTerminalRuleCall_14_1_0 = (RuleCall)cRestrictionsAssignment_14_1.eContents().get(0);
-		private final Assignment cPrioritiesAssignment_15 = (Assignment)cGroup.eContents().get(15);
-		private final RuleCall cPrioritiesPriorityDeclarationParserRuleCall_15_0 = (RuleCall)cPrioritiesAssignment_15.eContents().get(0);
-		private final Assignment cEscalationProcedureAssignment_16 = (Assignment)cGroup.eContents().get(16);
-		private final RuleCall cEscalationProcedureEscalationParserRuleCall_16_0 = (RuleCall)cEscalationProcedureAssignment_16.eContents().get(0);
+		private final Assignment cAppliesToAssignment_13_2 = (Assignment)cGroup_13.eContents().get(2);
+		private final RuleCall cAppliesToAssetRefParserRuleCall_13_2_0 = (RuleCall)cAppliesToAssignment_13_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_13_3 = (Keyword)cGroup_13.eContents().get(3);
+		private final Assignment cCostsAssignment_14 = (Assignment)cGroup.eContents().get(14);
+		private final RuleCall cCostsCostParserRuleCall_14_0 = (RuleCall)cCostsAssignment_14.eContents().get(0);
+		private final Group cGroup_15 = (Group)cGroup.eContents().get(15);
+		private final Keyword cServiceQualityRequirementsKeyword_15_0 = (Keyword)cGroup_15.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_15_1 = (Keyword)cGroup_15.eContents().get(1);
+		private final Assignment cServiceQualityPropertiesAssignment_15_2 = (Assignment)cGroup_15.eContents().get(2);
+		private final RuleCall cServiceQualityPropertiesServiceQualityPropertyParserRuleCall_15_2_0 = (RuleCall)cServiceQualityPropertiesAssignment_15_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_15_3 = (Keyword)cGroup_15.eContents().get(3);
+		private final Group cGroup_16 = (Group)cGroup.eContents().get(16);
+		private final Keyword cDataSecurityAndProtectionKeyword_16_0 = (Keyword)cGroup_16.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_16_1 = (Keyword)cGroup_16.eContents().get(1);
+		private final Group cGroup_16_2 = (Group)cGroup_16.eContents().get(2);
+		private final Keyword cGeneralSecurityTermsKeyword_16_2_0 = (Keyword)cGroup_16_2.eContents().get(0);
+		private final Assignment cDataSecProtClauseAssignment_16_2_1 = (Assignment)cGroup_16_2.eContents().get(1);
+		private final RuleCall cDataSecProtClauseSTRINGTerminalRuleCall_16_2_1_0 = (RuleCall)cDataSecProtClauseAssignment_16_2_1.eContents().get(0);
+		private final Group cGroup_16_3 = (Group)cGroup_16.eContents().get(3);
+		private final Keyword cSecurityRequirementsKeyword_16_3_0 = (Keyword)cGroup_16_3.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_16_3_1 = (Keyword)cGroup_16_3.eContents().get(1);
+		private final Assignment cSecurityRequirementsAssignment_16_3_2 = (Assignment)cGroup_16_3.eContents().get(2);
+		private final RuleCall cSecurityRequirementsSecurityRequirementParserRuleCall_16_3_2_0 = (RuleCall)cSecurityRequirementsAssignment_16_3_2.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_16_3_3 = (Keyword)cGroup_16_3.eContents().get(3);
+		private final Keyword cRightCurlyBracketKeyword_16_4 = (Keyword)cGroup_16.eContents().get(4);
 		private final Group cGroup_17 = (Group)cGroup.eContents().get(17);
 		private final Keyword cAdditionalServicesKeyword_17_0 = (Keyword)cGroup_17.eContents().get(0);
 		private final Assignment cAdditionalServicesAssignment_17_1 = (Assignment)cGroup_17.eContents().get(1);
 		private final RuleCall cAdditionalServicesSTRINGTerminalRuleCall_17_1_0 = (RuleCall)cAdditionalServicesAssignment_17_1.eContents().get(0);
-		private final Assignment cPartiesAssignment_18 = (Assignment)cGroup.eContents().get(18);
-		private final RuleCall cPartiesPartyParserRuleCall_18_0 = (RuleCall)cPartiesAssignment_18.eContents().get(0);
+		private final Assignment cEscalationProcedureAssignment_18 = (Assignment)cGroup.eContents().get(18);
+		private final RuleCall cEscalationProcedureEscalationParserRuleCall_18_0 = (RuleCall)cEscalationProcedureAssignment_18.eContents().get(0);
 		private final Group cGroup_19 = (Group)cGroup.eContents().get(19);
 		private final Keyword cCancellationKeyword_19_0 = (Keyword)cGroup_19.eContents().get(0);
 		private final Assignment cCancellationAssignment_19_1 = (Assignment)cGroup_19.eContents().get(1);
@@ -114,90 +113,43 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cExtraordinaryCancellationKeyword_20_0 = (Keyword)cGroup_20.eContents().get(0);
 		private final Assignment cExtraordinaryCancellationAssignment_20_1 = (Assignment)cGroup_20.eContents().get(1);
 		private final RuleCall cExtraordinaryCancellationSTRINGTerminalRuleCall_20_1_0 = (RuleCall)cExtraordinaryCancellationAssignment_20_1.eContents().get(0);
-		private final Group cGroup_21 = (Group)cGroup.eContents().get(21);
-		private final Keyword cEffortAccountingKeyword_21_0 = (Keyword)cGroup_21.eContents().get(0);
-		private final Assignment cEffortAccountingAssignment_21_1 = (Assignment)cGroup_21.eContents().get(1);
-		private final RuleCall cEffortAccountingSTRINGTerminalRuleCall_21_1_0 = (RuleCall)cEffortAccountingAssignment_21_1.eContents().get(0);
-		private final Assignment cReportsAssignment_22 = (Assignment)cGroup.eContents().get(22);
-		private final RuleCall cReportsReportParserRuleCall_22_0 = (RuleCall)cReportsAssignment_22.eContents().get(0);
+		private final Assignment cReportsAssignment_21 = (Assignment)cGroup.eContents().get(21);
+		private final RuleCall cReportsReportParserRuleCall_21_0 = (RuleCall)cReportsAssignment_21.eContents().get(0);
+		private final Group cGroup_22 = (Group)cGroup.eContents().get(22);
+		private final Keyword cSubscriptionsKeyword_22_0 = (Keyword)cGroup_22.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_22_1 = (Keyword)cGroup_22.eContents().get(1);
+		private final Assignment cSubscriptionsAssignment_22_2 = (Assignment)cGroup_22.eContents().get(2);
+		private final CrossReference cSubscriptionsUserCrossReference_22_2_0 = (CrossReference)cSubscriptionsAssignment_22_2.eContents().get(0);
+		private final RuleCall cSubscriptionsUserQualifiedNameParserRuleCall_22_2_0_1 = (RuleCall)cSubscriptionsUserCrossReference_22_2_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_22_3 = (Keyword)cGroup_22.eContents().get(3);
 		private final Group cGroup_23 = (Group)cGroup.eContents().get(23);
-		private final Keyword cContactInfoKeyword_23_0 = (Keyword)cGroup_23.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_23_1 = (Keyword)cGroup_23.eContents().get(1);
-		private final Group cGroup_23_2 = (Group)cGroup_23.eContents().get(2);
-		private final Keyword cOwnerKeyword_23_2_0 = (Keyword)cGroup_23_2.eContents().get(0);
-		private final Assignment cOwnerAssignment_23_2_1 = (Assignment)cGroup_23_2.eContents().get(1);
-		private final CrossReference cOwnerUserCrossReference_23_2_1_0 = (CrossReference)cOwnerAssignment_23_2_1.eContents().get(0);
-		private final RuleCall cOwnerUserQualifiedNameParserRuleCall_23_2_1_0_1 = (RuleCall)cOwnerUserCrossReference_23_2_1_0.eContents().get(1);
-		private final Group cGroup_23_3 = (Group)cGroup_23.eContents().get(3);
-		private final Keyword cResponsibleKeyword_23_3_0 = (Keyword)cGroup_23_3.eContents().get(0);
-		private final Assignment cResponsibleAssignment_23_3_1 = (Assignment)cGroup_23_3.eContents().get(1);
-		private final CrossReference cResponsibleUserCrossReference_23_3_1_0 = (CrossReference)cResponsibleAssignment_23_3_1.eContents().get(0);
-		private final RuleCall cResponsibleUserQualifiedNameParserRuleCall_23_3_1_0_1 = (RuleCall)cResponsibleUserCrossReference_23_3_1_0.eContents().get(1);
-		private final Group cGroup_23_4 = (Group)cGroup_23.eContents().get(4);
-		private final Keyword cBudgetingKeyword_23_4_0 = (Keyword)cGroup_23_4.eContents().get(0);
-		private final Assignment cBudgetingAssignment_23_4_1 = (Assignment)cGroup_23_4.eContents().get(1);
-		private final CrossReference cBudgetingUserCrossReference_23_4_1_0 = (CrossReference)cBudgetingAssignment_23_4_1.eContents().get(0);
-		private final RuleCall cBudgetingUserQualifiedNameParserRuleCall_23_4_1_0_1 = (RuleCall)cBudgetingUserCrossReference_23_4_1_0.eContents().get(1);
-		private final Group cGroup_23_5 = (Group)cGroup_23.eContents().get(5);
-		private final Keyword cSubscriptionsKeyword_23_5_0 = (Keyword)cGroup_23_5.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_23_5_1 = (Keyword)cGroup_23_5.eContents().get(1);
-		private final Assignment cSubscriptionsAssignment_23_5_2 = (Assignment)cGroup_23_5.eContents().get(2);
-		private final CrossReference cSubscriptionsUserCrossReference_23_5_2_0 = (CrossReference)cSubscriptionsAssignment_23_5_2.eContents().get(0);
-		private final RuleCall cSubscriptionsUserQualifiedNameParserRuleCall_23_5_2_0_1 = (RuleCall)cSubscriptionsUserCrossReference_23_5_2_0.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_23_5_3 = (Keyword)cGroup_23_5.eContents().get(3);
-		private final Group cGroup_24 = (Group)cGroup.eContents().get(24);
-		private final Keyword cTagsKeyword_24_0 = (Keyword)cGroup_24.eContents().get(0);
-		private final Assignment cTagsAssignment_24_1 = (Assignment)cGroup_24.eContents().get(1);
-		private final CrossReference cTagsTagCrossReference_24_1_0 = (CrossReference)cTagsAssignment_24_1.eContents().get(0);
-		private final RuleCall cTagsTagIDTerminalRuleCall_24_1_0_1 = (RuleCall)cTagsTagCrossReference_24_1_0.eContents().get(1);
-		private final Keyword cRightCurlyBracketKeyword_25 = (Keyword)cGroup.eContents().get(25);
+		private final Keyword cTagsKeyword_23_0 = (Keyword)cGroup_23.eContents().get(0);
+		private final Assignment cTagsAssignment_23_1 = (Assignment)cGroup_23.eContents().get(1);
+		private final CrossReference cTagsTagCrossReference_23_1_0 = (CrossReference)cTagsAssignment_23_1.eContents().get(0);
+		private final RuleCall cTagsTagIDTerminalRuleCall_23_1_0_1 = (RuleCall)cTagsTagCrossReference_23_1_0.eContents().get(1);
+		private final Keyword cRightCurlyBracketKeyword_24 = (Keyword)cGroup.eContents().get(24);
 		
 		//SLA:
-		//
 		//	"service-level-agreement" name=QualifiedName version=Version? "{" "effective-date" effectiveDate=STRING
-		//
-		//	("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
-		//
-		//	scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
-		//
+		//	("effective-until" effectiveUntil=STRING)? parties+=Party* ("scope" scope=STRING)? ("preample" preample=STRING)?
+		//	("description" description=STRING)? ("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration*
+		//	("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
 		//	serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
-		//
 		//	dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
-		//
-		//	("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
-		//
-		//	("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
-		//
-		//	("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
-		//
-		//	reports+=Report* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
-		//
-		//	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-		//
-		//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)* "}";
+		//	("additional-services" additionalServices=STRING)? escalationProcedure=Escalation? ("cancellation"
+		//	cancellation=STRING)? ("extraordinary-cancellation" extraordinaryCancellation=STRING)? reports+=Report*
+		//	("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")? ("tags" tags+=[semanticsDsl::Tag]+)* "}";
 		public ParserRule getRule() { return rule; }
 
 		//"service-level-agreement" name=QualifiedName version=Version? "{" "effective-date" effectiveDate=STRING
-		//
-		//("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
-		//
-		//scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
-		//
+		//("effective-until" effectiveUntil=STRING)? parties+=Party* ("scope" scope=STRING)? ("preample" preample=STRING)?
+		//("description" description=STRING)? ("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration*
+		//("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
 		//serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
-		//
 		//dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
-		//
-		//("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
-		//
-		//("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
-		//
-		//("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
-		//
-		//reports+=Report* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
-		//
-		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-		//
-		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)* "}"
+		//("additional-services" additionalServices=STRING)? escalationProcedure=Escalation? ("cancellation"
+		//cancellation=STRING)? ("extraordinary-cancellation" extraordinaryCancellation=STRING)? reports+=Report*
+		//("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")? ("tags" tags+=[semanticsDsl::Tag]+)* "}"
 		public Group getGroup() { return cGroup; }
 
 		//"service-level-agreement"
@@ -239,151 +191,150 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getEffectiveUntilSTRINGTerminalRuleCall_6_1_0() { return cEffectiveUntilSTRINGTerminalRuleCall_6_1_0; }
 
-		//("preample" preample=STRING)?
-		public Group getGroup_7() { return cGroup_7; }
+		//parties+=Party*
+		public Assignment getPartiesAssignment_7() { return cPartiesAssignment_7; }
 
-		//"preample"
-		public Keyword getPreampleKeyword_7_0() { return cPreampleKeyword_7_0; }
-
-		//preample=STRING
-		public Assignment getPreampleAssignment_7_1() { return cPreampleAssignment_7_1; }
-
-		//STRING
-		public RuleCall getPreampleSTRINGTerminalRuleCall_7_1_0() { return cPreampleSTRINGTerminalRuleCall_7_1_0; }
-
-		//("description" description=STRING)?
-		public Group getGroup_8() { return cGroup_8; }
-
-		//"description"
-		public Keyword getDescriptionKeyword_8_0() { return cDescriptionKeyword_8_0; }
-
-		//description=STRING
-		public Assignment getDescriptionAssignment_8_1() { return cDescriptionAssignment_8_1; }
-
-		//STRING
-		public RuleCall getDescriptionSTRINGTerminalRuleCall_8_1_0() { return cDescriptionSTRINGTerminalRuleCall_8_1_0; }
+		//Party
+		public RuleCall getPartiesPartyParserRuleCall_7_0() { return cPartiesPartyParserRuleCall_7_0; }
 
 		//("scope" scope=STRING)?
-		public Group getGroup_9() { return cGroup_9; }
+		public Group getGroup_8() { return cGroup_8; }
 
 		//"scope"
-		public Keyword getScopeKeyword_9_0() { return cScopeKeyword_9_0; }
+		public Keyword getScopeKeyword_8_0() { return cScopeKeyword_8_0; }
 
 		//scope=STRING
-		public Assignment getScopeAssignment_9_1() { return cScopeAssignment_9_1; }
+		public Assignment getScopeAssignment_8_1() { return cScopeAssignment_8_1; }
 
 		//STRING
-		public RuleCall getScopeSTRINGTerminalRuleCall_9_1_0() { return cScopeSTRINGTerminalRuleCall_9_1_0; }
+		public RuleCall getScopeSTRINGTerminalRuleCall_8_1_0() { return cScopeSTRINGTerminalRuleCall_8_1_0; }
 
-		//("applies-to" "{" appliesTo+=AssetRef* "}")?
+		//("preample" preample=STRING)?
+		public Group getGroup_9() { return cGroup_9; }
+
+		//"preample"
+		public Keyword getPreampleKeyword_9_0() { return cPreampleKeyword_9_0; }
+
+		//preample=STRING
+		public Assignment getPreampleAssignment_9_1() { return cPreampleAssignment_9_1; }
+
+		//STRING
+		public RuleCall getPreampleSTRINGTerminalRuleCall_9_1_0() { return cPreampleSTRINGTerminalRuleCall_9_1_0; }
+
+		//("description" description=STRING)?
 		public Group getGroup_10() { return cGroup_10; }
 
-		//"applies-to"
-		public Keyword getAppliesToKeyword_10_0() { return cAppliesToKeyword_10_0; }
+		//"description"
+		public Keyword getDescriptionKeyword_10_0() { return cDescriptionKeyword_10_0; }
 
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_10_1() { return cLeftCurlyBracketKeyword_10_1; }
+		//description=STRING
+		public Assignment getDescriptionAssignment_10_1() { return cDescriptionAssignment_10_1; }
 
-		//appliesTo+=AssetRef*
-		public Assignment getAppliesToAssignment_10_2() { return cAppliesToAssignment_10_2; }
+		//STRING
+		public RuleCall getDescriptionSTRINGTerminalRuleCall_10_1_0() { return cDescriptionSTRINGTerminalRuleCall_10_1_0; }
 
-		//AssetRef
-		public RuleCall getAppliesToAssetRefParserRuleCall_10_2_0() { return cAppliesToAssetRefParserRuleCall_10_2_0; }
+		//("restrictions" restrictions=STRING)?
+		public Group getGroup_11() { return cGroup_11; }
 
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_10_3() { return cRightCurlyBracketKeyword_10_3; }
+		//"restrictions"
+		public Keyword getRestrictionsKeyword_11_0() { return cRestrictionsKeyword_11_0; }
 
-		//costs=Cost?
-		public Assignment getCostsAssignment_11() { return cCostsAssignment_11; }
+		//restrictions=STRING
+		public Assignment getRestrictionsAssignment_11_1() { return cRestrictionsAssignment_11_1; }
 
-		//Cost
-		public RuleCall getCostsCostParserRuleCall_11_0() { return cCostsCostParserRuleCall_11_0; }
+		//STRING
+		public RuleCall getRestrictionsSTRINGTerminalRuleCall_11_1_0() { return cRestrictionsSTRINGTerminalRuleCall_11_1_0; }
 
-		//"service-quality-requirements" "{" serviceQualityProperties+=ServiceQualityProperty* "}"
-		public Group getGroup_12() { return cGroup_12; }
+		//priorities+=PriorityDeclaration*
+		public Assignment getPrioritiesAssignment_12() { return cPrioritiesAssignment_12; }
 
-		//"service-quality-requirements"
-		public Keyword getServiceQualityRequirementsKeyword_12_0() { return cServiceQualityRequirementsKeyword_12_0; }
+		//PriorityDeclaration
+		public RuleCall getPrioritiesPriorityDeclarationParserRuleCall_12_0() { return cPrioritiesPriorityDeclarationParserRuleCall_12_0; }
 
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_12_1() { return cLeftCurlyBracketKeyword_12_1; }
-
-		//serviceQualityProperties+=ServiceQualityProperty*
-		public Assignment getServiceQualityPropertiesAssignment_12_2() { return cServiceQualityPropertiesAssignment_12_2; }
-
-		//ServiceQualityProperty
-		public RuleCall getServiceQualityPropertiesServiceQualityPropertyParserRuleCall_12_2_0() { return cServiceQualityPropertiesServiceQualityPropertyParserRuleCall_12_2_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_12_3() { return cRightCurlyBracketKeyword_12_3; }
-
-		//("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)? ("security-requirements" "{"
-		//
-		//securityRequirements+=SecurityRequirement* "}") "}")?
+		//("applies-to" "{" appliesTo+=AssetRef* "}")?
 		public Group getGroup_13() { return cGroup_13; }
 
-		//"data-security-and-protection"
-		public Keyword getDataSecurityAndProtectionKeyword_13_0() { return cDataSecurityAndProtectionKeyword_13_0; }
+		//"applies-to"
+		public Keyword getAppliesToKeyword_13_0() { return cAppliesToKeyword_13_0; }
 
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_13_1() { return cLeftCurlyBracketKeyword_13_1; }
 
-		//("general-security-terms" dataSecProtClause=STRING)?
-		public Group getGroup_13_2() { return cGroup_13_2; }
+		//appliesTo+=AssetRef*
+		public Assignment getAppliesToAssignment_13_2() { return cAppliesToAssignment_13_2; }
 
-		//"general-security-terms"
-		public Keyword getGeneralSecurityTermsKeyword_13_2_0() { return cGeneralSecurityTermsKeyword_13_2_0; }
+		//AssetRef
+		public RuleCall getAppliesToAssetRefParserRuleCall_13_2_0() { return cAppliesToAssetRefParserRuleCall_13_2_0; }
 
-		//dataSecProtClause=STRING
-		public Assignment getDataSecProtClauseAssignment_13_2_1() { return cDataSecProtClauseAssignment_13_2_1; }
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_13_3() { return cRightCurlyBracketKeyword_13_3; }
 
-		//STRING
-		public RuleCall getDataSecProtClauseSTRINGTerminalRuleCall_13_2_1_0() { return cDataSecProtClauseSTRINGTerminalRuleCall_13_2_1_0; }
+		//costs=Cost?
+		public Assignment getCostsAssignment_14() { return cCostsAssignment_14; }
 
-		//"security-requirements" "{" securityRequirements+=SecurityRequirement* "}"
-		public Group getGroup_13_3() { return cGroup_13_3; }
+		//Cost
+		public RuleCall getCostsCostParserRuleCall_14_0() { return cCostsCostParserRuleCall_14_0; }
 
-		//"security-requirements"
-		public Keyword getSecurityRequirementsKeyword_13_3_0() { return cSecurityRequirementsKeyword_13_3_0; }
+		//"service-quality-requirements" "{" serviceQualityProperties+=ServiceQualityProperty* "}"
+		public Group getGroup_15() { return cGroup_15; }
+
+		//"service-quality-requirements"
+		public Keyword getServiceQualityRequirementsKeyword_15_0() { return cServiceQualityRequirementsKeyword_15_0; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_13_3_1() { return cLeftCurlyBracketKeyword_13_3_1; }
+		public Keyword getLeftCurlyBracketKeyword_15_1() { return cLeftCurlyBracketKeyword_15_1; }
 
-		//securityRequirements+=SecurityRequirement*
-		public Assignment getSecurityRequirementsAssignment_13_3_2() { return cSecurityRequirementsAssignment_13_3_2; }
+		//serviceQualityProperties+=ServiceQualityProperty*
+		public Assignment getServiceQualityPropertiesAssignment_15_2() { return cServiceQualityPropertiesAssignment_15_2; }
 
-		//SecurityRequirement
-		public RuleCall getSecurityRequirementsSecurityRequirementParserRuleCall_13_3_2_0() { return cSecurityRequirementsSecurityRequirementParserRuleCall_13_3_2_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_13_3_3() { return cRightCurlyBracketKeyword_13_3_3; }
+		//ServiceQualityProperty
+		public RuleCall getServiceQualityPropertiesServiceQualityPropertyParserRuleCall_15_2_0() { return cServiceQualityPropertiesServiceQualityPropertyParserRuleCall_15_2_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_13_4() { return cRightCurlyBracketKeyword_13_4; }
+		public Keyword getRightCurlyBracketKeyword_15_3() { return cRightCurlyBracketKeyword_15_3; }
 
-		//("restrictions" restrictions=STRING)?
-		public Group getGroup_14() { return cGroup_14; }
+		//("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)? ("security-requirements" "{"
+		//securityRequirements+=SecurityRequirement* "}") "}")?
+		public Group getGroup_16() { return cGroup_16; }
 
-		//"restrictions"
-		public Keyword getRestrictionsKeyword_14_0() { return cRestrictionsKeyword_14_0; }
+		//"data-security-and-protection"
+		public Keyword getDataSecurityAndProtectionKeyword_16_0() { return cDataSecurityAndProtectionKeyword_16_0; }
 
-		//restrictions=STRING
-		public Assignment getRestrictionsAssignment_14_1() { return cRestrictionsAssignment_14_1; }
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_16_1() { return cLeftCurlyBracketKeyword_16_1; }
+
+		//("general-security-terms" dataSecProtClause=STRING)?
+		public Group getGroup_16_2() { return cGroup_16_2; }
+
+		//"general-security-terms"
+		public Keyword getGeneralSecurityTermsKeyword_16_2_0() { return cGeneralSecurityTermsKeyword_16_2_0; }
+
+		//dataSecProtClause=STRING
+		public Assignment getDataSecProtClauseAssignment_16_2_1() { return cDataSecProtClauseAssignment_16_2_1; }
 
 		//STRING
-		public RuleCall getRestrictionsSTRINGTerminalRuleCall_14_1_0() { return cRestrictionsSTRINGTerminalRuleCall_14_1_0; }
+		public RuleCall getDataSecProtClauseSTRINGTerminalRuleCall_16_2_1_0() { return cDataSecProtClauseSTRINGTerminalRuleCall_16_2_1_0; }
 
-		//priorities+=PriorityDeclaration*
-		public Assignment getPrioritiesAssignment_15() { return cPrioritiesAssignment_15; }
+		//"security-requirements" "{" securityRequirements+=SecurityRequirement* "}"
+		public Group getGroup_16_3() { return cGroup_16_3; }
 
-		//PriorityDeclaration
-		public RuleCall getPrioritiesPriorityDeclarationParserRuleCall_15_0() { return cPrioritiesPriorityDeclarationParserRuleCall_15_0; }
+		//"security-requirements"
+		public Keyword getSecurityRequirementsKeyword_16_3_0() { return cSecurityRequirementsKeyword_16_3_0; }
 
-		//escalationProcedure=Escalation?
-		public Assignment getEscalationProcedureAssignment_16() { return cEscalationProcedureAssignment_16; }
+		//"{"
+		public Keyword getLeftCurlyBracketKeyword_16_3_1() { return cLeftCurlyBracketKeyword_16_3_1; }
 
-		//Escalation
-		public RuleCall getEscalationProcedureEscalationParserRuleCall_16_0() { return cEscalationProcedureEscalationParserRuleCall_16_0; }
+		//securityRequirements+=SecurityRequirement*
+		public Assignment getSecurityRequirementsAssignment_16_3_2() { return cSecurityRequirementsAssignment_16_3_2; }
+
+		//SecurityRequirement
+		public RuleCall getSecurityRequirementsSecurityRequirementParserRuleCall_16_3_2_0() { return cSecurityRequirementsSecurityRequirementParserRuleCall_16_3_2_0; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_16_3_3() { return cRightCurlyBracketKeyword_16_3_3; }
+
+		//"}"
+		public Keyword getRightCurlyBracketKeyword_16_4() { return cRightCurlyBracketKeyword_16_4; }
 
 		//("additional-services" additionalServices=STRING)?
 		public Group getGroup_17() { return cGroup_17; }
@@ -397,11 +348,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getAdditionalServicesSTRINGTerminalRuleCall_17_1_0() { return cAdditionalServicesSTRINGTerminalRuleCall_17_1_0; }
 
-		//parties+=Party*
-		public Assignment getPartiesAssignment_18() { return cPartiesAssignment_18; }
+		//escalationProcedure=Escalation?
+		public Assignment getEscalationProcedureAssignment_18() { return cEscalationProcedureAssignment_18; }
 
-		//Party
-		public RuleCall getPartiesPartyParserRuleCall_18_0() { return cPartiesPartyParserRuleCall_18_0; }
+		//Escalation
+		public RuleCall getEscalationProcedureEscalationParserRuleCall_18_0() { return cEscalationProcedureEscalationParserRuleCall_18_0; }
 
 		//("cancellation" cancellation=STRING)?
 		public Group getGroup_19() { return cGroup_19; }
@@ -427,120 +378,50 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getExtraordinaryCancellationSTRINGTerminalRuleCall_20_1_0() { return cExtraordinaryCancellationSTRINGTerminalRuleCall_20_1_0; }
 
-		//("effort-accounting" effortAccounting=STRING)?
-		public Group getGroup_21() { return cGroup_21; }
-
-		//"effort-accounting"
-		public Keyword getEffortAccountingKeyword_21_0() { return cEffortAccountingKeyword_21_0; }
-
-		//effortAccounting=STRING
-		public Assignment getEffortAccountingAssignment_21_1() { return cEffortAccountingAssignment_21_1; }
-
-		//STRING
-		public RuleCall getEffortAccountingSTRINGTerminalRuleCall_21_1_0() { return cEffortAccountingSTRINGTerminalRuleCall_21_1_0; }
-
 		//reports+=Report*
-		public Assignment getReportsAssignment_22() { return cReportsAssignment_22; }
+		public Assignment getReportsAssignment_21() { return cReportsAssignment_21; }
 
 		//Report
-		public RuleCall getReportsReportParserRuleCall_22_0() { return cReportsReportParserRuleCall_22_0; }
-
-		//("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
-		//
-		//responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-		//
-		//"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)?
-		public Group getGroup_23() { return cGroup_23; }
-
-		//"contact-info"
-		public Keyword getContactInfoKeyword_23_0() { return cContactInfoKeyword_23_0; }
-
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_23_1() { return cLeftCurlyBracketKeyword_23_1; }
-
-		//("owner" owner=[basedsl::User|QualifiedName])?
-		public Group getGroup_23_2() { return cGroup_23_2; }
-
-		//"owner"
-		public Keyword getOwnerKeyword_23_2_0() { return cOwnerKeyword_23_2_0; }
-
-		//owner=[basedsl::User|QualifiedName]
-		public Assignment getOwnerAssignment_23_2_1() { return cOwnerAssignment_23_2_1; }
-
-		//[basedsl::User|QualifiedName]
-		public CrossReference getOwnerUserCrossReference_23_2_1_0() { return cOwnerUserCrossReference_23_2_1_0; }
-
-		//QualifiedName
-		public RuleCall getOwnerUserQualifiedNameParserRuleCall_23_2_1_0_1() { return cOwnerUserQualifiedNameParserRuleCall_23_2_1_0_1; }
-
-		//("responsible" responsible+=[basedsl::User|QualifiedName])*
-		public Group getGroup_23_3() { return cGroup_23_3; }
-
-		//"responsible"
-		public Keyword getResponsibleKeyword_23_3_0() { return cResponsibleKeyword_23_3_0; }
-
-		//responsible+=[basedsl::User|QualifiedName]
-		public Assignment getResponsibleAssignment_23_3_1() { return cResponsibleAssignment_23_3_1; }
-
-		//[basedsl::User|QualifiedName]
-		public CrossReference getResponsibleUserCrossReference_23_3_1_0() { return cResponsibleUserCrossReference_23_3_1_0; }
-
-		//QualifiedName
-		public RuleCall getResponsibleUserQualifiedNameParserRuleCall_23_3_1_0_1() { return cResponsibleUserQualifiedNameParserRuleCall_23_3_1_0_1; }
-
-		//("budgeting" budgeting=[basedsl::User|QualifiedName])?
-		public Group getGroup_23_4() { return cGroup_23_4; }
-
-		//"budgeting"
-		public Keyword getBudgetingKeyword_23_4_0() { return cBudgetingKeyword_23_4_0; }
-
-		//budgeting=[basedsl::User|QualifiedName]
-		public Assignment getBudgetingAssignment_23_4_1() { return cBudgetingAssignment_23_4_1; }
-
-		//[basedsl::User|QualifiedName]
-		public CrossReference getBudgetingUserCrossReference_23_4_1_0() { return cBudgetingUserCrossReference_23_4_1_0; }
-
-		//QualifiedName
-		public RuleCall getBudgetingUserQualifiedNameParserRuleCall_23_4_1_0_1() { return cBudgetingUserQualifiedNameParserRuleCall_23_4_1_0_1; }
+		public RuleCall getReportsReportParserRuleCall_21_0() { return cReportsReportParserRuleCall_21_0; }
 
 		//("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")?
-		public Group getGroup_23_5() { return cGroup_23_5; }
+		public Group getGroup_22() { return cGroup_22; }
 
 		//"subscriptions"
-		public Keyword getSubscriptionsKeyword_23_5_0() { return cSubscriptionsKeyword_23_5_0; }
+		public Keyword getSubscriptionsKeyword_22_0() { return cSubscriptionsKeyword_22_0; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_23_5_1() { return cLeftCurlyBracketKeyword_23_5_1; }
+		public Keyword getLeftCurlyBracketKeyword_22_1() { return cLeftCurlyBracketKeyword_22_1; }
 
 		//subscriptions+=[basedsl::User|QualifiedName]*
-		public Assignment getSubscriptionsAssignment_23_5_2() { return cSubscriptionsAssignment_23_5_2; }
+		public Assignment getSubscriptionsAssignment_22_2() { return cSubscriptionsAssignment_22_2; }
 
 		//[basedsl::User|QualifiedName]
-		public CrossReference getSubscriptionsUserCrossReference_23_5_2_0() { return cSubscriptionsUserCrossReference_23_5_2_0; }
+		public CrossReference getSubscriptionsUserCrossReference_22_2_0() { return cSubscriptionsUserCrossReference_22_2_0; }
 
 		//QualifiedName
-		public RuleCall getSubscriptionsUserQualifiedNameParserRuleCall_23_5_2_0_1() { return cSubscriptionsUserQualifiedNameParserRuleCall_23_5_2_0_1; }
+		public RuleCall getSubscriptionsUserQualifiedNameParserRuleCall_22_2_0_1() { return cSubscriptionsUserQualifiedNameParserRuleCall_22_2_0_1; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_23_5_3() { return cRightCurlyBracketKeyword_23_5_3; }
+		public Keyword getRightCurlyBracketKeyword_22_3() { return cRightCurlyBracketKeyword_22_3; }
 
 		//("tags" tags+=[semanticsDsl::Tag]+)*
-		public Group getGroup_24() { return cGroup_24; }
+		public Group getGroup_23() { return cGroup_23; }
 
 		//"tags"
-		public Keyword getTagsKeyword_24_0() { return cTagsKeyword_24_0; }
+		public Keyword getTagsKeyword_23_0() { return cTagsKeyword_23_0; }
 
 		//tags+=[semanticsDsl::Tag]+
-		public Assignment getTagsAssignment_24_1() { return cTagsAssignment_24_1; }
+		public Assignment getTagsAssignment_23_1() { return cTagsAssignment_23_1; }
 
 		//[semanticsDsl::Tag]
-		public CrossReference getTagsTagCrossReference_24_1_0() { return cTagsTagCrossReference_24_1_0; }
+		public CrossReference getTagsTagCrossReference_23_1_0() { return cTagsTagCrossReference_23_1_0; }
 
 		//ID
-		public RuleCall getTagsTagIDTerminalRuleCall_24_1_0_1() { return cTagsTagIDTerminalRuleCall_24_1_0_1; }
+		public RuleCall getTagsTagIDTerminalRuleCall_23_1_0_1() { return cTagsTagIDTerminalRuleCall_23_1_0_1; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_25() { return cRightCurlyBracketKeyword_25; }
+		public Keyword getRightCurlyBracketKeyword_24() { return cRightCurlyBracketKeyword_24; }
 	}
 
 	public class CostElements extends AbstractParserRuleElementFinder {
@@ -554,24 +435,25 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cBilledPerUnitKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		private final Assignment cBilledUnitAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cBilledUnitSTRINGTerminalRuleCall_5_0 = (RuleCall)cBilledUnitAssignment_5.eContents().get(0);
-		private final Assignment cEscalationAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cEscalationEscalationParserRuleCall_6_0 = (RuleCall)cEscalationAssignment_6.eContents().get(0);
-		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
-		private final Keyword cPenaltyKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
-		private final Assignment cPenaltyAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
-		private final RuleCall cPenaltySTRINGTerminalRuleCall_7_1_0 = (RuleCall)cPenaltyAssignment_7_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cEffortAccountingKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cEffortAccountingAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cEffortAccountingSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cEffortAccountingAssignment_6_1.eContents().get(0);
+		private final Assignment cEscalationAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final RuleCall cEscalationEscalationParserRuleCall_7_0 = (RuleCall)cEscalationAssignment_7.eContents().get(0);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Keyword cPenaltyKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cPenaltyAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cPenaltySTRINGTerminalRuleCall_8_1_0 = (RuleCall)cPenaltyAssignment_8_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_9 = (Keyword)cGroup.eContents().get(9);
 		
 		//Cost:
-		//
-		//	"costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING escalation=Escalation? ("penalty"
-		//
-		//	penalty=STRING)? "}";
+		//	"costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING ("effort-accounting"
+		//	effortAccounting=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
-		//"costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING escalation=Escalation? ("penalty"
-		//
-		//penalty=STRING)? "}"
+		//"costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING ("effort-accounting"
+		//effortAccounting=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
 		//"costs"
@@ -598,26 +480,38 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getBilledUnitSTRINGTerminalRuleCall_5_0() { return cBilledUnitSTRINGTerminalRuleCall_5_0; }
 
-		//escalation=Escalation?
-		public Assignment getEscalationAssignment_6() { return cEscalationAssignment_6; }
+		//("effort-accounting" effortAccounting=STRING)?
+		public Group getGroup_6() { return cGroup_6; }
 
-		//Escalation
-		public RuleCall getEscalationEscalationParserRuleCall_6_0() { return cEscalationEscalationParserRuleCall_6_0; }
+		//"effort-accounting"
+		public Keyword getEffortAccountingKeyword_6_0() { return cEffortAccountingKeyword_6_0; }
 
-		//("penalty" penalty=STRING)?
-		public Group getGroup_7() { return cGroup_7; }
-
-		//"penalty"
-		public Keyword getPenaltyKeyword_7_0() { return cPenaltyKeyword_7_0; }
-
-		//penalty=STRING
-		public Assignment getPenaltyAssignment_7_1() { return cPenaltyAssignment_7_1; }
+		//effortAccounting=STRING
+		public Assignment getEffortAccountingAssignment_6_1() { return cEffortAccountingAssignment_6_1; }
 
 		//STRING
-		public RuleCall getPenaltySTRINGTerminalRuleCall_7_1_0() { return cPenaltySTRINGTerminalRuleCall_7_1_0; }
+		public RuleCall getEffortAccountingSTRINGTerminalRuleCall_6_1_0() { return cEffortAccountingSTRINGTerminalRuleCall_6_1_0; }
+
+		//escalation=Escalation?
+		public Assignment getEscalationAssignment_7() { return cEscalationAssignment_7; }
+
+		//Escalation
+		public RuleCall getEscalationEscalationParserRuleCall_7_0() { return cEscalationEscalationParserRuleCall_7_0; }
+
+		//("penalty" penalty=STRING)?
+		public Group getGroup_8() { return cGroup_8; }
+
+		//"penalty"
+		public Keyword getPenaltyKeyword_8_0() { return cPenaltyKeyword_8_0; }
+
+		//penalty=STRING
+		public Assignment getPenaltyAssignment_8_1() { return cPenaltyAssignment_8_1; }
+
+		//STRING
+		public RuleCall getPenaltySTRINGTerminalRuleCall_8_1_0() { return cPenaltySTRINGTerminalRuleCall_8_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_8() { return cRightCurlyBracketKeyword_8; }
+		public Keyword getRightCurlyBracketKeyword_9() { return cRightCurlyBracketKeyword_9; }
 	}
 
 	public class ServiceQualityPropertyElements extends AbstractParserRuleElementFinder {
@@ -633,14 +527,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLogRequirementParserRuleCall_7 = (RuleCall)cAlternatives.eContents().get(7);
 		
 		//ServiceQualityProperty:
-		//
 		//	Availability | Throughput | Latency | MaxDownTime | CapacityRequirement | AccuracyRequirement | ReliablityRequirement
-		//
 		//	| LogRequirement;
 		public ParserRule getRule() { return rule; }
 
 		//Availability | Throughput | Latency | MaxDownTime | CapacityRequirement | AccuracyRequirement | ReliablityRequirement |
-		//
 		//LogRequirement
 		public Alternatives getAlternatives() { return cAlternatives; }
 
@@ -694,14 +585,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Availability:
-		//
 		//	"availability" "{" "availability" availability=STRING ("mean-time-between-failure" mtbf=STRING)?
-		//
 		//	("mean-time-to-repair" mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times" regularDownTimes=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"availability" "{" "availability" availability=STRING ("mean-time-between-failure" mtbf=STRING)? ("mean-time-to-repair"
-		//
 		//mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times" regularDownTimes=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -786,14 +674,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Throughput:
-		//
 		//	"throughput" "{" "throughput" definition=STRING "score-to-be-kept" score=STRING escalation=Escalation? ("penalty"
-		//
 		//	penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"throughput" "{" "throughput" definition=STRING "score-to-be-kept" score=STRING escalation=Escalation? ("penalty"
-		//
 		//penalty=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -863,14 +748,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Latency:
-		//
 		//	"latency" "{" "latency" latency="STRING" "percentile" percentile=Percentile escalation=Escalation? ("penalty"
-		//
 		//	penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"latency" "{" "latency" latency="STRING" "percentile" percentile=Percentile escalation=Escalation? ("penalty"
-		//
 		//penalty=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -937,7 +819,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//MaxDownTime:
-		//
 		//	"max-downtime" "{" "duration" definition=STRING escalation=Escalation? ("penalty" penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
@@ -1007,14 +888,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//CapacityRequirement:
-		//
 		//	"capacity" "{" {CapacityRequirement} ("num-of-requests" requestNum=STRING "per" timeUnit=STRING)? ("message-size"
-		//
 		//	messageSize=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"capacity" "{" {CapacityRequirement} ("num-of-requests" requestNum=STRING "per" timeUnit=STRING)? ("message-size"
-		//
 		//messageSize=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1094,7 +972,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//ReliablityRequirement:
-		//
 		//	"message-exchange-reliability" "{" reliability=ReliablilityKind inOrderDelivery?="in-order-delivery"? "}";
 		public ParserRule getRule() { return rule; }
 
@@ -1140,7 +1017,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		//AccuracyRequirement:
-		//
 		//	"accuracy" "{" "max-error-rate" maxErrorRate=STRING escalation=Escalation? ("penalty" penalty=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
@@ -1197,14 +1073,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAdditionalLoggingRequirementSTRINGTerminalRuleCall_5_0 = (RuleCall)cAdditionalLoggingRequirementAssignment_5.eContents().get(0);
 		
 		//LogRequirement:
-		//
 		//	"logging" "{" "message-log-level" logLevel=LogRequirementKind "additional-logging-requirements"
-		//
 		//	additionalLoggingRequirement=STRING;
 		public ParserRule getRule() { return rule; }
 
 		//"logging" "{" "message-log-level" logLevel=LogRequirementKind "additional-logging-requirements"
-		//
 		//additionalLoggingRequirement=STRING
 		public Group getGroup() { return cGroup; }
 
@@ -1244,7 +1117,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPercentSignKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
 		//Percentile:
-		//
 		//	percentile=INT ("." INT)* "%";
 		public ParserRule getRule() { return rule; }
 
@@ -1278,7 +1150,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEncryptionRequirementParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		/// * Security policy to be applied to the services * / SecurityRequirement:
-		//
 		//	AuthenticationRequirement | SigningRequirement | EncryptionRequirement;
 		public ParserRule getRule() { return rule; }
 
@@ -1322,18 +1193,13 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_14 = (Keyword)cGroup.eContents().get(14);
 		
 		/// * Requirement, that defines how consumer are authenticated * / AuthenticationRequirement:
-		//
 		//	{AuthenticationRequirement} "authentication-procedure" optional?="optional"? "{" "auth-tokens" "{"
-		//
 		//	authTokens+=AuthToken+ "}" "hash-algorithms" "{" hashAlgorithms+=HashAlgorithm* "}" useNonce?="use-nonce"? ("issuer"
-		//
 		//	issuer=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//{AuthenticationRequirement} "authentication-procedure" optional?="optional"? "{" "auth-tokens" "{"
-		//
 		//authTokens+=AuthToken+ "}" "hash-algorithms" "{" hashAlgorithms+=HashAlgorithm* "}" useNonce?="use-nonce"? ("issuer"
-		//
 		//issuer=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1413,7 +1279,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cKindAuthTokenKindEnumRuleCall_1_0 = (RuleCall)cKindAssignment_1.eContents().get(0);
 		
 		//AuthToken:
-		//
 		//	optional?="optional"? kind=AuthTokenKind;
 		public ParserRule getRule() { return rule; }
 
@@ -1444,7 +1309,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cKindHashAlgKindEnumRuleCall_2_0 = (RuleCall)cKindAssignment_2.eContents().get(0);
 		
 		//HashAlgorithm:
-		//
 		//	optional?="optional"? useBase64?="Base64-encoded"? kind=HashAlgKind;
 		public ParserRule getRule() { return rule; }
 
@@ -1495,18 +1359,13 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		/// * How messages are signed, to verify their authenticity * / SigningRequirement:
-		//
 		//	{SigningRequirement} "signing-policy" "{" ("supported-algorithms" supportedSigningAlgorithms+=SigningAlgothm+)?
-		//
 		//	("requires-algorithm" requiredSigningAlgorithm=SigningAlgothm)? ("signed-message-parts" signedParts+=MessagePartRef
-		//
 		//	("," signedParts+=MessagePartRef)*)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//{SigningRequirement} "signing-policy" "{" ("supported-algorithms" supportedSigningAlgorithms+=SigningAlgothm+)?
-		//
 		//("requires-algorithm" requiredSigningAlgorithm=SigningAlgothm)? ("signed-message-parts" signedParts+=MessagePartRef
-		//
 		//("," signedParts+=MessagePartRef)*)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1582,7 +1441,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPartRefExpressionSTRINGTerminalRuleCall_1_1_0 = (RuleCall)cPartRefExpressionAssignment_1_1.eContents().get(0);
 		
 		//MessagePartRef:
-		//
 		//	messagePartRef=MessagePartRefKind ("expression" partRefExpression=STRING)?;
 		public ParserRule getRule() { return rule; }
 
@@ -1633,18 +1491,13 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
 		
 		/// * How messages are encrypted * / EncryptionRequirement:
-		//
 		//	{EncryptionRequirement} "encryption-policy" "{" ("supported-algorithms"
-		//
 		//	supportedCipherAlgorithms+=CipherAlgorithmKind+)? ("requires-algorithm" requiredCipherAlgorithm=CipherAlgorithmKind)?
-		//
 		//	("encrypted-message-parts" encryptedParts+=MessagePartRef ("," encryptedParts+=MessagePartRef)*)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//{EncryptionRequirement} "encryption-policy" "{" ("supported-algorithms"
-		//
 		//supportedCipherAlgorithms+=CipherAlgorithmKind+)? ("requires-algorithm" requiredCipherAlgorithm=CipherAlgorithmKind)?
-		//
 		//("encrypted-message-parts" encryptedParts+=MessagePartRef ("," encryptedParts+=MessagePartRef)*)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1720,7 +1573,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cDescriptionSTRINGTerminalRuleCall_3_0 = (RuleCall)cDescriptionAssignment_3.eContents().get(0);
 		
 		//PriorityDeclaration:
-		//
 		//	"priority" name=ID "description" description=STRING;
 		public ParserRule getRule() { return rule; }
 
@@ -1768,14 +1620,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
 		
 		//Escalation:
-		//
 		//	"escalation" "{" ("cause" cause=STRING)? "escalate-to" "{" escalationTargets+=[basedsl::User|QualifiedName]+ "}"
-		//
 		//	("procedure" procedure=STRING)? "}";
 		public ParserRule getRule() { return rule; }
 
 		//"escalation" "{" ("cause" cause=STRING)? "escalate-to" "{" escalationTargets+=[basedsl::User|QualifiedName]+ "}"
-		//
 		//("procedure" procedure=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
@@ -1839,7 +1688,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cThirdPartyParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		
 		//Party:
-		//
 		//	CustomerParty | ProviderParty | ThirdParty;
 		public ParserRule getRule() { return rule; }
 
@@ -1864,17 +1712,16 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameQualifiedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cRepresentativesAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cRepresentativesRepesentativeParserRuleCall_3_0 = (RuleCall)cRepresentativesAssignment_3.eContents().get(0);
+		private final RuleCall cRepresentativesRepresentativeParserRuleCall_3_0 = (RuleCall)cRepresentativesAssignment_3.eContents().get(0);
 		private final Assignment cResponsibilitiesAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cResponsibilitiesResponsibilityParserRuleCall_4_0 = (RuleCall)cResponsibilitiesAssignment_4.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//CustomerParty:
-		//
-		//	"customer-party" name=QualifiedName "{" representatives+=Repesentative+ responsibilities+=Responsibility+ "}";
+		//	"customer-party" name=QualifiedName "{" representatives+=Representative+ responsibilities+=Responsibility+ "}";
 		public ParserRule getRule() { return rule; }
 
-		//"customer-party" name=QualifiedName "{" representatives+=Repesentative+ responsibilities+=Responsibility+ "}"
+		//"customer-party" name=QualifiedName "{" representatives+=Representative+ responsibilities+=Responsibility+ "}"
 		public Group getGroup() { return cGroup; }
 
 		//"customer-party"
@@ -1889,11 +1736,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//representatives+=Repesentative+
+		//representatives+=Representative+
 		public Assignment getRepresentativesAssignment_3() { return cRepresentativesAssignment_3; }
 
-		//Repesentative
-		public RuleCall getRepresentativesRepesentativeParserRuleCall_3_0() { return cRepresentativesRepesentativeParserRuleCall_3_0; }
+		//Representative
+		public RuleCall getRepresentativesRepresentativeParserRuleCall_3_0() { return cRepresentativesRepresentativeParserRuleCall_3_0; }
 
 		//responsibilities+=Responsibility+
 		public Assignment getResponsibilitiesAssignment_4() { return cResponsibilitiesAssignment_4; }
@@ -1913,17 +1760,16 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cNameQualifiedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Assignment cRepresentativesAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cRepresentativesRepesentativeParserRuleCall_3_0 = (RuleCall)cRepresentativesAssignment_3.eContents().get(0);
+		private final RuleCall cRepresentativesRepresentativeParserRuleCall_3_0 = (RuleCall)cRepresentativesAssignment_3.eContents().get(0);
 		private final Assignment cResponsibilitiesAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cResponsibilitiesResponsibilityParserRuleCall_4_0 = (RuleCall)cResponsibilitiesAssignment_4.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//ProviderParty:
-		//
-		//	"provider-party" name=QualifiedName "{" representatives+=Repesentative+ responsibilities+=Responsibility+ "}";
+		//	"provider-party" name=QualifiedName "{" representatives+=Representative+ responsibilities+=Responsibility+ "}";
 		public ParserRule getRule() { return rule; }
 
-		//"provider-party" name=QualifiedName "{" representatives+=Repesentative+ responsibilities+=Responsibility+ "}"
+		//"provider-party" name=QualifiedName "{" representatives+=Representative+ responsibilities+=Responsibility+ "}"
 		public Group getGroup() { return cGroup; }
 
 		//"provider-party"
@@ -1938,11 +1784,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//representatives+=Repesentative+
+		//representatives+=Representative+
 		public Assignment getRepresentativesAssignment_3() { return cRepresentativesAssignment_3; }
 
-		//Repesentative
-		public RuleCall getRepresentativesRepesentativeParserRuleCall_3_0() { return cRepresentativesRepesentativeParserRuleCall_3_0; }
+		//Representative
+		public RuleCall getRepresentativesRepresentativeParserRuleCall_3_0() { return cRepresentativesRepresentativeParserRuleCall_3_0; }
 
 		//responsibilities+=Responsibility+
 		public Assignment getResponsibilitiesAssignment_4() { return cResponsibilitiesAssignment_4; }
@@ -1965,20 +1811,17 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cRoleAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cRoleSTRINGTerminalRuleCall_4_0 = (RuleCall)cRoleAssignment_4.eContents().get(0);
 		private final Assignment cRepresentativesAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cRepresentativesRepesentativeParserRuleCall_5_0 = (RuleCall)cRepresentativesAssignment_5.eContents().get(0);
+		private final RuleCall cRepresentativesRepresentativeParserRuleCall_5_0 = (RuleCall)cRepresentativesAssignment_5.eContents().get(0);
 		private final Assignment cResponsibilitiesAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cResponsibilitiesResponsibilityParserRuleCall_6_0 = (RuleCall)cResponsibilitiesAssignment_6.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//ThirdParty:
-		//
-		//	"third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Repesentative+
-		//
+		//	"third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Representative+
 		//	responsibilities+=Responsibility+ "}";
 		public ParserRule getRule() { return rule; }
 
-		//"third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Repesentative+
-		//
+		//"third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Representative+
 		//responsibilities+=Responsibility+ "}"
 		public Group getGroup() { return cGroup; }
 
@@ -2003,11 +1846,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getRoleSTRINGTerminalRuleCall_4_0() { return cRoleSTRINGTerminalRuleCall_4_0; }
 
-		//representatives+=Repesentative+
+		//representatives+=Representative+
 		public Assignment getRepresentativesAssignment_5() { return cRepresentativesAssignment_5; }
 
-		//Repesentative
-		public RuleCall getRepresentativesRepesentativeParserRuleCall_5_0() { return cRepresentativesRepesentativeParserRuleCall_5_0; }
+		//Representative
+		public RuleCall getRepresentativesRepresentativeParserRuleCall_5_0() { return cRepresentativesRepresentativeParserRuleCall_5_0; }
 
 		//responsibilities+=Responsibility+
 		public Assignment getResponsibilitiesAssignment_6() { return cResponsibilitiesAssignment_6; }
@@ -2019,151 +1862,194 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
 	}
 
-	public class RepesentativeElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Repesentative");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cRepresentativeKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Keyword cNameKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cFullnameAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cFullnameSTRINGTerminalRuleCall_3_0 = (RuleCall)cFullnameAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cPhoneKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cPhoneAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cPhoneSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cPhoneAssignment_4_1.eContents().get(0);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cEmailKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Assignment cEmailAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
-		private final RuleCall cEmailSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cEmailAssignment_5_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
+	public class RepresentativeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Representative");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cUserRefParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cInlineRepresentativeParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//Repesentative:
-		//
-		//	"representative" "{" "name" fullname=STRING ("phone" phone=STRING)? ("email" email=STRING)? "}";
+		//Representative:
+		//	UserRef | InlineRepresentative;
 		public ParserRule getRule() { return rule; }
 
-		//"representative" "{" "name" fullname=STRING ("phone" phone=STRING)? ("email" email=STRING)? "}"
+		//UserRef | InlineRepresentative
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//UserRef
+		public RuleCall getUserRefParserRuleCall_0() { return cUserRefParserRuleCall_0; }
+
+		//InlineRepresentative
+		public RuleCall getInlineRepresentativeParserRuleCall_1() { return cInlineRepresentativeParserRuleCall_1; }
+	}
+
+	public class UserRefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "UserRef");
+		private final Assignment cRepresentativeAssignment = (Assignment)rule.eContents().get(1);
+		private final CrossReference cRepresentativeUserCrossReference_0 = (CrossReference)cRepresentativeAssignment.eContents().get(0);
+		private final RuleCall cRepresentativeUserQualifiedNameParserRuleCall_0_1 = (RuleCall)cRepresentativeUserCrossReference_0.eContents().get(1);
+		
+		//UserRef:
+		//	representative=[basedsl::User|QualifiedName];
+		public ParserRule getRule() { return rule; }
+
+		//representative=[basedsl::User|QualifiedName]
+		public Assignment getRepresentativeAssignment() { return cRepresentativeAssignment; }
+
+		//[basedsl::User|QualifiedName]
+		public CrossReference getRepresentativeUserCrossReference_0() { return cRepresentativeUserCrossReference_0; }
+
+		//QualifiedName
+		public RuleCall getRepresentativeUserQualifiedNameParserRuleCall_0_1() { return cRepresentativeUserQualifiedNameParserRuleCall_0_1; }
+	}
+
+	public class InlineRepresentativeElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "InlineRepresentative");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cInlineRepresentativeAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cRepresentativeKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cFirstnameKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cFirstnameAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cFirstnameSTRINGTerminalRuleCall_3_1_0 = (RuleCall)cFirstnameAssignment_3_1.eContents().get(0);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLastnameKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cLastnameAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cLastnameSTRINGTerminalRuleCall_4_1_0 = (RuleCall)cLastnameAssignment_4_1.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cOrgKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cOrgAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cOrgSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cOrgAssignment_5_1.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cOrgUnitKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cOrgUnitAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cOrgUnitSTRINGTerminalRuleCall_6_1_0 = (RuleCall)cOrgUnitAssignment_6_1.eContents().get(0);
+		private final Group cGroup_7 = (Group)cGroup.eContents().get(7);
+		private final Keyword cEmailKeyword_7_0 = (Keyword)cGroup_7.eContents().get(0);
+		private final Assignment cEmailAssignment_7_1 = (Assignment)cGroup_7.eContents().get(1);
+		private final RuleCall cEmailSTRINGTerminalRuleCall_7_1_0 = (RuleCall)cEmailAssignment_7_1.eContents().get(0);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Keyword cPhoneKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Assignment cPhoneAssignment_8_1 = (Assignment)cGroup_8.eContents().get(1);
+		private final RuleCall cPhoneSTRINGTerminalRuleCall_8_1_0 = (RuleCall)cPhoneAssignment_8_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		
+		//InlineRepresentative:
+		//	{InlineRepresentative} "representative" "{" ("firstname" firstname=STRING)? ("lastname" lastname=STRING)? ("org"
+		//	org=STRING)? ("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}";
+		public ParserRule getRule() { return rule; }
+
+		//{InlineRepresentative} "representative" "{" ("firstname" firstname=STRING)? ("lastname" lastname=STRING)? ("org"
+		//org=STRING)? ("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}"
 		public Group getGroup() { return cGroup; }
 
+		//{InlineRepresentative}
+		public Action getInlineRepresentativeAction_0() { return cInlineRepresentativeAction_0; }
+
 		//"representative"
-		public Keyword getRepresentativeKeyword_0() { return cRepresentativeKeyword_0; }
+		public Keyword getRepresentativeKeyword_1() { return cRepresentativeKeyword_1; }
 
 		//"{"
-		public Keyword getLeftCurlyBracketKeyword_1() { return cLeftCurlyBracketKeyword_1; }
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
 
-		//"name"
-		public Keyword getNameKeyword_2() { return cNameKeyword_2; }
+		//("firstname" firstname=STRING)?
+		public Group getGroup_3() { return cGroup_3; }
 
-		//fullname=STRING
-		public Assignment getFullnameAssignment_3() { return cFullnameAssignment_3; }
+		//"firstname"
+		public Keyword getFirstnameKeyword_3_0() { return cFirstnameKeyword_3_0; }
+
+		//firstname=STRING
+		public Assignment getFirstnameAssignment_3_1() { return cFirstnameAssignment_3_1; }
 
 		//STRING
-		public RuleCall getFullnameSTRINGTerminalRuleCall_3_0() { return cFullnameSTRINGTerminalRuleCall_3_0; }
+		public RuleCall getFirstnameSTRINGTerminalRuleCall_3_1_0() { return cFirstnameSTRINGTerminalRuleCall_3_1_0; }
 
-		//("phone" phone=STRING)?
+		//("lastname" lastname=STRING)?
 		public Group getGroup_4() { return cGroup_4; }
 
-		//"phone"
-		public Keyword getPhoneKeyword_4_0() { return cPhoneKeyword_4_0; }
+		//"lastname"
+		public Keyword getLastnameKeyword_4_0() { return cLastnameKeyword_4_0; }
 
-		//phone=STRING
-		public Assignment getPhoneAssignment_4_1() { return cPhoneAssignment_4_1; }
+		//lastname=STRING
+		public Assignment getLastnameAssignment_4_1() { return cLastnameAssignment_4_1; }
 
 		//STRING
-		public RuleCall getPhoneSTRINGTerminalRuleCall_4_1_0() { return cPhoneSTRINGTerminalRuleCall_4_1_0; }
+		public RuleCall getLastnameSTRINGTerminalRuleCall_4_1_0() { return cLastnameSTRINGTerminalRuleCall_4_1_0; }
 
-		//("email" email=STRING)?
+		//("org" org=STRING)?
 		public Group getGroup_5() { return cGroup_5; }
 
-		//"email"
-		public Keyword getEmailKeyword_5_0() { return cEmailKeyword_5_0; }
+		//"org"
+		public Keyword getOrgKeyword_5_0() { return cOrgKeyword_5_0; }
 
-		//email=STRING
-		public Assignment getEmailAssignment_5_1() { return cEmailAssignment_5_1; }
+		//org=STRING
+		public Assignment getOrgAssignment_5_1() { return cOrgAssignment_5_1; }
 
 		//STRING
-		public RuleCall getEmailSTRINGTerminalRuleCall_5_1_0() { return cEmailSTRINGTerminalRuleCall_5_1_0; }
+		public RuleCall getOrgSTRINGTerminalRuleCall_5_1_0() { return cOrgSTRINGTerminalRuleCall_5_1_0; }
+
+		//("org-unit" orgUnit=STRING)?
+		public Group getGroup_6() { return cGroup_6; }
+
+		//"org-unit"
+		public Keyword getOrgUnitKeyword_6_0() { return cOrgUnitKeyword_6_0; }
+
+		//orgUnit=STRING
+		public Assignment getOrgUnitAssignment_6_1() { return cOrgUnitAssignment_6_1; }
+
+		//STRING
+		public RuleCall getOrgUnitSTRINGTerminalRuleCall_6_1_0() { return cOrgUnitSTRINGTerminalRuleCall_6_1_0; }
+
+		//("email" email=STRING)?
+		public Group getGroup_7() { return cGroup_7; }
+
+		//"email"
+		public Keyword getEmailKeyword_7_0() { return cEmailKeyword_7_0; }
+
+		//email=STRING
+		public Assignment getEmailAssignment_7_1() { return cEmailAssignment_7_1; }
+
+		//STRING
+		public RuleCall getEmailSTRINGTerminalRuleCall_7_1_0() { return cEmailSTRINGTerminalRuleCall_7_1_0; }
+
+		//("phone" phone=STRING)?
+		public Group getGroup_8() { return cGroup_8; }
+
+		//"phone"
+		public Keyword getPhoneKeyword_8_0() { return cPhoneKeyword_8_0; }
+
+		//phone=STRING
+		public Assignment getPhoneAssignment_8_1() { return cPhoneAssignment_8_1; }
+
+		//STRING
+		public RuleCall getPhoneSTRINGTerminalRuleCall_8_1_0() { return cPhoneSTRINGTerminalRuleCall_8_1_0; }
 
 		//"}"
-		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
+		public Keyword getRightCurlyBracketKeyword_9() { return cRightCurlyBracketKeyword_9; }
 	}
 
 	public class ResponsibilityElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Responsibility");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cSimpleResponsibilityParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cReportingResponsibilityParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//Responsibility:
-		//
-		//	SimpleResponsibility | ReportingResponsibility;
-		public ParserRule getRule() { return rule; }
-
-		//SimpleResponsibility | ReportingResponsibility
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//SimpleResponsibility
-		public RuleCall getSimpleResponsibilityParserRuleCall_0() { return cSimpleResponsibilityParserRuleCall_0; }
-
-		//ReportingResponsibility
-		public RuleCall getReportingResponsibilityParserRuleCall_1() { return cReportingResponsibilityParserRuleCall_1; }
-	}
-
-	public class SimpleResponsibilityElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "SimpleResponsibility");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cResponsibilityKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameQualifiedNameParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cDescriptionAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cDescriptionSTRINGTerminalRuleCall_3_0 = (RuleCall)cDescriptionAssignment_3.eContents().get(0);
-		private final Assignment cEscalationsAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cEscalationsEscalationParserRuleCall_4_0 = (RuleCall)cEscalationsAssignment_4.eContents().get(0);
-		private final Assignment cPenaltyAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cPenaltySTRINGTerminalRuleCall_5_0 = (RuleCall)cPenaltyAssignment_5.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cDescriptionAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cDescriptionSTRINGTerminalRuleCall_1_0 = (RuleCall)cDescriptionAssignment_1.eContents().get(0);
 		
-		//SimpleResponsibility:
-		//
-		//	"responsibility" name=QualifiedName "{" description=STRING escalations+=Escalation+ penalty=STRING "}";
+		//Responsibility:
+		//	"responsibility" description=STRING;
 		public ParserRule getRule() { return rule; }
 
-		//"responsibility" name=QualifiedName "{" description=STRING escalations+=Escalation+ penalty=STRING "}"
+		//"responsibility" description=STRING
 		public Group getGroup() { return cGroup; }
 
 		//"responsibility"
 		public Keyword getResponsibilityKeyword_0() { return cResponsibilityKeyword_0; }
 
-		//name=QualifiedName
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
-		//QualifiedName
-		public RuleCall getNameQualifiedNameParserRuleCall_1_0() { return cNameQualifiedNameParserRuleCall_1_0; }
-
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
-
 		//description=STRING
-		public Assignment getDescriptionAssignment_3() { return cDescriptionAssignment_3; }
+		public Assignment getDescriptionAssignment_1() { return cDescriptionAssignment_1; }
 
 		//STRING
-		public RuleCall getDescriptionSTRINGTerminalRuleCall_3_0() { return cDescriptionSTRINGTerminalRuleCall_3_0; }
-
-		//escalations+=Escalation+
-		public Assignment getEscalationsAssignment_4() { return cEscalationsAssignment_4; }
-
-		//Escalation
-		public RuleCall getEscalationsEscalationParserRuleCall_4_0() { return cEscalationsEscalationParserRuleCall_4_0; }
-
-		//penalty=STRING
-		public Assignment getPenaltyAssignment_5() { return cPenaltyAssignment_5; }
-
-		//STRING
-		public RuleCall getPenaltySTRINGTerminalRuleCall_5_0() { return cPenaltySTRINGTerminalRuleCall_5_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_6() { return cRightCurlyBracketKeyword_6; }
+		public RuleCall getDescriptionSTRINGTerminalRuleCall_1_0() { return cDescriptionSTRINGTerminalRuleCall_1_0; }
 	}
 
 	public class ReportElements extends AbstractParserRuleElementFinder {
@@ -2175,18 +2061,18 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Keyword cReportToKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cReportToAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cReportToSTRINGTerminalRuleCall_4_0 = (RuleCall)cReportToAssignment_4.eContents().get(0);
+		private final CrossReference cReportToUserCrossReference_4_0 = (CrossReference)cReportToAssignment_4.eContents().get(0);
+		private final RuleCall cReportToUserQualifiedNameParserRuleCall_4_0_1 = (RuleCall)cReportToUserCrossReference_4_0.eContents().get(1);
 		private final Keyword cContentsKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		private final Assignment cContentAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cContentSTRINGTerminalRuleCall_6_0 = (RuleCall)cContentAssignment_6.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Report:
-		//
-		//	"report" name=ID "{" "report-to" reportTo=STRING "contents" content=STRING "}";
+		//	"report" name=ID "{" "report-to" reportTo=[basedsl::User|QualifiedName] "contents" content=STRING "}";
 		public ParserRule getRule() { return rule; }
 
-		//"report" name=ID "{" "report-to" reportTo=STRING "contents" content=STRING "}"
+		//"report" name=ID "{" "report-to" reportTo=[basedsl::User|QualifiedName] "contents" content=STRING "}"
 		public Group getGroup() { return cGroup; }
 
 		//"report"
@@ -2204,11 +2090,14 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		//"report-to"
 		public Keyword getReportToKeyword_3() { return cReportToKeyword_3; }
 
-		//reportTo=STRING
+		//reportTo=[basedsl::User|QualifiedName]
 		public Assignment getReportToAssignment_4() { return cReportToAssignment_4; }
 
-		//STRING
-		public RuleCall getReportToSTRINGTerminalRuleCall_4_0() { return cReportToSTRINGTerminalRuleCall_4_0; }
+		//[basedsl::User|QualifiedName]
+		public CrossReference getReportToUserCrossReference_4_0() { return cReportToUserCrossReference_4_0; }
+
+		//QualifiedName
+		public RuleCall getReportToUserQualifiedNameParserRuleCall_4_0_1() { return cReportToUserQualifiedNameParserRuleCall_4_0_1; }
 
 		//"contents"
 		public Keyword getContentsKeyword_5() { return cContentsKeyword_5; }
@@ -2221,73 +2110,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 
 		//"}"
 		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
-	}
-
-	public class ReportingResponsibilityElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ReportingResponsibility");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cReportingResponsibilityKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Keyword cReportToKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Keyword cContentsKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cContentAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cContentSTRINGTerminalRuleCall_5_0 = (RuleCall)cContentAssignment_5.eContents().get(0);
-		private final Assignment cEscalationsAssignment_6 = (Assignment)cGroup.eContents().get(6);
-		private final RuleCall cEscalationsEscalationParserRuleCall_6_0 = (RuleCall)cEscalationsAssignment_6.eContents().get(0);
-		private final Assignment cPenaltyAssignment_7 = (Assignment)cGroup.eContents().get(7);
-		private final RuleCall cPenaltySTRINGTerminalRuleCall_7_0 = (RuleCall)cPenaltyAssignment_7.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_8 = (Keyword)cGroup.eContents().get(8);
-		
-		//ReportingResponsibility:
-		//
-		//	"reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING
-		//
-		//	"}";
-		public ParserRule getRule() { return rule; }
-
-		//"reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING "}"
-		public Group getGroup() { return cGroup; }
-
-		//"reporting-responsibility"
-		public Keyword getReportingResponsibilityKeyword_0() { return cReportingResponsibilityKeyword_0; }
-
-		//name=ID
-		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
-
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
-
-		//"{"
-		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
-
-		//"report-to"
-		public Keyword getReportToKeyword_3() { return cReportToKeyword_3; }
-
-		//"contents"
-		public Keyword getContentsKeyword_4() { return cContentsKeyword_4; }
-
-		//content=STRING
-		public Assignment getContentAssignment_5() { return cContentAssignment_5; }
-
-		//STRING
-		public RuleCall getContentSTRINGTerminalRuleCall_5_0() { return cContentSTRINGTerminalRuleCall_5_0; }
-
-		//escalations+=Escalation+
-		public Assignment getEscalationsAssignment_6() { return cEscalationsAssignment_6; }
-
-		//Escalation
-		public RuleCall getEscalationsEscalationParserRuleCall_6_0() { return cEscalationsEscalationParserRuleCall_6_0; }
-
-		//penalty=STRING
-		public Assignment getPenaltyAssignment_7() { return cPenaltyAssignment_7; }
-
-		//STRING
-		public RuleCall getPenaltySTRINGTerminalRuleCall_7_0() { return cPenaltySTRINGTerminalRuleCall_7_0; }
-
-		//"}"
-		public Keyword getRightCurlyBracketKeyword_8() { return cRightCurlyBracketKeyword_8; }
 	}
 	
 	
@@ -2306,7 +2128,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPlainTextPlainTextKeyword_4_0 = (Keyword)cPlainTextEnumLiteralDeclaration_4.eContents().get(0);
 		
 		//enum HashAlgKind:
-		//
 		//	MD5 | SHA1 | SHA256 | RSA | PlainText;
 		public EnumRule getRule() { return rule; }
 
@@ -2359,7 +2180,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cExpressionExpressionKeyword_4_0 = (Keyword)cExpressionEnumLiteralDeclaration_4.eContents().get(0);
 		
 		//enum MessagePartRefKind:
-		//
 		//	header | body | attachments | all | expression;
 		public EnumRule getRule() { return rule; }
 
@@ -2418,7 +2238,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAES256AES256Keyword_7_0 = (Keyword)cAES256EnumLiteralDeclaration_7.eContents().get(0);
 		
 		//enum SigningAlgothm:
-		//
 		//	NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
 		public EnumRule getRule() { return rule; }
 
@@ -2495,7 +2314,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAES256AES256Keyword_7_0 = (Keyword)cAES256EnumLiteralDeclaration_7.eContents().get(0);
 		
 		//enum CipherAlgorithmKind:
-		//
 		//	NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES="3DES" | AES128 | AES256;
 		public EnumRule getRule() { return rule; }
 
@@ -2574,7 +2392,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOAuth2OAuth2Keyword_8_0 = (Keyword)cOAuth2EnumLiteralDeclaration_8.eContents().get(0);
 		
 		//enum AuthTokenKind:
-		//
 		//	UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
 		public EnumRule getRule() { return rule; }
 
@@ -2647,7 +2464,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cAllAllKeyword_2_0 = (Keyword)cAllEnumLiteralDeclaration_2.eContents().get(0);
 		
 		//enum LogRequirementKind:
-		//
 		//	none | header | all;
 		public EnumRule getRule() { return rule; }
 
@@ -2686,10 +2502,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cBEST_EFFORTBestEffortKeyword_3_0 = (Keyword)cBEST_EFFORTEnumLiteralDeclaration_3.eContents().get(0);
 		
 		//enum ReliablilityKind:
-		//
-		//	EXACTLY_ONCE="exactly-once" | AT_MOST_ONCE="at-most-once" | AT_LEAST_ONCE="at-least-once" |
-		//
-		//	BEST_EFFORT="best-effort";
+		//	EXACTLY_ONCE="exactly-once" | AT_MOST_ONCE="at-most-once" | AT_LEAST_ONCE="at-least-once" | BEST_EFFORT="best-effort";
 		public EnumRule getRule() { return rule; }
 
 		//EXACTLY_ONCE="exactly-once" | AT_MOST_ONCE="at-most-once" | AT_LEAST_ONCE="at-least-once" | BEST_EFFORT="best-effort"
@@ -2753,11 +2566,11 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	private CustomerPartyElements pCustomerParty;
 	private ProviderPartyElements pProviderParty;
 	private ThirdPartyElements pThirdParty;
-	private RepesentativeElements pRepesentative;
+	private RepresentativeElements pRepresentative;
+	private UserRefElements pUserRef;
+	private InlineRepresentativeElements pInlineRepresentative;
 	private ResponsibilityElements pResponsibility;
-	private SimpleResponsibilityElements pSimpleResponsibility;
 	private ReportElements pReport;
-	private ReportingResponsibilityElements pReportingResponsibility;
 	
 	private final Grammar grammar;
 
@@ -2798,7 +2611,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//SlaModel:
-	//
 	//	agreements+=SLA*;
 	public SlaModelElements getSlaModelAccess() {
 		return (pSlaModel != null) ? pSlaModel : (pSlaModel = new SlaModelElements());
@@ -2809,28 +2621,15 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//SLA:
-	//
 	//	"service-level-agreement" name=QualifiedName version=Version? "{" "effective-date" effectiveDate=STRING
-	//
-	//	("effective-until" effectiveUntil=STRING)? ("preample" preample=STRING)? ("description" description=STRING)? ("scope"
-	//
-	//	scope=STRING)? ("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
-	//
+	//	("effective-until" effectiveUntil=STRING)? parties+=Party* ("scope" scope=STRING)? ("preample" preample=STRING)?
+	//	("description" description=STRING)? ("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration*
+	//	("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
 	//	serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
-	//
 	//	dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
-	//
-	//	("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration* escalationProcedure=Escalation?
-	//
-	//	("additional-services" additionalServices=STRING)? parties+=Party* ("cancellation" cancellation=STRING)?
-	//
-	//	("extraordinary-cancellation" extraordinaryCancellation=STRING)? ("effort-accounting" effortAccounting=STRING)?
-	//
-	//	reports+=Report* ("contact-info" "{" ("owner" owner=[basedsl::User|QualifiedName])? ("responsible"
-	//
-	//	responsible+=[basedsl::User|QualifiedName])* ("budgeting" budgeting=[basedsl::User|QualifiedName])? ("subscriptions"
-	//
-	//	"{" subscriptions+=[basedsl::User|QualifiedName]* "}")?)? ("tags" tags+=[semanticsDsl::Tag]+)* "}";
+	//	("additional-services" additionalServices=STRING)? escalationProcedure=Escalation? ("cancellation"
+	//	cancellation=STRING)? ("extraordinary-cancellation" extraordinaryCancellation=STRING)? reports+=Report*
+	//	("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")? ("tags" tags+=[semanticsDsl::Tag]+)* "}";
 	public SLAElements getSLAAccess() {
 		return (pSLA != null) ? pSLA : (pSLA = new SLAElements());
 	}
@@ -2840,10 +2639,8 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Cost:
-	//
-	//	"costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING escalation=Escalation? ("penalty"
-	//
-	//	penalty=STRING)? "}";
+	//	"costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING ("effort-accounting"
+	//	effortAccounting=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}";
 	public CostElements getCostAccess() {
 		return (pCost != null) ? pCost : (pCost = new CostElements());
 	}
@@ -2853,9 +2650,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ServiceQualityProperty:
-	//
 	//	Availability | Throughput | Latency | MaxDownTime | CapacityRequirement | AccuracyRequirement | ReliablityRequirement
-	//
 	//	| LogRequirement;
 	public ServiceQualityPropertyElements getServiceQualityPropertyAccess() {
 		return (pServiceQualityProperty != null) ? pServiceQualityProperty : (pServiceQualityProperty = new ServiceQualityPropertyElements());
@@ -2866,9 +2661,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Availability:
-	//
 	//	"availability" "{" "availability" availability=STRING ("mean-time-between-failure" mtbf=STRING)?
-	//
 	//	("mean-time-to-repair" mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times" regularDownTimes=STRING)? "}";
 	public AvailabilityElements getAvailabilityAccess() {
 		return (pAvailability != null) ? pAvailability : (pAvailability = new AvailabilityElements());
@@ -2879,9 +2672,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Throughput:
-	//
 	//	"throughput" "{" "throughput" definition=STRING "score-to-be-kept" score=STRING escalation=Escalation? ("penalty"
-	//
 	//	penalty=STRING)? "}";
 	public ThroughputElements getThroughputAccess() {
 		return (pThroughput != null) ? pThroughput : (pThroughput = new ThroughputElements());
@@ -2892,9 +2683,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Latency:
-	//
 	//	"latency" "{" "latency" latency="STRING" "percentile" percentile=Percentile escalation=Escalation? ("penalty"
-	//
 	//	penalty=STRING)? "}";
 	public LatencyElements getLatencyAccess() {
 		return (pLatency != null) ? pLatency : (pLatency = new LatencyElements());
@@ -2905,7 +2694,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MaxDownTime:
-	//
 	//	"max-downtime" "{" "duration" definition=STRING escalation=Escalation? ("penalty" penalty=STRING)? "}";
 	public MaxDownTimeElements getMaxDownTimeAccess() {
 		return (pMaxDownTime != null) ? pMaxDownTime : (pMaxDownTime = new MaxDownTimeElements());
@@ -2916,9 +2704,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CapacityRequirement:
-	//
 	//	"capacity" "{" {CapacityRequirement} ("num-of-requests" requestNum=STRING "per" timeUnit=STRING)? ("message-size"
-	//
 	//	messageSize=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}";
 	public CapacityRequirementElements getCapacityRequirementAccess() {
 		return (pCapacityRequirement != null) ? pCapacityRequirement : (pCapacityRequirement = new CapacityRequirementElements());
@@ -2929,7 +2715,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ReliablityRequirement:
-	//
 	//	"message-exchange-reliability" "{" reliability=ReliablilityKind inOrderDelivery?="in-order-delivery"? "}";
 	public ReliablityRequirementElements getReliablityRequirementAccess() {
 		return (pReliablityRequirement != null) ? pReliablityRequirement : (pReliablityRequirement = new ReliablityRequirementElements());
@@ -2940,7 +2725,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AccuracyRequirement:
-	//
 	//	"accuracy" "{" "max-error-rate" maxErrorRate=STRING escalation=Escalation? ("penalty" penalty=STRING)? "}";
 	public AccuracyRequirementElements getAccuracyRequirementAccess() {
 		return (pAccuracyRequirement != null) ? pAccuracyRequirement : (pAccuracyRequirement = new AccuracyRequirementElements());
@@ -2951,9 +2735,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//LogRequirement:
-	//
 	//	"logging" "{" "message-log-level" logLevel=LogRequirementKind "additional-logging-requirements"
-	//
 	//	additionalLoggingRequirement=STRING;
 	public LogRequirementElements getLogRequirementAccess() {
 		return (pLogRequirement != null) ? pLogRequirement : (pLogRequirement = new LogRequirementElements());
@@ -2964,7 +2746,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Percentile:
-	//
 	//	percentile=INT ("." INT)* "%";
 	public PercentileElements getPercentileAccess() {
 		return (pPercentile != null) ? pPercentile : (pPercentile = new PercentileElements());
@@ -2975,7 +2756,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * Security policy to be applied to the services * / SecurityRequirement:
-	//
 	//	AuthenticationRequirement | SigningRequirement | EncryptionRequirement;
 	public SecurityRequirementElements getSecurityRequirementAccess() {
 		return (pSecurityRequirement != null) ? pSecurityRequirement : (pSecurityRequirement = new SecurityRequirementElements());
@@ -2986,11 +2766,8 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * Requirement, that defines how consumer are authenticated * / AuthenticationRequirement:
-	//
 	//	{AuthenticationRequirement} "authentication-procedure" optional?="optional"? "{" "auth-tokens" "{"
-	//
 	//	authTokens+=AuthToken+ "}" "hash-algorithms" "{" hashAlgorithms+=HashAlgorithm* "}" useNonce?="use-nonce"? ("issuer"
-	//
 	//	issuer=STRING)? "}";
 	public AuthenticationRequirementElements getAuthenticationRequirementAccess() {
 		return (pAuthenticationRequirement != null) ? pAuthenticationRequirement : (pAuthenticationRequirement = new AuthenticationRequirementElements());
@@ -3001,7 +2778,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AuthToken:
-	//
 	//	optional?="optional"? kind=AuthTokenKind;
 	public AuthTokenElements getAuthTokenAccess() {
 		return (pAuthToken != null) ? pAuthToken : (pAuthToken = new AuthTokenElements());
@@ -3012,7 +2788,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//HashAlgorithm:
-	//
 	//	optional?="optional"? useBase64?="Base64-encoded"? kind=HashAlgKind;
 	public HashAlgorithmElements getHashAlgorithmAccess() {
 		return (pHashAlgorithm != null) ? pHashAlgorithm : (pHashAlgorithm = new HashAlgorithmElements());
@@ -3023,7 +2798,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum HashAlgKind:
-	//
 	//	MD5 | SHA1 | SHA256 | RSA | PlainText;
 	public HashAlgKindElements getHashAlgKindAccess() {
 		return (unknownRuleHashAlgKind != null) ? unknownRuleHashAlgKind : (unknownRuleHashAlgKind = new HashAlgKindElements());
@@ -3034,11 +2808,8 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * How messages are signed, to verify their authenticity * / SigningRequirement:
-	//
 	//	{SigningRequirement} "signing-policy" "{" ("supported-algorithms" supportedSigningAlgorithms+=SigningAlgothm+)?
-	//
 	//	("requires-algorithm" requiredSigningAlgorithm=SigningAlgothm)? ("signed-message-parts" signedParts+=MessagePartRef
-	//
 	//	("," signedParts+=MessagePartRef)*)? "}";
 	public SigningRequirementElements getSigningRequirementAccess() {
 		return (pSigningRequirement != null) ? pSigningRequirement : (pSigningRequirement = new SigningRequirementElements());
@@ -3049,7 +2820,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//MessagePartRef:
-	//
 	//	messagePartRef=MessagePartRefKind ("expression" partRefExpression=STRING)?;
 	public MessagePartRefElements getMessagePartRefAccess() {
 		return (pMessagePartRef != null) ? pMessagePartRef : (pMessagePartRef = new MessagePartRefElements());
@@ -3060,7 +2830,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum MessagePartRefKind:
-	//
 	//	header | body | attachments | all | expression;
 	public MessagePartRefKindElements getMessagePartRefKindAccess() {
 		return (unknownRuleMessagePartRefKind != null) ? unknownRuleMessagePartRefKind : (unknownRuleMessagePartRefKind = new MessagePartRefKindElements());
@@ -3071,7 +2840,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum SigningAlgothm:
-	//
 	//	NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
 	public SigningAlgothmElements getSigningAlgothmAccess() {
 		return (unknownRuleSigningAlgothm != null) ? unknownRuleSigningAlgothm : (unknownRuleSigningAlgothm = new SigningAlgothmElements());
@@ -3082,11 +2850,8 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	/// * How messages are encrypted * / EncryptionRequirement:
-	//
 	//	{EncryptionRequirement} "encryption-policy" "{" ("supported-algorithms"
-	//
 	//	supportedCipherAlgorithms+=CipherAlgorithmKind+)? ("requires-algorithm" requiredCipherAlgorithm=CipherAlgorithmKind)?
-	//
 	//	("encrypted-message-parts" encryptedParts+=MessagePartRef ("," encryptedParts+=MessagePartRef)*)? "}";
 	public EncryptionRequirementElements getEncryptionRequirementAccess() {
 		return (pEncryptionRequirement != null) ? pEncryptionRequirement : (pEncryptionRequirement = new EncryptionRequirementElements());
@@ -3097,7 +2862,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum CipherAlgorithmKind:
-	//
 	//	NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES="3DES" | AES128 | AES256;
 	public CipherAlgorithmKindElements getCipherAlgorithmKindAccess() {
 		return (unknownRuleCipherAlgorithmKind != null) ? unknownRuleCipherAlgorithmKind : (unknownRuleCipherAlgorithmKind = new CipherAlgorithmKindElements());
@@ -3108,7 +2872,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum AuthTokenKind:
-	//
 	//	UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
 	public AuthTokenKindElements getAuthTokenKindAccess() {
 		return (unknownRuleAuthTokenKind != null) ? unknownRuleAuthTokenKind : (unknownRuleAuthTokenKind = new AuthTokenKindElements());
@@ -3119,7 +2882,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum LogRequirementKind:
-	//
 	//	none | header | all;
 	public LogRequirementKindElements getLogRequirementKindAccess() {
 		return (unknownRuleLogRequirementKind != null) ? unknownRuleLogRequirementKind : (unknownRuleLogRequirementKind = new LogRequirementKindElements());
@@ -3130,10 +2892,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum ReliablilityKind:
-	//
-	//	EXACTLY_ONCE="exactly-once" | AT_MOST_ONCE="at-most-once" | AT_LEAST_ONCE="at-least-once" |
-	//
-	//	BEST_EFFORT="best-effort";
+	//	EXACTLY_ONCE="exactly-once" | AT_MOST_ONCE="at-most-once" | AT_LEAST_ONCE="at-least-once" | BEST_EFFORT="best-effort";
 	public ReliablilityKindElements getReliablilityKindAccess() {
 		return (unknownRuleReliablilityKind != null) ? unknownRuleReliablilityKind : (unknownRuleReliablilityKind = new ReliablilityKindElements());
 	}
@@ -3143,7 +2902,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PriorityDeclaration:
-	//
 	//	"priority" name=ID "description" description=STRING;
 	public PriorityDeclarationElements getPriorityDeclarationAccess() {
 		return (pPriorityDeclaration != null) ? pPriorityDeclaration : (pPriorityDeclaration = new PriorityDeclarationElements());
@@ -3154,9 +2912,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Escalation:
-	//
 	//	"escalation" "{" ("cause" cause=STRING)? "escalate-to" "{" escalationTargets+=[basedsl::User|QualifiedName]+ "}"
-	//
 	//	("procedure" procedure=STRING)? "}";
 	public EscalationElements getEscalationAccess() {
 		return (pEscalation != null) ? pEscalation : (pEscalation = new EscalationElements());
@@ -3167,7 +2923,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Party:
-	//
 	//	CustomerParty | ProviderParty | ThirdParty;
 	public PartyElements getPartyAccess() {
 		return (pParty != null) ? pParty : (pParty = new PartyElements());
@@ -3178,8 +2933,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//CustomerParty:
-	//
-	//	"customer-party" name=QualifiedName "{" representatives+=Repesentative+ responsibilities+=Responsibility+ "}";
+	//	"customer-party" name=QualifiedName "{" representatives+=Representative+ responsibilities+=Responsibility+ "}";
 	public CustomerPartyElements getCustomerPartyAccess() {
 		return (pCustomerParty != null) ? pCustomerParty : (pCustomerParty = new CustomerPartyElements());
 	}
@@ -3189,8 +2943,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ProviderParty:
-	//
-	//	"provider-party" name=QualifiedName "{" representatives+=Repesentative+ responsibilities+=Responsibility+ "}";
+	//	"provider-party" name=QualifiedName "{" representatives+=Representative+ responsibilities+=Responsibility+ "}";
 	public ProviderPartyElements getProviderPartyAccess() {
 		return (pProviderParty != null) ? pProviderParty : (pProviderParty = new ProviderPartyElements());
 	}
@@ -3200,9 +2953,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ThirdParty:
-	//
-	//	"third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Repesentative+
-	//
+	//	"third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Representative+
 	//	responsibilities+=Responsibility+ "}";
 	public ThirdPartyElements getThirdPartyAccess() {
 		return (pThirdParty != null) ? pThirdParty : (pThirdParty = new ThirdPartyElements());
@@ -3212,20 +2963,39 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		return getThirdPartyAccess().getRule();
 	}
 
-	//Repesentative:
-	//
-	//	"representative" "{" "name" fullname=STRING ("phone" phone=STRING)? ("email" email=STRING)? "}";
-	public RepesentativeElements getRepesentativeAccess() {
-		return (pRepesentative != null) ? pRepesentative : (pRepesentative = new RepesentativeElements());
+	//Representative:
+	//	UserRef | InlineRepresentative;
+	public RepresentativeElements getRepresentativeAccess() {
+		return (pRepresentative != null) ? pRepresentative : (pRepresentative = new RepresentativeElements());
 	}
 	
-	public ParserRule getRepesentativeRule() {
-		return getRepesentativeAccess().getRule();
+	public ParserRule getRepresentativeRule() {
+		return getRepresentativeAccess().getRule();
+	}
+
+	//UserRef:
+	//	representative=[basedsl::User|QualifiedName];
+	public UserRefElements getUserRefAccess() {
+		return (pUserRef != null) ? pUserRef : (pUserRef = new UserRefElements());
+	}
+	
+	public ParserRule getUserRefRule() {
+		return getUserRefAccess().getRule();
+	}
+
+	//InlineRepresentative:
+	//	{InlineRepresentative} "representative" "{" ("firstname" firstname=STRING)? ("lastname" lastname=STRING)? ("org"
+	//	org=STRING)? ("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}";
+	public InlineRepresentativeElements getInlineRepresentativeAccess() {
+		return (pInlineRepresentative != null) ? pInlineRepresentative : (pInlineRepresentative = new InlineRepresentativeElements());
+	}
+	
+	public ParserRule getInlineRepresentativeRule() {
+		return getInlineRepresentativeAccess().getRule();
 	}
 
 	//Responsibility:
-	//
-	//	SimpleResponsibility | ReportingResponsibility;
+	//	"responsibility" description=STRING;
 	public ResponsibilityElements getResponsibilityAccess() {
 		return (pResponsibility != null) ? pResponsibility : (pResponsibility = new ResponsibilityElements());
 	}
@@ -3234,20 +3004,8 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		return getResponsibilityAccess().getRule();
 	}
 
-	//SimpleResponsibility:
-	//
-	//	"responsibility" name=QualifiedName "{" description=STRING escalations+=Escalation+ penalty=STRING "}";
-	public SimpleResponsibilityElements getSimpleResponsibilityAccess() {
-		return (pSimpleResponsibility != null) ? pSimpleResponsibility : (pSimpleResponsibility = new SimpleResponsibilityElements());
-	}
-	
-	public ParserRule getSimpleResponsibilityRule() {
-		return getSimpleResponsibilityAccess().getRule();
-	}
-
 	//Report:
-	//
-	//	"report" name=ID "{" "report-to" reportTo=STRING "contents" content=STRING "}";
+	//	"report" name=ID "{" "report-to" reportTo=[basedsl::User|QualifiedName] "contents" content=STRING "}";
 	public ReportElements getReportAccess() {
 		return (pReport != null) ? pReport : (pReport = new ReportElements());
 	}
@@ -3256,21 +3014,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 		return getReportAccess().getRule();
 	}
 
-	//ReportingResponsibility:
-	//
-	//	"reporting-responsibility" name=ID "{" "report-to" "contents" content=STRING escalations+=Escalation+ penalty=STRING
-	//
-	//	"}";
-	public ReportingResponsibilityElements getReportingResponsibilityAccess() {
-		return (pReportingResponsibility != null) ? pReportingResponsibility : (pReportingResponsibility = new ReportingResponsibilityElements());
-	}
-	
-	public ParserRule getReportingResponsibilityRule() {
-		return getReportingResponsibilityAccess().getRule();
-	}
-
 	/// * Java like imports * / Import:
-	//
 	//	"import" importedNamespace=QualifiedNameWithWildCard;
 	public SOABaseDslGrammarAccess.ImportElements getImportAccess() {
 		return gaSOABaseDsl.getImportAccess();
@@ -3290,10 +3034,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	// * 	<li>Alpha:		alpha, may end with a number</li>
 	// * 	<li>Milestone:	milestone release, may end with a number</li>
 	// * </ul>
-	// * /
-	//
-	//VersionId:
-	//
+	// * / VersionId:
 	//	INT ("." INT)* (("." | "-") ID)*;
 	public SOABaseDslGrammarAccess.VersionIdElements getVersionIdAccess() {
 		return gaSOABaseDsl.getVersionIdAccess();
@@ -3304,7 +3045,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//VersionedName:
-	//
 	//	{VersionedName} QualifiedName | ID WS* version=VersionId;
 	public SOABaseDslGrammarAccess.VersionedNameElements getVersionedNameAccess() {
 		return gaSOABaseDsl.getVersionedNameAccess();
@@ -3317,7 +3057,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * A version qualifier for versioned assets
 	// * / Version:
-	//
 	//	"version" version=VersionId;
 	public SOABaseDslGrammarAccess.VersionElements getVersionAccess() {
 		return gaSOABaseDsl.getVersionAccess();
@@ -3330,7 +3069,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Version constraints applied to referenced assets
 	// * / VersionRef:
-	//
 	//	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
 	public SOABaseDslGrammarAccess.VersionRefElements getVersionRefAccess() {
 		return gaSOABaseDsl.getVersionRefAccess();
@@ -3343,7 +3081,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Assets, where the version is lesser than maximal version: asset version >= minVersion
 	// * / MinVersionRef:
-	//
 	//	"minVersion" minVersion=VersionId;
 	public SOABaseDslGrammarAccess.MinVersionRefElements getMinVersionRefAccess() {
 		return gaSOABaseDsl.getMinVersionRefAccess();
@@ -3356,7 +3093,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Assets, that match a minimal version: asset version >= minVersion
 	// * / MaxVersionRef:
-	//
 	//	"maxVersion" maxVersion=VersionId;
 	public SOABaseDslGrammarAccess.MaxVersionRefElements getMaxVersionRefAccess() {
 		return gaSOABaseDsl.getMaxVersionRefAccess();
@@ -3369,7 +3105,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Matches version in the half open range [minVersion, maxVersion)
 	// * / LowerBoundRangeVersionRef:
-	//
 	//	("minVersion" ">=") minVersion=VersionId "," ("maxVersion" "<") maxVersion=VersionId;
 	public SOABaseDslGrammarAccess.LowerBoundRangeVersionRefElements getLowerBoundRangeVersionRefAccess() {
 		return gaSOABaseDsl.getLowerBoundRangeVersionRefAccess();
@@ -3381,10 +3116,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// *
 	// * Constraint matches assets with any version with the same major version, i.e. the first INT until the first '.' is equal
-	// * /
-	//
-	//MajorVersionRef:
-	//
+	// * / MajorVersionRef:
 	//	"majorVersion" majorVersion=INT;
 	public SOABaseDslGrammarAccess.MajorVersionRefElements getMajorVersionRefAccess() {
 		return gaSOABaseDsl.getMajorVersionRefAccess();
@@ -3397,7 +3129,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Constraint that matches an asset version  explicitely
 	// * / FixedVersionRef:
-	//
 	//	"fixedVersion" fixedVersion=VersionId;
 	public SOABaseDslGrammarAccess.FixedVersionRefElements getFixedVersionRefAccess() {
 		return gaSOABaseDsl.getFixedVersionRefAccess();
@@ -3408,7 +3139,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QualifiedNameWithWildCard:
-	//
 	//	QualifiedName ".*"?;
 	public SOABaseDslGrammarAccess.QualifiedNameWithWildCardElements getQualifiedNameWithWildCardAccess() {
 		return gaSOABaseDsl.getQualifiedNameWithWildCardAccess();
@@ -3419,7 +3149,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QualifiedName:
-	//
 	//	ID ("." ID)*;
 	public SOABaseDslGrammarAccess.QualifiedNameElements getQualifiedNameAccess() {
 		return gaSOABaseDsl.getQualifiedNameAccess();
@@ -3432,14 +3161,9 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	// * Expresses SOA governance decisions
 	// * voteing until date will be part of the review ballots captured in the side store
-	// * /
-	//
-	//GovernanceDecision:
-	//
+	// * / GovernanceDecision:
 	//	"governance-decision" "{" ("subject" subject=STRING) ("decision-result" decisionResult=GovernanceDecisionResult)
-	//
 	//	("specific-result" specificResult=STRING)? ("justification-doc" justificationOrDocURL=STRING)? ("decision-date"
-	//
 	//	approvalDate=STRING)? ("decision-by" approvedBy=STRING)? ("effective-date" effectiveDate=STRING)? "}";
 	public SOABaseDslGrammarAccess.GovernanceDecisionElements getGovernanceDecisionAccess() {
 		return gaSOABaseDsl.getGovernanceDecisionAccess();
@@ -3450,7 +3174,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//enum GovernanceDecisionResult:
-	//
 	//	pending | accepted | denied | specific;
 	public SOABaseDslGrammarAccess.GovernanceDecisionResultElements getGovernanceDecisionResultAccess() {
 		return gaSOABaseDsl.getGovernanceDecisionResultAccess();
@@ -3461,7 +3184,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AbstractType:
-	//
 	//	{AbstractType} name=ID;
 	public SOABaseDslGrammarAccess.AbstractTypeElements getAbstractTypeAccess() {
 		return gaSOABaseDsl.getAbstractTypeAccess();
@@ -3472,7 +3194,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AdditionalInformation:
-	//
 	//	"additional-information" "{" infoItems+=InfoItem+ "}";
 	public SOABaseDslGrammarAccess.AdditionalInformationElements getAdditionalInformationAccess() {
 		return gaSOABaseDsl.getAdditionalInformationAccess();
@@ -3483,7 +3204,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//InfoItem:
-	//
 	//	"location" documentLocation=STRING ("reference" reference=STRING)?;
 	public SOABaseDslGrammarAccess.InfoItemElements getInfoItemAccess() {
 		return gaSOABaseDsl.getInfoItemAccess();
@@ -3494,9 +3214,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//User:
-	//
 	//	name=QualifiedName firstname=STRING? lastname=STRING? org=STRING? orgUnit=STRING? email=STRING? phone=STRING?
-	//
 	//	roles+=RoleRef*;
 	public SOABaseDslGrammarAccess.UserElements getUserAccess() {
 		return gaSOABaseDsl.getUserAccess();
@@ -3507,7 +3225,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RoleRef:
-	//
 	//	role=[Role|QualifiedName];
 	public SOABaseDslGrammarAccess.RoleRefElements getRoleRefAccess() {
 		return gaSOABaseDsl.getRoleRefAccess();
@@ -3518,7 +3235,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Role:
-	//
 	//	name=STRING grants+=PrivilegeRef*;
 	public SOABaseDslGrammarAccess.RoleElements getRoleAccess() {
 		return gaSOABaseDsl.getRoleAccess();
@@ -3529,7 +3245,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//PrivilegeRef:
-	//
 	//	privilege=[Privilege|QualifiedName];
 	public SOABaseDslGrammarAccess.PrivilegeRefElements getPrivilegeRefAccess() {
 		return gaSOABaseDsl.getPrivilegeRefAccess();
@@ -3540,7 +3255,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Privilege:
-	//
 	//	name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName*;
 	public SOABaseDslGrammarAccess.PrivilegeElements getPrivilegeAccess() {
 		return gaSOABaseDsl.getPrivilegeAccess();
@@ -3551,7 +3265,6 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//AssetRef:
-	//
 	//	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
 	public SOABaseDslGrammarAccess.AssetRefElements getAssetRefAccess() {
 		return gaSOABaseDsl.getAssetRefAccess();
@@ -3562,51 +3275,43 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//terminal ID:
-	//
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaSOABaseDsl.getIDRule();
 	} 
 
 	//terminal INT returns ecore::EInt:
-	//
 	//	"0".."9"+;
 	public TerminalRule getINTRule() {
 		return gaSOABaseDsl.getINTRule();
 	} 
 
 	//terminal STRING:
-	//
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"" | "\'" ("\\" ("b" | "t" |
-	//
 	//	"n" | "f" | "r" | "u" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getSTRINGRule() {
 		return gaSOABaseDsl.getSTRINGRule();
 	} 
 
 	//terminal ML_COMMENT:
-	//
 	//	"/ *"->"* /";
 	public TerminalRule getML_COMMENTRule() {
 		return gaSOABaseDsl.getML_COMMENTRule();
 	} 
 
 	//terminal SL_COMMENT:
-	//
 	//	"//" !("\n" | "\r")* ("\r"? "\n")?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaSOABaseDsl.getSL_COMMENTRule();
 	} 
 
 	//terminal WS:
-	//
 	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
 		return gaSOABaseDsl.getWSRule();
 	} 
 
 	//terminal ANY_OTHER:
-	//
 	//	.;
 	public TerminalRule getANY_OTHERRule() {
 		return gaSOABaseDsl.getANY_OTHERRule();

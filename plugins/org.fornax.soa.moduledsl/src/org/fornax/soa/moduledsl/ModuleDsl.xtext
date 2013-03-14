@@ -55,14 +55,6 @@ Module:
 			('source-location' source=STRING )? 		// Where can I get the sources? 
 		)
 		(additionalInfo=AdditionalInformation)?
-		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
-		'}')?
 		/* Declares services provided by the module */
 		('provides' '{'
 			/*
@@ -83,6 +75,16 @@ Module:
 			('endpoint-protocol' usesEndpointProtocol=ImportBindingProtocol)?
 			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=ImportBindingProtocol) (',' usesAlternativeEndpointProtocols+=ImportBindingProtocol)*)?
 			(endpointQualifierRef=EndpointQualifierRef)?
+		'}')?
+
+		('contact-info' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		'}')?
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])*)?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
 		'}')?
 			
 	'}';
