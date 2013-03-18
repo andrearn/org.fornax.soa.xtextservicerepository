@@ -15,11 +15,11 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.binding.query.BindingLookup;
-import org.fornax.soa.binding.query.BindingResolver;
+import org.fornax.soa.binding.query.DefaultModuleServiceRefBindingResolver;
 import org.fornax.soa.binding.query.ProtocolMatcher;
 import org.fornax.soa.binding.query.environment.AssetStateEnvironmentEligibilityChecker;
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
-import org.fornax.soa.binding.query.services.ServiceRefBindingDescription;
+import org.fornax.soa.binding.query.services.ModuleServiceRefBindingDescription;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingProtocol;
 import org.fornax.soa.bindingDsl.ModuleBinding;
@@ -88,7 +88,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
   private MessageHeaderXSDTemplates msgHeaderGenerator;
   
   @Inject
-  private BindingResolver bindingResolver;
+  private DefaultModuleServiceRefBindingResolver bindingResolver;
   
   @Inject
   private IQualifiedNameProvider nameProvider;
@@ -220,8 +220,8 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
     String _name_1 = targetEnvironment.getName();
     String _plus_2 = (_plus_1 + _name_1);
     this.log.fine(_plus_2);
-    final Set<ServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleProvidedServiceBindings(module, targetEnvironment, endpointQualifierRef);
-    for (final ServiceRefBindingDescription specBindingDesc : bindingDescs) {
+    final Set<ModuleServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleProvidedServiceBindings(module, targetEnvironment, endpointQualifierRef);
+    for (final ModuleServiceRefBindingDescription specBindingDesc : bindingDescs) {
       {
         final Service svc = specBindingDesc.getResolvedService();
         boolean _notEquals = (!Objects.equal(svc, null));
@@ -279,8 +279,8 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
     String _name_1 = targetEnvironment.getName();
     String _plus_2 = (_plus_1 + _name_1);
     this.log.fine(_plus_2);
-    final Set<ServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleUsedServiceBindings(module, targetEnvironment, endpointQualifierRef);
-    for (final ServiceRefBindingDescription specBindingDesc : bindingDescs) {
+    final Set<ModuleServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleUsedServiceBindings(module, targetEnvironment, endpointQualifierRef);
+    for (final ModuleServiceRefBindingDescription specBindingDesc : bindingDescs) {
       {
         final Service svc = specBindingDesc.getResolvedService();
         boolean _notEquals = (!Objects.equal(svc, null));
@@ -331,7 +331,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
     }
   }
   
-  protected void doBuildServiceContracts(final ServiceRefBindingDescription serviceBindingDescription, final SOAProfile profile) {
+  protected void doBuildServiceContracts(final ModuleServiceRefBindingDescription serviceBindingDescription, final SOAProfile profile) {
     AbstractServiceRef _serviceRef = serviceBindingDescription.getServiceRef();
     final Service service = _serviceRef.getService();
     final Binding specBinding = serviceBindingDescription.getApplicableBinding();

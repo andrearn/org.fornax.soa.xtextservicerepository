@@ -1,5 +1,7 @@
 package org.fornax.soa.profiledsl.scoping.versions;
 
+import java.util.List;
+
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
@@ -20,6 +22,7 @@ import org.fornax.soa.basedsl.version.SimpleScopeVersionResolver;
 import org.fornax.soa.basedsl.version.VersionedOwnerScopeVersionResolver;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
+import com.google.common.base.Predicate;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -75,6 +78,21 @@ public class DefaultVersionFilterProvider implements IVersionFilterProvider<IEOb
 				return new FixedVersionFilter<IEObjectDescription>(verResolver, ((FixedVersionRef) v).getFixedVersion());
 		}
 		return filter;
+	}
+
+	public VersionFilter<IEObjectDescription> createVersionFilter(VersionRef v,
+			LifecycleState minState,
+			Predicate<IEObjectDescription> preFilterPredicate) {
+		AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = (AbstractPredicateVersionFilter<IEObjectDescription>)createVersionFilter (v, minState);
+		versionFilter.setPreFilterPredicate(preFilterPredicate);
+		return versionFilter;
+	}
+
+	public VersionFilter<IEObjectDescription> createVersionFilter(VersionRef v,
+			Predicate<IEObjectDescription> preFilterPredicate) {
+		AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = (AbstractPredicateVersionFilter<IEObjectDescription>)createVersionFilter (v);
+		versionFilter.setPreFilterPredicate(preFilterPredicate);
+		return versionFilter;
 	}
 
 }

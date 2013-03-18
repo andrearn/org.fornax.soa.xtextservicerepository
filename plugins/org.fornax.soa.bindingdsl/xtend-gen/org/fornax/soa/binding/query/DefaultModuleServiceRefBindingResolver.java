@@ -14,7 +14,8 @@ import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.fornax.soa.binding.EndpointQualifierDescriptor;
 import org.fornax.soa.binding.query.BindingLookup;
 import org.fornax.soa.binding.query.EndpointQualifierQueries;
-import org.fornax.soa.binding.query.services.ServiceRefBindingDescription;
+import org.fornax.soa.binding.query.IModuleServiceRefBindingResolver;
+import org.fornax.soa.binding.query.services.ModuleServiceRefBindingDescription;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.environmentDsl.Environment;
@@ -36,7 +37,7 @@ import org.fornax.soa.serviceDsl.Service;
  * provided or used by a module.
  */
 @SuppressWarnings("all")
-public class BindingResolver {
+public class DefaultModuleServiceRefBindingResolver implements IModuleServiceRefBindingResolver {
   @Inject
   private IModuleServiceResolver modServiceResolver;
   
@@ -63,10 +64,10 @@ public class BindingResolver {
    * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
    * 								have any or no potentially effective endpoint qualifier
    */
-  public Set<ServiceRefBindingDescription> resolveCompatibleProvidedServiceBindings(final Module module, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifier) {
+  public Set<ModuleServiceRefBindingDescription> resolveCompatibleProvidedServiceBindings(final Module module, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifier) {
     Qualifier _endpointQualifier = endpointQualifier==null?(Qualifier)null:endpointQualifier.getEndpointQualifier();
     final Set<ModuleBinding> candBindings = this.bindingLookup.findBindingsToCompatibleModuleEnvAndQualifier(module, targetEnvironment, _endpointQualifier);
-    Set<ServiceRefBindingDescription> svcBindDescs = CollectionLiterals.<ServiceRefBindingDescription>newHashSet();
+    Set<ModuleServiceRefBindingDescription> svcBindDescs = CollectionLiterals.<ModuleServiceRefBindingDescription>newHashSet();
     final Set<AbstractServiceRef> providedServices = this.modServiceResolver.getAllProvidedServiceRefs(module);
     for (final AbstractServiceRef provSvcRef : providedServices) {
       {
@@ -76,8 +77,8 @@ public class BindingResolver {
             final Binding specBind = this.bindingLookup.getMostSpecificBinding(svc, bind, endpointQualifier);
             boolean _notEquals = (!Objects.equal(specBind, null));
             if (_notEquals) {
-              ServiceRefBindingDescription _serviceRefBindingDescription = new ServiceRefBindingDescription();
-              final ServiceRefBindingDescription curSvcBindDesc = _serviceRefBindingDescription;
+              ModuleServiceRefBindingDescription _moduleServiceRefBindingDescription = new ModuleServiceRefBindingDescription();
+              final ModuleServiceRefBindingDescription curSvcBindDesc = _moduleServiceRefBindingDescription;
               curSvcBindDesc.setApplicableBinding(specBind);
               curSvcBindDesc.setResolvedService(svc);
               curSvcBindDesc.setServiceRef(provSvcRef);
@@ -104,27 +105,33 @@ public class BindingResolver {
    * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
    * 								have any or no potentially effective endpoint qualifier
    */
-  public Set<ServiceRefBindingDescription> resolveCompatibleUsedServiceBindings(final Module module, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifierRef) {
+  public Set<ModuleServiceRefBindingDescription> resolveCompatibleUsedServiceBindings(final Module module, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifierRef) {
     final Set<? extends AbstractServiceRef> usedServiceRefs = this.modServiceResolver.getAllUsedServiceRefs(module);
+    final Set<ModuleServiceRefBindingDescription> svcBindDescs = CollectionLiterals.<ModuleServiceRefBindingDescription>newHashSet();
+    this.resolveModuleRefs(module, usedServiceRefs, targetEnvironment, endpointQualifierRef, svcBindDescs);
+    this.resolveServicesRefs(module, usedServiceRefs, targetEnvironment, endpointQualifierRef, svcBindDescs);
+    return svcBindDescs;
+  }
+  
+  private void resolveModuleRefs(final Module module, final Set<? extends AbstractServiceRef> usedServiceRefs, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifierRef, final Set<ModuleServiceRefBindingDescription> svcBindDescs) {
     LifecycleState _state = module.getState();
     EObject _eContainer = _state.eContainer();
     final Lifecycle lifecycle = ((Lifecycle) _eContainer);
-    final Set<ServiceRefBindingDescription> svcBindDescs = CollectionLiterals.<ServiceRefBindingDescription>newHashSet();
     EList<ModuleRef> _usedModules = module.getUsedModules();
     for (final ModuleRef usedModRef : _usedModules) {
       {
         final EndpointQualifierRef selectingEndpointQualifierRef = this.getSelectingEndpointQualifier(usedModRef, module, endpointQualifierRef);
-        final Module providerModule = this.modRefResolver.resolveModuleRef(usedModRef, targetEnvironment, lifecycle);
-        final Set<ServiceRefBindingDescription> impModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(providerModule, targetEnvironment, selectingEndpointQualifierRef);
-        final Function1<ServiceRefBindingDescription,Boolean> _function = new Function1<ServiceRefBindingDescription,Boolean>() {
-            public Boolean apply(final ServiceRefBindingDescription d) {
+        final Module providerModule = this.modRefResolver.resolveModuleRef(usedModRef, targetEnvironment, lifecycle, selectingEndpointQualifierRef, null);
+        final Set<ModuleServiceRefBindingDescription> impModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(providerModule, targetEnvironment, selectingEndpointQualifierRef);
+        final Function1<ModuleServiceRefBindingDescription,Boolean> _function = new Function1<ModuleServiceRefBindingDescription,Boolean>() {
+            public Boolean apply(final ModuleServiceRefBindingDescription d) {
               AbstractServiceRef _serviceRef = d.getServiceRef();
               boolean _contains = usedServiceRefs.contains(_serviceRef);
               return Boolean.valueOf(_contains);
             }
           };
-        Iterable<ServiceRefBindingDescription> _filter = IterableExtensions.<ServiceRefBindingDescription>filter(impModSvcBindDescs, _function);
-        for (final ServiceRefBindingDescription curDesc : _filter) {
+        Iterable<ModuleServiceRefBindingDescription> _filter = IterableExtensions.<ModuleServiceRefBindingDescription>filter(impModSvcBindDescs, _function);
+        for (final ModuleServiceRefBindingDescription curDesc : _filter) {
           {
             Binding _applicableBinding = curDesc.getApplicableBinding();
             final EndpointQualifierDescriptor curEndpointQualifiers = this.endpointQualifierQuery.getPotentialEffectiveEndpointQualifiers(_applicableBinding);
@@ -143,19 +150,19 @@ public class BindingResolver {
             }
           }
         }
-        Iterable<ServiceRefBindingDescription> _filterNull = IterableExtensions.<ServiceRefBindingDescription>filterNull(svcBindDescs);
-        final Function1<ServiceRefBindingDescription,AbstractServiceRef> _function_1 = new Function1<ServiceRefBindingDescription,AbstractServiceRef>() {
-            public AbstractServiceRef apply(final ServiceRefBindingDescription d) {
+        Iterable<ModuleServiceRefBindingDescription> _filterNull = IterableExtensions.<ModuleServiceRefBindingDescription>filterNull(svcBindDescs);
+        final Function1<ModuleServiceRefBindingDescription,AbstractServiceRef> _function_1 = new Function1<ModuleServiceRefBindingDescription,AbstractServiceRef>() {
+            public AbstractServiceRef apply(final ModuleServiceRefBindingDescription d) {
               AbstractServiceRef _serviceRef = d.getServiceRef();
               return _serviceRef;
             }
           };
-        Iterable<AbstractServiceRef> _map = IterableExtensions.<ServiceRefBindingDescription, AbstractServiceRef>map(_filterNull, _function_1);
+        Iterable<AbstractServiceRef> _map = IterableExtensions.<ModuleServiceRefBindingDescription, AbstractServiceRef>map(_filterNull, _function_1);
         final List svcRefsForEndpointQualifier = IterableExtensions.<AbstractServiceRef>toList(_map);
         ServiceModuleRef _moduleRef = usedModRef.getModuleRef();
         Module _module = _moduleRef.getModule();
-        final Set<ServiceRefBindingDescription> allImpModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(_module, targetEnvironment, selectingEndpointQualifierRef);
-        for (final ServiceRefBindingDescription curBindDesc : allImpModSvcBindDescs) {
+        final Set<ModuleServiceRefBindingDescription> allImpModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(_module, targetEnvironment, selectingEndpointQualifierRef);
+        for (final ModuleServiceRefBindingDescription curBindDesc : allImpModSvcBindDescs) {
           boolean _and = false;
           AbstractServiceRef _serviceRef = curBindDesc.getServiceRef();
           boolean _contains = svcRefsForEndpointQualifier.contains(_serviceRef);
@@ -179,14 +186,14 @@ public class BindingResolver {
             if (!_notEquals) {
               _and_1 = false;
             } else {
-              Iterable<ServiceRefBindingDescription> _filterNull_1 = IterableExtensions.<ServiceRefBindingDescription>filterNull(svcBindDescs);
-              final Function1<ServiceRefBindingDescription,AbstractServiceRef> _function_2 = new Function1<ServiceRefBindingDescription,AbstractServiceRef>() {
-                  public AbstractServiceRef apply(final ServiceRefBindingDescription d) {
+              Iterable<ModuleServiceRefBindingDescription> _filterNull_1 = IterableExtensions.<ModuleServiceRefBindingDescription>filterNull(svcBindDescs);
+              final Function1<ModuleServiceRefBindingDescription,AbstractServiceRef> _function_2 = new Function1<ModuleServiceRefBindingDescription,AbstractServiceRef>() {
+                  public AbstractServiceRef apply(final ModuleServiceRefBindingDescription d) {
                     AbstractServiceRef _serviceRef = d.getServiceRef();
                     return _serviceRef;
                   }
                 };
-              Iterable<AbstractServiceRef> _map_1 = IterableExtensions.<ServiceRefBindingDescription, AbstractServiceRef>map(_filterNull_1, _function_2);
+              Iterable<AbstractServiceRef> _map_1 = IterableExtensions.<ModuleServiceRefBindingDescription, AbstractServiceRef>map(_filterNull_1, _function_2);
               List _list = IterableExtensions.<AbstractServiceRef>toList(_map_1);
               AbstractServiceRef _serviceRef_1 = curBindDesc.getServiceRef();
               boolean _contains_1 = _list.contains(_serviceRef_1);
@@ -200,6 +207,12 @@ public class BindingResolver {
         }
       }
     }
+  }
+  
+  private void resolveServicesRefs(final Module module, final Set<? extends AbstractServiceRef> usedServiceRefs, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifierRef, final Set<ModuleServiceRefBindingDescription> svcBindDescs) {
+    LifecycleState _state = module.getState();
+    EObject _eContainer = _state.eContainer();
+    final Lifecycle lifecycle = ((Lifecycle) _eContainer);
     EList<ImportServiceRef> _usedServices = module.getUsedServices();
     for (final ImportServiceRef svcRef : _usedServices) {
       boolean _contains = usedServiceRefs.contains(svcRef);
@@ -208,7 +221,7 @@ public class BindingResolver {
         EList<ServiceModuleRef> _modules = svcRef.getModules();
         final Function1<ServiceModuleRef,Module> _function = new Function1<ServiceModuleRef,Module>() {
             public Module apply(final ServiceModuleRef m) {
-              Module _resolveModuleServiceRef = BindingResolver.this.modRefResolver.resolveModuleServiceRef(m, targetEnvironment, lifecycle);
+              Module _resolveModuleServiceRef = DefaultModuleServiceRefBindingResolver.this.modRefResolver.resolveModuleServiceRef(m, targetEnvironment, lifecycle);
               return _resolveModuleServiceRef;
             }
           };
@@ -231,8 +244,8 @@ public class BindingResolver {
             for (final ModuleBinding bind : candBindings) {
               {
                 Binding specBind = this.bindingLookup.getMostSpecificBinding(svc, bind, selectingEndpointQualifierRef);
-                ServiceRefBindingDescription _serviceRefBindingDescription = new ServiceRefBindingDescription();
-                final ServiceRefBindingDescription curSvcBindDesc = _serviceRefBindingDescription;
+                ModuleServiceRefBindingDescription _moduleServiceRefBindingDescription = new ModuleServiceRefBindingDescription();
+                final ModuleServiceRefBindingDescription curSvcBindDesc = _moduleServiceRefBindingDescription;
                 curSvcBindDesc.setApplicableBinding(specBind);
                 curSvcBindDesc.setResolvedService(svc);
                 curSvcBindDesc.setServiceRef(svcRef);
@@ -247,7 +260,6 @@ public class BindingResolver {
         }
       }
     }
-    return svcBindDescs;
   }
   
   private EndpointQualifierRef getSelectingEndpointQualifier(final ModuleRef usedModRef, final Module module, final EndpointQualifierRef endpointQualifierRef) {

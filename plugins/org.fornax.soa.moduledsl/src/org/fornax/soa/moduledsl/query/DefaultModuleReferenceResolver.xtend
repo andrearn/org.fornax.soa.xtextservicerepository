@@ -14,6 +14,9 @@ import org.eclipse.xtext.EcoreUtil2
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 import org.eclipse.xtext.resource.IEObjectDescription
+import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
+import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
+import org.fornax.soa.basedsl.search.IReferenceSearch
 
 class DefaultModuleReferenceResolver implements IModuleReferenceResolver {
 	
@@ -25,6 +28,8 @@ class DefaultModuleReferenceResolver implements IModuleReferenceResolver {
 	private IPredicateSearch search
 	@Inject 
 	private IStateMatcher stateMatcher 
+	@Inject
+	private IReferenceSearch referenceSearch
 
 	override resolveModuleRef(ModuleRef moduleRef, LifecycleState minState) {
 		resolveModuleServiceRef (moduleRef.moduleRef, minState)
@@ -52,6 +57,38 @@ class DefaultModuleReferenceResolver implements IModuleReferenceResolver {
 	override resolveModuleServiceRef(ServiceModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle) {
 		val minState = stateMatcher.getLowestStateByEnvironment(lifecycle, targetEnvironment)
 		resolveModuleServiceRef (moduleRef, minState)
+	}
+	
+
+	override resolveModuleRef(ModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, ImportBindingProtocol usedProtocol) {
+		val svcModuleRef = moduleRef.moduleRef
+		val minState = stateMatcher.getLowestStateByEnvironment (lifecycle, targetEnvironment)
+		val moduleName = nameProvider.getFullyQualifiedName (svcModuleRef.module)
+		val moduleDescs = search.search (moduleName.toString, "Module ", new IEObjectDescriptionIsInstancePredicate(typeof (Module)))
+		val deployedModulePredicate = new DeployedModuleInEnvironmentPredicate(targetEnvironment, endpointQualifierRef, referenceSearch)
+		var versionFilter = versionFilterProvider.createVersionFilter (svcModuleRef.version, minState, deployedModulePredicate)
+		val moduleMap = versionFilter.getBestMatchByNames (moduleDescs, false)
+		val resolvedModuleDesc = moduleMap.get (moduleName)?.head as IEObjectDescription
+		var resolvedMod = resolvedModuleDesc.EObjectOrProxy as Module
+		if (resolvedMod != null && resolvedMod.eIsProxy) {
+			resolvedMod = EcoreUtil2::resolve (resolvedMod, svcModuleRef.eResource?.resourceSet) as Module
+		}
+		return resolvedMod
+	}
+	
+	override resolveModuleServiceRef(ServiceModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, ImportBindingProtocol usedProtocol) {
+		val minState = stateMatcher.getLowestStateByEnvironment (lifecycle, targetEnvironment)
+		val moduleName = nameProvider.getFullyQualifiedName (moduleRef.module)
+		val moduleDescs = search.search (moduleName.toString, "Module ", new IEObjectDescriptionIsInstancePredicate(typeof (Module)))
+		val deployedModulePredicate = new DeployedModuleInEnvironmentPredicate(targetEnvironment, endpointQualifierRef, referenceSearch)
+		var versionFilter = versionFilterProvider.createVersionFilter (moduleRef.version, minState, deployedModulePredicate)
+		val moduleMap = versionFilter.getBestMatchByNames (moduleDescs, false)
+		val resolvedModuleDesc = moduleMap.get (moduleName)?.head as IEObjectDescription
+		var resolvedMod = resolvedModuleDesc.EObjectOrProxy as Module
+		if (resolvedMod != null && resolvedMod.eIsProxy) {
+			resolvedMod = EcoreUtil2::resolve (resolvedMod, moduleRef.eResource?.resourceSet) as Module
+		}
+		return resolvedMod
 	}
 	
 }

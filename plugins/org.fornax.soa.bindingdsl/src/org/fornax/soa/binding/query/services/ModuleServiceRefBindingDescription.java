@@ -11,7 +11,7 @@ import org.fornax.soa.serviceDsl.Service;
  * Describes a Binding to a Service with their providing Module and endpoint qualifiers. The binding should
  * be the most specific applicable binding for the service
  */
-public class ServiceRefBindingDescription {
+public class ModuleServiceRefBindingDescription {
 	
 	private AbstractServiceRef serviceRef;
 	private Service resolvedService;
@@ -83,7 +83,7 @@ public class ServiceRefBindingDescription {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ServiceRefBindingDescription other = (ServiceRefBindingDescription) obj;
+		ModuleServiceRefBindingDescription other = (ModuleServiceRefBindingDescription) obj;
 		if (applicableBinding == null) {
 			if (other.applicableBinding != null)
 				return false;

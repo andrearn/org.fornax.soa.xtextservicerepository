@@ -34,30 +34,23 @@ import com.google.inject.Inject;
 public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 
 	@Inject
-	LifecycleStateComparator stateComparator;
-	
+	private LifecycleStateComparator stateComparator;
 	@Inject
-	ModuleLookup moduleLookup;
+	private ModuleLookup moduleLookup;
 	@Inject
-	EnvironmentLookup envLookup;
-	
+	private EnvironmentLookup envLookup;
 	@Inject
-	IReferenceSearch referenceSearch;
-	
+	private IReferenceSearch referenceSearch;
 	@Inject
-	IEObjectLookup objLookup;
-	
+	private IEObjectLookup objLookup;
 	@Inject
-	BindingDslHelper bindingDslHelper;
-	
+	private BindingDslHelper bindingDslHelper;
 	@Inject
-	EnvironmentBindingResolver envBindResolver;
-	
+	private EnvironmentBindingResolver envBindResolver;
 	@Inject
-	BindingLookup bindLookup;
-	
+	private BindingLookup bindLookup;
 	@Inject
-	EndpointQualifierQueries endpointQualifierQueries;
+	private EndpointQualifierQueries endpointQualifierQueries;
 	
 	@Override
 	protected List<EPackage> getEPackages() {
