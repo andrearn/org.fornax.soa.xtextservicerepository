@@ -1,5 +1,8 @@
 package org.fornax.soa.moduledsl.generator;
 
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.fornax.soa.moduledsl.moduleDsl.Module;
+
 public class VersionedModuleSelector {
 	
 	private String name;
@@ -38,6 +41,15 @@ public class VersionedModuleSelector {
 	}
 	public void setEndpointQualifier(String providerEndpointQualifier) {
 		this.endpointQualifier = providerEndpointQualifier;
+	}
+	
+	public boolean matches (Module mod, IQualifiedNameProvider qualifiedNameProvider) {
+		if (name == qualifiedNameProvider.getFullyQualifiedName (mod).toString() && 
+				(version == null || "".equals(version) || version.equals(mod.getVersion().getVersion()))) {
+					return true;
+		} else {
+			return false;
+		}
 	}
 	
 	@Override

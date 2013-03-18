@@ -2,6 +2,7 @@ package org.fornax.soa.bindingdsl.generator;
 
 import java.util.regex.Pattern;
 
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.fornax.soa.bindingDsl.EndpointQualifierRef;
 import org.fornax.soa.bindingDsl.ModuleBinding;
 import org.fornax.soa.environmentDsl.Environment;
@@ -40,7 +41,7 @@ public class ModuleBindingSelector {
 		this.endpointQualifier = endpointQualifier;
 	}
 	
-	public boolean matches (ModuleBinding binding) {
+	public boolean matches (ModuleBinding binding, IQualifiedNameProvider qualifiedNameProvider) {
 		Server server = binding.getProvServer();
 		Environment env = binding.getEnvironment();
 		EndpointQualifierRef endpointQualifierRef = binding.getEndpointQualifierRef();
@@ -53,10 +54,10 @@ public class ModuleBindingSelector {
 		if (name != null && !Pattern.matches(name, binding.getName())) {
 			return false;
 		}
-		if (targetEnvironmentName != null && !Pattern.matches (targetEnvironmentName, env.getName())) {
+		if (targetEnvironmentName != null && !Pattern.matches (targetEnvironmentName, qualifiedNameProvider.getFullyQualifiedName(env).toString())) {
 			return false;
 		}
-		if (targetServerName != null && !Pattern.matches (targetServerName, server.getName())) {
+		if (targetServerName != null && !Pattern.matches (targetServerName, qualifiedNameProvider.getFullyQualifiedName(server).toString())) {
 			return false;
 		}
 		if (endpointQualifier != null && (endpointQualifierRef == null || !Pattern.matches(endpointQualifier, endpointQualifierRef.getEndpointQualifier().getName()))) {

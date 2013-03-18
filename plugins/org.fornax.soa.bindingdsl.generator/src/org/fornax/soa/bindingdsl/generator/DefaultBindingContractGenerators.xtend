@@ -123,7 +123,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 							compile (modBind, profile);
 						}
 						for (modBindingSelector : moduleBindingSelectors) {
-							if (modBindingSelector.matches(modBind)) {
+							if (modBindingSelector.matches(modBind, nameProvider)) {
 								compile (modBind, profile);
 							}
 						}
@@ -134,12 +134,8 @@ class DefaultBindingContractGenerators implements IGenerator {
 			if (contentRoot instanceof ModuleModel) {
 				val modModel = contentRoot as ModuleModel
 				for (module : modModel.modules) {
-					if (modules.exists(mod | mod.name == nameProvider.getFullyQualifiedName (module).toString 
-							&& (mod.version == null || mod.version == "" || mod.version == module.version.version )
-						)
-					) {
-						val moduleSelector = modules.findFirst(modSel | modSel.name == nameProvider.getFullyQualifiedName (module).toString 
-							&& (modSel.version == null || modSel.version == "" || modSel.version == module.version.version))
+					if (modules.exists(mod | mod.matches(module, nameProvider))) {
+						val moduleSelector = modules.findFirst(modSel | modSel.matches(module, nameProvider))
 						module.compile (moduleSelector, profile, resource)
 					}
 				}

@@ -76,7 +76,7 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 								.toInstance (moduleBindingNames);
 						bind (new TypeLiteral<List<ModuleBindingSelector>>() {})
 							.annotatedWith (
-								Names.named (BindingDSLGeneratorConstants.MODULES))
+								Names.named (BindingDSLGeneratorConstants.MODULE_BINDINGS))
 							.toInstance (getModuleBindings());
 						bind (new TypeLiteral<List<VersionedModuleSelector>>() {})
 							.annotatedWith (
