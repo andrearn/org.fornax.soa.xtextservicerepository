@@ -58,6 +58,9 @@ class DefaultBindingContractGenerators implements IGenerator {
 	@Inject @Named ("modules")
 	List<VersionedModuleSelector> modules
 	
+	@Inject @Named ("moduleBindings")
+	List<ModuleBindingSelector> moduleBindingSelectors
+	
 	@Inject @Named ("namespaces") 			
 	List<String> namespaces
 	
@@ -118,6 +121,11 @@ class DefaultBindingContractGenerators implements IGenerator {
 							&& Pattern::matches (targetEnvironmentName, modBind.resolveEnvironment.name)
 						) {
 							compile (modBind, profile);
+						}
+						for (modBindingSelector : moduleBindingSelectors) {
+							if (modBindingSelector.matches(modBind)) {
+								compile (modBind, profile);
+							}
 						}
 					}
 				}

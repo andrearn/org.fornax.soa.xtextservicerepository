@@ -26,6 +26,7 @@ import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingModel;
 import org.fornax.soa.bindingDsl.ModuleBinding;
+import org.fornax.soa.bindingdsl.generator.ModuleBindingSelector;
 import org.fornax.soa.bindingdsl.generator.templates.IArtifactBuilder;
 import org.fornax.soa.bindingdsl.generator.templates.xsd.XSDBuilder;
 import org.fornax.soa.environmentDsl.Environment;
@@ -71,6 +72,10 @@ public class DefaultBindingContractGenerators implements IGenerator {
   @Inject
   @Named(value = "modules")
   private List<VersionedModuleSelector> modules;
+  
+  @Inject
+  @Named(value = "moduleBindings")
+  private List<ModuleBindingSelector> moduleBindingSelectors;
   
   @Inject
   @Named(value = "namespaces")
@@ -179,6 +184,12 @@ public class DefaultBindingContractGenerators implements IGenerator {
             }
             if (_and) {
               this.compile(modBind, profile);
+            }
+            for (final ModuleBindingSelector modBindingSelector : this.moduleBindingSelectors) {
+              boolean _matches_1 = modBindingSelector.matches(modBind);
+              if (_matches_1) {
+                this.compile(modBind, profile);
+              }
             }
           }
         }
