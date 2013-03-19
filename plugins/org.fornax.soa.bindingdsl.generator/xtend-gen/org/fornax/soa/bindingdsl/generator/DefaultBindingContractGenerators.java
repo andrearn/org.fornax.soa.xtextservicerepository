@@ -186,7 +186,7 @@ public class DefaultBindingContractGenerators implements IGenerator {
               this.compile(modBind, profile);
             }
             for (final ModuleBindingSelector modBindingSelector : this.moduleBindingSelectors) {
-              boolean _matches_1 = modBindingSelector.matches(modBind);
+              boolean _matches_1 = modBindingSelector.matches(modBind, this.nameProvider);
               if (_matches_1) {
                 this.compile(modBind, profile);
               }
@@ -200,74 +200,16 @@ public class DefaultBindingContractGenerators implements IGenerator {
         for (final Module module : _modules) {
           final Function1<VersionedModuleSelector,Boolean> _function_1 = new Function1<VersionedModuleSelector,Boolean>() {
               public Boolean apply(final VersionedModuleSelector mod) {
-                boolean _and = false;
-                String _name = mod.getName();
-                QualifiedName _fullyQualifiedName = DefaultBindingContractGenerators.this.nameProvider.getFullyQualifiedName(module);
-                String _string = _fullyQualifiedName.toString();
-                boolean _equals = Objects.equal(_name, _string);
-                if (!_equals) {
-                  _and = false;
-                } else {
-                  boolean _or = false;
-                  boolean _or_1 = false;
-                  String _version = mod.getVersion();
-                  boolean _equals_1 = Objects.equal(_version, null);
-                  if (_equals_1) {
-                    _or_1 = true;
-                  } else {
-                    String _version_1 = mod.getVersion();
-                    boolean _equals_2 = Objects.equal(_version_1, "");
-                    _or_1 = (_equals_1 || _equals_2);
-                  }
-                  if (_or_1) {
-                    _or = true;
-                  } else {
-                    String _version_2 = mod.getVersion();
-                    Version _version_3 = module.getVersion();
-                    String _version_4 = _version_3.getVersion();
-                    boolean _equals_3 = Objects.equal(_version_2, _version_4);
-                    _or = (_or_1 || _equals_3);
-                  }
-                  _and = (_equals && _or);
-                }
-                return Boolean.valueOf(_and);
+                boolean _matches = mod.matches(module, DefaultBindingContractGenerators.this.nameProvider);
+                return Boolean.valueOf(_matches);
               }
             };
           boolean _exists_1 = IterableExtensions.<VersionedModuleSelector>exists(this.modules, _function_1);
           if (_exists_1) {
             final Function1<VersionedModuleSelector,Boolean> _function_2 = new Function1<VersionedModuleSelector,Boolean>() {
                 public Boolean apply(final VersionedModuleSelector modSel) {
-                  boolean _and = false;
-                  String _name = modSel.getName();
-                  QualifiedName _fullyQualifiedName = DefaultBindingContractGenerators.this.nameProvider.getFullyQualifiedName(module);
-                  String _string = _fullyQualifiedName.toString();
-                  boolean _equals = Objects.equal(_name, _string);
-                  if (!_equals) {
-                    _and = false;
-                  } else {
-                    boolean _or = false;
-                    boolean _or_1 = false;
-                    String _version = modSel.getVersion();
-                    boolean _equals_1 = Objects.equal(_version, null);
-                    if (_equals_1) {
-                      _or_1 = true;
-                    } else {
-                      String _version_1 = modSel.getVersion();
-                      boolean _equals_2 = Objects.equal(_version_1, "");
-                      _or_1 = (_equals_1 || _equals_2);
-                    }
-                    if (_or_1) {
-                      _or = true;
-                    } else {
-                      String _version_2 = modSel.getVersion();
-                      Version _version_3 = module.getVersion();
-                      String _version_4 = _version_3.getVersion();
-                      boolean _equals_3 = Objects.equal(_version_2, _version_4);
-                      _or = (_or_1 || _equals_3);
-                    }
-                    _and = (_equals && _or);
-                  }
-                  return Boolean.valueOf(_and);
+                  boolean _matches = modSel.matches(module, DefaultBindingContractGenerators.this.nameProvider);
+                  return Boolean.valueOf(_matches);
                 }
               };
             final VersionedModuleSelector moduleSelector = IterableExtensions.<VersionedModuleSelector>findFirst(this.modules, _function_2);

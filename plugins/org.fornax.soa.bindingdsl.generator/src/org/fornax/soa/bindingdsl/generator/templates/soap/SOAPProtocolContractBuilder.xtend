@@ -5,9 +5,9 @@ import com.google.inject.name.Named
 import java.util.logging.Level
 import java.util.logging.Logger
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.fornax.soa.binding.query.DefaultModuleServiceRefBindingResolver
+import org.fornax.soa.binding.query.DefaultModuleRefServiceBindingResolver
 import org.fornax.soa.binding.query.ProtocolMatcher
-import org.fornax.soa.binding.query.services.ModuleServiceRefBindingDescription
+import org.fornax.soa.binding.query.services.ServiceRefBindingDescription
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.bindingDsl.ModuleBinding
 import org.fornax.soa.bindingDsl.SOAP
@@ -50,7 +50,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	@Inject XSDBuilder 					xsdGenerator
 	@Inject ConcreteWsdlGenerator 		concreteWsdlGenerator
 	@Inject MessageHeaderXSDTemplates 	msgHeaderGenerator
-	@Inject DefaultModuleServiceRefBindingResolver				bindingResolver
+	@Inject DefaultModuleRefServiceBindingResolver				bindingResolver
 	@Inject IQualifiedNameProvider		nameProvider
 	@Inject ProtocolMatcher				protocolMatcher
 	@Inject LifecycleQueries 			lifecycleQueries
@@ -115,7 +115,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	override buildProvidedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
 		log.fine ("Generating WSDLs and XSDs for services provided by module " + module.name + " looking up binding for used module to environment " + targetEnvironment.name)
 		val bindingDescs = 	bindingResolver.resolveCompatibleProvidedServiceBindings (module, targetEnvironment, endpointQualifierRef)
-		for (specBindingDesc : bindingDescs) {
+		for (specBindingDesc : bindingDescs.serviceRefDescriptions) {
 			val svc = specBindingDesc.getResolvedService
 			if (svc != null) {
 				try {
@@ -136,25 +136,28 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	override buildUsedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
 		log.fine ("Generating WSDLs and XSDs for used services in module " + module.name + " looking up binding for used module to environment " + targetEnvironment.name)
 		val bindingDescs = bindingResolver.resolveCompatibleUsedServiceBindings (module, targetEnvironment, endpointQualifierRef)
-		for (specBindingDesc : bindingDescs) {
-			val svc = specBindingDesc.getResolvedService
-			if (svc != null) {
-				try {
-					if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocol::SOAP)) {
-						doBuildServiceContracts (specBindingDesc, profile)
+		for (curModBindDesc : bindingDescs) {
+			for (specBindingDesc : curModBindDesc.serviceRefDescriptions) {
+				val svc = specBindingDesc.getResolvedService
+				if (svc != null) {
+					try {
+						if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocol::SOAP)) {
+							doBuildServiceContracts (specBindingDesc, profile)
+						}
+					} catch (Exception ex) {
+						log.log (Level::SEVERE, "Error generating contracts for service " + nameProvider.getFullyQualifiedName (svc).toString + " and version " + svc.version.version + "\n", ex)
 					}
-				} catch (Exception ex) {
-					log.log (Level::SEVERE, "Error generating contracts for service " + nameProvider.getFullyQualifiedName (svc).toString + " and version " + svc.version.version + "\n", ex)
+				} else {
+					log.severe ("Error generating contracts for service " + nameProvider.getFullyQualifiedName (specBindingDesc.getServiceRef.service).toString + " and version " + specBindingDesc.getServiceRef.service.version.version 
+						+ " of module " + module.name +". Service could not be resolved for environment "+ targetEnvironment.name)
 				}
-			} else {
-				log.severe ("Error generating contracts for service " + nameProvider.getFullyQualifiedName (specBindingDesc.getServiceRef.service).toString + " and version " + specBindingDesc.getServiceRef.service.version.version 
-					+ " of module " + module.name +". Service could not be resolved for environment "+ targetEnvironment.name)
 			}
+		
 		}
 	}
 	
 	
-	def protected doBuildServiceContracts (ModuleServiceRefBindingDescription serviceBindingDescription, SOAProfile profile) {
+	def protected doBuildServiceContracts (ServiceRefBindingDescription serviceBindingDescription, SOAProfile profile) {
 		val service = serviceBindingDescription.getServiceRef.service
 		val specBinding = serviceBindingDescription.getApplicableBinding
 		for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {

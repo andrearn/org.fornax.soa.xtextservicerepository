@@ -3,6 +3,7 @@ package org.fornax.soa.bindingdsl.generator.templates.soap;
 import com.google.common.base.Objects;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,11 +16,12 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 import org.fornax.soa.basedsl.sOABaseDsl.Version;
 import org.fornax.soa.binding.query.BindingLookup;
-import org.fornax.soa.binding.query.DefaultModuleServiceRefBindingResolver;
+import org.fornax.soa.binding.query.DefaultModuleRefServiceBindingResolver;
+import org.fornax.soa.binding.query.ModuleRefServiceBindingDescription;
 import org.fornax.soa.binding.query.ProtocolMatcher;
 import org.fornax.soa.binding.query.environment.AssetStateEnvironmentEligibilityChecker;
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
-import org.fornax.soa.binding.query.services.ModuleServiceRefBindingDescription;
+import org.fornax.soa.binding.query.services.ServiceRefBindingDescription;
 import org.fornax.soa.bindingDsl.Binding;
 import org.fornax.soa.bindingDsl.BindingProtocol;
 import org.fornax.soa.bindingDsl.ModuleBinding;
@@ -88,7 +90,7 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
   private MessageHeaderXSDTemplates msgHeaderGenerator;
   
   @Inject
-  private DefaultModuleServiceRefBindingResolver bindingResolver;
+  private DefaultModuleRefServiceBindingResolver bindingResolver;
   
   @Inject
   private IQualifiedNameProvider nameProvider;
@@ -220,8 +222,9 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
     String _name_1 = targetEnvironment.getName();
     String _plus_2 = (_plus_1 + _name_1);
     this.log.fine(_plus_2);
-    final Set<ModuleServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleProvidedServiceBindings(module, targetEnvironment, endpointQualifierRef);
-    for (final ModuleServiceRefBindingDescription specBindingDesc : bindingDescs) {
+    final ModuleRefServiceBindingDescription bindingDescs = this.bindingResolver.resolveCompatibleProvidedServiceBindings(module, targetEnvironment, endpointQualifierRef);
+    List<ServiceRefBindingDescription> _serviceRefDescriptions = bindingDescs.getServiceRefDescriptions();
+    for (final ServiceRefBindingDescription specBindingDesc : _serviceRefDescriptions) {
       {
         final Service svc = specBindingDesc.getResolvedService();
         boolean _notEquals = (!Objects.equal(svc, null));
@@ -279,59 +282,62 @@ public class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
     String _name_1 = targetEnvironment.getName();
     String _plus_2 = (_plus_1 + _name_1);
     this.log.fine(_plus_2);
-    final Set<ModuleServiceRefBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleUsedServiceBindings(module, targetEnvironment, endpointQualifierRef);
-    for (final ModuleServiceRefBindingDescription specBindingDesc : bindingDescs) {
-      {
-        final Service svc = specBindingDesc.getResolvedService();
-        boolean _notEquals = (!Objects.equal(svc, null));
-        if (_notEquals) {
-          try {
-            Binding _applicableBinding = specBindingDesc.getApplicableBinding();
-            boolean _supportsImportBindingProtocol = this.protocolMatcher.supportsImportBindingProtocol(_applicableBinding, ImportBindingProtocol.SOAP);
-            if (_supportsImportBindingProtocol) {
-              this.doBuildServiceContracts(specBindingDesc, profile);
+    final Set<ModuleRefServiceBindingDescription> bindingDescs = this.bindingResolver.resolveCompatibleUsedServiceBindings(module, targetEnvironment, endpointQualifierRef);
+    for (final ModuleRefServiceBindingDescription curModBindDesc : bindingDescs) {
+      List<ServiceRefBindingDescription> _serviceRefDescriptions = curModBindDesc.getServiceRefDescriptions();
+      for (final ServiceRefBindingDescription specBindingDesc : _serviceRefDescriptions) {
+        {
+          final Service svc = specBindingDesc.getResolvedService();
+          boolean _notEquals = (!Objects.equal(svc, null));
+          if (_notEquals) {
+            try {
+              Binding _applicableBinding = specBindingDesc.getApplicableBinding();
+              boolean _supportsImportBindingProtocol = this.protocolMatcher.supportsImportBindingProtocol(_applicableBinding, ImportBindingProtocol.SOAP);
+              if (_supportsImportBindingProtocol) {
+                this.doBuildServiceContracts(specBindingDesc, profile);
+              }
+            } catch (final Throwable _t) {
+              if (_t instanceof Exception) {
+                final Exception ex = (Exception)_t;
+                QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(svc);
+                String _string = _fullyQualifiedName.toString();
+                String _plus_3 = ("Error generating contracts for service " + _string);
+                String _plus_4 = (_plus_3 + " and version ");
+                Version _version = svc.getVersion();
+                String _version_1 = _version.getVersion();
+                String _plus_5 = (_plus_4 + _version_1);
+                String _plus_6 = (_plus_5 + "\n");
+                this.log.log(Level.SEVERE, _plus_6, ex);
+              } else {
+                throw Exceptions.sneakyThrow(_t);
+              }
             }
-          } catch (final Throwable _t) {
-            if (_t instanceof Exception) {
-              final Exception ex = (Exception)_t;
-              QualifiedName _fullyQualifiedName = this.nameProvider.getFullyQualifiedName(svc);
-              String _string = _fullyQualifiedName.toString();
-              String _plus_3 = ("Error generating contracts for service " + _string);
-              String _plus_4 = (_plus_3 + " and version ");
-              Version _version = svc.getVersion();
-              String _version_1 = _version.getVersion();
-              String _plus_5 = (_plus_4 + _version_1);
-              String _plus_6 = (_plus_5 + "\n");
-              this.log.log(Level.SEVERE, _plus_6, ex);
-            } else {
-              throw Exceptions.sneakyThrow(_t);
-            }
+          } else {
+            AbstractServiceRef _serviceRef = specBindingDesc.getServiceRef();
+            Service _service = _serviceRef.getService();
+            QualifiedName _fullyQualifiedName_1 = this.nameProvider.getFullyQualifiedName(_service);
+            String _string_1 = _fullyQualifiedName_1.toString();
+            String _plus_7 = ("Error generating contracts for service " + _string_1);
+            String _plus_8 = (_plus_7 + " and version ");
+            AbstractServiceRef _serviceRef_1 = specBindingDesc.getServiceRef();
+            Service _service_1 = _serviceRef_1.getService();
+            Version _version_2 = _service_1.getVersion();
+            String _version_3 = _version_2.getVersion();
+            String _plus_9 = (_plus_8 + _version_3);
+            String _plus_10 = (_plus_9 + " of module ");
+            String _name_2 = module.getName();
+            String _plus_11 = (_plus_10 + _name_2);
+            String _plus_12 = (_plus_11 + ". Service could not be resolved for environment ");
+            String _name_3 = targetEnvironment.getName();
+            String _plus_13 = (_plus_12 + _name_3);
+            this.log.severe(_plus_13);
           }
-        } else {
-          AbstractServiceRef _serviceRef = specBindingDesc.getServiceRef();
-          Service _service = _serviceRef.getService();
-          QualifiedName _fullyQualifiedName_1 = this.nameProvider.getFullyQualifiedName(_service);
-          String _string_1 = _fullyQualifiedName_1.toString();
-          String _plus_7 = ("Error generating contracts for service " + _string_1);
-          String _plus_8 = (_plus_7 + " and version ");
-          AbstractServiceRef _serviceRef_1 = specBindingDesc.getServiceRef();
-          Service _service_1 = _serviceRef_1.getService();
-          Version _version_2 = _service_1.getVersion();
-          String _version_3 = _version_2.getVersion();
-          String _plus_9 = (_plus_8 + _version_3);
-          String _plus_10 = (_plus_9 + " of module ");
-          String _name_2 = module.getName();
-          String _plus_11 = (_plus_10 + _name_2);
-          String _plus_12 = (_plus_11 + ". Service could not be resolved for environment ");
-          String _name_3 = targetEnvironment.getName();
-          String _plus_13 = (_plus_12 + _name_3);
-          this.log.severe(_plus_13);
         }
       }
     }
   }
   
-  protected void doBuildServiceContracts(final ModuleServiceRefBindingDescription serviceBindingDescription, final SOAProfile profile) {
+  protected void doBuildServiceContracts(final ServiceRefBindingDescription serviceBindingDescription, final SOAProfile profile) {
     AbstractServiceRef _serviceRef = serviceBindingDescription.getServiceRef();
     final Service service = _serviceRef.getService();
     final Binding specBinding = serviceBindingDescription.getApplicableBinding();
