@@ -231,7 +231,7 @@ public class DefaultModuleRefServiceBindingResolver implements IModuleRefService
             }
           };
         Iterable<AbstractServiceRef> _map = IterableExtensions.<ServiceRefBindingDescription, AbstractServiceRef>map(_filterNull, _function_1);
-        final List svcRefsForEndpointQualifier = IterableExtensions.<AbstractServiceRef>toList(_map);
+        final List<AbstractServiceRef> svcRefsForEndpointQualifier = IterableExtensions.<AbstractServiceRef>toList(_map);
         ServiceModuleRef _moduleRef = usedModRef.getModuleRef();
         Module _module = _moduleRef.getModule();
         final ModuleRefServiceBindingDescription allImpModSvcBindDescs = this.resolveCompatibleProvidedServiceBindings(_module, targetEnvironment, selectingEndpointQualifierRef);

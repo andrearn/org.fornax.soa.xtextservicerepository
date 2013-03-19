@@ -44,9 +44,9 @@ public class VersionedModuleSelector {
 	}
 	
 	public boolean matches (Module mod, IQualifiedNameProvider qualifiedNameProvider) {
-		if (name == qualifiedNameProvider.getFullyQualifiedName (mod).toString() && 
+		if (name.equals(qualifiedNameProvider.getFullyQualifiedName (mod).toString()) && 
 				(version == null || "".equals(version) || version.equals(mod.getVersion().getVersion()))) {
-					return true;
+			return true;
 		} else {
 			return false;
 		}

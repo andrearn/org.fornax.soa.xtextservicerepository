@@ -42,6 +42,7 @@ public class InternalSolutionDslLexer extends Lexer {
     public static final int T__11=11;
     public static final int T__14=14;
     public static final int T__13=13;
+    public static final int T__59=59;
     public static final int RULE_INT=6;
     public static final int T__50=50;
     public static final int T__42=42;
@@ -816,11 +817,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__46;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:46:7: ( 'additional-information' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:46:9: 'additional-information'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:46:7: ( '@' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:46:9: '@'
             {
-            match("additional-information"); 
-
+            match('@'); 
 
             }
 
@@ -837,10 +837,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__47;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:47:7: ( 'location' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:47:9: 'location'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:47:7: ( 'additional-information' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:47:9: 'additional-information'
             {
-            match("location"); 
+            match("additional-information"); 
 
 
             }
@@ -858,10 +858,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__48;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:48:7: ( 'reference' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:48:9: 'reference'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:48:7: ( 'location' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:48:9: 'location'
             {
-            match("reference"); 
+            match("location"); 
 
 
             }
@@ -879,10 +879,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__49;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:49:7: ( 'UI' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:49:9: 'UI'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:49:7: ( 'reference' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:49:9: 'reference'
             {
-            match("UI"); 
+            match("reference"); 
 
 
             }
@@ -900,10 +900,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__50;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:50:7: ( 'BusinessLogic' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:50:9: 'BusinessLogic'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:50:7: ( 'UI' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:50:9: 'UI'
             {
-            match("BusinessLogic"); 
+            match("UI"); 
 
 
             }
@@ -921,10 +921,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__51;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:51:7: ( 'Persistence' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:51:9: 'Persistence'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:51:7: ( 'BusinessLogic' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:51:9: 'BusinessLogic'
             {
-            match("Persistence"); 
+            match("BusinessLogic"); 
 
 
             }
@@ -942,10 +942,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__52;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:52:7: ( 'Security' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:52:9: 'Security'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:52:7: ( 'Persistence' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:52:9: 'Persistence'
             {
-            match("Security"); 
+            match("Persistence"); 
 
 
             }
@@ -963,10 +963,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__53;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:53:7: ( 'Batch' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:53:9: 'Batch'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:53:7: ( 'Security' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:53:9: 'Security'
             {
-            match("Batch"); 
+            match("Security"); 
 
 
             }
@@ -984,10 +984,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__54;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:54:7: ( 'OTHER' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:54:9: 'OTHER'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:54:7: ( 'Batch' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:54:9: 'Batch'
             {
-            match("OTHER"); 
+            match("Batch"); 
 
 
             }
@@ -1005,10 +1005,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__55;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:55:7: ( 'pending' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:55:9: 'pending'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:55:7: ( 'OTHER' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:55:9: 'OTHER'
             {
-            match("pending"); 
+            match("OTHER"); 
 
 
             }
@@ -1026,10 +1026,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__56;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:56:7: ( 'accepted' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:56:9: 'accepted'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:56:7: ( 'pending' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:56:9: 'pending'
             {
-            match("accepted"); 
+            match("pending"); 
 
 
             }
@@ -1047,10 +1047,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__57;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:57:7: ( 'denied' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:57:9: 'denied'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:57:7: ( 'accepted' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:57:9: 'accepted'
             {
-            match("denied"); 
+            match("accepted"); 
 
 
             }
@@ -1068,10 +1068,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = T__58;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:58:7: ( 'specific' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:58:9: 'specific'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:58:7: ( 'denied' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:58:9: 'denied'
             {
-            match("specific"); 
+            match("denied"); 
 
 
             }
@@ -1084,15 +1084,36 @@ public class InternalSolutionDslLexer extends Lexer {
     }
     // $ANTLR end "T__58"
 
+    // $ANTLR start "T__59"
+    public final void mT__59() throws RecognitionException {
+        try {
+            int _type = T__59;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:59:7: ( 'specific' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:59:9: 'specific'
+            {
+            match("specific"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__59"
+
     // $ANTLR start "RULE_ID"
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2257:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2257:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2264:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2264:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2257:11: ( '^' )?
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2264:11: ( '^' )?
             int alt1=2;
             int LA1_0 = input.LA(1);
 
@@ -1101,7 +1122,7 @@ public class InternalSolutionDslLexer extends Lexer {
             }
             switch (alt1) {
                 case 1 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2257:11: '^'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2264:11: '^'
                     {
                     match('^'); 
 
@@ -1119,7 +1140,7 @@ public class InternalSolutionDslLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2257:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2264:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop2:
             do {
                 int alt2=2;
@@ -1168,10 +1189,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2259:10: ( ( '0' .. '9' )+ )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2259:12: ( '0' .. '9' )+
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2266:10: ( ( '0' .. '9' )+ )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2266:12: ( '0' .. '9' )+
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2259:12: ( '0' .. '9' )+
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2266:12: ( '0' .. '9' )+
             int cnt3=0;
             loop3:
             do {
@@ -1185,7 +1206,7 @@ public class InternalSolutionDslLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2259:13: '0' .. '9'
+            	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2266:13: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1217,10 +1238,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:13: ( ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' ) )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:15: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' | '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             int alt6=2;
             int LA6_0 = input.LA(1);
 
@@ -1238,10 +1259,10 @@ public class InternalSolutionDslLexer extends Lexer {
             }
             switch (alt6) {
                 case 1 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:16: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
                     {
                     match('\"'); 
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:20: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
                     loop4:
                     do {
                         int alt4=3;
@@ -1257,7 +1278,7 @@ public class InternalSolutionDslLexer extends Lexer {
 
                         switch (alt4) {
                     	case 1 :
-                    	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:21: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -1273,7 +1294,7 @@ public class InternalSolutionDslLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:66: ~ ( ( '\\\\' | '\"' ) )
+                    	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:66: ~ ( ( '\\\\' | '\"' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1298,10 +1319,10 @@ public class InternalSolutionDslLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:86: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
                     {
                     match('\''); 
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:91: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
                     loop5:
                     do {
                         int alt5=3;
@@ -1317,7 +1338,7 @@ public class InternalSolutionDslLexer extends Lexer {
 
                         switch (alt5) {
                     	case 1 :
-                    	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
+                    	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:92: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | 'u' | '\"' | '\\'' | '\\\\' )
                     	    {
                     	    match('\\'); 
                     	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||(input.LA(1)>='t' && input.LA(1)<='u') ) {
@@ -1333,7 +1354,7 @@ public class InternalSolutionDslLexer extends Lexer {
                     	    }
                     	    break;
                     	case 2 :
-                    	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2261:137: ~ ( ( '\\\\' | '\\'' ) )
+                    	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2268:137: ~ ( ( '\\\\' | '\\'' ) )
                     	    {
                     	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
                     	        input.consume();
@@ -1376,12 +1397,12 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2263:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2263:19: '/*' ( options {greedy=false; } : . )* '*/'
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2270:17: ( '/*' ( options {greedy=false; } : . )* '*/' )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2270:19: '/*' ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2263:24: ( options {greedy=false; } : . )*
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2270:24: ( options {greedy=false; } : . )*
             loop7:
             do {
                 int alt7=2;
@@ -1406,7 +1427,7 @@ public class InternalSolutionDslLexer extends Lexer {
 
                 switch (alt7) {
             	case 1 :
-            	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2263:52: .
+            	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2270:52: .
             	    {
             	    matchAny(); 
 
@@ -1436,12 +1457,12 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2265:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2265:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2272:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2272:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2265:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2272:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop8:
             do {
                 int alt8=2;
@@ -1454,7 +1475,7 @@ public class InternalSolutionDslLexer extends Lexer {
 
                 switch (alt8) {
             	case 1 :
-            	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2265:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2272:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1474,7 +1495,7 @@ public class InternalSolutionDslLexer extends Lexer {
                 }
             } while (true);
 
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2265:40: ( ( '\\r' )? '\\n' )?
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2272:40: ( ( '\\r' )? '\\n' )?
             int alt10=2;
             int LA10_0 = input.LA(1);
 
@@ -1483,9 +1504,9 @@ public class InternalSolutionDslLexer extends Lexer {
             }
             switch (alt10) {
                 case 1 :
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2265:41: ( '\\r' )? '\\n'
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2272:41: ( '\\r' )? '\\n'
                     {
-                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2265:41: ( '\\r' )?
+                    // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2272:41: ( '\\r' )?
                     int alt9=2;
                     int LA9_0 = input.LA(1);
 
@@ -1494,7 +1515,7 @@ public class InternalSolutionDslLexer extends Lexer {
                     }
                     switch (alt9) {
                         case 1 :
-                            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2265:41: '\\r'
+                            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2272:41: '\\r'
                             {
                             match('\r'); 
 
@@ -1526,10 +1547,10 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2267:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2267:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2274:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2274:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2267:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2274:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt11=0;
             loop11:
             do {
@@ -1583,8 +1604,8 @@ public class InternalSolutionDslLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2269:16: ( . )
-            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2269:18: .
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2276:16: ( . )
+            // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:2276:18: .
             {
             matchAny(); 
 
@@ -1599,8 +1620,8 @@ public class InternalSolutionDslLexer extends Lexer {
     // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
-        int alt12=55;
+        // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:8: ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        int alt12=56;
         alt12 = dfa12.predict(input);
         switch (alt12) {
             case 1 :
@@ -1940,49 +1961,56 @@ public class InternalSolutionDslLexer extends Lexer {
                 }
                 break;
             case 49 :
-                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:298: RULE_ID
+                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:298: T__59
+                {
+                mT__59(); 
+
+                }
+                break;
+            case 50 :
+                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:304: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
-            case 50 :
-                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:306: RULE_INT
+            case 51 :
+                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:312: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
-            case 51 :
-                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:315: RULE_STRING
+            case 52 :
+                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:321: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
-            case 52 :
-                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:327: RULE_ML_COMMENT
+            case 53 :
+                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:333: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
-            case 53 :
-                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:343: RULE_SL_COMMENT
+            case 54 :
+                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:349: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
-            case 54 :
-                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:359: RULE_WS
+            case 55 :
+                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:365: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 55 :
-                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:367: RULE_ANY_OTHER
+            case 56 :
+                // ../org.fornax.soa.solutiondsl/src-gen/org/fornax/soa/parser/antlr/internal/InternalSolutionDsl.g:1:373: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -1996,29 +2024,29 @@ public class InternalSolutionDslLexer extends Lexer {
 
     protected DFA12 dfa12 = new DFA12(this);
     static final String DFA12_eotS =
-        "\1\uffff\1\52\1\uffff\6\52\1\uffff\7\52\1\uffff\3\52\1\106\1\uffff"+
-        "\1\46\1\uffff\6\52\1\46\2\uffff\3\46\2\uffff\3\52\2\uffff\11\52"+
-        "\1\uffff\12\52\1\uffff\4\52\5\uffff\2\52\1\167\5\52\5\uffff\40\52"+
-        "\1\uffff\24\52\1\u00b2\4\52\1\u00b7\1\uffff\2\52\1\uffff\32\52\1"+
-        "\u00d4\1\52\1\uffff\4\52\1\uffff\2\52\1\uffff\10\52\1\u00e4\2\52"+
-        "\1\u00e7\3\52\1\u00eb\1\52\1\u00ed\7\52\1\uffff\1\52\1\u00f6\11"+
-        "\52\1\u0100\3\52\1\uffff\2\52\1\uffff\3\52\1\uffff\1\52\1\uffff"+
-        "\6\52\1\u0110\1\52\1\uffff\3\52\1\u0115\2\52\1\u0118\1\52\1\u011a"+
-        "\1\uffff\5\52\1\u0120\1\52\1\u0122\2\52\1\u0125\1\u0127\2\52\2\uffff"+
-        "\4\52\1\uffff\2\52\3\uffff\1\52\1\u0131\2\52\1\u0134\1\uffff\1\52"+
-        "\1\uffff\2\52\3\uffff\1\52\1\u0139\1\u013a\4\52\1\uffff\1\52\1\uffff"+
-        "\2\52\1\uffff\2\52\1\uffff\1\52\2\uffff\1\u0145\1\u0146\6\52\1\u014d"+
-        "\1\u014e\2\uffff\2\52\1\uffff\1\52\1\u0152\1\52\2\uffff\1\u0154"+
-        "\1\u0155\1\52\1\uffff\1\u0157\2\uffff\1\u0158\2\uffff";
+        "\1\uffff\1\53\1\uffff\6\53\1\uffff\7\53\1\uffff\3\53\1\107\1\uffff"+
+        "\1\47\2\uffff\6\53\1\47\2\uffff\3\47\2\uffff\3\53\2\uffff\11\53"+
+        "\1\uffff\12\53\1\uffff\4\53\6\uffff\2\53\1\171\5\53\5\uffff\40\53"+
+        "\1\uffff\24\53\1\u00b4\4\53\1\u00b9\1\uffff\2\53\1\uffff\32\53\1"+
+        "\u00d6\1\53\1\uffff\4\53\1\uffff\2\53\1\uffff\10\53\1\u00e6\2\53"+
+        "\1\u00e9\3\53\1\u00ed\1\53\1\u00ef\7\53\1\uffff\1\53\1\u00f8\11"+
+        "\53\1\u0102\3\53\1\uffff\2\53\1\uffff\3\53\1\uffff\1\53\1\uffff"+
+        "\6\53\1\u0112\1\53\1\uffff\3\53\1\u0117\2\53\1\u011a\1\53\1\u011c"+
+        "\1\uffff\5\53\1\u0122\1\53\1\u0124\2\53\1\u0127\1\u0129\2\53\2\uffff"+
+        "\4\53\1\uffff\2\53\3\uffff\1\53\1\u0133\2\53\1\u0136\1\uffff\1\53"+
+        "\1\uffff\2\53\3\uffff\1\53\1\u013b\1\u013c\4\53\1\uffff\1\53\1\uffff"+
+        "\2\53\1\uffff\2\53\1\uffff\1\53\2\uffff\1\u0147\1\u0148\6\53\1\u014f"+
+        "\1\u0150\2\uffff\2\53\1\uffff\1\53\1\u0154\1\53\2\uffff\1\u0156"+
+        "\1\u0157\1\53\1\uffff\1\u0159\2\uffff\1\u015a\2\uffff";
     static final String DFA12_eofS =
-        "\u0159\uffff";
+        "\u015b\uffff";
     static final String DFA12_minS =
         "\1\0\1\157\1\uffff\1\145\1\151\1\145\1\141\1\167\1\165\1\uffff\2"+
         "\141\1\151\1\157\1\145\1\163\1\141\1\uffff\2\145\1\155\1\52\1\uffff"+
-        "\1\75\1\uffff\1\143\1\111\1\141\2\145\1\124\1\101\2\uffff\2\0\1"+
+        "\1\75\2\uffff\1\143\1\111\1\141\2\145\1\124\1\101\2\uffff\2\0\1"+
         "\52\2\uffff\1\154\1\142\1\145\2\uffff\1\155\1\156\1\146\1\143\1"+
         "\146\1\156\1\154\1\156\1\144\1\uffff\1\147\1\144\1\156\1\152\2\156"+
-        "\1\141\1\170\1\145\1\156\1\uffff\1\162\1\157\1\156\1\160\5\uffff"+
+        "\1\141\1\170\1\145\1\156\1\uffff\1\162\1\157\1\156\1\160\6\uffff"+
         "\1\144\1\143\1\60\1\163\1\164\1\162\1\143\1\110\5\uffff\1\165\1"+
         "\163\1\143\1\141\1\143\1\151\1\145\1\141\1\165\1\160\1\145\1\164"+
         "\1\154\1\145\1\147\1\163\1\165\2\126\1\157\1\144\1\55\1\164\1\145"+
@@ -2045,11 +2073,11 @@ public class InternalSolutionDslLexer extends Lexer {
     static final String DFA12_maxS =
         "\1\uffff\1\165\1\uffff\2\157\1\145\1\157\1\167\1\165\1\uffff\1\141"+
         "\1\157\1\151\1\157\1\151\1\163\1\141\1\uffff\1\145\1\162\1\155\1"+
-        "\52\1\uffff\1\75\1\uffff\1\144\1\111\1\165\2\145\1\124\1\172\2\uffff"+
+        "\52\1\uffff\1\75\2\uffff\1\144\1\111\1\165\2\145\1\124\1\172\2\uffff"+
         "\2\uffff\1\57\2\uffff\1\154\1\142\1\145\2\uffff\1\155\1\163\1\146"+
         "\1\143\1\163\1\156\1\154\1\156\1\144\1\uffff\1\147\1\144\1\156\1"+
         "\170\2\156\1\141\1\170\1\145\1\156\1\uffff\1\162\1\157\1\156\1\160"+
-        "\5\uffff\1\144\1\143\1\172\1\163\1\164\1\162\1\143\1\110\5\uffff"+
+        "\6\uffff\1\144\1\143\1\172\1\163\1\164\1\162\1\143\1\110\5\uffff"+
         "\1\165\1\163\1\143\1\141\1\143\1\151\1\145\1\141\1\165\1\160\1\145"+
         "\1\164\1\154\1\145\1\147\1\163\1\165\2\126\1\157\1\144\1\55\1\164"+
         "\1\145\1\163\1\144\1\163\2\144\1\157\1\151\1\145\1\uffff\1\151\1"+
@@ -2074,113 +2102,113 @@ public class InternalSolutionDslLexer extends Lexer {
         "\2\172\1\143\1\uffff\1\172\2\uffff\1\172\2\uffff";
     static final String DFA12_acceptS =
         "\2\uffff\1\2\6\uffff\1\13\7\uffff\1\27\4\uffff\1\34\1\uffff\1\40"+
-        "\7\uffff\1\61\1\62\3\uffff\1\66\1\67\3\uffff\1\61\1\2\11\uffff\1"+
-        "\13\12\uffff\1\27\4\uffff\1\43\1\33\1\34\1\37\1\40\10\uffff\1\62"+
-        "\1\63\1\64\1\65\1\66\40\uffff\1\47\32\uffff\1\20\2\uffff\1\22\34"+
-        "\uffff\1\14\4\uffff\1\17\2\uffff\1\24\31\uffff\1\10\17\uffff\1\53"+
-        "\2\uffff\1\54\3\uffff\1\3\1\uffff\1\57\10\uffff\1\16\11\uffff\1"+
-        "\32\16\uffff\1\7\1\26\4\uffff\1\21\2\uffff\1\30\1\31\1\55\5\uffff"+
-        "\1\1\1\uffff\1\60\2\uffff\1\45\1\6\1\5\7\uffff\1\25\1\uffff\1\56"+
-        "\2\uffff\1\52\2\uffff\1\4\1\uffff\1\46\1\12\12\uffff\1\35\1\36\2"+
-        "\uffff\1\44\3\uffff\1\23\1\11\3\uffff\1\51\1\uffff\1\41\1\42\1\uffff"+
-        "\1\15\1\50";
+        "\1\44\7\uffff\1\62\1\63\3\uffff\1\67\1\70\3\uffff\1\62\1\2\11\uffff"+
+        "\1\13\12\uffff\1\27\4\uffff\1\43\1\33\1\34\1\37\1\40\1\44\10\uffff"+
+        "\1\63\1\64\1\65\1\66\1\67\40\uffff\1\50\32\uffff\1\20\2\uffff\1"+
+        "\22\34\uffff\1\14\4\uffff\1\17\2\uffff\1\24\31\uffff\1\10\17\uffff"+
+        "\1\54\2\uffff\1\55\3\uffff\1\3\1\uffff\1\60\10\uffff\1\16\11\uffff"+
+        "\1\32\16\uffff\1\7\1\26\4\uffff\1\21\2\uffff\1\30\1\31\1\56\5\uffff"+
+        "\1\1\1\uffff\1\61\2\uffff\1\46\1\6\1\5\7\uffff\1\25\1\uffff\1\57"+
+        "\2\uffff\1\53\2\uffff\1\4\1\uffff\1\47\1\12\12\uffff\1\35\1\36\2"+
+        "\uffff\1\45\3\uffff\1\23\1\11\3\uffff\1\52\1\uffff\1\41\1\42\1\uffff"+
+        "\1\15\1\51";
     static final String DFA12_specialS =
-        "\1\1\41\uffff\1\0\1\2\u0135\uffff}>";
+        "\1\2\42\uffff\1\0\1\1\u0136\uffff}>";
     static final String[] DFA12_transitionS = {
-            "\11\46\2\45\2\46\1\45\22\46\1\45\1\46\1\42\4\46\1\43\4\46\1"+
-            "\21\1\26\1\25\1\44\12\41\2\46\1\30\1\46\1\27\2\46\1\40\1\33"+
-            "\14\40\1\36\1\34\2\40\1\35\1\40\1\32\5\40\3\46\1\37\1\40\1\46"+
-            "\1\31\1\10\1\6\1\3\1\40\1\16\1\40\1\20\1\24\1\40\1\14\1\4\1"+
-            "\13\1\15\1\7\1\23\1\40\1\5\1\1\1\12\1\17\1\22\4\40\1\2\1\46"+
-            "\1\11\uff82\46",
-            "\1\47\1\51\4\uffff\1\50",
+            "\11\47\2\46\2\47\1\46\22\47\1\46\1\47\1\43\4\47\1\44\4\47\1"+
+            "\21\1\26\1\25\1\45\12\42\2\47\1\30\1\47\1\27\1\47\1\31\1\41"+
+            "\1\34\14\41\1\37\1\35\2\41\1\36\1\41\1\33\5\41\3\47\1\40\1\41"+
+            "\1\47\1\32\1\10\1\6\1\3\1\41\1\16\1\41\1\20\1\24\1\41\1\14\1"+
+            "\4\1\13\1\15\1\7\1\23\1\41\1\5\1\1\1\12\1\17\1\22\4\41\1\2\1"+
+            "\47\1\11\uff82\47",
+            "\1\50\1\52\4\uffff\1\51",
             "",
-            "\1\55\11\uffff\1\54",
-            "\1\56\5\uffff\1\57",
-            "\1\60",
-            "\1\62\15\uffff\1\61",
-            "\1\63",
+            "\1\56\11\uffff\1\55",
+            "\1\57\5\uffff\1\60",
+            "\1\61",
+            "\1\63\15\uffff\1\62",
             "\1\64",
+            "\1\65",
             "",
-            "\1\66",
-            "\1\71\7\uffff\1\70\5\uffff\1\67",
-            "\1\72",
+            "\1\67",
+            "\1\72\7\uffff\1\71\5\uffff\1\70",
             "\1\73",
-            "\1\74\3\uffff\1\75",
-            "\1\76",
+            "\1\74",
+            "\1\75\3\uffff\1\76",
             "\1\77",
+            "\1\100",
             "",
-            "\1\101",
-            "\1\103\14\uffff\1\102",
-            "\1\104",
+            "\1\102",
+            "\1\104\14\uffff\1\103",
             "\1\105",
+            "\1\106",
             "",
-            "\1\110",
+            "\1\111",
             "",
-            "\1\113\1\112",
-            "\1\114",
-            "\1\116\23\uffff\1\115",
-            "\1\117",
-            "\1\120",
+            "",
+            "\1\115\1\114",
+            "\1\116",
+            "\1\120\23\uffff\1\117",
             "\1\121",
-            "\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\122",
+            "\1\123",
+            "\32\53\4\uffff\1\53\1\uffff\32\53",
             "",
             "",
-            "\0\123",
-            "\0\123",
-            "\1\124\4\uffff\1\125",
+            "\0\125",
+            "\0\125",
+            "\1\126\4\uffff\1\127",
             "",
             "",
-            "\1\127",
-            "\1\130",
             "\1\131",
-            "",
-            "",
             "\1\132",
-            "\1\134\4\uffff\1\133",
-            "\1\135",
-            "\1\136",
-            "\1\141\12\uffff\1\137\1\uffff\1\140",
-            "\1\142",
-            "\1\143",
+            "\1\133",
+            "",
+            "",
+            "\1\134",
+            "\1\136\4\uffff\1\135",
+            "\1\137",
+            "\1\140",
+            "\1\143\12\uffff\1\141\1\uffff\1\142",
             "\1\144",
             "\1\145",
-            "",
             "\1\146",
             "\1\147",
+            "",
             "\1\150",
-            "\1\152\15\uffff\1\151",
-            "\1\153",
-            "\1\154",
+            "\1\151",
+            "\1\152",
+            "\1\154\15\uffff\1\153",
             "\1\155",
             "\1\156",
             "\1\157",
             "\1\160",
-            "",
             "\1\161",
             "\1\162",
+            "",
             "\1\163",
             "\1\164",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\165",
             "\1\166",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "\1\167",
             "\1\170",
-            "\1\171",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\172",
             "\1\173",
             "\1\174",
-            "",
-            "",
-            "",
-            "",
-            "",
             "\1\175",
             "\1\176",
+            "",
+            "",
+            "",
+            "",
+            "",
             "\1\177",
             "\1\u0080",
             "\1\u0081",
@@ -2203,17 +2231,17 @@ public class InternalSolutionDslLexer extends Lexer {
             "\1\u0092",
             "\1\u0093",
             "\1\u0094",
-            "\1\u0095\105\uffff\1\u0096",
-            "\1\u0097",
-            "\1\u0098",
+            "\1\u0095",
+            "\1\u0096",
+            "\1\u0097\105\uffff\1\u0098",
             "\1\u0099",
             "\1\u009a",
             "\1\u009b",
             "\1\u009c",
             "\1\u009d",
-            "",
             "\1\u009e",
             "\1\u009f",
+            "",
             "\1\u00a0",
             "\1\u00a1",
             "\1\u00a2",
@@ -2232,18 +2260,18 @@ public class InternalSolutionDslLexer extends Lexer {
             "\1\u00af",
             "\1\u00b0",
             "\1\u00b1",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u00b2",
             "\1\u00b3",
-            "\1\u00b4",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u00b5",
             "\1\u00b6",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "",
+            "\1\u00b7",
             "\1\u00b8",
-            "\1\u00b9",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "",
             "\1\u00ba",
             "\1\u00bb",
+            "",
             "\1\u00bc",
             "\1\u00bd",
             "\1\u00be",
@@ -2268,47 +2296,47 @@ public class InternalSolutionDslLexer extends Lexer {
             "\1\u00d1",
             "\1\u00d2",
             "\1\u00d3",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u00d4",
             "\1\u00d5",
-            "",
-            "\1\u00d6",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u00d7",
+            "",
             "\1\u00d8",
             "\1\u00d9",
-            "",
             "\1\u00da",
             "\1\u00db",
             "",
             "\1\u00dc",
             "\1\u00dd",
+            "",
             "\1\u00de",
             "\1\u00df",
             "\1\u00e0",
             "\1\u00e1",
             "\1\u00e2",
             "\1\u00e3",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u00e4",
             "\1\u00e5",
-            "\1\u00e6",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\1\u00e7",
             "\1\u00e8",
-            "\1\u00e9",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u00ea",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u00eb",
             "\1\u00ec",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u00ee",
-            "\1\u00ef",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u00f0",
             "\1\u00f1",
             "\1\u00f2",
             "\1\u00f3",
             "\1\u00f4",
-            "",
             "\1\u00f5",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u00f6",
+            "",
             "\1\u00f7",
-            "\1\u00f8",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u00f9",
             "\1\u00fa",
             "\1\u00fb",
@@ -2316,126 +2344,128 @@ public class InternalSolutionDslLexer extends Lexer {
             "\1\u00fd",
             "\1\u00fe",
             "\1\u00ff",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u0100",
             "\1\u0101",
-            "\1\u0102",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u0103",
-            "",
             "\1\u0104",
             "\1\u0105",
             "",
             "\1\u0106",
             "\1\u0107",
+            "",
             "\1\u0108",
-            "",
             "\1\u0109",
-            "",
             "\1\u010a",
+            "",
             "\1\u010b",
+            "",
             "\1\u010c",
             "\1\u010d",
             "\1\u010e",
             "\1\u010f",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u0110",
             "\1\u0111",
-            "",
-            "\1\u0112",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u0113",
-            "\1\u0114",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "\1\u0116",
-            "\1\u0117",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "\1\u0119",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
             "",
+            "\1\u0114",
+            "\1\u0115",
+            "\1\u0116",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\1\u0118",
+            "\1\u0119",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u011b",
-            "\1\u011c",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "",
             "\1\u011d",
             "\1\u011e",
             "\1\u011f",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u0120",
             "\1\u0121",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u0123",
-            "\1\u0124",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "\1\u0126\2\uffff\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32"+
-            "\52",
-            "\1\u0128",
-            "\1\u0129",
-            "",
-            "",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\1\u0125",
+            "\1\u0126",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\1\u0128\2\uffff\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32"+
+            "\53",
             "\1\u012a",
             "\1\u012b",
+            "",
+            "",
             "\1\u012c",
             "\1\u012d",
-            "",
             "\1\u012e",
             "\1\u012f",
             "",
-            "",
-            "",
             "\1\u0130",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u0131",
+            "",
+            "",
+            "",
             "\1\u0132",
-            "\1\u0133",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\1\u0134",
             "\1\u0135",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "",
-            "\1\u0136",
             "\1\u0137",
             "",
-            "",
-            "",
             "\1\u0138",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "\1\u013b",
-            "\1\u013c",
+            "\1\u0139",
+            "",
+            "",
+            "",
+            "\1\u013a",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u013d",
             "\1\u013e",
-            "",
             "\1\u013f",
-            "",
             "\1\u0140",
+            "",
             "\1\u0141",
             "",
             "\1\u0142",
             "\1\u0143",
             "",
             "\1\u0144",
+            "\1\u0145",
+            "",
+            "\1\u0146",
             "",
             "",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "\1\u0147",
-            "\1\u0148",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "\1\u0149",
             "\1\u014a",
             "\1\u014b",
             "\1\u014c",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u014d",
+            "\1\u014e",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "",
-            "",
-            "\1\u014f",
-            "\1\u0150",
             "",
             "\1\u0151",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\1\u0152",
+            "",
             "\1\u0153",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\1\u0155",
             "",
             "",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
-            "\1\u0156",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
+            "\1\u0158",
             "",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "",
             "",
-            "\12\52\7\uffff\32\52\4\uffff\1\52\1\uffff\32\52",
+            "\12\53\7\uffff\32\53\4\uffff\1\53\1\uffff\32\53",
             "",
             ""
     };
@@ -2470,23 +2500,33 @@ public class InternalSolutionDslLexer extends Lexer {
             this.transition = DFA12_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | RULE_ID | RULE_INT | RULE_STRING | RULE_ML_COMMENT | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
         public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
             IntStream input = _input;
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA12_34 = input.LA(1);
+                        int LA12_35 = input.LA(1);
 
                         s = -1;
-                        if ( ((LA12_34>='\u0000' && LA12_34<='\uFFFF')) ) {s = 83;}
+                        if ( ((LA12_35>='\u0000' && LA12_35<='\uFFFF')) ) {s = 85;}
 
-                        else s = 38;
+                        else s = 39;
 
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
+                        int LA12_36 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA12_36>='\u0000' && LA12_36<='\uFFFF')) ) {s = 85;}
+
+                        else s = 39;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
                         int LA12_0 = input.LA(1);
 
                         s = -1;
@@ -2538,43 +2578,35 @@ public class InternalSolutionDslLexer extends Lexer {
 
                         else if ( (LA12_0=='<') ) {s = 24;}
 
-                        else if ( (LA12_0=='a') ) {s = 25;}
+                        else if ( (LA12_0=='@') ) {s = 25;}
 
-                        else if ( (LA12_0=='U') ) {s = 26;}
+                        else if ( (LA12_0=='a') ) {s = 26;}
 
-                        else if ( (LA12_0=='B') ) {s = 27;}
+                        else if ( (LA12_0=='U') ) {s = 27;}
 
-                        else if ( (LA12_0=='P') ) {s = 28;}
+                        else if ( (LA12_0=='B') ) {s = 28;}
 
-                        else if ( (LA12_0=='S') ) {s = 29;}
+                        else if ( (LA12_0=='P') ) {s = 29;}
 
-                        else if ( (LA12_0=='O') ) {s = 30;}
+                        else if ( (LA12_0=='S') ) {s = 30;}
 
-                        else if ( (LA12_0=='^') ) {s = 31;}
+                        else if ( (LA12_0=='O') ) {s = 31;}
 
-                        else if ( (LA12_0=='A'||(LA12_0>='C' && LA12_0<='N')||(LA12_0>='Q' && LA12_0<='R')||LA12_0=='T'||(LA12_0>='V' && LA12_0<='Z')||LA12_0=='_'||LA12_0=='e'||LA12_0=='g'||LA12_0=='j'||LA12_0=='q'||(LA12_0>='w' && LA12_0<='z')) ) {s = 32;}
+                        else if ( (LA12_0=='^') ) {s = 32;}
 
-                        else if ( ((LA12_0>='0' && LA12_0<='9')) ) {s = 33;}
+                        else if ( (LA12_0=='A'||(LA12_0>='C' && LA12_0<='N')||(LA12_0>='Q' && LA12_0<='R')||LA12_0=='T'||(LA12_0>='V' && LA12_0<='Z')||LA12_0=='_'||LA12_0=='e'||LA12_0=='g'||LA12_0=='j'||LA12_0=='q'||(LA12_0>='w' && LA12_0<='z')) ) {s = 33;}
 
-                        else if ( (LA12_0=='\"') ) {s = 34;}
+                        else if ( ((LA12_0>='0' && LA12_0<='9')) ) {s = 34;}
 
-                        else if ( (LA12_0=='\'') ) {s = 35;}
+                        else if ( (LA12_0=='\"') ) {s = 35;}
 
-                        else if ( (LA12_0=='/') ) {s = 36;}
+                        else if ( (LA12_0=='\'') ) {s = 36;}
 
-                        else if ( ((LA12_0>='\t' && LA12_0<='\n')||LA12_0=='\r'||LA12_0==' ') ) {s = 37;}
+                        else if ( (LA12_0=='/') ) {s = 37;}
 
-                        else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\u001F')||LA12_0=='!'||(LA12_0>='#' && LA12_0<='&')||(LA12_0>='(' && LA12_0<='+')||(LA12_0>=':' && LA12_0<=';')||LA12_0=='='||(LA12_0>='?' && LA12_0<='@')||(LA12_0>='[' && LA12_0<=']')||LA12_0=='`'||LA12_0=='|'||(LA12_0>='~' && LA12_0<='\uFFFF')) ) {s = 38;}
+                        else if ( ((LA12_0>='\t' && LA12_0<='\n')||LA12_0=='\r'||LA12_0==' ') ) {s = 38;}
 
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA12_35 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA12_35>='\u0000' && LA12_35<='\uFFFF')) ) {s = 83;}
-
-                        else s = 38;
+                        else if ( ((LA12_0>='\u0000' && LA12_0<='\b')||(LA12_0>='\u000B' && LA12_0<='\f')||(LA12_0>='\u000E' && LA12_0<='\u001F')||LA12_0=='!'||(LA12_0>='#' && LA12_0<='&')||(LA12_0>='(' && LA12_0<='+')||(LA12_0>=':' && LA12_0<=';')||LA12_0=='='||LA12_0=='?'||(LA12_0>='[' && LA12_0<=']')||LA12_0=='`'||LA12_0=='|'||(LA12_0>='~' && LA12_0<='\uFFFF')) ) {s = 39;}
 
                         if ( s>=0 ) return s;
                         break;

@@ -1954,18 +1954,25 @@ ruleQualifiedName returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleT
     { 
     newLeafNode(this_ID_0, grammarAccess.getQualifiedNameAccess().getIDTerminalRuleCall_0()); 
     }
-(
+((
 	kw='.' 
     {
         $current.merge(kw);
-        newLeafNode(kw, grammarAccess.getQualifiedNameAccess().getFullStopKeyword_1_0()); 
+        newLeafNode(kw, grammarAccess.getQualifiedNameAccess().getFullStopKeyword_1_0_0()); 
     }
-    this_ID_2=RULE_ID    {
-		$current.merge(this_ID_2);
+
+    |
+	kw='@' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getQualifiedNameAccess().getCommercialAtKeyword_1_0_1()); 
+    }
+)    this_ID_3=RULE_ID    {
+		$current.merge(this_ID_3);
     }
 
     { 
-    newLeafNode(this_ID_2, grammarAccess.getQualifiedNameAccess().getIDTerminalRuleCall_1_1()); 
+    newLeafNode(this_ID_3, grammarAccess.getQualifiedNameAccess().getIDTerminalRuleCall_1_1()); 
     }
 )*)
     ;

@@ -79,7 +79,7 @@ QualifiedNameWithWildCard:
 	QualifiedName '.*'?;
 
 QualifiedName:
-	ID ('.' ID)*;
+	ID (('.'|'@') ID)*;
 
 /*
  * Expresses SOA governance decisions

@@ -1427,7 +1427,7 @@ public class SolutionDslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QualifiedName:
-	//	ID ("." ID)*;
+	//	ID (("." | "@") ID)*;
 	public SOABaseDslGrammarAccess.QualifiedNameElements getQualifiedNameAccess() {
 		return gaSOABaseDsl.getQualifiedNameAccess();
 	}

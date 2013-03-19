@@ -3133,7 +3133,7 @@ public class SLADslGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//QualifiedName:
-	//	ID ("." ID)*;
+	//	ID (("." | "@") ID)*;
 	public SOABaseDslGrammarAccess.QualifiedNameElements getQualifiedNameAccess() {
 		return gaSOABaseDsl.getQualifiedNameAccess();
 	}
