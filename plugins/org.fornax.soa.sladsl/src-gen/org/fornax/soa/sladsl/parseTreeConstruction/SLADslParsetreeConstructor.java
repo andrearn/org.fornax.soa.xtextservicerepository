@@ -90,6 +90,7 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule SlaModel ****************
  *
  * SlaModel:
+ * 
  * 	agreements+=SLA*;
  *
  **/
@@ -146,26 +147,43 @@ protected class SlaModel_AgreementsAssignment extends AssignmentToken  {
 /************ begin Rule SLA ****************
  *
  * SLA:
+ * 
  * 	"service-level-agreement" name=QualifiedName version=Version? "{" "effective-date" effectiveDate=STRING
+ * 
  * 	("effective-until" effectiveUntil=STRING)? parties+=Party* ("scope" scope=STRING)? ("preample" preample=STRING)?
+ * 
  * 	("description" description=STRING)? ("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration*
+ * 
  * 	("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
+ * 
  * 	serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
+ * 
  * 	dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
+ * 
  * 	("additional-services" additionalServices=STRING)? escalationProcedure=Escalation? ("cancellation"
+ * 
  * 	cancellation=STRING)? ("extraordinary-cancellation" extraordinaryCancellation=STRING)? reports+=Report*
+ * 
  * 	("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")? ("tags" tags+=[semanticsDsl::Tag]+)* "}";
  *
  **/
 
 // "service-level-agreement" name=QualifiedName version=Version? "{" "effective-date" effectiveDate=STRING
+// 
 // ("effective-until" effectiveUntil=STRING)? parties+=Party* ("scope" scope=STRING)? ("preample" preample=STRING)?
+// 
 // ("description" description=STRING)? ("restrictions" restrictions=STRING)? priorities+=PriorityDeclaration*
+// 
 // ("applies-to" "{" appliesTo+=AssetRef* "}")? costs=Cost? ("service-quality-requirements" "{"
+// 
 // serviceQualityProperties+=ServiceQualityProperty* "}") ("data-security-and-protection" "{" ("general-security-terms"
+// 
 // dataSecProtClause=STRING)? ("security-requirements" "{" securityRequirements+=SecurityRequirement* "}") "}")?
+// 
 // ("additional-services" additionalServices=STRING)? escalationProcedure=Escalation? ("cancellation"
+// 
 // cancellation=STRING)? ("extraordinary-cancellation" extraordinaryCancellation=STRING)? reports+=Report*
+// 
 // ("subscriptions" "{" subscriptions+=[basedsl::User|QualifiedName]* "}")? ("tags" tags+=[semanticsDsl::Tag]+)* "}"
 protected class SLA_Group extends GroupToken {
 	
@@ -1229,6 +1247,7 @@ protected class SLA_RightCurlyBracketKeyword_15_3 extends KeywordToken  {
 
 
 // ("data-security-and-protection" "{" ("general-security-terms" dataSecProtClause=STRING)? ("security-requirements" "{"
+// 
 // securityRequirements+=SecurityRequirement* "}") "}")?
 protected class SLA_Group_16 extends GroupToken {
 	
@@ -2140,12 +2159,15 @@ protected class SLA_RightCurlyBracketKeyword_24 extends KeywordToken  {
 /************ begin Rule Cost ****************
  *
  * Cost:
+ * 
  * 	"costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING ("effort-accounting"
+ * 
  * 	effortAccounting=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}";
  *
  **/
 
 // "costs" "{" "amount" costsAmount=STRING "billed-per-unit" billedUnit=STRING ("effort-accounting"
+// 
 // effortAccounting=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}"
 protected class Cost_Group extends GroupToken {
 	
@@ -2569,12 +2591,15 @@ protected class Cost_RightCurlyBracketKeyword_9 extends KeywordToken  {
 /************ begin Rule ServiceQualityProperty ****************
  *
  * ServiceQualityProperty:
+ * 
  * 	Availability | Throughput | Latency | MaxDownTime | CapacityRequirement | AccuracyRequirement | ReliablityRequirement
+ * 
  * 	| LogRequirement;
  *
  **/
 
 // Availability | Throughput | Latency | MaxDownTime | CapacityRequirement | AccuracyRequirement | ReliablityRequirement |
+// 
 // LogRequirement
 protected class ServiceQualityProperty_Alternatives extends AlternativesToken {
 
@@ -2913,12 +2938,15 @@ protected class ServiceQualityProperty_LogRequirementParserRuleCall_7 extends Ru
 /************ begin Rule Availability ****************
  *
  * Availability:
+ * 
  * 	"availability" "{" "availability" availability=STRING ("mean-time-between-failure" mtbf=STRING)?
+ * 
  * 	("mean-time-to-repair" mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times" regularDownTimes=STRING)? "}";
  *
  **/
 
 // "availability" "{" "availability" availability=STRING ("mean-time-between-failure" mtbf=STRING)? ("mean-time-to-repair"
+// 
 // mttr=STRING mttrPercentile=Percentile?)? ("regular-down-times" regularDownTimes=STRING)? "}"
 protected class Availability_Group extends GroupToken {
 	
@@ -3366,12 +3394,15 @@ protected class Availability_RightCurlyBracketKeyword_7 extends KeywordToken  {
 /************ begin Rule Throughput ****************
  *
  * Throughput:
+ * 
  * 	"throughput" "{" "throughput" definition=STRING "score-to-be-kept" score=STRING escalation=Escalation? ("penalty"
+ * 
  * 	penalty=STRING)? "}";
  *
  **/
 
 // "throughput" "{" "throughput" definition=STRING "score-to-be-kept" score=STRING escalation=Escalation? ("penalty"
+// 
 // penalty=STRING)? "}"
 protected class Throughput_Group extends GroupToken {
 	
@@ -3713,12 +3744,15 @@ protected class Throughput_RightCurlyBracketKeyword_8 extends KeywordToken  {
 /************ begin Rule Latency ****************
  *
  * Latency:
+ * 
  * 	"latency" "{" "latency" latency="STRING" "percentile" percentile=Percentile escalation=Escalation? ("penalty"
+ * 
  * 	penalty=STRING)? "}";
  *
  **/
 
 // "latency" "{" "latency" latency="STRING" "percentile" percentile=Percentile escalation=Escalation? ("penalty"
+// 
 // penalty=STRING)? "}"
 protected class Latency_Group extends GroupToken {
 	
@@ -4072,6 +4106,7 @@ protected class Latency_RightCurlyBracketKeyword_8 extends KeywordToken  {
 /************ begin Rule MaxDownTime ****************
  *
  * MaxDownTime:
+ * 
  * 	"max-downtime" "{" "duration" definition=STRING escalation=Escalation? ("penalty" penalty=STRING)? "}";
  *
  **/
@@ -4361,12 +4396,15 @@ protected class MaxDownTime_RightCurlyBracketKeyword_6 extends KeywordToken  {
 /************ begin Rule CapacityRequirement ****************
  *
  * CapacityRequirement:
+ * 
  * 	"capacity" "{" {CapacityRequirement} ("num-of-requests" requestNum=STRING "per" timeUnit=STRING)? ("message-size"
+ * 
  * 	messageSize=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}";
  *
  **/
 
 // "capacity" "{" {CapacityRequirement} ("num-of-requests" requestNum=STRING "per" timeUnit=STRING)? ("message-size"
+// 
 // messageSize=STRING)? escalation=Escalation? ("penalty" penalty=STRING)? "}"
 protected class CapacityRequirement_Group extends GroupToken {
 	
@@ -4844,6 +4882,7 @@ protected class CapacityRequirement_RightCurlyBracketKeyword_7 extends KeywordTo
 /************ begin Rule ReliablityRequirement ****************
  *
  * ReliablityRequirement:
+ * 
  * 	"message-exchange-reliability" "{" reliability=ReliablilityKind inOrderDelivery?="in-order-delivery"? "}";
  *
  **/
@@ -5018,6 +5057,7 @@ protected class ReliablityRequirement_RightCurlyBracketKeyword_4 extends Keyword
 /************ begin Rule AccuracyRequirement ****************
  *
  * AccuracyRequirement:
+ * 
  * 	"accuracy" "{" "max-error-rate" maxErrorRate=STRING escalation=Escalation? ("penalty" penalty=STRING)? "}";
  *
  **/
@@ -5307,12 +5347,15 @@ protected class AccuracyRequirement_RightCurlyBracketKeyword_6 extends KeywordTo
 /************ begin Rule LogRequirement ****************
  *
  * LogRequirement:
+ * 
  * 	"logging" "{" "message-log-level" logLevel=LogRequirementKind "additional-logging-requirements"
+ * 
  * 	additionalLoggingRequirement=STRING;
  *
  **/
 
 // "logging" "{" "message-log-level" logLevel=LogRequirementKind "additional-logging-requirements"
+// 
 // additionalLoggingRequirement=STRING
 protected class LogRequirement_Group extends GroupToken {
 	
@@ -5504,6 +5547,7 @@ protected class LogRequirement_AdditionalLoggingRequirementAssignment_5 extends 
 /************ begin Rule Percentile ****************
  *
  * Percentile:
+ * 
  * 	percentile=INT ("." INT)* "%";
  *
  **/
@@ -5599,6 +5643,7 @@ protected class Percentile_PercentSignKeyword_2 extends KeywordToken  {
 /************ begin Rule SecurityRequirement ****************
  *
  * / * Security policy to be applied to the services * / SecurityRequirement:
+ * 
  * 	AuthenticationRequirement | SigningRequirement | EncryptionRequirement;
  *
  **/
@@ -5751,14 +5796,19 @@ protected class SecurityRequirement_EncryptionRequirementParserRuleCall_2 extend
 /************ begin Rule AuthenticationRequirement ****************
  *
  * / * Requirement, that defines how consumer are authenticated * / AuthenticationRequirement:
+ * 
  * 	{AuthenticationRequirement} "authentication-procedure" optional?="optional"? "{" "auth-tokens" "{"
+ * 
  * 	authTokens+=AuthToken+ "}" "hash-algorithms" "{" hashAlgorithms+=HashAlgorithm* "}" useNonce?="use-nonce"? ("issuer"
+ * 
  * 	issuer=STRING)? "}";
  *
  **/
 
 // {AuthenticationRequirement} "authentication-procedure" optional?="optional"? "{" "auth-tokens" "{"
+// 
 // authTokens+=AuthToken+ "}" "hash-algorithms" "{" hashAlgorithms+=HashAlgorithm* "}" useNonce?="use-nonce"? ("issuer"
+// 
 // issuer=STRING)? "}"
 protected class AuthenticationRequirement_Group extends GroupToken {
 	
@@ -6265,6 +6315,7 @@ protected class AuthenticationRequirement_RightCurlyBracketKeyword_14 extends Ke
 /************ begin Rule AuthToken ****************
  *
  * AuthToken:
+ * 
  * 	optional?="optional"? kind=AuthTokenKind;
  *
  **/
@@ -6372,6 +6423,7 @@ protected class AuthToken_KindAssignment_1 extends AssignmentToken  {
 /************ begin Rule HashAlgorithm ****************
  *
  * HashAlgorithm:
+ * 
  * 	optional?="optional"? useBase64?="Base64-encoded"? kind=HashAlgKind;
  *
  **/
@@ -6514,14 +6566,19 @@ protected class HashAlgorithm_KindAssignment_2 extends AssignmentToken  {
 /************ begin Rule SigningRequirement ****************
  *
  * / * How messages are signed, to verify their authenticity * / SigningRequirement:
+ * 
  * 	{SigningRequirement} "signing-policy" "{" ("supported-algorithms" supportedSigningAlgorithms+=SigningAlgothm+)?
+ * 
  * 	("requires-algorithm" requiredSigningAlgorithm=SigningAlgothm)? ("signed-message-parts" signedParts+=MessagePartRef
+ * 
  * 	("," signedParts+=MessagePartRef)*)? "}";
  *
  **/
 
 // {SigningRequirement} "signing-policy" "{" ("supported-algorithms" supportedSigningAlgorithms+=SigningAlgothm+)?
+// 
 // ("requires-algorithm" requiredSigningAlgorithm=SigningAlgothm)? ("signed-message-parts" signedParts+=MessagePartRef
+// 
 // ("," signedParts+=MessagePartRef)*)? "}"
 protected class SigningRequirement_Group extends GroupToken {
 	
@@ -6999,6 +7056,7 @@ protected class SigningRequirement_RightCurlyBracketKeyword_6 extends KeywordTok
 /************ begin Rule MessagePartRef ****************
  *
  * MessagePartRef:
+ * 
  * 	messagePartRef=MessagePartRefKind ("expression" partRefExpression=STRING)?;
  *
  **/
@@ -7152,14 +7210,19 @@ protected class MessagePartRef_PartRefExpressionAssignment_1_1 extends Assignmen
 /************ begin Rule EncryptionRequirement ****************
  *
  * / * How messages are encrypted * / EncryptionRequirement:
+ * 
  * 	{EncryptionRequirement} "encryption-policy" "{" ("supported-algorithms"
+ * 
  * 	supportedCipherAlgorithms+=CipherAlgorithmKind+)? ("requires-algorithm" requiredCipherAlgorithm=CipherAlgorithmKind)?
+ * 
  * 	("encrypted-message-parts" encryptedParts+=MessagePartRef ("," encryptedParts+=MessagePartRef)*)? "}";
  *
  **/
 
 // {EncryptionRequirement} "encryption-policy" "{" ("supported-algorithms"
+// 
 // supportedCipherAlgorithms+=CipherAlgorithmKind+)? ("requires-algorithm" requiredCipherAlgorithm=CipherAlgorithmKind)?
+// 
 // ("encrypted-message-parts" encryptedParts+=MessagePartRef ("," encryptedParts+=MessagePartRef)*)? "}"
 protected class EncryptionRequirement_Group extends GroupToken {
 	
@@ -7637,6 +7700,7 @@ protected class EncryptionRequirement_RightCurlyBracketKeyword_6 extends Keyword
 /************ begin Rule PriorityDeclaration ****************
  *
  * PriorityDeclaration:
+ * 
  * 	"priority" name=ID "description" description=STRING;
  *
  **/
@@ -7788,12 +7852,15 @@ protected class PriorityDeclaration_DescriptionAssignment_3 extends AssignmentTo
 /************ begin Rule Escalation ****************
  *
  * Escalation:
+ * 
  * 	"escalation" "{" ("cause" cause=STRING)? "escalate-to" "{" escalationTargets+=[basedsl::User|QualifiedName]+ "}"
+ * 
  * 	("procedure" procedure=STRING)? "}";
  *
  **/
 
 // "escalation" "{" ("cause" cause=STRING)? "escalate-to" "{" escalationTargets+=[basedsl::User|QualifiedName]+ "}"
+// 
 // ("procedure" procedure=STRING)? "}"
 protected class Escalation_Group extends GroupToken {
 	
@@ -8159,6 +8226,7 @@ protected class Escalation_RightCurlyBracketKeyword_8 extends KeywordToken  {
 /************ begin Rule Party ****************
  *
  * Party:
+ * 
  * 	CustomerParty | ProviderParty | ThirdParty;
  *
  **/
@@ -8311,6 +8379,7 @@ protected class Party_ThirdPartyParserRuleCall_2 extends RuleCallToken {
 /************ begin Rule CustomerParty ****************
  *
  * CustomerParty:
+ * 
  * 	"customer-party" name=QualifiedName "{" representatives+=Representative+ responsibilities+=Responsibility+ "}";
  *
  **/
@@ -8544,6 +8613,7 @@ protected class CustomerParty_RightCurlyBracketKeyword_5 extends KeywordToken  {
 /************ begin Rule ProviderParty ****************
  *
  * ProviderParty:
+ * 
  * 	"provider-party" name=QualifiedName "{" representatives+=Representative+ responsibilities+=Responsibility+ "}";
  *
  **/
@@ -8777,12 +8847,15 @@ protected class ProviderParty_RightCurlyBracketKeyword_5 extends KeywordToken  {
 /************ begin Rule ThirdParty ****************
  *
  * ThirdParty:
+ * 
  * 	"third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Representative+
+ * 
  * 	responsibilities+=Responsibility+ "}";
  *
  **/
 
 // "third-party" name=QualifiedName "{" "participation-role" role=STRING representatives+=Representative+
+// 
 // responsibilities+=Responsibility+ "}"
 protected class ThirdParty_Group extends GroupToken {
 	
@@ -9068,6 +9141,7 @@ protected class ThirdParty_RightCurlyBracketKeyword_7 extends KeywordToken  {
 /************ begin Rule Representative ****************
  *
  * Representative:
+ * 
  * 	UserRef | InlineRepresentative;
  *
  **/
@@ -9182,6 +9256,7 @@ protected class Representative_InlineRepresentativeParserRuleCall_1 extends Rule
 /************ begin Rule UserRef ****************
  *
  * UserRef:
+ * 
  * 	representative=[basedsl::User|QualifiedName];
  *
  **/
@@ -9230,12 +9305,15 @@ protected class UserRef_RepresentativeAssignment extends AssignmentToken  {
 /************ begin Rule InlineRepresentative ****************
  *
  * InlineRepresentative:
+ * 
  * 	{InlineRepresentative} "representative" "{" ("first-name" firstname=STRING)? ("last-name" lastname=STRING)?
+ * 
  * 	("org-unit" orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}";
  *
  **/
 
 // {InlineRepresentative} "representative" "{" ("first-name" firstname=STRING)? ("last-name" lastname=STRING)? ("org-unit"
+// 
 // orgUnit=STRING)? ("email" email=STRING)? ("phone" phone=STRING)? "}"
 protected class InlineRepresentative_Group extends GroupToken {
 	
@@ -9774,6 +9852,7 @@ protected class InlineRepresentative_RightCurlyBracketKeyword_8 extends KeywordT
 /************ begin Rule Responsibility ****************
  *
  * Responsibility:
+ * 
  * 	"responsibility" description=STRING;
  *
  **/
@@ -9869,6 +9948,7 @@ protected class Responsibility_DescriptionAssignment_1 extends AssignmentToken  
 /************ begin Rule Report ****************
  *
  * Report:
+ * 
  * 	"report" name=ID "{" "report-to" reportTo=[basedsl::User|QualifiedName] "contents" content=STRING "}";
  *
  **/
@@ -10123,6 +10203,7 @@ protected class Report_RightCurlyBracketKeyword_7 extends KeywordToken  {
 /************ begin Rule Import ****************
  *
  * / * Java like imports * / Import:
+ * 
  * 	"import" importedNamespace=QualifiedNameWithWildCard;
  *
  **/
@@ -10219,6 +10300,7 @@ protected class Import_ImportedNamespaceAssignment_1 extends AssignmentToken  {
 /************ begin Rule VersionedName ****************
  *
  * VersionedName:
+ * 
  * 	{VersionedName} QualifiedName | ID WS* version=VersionId;
  *
  **/
@@ -10411,6 +10493,7 @@ protected class VersionedName_VersionAssignment_1_2 extends AssignmentToken  {
  * / *
  *  * A version qualifier for versioned assets
  *  * / Version:
+ * 
  * 	"version" version=VersionId;
  *
  **/
@@ -10508,6 +10591,7 @@ protected class Version_VersionAssignment_1 extends AssignmentToken  {
  * / *
  *  * Version constraints applied to referenced assets
  *  * / VersionRef:
+ * 
  * 	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
  *
  **/
@@ -10738,6 +10822,7 @@ protected class VersionRef_FixedVersionRefParserRuleCall_4 extends RuleCallToken
  * / *
  *  * Assets, where the version is lesser than maximal version: asset version >= minVersion
  *  * / MinVersionRef:
+ * 
  * 	"minVersion" minVersion=VersionId;
  *
  **/
@@ -10835,6 +10920,7 @@ protected class MinVersionRef_MinVersionAssignment_1 extends AssignmentToken  {
  * / *
  *  * Assets, that match a minimal version: asset version >= minVersion
  *  * / MaxVersionRef:
+ * 
  * 	"maxVersion" maxVersion=VersionId;
  *
  **/
@@ -10932,6 +11018,7 @@ protected class MaxVersionRef_MaxVersionAssignment_1 extends AssignmentToken  {
  * / *
  *  * Matches version in the half open range [minVersion, maxVersion)
  *  * / LowerBoundRangeVersionRef:
+ * 
  * 	("minVersion" ">=") minVersion=VersionId "," ("maxVersion" "<") maxVersion=VersionId;
  *
  **/
@@ -11196,7 +11283,10 @@ protected class LowerBoundRangeVersionRef_MaxVersionAssignment_4 extends Assignm
  *
  * / *
  *  * Constraint matches assets with any version with the same major version, i.e. the first INT until the first '.' is equal
- *  * / MajorVersionRef:
+ *  * /
+ * 
+ * MajorVersionRef:
+ * 
  * 	"majorVersion" majorVersion=INT;
  *
  **/
@@ -11294,6 +11384,7 @@ protected class MajorVersionRef_MajorVersionAssignment_1 extends AssignmentToken
  * / *
  *  * Constraint that matches an asset version  explicitely
  *  * / FixedVersionRef:
+ * 
  * 	"fixedVersion" fixedVersion=VersionId;
  *
  **/
@@ -11393,15 +11484,22 @@ protected class FixedVersionRef_FixedVersionAssignment_1 extends AssignmentToken
  * / *
  *  * Expresses SOA governance decisions
  *  * voteing until date will be part of the review ballots captured in the side store
- *  * / GovernanceDecision:
+ *  * /
+ * 
+ * GovernanceDecision:
+ * 
  * 	"governance-decision" "{" ("subject" subject=STRING) ("decision-result" decisionResult=GovernanceDecisionResult)
+ * 
  * 	("specific-result" specificResult=STRING)? ("justification-doc" justificationOrDocURL=STRING)? ("decision-date"
+ * 
  * 	approvalDate=STRING)? ("decision-by" approvedBy=STRING)? ("effective-date" effectiveDate=STRING)? "}";
  *
  **/
 
 // "governance-decision" "{" ("subject" subject=STRING) ("decision-result" decisionResult=GovernanceDecisionResult)
+// 
 // ("specific-result" specificResult=STRING)? ("justification-doc" justificationOrDocURL=STRING)? ("decision-date"
+// 
 // approvalDate=STRING)? ("decision-by" approvedBy=STRING)? ("effective-date" effectiveDate=STRING)? "}"
 protected class GovernanceDecision_Group extends GroupToken {
 	
@@ -12071,6 +12169,7 @@ protected class GovernanceDecision_RightCurlyBracketKeyword_9 extends KeywordTok
 /************ begin Rule AbstractType ****************
  *
  * AbstractType:
+ * 
  * 	{AbstractType} name=ID;
  *
  **/
@@ -12171,6 +12270,7 @@ protected class AbstractType_NameAssignment_1 extends AssignmentToken  {
 /************ begin Rule AdditionalInformation ****************
  *
  * AdditionalInformation:
+ * 
  * 	"additional-information" "{" infoItems+=InfoItem+ "}";
  *
  **/
@@ -12323,6 +12423,7 @@ protected class AdditionalInformation_RightCurlyBracketKeyword_3 extends Keyword
 /************ begin Rule InfoItem ****************
  *
  * InfoItem:
+ * 
  * 	"location" documentLocation=STRING ("reference" reference=STRING)?;
  *
  **/
@@ -12498,12 +12599,15 @@ protected class InfoItem_ReferenceAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule User ****************
  *
  * User:
+ * 
  * 	name=QualifiedName firstname=STRING? lastname=STRING? org=STRING? orgUnit=STRING? email=STRING? phone=STRING?
+ * 
  * 	roles+=RoleRef*;
  *
  **/
 
 // name=QualifiedName firstname=STRING? lastname=STRING? org=STRING? orgUnit=STRING? email=STRING? phone=STRING?
+// 
 // roles+=RoleRef*
 protected class User_Group extends GroupToken {
 	
@@ -12852,6 +12956,7 @@ protected class User_RolesAssignment_7 extends AssignmentToken  {
 /************ begin Rule RoleRef ****************
  *
  * RoleRef:
+ * 
  * 	role=[Role|QualifiedName];
  *
  **/
@@ -12900,6 +13005,7 @@ protected class RoleRef_RoleAssignment extends AssignmentToken  {
 /************ begin Rule Role ****************
  *
  * Role:
+ * 
  * 	name=STRING grants+=PrivilegeRef*;
  *
  **/
@@ -13021,6 +13127,7 @@ protected class Role_GrantsAssignment_1 extends AssignmentToken  {
 /************ begin Rule PrivilegeRef ****************
  *
  * PrivilegeRef:
+ * 
  * 	privilege=[Privilege|QualifiedName];
  *
  **/
@@ -13069,6 +13176,7 @@ protected class PrivilegeRef_PrivilegeAssignment extends AssignmentToken  {
 /************ begin Rule Privilege ****************
  *
  * Privilege:
+ * 
  * 	name=QualifiedName readACL+=QualifiedName* writeACL+=QualifiedName* executeACL+=QualifiedName*;
  *
  **/
@@ -13253,6 +13361,7 @@ protected class Privilege_ExecuteACLAssignment_3 extends AssignmentToken  {
 /************ begin Rule AssetRef ****************
  *
  * AssetRef:
+ * 
  * 	asset=[ecore::EObject|QualifiedName] versionRef=VersionRef?;
  *
  **/
