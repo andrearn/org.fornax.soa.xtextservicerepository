@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<groupId>org.fornax.soa.servicerepo.poms</groupId>
+	<artifactId>parent</artifactId>
+	<version>1.6.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<properties>
+		<tycho-version>0.16.0</tycho-version>
+		<xtext-version>2.3.1</xtext-version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<modules>
+	  <module>../plugins/org.fornax.soa.basedsl</module>
+	  <module>../plugins/org.fornax.soa.bindingdsl</module>
+	  <module>../plugins/org.fornax.soa.businessdsl</module>
+	  <module>../plugins/org.fornax.soa.environmentdsl</module>
+	  <module>../plugins/org.fornax.soa.moduledsl</module>
+	  <module>../plugins/org.fornax.soa.profiledsl</module>
+	  <module>../plugins/org.fornax.soa.semanticsdsl</module>
+	  <module>../plugins/org.fornax.soa.servicedsl</module>
+	  <module>../plugins/org.fornax.soa.sladsl</module>
+	  <module>../plugins/org.fornax.soa.solutiondsl</module>
+	  
+	  <module>../plugins/org.fornax.soa.basedsl.generator</module>
+	  <module>../plugins/org.fornax.soa.bindingdsl.generator</module>
+	  <module>../plugins/org.fornax.soa.businessdsl.generator</module>
+	  <module>../plugins/org.fornax.soa.environmentdsl.generator</module>
+	  <module>../plugins/org.fornax.soa.moduledsl.generator</module>
+	  <module>../plugins/org.fornax.soa.profiledsl.generator</module>
+	  <module>../plugins/org.fornax.soa.semanticsdsl.generator</module>
+	  <module>../plugins/org.fornax.soa.servicedsl.generator</module>
+	  <module>../plugins/org.fornax.soa.solutiondsl.generator</module>
+	  <module>../plugins/org.fornax.soa.xtextservicerepo.generator</module>
+	  
+	  <module>../plugins/org.fornax.soa.basedsl.ui</module>
+	  <module>../plugins/org.fornax.soa.bindingdsl.ui</module>
+	  <module>../plugins/org.fornax.soa.businessdsl.ui</module>
+	  <module>../plugins/org.fornax.soa.environmentdsl.ui</module>
+	  <module>../plugins/org.fornax.soa.moduledsl.ui</module>
+	  <module>../plugins/org.fornax.soa.profiledsl.ui</module>
+	  <module>../plugins/org.fornax.soa.semanticsdsl.ui</module>
+	  <module>../plugins/org.fornax.soa.servicedsl.ui</module>
+	  <module>../plugins/org.fornax.soa.sladsl.ui</module>
+	  <module>../plugins/org.fornax.soa.solutiondsl.ui</module>
+	  <module>../plugins/org.fornax.soa.servicerepo.ui</module>
+	  
+	  <module>../plugins/org.fornax.soa.servicerepo</module>
+	  
+	  <module>../plugins/org.fornax.soa.businessdsl.view.fragment</module>
+	  <module>../plugins/org.fornax.soa.moduledsl.view.fragment</module>
+	  <module>../plugins/org.fornax.soa.profiledsl.view.fragment</module>
+	  <module>../plugins/org.fornax.soa.servicedsl.view.fragment</module>
+	  <module>../plugins/org.fornax.soa.solutiondsl.view.fragment</module>
+	  
+	  <module>../plugins/org.fornax.soa.servicedsl.view</module>
+	  <module>../plugins/org.fornax.soa.solutiondsl.view</module>
+	  
+	  <module>../features/org.fornax.soa.basedsl.generator-feature</module>
+	  <module>../features/org.fornax.soa.basedsl-feature</module>
+	  <module>../features/org.fornax.soa.bindingdsl.generator-feature</module>
+	  <module>../features/org.fornax.soa.bindingdsl-feature</module>
+	  <module>../features/org.fornax.soa.businessdsl.generator-feature</module>
+	  <module>../features/org.fornax.soa.businessdsl-feature</module>
+	  <module>../features/org.fornax.soa.dslkit-feature</module>
+	  <module>../features/org.fornax.soa.environmentdsl.generator-feature</module>
+	  <module>../features/org.fornax.soa.environmentdsl-feature</module>
+	  <module>../features/org.fornax.soa.moduledsl.generator-feature</module>
+	  <module>../features/org.fornax.soa.moduledsl-feature</module>
+	  <module>../features/org.fornax.soa.profiledsl.generator-feature</module>
+	  <module>../features/org.fornax.soa.profiledsl-feature</module>
+	  <module>../features/org.fornax.soa.semanticsdsl.generator-feature</module>
+	  <module>../features/org.fornax.soa.semanticsdsl-feature</module>
+	  <module>../features/org.fornax.soa.servicedsl.generator-feature</module>
+	  <module>../features/org.fornax.soa.servicedsl-feature</module>
+	  <module>../features/org.fornax.soa.servicerepo.doc-feature</module>
+	  <module>../features/org.fornax.soa.servicerepo.examples-feature</module>
+	  <module>../features/org.fornax.soa.servicerepo.ui-feature</module>
+	  <module>../features/org.fornax.soa.sladsl-feature</module>
+	  <module>../features/org.fornax.soa.solutiondsl.generator-feature</module>
+	  <module>../features/org.fornax.soa.solutiondsl-feature</module>
+	  <module>../features/org.fornax.soa.xtextservicerepo.dsl.sdk-feature</module>
+	  <module>../features/org.fornax.soa.xtextservicerepo.generator-feature</module>
+	  <module>../features/org.fornax.soa.xtextservicerepo.generators.sdk-feature</module>
+	  <module>../features/org.fornax.soa.xtextservicerepo.view-feature/</module>
+	  
+	  <module>../docs/org.fornax.soa.servicerepo.doc</module>
+	  <module>../examples/org.fornax.soa.servicerepo.examples/org.fornax.soa.servicerepo.examples/</module>
+	  
+	  <module>../releng/org.fornax.soa.xtextservicerepository.updatesite</module>
+	  
+	  <module>../test/org.fornax.soa.basedsl.test</module>
+	  <module>../test/org.fornax.soa.environmentdsl.test</module>
+	  <module>../test/org.fornax.soa.profiledsl.test</module>
+	  <module>../test/org.fornax.soa.servicedsl.test</module>
+	  <module>../test/org.fornax.soa.test</module>
+	</modules>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src</directory>
+			</resource>
+		</resources>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<pomDependencies>consider</pomDependencies>
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+				</configuration>
+			</plugin>
+			
+			<!--plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<executions>
+					<execution>
+						<id>attach-source</id>
+						<goals>
+							<goal>plugin-source</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin-->
+			
+			
+		</plugins>
+		
+		<pluginManagement>
+			<plugins>
+				<!-- TYCHO -->
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-compiler-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<source>5.0</source>
+						<target>5.0</target>
+						<excludeResources>
+							<exludeResource>**/*.xtend</exludeResource>
+						</excludeResources>
+					</configuration>
+				</plugin>
+				
+				<!-- enable source bundle generation -->
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-surefire-plugin</artifactId>
+					<version>${tycho-version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>maven-osgi-test-plugin</artifactId>
+					<version>${tycho-version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-p2-repository-plugin</artifactId>
+					<version>${tycho-version}</version>
+				</plugin>
+				
+				<!-- APACHE MAVEN PLUGINS -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.3</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.9</version>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+					<configuration>
+						<filesets>
+							<fileset>
+								<directory>${basedir}/xtend-gen</directory>
+								<includes>
+									<include>**</include>
+								</includes>
+								<excludes>
+									<exclude>**.gitignore</exclude>
+								</excludes>
+							</fileset>
+							<fileset>
+								<directory>${basedir}/src-gen</directory>
+								<includes>
+									<include>**</include>
+								</includes>
+								<excludes>
+									<exclude>**.gitignore</exclude>
+								</excludes>
+							</fileset>
+						</filesets>
+					</configuration>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.3</version>
+				</plugin>
+				
+				<!-- OTHER PLUGINS -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.7</version>
+					<executions>
+						<execution>
+							<id>add-source</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>${project.build.directory}/src-gen</source>
+								</sources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				
+				<plugin>
+					<groupId>org.eclipse.dash.maven</groupId>
+					<artifactId>eclipse-signing-maven-plugin</artifactId>
+					<version>1.0.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<pluginRepositories>
+		<!-- Fornax Workflow Runner plugin -->
+		<pluginRepository>
+			<id>fornax</id>
+			<url>http://www.fornax-platform.org/m2/repository</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>xtend</id>
+			<url>http://build.eclipse.org/common/xtend/maven/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<repositories>
+		<repository>
+			<id>itemis</id>
+			<layout>p2</layout>
+			<url>http://download.itemis.com/updates/releases</url>
+		</repository>
+		<repository>
+			<id>indigo</id>
+			<layout>p2</layout>
+			<url>http://download.eclipse.org/releases/indigo</url>
+		</repository>
+		<repository>
+			<id>graphview</id>
+			<layout>p2</layout>
+			<url>https://raw.github.com/athurn/Generic-Graph-View/master/org.eclipse.xtext.graphview.p2.repository/</url>
+		</repository>
+		
+	  <repository>
+	    <id>xtend</id>
+	    <url>http://build.eclipse.org/common/xtend/maven/</url>
+	  </repository>
+	</repositories>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.tycho</groupId>
+						<artifactId>maven-osgi-packaging-plugin</artifactId>
+						<configuration>
+							<strictVersions>false</strictVersions>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-scm-plugin</artifactId>
+						<configuration>
+							<basedir>${basedir}</basedir>
+							<includes>${basedir}/../feature/feature.xml,${basedir}/../site/site.xml,${basedir}/repository/category.xml</includes>
+							<message>[maven-release-plugin] prepare release of OSGI artifacts</message>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>skip-ui-tests</id>
+			<activation>
+				<property>
+					<name>skip-ui-tests</name>
+				</property>
+			</activation>
+			<properties>
+				<tycho.surefire.skipUiTest>true</tycho.surefire.skipUiTest>
+			</properties>
+		</profile>
+	</profiles>
+
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>org.eclipse.xtend.standalone</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr</artifactId>
+				<version>3.4</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<licenses>
+		<license>
+			<name>Eclipse Public License v1.0</name>
+			<comments>
+       All rights reserved.
+
+       This program and the accompanying materials are made
+       available under the terms of the Eclipse Public License v1.0
+       which accompanies this distribution, and is available at
+       http://www.eclipse.org/legal/epl-v10.htm
+      </comments>
+		</license>
+	</licenses>
+</project>
