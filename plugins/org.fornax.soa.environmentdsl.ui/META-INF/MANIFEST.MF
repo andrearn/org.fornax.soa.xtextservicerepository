@@ -22,5 +22,6 @@ Require-Bundle: org.fornax.soa.environmentdsl;bundle-version="1.5.5";visibility:
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.ui.contentassist.antlr,
- org.fornax.soa.ui.contentassist
+ org.fornax.soa.ui.contentassist,
+ org.fornax.soa.ui.quickfix
 Bundle-Activator: org.fornax.soa.ui.internal.CustomEnvironmentDslActivator

@@ -20,5 +20,6 @@ Export-Package: org.fornax.soa.basedsl.ui.contentassist,
  org.fornax.soa.basedsl.ui.contentassist.antlr,
  org.fornax.soa.basedsl.ui.editor,
  org.fornax.soa.basedsl.ui.hierarchy,
- org.fornax.soa.basedsl.ui.labeling
+ org.fornax.soa.basedsl.ui.labeling,
+ org.fornax.soa.basedsl.ui.quickfix
 Bundle-Activator: org.fornax.soa.basedsl.ui.internal.CustomSOABaseDslActivator

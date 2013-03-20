@@ -23,5 +23,6 @@ Require-Bundle: org.fornax.soa.moduledsl;bundle-version="1.5.5";visibility:=reex
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.moduledsl.ui.contentassist.antlr,
- org.fornax.soa.moduledsl.ui.contentassist
+ org.fornax.soa.moduledsl.ui.contentassist,
+ org.fornax.soa.moduledsl.ui.quickfix
 Bundle-Activator: org.fornax.soa.moduledsl.ui.internal.CustomModuleDslActivator

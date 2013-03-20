@@ -23,5 +23,6 @@ Require-Bundle: org.fornax.soa.profiledsl;bundle-version="1.5.5";visibility:=ree
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.profiledsl.ui.contentassist.antlr,
- org.fornax.soa.profiledsl.ui.contentassist
+ org.fornax.soa.profiledsl.ui.contentassist,
+ org.fornax.soa.profiledsl.ui.quickfix
 Bundle-Activator: org.fornax.soa.profiledsl.ui.internal.CustomSOAProfileDslActivator

@@ -23,5 +23,6 @@ Require-Bundle: org.fornax.soa.sladsl;bundle-version="1.5.5";visibility:=reexpor
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.sladsl.ui.contentassist,
- org.fornax.soa.sladsl.ui.contentassist.antlr
+ org.fornax.soa.sladsl.ui.contentassist.antlr,
+ org.fornax.soa.sladsl.ui.quickfix
 Bundle-Activator: org.fornax.soa.sladsl.ui.internal.CustomSLADslActivator
