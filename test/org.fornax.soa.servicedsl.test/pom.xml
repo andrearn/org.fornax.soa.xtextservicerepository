@@ -9,6 +9,6 @@
 		<relativePath>../../poms/test-parent.pom</relativePath>
 	</parent>
 
-	<artifactId>org.fornax.soa.profiledsl.test</artifactId>
+	<artifactId>org.fornax.soa.servicedsl.test</artifactId>
 	<packaging>eclipse-test-plugin</packaging>
 </project>
