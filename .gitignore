@@ -1,0 +1,24 @@
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+
+
+# Thumbnails
+._*
+
+#Linux
+.directory
+
+#Generated Files
+*/*/bin
+*/*/target
+*/*/src-gen
+*/*/xtend-gen
