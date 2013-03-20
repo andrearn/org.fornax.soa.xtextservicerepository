@@ -3,7 +3,7 @@ package org.fornax.soa.moduledsl.query
 import com.google.inject.Inject
 import java.util.Set
 import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory
-import org.fornax.soa.basedsl.search.IEObjectLookup
+import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.environmentDsl.Environment
 import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef
@@ -12,12 +12,17 @@ import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslFactory
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef
 import org.fornax.soa.profiledsl.query.LifecycleQueries
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.basedsl.search.IEObjectLookup
 
-class DefaultModuleServiceResolver implements IModuleServiceResolver {
+class LatestVersionModuleServiceResolver implements IModuleServiceResolver {
 	
+	@Inject extension VersionMatcher
+	@Inject extension NamespaceQuery
 	@Inject extension VersionQualifierExtensions
 	@Inject IStateMatcher stateMatcher
 	@Inject LifecycleQueries lifecycleQueries
@@ -81,14 +86,14 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 	 * Get the latest version of the service referenced in the ServiceRef matching the given minimal LifecycleState 
 	 */
 	def dispatch  Service resolveModuleServiceRefInternal (ServiceRef s, LifecycleState minState) {
-		s.service
+		s.service.findSubdomain().services.filter (e|e.name == s.service.name && e.version.versionMatches (s.versionRef) && stateMatcher.matches (minState, e.state)).sortBy(e|e.version.version).last();
 	}
 	
 	/**
 	 * Get the latest version of the service referenced in the ImportServiceRef matching the given minimal LifecycleState 
 	 */
 	def dispatch  Service resolveModuleServiceRefInternal (ImportServiceRef importServiceRef, LifecycleState minState) {
-		importServiceRef.service
+		importServiceRef.service.findSubdomain().services.filter (e|e.name == importServiceRef.service.name && e.version.versionMatches (importServiceRef.versionRef) && stateMatcher.matches (minState, e.state)).sortBy(e|e.version.version).last();
 	}
 	
 	/**
@@ -102,8 +107,7 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 	 * Get the latest version of the service referenced in the ServiceRef  eligible for the given environment 
 	 */
 	def dispatch  Service resolveModuleServiceRefInternal (ServiceRef svcRef, Environment env) {
-		val Module referringModule = objLookup.getOwnerByType (svcRef, typeof (Module))
-		val minState = referringModule.state
+		val minState = lifecycleQueries.getMinLifecycleState(env, svcRef.service.state.eContainer as Lifecycle)
 		resolveModuleServiceRef (svcRef, minState)
 	}
 
@@ -111,8 +115,7 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 	 * Get the latest version of the service referenced in the ImportServiceRef eligible for the given environment 
 	 */
 	def dispatch  Service resolveModuleServiceRefInternal (ImportServiceRef svcRef, Environment env) {
-		val Module referringModule = objLookup.getOwnerByType (svcRef, typeof (Module))
-		val minState = referringModule.state
+		val minState = lifecycleQueries.getMinLifecycleState(env, svcRef.service.state.eContainer as Lifecycle)
 		resolveModuleServiceRef (svcRef, minState)
 	}
 	
@@ -127,8 +130,4 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 		serviceRef.setVersionRef(verRef)
 		return serviceRef
 	}
-	
-		
-
-	
 }

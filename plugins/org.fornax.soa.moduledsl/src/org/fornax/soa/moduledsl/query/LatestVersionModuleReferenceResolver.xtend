@@ -1,24 +1,25 @@
 package org.fornax.soa.moduledsl.query
 
 import com.google.inject.Inject
-import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.eclipse.xtext.resource.IEObjectDescription
 import org.fornax.soa.basedsl.search.IEObjectDescriptionIsInstancePredicate
-import org.fornax.soa.basedsl.search.IEObjectLookup
 import org.fornax.soa.basedsl.search.IPredicateSearch
-import org.fornax.soa.basedsl.search.IReferenceSearch
-import org.fornax.soa.environmentDsl.Environment
-import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
-import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.moduleDsl.ModuleRef
 import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef
-import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.scoping.versions.IVersionFilterProvider
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.eclipse.xtext.EcoreUtil2
+import org.fornax.soa.environmentDsl.Environment
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
+import org.eclipse.xtext.resource.IEObjectDescription
+import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
+import org.fornax.soa.moduledsl.moduleDsl.ImportBindingProtocol
+import org.fornax.soa.basedsl.search.IReferenceSearch
+import org.fornax.soa.basedsl.search.IEObjectLookup
 
-class DefaultModuleReferenceResolver implements IModuleReferenceResolver {
+class LatestVersionModuleReferenceResolver implements IModuleReferenceResolver {
 	
 	@Inject
 	private IQualifiedNameProvider nameProvider
@@ -26,6 +27,8 @@ class DefaultModuleReferenceResolver implements IModuleReferenceResolver {
 	private IVersionFilterProvider versionFilterProvider
 	@Inject
 	private IPredicateSearch search
+	@Inject 
+	private IStateMatcher stateMatcher 
 	@Inject
 	private IReferenceSearch referenceSearch
 	@Inject
@@ -38,9 +41,7 @@ class DefaultModuleReferenceResolver implements IModuleReferenceResolver {
 	override resolveModuleServiceRef(ServiceModuleRef moduleRef, LifecycleState minState) {
 		val moduleName = nameProvider.getFullyQualifiedName (moduleRef.module)
 		val moduleDescs = search.search (moduleName.toString, "Module ", new IEObjectDescriptionIsInstancePredicate(typeof (Module)))
-		val Module referringModule = objLookup.getOwnerByType (moduleRef, typeof (Module))
-		val minimalState = referringModule.state
-		val versionFilter = versionFilterProvider.createVersionFilter(moduleRef.version, minimalState)
+		val versionFilter = versionFilterProvider.createVersionFilter(moduleRef.version, minState)
 		val moduleMap = versionFilter.getBestMatchByNames(moduleDescs, false)
 		val resolvedModuleDesc = moduleMap.get(moduleName)?.head as IEObjectDescription
 		var resolvedMod = resolvedModuleDesc.EObjectOrProxy as Module
@@ -52,22 +53,19 @@ class DefaultModuleReferenceResolver implements IModuleReferenceResolver {
 	
 
 	override resolveModuleRef(ModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle) {
-		val Module referringModule = objLookup.getOwnerByType (moduleRef, typeof (Module))
-		val minState = referringModule.state
+		val minState = stateMatcher.getLowestStateByEnvironment(lifecycle, targetEnvironment)
 		resolveModuleRef (moduleRef, minState)
 	}
 	
 	override resolveModuleServiceRef(ServiceModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle) {
-		val Module referringModule = objLookup.getOwnerByType (moduleRef, typeof (Module))
-		val minState = referringModule.state
+		val minState = stateMatcher.getLowestStateByEnvironment(lifecycle, targetEnvironment)
 		resolveModuleServiceRef (moduleRef, minState)
 	}
 	
 
 	override resolveModuleRef(ModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, ImportBindingProtocol usedProtocol) {
 		val svcModuleRef = moduleRef.moduleRef
-		val Module referringModule = objLookup.getOwnerByType (moduleRef, typeof (Module))
-		val minState = referringModule.state
+		val minState = stateMatcher.getLowestStateByEnvironment (lifecycle, targetEnvironment)
 		val moduleName = nameProvider.getFullyQualifiedName (svcModuleRef.module)
 		val moduleDescs = search.search (moduleName.toString, "Module ", new IEObjectDescriptionIsInstancePredicate(typeof (Module)))
 		val deployedModulePredicate = new DeployedModuleInEnvironmentPredicate(targetEnvironment, endpointQualifierRef, referenceSearch)
@@ -82,8 +80,7 @@ class DefaultModuleReferenceResolver implements IModuleReferenceResolver {
 	}
 	
 	override resolveModuleServiceRef(ServiceModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, ImportBindingProtocol usedProtocol) {
-		val Module referringModule = objLookup.getOwnerByType (moduleRef, typeof (Module))
-		val minState = referringModule.state
+		val minState = stateMatcher.getLowestStateByEnvironment (lifecycle, targetEnvironment)
 		val moduleName = nameProvider.getFullyQualifiedName (moduleRef.module)
 		val moduleDescs = search.search (moduleName.toString, "Module ", new IEObjectDescriptionIsInstancePredicate(typeof (Module)))
 		val deployedModulePredicate = new DeployedModuleInEnvironmentPredicate(targetEnvironment, endpointQualifierRef, referenceSearch)

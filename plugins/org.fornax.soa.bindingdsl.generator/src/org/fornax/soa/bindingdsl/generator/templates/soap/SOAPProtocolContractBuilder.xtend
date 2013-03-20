@@ -76,7 +76,8 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 					for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
 						if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (binding.resolveEnvironment)) {
 							val namespace = svc.findSubdomain();
-							val minState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
+//							val minState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
+							val minState = binding.module.module.state
 									
 							wsdlGenerator.toWSDL (svc, namespace, minState, profile, binding.getRegistryBaseUrl());
 							concreteWsdlGenerator.toWSDL(binding, svc, soapProt, profile);
@@ -164,7 +165,8 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 			try {
 				if (service.providedContractUrl == null && service.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
 					val namespace = service.findSubdomain();
-					val minState = lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, profile.lifecycle)
+//					val minState = lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, profile.lifecycle)
+					val minState = serviceBindingDescription.providingModule.state
 							
 					wsdlGenerator.toWSDL (service, namespace, minState, profile, specBinding.getRegistryBaseUrl());
 					concreteWsdlGenerator.toWSDL(specBinding, service, soapProt, profile);
