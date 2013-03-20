@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.fornax.soa.semanticsdsl"
+      id="org.fornax.soa.semanticsdsl-feature"
       label="SOA Semantics DSL"
       version="1.6.0.qualifier"
       provider-name="Fornax Platform">

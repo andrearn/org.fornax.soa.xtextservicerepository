@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.fornax.soa.xtextservicerepo.generators.sdk"
+      id="org.fornax.soa.xtextservicerepo.generators.sdk-feature"
       label="SOA Xtext Service Repository generators SDK"
       version="1.6.0.qualifier"
       provider-name="Fornax Platform">
@@ -18,43 +18,43 @@
    </license>
 
    <includes
-         id="org.fornax.soa.basedsl.generator"
+         id="org.fornax.soa.basedsl.generator-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.bindingdsl.generator"
+         id="org.fornax.soa.bindingdsl.generator-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.businessdsl.generator"
+         id="org.fornax.soa.businessdsl.generator-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.environmentdsl.generator"
+         id="org.fornax.soa.environmentdsl.generator-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.moduledsl.generator"
+         id="org.fornax.soa.moduledsl.generator-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.profiledsl.generator"
+         id="org.fornax.soa.profiledsl.generator-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.semanticsdsl.generator"
+         id="org.fornax.soa.semanticsdsl.generator-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.servicedsl.generator"
+         id="org.fornax.soa.servicedsl.generator-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.solutiondsl.generator"
+         id="org.fornax.soa.solutiondsl.generator-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.xtextservicerepo.generator"
+         id="org.fornax.soa.xtextservicerepo.generator-feature"
          version="0.0.0"/>
 
 </feature>

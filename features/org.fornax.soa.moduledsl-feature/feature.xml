@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.fornax.soa.moduledsl"
+      id="org.fornax.soa.moduledsl-feature"
       label="SOA Module DSL feature"
       version="1.6.0.qualifier"
       provider-name="Fornax Platform">

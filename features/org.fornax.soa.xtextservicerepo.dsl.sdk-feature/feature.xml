@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.fornax.soa.xtextservicerepo.dsl.sdk"
+      id="org.fornax.soa.xtextservicerepo.dsl.sdk-feature"
       label="SOA Xtext Service Repository DSL SDK"
       version="1.6.0.qualifier"
       provider-name="Fornax Platform">
@@ -23,11 +23,11 @@
    </url>
 
    <includes
-         id="org.fornax.soa.dslkit"
+         id="org.fornax.soa.dslkit-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.servicerepo.examples"
+         id="org.fornax.soa.servicerepo.examples-feature"
          version="0.0.0"/>
 
    <plugin

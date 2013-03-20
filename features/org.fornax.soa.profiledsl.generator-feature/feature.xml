@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.fornax.soa.profiledsl.generator"
+      id="org.fornax.soa.profiledsl.generator-feature"
       label="SOA Profile DSL generator"
       version="1.6.0.qualifier"
       provider-name="Fornax Platform">

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.fornax.soa.businessdsl"
+      id="org.fornax.soa.businessdsl-feature"
       label="SOA Business DSL"
       version="1.6.0.qualifier"
       provider-name="Fornax Platform">

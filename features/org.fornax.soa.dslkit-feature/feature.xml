@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="org.fornax.soa.dslkit"
+      id="org.fornax.soa.dslkit-feature"
       label="SOA service repository DSL kit"
       version="1.6.0.qualifier"
       provider-name="Fornax Platform">
@@ -23,47 +23,47 @@
    </url>
 
    <includes
-         id="org.fornax.soa.bindingdsl"
+         id="org.fornax.soa.bindingdsl-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.businessdsl"
+         id="org.fornax.soa.businessdsl-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.environmentdsl"
+         id="org.fornax.soa.environmentdsl-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.semanticsdsl"
+         id="org.fornax.soa.semanticsdsl-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.servicedsl"
+         id="org.fornax.soa.servicedsl-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.solutiondsl"
+         id="org.fornax.soa.solutiondsl-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.servicerepo.ui"
+         id="org.fornax.soa.servicerepo.ui-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.profiledsl"
+         id="org.fornax.soa.profiledsl-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.basedsl"
+         id="org.fornax.soa.basedsl-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.moduledsl"
+         id="org.fornax.soa.moduledsl-feature"
          version="0.0.0"/>
 
    <includes
-         id="org.fornax.soa.sladsl"
+         id="org.fornax.soa.sladsl-feature"
          version="0.0.0"/>
 
 </feature>
