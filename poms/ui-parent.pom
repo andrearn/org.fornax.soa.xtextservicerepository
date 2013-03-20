@@ -5,9 +5,9 @@
 
 	<parent>
 		<groupId>org.fornax.soa.servicerepo.poms</groupId>
-		<artifactId>java-parent</artifactId>
+		<artifactId>generator-parent</artifactId>
 		<version>1.6.0-SNAPSHOT</version>
-		<relativePath>java-parent.pom</relativePath>
+		<relativePath>generator-parent.pom</relativePath>
 	</parent>
 
 	<groupId>org.fornax.soa.servicerepo.poms</groupId>
@@ -15,7 +15,29 @@
 	<packaging>pom</packaging>
 
 	<build>
-		
+		<plugins>
+			<!-- Do not clean the src-gen folder, therefore we remove all paths from 
+				the default configuration in the parent pom. Note the combine.self="override" 
+				statement -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration combine.self="override">
+					<fileset>
+						<directory>${basedir}/bin</directory>
+						<includes>
+							<include>**</include>
+						</includes>
+					</fileset>
+					<fileset>
+						<directory>${basedir}/target</directory>
+						<includes>
+							<include>**</include>
+						</includes>
+					</fileset>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
-	
 </project>

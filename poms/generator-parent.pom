@@ -21,10 +21,9 @@
 				<artifactId>xtend-maven-plugin</artifactId>
 				<version>${xtext-version}</version>
 				<configuration>
-						<encoding>UTF-8</encoding>
-														<outputDirectory>${basedir}/xtend-gen</outputDirectory>
-
-					</configuration>
+					<encoding>UTF-8</encoding>
+					<outputDirectory>${basedir}/xtend-gen</outputDirectory>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
@@ -33,17 +32,17 @@
 					</execution>
 				</executions>
 				<dependencies>
-						<!-- these dependencies are contributed in Eclipse by the "Xtend Library" 
-							classpath container -->
-						<dependency>
-							<groupId>org.eclipse.xtend</groupId>
-							<artifactId>org.eclipse.xtend.lib</artifactId>
-							<version>${xtext-version}</version>
-							<type>pom</type>
-						</dependency>
-					</dependencies>
+					<!-- these dependencies are contributed in Eclipse by the "Xtend Library" 
+						classpath container -->
+					<dependency>
+						<groupId>org.eclipse.xtend</groupId>
+						<artifactId>org.eclipse.xtend.lib</artifactId>
+						<version>${xtext-version}</version>
+						<type>pom</type>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>

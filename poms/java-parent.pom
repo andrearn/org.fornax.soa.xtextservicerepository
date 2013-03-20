@@ -14,8 +14,4 @@
 	<artifactId>java-parent</artifactId>
 	<packaging>pom</packaging>
 
-	<build>
-		
-	</build>
-	
 </project>

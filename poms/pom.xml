@@ -19,89 +19,89 @@
 	</properties>
 
 	<modules>
-	  <module>../plugins/org.fornax.soa.basedsl</module>
-	  <module>../plugins/org.fornax.soa.bindingdsl</module>
-	  <module>../plugins/org.fornax.soa.businessdsl</module>
-	  <module>../plugins/org.fornax.soa.environmentdsl</module>
-	  <module>../plugins/org.fornax.soa.moduledsl</module>
-	  <module>../plugins/org.fornax.soa.profiledsl</module>
-	  <module>../plugins/org.fornax.soa.semanticsdsl</module>
-	  <module>../plugins/org.fornax.soa.servicedsl</module>
-	  <module>../plugins/org.fornax.soa.sladsl</module>
-	  <module>../plugins/org.fornax.soa.solutiondsl</module>
-	  
-	  <module>../plugins/org.fornax.soa.basedsl.generator</module>
-	  <module>../plugins/org.fornax.soa.bindingdsl.generator</module>
-	  <module>../plugins/org.fornax.soa.businessdsl.generator</module>
-	  <module>../plugins/org.fornax.soa.environmentdsl.generator</module>
-	  <module>../plugins/org.fornax.soa.moduledsl.generator</module>
-	  <module>../plugins/org.fornax.soa.profiledsl.generator</module>
-	  <module>../plugins/org.fornax.soa.semanticsdsl.generator</module>
-	  <module>../plugins/org.fornax.soa.servicedsl.generator</module>
-	  <module>../plugins/org.fornax.soa.solutiondsl.generator</module>
-	  <module>../plugins/org.fornax.soa.xtextservicerepo.generator</module>
-	  
-	  <module>../plugins/org.fornax.soa.basedsl.ui</module>
-	  <module>../plugins/org.fornax.soa.bindingdsl.ui</module>
-	  <module>../plugins/org.fornax.soa.businessdsl.ui</module>
-	  <module>../plugins/org.fornax.soa.environmentdsl.ui</module>
-	  <module>../plugins/org.fornax.soa.moduledsl.ui</module>
-	  <module>../plugins/org.fornax.soa.profiledsl.ui</module>
-	  <module>../plugins/org.fornax.soa.semanticsdsl.ui</module>
-	  <module>../plugins/org.fornax.soa.servicedsl.ui</module>
-	  <module>../plugins/org.fornax.soa.sladsl.ui</module>
-	  <module>../plugins/org.fornax.soa.solutiondsl.ui</module>
-	  <module>../plugins/org.fornax.soa.servicerepo.ui</module>
-	  
-	  <module>../plugins/org.fornax.soa.servicerepo</module>
-	  
-	  <module>../plugins/org.fornax.soa.businessdsl.view.fragment</module>
-	  <module>../plugins/org.fornax.soa.moduledsl.view.fragment</module>
-	  <module>../plugins/org.fornax.soa.profiledsl.view.fragment</module>
-	  <module>../plugins/org.fornax.soa.servicedsl.view.fragment</module>
-	  <module>../plugins/org.fornax.soa.solutiondsl.view.fragment</module>
-	  
-	  <module>../plugins/org.fornax.soa.servicedsl.view</module>
-	  <module>../plugins/org.fornax.soa.solutiondsl.view</module>
-	  
-	  <module>../features/org.fornax.soa.basedsl.generator-feature</module>
-	  <module>../features/org.fornax.soa.basedsl-feature</module>
-	  <module>../features/org.fornax.soa.bindingdsl.generator-feature</module>
-	  <module>../features/org.fornax.soa.bindingdsl-feature</module>
-	  <module>../features/org.fornax.soa.businessdsl.generator-feature</module>
-	  <module>../features/org.fornax.soa.businessdsl-feature</module>
-	  <module>../features/org.fornax.soa.dslkit-feature</module>
-	  <module>../features/org.fornax.soa.environmentdsl.generator-feature</module>
-	  <module>../features/org.fornax.soa.environmentdsl-feature</module>
-	  <module>../features/org.fornax.soa.moduledsl.generator-feature</module>
-	  <module>../features/org.fornax.soa.moduledsl-feature</module>
-	  <module>../features/org.fornax.soa.profiledsl.generator-feature</module>
-	  <module>../features/org.fornax.soa.profiledsl-feature</module>
-	  <module>../features/org.fornax.soa.semanticsdsl.generator-feature</module>
-	  <module>../features/org.fornax.soa.semanticsdsl-feature</module>
-	  <module>../features/org.fornax.soa.servicedsl.generator-feature</module>
-	  <module>../features/org.fornax.soa.servicedsl-feature</module>
-	  <module>../features/org.fornax.soa.servicerepo.doc-feature</module>
-	  <module>../features/org.fornax.soa.servicerepo.examples-feature</module>
-	  <module>../features/org.fornax.soa.servicerepo.ui-feature</module>
-	  <module>../features/org.fornax.soa.sladsl-feature</module>
-	  <module>../features/org.fornax.soa.solutiondsl.generator-feature</module>
-	  <module>../features/org.fornax.soa.solutiondsl-feature</module>
-	  <module>../features/org.fornax.soa.xtextservicerepo.dsl.sdk-feature</module>
-	  <module>../features/org.fornax.soa.xtextservicerepo.generator-feature</module>
-	  <module>../features/org.fornax.soa.xtextservicerepo.generators.sdk-feature</module>
-	  <module>../features/org.fornax.soa.xtextservicerepo.view-feature/</module>
-	  
-	  <module>../docs/org.fornax.soa.servicerepo.doc</module>
-	  <module>../examples/org.fornax.soa.servicerepo.examples/org.fornax.soa.servicerepo.examples/</module>
-	  
-	  <module>../releng/org.fornax.soa.xtextservicerepository.updatesite</module>
-	  
-	  <module>../test/org.fornax.soa.basedsl.test</module>
-	  <module>../test/org.fornax.soa.environmentdsl.test</module>
-	  <module>../test/org.fornax.soa.profiledsl.test</module>
-	  <module>../test/org.fornax.soa.servicedsl.test</module>
-	  <module>../test/org.fornax.soa.test</module>
+		<module>../plugins/org.fornax.soa.basedsl</module>
+		<module>../plugins/org.fornax.soa.bindingdsl</module>
+		<module>../plugins/org.fornax.soa.businessdsl</module>
+		<module>../plugins/org.fornax.soa.environmentdsl</module>
+		<module>../plugins/org.fornax.soa.moduledsl</module>
+		<module>../plugins/org.fornax.soa.profiledsl</module>
+		<module>../plugins/org.fornax.soa.semanticsdsl</module>
+		<module>../plugins/org.fornax.soa.servicedsl</module>
+		<module>../plugins/org.fornax.soa.sladsl</module>
+		<module>../plugins/org.fornax.soa.solutiondsl</module>
+
+		<module>../plugins/org.fornax.soa.basedsl.generator</module>
+		<module>../plugins/org.fornax.soa.bindingdsl.generator</module>
+		<module>../plugins/org.fornax.soa.businessdsl.generator</module>
+		<module>../plugins/org.fornax.soa.environmentdsl.generator</module>
+		<module>../plugins/org.fornax.soa.moduledsl.generator</module>
+		<module>../plugins/org.fornax.soa.profiledsl.generator</module>
+		<module>../plugins/org.fornax.soa.semanticsdsl.generator</module>
+		<module>../plugins/org.fornax.soa.servicedsl.generator</module>
+		<module>../plugins/org.fornax.soa.solutiondsl.generator</module>
+		<module>../plugins/org.fornax.soa.xtextservicerepo.generator</module>
+
+		<module>../plugins/org.fornax.soa.basedsl.ui</module>
+		<module>../plugins/org.fornax.soa.bindingdsl.ui</module>
+		<module>../plugins/org.fornax.soa.businessdsl.ui</module>
+		<module>../plugins/org.fornax.soa.environmentdsl.ui</module>
+		<module>../plugins/org.fornax.soa.moduledsl.ui</module>
+		<module>../plugins/org.fornax.soa.profiledsl.ui</module>
+		<module>../plugins/org.fornax.soa.semanticsdsl.ui</module>
+		<module>../plugins/org.fornax.soa.servicedsl.ui</module>
+		<module>../plugins/org.fornax.soa.sladsl.ui</module>
+		<module>../plugins/org.fornax.soa.solutiondsl.ui</module>
+		<module>../plugins/org.fornax.soa.servicerepo.ui</module>
+
+		<module>../plugins/org.fornax.soa.servicerepo</module>
+
+		<module>../plugins/org.fornax.soa.businessdsl.view.fragment</module>
+		<module>../plugins/org.fornax.soa.moduledsl.view.fragment</module>
+		<module>../plugins/org.fornax.soa.profiledsl.view.fragment</module>
+		<module>../plugins/org.fornax.soa.servicedsl.view.fragment</module>
+		<module>../plugins/org.fornax.soa.solutiondsl.view.fragment</module>
+
+		<module>../plugins/org.fornax.soa.servicedsl.view</module>
+		<module>../plugins/org.fornax.soa.solutiondsl.view</module>
+
+		<module>../features/org.fornax.soa.basedsl.generator-feature</module>
+		<module>../features/org.fornax.soa.basedsl-feature</module>
+		<module>../features/org.fornax.soa.bindingdsl.generator-feature</module>
+		<module>../features/org.fornax.soa.bindingdsl-feature</module>
+		<module>../features/org.fornax.soa.businessdsl.generator-feature</module>
+		<module>../features/org.fornax.soa.businessdsl-feature</module>
+		<module>../features/org.fornax.soa.dslkit-feature</module>
+		<module>../features/org.fornax.soa.environmentdsl.generator-feature</module>
+		<module>../features/org.fornax.soa.environmentdsl-feature</module>
+		<module>../features/org.fornax.soa.moduledsl.generator-feature</module>
+		<module>../features/org.fornax.soa.moduledsl-feature</module>
+		<module>../features/org.fornax.soa.profiledsl.generator-feature</module>
+		<module>../features/org.fornax.soa.profiledsl-feature</module>
+		<module>../features/org.fornax.soa.semanticsdsl.generator-feature</module>
+		<module>../features/org.fornax.soa.semanticsdsl-feature</module>
+		<module>../features/org.fornax.soa.servicedsl.generator-feature</module>
+		<module>../features/org.fornax.soa.servicedsl-feature</module>
+		<module>../features/org.fornax.soa.servicerepo.doc-feature</module>
+		<module>../features/org.fornax.soa.servicerepo.examples-feature</module>
+		<module>../features/org.fornax.soa.servicerepo.ui-feature</module>
+		<module>../features/org.fornax.soa.sladsl-feature</module>
+		<module>../features/org.fornax.soa.solutiondsl.generator-feature</module>
+		<module>../features/org.fornax.soa.solutiondsl-feature</module>
+		<module>../features/org.fornax.soa.xtextservicerepo.dsl.sdk-feature</module>
+		<module>../features/org.fornax.soa.xtextservicerepo.generator-feature</module>
+		<module>../features/org.fornax.soa.xtextservicerepo.generators.sdk-feature</module>
+		<module>../features/org.fornax.soa.xtextservicerepo.view-feature/</module>
+
+		<module>../docs/org.fornax.soa.servicerepo.doc</module>
+		<module>../examples/org.fornax.soa.servicerepo.examples/org.fornax.soa.servicerepo.examples/</module>
+
+		<module>../releng/org.fornax.soa.xtextservicerepository.updatesite</module>
+
+		<module>../test/org.fornax.soa.basedsl.test</module>
+		<module>../test/org.fornax.soa.environmentdsl.test</module>
+		<module>../test/org.fornax.soa.profiledsl.test</module>
+		<module>../test/org.fornax.soa.servicedsl.test</module>
+		<module>../test/org.fornax.soa.test</module>
 	</modules>
 
 	<build>
@@ -111,7 +111,7 @@
 				<directory>src</directory>
 			</resource>
 		</resources>
-		
+
 		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
@@ -119,7 +119,7 @@
 				<version>${tycho-version}</version>
 				<extensions>true</extensions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>target-platform-configuration</artifactId>
@@ -161,24 +161,14 @@
 					</environments>
 				</configuration>
 			</plugin>
-			
-			<!--plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-source-plugin</artifactId>
-				<version>${tycho-version}</version>
-				<executions>
-					<execution>
-						<id>attach-source</id>
-						<goals>
-							<goal>plugin-source</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin-->
-			
-			
+
+			<!--plugin> <groupId>org.eclipse.tycho</groupId> <artifactId>tycho-source-plugin</artifactId> 
+				<version>${tycho-version}</version> <executions> <execution> <id>attach-source</id> 
+				<goals> <goal>plugin-source</goal> </goals> </execution> </executions> </plugin -->
+
+
 		</plugins>
-		
+
 		<pluginManagement>
 			<plugins>
 				<!-- TYCHO -->
@@ -195,7 +185,7 @@
 						</excludeResources>
 					</configuration>
 				</plugin>
-				
+
 				<!-- enable source bundle generation -->
 				<plugin>
 					<groupId>org.eclipse.tycho</groupId>
@@ -212,7 +202,7 @@
 					<artifactId>tycho-p2-repository-plugin</artifactId>
 					<version>${tycho-version}</version>
 				</plugin>
-				
+
 				<!-- APACHE MAVEN PLUGINS -->
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
@@ -222,19 +212,19 @@
 						<encoding>${project.build.sourceEncoding}</encoding>
 					</configuration>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-antrun-plugin</artifactId>
 					<version>1.3</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>2.9</version>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-clean-plugin</artifactId>
@@ -246,29 +236,29 @@
 								<includes>
 									<include>**</include>
 								</includes>
-								<excludes>
-									<exclude>**.gitignore</exclude>
-								</excludes>
 							</fileset>
 							<fileset>
 								<directory>${basedir}/src-gen</directory>
 								<includes>
 									<include>**</include>
 								</includes>
-								<excludes>
-									<exclude>**.gitignore</exclude>
-								</excludes>
+							</fileset>
+							<fileset>
+								<directory>${basedir}/bin</directory>
+								<includes>
+									<include>**</include>
+								</includes>
 							</fileset>
 						</filesets>
 					</configuration>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.3</version>
 				</plugin>
-				
+
 				<!-- OTHER PLUGINS -->
 				<plugin>
 					<groupId>org.codehaus.mojo</groupId>
@@ -289,7 +279,7 @@
 						</execution>
 					</executions>
 				</plugin>
-				
+
 				<plugin>
 					<groupId>org.eclipse.dash.maven</groupId>
 					<artifactId>eclipse-signing-maven-plugin</artifactId>
@@ -326,11 +316,11 @@
 			<layout>p2</layout>
 			<url>https://raw.github.com/athurn/Generic-Graph-View/master/org.eclipse.xtext.graphview.p2.repository/</url>
 		</repository>
-		
-	  <repository>
-	    <id>xtend</id>
-	    <url>http://build.eclipse.org/common/xtend/maven/</url>
-	  </repository>
+
+		<repository>
+			<id>xtend</id>
+			<url>http://build.eclipse.org/common/xtend/maven/</url>
+		</repository>
 	</repositories>
 
 	<profiles>
