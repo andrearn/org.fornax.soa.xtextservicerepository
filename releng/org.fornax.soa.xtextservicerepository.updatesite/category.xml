@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.fornax.soa.servicerepo.view.sdk-feature_1.6.0.qualifier.jar" id="org.fornax.soa.servicerepo.view.sdk-feature" version="1.6.0.qualifier">
+      <category name="org.fornax.soa.xtextservicerepo"/>
+   </feature>
+   <feature url="features/org.fornax.soa.xtextservicerepo.dsl.sdk-feature_1.6.0.qualifier.jar" id="org.fornax.soa.xtextservicerepo.dsl.sdk-feature" version="1.6.0.qualifier">
+      <category name="org.fornax.soa.xtextservicerepo"/>
+   </feature>
+   <feature url="features/org.fornax.soa.xtextservicerepo.generators.sdk-feature_1.6.0.qualifier.jar" id="org.fornax.soa.xtextservicerepo.generators.sdk-feature" version="1.6.0.qualifier">
+      <category name="org.fornax.soa.xtextservicerepo"/>
+   </feature>
+   <category-def name="org.fornax.soa.xtextservicerepo" label="Xtext Service Repository">
+      <description>
+         Xtext Service Repository is an OpenSource SOA service repository that is based on Xtext for service modelling. It does more than just storing and managing contracts of services in a SOA environment: Based on contracts defined with DSLs as well as applying model validators and code generation, it speeds up the service development and SOA governance approval processes with automated compliance checks.
+      </description>
+   </category-def>
+</site>
