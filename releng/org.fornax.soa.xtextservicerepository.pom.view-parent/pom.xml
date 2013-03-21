@@ -4,14 +4,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.fornax.soa.servicerepo.poms</groupId>
-		<artifactId>parent</artifactId>
+		<groupId>org.fornax.soa.servicerepo.pom</groupId>
+		<artifactId>generator-parent</artifactId>
 		<version>1.6.0-SNAPSHOT</version>
-		<relativePath>pom.xml</relativePath>
+		<relativePath>../org.fornax.soa.xtextservicerepository.pom.generator-parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>org.fornax.soa.servicerepo.poms</groupId>
-	<artifactId>java-parent</artifactId>
+	<groupId>org.fornax.soa.servicerepo.pom</groupId>
+	<artifactId>view-parent</artifactId>
 	<packaging>pom</packaging>
-
+	
 </project>

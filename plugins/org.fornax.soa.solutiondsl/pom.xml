@@ -3,10 +3,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>org.fornax.soa.servicerepo.poms</groupId>
+		<groupId>org.fornax.soa.servicerepo.pom</groupId>
 		<artifactId>dsl-parent</artifactId>
 		<version>1.6.0-SNAPSHOT</version>
-		<relativePath>../../poms/dsl-parent.pom</relativePath>
+		<relativePath>../../releng/org.fornax.soa.xtextservicerepository.pom.dsl-parent/pom.xml</relativePath>
 	</parent>
 
 	<artifactId>org.fornax.soa.solutiondsl</artifactId>
@@ -15,4 +15,5 @@
 	<properties>
 		<workflow>src/org/fornax/soa/GenerateSolutionDsl.mwe2</workflow>
 	</properties>
+	<groupId>org.fornax.soa.solutiondsl</groupId>
 </project>
