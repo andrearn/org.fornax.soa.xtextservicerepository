@@ -14,4 +14,9 @@
 	<artifactId>view-parent</artifactId>
 	<packaging>pom</packaging>
 	
+	<modules>
+		<module>../../plugins/org.fornax.soa.servicedsl.view</module>
+		<module>../../plugins/org.fornax.soa.solutiondsl.view</module>
+	</modules>
+	
 </project>

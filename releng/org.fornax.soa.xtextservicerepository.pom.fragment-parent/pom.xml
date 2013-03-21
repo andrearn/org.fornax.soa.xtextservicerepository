@@ -13,6 +13,14 @@
 	<groupId>org.fornax.soa.servicerepo.pom</groupId>
 	<artifactId>fragment-parent</artifactId>
 	<packaging>pom</packaging>
+	
+	<modules>
+		<module>../../plugins/org.fornax.soa.businessdsl.view.fragment</module>
+		<module>../../plugins/org.fornax.soa.moduledsl.view.fragment</module>
+		<module>../../plugins/org.fornax.soa.profiledsl.view.fragment</module>
+		<module>../../plugins/org.fornax.soa.servicedsl.view.fragment</module>
+		<module>../../plugins/org.fornax.soa.solutiondsl.view.fragment</module>
+	</modules>
 
 	<build>
 		<sourceDirectory>src</sourceDirectory>

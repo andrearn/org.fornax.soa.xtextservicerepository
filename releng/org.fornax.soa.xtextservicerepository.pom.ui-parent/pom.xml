@@ -13,6 +13,20 @@
 	<groupId>org.fornax.soa.servicerepo.pom</groupId>
 	<artifactId>ui-parent</artifactId>
 	<packaging>pom</packaging>
+	
+	<modules>
+		<module>../../plugins/org.fornax.soa.basedsl.ui</module>
+		<module>../../plugins/org.fornax.soa.bindingdsl.ui</module>
+		<module>../../plugins/org.fornax.soa.businessdsl.ui</module>
+		<module>../../plugins/org.fornax.soa.environmentdsl.ui</module>
+		<module>../../plugins/org.fornax.soa.moduledsl.ui</module>
+		<module>../../plugins/org.fornax.soa.profiledsl.ui</module>
+		<module>../../plugins/org.fornax.soa.semanticsdsl.ui</module>
+		<module>../../plugins/org.fornax.soa.servicedsl.ui</module>
+		<module>../../plugins/org.fornax.soa.sladsl.ui</module>
+		<module>../../plugins/org.fornax.soa.solutiondsl.ui</module>
+		<module>../../plugins/org.fornax.soa.servicerepo.ui</module>
+	</modules>
 
 	<build>
 		<plugins>

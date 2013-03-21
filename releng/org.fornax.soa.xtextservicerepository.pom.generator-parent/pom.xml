@@ -13,6 +13,19 @@
 	<groupId>org.fornax.soa.servicerepo.pom</groupId>
 	<artifactId>generator-parent</artifactId>
 	<packaging>pom</packaging>
+	
+	<modules>
+		<module>../../plugins/org.fornax.soa.basedsl.generator</module>
+		<module>../../plugins/org.fornax.soa.bindingdsl.generator</module>
+		<module>../../plugins/org.fornax.soa.businessdsl.generator</module>
+		<module>../../plugins/org.fornax.soa.environmentdsl.generator</module>
+		<module>../../plugins/org.fornax.soa.moduledsl.generator</module>
+		<module>../../plugins/org.fornax.soa.profiledsl.generator</module>
+		<module>../../plugins/org.fornax.soa.semanticsdsl.generator</module>
+		<module>../../plugins/org.fornax.soa.servicedsl.generator</module>
+		<module>../../plugins/org.fornax.soa.solutiondsl.generator</module>
+		<module>../../plugins/org.fornax.soa.xtextservicerepo.generator</module>
+	</modules>
 
 	<build>
 		<plugins>
