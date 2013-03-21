@@ -16,6 +16,6 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.junit4,
  org.eclipse.xtext.ui.junit;bundle-version="2.3.1",
  org.fornax.soa.environmentdsl;bundle-version="1.6.0",
- org.fornax.soa.test;bundle-version="1.0.0"
+ org.fornax.soa.test;bundle-version="1.6.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
