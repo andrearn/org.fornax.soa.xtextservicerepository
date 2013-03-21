@@ -2,11 +2,15 @@ package org.fornax.soa.moduledsl.generator;
 
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
+import org.fornax.soa.moduledsl.query.ModuleLookup;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 
 public class VersionedModuleSelector {
 	
 	private String name;
 	private String version;
+	private boolean useOtherVersionIfNotInEnvironment;
 	private boolean generateProvidedServices;
 	private boolean generateUsedServices;
 	private String endpointQualifier;
@@ -22,6 +26,13 @@ public class VersionedModuleSelector {
 	}
 	public void setVersion(String version) {
 		this.version = version;
+	}
+	public boolean isUseOtherVersionIfNotInEnvironment() {
+		return useOtherVersionIfNotInEnvironment;
+	}
+	public void setUseOtherVersionIfNotInEnvironment(
+			boolean useOtherVersionIfNotInEnvironment) {
+		this.useOtherVersionIfNotInEnvironment = useOtherVersionIfNotInEnvironment;
 	}
 	public boolean isGenerateProvidedServices() {
 		return generateProvidedServices;
@@ -43,13 +54,19 @@ public class VersionedModuleSelector {
 		this.endpointQualifier = providerEndpointQualifier;
 	}
 	
-	public boolean matches (Module mod, IQualifiedNameProvider qualifiedNameProvider) {
-		if (name.equals(qualifiedNameProvider.getFullyQualifiedName (mod).toString()) && 
-				(version == null || "".equals(version) || version.equals(mod.getVersion().getVersion()))) {
-			return true;
-		} else {
-			return false;
+	public boolean matches (Module mod, LifecycleState minState, ModuleLookup modLookup, IStateMatcher stateMatcher, IQualifiedNameProvider qualifiedNameProvider) {
+		if (name.equals(qualifiedNameProvider.getFullyQualifiedName (mod).toString())) {
+			if (version == null || "".equals(version) 
+					|| (version.equals(mod.getVersion().getVersion()) && stateMatcher.matches(minState, mod.getState()))) {
+				return true;
+			} else if (version != null || !"".equals(version) && useOtherVersionIfNotInEnvironment){
+				Module matchingModule = modLookup.findLatestModuleByNameAndMinState(mod, minState);
+				if (matchingModule != null) {
+					return true;
+				}
+			}
 		}
+		return false;
 	}
 	
 	@Override

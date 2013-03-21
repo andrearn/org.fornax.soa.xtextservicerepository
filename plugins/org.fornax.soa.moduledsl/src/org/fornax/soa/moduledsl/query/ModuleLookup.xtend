@@ -13,11 +13,16 @@ import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef
 import org.fornax.soa.moduledsl.moduleDsl.Module
 import org.fornax.soa.moduledsl.moduleDsl.ModuleRef
 import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.basedsl.search.IEObjectLookup
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.fornax.soa.basedsl.version.VersionComparator
 
 class ModuleLookup {
 	
 	@Inject IPredicateSearch search
 	@Inject extension IModuleVersionMatcher
+	@Inject extension IStateMatcher
 	
 	def findAllModules (ResourceSet resourceSet) {
 		var moduleDescs = search.search ("Module ", Predicates::alwaysTrue)
@@ -96,7 +101,22 @@ class ModuleLookup {
 	 */
 	def findProvidingModules (Service service, Iterable<Module> candidateModules, String qualifierName) {
 		service.findProvidingModules (candidateModules).filter (m|m.qualifiers.qualifiers.exists(q|q.name == qualifierName))
-	}	
+	}
+	
+	def findLatestModuleByNameAndMinState (Module module, LifecycleState minState) {
+		val modules = findAllModuleVersionsByName(module.name, module.eResource.resourceSet)
+		var Module matchingModule = null
+		for (mod : modules) {
+			if (mod.state.matches(minState)) {
+				if (matchingModule == null 
+					|| VersionComparator::compare(mod.version.version, matchingModule.version.version) > 0
+				) {
+					matchingModule = mod
+				}
+			}
+		}
+		return matchingModule
+	}
 		
 	/*
 	 * Get the endpoint qualifier
