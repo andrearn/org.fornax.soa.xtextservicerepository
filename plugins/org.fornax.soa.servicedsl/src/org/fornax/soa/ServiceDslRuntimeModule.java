@@ -25,6 +25,9 @@ import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
 import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
 import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
 import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
+import org.fornax.soa.service.versioning.DefaultExceptionResolver;
+import org.fornax.soa.service.versioning.DefaultServiceResolver;
+import org.fornax.soa.service.versioning.DefaultTypeResolver;
 import org.fornax.soa.service.versioning.IExceptionResolver;
 import org.fornax.soa.service.versioning.IServiceResolver;
 import org.fornax.soa.service.versioning.ITypeResolver;
@@ -98,15 +101,15 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 	}
 	
 	public Class<? extends ITypeResolver> bindITypeResolver () {
-		return LatestMinorVersionTypeResolver.class;
+		return DefaultTypeResolver.class;
 	}
 	
 	public Class<? extends IServiceResolver> bindIServiceResolver () {
-		return LatestMinorVersionServiceResolver.class;
+		return DefaultServiceResolver.class;
 	}
 	
 	public Class<? extends IExceptionResolver> bindIExceptionResolver () {
-		return LatestMinorVersionExceptionResolver.class;
+		return DefaultExceptionResolver.class;
 	}
 	
 	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {

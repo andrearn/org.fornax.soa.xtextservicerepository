@@ -7,6 +7,12 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
 public interface IStateMatcher {
 
+	/**
+	 * 
+	 * @param sourceState
+	 * @param targetState
+	 * @return true, when asset with targetState is reachable from asset with sourceState
+	 */
 	public abstract boolean matches(LifecycleState sourceState,
 			LifecycleState targetState);
 	

@@ -31,6 +31,9 @@ import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslFactory
 import org.fornax.soa.semanticsDsl.Qualifier
 import org.fornax.soa.bindingdsl.generator.templates.IArtifactBuilder
+import org.fornax.soa.moduledsl.query.ModuleLookup
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
+import org.fornax.soa.profiledsl.query.LifecycleQueries
 
 /*
  * Generate technical service and datamodel contract artifacts like WSDLs, XSDs or IDLs for ModuleBindings
@@ -81,6 +84,12 @@ class DefaultBindingContractGenerators implements IGenerator {
 	
 	@Inject 
 	IPredicateSearch searchEngine
+	@Inject
+	ModuleLookup modLookup
+	@Inject
+	IStateMatcher stateMatcher
+	@Inject
+	LifecycleQueries lifecycleQueries
 	
 	@Inject
 	ResourceSetBasedResourceDescriptions resourceDescriptions
@@ -112,6 +121,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 			hasValidParameters = false
 		}
 		if (hasValidParameters) {
+			val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 			if (contentRoot instanceof BindingModel) {
 				var model = resource.contents.head as BindingModel;
 				for (binding : model.bindings) {
@@ -133,9 +143,10 @@ class DefaultBindingContractGenerators implements IGenerator {
 			
 			if (contentRoot instanceof ModuleModel) {
 				val modModel = contentRoot as ModuleModel
+				val minState = lifecycleQueries.getMinLifecycleState(env, profile.lifecycle)
 				for (module : modModel.modules) {
-					if (modules.exists(mod | mod.matches(module, nameProvider))) {
-						val moduleSelector = modules.findFirst(modSel | modSel.matches(module, nameProvider))
+					if (modules.exists(mod | mod.matches(module, minState, modLookup, stateMatcher, nameProvider))) {
+						val moduleSelector = modules.findFirst(modSel | modSel.matches(module, minState, modLookup, stateMatcher, nameProvider))
 						module.compile (moduleSelector, profile, resource)
 					}
 				}

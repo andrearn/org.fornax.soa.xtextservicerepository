@@ -73,6 +73,52 @@ class LifecycleQueries {
 			default:							l.minDevState
 		}
 	}
+	/*
+	 * Get the minimal state for an environment of type LOCAL based on a given lifecycle definition
+	 */
+	def LifecycleState getMaxLocalState (Lifecycle lifecycleDefinition) {
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::LOCAL)).sort (stateComparator).last
+	}
+	
+	/*
+	 * Get the minimal state for an environment of type DEV based on a given lifecycle definition
+	 */
+	def LifecycleState getMaxDevState (Lifecycle lifecycleDefinition) {
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::DEV)).sort (stateComparator).last
+	}
+
+
+	/*
+	 * Get the minimal state for an environment of type TEST based on a given lifecycle definition
+	 */
+	def LifecycleState getMaxTestState (Lifecycle lifecycleDefinition) {
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::TEST)).sort (stateComparator).last
+	}
+
+	/*
+	 * Get the minimal state for an environment of type STAGING based on a given lifecycle definition
+	 */
+	def LifecycleState getMaxStagingState (Lifecycle lifecycleDefinition) {
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::STAGING)).sort (stateComparator).last
+	}
+
+	/*
+	 * Get the minimal state for an environment of type PROD based on a given lifecycle definition
+	 */
+	def LifecycleState getMaxProdState (Lifecycle lifecycleDefinition) {
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::PROD)).sort (stateComparator).last
+	}
+	
+	def LifecycleState getMaxLifecycleState (Environment env, Lifecycle l) {
+		switch (env.type) {
+			case EnvironmentType::LOCAL : 		l.maxLocalState
+			case EnvironmentType::DEV : 		l.maxDevState
+			case EnvironmentType::TEST:			l.maxTestState
+			case EnvironmentType::STAGING :		l.maxStagingState
+			case EnvironmentType::PROD :		l.maxProdState
+			default:							l.maxDevState
+		}
+	}
 	
 	def LifecycleState getAssetLifecycleState (EObject asset) {
 		stateResolver.getLifecycleState (asset)

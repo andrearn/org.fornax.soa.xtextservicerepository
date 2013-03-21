@@ -28,7 +28,7 @@ class DefaultModuleVersionMatcher implements IModuleVersionMatcher {
 	@Inject extension IQualifiedNameProvider
 
 	/* 
-	 * Check, whether the Module module is compatible to Module originalModule based on thein versions
+	 * Check, whether the Module module is compatible to Module originalModule based on their versions
 	 * 
 	 * returns true, if module is compatible to originalModule
 	 */

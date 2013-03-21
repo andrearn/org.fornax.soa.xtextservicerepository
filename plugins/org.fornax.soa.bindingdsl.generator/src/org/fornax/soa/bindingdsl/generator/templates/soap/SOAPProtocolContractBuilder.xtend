@@ -31,6 +31,7 @@ import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 import org.fornax.soa.binding.query.BindingLookup
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
 import org.fornax.soa.binding.query.environment.AssetStateEnvironmentEligibilityChecker
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 /** 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -76,7 +77,8 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 					for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
 						if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (binding.resolveEnvironment)) {
 							val namespace = svc.findSubdomain();
-							val minState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
+//							val minState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
+							val minState = binding.module.module.state
 									
 							wsdlGenerator.toWSDL (svc, namespace, minState, profile, binding.getRegistryBaseUrl());
 							concreteWsdlGenerator.toWSDL(binding, svc, soapProt, profile);
@@ -120,7 +122,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 			if (svc != null) {
 				try {
 					if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocol::SOAP)) {
-						doBuildServiceContracts (specBindingDesc, profile)
+						doBuildServiceContracts (specBindingDesc, module.state, profile)
 					}
 				} catch (Exception ex) {
 					log.log (Level::SEVERE, "Error generating contracts for service " + nameProvider.getFullyQualifiedName (svc).toString + " and version " + svc.version.version + "\n", ex)
@@ -142,7 +144,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				if (svc != null) {
 					try {
 						if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocol::SOAP)) {
-							doBuildServiceContracts (specBindingDesc, profile)
+							doBuildServiceContracts (specBindingDesc, module.state, profile)
 						}
 					} catch (Exception ex) {
 						log.log (Level::SEVERE, "Error generating contracts for service " + nameProvider.getFullyQualifiedName (svc).toString + " and version " + svc.version.version + "\n", ex)
@@ -157,14 +159,14 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	}
 	
 	
-	def protected doBuildServiceContracts (ServiceRefBindingDescription serviceBindingDescription, SOAProfile profile) {
+	def protected doBuildServiceContracts (ServiceRefBindingDescription serviceBindingDescription, LifecycleState minState, SOAProfile profile) {
 		val service = serviceBindingDescription.getServiceRef.service
 		val specBinding = serviceBindingDescription.getApplicableBinding
 		for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
 			try {
 				if (service.providedContractUrl == null && service.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
 					val namespace = service.findSubdomain();
-					val minState = lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, profile.lifecycle)
+//					val minState = lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, profile.lifecycle)
 							
 					wsdlGenerator.toWSDL (service, namespace, minState, profile, specBinding.getRegistryBaseUrl());
 					concreteWsdlGenerator.toWSDL(specBinding, service, soapProt, profile);

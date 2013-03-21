@@ -73,7 +73,8 @@ class XSDBuilder {
 	def dispatch toXSD (VersionedDomainNamespace ns, LifecycleState minState, ModuleBinding bind, SOAProfile profile) {
 		log.fine("Generating XSDs for namespace " + ns.fqn + " with major version " + ns.version)
 		try {
-			xsdGenerator.toXSD (ns, bind.resolveEnvironment.getMinLifecycleState(profile.lifecycle), profile, bind.getRegistryBaseUrl());
+			xsdGenerator.toXSD (ns, minState, profile, bind.getRegistryBaseUrl());
+//			xsdGenerator.toXSD (ns, bind.resolveEnvironment.getMinLifecycleState(profile.lifecycle), profile, bind.getRegistryBaseUrl());
 		} catch (Exception ex) {
 			log.log (Level::SEVERE, "Error generating XSDs for namespace " + ns.fqn + " with major version " + ns.version + "\n", ex)
 		}
