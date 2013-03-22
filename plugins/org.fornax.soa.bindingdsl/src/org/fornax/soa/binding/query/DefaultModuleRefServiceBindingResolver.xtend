@@ -41,7 +41,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 	 * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
 	 * 								have any or no potentially effective endpoint qualifier
 	 */
-	override ModuleRefServiceBindingDescription resolveCompatibleProvidedServiceBindings (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifier) {
+	override ModuleRefServiceBindingDescription resolveProvidedServiceBindings (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifier) {
 		val candBindings = bindingLookup.findBindingsToCompatibleModuleEnvAndQualifier (module, targetEnvironment, endpointQualifier?.endpointQualifier)
 		var Set<ServiceRefBindingDescription> svcBindDescs= newHashSet
 		
@@ -79,7 +79,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 	 * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
 	 * 								have any or no potentially effective endpoint qualifier
 	 */
-	override Set<ModuleRefServiceBindingDescription> resolveCompatibleUsedServiceBindings (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifierRef) {
+	override Set<ModuleRefServiceBindingDescription> resolveUsedServiceBindings (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifierRef) {
 		val usedServiceRefs = modServiceResolver.getAllUsedServiceRefs(module)
 		val Set<ModuleRefServiceBindingDescription> modBindDescs = newHashSet
 		val Map<Module, Set<ServiceRefBindingDescription>> svcBindDescs= newHashMap
@@ -108,7 +108,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 		for (usedModRef : module.usedModules) {
 			val selectingEndpointQualifierRef = getSelectingEndpointQualifier (usedModRef, module, endpointQualifierRef)
 			val providerModule = modRefResolver.resolveModuleRef (usedModRef, targetEnvironment, lifecycle, selectingEndpointQualifierRef, null)
-			val impModSvcBindDescs = resolveCompatibleProvidedServiceBindings (providerModule, targetEnvironment, selectingEndpointQualifierRef)
+			val impModSvcBindDescs = resolveProvidedServiceBindings (providerModule, targetEnvironment, selectingEndpointQualifierRef)
 			
 			for (curDesc : impModSvcBindDescs.serviceRefDescriptions.filter (d | usedServiceRefs.contains (d.getServiceRef))) {
 				val curEndpointQualifiers = endpointQualifierQuery.getPotentialEffectiveEndpointQualifiers (curDesc.getApplicableBinding)
@@ -124,7 +124,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 			}
 			
 			val svcRefsForEndpointQualifier = svcBindDescs.values.flatten.toSet.filterNull.map(d|d.getServiceRef).toList
-			val allImpModSvcBindDescs = resolveCompatibleProvidedServiceBindings (usedModRef.moduleRef.module, targetEnvironment, selectingEndpointQualifierRef)
+			val allImpModSvcBindDescs = resolveProvidedServiceBindings (usedModRef.moduleRef.module, targetEnvironment, selectingEndpointQualifierRef)
 			
 			for (curBindDesc : allImpModSvcBindDescs.serviceRefDescriptions) {
 				if (!svcRefsForEndpointQualifier.contains(curBindDesc.getServiceRef) && (selectingEndpointQualifierRef == null || selectingEndpointQualifierRef.acceptOtherEndpoints)) {

@@ -15,7 +15,6 @@ import com.google.inject.ImplementedBy;
  * 
  * @author aarnold
  */
-@ImplementedBy (DefaultModuleRefServiceBindingResolver.class)
 public interface IModuleRefServiceBindingResolver {
 
 	/**
@@ -29,7 +28,7 @@ public interface IModuleRefServiceBindingResolver {
 	 * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
 	 * 								have any or no potentially effective endpoint qualifier
 	 */
-	public abstract Set<ModuleRefServiceBindingDescription> resolveCompatibleUsedServiceBindings(final Module module,
+	public abstract Set<ModuleRefServiceBindingDescription> resolveUsedServiceBindings (final Module module,
 			final Environment targetEnvironment, final EndpointQualifierRef endpointQualifierRef);
 
 	/**
@@ -43,7 +42,7 @@ public interface IModuleRefServiceBindingResolver {
 	 * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
 	 * 								have any or no potentially effective endpoint qualifier
 	 */
-	public abstract ModuleRefServiceBindingDescription resolveCompatibleProvidedServiceBindings(
+	public abstract ModuleRefServiceBindingDescription resolveProvidedServiceBindings (
 			final Module module, final Environment targetEnvironment, final EndpointQualifierRef endpointQualifier);
 
 }
