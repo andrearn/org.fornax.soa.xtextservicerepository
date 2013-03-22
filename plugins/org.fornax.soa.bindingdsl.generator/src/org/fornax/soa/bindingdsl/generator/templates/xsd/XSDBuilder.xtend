@@ -70,7 +70,7 @@ class XSDBuilder {
 		toXSD(ns, minState, bind.eContainer as Binding, profile)
 	}
 	
-	def dispatch toXSD (VersionedDomainNamespace ns, LifecycleState minState, ModuleBinding bind, SOAProfile profile) {
+	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, ModuleBinding bind, SOAProfile profile) {
 		log.fine("Generating XSDs for namespace " + ns.fqn + " with major version " + ns.version)
 		try {
 			xsdGenerator.toXSD (ns, minState, profile, bind.getRegistryBaseUrl());

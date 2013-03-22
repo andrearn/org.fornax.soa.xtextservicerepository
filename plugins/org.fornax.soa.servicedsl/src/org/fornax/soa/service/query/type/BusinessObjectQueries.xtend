@@ -94,7 +94,7 @@ class BusinessObjectQueries {
 	 * @param includeInheritedProperties
 	 * @param includeCycleTypes include the BO in the result even if it already was visited. 
 	 * 		However traversal of this path stops here
-	 * @return {@link DependencyDescription} keyed with the {@link IEObjectDesription} of the referring property 
+	 * @return {@link DependencyDescription} keyed with the {@link IEObjectDescription} of the referring property 
 	 */
 	def DependencyDescription getTransitiveDependencies (Property prop, boolean includeInheritedProperties, boolean includeCycleTypes, List<IEObjectDescription> visitedDependendies, DependencyDescription referrer) {
 		boQueryInt.getTransitiveDependencies (prop, includeInheritedProperties, includeCycleTypes, visitedDependendies, referrer)
