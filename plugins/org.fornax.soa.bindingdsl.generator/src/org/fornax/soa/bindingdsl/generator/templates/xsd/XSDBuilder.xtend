@@ -38,12 +38,12 @@ class XSDBuilder {
 	
 	@Inject Logger log
 
-	def toXSD (SubNamespace ns, List<Environment> env, String targetEnv, List<SOAProfile> profiles, String profileName) {
+	def void toXSD (SubNamespace ns, List<Environment> env, String targetEnv, List<SOAProfile> profiles, String profileName) {
 		ns.toXSD (env.findFirst (e|e.name == targetEnv), profiles.findFirst (e|e.name == profileName));
 	}
 	
 	
-	def toXSD (SubNamespace ns, Environment env, SOAProfile profile) {
+	def void toXSD (SubNamespace ns, Environment env, SOAProfile profile) {
 		log.fine("Generating XSDs for namespace " + nameProvider.getFullyQualifiedName(ns).toString)
 		try {
 			xsdGenerator.toXSD (ns, env.getMinLifecycleState (profile.lifecycle), profile, env.getRegistryBaseUrl());
@@ -52,7 +52,7 @@ class XSDBuilder {
 		}
 	}
 	
-	def toXSD (VersionedDomainNamespace ns, Environment env, SOAProfile profile) {
+	def void toXSD (VersionedDomainNamespace ns, Environment env, SOAProfile profile) {
 		log.fine("Generating XSDs for namespace " + ns.fqn + " with major version " + ns.version)
 		try {
 			xsdGenerator.toXSD (ns, env.getMinLifecycleState (profile.lifecycle), profile, env.getRegistryBaseUrl());
@@ -63,10 +63,10 @@ class XSDBuilder {
 	
 	
 
-	def dispatch toXSD (VersionedDomainNamespace ns, LifecycleState minState, Binding bind, SOAProfile profile) {
+	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, Binding bind, SOAProfile profile) {
 		
 	}
-	def dispatch toXSD (VersionedDomainNamespace ns, LifecycleState minState, ServiceBinding bind, SOAProfile profile) {
+	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, ServiceBinding bind, SOAProfile profile) {
 		toXSD(ns, minState, bind.eContainer as Binding, profile)
 	}
 	
@@ -78,6 +78,7 @@ class XSDBuilder {
 		} catch (Exception ex) {
 			log.log (Level::SEVERE, "Error generating XSDs for namespace " + ns.fqn + " with major version " + ns.version + "\n", ex)
 		}
+		
 	}
 	
 	
