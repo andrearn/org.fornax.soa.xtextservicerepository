@@ -8,6 +8,7 @@ import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.servicedsl.test.BaseServiceDslTest;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTest {
@@ -45,11 +46,13 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 
 	
 	@Test
+	@Ignore
 	public void testGetBestMatchByNames() {
 		fail("Not yet implemented");
 	}
 
 	@Test
+	@Ignore
 	public void testMatches() {
 		fail("Not yet implemented");
 	}
@@ -75,11 +78,13 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 	}
 
 	@Test
+	@Ignore
 	public void testToMajorVersion() {
 		fail("Not yet implemented");
 	}
 
 	@Test
+	@Ignore
 	public void testGetBestMatchByQualifedNames() {
 		fail("Not yet implemented");
 	}

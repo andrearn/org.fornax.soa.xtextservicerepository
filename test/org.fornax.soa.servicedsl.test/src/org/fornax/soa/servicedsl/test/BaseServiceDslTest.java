@@ -74,7 +74,6 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		proposed.setName ("proposed");
 		proposed.setIsInitial (true);
 		proposed.getQualifiesFor ().add (EnvironmentType.LOCAL);
-		proposed.getQualifiesFor ().add (EnvironmentType.DEV);
 		
 		defined = factory.createLifecycleState ();
 		defined.setName ("defined");

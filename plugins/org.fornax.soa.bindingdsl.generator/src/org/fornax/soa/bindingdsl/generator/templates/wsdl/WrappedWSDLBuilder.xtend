@@ -32,7 +32,7 @@ class WrappedWSDLBuilder {
 		will be generated. For each major version of a service WSDL is generated for the latest minor
 		version in that major version matching the minimal Lifecycle constraint is be generated
 	*/
-	def dispatch toWrappedWSDL (SubNamespace ns, SOAProfile profileName, Environment targetEnvironment) {
+	def dispatch void toWrappedWSDL (SubNamespace ns, SOAProfile profileName, Environment targetEnvironment) {
 		ns.services.filter (s|s.isEligibleForEnvironment (targetEnvironment))
 			.forEach (e|e.toWrappedWSDL (profileName, targetEnvironment));
 	}

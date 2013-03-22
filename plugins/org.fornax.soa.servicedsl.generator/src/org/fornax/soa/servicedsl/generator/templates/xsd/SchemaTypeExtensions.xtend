@@ -190,7 +190,7 @@ class SchemaTypeExtensions {
 	 * qualified by namespace prefixes
 	 */
 	def dispatch String toTypeNameRef (DataTypeRef typeRef, VersionedDomainNamespace currentDomNs) {
-		typeRef.findMatchingType ().toTypeNameRef();
+		typeRef.type.toTypeNameRef();
 	}
 		
 	/**
@@ -288,7 +288,7 @@ class SchemaTypeExtensions {
 	 * with a namespace alias calculate from the (major) versioned namespace
 	 */
 	def dispatch String toNsPrefixedTypeNameRef (DataTypeRef t, VersionedDomainNamespace currentDomNs) { 
-		t.findMatchingType () .toNsPrefixedTypeNameRef();
+		t.type.toNsPrefixedTypeNameRef();
 	}
 		
 	/**

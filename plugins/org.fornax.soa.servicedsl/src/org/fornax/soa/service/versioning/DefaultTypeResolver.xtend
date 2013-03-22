@@ -135,9 +135,9 @@ class DefaultTypeResolver implements ITypeResolver {
 		t.type
 	}
 	
-	override org.fornax.soa.profiledsl.sOAProfileDsl.Type findMatchingType (DataTypeRef t) {
-		t.type;
-	}
+//	override org.fornax.soa.profiledsl.sOAProfileDsl.Type findMatchingType (DataTypeRef t) {
+//		t.type;
+//	}
 		
 	
 	

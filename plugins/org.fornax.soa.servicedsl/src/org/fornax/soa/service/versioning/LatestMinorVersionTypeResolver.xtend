@@ -158,9 +158,9 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 			.sortBy (e|e.version.version).last( );
 	}
 	
-	override org.fornax.soa.profiledsl.sOAProfileDsl.Type findMatchingType (DataTypeRef t) {
-		t.type;
-	}
+//	override org.fornax.soa.profiledsl.sOAProfileDsl.Type findMatchingType (DataTypeRef t) {
+//		t.type;
+//	}
 		
 	
 	

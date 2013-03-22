@@ -112,9 +112,9 @@ class ConcreteWsdlGenerator {
 		fsa.generateFile (wsdlFile, content);
 	}
 	
-	def dispatch void toSOAPBinding (BindingProtocol protocol, Service svc) {}
+	def dispatch toSOAPBinding (BindingProtocol protocol, Service svc) {}
 
-	def dispatch void toSOAPBinding (BindingProtocol protocol, Service svc, String qualifierName) {}
+	def dispatch toSOAPBinding (BindingProtocol protocol, Service svc, String qualifierName) {}
 	
 	def dispatch toSOAPBinding(SOAP protocol, Service svc) '''
 		<wsdl:binding name="«svc.toBindingName (protocol)»"
@@ -174,7 +174,7 @@ class ConcreteWsdlGenerator {
 		</wsdl:service>
 	'''
 	
-	def dispatch void toWsdlService (BindingProtocol protocol, Service svc, Server server, ModuleBinding bind) {}
+	def dispatch toWsdlService (BindingProtocol protocol, Service svc, Server server, ModuleBinding bind) {}
 	
 	def dispatch toWsdlService (SOAP protocol, Service svc, Server server, ModuleBinding bind) '''
 		<wsdl:service name="«svc.name»">

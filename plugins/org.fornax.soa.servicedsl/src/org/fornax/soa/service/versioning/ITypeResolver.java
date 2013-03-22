@@ -11,7 +11,7 @@ import org.fornax.soa.serviceDsl.TypeRef;
 public interface ITypeResolver {
 	
 	public Type findMatchingType (EObject t);
-	public org.fornax.soa.profiledsl.sOAProfileDsl.Type findMatchingType (DataTypeRef t);
+//	public org.fornax.soa.profiledsl.sOAProfileDsl.Type findMatchingType (DataTypeRef t);
 	public Type findMatchingTypeByState (TypeRef t, LifecycleState minState);
 
 	public VersionedType selectMatchingType (AbstractVersionedTypeRef ref);
