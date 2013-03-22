@@ -12,4 +12,17 @@
   <artifactId>org.fornax.soa.xtextservicerepository.updatesite</artifactId>
   <packaging>eclipse-repository</packaging>
   <groupId>org.fornax.soa.xtextservicerepository</groupId>
+  
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-p2-repository-plugin</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <includeAllDependencies>true</includeAllDependencies>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>

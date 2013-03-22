@@ -14,7 +14,8 @@
 
 	<properties>
 		<tycho-version>0.16.0</tycho-version>
-		<xtext-version>2.3.1</xtext-version>
+		<!-- See profiles for xtext version -->
+		<!-- <xtext-version>2.4.0</xtext-version> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -26,11 +27,11 @@
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.view-parent</module>
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.fragment-parent</module>
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.test-parent</module>
-		
+
 		<module>../../plugins/org.fornax.soa.servicerepo</module>
 		<module>../../docs/org.fornax.soa.servicerepo.doc</module>
 		<module>../../examples/org.fornax.soa.servicerepo.examples/org.fornax.soa.servicerepo.examples/</module>
-		
+
 		<module>../../releng/org.fornax.soa.xtextservicerepository.updatesite</module>
 	</modules>
 
@@ -230,17 +231,22 @@
 			<layout>p2</layout>
 			<url>http://download.itemis.com/updates/releases</url>
 		</repository>
-		<repository>
-			<id>indigo</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/indigo</url>
-		</repository>
+		<!-- See profile for main repository -->
+		<!-- <repository> -->
+		<!-- <id>indigo</id> -->
+		<!-- <layout>p2</layout> -->
+		<!-- <url>http://download.eclipse.org/releases/juno</url> -->
+		<!-- </repository> -->
 		<repository>
 			<id>graphview</id>
 			<layout>p2</layout>
 			<url>https://raw.github.com/athurn/Generic-Graph-View/master/org.eclipse.xtext.graphview.p2.repository/</url>
 		</repository>
-
+		<repository>
+			<id>xdoc</id>
+			<layout>p2</layout>
+			<url>file:/C:/Development/Workspace/xDoc/org.eclipse.xtext.xdoc.releng/target/site</url>
+		</repository>
 		<repository>
 			<id>xtend</id>
 			<url>http://build.eclipse.org/common/xtend/maven/</url>
@@ -271,19 +277,35 @@
 			</build>
 		</profile>
 		<profile>
-			<id>skip-ui-tests</id>
-			<activation>
-				<property>
-					<name>skip-ui-tests</name>
-				</property>
-			</activation>
+			<id>xtext-2.4</id>
 			<properties>
-				<tycho.surefire.skipUiTest>true</tycho.surefire.skipUiTest>
+				<xtext-version>2.4.0</xtext-version>
 			</properties>
+			<repositories>
+				<repository>
+					<id>juno</id>
+					<layout>p2</layout>
+					<url>http://download.eclipse.org/releases/juno</url>
+				</repository>
+			</repositories>
+		</profile>
+		<profile>
+			<id>xtext-2.3</id>
+			<properties>
+				<xtext-version>2.3.1</xtext-version>
+			</properties>
+			<repositories>
+				<repository>
+					<id>indigo</id>
+					<layout>p2</layout>
+					<url>http://download.eclipse.org/releases/indigo</url>
+				</repository>
+			</repositories>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 	</profiles>
-
-
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
