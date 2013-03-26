@@ -20,23 +20,24 @@ section2:AssetVersioning[Asset versioning]
 
 section3:settingAssetVersion[Setting the version of an asset]
 
-Each versioned asset has a <code>version</code> property.
+Each versioned asset has a code[ServiceDSL][version] property.
 
 section3:whenCreateVersion[When to create a new version]
 
-A new version has a least to be created, when an asset is to be changed but the most recent version has already
-been approved by SOA governance. Create a new minor version when the changes are backward compatible. However, 
-if the changes are incompatible, a new major version must be created.
+A new version has a least to be created, when an asset is to be changed, but the most recent version has already
+been approved by SOA governance or is already in production. Create a new minor version when the changes are backward 
+compatible. If however, the changes are incompatible, a new major version must be created.
 
 section3:versionedAssetRelationships[Versioned relationships between assets]
 
-Relationships between versioned assets are version as well. This is expressed by defined a version constraint rule on
+Relationships between versioned assets are constrained by a version constraint, defining which versions
+of the referred asset are acceptable. This is expressed by a version constraint rule on
 the relationship like this:
 
 code[SOABaseDSL][someAttribute : SomeOtherType majorVersion 2]
 
-The example declares that the BO attribute <code>someAttribute</code> references an instance of 
-the latest minor version in mojor version <code>2</code> available for <code>VersionedType</code> <code>SomeOtherType</code>.</para>
+The example declares that the BO attribute code[SOABaseDSL][someAttribute] references an instance of 
+the latest minor version in mojor version code[SOABaseDSL][2] available for code[SOABaseDSL][VersionedType] code[SOABaseDSL][SomeOtherType].
 
 
 section2:lifecycleManagement[Asset lifecycle management]

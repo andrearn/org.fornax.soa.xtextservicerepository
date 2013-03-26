@@ -83,9 +83,9 @@ defined in the service model.
 
 section2:SolutionPerspective[Solutions]
 
-Solutions support the business of company. Solutions are available as applications or bundles of application 
-that solve a certain problem, e.g. a customer self care solution. In SOA solutions will reuse business 
-function by using services that support those business functions. Solutions are the end consumers
+Solutions support the business of a company. They are available as applications or bundles of applications 
+that solve a certain problem, e.g. a customer self care solution. In SOA, solutions are based services that 
+support the business capabilities required to compose a solution. Solutions are the end consumers
 of services.
 
 img:Solutions[images/Solutions.png] [Structure of a solution] [] [align="center"]
@@ -99,17 +99,18 @@ and internal namespaces, which in turn define business objects, enumerations, se
 types.
 
 
-section3:VersionANdLifecycles[Versions and lifecycle states]
+section3:VersionAndLifecycles[Versions and lifecycle states]
 
 Different consumers	of a service may require a different version of the service. Hence, several different
 versions of a service and related business objects etc. may be deployed in the same runtime environment. 
-Generally the latest compatible version will be used when a dependency to another service or business 
-object is being declared. Whether a newer version is compatible to it's previous version or not is inferred 
-from the version number increment. If the major version is incremented the change is incmpatible to the previous
-version.
+Generally the latest compatible version will be used when a dependency to a service or business 
+object is being declared. Whether a newer version is compatible to it's previous version or not is reflected 
+by the version number increment. If the major version is incremented, the change is incompatible to the previous
+version. If only a minor version number has been incremented it is backward compatible to the previous
+minor version.
  
-Business objects, enumerations and services are versioned by having a version number. Versionnumber may 
-be qualified with major and minor version numbers and so seperated by dots. A namespace may declare 
+Business objects, enumerations and services are versioned by declaring a version number. A version number may 
+be composed of a major and minor version numbers and so on being separated by dots. A namespace may declare 
 several different versions of a service etc. Dependencies to other services and types are qualified 
 by the name and a version constraint, that selects the latest applicable version.
 
@@ -130,13 +131,14 @@ environment it would resolve to version e[1.1].
 
 section3:Services[Services]
 
-A public service usually relates to a business function in	the business model. A service provides 
-functional capabilities implemented	as service operations.
+A public service usually relates to a business capability in the business model. A service provides,
+i.e. implements capabilities as service operations. Services are foundational building blocks of a service oriented
+architecture.
 
 
 section3:BusinessObjects[Business Objects]
 
-Business objects are complex types with one ore more attributes. Attibutes have a name, a type with 
+Business objects are complex types with one ore more attributes. Attributes have a name, a type with 
 a version constraint if it is a business object or enumeration, an optional many cardinality and 
 some other optional flags.
 
@@ -146,14 +148,30 @@ section3:Enumerations[Enumerations]
 Enumerations declare all possible values that an attribute or parameter of that type may have.
 
 
+section3:QueryObjects[Query Objects]
+
+Query objects are quite similar to business objects. They are used as template objects for query operations.
+Only some, of the attributes may be set. Generally all attributes are optional. Code generators support
+complex predicates inferred from the attribute types, such as generating a date range for date attributes.
+Query objects are rather technical objects.
+
+
 section3:Exceptions[Exceptions]
 
-As in many programming languages, exceptions describe an unexpected behavior or error condition.
+As in many programming languages, exceptions describe an unexpected behavior or error condition. However,
+in contrast to many languages, they are first class citizens in the service DSL.
 
 
 section2:ModulePerspective[Modules]
 
-Modules assemble services into modules. The module has a unique version number.
+Modules assemble services into modules. The module has a unique version number and state. The module
+defines which services are provided by the module and which services or even whole modules are being
+used by the module. 
+
+Provided services should always explicitly refer to the version of the service being provided using a
+code[ServiceDSL][fixedVersion] constraint.
+On the other hand used services or modules should be referred to with a weaker version constraint such
+as code[ServiceDSL][majorVersion]. 
 
 
 section2:EnvironmentPerspective[Runtime environment]
@@ -163,11 +181,12 @@ parts of an environment are hosts, application servers, databases and so on. Typ
 a production, test and a development environment.
 		
 
-section2:BindingPerspective[Service binding]
+section2:BindingPerspective[Module and service binding to the runtime]
 
+This perspective describes, where and how service modules are deployed to the runtime environment. 
 The binding perspective wires services to an environment, where they are supposed to be hosted together. 
-It defines protocols, servers hosting the services (and implicitly their endpoints) as well as assigned 
-SLAs and policies like security policies.
+It defines protocols, servers hosting the services (and implicitly their endpoints) as well as policies 
+like security policies or availability assertions.
 		
 img:CoreDSLs[images/CoreDSLs.png] [The core DSLs] [] [align="center"]
 				
@@ -198,12 +217,10 @@ operation of a service.
 
 section2:SLAPerspective[Service level agreements]
 
-Service Level Agreement can be declared in a SLA model. Service Level Agreement declare
-properties properties like service availability, maximum downtimes, responsible service owners
-and so on. SLAs are generally scoped to an environment. Hence, SLAs must be assigned to a 
-namespace or service in the binding model. As each binding is scoped to an environment, assigned
-SLAs are implicitly scoped to the environment for which the respective binding has
-been declared.
+Service level agreements can be declared in a SLA model. They define a contract between a service consumer
+and a service provider. SLAs are defined by properties like service availability, maximum downtimes, 
+responsible service owners and so on. The SLA identifies all involved parties and the assets, it applies
+to. 
 
 
 section2:ModelingWithDSLs[Modeling with Domain Specific Languages]
@@ -214,8 +231,9 @@ using a specific textual DSL for each perspective. The Xtext Service Repository 
 code completion.
 
 As services are the most important assets of a SOA, the Service DSL is the most important one. Create a new 
-Service DSL file to define namespace, business objects and services. To define a runtime environment 
-you are going to create an Environment DSL file. To finally declare, where the defines services run bind 
+Service DSL file to define a namespace, business objects and services. After the services have been defined,
+the are being composed into modules. Create a new Module DSL file. To define a runtime environment,
+you should create an Environment DSL file. To finally declare, where the defines services run bind 
 them with DomainBinding, ServiceBinding or even OperationBinding to the environment or more specific, 
 certain servers in the target environment. Create a new Binding DSL file to declare such a binding.
 				
