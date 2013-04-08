@@ -28,7 +28,7 @@
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.fragment-parent</module>
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.test-parent</module>
 
-		<module>../../plugins/org.fornax.soa.servicerepo</module>
+		
 		<module>../../docs/org.fornax.soa.servicerepo.doc</module>
 		<module>../../examples/org.fornax.soa.servicerepo.examples/org.fornax.soa.servicerepo.examples/</module>
 
@@ -240,7 +240,7 @@
 		<repository>
 			<id>graphview</id>
 			<layout>p2</layout>
-			<url>https://raw.github.com/athurn/Generic-Graph-View/master/org.eclipse.xtext.graphview.p2.repository/</url>
+			<url>http://download.anderscore.com/graphview/updates-xtext23</url>
 		</repository>
 		<!--repository>
 			<id>xdoc</id>

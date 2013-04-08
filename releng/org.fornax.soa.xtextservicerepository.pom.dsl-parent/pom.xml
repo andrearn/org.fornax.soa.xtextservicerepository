@@ -25,6 +25,7 @@
 		<module>../../plugins/org.fornax.soa.servicedsl</module>
 		<module>../../plugins/org.fornax.soa.sladsl</module>
 		<module>../../plugins/org.fornax.soa.solutiondsl</module>
+		<module>../../plugins/org.fornax.soa.servicerepo</module>
 	</modules>
 	
 	<build>
