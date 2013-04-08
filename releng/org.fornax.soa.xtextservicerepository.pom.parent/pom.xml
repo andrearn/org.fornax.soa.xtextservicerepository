@@ -240,7 +240,7 @@
 		<repository>
 			<id>graphview</id>
 			<layout>p2</layout>
-			<url>https://raw.github.com/athurn/Generic-Graph-View/master/org.eclipse.xtext.graphview.p2.repository/</url>
+			<url>http://download.anderscore.com/graphview/updates-xtext23</url>
 		</repository>
 		<!--repository>
 			<id>xdoc</id>
