@@ -103,7 +103,7 @@ codelanguage-def[Java]
 
 codelanguage-def[MWE2]
 [
-	component,module,workflow,var
+	component,module,workflow,var,package
 ]
 
 chapter-ref[Introduction]
