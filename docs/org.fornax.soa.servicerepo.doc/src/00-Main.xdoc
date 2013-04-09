@@ -84,7 +84,7 @@ codelanguage-def[ProfileDSL]
 	requires-approval,service-categories,base-category,activity,entity,process,rule,utility,
 	qualifies-for, Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment,
 	design-rules,types,version-evolution,extendible-properties,extendible-XML-attributes,
-	versioning-strategy,namespace-based
+	versioning-strategy,namespace-based,freezes-asset
 ]
 
 codelanguage-def[Java]

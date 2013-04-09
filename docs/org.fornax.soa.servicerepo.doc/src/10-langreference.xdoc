@@ -917,6 +917,7 @@ soa-profile SampleArchitectureProfile {
 		 * The asset is under test
 		 */
 		state test {
+			//must have been approved by SOA governance
 			requires-approval
 			qualifies-for Local-Environment, Development-Environment, Test-Environment
 			-> productive
@@ -927,7 +928,11 @@ soa-profile SampleArchitectureProfile {
 		 * The is under productive use
 		 */
 		state productive {
+			//must have been approved by SOA governance
 			requires-approval
+			/* changes are not allowed on this version of the asset, a new version need to be created
+			   to incorporate changes */
+			freezes-asset
 			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
 			-> deprecated
 			-> proposed
@@ -937,7 +942,11 @@ soa-profile SampleArchitectureProfile {
 		 * The asset is deprecated and will be retired soon.
 		 */
 		state deprecated {
+			//must have been approved by SOA governance
 			requires-approval
+			/* changes are not allowed on this version of the asset, a new version need to be created
+			   to incorporate changes */
+			freezes-asset
 			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
 			-> productive
 			-> proposed
