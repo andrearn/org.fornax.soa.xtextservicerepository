@@ -149,6 +149,10 @@ public class LifecycleStateComparatorTest {
 		assertEquals(1, comparator.compare (retired, productive));
 		assertEquals(1, comparator.compare (retired, deprecated));
 		assertEquals(0, comparator.compare (retired, retired));
+
+		assertEquals(0, comparator.compare (null, null));
+		assertEquals(0, comparator.compare (null, productive));
+		assertEquals(0, comparator.compare (productive, null));
 	}
 
 }

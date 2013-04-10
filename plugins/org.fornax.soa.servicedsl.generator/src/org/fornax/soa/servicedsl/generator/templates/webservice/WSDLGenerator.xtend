@@ -66,7 +66,7 @@ class WSDLGenerator {
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(s.version)»
-				Lifecycle state: «s.state.name»
+				Lifecycle state: «s.state?.name ?: "undefined"»
 				
 				«docProvider.getDocumentation (s)»
 			</wsdl:documentation>
@@ -98,7 +98,7 @@ class WSDLGenerator {
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «versionQualifier.toVersionNumber(s.version)»
-				Lifecycle state: «s.state.name»
+				Lifecycle state: «s.state?.name ?: "undefined"»
 				
 				«docProvider.getDocumentation (s)»]]>
 			</wsdl:documentation>
@@ -241,7 +241,7 @@ class WSDLGenerator {
 			<wsdl:documentation>
 					<![CDATA[
 						Version:	«versionQualifier.toVersionNumber(s.version)»
-						Lifecycle state: «s.state.name»
+						Lifecycle state: «s.state?.name ?: "undefined"»
 
 						«docProvider.getDocumentation (s)»
 					]]>   			

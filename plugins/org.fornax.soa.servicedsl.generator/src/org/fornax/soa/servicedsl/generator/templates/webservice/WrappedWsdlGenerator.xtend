@@ -78,7 +78,7 @@ class WrappedWsdlGenerator {
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «svc.version.toVersionNumber()»
-				Lifecycle state: «svc.state.name»
+				Lifecycle state: «svc.state?.name ?: "undefined"»
 				
 				«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>
@@ -111,7 +111,7 @@ class WrappedWsdlGenerator {
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «svc.version.toVersionNumber()»
-				Lifecycle state: «svc.state.name»
+				Lifecycle state: «svc.state?.name ?: "undefined"»
 				
 				«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>
@@ -199,7 +199,7 @@ class WrappedWsdlGenerator {
 		<wsdl:portType name="«svc.name»Wrapped">
 			<wsdl:documentation>
 					<![CDATA[Version:	«svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state.name»
+					Lifecycle state: «svc.state?.name ?: "undefined"»
 										
 					«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>

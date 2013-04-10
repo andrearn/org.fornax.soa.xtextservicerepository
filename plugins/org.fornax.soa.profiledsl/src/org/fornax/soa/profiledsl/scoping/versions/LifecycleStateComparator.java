@@ -30,9 +30,9 @@ public class LifecycleStateComparator implements Comparator<LifecycleState> {
 		if (s1 == null && s2 == null)
 			return 0;
 		if (s1 != null && s2 == null)
-			return 1;
+			return 0;
 		if (s1 == null && s2 != null)
-			return -1;
+			return 0;
 		if (s1.equals(s2))
 			return 0;
 		if (s1.isIsInitial () && !s2.isIsInitial ())

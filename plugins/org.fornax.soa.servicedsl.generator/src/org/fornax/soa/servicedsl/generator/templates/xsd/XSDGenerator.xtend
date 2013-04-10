@@ -253,7 +253,7 @@ class XSDGenerator {
 		    	<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(bo.version)»
-						Lifecycle state: 	«bo.state.name»
+						Lifecycle state: 	«bo.state?.name ?: "undefined"»
 										
 						«docProvider.getDocumentation (bo)»
 					]]>
@@ -305,7 +305,7 @@ class XSDGenerator {
 		    	<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(qo.version)»
-						Lifecycle state: 	«qo.state.name»
+						Lifecycle state: 	«qo.state?.name ?: "undefined"»
 										
 						«docProvider.getDocumentation (qo)»
 					]]>
@@ -426,7 +426,7 @@ class XSDGenerator {
 				<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(en.version)»
-						Lifecycle state: 	«en.state.name»
+						Lifecycle state: 	«en.state?.name ?: "undefined"»
 						
 						«docProvider.getDocumentation (en)»
 					]]>
@@ -453,7 +453,7 @@ class XSDGenerator {
 				<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(ex.version)»
-					    Lifecycle state: 	«ex.state.name»
+					    Lifecycle state: 	«ex.state?.name ?: "undefined"»
 						
 						«docProvider.getDocumentation (ex)»
 					]]>   			

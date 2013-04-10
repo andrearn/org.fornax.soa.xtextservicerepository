@@ -99,7 +99,7 @@ class OperationWrapperTypesGenerator {
 			<xsd:annotation>
 		   		<xsd:documentation>
 					<![CDATA[Version «service.version.toVersionNumber()»
-					Lifecycle state: «service.state.name»
+					Lifecycle state: «service.state?.name ?: "undefined"»
 					
 					«docProvider.getDocumentation (service)»]]>
 			   	</xsd:documentation>
@@ -144,7 +144,7 @@ class OperationWrapperTypesGenerator {
 			<xsd:annotation>
 		    	<xsd:documentation>
 					<![CDATA[Version «service.version.toVersionNumber()»
-					Lifecycle state: «service.state.name»
+					Lifecycle state: «service.state?.name ?: "undefined"»
 					
 					«docProvider.getDocumentation (service)»]]>
 		    	</xsd:documentation>

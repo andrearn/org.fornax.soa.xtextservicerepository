@@ -69,7 +69,7 @@ class ConcreteWsdlGenerator {
 
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(svc.version)»
-				Lifecycle state: «svc.state.toString()»
+				Lifecycle state: «svc.state?.name ?: "undefined"»
 				
 				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
@@ -97,7 +97,7 @@ class ConcreteWsdlGenerator {
 
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(svc.version)»
-				Lifecycle state: «svc.state.name»
+				Lifecycle state: «svc.state?.name ?: "undefined"»
 				
 				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>

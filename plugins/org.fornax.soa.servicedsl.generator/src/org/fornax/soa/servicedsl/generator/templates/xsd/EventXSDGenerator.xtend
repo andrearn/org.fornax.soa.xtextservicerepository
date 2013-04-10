@@ -87,7 +87,7 @@ class EventXSDGenerator {
 			<xsd:annotation>
 		   		<xsd:documentation>
 					<![CDATA[Version «svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state.name»
+					Lifecycle state: «svc.state?.name ?: "undefined"»
 					
 					«docProvider.getDocumentation (svc)»]]>
 			   	</xsd:documentation>
@@ -133,7 +133,7 @@ class EventXSDGenerator {
 			<xsd:annotation>
 		    	<xsd:documentation>
 					<![CDATA[Version «svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state.name»
+					Lifecycle state: «svc.state?.name ?: "undefined"»
 					
 					«docProvider.getDocumentation (svc)»]]>
 		    	</xsd:documentation>

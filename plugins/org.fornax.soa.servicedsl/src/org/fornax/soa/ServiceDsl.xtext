@@ -104,7 +104,7 @@ BusinessObject:
 		'metadata' '{'
 			version=Version 
 			('replaces' replaces=BusinessObjectRef)?
-			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
 			(
@@ -134,7 +134,7 @@ QueryObject:
 		'metadata' '{'
 			version=Version 
 			('replaces' replaces=QueryObjectRef)?
-			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
 			(
@@ -199,7 +199,7 @@ Enumeration:
 		'metadata' '{'
 			version=Version  
 			('replaces' replaces=EnumTypeRef )?
-			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(
 				('release-on' releaseDate = STRING )?
@@ -235,7 +235,7 @@ Service:
 			 * Used in conjunction with renaming the service. Points to the previous service version
 			 */
 			('replaces' replaces=ServiceRef )?
-			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
 			('service-category' category=[profileDsl::ServiceCategory | QualifiedName])?
@@ -345,7 +345,7 @@ Exception:
 		'metadata' '{'
 			version=Version  
 			('replaces' replaces=ExceptionRef )?
-			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] 
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
 			('release-on' releaseDate = STRING )?
@@ -465,7 +465,7 @@ Event:
 		'metadata' '{'
 			version=Version  
 			('replaces' replaces=EventRef )?
-			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] 
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
 			('release-on' releaseDate = STRING )?
