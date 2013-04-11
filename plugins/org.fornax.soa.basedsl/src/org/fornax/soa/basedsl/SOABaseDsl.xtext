@@ -37,7 +37,7 @@ VersionedName: {VersionedName} QualifiedName|ID (WS)* version=VersionId;
  * A version qualifier for versioned assets
  */
 Version:
-	'version' (version=VersionId) ;
+	'version' (version=VersionId) (frozen?='frozen')?;
 
 /*
  * Version constraints applied to referenced assets
