@@ -22,12 +22,14 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 import java.util.Set
+import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
 
 class EventXSDGenerator {
 	
 
 	@Inject IFileSystemAccess fsa
 
+	@Inject extension CommonTemplateExtensions
 	@Inject extension SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
@@ -87,7 +89,7 @@ class EventXSDGenerator {
 			<xsd:annotation>
 		   		<xsd:documentation>
 					<![CDATA[Version «svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state?.name ?: "undefined"»
+					Lifecycle state: «svc.state.toStateName»
 					
 					«docProvider.getDocumentation (svc)»]]>
 			   	</xsd:documentation>
@@ -133,7 +135,7 @@ class EventXSDGenerator {
 			<xsd:annotation>
 		    	<xsd:documentation>
 					<![CDATA[Version «svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state?.name ?: "undefined"»
+					Lifecycle state: «svc.state.toStateName»
 					
 					«docProvider.getDocumentation (svc)»]]>
 		    	</xsd:documentation>

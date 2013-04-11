@@ -181,6 +181,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	@Check
 	public void checkGovApprovalDeclared (VersionedType o) {
 		if (o.eContainer() instanceof DomainNamespace
+				&& o.getState() != null
 				&& o.getState().isRequiresApproval()
 				&& o.getGovernanceApproval() == null)
 			error("The state of the governance-approval for a canonical " + getContainingObjectTypeName(o) + " must be declared!",
@@ -190,6 +191,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	@Check
 	public void checkGovApprovalDeclared (org.fornax.soa.serviceDsl.Exception ex) {
 		if (ex.eContainer() instanceof DomainNamespace
+				&& ex.getState() != null
 				&& ex.getState().isRequiresApproval()
 				&& ex.getGovernanceApproval() == null)
 			error("The state of the governance-approval for a canonical exception must be declared!",
@@ -199,6 +201,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	@Check
 	public void checkGovApprovalDeclared(Service s) {
 		if (s.eContainer() instanceof DomainNamespace
+				&& s.getState() != null
 				&& s.getState().isRequiresApproval()
 				&& s.getGovernanceApproval() == null)
 			error("The state of the governance-approval for a canonical service must be declared!",

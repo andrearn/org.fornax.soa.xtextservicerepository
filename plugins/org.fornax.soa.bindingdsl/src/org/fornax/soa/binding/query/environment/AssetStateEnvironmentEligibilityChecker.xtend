@@ -27,15 +27,24 @@ class AssetStateEnvironmentEligibilityChecker {
 	}
 	
 	def dispatch boolean isEligibleForEnvironment (Service service, Environment env) {
-		stateMatcher.matches (env.getMinLifecycleState (service.state.eContainer as Lifecycle), service.state);
+		if (service.state != null)
+			stateMatcher.matches (env.getMinLifecycleState (service.state.eContainer as Lifecycle), service.state)
+		else
+			true
 	}
 	
 	def dispatch boolean isEligibleForEnvironment (VersionedType type, Environment env) {
-		stateMatcher.matches (env.getMinLifecycleState (type.state.eContainer as Lifecycle), type.state);
+		if (type.state != null)
+			stateMatcher.matches (env.getMinLifecycleState (type.state.eContainer as Lifecycle), type.state)
+		else
+			true
 	}
 	
 	def dispatch boolean isEligibleForEnvironment (org.fornax.soa.serviceDsl.Exception exception, Environment env) {
-		stateMatcher.matches (env.getMinLifecycleState (exception.state.eContainer as Lifecycle), exception.state);
+		if (exception.state != null)
+			stateMatcher.matches (env.getMinLifecycleState (exception.state.eContainer as Lifecycle), exception.state)
+		else
+			true
 	}
 	
 }

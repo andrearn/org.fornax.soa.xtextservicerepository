@@ -46,7 +46,7 @@ public class SolutionDslJavaValidator extends AbstractSolutionDslJavaValidator {
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateResolver.definesState (owner)) {
-			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !ownerState.isIsEnd())
+			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !(ownerState != null && ownerState.isIsEnd()))
 				warning ("A service with a lower lifecycle-state is being used. You should review the used service and adjust it's lifecycle-state.", SolutionDslPackage.Literals.SERVICE_REF__SERVICE);
 		}
 	}

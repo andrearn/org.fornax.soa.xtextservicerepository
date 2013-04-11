@@ -43,7 +43,7 @@ public class BusinessObjectVersionValidator extends AbstractServiceDslVersionVal
 				eObject = EcoreUtil2.resolve (eObject, res);
 			if (eObject instanceof BusinessObject) {
 				BusinessObject otherBo  = (BusinessObject)eObject;
-				if (! otherBo.getState().isIsEnd()) {
+				if (otherBo.getState() == null || ! otherBo.getState().isIsEnd()) {
 					if (bo.getSuperBusinessObject () != null) {
 						if (otherBo.getSuperBusinessObject () == null || ! (bo.getSuperBusinessObject ().getType ().equals (otherBo.getSuperBusinessObject ().getType ()))) {
 							error ("The BusinessObject " + bo.getName () + " version " + bo.getVersion ().getVersion () + " has an incompatible change to it's type hierarchy.", ServiceDslPackage.Literals.VERSIONED_TYPE__NAME);
@@ -96,7 +96,7 @@ public class BusinessObjectVersionValidator extends AbstractServiceDslVersionVal
 			if (eObject instanceof BusinessObject) {
 				BusinessObject otherBo  = (BusinessObject)eObject;
 				
-				if (! otherBo.getState().isIsEnd()) {
+				if (otherBo.getState() == null || !otherBo.getState().isIsEnd()) {
 					EList<Property> boProps = bo.getProperties ();
 					EList<Property> otherBoProps = otherBo.getProperties ();
 					int boPropIdx = boProps.indexOf (prop);

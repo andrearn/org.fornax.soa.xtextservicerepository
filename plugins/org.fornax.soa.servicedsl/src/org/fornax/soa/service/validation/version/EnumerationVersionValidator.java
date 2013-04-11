@@ -44,7 +44,7 @@ public class EnumerationVersionValidator extends AbstractServiceDslVersionValida
 				eObject = EcoreUtil2.resolve (eObject, res.getResourceSet ());
 			if (eObject instanceof Enumeration) {
 				Enumeration otherEnum  = (Enumeration)eObject;
-				if (! otherEnum.getState().isIsEnd()) {
+				if (otherEnum.getState() == null || !otherEnum.getState().isIsEnd()) {
 					for (final EnumLiteral lit : otherEnum.getLiterals ()) {
 						boolean curVerHasLiteral = Iterables.any (enumeration.getLiterals (), new Predicate<EnumLiteral>() {
 	
@@ -76,7 +76,7 @@ public class EnumerationVersionValidator extends AbstractServiceDslVersionValida
 			if (eObject instanceof Enumeration) {
 				Enumeration otherEnum  = (Enumeration)eObject;
 				
-				if (! otherEnum.getState().isIsEnd()) {
+				if (otherEnum.getState() == null || !otherEnum.getState().isIsEnd()) {
 					EList<EnumLiteral> enumLiterals = en.getLiterals ();
 					EList<EnumLiteral> otherEnumLiterals = otherEnum.getLiterals ();
 					int enumLiteralIdx = enumLiterals.indexOf (literal);

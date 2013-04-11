@@ -29,6 +29,7 @@ import org.fornax.soa.serviceDsl.SimpleAttribute
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.DataTypeRef
+import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
 
 
 /**
@@ -39,6 +40,7 @@ class XSDGenerator {
 
 	@Inject IFileSystemAccess fsa
 	
+	@Inject extension CommonTemplateExtensions
 	@Inject extension CommonStringExtensions
 	@Inject extension SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
@@ -140,9 +142,9 @@ class XSDGenerator {
 	*/
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val imports = vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace());
-		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.state==null || !b.state.isEnd)
 			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
-		val qos = vns.types.filter (typeof (QueryObject)).filter (b|!b.state.isEnd)
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.state==null || !b.state.isEnd)
 			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
 			.filter (en|minState.matches (en.state) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
@@ -187,9 +189,9 @@ class XSDGenerator {
 	*/
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val imports = vns.importedVersionedNS(minState).filter(e|e.toNamespace() != vns.toNamespace());
-		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|!b.state.isEnd)
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.state==null || !b.state.isEnd)
 			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
-		val qos = vns.types.filter (typeof (QueryObject)).filter (b|!b.state.isEnd)
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.state==null || !b.state.isEnd)
 			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
 			.filter (en|minState.matches (en.state) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
@@ -253,7 +255,7 @@ class XSDGenerator {
 		    	<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(bo.version)»
-						Lifecycle state: 	«bo.state?.name ?: "undefined"»
+						Lifecycle state: 	«bo.state.toStateName»
 										
 						«docProvider.getDocumentation (bo)»
 					]]>
@@ -263,7 +265,7 @@ class XSDGenerator {
 						    	<jxb:class>
 					  	    		<jxb:javadoc>
 						<![CDATA[Version:	«version.toVersionNumber()»
-						Lifecycle state: «state.toString()»
+						Lifecycle state: «state.toStateName»
 						«IF doc != null-»
 										
 						«doc?.stripCommentBraces()?.trim()»
@@ -305,7 +307,7 @@ class XSDGenerator {
 		    	<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(qo.version)»
-						Lifecycle state: 	«qo.state?.name ?: "undefined"»
+						Lifecycle state: 	«qo.state.toStateName»
 										
 						«docProvider.getDocumentation (qo)»
 					]]>
@@ -315,7 +317,7 @@ class XSDGenerator {
 						    	<jxb:class>
 					  	    		<jxb:javadoc>
 						<![CDATA[Version:	«version.toVersionNumber()»
-						Lifecycle state: «state.toString()»
+						Lifecycle state: «state.toStateName»
 						«IF doc != null-»
 										
 						«doc?.stripCommentBraces()?.trim()»
@@ -426,7 +428,7 @@ class XSDGenerator {
 				<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(en.version)»
-						Lifecycle state: 	«en.state?.name ?: "undefined"»
+						Lifecycle state: 	«en.state.toStateName»
 						
 						«docProvider.getDocumentation (en)»
 					]]>
@@ -453,7 +455,7 @@ class XSDGenerator {
 				<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(ex.version)»
-					    Lifecycle state: 	«ex.state?.name ?: "undefined"»
+					    Lifecycle state: 	«ex.state.toStateName»
 						
 						«docProvider.getDocumentation (ex)»
 					]]>   			

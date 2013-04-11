@@ -26,6 +26,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator
 import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceImportQueries
 import java.util.Set
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
+import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
 
 /*
  * Template class for generation of abstract WSDLs
@@ -34,6 +35,7 @@ class WSDLGenerator {
 	
 	@Inject IFileSystemAccess fsa
 
+	@Inject extension CommonTemplateExtensions
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
@@ -66,7 +68,7 @@ class WSDLGenerator {
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(s.version)»
-				Lifecycle state: «s.state?.name ?: "undefined"»
+				Lifecycle state: «s.state.toStateName»
 				
 				«docProvider.getDocumentation (s)»
 			</wsdl:documentation>
@@ -98,7 +100,7 @@ class WSDLGenerator {
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «versionQualifier.toVersionNumber(s.version)»
-				Lifecycle state: «s.state?.name ?: "undefined"»
+				Lifecycle state: «s.state.toStateName»
 				
 				«docProvider.getDocumentation (s)»]]>
 			</wsdl:documentation>
@@ -241,7 +243,7 @@ class WSDLGenerator {
 			<wsdl:documentation>
 					<![CDATA[
 						Version:	«versionQualifier.toVersionNumber(s.version)»
-						Lifecycle state: «s.state?.name ?: "undefined"»
+						Lifecycle state: «s.state.toStateName»
 
 						«docProvider.getDocumentation (s)»
 					]]>   			

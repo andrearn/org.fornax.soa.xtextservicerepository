@@ -26,12 +26,14 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator
+import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
 
 class WrappedWsdlGenerator {
 	
 	
 	@Inject IFileSystemAccess fsa
 
+	@Inject extension CommonTemplateExtensions
 	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
@@ -78,7 +80,7 @@ class WrappedWsdlGenerator {
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «svc.version.toVersionNumber()»
-				Lifecycle state: «svc.state?.name ?: "undefined"»
+				Lifecycle state: «svc.state.toStateName»
 				
 				«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>
@@ -111,7 +113,7 @@ class WrappedWsdlGenerator {
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «svc.version.toVersionNumber()»
-				Lifecycle state: «svc.state?.name ?: "undefined"»
+				Lifecycle state: «svc.state.toStateName»
 				
 				«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>
@@ -199,7 +201,7 @@ class WrappedWsdlGenerator {
 		<wsdl:portType name="«svc.name»Wrapped">
 			<wsdl:documentation>
 					<![CDATA[Version:	«svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state?.name ?: "undefined"»
+					Lifecycle state: «svc.state.toStateName»
 										
 					«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>

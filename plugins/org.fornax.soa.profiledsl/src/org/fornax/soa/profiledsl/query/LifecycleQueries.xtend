@@ -120,6 +120,10 @@ class LifecycleQueries {
 		}
 	}
 	
+	def Lifecycle getAssetLifecycle (EObject asset) {
+		stateResolver.getLifecycleState (asset)?.eContainer as Lifecycle
+	}
+	
 	def LifecycleState getAssetLifecycleState (EObject asset) {
 		stateResolver.getLifecycleState (asset)
 	}

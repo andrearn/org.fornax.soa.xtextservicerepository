@@ -107,7 +107,11 @@ class LatestVersionModuleServiceResolver implements IModuleServiceResolver {
 	 * Get the latest version of the service referenced in the ServiceRef  eligible for the given environment 
 	 */
 	def dispatch  Service resolveModuleServiceRefInternal (ServiceRef svcRef, Environment env) {
-		val minState = lifecycleQueries.getMinLifecycleState(env, svcRef.service.state.eContainer as Lifecycle)
+		val lifecycle = if (svcRef.service.state!= null) 
+							svcRef.service.state.eContainer as Lifecycle 
+						else 
+							lifecycleQueries.getAssetLifecycle (objLookup.getStatefulOwner(svcRef))
+		val minState = lifecycleQueries.getMinLifecycleState(env, lifecycle)
 		resolveModuleServiceRef (svcRef, minState)
 	}
 
@@ -115,7 +119,11 @@ class LatestVersionModuleServiceResolver implements IModuleServiceResolver {
 	 * Get the latest version of the service referenced in the ImportServiceRef eligible for the given environment 
 	 */
 	def dispatch  Service resolveModuleServiceRefInternal (ImportServiceRef svcRef, Environment env) {
-		val minState = lifecycleQueries.getMinLifecycleState(env, svcRef.service.state.eContainer as Lifecycle)
+		val lifecycle = if (svcRef.service.state!= null) 
+							svcRef.service.state.eContainer as Lifecycle 
+						else 
+							lifecycleQueries.getAssetLifecycle (objLookup.getStatefulOwner(svcRef))
+		val minState = lifecycleQueries.getMinLifecycleState(env, lifecycle)
 		resolveModuleServiceRef (svcRef, minState)
 	}
 	

@@ -6,6 +6,7 @@ import org.fornax.soa.basedsl.sOABaseDsl.MaxVersionRef
 import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 
 class CommonTemplateExtensions {
 	
@@ -25,6 +26,13 @@ class CommonTemplateExtensions {
 	
 	def dispatch String versionRangeText(MaxVersionRef v) {
 		"<= " + v.maxVersion.toVersionNumber();
+	}
+	
+	def String toStateName (LifecycleState state) {
+		if (state != null)
+			state.name
+		else
+			"undefined"
 	}
 	
 }

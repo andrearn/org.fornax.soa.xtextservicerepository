@@ -46,7 +46,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 
 	Object text (Service ele) {
 		StyledString name = new StyledString(ele.getName());
-		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + ele.getState().getName (), StyledString.DECORATIONS_STYLER);
+		String stateName = ele.getState() != null ? ele.getState().getName () : "";
+		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		return name;
 	}
@@ -73,7 +74,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	Object text (BusinessObject ele) {
 		StyledString name = new StyledString(ele.getName());
-		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + ele.getState().getName (), StyledString.DECORATIONS_STYLER);
+		String stateName = ele.getState() != null ? ele.getState().getName () : "";
+		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		return name;
 	}
@@ -82,7 +84,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	Object text (QueryObject ele) {
 		StyledString name = new StyledString(ele.getName());
-		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + ele.getState().getName (), StyledString.DECORATIONS_STYLER);
+		String stateName = ele.getState() != null ? ele.getState().getName () : "";
+		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		return name;
 	}
@@ -92,7 +95,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	Object text (Enumeration ele) {
 		StyledString name = new StyledString(ele.getName());
-		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + ele.getState().getName (), StyledString.DECORATIONS_STYLER);
+		String stateName = ele.getState() != null ? ele.getState().getName () : "";
+		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		return name;
 	}
@@ -102,7 +106,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	Object text (org.fornax.soa.serviceDsl.Exception ele) {
 		StyledString name = new StyledString(ele.getName());
-		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + ele.getState().getName (), StyledString.DECORATIONS_STYLER);
+		String stateName = ele.getState() != null ? ele.getState().getName () : "";
+		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		return name;
 	}

@@ -24,6 +24,7 @@ import org.fornax.soa.service.query.HeaderFinder
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import java.util.Set
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
+import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
 
 
 /**
@@ -33,6 +34,7 @@ class OperationWrapperTypesGenerator {
 	
 	@Inject IFileSystemAccess fsa
 
+	@Inject extension CommonTemplateExtensions
 	@Inject extension SchemaNamespaceExtensions
 	@Inject extension SchemaTemplateExtensions
 	@Inject extension SchemaTypeExtensions
@@ -99,7 +101,7 @@ class OperationWrapperTypesGenerator {
 			<xsd:annotation>
 		   		<xsd:documentation>
 					<![CDATA[Version «service.version.toVersionNumber()»
-					Lifecycle state: «service.state?.name ?: "undefined"»
+					Lifecycle state: «service.state.toStateName»
 					
 					«docProvider.getDocumentation (service)»]]>
 			   	</xsd:documentation>
@@ -144,7 +146,7 @@ class OperationWrapperTypesGenerator {
 			<xsd:annotation>
 		    	<xsd:documentation>
 					<![CDATA[Version «service.version.toVersionNumber()»
-					Lifecycle state: «service.state?.name ?: "undefined"»
+					Lifecycle state: «service.state.toStateName»
 					
 					«docProvider.getDocumentation (service)»]]>
 		    	</xsd:documentation>

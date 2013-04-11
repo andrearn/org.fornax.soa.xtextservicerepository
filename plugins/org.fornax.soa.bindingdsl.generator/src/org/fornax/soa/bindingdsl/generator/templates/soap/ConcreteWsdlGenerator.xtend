@@ -21,6 +21,7 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateE
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.bindingDsl.Binding
+import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -32,6 +33,7 @@ import org.fornax.soa.bindingDsl.Binding
  */
 class ConcreteWsdlGenerator {
 	
+	@Inject extension CommonTemplateExtensions
 	@Inject extension BindingExtensions
 	@Inject extension ConcreteWsdlFileNameProvider
 	@Inject extension SoapBindingResolver
@@ -69,7 +71,7 @@ class ConcreteWsdlGenerator {
 
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(svc.version)»
-				Lifecycle state: «svc.state?.name ?: "undefined"»
+				Lifecycle state: «svc.state.toStateName»
 				
 				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
@@ -97,7 +99,7 @@ class ConcreteWsdlGenerator {
 
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(svc.version)»
-				Lifecycle state: «svc.state?.name ?: "undefined"»
+				Lifecycle state: «svc.state.toStateName»
 				
 				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>

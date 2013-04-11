@@ -136,7 +136,7 @@ class ServiceRepositoryNewProjectGenerator {
 				
 				node ServiceNode for each services {
 					label Name for name
-					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					
 					node OperationNode for operations {
 						label Name for each map (op|op.name + "(" + {if (op.parameters?.size < 4) {op.parameters.map(p|p.name).join(",")} else "..."} + ")")
@@ -189,7 +189,7 @@ class ServiceRepositoryNewProjectGenerator {
 			
 				node BusinessObjectNode for this as BusinessObject {
 					label Name for name
-					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
@@ -220,7 +220,7 @@ class ServiceRepositoryNewProjectGenerator {
 				
 				node QueryObjectNode for this as QueryObject {
 					label Name for name
-					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
@@ -253,7 +253,7 @@ class ServiceRepositoryNewProjectGenerator {
 				node EnumNode for this as org.fornax.soa.serviceDsl.Enumeration {
 					label EnumLabel  for "<<Enum>>"
 					label Name for name
-					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					hidden node EnumLiteralNode for literals {
 						label Label for each map(lit|lit.name)
 					} unless literals.empty
@@ -262,7 +262,7 @@ class ServiceRepositoryNewProjectGenerator {
 				node HiddenExceptionNode for this as org.fornax.soa.serviceDsl.Exception {
 					label ExceptionLabel for "<<Exception>>"
 					label Name for name	
-					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
@@ -473,7 +473,7 @@ class ServiceRepositoryNewProjectGenerator {
 				
 				node BusinessObjectNode for each types.filter (typeof (BusinessObject)) {
 					label Name for name
-					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type?.name + " {" +
@@ -535,7 +535,7 @@ class ServiceRepositoryNewProjectGenerator {
 					} else {
 						(eContainer as SubNamespace).name
 					}
-					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name + " {" +
@@ -573,7 +573,7 @@ class ServiceRepositoryNewProjectGenerator {
 				
 				node QueryObjectNode for each types.filter (typeof (QueryObject)) {
 					label Name for name
-					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type?.name + " {" +
@@ -634,7 +634,7 @@ class ServiceRepositoryNewProjectGenerator {
 					} else {
 						(eContainer as SubNamespace).name
 					}
-					label Version for "[v" + version?.version + ", " + state?.name?:"" + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name + " {" +
@@ -672,7 +672,7 @@ class ServiceRepositoryNewProjectGenerator {
 				node ExceptionNode for each exceptions {
 					label ExceptionLabel for "<<Exception>>"
 					label Name for name	
-					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type?.name)
@@ -723,7 +723,7 @@ class ServiceRepositoryNewProjectGenerator {
 				node EnumNode for each types.filter(typeof (org.fornax.soa.serviceDsl.Enumeration)) {
 					label EnumLabel  for "<<Enum>>"
 					label Name for name
-					label Version for "[v" + version?.version + ", " + state?.name + "]"
+					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					hidden node EnumLiteralNode for literals {
 						label Label for each map(lit|lit?.name)
 					} unless literals.empty

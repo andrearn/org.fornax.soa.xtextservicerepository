@@ -47,7 +47,7 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 				eObject = EcoreUtil2.resolve (eObject, res.getResourceSet ());
 			if (eObject instanceof Service) {
 				Service otherSvc  = (Service)eObject;
-				if (! otherSvc.getState().isIsEnd()) {
+				if (otherSvc.getState() == null || !otherSvc.getState().isIsEnd()) {
 					for (final Operation op : otherSvc.getOperations ()) {
 						boolean lesserVerHasOp = Iterables.any (svc.getOperations (), new Predicate<Operation>() {
 	
@@ -78,7 +78,7 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 				eObject = EcoreUtil2.resolve (eObject, res.getResourceSet ());
 			if (eObject instanceof Service) {
 				Service otherSvc  = (Service)eObject;
-				if (! otherSvc.getState().isIsEnd()) {
+				if (otherSvc.getState() == null || !otherSvc.getState().isIsEnd()) {
 					boolean lesserVerHasOp = Iterables.any (otherSvc.getOperations (), new Predicate<Operation>() {
 						public boolean apply (Operation input) {
 							return input.getName ().equals (op.getName ());
@@ -148,7 +148,7 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 				eObject = EcoreUtil2.resolve (eObject, res.getResourceSet ());
 			if (eObject instanceof Service) {
 				Service otherSvc  = (Service)eObject;
-				if (! otherSvc.getState ().isIsEnd ()) {
+				if (otherSvc.getState() == null || !otherSvc.getState ().isIsEnd ()) {
 					boolean lesserHasOp = Iterables.any (otherSvc.getOperations (), new Predicate<Operation>() {
 	
 						public boolean apply (Operation input) {

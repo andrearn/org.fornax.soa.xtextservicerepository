@@ -49,6 +49,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState(owner) && ownerState.isIsEnd() 
+				&& svcRef.getService().getState() != null
 				&& svcRef.getService().getState().isIsEnd()) 
 			error ("A service in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
 	}
@@ -59,6 +60,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState(owner) && ownerState.isIsEnd()
+				&& boRef.getType().getState() != null
 				&& boRef.getType().getState().isIsEnd())
 			error ("A businessObject in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
 	}
@@ -69,6 +71,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner) && ownerState.isIsEnd()
+				&& enumRef.getType().getState() != null
 				&& enumRef.getType().getState().isIsEnd())
 			error ("An enum in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
 	}
@@ -79,6 +82,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner) && ownerState.isIsEnd()
+				&& exRef.getException().getState() != null
 				&& exRef.getException().getState().isIsEnd())
 			error ("An exception in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION);
 	}
@@ -89,6 +93,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner) && ownerState.isIsEnd()
+				&& exRef.getException().getState() != null
 				&& exRef.getException().getState().isIsEnd())
 			error ("An exception in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION);
 	}
@@ -151,7 +156,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner)) {
-			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !ownerState.isIsEnd())
+			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !(ownerState != null && ownerState.isIsEnd()))
 				warning ("A service with a lower lifecycle-state is being referenced. You should review the referenced service and adjust it's lifecycle-state.", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
 		}
 	}
@@ -161,7 +166,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {
-			if (stateComparator.compare (ownerState, ((BusinessObject)boRef.getType()).getState()) > 0 && !ownerState.isIsEnd())
+			if (stateComparator.compare (ownerState, ((BusinessObject)boRef.getType()).getState()) > 0 && !(ownerState != null && ownerState.isIsEnd()))
 				warning ("A businessObject with a lower lifecycle-state is being referenced. You should review the referenced businessObject and adjust it's lifecycle-state.", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
 		}
 	}
@@ -171,7 +176,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {
-			if (stateComparator.compare (ownerState, boRef.getType().getState()) > 0 && !ownerState.isIsEnd())
+			if (stateComparator.compare (ownerState, boRef.getType().getState()) > 0 && !(ownerState != null && ownerState.isIsEnd()))
 				warning ("A " + getObjectTypeName (boRef.getType())+ " with a lower lifecycle-state is being referenced. You should review the referenced businessObject and adjust it's lifecycle-state.", ServiceDslPackage.Literals.VERSIONED_TYPE_REF__TYPE);
 		}
 	}
@@ -182,7 +187,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner)) {
-			if (stateComparator.compare (ownerState, enumRef.getType().getState()) > 0 && !ownerState.isIsEnd())
+			if (stateComparator.compare (ownerState, enumRef.getType().getState()) > 0 && !(ownerState != null && ownerState.isIsEnd()))
 				warning ("An enum with a lower lifecycle-state is being referenced. You should review the referenced enum and adjust it's lifecycle-state.", ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE);
 		}
 	}
@@ -195,7 +200,7 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState (owner)) {
-			if (stateComparator.compare(ownerState, exRef.getException().getState()) > 0 && !ownerState.isIsEnd())
+			if (stateComparator.compare(ownerState, exRef.getException().getState()) > 0 && !(ownerState != null && ownerState.isIsEnd()))
 				warning ("An exception with a lower lifecycle-state is being referenced. You should review the referenced exception and adjust it's lifecycle-state.", ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION);
 		}
 	}
