@@ -275,7 +275,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         minVersionLabel.setLayoutData(gd_minVersionLabel);
         minVersionLabel.setText (ServiceRepositorySearchMessages.SearchPage_minVersion_label);
         
-        minVersionText = new Text (limitToGroup, SWT.NONE);
+        minVersionText = new Text (limitToGroup, SWT.BORDER);
         GridData gd_minVersionText = new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1);
         gd_minVersionText.widthHint = 245;
         minVersionText.setLayoutData(gd_minVersionText);
@@ -294,7 +294,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         maxVersionLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         maxVersionLabel.setText (ServiceRepositorySearchMessages.SearchPage_maxVersion_label);
         
-        maxVersionText = new Text (limitToGroup, SWT.NONE);
+        maxVersionText = new Text (limitToGroup, SWT.BORDER);
         maxVersionText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         initializeStates();
@@ -309,7 +309,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         tagsLabel.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
         tagsLabel.setText (ServiceRepositorySearchMessages.SearchPage_tags_label);
         
-        tagsText = new Text (limitToGroup, SWT.NONE);
+        tagsText = new Text (limitToGroup, SWT.BORDER);
         tagsText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
 
         nonCanonicalCheckButton = new Button(limitToGroup, SWT.CHECK);

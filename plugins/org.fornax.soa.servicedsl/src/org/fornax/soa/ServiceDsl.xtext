@@ -100,6 +100,7 @@ VersionedType:
  * BusinessObjects are versioned.
  */
 BusinessObject:
+	(deprecated?='@deprecated')? 
 	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superBusinessObject=BusinessObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
@@ -130,6 +131,7 @@ BusinessObject:
  * BusinessObject instances. All properties are considered optional.
  */	
 QueryObject:
+	(deprecated?='@deprecated')? 
 	'queryObject'  name=ID ('extends' superQueryObject=QueryObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
@@ -195,6 +197,7 @@ SimpleAttribute:
 	(deprecated?='@deprecated')? (optional?='optional')? name=ID ':' type=TypeRef;
 	
 Enumeration:
+	(deprecated?='@deprecated')? 
 	'enum' name=ID '{'
 		'metadata' '{'
 			version=Version  
@@ -228,6 +231,7 @@ EnumLiteral:
 
 
 Service:
+	(deprecated?='@deprecated')? 
 	visibility=Visibility 'service' name=ID '{'
 		'metadata' '{'
 			version=Version  
@@ -341,6 +345,7 @@ Parameter:
  * Declared service operation exceptions
  */
 Exception:
+	(deprecated?='@deprecated')? 
 	'exception' name=ID ('extends' superException=ExceptionRef)? '{' 
 		'metadata' '{'
 			version=Version  
@@ -461,6 +466,7 @@ CapabilityRef:
  * Event, that is not scoped to an operation
  */
 Event:
+	(deprecated?='@deprecated')? 
 	'event' name=ID '{'
 		'metadata' '{'
 			version=Version  
@@ -493,6 +499,7 @@ EventRef:
  * Channel used to publish events to or to watch for events
  */
 Channel:
+	(deprecated?='@deprecated')? 
 	(isTopic?='topic')? 'channel' name=QualifiedName  '{'
 		('subscribers' '{'
 			subscribers += AssetRef*
