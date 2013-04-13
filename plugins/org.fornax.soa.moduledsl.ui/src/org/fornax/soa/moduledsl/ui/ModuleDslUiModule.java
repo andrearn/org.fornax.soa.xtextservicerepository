@@ -4,6 +4,10 @@
 package org.fornax.soa.moduledsl.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
+import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
+import org.fornax.soa.basedsl.ui.highlighting.BaseDslHighLightingConfiguration;
+import org.fornax.soa.moduledsl.ui.highlighting.ModuleDslSemanticHighlightingCalculator;
 
 /**
  * Use this class to register components to be used within the IDE.
@@ -11,5 +15,13 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 public class ModuleDslUiModule extends org.fornax.soa.moduledsl.ui.AbstractModuleDslUiModule {
 	public ModuleDslUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
+	}
+
+	public Class<? extends ISemanticHighlightingCalculator> bindSemanticHighlightingCalculator() {
+		return ModuleDslSemanticHighlightingCalculator.class;
+	}
+
+	public Class<? extends IHighlightingConfiguration> bindSemanticConfig() {
+		return BaseDslHighLightingConfiguration.class;
 	}
 }

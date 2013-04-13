@@ -6,6 +6,8 @@ package org.fornax.soa.ui.labeling;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jface.viewers.StyledString.Styler;
+import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.basedsl.sOABaseDsl.Import;
 import org.fornax.soa.serviceDsl.BusinessObject;
@@ -16,11 +18,14 @@ import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.Enumeration;
+import org.fornax.soa.serviceDsl.ExceptionRef;
 import org.fornax.soa.serviceDsl.InternalNamespace;
 import org.fornax.soa.serviceDsl.Operation;
+import org.fornax.soa.serviceDsl.OperationRef;
 import org.fornax.soa.serviceDsl.Parameter;
 import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.QueryObject;
+import org.fornax.soa.serviceDsl.QueryObjectRef;
 import org.fornax.soa.serviceDsl.RequiredServiceRef;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceRef;
@@ -39,6 +44,13 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	private static Logger _log = Logger.getLogger (ServiceDslLabelProvider.class);
 
+	private static Styler STRIKETHROUGH = new Styler() {
+		@Override
+		public void applyStyles(TextStyle textStyle) {
+			textStyle.strikeout = true;
+		}
+	};
+	
 	@Inject
 	public ServiceDslLabelProvider(AdapterFactoryLabelProvider delegate) {
 		super(delegate);
@@ -49,6 +61,9 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 		String stateName = ele.getState() != null ? ele.getState().getName () : "";
 		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
+		if (ele.isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
 		return name;
 	}
 	String image (Service ele) {
@@ -57,6 +72,9 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	Object text (ServiceRef ele) {
 		StyledString name = new StyledString(ele.getService ().getName());
+		if (ele.getService().isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
 		return name;
 	}
 	
@@ -65,6 +83,9 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	Object text (RequiredServiceRef ele) {
 		StyledString name = new StyledString(ele.getService ().getName());
+		if (ele.getService().isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
 		return name;
 	}
 	
@@ -77,6 +98,9 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 		String stateName = ele.getState() != null ? ele.getState().getName () : "";
 		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
+		if (ele.isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
 		return name;
 	}
 	String image (BusinessObject ele) {
@@ -87,6 +111,9 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 		String stateName = ele.getState() != null ? ele.getState().getName () : "";
 		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
+		if (ele.isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
 		return name;
 	}
 	String image (QueryObject ele) {
@@ -98,6 +125,9 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 		String stateName = ele.getState() != null ? ele.getState().getName () : "";
 		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
+		if (ele.isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
 		return name;
 	}
 	String image (Enumeration ele) {
@@ -109,6 +139,9 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 		String stateName = ele.getState() != null ? ele.getState().getName () : "";
 		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
+		if (ele.isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
 		return name;
 	}
 	
@@ -122,6 +155,21 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 
 	String image (InternalNamespace ele) {
 		return "full/obj16/packd_obj.gif";
+	}
+	
+	Object text (Operation ele) {
+		StyledString name = new StyledString(ele.getName());
+		if (ele.isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
+		return name;
+	}
+	Object text (OperationRef ele) {
+		StyledString name = new StyledString(ele.getOperation().getName());
+		if (ele.getOperation().isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
+		return name;
 	}
 
 	String image (Operation ele) {
@@ -171,6 +219,35 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	String text(SimpleConsiderationPropertyRef ele) {
 		return ele.getProperty().getName();
+	}
+	
+	Object text(BusinessObjectRef ele) {
+		StyledString name = new StyledString(ele.getType().getName());
+		if (ele.getType().isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
+		return name;
+	}
+	Object text(EnumTypeRef ele) {
+		StyledString name = new StyledString(ele.getType().getName());
+		if (ele.getType().isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
+		return name;
+	}
+	Object text(QueryObjectRef ele) {
+		StyledString name = new StyledString(ele.getType().getName());
+		if (ele.getType().isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
+		return name;
+	}
+	Object text(ExceptionRef ele) {
+		StyledString name = new StyledString(ele.getException().getName());
+		if (ele.getException().isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
+		return name;
 	}
 	
 	
