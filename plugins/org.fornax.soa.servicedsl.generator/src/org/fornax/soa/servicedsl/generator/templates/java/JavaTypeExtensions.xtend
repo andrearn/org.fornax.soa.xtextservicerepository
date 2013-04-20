@@ -60,6 +60,10 @@ class JavaTypeExtensions {
 		}
 	}
 	
+	def dispatch String toQualifiedJavaTypeName (VersionedType type, boolean optionalField) {
+		type.toQualifiedJavaTypeName
+	}
+	
 	/**
 	 * Returns the fully qualified java class name for a Type.
 	 */
