@@ -51,7 +51,7 @@ codelanguage-def[ModuleDSL][
 	source-location,revision-tag,
 	SCA_EAR,Webmethods,EAR,WAR,JAR,ZIP,
 	import,
-	majorVersion,minVersion,maxVersion,fixedVersion
+	majorVersion,minVersion,maxVersion,fixedVersion, endpoint-protocol
 ]
 
 codelanguage-def[BindingDSL][

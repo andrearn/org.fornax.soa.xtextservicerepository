@@ -168,6 +168,13 @@ table[
 	]
 ]
 
+section2 Mapping of the model to WSDLs
+
+The following picture shows how the generator maps the modelled assets to a WSDL:
+
+img:WSDLgeneration[images/WSDLgeneration.png] [Mapping services to WSDLs] [] [align="center"]
+
+
 
 section[Generate business objects for a platform]
 
