@@ -70,30 +70,6 @@ In a SOA model you can take different perspectives, depending on the matter of i
 img:AllModels[images/AllModels.png] [Overview of all models] [] [align="center"]
 
 
-section2:BusinessModelPerspective[Business view]
-
-The business view gives a perspective on what makes up the business of a company. It is typically 
-organized into domains which may be reflected by the company's organizational structure. The business
-model also defines business functions that are supported by the organization or certain organizational roles.
-to build solutions from business functions.
-
-Business capabilities are used to define what can be done in the business sense. They can be compared to 
-use cases, yet they do not define actors as they are designed for reuse. A business capability might 
-be e.g. "Lookup a customer by her address". Business capabilities relate to services or service operations
-defined in the service model.
-
-
-section2:SolutionPerspective[Solutions]
-
-Solutions support the business of a company. They are available as applications or bundles of applications 
-that solve a certain problem, e.g. a customer self care solution. In SOA, solutions are based services that 
-support the business capabilities required to compose a solution. Solutions are the end consumers
-of services.
-
-img:Solutions[images/Solutions.png] [Structure of a solution] [] [align="center"]
-
-
-
 section2:ServiceModelPerspective[Service model]
 
 The service model let's you look at service contracts and data types. The service model defines domain 
@@ -183,7 +159,7 @@ parts of an environment are hosts, application servers, databases and so on. Typ
 a production, test and a development environment.
 		
 
-section2:BindingPerspective[Module and service binding to the runtime]
+section2:BindingPerspective[Module and service bindings to the runtime]
 
 This perspective describes, where and how service modules are deployed to the runtime environment. 
 The binding perspective wires services to an environment, where they are supposed to be hosted together. 
@@ -247,6 +223,30 @@ where the same module is deployed to two different ESBs. You would mark the resp
 different endpoint-qualifiers. You can do this as well on the consuming side of a module to select between
 bindings and select the endpoint on the ESB you would like the module to access when calling the service.
 
+
+section2:BusinessModelPerspective[Business view]
+
+The business view gives a perspective on what makes up the business of a company. It is typically 
+organized into domains which may be reflected by the company's organizational structure. The business
+model also defines business functions that are supported by the organization or certain organizational roles.
+to build solutions from business functions.
+
+Business capabilities are used to define what can be done in the business sense. They can be compared to 
+use cases, yet they do not define actors as they are designed for reuse. A business capability might 
+be e.g. "Lookup a customer by her address". Business capabilities relate to services or service operations
+defined in the service model.
+
+
+section2:SolutionPerspective[Solutions]
+
+Solutions support the business of a company. They are available as applications or bundles of applications 
+that solve a certain problem, e.g. a customer self care solution. In SOA, solutions are based services that 
+support the business capabilities required to compose a solution. Solutions are the end consumers
+of services.
+
+img:Solutions[images/Solutions.png] [Structure of a solution] [] [align="center"]
+
+
 section2:BaseDSL[The base DSL for most models]
 
 Most models have a base DSL that describes common concepts like version or versioned reference or qualified
@@ -254,17 +254,17 @@ names. This is the SOA Base DSL. However, you will not use this DSL to model any
 
 
 
-section2:ModelingWithDSLs[Modeling with Domain Specific Languages]
+section:ModelingWithDSLs[Modeling with Domain Specific Languages]
 
-Domain Specific Languages (short DSLs) are textual or graphical languages designed for specific problem domain. 
+Domain Specific Languages (short DSLs) are textual or graphical languages designed for a specific problem domain. 
 Xtext Service Repository describes the central assets of a SOA as explained in the ref:ModelPerspectives 
 using a specific textual DSL for each perspective. The Xtext Service Repository DSL editors will support with 
 code completion.
 
 As services are the most important assets of a SOA, the Service DSL is the most important one. Create a new 
 Service DSL file to define a namespace, business objects and services. After the services have been defined,
-the are being composed into modules. Create a new Module DSL file. To define a runtime environment,
-you should create an Environment DSL file. To finally declare, where the defines services run bind 
-them with DomainBinding, ServiceBinding or even OperationBinding to the environment or more specific, 
+the are being composed into modules. Create a new Module DSL file to define module. The runtime environment will
+be defined in an Environment DSL file. To finally declare, where the defines services run bind 
+them with ModuleBinding, ServiceBinding or even OperationBinding to the environment or more specific, 
 certain servers in the target environment. Create a new Binding DSL file to declare such a binding.
 				
