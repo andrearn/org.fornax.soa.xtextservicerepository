@@ -370,7 +370,7 @@ Exception:
 	'}';
 
 ExceptionRef:
-	exception=[Exception|QualifiedName] version=VersionRef;
+	exception=[Exception|QualifiedName] versionRef=VersionRef;
 	
 /* the message exchange pattern */
 enum MEP : 

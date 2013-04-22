@@ -21,7 +21,7 @@ class LatestMinorVersionExceptionResolver implements IExceptionResolver {
 	 *	version constraint in the reference and the minimal required LifecycleState 
 	 */	
 	override org.fornax.soa.serviceDsl.Exception findMatchingException (ExceptionRef excRef, LifecycleState minState) {
-		excRef.exception.findSubdomain ().exceptions.filter (e|e.name == excRef.exception.name && excRef.exception.version.versionMatches (excRef.version) && excRef.exception.state.matchesMinStateLevel (minState))
+		excRef.exception.findSubdomain ().exceptions.filter (e|e.name == excRef.exception.name && excRef.exception.version.versionMatches (excRef.versionRef) && excRef.exception.state.matchesMinStateLevel (minState))
 			.filter (typeof (org.fornax.soa.serviceDsl.Exception)).sortBy (e|e.version.version).last( );
 	}
 	
@@ -30,7 +30,7 @@ class LatestMinorVersionExceptionResolver implements IExceptionResolver {
 	 *	version constraint in the reference. The LifecycleState of the Exception is not considered. 
 	 */	
 	override org.fornax.soa.serviceDsl.Exception findMatchingException (ExceptionRef excRef) { 
-		excRef.exception.findSubdomain ().exceptions.filter (e|e.name == excRef.exception.name && excRef.exception.version.versionMatches (excRef.version))
+		excRef.exception.findSubdomain ().exceptions.filter (e|e.name == excRef.exception.name && excRef.exception.version.versionMatches (excRef.versionRef))
 			.filter (typeof (org.fornax.soa.serviceDsl.Exception)).sortBy (e|e.version.version).last( );
 	}
 	

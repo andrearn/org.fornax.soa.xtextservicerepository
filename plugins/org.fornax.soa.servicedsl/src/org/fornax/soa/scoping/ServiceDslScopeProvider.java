@@ -141,7 +141,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		
 		} else if (reference == ServiceDslPackage.Literals.EXCEPTION_REF__EXCEPTION 
 				&& ctx instanceof ExceptionRef) {
-			final VersionRef v = ((ExceptionRef) ctx).getVersion();
+			final VersionRef v = ((ExceptionRef) ctx).getVersionRef();
 			return createVersionFilter (v, objLookup.getVersionedOwner(ctx));
 
 		} else if (reference == ServiceDslPackage.Literals.EVENT_REF__EVENT 
