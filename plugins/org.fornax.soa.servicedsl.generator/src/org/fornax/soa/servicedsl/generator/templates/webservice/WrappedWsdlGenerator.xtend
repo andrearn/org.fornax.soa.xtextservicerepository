@@ -75,6 +75,7 @@ class WrappedWsdlGenerator {
 			xmlns:tns="«svc.toWrapperServiceTargetNamespace()»"
 			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd"
 			xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
 			name="«svc.name»" 
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
@@ -106,6 +107,7 @@ class WrappedWsdlGenerator {
 			xmlns:tns="«svc.toWrapperServiceTargetNamespace()»"
 			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd"
 			«/*	
 				xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
 			*/»

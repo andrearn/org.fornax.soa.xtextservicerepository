@@ -64,6 +64,7 @@ class WSDLGenerator {
 			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
+			xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd"
 			name="«s.name»" 
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
@@ -91,7 +92,7 @@ class WSDLGenerator {
 			xmlns:tns="«s.toTargetNamespace()»"
 			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-			xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd
+			xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd"
 
 		«/*	
 			xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
