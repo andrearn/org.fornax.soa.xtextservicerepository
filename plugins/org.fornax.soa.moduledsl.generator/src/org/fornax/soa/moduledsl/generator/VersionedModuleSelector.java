@@ -1,74 +1,173 @@
 package org.fornax.soa.moduledsl.generator;
 
+import java.util.Set;
+
+import javax.naming.NameParser;
+
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.xbase.lib.FunctionExtensions;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.fornax.soa.basedsl.version.VersionComparator;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.moduledsl.query.ModuleLookup;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+
 public class VersionedModuleSelector {
-	
+
 	private String name;
 	private String version;
 	private boolean useOtherVersionIfNotInEnvironment;
 	private boolean generateProvidedServices;
 	private boolean generateUsedServices;
 	private String endpointQualifier;
-	
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getVersion() {
 		return version;
 	}
+
 	public void setVersion(String version) {
 		this.version = version;
 	}
+
 	public boolean isUseOtherVersionIfNotInEnvironment() {
 		return useOtherVersionIfNotInEnvironment;
 	}
+
 	public void setUseOtherVersionIfNotInEnvironment(
 			boolean useOtherVersionIfNotInEnvironment) {
 		this.useOtherVersionIfNotInEnvironment = useOtherVersionIfNotInEnvironment;
 	}
+
 	public boolean isGenerateProvidedServices() {
 		return generateProvidedServices;
 	}
+
 	public void setGenerateProvidedServices(boolean generateProvidedServices) {
 		this.generateProvidedServices = generateProvidedServices;
 	}
+
 	public boolean isGenerateUsedServices() {
 		return generateUsedServices;
 	}
+
 	public void setGenerateUsedServices(boolean generateUsedServices) {
 		this.generateUsedServices = generateUsedServices;
 	}
-	
+
 	public String getEndpointQualifier() {
 		return endpointQualifier;
 	}
+
 	public void setEndpointQualifier(String providerEndpointQualifier) {
 		this.endpointQualifier = providerEndpointQualifier;
 	}
-	
-	public boolean matches (Module mod, LifecycleState minState, ModuleLookup modLookup, IStateMatcher stateMatcher, IQualifiedNameProvider qualifiedNameProvider) {
-		if (name.equals(qualifiedNameProvider.getFullyQualifiedName (mod).toString())) {
-			if (version == null || "".equals(version) 
-					|| (version.equals(mod.getVersion().getVersion()) && stateMatcher.matches(minState, mod.getState()))) {
+
+	public boolean matches (final Module mod, final LifecycleState minState, final ModuleLookup modLookup, final IStateMatcher stateMatcher, final IQualifiedNameProvider qualifiedNameProvider) {
+		boolean matchesQualifier = moduleMatchesQualifier(mod,
+				qualifiedNameProvider);
+		if (name.equals(qualifiedNameProvider.getFullyQualifiedName (mod).toString()) && matchesQualifier) {
+			if (version != null
+					&& version.equals(mod.getVersion().getVersion())
+					&& stateMatcher.matches(minState, mod.getState())) {
 				return true;
-			} else if (version != null || !"".equals(version) && useOtherVersionIfNotInEnvironment){
-				Module matchingModule = modLookup.findLatestModuleByNameAndMinState(mod, minState);
-				if (matchingModule != null) {
-					return true;
+			} else if (version != null && !version.equals(mod.getVersion().getVersion()) 
+					&& useOtherVersionIfNotInEnvironment
+					&& stateMatcher.matches(minState, mod.getState())) {
+				boolean hasExactModuleVersion = hasExactMatchingModule (
+						minState, modLookup, stateMatcher,
+						qualifiedNameProvider, mod.eResource().getResourceSet());
+				if (!hasExactModuleVersion) {
+					Module alternativeMatchingModule = findLatestMatchingModule (minState, modLookup, stateMatcher,
+							qualifiedNameProvider, mod.eResource().getResourceSet());
+					if (alternativeMatchingModule != null 
+							&& mod.getVersion().getVersion().equals(alternativeMatchingModule.getVersion().getVersion())) {
+						return true;
+					}
 				}
+			} else if (((version == null || "".equals(version)) && stateMatcher.matches (minState, mod.getState()))) {
+				return true;
 			}
 		}
 		return false;
 	}
+
+	private boolean hasExactMatchingModule(
+			final LifecycleState minState, final ModuleLookup modLookup,
+			final IStateMatcher stateMatcher,
+			final IQualifiedNameProvider qualifiedNameProvider, final ResourceSet resourceSet) {
+		final String modVersion = version;
+		Set<Module> moduleVersions = modLookup.findAllModuleVersionsByName(name, resourceSet);
+		boolean hasExactModuleVersion = Iterables.any (moduleVersions, new Predicate<Module>(){
+
+					public boolean apply(Module input) {
+						return input.getVersion().getVersion()
+								.equals(modVersion)
+								&& stateMatcher.matches(minState,
+										input.getState())
+								&& moduleMatchesQualifier(input,
+										qualifiedNameProvider);
+					}
+				});
+		return hasExactModuleVersion;
+	}
 	
+	private Module findLatestMatchingModule (
+			final LifecycleState minState, final ModuleLookup modLookup,
+			final IStateMatcher stateMatcher,
+			final IQualifiedNameProvider qualifiedNameProvider, final ResourceSet resourceSet) {
+		Set<Module> moduleVersions = modLookup.findAllModuleVersionsByName(name, resourceSet);
+		Iterable<Module> matchingModuleVersions = Iterables.filter (moduleVersions, new Predicate<Module>(){
+
+					public boolean apply(Module input) {
+						return stateMatcher.matches(minState,
+										input.getState())
+								&& moduleMatchesQualifier(input,
+										qualifiedNameProvider);
+					}
+				});
+		Module latestMatchingModuleVersion = null;
+		for (Module modVer : matchingModuleVersions) {
+			if (latestMatchingModuleVersion == null) {
+				latestMatchingModuleVersion = modVer;
+			} else if (VersionComparator.compare(modVer.getVersion().getVersion(), latestMatchingModuleVersion.getVersion().getVersion()) > 0){
+				latestMatchingModuleVersion = modVer;
+			}
+		}
+		return latestMatchingModuleVersion;
+	}
+
+	private boolean moduleMatchesQualifier(final Module mod,
+			final IQualifiedNameProvider qualifiedNameProvider) {
+		boolean matchesQualifier = false;
+		if (endpointQualifier != null && !"".equals(endpointQualifier)) {
+			if (mod.getEndpointQualifierRef() != null
+					&& endpointQualifier
+							.equals(qualifiedNameProvider
+									.getFullyQualifiedName(
+											mod.getEndpointQualifierRef()
+													.getEndpointQualifier())
+									.toString())) {
+				matchesQualifier = true;
+			}
+		} else {
+			matchesQualifier = true;
+		}
+		return matchesQualifier;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -77,6 +176,7 @@ public class VersionedModuleSelector {
 		result = prime * result + ((version == null) ? 0 : version.hashCode());
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -98,7 +198,5 @@ public class VersionedModuleSelector {
 			return false;
 		return true;
 	}
-	
-	
 
 }

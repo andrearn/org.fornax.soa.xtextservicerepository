@@ -107,7 +107,7 @@ class ModuleLookup {
 		val modules = findAllModuleVersionsByName(module.name, module.eResource.resourceSet)
 		var Module matchingModule = null
 		for (mod : modules) {
-			if (mod.state.matches(minState)) {
+			if (minState.matches(mod.state)) {
 				if (matchingModule == null 
 					|| VersionComparator::compare(mod.version.version, matchingModule.version.version) > 0
 				) {
