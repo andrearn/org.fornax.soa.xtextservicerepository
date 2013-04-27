@@ -175,10 +175,11 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 	}
 		
 	def private EndpointQualifierRef getSelectingEndpointQualifier (ModuleRef usedModRef, Module module, EndpointQualifierRef endpointQualifierRef) {
-		val moduleEndpointQualifierRef = 	if (usedModRef.endpointQualifierRef?.endpointQualifier != null) 
+		val moduleEndpointQualifierRef = 	if (usedModRef.endpointQualifierRef?.endpointQualifier != null) {
 													usedModRef.endpointQualifierRef 
-												else 
+											} else {
 													module.endpointQualifierRef
+											}
 		val selectingEndpointQualifierRef = if (endpointQualifierRef != null 
 														&& moduleEndpointQualifierRef?.endpointQualifier?.name != null
 												) {
@@ -189,7 +190,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 															endpointQualifierRef.endpointQualifier.name
 														)
 													}
-													usedModRef.endpointQualifierRef 
+													moduleEndpointQualifierRef 
 												} else if (endpointQualifierRef != null)  {
 													endpointQualifierRef 
 												} else { 
