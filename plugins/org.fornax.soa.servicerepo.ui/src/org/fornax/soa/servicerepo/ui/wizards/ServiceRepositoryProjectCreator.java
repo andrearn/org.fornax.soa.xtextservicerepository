@@ -23,6 +23,7 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 	protected static final String PROFILE_DSL_PROJECT_NAME = "org.fornax.soa.profiledsl";
 	protected static final String SEMANTICS_DSL_PROJECT_NAME = "org.fornax.soa.semanticsdsl";
 	protected static final String SERVICE_DSL_PROJECT_NAME = "org.fornax.soa.servicedsl";
+	protected static final String SLA_DSL_PROJECT_NAME = "org.fornax.soa.sladsl";
 	protected static final String SOLUTION_DSL_PROJECT_NAME = "org.fornax.soa.solutiondsl";
 
 	protected static final String BASE_DSL_UI_PROJECT_NAME = "org.fornax.soa.basedsl.ui";
@@ -33,6 +34,7 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 	protected static final String PROFILE_DSL_UI_PROJECT_NAME = "org.fornax.soa.profiledsl.ui";
 	protected static final String SEMANTICS_DSL_UI_PROJECT_NAME = "org.fornax.soa.semanticsdsl.ui";
 	protected static final String SERVICE_DSL_UI_PROJECT_NAME = "org.fornax.soa.servicedsl.ui";
+	protected static final String SLA_DSL_UI_PROJECT_NAME = "org.fornax.soa.sladsl.ui";
 	protected static final String SOLUTION_DSL_UI_PROJECT_NAME = "org.fornax.soa.solutiondsl.ui";
 
 	protected static final String MODEL_ROOT = "model";
@@ -74,6 +76,7 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 				PROFILE_DSL_PROJECT_NAME,
 				SEMANTICS_DSL_PROJECT_NAME,
 				SERVICE_DSL_PROJECT_NAME,
+				SLA_DSL_PROJECT_NAME,
 				SOLUTION_DSL_PROJECT_NAME,
 		
 				BASE_DSL_UI_PROJECT_NAME,
@@ -84,6 +87,7 @@ public class ServiceRepositoryProjectCreator extends AbstractPluginProjectCreato
 				PROFILE_DSL_UI_PROJECT_NAME,
 				SEMANTICS_DSL_UI_PROJECT_NAME,
 				SERVICE_DSL_UI_PROJECT_NAME,
+				SLA_DSL_UI_PROJECT_NAME,
 				SOLUTION_DSL_UI_PROJECT_NAME);
 		return result;
 	}
