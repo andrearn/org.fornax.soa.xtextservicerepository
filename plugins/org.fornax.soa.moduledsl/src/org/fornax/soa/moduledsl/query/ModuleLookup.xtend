@@ -17,6 +17,7 @@ import org.fornax.soa.basedsl.search.IEObjectLookup
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.basedsl.version.VersionComparator
+import org.eclipse.xtext.naming.QualifiedName
 
 class ModuleLookup {
 	
@@ -67,6 +68,11 @@ class ModuleLookup {
 	def findCompatibleModules (Module module) {
 		val allModules = findAllModules (module.eResource.resourceSet)
 		allModules.filter (m | m.isCompatibleTo (module))
+	}
+	
+	def findAllEffectivelyReferencedModules (QualifiedName moduleName, VersionRef versionConstraint, ResourceSet resourceSet) {
+		val allModules = findAllModules (resourceSet)
+		allModules.filter (m | m.isEffectivelyReferencedVersion(moduleName, versionConstraint))
 	}
 	
 	/* 

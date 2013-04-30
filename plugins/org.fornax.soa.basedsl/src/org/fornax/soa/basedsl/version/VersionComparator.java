@@ -4,11 +4,27 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.sOABaseDsl.Version;
 
+/**
+ * Comparator for version numbers
+ * @author aarnold
+ *
+ */
 public class VersionComparator {
 	
 	private static final Pattern pattern = Pattern.compile("(^[\\d+][\\.\\d+]*)(?:(?:\\.|\\-)(\\w.*))?$");
 	
+	/**
+	 * Compares two version numbers
+	 * @param v1 a version number
+	 * @param v2 another version number
+	 * @return	<ul>
+	 * 		<li>0, if the version numbers v1 and v2 are equal</li>
+	 * 		<li>1, if the version v1 is higher than version v2</li>
+	 * 		<li>-1, if the version v1 is lower than version v2</li>
+	 * </ul>
+	 */
 	public static int compare (final String v1, final String v2) {
 		if (v1!=null && v2 == null)
 			return 1;
@@ -57,6 +73,16 @@ public class VersionComparator {
 		return classifierCmp;
 	}
 	
+	/**
+	 * Compares two version numbers
+	 * @param eObjDesc1 IEObjectDescription of a versioned object 
+	 * @param eObjDesc2 another IEObjectDescription of a versioned object
+	 * @return	<ul>
+	 * 		<li>0, if the version numbers of eObjDesc1 and eObjDesc2 are equal</li>
+	 * 		<li>1, if the version of eObjDesc1 is higher than version of eObjDesc2</li>
+	 * 		<li>-1, if the version of eObjDesc1 is lower than version of eObjDesc2</li>
+	 * </ul>
+	 */
 	public static int compare (IEObjectDescription eObjDesc1, IEObjectDescription eObjDesc2, IScopeVersionResolver resolver) {
 		if (eObjDesc1 == null && eObjDesc2 != null)
 			return -1;
@@ -65,14 +91,57 @@ public class VersionComparator {
 		return compare (resolver.getVersionAsString(eObjDesc1), resolver.getVersionAsString(eObjDesc2));
 	}
 
+	/**
+	 * Compares two version numbers
+	 * @param v1 a version number
+	 * @param v2 another version number
+	 * @return	<ul>
+	 * 		<li>0, if the version numbers v1 and v2 are equal</li>
+	 * 		<li>1, if the version v1 is higher than version v2</li>
+	 * 		<li>-1, if the version v1 is lower than version v2</li>
+	 * </ul>
+	 */
 	public static int compare (final Integer v1, final Integer v2) {
 		return compare(v1.toString(), v2.toString());
 	}
+	/**
+	 * Compares two version numbers
+	 * @param v1 a version number
+	 * @param v2 another version number
+	 * @return	<ul>
+	 * 		<li>0, if the version numbers v1 and v2 are equal</li>
+	 * 		<li>1, if the version v1 is higher than version v2</li>
+	 * 		<li>-1, if the version v1 is lower than version v2</li>
+	 * </ul>
+	 */
 	public static int compare (final String v1, final Integer v2) {
 		return compare(v1.toString(), v2.toString());
 	}
+	/**
+	 * Compares two version numbers
+	 * @param v1 a version number
+	 * @param v2 another version number
+	 * @return	<ul>
+	 * 		<li>0, if the version numbers v1 and v2 are equal</li>
+	 * 		<li>1, if the version v1 is higher than version v2</li>
+	 * 		<li>-1, if the version v1 is lower than version v2</li>
+	 * </ul>
+	 */
 	public static int compare (final Integer v1, final String v2) {
 		return compare(v1.toString(), v2.toString());
+	}
+	/**
+	 * Compares two version numbers
+	 * @param v1 a version number
+	 * @param v2 another version number
+	 * @return	<ul>
+	 * 		<li>0, if the version numbers v1 and v2 are equal</li>
+	 * 		<li>1, if the version v1 is higher than version v2</li>
+	 * 		<li>-1, if the version v1 is lower than version v2</li>
+	 * </ul>
+	 */
+	public static int compare (final Version v1, final Version v2) {
+		return compare(v1.getVersion(), v2.getVersion());
 	}
 
 }

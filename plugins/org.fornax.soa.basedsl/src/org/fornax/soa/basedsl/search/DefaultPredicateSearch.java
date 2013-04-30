@@ -2,10 +2,12 @@ package org.fornax.soa.basedsl.search;
 
 import java.util.Collection;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -20,6 +22,9 @@ public class DefaultPredicateSearch implements IPredicateSearch {
 
 	@Inject
 	private IResourceDescriptions resourceDescriptions;
+	
+	@Inject
+	private ResourceDescriptionsProvider resourceDescriptionsProvider;
 
 	@Inject
 	private IQualifiedNameConverter qualifiedNameConverter;
@@ -47,6 +52,12 @@ public class DefaultPredicateSearch implements IPredicateSearch {
 	public Iterable<IEObjectDescription> search (
 			final String searchPattern, int allowedSearchRules, final String typeSearchPattern, Predicate<IEObjectDescription> predicate) {
 		return Iterables.filter (getSearchScope (),
+				getSearchPredicate (searchPattern, allowedSearchRules, typeSearchPattern, predicate));
+	}
+	
+	public Iterable<IEObjectDescription> search (
+			final String searchPattern, int allowedSearchRules, final String typeSearchPattern, Predicate<IEObjectDescription> predicate, ResourceSet resourceSet) {
+		return Iterables.filter (getSearchScope (resourceSet),
 				getSearchPredicate (searchPattern, allowedSearchRules, typeSearchPattern, predicate));
 	}
 	
@@ -122,6 +133,38 @@ public class DefaultPredicateSearch implements IPredicateSearch {
 									}
 								}));
 	}
+	
+	protected Iterable<IEObjectDescription> getSearchScope (ResourceSet resourceSet) {
+		return Iterables
+				.concat (Iterables
+						.transform (
+								getResourceDescriptionsProvider().getResourceDescriptions (resourceSet)
+										.getAllResourceDescriptions (),
+								new Function<IResourceDescription, Iterable<IEObjectDescription>> () {
+									public Iterable<IEObjectDescription> apply (
+											IResourceDescription from) {
+										return from.getExportedObjects ();
+									}
+								}));
+	}
+
+	public Iterable<IEObjectDescription> search(String searchPattern,
+			String typeSearchPattern, Predicate<IEObjectDescription> predicate,
+			ResourceSet resourceSet) {
+		int allowedSearchRules = SearchPattern.RULE_BLANK_MATCH
+				| SearchPattern.RULE_CAMELCASE_MATCH
+				| SearchPattern.RULE_CASE_SENSITIVE
+				| SearchPattern.RULE_EXACT_MATCH
+				| SearchPattern.RULE_PATTERN_MATCH
+				| SearchPattern.RULE_PREFIX_MATCH;
+		return Iterables.filter (getSearchScope (resourceSet),
+				getSearchPredicate (searchPattern, allowedSearchRules, typeSearchPattern, predicate));
+	}
+
+	public Iterable<IEObjectDescription> search(String typeSearchPattern,
+			Predicate<IEObjectDescription> predicate, ResourceSet resourceSet) {
+		return Iterables.filter (getSearchScope (resourceSet),getSearchPredicate (typeSearchPattern, predicate));
+	}
 
 	public void setResourceDescriptions (
 			IResourceDescriptions resourceDescriptions) {
@@ -130,6 +173,15 @@ public class DefaultPredicateSearch implements IPredicateSearch {
 
 	public IResourceDescriptions getResourceDescriptions () {
 		return resourceDescriptions;
+	}
+
+	public ResourceDescriptionsProvider getResourceDescriptionsProvider() {
+		return resourceDescriptionsProvider;
+	}
+
+	public void setResourceDescriptionsProvider(
+			ResourceDescriptionsProvider resourceDescriptionsProvider) {
+		this.resourceDescriptionsProvider = resourceDescriptionsProvider;
 	}
 
 }

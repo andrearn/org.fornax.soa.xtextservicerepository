@@ -10,11 +10,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
+import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.binding.query.BindingLookup;
@@ -52,6 +54,9 @@ public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativ
 	IEObjectLookup objLookup;
 	
 	@Inject
+	IPredicateSearch search;
+	
+	@Inject
 	BindingDslHelper bindingDslHelper;
 	
 	@Inject
@@ -73,8 +78,9 @@ public class ModuleProvidedServicesValidator extends AbstractPluggableDeclarativ
 
 	@Check (CheckType.FAST)
 	public void checkModuleHasBindingsForState (Module module) {
-		if (!module.isClient() && !module.isExternal()) {
-			final Set<ModuleBinding> moduleBindings = bindingLookup.findAllBindingsToCompatibleModule (module);
+		Predicate<IEObjectDescription> assetPredicate = Predicates.alwaysTrue();
+		if (!module.isClient() && !module.isExternal() && search.search("*", assetPredicate).iterator().hasNext()) {
+			final Set<ModuleBinding> moduleBindings = bindingLookup.findAllApplicableBindingsToModule (module);
 			if (moduleBindings.isEmpty()) {
 				warning("The module " + module.getName() + " has no binding. You should define a binding to use it from another module", ModuleDslPackage.Literals.MODULE__NAME);
 			} else {

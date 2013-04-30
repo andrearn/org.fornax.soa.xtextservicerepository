@@ -42,7 +42,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 	 * 								have any or no potentially effective endpoint qualifier
 	 */
 	override ModuleRefServiceBindingDescription resolveProvidedServiceBindings (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifier) {
-		val candBindings = bindingLookup.findBindingsToCompatibleModuleEnvAndQualifier (module, targetEnvironment, endpointQualifier?.endpointQualifier)
+		val candBindings = bindingLookup.findApplicableBindingsToModuleByEnvAndQualifier (module, targetEnvironment, endpointQualifier?.endpointQualifier)
 		var Set<ServiceRefBindingDescription> svcBindDescs= newHashSet
 		
 		val providedServices = modServiceResolver.getAllProvidedServiceRefs(module)
@@ -151,7 +151,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 				
 				for (candMod : canditateModules) {
 					val selectingEndpointQualifierRef = if (svcRef.endpointQualifierRef != null) svcRef.endpointQualifierRef else module.endpointQualifierRef
-					val candBindings = bindingLookup.findBindingsToCompatibleModuleEnvAndQualifier (candMod, targetEnvironment, selectingEndpointQualifierRef?.endpointQualifier)
+					val candBindings = bindingLookup.findApplicableBindingsToModuleByEnvAndQualifier (candMod, targetEnvironment, selectingEndpointQualifierRef?.endpointQualifier)
 				
 					for (bind : candBindings) {
 					 	var specBind = bindingLookup.getMostSpecificBinding(svc, bind, selectingEndpointQualifierRef)

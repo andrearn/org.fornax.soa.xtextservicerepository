@@ -26,6 +26,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.binding.query.EndpointQualifierQueries
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver
+import org.fornax.soa.moduledsl.query.IModuleVersionMatcher
 
 
 /**
@@ -34,6 +35,7 @@ import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 class BindingLookup {
 	
 	@Inject extension EnvironmentBindingResolver
+	@Inject extension IModuleVersionMatcher
 
 	@Inject
 	private IQualifiedNameProvider nameProvider
@@ -56,85 +58,145 @@ class BindingLookup {
 	private BindingServiceRefMatcher serviceRefMatcher
 	
 	/**
-	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given 
+	 * Find all ModuleBindings that refer to this module by name and version constraint and bind it to the given 
 	 * target environment that satisfy the given endpoint qualifier or any endpoint qualifier in the binding if endpointQualifier
 	 * is null
 	 * 
-	 * @param module 			The module to find a ModuleBinding for. Bindings to a compatible module version are also considered
+	 * @param module 			The module to find a ModuleBinding for. Bindings referring to this module version 
+	 * 							are concerning the version constraint from the binding are considered
 	 * @param targetEnvironment	The environment the bindings must bind to.
 	 * @param endpointQualifier	Endpoint qualifier that must be effective in the binding. When null, endpoint qualifiers are ignored,
 	 * 							i.e. all bindings that match the other criteria will be returned	 
 	 */
-	def Set<ModuleBinding> findBindingsToCompatibleModuleEnvAndQualifier (Module module, Environment targetEnvironment, Qualifier endpointQualifier) {
+	def Set<ModuleBinding> findApplicableBindingsToModuleByEnvAndQualifier (Module module, Environment targetEnvironment, Qualifier endpointQualifier) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
-		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
-		if (endpointQualifier != null) {
-			val Set<ModuleBinding> modBindings = newHashSet()
-			for (b : allBindings) {
-				var ModuleBinding bind = b
-				if (b.eIsProxy) {
-					bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
-				}
-				if (compatibleModules.contains (bind.module.module) && bind.resolveEnvironment == targetEnvironment && (endpointQualifier == null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
-					modBindings.add(bind)
-				}
+		val Set<ModuleBinding> modBindings = newHashSet()
+		for (b : allBindings) {
+			var ModuleBinding bind = b
+			if (b.eIsProxy) {
+				bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
 			}
-			return modBindings
-		} else  
-			return allBindings.filter (e|compatibleModules.contains (e.module.module) && e.resolveEnvironment == targetEnvironment ).toSet;
+			val referredModuleName = nameProvider.getFullyQualifiedName(bind.module.module)
+			if (module.isEffectivelyReferencedVersion (referredModuleName, bind.module.versionRef) && bind.resolveEnvironment == targetEnvironment && (endpointQualifier == null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
+				modBindings.add(bind)
+			}
+		}
+		return modBindings
 	}
 	
 	/**
-	 * Find all ModuleBindings that directly refer to this module or a compatible module and bind it to the given 
+	 * Find all ModuleBindings that refer to this module by name and version constraint and bind it to the given 
 	 * target environment. Endpoint qualifiers are ignored.
 	 * 
-	 * @param module 			The module to find a ModuleBinding for. Bindings to compatible module version are also considered
+	 * @param module 			The module to find a ModuleBinding for. Bindings referring to this module version 
+	 * 							are concerning the version constraint from the binding are considered
 	 * @param targetEnvironment	The environment the bindings must bind to.
 	 */
-	def Set<ModuleBinding> findBindingsToCompatibleModuleByEnv (Module module, Environment targetEnvironment) {
+	def Set<ModuleBinding> findApplicableBindingsToModuleByEnv (Module module, Environment targetEnvironment) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
-		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
-		return allBindings.filter (e|compatibleModules.contains (e.module.module) && e.resolveEnvironment == targetEnvironment ).toSet;
+		val Set<ModuleBinding> modBindings = newHashSet()
+		for (b : allBindings) {
+			var ModuleBinding bind = b
+			if (b.eIsProxy) {
+				bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
+			}
+			val referredModuleName = nameProvider.getFullyQualifiedName(bind.module.module)
+			if (module.isEffectivelyReferencedVersion (referredModuleName, bind.module.versionRef) && bind.resolveEnvironment == targetEnvironment) {
+				modBindings.add(bind)
+			}
+		}
+		return modBindings
 	}
 	
 	/**
-	 * Find all ModuleBindings that <b>directly</b> refer to this module or a compatible module and bind it to any 
+	 * Find all ModuleBindings that refer to this module by name and version constraint and bind it to any 
 	 * target environment.
 	 * 
-	 * @param module The module to find bindings for, that directly refer to this module
+	 * @param module 			The module to find a ModuleBinding for. Bindings referring to this module version 
+	 * 							are concerning the version constraint from the binding are considered
 	 */
-	def Set<ModuleBinding> findAllBindingsToCompatibleModule (Module module) {
+	def Set<ModuleBinding> findAllApplicableBindingsToModule (Module module) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
-		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
-		return allBindings.filter (e|compatibleModules.contains (e.module.module)).toSet
+		val Set<ModuleBinding> modBindings = newHashSet()
+		for (b : allBindings) {
+			var ModuleBinding bind = b
+			if (b.eIsProxy) {
+				bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
+			}
+			val referredModuleName = nameProvider.getFullyQualifiedName(bind.module.module)
+			if (module.isEffectivelyReferencedVersion (referredModuleName, bind.module.versionRef)) {
+				modBindings.add(bind)
+			}
+		}
+		return modBindings
 	}
 	
 	/**
-	 * Find all ModuleBindings that <b>directly</b> refer to this module or a compatible module and bind it to any 
+	 * Find all ModuleBindings that that refer to this module by name and version constraint and bind it to any 
 	 * target environment with the given endpoint qualifier or any endpoint qualifier in the binding if endpointQualifier
 	 * is null.
 	 * 
-	 * @param module The module to find bindings for, that directly refer to this module
+	 * @param module 			The module to find bindings for
 	 * @param endpointQualifier The endpointQualifier with which the Bindings must be tagged
 	 */
-	def Set<ModuleBinding> findAllBindingsToCompatibleModule (Module module, Qualifier endpointQualifier) {
+	def Set<ModuleBinding> findAllApplicableBindingsToModuleByQualifier (Module module, Qualifier endpointQualifier) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
-		val compatibleModules = moduleLookup.findCompatibleModules(module).toSet
-		if (endpointQualifier != null) {
-			val Set<ModuleBinding> modBindings = newHashSet()
-			for (b : allBindings) {
-				var ModuleBinding bind = b
-				if (b.eIsProxy) {
-					bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
-				}
-				if (compatibleModules.contains (bind.module.module) && (endpointQualifier == null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
-					modBindings.add(bind)
-				}
+		val Set<ModuleBinding> modBindings = newHashSet()
+		for (b : allBindings) {
+			var ModuleBinding bind = b
+			if (b.eIsProxy) {
+				bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
 			}
-			return modBindings
+			val referredModuleName = nameProvider.getFullyQualifiedName(bind.module.module)
+			if (module.isEffectivelyReferencedVersion (referredModuleName, bind.module.versionRef) && (endpointQualifier == null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
+				modBindings.add(bind)
+			}
 		}
-		else 
-			return allBindings.filter (e|compatibleModules.contains (e.module.module)).toSet
+		return modBindings
+	}
+	
+	/**
+	 * Find all ModuleBindings that <b>explicitly</b> refer to this module and bind it to any 
+	 * target environment.
+	 * 
+	 * @param module The module to find bindings for
+	 */
+	def Set<ModuleBinding> findAllExplicitBindingsToModule (Module module) {
+		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
+		val Set<ModuleBinding> modBindings = newHashSet()
+		for (b : allBindings) {
+			var ModuleBinding bind = b
+			if (b.eIsProxy) {
+				bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
+			}
+			val referredModuleName = nameProvider.getFullyQualifiedName(bind.module.module)
+			if (module.isEffectivelyReferencedVersion (referredModuleName, bind.module.versionRef)) {
+				modBindings.add(bind)
+			}
+		}
+		return modBindings
+	}
+	/**
+	 * Find all ModuleBindings that <b>explicitly</b> refer to this module and bind it to any 
+	 * target environment with the given endpoint qualifier or any endpoint qualifier in the binding if endpointQualifier
+	 * is null.
+	 * 
+	 * @param module The module to find bindings for
+	 * @param endpointQualifier The endpointQualifier with which the Bindings must be tagged
+	 */
+	def Set<ModuleBinding> findAllExplicitBindingsToModuleByQualifier (Module module, Qualifier endpointQualifier) {
+		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
+		val Set<ModuleBinding> modBindings = newHashSet()
+		for (b : allBindings) {
+			var ModuleBinding bind = b
+			if (b.eIsProxy) {
+				bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
+			}
+			if (module == bind.module.module && (endpointQualifier == null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
+				modBindings.add(bind)
+			}
+		}
+		return modBindings
 	}
 	
 	
@@ -177,7 +239,7 @@ class BindingLookup {
 	 * Get all Bindings defined in the model. This includes ModuleBindings, ServiceBindings and OperationBindings
 	 */
 	def getAllBindings (ResourceSet rs) {
-		var Set<IEObjectDescription> allBindingDescs = lookup.search("ModuleBinding ", Predicates::alwaysTrue).toSet
+		var Set<IEObjectDescription> allBindingDescs = lookup.search("ModuleBinding ", Predicates::alwaysTrue, rs).toSet
 		allBindingDescs.addAll (lookup.search("ServiceBinding ", Predicates::alwaysTrue))
 		allBindingDescs.addAll (lookup.search("OperationBinding ", Predicates::alwaysTrue))
 		var List<Binding> allBindings = newArrayList()

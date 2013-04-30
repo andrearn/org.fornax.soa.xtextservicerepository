@@ -22,18 +22,16 @@ class VersionMatcher {
 	}
 		
 	def dispatch boolean versionMatches (Version v, MinVersionRef r) {
-		v.toVersionNumber() == r.minVersion.toVersionNumber() || 
-		v.toVersionNumber() > r.minVersion.toVersionNumber();
+		VersionComparator::compare(v.toVersionNumber, r.minVersion.toVersionNumber()) >= 0
 	}
 	
 	def dispatch boolean versionMatches (Version v, MaxVersionRef r) {
-		v.toVersionNumber() == r.maxVersion.toVersionNumber() || 
-		v.toVersionNumber() < r.maxVersion.toVersionNumber();
+		VersionComparator::compare(v.toVersionNumber, r.maxVersion.toVersionNumber()) < 0
 	}
 
 	def dispatch boolean versionMatches (Version v, LowerBoundRangeVersionRef r) {
-		v.version.toVersionNumber() == r.minVersion.toVersionNumber() || 
-		(v.toVersionNumber() > r.minVersion.toVersionNumber() && v.toVersionNumber < r.maxVersion.toVersionNumber());
+		VersionComparator::compare(v.toVersionNumber, r.minVersion.toVersionNumber()) >= 0
+		&&	VersionComparator::compare(v.toVersionNumber, r.maxVersion.toVersionNumber()) < 0
 	}
 
 	def dispatch boolean versionMatches (Version v, MajorVersionRef r) {

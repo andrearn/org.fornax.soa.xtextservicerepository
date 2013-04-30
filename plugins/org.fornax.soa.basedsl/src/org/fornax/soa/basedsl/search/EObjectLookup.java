@@ -11,6 +11,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 
@@ -25,6 +26,9 @@ public class EObjectLookup implements IEObjectLookup {
 
 	@Inject
 	private IResourceDescriptions resourceDescriptions;
+	
+	@Inject
+	private ResourceDescriptionsProvider resourceDescriptionsProvider;
 
 	public <T> T getModelElementByName (final String elementName, final ResourceSet res, String eClassName) {
         List<IEObjectDescription> searchResult = Lists.newArrayList (searchEngine.search(elementName, SearchPattern.RULE_EXACT_MATCH, eClassName, Predicates.<IEObjectDescription>alwaysTrue()));
@@ -86,9 +90,9 @@ public class EObjectLookup implements IEObjectLookup {
 
 	public IEObjectDescription getIEOBjectDescriptionByURI (URI eObjectURI,
 			ResourceSet resourceSet) {
-		if (resourceDescriptions instanceof ResourceSetBasedResourceDescriptions)
-			((ResourceSetBasedResourceDescriptions)resourceDescriptions).setContext (resourceSet);
-		IResourceDescription resourceDescription = resourceDescriptions.getResourceDescription(eObjectURI
+		if (getResourceDescriptions() instanceof IResourceDescriptions.IContextAware)
+			((IResourceDescriptions.IContextAware)getResourceDescriptions()).setContext (resourceSet);
+		IResourceDescription resourceDescription = getResourceDescriptions().getResourceDescription(eObjectURI
 				.trimFragment());
 		IEObjectDescription ieObjDesc = null;
 		if (resourceDescription != null) {
@@ -132,6 +136,23 @@ public class EObjectLookup implements IEObjectLookup {
 			return getStatefulOwner(o.eContainer());
 		else
 			return null;
+	}
+
+	public IResourceDescriptions getResourceDescriptions() {
+		return resourceDescriptions;
+	}
+
+	public void setResourceDescriptions(IResourceDescriptions resourceDescriptions) {
+		this.resourceDescriptions = resourceDescriptions;
+	}
+
+	public ResourceDescriptionsProvider getResourceDescriptionsProvider() {
+		return resourceDescriptionsProvider;
+	}
+
+	public void setResourceDescriptionsProvider(
+			ResourceDescriptionsProvider resourceDescriptionsProvider) {
+		this.resourceDescriptionsProvider = resourceDescriptionsProvider;
 	}
 
 }

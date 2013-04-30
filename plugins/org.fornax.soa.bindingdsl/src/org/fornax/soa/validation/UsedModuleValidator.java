@@ -71,7 +71,7 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 			Module usedModule = modRef.getModule();
 			if (usedModule != null && usedModule.eResource() != null) {
 				Qualifier effectiveEndpointQualifier = endpointQualifierQueries.getEffectiveEndpointQualifier(modRef);
-				final Set<ModuleBinding> usedModuleBindings = bindLookup.findAllBindingsToCompatibleModule (usedModule, effectiveEndpointQualifier);
+				final Set<ModuleBinding> usedModuleBindings = bindLookup.findAllApplicableBindingsToModuleByQualifier (usedModule, effectiveEndpointQualifier);
 				if (usedModuleBindings.isEmpty()) {
 					warning("The used module " + usedModule.getName() + " has no binding. You should define a binding to use it from another module", ModuleDslPackage.Literals.SERVICE_MODULE_REF__MODULE);
 				} else {
@@ -102,7 +102,7 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 		
 	}
 	
-	@Check (CheckType.NORMAL)
+	@Check (CheckType.FAST)
 	public void checkUsedServiceHasBinding(org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef svcRef) {
 		if (svcRef.eResource() != null && !moduleLookup.findAllModules(svcRef.eResource().getResourceSet()).isEmpty()) {
 			Iterable<Module> providingModules = Sets.newHashSet();
@@ -131,7 +131,7 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 			boolean hasProvidingModuleWithBinding = false;
 			for (Module usedModule : providingModules) {
 				if (usedModule != null && usedModule.eResource() != null) {
-					final Set<ModuleBinding> usedModuleBindings = bindLookup.findAllBindingsToCompatibleModule (usedModule);
+					final Set<ModuleBinding> usedModuleBindings = bindLookup.findAllApplicableBindingsToModule (usedModule);
 					if (!usedModuleBindings.isEmpty())
 						hasProvidingModuleWithBinding = true;
 				}

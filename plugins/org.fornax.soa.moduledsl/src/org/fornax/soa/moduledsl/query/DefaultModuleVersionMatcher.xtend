@@ -12,6 +12,9 @@ import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.basedsl.search.IEObjectLookup
 import org.fornax.soa.basedsl.search.IPredicateSearch
+import org.eclipse.xtext.naming.QualifiedName
+import org.fornax.soa.basedsl.sOABaseDsl.VersionRef
+import org.fornax.soa.basedsl.version.VersionMatcher
 
 /*
  * Checks, whether to two module versions are compatible.<br/>
@@ -26,6 +29,7 @@ class DefaultModuleVersionMatcher implements IModuleVersionMatcher {
 	
 	@Inject extension VersionQualifierExtensions
 	@Inject extension IQualifiedNameProvider
+	@Inject extension VersionMatcher
 
 	/* 
 	 * Check, whether the Module module is compatible to Module originalModule based on their versions
@@ -33,7 +37,7 @@ class DefaultModuleVersionMatcher implements IModuleVersionMatcher {
 	 * returns true, if module is compatible to originalModule
 	 */
 	override isCompatibleTo(Module otherModule, Module originalModule) {
-		val originalVersion = otherModule.version
+		val originalVersion = originalModule.version
 		val otherVersion = otherModule.version
 		if (otherModule.fullyQualifiedName == originalModule.fullyQualifiedName 
 			&& originalVersion.toMajorVersionNumber == otherVersion.toMajorVersionNumber
@@ -42,6 +46,11 @@ class DefaultModuleVersionMatcher implements IModuleVersionMatcher {
 			return true
 		}
 		return false
+	}
+	
+
+	override isEffectivelyReferencedVersion(Module module, QualifiedName moduleRefName, VersionRef moduleRefVersionContraint) {
+		return module.fullyQualifiedName == moduleRefName && module.version.versionMatches(moduleRefVersionContraint)
 	}
 	
 }
