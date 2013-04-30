@@ -14,7 +14,7 @@
    	<extension
 	      point = "org.eclipse.ui.newWizards">
 		 <wizard
-         category="org.fornax.soa.sladsl.ui.newWizards"
+         category="org.fornax.soa.ui.newWizards"
          class="org.fornax.soa.sladsl.ui.SLADslExecutableExtensionFactory:org.fornax.soa.sladsl.ui.wizard.NewSLADslFileWizard"
          hasPages="true"
 
