@@ -19,7 +19,8 @@ Require-Bundle: org.fornax.soa.moduledsl;bundle-version="1.5.5";visibility:=reex
  org.eclipse.jdt.ui;bundle-version="3.5.1",
  org.eclipse.compare,
  org.fornax.soa.basedsl.ui;bundle-version="1.5.5",
- org.fornax.soa.servicedsl;bundle-version="1.5.5"
+ org.fornax.soa.servicedsl;bundle-version="1.5.5",
+ org.fornax.soa.profiledsl;bundle-version="1.6.0"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.moduledsl.ui.contentassist.antlr,

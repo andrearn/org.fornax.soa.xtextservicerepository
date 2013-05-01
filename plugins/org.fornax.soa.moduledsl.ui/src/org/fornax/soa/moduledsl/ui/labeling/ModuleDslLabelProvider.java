@@ -9,6 +9,7 @@ import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.basedsl.ui.labeling.SOABaseDslLabelHelper;
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
 import org.fornax.soa.serviceDsl.impl.ServiceImpl;
 
@@ -57,6 +58,13 @@ public class ModuleDslLabelProvider extends DefaultEObjectLabelProvider {
 	Object text(ImportServiceRef s) {
 		StyledString name = new StyledString(s.getService().getName());
 		StyledString versionAndState  = new StyledString(" " + SOABaseDslLabelHelper.getVersionConstraint (s.getVersionRef()), StyledString.DECORATIONS_STYLER);
+		name.append(versionAndState);
+		return name;
+	}
+	
+	Object text(ModuleRef modRef) {
+		StyledString name = new StyledString(modRef.getModuleRef().getModule().getName());
+		StyledString versionAndState  = new StyledString(" " + SOABaseDslLabelHelper.getVersionConstraint (modRef.getModuleRef().getVersion()), StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		return name;
 	}
