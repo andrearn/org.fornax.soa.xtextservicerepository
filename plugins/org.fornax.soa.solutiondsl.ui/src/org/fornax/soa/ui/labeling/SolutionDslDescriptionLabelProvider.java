@@ -38,18 +38,6 @@ public class SolutionDslDescriptionLabelProvider extends DefaultDescriptionLabel
 		}
 		s.append (" - ");
 		s.append (ele.getEClass().getName());
-		EObject o = ele.getEObjectOrProxy();
-		EStructuralFeature stateFeature = ele.getEClass().getEStructuralFeature("state");
-		if (stateFeature != null) {
-			if (o.eIsProxy()) {
-				EcoreUtil2.resolve(o, o.eResource());
-			}
-			LifecycleState state = (LifecycleState)o.eGet(stateFeature, true);
-			if (state != null) {
-				s.append(" ");
-				s.append (state.getName(), StyledString.DECORATIONS_STYLER);
-			}
-		}
 		return s;
 	}
 
