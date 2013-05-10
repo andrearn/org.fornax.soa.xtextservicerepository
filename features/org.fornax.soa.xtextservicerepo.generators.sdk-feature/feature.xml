@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.xtextservicerepo.generators.sdk-feature"
       label="SOA Xtext Service Repository generators SDK"
-      version="1.6.0.qualifier"
+      version="1.6.1.qualifier"
       provider-name="Fornax Platform">
 
    <description url="http://www.example.com/description">

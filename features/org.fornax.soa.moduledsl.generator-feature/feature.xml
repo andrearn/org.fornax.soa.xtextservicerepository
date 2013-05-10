@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.moduledsl.generator-feature"
       label="SOA Module DSL generator"
-      version="1.6.0.qualifier"
+      version="1.6.1.qualifier"
       provider-name="Fornax Platform">
 
    <description>

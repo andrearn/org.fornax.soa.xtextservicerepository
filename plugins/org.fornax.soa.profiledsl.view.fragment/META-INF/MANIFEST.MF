@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Profile DSL Graph View Fragment
 Bundle-SymbolicName: org.fornax.soa.profiledsl.view.fragment;singleton:=true
-Bundle-Version: 1.6.0.qualifier
+Bundle-Version: 1.6.1.qualifier
 Bundle-Vendor: Fornax Platform
 Fragment-Host: org.fornax.soa.profiledsl.ui;bundle-version="1.6.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
