@@ -19,7 +19,7 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.fornax.soa.basedsl.sOABaseDsl.Import;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
-import org.fornax.soa.serviceDsl.BusinessObjectRef;
+import org.fornax.soa.serviceDsl.DataObjectRef;
 import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
@@ -118,8 +118,8 @@ public class ServiceDslProposalProvider extends AbstractServiceDslProposalProvid
 					acceptor.accept (createCompletionProposal (version, context));
 				}
 
-			} else if (model.eContainer() instanceof BusinessObjectRef) {
-				BusinessObjectRef typeRef = (BusinessObjectRef) model.eContainer();
+			} else if (model.eContainer() instanceof DataObjectRef) {
+				DataObjectRef typeRef = (DataObjectRef) model.eContainer();
 				boolean versionConstraintFound = false;
 				StringBuilder nameParts = new StringBuilder();
 				while (leafIt.hasNext() && !versionConstraintFound) {

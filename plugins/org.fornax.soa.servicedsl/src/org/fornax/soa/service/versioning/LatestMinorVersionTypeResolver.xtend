@@ -2,13 +2,14 @@ package org.fornax.soa.service.versioning
 
 import com.google.inject.Inject
 import java.util.List
-import org.fornax.soa.profiledsl.search.StateMatcher
-import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.fornax.soa.basedsl.version.VersionMatcher
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.search.StateMatcher
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import org.fornax.soa.serviceDsl.BusinessObject
-import org.fornax.soa.serviceDsl.BusinessObjectRef
-import org.fornax.soa.serviceDsl.DataTypeRef
 import org.fornax.soa.serviceDsl.EnumTypeRef
 import org.fornax.soa.serviceDsl.Enumeration
 import org.fornax.soa.serviceDsl.SubNamespace
@@ -16,10 +17,8 @@ import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.VersionedTypeRef
-import org.fornax.soa.service.query.namespace.NamespaceQuery
-import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.serviceDsl.QueryObjectRef
-import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.fornax.soa.serviceDsl.DataObjectRef
+import org.fornax.soa.serviceDsl.DataObject
 
 class LatestMinorVersionTypeResolver implements ITypeResolver {
 	
@@ -28,45 +27,43 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 	@Inject extension NamespaceQuery
 	@Inject extension IQualifiedNameProvider
 	
-	def dispatch VersionedType selectMatchingType (AbstractVersionedTypeRef ref) {}
+	override selectMatchingType(AbstractVersionedTypeRef ref) {
+		selectMatchingType(ref)
+	}
 	
-	def dispatch VersionedType selectMatchingType (VersionedTypeRef ref) {
+	def dispatch VersionedType selectMatchingTypeImpl (AbstractVersionedTypeRef ref) {}
+	
+	def dispatch VersionedType selectMatchingTypeImpl (VersionedTypeRef ref) {
 		ref.type;
 	}
 	
-	def dispatch VersionedType selectMatchingType (BusinessObjectRef ref) {
+	def dispatch VersionedType selectMatchingTypeImpl (DataObjectRef ref) {
 		ref.type;
 	}
 	
-	def dispatch VersionedType selectMatchingType (QueryObjectRef ref) {
-		ref.type;
-	}
-		
-	def dispatch VersionedType selectMatchingType (EnumTypeRef ref) {
+	def dispatch VersionedType selectMatchingTypeImpl (EnumTypeRef ref) {
 		ref.type;
 	}
 	
-	def dispatch VersionedType selectMatchingTypeByState (AbstractVersionedTypeRef ref, LifecycleState minState) {}
+	override selectMatchingTypeByState(AbstractVersionedTypeRef ref, LifecycleState minState) {
+		selectMatchingTypeByState(ref, minState)
+	}
 	
-	def dispatch VersionedType selectMatchingTypeByState (VersionedTypeRef ref, LifecycleState minState) {
+	def dispatch VersionedType selectMatchingTypeByStateImpl (AbstractVersionedTypeRef ref, LifecycleState minState) {}
+	
+	def dispatch VersionedType selectMatchingTypeByStateImpl (VersionedTypeRef ref, LifecycleState minState) {
 		ref.type.findSubdomain().types.filter (typeof (VersionedType)).filter (e| e.state.matchesMinStateLevel(minState))
 		.filter (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
 		.sortBy(e|e.version.version).last();
 	}
 		
-	def dispatch VersionedType selectMatchingTypeByState (BusinessObjectRef ref, LifecycleState minState) {
+	def dispatch VersionedType selectMatchingTypeByStateImpl (DataObjectRef ref, LifecycleState minState) {
 		ref.type.findSubdomain().types.filter (typeof (VersionedType)).filter (e| e.state.matchesMinStateLevel(minState))
 		.filter (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
 		.sortBy(e|e.version.version).last();
 	}
 		
-	def dispatch VersionedType selectMatchingTypeByState (QueryObjectRef ref, LifecycleState minState) {
-		ref.type.findSubdomain().types.filter (typeof (VersionedType)).filter (e| e.state.matchesMinStateLevel(minState))
-		.filter (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
-		.sortBy(e|e.version.version).last();
-	}
-	
-	def dispatch VersionedType selectMatchingTypeByState (EnumTypeRef ref, LifecycleState minState) {
+	def dispatch VersionedType selectMatchingTypeByStateImpl (EnumTypeRef ref, LifecycleState minState) {
 		ref.type.findSubdomain().types.filter (typeof (VersionedType)).filter(e| e.state.matchesMinStateLevel(minState))
 		.filter (t|t.name == ref.type.name && t.version.versionMatches (ref.versionRef))
 		.sortBy(e|e.version.version).last();
@@ -91,7 +88,7 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 			(t.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (e|e.name == t.name).toList, 
 			majorVersion)
 		 == t);
-	}		
+	}		 
 
 	/*
 	 *		Checks if type declaration is the latest version matching the following constraint
@@ -134,19 +131,12 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 			.sortBy (e|e.version.version).last( );
 	}
 	
-	def dispatch Type findMatchingType (BusinessObjectRef t) { 
+	def dispatch Type findMatchingType (DataObjectRef t) { 
 		t.type.findSubdomain ().types.
 			filter (e|e.fullyQualifiedName == t.type.fullyQualifiedName && t.type.version.versionMatches (t.versionRef))
-			.filter (typeof (BusinessObject))
+			.filter (typeof (DataObject))
 			.sortBy (e|e.version.version).last( );
-	}
-	
-	def dispatch Type findMatchingType (QueryObjectRef t) { 
-		t.type.findSubdomain ().types.
-			filter (e|e.fullyQualifiedName == t.type.fullyQualifiedName && t.type.version.versionMatches (t.versionRef))
-			.filter (typeof (VersionedType))
-			.sortBy (e|e.version.version).last( );
-	}
+	} 
 	
 	def dispatch Type findMatchingType (EnumTypeRef t) { 
 		t.type.findSubdomain ().types.
@@ -170,10 +160,6 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 	 *  	- the version constraint defined in the reference
 	 *		- the given minimal required LifecycleState
 	 */
-	def dispatch Type findMatchingTypeByState (TypeRef t, LifecycleState minState) {
-		null;
-	}
-	
 	def dispatch Type findMatchingTypeByState (VersionedTypeRef t, LifecycleState minState) { 
 		t.type.findSubdomain ().types.
 			filter (
@@ -185,27 +171,17 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 			.sortBy (e|e.version.version).last( );
 	}
 	
-	def dispatch Type findMatchingTypeByState (BusinessObjectRef t, LifecycleState minState) { 
+	def dispatch Type findMatchingTypeByState (DataObjectRef t, LifecycleState minState) { 
 		t.type.findSubdomain ().types.
 			filter (
 				e|e.fullyQualifiedName == t.type.fullyQualifiedName && 
 				t.type.version.versionMatches (t.versionRef) && 
 				t.type.state.matchesMinStateLevel(minState)
 			)
-			.filter (typeof (BusinessObject))
+			.filter (typeof (DataObject))
 			.sortBy (e|e.version.version).last( );
 	}
-	
-	def dispatch Type findMatchingTypeByState (QueryObjectRef t, LifecycleState minState) { 
-		t.type.findSubdomain ().types.
-			filter (
-				e|e.fullyQualifiedName == t.type.fullyQualifiedName && 
-				t.type.version.versionMatches (t.versionRef) && 
-				t.type.state.matchesMinStateLevel(minState)
-			)
-			.filter (typeof (BusinessObject))
-			.sortBy (e|e.version.version).last( );
-	}
+
 	
 	def dispatch Type findMatchingTypeByState (EnumTypeRef t, LifecycleState minState) { 
 		t.type.findSubdomain ().types.
@@ -219,13 +195,13 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 	}
 	
 		
-	def private dispatch Type findMatchingVersionedType (List<VersionedType> types, Integer majorVersion) { 
+	def private Type findMatchingVersionedType (List<VersionedType> types, Integer majorVersion) { 
 		types.filter (
 			e|e.version.versionMatches (majorVersion) 
 		).sortBy(e|e.version.version).last();
 	}
 	
-	def private dispatch org.fornax.soa.profiledsl.sOAProfileDsl.Type findMatchingVersionedTypeFromProfile (List<org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType> types, Integer majorVersion) { 
+	def private org.fornax.soa.profiledsl.sOAProfileDsl.Type findMatchingVersionedTypeFromProfile (List<org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType> types, Integer majorVersion) { 
 		types.filter (
 			e|e.version.versionMatches (majorVersion) 
 		).sortBy(e|e.version.version).last();
@@ -237,7 +213,5 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 			e.state.matchesMinStateLevel (minState)
 		).sortBy (e|e.version.version).last();
 	}
-	
-
 	
 }

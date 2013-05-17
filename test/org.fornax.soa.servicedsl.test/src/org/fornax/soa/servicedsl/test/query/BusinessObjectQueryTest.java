@@ -18,8 +18,9 @@ import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.util.BaseDslEqualityHelper;
 import org.fornax.soa.basedsl.util.TreeNode;
 import org.fornax.soa.service.query.type.BusinessObjectQueries;
-import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
+import org.fornax.soa.service.query.type.DataObjectQueryInternal;
 import org.fornax.soa.serviceDsl.BusinessObject;
+import org.fornax.soa.serviceDsl.DataObject;
 import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.ServiceModel;
 import org.fornax.soa.serviceDsl.Type;
@@ -71,11 +72,11 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 		assertTrue (props.contains(attrBo3));
 		assertTrue (props.contains(attrBo4));
 	}
-	
+	 
 	@Test
 	public void testGetAllSuperTypes () {
 		List<BusinessObject> superTypes = Lists.newArrayList();
-		List<BusinessObject> allSuperTypes = boQuery.getAllSuperTypes (bo1, superTypes);
+		List<DataObject> allSuperTypes = boQuery.getAllSuperTypes (bo1, superTypes);
 		assertTrue (superTypes.contains (bo3));
 		assertTrue (superTypes.contains (bo4));
 		assertFalse(superTypes.contains (bo1));

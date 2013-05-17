@@ -44,11 +44,11 @@ public class BusinessObjectVersionValidator extends AbstractServiceDslVersionVal
 			if (eObject instanceof BusinessObject) {
 				BusinessObject otherBo  = (BusinessObject)eObject;
 				if (otherBo.getState() == null || ! otherBo.getState().isIsEnd()) {
-					if (bo.getSuperBusinessObject () != null) {
-						if (otherBo.getSuperBusinessObject () == null || ! (bo.getSuperBusinessObject ().getType ().equals (otherBo.getSuperBusinessObject ().getType ()))) {
+					if (bo.getSuperObject () != null) {
+						if (otherBo.getSuperObject () == null || ! (bo.getSuperObject ().getType ().equals (otherBo.getSuperObject ().getType ()))) {
 							error ("The BusinessObject " + bo.getName () + " version " + bo.getVersion ().getVersion () + " has an incompatible change to it's type hierarchy.", ServiceDslPackage.Literals.VERSIONED_TYPE__NAME);
 						}
-					} else if (otherBo.getSuperBusinessObject () != null) {
+					} else if (otherBo.getSuperObject () != null) {
 						error ("The BusinessObject " + bo.getName () + " version " + bo.getVersion ().getVersion () + " has an incompatible change to it's type hierarchy as it does not have a supertype anymore.", ServiceDslPackage.Literals.VERSIONED_TYPE__NAME);
 					}
 					

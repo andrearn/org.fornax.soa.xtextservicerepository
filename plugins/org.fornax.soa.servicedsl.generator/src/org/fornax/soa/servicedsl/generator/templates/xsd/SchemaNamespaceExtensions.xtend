@@ -11,7 +11,6 @@ import org.fornax.soa.basedsl.CommonEObjectExtensions
 import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.profiledsl.sOAProfileDsl.TechnicalNamespace
-import org.fornax.soa.serviceDsl.BusinessObjectRef
 import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.EnumTypeRef
 import org.fornax.soa.serviceDsl.InternalNamespace

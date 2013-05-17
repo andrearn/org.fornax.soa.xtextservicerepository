@@ -93,7 +93,9 @@ Type:
 	VersionedType;
 
 VersionedType:
-	BusinessObject | Enumeration | QueryObject;		
+	Enumeration | DataObject;		
+
+DataObject: BusinessObject | QueryObject;
 
 /*
  * A complex datatype representing a business entity of the domain model. 
@@ -101,7 +103,7 @@ VersionedType:
  */
 BusinessObject:
 	(deprecated?='@deprecated')? 
-	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superBusinessObject=BusinessObjectRef)? '{' 
+	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superObject=BusinessObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
 			('replaces' replaces=BusinessObjectRef)?
@@ -132,7 +134,7 @@ BusinessObject:
  */	
 QueryObject:
 	(deprecated?='@deprecated')? 
-	'queryObject'  name=ID ('extends' superQueryObject=QueryObjectRef)? '{' 
+	'queryObject'  name=ID ('extends' superObject=QueryObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
 			('replaces' replaces=QueryObjectRef)?
@@ -164,7 +166,9 @@ TypeRef : DataTypeRef | AbstractVersionedTypeRef;
 DataTypeRef: 
 	type=[profileDsl::DataType|QualifiedName] (many?='[]' (set?='as set')? )? ('content-type' contentType = STRING)?;
 
-AbstractVersionedTypeRef:  VersionedTypeRef | EnumTypeRef | BusinessObjectRef | QueryObjectRef;
+AbstractVersionedTypeRef:
+	VersionedTypeRef | EnumTypeRef | DataObjectRef
+;
 
 /* A version constrained reference to any kind of VersionedType */
 VersionedTypeRef:
@@ -174,13 +178,17 @@ VersionedTypeRef:
 EnumTypeRef:
 	type=[Enumeration|QualifiedName] versionRef=VersionRef;
 
+DataObjectRef:
+	BusinessObjectRef | QueryObjectRef;
+
 /* A version constrained reference to a BO */
-BusinessObjectRef:
+BusinessObjectRef returns DataObjectRef:
 	type=[BusinessObject|QualifiedName] versionRef=VersionRef;
 
 /* A version constrained reference to a QueryObject */
-QueryObjectRef:
+QueryObjectRef returns DataObjectRef:
 	type=[QueryObject|QualifiedName] versionRef=VersionRef;
+
 
 /* A property field of an BusinessObject or QueryObject */	
 Property:

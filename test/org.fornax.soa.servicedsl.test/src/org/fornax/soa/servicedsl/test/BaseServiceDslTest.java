@@ -11,9 +11,9 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslFactory;
 import org.fornax.soa.serviceDsl.BusinessObject;
-import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
 import org.fornax.soa.serviceDsl.ConsiderationSpec;
+import org.fornax.soa.serviceDsl.DataObjectRef;
 import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.EnumLiteral;
@@ -49,8 +49,8 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 	protected ConsiderationParameterRef paramRef;
 	protected VersionedTypeRef bo1_2_TypeRef;
 	protected VersionedTypeRef bo2_1_TypeRef;
-	protected BusinessObjectRef bo1_3_SuperTypeRef;
-	protected BusinessObjectRef bo3_4_SuperTypeRef;
+	protected DataObjectRef bo1_3_SuperTypeRef;
+	protected DataObjectRef bo3_4_SuperTypeRef;
 	protected Property attr2Bos1;
 	protected Property attr1Bos2;
 	
@@ -201,21 +201,21 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		
 		bo4.getProperties().add (attrBo4);
 
-		bo1_3_SuperTypeRef = dslFactory.createBusinessObjectRef();
+		bo1_3_SuperTypeRef = dslFactory.createDataObjectRef();
 		bo1_3_SuperTypeRef.setType(bo3);
 		MajorVersionRef bo3VerRef = baseDslFactory.createMajorVersionRef();
 		bo3VerRef.setMajorVersion(1);
 		bo1_3_SuperTypeRef.setVersionRef(bo3VerRef);
 
-		bo3_4_SuperTypeRef = dslFactory.createBusinessObjectRef();
+		bo3_4_SuperTypeRef = dslFactory.createDataObjectRef();
 		bo3_4_SuperTypeRef.setType(bo4);
 		MajorVersionRef bo4VerRef = baseDslFactory.createMajorVersionRef();
 		bo4VerRef.setMajorVersion(1);
 		bo3_4_SuperTypeRef.setVersionRef(bo4VerRef);
 		
-		bo1.setSuperBusinessObject(bo1_3_SuperTypeRef);
+		bo1.setSuperObject(bo1_3_SuperTypeRef);
 		
-		bo3.setSuperBusinessObject(bo3_4_SuperTypeRef);
+		bo3.setSuperObject(bo3_4_SuperTypeRef);
 
 		s = dslFactory.createService();
 		s.setName("TestService");
@@ -228,7 +228,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		paramBoRef = dslFactory.createVersionedTypeRef();
 		paramBoRef.setType(bo1);
 		VersionRef vRef = baseDslFactory.createVersionRef();
-		paramBoRef.setVersionRef(vRef);
+		paramBoRef.setVersionRef(vRef); 
 		p.setType(paramBoRef);
 		op.getParameters().add(p);
 		
