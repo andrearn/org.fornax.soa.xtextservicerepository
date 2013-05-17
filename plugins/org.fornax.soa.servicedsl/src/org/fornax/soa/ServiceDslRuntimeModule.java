@@ -27,6 +27,7 @@ import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
 import org.fornax.soa.service.query.type.DataObjectQueryInternal;
 import org.fornax.soa.service.versioning.DefaultExceptionResolver;
 import org.fornax.soa.service.versioning.DefaultServiceResolver;
+import org.fornax.soa.service.versioning.DefaultTypeResolver;
 import org.fornax.soa.service.versioning.IExceptionResolver;
 import org.fornax.soa.service.versioning.IServiceResolver;
 import org.fornax.soa.service.versioning.ITypeResolver;
@@ -96,6 +97,10 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 	@org.eclipse.xtext.service.SingletonBinding	
 	public Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector () {
 		return DefaultEnvironmentPerspectiveSelector.class;
+	}
+	
+	public Class<? extends ITypeResolver> bindITypeResolver () {
+		return DefaultTypeResolver.class;
 	}
 	
 	public Class<? extends IServiceResolver> bindIServiceResolver () {
