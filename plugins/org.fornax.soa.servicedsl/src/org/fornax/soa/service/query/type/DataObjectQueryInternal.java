@@ -28,10 +28,11 @@ import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
 import org.fornax.soa.basedsl.util.BaseDslEqualityHelper;
 import org.fornax.soa.basedsl.util.TreeNode;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.serviceDsl.ApprovalDecision;
-import org.fornax.soa.serviceDsl.BusinessObject;
+import org.fornax.soa.serviceDsl.DataObject;
 import org.fornax.soa.serviceDsl.Property;
-import org.fornax.soa.serviceDsl.QueryObject;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.SubNamespace;
@@ -45,7 +46,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
-class QueryObjectQueryInternal {
+public class DataObjectQueryInternal {
 	
 	@Inject
 	IQualifiedNameProvider nameProvider;
@@ -61,65 +62,66 @@ class QueryObjectQueryInternal {
 	
 	@Inject
 	IEObjectLookup objLookup;
+	
+	@Inject
+	IStateMatcher stateMatcher;
 
+	/**
+	 * Get all super types of the business object in upward order
+	 * @param do The business object
+	 * @param vistitedBOs	already visited business objects
+	 * @return
+	 */
+	public static List<DataObject> getAllSuperTypes (DataObject bo, List<DataObject> vistitedBOs) {
+		if (vistitedBOs == null)
+			vistitedBOs = Lists.newArrayList();
+		if (bo.getSuperObject() != null && bo.getSuperObject().getType() != null) {
+			vistitedBOs.add (bo.getSuperObject().getType());
+			getAllSuperTypes (bo.getSuperObject().getType(), vistitedBOs);
+		}
+		return vistitedBOs;
+	}
 		
-	public QueryObject getRootBusinessObject (QueryObject qo) {
-		if (qo.getSuperQueryObject() != null) {
-			List<QueryObject> allSuperTypes = getAllSuperTypes(qo, new ArrayList<QueryObject>());
+	public DataObject getRootDataObject (DataObject bo) {
+		if (bo.getSuperObject() != null) {
+			List<DataObject> allSuperTypes = getAllSuperTypes(bo, new ArrayList<DataObject>());
 			if (!allSuperTypes.isEmpty()) {
 				return allSuperTypes.get(allSuperTypes.size()-1);
 			}
 		}
-		return qo;
+		return bo;
 	}
 	
 	/**
-	 * Get all super types of the business object in upward order
-	 * @param qo The business object
-	 * @param vistitedQOs	already visited business objects
-	 * @return
-	 */
-	public static List<QueryObject> getAllSuperTypes (QueryObject qo, List<QueryObject> vistitedQOs) {
-		if (vistitedQOs == null)
-			vistitedQOs = Lists.newArrayList();
-		if (qo.getSuperQueryObject() != null && qo.getSuperQueryObject().getType() != null) {
-			vistitedQOs.add (qo.getSuperQueryObject().getType());
-			getAllSuperTypes (qo.getSuperQueryObject().getType(), vistitedQOs);
-		}
-		return vistitedQOs;
-	}
-
-
-	/**
 	 * all own and inherited properties visible on the type
-	 * @param qo The BusinessObject
+	 * @param bo The DataObject
 	 * @return all own and inherited properties visible on the type
 	 */
-	public static List<Property> getAllVisibleProperties (final QueryObject qo) {
+	public static List<Property> getAllVisibleProperties (final DataObject bo) {
 		List<Property> props = new ArrayList<Property>();
-		props.addAll (qo.getProperties());
-		props.addAll (getAllInheritedProperties(qo));
+		props.addAll (bo.getProperties());
+		props.addAll (getAllInheritedProperties(bo));
 		return props;
 	}
 	
 	/**
-	 * Get all super types of the business object in upward order
-	 * @param bo
-	 * @return super types in upward order
+	 * all inherited properties visible on the type (own properties are excluded)
+	 * @param bo The DataObject
+	 * @return all own and inherited properties visible on the type
 	 */
-	public static List<Property> getAllInheritedProperties (final QueryObject bo) {
+	public static List<Property> getAllInheritedProperties (final DataObject bo) {
 		return collectAllInheritedProperties (bo, new ArrayList<Property>());
 	}
 	
 	
-	public Iterable<IEObjectDescription> findUnapprovedQueryObjects (ResourceSet res) {
+	public Iterable<IEObjectDescription> findUnapprovedDataObjects (ResourceSet res) {
 		final ResourceSet resSet = res;
-		Iterable<IEObjectDescription> result = predicateSearch.search (ServiceDslPackage.Literals.QUERY_OBJECT.getName (), new Predicate<IEObjectDescription>() {
+		Iterable<IEObjectDescription> result = predicateSearch.search (ServiceDslPackage.Literals.BUSINESS_OBJECT.getName (), new Predicate<IEObjectDescription>() {
 
 			public boolean apply (IEObjectDescription objDesc) {
 				EObject eObjectOrProxy = objDesc.getEObjectOrProxy ();
 				if (eObjectOrProxy.eIsProxy () && eObjectOrProxy instanceof Service) {
-					QueryObject bo = (QueryObject) EcoreUtil2.resolve (eObjectOrProxy, resSet);
+					DataObject bo = (DataObject) EcoreUtil2.resolve (eObjectOrProxy, resSet);
 					if (bo.getGovernanceApproval () == null)
 						return true;
 					else if (bo.getGovernanceApproval ().getDecision () != ApprovalDecision.YES)
@@ -174,8 +176,8 @@ class QueryObjectQueryInternal {
 		});
 		if (!targetVisited) {
 			visitedDependendies.add (target);
-			if (targetType instanceof BusinessObject) {
-				BusinessObject targetBO = (BusinessObject) targetType;
+			if (targetType instanceof DataObject) {
+				DataObject targetBO = (DataObject) targetType;
 				for (Property p : targetBO.getProperties()) {
 					DependencyDescription propDep = getTransitiveDependencies (p, includeInheritedProperties, includeCycleTypes, visitedDependendies, dep);
 					if (propDep != null && (!propDep.isBackRef() || propDep.isBackRef() && includeCycleTypes))
@@ -199,8 +201,8 @@ class QueryObjectQueryInternal {
 		if (!nsName.equals (typeNsName)) {
 			EList<Type> types = ((SubNamespace)type.eContainer()).getTypes();
 			for(Type t : types) {
-				if (t instanceof BusinessObject) {
-					BusinessObject bo = (BusinessObject)t;
+				if (t instanceof DataObject) {
+					DataObject bo = (DataObject)t;
 					for (Property p : bo.getProperties()) {
 						if (p.getType() instanceof VersionedTypeRef) {
 	
@@ -217,13 +219,13 @@ class QueryObjectQueryInternal {
 		return otherTypeNsRefs;
 	}
 	
-	public Map<EObject, VersionedType> getReferencedVersionedTypes (final QueryObject qo, final boolean includeInheritedProperties) {
+	public Map<EObject, VersionedType> getReferencedVersionedTypes (final DataObject bo, final boolean includeInheritedProperties) {
 		Map<EObject, VersionedType> result = new HashMap<EObject, VersionedType>();
 		List<Property> props = new ArrayList<Property>();
 		if (includeInheritedProperties)
-			props = qo.getProperties();
+			props = bo.getProperties();
 		else
-			props = getAllVisibleProperties (qo);
+			props = getAllVisibleProperties (bo);
 		for (Property prop :  props) {
 			if (prop .getType() instanceof VersionedTypeRef) {
 				VersionedTypeRef verTypeRef = (VersionedTypeRef) prop.getType();
@@ -239,13 +241,13 @@ class QueryObjectQueryInternal {
 
 	
 	
-	private static List<Property> collectAllInheritedProperties (final QueryObject bo, List<Property> props) {
+	private static List<Property> collectAllInheritedProperties (final DataObject bo, List<Property> props) {
 		if (props == null)
 			props = new ArrayList<Property> ();
-		if  (bo.getSuperQueryObject() != null && bo.getSuperQueryObject().getType() != null) {
-			List<Property> superTypeProps = bo.getSuperQueryObject().getType().getProperties();
+		if  (bo.getSuperObject() != null && bo.getSuperObject().getType() != null) {
+			List<Property> superTypeProps = bo.getSuperObject().getType().getProperties();
 			props.addAll (superTypeProps);
-			collectAllInheritedProperties (bo.getSuperQueryObject().getType(), props);
+			collectAllInheritedProperties (bo.getSuperObject().getType(), props);
 		}
 		return props;
 	}
@@ -262,15 +264,15 @@ class QueryObjectQueryInternal {
 		return verType;
 	}
 	
-	public List<TreeNode<IEObjectDescription>> getAllSubTypes (final QueryObject qo, final ResourceSet resourceSet) {
+	public List<TreeNode<IEObjectDescription>> getAllSubTypes (final DataObject bo, final ResourceSet resourceSet) {
 		final List<TreeNode<IEObjectDescription>> subTypes = newArrayList ();
 		Predicate<IReferenceDescription> predicate = new Predicate<IReferenceDescription> () {
 
 			public boolean apply (final IReferenceDescription input) {
 				IEObjectDescription sourceObjContainer = objLookup.getIEOBjectDescriptionByURI (input.getContainerEObjectURI (), resourceSet);
 				EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
-				if (sourceObjContainer != null && sourceObjContainer.getEObjectOrProxy () instanceof BusinessObject &&
-						ServiceDslPackage.Literals.QUERY_OBJECT__SUPER_QUERY_OBJECT.getName ().equals (sourceObj.eContainingFeature ().getName ()))
+				if (sourceObjContainer != null && sourceObjContainer.getEObjectOrProxy () instanceof DataObject &&
+						ServiceDslPackage.Literals.DATA_OBJECT__SUPER_OBJECT.getName ().equals (sourceObj.eContainingFeature ().getName ()))
 					return true;
 				else
 					return false;
@@ -285,7 +287,7 @@ class QueryObjectQueryInternal {
 				subTypes.add (childNode);
 			}
 		};
-		referenceSearch.findAllReferences (qo, resourceSet, predicate, acceptor);
+		referenceSearch.findAllReferences (bo, resourceSet, predicate, acceptor);
 		for (TreeNode<IEObjectDescription> subType : subTypes) {
 			getAllSubTypesWithParent (subType, resourceSet);
 		}
@@ -294,18 +296,18 @@ class QueryObjectQueryInternal {
 	
 	public TreeNode<IEObjectDescription> getAllSubTypesWithParent (TreeNode<IEObjectDescription> parent, final ResourceSet resourceSet) {
 		EObject parentObj = parent.getElement ().getEObjectOrProxy ();
-		if (parentObj instanceof QueryObject) {
-			QueryObject bo = (QueryObject)parentObj;
+		if (parentObj instanceof DataObject) {
+			DataObject bo = (DataObject)parentObj;
 			if (bo.eIsProxy ())
-				bo = (QueryObject) EcoreUtil.resolve (bo, resourceSet);
+				bo = (DataObject) EcoreUtil.resolve (bo, resourceSet);
 			final List<TreeNode<IEObjectDescription>> subTypes = newArrayList ();
 			Predicate<IReferenceDescription> predicate = new Predicate<IReferenceDescription> () {
 	
 				public boolean apply (final IReferenceDescription input) {
 					IEObjectDescription sourceObjContainer = objLookup.getIEOBjectDescriptionByURI (input.getContainerEObjectURI (), resourceSet);
 					EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
-					if (sourceObjContainer != null && sourceObjContainer.getEObjectOrProxy () instanceof BusinessObject &&
-							ServiceDslPackage.Literals.QUERY_OBJECT__SUPER_QUERY_OBJECT.getName ().equals (sourceObj.eContainingFeature ().getName ()))
+					if (sourceObjContainer != null && sourceObjContainer.getEObjectOrProxy () instanceof DataObject &&
+							ServiceDslPackage.Literals.DATA_OBJECT__SUPER_OBJECT.getName ().equals (sourceObj.eContainingFeature ().getName ()))
 						return true;
 					else
 						return false;
@@ -331,4 +333,13 @@ class QueryObjectQueryInternal {
 		return parent;
 	}
 	
+	public List<DataObject> collectAllSuperTypes (DataObject bo, List<DataObject> superTypes, LifecycleState minState) {
+		if (bo.getSuperObject() != null) {
+			if (stateMatcher.matches(minState, bo.getSuperObject().getType().getState()))
+			superTypes.add ( bo.getSuperObject().getType());
+			return superTypes;
+		} else {
+			return superTypes;
+		}
+	}
 }

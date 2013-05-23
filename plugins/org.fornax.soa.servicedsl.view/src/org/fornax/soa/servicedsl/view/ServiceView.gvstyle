@@ -4,6 +4,7 @@ import org.eclipse.xtext.graphview.behavior.layout.*
 import org.eclipse.draw2d.*
 import org.eclipse.swt.SWT
 import ServiceDiagram.*
+import org.fornax.soa.serviceDsl.BusinessObject
 
 stylesheet ServiceDiagram for ServiceDiagram
 
@@ -60,18 +61,18 @@ style HiddenExceptionNode.PropertiesNode as RoundedRectangleShape {
 
 
 
-style BusinessObjectNode { 
+style DataObjectNode { 
 	backgroundColor = color(#dfeff8)
 	font = font("Helvetica", 12, SWT::CENTER + SWT::BOLD + 
-		(if (element.abstract) SWT::ITALIC else SWT::NONE)
+		(if (element instanceof BusinessObject && (element as BusinessObject).abstract) SWT::ITALIC else SWT::NONE)
 	)
 }
-style BusinessObjectNode.Version { 
+style DataObjectNode.Version { 
 	font = font("Helvetica", 12, SWT::CENTER 
 	)
 }
 
-style BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
+style DataObjectNode.PropertiesNode as RoundedRectangleShape {
 	outline = false
 	backgroundColor = color(#ffffff)
 	font = font("Helvetica", 12, SWT::LEAD + SWT::LEFT+ 
@@ -79,12 +80,12 @@ style BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
 	)
 }
 
-style BusinessObjectNode.HiddenEnumReferenceEdge {
+style DataObjectNode.HiddenEnumReferenceEdge {
 	lineStyle = SWT::LINE_DASH
 	foregroundColor = color(#cccccc)
 }
 
-style BusinessObjectNode.InhertanceEdge as ConnectionShape  {
+style DataObjectNode.InhertanceEdge as ConnectionShape  {
 	var arrow = new PolygonDecoration()
 	arrow.setScale(8,8)
 	arrow.backgroundColor = color(#ffffff)

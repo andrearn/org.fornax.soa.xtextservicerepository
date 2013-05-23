@@ -17,7 +17,7 @@ import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.service.versioning.IExceptionResolver
 import org.fornax.soa.service.versioning.ITypeResolver
 import org.fornax.soa.serviceDsl.BusinessObject
-import org.fornax.soa.serviceDsl.BusinessObjectRef
+import org.fornax.soa.serviceDsl.DataObjectRef
 import org.fornax.soa.serviceDsl.DataTypeRef
 import org.fornax.soa.serviceDsl.EnumTypeRef
 import org.fornax.soa.serviceDsl.Enumeration
@@ -25,13 +25,13 @@ import org.fornax.soa.serviceDsl.Exception
 import org.fornax.soa.serviceDsl.ExceptionRef
 import org.fornax.soa.serviceDsl.Property
 import org.fornax.soa.serviceDsl.QueryObject
-import org.fornax.soa.serviceDsl.QueryObjectRef
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.VersionedTypeRef
+import org.fornax.soa.serviceDsl.DataObjectRef
 
 /**
  * Extension functions for 
@@ -107,7 +107,7 @@ class SchemaTypeExtensions {
 		}
 	}
 	
-	def dispatch String toTypeNameRef (BusinessObjectRef t) { 
+	def dispatch String toTypeNameRef (DataObjectRef t) { 
 		if (t.type.findSubdomain() != null) {
 			var prefix = "tns";
 			if (!(t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
@@ -122,21 +122,6 @@ class SchemaTypeExtensions {
 		}
 	}
 	
-	def dispatch String toTypeNameRef (QueryObjectRef t) { 
-		if (t.type.findSubdomain() != null) {
-			var prefix = "tns";
-			if (!(t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
-				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
-				&& !(t.getStatefulOwner() instanceof Service))
-			)  {
-				prefix = t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber();
-			}
-			prefix + ":" + t.type.name;
-		} else {
-			t.type.name;
-		}
-	}
-		
 	def dispatch String toTypeNameRef (EnumTypeRef t) { 
 		if (t.type.findSubdomain() != null) {
 			var prefix = "tns";
@@ -213,7 +198,7 @@ class SchemaTypeExtensions {
 	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
 	 * qualified by namespace prefixes
 	 */
-	def dispatch String toTypeNameRef (BusinessObjectRef typeRef, VersionedDomainNamespace currNs) { 
+	def dispatch String toTypeNameRef (DataObjectRef typeRef, VersionedDomainNamespace currNs) { 
 		if (typeRef.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()
 			&& typeRef.getOwnerVersion().toMajorVersionNumber() == typeRef.type.version.toMajorVersionNumber()
 			&& !(typeRef.getStatefulOwner() instanceof Service)
@@ -224,20 +209,6 @@ class SchemaTypeExtensions {
 		}
 	}
 			
-	/**
-	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
-	 * qualified by namespace prefixes
-	 */
-	def dispatch String toTypeNameRef (QueryObjectRef typeRef, VersionedDomainNamespace currNs) { 
-		if (typeRef.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()
-			&& typeRef.getOwnerVersion().toMajorVersionNumber() == typeRef.type.version.toMajorVersionNumber()
-			&& !(typeRef.getStatefulOwner() instanceof Service)
-		) {
-			"tns:" +typeRef.type.name;
-		} else {
-			typeRef.type.findSubdomain().toShortName() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
-		}
-	}
 			
 	/**
 	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
@@ -303,18 +274,10 @@ class SchemaTypeExtensions {
 	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
 	 * with a namespace alias calculate from the (major) versioned namespace
 	 */
-	def dispatch String toNsPrefixedTypeNameRef (BusinessObjectRef t, VersionedDomainNamespace currNs) { 
+	def dispatch String toNsPrefixedTypeNameRef (DataObjectRef t, VersionedDomainNamespace currNs) { 
 		t.toNamespace() + t.type.name;
 	}
 		
-	/**
-	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
-	 * with a namespace alias calculate from the (major) versioned namespace
-	 */
-	def dispatch String toNsPrefixedTypeNameRef (QueryObjectRef t, VersionedDomainNamespace currNs) { 
-		t.toNamespace() + t.type.name;
-	}
-			
 	/**
 	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
 	 * with a namespace alias calculate from the (major) versioned namespace
@@ -414,13 +377,7 @@ class SchemaTypeExtensions {
 	/**
 	 * Has the type reference a many cardinality?
 	 */	
-	def dispatch boolean isMany (BusinessObjectRef t) {
-		false;
-	}
-	/**
-	 * Has the type reference a many cardinality?
-	 */	
-	def dispatch boolean isMany (QueryObjectRef t) {
+	def dispatch boolean isMany (DataObjectRef t) {
 		false;
 	}
 	/**
@@ -450,16 +407,9 @@ class SchemaTypeExtensions {
 	/**
 	 * Calculate the namespace URL
 	 */
-	def dispatch String toNamespace (BusinessObjectRef t) { 
+	def dispatch String toNamespace (DataObjectRef t) { 
 		t.type.eContainer.toUnversionedNamespace() + "/"
 			+ (t.findMatchingType() as BusinessObject).version.toVersionPostfix() + "/";
-	}
-	/**
-	 * Calculate the namespace URL
-	 */
-	def dispatch String toNamespace (QueryObjectRef t) { 
-		t.type.eContainer.toUnversionedNamespace() + "/"
-			+ (t.findMatchingType() as QueryObject).version.toVersionPostfix() + "/";
 	}
 	/**
 	 * Calculate the namespace URL

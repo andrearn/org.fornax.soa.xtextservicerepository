@@ -19,10 +19,13 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.fornax.soa.basedsl.sOABaseDsl.Import;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
-import org.fornax.soa.serviceDsl.BusinessObjectRef;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
+import org.fornax.soa.serviceDsl.BusinessObject;
+import org.fornax.soa.serviceDsl.DataObjectRef;
 import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
+import org.fornax.soa.serviceDsl.QueryObject;
 import org.fornax.soa.serviceDsl.RequiredServiceRef;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
 import org.fornax.soa.serviceDsl.ServiceModel;
@@ -30,6 +33,7 @@ import org.fornax.soa.serviceDsl.ServiceRef;
 import org.fornax.soa.serviceDsl.SimpleConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.SimpleOperationRef;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
+import org.fornax.soa.services.ServiceDslGrammarAccess.BusinessObjectRefElements;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -42,7 +46,10 @@ import com.google.inject.Inject;
 public class ServiceDslProposalProvider extends AbstractServiceDslProposalProvider {
 	
 	@Inject
-	IQualifiedNameProvider nameProvider;
+	protected IQualifiedNameProvider nameProvider;
+	
+	@Inject
+	protected IEObjectLookup objLookup;
 
 	public void complete_VersionId (EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		calculateVersionProposals (model, context, acceptor, false);
@@ -75,124 +82,131 @@ public class ServiceDslProposalProvider extends AbstractServiceDslProposalProvid
 	private void calculateVersionProposals (EObject model,
 			ContentAssistContext context, ICompletionProposalAcceptor acceptor, boolean majorVersionsOnly) {
 		ICompositeNode parentNode = NodeModelUtils.findActualNodeFor (model).getParent();
-		Iterable<ILeafNode> leafs = parentNode.getLeafNodes();
-		Iterable<ILeafNode> nonHidden = Iterables.filter (leafs, new Predicate<ILeafNode>() {
-
-			public boolean apply (ILeafNode node) {
-				return !node.isHidden();
-			}
-			
-		});
-		ServiceModel serviceModel = null;
-		EObject curObj = model;
-		while (! (curObj instanceof ServiceModel) && curObj.eContainer() != null) {
-			curObj = curObj.eContainer();
-		}
-		if (curObj instanceof ServiceModel) {
-			serviceModel = (ServiceModel) curObj;
-			EList<Import> imports = serviceModel.getImports();
-			final Iterable<String> importedNamespaces = Lists.transform (imports, new Function<Import, String> () {
-
-				public String apply (Import from) {
-					return from.getImportedNamespace().replaceAll("\\.\\*", "");
+		if (parentNode != null) {
+			Iterable<ILeafNode> leafs = parentNode.getLeafNodes();
+			Iterable<ILeafNode> nonHidden = Iterables.filter (leafs, new Predicate<ILeafNode>() {
+	
+				public boolean apply (ILeafNode node) {
+					return !node.isHidden();
 				}
 				
 			});
-			Iterator<ILeafNode> leafIt = nonHidden.iterator();
-			if (model.eContainer() instanceof VersionedTypeRef) {
-				VersionedTypeRef typeRef = (VersionedTypeRef) model.eContainer();
-				boolean versionConstraintFound = false;
-				StringBuilder nameParts = new StringBuilder();
-				while (leafIt.hasNext() && !versionConstraintFound) {
-					ILeafNode curNode = leafIt.next();
-					if (curNode.getSemanticElement() instanceof VersionRef)
-						versionConstraintFound = true;
+			ServiceModel serviceModel = null;
+			EObject curObj = model;
+			while (! (curObj instanceof ServiceModel) && curObj.eContainer() != null) {
+				curObj = curObj.eContainer();
+			}
+			if (curObj instanceof ServiceModel) {
+				serviceModel = (ServiceModel) curObj;
+				EList<Import> imports = serviceModel.getImports();
+				final Iterable<String> importedNamespaces = Lists.transform (imports, new Function<Import, String> () {
+	
+					public String apply (Import from) {
+						return from.getImportedNamespace().replaceAll("\\.\\*", "");
+					}
+					
+				});
+				Iterator<ILeafNode> leafIt = nonHidden.iterator();
+				if (model.eContainer() instanceof VersionedTypeRef) {
+					VersionedTypeRef typeRef = (VersionedTypeRef) model.eContainer();
+					boolean versionConstraintFound = false;
+					StringBuilder nameParts = new StringBuilder();
+					while (leafIt.hasNext() && !versionConstraintFound) {
+						ILeafNode curNode = leafIt.next();
+						if (curNode.getSemanticElement() instanceof VersionRef)
+							versionConstraintFound = true;
+						else
+							nameParts.append(curNode.getText());
+					}
+					String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
+					Iterable<String> canditateVersions = getCanditateVersions (typeName, ServiceDslPackage.Literals.BUSINESS_OBJECT.getName(), importedNamespaces, majorVersionsOnly);
+					if (!canditateVersions.iterator().hasNext())
+						canditateVersions = getCanditateVersions (typeName, ServiceDslPackage.Literals.ENUMERATION.getName(), importedNamespaces, majorVersionsOnly);
+					for (String version : canditateVersions) {
+						acceptor.accept (createCompletionProposal (version, context));
+					}
+	
+				} else if (model.eContainer() instanceof DataObjectRef) {
+					DataObjectRef typeRef = (DataObjectRef) model.eContainer();
+					boolean versionConstraintFound = false;
+					StringBuilder nameParts = new StringBuilder();
+					while (leafIt.hasNext() && !versionConstraintFound) {
+						ILeafNode curNode = leafIt.next();
+						if (curNode.getSemanticElement() instanceof VersionRef)
+							versionConstraintFound = true;
+						else
+							nameParts.append(curNode.getText());
+					}
+					String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
+					EObject versionedOwner = objLookup.getVersionedOwner(model.eContainer());
+					String className = null;
+					if (versionedOwner instanceof QueryObject) 
+						className = ServiceDslPackage.Literals.QUERY_OBJECT.getName();
 					else
-						nameParts.append(curNode.getText());
-				}
-				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
-				Iterable<String> canditateVersions = getCanditateVersions (typeName, ServiceDslPackage.Literals.BUSINESS_OBJECT.getName(), importedNamespaces, majorVersionsOnly);
-				if (!canditateVersions.iterator().hasNext())
-					canditateVersions = getCanditateVersions (typeName, ServiceDslPackage.Literals.ENUMERATION.getName(), importedNamespaces, majorVersionsOnly);
-				for (String version : canditateVersions) {
-					acceptor.accept (createCompletionProposal (version, context));
-				}
-
-			} else if (model.eContainer() instanceof BusinessObjectRef) {
-				BusinessObjectRef typeRef = (BusinessObjectRef) model.eContainer();
-				boolean versionConstraintFound = false;
-				StringBuilder nameParts = new StringBuilder();
-				while (leafIt.hasNext() && !versionConstraintFound) {
-					ILeafNode curNode = leafIt.next();
-					if (curNode.getSemanticElement() instanceof VersionRef)
-						versionConstraintFound = true;
+						className = ServiceDslPackage.Literals.BUSINESS_OBJECT.getName();
+					Iterable<String> canditateVersions = getCanditateVersions (typeName, className, importedNamespaces, majorVersionsOnly);
+					for (String version : canditateVersions) {
+						acceptor.accept (createCompletionProposal (version, context));
+					}
+	
+				} else if (model.eContainer() instanceof EnumTypeRef) {
+					EnumTypeRef typeRef = (EnumTypeRef) model.eContainer();
+					boolean versionConstraintFound = false;
+					StringBuilder nameParts = new StringBuilder();
+					while (leafIt.hasNext() && !versionConstraintFound) {
+						ILeafNode curNode = leafIt.next();
+						if (curNode.getSemanticElement() instanceof VersionRef)
+							versionConstraintFound = true;
+						else
+							nameParts.append(curNode.getText());
+					}
+					String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
+					String className = ServiceDslPackage.Literals.ENUMERATION.getName();
+					Iterable<String> canditateVersions = getCanditateVersions (typeName, className, importedNamespaces, majorVersionsOnly);
+					for (String version : canditateVersions) {
+						acceptor.accept (createCompletionProposal (version, context));
+					}
+	
+				} else if (model.eContainer() instanceof ServiceRef) {
+					ServiceRef svcRef = (ServiceRef) model.eContainer();
+					boolean versionConstraintFound = false;
+					StringBuilder nameParts = new StringBuilder();
+					while (leafIt.hasNext() && !versionConstraintFound) {
+						ILeafNode curNode = leafIt.next();
+						if (curNode.getSemanticElement() instanceof VersionRef)
+							versionConstraintFound = true;
+						else
+							nameParts.append(curNode.getText());
+					}
+					String svcName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
+					String className = ServiceDslPackage.Literals.SERVICE.getName();
+					Iterable<String> canditateVersions = getCanditateVersions (svcName, className, importedNamespaces, majorVersionsOnly);
+					for (String version : canditateVersions) {
+						acceptor.accept (createCompletionProposal (version, context));
+					}
+	
+				} else if (model.eContainer() instanceof ExceptionRef) {
+					boolean versionConstraintFound = false;
+					StringBuilder nameParts = new StringBuilder();
+					while (leafIt.hasNext() && !versionConstraintFound) {
+						ILeafNode curNode = leafIt.next();
+						if (curNode.getSemanticElement() instanceof VersionRef)
+							versionConstraintFound = true;
+						else
+							nameParts.append(curNode.getText());
+					}
+					String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
+					String className = ServiceDslPackage.Literals.EXCEPTION.getName();
+					Iterable<String> canditateVersions = getCanditateVersions (typeName, className, importedNamespaces, majorVersionsOnly);
+					for (String version : canditateVersions) {
+						acceptor.accept (createCompletionProposal (version, context));
+					}
+				} else {
+					if (majorVersionsOnly)
+						acceptor.accept (createCompletionProposal ("1", context));
 					else
-						nameParts.append(curNode.getText());
+						acceptor.accept (createCompletionProposal ("1.0", context));
 				}
-				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
-				String className = ServiceDslPackage.Literals.BUSINESS_OBJECT.getName();
-				Iterable<String> canditateVersions = getCanditateVersions (typeName, className, importedNamespaces, majorVersionsOnly);
-				for (String version : canditateVersions) {
-					acceptor.accept (createCompletionProposal (version, context));
-				}
-
-			} else if (model.eContainer() instanceof EnumTypeRef) {
-				EnumTypeRef typeRef = (EnumTypeRef) model.eContainer();
-				boolean versionConstraintFound = false;
-				StringBuilder nameParts = new StringBuilder();
-				while (leafIt.hasNext() && !versionConstraintFound) {
-					ILeafNode curNode = leafIt.next();
-					if (curNode.getSemanticElement() instanceof VersionRef)
-						versionConstraintFound = true;
-					else
-						nameParts.append(curNode.getText());
-				}
-				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
-				String className = ServiceDslPackage.Literals.ENUMERATION.getName();
-				Iterable<String> canditateVersions = getCanditateVersions (typeName, className, importedNamespaces, majorVersionsOnly);
-				for (String version : canditateVersions) {
-					acceptor.accept (createCompletionProposal (version, context));
-				}
-
-			} else if (model.eContainer() instanceof ServiceRef) {
-				ServiceRef svcRef = (ServiceRef) model.eContainer();
-				boolean versionConstraintFound = false;
-				StringBuilder nameParts = new StringBuilder();
-				while (leafIt.hasNext() && !versionConstraintFound) {
-					ILeafNode curNode = leafIt.next();
-					if (curNode.getSemanticElement() instanceof VersionRef)
-						versionConstraintFound = true;
-					else
-						nameParts.append(curNode.getText());
-				}
-				String svcName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
-				String className = ServiceDslPackage.Literals.SERVICE.getName();
-				Iterable<String> canditateVersions = getCanditateVersions (svcName, className, importedNamespaces, majorVersionsOnly);
-				for (String version : canditateVersions) {
-					acceptor.accept (createCompletionProposal (version, context));
-				}
-
-			} else if (model.eContainer() instanceof ExceptionRef) {
-				boolean versionConstraintFound = false;
-				StringBuilder nameParts = new StringBuilder();
-				while (leafIt.hasNext() && !versionConstraintFound) {
-					ILeafNode curNode = leafIt.next();
-					if (curNode.getSemanticElement() instanceof VersionRef)
-						versionConstraintFound = true;
-					else
-						nameParts.append(curNode.getText());
-				}
-				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
-				String className = ServiceDslPackage.Literals.EXCEPTION.getName();
-				Iterable<String> canditateVersions = getCanditateVersions (typeName, className, importedNamespaces, majorVersionsOnly);
-				for (String version : canditateVersions) {
-					acceptor.accept (createCompletionProposal (version, context));
-				}
-			} else {
-				if (majorVersionsOnly)
-					acceptor.accept (createCompletionProposal ("1", context));
-				else
-					acceptor.accept (createCompletionProposal ("1.0", context));
 			}
 		}
 	}

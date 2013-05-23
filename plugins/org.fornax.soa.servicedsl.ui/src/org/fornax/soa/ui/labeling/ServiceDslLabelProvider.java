@@ -11,9 +11,9 @@ import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.basedsl.sOABaseDsl.Import;
 import org.fornax.soa.serviceDsl.BusinessObject;
-import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
+import org.fornax.soa.serviceDsl.DataObjectRef;
 import org.fornax.soa.serviceDsl.DataTypeRef;
 import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
@@ -25,7 +25,6 @@ import org.fornax.soa.serviceDsl.OperationRef;
 import org.fornax.soa.serviceDsl.Parameter;
 import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.QueryObject;
-import org.fornax.soa.serviceDsl.QueryObjectRef;
 import org.fornax.soa.serviceDsl.RequiredServiceRef;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceRef;
@@ -221,7 +220,7 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 		return ele.getProperty().getName();
 	}
 	
-	Object text(BusinessObjectRef ele) {
+	Object text(DataObjectRef ele) {
 		StyledString name = new StyledString(ele.getType().getName());
 		if (ele.getType().isDeprecated()) {
 			name.setStyle(0, name.length(), STRIKETHROUGH);
@@ -229,13 +228,6 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 		return name;
 	}
 	Object text(EnumTypeRef ele) {
-		StyledString name = new StyledString(ele.getType().getName());
-		if (ele.getType().isDeprecated()) {
-			name.setStyle(0, name.length(), STRIKETHROUGH);
-		}
-		return name;
-	}
-	Object text(QueryObjectRef ele) {
 		StyledString name = new StyledString(ele.getType().getName());
 		if (ele.getType().isDeprecated()) {
 			name.setStyle(0, name.length(), STRIKETHROUGH);
@@ -259,8 +251,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 			else
 				_log.error("Unexpected reference type " + dtRef.getType().eClass().getName());
 		}
-		if (t instanceof BusinessObjectRef)
-			return ((BusinessObjectRef)t).getType().getName();
+		if (t instanceof DataObjectRef)
+			return ((DataObjectRef)t).getType().getName();
 		if (t instanceof EnumTypeRef)
 			return ((EnumTypeRef)t).getType().getName();
 		if (t instanceof VersionedTypeRef)

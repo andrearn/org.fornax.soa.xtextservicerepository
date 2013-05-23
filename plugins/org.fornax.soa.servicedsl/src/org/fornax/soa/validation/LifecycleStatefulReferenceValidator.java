@@ -18,7 +18,7 @@ import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
 import org.fornax.soa.service.query.VersionedObjectQueryHelper;
 import org.fornax.soa.service.util.ServiceDslElementAccessor;
 import org.fornax.soa.serviceDsl.BusinessObject;
-import org.fornax.soa.serviceDsl.BusinessObjectRef;
+import org.fornax.soa.serviceDsl.DataObjectRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.Enumeration;
 import org.fornax.soa.serviceDsl.ExceptionRef;
@@ -55,14 +55,14 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	}
 
 	@Check
-	public void checkDoesNotRefRetiredBO(BusinessObjectRef boRef) {
-		EObject owner = objLookup.getStatefulOwner(boRef);
+	public void checkDoesNotRefRetiredDO(DataObjectRef doRef) {
+		EObject owner = objLookup.getVersionedOwner(doRef);
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null && stateRes.definesState(owner) && ownerState.isIsEnd()
-				&& boRef.getType().getState() != null
-				&& boRef.getType().getState().isIsEnd())
-			error ("A businessObject in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
+				&& doRef.getType().getState() != null
+				&& doRef.getType().getState().isIsEnd())
+			error ("A businessObject / queryObject in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.DATA_OBJECT_REF__TYPE);
 	}
 
 	@Check
@@ -118,12 +118,12 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		}
 	}
 	@Check
-	public void checkRefsBOInMatchingState (BusinessObjectRef boRef) {
-		EObject owner = objLookup.getStatefulOwner(boRef);
+	public void checkRefsDOInMatchingState (DataObjectRef doRef) {
+		EObject owner = objLookup.getVersionedOwner(doRef);
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		if (owner != null && stateRes.definesState (owner)) {
-			if (!referencedStateChecker.stateMatches (((BusinessObject)boRef.getType()).getState(), owner))
-				error ("A businessObject with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the businessObject", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
+			if (!referencedStateChecker.stateMatches (((BusinessObject)doRef.getType()).getState(), owner))
+				error ("A businessObject / queryObject with a lower lifecycle-state or the declared minimal state must not be referenced as it does not support all environments supported by the businessObject", ServiceDslPackage.Literals.DATA_OBJECT_REF__TYPE);
 		}
 	}
 
@@ -161,13 +161,13 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 		}
 	}
 	@Check (CheckType.NORMAL)
-	public void checkNotRefsLowerStateBO(BusinessObjectRef boRef) {
-		EObject owner = objLookup.getStatefulOwner(boRef);
+	public void checkNotRefsLowerStateDO(DataObjectRef doRef) {
+		EObject owner = objLookup.getVersionedOwner(doRef);
 		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
 		LifecycleState ownerState = stateRes.getLifecycleState(owner);
 		if (owner != null) {
-			if (stateComparator.compare (ownerState, ((BusinessObject)boRef.getType()).getState()) > 0 && !(ownerState != null && ownerState.isIsEnd()))
-				warning ("A businessObject with a lower lifecycle-state is being referenced. You should review the referenced businessObject and adjust it's lifecycle-state.", ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE);
+			if (stateComparator.compare (ownerState, ((BusinessObject)doRef.getType()).getState()) > 0 && !(ownerState != null && ownerState.isIsEnd()))
+				warning ("A businessObject / queryObject with a lower lifecycle-state is being referenced. You should review the referenced businessObject and adjust it's lifecycle-state.", ServiceDslPackage.Literals.DATA_OBJECT_REF__TYPE);
 		}
 	}
 	@Check (CheckType.NORMAL)

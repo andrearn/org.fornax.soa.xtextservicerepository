@@ -27,6 +27,7 @@ import org.fornax.soa.profiledsl.query.namespace.TechnicalNamespaceImportQueries
 import java.util.Set
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
+import org.fornax.soa.servicedsl.generator.templates.xsd.SwaRefSchemaGenerator
 
 /*
  * Template class for generation of abstract WSDLs
@@ -47,7 +48,8 @@ class WSDLGenerator {
 	@Inject TechnicalNamespaceImportQueries techNsImportQueries
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
-	@Inject IEObjectDocumentationProvider docProvider	
+	@Inject IEObjectDocumentationProvider docProvider
+	@Inject SwaRefSchemaGenerator swarefSchemaGenerator
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
@@ -118,6 +120,7 @@ class WSDLGenerator {
 
 
 	def toTypes(Service s, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		swarefSchemaGenerator.generateSwaRefSchema11
 		val Set<VersionedTechnicalNamespace> headerImports = s.collectTechnicalVersionedNamespaceImports (profile)
 		'''
 		<wsdl:types>
@@ -134,7 +137,8 @@ class WSDLGenerator {
 				elementFormDefault="qualified"
 				attributeFormDefault="unqualified"
 			>
-				<xsd:import namespace="http://ws-i.org/profiles/basic/1.1/xsd" />
+				<xsd:import schemaLocation="swaref.xsd"
+					namespace="http://ws-i.org/profiles/basic/1.1/xsd" />
 				«/*<xsd:import
 					namespace="http://ws-i.org/profiles/basic/1.1/xsd"
 					schemaLocation="http://ws-i.org/profiles/basic/1.1/xsd"/>*/»

@@ -5,7 +5,6 @@ import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.basedsl.CommonStringExtensions
 import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.serviceDsl.BusinessObject
-import org.fornax.soa.serviceDsl.BusinessObjectRef
 import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.EnumTypeRef
 import org.fornax.soa.serviceDsl.Enumeration
@@ -27,6 +26,7 @@ import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.service.query.ExceptionFinder
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.serviceDsl.DataObjectRef
 
 /*
  * Namespace lookup functions
@@ -65,7 +65,7 @@ class NamespaceQuery {
 	/**
 	 *	Find the owning namespace of the owner of the type reference
 	 */
-	def dispatch SubNamespace findTypeRefOwnerSubdomain (BusinessObjectRef c) {
+	def dispatch SubNamespace findTypeRefOwnerSubdomain (DataObjectRef c) {
 		c?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	

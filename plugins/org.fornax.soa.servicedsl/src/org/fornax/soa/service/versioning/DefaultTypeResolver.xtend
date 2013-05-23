@@ -2,24 +2,20 @@ package org.fornax.soa.service.versioning
 
 import com.google.inject.Inject
 import java.util.List
-import org.fornax.soa.profiledsl.search.StateMatcher
-import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.fornax.soa.basedsl.version.VersionMatcher
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.search.StateMatcher
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
-import org.fornax.soa.serviceDsl.BusinessObject
-import org.fornax.soa.serviceDsl.BusinessObjectRef
-import org.fornax.soa.serviceDsl.DataTypeRef
+import org.fornax.soa.serviceDsl.DataObjectRef
 import org.fornax.soa.serviceDsl.EnumTypeRef
-import org.fornax.soa.serviceDsl.Enumeration
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.VersionedTypeRef
-import org.fornax.soa.service.query.namespace.NamespaceQuery
-import org.eclipse.emf.ecore.EObject
-import org.fornax.soa.serviceDsl.QueryObjectRef
-import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 class DefaultTypeResolver implements ITypeResolver {
 	
@@ -28,39 +24,40 @@ class DefaultTypeResolver implements ITypeResolver {
 	@Inject extension NamespaceQuery
 	@Inject extension IQualifiedNameProvider
 	
-	def dispatch VersionedType selectMatchingType (AbstractVersionedTypeRef ref) {}
+	override selectMatchingType(AbstractVersionedTypeRef ref) {
+		selectMatchingTypeImpl(ref)
+	}
 	
-	def dispatch VersionedType selectMatchingType (VersionedTypeRef ref) {
+	override selectMatchingTypeByState(AbstractVersionedTypeRef ref, LifecycleState minState) {
+		selectMatchingTypeByStateImpl(ref, minState)
+	} 
+	
+	
+	def dispatch VersionedType selectMatchingTypeImpl (EObject ref) { }
+	
+	def dispatch VersionedType selectMatchingTypeImpl (VersionedTypeRef ref) {
 		ref.type as VersionedType;
 	}
 	
-	def dispatch VersionedType selectMatchingType (BusinessObjectRef ref) {
+	def dispatch VersionedType selectMatchingTypeImpl (DataObjectRef ref) {
 		ref.type;
 	}
 	
-	def dispatch VersionedType selectMatchingType (QueryObjectRef ref) {
-		ref.type;
-	}
-		
-	def dispatch VersionedType selectMatchingType (EnumTypeRef ref) {
+	def dispatch VersionedType selectMatchingTypeImpl (EnumTypeRef ref) {
 		ref.type;
 	}
 	
-	def dispatch VersionedType selectMatchingTypeByState (AbstractVersionedTypeRef ref, LifecycleState minState) {}
+	def dispatch VersionedType selectMatchingTypeByStateImpl (AbstractVersionedTypeRef ref, LifecycleState minState) {}
 	
-	def dispatch VersionedType selectMatchingTypeByState (VersionedTypeRef ref, LifecycleState minState) {
+	def dispatch VersionedType selectMatchingTypeByStateImpl (VersionedTypeRef ref, LifecycleState minState) {
 		ref.type
 	}
 		
-	def dispatch VersionedType selectMatchingTypeByState (BusinessObjectRef ref, LifecycleState minState) {
+	def dispatch VersionedType selectMatchingTypeByStateImpl (DataObjectRef ref, LifecycleState minState) {
 		ref.type
 	}
 		
-	def dispatch VersionedType selectMatchingTypeByState (QueryObjectRef ref, LifecycleState minState) {
-		ref.type
-	}
-	
-	def dispatch VersionedType selectMatchingTypeByState (EnumTypeRef ref, LifecycleState minState) {
+	def dispatch VersionedType selectMatchingTypeByStateImpl (EnumTypeRef ref, LifecycleState minState) {
 		ref.type
 	}
 	
@@ -123,11 +120,7 @@ class DefaultTypeResolver implements ITypeResolver {
 		t.type
 	}
 	
-	def dispatch Type findMatchingType (BusinessObjectRef t) { 
-		t.type
-	}
-	
-	def dispatch Type findMatchingType (QueryObjectRef t) { 
+	def dispatch Type findMatchingType (DataObjectRef t) { 
 		t.type
 	}
 	
@@ -147,34 +140,13 @@ class DefaultTypeResolver implements ITypeResolver {
 	 *  	- the version constraint defined in the reference
 	 *		- the given minimal required LifecycleState
 	 */
-	def dispatch Type findMatchingTypeByState (TypeRef t, LifecycleState minState) {
-		null;
-	}
-	
-	def dispatch Type findMatchingTypeByState (VersionedTypeRef t, LifecycleState minState) { 
-		t.type
-	}
-	
-	def dispatch Type findMatchingTypeByState (BusinessObjectRef t, LifecycleState minState) { 
-		t.type
-	}
-	
-	def dispatch Type findMatchingTypeByState (QueryObjectRef t, LifecycleState minState) { 
-		t.type
-	}
-	
-	def dispatch Type findMatchingTypeByState (EnumTypeRef t, LifecycleState minState) { 
-		t.type
-	}
-	
-		
-	def private dispatch Type findMatchingVersionedType (List<VersionedType> types, Integer majorVersion) { 
+	def private Type findMatchingVersionedType (List<VersionedType> types, Integer majorVersion) { 
 		types.filter (
 			e|e.version.versionMatches (majorVersion) 
 		).sortBy(e|e.version.version).last();
 	}
 	
-	def private dispatch org.fornax.soa.profiledsl.sOAProfileDsl.Type findMatchingVersionedTypeFromProfile (List<org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType> types, Integer majorVersion) { 
+	def private org.fornax.soa.profiledsl.sOAProfileDsl.Type findMatchingVersionedTypeFromProfile (List<org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType> types, Integer majorVersion) { 
 		types.filter (
 			e|e.version.versionMatches (majorVersion) 
 		).sortBy(e|e.version.version).last();
@@ -186,6 +158,8 @@ class DefaultTypeResolver implements ITypeResolver {
 			e.state.matchesMinStateLevel (minState)
 		).sortBy (e|e.version.version).last();
 	}
+	
+
 	
 	
 }

@@ -24,7 +24,7 @@ import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateRe
 import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
 import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
 import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
-import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
+import org.fornax.soa.service.query.type.DataObjectQueryInternal;
 import org.fornax.soa.service.versioning.DefaultExceptionResolver;
 import org.fornax.soa.service.versioning.DefaultServiceResolver;
 import org.fornax.soa.service.versioning.DefaultTypeResolver;
@@ -33,7 +33,6 @@ import org.fornax.soa.service.versioning.IServiceResolver;
 import org.fornax.soa.service.versioning.ITypeResolver;
 import org.fornax.soa.service.versioning.LatestMinorVersionExceptionResolver;
 import org.fornax.soa.service.versioning.LatestMinorVersionServiceResolver;
-import org.fornax.soa.service.versioning.LatestMinorVersionTypeResolver;
 import org.fornax.soa.util.EnvironmentTypeComparator;
 
 import com.google.inject.Binder;
@@ -65,8 +64,8 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 	}
 	
 	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
-	public Class<org.fornax.soa.service.query.type.BusinessObjectQueryInternal> bindBusinessObjectQuery () {
-		return BusinessObjectQueryInternal.class;
+	public Class<org.fornax.soa.service.query.type.DataObjectQueryInternal> bindBusinessObjectQuery () {
+		return DataObjectQueryInternal.class;
 	}
 	
 	public Class<? extends IPredicateSearch> bindIPredicateSearch () {

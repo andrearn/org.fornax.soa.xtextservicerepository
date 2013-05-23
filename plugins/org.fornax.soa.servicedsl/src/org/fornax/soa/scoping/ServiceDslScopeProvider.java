@@ -40,12 +40,12 @@ import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMinVersionForOwne
 import org.fornax.soa.profiledsl.scoping.versions.RelaxedMaxVersionForOwnerStateFilter;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.service.util.ServiceDslElementAccessor;
-import org.fornax.soa.serviceDsl.BusinessObjectRef;
 import org.fornax.soa.serviceDsl.CapabilityRef;
 import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
 import org.fornax.soa.serviceDsl.ConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.ConsiderationSpec;
+import org.fornax.soa.serviceDsl.DataObjectRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.EventRef;
 import org.fornax.soa.serviceDsl.ExceptionRef;
@@ -118,15 +118,15 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			final VersionRef v = ((VersionedTypeRef) ctx).getVersionRef();
 			return createVersionFilter (v, objLookup.getVersionedOwner(ctx));
 		
-		} else if (reference==ServiceDslPackage.Literals.BUSINESS_OBJECT_REF__TYPE 
-				&& ctx instanceof BusinessObjectRef) {
-			final VersionRef v = ((BusinessObjectRef) ctx).getVersionRef();
+		} else if (reference==ServiceDslPackage.Literals.DATA_OBJECT_REF__TYPE 
+				&& ctx instanceof DataObjectRef) {
+			final VersionRef v = ((DataObjectRef) ctx).getVersionRef();
 			return createVersionFilter (v, objLookup.getVersionedOwner(ctx));
 		
 			//FIXME verify this ref
-		} else if (reference==ServiceDslPackage.Literals.BUSINESS_OBJECT__SUPER_BUSINESS_OBJECT 
-				&& ctx instanceof BusinessObjectRef) {
-			final VersionRef v = ((BusinessObjectRef) ctx).getVersionRef();
+		} else if (reference==ServiceDslPackage.Literals.DATA_OBJECT__SUPER_OBJECT 
+				&& ctx instanceof DataObjectRef) {
+			final VersionRef v = ((DataObjectRef) ctx).getVersionRef();
 			return createVersionFilter (v, objLookup.getVersionedOwner(ctx));
 		
 		} else if (reference == ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE 
@@ -184,8 +184,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				&& ctx instanceof ConsiderationParameterRef) {
 			TypeRef typeRef = ((ConsiderationParameterRef) ctx).getParam().getType();
 			AbstractPredicateVersionFilter<IEObjectDescription> f = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
-			if (typeRef instanceof BusinessObjectRef) 
-				f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
+			if (typeRef instanceof DataObjectRef) 
+				f = createEContainerVersionFilter (((DataObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			else if (typeRef instanceof EnumTypeRef)
 				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			return f;
@@ -199,8 +199,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			}
 			AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
 			
-			if (typeRef instanceof BusinessObjectRef) 
-				f = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
+			if (typeRef instanceof DataObjectRef) 
+				f = createEContainerVersionFilter (((DataObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			else if (typeRef instanceof EnumTypeRef)
 				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			if (typeRef instanceof VersionedTypeRef) {
@@ -305,8 +305,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		}
 		AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
 		
-		if (typeRef instanceof BusinessObjectRef) 
-			f = createVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
+		if (typeRef instanceof DataObjectRef) 
+			f = createVersionFilter (((DataObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 		else if (typeRef instanceof EnumTypeRef)
 			f = createVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 		if (typeRef instanceof VersionedTypeRef) {
@@ -338,8 +338,8 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		}
 		AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
 		
-		if (typeRef instanceof BusinessObjectRef) 
-			f = createVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
+		if (typeRef instanceof DataObjectRef) 
+			f = createVersionFilter (((DataObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 		else if (typeRef instanceof EnumTypeRef)
 			f = createVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 		if (typeRef instanceof VersionedTypeRef) {
@@ -383,9 +383,9 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 	private AbstractPredicateVersionFilter<IEObjectDescription> getPropertyFilterFromTypeRef(
 			EObject ctx, TypeRef typeRef) {
 		AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = new NullVersionFilter<IEObjectDescription>();
-		if (typeRef instanceof BusinessObjectRef) {
-			versionFilter = createEContainerVersionFilter (((BusinessObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
-			BusinessObjectRef verTypeRef = (BusinessObjectRef) typeRef;
+		if (typeRef instanceof DataObjectRef) {
+			versionFilter = createEContainerVersionFilter (((DataObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
+			DataObjectRef verTypeRef = (DataObjectRef) typeRef;
 			final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());
 			versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
 

@@ -13,8 +13,8 @@ import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import com.google.inject.Inject
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
-import org.fornax.soa.serviceDsl.QueryObject
 import org.fornax.soa.service.versioning.ITypeResolver
+import org.fornax.soa.serviceDsl.DataObject
 
 /*
  * Find type references of a model object
@@ -52,21 +52,10 @@ class ReferencedTypesFinder {
 		newArrayList();
 	}
 	
-	def private dispatch List<TypeRef> allReferencedTypeRefs (BusinessObject t) { 
+	def private dispatch List<TypeRef> allReferencedTypeRefs (DataObject t) { 
 		var refs = new ArrayList<TypeRef>();
-		if (t.superBusinessObject != null) {
-			refs.add (t.superBusinessObject);
-			refs.addAll(t.properties.map (p|p.type));
-		} else {
-			refs.addAll (t.properties.map (p|p.type));
-		}
-		return refs;
-	}
-	
-	def private dispatch List<TypeRef> allReferencedTypeRefs (QueryObject t) { 
-		var refs = new ArrayList<TypeRef>();
-		if (t.superQueryObject != null) {
-			refs.add (t.superQueryObject);
+		if (t.superObject != null) {
+			refs.add (t.superObject);
 			refs.addAll(t.properties.map (p|p.type));
 		} else {
 			refs.addAll (t.properties.map (p|p.type));

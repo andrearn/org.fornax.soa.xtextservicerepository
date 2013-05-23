@@ -17,14 +17,13 @@ import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.profiledsl.sOAProfileDsl.ServiceBaseCategory;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
 import org.fornax.soa.service.query.type.BusinessObjectQueries;
-import org.fornax.soa.service.query.type.BusinessObjectQueryInternal;
 import org.fornax.soa.service.query.type.QueryObjectQueries;
 import org.fornax.soa.service.validation.version.BusinessObjectVersionValidator;
 import org.fornax.soa.service.validation.version.EnumerationVersionValidator;
 import org.fornax.soa.service.validation.version.ExceptionVersionValidator;
 import org.fornax.soa.service.validation.version.ServiceVersionValidator;
 import org.fornax.soa.serviceDsl.BusinessObject;
-import org.fornax.soa.serviceDsl.BusinessObjectRef;
+import org.fornax.soa.serviceDsl.DataObject;
 import org.fornax.soa.serviceDsl.DomainNamespace;
 import org.fornax.soa.serviceDsl.EnumLiteral;
 import org.fornax.soa.serviceDsl.Enumeration;
@@ -79,13 +78,13 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	
 	@Check
 	public void checkNoPropertyOverrides(Property prop) {
-		if (prop.eContainer() instanceof BusinessObject) {
-			BusinessObject bo = (BusinessObject) prop.eContainer();
-			if (bo.getSuperBusinessObject() != null
-					&& bo.getSuperBusinessObject().getType() != null) {
+		if (prop.eContainer() instanceof DataObject) {
+			DataObject dataObject = (DataObject) prop.eContainer();
+			if (dataObject.getSuperObject() != null
+					&& dataObject.getSuperObject().getType() != null) {
 				final String propName = prop.getName();
-				for (BusinessObject superType : boQuery
-						.getAllSuperTypes(bo, null)) {
+				for (DataObject superType : boQuery
+						.getAllSuperTypes(dataObject, null)) {
 					
 					Iterable<Property> props = Iterables.filter (
 							superType.getProperties(),
@@ -104,39 +103,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 								.append (" overrides an inherited property from ")
 								.append (superType.getName())
 								.append (" version ")
-								.append (bo.getVersion().getVersion());
-						error (errMsg.toString(),
-								ServiceDslPackage.Literals.PROPERTY__NAME);
-					}
-				}
-			}
-		}
-		if (prop.eContainer() instanceof QueryObject) {
-			QueryObject bo = (QueryObject) prop.eContainer();
-			if (bo.getSuperQueryObject() != null
-					&& bo.getSuperQueryObject().getType() != null) {
-				final String propName = prop.getName();
-				for (QueryObject superType : getQoQuery()
-						.getAllSuperTypes(bo, null)) {
-					
-					Iterable<Property> props = Iterables.filter (
-							superType.getProperties(),
-							new Predicate<Property>() {
-
-								public boolean apply (Property curProp) {
-									return curProp.getName().equals(propName);
-								}
-
-							});
-					
-					List<Property> opList = Lists.newArrayList(props);
-					if (opList.size() > 0) {
-						StringBuilder errMsg = new StringBuilder("Property ");
-						errMsg.append (propName)
-								.append (" overrides an inherited property from ")
-								.append (superType.getName())
-								.append (" version ")
-								.append (bo.getVersion().getVersion());
+								.append (dataObject.getVersion().getVersion());
 						error (errMsg.toString(),
 								ServiceDslPackage.Literals.PROPERTY__NAME);
 					}

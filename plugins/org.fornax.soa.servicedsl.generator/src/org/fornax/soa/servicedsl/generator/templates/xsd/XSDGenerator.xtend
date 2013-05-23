@@ -30,7 +30,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.DataTypeRef
 import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
-
+import org.fornax.soa.serviceDsl.DataObject
 
 /**
  * Templates for XSD generation
@@ -248,9 +248,9 @@ class XSDGenerator {
 							XSD being generated
 		@param		profile	The SOAProfile defining the governing architecture rules.
 	*/
-	def toComplexType(BusinessObject bo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
+	def toComplexType(DataObject bo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
 
-		<xsd:complexType name="«bo.name»"«IF bo.^abstract» abstract="true"«ENDIF»>
+		<xsd:complexType name="«bo.name»"«IF isAbstract(bo)» abstract="true"«ENDIF»>
 			<xsd:annotation>
 		    	<xsd:documentation>
 					<![CDATA[
@@ -276,9 +276,9 @@ class XSDGenerator {
 						*/» 
 			</xsd:annotation>
 			
-			«IF bo.superBusinessObject != null»
+			«IF bo.superObject != null»
 				<xsd:complexContent>
-					<xsd:extension base="«bo.superBusinessObject.toTypeNameRef(currNs)»">
+					<xsd:extension base="«bo.superObject.toTypeNameRef(currNs)»">
 						«bo.toPropertySequence (currNs, profile, minState)»
 					</xsd:extension>
 				</xsd:complexContent>
@@ -292,56 +292,12 @@ class XSDGenerator {
 	'''
 
 
-	/**
-		Generate a ComplexType for a QueryObject respecting the major version of the containing 
-		XSD. Hence, the same VersionedDomainNamespace as for the containing XSD must be used.
-		
-		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
-							XSD being generated
-		@param		profile	The SOAProfile defining the governing architecture rules.
-	*/
-	def toComplexType(QueryObject qo, VersionedDomainNamespace currNs, SOAProfile profile, LifecycleState minState) '''
-
-		<xsd:complexType name="«qo.name»">
-			<xsd:annotation>
-		    	<xsd:documentation>
-					<![CDATA[
-						Version:			«versionQualifier.toVersionNumber(qo.version)»
-						Lifecycle state: 	«qo.state.toStateName»
-										
-						«docProvider.getDocumentation (qo)»
-					]]>
-				</xsd:documentation>
-						«/*
-					    	<xsd:appinfo>
-						    	<jxb:class>
-					  	    		<jxb:javadoc>
-						<![CDATA[Version:	«version.toVersionNumber()»
-						Lifecycle state: «state.toStateName»
-						«IF doc != null-»
-										
-						«doc?.stripCommentBraces()?.trim()»
-						«ENDIF-» ]]>   			
-					    			</jxb:javadoc>
-						    	</jxb:class>
-					      	</xsd:appinfo>
-						*/» 
-			</xsd:annotation>
-			
-			«IF qo.superQueryObject != null»
-				<xsd:complexContent>
-					<xsd:extension base="«qo.superQueryObject.toTypeNameRef(currNs)»">
-						«qo.toPropertySequence (currNs, profile, minState)»
-					</xsd:extension>
-				</xsd:complexContent>
-			«ELSE»
-				«qo.toPropertySequenceWithAny (currNs, profile, minState)»
-				«IF profile.typesUseExtendibleXMLAttributes()»
-					«profile.typesExtendibleXMLAttributesClause»
-				«ENDIF»
-			«ENDIF»
-		</xsd:complexType>
-	'''
+	def dispatch isAbstract(BusinessObject bo) {
+		bo.^abstract
+	}
+	def dispatch isAbstract(QueryObject bo) {
+		false
+	}
 
 	
 	/*

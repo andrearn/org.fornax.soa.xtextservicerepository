@@ -7,8 +7,6 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.VersionedTypeRef
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import com.google.inject.Inject
-import org.fornax.soa.serviceDsl.BusinessObjectRef
-import org.fornax.soa.serviceDsl.QueryObjectRef
 
 class WsdlParameterExtensions {
 	
