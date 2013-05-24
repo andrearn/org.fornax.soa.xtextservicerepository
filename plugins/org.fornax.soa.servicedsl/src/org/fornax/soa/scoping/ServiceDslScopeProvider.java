@@ -3,6 +3,9 @@
  */
 package org.fornax.soa.scoping;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -39,12 +42,14 @@ import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMinMaxVersionForO
 import org.fornax.soa.profiledsl.scoping.versions.RelaxedLatestMinVersionForOwnerStateFilter;
 import org.fornax.soa.profiledsl.scoping.versions.RelaxedMaxVersionForOwnerStateFilter;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
+import org.fornax.soa.service.query.type.DataObjectQueries;
 import org.fornax.soa.service.util.ServiceDslElementAccessor;
 import org.fornax.soa.serviceDsl.CapabilityRef;
 import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
 import org.fornax.soa.serviceDsl.ConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.ConsiderationSpec;
+import org.fornax.soa.serviceDsl.DataObject;
 import org.fornax.soa.serviceDsl.DataObjectRef;
 import org.fornax.soa.serviceDsl.EnumTypeRef;
 import org.fornax.soa.serviceDsl.EventRef;
@@ -84,6 +89,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 	private IQualifiedNameProvider nameProvider;
 	
 	@Inject IEObjectLookup objLookup;
+	@Inject DataObjectQueries dataObjQueries;
 
 	public void setNameProvider(IQualifiedNameProvider nameProvider) {
 		this.nameProvider = nameProvider;
@@ -189,6 +195,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			else if (typeRef instanceof EnumTypeRef)
 				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			return f;
+			
 		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF 
 				&& ctx instanceof SimpleConsiderationPropertyRef) {
 			TypeRef typeRef = null;
@@ -205,17 +212,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 				f = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			if (typeRef instanceof VersionedTypeRef) {
 				VersionedTypeRef verTypeRef = (VersionedTypeRef) typeRef;
-				final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());	
-				f.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
-
-					public boolean apply(IEObjectDescription input) {
-						if (input.getQualifiedName().startsWith(verTypeName))
-							return true;
-						else
-							return false;
-					}
-					
-				});
+				attachConsidersPropertyFilter(f, verTypeRef);
 			}
 			return f;
 		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF__PROPERTY 
@@ -312,18 +309,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		if (typeRef instanceof VersionedTypeRef) {
 			f = createVersionFilter (((VersionedTypeRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			VersionedTypeRef verTypeRef = (VersionedTypeRef) typeRef;
-			final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());	
-			f.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
-
-				public boolean apply(IEObjectDescription input) {
-					QualifiedName qualifiedName = input.getQualifiedName();
-					if (qualifiedName.startsWith(verTypeName))
-						return true;
-					else
-						return false;
-				}
-				
-			});
+			attachConsidersPropertyFilter(f, verTypeRef);
 		}
 		return f;
 	}
@@ -345,18 +331,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		if (typeRef instanceof VersionedTypeRef) {
 			f = createVersionFilter (((VersionedTypeRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			VersionedTypeRef verTypeRef = (VersionedTypeRef) typeRef;
-			final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());	
-			f.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
-
-				public boolean apply(IEObjectDescription input) {
-					QualifiedName qualifiedName = input.getQualifiedName();
-					if (qualifiedName.startsWith(verTypeName))
-						return true;
-					else
-						return false;
-				}
-				
-			});
+			attachConsidersPropertyFilter(f, verTypeRef);
 		}
 		return f;
 	}
@@ -386,33 +361,13 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		if (typeRef instanceof DataObjectRef) {
 			versionFilter = createEContainerVersionFilter (((DataObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			DataObjectRef verTypeRef = (DataObjectRef) typeRef;
-			final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());
-			versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
-
-				public boolean apply(IEObjectDescription input) {
-					if (input.getQualifiedName().startsWith(verTypeName))
-						return true;
-					else
-						return false;
-				}
-				
-			});
+			attachConsidersPropertyFilter(versionFilter, verTypeRef);
 		} else if (typeRef instanceof EnumTypeRef) {
 			versionFilter = createEContainerVersionFilter (((EnumTypeRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 		} else if (typeRef instanceof VersionedTypeRef) {
 			versionFilter = createVersionFilter (((VersionedTypeRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			VersionedTypeRef verTypeRef = (VersionedTypeRef) typeRef;
-			final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());
-			versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
-
-				public boolean apply(IEObjectDescription input) {
-					if (input.getQualifiedName().startsWith(verTypeName))
-						return true;
-					else
-						return false;
-				}
-				
-			});
+			attachConsidersPropertyFilter(versionFilter, verTypeRef);
 		}
 		return versionFilter;
 	}
@@ -451,6 +406,54 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			logger.error("Error creating scope filter for ConsiderationParameterRefs", ex);
 		}
 		return null;
+	}
+
+	private void attachConsidersPropertyFilter(
+			AbstractPredicateVersionFilter<IEObjectDescription> f,
+			VersionedTypeRef verTypeRef) {
+		final List<QualifiedName> verTypeNameList = new ArrayList<QualifiedName>();
+		if (verTypeRef.getType() instanceof DataObject) {
+			List<DataObject> allSuperTypes = dataObjQueries.getAllSuperTypes ((DataObject)verTypeRef.getType(), new ArrayList<DataObject>());
+			for (DataObject dataObj : allSuperTypes) {
+				verTypeNameList.add (nameProvider.getFullyQualifiedName (dataObj));
+			}
+		}
+		final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());	
+		verTypeNameList.add (verTypeName);
+		f.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
+
+			public boolean apply(IEObjectDescription input) {
+				for (QualifiedName name : verTypeNameList) {
+					if (input.getQualifiedName() != null && name != null && input.getQualifiedName().startsWith(name))
+						return true;
+				}
+				return false;
+			}
+			
+		});
+	}
+	
+	private void attachConsidersPropertyFilter(
+			AbstractPredicateVersionFilter<IEObjectDescription> f,
+			DataObjectRef verTypeRef) {
+		final List<QualifiedName> verTypeNameList = new ArrayList<QualifiedName>();
+		List<DataObject> allSuperTypes = dataObjQueries.getAllSuperTypes (verTypeRef.getType(), new ArrayList<DataObject>());
+		for (DataObject dataObj : allSuperTypes) {
+			verTypeNameList.add (nameProvider.getFullyQualifiedName (dataObj));
+		}
+		final QualifiedName verTypeName = nameProvider.getFullyQualifiedName (verTypeRef.getType());	
+		verTypeNameList.add (verTypeName);
+		f.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
+
+			public boolean apply(IEObjectDescription input) {
+				for (QualifiedName name : verTypeNameList) {
+					if (input.getQualifiedName() != null && name != null && input.getQualifiedName().startsWith(name))
+						return true;
+				}
+				return false;
+			}
+			
+		});
 	}
 
 	@Override
