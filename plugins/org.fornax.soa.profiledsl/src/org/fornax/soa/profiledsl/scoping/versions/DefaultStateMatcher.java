@@ -58,6 +58,8 @@ public class DefaultStateMatcher implements IStateMatcher {
 	}
 
 	public boolean supportsEnvironment (LifecycleState state, String envName) {
+		if (state == null)
+			return true;
 		for (Environment env : state.getQualifiesForEnvironment ()) {
 			if (env.getName().equals (envName)) {
 				return true;

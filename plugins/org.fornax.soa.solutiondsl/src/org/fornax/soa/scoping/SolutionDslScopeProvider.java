@@ -105,7 +105,7 @@ public class SolutionDslScopeProvider extends VersionedImportedNamespaceAwareSco
 			final VersionRef v = ((CapabilityRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);
 		}
-		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		return new NullVersionFilter<IEObjectDescription>();
 	}
 
 	@Override

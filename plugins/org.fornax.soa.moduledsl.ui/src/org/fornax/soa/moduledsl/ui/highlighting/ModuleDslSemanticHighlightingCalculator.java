@@ -44,7 +44,7 @@ public class ModuleDslSemanticHighlightingCalculator implements
 		if (resource != null && !resource.getContents().isEmpty()) {
 			for (TreeIterator<EObject> eObjIt = resource.getAllContents(); eObjIt.hasNext();) {
 				EObject eObject = eObjIt.next();
-				if (eObject instanceof AbstractServiceRef && ((AbstractServiceRef)eObject).getService().isDeprecated()) {
+				if (eObject instanceof AbstractServiceRef && ((AbstractServiceRef)eObject).getService() != null && ((AbstractServiceRef)eObject).getService().isDeprecated()) {
 					for (INode crossRefNode : NodeModelUtils.findNodesForFeature(eObject,
 							ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE)) {
 						acceptor.addPosition(crossRefNode.getOffset(), crossRefNode.getLength(),

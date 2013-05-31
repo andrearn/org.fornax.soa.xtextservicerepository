@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.sOABaseDsl.FixedVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
@@ -19,6 +22,7 @@ import org.fornax.soa.basedsl.sOABaseDsl.MinVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.FixedVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
 import org.fornax.soa.basedsl.version.IScopeVersionResolver;
 import org.fornax.soa.basedsl.version.SimpleScopeVersionResolver;
@@ -26,6 +30,8 @@ import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
+import org.fornax.soa.moduledsl.moduleDsl.ModuleRef;
+import org.fornax.soa.moduledsl.moduleDsl.NamespaceRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver;
@@ -40,7 +46,9 @@ import org.fornax.soa.profiledsl.scoping.versions.RelaxedMaxVersionForOwnerState
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.service.util.CandidateServicesPredicate;
 import org.fornax.soa.serviceDsl.Service;
+import org.fornax.soa.serviceDsl.ServiceDslPackage;
 
+import com.google.common.base.Predicate;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -58,13 +66,35 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 	
 	@Inject ModuleLookup modLookup;
 	@Inject IModuleServiceResolver modServiceResolver;
+	@Inject IQualifiedNameProvider nameProvider;
 
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
 			EObject context, EReference reference) {
 		if (reference == ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE && context instanceof ServiceRef) {
 			final VersionRef v = ((ServiceRef) context).getVersionRef();
-			return createVersionFilter(v, context);
+			AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = createVersionFilter(v, context);
+			if (context.eContainer() instanceof ModuleRef) {
+				
+				ModuleRef modRef = (ModuleRef) context.eContainer();
+				Set<AbstractServiceRef> providedServiceRefs = modServiceResolver.getAllProvidedServiceRefs(modRef.getModuleRef().getModule());
+				if (!providedServiceRefs.isEmpty()) {
+					final List<QualifiedName> provServiceNames = new ArrayList<QualifiedName>();
+					for (AbstractServiceRef provSvcRef : providedServiceRefs) {
+						provServiceNames.add(nameProvider.getFullyQualifiedName(provSvcRef.getService()));
+					}
+					createServiceNameFilter(versionFilter, provServiceNames);
+				}
+			} else if (context.eContainer() instanceof NamespaceRef) {
+				NamespaceRef nsRef = (NamespaceRef)context.eContainer();
+				List<Service> services = nsRef.getNamespace().getServices();
+				final List<QualifiedName> provServiceNames = new ArrayList<QualifiedName>();
+				for (Service provSvc : services) {
+					provServiceNames.add(nameProvider.getFullyQualifiedName(provSvc));
+				}
+				createServiceNameFilter(versionFilter, provServiceNames);
+			}
+			return versionFilter;
 		}
 		if (reference == ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE && context instanceof ImportServiceRef) {
 			final VersionRef v = ((ImportServiceRef) context).getVersionRef();
@@ -97,7 +127,24 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 			Module owningModule = ModuleDslAccess.getOwningModule (context);
 			return createVersionFilter(v, owningModule);
 		}
-		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		return new NullVersionFilter<IEObjectDescription>();
+	}
+
+	private void createServiceNameFilter(
+			AbstractPredicateVersionFilter<IEObjectDescription> versionFilter,
+			final List<QualifiedName> provServiceNames) {
+		versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription> () {
+
+			public boolean apply(IEObjectDescription input) {
+				for (QualifiedName name : provServiceNames) {
+					if (ServiceDslPackage.Literals.SERVICE.equals(input.getEClass()) && input.getQualifiedName() != null && name != null && input.getQualifiedName().startsWith(name)) {
+						return true;
+					}
+				}
+				return false;
+			}
+			
+		});
 	}
 
 	private void extractProvidedServices(EObject context,
@@ -118,7 +165,7 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner) {
-		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
 			ILifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
@@ -150,7 +197,7 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 	}
 	
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner, List<Service> candidates) {
-		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
 			ILifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());

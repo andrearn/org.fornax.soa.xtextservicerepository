@@ -189,7 +189,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PROPERTY_REF 
 				&& ctx instanceof ConsiderationParameterRef) {
 			TypeRef typeRef = ((ConsiderationParameterRef) ctx).getParam().getType();
-			AbstractPredicateVersionFilter<IEObjectDescription> f = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+			AbstractPredicateVersionFilter<IEObjectDescription> f = new NullVersionFilter<IEObjectDescription>();
 			if (typeRef instanceof DataObjectRef) 
 				f = createEContainerVersionFilter (((DataObjectRef)typeRef).getVersionRef(), objLookup.getVersionedOwner(ctx));
 			else if (typeRef instanceof EnumTypeRef)

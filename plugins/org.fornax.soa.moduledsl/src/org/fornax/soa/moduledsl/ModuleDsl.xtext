@@ -131,7 +131,7 @@ ModuleRef:
 			(excludedServices+=ServiceRef)+
 		'}')?
 		('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
-		('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
+		('alternative-endpoint-protocols' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
 		(endpointQualifierRef=EndpointQualifierRef)?
 	'}'
 ;

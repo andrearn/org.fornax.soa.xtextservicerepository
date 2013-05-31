@@ -28,6 +28,7 @@ import org.fornax.soa.basedsl.scoping.versions.filter.LatestMajorVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.LatestMaxExclVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.LatestMinInclMaxExclRangeVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.LatestMinInclVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
 import org.fornax.soa.basedsl.version.IScopeVersionResolver;
 import org.fornax.soa.basedsl.version.SimpleScopeVersionResolver;
@@ -106,11 +107,11 @@ public class BindingDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);
 		}
-		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		return new NullVersionFilter<IEObjectDescription>();
 	}
 
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, ModuleRef owner) {
-		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
 			if (v instanceof MajorVersionRef && owner.eContainer () instanceof Binding) {

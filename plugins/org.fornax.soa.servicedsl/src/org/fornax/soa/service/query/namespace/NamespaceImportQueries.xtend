@@ -5,13 +5,12 @@ import java.util.HashSet
 import java.util.Set
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.service.VersionedDomainNamespace
-import org.fornax.soa.service.versioning.NamespaceSplitter
-import org.fornax.soa.service.query.ExceptionFinder
 import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.service.query.type.ReferencedTypesFinder
 import org.fornax.soa.service.query.type.VersionedTypeFilter
 import org.fornax.soa.service.versioning.IExceptionResolver
 import org.fornax.soa.service.versioning.ITypeResolver
+import org.fornax.soa.service.versioning.NamespaceSplitter
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Service
@@ -29,7 +28,6 @@ class NamespaceImportQueries {
 	@Inject extension VersionedTypeFilter
 	@Inject extension ReferencedTypesFinder
 
-	@Inject ExceptionFinder excFinder
 	@Inject IExceptionResolver excResolver
 	@Inject ServiceQueries serviceFinder
 	@Inject NamespaceSplitter namespaceSplitter

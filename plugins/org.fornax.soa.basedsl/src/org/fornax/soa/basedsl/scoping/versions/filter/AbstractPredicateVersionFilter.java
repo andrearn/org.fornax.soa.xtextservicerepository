@@ -13,8 +13,6 @@ public abstract class AbstractPredicateVersionFilter<T> implements VersionFilter
 	
 	private Predicate<T> preFilterPredicate;
 
-	public final static AbstractPredicateVersionFilter<IEObjectDescription> NULL_VERSION_FILTER = new NullVersionFilter<IEObjectDescription>();
-
 	public boolean apply(T input) {
 		if (getPreFilterPredicate() != null)
 			return getPreFilterPredicate().apply(input);

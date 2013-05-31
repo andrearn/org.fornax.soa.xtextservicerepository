@@ -8,6 +8,7 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.sOABaseDsl.VersionRef;
 import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.businessDsl.BusinessDslPackage;
@@ -35,7 +36,7 @@ public class BusinessDslScopeProvider extends VersionedImportedNamespaceAwareSco
 			return createVersionFilter (v, objLookup.getVersionedOwner(ctx));
 		}
 
-		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		return new NullVersionFilter<IEObjectDescription>();
 	}
 
 }

@@ -9,8 +9,6 @@ import org.fornax.soa.basedsl.version.VersionMatcher
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions
 import org.fornax.soa.service.VersionedDomainNamespace
 import org.fornax.soa.service.query.type.VersionedTypeFilter
-import org.fornax.soa.serviceDsl.BusinessObject
-import org.fornax.soa.serviceDsl.Enumeration
 import org.fornax.soa.serviceDsl.Exception
 import org.fornax.soa.serviceDsl.OrganizationNamespace
 import org.fornax.soa.serviceDsl.Service

@@ -41,7 +41,7 @@ public abstract class VersionedImportedNamespaceAwareScopeProvider extends Impor
 	}
 
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v) {
-		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
 			if (v instanceof MajorVersionRef)
@@ -59,7 +59,7 @@ public abstract class VersionedImportedNamespaceAwareScopeProvider extends Impor
 	}
 	
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner) {
-		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
 			if (v instanceof MajorVersionRef)

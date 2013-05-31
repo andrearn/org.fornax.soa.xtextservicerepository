@@ -24,6 +24,7 @@ import org.fornax.soa.basedsl.scoping.versions.filter.FixedVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.LatestMaxExclVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.LatestMinInclMaxExclRangeVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.LatestMinInclVersionFilter;
+import org.fornax.soa.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
 import org.fornax.soa.basedsl.version.IScopeVersionResolver;
 import org.fornax.soa.basedsl.version.SimpleScopeVersionResolver;
@@ -106,12 +107,12 @@ public class SOAProfileDslScopeProvider extends VersionedImportedNamespaceAwareS
 			final VersionRef v = ((EnumRef)ctx).getVersionRef();
 			return createVersionFilter (v, ProfileDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		}
-		return AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		return new NullVersionFilter<IEObjectDescription>();
 	}
 	
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner) {
-		AbstractPredicateVersionFilter<IEObjectDescription> filter = AbstractPredicateVersionFilter.NULL_VERSION_FILTER;
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
 			ILifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
