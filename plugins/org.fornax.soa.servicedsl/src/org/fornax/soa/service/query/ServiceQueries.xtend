@@ -19,14 +19,20 @@ import org.eclipse.emf.ecore.EObject
 import org.fornax.soa.basedsl.search.IEObjectLookup
 import org.eclipse.xtext.util.IAcceptor
 import org.eclipse.xtext.resource.IEObjectDescription
+import org.fornax.soa.basedsl.search.IPredicateSearch
+import com.google.common.base.Predicates
+import java.util.Set
 
 class ServiceQueries {
 	
 	@Inject extension StateMatcher
 	@Inject extension VersionQualifierExtensions
 	@Inject extension NamespaceQuery
+	
 	@Inject
 	private ServiceQueriesInternal svcQueriesInt
+	@Inject
+	private IPredicateSearch search
 	
 	def dispatch List servicesWithMinState (Object ns, LifecycleState state) {null;}
 	
@@ -36,6 +42,18 @@ class ServiceQueries {
 
 	def dispatch List servicesWithMinState (VersionedDomainNamespace ns, LifecycleState state) {
 		ns.subdomain.servicesWithMinState (state);
+	}
+	
+	def Set<Service> findAllServices () {
+		search.search("Service ", Predicates::alwaysTrue).filter(typeof (Service)).toSet
+	}
+	
+	def List<EObject> findAllServiceConsumers (Service service) {
+		svcQueriesInt.findAllServiceConsumers(service) 
+	}
+	
+	def List<EObject> findAllProvidingModules (Service service) {
+		svcQueriesInt.findAllProvidingModules(service)
 	}
 
 	
@@ -49,10 +67,6 @@ class ServiceQueries {
 	
 	def List<org.fornax.soa.serviceDsl.Exception> allReferencedExceptions (Service s) {
 		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
-	}
-	
-	def List<EObject> findAllServiceConsumers (Service service) {
-		svcQueriesInt.findAllServiceConsumers(service) 
 	}
 	
 	def private Service findMatchingServiceByMajorVersionAndState (String majorVersion, List<Service> s, LifecycleState minState) {

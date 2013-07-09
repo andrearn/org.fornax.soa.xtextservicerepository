@@ -16,8 +16,7 @@ import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.profiledsl.sOAProfileDsl.ServiceBaseCategory;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
-import org.fornax.soa.service.query.type.BusinessObjectQueries;
-import org.fornax.soa.service.query.type.QueryObjectQueries;
+import org.fornax.soa.service.query.type.DataObjectQueries;
 import org.fornax.soa.service.validation.version.BusinessObjectVersionValidator;
 import org.fornax.soa.service.validation.version.EnumerationVersionValidator;
 import org.fornax.soa.service.validation.version.ExceptionVersionValidator;
@@ -63,10 +62,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	IQualifiedNameProvider nameProvider;
 	
 	@Inject
-	private	BusinessObjectQueries boQuery;
-	
-	@Inject
-	private	QueryObjectQueries qoQuery;
+	private	DataObjectQueries dataObjQuery;
 	
 	@Inject
 	IPredicateSearch predicateSearch;
@@ -83,7 +79,7 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 			if (dataObject.getSuperObject() != null
 					&& dataObject.getSuperObject().getType() != null) {
 				final String propName = prop.getName();
-				for (DataObject superType : boQuery
+				for (DataObject superType : dataObjQuery
 						.getAllSuperTypes(dataObject, null)) {
 					
 					Iterable<Property> props = Iterables.filter (
@@ -382,19 +378,19 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		if (p.getType() instanceof VersionedTypeRef) {
 			VersionedType targetType = ((VersionedTypeRef) p.getType()).getType();
 			if (!targetType.eContainer().equals (p.eContainer().eContainer())) {
-				DependencyDescription transDepsRoot = boQuery.getTransitiveDependencies (p, true, true, null, null);
+				DependencyDescription transDepsRoot = dataObjQuery.getTransitiveDependencies (p, true, true, null, null);
 				boolean hasTransitImport = false;
 				boolean rootVisited = false;
 				
 				List<String> foundPaths = new ArrayList<String>();
 				for (DependencyDescription dep : transDepsRoot) {
 					if (rootVisited) {
-						VersionedType verType = boQuery.toVersionedType (dep.getTarget(), p.eResource());
+						VersionedType verType = dataObjQuery.toVersionedType (dep.getTarget(), p.eResource());
 						if (verType != null) {
 							if (!nameProvider.getFullyQualifiedName (p.eContainer().eContainer()).equals (dep.getContainer().getName())) {
 								hasTransitImport = true;
 							}
-							List<QualifiedName> otherTypeNsRefersToNs = boQuery.getOtherTypeNsRefsToNs (verType, (SubNamespace)p.eContainer().eContainer());	
+							List<QualifiedName> otherTypeNsRefersToNs = dataObjQuery.getOtherTypeNsRefsToNs (verType, (SubNamespace)p.eContainer().eContainer());	
 							if (hasTransitImport && !otherTypeNsRefersToNs.isEmpty()) {
 								StringBuilder msg = new StringBuilder();
 								String path = getReferrerDependencyPath (dep, new StringBuilder());
@@ -501,20 +497,12 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		return propName.toString();
 	}
 
-	public void setBoQuery(BusinessObjectQueries boQuery) {
-		this.boQuery = boQuery;
+	public DataObjectQueries getDataObjectQuery() {
+		return dataObjQuery;
 	}
 
-	public BusinessObjectQueries getBoQuery() {
-		return boQuery;
-	}
-
-	public QueryObjectQueries getQoQuery() {
-		return qoQuery;
-	}
-
-	public void setQoQuery(QueryObjectQueries qoQuery) {
-		this.qoQuery = qoQuery;
+	public void setQoQuery(DataObjectQueries dataObjectQuery) {
+		this.dataObjQuery = dataObjectQuery;
 	}
 
 }

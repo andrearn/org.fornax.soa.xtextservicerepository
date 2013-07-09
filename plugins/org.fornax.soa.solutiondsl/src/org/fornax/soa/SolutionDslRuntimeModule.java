@@ -63,6 +63,10 @@ public class SolutionDslRuntimeModule extends org.fornax.soa.AbstractSolutionDsl
 	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
 		return DefaultPredicateSearch.class;
 	}
+	
+	public Class<? extends ILifecycleStateResolver> bindILifecycleStateResolver () {
+		return StateAttributeLifecycleStateResolver.class;
+	}
 
 
 }	

@@ -12,6 +12,8 @@ import org.fornax.soa.basedsl.search.DefaultPredicateSearch;
 import org.fornax.soa.basedsl.validation.IPluggableValidatorProvider;
 import org.fornax.soa.basedsl.validation.ReflectivePluggableValidatorProvider;
 import org.fornax.soa.business.documentation.BusinessDslDocumentationProvider;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
+import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 
 import com.google.inject.Binder;
 
@@ -39,6 +41,10 @@ public class BusinessDslRuntimeModule extends org.fornax.soa.AbstractBusinessDsl
 	
 	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
 		return DefaultPredicateSearch.class;
+	}
+	
+	public Class<? extends ILifecycleStateResolver> bindILifecycleStateResolver () {
+		return StateAttributeLifecycleStateResolver.class;
 	}
 
 }

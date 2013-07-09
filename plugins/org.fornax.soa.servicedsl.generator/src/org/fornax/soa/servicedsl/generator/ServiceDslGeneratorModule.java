@@ -14,7 +14,7 @@ import org.fornax.soa.service.query.ServiceQueries;
 import org.fornax.soa.service.query.VersionQueries;
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries;
 import org.fornax.soa.service.query.namespace.NamespaceQuery;
-import org.fornax.soa.service.query.type.BusinessObjectQueries;
+import org.fornax.soa.service.query.type.DataObjectQueries;
 import org.fornax.soa.service.query.type.ReferencedTypesFinder;
 import org.fornax.soa.service.query.type.TypesByLifecycleStateFinder;
 import org.fornax.soa.service.query.type.VersionedTypeFilter;
@@ -49,8 +49,8 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 		return NamespaceQuery.class;
 	}
 	
-	public Class<? extends BusinessObjectQueries> bindBusinessObjectQueries () {
-		return BusinessObjectQueries.class;
+	public Class<? extends DataObjectQueries> bindDataObjectQueries () {
+		return DataObjectQueries.class;
 	}
 	
 	public Class<? extends ReferencedTypesFinder> bindReferencedTypesFinder () {

@@ -6,31 +6,32 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.fornax.soa.environmentDsl.Environment;
-import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
+import com.google.inject.Singleton;
+
+@Singleton
 public class StateAttributeLifecycleStateResolver implements ILifecycleStateResolver {
 
 	private final static String STATE_ATTR_NAME = "state";
 	
-	public final static StateAttributeLifecycleStateResolver INSTANCE = new StateAttributeLifecycleStateResolver();
-
 	private ResourceSet resSet;
 
 	public StateAttributeLifecycleStateResolver() {
 	}
 	
+	@Deprecated
 	public StateAttributeLifecycleStateResolver(ResourceSet resSet) {
 		super();
 		this.resSet = resSet;
 	}
 
+	@Deprecated
 	public LifecycleState getLifecycleState(IEObjectDescription ieDesc) {
 		return getLifecycleState(ieDesc, resSet);		
 	}
 	
-	public LifecycleState getLifecycleState(IEObjectDescription ieDesc, ResourceSet rs) {
+	public LifecycleState getLifecycleState (IEObjectDescription ieDesc, ResourceSet rs) {
 		EObject o = ieDesc.getEObjectOrProxy();
 		if (rs == null) {
 			if (o.eResource() != null) {
@@ -43,7 +44,7 @@ public class StateAttributeLifecycleStateResolver implements ILifecycleStateReso
 			if (o.eIsProxy())
 				o = EcoreUtil2.resolve(o, rs);
 		}
-		final EStructuralFeature stateFeature = o.eClass().getEStructuralFeature(STATE_ATTR_NAME);
+		final EStructuralFeature stateFeature = o.eClass().getEStructuralFeature (STATE_ATTR_NAME);
 		if (!o.eIsProxy()) {
 			if (stateFeature != null) {
 				Object stateObj = o.eGet(stateFeature, true);
@@ -88,7 +89,7 @@ public class StateAttributeLifecycleStateResolver implements ILifecycleStateReso
 	}
 
 	public LifecycleState getLifecycleState(EObject o, Resource res) {
-		final EStructuralFeature stateFeature = o.eClass().getEStructuralFeature(STATE_ATTR_NAME);
+		final EStructuralFeature stateFeature = o.eClass().getEStructuralFeature (STATE_ATTR_NAME);
 		if (stateFeature != null) {
 			Object stateObj = o.eGet (stateFeature, true);
 			if (stateObj instanceof LifecycleState) {
@@ -103,12 +104,12 @@ public class StateAttributeLifecycleStateResolver implements ILifecycleStateReso
 	}
 
 	public boolean definesState(EObject o) {
-		final EStructuralFeature stateFeature = o.eClass().getEStructuralFeature(STATE_ATTR_NAME);
+		final EStructuralFeature stateFeature = o.eClass().getEStructuralFeature (STATE_ATTR_NAME);
 		return stateFeature != null;
 	}
 
 	public boolean definesState(IEObjectDescription ieDesc) {
-		final EStructuralFeature stateFeature = ieDesc.getEClass().getEStructuralFeature(STATE_ATTR_NAME);
+		final EStructuralFeature stateFeature = ieDesc.getEClass().getEStructuralFeature (STATE_ATTR_NAME);
 		return stateFeature != null;
 	}
 

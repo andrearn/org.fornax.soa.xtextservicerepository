@@ -29,6 +29,7 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 
 	@Inject ReferencedStateChecker referencedStateChecker;
 	@Inject IStateMatcher stateMatcher;
+	@Inject ILifecycleStateResolver stateResolver;
 
 	@Override
 	protected List<EPackage> getEPackages() {
@@ -41,9 +42,8 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	
 	@Check
 	public void checkPublicTmpToleratedAssetShouldHaveApproval (GovernanceApproval g) {
-		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
 		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& stateRes.getLifecycleState(g).isRequiresApproval()
+				&& stateResolver.getLifecycleState(g).isRequiresApproval()
 				&& g.getDecision() == ApprovalDecision.TEMPORARILY_TOLERATED)
 			warning("The temporarily tolerated "
 					+ getPubCanocicalName(g)
@@ -59,9 +59,8 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 
 	@Check
 	public void checkPublicToleratedAssetShouldHaveApproval (GovernanceApproval g) {
-		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
 		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& stateRes.getLifecycleState(g).isRequiresApproval()
+				&& stateResolver.getLifecycleState(g).isRequiresApproval()
 				&& g.getDecision() == ApprovalDecision.TOLERATED)
 			warning("The "
 					+ getPubCanocicalName(g)
@@ -98,9 +97,8 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 	@Check
 	public void checkPublicAssetsMustHaveApproval (GovernanceApproval g) {
 
-		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (g.eResource().getResourceSet());
 		if (g.eContainer().eContainer() instanceof DomainNamespace
-				&& stateRes.getLifecycleState(g).isRequiresApproval()
+				&& stateResolver.getLifecycleState(g).isRequiresApproval()
 				&& (g.getDecision() == ApprovalDecision.NO || g.getDecision() == ApprovalDecision.DENIED))
 			error("A "
 					+ getPubCanocicalName(g)

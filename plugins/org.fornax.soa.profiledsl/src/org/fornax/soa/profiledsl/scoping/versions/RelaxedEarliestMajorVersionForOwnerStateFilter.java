@@ -2,6 +2,7 @@ package org.fornax.soa.profiledsl.scoping.versions;
 
 import java.util.Collections;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
@@ -31,6 +32,7 @@ public class RelaxedEarliestMajorVersionForOwnerStateFilter<T> extends AbstractP
 	private IScopeVersionResolver resolver;
 	private LifecycleState ownerLifecycleState;
 	private ILifecycleStateResolver stateResolver;
+	private ResourceSet resourceSet;
 	
 	@Inject
 	private	IStateMatcher stateMatcher;
@@ -41,11 +43,12 @@ public class RelaxedEarliestMajorVersionForOwnerStateFilter<T> extends AbstractP
 	@Inject
 	private LifecycleStateComparator stateComparator;
 	
-	public RelaxedEarliestMajorVersionForOwnerStateFilter (IScopeVersionResolver resolver, String majorVersion, ILifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public RelaxedEarliestMajorVersionForOwnerStateFilter (IScopeVersionResolver resolver, String majorVersion, ILifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState, ResourceSet resourceSet) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
 		this.ownerLifecycleState = ownerLifecycleState;
 		this.stateResolver = stateResolver;
+		this.resourceSet = resourceSet;
 	}
 
 	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames (
@@ -92,7 +95,7 @@ public class RelaxedEarliestMajorVersionForOwnerStateFilter<T> extends AbstractP
 	}
 	
 	public boolean stateMatches (IEObjectDescription description) {
-		final LifecycleState state = stateResolver.getLifecycleState(description);
+		final LifecycleState state = stateResolver.getLifecycleState(description, resourceSet);
 		LifecycleState sourceState = ownerLifecycleState;
 		Environment selectedEnvironment = getEnvSelector().getSelectedEnvironment();
 		if (selectedEnvironment != null && ownerLifecycleState.eContainer() instanceof Lifecycle) {

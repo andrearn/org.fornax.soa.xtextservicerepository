@@ -2,6 +2,7 @@ package org.fornax.soa.profiledsl.scoping.versions;
 
 import java.util.Collections;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
@@ -19,15 +20,17 @@ public class LatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateV
 	private IScopeVersionResolver resolver;
 	private LifecycleState ownerLifecycleState;
 	private ILifecycleStateResolver stateResolver;
+	private ResourceSet resourceSet;
 	
 	@Inject
 	IStateMatcher stateMatcher;
 	
-	public LatestMajorVersionForOwnerStateFilter(IScopeVersionResolver resolver, String majorVersion, ILifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public LatestMajorVersionForOwnerStateFilter(IScopeVersionResolver resolver, String majorVersion, ILifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState, ResourceSet resourceSet) {
 		this.majorVersion = majorVersion;
 		this.resolver = resolver;
 		this.ownerLifecycleState = ownerLifecycleState;
 		this.stateResolver = stateResolver;
+		this.resourceSet = resourceSet;
 	}
 
 	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames(
@@ -55,7 +58,7 @@ public class LatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateV
 
 	public boolean matches(IEObjectDescription description) {
 		final String v = resolver.getVersionAsString(description);
-		final LifecycleState state = stateResolver.getLifecycleState(description);
+		final LifecycleState state = stateResolver.getLifecycleState(description, resourceSet);
 		if (v != null)
 			if (state != null)
 				return toMajorVersion (v).equals(majorVersion) && stateMatches (state);

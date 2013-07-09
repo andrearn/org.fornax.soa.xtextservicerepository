@@ -9,7 +9,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
 public interface ILifecycleStateResolver {
-
+	
+	@Deprecated
 	public LifecycleState getLifecycleState (IEObjectDescription ieDesc);
 	
 	public LifecycleState getLifecycleState (IEObjectDescription ieDesc, ResourceSet rs);

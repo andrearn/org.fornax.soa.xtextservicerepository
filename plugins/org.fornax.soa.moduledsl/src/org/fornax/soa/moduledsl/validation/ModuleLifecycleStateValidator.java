@@ -28,7 +28,7 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	@Inject IStateMatcher stateMatcher;
 	@Inject LifecycleStateComparator stateComparator;
 	@Inject IEObjectLookup objLookup;
-	
+	@Inject ILifecycleStateResolver stateResolver;
 
 	@Override
 	protected List<EPackage> getEPackages() {
@@ -41,8 +41,7 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	@Check (CheckType.FAST)
 	public void checkNotUsesLowerStateService(ImportServiceRef svcRef) {
 		EObject owner = objLookup.getVersionedOwner(svcRef);
-		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
-		LifecycleState ownerState = stateRes.getLifecycleState(owner);
+		LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 		if (owner != null) {
 			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !ownerState.isIsEnd()) {
 				if (referencedStateChecker.stateMatches (svcRef.getService().getState(), owner))
@@ -56,8 +55,7 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	@Check (CheckType.FAST)
 	public void checkNotUsesLowerStateModule(ModuleRef modRef) {
 		EObject owner = objLookup.getVersionedOwner(modRef);
-		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
-		LifecycleState ownerState = stateRes.getLifecycleState(owner);
+		LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 		if (owner != null) {
 			if (stateComparator.compare (ownerState, modRef.getModuleRef().getModule().getState()) > 0 && !ownerState.isIsEnd()) {
 				if (referencedStateChecker.stateMatches (modRef.getModuleRef().getModule().getState(), owner))
@@ -71,8 +69,7 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	@Check (CheckType.FAST)
 	public void checkNotProvidesLowerStateService(ServiceRef svcRef) {
 		EObject owner = objLookup.getVersionedOwner(svcRef);
-		ILifecycleStateResolver stateRes = new StateAttributeLifecycleStateResolver (owner.eResource().getResourceSet());
-		LifecycleState ownerState = stateRes.getLifecycleState(owner);
+		LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 		if (owner != null) {
 			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !ownerState.isIsEnd()) {
 				if (referencedStateChecker.stateMatches (svcRef.getService().getState(), owner))

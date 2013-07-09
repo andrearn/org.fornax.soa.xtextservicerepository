@@ -54,6 +54,8 @@ public class SolutionDslScopeProvider extends VersionedImportedNamespaceAwareSco
 
 	@Inject
 	private IGlobalScopeProvider globalScopeProvider;
+	@Inject
+	private ILifecycleStateResolver stateResolver;
 
 	public void setGlobalScopeProvider(IGlobalScopeProvider globalScopeProvider) {
 		this.globalScopeProvider = globalScopeProvider;
@@ -113,10 +115,11 @@ public class SolutionDslScopeProvider extends VersionedImportedNamespaceAwareSco
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
-			ILifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 			if (v instanceof MajorVersionRef) {
-				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState);
+				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, 
+						new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), 
+						stateResolver, ownerState, v.eResource().getResourceSet());
 				injector.injectMembers (stateFilter);
 				return stateFilter;
 			}

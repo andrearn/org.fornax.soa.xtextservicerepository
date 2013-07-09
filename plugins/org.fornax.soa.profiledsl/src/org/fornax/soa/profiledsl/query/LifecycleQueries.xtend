@@ -11,6 +11,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator
+import org.fornax.soa.profiledsl.scoping.versions.EnvironmentBasedLifecycleStateComparator
+import java.util.List
 
 /*
  * Queries for lifecycle states and stateful objects
@@ -22,6 +24,7 @@ class LifecycleQueries {
 	@Inject extension LifecycleStateComparator stateComparator
 	@Inject extension IStateMatcher
 	@Inject ILifecycleStateResolver stateResolver
+	@Inject EnvironmentBasedLifecycleStateComparator envLifecycleComparator
 	
 	def LifecycleState stateByName (String state, Resource res) {
 		lookup.getModelElementByName (state, res, "LifecycleState");
@@ -130,6 +133,18 @@ class LifecycleQueries {
 	
 	def boolean hasLifecycleState (EObject asset) {
 		stateResolver.definesState (asset)
+	}
+	
+	def getHighestEnvironmentalLifecycleState (List<LifecycleState> states) {
+		var LifecycleState highestState = null
+		if (!states.nullOrEmpty) {
+			for (state : states) {
+				if (highestState == null || envLifecycleComparator.compare(state, highestState) > 1)
+					highestState = state
+			}
+		}
+		//@TODO what should be done with environment wise equivalent states?
+		return highestState
 	}
 	
 }

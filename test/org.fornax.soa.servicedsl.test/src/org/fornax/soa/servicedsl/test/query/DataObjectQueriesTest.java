@@ -1,29 +1,20 @@
 package org.fornax.soa.servicedsl.test.query;
 
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.junit4.XtextRunner;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.eclipse.xtext.resource.XtextResource;
 import org.fornax.soa.basedsl.ref.DependencyDescription;
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.util.BaseDslEqualityHelper;
-import org.fornax.soa.basedsl.util.TreeNode;
-import org.fornax.soa.service.query.type.BusinessObjectQueries;
-import org.fornax.soa.service.query.type.DataObjectQueryInternal;
+import org.fornax.soa.service.query.type.DataObjectQueries;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.DataObject;
 import org.fornax.soa.serviceDsl.Property;
-import org.fornax.soa.serviceDsl.ServiceModel;
-import org.fornax.soa.serviceDsl.Type;
 import org.fornax.soa.servicedsl.test.BaseServiceDslTest;
 import org.junit.Before;
 import org.junit.Test;
@@ -35,11 +26,11 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 @RunWith(XtextRunner.class)
-public class BusinessObjectQueryTest extends BaseServiceDslTest {
+public class DataObjectQueriesTest extends BaseServiceDslTest {
 	
 	@Inject
 	private
-	BusinessObjectQueries boQuery;
+	DataObjectQueries dataObjQueries;
 	
 	@Inject
 	private
@@ -59,7 +50,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	
 	@Test
 	public void testGetAllInheritedProperties () {
-		List<Property> props = boQuery.getAllInheritedProperties (bo1);
+		List<Property> props = dataObjQueries.getAllInheritedProperties (bo1);
 		assertFalse (props.contains(attrBo1));
 		assertTrue (props.contains(attrBo3));
 		assertTrue (props.contains(attrBo4));
@@ -67,7 +58,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	
 	@Test
 	public void testGetAllVisibleProperties () {
-		List<Property> props = boQuery.getAllVisibleProperties (bo1);
+		List<Property> props = dataObjQueries.getAllVisibleProperties (bo1);
 		assertTrue (props.contains(attrBo1));
 		assertTrue (props.contains(attrBo3));
 		assertTrue (props.contains(attrBo4));
@@ -76,7 +67,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	@Test
 	public void testGetAllSuperTypes () {
 		List<BusinessObject> superTypes = Lists.newArrayList();
-		List<DataObject> allSuperTypes = boQuery.getAllSuperTypes (bo1, superTypes);
+		List<DataObject> allSuperTypes = dataObjQueries.getAllSuperTypes (bo1, superTypes);
 		assertTrue (superTypes.contains (bo3));
 		assertTrue (superTypes.contains (bo4));
 		assertFalse(superTypes.contains (bo1));
@@ -85,7 +76,7 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 	
 	@Test
 	public void testGetTransitiveDependencies () {
-		DependencyDescription transitiveDependencies = getBoQuery().getTransitiveDependencies(attr2Bos1, false, true, null, null);
+		DependencyDescription transitiveDependencies = dataObjQueries.getTransitiveDependencies(attr2Bos1, false, true, null, null);
 		Iterator<DependencyDescription> transDepIt = transitiveDependencies.iterator();
 		assertTrue (transDepIt.hasNext());
 		
@@ -116,12 +107,12 @@ public class BusinessObjectQueryTest extends BaseServiceDslTest {
 		return nameProvider;
 	}
 
-	public void setBoQuery (BusinessObjectQueries boQuery) {
-		this.boQuery = boQuery;
+	public void setDataObjectQueries (DataObjectQueries boQuery) {
+		this.dataObjQueries = boQuery;
 	}
 
-	public BusinessObjectQueries getBoQuery() {
-		return boQuery;
+	public DataObjectQueries getDataObjectQueries() {
+		return dataObjQueries;
 	}
 
 }

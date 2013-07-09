@@ -32,6 +32,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.serviceDsl.ApprovalDecision;
 import org.fornax.soa.serviceDsl.DataObject;
+import org.fornax.soa.serviceDsl.Parameter;
 import org.fornax.soa.serviceDsl.Property;
 import org.fornax.soa.serviceDsl.Service;
 import org.fornax.soa.serviceDsl.ServiceDslPackage;
@@ -41,7 +42,9 @@ import org.fornax.soa.serviceDsl.TypeRef;
 import org.fornax.soa.serviceDsl.VersionedType;
 import org.fornax.soa.serviceDsl.VersionedTypeRef;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -155,6 +158,58 @@ public class DataObjectQueryInternal {
 		return null;
 	}
 	
+	/**
+	 * Get all {@link EObject}s that have a transitive reference to the given {@code type}. Traversal of the reference graph stops, when the referrer
+	 * is not a {@link DataObject}. References are being determined recursively. 
+	 * 
+	 * @param type The type to find transitive references to
+	 * @param includeSuperTypes Look for references to super types as well?
+	 * @param visited	Contains all trasititively found references so far.
+	 * @param resourceSet	The {@link ResourceSet} used to materialize found references from.
+	 * @return
+	 */
+	public List<IEObjectDescription> getAllTransitiveReferrers (final EObject type, final boolean includeSuperTypes, List<IEObjectDescription> visited, ResourceSet resourceSet) {
+		final List<EObject> referrers = new ArrayList<EObject>();
+		if (type instanceof DataObject) {
+			DataObject dataObj = (DataObject) type;
+			IAcceptor<IReferenceDescription> acceptor = new IAcceptor<IReferenceDescription>() {
+				public void accept(IReferenceDescription referenceDescription) {
+					EObject ref = objLookup.getModelElementByURI (referenceDescription.getSourceEObjectUri(), type.eResource().getResourceSet());
+					if (ref instanceof VersionedTypeRef && !(ref.eContainer() instanceof Parameter)) {
+						referrers.add (objLookup.getVersionedOwner(ref));
+					} else if (ref instanceof VersionedTypeRef && ref.eContainer() instanceof Parameter) {
+						referrers.add (ref.eContainer());
+					} else {
+						referrers.add (ref);
+					}
+				}
+			};
+			Predicate<IReferenceDescription> refPredicate = new Predicate<IReferenceDescription>() {
+
+				public boolean apply(IReferenceDescription input) {
+					return true;
+				}
+				
+			};
+			referenceSearch.findAllReferences(type, resourceSet, refPredicate, acceptor);
+			List<DataObject> allSuperTypes = getAllSuperTypes(dataObj, new ArrayList<DataObject>());
+			for (DataObject superType : allSuperTypes) {
+				referenceSearch.findAllReferences(superType, resourceSet, refPredicate, acceptor);
+			}
+			visited.addAll(Lists.transform(referrers, new Function<EObject, IEObjectDescription>() {
+
+				public IEObjectDescription apply(EObject input) {
+					return descriptionBuilder.buildDescription(input);
+				}
+				
+			}));
+			for (EObject ref : referrers) {
+				getAllTransitiveReferrers(ref, includeSuperTypes, visited, resourceSet);
+			}
+		}
+		return visited;
+	}
+	
 	public DependencyDescription buildDependencyDescription (final Property sourceProp, final VersionedType targetType, final boolean includeInheritedProperties, final boolean includeCycleTypes, List<IEObjectDescription> visitedDependendies, DependencyDescription referrer) {
 		final IEObjectDescription source 		= descriptionBuilder.buildDescription (sourceProp);
 		final IEObjectDescription sourceBO 		= descriptionBuilder.buildDescription (sourceProp.eContainer());
@@ -192,7 +247,14 @@ public class DataObjectQueryInternal {
 		
 	}
 	
-	
+	/**
+	 * Get the {@link QualifiedName}s of all Properties of all types  declared in the same {@link SubNamespace} as
+	 * the given {@code type}, that refer transitively to types in the given {@link SubNamespace} {@code ns}
+	 * 
+	 * @param type The type who's namespace and all properties declared therein are to be examined
+	 * @param ns The target namespace potentially being referenced
+	 * @return The {@link QualifiedName}s of all properties that have such transitive references
+	 */
 	public List<QualifiedName> getOtherTypeNsRefsToNs (VersionedType type, SubNamespace ns) {
 		SubNamespace typeNs = (SubNamespace) type.eContainer();
 		QualifiedName typeNsName = nameProvider.getFullyQualifiedName (typeNs);

@@ -1,9 +1,7 @@
 package org.fornax.soa.servicedsl.test.query;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.junit4.XtextRunner;
@@ -12,8 +10,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.util.TreeNode;
-import org.fornax.soa.service.query.type.BusinessObjectQueries;
-import org.fornax.soa.service.query.type.DataObjectQueryInternal;
+import org.fornax.soa.service.query.type.DataObjectQueries;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.OrganizationNamespace;
 import org.fornax.soa.serviceDsl.ServiceModel;
@@ -31,7 +28,7 @@ public class ModelBusinessObjectQueryTest extends AbstractModelBasedTest {
 
 	@Inject
 	private
-	BusinessObjectQueries boQuery;
+	DataObjectQueries boQuery;
 	
 	@Inject
 	private

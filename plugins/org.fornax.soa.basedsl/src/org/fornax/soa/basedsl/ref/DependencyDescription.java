@@ -92,6 +92,11 @@ public class DependencyDescription implements Iterable<DependencyDescription> {
 		this.referrer = referrer;
 	}
 
+	/**
+	 * The referrer to this dependency. A DependencyDescription is referrer to this 
+	 * DependencyDescription if it's target matches the source of this description
+	 * @return
+	 */
 	public DependencyDescription getReferrer() {
 		return referrer;
 	}
@@ -100,6 +105,13 @@ public class DependencyDescription implements Iterable<DependencyDescription> {
 		this.isBackRef = isBackRef;
 	}
 
+	/**
+	 * Denotes a backward reference in the dependency graph
+	 * 
+	 * @returns True, when the dependency is a backward reference
+	 * in the dependency graph, i.e. the target has already been visited from
+	 * a transitive upstream referrerin the graph
+	 */
 	public boolean isBackRef() {
 		return isBackRef;
 	}

@@ -29,30 +29,30 @@ import com.google.inject.Injector;
 public class DefaultVersionFilterProvider implements IVersionFilterProvider<IEObjectDescription> {
 	
 	@Inject Injector injector;
+	@Inject ILifecycleStateResolver stateResolver;
 
 	public VersionFilter<IEObjectDescription> createVersionFilter(VersionRef v,
 			LifecycleState minState) {
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
 		if (v != null) {
 			IScopeVersionResolver verResolver = new VersionedOwnerScopeVersionResolver (v.eResource().getResourceSet());
-			ILifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver (v.eResource().getResourceSet());
 			if (v instanceof MajorVersionRef) {
-				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, minState);
+				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, minState, v.eResource().getResourceSet());
 				injector.injectMembers (stateFilter);
 				return stateFilter;
 			}
 			if (v instanceof MaxVersionRef) {
-				RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion(), stateResolver, minState);
+				RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion(), stateResolver, minState, v.eResource().getResourceSet());
 				injector.injectMembers (stateFilter);
 				return stateFilter;
 			}
 			if (v instanceof MinVersionRef) {
-				RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion(), stateResolver, minState);
+				RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion(), stateResolver, minState, v.eResource().getResourceSet());
 				injector.injectMembers (stateFilter);
 				return stateFilter;
 			}
 			if (v instanceof LowerBoundRangeVersionRef) {
-				RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion(), stateResolver, minState);
+				RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion(), stateResolver, minState, v.eResource().getResourceSet());
 				injector.injectMembers (stateFilter);
 				return stateFilter;
 			}

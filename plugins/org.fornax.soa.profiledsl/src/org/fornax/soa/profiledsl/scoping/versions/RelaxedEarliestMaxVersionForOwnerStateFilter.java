@@ -2,6 +2,7 @@ package org.fornax.soa.profiledsl.scoping.versions;
 
 import java.util.Collections;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.scoping.versions.filter.LatestMaxExclVersionFilter;
@@ -21,6 +22,7 @@ public class RelaxedEarliestMaxVersionForOwnerStateFilter<T> extends
 	
 	private LifecycleState ownerLifecycleState;
 	private ILifecycleStateResolver stateResolver;
+	private ResourceSet resourceSet;
 	
 	@Inject
 	private	IStateMatcher stateMatcher;
@@ -31,10 +33,11 @@ public class RelaxedEarliestMaxVersionForOwnerStateFilter<T> extends
 	@Inject
 	private LifecycleStateComparator stateComparator;
 	
-	public RelaxedEarliestMaxVersionForOwnerStateFilter (IScopeVersionResolver resolver, String maxVersion, ILifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState) {
+	public RelaxedEarliestMaxVersionForOwnerStateFilter (IScopeVersionResolver resolver, String maxVersion, ILifecycleStateResolver stateResolver, LifecycleState ownerLifecycleState, ResourceSet resourceSet) {
 		super (resolver, maxVersion);
 		this.ownerLifecycleState = ownerLifecycleState;
 		this.stateResolver = stateResolver;
+		this.resourceSet = resourceSet;
 	}
 
 	public Multimap<QualifiedName, IEObjectDescription> getBestMatchByNames (
@@ -74,7 +77,7 @@ public class RelaxedEarliestMaxVersionForOwnerStateFilter<T> extends
 
 	
 	public boolean stateMatches (IEObjectDescription description) {
-		final LifecycleState state = stateResolver.getLifecycleState(description);
+		final LifecycleState state = stateResolver.getLifecycleState(description, resourceSet);
 		LifecycleState sourceState = ownerLifecycleState;
 		Environment selectedEnvironment = getEnvSelector().getSelectedEnvironment();
 		if (selectedEnvironment != null && ownerLifecycleState.eContainer() instanceof Lifecycle) {

@@ -24,17 +24,17 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 	public void setUp() throws Exception {
 		super.setUp();
 		IScopeVersionResolver verRes = new SimpleScopeVersionResolver(null);
-		ILifecycleStateResolver stateResolver = new StateAttributeLifecycleStateResolver(null);
+		ILifecycleStateResolver stateResolver = getInjector().getInstance(ILifecycleStateResolver.class);
 		String majorVersion = "1";
 		LifecycleState minDevLifecycleState = defined;
 		LifecycleState minTestLifecycleState = test;
 		LifecycleState minProdLifecycleState = productive;
-		devFilter =  new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , development);
-		testFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , test);
-		prodFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , productive);
-		defFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , defined);
-		propFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , proposed);
-		deprFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , deprecated);
+		devFilter =  new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , development, development.eResource().getResourceSet());
+		testFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , test, test.eResource().getResourceSet());
+		prodFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , productive, productive.eResource().getResourceSet());
+		defFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , defined, defined.eResource().getResourceSet());
+		propFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , proposed, proposed.eResource().getResourceSet());
+		deprFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , deprecated, deprecated.eResource().getResourceSet());
 		
 		getInjector().injectMembers (devFilter);
 		getInjector().injectMembers (testFilter);
