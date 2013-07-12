@@ -55,6 +55,8 @@ public class VersionAndLifecycleStatePredicate implements Predicate<IEObjectDesc
 		this.includingMaxState = includingMaxState;
 		this.minVersion = minVersion;
 		this.maxVersion = maxVersion;
+		this.includingMinVersion = includingMinVersion;
+		this.includingMaxVersion = includingMaxVersion;
 		this.resourceSet = rs;
 	}
 
@@ -120,10 +122,10 @@ public class VersionAndLifecycleStatePredicate implements Predicate<IEObjectDesc
 		}
 		if (minVersion == null && maxVersion == null)
 			return true;
-		String lifecycleState = versionResolver.getVersionAsString(versionedObj);
+		String assetVersion = versionResolver.getVersionAsString(versionedObj);
 		if (minVersion != null && maxVersion != null) {
-			int minVersionCmp = VersionComparator.compare(lifecycleState, minVersion);
-			int maxVersionCmp = VersionComparator.compare(lifecycleState, maxVersion);
+			int minVersionCmp = VersionComparator.compare(assetVersion, minVersion);
+			int maxVersionCmp = VersionComparator.compare(assetVersion, maxVersion);
 			if (includingMaxState && includingMinState) {
 				if (minVersionCmp >= 0 && maxVersionCmp <=0)
 					return true;
@@ -138,13 +140,13 @@ public class VersionAndLifecycleStatePredicate implements Predicate<IEObjectDesc
 					return true;
 			}
 		} else if (minVersion != null && maxVersion == null) {
-			int minVersionCmp = VersionComparator.compare(lifecycleState, minVersion);
+			int minVersionCmp = VersionComparator.compare(assetVersion, minVersion);
 			if (includingMinVersion && minVersionCmp >= 0)
 				return true;
 			else if (!includingMinVersion && minVersionCmp > 0)
 				return true;
 		} else {
-			int maxVersionCmp = VersionComparator.compare(lifecycleState, maxVersion);
+			int maxVersionCmp = VersionComparator.compare(assetVersion, maxVersion);
 			if (includingMaxVersion && maxVersionCmp <= 0)
 				return true;
 			else if (!includingMaxVersion && maxVersionCmp < 0)
