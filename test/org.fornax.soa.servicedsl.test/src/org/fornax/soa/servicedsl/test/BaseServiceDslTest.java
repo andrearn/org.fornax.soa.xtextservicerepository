@@ -1,6 +1,9 @@
 package org.fornax.soa.servicedsl.test;
 
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.junit.AbstractXtextTests;
+import org.eclipse.xtext.resource.XtextResource;
 import org.fornax.soa.ServiceDslStandaloneSetup;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;
 import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
@@ -61,8 +64,10 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 	protected LifecycleState productive;
 	protected LifecycleState deprecated;
 	protected LifecycleState retired;
+	protected Resource resource  = new XtextResource();
 	
 	private Lifecycle lifecycle;
+	
 
 	@Before
 	public void setUp() throws Exception {

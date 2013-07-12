@@ -29,12 +29,14 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 		LifecycleState minDevLifecycleState = defined;
 		LifecycleState minTestLifecycleState = test;
 		LifecycleState minProdLifecycleState = productive;
-		devFilter =  new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , development, development.eResource().getResourceSet());
-		testFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , test, test.eResource().getResourceSet());
-		prodFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , productive, productive.eResource().getResourceSet());
-		defFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , defined, defined.eResource().getResourceSet());
-		propFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , proposed, proposed.eResource().getResourceSet());
-		deprFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , deprecated, deprecated.eResource().getResourceSet());
+		
+		
+		devFilter =  new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , development, resource.getResourceSet());
+		testFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , test, resource.getResourceSet());
+		prodFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , productive, resource.getResourceSet());
+		defFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , defined, resource.getResourceSet());
+		propFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , proposed, resource.getResourceSet());
+		deprFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , deprecated, resource.getResourceSet());
 		
 		getInjector().injectMembers (devFilter);
 		getInjector().injectMembers (testFilter);
@@ -45,16 +47,12 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 	}
 
 	
-	@Test
 	@Ignore
 	public void testGetBestMatchByNames() {
-		fail("Not yet implemented");
 	}
 
-	@Test
 	@Ignore
 	public void testMatches() {
-		fail("Not yet implemented");
 	}
 
 	@Test
@@ -77,16 +75,12 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 		
 	}
 
-	@Test
 	@Ignore
 	public void testToMajorVersion() {
-		fail("Not yet implemented");
 	}
 
-	@Test
 	@Ignore
 	public void testGetBestMatchByQualifedNames() {
-		fail("Not yet implemented");
 	}
 
 }
