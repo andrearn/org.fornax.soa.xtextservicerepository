@@ -23,6 +23,7 @@ Workflow {
 		registerEcoreFile = baseMetaModel
 		registerEcoreFile = envMetaModel
 		registerGenModelFile = envGenModel
+		registerGenModelFile = baseGenModel
 	}
 
 	component = DirectoryCleaner {
@@ -43,12 +44,12 @@ Workflow {
 			fileExtensions = file.extensions
 
 			// Java API to access grammar elements (required by several other fragments)
-			fragment = grammarAccess.GrammarAccessFragment {}
+			fragment = grammarAccess.GrammarAccessFragment auto-inject {
+				xmlVersion = "1.0"
+			}
 
 			// generates Java API for the generated EPackages 
-			fragment = ecore.EcoreGeneratorFragment {
-				referencedGenModels = "${baseGenModel},${envGenModel}"
-			}
+			fragment = ecore.EcoreGeneratorFragment {}
 
 			// the serialization component
 			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}

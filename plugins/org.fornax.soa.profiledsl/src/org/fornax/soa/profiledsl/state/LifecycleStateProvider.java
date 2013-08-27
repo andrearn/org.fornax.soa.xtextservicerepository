@@ -10,6 +10,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 
 @Singleton
+@Deprecated
 public class LifecycleStateProvider implements ILifecycleStateProvider {
 	
 	@Inject
@@ -28,13 +29,6 @@ public class LifecycleStateProvider implements ILifecycleStateProvider {
 		} catch (ExecutionException e) {
 		}
 		return null;
-	}
-	
-	/* (non-Javadoc)
-	 * @see org.fornax.soa.profiledsl.state.ILifecycleStateProvider#registerStateInferrer(org.fornax.soa.profiledsl.state.ILifecycleStateInferrer)
-	 */
-	public void registerStateInferrer(ILifecycleStateInferrer inferrer) {
-		stateCache.registerLifycycleStateInferrer(inferrer);
 	}
 
 }

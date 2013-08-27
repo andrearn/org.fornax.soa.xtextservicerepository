@@ -6,13 +6,23 @@ import java.util.Set;
 import java.util.WeakHashMap;
 import java.util.concurrent.ExecutionException;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
-public class LifecycleStateCache {
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+
+@Singleton
+public class LifecycleStateCache implements Adapter {
 	
-	private Set<ILifecycleStateInferrer> stateInferrers = new HashSet<ILifecycleStateInferrer>();
+	@Inject
+	private ILifecycleStateInferrer stateInferrer;
+	
+	private Notifier notifier;
 	
 	Map<IEObjectDescription, LifecycleState> cache = new WeakHashMap<IEObjectDescription, LifecycleState>();
 
@@ -22,20 +32,15 @@ public class LifecycleStateCache {
 		if (lifecycleState != null) {
 			return lifecycleState;
 		} else {
-			for (ILifecycleStateInferrer inferrer : stateInferrers) {
-				LifecycleState inferredState = inferrer.inferState(key, resourceSet);
-				if (inferredState != null) {
-					cache.put(key, inferredState);
-					return inferredState;
-				}
+			LifecycleState inferredState = stateInferrer.inferState(key, resourceSet);
+			if (inferredState != null) {
+				cache.put(key, inferredState);
+				return inferredState;
 			}
 			return null;
 		}
 	}
 	
-	void registerLifycycleStateInferrer(ILifecycleStateInferrer inferrer) {
-		stateInferrers.add(inferrer);
-	}
 	
 	public void invalidateEntry (IEObjectDescription key) {
 		cache.remove(key);
@@ -43,6 +48,27 @@ public class LifecycleStateCache {
 	
 	public void clear () {
 		cache.clear();
+	}
+
+
+	public void notifyChanged(Notification notification) {
+		clear();
+	}
+
+
+	public Notifier getTarget() {
+		// TODO Auto-generated method stub
+		return notifier;
+	}
+
+
+	public void setTarget(Notifier newTarget) {
+		this.notifier = notifier;
+	}
+
+
+	public boolean isAdapterForType(Object type) {
+		return true;
 	}
 
 }

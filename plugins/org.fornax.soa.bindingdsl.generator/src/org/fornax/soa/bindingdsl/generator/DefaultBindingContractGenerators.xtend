@@ -117,7 +117,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 		}
 		var SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
 		if (profile == null) {
-			logger.severe ("No profile found mathing the name " + profileName)
+			logger.severe ("No profile found matching the name " + profileName)
 			hasValidParameters = false
 		}
 		if (hasValidParameters) {

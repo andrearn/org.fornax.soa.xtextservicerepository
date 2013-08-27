@@ -5,13 +5,19 @@ package org.fornax.soa.moduledsl.ui.labeling;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;
 import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleDslPackage;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
+
+import com.google.inject.Inject;
 
 /**
  * Provides labels for a IEObjectDescriptions and IResourceDescriptions.
@@ -20,17 +26,11 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
  */
 public class ModuleDslDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
 
-/*
-	//Labels and icons can be computed like this:
-	
-	String text(IEObjectDescription ele) {
-	  return "my "+ele.getName();
-	}
-	 
-    String image(IEObjectDescription ele) {
-      return ele.getEClass().getName() + ".gif";
-    }	 
-*/
+	@Inject
+	private IResourceDescriptions resourceDescriptions;
+
+	@Inject
+	private ILifecycleStateResolver stateResolver;
 	
 	public Object text(IEObjectDescription ele) {
 		StyledString s = new StyledString (ele.getQualifiedName().toString());
@@ -39,6 +39,14 @@ public class ModuleDslDescriptionLabelProvider extends DefaultDescriptionLabelPr
 			s.append (ele.getUserData (VersionedResourceDescriptionStrategy.VERSION_KEY));
 		}
 		s.append (" - ");
+		if (resourceDescriptions instanceof ResourceSetBasedResourceDescriptions && stateResolver.definesState(ele)) {
+			ResourceSet resourceSet = ((ResourceSetBasedResourceDescriptions) resourceDescriptions).getResourceSet();
+			LifecycleState state = stateResolver.getLifecycleState(ele, resourceSet);
+			if (state != null) {
+				s.append (" - ");
+				s.append(state.getName());
+			}
+		}
 		s.append (ele.getEClass().getName());
 		return s;
 	}

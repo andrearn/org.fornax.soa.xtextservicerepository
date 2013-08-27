@@ -7,11 +7,10 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import com.google.inject.ImplementedBy;
 
 @ImplementedBy (LifecycleStateProvider.class)
+@Deprecated
 public interface ILifecycleStateProvider {
 
 	public abstract LifecycleState getAssetState(IEObjectDescription ieDesc,
 			ResourceSet resourceSet);
-
-	public abstract void registerStateInferrer(ILifecycleStateInferrer inferrer);
 
 }

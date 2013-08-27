@@ -11,6 +11,8 @@ import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
 import org.fornax.soa.moduledsl.moduleDsl.ModuleRef;
 import org.fornax.soa.moduledsl.moduleDsl.ServiceRef;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.serviceDsl.impl.ServiceImpl;
 
 import com.google.inject.Inject;
@@ -21,26 +23,20 @@ import com.google.inject.Inject;
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
 public class ModuleDslLabelProvider extends DefaultEObjectLabelProvider {
+	
+	@Inject
+	private ILifecycleStateResolver stateResolver;
 
 	@Inject
 	public ModuleDslLabelProvider(AdapterFactoryLabelProvider delegate) {
 		super(delegate);
 	}
 
-/*
-	//Labels and icons can be computed like this:
-	
-	String text(MyModel ele) {
-	  return "my "+ele.getName();
-	}
-	 
-    String image(MyModel ele) {
-      return "MyModel.gif";
-    }
-*/
 	Object text(Module mod) {
 		StyledString name = new StyledString(mod.getName());
-		StyledString versionAndState  = new StyledString(" " + mod.getVersion().getVersion(), StyledString.DECORATIONS_STYLER);
+		LifecycleState state = stateResolver.getLifecycleState(mod);
+		String stateName = state != null ? state.getName () : "";
+		StyledString versionAndState  = new StyledString(" " + mod.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		return name;
 	}

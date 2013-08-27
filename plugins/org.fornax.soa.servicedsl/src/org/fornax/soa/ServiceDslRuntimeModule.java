@@ -22,9 +22,12 @@ import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
+import org.fornax.soa.profiledsl.state.DefaultStateResolver;
+import org.fornax.soa.profiledsl.state.ILifecycleStateInferrer;
 import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
 import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
 import org.fornax.soa.service.query.type.DataObjectQueryInternal;
+import org.fornax.soa.service.state.ServiceDslStateInferrer;
 import org.fornax.soa.service.versioning.DefaultExceptionResolver;
 import org.fornax.soa.service.versioning.DefaultServiceResolver;
 import org.fornax.soa.service.versioning.DefaultTypeResolver;
@@ -91,7 +94,11 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 	}
 	
 	public Class<? extends ILifecycleStateResolver> bindLifecycleStateResolver () {
-		return StateAttributeLifecycleStateResolver.class;
+		return DefaultStateResolver.class;
+	}
+	
+	public Class<? extends ILifecycleStateInferrer> bindILifecycleStateInferrer () {
+		return ServiceDslStateInferrer.class;
 	}
 	
 	@org.eclipse.xtext.service.SingletonBinding	

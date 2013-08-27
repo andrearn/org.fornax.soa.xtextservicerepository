@@ -10,6 +10,8 @@ import org.eclipse.jface.viewers.StyledString.Styler;
 import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.fornax.soa.basedsl.sOABaseDsl.Import;
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.serviceDsl.BusinessObject;
 import org.fornax.soa.serviceDsl.ComplexConsiderationPropertyRef;
 import org.fornax.soa.serviceDsl.ConsiderationParameterRef;
@@ -42,6 +44,9 @@ import com.google.inject.Inject;
 public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	private static Logger _log = Logger.getLogger (ServiceDslLabelProvider.class);
+	
+	@Inject
+	private ILifecycleStateResolver stateResolver;
 
 	private static Styler STRIKETHROUGH = new Styler() {
 		@Override
@@ -57,7 +62,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 
 	Object text (Service ele) {
 		StyledString name = new StyledString(ele.getName());
-		String stateName = ele.getState() != null ? ele.getState().getName () : "";
+		LifecycleState state = stateResolver.getLifecycleState(ele);
+		String stateName = state != null ? state.getName () : "";
 		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		if (ele.isDeprecated()) {
@@ -94,7 +100,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	Object text (BusinessObject ele) {
 		StyledString name = new StyledString(ele.getName());
-		String stateName = ele.getState() != null ? ele.getState().getName () : "";
+		LifecycleState state = stateResolver.getLifecycleState(ele);
+		String stateName = state != null ? state.getName () : "";
 		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		if (ele.isDeprecated()) {
@@ -107,7 +114,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	Object text (QueryObject ele) {
 		StyledString name = new StyledString(ele.getName());
-		String stateName = ele.getState() != null ? ele.getState().getName () : "";
+		LifecycleState state = stateResolver.getLifecycleState(ele);
+		String stateName = state != null ? state.getName () : "";
 		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		if (ele.isDeprecated()) {
@@ -121,7 +129,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	Object text (Enumeration ele) {
 		StyledString name = new StyledString(ele.getName());
-		String stateName = ele.getState() != null ? ele.getState().getName () : "";
+		LifecycleState state = stateResolver.getLifecycleState(ele);
+		String stateName = state != null ? state.getName () : "";
 		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		if (ele.isDeprecated()) {
@@ -135,7 +144,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	Object text (org.fornax.soa.serviceDsl.Exception ele) {
 		StyledString name = new StyledString(ele.getName());
-		String stateName = ele.getState() != null ? ele.getState().getName () : "";
+		LifecycleState state = stateResolver.getLifecycleState(ele);
+		String stateName = state != null ? state.getName () : "";
 		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
 		name.append(versionAndState);
 		if (ele.isDeprecated()) {

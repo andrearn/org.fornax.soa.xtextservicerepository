@@ -8,6 +8,13 @@ import org.fornax.soa.environmentDsl.Environment;
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 
+/**
+ * Provides the lifecycle of a stateful asset. If not explicitly set on asset, implementor may
+ * try to derive the state by means of state inference.
+ * 
+ * @author aarnold
+ *
+ */
 public interface ILifecycleStateResolver {
 	
 	@Deprecated

@@ -140,7 +140,7 @@ public class DataObjectQueryInternal {
 	
 	/**
 	 * Find all transitive dependencies of the Property. The dependency graph is build from all properties transitively 
-	 * referenced via the properties' type references if these have properties themselves, i.e. they are BusinessOobjects 
+	 * referenced via the properties' type references if these have properties themselves, i.e. they are DataObjects 
 	 * @param prop Property from which to start the traversal of the dependency graph
 	 * @param includeInheritedProperties
 	 * @param includeCycleTypes include the BO in the result even if it already was visited. 
@@ -164,7 +164,7 @@ public class DataObjectQueryInternal {
 	 * 
 	 * @param type The type to find transitive references to
 	 * @param includeSuperTypes Look for references to super types as well?
-	 * @param visited	Contains all trasititively found references so far.
+	 * @param visited	Contains all transitively found references so far. References include VersionedTypes and Operation Parameters.
 	 * @param resourceSet	The {@link ResourceSet} used to materialize found references from.
 	 * @return
 	 */

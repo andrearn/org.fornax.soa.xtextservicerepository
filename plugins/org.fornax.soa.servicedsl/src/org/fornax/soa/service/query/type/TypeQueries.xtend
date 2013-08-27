@@ -12,6 +12,9 @@ import org.fornax.soa.serviceDsl.Enumeration
 import org.fornax.soa.serviceDsl.Operation
 import org.fornax.soa.serviceDsl.Parameter
 import org.fornax.soa.serviceDsl.Service
+import org.fornax.soa.serviceDsl.VersionedType
+import org.fornax.soa.basedsl.ref.DependencyDescription
+import java.util.List
 
 class TypeQueries {
 	
@@ -55,5 +58,12 @@ class TypeQueries {
 	
 	def dispatch Set<Service> findUsingServices (Enumeration enumeration) {
 		findUsingServiceOperations(enumeration).map (o|o.getOwnerByType(typeof(Service))).toSet
+	}
+	
+	def List getStatesOfClosestReferrers (VersionedType type) {
+		
+	}
+	
+	def List<DependencyDescription> getReferrersAsGraph (VersionedType type) {
 	}
 }

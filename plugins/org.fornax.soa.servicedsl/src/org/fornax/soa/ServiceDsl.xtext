@@ -70,7 +70,7 @@ InternalNamespace:
 		('metadata' '{'
 			(version=Version)?
 			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
-			('namespace-url' namespaceUrl = STRING)
+			('namespace-url' namespaceUrl = STRING)?
 			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*

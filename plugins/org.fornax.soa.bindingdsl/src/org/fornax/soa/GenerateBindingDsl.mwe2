@@ -68,12 +68,12 @@ Workflow {
 			fileExtensions = file.extensions
 
 			// Java API to access grammar elements (required by several other fragments)
-			fragment = grammarAccess.GrammarAccessFragment {}
+			fragment = grammarAccess.GrammarAccessFragment auto-inject {
+				xmlVersion = "1.0"
+			}
 
 			// generates Java API for the generated EPackages 
-			fragment = ecore.EcoreGeneratorFragment {
-				referencedGenModels = "${baseGenModel}, ${svcGenModel},${envGenModel},${semGenModel}"
-			}
+			fragment = ecore.EcoreGeneratorFragment {}
 
 			// the serialization component
 			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}

@@ -5,12 +5,19 @@ package org.fornax.soa.ui.labeling;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.IResourceDescriptions.IContextAware;
+import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;
 import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
+
+import com.google.inject.Inject;
 
 /**
  * Provides labels for a IEObjectDescriptions and IResourceDescriptions.
@@ -19,6 +26,11 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
  */
 public class ServiceDslDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
 
+	@Inject
+	private IResourceDescriptions resourceDescriptions;
+
+	@Inject
+	private ILifecycleStateResolver stateResolver;
 
 	public Object text(IEObjectDescription ele) {
 		StyledString s = new StyledString (ele.getQualifiedName().toString());
@@ -27,6 +39,14 @@ public class ServiceDslDescriptionLabelProvider extends DefaultDescriptionLabelP
 			s.append (ele.getUserData (VersionedResourceDescriptionStrategy.VERSION_KEY));
 		}
 		s.append (" - ");
+		if (resourceDescriptions instanceof ResourceSetBasedResourceDescriptions && stateResolver.definesState(ele)) {
+			ResourceSet resourceSet = ((ResourceSetBasedResourceDescriptions) resourceDescriptions).getResourceSet();
+			LifecycleState state = stateResolver.getLifecycleState(ele, resourceSet);
+			if (state != null) {
+				s.append (" - ");
+				s.append(state.getName());
+			}
+		}
 		s.append (ele.getEClass().getName());
 		return s;
 	}

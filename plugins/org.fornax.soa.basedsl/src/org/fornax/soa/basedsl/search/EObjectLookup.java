@@ -44,6 +44,22 @@ public class EObjectLookup implements IEObjectLookup {
         	} catch (Exception ex) {
         		
         	}
+        } else if (searchResult.size () > 1 && !elementName.contains("*")) {
+        	for (IEObjectDescription ieDesc : searchResult) {
+        		if (ieDesc.getQualifiedName().toString().equals(elementName)) {
+	            	EObject obj = ieDesc.getEObjectOrProxy ();
+	            	if (obj.eIsProxy ()) {
+	    				obj = EcoreUtil.resolve (obj, res);
+	    			}
+	            	try {
+	            		T result  = (T)obj;
+	            		return result;
+	            	} catch (Exception ex) {
+	            		
+	            	}
+        		}
+			}
+        	
         }
         return null;
 	}
