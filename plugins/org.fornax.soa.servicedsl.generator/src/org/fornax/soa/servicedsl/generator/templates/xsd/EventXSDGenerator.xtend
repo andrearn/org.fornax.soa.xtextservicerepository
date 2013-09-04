@@ -23,6 +23,8 @@ import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateE
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 import java.util.Set
 import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 class EventXSDGenerator {
 	
@@ -36,6 +38,8 @@ class EventXSDGenerator {
 	@Inject extension VersionQualifierExtensions
 	@Inject extension HeaderFinder
 	@Inject extension NamespaceImportQueries
+	@Inject extension NamespaceQuery
+	@Inject extension ILifecycleStateResolver
 	
 	@Inject IEObjectDocumentationProvider docProvider
 
@@ -49,7 +53,8 @@ class EventXSDGenerator {
 		}
 	}
 	
-	def toEvents (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def toEvents (SubNamespace ns, LifecycleState minState, SOAProfile enforcedProfile, String registryBaseUrl) {
+		val profile = ns.getApplicableProfile(enforcedProfile)
 		ns.services.forEach (s|s.toEvents (ns, minState, profile, registryBaseUrl));
 	}
 	
@@ -89,7 +94,7 @@ class EventXSDGenerator {
 			<xsd:annotation>
 		   		<xsd:documentation>
 					<![CDATA[Version «svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state.toStateName»
+					Lifecycle state: «svc.lifecycleState.toStateName»
 					
 					«docProvider.getDocumentation (svc)»]]>
 			   	</xsd:documentation>
@@ -135,7 +140,7 @@ class EventXSDGenerator {
 			<xsd:annotation>
 		    	<xsd:documentation>
 					<![CDATA[Version «svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state.toStateName»
+					Lifecycle state: «svc.lifecycleState.toStateName»
 					
 					«docProvider.getDocumentation (svc)»]]>
 		    	</xsd:documentation>

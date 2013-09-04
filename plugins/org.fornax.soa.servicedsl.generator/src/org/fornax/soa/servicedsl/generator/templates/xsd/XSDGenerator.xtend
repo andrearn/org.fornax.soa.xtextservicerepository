@@ -31,6 +31,8 @@ import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.DataTypeRef
 import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
 import org.fornax.soa.serviceDsl.DataObject
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 /**
  * Templates for XSD generation
@@ -46,6 +48,7 @@ class XSDGenerator {
 	@Inject extension SchemaTypeExtensions
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries
+	@Inject extension NamespaceQuery
 	@Inject extension ITypeResolver
 	@Inject extension IStateMatcher
 	
@@ -63,6 +66,7 @@ class XSDGenerator {
 	IEObjectDocumentationProvider docProvider
 	
 	@Inject LifecycleQueries lifecycleQueries
+	@Inject extension ILifecycleStateResolver stateResolver
 
 	@Inject 
 	private Logger log
@@ -88,7 +92,8 @@ class XSDGenerator {
 		applying splitting by major version of owned VersionedTypes and Exceptions in the 
 		given minimal LifecycleState.
 	*/
-	def dispatch toXSD (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toXSD (SubNamespace ns, LifecycleState minState, SOAProfile enforcedProfile, String registryBaseUrl) {
+		val profile = ns.getApplicableProfile(enforcedProfile)
 		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
 		for (nsVer : nsVersions) {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl);
@@ -103,7 +108,8 @@ class XSDGenerator {
 	/*
 	 * TODO: review for use as noDependencies flag is being injected already
 	 */
-	def dispatch toXSD (SubNamespace ns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+	def dispatch toXSD (SubNamespace ns, LifecycleState minState, SOAProfile enforcedProfile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+		val profile = ns.getApplicableProfile(enforcedProfile)
 		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
 		for (nsVer : nsVersions) {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl, noDeps, includeSubNamespaces);
@@ -141,15 +147,16 @@ class XSDGenerator {
 		that match the given minimal LifecycleState.
 	*/
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+		val resSet = profile.eResource.resourceSet
 		val imports = vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace());
-		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.state==null || !b.state.isEnd)
-			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
-		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.state==null || !b.state.isEnd)
-			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState ==null || !b.lifecycleState.isEnd)
+			.filter (e|minState.matches (e.lifecycleState) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
+			.filter (e|minState.matches (e.lifecycleState) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
-			.filter (en|minState.matches (en.state) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
+			.filter (en|minState.matches (en.lifecycleState) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
-			.filter (ex|minState.matches (ex.state) && exceptionResolver.isMatchingException (ex, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
+			.filter (ex|minState.matches (ex.lifecycleState) && exceptionResolver.isMatchingException (ex, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
 
 		if (!bos.empty || !qos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''
@@ -255,7 +262,7 @@ class XSDGenerator {
 		    	<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(bo.version)»
-						Lifecycle state: 	«bo.state.toStateName»
+						Lifecycle state: 	«bo.lifecycleState.toStateName»
 										
 						«docProvider.getDocumentation (bo)»
 					]]>
@@ -411,7 +418,7 @@ class XSDGenerator {
 				<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(ex.version)»
-					    Lifecycle state: 	«ex.state.toStateName»
+					    Lifecycle state: 	«ex.lifecycleState.toStateName»
 						
 						«docProvider.getDocumentation (ex)»
 					]]>   			

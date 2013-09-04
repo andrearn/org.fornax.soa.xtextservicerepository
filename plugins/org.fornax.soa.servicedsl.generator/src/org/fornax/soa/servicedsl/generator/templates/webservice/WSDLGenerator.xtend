@@ -28,6 +28,8 @@ import java.util.Set
 import org.fornax.soa.profiledsl.versioning.VersionedTechnicalNamespace
 import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.SwaRefSchemaGenerator
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 /*
  * Template class for generation of abstract WSDLs
@@ -41,9 +43,11 @@ class WSDLGenerator {
 	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension HeaderFinder
+	@Inject extension NamespaceQuery
 	@Inject extension NamespaceImportQueries
 	@Inject extension XSDGenerator
 	@Inject extension WsdlParameterExtensions
+	@Inject extension ILifecycleStateResolver
 
 	@Inject TechnicalNamespaceImportQueries techNsImportQueries
 	@Inject VersionQualifierExtensions versionQualifier
@@ -57,7 +61,8 @@ class WSDLGenerator {
 	@Inject 
 	private Logger log
 	
-	def dispatch toWSDL (Service s, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toWSDL (Service s, DomainNamespace subDom, LifecycleState minState, SOAProfile enforcedProfile, String registryBaseUrl) {
+		val profile = subDom.getApplicableProfile(enforcedProfile)
 		val allServiceExceptionRefs = s.operations.map (o|o.^throws).flatten;
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -71,7 +76,7 @@ class WSDLGenerator {
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(s.version)»
-				Lifecycle state: «s.state.toStateName»
+				Lifecycle state: «s.lifecycleState.toStateName»
 				
 				«docProvider.getDocumentation (s)»
 			</wsdl:documentation>
@@ -86,7 +91,8 @@ class WSDLGenerator {
 		fsa.generateFile (wsdlFileName, content);
 	}
 
-	def dispatch toWSDL (Service s, InternalNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toWSDL (Service s, InternalNamespace subDom, LifecycleState minState, SOAProfile enforcedProfile, String registryBaseUrl) {
+		val profile = subDom.getApplicableProfile(enforcedProfile)
 		val allServiceExceptionRefs = s.operations.map (o|o.^throws).flatten;
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -103,7 +109,7 @@ class WSDLGenerator {
 			targetNamespace="«s.toTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «versionQualifier.toVersionNumber(s.version)»
-				Lifecycle state: «s.state.toStateName»
+				Lifecycle state: «s.lifecycleState.toStateName»
 				
 				«docProvider.getDocumentation (s)»]]>
 			</wsdl:documentation>

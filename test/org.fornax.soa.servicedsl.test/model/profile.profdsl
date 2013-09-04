@@ -6,7 +6,7 @@ datatype date
 datatype datetime
 datatype string
 
-soa-profile test {
+default soa-profile test {
 	scope "JUnit tests"
 
 	lifecycle TestLifecycle {

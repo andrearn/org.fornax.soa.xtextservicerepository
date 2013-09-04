@@ -16,7 +16,7 @@ import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.servicedsl.generator.templates.webservice.ServiceTemplateExtensions
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 import org.fornax.soa.binding.query.BindingLookup
-
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 /* 
  * Generator for IBM SCA export components for the IBM WebSphere ESB. For each service provided from the module referenced in the binding
@@ -31,7 +31,8 @@ class SCAExportTemplates {
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension SCAExportExtension
 	@Inject extension SoapBindingResolver
-	@Inject extension EnvironmentBindingResolver		
+	@Inject extension EnvironmentBindingResolver
+	@Inject extension NamespaceQuery		
 
 
 	@Inject IFileSystemAccess fsa
@@ -40,12 +41,12 @@ class SCAExportTemplates {
 	}
 	
 	
-	def dispatch void toSCAModuleExport (ModuleBinding binding, SOAProfile profile) {
+	def dispatch void toSCAModuleExport (ModuleBinding binding, SOAProfile enforcedProfile) {
 		if (binding.module.module.assemblyType == AssemblyType::SCA_EAR) {
 			for (provSvc : binding.module.module.providedServices) {
 				val svc = provSvc.resolveModuleServiceRef (binding.resolveEnvironment);
 				if (svc != null) {
-					svc.getMostSpecificBinding (binding).protocol.forEach (p|p.toServiceExport (binding, svc, profile));
+					svc.getMostSpecificBinding (binding).protocol.forEach (p|p.toServiceExport (binding, svc, enforcedProfile));
 				}
 			}
 		}
@@ -54,7 +55,8 @@ class SCAExportTemplates {
 	def dispatch void toServiceExport (BindingProtocol protocol, ModuleBinding modBind, Service svc, SOAProfile profile) {
 	}
 	
-	def dispatch toServiceExport (SOAP protocol, ModuleBinding modBind, Service svc, SOAProfile profile) {
+	def dispatch toServiceExport (SOAP protocol, ModuleBinding modBind, Service svc, SOAProfile enforcedProfile) {
+		val profile = svc.findSubdomain.getApplicableProfile(enforcedProfile)
 		val exportFile = svc.getExportFileName (protocol);
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8"?>
@@ -77,7 +79,8 @@ class SCAExportTemplates {
 		fsa.generateFile (exportFile, content);
 	}
 	
-	def dispatch toServiceExport (SCA protocol, ModuleBinding modBind, Service svc, SOAProfile profile) {
+	def dispatch toServiceExport (SCA protocol, ModuleBinding modBind, Service svc, SOAProfile enforcedProfile) {
+		val profile = svc.findSubdomain.getApplicableProfile(enforcedProfile)
 		val exportFile = svc.getExportFileName (protocol);
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8"?>

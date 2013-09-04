@@ -15,6 +15,7 @@ import com.google.inject.Inject
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
 import org.fornax.soa.service.versioning.ITypeResolver
 import org.fornax.soa.serviceDsl.DataObject
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver
 
 /*
  * Find type references of a model object

@@ -22,9 +22,9 @@ public class DefaultPredicateSearch implements IPredicateSearch {
 
 	@Inject
 	private IResourceDescriptions resourceDescriptions;
-	
-	@Inject
-	private ResourceDescriptionsProvider resourceDescriptionsProvider;
+//	
+//	@Inject
+//	private ResourceDescriptionsProvider resourceDescriptionsProvider;
 
 	@Inject
 	private IQualifiedNameConverter qualifiedNameConverter;
@@ -138,7 +138,7 @@ public class DefaultPredicateSearch implements IPredicateSearch {
 		return Iterables
 				.concat (Iterables
 						.transform (
-								getResourceDescriptionsProvider().getResourceDescriptions (resourceSet)
+								getResourceDescriptions ()
 										.getAllResourceDescriptions (),
 								new Function<IResourceDescription, Iterable<IEObjectDescription>> () {
 									public Iterable<IEObjectDescription> apply (
@@ -174,14 +174,14 @@ public class DefaultPredicateSearch implements IPredicateSearch {
 	public IResourceDescriptions getResourceDescriptions () {
 		return resourceDescriptions;
 	}
-
-	public ResourceDescriptionsProvider getResourceDescriptionsProvider() {
-		return resourceDescriptionsProvider;
-	}
-
-	public void setResourceDescriptionsProvider(
-			ResourceDescriptionsProvider resourceDescriptionsProvider) {
-		this.resourceDescriptionsProvider = resourceDescriptionsProvider;
-	}
+//
+//	public ResourceDescriptionsProvider getResourceDescriptionsProvider() {
+//		return resourceDescriptionsProvider;
+//	}
+//
+//	public void setResourceDescriptionsProvider(
+//			ResourceDescriptionsProvider resourceDescriptionsProvider) {
+//		this.resourceDescriptionsProvider = resourceDescriptionsProvider;
+//	}
 
 }

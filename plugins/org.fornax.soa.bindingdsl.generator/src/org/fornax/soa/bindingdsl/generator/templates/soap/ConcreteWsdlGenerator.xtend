@@ -22,6 +22,8 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensio
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.bindingDsl.Binding
 import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -43,6 +45,8 @@ class ConcreteWsdlGenerator {
 	@Inject extension SoapEndpointAddressResolver
 	@Inject extension EnvironmentBindingResolver
 	@Inject extension DefaultEndpointQualifierNameProvider
+	@Inject extension ILifecycleStateResolver
+	@Inject extension NamespaceQuery
 
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IEObjectDocumentationProvider docProvider
@@ -58,7 +62,8 @@ class ConcreteWsdlGenerator {
 	}
 	
 	
-	def dispatch toWSDL(Service svc, ServiceBinding svcBind, SOAP prot, SOAProfile profile) {
+	def dispatch toWSDL(Service svc, ServiceBinding svcBind, SOAP prot, SOAProfile enforcedProfile) {
+		val profile = svc.findSubdomain.getApplicableProfile(enforcedProfile)
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment(svcBind, prot) + ".wsdl";
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -71,7 +76,7 @@ class ConcreteWsdlGenerator {
 
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(svc.version)»
-				Lifecycle state: «svc.state.toStateName»
+				Lifecycle state: «svc.lifecycleState.toStateName»
 				
 				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>
@@ -86,7 +91,8 @@ class ConcreteWsdlGenerator {
 		fsa.generateFile (wsdlFile, content);
 	}
 	
-	def dispatch toWSDL(Service svc, ModuleBinding modBind, BindingProtocol prot, SOAProfile profile) {
+	def dispatch toWSDL(Service svc, ModuleBinding modBind, BindingProtocol prot, SOAProfile enforcedProfile) {
+		val profile = svc.findSubdomain.getApplicableProfile(enforcedProfile)
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment(modBind, prot) + ".wsdl";
 		val content ='''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -99,7 +105,7 @@ class ConcreteWsdlGenerator {
 
 			<wsdl:documentation>
 				Version «versionQualifier.toVersionNumber(svc.version)»
-				Lifecycle state: «svc.state.toStateName»
+				Lifecycle state: «svc.lifecycleState.toStateName»
 				
 				«docProvider.getDocumentation (svc)»
 			</wsdl:documentation>

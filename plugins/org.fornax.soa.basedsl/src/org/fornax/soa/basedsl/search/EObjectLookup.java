@@ -26,9 +26,9 @@ public class EObjectLookup implements IEObjectLookup {
 
 	@Inject
 	private IResourceDescriptions resourceDescriptions;
-	
-	@Inject
-	private ResourceDescriptionsProvider resourceDescriptionsProvider;
+//	
+//	@Inject
+//	private ResourceDescriptionsProvider resourceDescriptionsProvider;
 
 	public <T> T getModelElementByName (final String elementName, final ResourceSet res, String eClassName) {
         List<IEObjectDescription> searchResult = Lists.newArrayList (searchEngine.search(elementName, SearchPattern.RULE_EXACT_MATCH, eClassName, Predicates.<IEObjectDescription>alwaysTrue()));
@@ -161,14 +161,14 @@ public class EObjectLookup implements IEObjectLookup {
 	public void setResourceDescriptions(IResourceDescriptions resourceDescriptions) {
 		this.resourceDescriptions = resourceDescriptions;
 	}
-
-	public ResourceDescriptionsProvider getResourceDescriptionsProvider() {
-		return resourceDescriptionsProvider;
-	}
-
-	public void setResourceDescriptionsProvider(
-			ResourceDescriptionsProvider resourceDescriptionsProvider) {
-		this.resourceDescriptionsProvider = resourceDescriptionsProvider;
-	}
+//
+//	public ResourceDescriptionsProvider getResourceDescriptionsProvider() {
+//		return resourceDescriptionsProvider;
+//	}
+//
+//	public void setResourceDescriptionsProvider(
+//			ResourceDescriptionsProvider resourceDescriptionsProvider) {
+//		this.resourceDescriptionsProvider = resourceDescriptionsProvider;
+//	}
 
 }

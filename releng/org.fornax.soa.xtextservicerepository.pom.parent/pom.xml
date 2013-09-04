@@ -293,6 +293,9 @@
 					<url>http://download.eclipse.org/releases/juno</url>
 				</repository>
 			</repositories>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 		</profile>
 		<profile>
 			<id>xtext-2.3</id>
@@ -306,9 +309,6 @@
 					<url>http://download.eclipse.org/releases/indigo</url>
 				</repository>
 			</repositories>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
 		</profile>
 	</profiles>
 	<dependencyManagement>

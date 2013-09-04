@@ -27,7 +27,7 @@ SOAProfileModel:
  * are defined as well in the profile. Usually scoped to an organization
  */	
 SOAProfile:
-	'soa-profile' name=ID '{'
+	(default?='default')? ('soa-profile'|'profile') name=QualifiedName '{'
 		/* The scope, where the architecture profile applies to */
 		('scope' scope = STRING)?
 		/* The asset lifecycle states */

@@ -1,10 +1,15 @@
 package org.fornax.soa.basedsl.search;
 
+import static com.google.common.collect.Iterables.isEmpty;
+import static com.google.common.collect.Iterables.size;
 import static com.google.common.collect.Iterables.transform;
 import static com.google.common.collect.Maps.newHashMap;
+import static com.google.common.collect.Maps.newIdentityHashMap;
 import static com.google.common.collect.Sets.newHashSet;
+import static com.google.common.collect.Sets.newLinkedHashSet;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -13,16 +18,19 @@ import java.util.Set;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.EStructuralFeature.Setting;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.util.InternalEList;
 import org.eclipse.emf.ecore.util.EcoreUtil.CrossReferencer;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.resource.impl.DefaultReferenceDescription;
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;
 import org.eclipse.xtext.util.IAcceptor;
@@ -32,7 +40,10 @@ import org.fornax.soa.basedsl.resource.SimpleLocalResourceAccess;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.Multimap;
 import com.google.inject.Inject;
 
 import static java.util.Collections.singleton;
@@ -40,12 +51,17 @@ import static java.util.Collections.singleton;
 public class PredicateReferenceSearch implements IReferenceSearch {
 
 	private IResourceDescriptions index;
+
+	private IResourceServiceProvider.Registry serviceProviderRegistry;
+
 	private IEObjectLookup ieObjLookup;
 
 	@Inject
-	public PredicateReferenceSearch (IResourceDescriptions index, IEObjectLookup ieObjLookup) {
+	public PredicateReferenceSearch (IResourceDescriptions index, IEObjectLookup ieObjLookup,
+			IResourceServiceProvider.Registry serviceProviderRegistry) {
 		this.index = index;
 		this.ieObjLookup = ieObjLookup;
+		this.serviceProviderRegistry = serviceProviderRegistry;
 	}
 
 	public void findAllReferences (EObject eObjectOrProxy,
@@ -67,12 +83,31 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 
 	public void findAllReferences(IReferenceQueryData queryData, ResourceSet resourceSet, ILocalResourceAccess localResourceAccess,
 			final IAcceptor<IReferenceDescription> acceptor) {
-		if (!queryData.getTargetURIs().isEmpty()) {
-			findLocalReferences(queryData, localResourceAccess, acceptor);
-			findIndexedReferences(queryData, resourceSet, acceptor);
+		Set<URI> targetURIs = queryData.getTargetURIs();
+		if (!isEmpty(targetURIs)) {
+			if (localResourceAccess != null) {
+				findLocalReferences(queryData, localResourceAccess, acceptor);
+			}
+			Set<URI> targetURIsAsSet = newLinkedHashSet(targetURIs);
+			findAllIndexedReferences(acceptor, targetURIsAsSet, localResourceAccess);
+		}
+//		if (!queryData.getTargetURIs().isEmpty()) {
+//			findLocalReferences(queryData, localResourceAccess, acceptor);
+//			findIndexedReferences(queryData, resourceSet, acceptor);
+//		}
+	}
+	
+	protected void findAllIndexedReferences(IAcceptor<IReferenceDescription> referenceAcceptor, 
+			Set<URI> targetURIsAsSet, ILocalResourceAccess localResourceAccess) {
+		for (IResourceDescription resourceDescription : index.getAllResourceDescriptions()) {
+			IResourceServiceProvider serviceProvider = serviceProviderRegistry.getResourceServiceProvider(resourceDescription.getURI());
+			IReferenceSearch referenceFinder = serviceProvider.get(IReferenceSearch.class);
+			// don't use the language specific reference finder here for backwards compatibility reasons
+			findReferences(targetURIsAsSet, resourceDescription, referenceAcceptor, localResourceAccess);
 		}
 	}
 
+	@Deprecated
 	public void findIndexedReferences(final IReferenceQueryData queryData, ResourceSet resourceSet, final IAcceptor<IReferenceDescription> acceptor) {
 		findIndexedReferences(queryData.getTargetURIs(), acceptor, queryData.getResultFilter());
 	}
@@ -94,20 +129,44 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 
 	public void findLocalReferences(final IReferenceQueryData queryData, ILocalResourceAccess localResourceAccess,
 			final IAcceptor<IReferenceDescription> acceptor) {
-		localResourceAccess.readOnly(queryData.getLocalContextResourceURI(), new IUnitOfWork<Boolean, ResourceSet>() {
-			public Boolean exec(ResourceSet localContext) throws Exception {
-				Set<EObject> targets = newHashSet();
-				for (URI targetURI : queryData.getTargetURIs()) {
-					EObject target = localContext.getEObject(targetURI, true);
-					if (target != null)
-						targets.add(target);
+//		localResourceAccess.readOnly(queryData.getLocalContextResourceURI(), new IUnitOfWork<Boolean, ResourceSet>() {
+//			public Boolean exec(ResourceSet localContext) throws Exception {
+//				Set<EObject> targets = newHashSet();
+//				for (URI targetURI : queryData.getTargetURIs()) {
+//					EObject target = localContext.getEObject(targetURI, true);
+//					if (target != null)
+//						targets.add(target);
+//				}
+//				findLocalReferences(targets, acceptor, queryData.getResultFilter());
+//				return true;
+//			}
+//		});
+
+		final Multimap<URI, URI> resource2target = LinkedHashMultimap.create();
+		for (URI targetURI : queryData.getTargetURIs()) {
+			resource2target.put(targetURI.trimFragment(), targetURI);
+		}
+		for (final URI resourceURI : resource2target.keySet()) {
+			localResourceAccess.readOnly(resourceURI, new IUnitOfWork.Void<ResourceSet>() {
+				@Override
+				public void process(ResourceSet resourceSet) throws Exception {
+					Resource resource = resourceSet.getResource(resourceURI, true);
+					findLocalReferencesInResource(resource2target.get(resourceURI), resource, acceptor, queryData.getResultFilter());
 				}
-				findLocalReferences(targets, acceptor, queryData.getResultFilter());
-				return true;
-			}
-		});
+			});
+		}
 	}
 
+	protected void findLocalReferencesInResource(final Iterable<URI> targetURIs, Resource resource,
+			final IAcceptor<IReferenceDescription> acceptor, Predicate<IReferenceDescription> filter) {
+		Set<URI> targetURISet = ImmutableSet.copyOf(targetURIs);
+		Map<EObject, URI> exportedElementsMap = createExportedElementsMap(resource);
+		for(EObject content: resource.getContents()) {
+			findLocalReferencesFromElement(targetURISet, content, resource, acceptor, null, exportedElementsMap, filter);
+		}
+	}
+
+	@Deprecated
 	public void findLocalReferences(Set<? extends EObject> targets, IAcceptor<IReferenceDescription> acceptor,
 			Predicate<IReferenceDescription> filter) {
 		if (targets != null && !targets.isEmpty()) {
@@ -147,12 +206,89 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 			}
 		}
 	}
+	
+	@SuppressWarnings("unchecked")
+	protected void findLocalReferencesFromElement(
+			final Set<URI> targetURISet, 
+			EObject sourceCandidate,
+			Resource localResource,
+			final IAcceptor<IReferenceDescription> acceptor, 
+			URI currentExportedContainerURI, 
+			Map<EObject, URI> exportedElementsMap,
+			Predicate<IReferenceDescription> filter) {
+		URI sourceURI = null; 
+		if(exportedElementsMap.containsKey(sourceCandidate)) { 
+			currentExportedContainerURI = exportedElementsMap.get(sourceCandidate);
+			sourceURI = currentExportedContainerURI;
+		}
+		for(EReference ref: sourceCandidate.eClass().getEAllReferences()) {
+			if(sourceCandidate.eIsSet(ref)) {
+				if(ref.isContainment()) {
+					Object content = sourceCandidate.eGet(ref, false);
+					if(ref.isMany()) {
+						InternalEList<EObject> contentList = (InternalEList<EObject>) content;
+						for(int i=0; i<contentList.size(); ++i) {
+							EObject childElement = contentList.basicGet(i);
+							if(!childElement.eIsProxy())
+								findLocalReferencesFromElement(targetURISet, childElement, localResource, acceptor, currentExportedContainerURI, exportedElementsMap, filter);
+						}
+					} else {
+						EObject childElement = (EObject) content;
+						if(!childElement.eIsProxy())
+							findLocalReferencesFromElement(targetURISet, childElement, localResource, acceptor, currentExportedContainerURI, exportedElementsMap, filter);
+					}
+				} else if (!ref.isContainer()) {
+					Object value = sourceCandidate.eGet(ref, false);
+					if(ref.isMany()) {
+						InternalEList<EObject> values = (InternalEList<EObject>) value;
+						for(int i=0; i< values.size(); ++i) {
+							EObject refElement = resolveInternalProxy(values.basicGet(i), localResource);
+							URI refURI= EcoreUtil2.getPlatformResourceOrNormalizedURI(refElement);
+							if(targetURISet.contains(refURI)) {
+								sourceURI = (sourceURI == null) ? EcoreUtil2.getPlatformResourceOrNormalizedURI(sourceCandidate) : sourceURI;
+								IReferenceDescription localReferenceDescription = new DefaultReferenceDescription(
+										sourceURI, refURI, ref, i, currentExportedContainerURI);
+								if (filter == null || filter.apply(localReferenceDescription)) {
+									acceptor.accept(localReferenceDescription);
+								}
+							}
+						}
+					} else {
+						EObject refElement = resolveInternalProxy((EObject) value, localResource);
+						URI refURI= EcoreUtil2.getPlatformResourceOrNormalizedURI(refElement);
+						if(targetURISet.contains(refURI)) {
+							sourceURI = (sourceURI == null) ? EcoreUtil2.getPlatformResourceOrNormalizedURI(sourceCandidate) : sourceURI;
+							IReferenceDescription localReferenceDescription = new DefaultReferenceDescription(
+									sourceURI, refURI, ref, -1, currentExportedContainerURI);
+							if (filter == null || filter.apply(localReferenceDescription)) {
+								acceptor.accept(localReferenceDescription);
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	protected EObject resolveInternalProxy(EObject elementOrProxy, Resource resource) {
+		if(elementOrProxy.eIsProxy() && ((InternalEObject) elementOrProxy).eProxyURI().trimFragment().equals(resource.getURI()))
+			return EcoreUtil.resolve(elementOrProxy, resource);
+		else
+			return elementOrProxy;
+	}
 
 	protected Map<EObject, URI> createExportedElementsMap(Resource resource) {
-		if (index instanceof ResourceSetBasedResourceDescriptions)
-			((ResourceSetBasedResourceDescriptions)index).setContext (resource.getResourceSet ());
-		IResourceDescription resourceDescription = index.getResourceDescription(EcoreUtil2.getNormalizedURI(resource));
-		Map<EObject, URI> exportedElementMap = newHashMap();
+		URI uri = EcoreUtil2.getPlatformResourceOrNormalizedURI(resource);
+		IResourceServiceProvider resourceServiceProvider = serviceProviderRegistry.getResourceServiceProvider(uri);
+		if (resourceServiceProvider == null) {
+			return Collections.emptyMap();
+		}
+		IResourceDescription.Manager resourceDescriptionManager = resourceServiceProvider.getResourceDescriptionManager();
+		if (resourceDescriptionManager == null) {
+			return Collections.emptyMap();
+		}
+		IResourceDescription resourceDescription = resourceDescriptionManager.getResourceDescription(resource);
+		Map<EObject, URI> exportedElementMap = newIdentityHashMap();
 		if (resourceDescription != null) {
 			for (IEObjectDescription exportedEObjectDescription : resourceDescription.getExportedObjects()) {
 				EObject eObject = resource.getEObject(exportedEObjectDescription.getEObjectURI().fragment());
@@ -163,6 +299,7 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 		return exportedElementMap;
 	}
 
+	@Deprecated
 	protected URI findClosestExportedContainerURI(EObject element, Map<EObject, URI> exportedElementsMap) {
 		EObject current = element;
 		while (current != null) {
@@ -174,6 +311,7 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 		return null;
 	}
 
+	@Deprecated
 	protected void findIndexedReferences(Set<URI> targetURIs, IAcceptor<IReferenceDescription> acceptor,
 			Predicate<IReferenceDescription> filter) {
 		Set<URI> targetResourceURIs = newHashSet(transform(targetURIs, new Function<URI, URI>() {
@@ -190,6 +328,14 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 						acceptor.accept(referenceDescription);
 					}
 				}
+			}
+		}
+	}
+	
+	public void findReferences(Set<URI> targetURIs, IResourceDescription resourceDescription, IAcceptor<IReferenceDescription> acceptor, ILocalResourceAccess localResourceAccess) {
+		for (IReferenceDescription referenceDescription : resourceDescription.getReferenceDescriptions()) {
+			if (targetURIs.contains(referenceDescription.getTargetEObjectUri())) {
+				acceptor.accept(referenceDescription);
 			}
 		}
 	}

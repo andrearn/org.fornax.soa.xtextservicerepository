@@ -5,15 +5,15 @@ Bundle-Vendor: Fornax Platform
 Bundle-Version: 1.6.1.qualifier
 Bundle-SymbolicName: org.fornax.soa.profiledsl.generator; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.fornax.soa.profiledsl;bundle-version="1.6.0";visibility:=reexport,
- org.eclipse.xtext;bundle-version="2.3.1";visibility:=reexport,
+Require-Bundle: org.fornax.soa.profiledsl;bundle-version="1.6.1";visibility:=reexport,
+ org.eclipse.xtext;bundle-version="2.4.2";visibility:=reexport,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.mwe.utils;visibility:=reexport,
- org.fornax.soa.profiledsl;bundle-version="1.6.0",
- org.fornax.soa.basedsl.generator;bundle-version="1.6.0",
- org.fornax.soa.xtextservicerepo.generator;bundle-version="1.6.0",
- org.fornax.soa.environmentdsl;bundle-version="1.6.0",
- org.eclipse.xtend2.lib;bundle-version="2.3.1"
+ org.fornax.soa.profiledsl;bundle-version="1.6.1",
+ org.fornax.soa.basedsl.generator;bundle-version="1.6.1",
+ org.fornax.soa.xtextservicerepo.generator;bundle-version="1.6.1",
+ org.fornax.soa.environmentdsl;bundle-version="1.6.1",
+ org.eclipse.xtend2.lib;bundle-version="2.4.2"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.profiledsl.generator;uses:="org.eclipse.xtext,org.fornax.soa.profiledsl,com.google.inject",

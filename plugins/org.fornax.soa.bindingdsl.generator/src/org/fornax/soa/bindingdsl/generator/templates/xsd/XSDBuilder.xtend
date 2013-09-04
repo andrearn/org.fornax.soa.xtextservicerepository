@@ -18,6 +18,7 @@ import java.util.logging.Level
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 /*
  * Generate an XSD for a SubNamespace. Types and exceptions are filtered by their lifecycle state, determining whether it
@@ -28,6 +29,7 @@ class XSDBuilder {
 	@Inject extension BindingExtensions
 	@Inject extension EnvironmentBindingResolver		
 	@Inject extension LifecycleQueries
+	@Inject extension NamespaceQuery
 		
 	
 	@Inject XSDGenerator 					xsdGenerator
@@ -43,7 +45,8 @@ class XSDBuilder {
 	}
 	
 	
-	def void toXSD (SubNamespace ns, Environment env, SOAProfile profile) {
+	def void toXSD (SubNamespace ns, Environment env, SOAProfile enforcedProfile) {
+		val profile = ns.getApplicableProfile(enforcedProfile)
 		log.fine("Generating XSDs for namespace " + nameProvider.getFullyQualifiedName(ns).toString)
 		try {
 			xsdGenerator.toXSD (ns, env.getMinLifecycleState (profile.lifecycle), profile, env.getRegistryBaseUrl());
@@ -52,7 +55,8 @@ class XSDBuilder {
 		}
 	}
 	
-	def void toXSD (VersionedDomainNamespace ns, Environment env, SOAProfile profile) {
+	def void toXSD (VersionedDomainNamespace ns, Environment env, SOAProfile enforcedProfile) {
+		val profile = (ns.subdomain as SubNamespace).getApplicableProfile(enforcedProfile)
 		log.fine("Generating XSDs for namespace " + ns.fqn + " with major version " + ns.version)
 		try {
 			xsdGenerator.toXSD (ns, env.getMinLifecycleState (profile.lifecycle), profile, env.getRegistryBaseUrl());
@@ -63,14 +67,16 @@ class XSDBuilder {
 	
 	
 
-	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, Binding bind, SOAProfile profile) {
+	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, Binding bind, SOAProfile enforcedProfile) {
 		
 	}
-	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, ServiceBinding bind, SOAProfile profile) {
+	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, ServiceBinding bind, SOAProfile enforcedProfile) {
+		val profile = (ns.subdomain as SubNamespace).getApplicableProfile(enforcedProfile)
 		toXSD(ns, minState, bind.eContainer as Binding, profile)
 	}
 	
-	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, ModuleBinding bind, SOAProfile profile) {
+	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, ModuleBinding bind, SOAProfile enforcedProfile) {
+		val profile = (ns.subdomain as SubNamespace).getApplicableProfile(enforcedProfile)
 		log.fine("Generating XSDs for namespace " + ns.fqn + " with major version " + ns.version)
 		try {
 			xsdGenerator.toXSD (ns, minState, profile, bind.getRegistryBaseUrl());

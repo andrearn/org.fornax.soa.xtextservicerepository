@@ -27,6 +27,7 @@ import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTemplateExtension
 import org.fornax.soa.servicedsl.generator.templates.xsd.SchemaTypeExtensions
 import org.fornax.soa.servicedsl.generator.templates.xsd.XSDGenerator
 import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver
 
 class WrappedWsdlGenerator {
 	
@@ -42,6 +43,7 @@ class WrappedWsdlGenerator {
 	@Inject extension NamespaceImportQueries
 	@Inject extension XSDGenerator
 	@Inject extension OperationWrapperTypesGenerator
+	@Inject extension ILifecycleStateResolver
 	
 	@Inject IEObjectDocumentationProvider docProvider
 	
@@ -66,7 +68,8 @@ class WrappedWsdlGenerator {
 		throw new UnsupportedOperationException ()
 	}
 	
-	def dispatch toWrappedWSDL(Service svc, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toWrappedWSDL(Service svc, DomainNamespace subDom, LifecycleState minState, SOAProfile enforcedProfile, String registryBaseUrl) {
+		val profile = subDom.getApplicableProfile(enforcedProfile)
 		val allServiceExceptionRefs = svc.operations.map (o|o.^throws).flatten;
 		svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);
 		val content = '''
@@ -81,7 +84,7 @@ class WrappedWsdlGenerator {
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «svc.version.toVersionNumber()»
-				Lifecycle state: «svc.state.toStateName»
+				Lifecycle state: «svc.lifecycleState.toStateName»
 				
 				«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>
@@ -115,7 +118,7 @@ class WrappedWsdlGenerator {
 			targetNamespace="«svc.toWrapperServiceTargetNamespace()»">
 			<wsdl:documentation>
 				<![CDATA[Version «svc.version.toVersionNumber()»
-				Lifecycle state: «svc.state.toStateName»
+				Lifecycle state: «svc.lifecycleState.toStateName»
 				
 				«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>
@@ -203,7 +206,7 @@ class WrappedWsdlGenerator {
 		<wsdl:portType name="«svc.name»Wrapped">
 			<wsdl:documentation>
 					<![CDATA[Version:	«svc.version.toVersionNumber()»
-					Lifecycle state: «svc.state.toStateName»
+					Lifecycle state: «svc.lifecycleState.toStateName»
 										
 					«docProvider.getDocumentation (svc)»]]>
 			</wsdl:documentation>

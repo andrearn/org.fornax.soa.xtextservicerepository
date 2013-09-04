@@ -11,6 +11,10 @@ class ProfileQueries {
 	@Inject IPredicateSearch search
 	
 	def SOAProfile getDefaultProfile () {
-		search.search("SOAProfile ", Predicates::alwaysTrue).filter (typeof (SOAProfile)).head
+		search.search("SOAProfile ", Predicates::alwaysTrue).filter (typeof (SOAProfile)).filter[defaultProfile == true].head
+	}
+	
+	def SOAProfile getProfileByName (String profileName) {
+		search.search("SOAProfile ", Predicates::alwaysTrue).filter (typeof (SOAProfile)).findFirst[name == profileName]
 	}
 }

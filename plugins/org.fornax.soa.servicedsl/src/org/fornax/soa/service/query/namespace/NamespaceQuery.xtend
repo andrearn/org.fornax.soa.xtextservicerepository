@@ -16,6 +16,8 @@ import org.fornax.soa.serviceDsl.ServiceRef
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedTypeRef
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.fornax.soa.profiledsl.query.ProfileQueries
 
 /*
  * Namespace lookup functions
@@ -26,6 +28,7 @@ class NamespaceQuery {
 	@Inject extension TypesByLifecycleStateFinder
 	@Inject extension ServiceQueries
 	@Inject extension ExceptionFinder
+	@Inject ProfileQueries profileQuery
 
 	def OrganizationNamespace findOrgNamespace (EObject o) {
 		val OrganizationNamespace orgNs = o.getOwnerByType(typeof (OrganizationNamespace))
@@ -102,6 +105,18 @@ class NamespaceQuery {
 	
 	def dispatch boolean hasExceptionsInMinState (VersionedDomainNamespace ns, LifecycleState state) {
 		ns.exceptionsWithMinState (state).size > 0;
+	}
+	
+	def SOAProfile getApplicableProfile (SubNamespace ns, SOAProfile enforcedProfile) {
+		if (enforcedProfile == null) {
+			if (ns.profile != null) {
+				return ns.profile
+			} else {
+				profileQuery.defaultProfile
+			}
+		} else {
+			return enforcedProfile
+		}
 	}
 		
 }

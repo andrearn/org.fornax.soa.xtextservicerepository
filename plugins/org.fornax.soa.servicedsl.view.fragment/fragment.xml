@@ -3,7 +3,7 @@
 <fragment>
 	<extension point="org.eclipse.xtext.graphview.selectionStrategy">
 		<strategy
-        	class="org.fornax.soa.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.graphview.view.selection.XtextEditorSelectionStrategy">
+        	class="org.fornax.soa.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.graphview.providers.XtextEditorSelectionStrategy">
     	</strategy>
 	</extension>
 
