@@ -6,5 +6,5 @@ Bundle-Version: 1.6.1.qualifier
 Bundle-Vendor: Fornax Platform
 Fragment-Host: org.fornax.soa.moduledsl.ui;bundle-version="1.6.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.eclipse.xtext.graphview;bundle-version="1.0.1",
+Require-Bundle: org.eclipse.xtext.graphview;bundle-version="1.0.2",
  org.eclipse.xtext.graphview.providers;bundle-version="1.0.0"

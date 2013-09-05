@@ -240,7 +240,7 @@
 		<repository>
 			<id>graphview</id>
 			<layout>p2</layout>
-			<url>http://download.anderscore.com/graphview/updates-xtext23</url>
+			<url>http://download.anderscore.com/graphview/updates</url>
 		</repository>
 		<repository>
 			<id>kieler</id>
@@ -284,13 +284,13 @@
 		<profile>
 			<id>xtext-2.4</id>
 			<properties>
-				<xtext-version>2.4.0</xtext-version>
+				<xtext-version>2.4.2</xtext-version>
 			</properties>
 			<repositories>
 				<repository>
 					<id>juno</id>
 					<layout>p2</layout>
-					<url>http://download.eclipse.org/releases/juno</url>
+					<url>http://download.eclipse.org/releases/indigo</url>
 				</repository>
 			</repositories>
 			<activation>
