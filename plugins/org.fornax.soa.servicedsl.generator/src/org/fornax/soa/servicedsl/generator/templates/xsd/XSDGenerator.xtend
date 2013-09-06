@@ -17,7 +17,6 @@ import org.fornax.soa.service.versioning.NamespaceSplitter
 import org.fornax.soa.service.query.ExceptionFinder
 import org.fornax.soa.service.query.namespace.NamespaceImportQueries
 import org.fornax.soa.service.versioning.IExceptionResolver
-import org.fornax.soa.service.versioning.ITypeResolver
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.EnumLiteral
 import org.fornax.soa.serviceDsl.Enumeration
@@ -33,6 +32,7 @@ import org.fornax.soa.servicedsl.generator.templates.CommonTemplateExtensions
 import org.fornax.soa.serviceDsl.DataObject
 import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.fornax.soa.service.query.namespace.NamespaceQuery
+import org.fornax.soa.service.versioning.IVersionedTypeRefResolver
 
 /**
  * Templates for XSD generation
@@ -49,7 +49,7 @@ class XSDGenerator {
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries
 	@Inject extension NamespaceQuery
-	@Inject extension ITypeResolver
+	@Inject extension IVersionedTypeRefResolver
 	@Inject extension IStateMatcher
 	
 	@Inject IExceptionResolver exceptionResolver
@@ -148,15 +148,16 @@ class XSDGenerator {
 	*/
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val resSet = profile.eResource.resourceSet
+		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
 		val imports = vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace());
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState ==null || !b.lifecycleState.isEnd)
-			.filter (e|minState.matches (e.lifecycleState) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
+			.filter (e|minState.matches (e.lifecycleState) && e.typeMatchesMajorVersion (namespaceMajorVersion,  minState));
 		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
-			.filter (e|minState.matches (e.lifecycleState) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
+			.filter (e|minState.matches (e.lifecycleState) && e.typeMatchesMajorVersion (namespaceMajorVersion,  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
-			.filter (en|minState.matches (en.lifecycleState) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
+			.filter (en|minState.matches (en.lifecycleState) && en.typeMatchesMajorVersion (namespaceMajorVersion, minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
-			.filter (ex|minState.matches (ex.lifecycleState) && exceptionResolver.isMatchingException (ex, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
+			.filter (ex|minState.matches (ex.lifecycleState) && exceptionResolver.isMatchingException (ex, namespaceMajorVersion, minState));
 
 		if (!bos.empty || !qos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''
@@ -195,15 +196,16 @@ class XSDGenerator {
 		that match the given minimal LifecycleState.
 	*/
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
 		val imports = vns.importedVersionedNS(minState).filter(e|e.toNamespace() != vns.toNamespace());
-		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.state==null || !b.state.isEnd)
-			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
-		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.state==null || !b.state.isEnd)
-			.filter (e|minState.matches (e.state) && e.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(),  minState));
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
+			.filter (e|minState.matches (e.lifecycleState) && e.typeMatchesMajorVersion (namespaceMajorVersion,  minState));
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
+			.filter (e|minState.matches (e.lifecycleState) && e.typeMatchesMajorVersion (namespaceMajorVersion,  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
-			.filter (en|minState.matches (en.state) && en.isMatchingType (versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
+			.filter (en|minState.matches (en.lifecycleState) && en.typeMatchesMajorVersion (namespaceMajorVersion, minState));
 		val exceptions = vns.exceptions.filter (typeof (org.fornax.soa.serviceDsl.Exception))
-			.filter (e|minState.matches (e.state) && exceptionResolver.isMatchingException (e, versionQualifier.toMajorVersionNumber(vns.version).asInteger(), minState));
+			.filter (e|minState.matches (e.lifecycleState) && exceptionResolver.isMatchingException (e, namespaceMajorVersion, minState));
 
 		if (!bos.empty || !qos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''

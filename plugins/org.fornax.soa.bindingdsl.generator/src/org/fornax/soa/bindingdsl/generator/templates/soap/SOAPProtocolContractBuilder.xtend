@@ -78,15 +78,15 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 						if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (binding.resolveEnvironment)) {
 							val namespace = svc.findSubdomain();
 							val profile = namespace.getApplicableProfile(enforcedProfile)
-//							val minState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
+							val typesMinState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
 							val minState = binding.module.module.state
 									
 							wsdlGenerator.toWSDL (svc, namespace, minState, profile, binding.getRegistryBaseUrl());
 							concreteWsdlGenerator.toWSDL(binding, svc, soapProt, profile);
 									
 							if ( ! noDependencies) {
-								val verNamespaces = svc.importedVersionedNS (minState);
-								verNamespaces.forEach (n | xsdGenerator.toXSD(n, minState, binding, profile));
+								val verNamespaces = svc.importedVersionedNS (typesMinState);
+								verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, binding, profile));
 										
 								val requestHeader = svc.findBestMatchingRequestHeader (profile);
 								if (requestHeader != null) {
@@ -168,14 +168,14 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				if (service.providedContractUrl == null && service.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
 					val namespace = service.findSubdomain();
 					val profile = namespace.getApplicableProfile(enforcedProfile)
-//					val minState = lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, profile.lifecycle)
+					val typesMinState = lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, profile.lifecycle)
 							
 					wsdlGenerator.toWSDL (service, namespace, minState, profile, specBinding.getRegistryBaseUrl());
 					concreteWsdlGenerator.toWSDL(specBinding, service, soapProt, profile);
 							
 					if ( ! noDependencies) {
-						val verNamespaces = service.importedVersionedNS (minState);
-						verNamespaces.forEach (n | xsdGenerator.toXSD(n, minState, specBinding, profile));
+						val verNamespaces = service.importedVersionedNS (typesMinState);
+						verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile));
 								
 						val requestHeader = service.findBestMatchingRequestHeader (profile);
 						if (requestHeader != null) {

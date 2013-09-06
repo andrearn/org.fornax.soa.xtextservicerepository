@@ -13,38 +13,38 @@ import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import com.google.inject.Inject
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
-import org.fornax.soa.service.versioning.ITypeResolver
 import org.fornax.soa.serviceDsl.DataObject
 import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver
+import org.fornax.soa.service.versioning.IVersionedTypeRefResolver
 
 /*
  * Find type references of a model object
  */
 class ReferencedTypesFinder {
 	
-	@Inject extension ITypeResolver
+	@Inject extension IVersionedTypeRefResolver
 	
 	
 	def dispatch List<VersionedType> allReferencedVersionedTypes (Type t, LifecycleState minState) {newArrayList()}
 	
 	def dispatch List<VersionedType> allReferencedVersionedTypes (BusinessObject t, LifecycleState minState) { 
-		t.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingType () as VersionedType).toList;	
+		t.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingTypeVersion () as VersionedType).toList;	
 	}
 	
 	def dispatch List<VersionedType> allReferencedVersionedTypes (org.fornax.soa.serviceDsl.Exception t, LifecycleState minState) { 
-		t.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingType () as VersionedType).toList;
+		t.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingTypeVersion () as VersionedType).toList;
 	}
 	
 	def dispatch List<VersionedType> allReferencedVersionedTypes (Parameter p, LifecycleState minState) { 
-		p.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingType () as VersionedType).toList;
+		p.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingTypeVersion () as VersionedType).toList;
 	}
 	
 	def dispatch List<VersionedType>  allReferencedVersionedTypes (Operation o, LifecycleState minState) {
-		o.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingType () as VersionedType).toList;
+		o.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingTypeVersion () as VersionedType).toList;
 	}
 	
 	def dispatch List<VersionedType>  allReferencedVersionedTypes (Service s, LifecycleState minState) {
-		s.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingType () as VersionedType).toList;
+		s.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingTypeVersion () as VersionedType).toList;
 	}
 	
 	

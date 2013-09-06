@@ -9,13 +9,13 @@ import org.fornax.soa.service.query.ServiceQueries
 import org.fornax.soa.service.query.type.ReferencedTypesFinder
 import org.fornax.soa.service.query.type.VersionedTypeFilter
 import org.fornax.soa.service.versioning.IExceptionResolver
-import org.fornax.soa.service.versioning.ITypeResolver
 import org.fornax.soa.service.versioning.NamespaceSplitter
 import org.fornax.soa.serviceDsl.AbstractVersionedTypeRef
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.Service
 import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.serviceDsl.Type
+import org.fornax.soa.service.versioning.IVersionedTypeRefResolver
 
 /*********************************************************************************
  *	Calculation of all VersionedDomainNamespaces imported by a given or derived 
@@ -24,7 +24,7 @@ import org.fornax.soa.serviceDsl.Type
 class NamespaceImportQueries {
 	
 	@Inject extension NamespaceQuery
-	@Inject extension ITypeResolver
+	@Inject extension IVersionedTypeRefResolver
 	@Inject extension VersionedTypeFilter
 	@Inject extension ReferencedTypesFinder
 
@@ -40,9 +40,9 @@ class NamespaceImportQueries {
 	 */
 	def Set<VersionedDomainNamespace> findImportedSubdomains (Service svc) { 
 		var imports = svc.operations.map (o|o.parameters).flatten.map (p|p.type).filter(typeof (AbstractVersionedTypeRef))
-			.map (r|r.findMatchingType()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)).toSet;
+			.map (r|r.findMatchingTypeVersion()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)).toSet;
 		imports.addAll (svc.operations.map (o|o.^return).flatten.map (r|r.type).filter (typeof (AbstractVersionedTypeRef))
-			.map (v|v.findMatchingType()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
+			.map (v|v.findMatchingTypeVersion()).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		imports.addAll (svc.operations.map (o|o.^throws).flatten.map(t|excResolver.findMatchingException(t)).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		return imports;
 	}

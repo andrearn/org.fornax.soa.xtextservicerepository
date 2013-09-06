@@ -33,7 +33,7 @@ import org.fornax.soa.service.versioning.DefaultServiceResolver;
 import org.fornax.soa.service.versioning.DefaultTypeResolver;
 import org.fornax.soa.service.versioning.IExceptionResolver;
 import org.fornax.soa.service.versioning.IServiceResolver;
-import org.fornax.soa.service.versioning.ITypeResolver;
+import org.fornax.soa.service.versioning.IVersionedTypeRefResolver;
 import org.fornax.soa.service.versioning.LatestMinorVersionExceptionResolver;
 import org.fornax.soa.service.versioning.LatestMinorVersionServiceResolver;
 import org.fornax.soa.util.EnvironmentTypeComparator;
@@ -106,7 +106,7 @@ public class ServiceDslRuntimeModule extends org.fornax.soa.AbstractServiceDslRu
 		return DefaultEnvironmentPerspectiveSelector.class;
 	}
 	
-	public Class<? extends ITypeResolver> bindITypeResolver () {
+	public Class<? extends IVersionedTypeRefResolver> bindIVersionedTypeRefResolver () {
 		return DefaultTypeResolver.class;
 	}
 	

@@ -15,7 +15,6 @@ import org.fornax.soa.service.versioning.NamespaceSplitter
 import org.fornax.soa.service.query.VersionQueries
 import org.fornax.soa.service.query.namespace.NamespaceQuery
 import org.fornax.soa.service.versioning.IExceptionResolver
-import org.fornax.soa.service.versioning.ITypeResolver
 import org.fornax.soa.serviceDsl.BusinessObject
 import org.fornax.soa.serviceDsl.DataObjectRef
 import org.fornax.soa.serviceDsl.DataTypeRef
@@ -32,6 +31,7 @@ import org.fornax.soa.serviceDsl.TypeRef
 import org.fornax.soa.serviceDsl.VersionedType
 import org.fornax.soa.serviceDsl.VersionedTypeRef
 import org.fornax.soa.serviceDsl.DataObjectRef
+import org.fornax.soa.service.versioning.IVersionedTypeRefResolver
 
 /**
  * Extension functions for 
@@ -44,7 +44,7 @@ class SchemaTypeExtensions {
 	@Inject extension NamespaceQuery
 	@Inject extension VersionQualifierExtensions
 	@Inject extension VersionQueries
-	@Inject extension ITypeResolver
+	@Inject extension IVersionedTypeRefResolver
 	@Inject extension IExceptionResolver
 	@Inject extension IEObjectLookup
 	
@@ -402,21 +402,21 @@ class SchemaTypeExtensions {
 	 */
 	def dispatch String toNamespace (VersionedTypeRef t) { 
 		t.type.eContainer.toUnversionedNamespace() + "/"
-			+ (t.findMatchingType() as VersionedType).version.toVersionPostfix() + "/";
+			+ (t.findMatchingTypeVersion() as VersionedType).version.toVersionPostfix() + "/";
 	}
 	/**
 	 * Calculate the namespace URL
 	 */
 	def dispatch String toNamespace (DataObjectRef t) { 
 		t.type.eContainer.toUnversionedNamespace() + "/"
-			+ (t.findMatchingType() as BusinessObject).version.toVersionPostfix() + "/";
+			+ (t.findMatchingTypeVersion() as BusinessObject).version.toVersionPostfix() + "/";
 	}
 	/**
 	 * Calculate the namespace URL
 	 */
 	def dispatch String toNamespace (EnumTypeRef t) {
 		t.type.eContainer.toUnversionedNamespace() + "/"
-			+ (t.findMatchingType() as Enumeration).version.toVersionPostfix() + "/";
+			+ (t.findMatchingTypeVersion() as Enumeration).version.toVersionPostfix() + "/";
 	}
 	/**
 	 * Calculate the namespace URL
