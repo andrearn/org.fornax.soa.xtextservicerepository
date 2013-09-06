@@ -18,7 +18,7 @@ datatype anyType
 /**
  * A SOA architecture profile defines some basic rules for the whole company
  */
-soa-profile SampleArchitectureProfile {
+default soa-profile SampleArchitectureProfile {
 	scope "Example Org"
 	
 	/** Example Org default asset lifecycle */

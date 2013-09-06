@@ -7,9 +7,8 @@
  * 
  * initial contribution:	André Arnold
  *******************************************************************************/
-import org.eclipse.xtext.graphview.shape.*
-import org.eclipse.xtext.graphview.layout.*  
-import org.eclipse.xtext.graphview.behavior.layout.*  
+import org.eclipse.xtext.graphview.lib.shape.*
+import org.eclipse.xtext.graphview.lib.layout.*
 import org.eclipse.draw2d.*
 import org.eclipse.swt.SWT
 import ServiceDiagram.*
@@ -29,12 +28,12 @@ style ServiceNode {
 	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 	)
 }
-style ServiceNode.Version { 
+style ServiceDiagram.ServiceNode.Version { 
 	this.font = font("Helvetica", 10, SWT::CENTER 
 	)
 }
 
-style ServiceNode.OperationNode as RoundedRectangleShape {
+style ServiceDiagram.ServiceNode.OperationNode as RoundedRectangleShape {
 	this.outline = false
 	this.backgroundColor = color(#ffffff)
 	this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
@@ -42,7 +41,7 @@ style ServiceNode.OperationNode as RoundedRectangleShape {
 	)
 }
 
-style ServiceNode.RequiredServiceEdge {
+style ServiceDiagram.ServiceNode.RequiredServiceEdge {
 	this.lineStyle = SWT::LINE_DASH
 	this.foregroundColor = color(#cccccc)
 }
@@ -56,15 +55,15 @@ style HiddenExceptionNode {
 	this.font = font("Helvetica", 10, SWT::CENTER 
 	)
 }
-style HiddenExceptionNode.ExceptionLabel { 
+style ServiceDiagram.HiddenExceptionNode.ExceptionLabel { 
 	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 	)
 }
-style HiddenExceptionNode.Name { 
+style ServiceDiagram.HiddenExceptionNode.Name { 
 	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 	)
 }
-style HiddenExceptionNode.PropertiesNode as RoundedRectangleShape {
+style ServiceDiagram.HiddenExceptionNode.PropertiesNode as RoundedRectangleShape {
 	this.outline = false
 	this.backgroundColor = color(#ffffff)
 	this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
@@ -80,12 +79,12 @@ style BusinessObjectNode {
 		(if (element.abstract) SWT::ITALIC else SWT::NONE)
 	)
 }
-style BusinessObjectNode.Version { 
+style ServiceDiagram.BusinessObjectNode.Version { 
 	this.font = font("Helvetica", 10, SWT::CENTER 
 	)
 }
 
-style BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
+style ServiceDiagram.BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
 	this.outline = false
 	this.backgroundColor = color(#ffffff)
 	this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
@@ -93,12 +92,12 @@ style BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
 	)
 }
 
-style BusinessObjectNode.HiddenEnumReferenceEdge {
+style ServiceDiagram.BusinessObjectNode.HiddenEnumReferenceEdge {
 	this.lineStyle = SWT::LINE_DASH
 	this.foregroundColor = color(#cccccc)
 }
 
-style BusinessObjectNode.InhertanceEdge as ConnectionShape  {
+style ServiceDiagram.BusinessObjectNode.InhertanceEdge as ConnectionShape  {
 	var arrow = new PolygonDecoration()
 	arrow.setScale(8,8)
 	arrow.backgroundColor = color(#ffffff)
@@ -111,12 +110,12 @@ style QueryObjectNode {
 	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD
 	)
 }
-style QueryObjectNode.Version { 
+style ServiceDiagram.QueryObjectNode.Version { 
 	this.font = font("Helvetica", 10, SWT::CENTER 
 	)
 }
 
-style QueryObjectNode.PropertiesNode as RoundedRectangleShape {
+style ServiceDiagram.QueryObjectNode.PropertiesNode as RoundedRectangleShape {
 	this.outline = false
 	this.backgroundColor = color(#ffffff)
 	this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
@@ -132,15 +131,15 @@ style EnumNode {
 	this.font = font("Helvetica", 10, SWT::CENTER 
 	)
 }
-style EnumNode.EnumLabel { 
+style ServiceDiagram.EnumNode.EnumLabel { 
 	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 	)
 }
-style EnumNode.Name { 
+style ServiceDiagram.EnumNode.Name { 
 	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
 	)
 }
-style EnumNode.EnumLiteralNode as RoundedRectangleShape {
+style ServiceDiagram.EnumNode.EnumLiteralNode as RoundedRectangleShape {
 	this.outline = false
 	this.backgroundColor = color(#ffffff)
 	this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
