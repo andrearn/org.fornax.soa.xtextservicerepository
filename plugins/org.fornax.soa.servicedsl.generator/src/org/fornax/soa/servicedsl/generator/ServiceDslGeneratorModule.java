@@ -8,6 +8,8 @@ import org.fornax.soa.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
 import org.fornax.soa.basedsl.version.VersionMatcher;
 import org.fornax.soa.basedsl.version.VersionQualifierExtensions;
 import org.fornax.soa.profiledsl.generator.templates.MessageHeaderXSDTemplates;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
+import org.fornax.soa.profiledsl.state.DefaultStateResolver;
 import org.fornax.soa.service.query.ExceptionFinder;
 import org.fornax.soa.service.query.HeaderFinder;
 import org.fornax.soa.service.query.ServiceQueries;
@@ -153,6 +155,10 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 	
 	public Class<? extends IFileSystemAccess> bindIFileSystemAccess () {
 		return JavaIoFileSystemAccess.class;
+	}
+	
+	public Class<? extends ILifecycleStateResolver> bindLifecycleStateResolver () {
+		return DefaultStateResolver.class;
 	}
 
 	

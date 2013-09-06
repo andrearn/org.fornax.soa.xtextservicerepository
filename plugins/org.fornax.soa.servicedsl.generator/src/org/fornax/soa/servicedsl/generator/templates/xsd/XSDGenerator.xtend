@@ -66,7 +66,7 @@ class XSDGenerator {
 	IEObjectDocumentationProvider docProvider
 	
 	@Inject LifecycleQueries lifecycleQueries
-	@Inject extension ILifecycleStateResolver stateResolver
+	@Inject extension ILifecycleStateResolver
 
 	@Inject 
 	private Logger log

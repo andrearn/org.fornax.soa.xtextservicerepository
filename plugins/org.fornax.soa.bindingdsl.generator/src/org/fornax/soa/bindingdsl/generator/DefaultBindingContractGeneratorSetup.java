@@ -17,6 +17,8 @@ import org.fornax.soa.moduledsl.generator.ModuleDslGeneratorModule;
 import org.fornax.soa.moduledsl.generator.VersionedModuleSelector;
 import org.fornax.soa.profiledsl.generator.ProfileDslGeneratorModule;
 import org.fornax.soa.profiledsl.generator.ProfileGeneratorConstants;
+import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
+import org.fornax.soa.profiledsl.state.DefaultStateResolver;
 import org.fornax.soa.servicedsl.generator.ServiceDslGeneratorModule;
 import org.fornax.soa.xtextservicerepo.generator.XtextServiceRepositoryGeneratorConstants;
 import org.fornax.soa.xtextservicerepo.generator.XtextServiceRepositoryGeneratorModule;
@@ -123,6 +125,7 @@ public class DefaultBindingContractGeneratorSetup implements ISetup {
 
 						bind (IFileSystemAccess.class).toInstance (fileSystemAccess);
 						bind (JavaIoFileSystemAccess.class).toInstance (fileSystemAccess);
+						bind (ILifecycleStateResolver.class).to(DefaultStateResolver.class);
 					}
 
 				}));
