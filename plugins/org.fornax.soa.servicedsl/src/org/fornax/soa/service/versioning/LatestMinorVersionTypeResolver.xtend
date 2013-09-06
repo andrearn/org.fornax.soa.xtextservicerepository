@@ -20,33 +20,33 @@ import org.fornax.soa.serviceDsl.VersionedTypeRef
 import org.fornax.soa.serviceDsl.DataObjectRef
 import org.fornax.soa.serviceDsl.DataObject
 
-class LatestMinorVersionTypeResolver implements ITypeResolver {
+class LatestMinorVersionTypeResolver implements IVersionedTypeRefResolver {
 	
 	@Inject extension VersionMatcher
 	@Inject extension StateMatcher
 	@Inject extension NamespaceQuery
 	@Inject extension IQualifiedNameProvider
 	
-	override selectMatchingType(AbstractVersionedTypeRef ref) {
-		selectMatchingType(ref)
+	override selectMatchingTypeVersion(AbstractVersionedTypeRef ref) {
+		selectMatchingTypeVersion(ref)
 	}
 	
-	def dispatch VersionedType selectMatchingTypeImpl (AbstractVersionedTypeRef ref) {}
+	def dispatch VersionedType selectMatchingTypeVersionImpl (AbstractVersionedTypeRef ref) {}
 	
-	def dispatch VersionedType selectMatchingTypeImpl (VersionedTypeRef ref) {
+	def dispatch VersionedType selectMatchingTypeVersionImpl (VersionedTypeRef ref) {
 		ref.type;
 	}
 	
-	def dispatch VersionedType selectMatchingTypeImpl (DataObjectRef ref) {
+	def dispatch VersionedType selectMatchingTypeVersionImpl (DataObjectRef ref) {
 		ref.type;
 	}
 	
-	def dispatch VersionedType selectMatchingTypeImpl (EnumTypeRef ref) {
+	def dispatch VersionedType selectMatchingTypeVersionImpl (EnumTypeRef ref) {
 		ref.type;
 	}
 	
-	override selectMatchingTypeByState(AbstractVersionedTypeRef ref, LifecycleState minState) {
-		selectMatchingTypeByState(ref, minState)
+	override selectMatchingTypeVersionByState(AbstractVersionedTypeRef ref, LifecycleState minState) {
+		selectMatchingTypeVersionByState(ref, minState)
 	}
 	
 	def dispatch VersionedType selectMatchingTypeByStateImpl (AbstractVersionedTypeRef ref, LifecycleState minState) {}
@@ -75,7 +75,7 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 	 *	Checks if type declaration is the latest version matching the following constraint. The function
 	 *	should never be called as Type is not versioned and considered abstract
 	 */
-	def dispatch boolean isMatchingType (Type t, Integer majorVersion, LifecycleState minState) { 
+	def dispatch boolean typeMatchesMajorVersion (Type t, Integer majorVersion, LifecycleState minState) { 
 		false;
 	}
 	
@@ -83,7 +83,7 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 	 *		Checks if type declaration is the latest version matching the following constraint
 	 *		- same major version
 	 */
-	override boolean isMatchingType (VersionedType t, Integer majorVersion) { 
+	override boolean typeMatchesMajorVersion (VersionedType t, Integer majorVersion) { 
 		(findMatchingVersionedType ( 
 			(t.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (e|e.name == t.name).toList, 
 			majorVersion)
@@ -94,7 +94,7 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 	 *		Checks if type declaration is the latest version matching the following constraint
 	 *		- same major version
 	 */
-	override boolean isMatchingType (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType t, Integer majorVersion) { 
+	override boolean typeMatchesMajorVersion (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType t, Integer majorVersion) { 
 		(findMatchingVersionedTypeFromProfile ( 
 			(t.eContainer as SubNamespace).types.filter (typeof (org.fornax.soa.profiledsl.sOAProfileDsl.VersionedType)).filter (e|e.name == t.name).toList, 
 			majorVersion)
@@ -106,7 +106,7 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 	 *		- same major version
 	 *      - matches a given minimal lifecycle state
 	 */
-	def dispatch boolean isMatchingType (VersionedType t, Integer majorVersion, LifecycleState minState) { 
+	def dispatch boolean typeMatchesMajorVersion (VersionedType t, Integer majorVersion, LifecycleState minState) { 
 		findMatchingVersionedType ( 
 			(t.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (e|e.name == t.name).toList, 
 			majorVersion, 
@@ -119,26 +119,26 @@ class LatestMinorVersionTypeResolver implements ITypeResolver {
 	 *		find the latest type declaration matching
 	 *  	- the version constraint defined in the reference
 	 */
-	def dispatch Type findMatchingType (EObject t) {
+	def dispatch Type findMatchingTypeVersion (EObject t) {
 	}
-	def dispatch Type findMatchingType (TypeRef t) {
+	def dispatch Type findMatchingTypeVersion (TypeRef t) {
 	}
 	
-	def dispatch Type findMatchingType (VersionedTypeRef t) {
+	def dispatch Type findMatchingTypeVersion (VersionedTypeRef t) {
 		t.type.findSubdomain ().types.
 			filter (e|e.fullyQualifiedName == t.type.fullyQualifiedName && t.type.version.versionMatches (t.versionRef))
 			.filter (typeof (VersionedType))
 			.sortBy (e|e.version.version).last( );
 	}
 	
-	def dispatch Type findMatchingType (DataObjectRef t) { 
+	def dispatch Type findMatchingTypeVersion (DataObjectRef t) { 
 		t.type.findSubdomain ().types.
 			filter (e|e.fullyQualifiedName == t.type.fullyQualifiedName && t.type.version.versionMatches (t.versionRef))
 			.filter (typeof (DataObject))
 			.sortBy (e|e.version.version).last( );
 	} 
 	
-	def dispatch Type findMatchingType (EnumTypeRef t) { 
+	def dispatch Type findMatchingTypeVersion (EnumTypeRef t) { 
 		t.type.findSubdomain ().types.
 			filter (
 				e|e.fullyQualifiedName == t.type.fullyQualifiedName && 
