@@ -318,7 +318,7 @@ class SchemaTypeExtensions {
 	}
 	
 	def dispatch boolean isMimeContent (DataTypeRef t) {
-		return t.contentType != null
+		return t.contentType != null || t.type.name == "attachment"
 	}
 	
 	def dispatch boolean isMimeContentMultiPartAttachment (TypeRef t) {

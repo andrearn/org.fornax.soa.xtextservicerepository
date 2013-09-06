@@ -393,7 +393,7 @@ class XSDGenerator {
 				<xsd:documentation>
 					<![CDATA[
 						Version:			«versionQualifier.toVersionNumber(en.version)»
-						Lifecycle state: 	«en.state.toStateName»
+						Lifecycle state: 	«en.lifecycleState.toStateName»
 						
 						«docProvider.getDocumentation (en)»
 					]]>
@@ -516,11 +516,11 @@ class XSDGenerator {
 		<xsd:enumeration value="«enumLit.name»"/>
 	'''
 	
-	def toMimeFragment (TypeRef t) '''
+	def dispatch toMimeFragment (TypeRef t) '''
 		xmime:expectedContentTypes="application/octet-stream"
 	'''
 	
-	def toAttachmentMimeFragment (DataTypeRef t) {
+	def dispatch toMimeFragment (DataTypeRef t) {
 	'''
 		«IF t.contentType != null»
 		xmime:expectedContentTypes="«t.contentType»"
