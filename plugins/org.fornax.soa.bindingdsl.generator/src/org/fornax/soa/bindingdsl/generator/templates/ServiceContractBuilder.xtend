@@ -65,13 +65,13 @@ class ServiceContractBuilder {
 	 * @param endpointQualifierRef Only generate for looked up bindings that are tagged with this endpoint qualifier
 	 * @param profile The architecture profile defining the architectural rules, generated service contracts must be compliant to 
 	 */
-	def void build (Module module, Environment targetEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
+	def void build (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
 		for (protContractBuilder : protocolContractBuilders) {
 			try {
 				if (generateProvidedServices)
-					protContractBuilder.buildProvidedServiceContracts (module, targetEnvironment, endpointQualifierRef, profile);
+					protContractBuilder.buildProvidedServiceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, endpointQualifierRef, profile);
 				if (generateUsedServices)
-					protContractBuilder.buildUsedServiceContracts (module, targetEnvironment, endpointQualifierRef, profile);
+					protContractBuilder.buildUsedServiceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, endpointQualifierRef, profile);
 			} catch (Exception ex) {
 				log.log (Level::SEVERE, "Error generating contracts\n", ex)
 			}

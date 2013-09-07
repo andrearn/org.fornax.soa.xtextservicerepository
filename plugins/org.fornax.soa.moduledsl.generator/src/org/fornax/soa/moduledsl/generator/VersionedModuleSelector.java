@@ -22,6 +22,7 @@ public class VersionedModuleSelector {
 	private String name;
 	private String version;
 	private boolean useOtherVersionIfNotInEnvironment;
+	private boolean selectTypeVersionsByEnvironment;
 	private boolean generateProvidedServices;
 	private boolean generateUsedServices;
 	private String endpointQualifier;
@@ -49,6 +50,15 @@ public class VersionedModuleSelector {
 	public void setUseOtherVersionIfNotInEnvironment(
 			boolean useOtherVersionIfNotInEnvironment) {
 		this.useOtherVersionIfNotInEnvironment = useOtherVersionIfNotInEnvironment;
+	}
+
+	public boolean isSelectTypeVersionsByEnvironment() {
+		return selectTypeVersionsByEnvironment;
+	}
+
+	public void setSelectTypeVersionsByEnvironment(
+			boolean selectTypeVersionsByEnvironment) {
+		this.selectTypeVersionsByEnvironment = selectTypeVersionsByEnvironment;
 	}
 
 	public boolean isGenerateProvidedServices() {

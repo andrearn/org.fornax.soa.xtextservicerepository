@@ -20,7 +20,7 @@ public interface IArtifactBuilder {
 	public abstract void build(final ModuleBinding binding, final SOAProfile profile, final boolean noDeps,
 			final boolean includeSubNamespaces);
 
-	public abstract void build(final Module module, final Environment environment, final boolean generateProvidedServices,
+	public abstract void build(final Module module, final Environment environment, final boolean selectTypeVersionsByEnvironment, final boolean generateProvidedServices,
 			final boolean generateUsedServices, final EndpointQualifierRef endpointQualifierRef, final SOAProfile profile);
 
 	public abstract void buildEvents(final SubNamespace ns, final List<Environment> environments, final String targetEnv,

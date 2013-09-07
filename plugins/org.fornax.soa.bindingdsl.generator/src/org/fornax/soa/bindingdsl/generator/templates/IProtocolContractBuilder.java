@@ -23,7 +23,7 @@ public abstract interface IProtocolContractBuilder {
 	 * Build technical service contracts for all services provided by this module. A binding of this module (or to
 	 * a compatible module version) to the given target environment will be used.
 	 */
-	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef providerEndpointQualifierRef, SOAProfile profile);
+	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef providerEndpointQualifierRef, SOAProfile profile);
 	
 	
 	/**
@@ -32,7 +32,7 @@ public abstract interface IProtocolContractBuilder {
 	 * to the given environment.
 	 * The bindings of the modules used by explicit or implicit reference from this module are used as bindings.
 	 */
-	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile profile);
+	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile profile);
 	
 	/**
 	 * Build technical type definitions for all types defined in the given namespace. The latest minor versions 

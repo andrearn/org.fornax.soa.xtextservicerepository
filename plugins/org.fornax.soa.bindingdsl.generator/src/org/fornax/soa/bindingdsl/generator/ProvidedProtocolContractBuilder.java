@@ -23,12 +23,12 @@ public class ProvidedProtocolContractBuilder implements IProtocolContractBuilder
 		provider.get().buildServiceContracts (bind, profile);
 	}
 
-	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef providerEndpointQualifier, SOAProfile profile) {
-		provider.get().buildProvidedServiceContracts (module, targetEnvironment, providerEndpointQualifier, profile);
+	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef providerEndpointQualifier, SOAProfile profile) {
+		provider.get().buildProvidedServiceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, providerEndpointQualifier, profile);
 	}
 	
-	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifier, SOAProfile profile) {
-		provider.get().buildUsedServiceContracts (module, targetEnvironment, endpointQualifier, profile);
+	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifier, SOAProfile profile) {
+		provider.get().buildUsedServiceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, endpointQualifier, profile);
 	}
 
 	public void buildTypeDefinitions (SubNamespace namespace, Environment env,

@@ -63,10 +63,10 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 		}
 	}
 
-	override build (Module module, Environment environment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
+	override build (Module module, Environment environment, boolean selectTypeVersionsByEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
 		log.info ("Generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name)
 		try {
-			contractBuilder.build (module, environment, generateProvidedServices, generateUsedServices, endpointQualifierRef, profile);
+			contractBuilder.build (module, environment, selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, endpointQualifierRef, profile);
 		} catch (Exception ex) {
 			log.severe ("Error generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name + "\n" + ex.message)
 		}

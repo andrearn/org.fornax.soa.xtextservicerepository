@@ -115,7 +115,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	
 	
 
-	override buildProvidedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
+	override buildProvidedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
 		log.fine ("Generating WSDLs and XSDs for services provided by module " + module.name + " looking up binding for used module to environment " + targetEnvironment.name)
 		val bindingDescs = 	bindingResolver.resolveProvidedServiceBindings (module, targetEnvironment, endpointQualifierRef)
 		for (specBindingDesc : bindingDescs.serviceRefDescriptions) {
@@ -123,7 +123,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 			if (svc != null) {
 				try {
 					if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocol::SOAP)) {
-						doBuildServiceContracts (specBindingDesc, module.state, profile)
+						doBuildServiceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, profile)
 					}
 				} catch (Exception ex) {
 					log.log (Level::SEVERE, "Error generating contracts for service " + nameProvider.getFullyQualifiedName (svc).toString + " and version " + svc.version.version + "\n", ex)
@@ -136,7 +136,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	}
 	
 	
-	override buildUsedServiceContracts (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
+	override buildUsedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
 		log.fine ("Generating WSDLs and XSDs for used services in module " + module.name + " looking up binding for used module to environment " + targetEnvironment.name)
 		val bindingDescs = bindingResolver.resolveUsedServiceBindings (module, targetEnvironment, endpointQualifierRef)
 		for (curModBindDesc : bindingDescs) {
@@ -145,7 +145,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				if (svc != null) {
 					try {
 						if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocol::SOAP)) {
-							doBuildServiceContracts (specBindingDesc, module.state, profile)
+							doBuildServiceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, profile)
 						}
 					} catch (Exception ex) {
 						log.log (Level::SEVERE, "Error generating contracts for service " + nameProvider.getFullyQualifiedName (svc).toString + " and version " + svc.version.version + "\n", ex)
@@ -160,7 +160,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	}
 	
 	
-	def protected doBuildServiceContracts (ServiceRefBindingDescription serviceBindingDescription, LifecycleState minState, SOAProfile enforcedProfile) {
+	def protected doBuildServiceContracts (ServiceRefBindingDescription serviceBindingDescription, LifecycleState minState, boolean selectTypeVersionsByEnvironment, SOAProfile enforcedProfile) {
 		val service = serviceBindingDescription.getServiceRef.service
 		val specBinding = serviceBindingDescription.getApplicableBinding
 		for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
@@ -168,8 +168,10 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				if (service.providedContractUrl == null && service.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
 					val namespace = service.findSubdomain();
 					val profile = namespace.getApplicableProfile(enforcedProfile)
-					val typesMinState = lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, profile.lifecycle)
-							
+					val typesMinState = if (selectTypeVersionsByEnvironment) 
+											lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, profile.lifecycle)
+										else
+											minState
 					wsdlGenerator.toWSDL (service, namespace, minState, profile, specBinding.getRegistryBaseUrl());
 					concreteWsdlGenerator.toWSDL(specBinding, service, soapProt, profile);
 							

@@ -192,13 +192,13 @@ class DefaultBindingContractGenerators implements IGenerator {
 				val Qualifier endpointQualifier = eObjectLookup.getModelElementByName(moduleSelector.endpointQualifier, resource, "Qualifier")
 				if (endpointQualifierRef != null) {
 					endpointQualifierRef.setEndpointQualifier(endpointQualifier)
-					bindingBuilder.build(mod, env, generateProvidedServices, generateUsedServices, endpointQualifierRef, profile)
+					bindingBuilder.build(mod, env, moduleSelector.selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, endpointQualifierRef, profile)
 				} else {
 					logger.severe("The provider endpoint-qualifier " + moduleSelector.endpointQualifier + " is not defined.")
 				}
 			
 			} else {
-				bindingBuilder.build(mod, env, generateProvidedServices, generateUsedServices, null, profile)
+				bindingBuilder.build(mod, env, moduleSelector.selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, null, profile)
 			}
 			
 		} else {
