@@ -116,8 +116,9 @@ table[
 	]
 	tr[		
 		td[profileName]			td[String]	td[0..1]		td[]		td[The name of the architecture
-		profile, that defines the architectural rules to be applied on generation. This property is not
-		required, if only one architecture profile is defined in the model.]
+		profile, that defines the architectural rules to be applied on generation. If not set, the default
+		profile as defined in the model, or the profile specifically declared on a subnamespace will
+		be used.]
 	]
 	tr[		
 		td[targetEnvironmentName]	td[String] td[1..1]		td[]		td[The of the Environment
@@ -147,6 +148,18 @@ table[
 	]
 	tr[
 		td[version]	td[String]	td[1..1]	td[] td[The module version to generate assets for]
+	]
+	tr[
+		td[selectTypeVersionsByEnvironment]	td[String]	td[0..1]	td[]	td[If you select a module
+		version, the types to be generated are selected based on the modules state. However, if you generate
+		for several modules with different lifecycle states, this may yield inconsistent type definitions
+		(XSDs etc.) where certain types may become unresolvable. If one module is productive already,
+		types in state development may not have been generated, but might be required by another development
+		module though.  
+		
+		Hence, you should either select modules with the same state, or set this property to "true",
+		to select all types to be generated, based on the minimal state that supports the given target
+		environment.]
 	]
 	tr[
 		td[generatedUsedServices]	td[boolean]	td[1..1]	td[false] td[Whether services used
