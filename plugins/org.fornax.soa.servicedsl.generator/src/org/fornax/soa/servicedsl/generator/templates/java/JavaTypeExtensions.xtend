@@ -51,6 +51,7 @@ class JavaTypeExtensions {
 			case "decimal":			"java.math.BigDecimal"
 			case "binary": 			if (optionalField) return "Byte[]" else return "byte[]"
 			case "base64Binary": 	if (optionalField) return "Byte[]" else return "byte[]"
+			case "attachment":	 	if (optionalField) return "Byte[]" else return "byte[]"
 			case "decimal":			"BigDecimal"
 			case "boolean":			if (optionalField) return "Boolean" else return "boolean"
 			case "char":			if (optionalField) return "Character" else return "char"
