@@ -36,6 +36,7 @@ import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.profiledsl.query.LifecycleQueriesimport org.fornax.soa.profiledsl.query.ProfileQueries
 import org.eclipse.xtext.EcoreUtil2
 import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 /*
  * Generate technical service and datamodel contract artifacts like WSDLs, XSDs or IDLs for ModuleBindings
@@ -50,6 +51,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 class DefaultBindingContractGenerators implements IGenerator {
 	
 	
+	@Inject extension NamespaceQuery
 	@Inject IArtifactBuilder bindingBuilder
 	@Inject XSDBuilder xsdGen
 
@@ -115,7 +117,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 			logger.severe ("No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
 			hasValidParameters = false
 		}
-		val SOAProfile profile = profileQueries.getProfileByName(profileName, resourceSet);
+		val SOAProfile profile = profileQueries.getProfileByName(profileName, resourceSet)
 		if (profile != null) {
 			logger.info ("Enforcing generation with profile " + profile.name)
 			hasValidParameters = hasValidParameters && true
@@ -213,12 +215,12 @@ class DefaultBindingContractGenerators implements IGenerator {
 	}
 	
 	def protected compile (SubNamespace namespace, Resource resource) {
-		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
+		val SOAProfile profile = namespace.getApplicableProfile(profileQueries.getProfileByName(profileName, resource.resourceSet))
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 		if (env == null)
 			logger.severe ("No environment found matching the name expression " + targetEnvironmentName)
 		if (profile == null)
-			logger.severe ("No architecture profile found matching the name " + profileName)
+			logger.severe ("No applicable architecture profile found")
 		
 		if (env != null && profile != null) {
 			logger.info ("Generating XSDs for namespace " + nameProvider.getFullyQualifiedName(namespace).toString)
