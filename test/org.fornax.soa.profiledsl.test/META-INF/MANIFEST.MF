@@ -9,11 +9,11 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit;bundle-version="4.8.1",
  org.eclipse.emf.ecore;bundle-version="2.6.0",
- org.fornax.soa.basedsl;bundle-version="1.0.0",
- org.fornax.soa.profiledsl;bundle-version="1.1.0",
- org.eclipse.xtext;bundle-version="2.1.0",
+ org.fornax.soa.basedsl;bundle-version="1.6.1",
+ org.fornax.soa.profiledsl;bundle-version="1.6.1",
+ org.eclipse.xtext;bundle-version="2.4.2",
  org.eclipse.xtext.junit4,
- org.eclipse.xtext.ui.junit;bundle-version="2.1.0",
- org.fornax.soa.environmentdsl;bundle-version="1.5.5"
+ org.eclipse.xtext.ui.junit;bundle-version="2.4.2",
+ org.fornax.soa.environmentdsl;bundle-version="1.6.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

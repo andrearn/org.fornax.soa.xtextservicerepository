@@ -74,8 +74,6 @@ public class VersionAndLifecycleStatePredicateTest extends AbstractXtextTests {
 
 			@Override
 			protected void configure () {
-
-				bind(IPredicateSearch.class ).to(DefaultPredicateSearch.class);
 				
 				bind(IEObjectDescriptionBuilder.class).toInstance (new EObjectDescriptionBuilder());
 				

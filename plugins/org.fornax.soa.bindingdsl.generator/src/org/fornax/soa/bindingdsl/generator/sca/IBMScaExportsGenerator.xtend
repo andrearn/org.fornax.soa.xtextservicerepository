@@ -26,7 +26,6 @@ import java.util.regex.Pattern
 import java.util.logging.Logger
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
 import org.fornax.soa.profiledsl.query.ProfileQueries
-import org.eclipse.jdt.annotation.Nullable
 
 class IBMScaExportsGenerator implements IGenerator {
 	

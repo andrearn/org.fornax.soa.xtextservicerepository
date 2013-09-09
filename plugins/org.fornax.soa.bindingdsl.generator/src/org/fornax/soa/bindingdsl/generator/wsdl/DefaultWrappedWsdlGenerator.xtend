@@ -22,7 +22,6 @@ import org.fornax.soa.serviceDsl.DomainNamespace
 import org.fornax.soa.serviceDsl.InternalNamespace
 import java.util.logging.Logger
 import org.fornax.soa.profiledsl.query.ProfileQueries
-import org.eclipse.jdt.annotation.Nullable
 
 class DefaultWrappedWsdlGenerator implements IGenerator {
 
