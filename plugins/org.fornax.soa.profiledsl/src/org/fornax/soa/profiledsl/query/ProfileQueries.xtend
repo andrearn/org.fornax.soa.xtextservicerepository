@@ -8,6 +8,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.EcoreUtil2
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage
+import java.util.List
 
 class ProfileQueries {
 	
@@ -15,10 +16,10 @@ class ProfileQueries {
 	@Inject IEObjectLookup lookup
 	
 	def SOAProfile getDefaultProfile (ResourceSet resourceSet) {
-		val profiles = search.search("SOAProfile ", Predicates::alwaysTrue).map (p|p.EObjectOrProxy).filter (typeof (SOAProfile))
+		val profiles = getAllProfiles(resourceSet)
 		var profile = profiles.filter(e|e.isDefault == true).head
-		if (profile != null && profile.eIsProxy) {
-			profile = EcoreUtil2.resolve(profile, resourceSet) as SOAProfile
+		if (profile == null && profiles.size == 1) {
+			profile = profiles.head
 		}
 		return profile
 	}
@@ -30,5 +31,10 @@ class ProfileQueries {
 		} else {
 			return null
 		}
+	}
+	
+	def List<SOAProfile> getAllProfiles (ResourceSet resourceSet) {
+		val profiles = search.search("SOAProfile ", Predicates::alwaysTrue).map (p|p.EObjectOrProxy).filter (typeof (SOAProfile))
+		return profiles.map [if (it.eIsProxy) {EcoreUtil2::resolve(it, resourceSet) as SOAProfile} else {it}].toList
 	}
 }
