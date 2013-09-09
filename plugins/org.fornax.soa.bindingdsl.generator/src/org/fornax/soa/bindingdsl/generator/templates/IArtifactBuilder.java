@@ -21,12 +21,12 @@ public interface IArtifactBuilder {
 			final boolean includeSubNamespaces);
 
 	public abstract void build(final Module module, final Environment environment, final boolean selectTypeVersionsByEnvironment, final boolean generateProvidedServices,
-			final boolean generateUsedServices, final EndpointQualifierRef endpointQualifierRef, final SOAProfile profile);
+			final boolean generateUsedServices, final EndpointQualifierRef endpointQualifierRef, final SOAProfile enforcedProfile);
 
 	public abstract void buildEvents(final SubNamespace ns, final List<Environment> environments, final String targetEnv,
-			final List<SOAProfile> profiles, final String profileName);
+			final SOAProfile enforcedProfile);
 
 	public abstract void buildEventsInclSubNamespaces(final String namespaceName, final List<SubNamespace> namespaces,
-			final List<Environment> environments, final String targetEnv, final List<SOAProfile> profiles, final String profileName);
+			final List<Environment> environments, final String targetEnv, final SOAProfile enforcedProfile);
 
 }

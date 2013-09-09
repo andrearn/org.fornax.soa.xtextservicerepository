@@ -187,7 +187,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 			bindingBuilder.build (bind, profile);
 	}
 		
-	def protected compile (Module mod, VersionedModuleSelector moduleSelector, SOAProfile profile, Resource resource) {
+	def protected compile (Module mod, VersionedModuleSelector moduleSelector, SOAProfile enforcedProfile, Resource resource) {
 		logger.info("Generating contracts for module " + mod.name + " version " + mod.version.version)
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 		var generateProvidedServices = moduleSelector.generateProvidedServices
@@ -200,13 +200,13 @@ class DefaultBindingContractGenerators implements IGenerator {
 				val Qualifier endpointQualifier = eObjectLookup.getModelElementByName(moduleSelector.endpointQualifier, resource, "Qualifier")
 				if (endpointQualifierRef != null) {
 					endpointQualifierRef.setEndpointQualifier(endpointQualifier)
-					bindingBuilder.build(mod, env, moduleSelector.selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, endpointQualifierRef, profile)
+					bindingBuilder.build(mod, env, moduleSelector.selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, endpointQualifierRef, enforcedProfile)
 				} else {
 					logger.severe("The provider endpoint-qualifier " + moduleSelector.endpointQualifier + " is not defined.")
 				}
 			
 			} else {
-				bindingBuilder.build(mod, env, moduleSelector.selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, null, profile)
+				bindingBuilder.build(mod, env, moduleSelector.selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, null, enforcedProfile)
 			}
 			
 		} else {

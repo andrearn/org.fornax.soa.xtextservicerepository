@@ -13,6 +13,7 @@ import org.fornax.soa.serviceDsl.SubNamespace
 import org.fornax.soa.servicedsl.generator.templates.xsd.EventXSDGenerator
 import org.fornax.soa.profiledsl.query.LifecycleQueries
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
+import org.fornax.soa.service.query.namespace.NamespaceQuery
 
 /**
  * Builds all technical artifacts that represent a binding (WSDLs/XSDs etc.).
@@ -22,7 +23,7 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 	
 	@Inject extension BindingExtensions
 	@Inject extension LifecycleQueries
-		
+	@Inject extension NamespaceQuery
 	
 	@Inject ServiceContractBuilder	contractBuilder
 	@Inject EventXSDGenerator 				eventXsdGenerator
@@ -45,28 +46,28 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 	 *	LifecycleState derived from the profile's Environment and the minimal required LifecycleState 
 	 *	of the respective Service / owning SubNamespace
 	 */
-	override build (ModuleBinding binding, SOAProfile profile) {
+	override build (ModuleBinding binding, SOAProfile enforcedProfile) {
 		log.info ("Generating technical service contracts for binding " + binding.name)
 		try {
-			contractBuilder.build (binding, profile);
+			contractBuilder.build (binding, enforcedProfile);
 		} catch (Exception ex) {
 			log.severe ("Error generating technical service contracts for binding " + binding.name + "\n" + ex.message)
 		}
 	}
 	
-	override build (ModuleBinding binding, SOAProfile profile, boolean noDeps, boolean includeSubNamespaces) {
+	override build (ModuleBinding binding, SOAProfile enforcedProfile, boolean noDeps, boolean includeSubNamespaces) {
 		log.info ("Generating technical service contracts for binding " + binding.name)
 		try {
-			contractBuilder.build (binding, profile);
+			contractBuilder.build (binding, enforcedProfile);
 		} catch (Exception ex) {
 			log.severe ("Error generating technical service contracts for binding " + binding.name + "\n" + ex.message)
 		}
 	}
 
-	override build (Module module, Environment environment, boolean selectTypeVersionsByEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, SOAProfile profile) {
+	override build (Module module, Environment environment, boolean selectTypeVersionsByEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, SOAProfile enforcedProfile) {
 		log.info ("Generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name)
 		try {
-			contractBuilder.build (module, environment, selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, endpointQualifierRef, profile);
+			contractBuilder.build (module, environment, selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, endpointQualifierRef, enforcedProfile);
 		} catch (Exception ex) {
 			log.severe ("Error generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name + "\n" + ex.message)
 		}
@@ -76,22 +77,23 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 	/**
 	 *	Event XSDs for Services having an request and an response event for each service operation
 	 */
-	override buildEventsInclSubNamespaces (String namespaceName, List<SubNamespace> namespaces, List<Environment> environments, String targetEnv, List<SOAProfile> profiles, String profileName) {
+	override buildEventsInclSubNamespaces (String namespaceName, List<SubNamespace> namespaces, List<Environment> environments, String targetEnv, SOAProfile enforcedProfile) {
 		if (namespaceName != null) {
 			for (ns : namespaces.filter (e|e.name.startsWith (namespaceName))) {
-				ns.buildEvents (environments, targetEnv, profiles, profileName);
+				val profile = ns.getApplicableProfile(enforcedProfile)
+				ns.buildEvents (environments, targetEnv, profile);
 			}
 		} else {
 			log.severe("No namespace name expression has been supplied")
 		}
 	}
 	
-	override buildEvents (SubNamespace ns, List<Environment> environments, String targetEnv, List<SOAProfile> profiles, String profileName) { 
+	override buildEvents (SubNamespace ns, List<Environment> environments, String targetEnv, SOAProfile enforcedProfile) { 
 		val env = environments.findFirst (e|e.name == targetEnv);
-		val profile = profiles.findFirst (e|e.name == profileName);
+		val profile = ns.getApplicableProfile(enforcedProfile)
 		log.info ("Generating event data definitions for services in namespace " + nameProvider.getFullyQualifiedName(ns) + " applicable for Environment " + env.name)
 		try {
-		eventXsdGenerator.toEvents (ns,env.getMinLifecycleState(profile.lifecycle), profile, env.getRegistryBaseUrl());
+			eventXsdGenerator.toEvents (ns,env.getMinLifecycleState(profile.lifecycle), profile, env.getRegistryBaseUrl());
 		} catch (Exception ex) {
 			log.severe ("Error generating event data definitions for services in namespace " + nameProvider.getFullyQualifiedName(ns) + " applicable for Environment " + env.name + "\n" + ex.message)
 		}

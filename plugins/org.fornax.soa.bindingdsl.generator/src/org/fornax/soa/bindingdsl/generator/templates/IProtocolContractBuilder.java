@@ -17,13 +17,13 @@ public abstract interface IProtocolContractBuilder {
 	/**
 	 * Build technical service contracts for all services provided by the module referenced in the binding. 
 	 */
-	public void buildServiceContracts (ModuleBinding bind, SOAProfile profile);
+	public void buildServiceContracts (ModuleBinding bind, SOAProfile enforcedProfile);
 	
 	/**
 	 * Build technical service contracts for all services provided by this module. A binding of this module (or to
 	 * a compatible module version) to the given target environment will be used.
 	 */
-	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef providerEndpointQualifierRef, SOAProfile profile);
+	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef providerEndpointQualifierRef, SOAProfile enforcedProfile);
 	
 	
 	/**
@@ -32,7 +32,7 @@ public abstract interface IProtocolContractBuilder {
 	 * to the given environment.
 	 * The bindings of the modules used by explicit or implicit reference from this module are used as bindings.
 	 */
-	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile profile);
+	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile enforcedProfile);
 	
 	/**
 	 * Build technical type definitions for all types defined in the given namespace. The latest minor versions 
@@ -40,9 +40,9 @@ public abstract interface IProtocolContractBuilder {
 	 * 
 	 * @param namespace
 	 * @param env
-	 * @param profile
+	 * @param enforcedProfile
 	 */
-	public void buildTypeDefinitions (SubNamespace namespace, Environment env, SOAProfile profile);
+	public void buildTypeDefinitions (SubNamespace namespace, Environment env, SOAProfile enforcedProfile);
 
 	/**
 	 * Build technical type definitions for all types defined in the given namespace of a major version number slice of the namespace. 
@@ -51,8 +51,8 @@ public abstract interface IProtocolContractBuilder {
 	 * 
 	 * @param namespace
 	 * @param env
-	 * @param profile
+	 * @param enforcedProfile
 	 */
-	public void buildTypeDefinitions (VersionedDomainNamespace namespace, Environment env, SOAProfile profile);
+	public void buildTypeDefinitions (VersionedDomainNamespace namespace, Environment env, SOAProfile enforcedProfile);
 
 }
