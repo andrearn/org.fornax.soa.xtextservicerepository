@@ -32,7 +32,7 @@ import com.google.inject.name.Names;
 
 public class DefaultBindingContractGeneratorSetup implements ISetup {
 
-	private String profileName = "*";
+	private String profileName = "";
 	private List<String> moduleBindingNames = new ArrayList<String>();
 	private List<VersionedModuleSelector> modules = new ArrayList<VersionedModuleSelector>();
 	private List<ModuleBindingSelector> moduleBindings = new ArrayList<ModuleBindingSelector>();

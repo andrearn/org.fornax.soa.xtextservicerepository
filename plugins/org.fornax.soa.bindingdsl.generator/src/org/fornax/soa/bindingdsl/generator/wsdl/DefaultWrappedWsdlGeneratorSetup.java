@@ -25,12 +25,14 @@ import com.google.common.collect.Maps;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.google.inject.Provider;
 import com.google.inject.TypeLiteral;
 import com.google.inject.name.Names;
+import com.google.inject.util.Providers;
 
 public class DefaultWrappedWsdlGeneratorSetup implements ISetup {
 
-	private String profileName = "*";
+	private String profileName = "";
 	private List<String> namespaces = new ArrayList<String>();
 	private List<String> domainNamespaces = new ArrayList<String>();
 	private List<String> internalNamespaces = new ArrayList<String>();
@@ -66,9 +68,9 @@ public class DefaultWrappedWsdlGeneratorSetup implements ISetup {
 										Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
 								.toInstance (useNestedPaths);
 						bind (String.class)
-								.annotatedWith (
-										Names.named (ProfileGeneratorConstants.PROFILE_NAME))
-								.toInstance (profileName);
+							.annotatedWith (
+								Names.named (BindingDSLGeneratorConstants.PROFILE_NAME))
+							.toInstance (getProfileName ());
 						bind (new TypeLiteral<List<String>>() {})
 								.annotatedWith (
 										Names.named (BindingDSLGeneratorConstants.NAME_SPACES))

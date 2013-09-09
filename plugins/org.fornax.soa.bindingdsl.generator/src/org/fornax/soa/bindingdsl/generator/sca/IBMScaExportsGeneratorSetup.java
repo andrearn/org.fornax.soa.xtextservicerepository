@@ -30,7 +30,7 @@ import com.google.inject.name.Names;
 
 public class IBMScaExportsGeneratorSetup implements ISetup {
 
-	private String profileName = "*";
+	private String profileName = "";
 	private List<String> moduleBindingNames = new ArrayList<String>();
 	private Boolean noDependencies = false;
 	private Boolean includeSubNamespaces = false;

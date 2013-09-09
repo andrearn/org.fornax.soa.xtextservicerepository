@@ -25,6 +25,8 @@ import org.fornax.soa.moduledsl.moduleDsl.AssemblyType
 import java.util.regex.Pattern
 import java.util.logging.Logger
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver
+import org.fornax.soa.profiledsl.query.ProfileQueries
+import org.eclipse.jdt.annotation.Nullable
 
 class IBMScaExportsGenerator implements IGenerator {
 	
@@ -62,6 +64,7 @@ class IBMScaExportsGenerator implements IGenerator {
 	
 	@Inject IQualifiedNameProvider nameProvider
 	@Inject IEObjectLookup eObjectLookup
+	@Inject ProfileQueries profileQueries
 	@Inject extension EnvironmentBindingResolver		
 
 	@Inject 
@@ -77,14 +80,10 @@ class IBMScaExportsGenerator implements IGenerator {
 			logger.severe ("No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
 			hasValidParameters = false
 		}
-		if (profileName == null || "".equals(profileName)) {
-			logger.severe ("No profileName has been supplied to the Generator. Please proved the name an architecture profile to be applied.")
-			hasValidParameters = false
-		}
-		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
-		if (profile == null) {
-			logger.severe ("No profile found mathing the name " + profileName)
-			hasValidParameters = false
+		val SOAProfile profile = profileQueries.getProfileByName(profileName, resourceSet);
+		if (profile != null) {
+			logger.info ("Enforcing generation with profile " + profile.name)
+			hasValidParameters = hasValidParameters && true
 		}
 
 		val contentRoot = resource.contents.head;

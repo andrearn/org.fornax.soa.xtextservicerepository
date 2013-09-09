@@ -112,7 +112,7 @@ class NamespaceQuery {
 			if (ns.profile != null) {
 				return ns.profile
 			} else {
-				profileQuery.defaultProfile
+				profileQuery.getDefaultProfile (ns.eResource.resourceSet)
 			}
 		} else {
 			return enforcedProfile

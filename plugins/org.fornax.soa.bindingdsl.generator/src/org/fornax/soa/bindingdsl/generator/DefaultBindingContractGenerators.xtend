@@ -33,7 +33,9 @@ import org.fornax.soa.semanticsDsl.Qualifier
 import org.fornax.soa.bindingdsl.generator.templates.IArtifactBuilder
 import org.fornax.soa.moduledsl.query.ModuleLookup
 import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
-import org.fornax.soa.profiledsl.query.LifecycleQueries
+import org.fornax.soa.profiledsl.query.LifecycleQueriesimport org.fornax.soa.profiledsl.query.ProfileQueries
+import org.eclipse.xtext.EcoreUtil2
+import org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 
 /*
  * Generate technical service and datamodel contract artifacts like WSDLs, XSDs or IDLs for ModuleBindings
@@ -52,7 +54,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 	@Inject XSDBuilder xsdGen
 
 	
-	@Inject @Named ("profileName") 			
+	@Inject @Named ("profileName")
 	String profileName
 	
 	@Inject @Named ("moduleBindingNames") 	
@@ -90,6 +92,8 @@ class DefaultBindingContractGenerators implements IGenerator {
 	IStateMatcher stateMatcher
 	@Inject
 	LifecycleQueries lifecycleQueries
+	@Inject
+	ProfileQueries profileQueries
 	
 	@Inject
 	ResourceSetBasedResourceDescriptions resourceDescriptions
@@ -111,14 +115,10 @@ class DefaultBindingContractGenerators implements IGenerator {
 			logger.severe ("No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
 			hasValidParameters = false
 		}
-		if (profileName == null || "".equals(profileName)) {
-			logger.severe ("No profileName has been supplied to the Generator. Please provide the name an architecture profile to be applied.")
-			hasValidParameters = false
-		}
-		var SOAProfile profile = eObjectLookup.getModelElementByName (profileName, resource, "SOAProfile");
-		if (profile == null) {
-			logger.severe ("No profile found matching the name " + profileName)
-			hasValidParameters = false
+		val SOAProfile profile = profileQueries.getProfileByName(profileName, resourceSet);
+		if (profile != null) {
+			logger.info ("Enforcing generation with profile " + profile.name)
+			hasValidParameters = hasValidParameters && true
 		}
 		if (hasValidParameters) {
 			val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
@@ -142,12 +142,18 @@ class DefaultBindingContractGenerators implements IGenerator {
 			}
 			
 			if (contentRoot instanceof ModuleModel) {
-				val modModel = contentRoot as ModuleModel
-				val minState = lifecycleQueries.getMinLifecycleState(env, profile.lifecycle)
-				for (module : modModel.modules) {
-					if (modules.exists(mod | mod.matches(module, minState, modLookup, stateMatcher, nameProvider))) {
-						val moduleSelector = modules.findFirst(modSel | modSel.matches(module, minState, modLookup, stateMatcher, nameProvider))
-						module.compile (moduleSelector, profile, resource)
+				var modModel = contentRoot as ModuleModel
+				if (modModel.eIsProxy) {
+					modModel = EcoreUtil2::resolve(modModel, resourceSet) as ModuleModel
+				}
+				if (!modModel.modules.empty) {
+					val moduleLifecycle = modModel.modules.head.state.eContainer as Lifecycle
+					val minState = lifecycleQueries.getMinLifecycleState(env, moduleLifecycle)
+					for (module : modModel.modules) {
+						if (modules.exists(mod | mod.matches(module, minState, modLookup, stateMatcher, nameProvider))) {
+							val moduleSelector = modules.findFirst(modSel | modSel.matches(module, minState, modLookup, stateMatcher, nameProvider))
+							module.compile (moduleSelector, profile, resource)
+						}
 					}
 				}
 			}

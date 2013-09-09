@@ -31,7 +31,7 @@ import org.fornax.soa.moduledsl.query.IModuleServiceResolver
 import org.fornax.soa.binding.query.BindingLookup
 import org.fornax.soa.moduledsl.moduleDsl.EndpointQualifierRef
 import org.fornax.soa.binding.query.environment.AssetStateEnvironmentEligibilityChecker
-import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState
+import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleStateimport org.fornax.soa.profiledsl.sOAProfileDsl.Lifecycle
 
 /** 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -169,7 +169,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 					val namespace = service.findSubdomain();
 					val profile = namespace.getApplicableProfile(enforcedProfile)
 					val typesMinState = if (selectTypeVersionsByEnvironment) 
-											lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, profile.lifecycle)
+											lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, minState.eContainer as Lifecycle)
 										else
 											minState
 					wsdlGenerator.toWSDL (service, namespace, minState, profile, specBinding.getRegistryBaseUrl());
