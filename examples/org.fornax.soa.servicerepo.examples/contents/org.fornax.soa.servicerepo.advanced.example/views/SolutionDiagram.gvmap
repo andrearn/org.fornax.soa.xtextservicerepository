@@ -4,7 +4,7 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.*
 
 diagram SolutionDiagram type Solution {
 	
-	node FeatureNode for each features {
+	node FeatureNode for each this.features {
 		label FeatureLabel for "<<Feature>>"
 		label FeatureNameLabel for this.name
 		hidden edge NestedFeatureEdge for each features {
@@ -44,14 +44,14 @@ diagram SolutionDiagram type Solution {
 	node RequiredServiceNode for each requires.map(r|r.service) {
 		label ServiceLabel for "<<Service>>"
 		label ServiceNameLabel for name
-		label Version for "[v" + version?.version + "]"
+		label Version for "[v" + version?.version+"]"
 		
 	}
 	
 	hidden node HiddenRequiredServiceNode for this  as org.fornax.soa.serviceDsl.Service {
 		label ServiceLabel for "<<Service>>"
 		label ServiceNameLabel for this.name
-		label Version for "[v" + this.version?.version + "]"
+		label Version for "[v" + this.version?.version+"]"
 		
 	} unless !(this instanceof org.fornax.soa.serviceDsl.Service)
 }

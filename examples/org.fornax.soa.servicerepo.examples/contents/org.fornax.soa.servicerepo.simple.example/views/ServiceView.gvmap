@@ -88,9 +88,9 @@ diagram ServiceDiagram type SubNamespace {
 			label EdgeLabel for name
 		}
 		
-		hidden edge InhertanceEdge for superBusinessObject?.^type {
+		hidden edge InhertanceEdge for superObject?.^type {
 			=> call BusinessObjectNode for this
-		} unless superBusinessObject == null
+		} unless superObject == null
 		
 		
 	} unless !(this instanceof BusinessObject)
@@ -119,9 +119,9 @@ diagram ServiceDiagram type SubNamespace {
 			label EdgeLabel for name
 		}
 		
-		hidden edge InhertanceEdge for superQueryObject?.^type {
+		hidden edge InhertanceEdge for superObject?.^type {
 			=> call QueryObjectNode for this
-		} unless superQueryObject == null
+		} unless superObject == null
 		
 		
 	} unless !(this instanceof BusinessObject)

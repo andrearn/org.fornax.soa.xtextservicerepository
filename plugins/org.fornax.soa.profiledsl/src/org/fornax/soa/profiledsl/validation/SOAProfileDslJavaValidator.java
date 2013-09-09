@@ -20,7 +20,7 @@ public class SOAProfileDslJavaValidator extends AbstractSOAProfileDslJavaValidat
 		ResourceSet rs = profile.eResource().getResourceSet();
 		SOAProfile defaultProfile = profileQueries.getDefaultProfile(rs);
 		if (defaultProfile == null) {
-			error ("You should declare one profile as default like this: \"default soa-profile ...\"", SOAProfileDslPackage.Literals.SOA_PROFILE__NAME);
+			warning ("You should declare one profile as default like this: \"default soa-profile ...\"", SOAProfileDslPackage.Literals.SOA_PROFILE__NAME);
 		}
 	}
 

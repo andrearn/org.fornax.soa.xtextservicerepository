@@ -211,9 +211,9 @@ class ServiceRepositoryNewProjectGenerator {
 						label EdgeLabel for name
 					}
 					
-					hidden edge InhertanceEdge for superBusinessObject?.^type {
+					hidden edge InhertanceEdge for superObject?.^type {
 						=> call BusinessObjectNode for this
-					} unless superBusinessObject == null
+					} unless superObject == null
 					
 					
 				} unless !(this instanceof BusinessObject)
@@ -242,9 +242,9 @@ class ServiceRepositoryNewProjectGenerator {
 						label EdgeLabel for name
 					}
 					
-					hidden edge InhertanceEdge for superQueryObject?.^type {
+					hidden edge InhertanceEdge for superObject?.^type {
 						=> call QueryObjectNode for this
-					} unless superQueryObject == null
+					} unless superObject == null
 					
 					
 				} unless !(this instanceof BusinessObject)
@@ -514,13 +514,13 @@ class ServiceRepositoryNewProjectGenerator {
 							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}" 
 					}
 					 
-					edge InhertanceEdge for superBusinessObject?.^type {
+					edge InhertanceEdge for superObject?.^type {
 						=> ref BusinessObjectNode for this
-					} unless superBusinessObject == null || superBusinessObject?.^type.eContainer != eContainer
+					} unless superObject == null || superObject?.^type.eContainer != eContainer
 					
-					hidden edge HiddenInhertanceEdge for superBusinessObject?.^type {
+					hidden edge HiddenInhertanceEdge for superObject?.^type {
 						=> call HiddenBusinessObjectNode for this
-					} unless superBusinessObject == null || superBusinessObject?.^type.eContainer == eContainer
+					} unless superObject == null || superObject?.^type.eContainer == eContainer
 				}
 				
 				 
@@ -563,9 +563,9 @@ class ServiceRepositoryNewProjectGenerator {
 							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
 					}
 					
-					hidden edge HiddenInhertanceEdge for superBusinessObject?.^type {
+					hidden edge HiddenInhertanceEdge for superObject?.^type {
 						=> call BusinessObjectNode for this
-					} unless superBusinessObject == null
+					} unless superObject == null
 				} unless !(this instanceof BusinessObject)
 			
 			
@@ -614,13 +614,13 @@ class ServiceRepositoryNewProjectGenerator {
 							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}" 
 					}
 					 
-					edge InhertanceEdge for superQueryObject?.^type {
+					edge InhertanceEdge for superObject?.^type {
 						=> ref QueryObjectNode for this
-					} unless superQueryObject == null || superQueryObject?.^type.eContainer != eContainer
+					} unless superObject == null || superObject?.^type.eContainer != eContainer
 					
-					hidden edge HiddenInhertanceEdge for superQueryObject?.^type {
+					hidden edge HiddenInhertanceEdge for superObject?.^type {
 						=> call HiddenQueryObjectNode for this
-					} unless superQueryObject == null || superQueryObject?.^type.eContainer == eContainer
+					} unless superObject == null || superObject?.^type.eContainer == eContainer
 				}
 				 
 				node HiddenQueryObjectNode for this as QueryObject {
@@ -662,9 +662,9 @@ class ServiceRepositoryNewProjectGenerator {
 							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
 					}
 					
-					hidden edge HiddenInhertanceEdge for superQueryObject?.^type {
+					hidden edge HiddenInhertanceEdge for superObject?.^type {
 						=> call QueryObjectNode for this
-					} unless superQueryObject == null
+					} unless superObject == null
 				} unless !(this instanceof QueryObject)
 			
 			

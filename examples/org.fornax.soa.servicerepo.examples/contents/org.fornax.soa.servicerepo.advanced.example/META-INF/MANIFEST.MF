@@ -30,6 +30,7 @@ Require-Bundle: com.ibm.icu,
  org.fornax.soa.sladsl.ui,
  org.fornax.soa.solutiondsl.ui,
  org.eclipse.xtext.graphview;bundle-version="1.0.2";resolution:=optional,
+ org.eclipse.xtext.graphview.lib;bundle-version="1.0.2";resolution:=optional,
  org.fornax.soa.moduledsl;bundle-version="1.6.1"
 Import-Package: org.apache.log4j,
  org.apache.commons.logging
