@@ -139,8 +139,9 @@ class LifecycleQueries {
 		var LifecycleState highestState = null
 		if (!states.nullOrEmpty) {
 			for (state : states) {
-				if (highestState == null || envLifecycleComparator.compare(state, highestState) > 1)
+				if (highestState == null || envLifecycleComparator.compare(state, highestState) > 0) {
 					highestState = state
+				}
 			}
 		}
 		//@TODO what should be done with environment wise equivalent states?
