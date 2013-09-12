@@ -21,9 +21,9 @@ public class ReferrerGraphTraversor {
 	@Inject
 	private IEObjectLookup objLookup;
 	
-	public void traverse (final IEObjectDescription element, final List<IModelVisitor<IEObjectDescription>> visitors, final ResourceSet resourceSet) {
+	public void traverse (final IEObjectDescription element, final IEObjectDescription referredElement, final List<IModelVisitor<IEObjectDescription>> visitors, final ResourceSet resourceSet) {
 		for (IModelVisitor<IEObjectDescription> visitor : visitors) {
-			boolean continueTraversal = visitor.visit(element);
+			boolean continueTraversal = visitor.visit(element, referredElement);
 			if (!continueTraversal) {
 				return;
 			}
@@ -42,7 +42,7 @@ public class ReferrerGraphTraversor {
 		};
 		refSearch.findAllReferences(element, resourceSet, predicate, refCollector);
 		for (IEObjectDescription ref : refs) {
-			traverse (ref, visitors, resourceSet);
+			traverse (ref, element, visitors, resourceSet);
 		}
 		
 	}

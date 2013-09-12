@@ -37,9 +37,9 @@ public class ServiceDslStateInferenceGraphTraversor {
 	@Inject 
 	private ServiceQueries serviceQueries;
 	
-	public void traverse (final IEObjectDescription element, final List<IModelVisitor<IEObjectDescription>> visitors, final ResourceSet resourceSet) {
+	public void traverse (final IEObjectDescription element, final IEObjectDescription referrer, final List<IModelVisitor<IEObjectDescription>> visitors, final ResourceSet resourceSet) {
 		for (IModelVisitor<IEObjectDescription> visitor : visitors) {
-			boolean continueTraversal = visitor.visit(element);
+			boolean continueTraversal = visitor.visit(element, referrer);
 			if (!continueTraversal) {
 				return;
 			}
@@ -66,7 +66,7 @@ public class ServiceDslStateInferenceGraphTraversor {
 				EObject owner = objLookup.getStatefulOwner(obj);
 				if (owner instanceof Service || owner instanceof VersionedType) {
 					IEObjectDescription ownerDesc = descriptionBuilder.buildDescription(owner);
-					traverse (ownerDesc, visitors, resourceSet);
+					traverse (ownerDesc, element, visitors, resourceSet);
 				}
 			} else if ("Module".equals(obj.eClass().getName()) && 
 				"http://www.fornax.org/soa/moduledsl/ModuleDsl".equals (obj.eClass().getEPackage().getNsURI())) {
@@ -74,7 +74,7 @@ public class ServiceDslStateInferenceGraphTraversor {
 					obj = EcoreUtil2.resolve(obj, resourceSet);
 				}
 				IEObjectDescription objDesc = descriptionBuilder.buildDescription(obj);
-				traverse (objDesc, visitors, resourceSet);
+				traverse (objDesc, element, visitors, resourceSet);
 			} else if (obj instanceof Parameter) {
 				if (obj.eIsProxy()) {
 					obj = EcoreUtil2.resolve(obj, resourceSet);
@@ -82,7 +82,7 @@ public class ServiceDslStateInferenceGraphTraversor {
 				EObject owner = objLookup.getStatefulOwner(obj);
 				if (owner != null) {
 					IEObjectDescription ownerDesc = descriptionBuilder.buildDescription(owner);
-					traverse (ownerDesc, visitors, resourceSet);
+					traverse (ownerDesc, element, visitors, resourceSet);
 				}
 			} else if (obj instanceof Operation) {
 				if (obj.eIsProxy()) {
@@ -91,7 +91,7 @@ public class ServiceDslStateInferenceGraphTraversor {
 				EObject owner = objLookup.getStatefulOwner(obj);
 				if (owner != null) {
 					IEObjectDescription ownerDesc = descriptionBuilder.buildDescription(owner);
-					traverse (ownerDesc, visitors, resourceSet);
+					traverse (ownerDesc, element, visitors, resourceSet);
 				}
 			}
 		}

@@ -28,9 +28,9 @@ public class StateCollectorModelVisitor implements IModelVisitor<IEObjectDescrip
 		this.stateAttrResolver = stateAttrResolver;
 	}
 
-	public boolean visit(IEObjectDescription modelElement) {
+	public boolean visit(IEObjectDescription modelElement, IEObjectDescription referrerElement) {
 		if (stateAttrResolver.definesState(modelElement) &&
-				isEligibleType (modelElement)) {
+				isEligibleElement (modelElement, referrerElement)) {
 			LifecycleState lifecycleState = stateAttrResolver.getLifecycleState(modelElement, resourceSet);
 			if (lifecycleState != null) {
 				states.add(lifecycleState);
@@ -43,7 +43,7 @@ public class StateCollectorModelVisitor implements IModelVisitor<IEObjectDescrip
 		}
 	}
 
-	protected boolean isEligibleType(IEObjectDescription modelElement) {
+	protected boolean isEligibleElement(IEObjectDescription modelElement, IEObjectDescription predecessorElement) {
 		return true;
 	}
 

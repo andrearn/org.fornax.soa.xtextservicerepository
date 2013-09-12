@@ -43,7 +43,7 @@ public class DefaultStateInferrer implements ILifecycleStateInferrer {
 			StateCollectorModelVisitor stateCollector = new StateCollectorModelVisitor(resourceSet, stateAttrStateResolver);
 			List<IModelVisitor<IEObjectDescription>> visitors = new ArrayList<IModelVisitor<IEObjectDescription>>();
 			visitors.add(stateCollector);
-			traversor.traverse(ieDesc, visitors, resourceSet);
+			traversor.traverse(ieDesc, null, visitors, resourceSet);
 			List<LifecycleState> states = stateCollector.getStates();
 			return lifecycleQueries.getHighestEnvironmentalLifecycleState(states);
 		}
