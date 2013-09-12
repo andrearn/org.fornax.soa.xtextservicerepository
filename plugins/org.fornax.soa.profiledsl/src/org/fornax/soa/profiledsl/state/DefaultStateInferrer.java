@@ -41,6 +41,7 @@ public class DefaultStateInferrer implements ILifecycleStateInferrer {
 		if (stateAttrStateResolver.definesState(ieDesc)) {
 			ReferrerGraphTraversor traversor = injector.getInstance(ReferrerGraphTraversor.class);
 			StateCollectorModelVisitor stateCollector = new StateCollectorModelVisitor(resourceSet, stateAttrStateResolver);
+			injector.injectMembers(stateCollector);
 			List<IModelVisitor<IEObjectDescription>> visitors = new ArrayList<IModelVisitor<IEObjectDescription>>();
 			visitors.add(stateCollector);
 			traversor.traverse(ieDesc, null, visitors, resourceSet);
