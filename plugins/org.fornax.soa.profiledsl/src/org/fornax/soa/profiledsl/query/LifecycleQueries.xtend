@@ -13,6 +13,8 @@ import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator
 import org.fornax.soa.profiledsl.scoping.versions.EnvironmentBasedLifecycleStateComparator
 import java.util.List
+import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile
+import org.eclipse.emf.ecore.resource.ResourceSet
 
 /*
  * Queries for lifecycle states and stateful objects
@@ -25,6 +27,7 @@ class LifecycleQueries {
 	@Inject extension IStateMatcher
 	@Inject ILifecycleStateResolver stateResolver
 	@Inject EnvironmentBasedLifecycleStateComparator envLifecycleComparator
+	@Inject ProfileQueries profileQuery
 	
 	def LifecycleState stateByName (String state, Resource res) {
 		lookup.getModelElementByName (state, res, "LifecycleState");
@@ -120,6 +123,14 @@ class LifecycleQueries {
 			case EnvironmentType::STAGING :		l.maxStagingState
 			case EnvironmentType::PROD :		l.maxProdState
 			default:							l.maxDevState
+		}
+	}
+	
+	def LifecycleState getInitialState (SOAProfile profile, ResourceSet resourceSet) {
+		if (profile != null) {
+			return profile.lifecycle.states.findFirst[isInitial]
+		} else {
+			return profileQuery.getDefaultProfile(resourceSet)?.lifecycle.states.findFirst[isInitial]
 		}
 	}
 	

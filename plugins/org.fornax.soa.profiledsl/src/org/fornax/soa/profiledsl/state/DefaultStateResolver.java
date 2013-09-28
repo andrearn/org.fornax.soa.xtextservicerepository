@@ -9,6 +9,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
+import org.fornax.soa.profiledsl.query.LifecycleQueries;
+import org.fornax.soa.profiledsl.query.ProfileQueries;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
@@ -32,6 +34,9 @@ public class DefaultStateResolver implements ILifecycleStateResolver {
 	
 	@Inject
 	private IEObjectDescriptionBuilder descBuilder;
+	
+	@Inject
+	private LifecycleQueries lifeCycleQuery;
 
 	@Deprecated
 	public LifecycleState getLifecycleState(IEObjectDescription ieDesc) {
@@ -59,7 +64,7 @@ public class DefaultStateResolver implements ILifecycleStateResolver {
 			}
 			return lifecycleState;
 		}
-		return null;
+		return lifeCycleQuery.getInitialState(null, o.eResource().getResourceSet());
 	}
 
 	public LifecycleState getLifecycleState(EObject o, Resource res) {

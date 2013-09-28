@@ -101,9 +101,9 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 			final VersionRef v = ((ImportServiceRef) context).getVersionRef();
 			ImportServiceRef impSvcRef = (ImportServiceRef) context;
 			Module owningModule = ModuleDslAccess.getOwningModule(impSvcRef);
-			final List<ServiceModuleRef> modules = impSvcRef.getModules();
+			final List<ServiceModuleRef> candModules = impSvcRef.getModules();
 			List<Service> candServices = new ArrayList<Service>();
-			if (modules.isEmpty()) {
+			if (candModules.isEmpty()) {
 				Set<Module> allModules = modLookup.findAllModules (context.eResource().getResourceSet());
 				for (Module mod : allModules) {
 					if (!mod.equals(owningModule)) {
@@ -111,14 +111,14 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 					}
 				}
 			} else {
-				for (ServiceModuleRef ref : modules) {
+				for (ServiceModuleRef ref : candModules) {
 					Module targetModule = ref.getModule();
-					//TODO filter modules, that are don not have one of the accepted qualifiers
+					//TODO filter modules, that do not have one of the accepted qualifiers
 					extractProvidedServices(context, candServices, targetModule);
 				}
 			}
  
-			if (!candServices.isEmpty())
+			if (!candServices.isEmpty() && !candModules.isEmpty())
 				return createVersionFilter(v, context, candServices);
 			else
 				return createVersionFilter(v, context);

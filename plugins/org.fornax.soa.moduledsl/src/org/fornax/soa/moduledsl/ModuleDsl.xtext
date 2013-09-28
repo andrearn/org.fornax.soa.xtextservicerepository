@@ -102,12 +102,22 @@ ServiceRef:
  */
 ImportServiceRef:
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef ('{')?
+		/*	specify from which module(s) the service can be used, if not defined use the first module found, 
+			that is not identical with the importing module */
 		('from-any-module-of' '{'
 			(modules+=ServiceModuleRef)(',' modules+=ServiceModuleRef)*
 		'}' 
 		)?
+		/**
+		 * select an endpoint that provides the given endpoint-protocol and has (if defined) 
+		 * the given endpoint qualifier. This can be used to declaratively select a specific endpoint.
+		 * Endpoint qualifiers may become useful in migration scenarios, where you need to select either 
+		 * the legacy endpoint on the legacy server or the new endpoint on the new server. Such a qualifier
+		 * must be declared in the binding to be selected.
+		 */
 		('using-endpoint' '{'
 			('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
+			/* fall back to other supported protocols, if necessary */
 			('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
 			(endpointQualifierRef=EndpointQualifierRef)?
 		'}')?
