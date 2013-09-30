@@ -12,6 +12,7 @@ import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.validation.Check;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
+import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.ImportServiceRef;
 import org.fornax.soa.moduledsl.moduleDsl.Module;
@@ -29,6 +30,9 @@ import com.google.inject.Inject;
  *
  * see http://www.eclipse.org/Xtext/documentation.html#validation
  */
+@PluggableChecks (
+		validators={ModuleLifecycleStateValidator.class}
+)
 public class ModuleDslJavaValidator extends org.fornax.soa.moduledsl.validation.AbstractModuleDslJavaValidator {
 
 	@Inject
