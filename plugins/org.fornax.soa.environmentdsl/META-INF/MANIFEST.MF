@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.environmentdsl
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.6.1.qualifier
+Bundle-Version: 1.6.2.qualifier
 Bundle-SymbolicName: org.fornax.soa.environmentdsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext;bundle-version="2.4.2",
@@ -16,8 +16,8 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.4.2",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.fornax.soa.semanticsdsl;bundle-version="1.6.1",
- org.fornax.soa.basedsl;bundle-version="1.6.1"
+ org.fornax.soa.semanticsdsl;bundle-version="1.6.2",
+ org.fornax.soa.basedsl;bundle-version="1.6.2"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa,
