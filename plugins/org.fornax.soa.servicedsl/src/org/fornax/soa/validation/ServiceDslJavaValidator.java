@@ -13,6 +13,7 @@ import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.fornax.soa.basedsl.ref.DependencyDescription;
 import org.fornax.soa.basedsl.search.IPredicateSearch;
+import org.fornax.soa.basedsl.validation.NameAndVersionAreUniqueValidator;
 import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.profiledsl.sOAProfileDsl.ServiceBaseCategory;
 import org.fornax.soa.profiledsl.util.ReferencedStateChecker;
@@ -54,7 +55,8 @@ import com.google.inject.Inject;
 		BusinessObjectVersionValidator.class,
 		EnumerationVersionValidator.class,
 		ExceptionVersionValidator.class,
-		ServiceUsageValidator.class
+		ServiceUsageValidator.class,
+		NameAndVersionAreUniqueValidator.class
 		})
 public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 	

@@ -24,6 +24,7 @@ import org.fornax.soa.basedsl.scoping.versions.filter.AbstractPredicateVersionFi
 import org.fornax.soa.basedsl.scoping.versions.filter.FixedVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.fornax.soa.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
+import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.version.IScopeVersionResolver;
 import org.fornax.soa.basedsl.version.SimpleScopeVersionResolver;
 import org.fornax.soa.moduledsl.moduleDsl.AbstractServiceRef;
@@ -67,35 +68,42 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 	@Inject ModuleLookup modLookup;
 	@Inject IModuleServiceResolver modServiceResolver;
 	@Inject IQualifiedNameProvider nameProvider;
-	@Inject ILifecycleStateResolver stateResolver; 
+	@Inject ILifecycleStateResolver defaultStateResolver; 
+	@Inject StateAttributeLifecycleStateResolver staticStateResolver; 
+	@Inject IEObjectLookup objLookup;
 
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
 			EObject context, EReference reference) {
 		if (reference == ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE && context instanceof ServiceRef) {
 			final VersionRef v = ((ServiceRef) context).getVersionRef();
-			AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = createVersionFilter(v, context);
 			if (context.eContainer() instanceof ModuleRef) {
+				AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = createVersionFilter(v, context, staticStateResolver);
 				
 				ModuleRef modRef = (ModuleRef) context.eContainer();
 				Set<AbstractServiceRef> providedServiceRefs = modServiceResolver.getAllProvidedServiceRefs(modRef.getModuleRef().getModule());
 				if (!providedServiceRefs.isEmpty()) {
 					final List<QualifiedName> provServiceNames = new ArrayList<QualifiedName>();
 					for (AbstractServiceRef provSvcRef : providedServiceRefs) {
-						provServiceNames.add(nameProvider.getFullyQualifiedName(provSvcRef.getService()));
+						provServiceNames.add (nameProvider.getFullyQualifiedName(provSvcRef.getService()));
 					}
 					createServiceNameFilter(versionFilter, provServiceNames);
 				}
+				return versionFilter;
 			} else if (context.eContainer() instanceof NamespaceRef) {
+				AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = createVersionFilter(v, context, staticStateResolver);
 				NamespaceRef nsRef = (NamespaceRef)context.eContainer();
 				List<Service> services = nsRef.getNamespace().getServices();
 				final List<QualifiedName> provServiceNames = new ArrayList<QualifiedName>();
 				for (Service provSvc : services) {
-					provServiceNames.add(nameProvider.getFullyQualifiedName(provSvc));
+					provServiceNames.add (nameProvider.getFullyQualifiedName(provSvc));
 				}
 				createServiceNameFilter(versionFilter, provServiceNames);
+				return versionFilter;
+			} else {
+				AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = createVersionFilter(v, context, staticStateResolver);
+				return versionFilter;
 			}
-			return versionFilter;
 		}
 		if (reference == ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE && context instanceof ImportServiceRef) {
 			final VersionRef v = ((ImportServiceRef) context).getVersionRef();
@@ -119,14 +127,14 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 			}
  
 			if (!candServices.isEmpty() && !candModules.isEmpty())
-				return createVersionFilter(v, context, candServices);
+				return createVersionFilter(v, context, candServices, staticStateResolver);
 			else
-				return createVersionFilter(v, context);
+				return createVersionFilter(v, context, staticStateResolver);
 		}
 		if (reference == ModuleDslPackage.Literals.SERVICE_MODULE_REF__MODULE && context instanceof ServiceModuleRef) {
 			final VersionRef v = ((ServiceModuleRef) context).getVersion();
 			Module owningModule = ModuleDslAccess.getOwningModule (context);
-			return createVersionFilter(v, owningModule);
+			return createVersionFilter(v, owningModule, staticStateResolver);
 		}
 		return new NullVersionFilter<IEObjectDescription>();
 	}
@@ -169,6 +177,43 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
+			if (!staticStateResolver.definesState(owner)) {
+				owner = objLookup.getStatefulOwner(owner);
+			}
+			LifecycleState ownerState = staticStateResolver.getLifecycleState(owner);
+			if (v instanceof MajorVersionRef) {
+				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), staticStateResolver, ownerState, v.eResource().getResourceSet());
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof MaxVersionRef) {
+				RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription>(verResolver, ((MaxVersionRef)v).getMaxVersion(), staticStateResolver, ownerState, v.eResource().getResourceSet());
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof MinVersionRef) {
+				RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription>(verResolver, ((MinVersionRef)v).getMinVersion(), staticStateResolver, ownerState, v.eResource().getResourceSet());
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof LowerBoundRangeVersionRef) {
+				RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription>(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion(), staticStateResolver, ownerState, v.eResource().getResourceSet());
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof FixedVersionRef)
+				return new FixedVersionFilter<IEObjectDescription>(verResolver, ((FixedVersionRef) v).getFixedVersion());
+		}
+		return filter;
+	}
+	
+	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner, ILifecycleStateResolver stateResolver) {
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
+		if (v != null) {
+			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
+			if (!stateResolver.definesState(owner)) {
+				owner = objLookup.getStatefulOwner(owner);
+			}
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 			if (v instanceof MajorVersionRef) {
 				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), stateResolver, ownerState, v.eResource().getResourceSet());
@@ -196,10 +241,13 @@ public class ModuleDslScopeProvider extends VersionedImportedNamespaceAwareScope
 		return filter;
 	}
 	
-	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner, List<Service> candidates) {
+	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, EObject owner, List<Service> candidates, ILifecycleStateResolver stateResolver) {
 		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
 		if (v != null) {
 			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
+			if (!stateResolver.definesState(owner)) {
+				owner = objLookup.getStatefulOwner(owner);
+			}
 			LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 			
 			if (candidates != null && !candidates.isEmpty()) {

@@ -5,6 +5,8 @@ package org.fornax.soa.moduledsl;
 
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.fornax.soa.basedsl.resource.EObjectDescriptionBuilder;
+import org.fornax.soa.basedsl.resource.IEObjectDescriptionBuilder;
 import org.fornax.soa.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.fornax.soa.basedsl.sOABaseDsl.SOABaseDslFactory;
 import org.fornax.soa.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
@@ -18,6 +20,7 @@ import org.fornax.soa.moduledsl.query.DefaultModuleVersionMatcher;
 import org.fornax.soa.moduledsl.query.IModuleReferenceResolver;
 import org.fornax.soa.moduledsl.query.IModuleServiceResolver;
 import org.fornax.soa.moduledsl.query.IModuleVersionMatcher;
+import org.fornax.soa.moduledsl.state.ModuleDslLifecycleStateResolver;
 import org.fornax.soa.profiledsl.scoping.versions.DefaultStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.DefaultVersionFilterProvider;
 import org.fornax.soa.profiledsl.scoping.versions.ILifecycleStateResolver;
@@ -25,6 +28,7 @@ import org.fornax.soa.profiledsl.scoping.versions.IStateMatcher;
 import org.fornax.soa.profiledsl.scoping.versions.IVersionFilterProvider;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
+import org.fornax.soa.profiledsl.state.DefaultStateResolver;
 import org.fornax.soa.scoping.IEnvironmentPerspectiveSelector;
 import org.fornax.soa.scoping.impl.DefaultEnvironmentPerspectiveSelector;
 
@@ -52,9 +56,14 @@ public class ModuleDslRuntimeModule extends org.fornax.soa.moduledsl.AbstractMod
 	public Class<? extends LifecycleStateComparator> bindLifecycleStateComparator () {
 		return LifecycleStateComparator.class;
 	}
+
+	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
+	public Class<? extends IEObjectDescriptionBuilder> bindEObjectDescriptionBuilder () {
+		return EObjectDescriptionBuilder.class;
+	}
 	
 	public Class<? extends ILifecycleStateResolver> bindLifecycleStateResolver () {
-		return StateAttributeLifecycleStateResolver.class;
+		return ModuleDslLifecycleStateResolver.class;
 	}
 	
 	public Class<? extends IStateMatcher> bindIStateMatcher () {

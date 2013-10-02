@@ -2,6 +2,8 @@ package org.fornax.soa.profiledsl.validation;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.validation.Check;
+import org.fornax.soa.basedsl.validation.NameAndVersionAreUniqueValidator;
+import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.profiledsl.query.ProfileQueries;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfile;
 import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
@@ -9,6 +11,8 @@ import org.fornax.soa.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
 import com.google.inject.Inject;
  
 
+@PluggableChecks (validators = {
+		NameAndVersionAreUniqueValidator.class})
 public class SOAProfileDslJavaValidator extends AbstractSOAProfileDslJavaValidator {
 	
 	@Inject

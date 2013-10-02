@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
@@ -24,11 +25,20 @@ import com.google.inject.Inject;
 
 public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeValidator {
 
-	@Inject ReferencedStateChecker referencedStateChecker;
-	@Inject IStateMatcher stateMatcher;
-	@Inject LifecycleStateComparator stateComparator;
-	@Inject IEObjectLookup objLookup;
-	@Inject ILifecycleStateResolver stateResolver;
+	@Inject 
+	private ReferencedStateChecker referencedStateChecker;
+	@Inject 
+	private IStateMatcher stateMatcher;
+	@Inject 
+	private LifecycleStateComparator stateComparator;
+	@Inject 
+	private IEObjectLookup objLookup;
+	@Inject 
+	private ILifecycleStateResolver stateResolver;
+	@Inject 
+	private StateAttributeLifecycleStateResolver staticStateResolver;
+	@Inject 
+	private IResourceServiceProvider resourceServiceProvider;
 
 	@Override
 	protected List<EPackage> getEPackages() {
@@ -41,10 +51,11 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	@Check (CheckType.FAST)
 	public void checkNotUsesLowerStateService(ImportServiceRef svcRef) {
 		EObject owner = objLookup.getVersionedOwner(svcRef);
-		LifecycleState ownerState = stateResolver.getLifecycleState(owner);
+		LifecycleState ownerState = staticStateResolver.getLifecycleState(owner);
+		LifecycleState referredServiceState = staticStateResolver.getLifecycleState(svcRef.getService());
 		if (owner != null) {
-			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !ownerState.isIsEnd()) {
-				if (referencedStateChecker.stateMatches (svcRef.getService().getState(), owner))
+			if (stateComparator.compare (ownerState, referredServiceState) > 0 && !ownerState.isIsEnd()) {
+				if (referencedStateChecker.stateMatches (referredServiceState, owner))
 					warning ("A service with a lower lifecycle-state is being provided by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 				else
 					error ("A service with a lower lifecycle-state not supporting all required environments is being provided by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
@@ -55,7 +66,7 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	@Check (CheckType.FAST)
 	public void checkNotUsesLowerStateModule(ModuleRef modRef) {
 		EObject owner = objLookup.getVersionedOwner(modRef);
-		LifecycleState ownerState = stateResolver.getLifecycleState(owner);
+		LifecycleState ownerState = staticStateResolver.getLifecycleState(owner);
 		if (owner != null) {
 			if (stateComparator.compare (ownerState, modRef.getModuleRef().getModule().getState()) > 0 && !ownerState.isIsEnd()) {
 				if (referencedStateChecker.stateMatches (modRef.getModuleRef().getModule().getState(), owner))
@@ -69,10 +80,11 @@ public class ModuleLifecycleStateValidator extends AbstractPluggableDeclarativeV
 	@Check (CheckType.FAST)
 	public void checkNotProvidesLowerStateService(ServiceRef svcRef) {
 		EObject owner = objLookup.getVersionedOwner(svcRef);
-		LifecycleState ownerState = stateResolver.getLifecycleState(owner);
+		LifecycleState ownerState = staticStateResolver.getLifecycleState(owner);
+		LifecycleState referredServiceState = staticStateResolver.getLifecycleState(svcRef.getService());
 		if (owner != null) {
-			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !ownerState.isIsEnd()) {
-				if (referencedStateChecker.stateMatches (svcRef.getService().getState(), owner))
+			if (stateComparator.compare (ownerState, referredServiceState) > 0 && !ownerState.isIsEnd()) {
+				if (referencedStateChecker.stateMatches (referredServiceState, owner))
 					warning ("A service with a lower lifecycle-state is being used by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 				else
 					error ("A service with a lower lifecycle-state not supporting all required environments is being used by the module. You should review the referenced service "+ svcRef.getService().getName() + " and adjust it's lifecycle-state.", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);

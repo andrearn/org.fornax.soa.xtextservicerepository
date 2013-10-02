@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.traversal.IModelVisitor;
@@ -40,6 +41,9 @@ public class ServiceDslStateInferrer extends DefaultStateInferrer {
 				return lifecycleQueries.getHighestEnvironmentalLifecycleState(states);
 			else {
 				EObject obj = ieDesc.getEObjectOrProxy();
+				if (obj.eIsProxy()) {
+					obj = EcoreUtil2.resolve(obj, resourceSet);
+				}
 				SubNamespace subNamespace = objLookup.getOwnerByType(obj, SubNamespace.class);
 				SOAProfile applicableProfile = namespaceQuery.getApplicableProfile(subNamespace, null);
 				return lifecycleQueries.getInitialState(applicableProfile, resourceSet);

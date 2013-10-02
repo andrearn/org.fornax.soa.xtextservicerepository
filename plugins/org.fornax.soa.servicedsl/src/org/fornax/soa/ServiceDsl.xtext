@@ -247,7 +247,7 @@ Service:
 			 * Used in conjunction with renaming the service. Points to the previous service version
 			 */
 			('replaces' replaces=ServiceRef )?
-			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
+			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
 			('service-category' category=[profileDsl::ServiceCategory | QualifiedName])?

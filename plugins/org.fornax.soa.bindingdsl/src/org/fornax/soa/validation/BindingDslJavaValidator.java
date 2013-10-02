@@ -13,6 +13,7 @@ import org.eclipse.xtext.validation.CheckType;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
+import org.fornax.soa.basedsl.validation.NameAndVersionAreUniqueValidator;
 import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.binding.query.environment.EnvironmentBindingResolver;
 import org.fornax.soa.bindingDsl.Binding;
@@ -40,7 +41,8 @@ import com.google.inject.Injector;
 
 @PluggableChecks (validators = {
 		UsedModuleValidator.class,
-		ModuleProvidedServicesValidator.class
+		ModuleProvidedServicesValidator.class,
+		NameAndVersionAreUniqueValidator.class
 })
 public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 

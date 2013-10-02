@@ -4,6 +4,8 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
+import org.fornax.soa.basedsl.validation.NameAndVersionAreUniqueValidator;
+import org.fornax.soa.basedsl.validation.PluggableChecks;
 import org.fornax.soa.profiledsl.query.LifecycleQueries;
 import org.fornax.soa.profiledsl.sOAProfileDsl.LifecycleState;
 import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
@@ -18,7 +20,9 @@ import org.fornax.soa.solutionDsl.SolutionDslPackage;
 
 import com.google.inject.Inject;
  
-
+@PluggableChecks (validators = {
+		NameAndVersionAreUniqueValidator.class
+})
 public class SolutionDslJavaValidator extends AbstractSolutionDslJavaValidator {
 	
 	@Inject LifecycleStateComparator stateComparator;
