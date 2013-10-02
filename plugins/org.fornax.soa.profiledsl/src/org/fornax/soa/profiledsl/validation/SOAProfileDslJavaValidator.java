@@ -27,5 +27,14 @@ public class SOAProfileDslJavaValidator extends AbstractSOAProfileDslJavaValidat
 			warning ("You should declare one profile as default like this: \"default soa-profile ...\"", SOAProfileDslPackage.Literals.SOA_PROFILE__NAME);
 		}
 	}
+	
+	@Check
+	public void checkDefaultProfileDefinesLifecycle (SOAProfile profile) {
+		ResourceSet rs = profile.eResource().getResourceSet();
+		SOAProfile defaultProfile = profileQueries.getDefaultProfile(rs);
+		if (defaultProfile != null && defaultProfile.getLifecycle() == null) {
+			warning ("You should declare a Lifecyle default profile like this: \"lifecycle DefaultLifecycle { ...\"", SOAProfileDslPackage.Literals.SOA_PROFILE__NAME);
+		}
+	}
 
 }

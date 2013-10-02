@@ -3,14 +3,26 @@ package org.fornax.soa.validation;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.resource.IResourceDescription;
+import org.eclipse.xtext.resource.IResourceServiceProvider;
+import org.eclipse.xtext.util.CancelIndicator;
+import org.eclipse.xtext.validation.CancelableDiagnostician;
 import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
+import org.eclipse.xtext.validation.INamesAreUniqueValidationHelper;
 import org.fornax.soa.basedsl.search.IEObjectLookup;
+import org.fornax.soa.basedsl.search.IPredicateSearch;
 import org.fornax.soa.basedsl.search.IReferenceSearch;
 import org.fornax.soa.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.fornax.soa.basedsl.validation.NameAndVersionAreUniqueValidator;
@@ -36,6 +48,10 @@ import org.fornax.soa.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.fornax.soa.serviceDsl.Visibility;
 import org.fornax.soa.util.BindingDslHelper;
 
+import com.google.common.base.Predicate;
+import com.google.common.base.Predicates;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -47,21 +63,33 @@ import com.google.inject.Injector;
 public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 
 	@Inject
-	LifecycleStateComparator stateComparator;
+	private LifecycleStateComparator stateComparator;
 	
 	@Inject
-	ModuleLookup moduleLookup;
+	private ModuleLookup moduleLookup;
 	
 	@Inject
-	IReferenceSearch referenceSearch;
+	private IReferenceSearch referenceSearch;
 	
 	@Inject
-	IEObjectLookup objLookup;
+	private IEObjectLookup objLookup;
 	
 	@Inject
-	Injector injector;
+	private IQualifiedNameProvider nameProvider;
+	
+	@Inject
+	private IPredicateSearch search;
+	
+	@Inject
+	private INamesAreUniqueValidationHelper namesUniqueValidationHelper;
+
+	@Inject
+	private IResourceServiceProvider.Registry resourceServiceProviderRegistry = IResourceServiceProvider.Registry.INSTANCE;
+	
+	@Inject
+	private Injector injector;
 	@Inject 
-	EnvironmentBindingResolver envBindResolver;		
+	private EnvironmentBindingResolver envBindResolver;
 
 	@Override
 	protected List<EPackage> getEPackages() {
@@ -112,6 +140,24 @@ public class BindingDslJavaValidator extends AbstractBindingDslJavaValidator {
 						+ envBindResolver.resolveEnvironment(bind).getName() 
 						+ ". Review the module's state and seek governance approval to a state that supports the targeted environment!",
 								BindingDslPackage.Literals.MODULE_REF__MODULE);
+			}
+		}
+	}
+
+	@Check (CheckType.FAST)
+	public void checkUniqueBindingNamesInResourceOf(ModuleBinding eObject) {
+		QualifiedName bindingName = nameProvider.getFullyQualifiedName(eObject);
+		final EClass eObjectClass = eObject.eClass();
+		if (bindingName != null) {
+			Predicate<IEObjectDescription> pred = new Predicate<IEObjectDescription>() {
+
+				public boolean apply(IEObjectDescription input) {
+					return eObjectClass.isInstance(input.getEObjectOrProxy());
+				}
+			};
+			Iterable<IEObjectDescription> descriptions = search.search(bindingName.toString() + " ", eObject.eClass().getName() + " ", pred);
+			if (Lists.newArrayList(descriptions).size() > 1) {
+				error ("Duplicate " + eObjectClass.getName() + " '"+ bindingName.toString() + "'", BindingDslPackage.Literals.MODULE_BINDING__NAME);
 			}
 		}
 	}

@@ -31,7 +31,7 @@ SOAProfile:
 		/* The scope, where the architecture profile applies to */
 		('scope' scope = STRING)?
 		/* The asset lifecycle states */
-		lifecycle=Lifecycle
+		(lifecycle=Lifecycle)?
 		/* The available service categories */
 		('service-categories' '{'
 			serviceCategory+=ServiceCategory+
