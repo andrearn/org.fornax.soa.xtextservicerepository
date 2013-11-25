@@ -6,7 +6,7 @@ import org.fornax.soa.xsr.connex.core.Asset;
 
 
 /**
- * Accesses the Connex datastore to persist and retrive {@link Subscription}s
+ * Accesses the Connex datastore to persist and retrieve {@link Subscription}s
  * @author aarnold
  *
  */

@@ -74,6 +74,19 @@ public class MergeAgent {
 	@Inject
 	private EventBus bus;
 	
+	/**
+	 * The MergeAgent merges proper commits to the staging repository with the upstream branch head. The MergeAgent 
+	 * only accepts commits, that 
+	 * <ul>
+	 * 	<li>the committer is authorized to contribute, chacking authorization on the model level and not only the the file level</li>
+	 * 	<li>pass the compliance checks for asset versioning, lifecycle management and other model properties</li>
+	 * </ul>
+	 * 
+	 * Unaccepted commits will be reverted from the staging repository. The MergeAgent will notify the committer, 
+	 * if the commit has not been accepted.<br/>
+	 * 
+	 * If a commit has been accepted, all subscribers to change events will be notified.
+	 */
 	public MergeAgent() {
 		leftModelPath = "";
 		rightModelPath = "";
@@ -83,6 +96,10 @@ public class MergeAgent {
 		
 	}
 
+	/**
+	 * Create a diff model for the ongoing merge. 
+	 * @param ctx
+	 */
 	public void diffModels (MergeContext ctx) {
 		ResourceSet leftResourceSet = readModel (leftModelPath, "leftModel");
 		ResourceSet rightResourceSet = readModel (rightModelPath, "rightModel");
@@ -95,6 +112,11 @@ public class MergeAgent {
 		
 	}
 	
+	/**
+	 * Command chain that handles recognized differences
+	 * @param comparison The EMF Compare comparison model
+	 * @param ctx
+	 */
 	private void handleComparison (Comparison comparison, MergeContext ctx) {
 		EList<Conflict> conflicts = comparison.getConflicts();
 		if (conflicts.isEmpty()) {
@@ -122,7 +144,7 @@ public class MergeAgent {
 	}
 
 	private void notifySubscribers (Comparison comparison, MergeContext ctx) {
-		MergeNotificationEvent evt = new MergeNotificationEvent("Changed assets", comparison, ctx);
+		MergeNotificationEvent evt = new MergeNotificationEvent ("Changed assets", comparison, ctx);
 		subscriberNotificationHandler.notify (evt);
 	}
 
