@@ -20,12 +20,19 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.fornax.soa.xsr</groupId>
+	
+	<parent>
+	    <groupId>org.fornax.soa.xsr</groupId>
+	    <artifactId>connex.parent</artifactId>
+	    <relativePath>../../releng/org.fornax.soa.connex.pom.parent/pom.xml</relativePath>
+	    <version>0.0.1-SNAPSHOT</version>
+	</parent>
+
 	<artifactId>connex.web</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 		<!-- TODO project name  -->
-	<name>quickstart</name>
+	<name>Connex web</name>
 	<description></description>
 	<!--
 		<organization>
@@ -50,6 +57,17 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.fornax.soa.xsr</groupId>
+			<artifactId>connex.core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>com.google.inject</artifactId>
+					<groupId>com.google.inject</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<!--  WICKET DEPENDENCIES -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
@@ -67,6 +85,76 @@
             <artifactId>wicket-guice</artifactId>
             <version>${wicket.version}</version>
         </dependency>
+
+       <dependency>
+            <groupId>org.wicketstuff</groupId>
+            <artifactId>wicketstuff-annotation</artifactId>
+            <version>${wicketstuff.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.apache.wicket</groupId>
+                    <artifactId>wicket</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>com.newrelic.agent.java</groupId>
+            <artifactId>newrelic-api</artifactId>
+            <version>${newrelic.version}</version>
+        </dependency>
+
+        <!-- WICKET-BOOTSTRAP -->
+
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-extensions</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-less</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-themes</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.javascript</groupId>
+            <artifactId>closure-compiler</artifactId>
+            <version>${google-closure.version}</version>
+        </dependency>
+
+
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>bootstrap</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>jquerypp</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.webjars</groupId>
+                <artifactId>jquery</artifactId>
+            </dependency>
+
+
 		<!-- -->
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
@@ -105,6 +193,12 @@
 			<artifactId>org.eclipse.jgit.http.server</artifactId>
 			<version>${jgit.version}</version>
 		</dependency>
+
+<dependency>
+	<groupId>commons-lang</groupId>
+	<artifactId>commons-lang</artifactId>
+	<version>2.4</version>
+</dependency>
 		
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
@@ -125,13 +219,30 @@
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.27</version>
+			<scope>test</scope>
+		</dependency>
+		
 		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all-server</artifactId>
 			<version>${jetty.version}</version>
 			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-auth-roles</artifactId>
+			<version>6.12.0</version>
+		</dependency>
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-core</artifactId>
 		</dependency>
 	</dependencies>
 	
@@ -140,6 +251,10 @@
 			<resource>
 				<filtering>false</filtering>
 				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/html</directory>
 			</resource>
 			<resource>
 				<filtering>false</filtering>

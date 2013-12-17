@@ -1,5 +1,7 @@
 package org.fornax.soa.xsr;
 
+import java.io.File;
+
 import org.apache.wicket.util.time.Duration;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.bio.SocketConnector;
@@ -7,6 +9,7 @@ import org.eclipse.jetty.server.ssl.SslSocketConnector;
 import org.eclipse.jetty.util.resource.Resource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.webapp.WebAppContext;
+import org.eclipse.jetty.xml.XmlConfiguration;
 
 public class Start {
     public static void main(String[] args) throws Exception {
@@ -20,6 +23,8 @@ public class Start {
         connector.setSoLingerTime(-1);
         connector.setPort(8080);
         server.addConnector(connector);
+        XmlConfiguration configuration = new XmlConfiguration(new File("src/test/resources/jetty.xml").toURI().toURL());
+        configuration.configure(server);
 
         Resource keystore = Resource.newClassPathResource("/keystore");
         if (keystore != null && keystore.exists()) {

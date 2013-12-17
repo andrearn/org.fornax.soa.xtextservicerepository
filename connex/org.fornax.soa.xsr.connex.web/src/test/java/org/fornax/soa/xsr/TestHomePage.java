@@ -1,6 +1,8 @@
 package org.fornax.soa.xsr;
 
 import org.apache.wicket.util.tester.WicketTester;
+import org.fornax.soa.xsr.connex.web.ConnexApplication;
+import org.fornax.soa.xsr.connex.web.HomePage;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -14,7 +16,7 @@ public class TestHomePage
 	@Before
 	public void setUp()
 	{
-		tester = new WicketTester(new WicketApplication());
+		tester = new WicketTester(new ConnexApplication());
 	}
 
 	@Test
