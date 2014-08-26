@@ -32,10 +32,10 @@ class EventXSDGenerator {
 	@Inject IFileSystemAccess fsa
 
 	@Inject extension CommonTemplateExtensions
-	@Inject extension SchemaNamespaceExtensions
-	@Inject extension SchemaTypeExtensions
+	@Inject extension SchemaNamespaceExtensions schemaNamespaceExt
+	@Inject extension SchemaTypeExtensions schemaTypeExt
 	@Inject extension ServiceTemplateExtensions
-	@Inject extension VersionQualifierExtensions
+	@Inject extension VersionQualifierExtensions versionQualifier
 	@Inject extension HeaderFinder
 	@Inject extension NamespaceImportQueries
 	@Inject extension NamespaceQuery
@@ -69,11 +69,11 @@ class EventXSDGenerator {
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(imp)»"
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
-					xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
+					xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(headerImp)»"
 				«ENDFOR»
 			«ENDIF»
 			elementFormDefault="qualified"
@@ -82,12 +82,12 @@ class EventXSDGenerator {
 			
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
 				<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-					namespace="«imp.toNamespace()»"/>
+					namespace="«schemaNamespaceExt.toNamespace(imp)»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
 					<xsd:import schemaLocation="«headerImp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-						namespace="«headerImp.toNamespace()»"/>
+						namespace="«schemaNamespaceExt.toNamespace(headerImp)»"/>
 				«ENDFOR»
 			«ENDIF»
 			
@@ -115,11 +115,11 @@ class EventXSDGenerator {
 		<xsd:schema targetNamespace="«svc.toTargetNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(imp)»"
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
-					xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«headerImp.toNamespace()»"
+					xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(headerImp)»"
 				«ENDFOR»
 			«ENDIF»
 			elementFormDefault="qualified"
@@ -128,12 +128,12 @@ class EventXSDGenerator {
 			
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
 				<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-					namespace="«imp.toNamespace()»"/>
+					namespace="«schemaNamespaceExt.toNamespace(imp)»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
 					<xsd:import schemaLocation="«headerImp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-						namespace="«headerImp.toNamespace()»"/>
+						namespace="«schemaNamespaceExt.toNamespace(headerImp)»"/>
 				«ENDFOR»
 			«ENDIF»
 			
@@ -149,7 +149,7 @@ class EventXSDGenerator {
 			«svc.toEventMessages(minState, profile)»
 		</xsd:schema>
 		'''
-		val xsdFileName = subDom.toFileNameFragment() + "-" + svc.name + "-" + svc.version.toVersionPostfix() + "Events.xsd";
+		val xsdFileName = subDom.toFileNameFragment() + "-" + svc.name + "-" + versionQualifier.toVersionPostfix(svc.version) + "Events.xsd";
 		fsa.generateFile (xsdFileName, content);
 	}
 	

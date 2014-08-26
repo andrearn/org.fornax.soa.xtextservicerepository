@@ -40,7 +40,7 @@ import org.fornax.soa.service.versioning.IVersionedTypeRefResolver
 class SchemaTypeExtensions {
 	
 	@Inject extension VersionMatcher
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension SchemaNamespaceExtensions schemaNamespaceExt
 	@Inject extension NamespaceQuery
 	@Inject extension VersionQualifierExtensions
 	@Inject extension VersionQueries
@@ -402,28 +402,28 @@ class SchemaTypeExtensions {
 	 */
 	def dispatch String toNamespace (VersionedTypeRef t) { 
 		t.type.eContainer.toUnversionedNamespace() + "/"
-			+ (t.findMatchingTypeVersion() as VersionedType).version.toVersionPostfix() + "/";
+			+ schemaNamespaceExt.toVersionPostfix((t.findMatchingTypeVersion() as VersionedType).version) + "/";
 	}
 	/**
 	 * Calculate the namespace URL
 	 */
 	def dispatch String toNamespace (DataObjectRef t) { 
 		t.type.eContainer.toUnversionedNamespace() + "/"
-			+ (t.findMatchingTypeVersion() as BusinessObject).version.toVersionPostfix() + "/";
+			+ schemaNamespaceExt.toVersionPostfix((t.findMatchingTypeVersion() as BusinessObject).version) + "/";
 	}
 	/**
 	 * Calculate the namespace URL
 	 */
 	def dispatch String toNamespace (EnumTypeRef t) {
 		t.type.eContainer.toUnversionedNamespace() + "/"
-			+ (t.findMatchingTypeVersion() as Enumeration).version.toVersionPostfix() + "/";
+			+ schemaNamespaceExt.toVersionPostfix((t.findMatchingTypeVersion() as Enumeration).version) + "/";
 	}
 	/**
 	 * Calculate the namespace URL
 	 */
 	def dispatch String toNamespace (ExceptionRef t) {
 		t.exception.eContainer.toUnversionedNamespace() + "/"
-			+ (t.findMatchingException() as org.fornax.soa.serviceDsl.Exception).version.toVersionPostfix() + "/";
+			+ schemaNamespaceExt.toVersionPostfix((t.findMatchingException() as org.fornax.soa.serviceDsl.Exception).version) + "/";
 	}
 	
 	/**
@@ -437,7 +437,7 @@ class SchemaTypeExtensions {
 	 * Calculate the namespace URL
 	 */
 	def dispatch String toNamespace (VersionedDomainNamespace ns) {
-		ns.toUnversionedNamespace() + "/" + ns.version.toMajorVersionNumber.toVersionPostfix + "/"
+		ns.toUnversionedNamespace() + "/" + schemaNamespaceExt.toVersionPostfix(ns.version.toMajorVersionNumber) + "/"
 	}
 	
 	/**

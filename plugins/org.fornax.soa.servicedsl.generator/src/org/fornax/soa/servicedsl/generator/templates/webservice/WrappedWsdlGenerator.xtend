@@ -35,8 +35,8 @@ class WrappedWsdlGenerator {
 	@Inject IFileSystemAccess fsa
 
 	@Inject extension CommonTemplateExtensions
-	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-	@Inject extension SchemaTypeExtensions
+	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions schemaNamespaceExt
+	@Inject extension SchemaTypeExtensions schemaTypeExt
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension VersionQualifierExtensions
 	@Inject extension NamespaceQuery
@@ -103,7 +103,7 @@ class WrappedWsdlGenerator {
 		val allServiceExceptionRefs = svc.operations.map (o|o.^throws).flatten;
 		
 		svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);
-		val xsdFileName = subDom.toFileNameFragment() + "-" + svc.name + "-" + svc.version.toVersionPostfix() + "Wrapped.wsdl";
+		val xsdFileName = subDom.toFileNameFragment() + "-" + svc.name + "-" + schemaNamespaceExt.toVersionPostfix(svc.version) + "Wrapped.wsdl";
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
@@ -136,7 +136,7 @@ class WrappedWsdlGenerator {
 		<wsdl:types>
 			<xsd:schema targetNamespace="«svc.toWrapperServiceTargetNamespace()»"
 				«FOR imp : svc.importedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-					xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+					xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(imp)»"
 				«ENDFOR»
 				xmlns:svc="«svc.toWrapperTargetNamespace()»"
 				elementFormDefault="qualified"
@@ -144,7 +144,7 @@ class WrappedWsdlGenerator {
 			>
 				«FOR imp : svc.importedVersionedNS(svc.version.toMajorVersionNumber(), minState) »
 					<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-						namespace="«imp.toNamespace()»"/>
+						namespace="«schemaNamespaceExt.toNamespace(imp)»"/>
 				«ENDFOR»
 				<xsd:import schemaLocation="«svc.getRegisteredOperationWrapperUrl (registryBaseUrl)»"
 					namespace="«svc.toWrapperTargetNamespace()»"/>
@@ -272,7 +272,7 @@ class WrappedWsdlGenerator {
 	def protected toBindingOperation (Operation op) '''
 		<wsdl:operation name="«op.name»">
 			<soap:operation
-				soapAction="«op.eContainer.toNamespace() + op.name»" />
+				soapAction="«schemaTypeExt.toNamespace(op.eContainer) + op.name»" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>

@@ -23,11 +23,4 @@ Workflow {
 		}
 	}
 
-	component = org.eclipse.xpand2.Generator {
-		expand = "templates::Template::main FOREACH greetings"
-		outlet = {
-			path = targetDir
-		}
-		fileEncoding = fileEncoding
-	}
 }

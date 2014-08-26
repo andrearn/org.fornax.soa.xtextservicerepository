@@ -35,9 +35,9 @@ class OperationWrapperTypesGenerator {
 	@Inject IFileSystemAccess fsa
 
 	@Inject extension CommonTemplateExtensions
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension SchemaNamespaceExtensions schemaNamespaceExt
 	@Inject extension SchemaTemplateExtensions
-	@Inject extension SchemaTypeExtensions
+	@Inject extension SchemaTypeExtensions schemaTypeExt
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension VersionQualifierExtensions
 	@Inject extension HeaderFinder
@@ -76,7 +76,7 @@ class OperationWrapperTypesGenerator {
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 			«FOR imp : service.allImportedVersionedNS (service.version.toMajorVersionNumber(), minState)»
-				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(imp)»"
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
@@ -89,7 +89,7 @@ class OperationWrapperTypesGenerator {
 			
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
 				<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-					namespace="«imp.toNamespace()»"/>
+					namespace="«schemaNamespaceExt.toNamespace(imp)»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
@@ -121,7 +121,7 @@ class OperationWrapperTypesGenerator {
 		<xsd:schema targetNamespace="«service.toWrapperTargetNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
-				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«imp.toNamespace()»"
+				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(imp)»"
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
@@ -134,7 +134,7 @@ class OperationWrapperTypesGenerator {
 			
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
 			<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-				namespace="«imp.toNamespace()»"/>
+				namespace="«schemaNamespaceExt.toNamespace(imp)»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»

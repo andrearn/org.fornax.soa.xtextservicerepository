@@ -114,7 +114,6 @@ class BindingConnectorResolver {
 		switch (prot) {
 			SOAP: 		con instanceof SOAPHTTP || con instanceof org.fornax.soa.environmentDsl.HTTP
 			EJB:		con instanceof RMI || con instanceof IIOP
-			SCA:		con instanceof RMI || con instanceof IIOP
 			JMS:		con instanceof org.fornax.soa.environmentDsl.JMS
 			REST:		con instanceof org.fornax.soa.environmentDsl.REST || con instanceof org.fornax.soa.environmentDsl.HTTP
 			HTTP:		con instanceof org.fornax.soa.environmentDsl.HTTP

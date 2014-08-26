@@ -19,7 +19,7 @@ class ExceptionFinder {
 	}
 
 
-	def dispatch List exceptionsWithMinState (SubNamespace ns, LifecycleState state) {
+	def dispatch List<org.fornax.soa.serviceDsl.Exception> exceptionsWithMinState (SubNamespace ns, LifecycleState state) {
 		ns.exceptions.filter (e|e.state.matchesMinStateLevel (state)).toList;
 	}
 

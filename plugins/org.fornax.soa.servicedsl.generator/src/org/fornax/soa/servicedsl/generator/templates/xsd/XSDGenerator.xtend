@@ -44,7 +44,7 @@ class XSDGenerator {
 	
 	@Inject extension CommonTemplateExtensions
 	@Inject extension CommonStringExtensions
-	@Inject extension SchemaNamespaceExtensions
+	@Inject extension SchemaNamespaceExtensions schemaNsExt
 	@Inject extension SchemaTypeExtensions
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries
@@ -149,7 +149,7 @@ class XSDGenerator {
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val resSet = profile.eResource.resourceSet
 		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
-		val imports = vns.importedVersionedNS (minState).filter (e|e.toNamespace() != vns.toNamespace());
+		val imports = vns.importedVersionedNS (minState).filter (e|schemaNsExt.toNamespace(e) != schemaNsExt.toNamespace(vns));
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState ==null || !b.lifecycleState.isEnd)
 			.filter (e|minState.matches (e.lifecycleState) && e.typeMatchesMajorVersion (namespaceMajorVersion,  minState));
 		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
@@ -162,9 +162,9 @@ class XSDGenerator {
 		if (!bos.empty || !qos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''
 			<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-			<xsd:schema xmlns:tns="«vns.toNamespace()»"
+			<xsd:schema xmlns:tns="«schemaNsExt.toNamespace(vns)»"
 				«vns.importedVersionedNS (minState).map (e|e.toNamespaceDeclaration ()).join» 
-				xmlns="«vns.toNamespace()»"
+				xmlns="«schemaNsExt.toNamespace(vns)»"
 				xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 				xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
 				«/*
@@ -173,7 +173,7 @@ class XSDGenerator {
 				*/»
 				elementFormDefault="qualified"
 				attributeFormDefault="unqualified"
-				targetNamespace="«vns.toNamespace()»"
+				targetNamespace="«schemaNsExt.toNamespace(vns)»"
 				>
 				«imports.map (e|e.toImportDeclaration (registryBaseUrl)).join» 	
 				«IF (vns.subdomain instanceof SubNamespace)»
@@ -197,7 +197,7 @@ class XSDGenerator {
 	*/
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, SOAProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
-		val imports = vns.importedVersionedNS(minState).filter(e|e.toNamespace() != vns.toNamespace());
+		val imports = vns.importedVersionedNS(minState).filter(e|schemaNsExt.toNamespace(e) != schemaNsExt.toNamespace(vns));
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
 			.filter (e|minState.matches (e.lifecycleState) && e.typeMatchesMajorVersion (namespaceMajorVersion,  minState));
 		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
@@ -210,9 +210,9 @@ class XSDGenerator {
 		if (!bos.empty || !qos.empty || !enums.empty || !exceptions.empty) {
 			var content = '''
 			<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-			<xsd:schema xmlns:tns="«vns.toNamespace()»"
+			<xsd:schema xmlns:tns="«schemaNsExt.toNamespace(vns)»"
 				«vns.importedVersionedNS (minState).map (e|e.toNamespaceDeclaration).join» 
-				xmlns="«vns.toNamespace()»"
+				xmlns="«schemaNsExt.toNamespace(vns)»"
 				xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
 				xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
 			«/*
@@ -221,7 +221,7 @@ class XSDGenerator {
 			*/»
 				elementFormDefault="qualified"
 				attributeFormDefault="unqualified"
-				targetNamespace="«vns.toNamespace()»"
+				targetNamespace="«schemaNsExt.toNamespace(vns)»"
 				>
 				«imports.map (e|e.toImportDeclaration (registryBaseUrl)).join» 	
 				«IF (vns.subdomain instanceof SubNamespace)»
@@ -241,12 +241,12 @@ class XSDGenerator {
 	
 	
 	def toNamespaceDeclaration (VersionedDomainNamespace vns) '''
-		xmlns:«vns.toPrefix() + versionQualifier.toMajorVersionNumber(vns.version)»="«vns.toNamespace()»"
+		xmlns:«vns.toPrefix() + versionQualifier.toMajorVersionNumber(vns.version)»="«schemaNsExt.toNamespace(vns)»"
 	'''
 	
 	def toImportDeclaration (VersionedDomainNamespace vns, String registryBaseUrl) '''
 		<xsd:import schemaLocation="«vns.toSchemaAssetUrl (registryBaseUrl)».xsd"
-			namespace="«vns.toNamespace()»"></xsd:import>
+			namespace="«schemaNsExt.toNamespace(vns)»"></xsd:import>
 	'''
 	
 	/**

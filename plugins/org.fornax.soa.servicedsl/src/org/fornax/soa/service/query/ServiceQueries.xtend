@@ -36,7 +36,7 @@ class ServiceQueries {
 	
 	def dispatch List servicesWithMinState (Object ns, LifecycleState state) {null;}
 	
-	def dispatch List servicesWithMinState (SubNamespace ns, LifecycleState state) {
+	def dispatch List<Service> servicesWithMinState (SubNamespace ns, LifecycleState state) {
 		ns.services.filter (e|e.state.matchesMinStateLevel (state)).toList;
 	}
 

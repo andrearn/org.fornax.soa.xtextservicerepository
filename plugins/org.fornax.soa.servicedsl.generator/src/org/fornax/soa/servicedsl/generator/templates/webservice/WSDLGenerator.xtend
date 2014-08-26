@@ -39,8 +39,8 @@ class WSDLGenerator {
 	@Inject IFileSystemAccess fsa
 
 	@Inject extension CommonTemplateExtensions
-	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions
-	@Inject extension SchemaTypeExtensions
+	@Inject extension org.fornax.soa.servicedsl.generator.templates.xsd.SchemaNamespaceExtensions schemaNamespaceExt
+	@Inject extension SchemaTypeExtensions schemaTypeExt
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension HeaderFinder
 	@Inject extension NamespaceQuery
@@ -133,7 +133,7 @@ class WSDLGenerator {
 			<xsd:schema targetNamespace="«s.toTargetNamespace()»"
 				xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd"
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber (s.version), minState) »
-					xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber (imp.version)»="«imp.toNamespace()»"
+					xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber (imp.version)»="«schemaNamespaceExt.toNamespace(imp)»"
 				«ENDFOR»
 				«IF !headerImports.empty»
 					«FOR headerImp : headerImports»
@@ -150,7 +150,7 @@ class WSDLGenerator {
 					schemaLocation="http://ws-i.org/profiles/basic/1.1/xsd"/>*/»
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
 					<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-						namespace="«imp.toNamespace ()»"/>
+						namespace="«schemaNamespaceExt.toNamespace (imp)»"/>
 				«ENDFOR»
 				«IF !headerImports.empty»
 					«FOR headerImp : headerImports»
@@ -322,7 +322,7 @@ class WSDLGenerator {
 	def toBindingOperation (Operation o) '''
 		<wsdl:operation name="«o.name»">
 			<soap:operation
-				soapAction="«o.eContainer.toNamespace() + o.name»" />
+				soapAction="«schemaTypeExt.toNamespace(o.eContainer) + o.name»" />
 			<wsdl:input>
 				<soap:body use="literal" />
 			</wsdl:input>

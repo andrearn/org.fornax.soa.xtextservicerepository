@@ -345,6 +345,8 @@ Operation:
 
 /*
  * An operation (return) parameter
+ * If the modifier 'as-attachment-ref' is set, the parameter will be transferred out-of-band
+ * as an attach
  */	 
 Parameter:
 	(optional?='optional')? name=ID ':' type=TypeRef  (attachmentRef?='as-attachment-ref' )?;
