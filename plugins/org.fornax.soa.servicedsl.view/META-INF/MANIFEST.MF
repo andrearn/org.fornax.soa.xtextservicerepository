@@ -7,11 +7,11 @@ Bundle-Activator: org.fornax.soa.servicedsl.view.Activator
 Bundle-Vendor: Fornax Platform
 Require-Bundle: org.eclipse.core.runtime,
  org.fornax.soa.servicedsl;bundle-version="1.6.2",
- org.eclipse.xtext.xbase.lib;bundle-version="2.4.2",
- org.eclipse.xtext.graphview;bundle-version="1.0.2",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.6.2",
+ org.eclipse.xtext.graphview;bundle-version="1.0.3",
  org.eclipse.jdt.core;bundle-version="3.6.2",
  org.fornax.soa.basedsl;bundle-version="1.6.2",
  org.fornax.soa.profiledsl;bundle-version="1.6.2",
- org.eclipse.xtend2.lib;bundle-version="2.4.2"
+ org.eclipse.xtend.lib;bundle-version="2.6.2"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

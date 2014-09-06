@@ -35,7 +35,6 @@ class JavaTypeExtensions {
 			case "decimal":			"java.math.BigDecimal"
 			case "binary": 			"byte[]"
 			case "base64Binary": 	"byte[]"
-			case "decimal":			"BigDecimal"
 			case "boolean":			if (optionalField) return "Boolean" else return "boolean"
 			case "char":			if (optionalField) return "Character" else return "char"
 			case "string":			return "String"
@@ -75,17 +74,16 @@ class JavaTypeExtensions {
 	
 	def dispatch toJavaTypeName (DataType type, boolean optionalField) {
 		switch (type.name) {
-			case "date":			"Date"
-			case "datetime":		"Date"
+			case "date":			"java.util.Date"
+			case "datetime":		"java.util.Date"
 			case "byte":			if (optionalField) return "Byte" else return "byte"
 			case "int":				if (optionalField) return "Integer" else return "int"
 			case "long":			if (optionalField) return "Long" else return "long"
 			case "float":			if (optionalField) return "Float" else return "float"
 			case "double":			if (optionalField) return "Double" else return "double"
-			case "decimal":			"BigDecimal"
+			case "decimal":			"java.math.BigDecimal"
 			case "binary": 			"byte[]"
 			case "base64Binary": 	"byte[]"
-			case "decimal":			"BigDecimal"
 			case "boolean":			if (optionalField) return "Boolean" else return "boolean"
 			case "char":			if (optionalField) return "Character" else return "char"
 			case "string":			return "String"

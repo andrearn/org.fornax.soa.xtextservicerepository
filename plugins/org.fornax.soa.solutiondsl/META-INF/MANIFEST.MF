@@ -5,14 +5,14 @@ Bundle-Vendor: Fornax Platform
 Bundle-Version: 1.6.2.qualifier
 Bundle-SymbolicName: org.fornax.soa.solutiondsl; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.4.2",
- org.eclipse.xtext.generator;bundle-version="2.4.2";resolution:=optional,
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.generator;resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
- org.eclipse.xtext.util;bundle-version="2.4.2",
+ org.eclipse.xtext.util;bundle-version="2.6.2",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
@@ -29,9 +29,9 @@ Export-Package: org.fornax.soa,
  org.fornax.soa.solutionDsl,
  org.fornax.soa.solutionDsl.impl,
  org.fornax.soa.solutionDsl.util,
- org.fornax.soa.parseTreeConstruction,
  org.fornax.soa.parser.antlr,
  org.fornax.soa.parser.antlr.internal,
  org.fornax.soa.validation,
  org.fornax.soa.scoping,
- org.fornax.soa.formatting
+ org.fornax.soa.formatting,
+ org.fornax.soa.serializer

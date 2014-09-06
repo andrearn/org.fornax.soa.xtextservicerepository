@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.fornax.soa.environmentdsl.test
 Bundle-Version: 1.6.2.qualifier
 Bundle-Vendor: Fornax Platform
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.fornax.soa.environmentdsl;bundle-version="1.5.5",
+Require-Bundle: org.fornax.soa.environmentdsl;bundle-version="1.6.2",
  org.eclipse.ui,
  org.eclipse.core.runtime,
  org.fornax.soa.servicedsl;bundle-version="1.6.2",
@@ -13,7 +13,7 @@ Require-Bundle: org.fornax.soa.environmentdsl;bundle-version="1.5.5",
  org.eclipse.emf.ecore;bundle-version="2.6.0",
  org.fornax.soa.basedsl;bundle-version="1.6.2",
  org.fornax.soa.profiledsl;bundle-version="1.6.2",
- org.eclipse.xtext;bundle-version="2.4.2",
+ org.eclipse.xtext;bundle-version="2.6.2",
  org.eclipse.xtext.junit4,
- org.eclipse.xtext.ui.junit;bundle-version="2.4.2"
+ org.eclipse.xtext.ui.junit;bundle-version="2.6.2"
 

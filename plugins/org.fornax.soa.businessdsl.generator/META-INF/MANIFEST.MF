@@ -6,7 +6,7 @@ Bundle-Version: 1.6.2.qualifier
 Bundle-SymbolicName: org.fornax.soa.businessdsl.generator; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.fornax.soa.businessdsl;bundle-version="1.6.2";visibility:=reexport,
- org.eclipse.xtext;bundle-version="2.4.2";visibility:=reexport,
+ org.eclipse.xtext;bundle-version="2.6.2";visibility:=reexport,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.mwe.utils;visibility:=reexport,
  org.fornax.soa.basedsl;bundle-version="1.6.2"

@@ -9,23 +9,23 @@ var file.extensions = "binddsl"
 var projectName = "org.fornax.soa.bindingdsl"
 var runtimeProject = "../${projectName}"
 
-var baseMetaModel="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore"
-var baseGenModel="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel"
+var baseMetaModel="platform:/resource/org.fornax.soa.basedsl/model/generated/SOABaseDsl.ecore"
+var baseGenModel="platform:/resource/org.fornax.soa.basedsl/model/generated/SOABaseDsl.genmodel"
 
-var semMetaModel = "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore"
-var semGenModel = "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel"
+var semMetaModel = "platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.ecore"
+var semGenModel = "platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.genmodel"
 
-var svcMetaModel = "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.ecore"
-var svcGenModel = "platform:/resource/org.fornax.soa.servicedsl/src-gen/org/fornax/soa/ServiceDsl.genmodel"
+var svcMetaModel = "platform:/resource/org.fornax.soa.servicedsl/model/generated/ServiceDsl.ecore"
+var svcGenModel = "platform:/resource/org.fornax.soa.servicedsl/model/generated/ServiceDsl.genmodel"
 
-var modMetaModel = "platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.ecore"
-var modGenModel = "platform:/resource/org.fornax.soa.moduledsl/src-gen/org/fornax/soa/moduledsl/ModuleDsl.genmodel"
+var modMetaModel = "platform:/resource/org.fornax.soa.moduledsl/model/generated/ModuleDsl.ecore"
+var modGenModel = "platform:/resource/org.fornax.soa.moduledsl/model/generated/ModuleDsl.genmodel"
 
-var envMetaModel = "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.ecore"
-var envGenModel = "platform:/resource/org.fornax.soa.environmentdsl/src-gen/org/fornax/soa/EnvironmentDsl.genmodel"
+var envMetaModel = "platform:/resource/org.fornax.soa.environmentdsl/model/generated/EnvironmentDsl.ecore"
+var envGenModel = "platform:/resource/org.fornax.soa.environmentdsl/model/generated/EnvironmentDsl.genmodel"
 
-var profMetaModel="platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.ecore"
-var profGenModel="platform:/resource/org.fornax.soa.profiledsl/src-gen/org/fornax/soa/profiledsl/SOAProfileDsl.genmodel"
+var profMetaModel="platform:/resource/org.fornax.soa.profiledsl/model/generated/SOAProfileDsl.ecore"
+var profGenModel="platform:/resource/org.fornax.soa.profiledsl/model/generated/SOAProfileDsl.genmodel"
 
 Workflow {
     bean = StandaloneSetup {
@@ -72,10 +72,10 @@ Workflow {
 			}
 
 			// generates Java API for the generated EPackages 
-			fragment = ecore.EcoreGeneratorFragment {}
+			fragment = ecore.EMFGeneratorFragment {}
 
 			// the serialization component
-			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+			fragment = serializer.SerializerFragment {}
 
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {

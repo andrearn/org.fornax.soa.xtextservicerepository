@@ -9,11 +9,11 @@ var file.extensions = "sladsl"
 var projectName = "org.fornax.soa.sladsl"
 var runtimeProject = "../${projectName}"
 
-var baseMetaModel="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.ecore"
-var baseGenModel="platform:/resource/org.fornax.soa.basedsl/src-gen/org/fornax/soa/basedsl/SOABaseDsl.genmodel"
+var baseMetaModel="platform:/resource/org.fornax.soa.basedsl/model/generated/SOABaseDsl.ecore"
+var baseGenModel="platform:/resource/org.fornax.soa.basedsl/model/generated/SOABaseDsl.genmodel"
 
-var semMetaModel = "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore"
-var semGenModel = "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel"
+var semMetaModel = "platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.ecore"
+var semGenModel = "platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.genmodel"
 
 Workflow {
     bean = StandaloneSetup {
@@ -48,11 +48,11 @@ Workflow {
 			}
 
 			// generates Java API for the generated EPackages 
-			fragment = ecore.EcoreGeneratorFragment {
+			fragment = ecore.EMFGeneratorFragment {
 			}
 
 			// the serialization component
-			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+			fragment = serializer.SerializerFragment {}
 
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {

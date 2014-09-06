@@ -20,11 +20,10 @@ import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.compare.utils.UseIdentifiers;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.mwe2.runtime.workflow.IWorkflowContext;
-import org.eclipse.emf.mwe2.runtime.workflow.WorkflowContextImpl;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.mwe.Reader;
 import org.eclipse.xtext.mwe.ResourceSetBasedSlotEntry;
+import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.validation.Issue;
 import org.fornax.soa.BindingDslStandaloneSetup;
 import org.fornax.soa.BusinessDslStandaloneSetup;
@@ -45,6 +44,7 @@ import org.fornax.soa.xsr.connex.core.validation.IssueFilterPredicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.EventBus;
+import com.google.inject.Provider;
 
 
 public class MergeAgent {
@@ -61,6 +61,8 @@ public class MergeAgent {
 	private SubscriberMergeNotificationPublisher subscriberNotificationHandler;
 	@Inject
 	private CommitterMergeNotificationPublisher committerNotificationHandler;
+	@Inject
+	private Provider<XtextResourceSet> resourceSetProvider;
 	
 	@Inject
 	private EventBus bus;
@@ -151,6 +153,7 @@ public class MergeAgent {
 	}
 
 	private ResourceSet readModel (String path, String modelName) {
+		
 		IWorkflowContext ctx = new WorkflowContextImpl();
 		
 		Reader modelReader = new Reader();

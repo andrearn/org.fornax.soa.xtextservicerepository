@@ -64,7 +64,7 @@ class OperationWrapperTypesGenerator {
 		namespace.services.forEach (s|s.toOperationWrappers (namespace, minState, profile, registryBaseUrl));
 	}
 	
-	def dispatch void toOperationWrappers (Service service, SubNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch Void toOperationWrappers (Service service, SubNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		
 	}
 	

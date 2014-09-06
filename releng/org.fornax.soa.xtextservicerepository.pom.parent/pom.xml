@@ -240,7 +240,8 @@
 		<repository>
 			<id>graphview</id>
 			<layout>p2</layout>
-			<url>http://download.anderscore.com/graphview/updates</url>
+			<url>http://dl.bintray.com/andrearn/GenericGraphView </url>
+			<!-- url>http://download.anderscore.com/graphview/updates</url-->
 		</repository>
 		<repository>
 			<id>kieler</id>
@@ -282,9 +283,9 @@
 			</build>
 		</profile>
 		<profile>
-			<id>xtext-2.4</id>
+			<id>xtext-latest</id>
 			<properties>
-				<xtext-version>2.4.2</xtext-version>
+				<xtext-version>2.6.2</xtext-version>
 			</properties>
 			<repositories>
 				<repository>

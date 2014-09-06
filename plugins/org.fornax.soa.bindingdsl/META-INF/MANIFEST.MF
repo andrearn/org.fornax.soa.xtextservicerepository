@@ -5,8 +5,7 @@ Bundle-Vendor: Fornax Platform
 Bundle-Version: 1.6.2.qualifier
 Bundle-SymbolicName: org.fornax.soa.bindingdsl; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.4.2",
- org.eclipse.xtext.generator;bundle-version="2.4.2";resolution:=optional,
+Require-Bundle: org.eclipse.xtext.generator;bundle-version="2.6.2";resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
@@ -14,14 +13,15 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.4.2",
  com.ibm.icu;resolution:=optional,
  org.fornax.soa.environmentdsl;bundle-version="1.6.2",
  org.fornax.soa.servicedsl;bundle-version="1.6.2",
- org.eclipse.xtext.util;bundle-version="2.4.2",
+ org.eclipse.xtext.util;bundle-version="2.6.2",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
  org.fornax.soa.basedsl;bundle-version="1.6.2",
  org.fornax.soa.moduledsl;bundle-version="1.6.2",
  org.fornax.soa.profiledsl;bundle-version="1.6.2",
- org.fornax.soa.semanticsdsl;bundle-version="1.6.2"
+ org.fornax.soa.semanticsdsl;bundle-version="1.6.2",
+ org.eclipse.xtext;bundle-version="2.6.2"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa,
@@ -33,10 +33,10 @@ Export-Package: org.fornax.soa,
  org.fornax.soa.bindingDsl.impl,
  org.fornax.soa.bindingDsl.util,
  org.fornax.soa.formatting,
- org.fornax.soa.parseTreeConstruction,
  org.fornax.soa.parser.antlr,
  org.fornax.soa.parser.antlr.internal,
  org.fornax.soa.scoping,
  org.fornax.soa.services,
  org.fornax.soa.util,
- org.fornax.soa.validation
+ org.fornax.soa.validation,
+ org.fornax.soa.serializer

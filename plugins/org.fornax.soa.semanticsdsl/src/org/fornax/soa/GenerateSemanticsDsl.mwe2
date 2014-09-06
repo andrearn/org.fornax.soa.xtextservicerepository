@@ -36,12 +36,12 @@ Workflow {
 			}
 
 			// generates Java API for the generated EPackages 
-			fragment = ecore.EcoreGeneratorFragment {
+			fragment = ecore.EMFGeneratorFragment {
 			// referencedGenModels = "uri to genmodel, uri to next genmodel"
 			}
 
 			// the serialization component
-			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+			fragment = serializer.SerializerFragment {}
 
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {

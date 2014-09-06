@@ -7,14 +7,14 @@ Bundle-Activator: org.fornax.soa.servicerepo.Activator
 Require-Bundle: org.eclipse.core.runtime
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Require-Bundle: org.eclipse.xtext;bundle-version="2.4.2",
+Require-Bundle: org.eclipse.xtext;bundle-version="2.6.2",
  org.eclipse.xtext.generator;resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
- org.eclipse.xtext.util;bundle-version="2.4.2",
+ org.eclipse.xtext.util;bundle-version="2.6.2",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
@@ -29,7 +29,8 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.4.2",
  org.fornax.soa.profiledsl;bundle-version="1.6.2",
  org.fornax.soa.semanticsdsl;bundle-version="1.6.2",
  org.fornax.soa.servicedsl;bundle-version="1.6.2",
- org.fornax.soa.solutiondsl;bundle-version="1.6.2"
+ org.fornax.soa.solutiondsl;bundle-version="1.6.2",
+ org.eclipse.xtend.lib;bundle-version="1.6.2
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.servicerepo,

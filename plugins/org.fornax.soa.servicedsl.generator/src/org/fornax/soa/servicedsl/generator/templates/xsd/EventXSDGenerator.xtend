@@ -58,7 +58,7 @@ class EventXSDGenerator {
 		ns.services.forEach (s|s.toEvents (ns, minState, profile, registryBaseUrl));
 	}
 	
-	def dispatch void toEvents (Service svc, SubNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch Void toEvents (Service svc, SubNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 	}
 	
 	def dispatch toEvents (Service svc, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {

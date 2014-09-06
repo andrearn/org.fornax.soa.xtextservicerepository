@@ -5,20 +5,20 @@ Bundle-Vendor: Fornax Platform
 Bundle-Version: 1.6.2.qualifier
 Bundle-SymbolicName: org.fornax.soa.businessdsl; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.4.2",
- org.eclipse.xtext.generator;resolution:=optional,
+Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
- org.eclipse.xtext.util;bundle-version="2.4.2",
+ org.eclipse.xtext.util;bundle-version="2.6.2",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
  org.fornax.soa.semanticsdsl;bundle-version="1.6.2",
  org.fornax.soa.basedsl;bundle-version="1.6.2",
- org.fornax.soa.profiledsl;bundle-version="1.6.2"
+ org.fornax.soa.profiledsl;bundle-version="1.6.2",
+ org.eclipse.xtext;bundle-version="2.6.2"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa,
@@ -26,9 +26,9 @@ Export-Package: org.fornax.soa,
  org.fornax.soa.businessDsl,
  org.fornax.soa.businessDsl.impl,
  org.fornax.soa.businessDsl.util,
- org.fornax.soa.parseTreeConstruction,
  org.fornax.soa.parser.antlr,
  org.fornax.soa.parser.antlr.internal,
  org.fornax.soa.validation,
  org.fornax.soa.scoping,
- org.fornax.soa.formatting
+ org.fornax.soa.formatting,
+ org.fornax.soa.serializer

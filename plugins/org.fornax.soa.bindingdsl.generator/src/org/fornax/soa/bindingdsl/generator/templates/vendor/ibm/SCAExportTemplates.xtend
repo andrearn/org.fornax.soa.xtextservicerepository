@@ -52,7 +52,7 @@ class SCAExportTemplates {
 		}
 	}
 	
-	def dispatch void toServiceExport (BindingProtocol protocol, ModuleBinding modBind, Service svc, SOAProfile profile) {
+	def dispatch Void toServiceExport (BindingProtocol protocol, ModuleBinding modBind, Service svc, SOAProfile profile) {
 	}
 	
 	def dispatch toServiceExport (SOAP protocol, ModuleBinding modBind, Service svc, SOAProfile enforcedProfile) {

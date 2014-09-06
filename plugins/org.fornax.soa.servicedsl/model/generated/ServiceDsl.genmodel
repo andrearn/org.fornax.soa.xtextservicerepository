@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.fornax.soa.servicedsl/src-gen" editDirectory="/org.fornax.soa.servicedsl.edit/src"
+    editorDirectory="/org.fornax.soa.servicedsl.editor/src" modelPluginID="org.fornax.soa.servicedsl"
+    forceOverwrite="true" modelName="ServiceDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.servicedsl.edit"
+    editorPluginID="org.fornax.soa.servicedsl.editor" runtimeVersion="2.10" usedGenPackages="platform:/resource/org.fornax.soa.basedsl/model/generated/SOABaseDsl.genmodel#//sOABaseDsl platform:/resource/org.fornax.soa.businessdsl/model/generated/BusinessDsl.genmodel#//businessDsl platform:/resource/org.fornax.soa.profiledsl/model/generated/SOAProfileDsl.genmodel#//sOAProfileDsl platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.genmodel#//semanticsDsl">
+  <genPackages prefix="ServiceDsl" basePackage="org.fornax.soa" disposableProviderFactory="true"
+      ecorePackage="ServiceDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ServiceDsl.ecore#//MEP">
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//MEP/sync"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//MEP/async"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//MEP/oneway"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//MEP/fireForget"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//MEP/deferredResponse"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//MEP/syncAsync"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ServiceDsl.ecore#//TransactionSpec">
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//TransactionSpec/requiresNew"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//TransactionSpec/requires"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//TransactionSpec/mandatory"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ServiceDsl.ecore#//Statefulness">
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Statefulness/idempotent"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Statefulness/stateless"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Statefulness/transientState"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Statefulness/stateful"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ServiceDsl.ecore#//Persistence">
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Persistence/none"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Persistence/read"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Persistence/write"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Persistence/readWrite"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ServiceDsl.ecore#//Visibility">
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Visibility/public"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Visibility/domain"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//Visibility/private"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="ServiceDsl.ecore#//ApprovalDecision">
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/no"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/yes"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/temporarily_tolerated"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/tolerated"/>
+      <genEnumLiterals ecoreEnumLiteral="ServiceDsl.ecore#//ApprovalDecision/denied"/>
+    </genEnums>
+    <genClasses ecoreClass="ServiceDsl.ecore#//ServiceModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ServiceModel/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ServiceModel/orgNamespaces"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ServiceModel/types"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//OrganizationNamespace">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//OrganizationNamespace/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//OrganizationNamespace/prefix"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//OrganizationNamespace/profile"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//OrganizationNamespace/subNamespaces"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//SubNamespace">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SubNamespace/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SubNamespace/prefix"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/version"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/profile"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/subscriptions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/types"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/services"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/exceptions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/events"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/channels"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SubNamespace/interalNamespaces"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//DomainNamespace">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//DomainNamespace/domain"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//InternalNamespace">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//InternalNamespace/namespaceUrl"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//Type"/>
+    <genClasses ecoreClass="ServiceDsl.ecore#//VersionedType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedType/deprecated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedType/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/version"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/state"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/governanceApproval"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedType/releaseDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedType/retirementDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedType/providedContractUrl"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedType/subscriptions"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//DataObject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//DataObject/superObject"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//DataObject/replaces"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//DataObject/governanceDecisions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//DataObject/properties"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//BusinessObject">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//BusinessObject/abstract"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//BusinessObject/additionalInfo"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//QueryObject"/>
+    <genClasses ecoreClass="ServiceDsl.ecore#//TypeRef"/>
+    <genClasses ecoreClass="ServiceDsl.ecore#//DataTypeRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//DataTypeRef/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//DataTypeRef/many"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//DataTypeRef/set"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//DataTypeRef/contentType"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//AbstractVersionedTypeRef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//AbstractVersionedTypeRef/versionRef"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//VersionedTypeRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//VersionedTypeRef/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedTypeRef/many"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//VersionedTypeRef/set"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//EnumTypeRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//EnumTypeRef/type"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//DataObjectRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//DataObjectRef/type"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//Property">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/deprecated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/optional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/weak"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/isBusinessKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/isProvidedKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/readonly"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/historizingKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/historized"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/versionIndependantKey"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Property/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Property/type"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//SimpleAttribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SimpleAttribute/deprecated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SimpleAttribute/optional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//SimpleAttribute/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SimpleAttribute/type"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//Enumeration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Enumeration/replaces"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Enumeration/additionalInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Enumeration/literals"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//EnumLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//EnumLiteral/deprecated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//EnumLiteral/name"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//Service">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/deprecated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/visibility"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/replaces"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/state"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/governanceApproval"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/governanceDecisions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/category"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/statefulness"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/persistence"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/additionalInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/realizedCapabilities"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/supportedCapabilities"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/providedContractUrl"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/releaseDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Service/retirementDate"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/requestMessageHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/responseMessageHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/publishMessageHeader"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/subscriptions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Service/operations"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//Operation">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/deprecated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/mep"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/transactional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/return"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/throws"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/considerationSpec"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/statefulness"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/updating"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/transactionSpec"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Operation/persistence"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/requestMessageHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/responseMessageHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/publishMessageHeader"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/requires"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/requiresChannel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/compensatedBy"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/realizedCapabilities"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/supportedCapabilities"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Operation/tags"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Parameter/optional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Parameter/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Parameter/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Parameter/attachmentRef"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//Exception">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Exception/deprecated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Exception/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/superException"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/replaces"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/state"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/governanceApproval"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/governanceDecisions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Exception/releaseDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Exception/retirementDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Exception/providedContractUrl"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/subscriptions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Exception/properties"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//ExceptionRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ExceptionRef/exception"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ExceptionRef/versionRef"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//ServiceRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ServiceRef/service"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ServiceRef/versionRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//ServiceRef/isResponseHandler"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//RequiredServiceRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//RequiredServiceRef/service"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//RequiredServiceRef/versionRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//RequiredServiceRef/isResponseHandler"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//RequiredServiceRef/calledOperations"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//OperationRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//OperationRef/operation"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//OperationRef/versionRef"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//SimpleOperationRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SimpleOperationRef/operation"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//ConsiderationSpec">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ConsiderationSpec/consideredParam"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//ConsiderationParameterRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ConsiderationParameterRef/param"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//ConsiderationParameterRef/flat"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ConsiderationParameterRef/propertyRef"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//ConsiderationPropertyRef"/>
+    <genClasses ecoreClass="ServiceDsl.ecore#//SimpleConsiderationPropertyRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//SimpleConsiderationPropertyRef/property"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//ComplexConsiderationPropertyRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ComplexConsiderationPropertyRef/parentProperty"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//ComplexConsiderationPropertyRef/flat"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//ComplexConsiderationPropertyRef/nestedPropertyRef"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//MessageHeaderRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//MessageHeaderRef/header"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//MessageHeaderRef/versionRef"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//CapabilityRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//CapabilityRef/capability"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//CapabilityRef/versionRef"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//Event">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Event/deprecated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Event/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/replaces"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/state"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/governanceApproval"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/governanceDecisions"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Event/releaseDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Event/retirementDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Event/providedContractUrl"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/additionalInfo"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/subscriptions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Event/parameter"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//EventRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//EventRef/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//EventRef/versionRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//EventRef/subType"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//Channel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Channel/deprecated"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Channel/isTopic"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//Channel/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Channel/subscribers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Channel/publisher"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference ServiceDsl.ecore#//Channel/transmitsEvents"/>
+    </genClasses>
+    <genClasses ecoreClass="ServiceDsl.ecore#//GovernanceApproval">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//GovernanceApproval/decision"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//GovernanceApproval/justificationOrDocURL"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//GovernanceApproval/approvalDate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute ServiceDsl.ecore#//GovernanceApproval/approvedBy"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

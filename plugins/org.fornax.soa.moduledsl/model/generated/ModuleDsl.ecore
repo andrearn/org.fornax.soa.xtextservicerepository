@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="moduleDsl" nsURI="http://www.fornax.org/soa/moduledsl/ModuleDsl"
+    nsPrefix="moduleDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="ModuleModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Import"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
+        eType="#//Module" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Module">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="external" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="client" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="public" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//Version"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.fornax.soa.profiledsl/model/generated/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
+        eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//GovernanceDecision"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" eType="#//QualifierRefs"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assemblyType" eType="#//AssemblyType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="assemblyTypeDetails" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="deploymentModuleName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="groupId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="artifactId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseTag" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="source" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInfo" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//AdditionalInformation"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providedServices" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="providedNamespaces" upperBound="-1"
+        eType="#//NamespaceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="usedServices" upperBound="-1"
+        eType="#//ImportServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="usedModules" upperBound="-1"
+        eType="#//ModuleRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="usesEndpointProtocol" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="usesAlternativeEndpointProtocols"
+        unique="false" upperBound="-1" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRef" eType="#//EndpointQualifierRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
+        eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.ecore#//Tag"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//User"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractServiceRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass platform:/resource/org.fornax.soa.servicedsl/model/generated/ServiceDsl.ecore#//Service"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceRef" eSuperTypes="#//AbstractServiceRef"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ImportServiceRef" eSuperTypes="#//AbstractServiceRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
+        eType="#//ServiceModuleRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endpointProtocol" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alternativeEndpointProtocols"
+        unique="false" upperBound="-1" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRef" eType="#//EndpointQualifierRef"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceModuleRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="#//Module"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.fornax.org/soa/basedsl/SOABaseDsl#//VersionRef"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ModuleRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="moduleRef" eType="#//ServiceModuleRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="includedServices" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="excludedServices" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="endpointProtocol" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="alternativeEndpointProtocols"
+        unique="false" upperBound="-1" eType="#//ImportBindingProtocol"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRef" eType="#//EndpointQualifierRef"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamespaceRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="namespace" eType="ecore:EClass platform:/resource/org.fornax.soa.servicedsl/model/generated/ServiceDsl.ecore#//SubNamespace"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inclSubNamespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inclDomainSubNamespace"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="includedServices" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="excludedServices" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="AssemblyType">
+    <eLiterals name="OTHER" literal="OTHER"/>
+    <eLiterals name="JAR" value="1" literal="JAR"/>
+    <eLiterals name="WAR" value="2" literal="WAR"/>
+    <eLiterals name="EAR" value="3" literal="EAR"/>
+    <eLiterals name="OSGi" value="4" literal="OSGi"/>
+    <eLiterals name="SCAComposite" value="5" literal="SCA-Composite"/>
+    <eLiterals name="SCA_EAR" value="6" literal="SCA-EAR"/>
+    <eLiterals name="WebMethods" value="7" literal="WebMethods"/>
+    <eLiterals name="dotNet" value="8" literal=".Net"/>
+    <eLiterals name="ZIP" value="9" literal="ZIP"/>
+    <eLiterals name="DLL" value="10" literal="DLL"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ImportBindingProtocol">
+    <eLiterals name="SCA" literal="SCA"/>
+    <eLiterals name="SOAP" value="1" literal="SOAP"/>
+    <eLiterals name="EJB" value="2" literal="EJB"/>
+    <eLiterals name="HTTP" value="3" literal="HTTP"/>
+    <eLiterals name="REST" value="4" literal="REST"/>
+    <eLiterals name="SAP" value="5" literal="SAP"/>
+    <eLiterals name="JMS" value="6" literal="JMS"/>
+    <eLiterals name="FILE" value="7" literal="FILE"/>
+    <eLiterals name="FTP" value="8" literal="FTP"/>
+    <eLiterals name="IIOP" value="9" literal="IIOP"/>
+    <eLiterals name="AMQP" value="10" literal="AMQP"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="QualifierRefs">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifiers" unique="false"
+        upperBound="-1" eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.ecore#//Qualifier"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EndpointQualifierRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifier" eType="ecore:EClass platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.ecore#//Qualifier"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="acceptOtherEndpoints" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+</ecore:EPackage>

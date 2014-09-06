@@ -60,15 +60,15 @@ class WrappedWsdlGenerator {
 		will be generated. For each major version of a service WSDL is generated for the latest minor
 		version in that major version matching the minimal Lifecycle constraint is be generated
 	*/
-	def toWrappedWSDL(Service svc, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def void toWrappedWSDL(Service svc, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		svc.toWrappedWSDL (svc.findSubdomain(), minState, profile, registryBaseUrl);
 	}
 	
-	def dispatch toWrappedWSDL(Service svc, SubNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch void toWrappedWSDL(Service svc, SubNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		throw new UnsupportedOperationException ()
 	}
 	
-	def dispatch toWrappedWSDL(Service svc, DomainNamespace subDom, LifecycleState minState, SOAProfile enforcedProfile, String registryBaseUrl) {
+	def dispatch void toWrappedWSDL(Service svc, DomainNamespace subDom, LifecycleState minState, SOAProfile enforcedProfile, String registryBaseUrl) {
 		val profile = subDom.getApplicableProfile(enforcedProfile)
 		val allServiceExceptionRefs = svc.operations.map (o|o.^throws).flatten;
 		svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);
@@ -99,7 +99,7 @@ class WrappedWsdlGenerator {
 		fsa.generateFile (xsdFileName, content);
 	}
 	
-	def dispatch toWrappedWSDL(Service svc, InternalNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch void toWrappedWSDL(Service svc, InternalNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
 		val allServiceExceptionRefs = svc.operations.map (o|o.^throws).flatten;
 		
 		svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);

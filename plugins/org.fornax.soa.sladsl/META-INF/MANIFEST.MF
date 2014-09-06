@@ -5,15 +5,15 @@ Bundle-Vendor: Fornax Platform
 Bundle-Version: 1.6.2.qualifier
 Bundle-SymbolicName: org.fornax.soa.sladsl; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.4.2",
- org.eclipse.xtext.generator;bundle-version="2.4.2";resolution:=optional,
+Require-Bundle: org.eclipse.xtext,
+ org.eclipse.xtext.generator;resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
  org.fornax.soa.semanticsdsl;bundle-version="1.6.2",
- org.eclipse.xtext.util;bundle-version="2.4.2",
+ org.eclipse.xtext.util;bundle-version="2.6.2",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
@@ -25,10 +25,9 @@ Export-Package: org.fornax.soa.sladsl,
  org.fornax.soa.sladsl.sLADsl,
  org.fornax.soa.sladsl.sLADsl.impl,
  org.fornax.soa.sladsl.sLADsl.util,
- org.fornax.soa.sladsl.parseTreeConstruction,
  org.fornax.soa.sladsl.parser.antlr,
  org.fornax.soa.sladsl.parser.antlr.internal,
  org.fornax.soa.sladsl.validation,
  org.fornax.soa.sladsl.scoping,
- org.fornax.soa.sladsl.formatting
-
+ org.fornax.soa.sladsl.formatting,
+ org.fornax.soa.sladsl.serializer

@@ -328,7 +328,7 @@
 		</plugins>
 	</build>
 
-	<repositories>
+	<!-- repositories>
 		<repository>
 			<id>Apache Nexus</id>
 			<url>https://repository.apache.org/content/repositories/snapshots/</url>
@@ -339,5 +339,5 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-	</repositories>
+	</repositories-->
 	</project>

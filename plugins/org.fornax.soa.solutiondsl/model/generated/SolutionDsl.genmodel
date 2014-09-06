@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.fornax.soa.solutiondsl/src-gen" editDirectory="/org.fornax.soa.solutiondsl.edit/src"
+    editorDirectory="/org.fornax.soa.solutiondsl.editor/src" modelPluginID="org.fornax.soa.solutiondsl"
+    forceOverwrite="true" modelName="SolutionDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    complianceLevel="5.0" copyrightFields="false" editPluginID="org.fornax.soa.solutiondsl.edit"
+    editorPluginID="org.fornax.soa.solutiondsl.editor" runtimeVersion="2.10" usedGenPackages="platform:/resource/org.fornax.soa.basedsl/model/generated/SOABaseDsl.genmodel#//sOABaseDsl platform:/resource/org.fornax.soa.businessdsl/model/generated/BusinessDsl.genmodel#//businessDsl platform:/resource/org.fornax.soa.profiledsl/model/generated/SOAProfileDsl.genmodel#//sOAProfileDsl platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.genmodel#//semanticsDsl platform:/resource/org.fornax.soa.servicedsl/model/generated/ServiceDsl.genmodel#//serviceDsl">
+  <genPackages prefix="SolutionDsl" basePackage="org.fornax.soa" disposableProviderFactory="true"
+      ecorePackage="SolutionDsl.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SolutionDsl.ecore#//ModuleKind">
+      <genEnumLiterals ecoreEnumLiteral="SolutionDsl.ecore#//ModuleKind/UI"/>
+      <genEnumLiterals ecoreEnumLiteral="SolutionDsl.ecore#//ModuleKind/BusinessLogic"/>
+      <genEnumLiterals ecoreEnumLiteral="SolutionDsl.ecore#//ModuleKind/Persistence"/>
+      <genEnumLiterals ecoreEnumLiteral="SolutionDsl.ecore#//ModuleKind/Security"/>
+      <genEnumLiterals ecoreEnumLiteral="SolutionDsl.ecore#//ModuleKind/Batch"/>
+      <genEnumLiterals ecoreEnumLiteral="SolutionDsl.ecore#//ModuleKind/OTHER"/>
+    </genEnums>
+    <genClasses ecoreClass="SolutionDsl.ecore#//Model">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Model/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Model/solution"/>
+    </genClasses>
+    <genClasses ecoreClass="SolutionDsl.ecore#//Solution">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Solution/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/domain"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/version"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/state"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/productVersion"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/additionalInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/requires"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/requiresChannel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/features"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/modules"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Solution/subscriptions"/>
+    </genClasses>
+    <genClasses ecoreClass="SolutionDsl.ecore#//Module">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Module/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Module/kind"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/version"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/additionalInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/requires"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/requiresChannel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/features"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/modules"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/tags"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Module/subscriptions"/>
+    </genClasses>
+    <genClasses ecoreClass="SolutionDsl.ecore#//Feature">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Feature/nonFunctional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Feature/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Feature/useCase"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//Feature/description"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/additionalInfo"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/usesCapabilities"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/requires"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/requiresChannel"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/tags"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/features"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//Feature/subscriptions"/>
+    </genClasses>
+    <genClasses ecoreClass="SolutionDsl.ecore#//ServiceRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//ServiceRef/service"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//ServiceRef/versionRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SolutionDsl.ecore#//ServiceRef/isResponseHandler"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//ServiceRef/calledOperations"/>
+    </genClasses>
+    <genClasses ecoreClass="SolutionDsl.ecore#//SimpleOperationRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//SimpleOperationRef/operation"/>
+    </genClasses>
+    <genClasses ecoreClass="SolutionDsl.ecore#//CapabilityRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//CapabilityRef/capability"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//CapabilityRef/versionRef"/>
+    </genClasses>
+    <genClasses ecoreClass="SolutionDsl.ecore#//Version"/>
+    <genClasses ecoreClass="SolutionDsl.ecore#//EventRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//EventRef/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SolutionDsl.ecore#//EventRef/versionRef"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

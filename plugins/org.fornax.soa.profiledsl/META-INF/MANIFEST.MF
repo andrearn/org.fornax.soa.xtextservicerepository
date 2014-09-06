@@ -5,24 +5,23 @@ Bundle-Vendor: Fornax Platform
 Bundle-Version: 1.6.2.qualifier
 Bundle-SymbolicName: org.fornax.soa.profiledsl; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.4.2",
- org.eclipse.xtext.generator;resolution:=optional,
+Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
- org.eclipse.xtext.util;bundle-version="2.4.2",
+ org.eclipse.xtext.util;bundle-version="2.6.2",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
  org.fornax.soa.basedsl;bundle-version="1.6.2",
- org.fornax.soa.environmentdsl;bundle-version="1.6.2"
+ org.fornax.soa.environmentdsl;bundle-version="1.6.2",
+ org.eclipse.xtext;bundle-version="2.6.2"
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.fornax.soa.profiledsl,
  org.fornax.soa.profiledsl.formatting,
- org.fornax.soa.profiledsl.parseTreeConstruction,
  org.fornax.soa.profiledsl.parser.antlr,
  org.fornax.soa.profiledsl.parser.antlr.internal,
  org.fornax.soa.profiledsl.query,
@@ -39,4 +38,6 @@ Export-Package: org.fornax.soa.profiledsl,
  org.fornax.soa.profiledsl.state,
  org.fornax.soa.profiledsl.util,
  org.fornax.soa.profiledsl.validation,
- org.fornax.soa.profiledsl.versioning
+ org.fornax.soa.profiledsl.versioning,
+ org.fornax.soa.profiledsl.serializer
+

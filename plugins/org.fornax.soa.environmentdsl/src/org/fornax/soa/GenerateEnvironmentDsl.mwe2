@@ -9,8 +9,8 @@ var file.extensions = "envdsl"
 var projectName = "org.fornax.soa.environmentdsl"
 var runtimeProject = "../${projectName}"
 
-var semMetaModel = "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.ecore"
-var semGenModel = "platform:/resource/org.fornax.soa.semanticsdsl/src-gen/org/fornax/soa/SemanticsDsl.genmodel"
+var semMetaModel = "platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.ecore"
+var semGenModel = "platform:/resource/org.fornax.soa.semanticsdsl/model/generated/SemanticsDsl.genmodel"
 
 Workflow {
     bean = StandaloneSetup {
@@ -42,10 +42,10 @@ Workflow {
 			}
 
 			// generates Java API for the generated EPackages 
-			fragment = ecore.EcoreGeneratorFragment {}
+			fragment = ecore.EMFGeneratorFragment {}
 
 			// the serialization component
-			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+			fragment = serializer.SerializerFragment {}
 
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {
