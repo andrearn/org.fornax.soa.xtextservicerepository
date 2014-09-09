@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bookmarks>
+   <site url="http://dl.bintray.com/andrearn/XtextServiceRepository-updatesite" selected="true" name="Xtext Service Repository"/>
+   <site url="http://download.itemis.de/updates" selected="true" name="Xtext Composite update site"/>
+   <site url="http://download.eclipse.org/modeling/emf/emf/updates/releases/" selected="true" name="EMF releases"/>
+   <site url="http://dl.bintray.com/andrearn/GenericGraphView" selected="true" name="Generic Graphview"/>
+   <site url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_0.8/" selected="true" name="Kieler 0.8"/>
+</bookmarks>
