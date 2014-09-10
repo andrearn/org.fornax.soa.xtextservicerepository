@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.fornax.soa</groupId>
+	<artifactId>xsr-parent</artifactId>
+	<version>1.6.2</version>
+	<packaging>pom</packaging>
+	
+	<url>https://github.com/andrearn/org.fornax.soa.xtextservicerepository</url>
+
+	<licenses>
+		<license>
+			<name>Eclipse Public License 1.0</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>scm:git:https://github.com/andrearn/org.fornax.soa.xtextservicerepository.git</url>
+	</scm>
+
+	<properties>
+		<xtext.version>2.6.2</xtext.version>
+		<xtend.version>2.6.2</xtend.version>
+	</properties>
+
+	<dependencyManagement>
+
+		<dependencies>
+			<!-- core -->
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>servicerepo</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- DSLs -->
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>basedsl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>bindingdsl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>businessdsl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>environmentdsl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>moduledsl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>profiledsl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>semanticsdsl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>servicedsl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>sladsl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>solutiondsl</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- generators -->
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>xtextservicerepo.generator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>basedsl.generator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>bindingdsl.generator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>businessdsl.generator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>environmentdsl.generator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>moduledsl.generator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>profiledsl.generator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>servicedsl.generator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>semanticsdsl.generator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.fornax.soa</groupId>
+				<artifactId>solutiondsl.generator</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+
+			<!-- Xtext -->
+			<dependency>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>org.eclipse.xtend.standalone</artifactId>
+				<version>${xtext.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>org.eclipse.xtend.standalone</artifactId>
+				<version>${xtend.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

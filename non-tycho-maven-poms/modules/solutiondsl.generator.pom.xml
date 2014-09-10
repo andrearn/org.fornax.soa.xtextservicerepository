@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.fornax.soa</groupId>
+	<artifactId>solutiondsl.generator</artifactId>
+	<packaging>jar</packaging>
+
+	<parent>
+		<groupId>org.fornax.soa</groupId>
+		<artifactId>xsr-parent</artifactId>
+		<version>1.6.2</version>
+	</parent>
+
+	<licenses>
+		<license>
+			<name>Eclipse Public License 1.0</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>solutiondsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>basedsl.generator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>servicedsl.generator</artifactId>
+		</dependency>
+
+	</dependencies>
+</project>
