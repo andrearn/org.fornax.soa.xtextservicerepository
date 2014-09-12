@@ -22,11 +22,15 @@
 	</licenses>
 
 	<dependencies>
-
 		<dependency>
-			<groupId>org.fornax.soa</groupId>
-			<artifactId>servicerepo</artifactId>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext</artifactId>
+			<version>${xtext.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>org.eclipse.xtend</groupId>
+			<artifactId>org.eclipse.xtend.lib</artifactId>
+			<version>${xtend.version}</version>
+		</dependency>
 	</dependencies>
 </project>

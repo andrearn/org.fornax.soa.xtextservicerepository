@@ -22,10 +22,60 @@
 	</licenses>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>basedsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>bindingdsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>businessdsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>benvironmentdsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>moduledsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>profiledsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>servicedsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>servicedsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>semanticsdsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>sladsl</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.fornax.soa</groupId>
+			<artifactId>solutiondsl</artifactId>
+		</dependency>
 
 		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext</artifactId>
+			<version>${xtext.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
-			<artifactId>org.eclipse.xtend.standalone</artifactId>
+			<artifactId>org.eclipse.xtend.lib</artifactId>
+			<version>${xtend.version}</version>
 		</dependency>
 
 	</dependencies>

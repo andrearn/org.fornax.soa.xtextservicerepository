@@ -143,13 +143,18 @@
 
 			<!-- Xtext -->
 			<dependency>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>org.eclipse.xtend.standalone</artifactId>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext</artifactId>
+				<version>${xtext.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext.dependencies</artifactId>
 				<version>${xtext.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>org.eclipse.xtend.standalone</artifactId>
+				<artifactId>org.eclipse.xtend.lib</artifactId>
 				<version>${xtend.version}</version>
 			</dependency>
 		</dependencies>
