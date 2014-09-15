@@ -90,6 +90,71 @@
 							<arch>x86_64</arch>
 						</environment>
 					</environments>
+					<filters>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.generator</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.xbase.lib</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtend.core</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.junit</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.smap</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.util</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtend.lib</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.apache.log4j</id>
+							<restrictTo>
+								<versionRange>[1.2.15.v201012070815,2.0)</versionRange>
+							</restrictTo>
+						</filter>
+					</filters>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -126,6 +191,9 @@
 					<groupId>org.eclipse.tycho</groupId>
 					<artifactId>tycho-p2-repository-plugin</artifactId>
 					<version>${tycho-version}</version>
+					<configuration>
+						<includeAllDependencies>true</includeAllDependencies>
+					</configuration>
 				</plugin>
 
 				<!-- APACHE MAVEN PLUGINS -->
@@ -286,6 +354,7 @@
 			<id>xtext-latest</id>
 			<properties>
 				<xtext-version>2.6.2</xtext-version>
+				<xtext-version-bound>2.7.0</xtext-version-bound>
 			</properties>
 			<repositories>
 				<repository>
@@ -297,19 +366,6 @@
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
-		</profile>
-		<profile>
-			<id>xtext-2.3</id>
-			<properties>
-				<xtext-version>2.3.1</xtext-version>
-			</properties>
-			<repositories>
-				<repository>
-					<id>indigo</id>
-					<layout>p2</layout>
-					<url>http://download.eclipse.org/releases/indigo</url>
-				</repository>
-			</repositories>
 		</profile>
 	</profiles>
 	<dependencyManagement>
