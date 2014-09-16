@@ -6,6 +6,8 @@
 	<groupId>org.fornax.soa</groupId>
 	<artifactId>profiledsl</artifactId>
 	<packaging>jar</packaging>
+	<name>Profile DSL</name>
+	<description>Profile DSL for service repository</description>
 
 	<parent>
 		<groupId>org.fornax.soa</groupId>

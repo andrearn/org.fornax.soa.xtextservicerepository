@@ -19,8 +19,17 @@
 	</licenses>
 
 	<scm>
-		<url>scm:git:https://github.com/andrearn/org.fornax.soa.xtextservicerepository.git</url>
+		<url>https://github.com/andrearn/org.fornax.soa.xtextservicerepository.git</url>
+		<connection>scm:git:https://github.com/andrearn/org.fornax.soa.xtextservicerepository.git</connection>
 	</scm>
+	
+	<developers>
+		<developer>
+			<id>andre.arnold@gmx.de</id>
+			<name>André Arnold</name>
+			<email>andre.arnold@gmx.de</email>
+		</developer>
+	</developers>
 
 	<properties>
 		<xtext.version>2.6.2</xtext.version>

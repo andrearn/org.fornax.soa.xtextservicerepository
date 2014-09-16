@@ -6,6 +6,8 @@
 	<groupId>org.fornax.soa</groupId>
 	<artifactId>servicerepo</artifactId>
 	<packaging>jar</packaging>
+	<name>Service repository core</name>
+	<description>Service repository core components</description>
 
 	<parent>
 		<groupId>org.fornax.soa</groupId>

@@ -6,6 +6,8 @@
 	<groupId>org.fornax.soa</groupId>
 	<artifactId>sladsl</artifactId>
 	<packaging>jar</packaging>
+	<name>SLA DSL</name>
+	<description>Service Level Agreement DSL for service repository</description>
 
 	<parent>
 		<groupId>org.fornax.soa</groupId>

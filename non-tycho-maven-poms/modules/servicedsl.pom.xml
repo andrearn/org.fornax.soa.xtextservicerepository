@@ -6,6 +6,8 @@
 	<groupId>org.fornax.soa</groupId>
 	<artifactId>servicedsl</artifactId>
 	<packaging>jar</packaging>
+	<name>Service DSL</name>
+	<description>Service DSL for service repository</description>
 
 	<parent>
 		<groupId>org.fornax.soa</groupId>

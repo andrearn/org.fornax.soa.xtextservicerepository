@@ -6,6 +6,8 @@
 	<groupId>org.fornax.soa</groupId>
 	<artifactId>xtextservicerepo.generator</artifactId>
 	<packaging>jar</packaging>
+	<name>Xtext Service Repository generator</name>
+	<description>Xtext Service Repository contains basic facilities for service repository code generators</description>
 
 	<parent>
 		<groupId>org.fornax.soa</groupId>
