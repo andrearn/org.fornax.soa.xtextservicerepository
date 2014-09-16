@@ -6,8 +6,8 @@
 	<groupId>org.fornax.soa</groupId>
 	<artifactId>solutiondsl.generator</artifactId>
 	<packaging>jar</packaging>
-	<name>Binding DSL generator</name>
-	<description>Binding DSL generator for service repository</description>
+	<name>Solution DSL generator</name>
+	<description>Solution DSL generator for service repository</description>
 
 	<parent>
 		<groupId>org.fornax.soa</groupId>

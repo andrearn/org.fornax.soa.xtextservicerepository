@@ -7,6 +7,8 @@
 	<artifactId>xsr-parent</artifactId>
 	<version>1.6.2</version>
 	<packaging>pom</packaging>
+	<name>Xtext Service Repository parent POM</name>
+	<description>Xtext Service Repository parent POM not using tycho</description>
 	
 	<url>https://github.com/andrearn/org.fornax.soa.xtextservicerepository</url>
 
