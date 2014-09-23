@@ -17,6 +17,9 @@ Icon
 #Linux
 .directory
 
+#Eclipse
+*/*/.settings
+
 #Generated Files
 */*/bin
 */*/target

@@ -154,25 +154,26 @@ public class MergeAgent {
 
 	private ResourceSet readModel (String path, String modelName) {
 		
-		IWorkflowContext ctx = new WorkflowContextImpl();
-		
-		Reader modelReader = new Reader();
-		modelReader.addRegister (new SOABaseDslStandaloneSetup());
-		modelReader.addRegister (new BindingDslStandaloneSetup());
-		modelReader.addRegister (new BusinessDslStandaloneSetup());
-		modelReader.addRegister (new EnvironmentDslStandaloneSetup());
-		modelReader.addRegister (new ModuleDslStandaloneSetup());
-		modelReader.addRegister (new ServiceDslStandaloneSetup());
-		modelReader.addRegister (new SLADslStandaloneSetup());
-		modelReader.addRegister (new SOAProfileDslStandaloneSetup());
-		modelReader.addRegister (new SolutionDslStandaloneSetup());
-		modelReader.addPath(path);
-		ResourceSetBasedSlotEntry outputSlot = new ResourceSetBasedSlotEntry();
-		outputSlot.setName (modelName);
-		modelReader.addLoadFromResourceSet (outputSlot);
-//		modelReader.invoke(ctx);
-		
-		ResourceSet rs = (ResourceSet)ctx.get (modelName);
-		return rs;
+//		IWorkflowContext ctx = new WorkflowContextImpl();
+//		
+//		Reader modelReader = new Reader();
+//		modelReader.addRegister (new SOABaseDslStandaloneSetup());
+//		modelReader.addRegister (new BindingDslStandaloneSetup());
+//		modelReader.addRegister (new BusinessDslStandaloneSetup());
+//		modelReader.addRegister (new EnvironmentDslStandaloneSetup());
+//		modelReader.addRegister (new ModuleDslStandaloneSetup());
+//		modelReader.addRegister (new ServiceDslStandaloneSetup());
+//		modelReader.addRegister (new SLADslStandaloneSetup());
+//		modelReader.addRegister (new SOAProfileDslStandaloneSetup());
+//		modelReader.addRegister (new SolutionDslStandaloneSetup());
+//		modelReader.addPath(path);
+//		ResourceSetBasedSlotEntry outputSlot = new ResourceSetBasedSlotEntry();
+//		outputSlot.setName (modelName);
+//		modelReader.addLoadFromResourceSet (outputSlot);
+////		modelReader.invoke(ctx);
+//		
+//		ResourceSet rs = (ResourceSet)ctx.get (modelName);
+//		return rs;
+		return null;
 	}
 }
