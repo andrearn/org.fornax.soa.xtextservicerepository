@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.xkonnex.repo.view.sdk-feature"
+      label="XkonneX Repository graph views SDK"
+      version="2.0.0.qualifier"
+      provider-name="Fornax Platform">
+
+   <description>
+      %description
+   </description>
+
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
+      %copyright
+   </copyright>
+
+   <license url="http://www.eclipse.org/legal/epl-v10.html">
+      %license
+   </license>
+
+   <url>
+      <discovery label="KIELER layouts release 0.6" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_0.6/"/>
+      <discovery label="GEF relaeses" url="http://download.eclipse.org/tools/gef/updates/releases/"/>
+      <discovery label="Eclipse Modelling TMF Update Site" url="http://download.eclipse.org/modeling/tmf/updates/"/>
+      <discovery label="Xtext Composite Update Site" url="http://download.itemis.de/updates"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.xtext.graphview" version="1.0.3" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.graphview.providers" version="1.0.3" match="greaterOrEqual"/>
+      <import plugin="org.xkonnex.repo.dsl.moduledsl.ui" version="2.0.0" match="greaterOrEqual"/>
+      <import plugin="org.xkonnex.repo.dsl.profiledsl.ui" version="2.0.0" match="greaterOrEqual"/>
+      <import plugin="org.xkonnex.repo.dsl.servicedsl.ui" version="2.0.0" match="greaterOrEqual"/>
+      <import plugin="org.xkonnex.repo.dsl.servicedsl" version="2.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.xbase.lib" version="2.6.2" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.jdt.core" version="3.6.2" match="greaterOrEqual"/>
+      <import plugin="org.xkonnex.repo.dsl.basedsl" version="2.0.0" match="greaterOrEqual"/>
+      <import plugin="org.xkonnex.repo.dsl.profiledsl" version="2.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtend.lib" version="2.6.2" match="greaterOrEqual"/>
+      <import plugin="org.xkonnex.repo.dsl.solutiondsl.ui" version="2.0.0" match="greaterOrEqual"/>
+   </requires>
+
+   <plugin
+         id="org.xkonnex.repo.view.module.fragment"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.view.service.fragment"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.view.service.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.view.solution.fragment"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.view.solution.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.view.business.fragment"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.view.profile.fragment"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         fragment="true"
+         unpack="false"/>
+
+</feature>

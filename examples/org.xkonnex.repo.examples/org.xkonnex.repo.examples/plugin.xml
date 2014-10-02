@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+	<extension point="org.eclipse.ui.newWizards">
+		<category id="org.xkonnex.repo.dsl.bindingdsl.servicerepo.Examples" 
+				  name="%category.name" 
+				  parentCategory="org.eclipse.ui.Examples" />
+	</extension>
+
+	<!-- ========= org.xkonnex.repo.dsl.bindingdsl.servicerepo.simple.example ========= -->
+	<extension point="org.eclipse.ui.newWizards">
+		<wizard	id="org.xkonnex.repo.dsl.bindingdsl.servicerepo.NewSimpleExampleWizard" 
+			name="%simple.example.name" 
+			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
+			category="org.eclipse.ui.Examples/org.xkonnex.repo.dsl.bindingdsl.servicerepo.Examples"
+			icon="icons/genproject.gif" 
+			project="true">
+			<description>%simple.example.description</description>
+		</wizard>
+	</extension>
+	
+	<!-- ========= org.xkonnex.repo.dsl.bindingdsl.servicerepo.advanced.example ========= -->
+	<extension point="org.eclipse.ui.newWizards">
+		<wizard	id="org.xkonnex.repo.dsl.bindingdsl.servicerepo.NewAdvancedExampleWizard" 
+			name="%advanced.example.name" 
+			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
+			category="org.eclipse.ui.Examples/org.xkonnex.repo.dsl.bindingdsl.servicerepo.Examples"
+			icon="icons/genproject.gif" 
+			project="true">
+			<description>%advanced.example.description</description>
+		</wizard>
+	</extension>
+
+	<extension point="org.eclipse.emf.common.ui.examples">
+	    <example wizardID="org.xkonnex.repo.dsl.bindingdsl.servicerepo.NewSimpleExampleWizard" pageImage="icons/genproject.gif">
+		 	<projectDescriptor name="org.xkonnex.repo.dsl.bindingdsl.servicerepo.simple.example" contentURI="contents/org.xkonnex.repo.dsl.bindingdsl.servicerepo.simple.example.zip" description="%simple.example.repoproject.description"/>
+		 	<projectDescriptor name="org.xkonnex.repo.dsl.bindingdsl.servicerepo.simple.generator.example" contentURI="contents/org.xkonnex.repo.dsl.bindingdsl.servicerepo.simple.generator.example.zip" description="%simple.example.generatorproject.description"/>
+	    </example>
+	</extension>
+	
+	<extension point="org.eclipse.emf.common.ui.examples">
+	    <example wizardID="org.xkonnex.repo.dsl.bindingdsl.servicerepo.NewAdvancedExampleWizard" pageImage="icons/genproject.gif">
+			<projectDescriptor name="org.xkonnex.repo.dsl.bindingdsl.servicerepo.advanced.example" contentURI="contents/org.xkonnex.repo.dsl.bindingdsl.servicerepo.advanced.example.zip" description="%advanced.example.repoproject.description"/>
+			<projectDescriptor name="org.xkonnex.repo.dsl.bindingdsl.servicerepo.advanced.generator.example" contentURI="contents/org.xkonnex.repo.dsl.bindingdsl.servicerepo.advanced.generator.example.zip" description="%advanced.example.generatorproject.description"/>
+	    </example>
+	</extension>   
+   
+</plugin>

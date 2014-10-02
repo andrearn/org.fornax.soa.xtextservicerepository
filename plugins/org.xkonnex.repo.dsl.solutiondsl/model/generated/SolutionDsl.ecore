@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="solutionDsl" nsURI="http://www.xkonnex.org/repo/dsl/solutiondsl/SolutionDsl"
+    nsPrefix="solutionDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="Model">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
+        eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//Import"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="solution" upperBound="-1"
+        eType="#//Solution" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Solution">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.businessdsl/model/generated/BusinessDsl.ecore#//Domain"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="#//Version"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="productVersion" eType="#//Version"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInfo" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//AdditionalInformation"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiresChannel" unique="false"
+        upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.ecore#//Channel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
+        eType="#//Feature" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
+        eType="#//Module" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore#//Tag"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Module">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//ModuleKind"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="#//Version"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInfo" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//AdditionalInformation"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiresChannel" unique="false"
+        upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.ecore#//Channel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
+        eType="#//Feature" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
+        eType="#//Module" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore#//Tag"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ModuleKind">
+    <eLiterals name="UI" literal="UI"/>
+    <eLiterals name="BusinessLogic" value="1" literal="BusinessLogic"/>
+    <eLiterals name="Persistence" value="2" literal="Persistence"/>
+    <eLiterals name="Security" value="3" literal="Security"/>
+    <eLiterals name="Batch" value="4" literal="Batch"/>
+    <eLiterals name="OTHER" value="5" literal="OTHER"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Feature">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="nonFunctional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="useCase" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInfo" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//AdditionalInformation"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="usesCapabilities" upperBound="-1"
+        eType="#//CapabilityRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requires" upperBound="-1"
+        eType="#//ServiceRef" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiresChannel" unique="false"
+        upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.ecore#//Channel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="budgeting" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore#//Tag"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
+        eType="#//Feature" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
+        upperBound="-1" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.ecore#//Service"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//VersionRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isResponseHandler" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calledOperations" upperBound="-1"
+        eType="#//SimpleOperationRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SimpleOperationRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="operation" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.ecore#//Operation"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CapabilityRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="capability" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.businessdsl/model/generated/BusinessDsl.ecore#//Capability"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//VersionRef"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Version" eSuperTypes="http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//Version"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EventRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.ecore#//Event"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//VersionRef"
+        containment="true"/>
+  </eClassifiers>
+</ecore:EPackage>

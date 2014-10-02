@@ -1,0 +1,254 @@
+/*
+Copyright (c) 2010-2013 André Arnold and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    André Arnold 		- initial API and implementation
+    Krunoslav Markotic	- reviews
+    Liane Lenke			- reviews
+*/
+grammar org.xkonnex.repo.dsl.businessdsl.BusinessDsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+
+generate businessDsl "http://www.xkonnex.org/repo/dsl/businessdsl/BusinessDsl"
+
+import "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" as basedsl
+import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as  semantics
+
+BusinessModel :
+	(imports+=Import)*
+	(domains+=Domain)*
+	(organizations+=Organization)*
+	(roles+=Role)*
+	(users+=User)*
+	(privileges+=Privilege)*;
+		
+Organization :
+	'org' name=QualifiedName '{'
+		('competence' competence=STRING)?
+		('head' bizLead=[basedsl::User|QualifiedName])?
+		(businessFunctions+=BusinessFunction)*
+		(subOrganizations+=[Organization|QualifiedName])*
+	'}';
+	
+Domain :
+	'domain' name=QualifiedName '{'
+		('competence' competence=STRING)?
+		('contact-info' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		'}')?
+		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
+
+		(domains+=Domain)*
+		(capabilityGroups+=CapabilityGroup)*
+		(capabilites+=Capability)*
+		
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
+	'}';
+	
+/**
+ * A business function operated by an organization.
+ */
+BusinessFunction :
+	'business-function' name=ID '{' 
+		'short-description' shortDescription=STRING
+		('description' description=STRING)?
+		('contact-info' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		'}')?
+		(additionalInfo=AdditionalInformation)?
+
+		('uses-capability' '{'
+			(capabilties+=CapabilityRef)+
+		'}')?
+
+		('tags' (tags+=[semantics::Tag])+)?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
+	'}' ; 
+	
+/**
+ * A group of business capabilities. Capability Groups are used to build capability hierarchies.
+ */
+CapabilityGroup :
+	'capability-group' name=ID '{'
+		'description' description = STRING
+		('contact-info' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		'}')?
+		(additionalInfo=AdditionalInformation)?
+		(capabilities+=Capability)*
+		(capabilityGroups+=CapabilityGroup)*
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
+	'}'
+;
+
+/**
+ * A business capability
+ * 
+ * A business capability is a particular ability or capacity that a business may possess or exchange 
+ * to achieve a specific purpose or outcome. A capability describes what the business 
+ * does (outcomes and service levels) that creates value for customers; for example, pay employee or ship product. 
+ * A business capability abstracts and encapsulates the people, process/procedures, technology, and information 
+ * into the essential building blocks needed to facilitate performance improvement and redesign analysis.
+ * 
+ * @see http://msdn.microsoft.com/en-us/library/aa479368.aspx
+ */
+Capability: SimpleCapability | CapabilityVariant;
+
+SimpleCapability :
+	(external?='external')? 'capability' name=ID '{'
+		version=Version
+		'short-description' shortDescription=STRING
+		('description' description=STRING)?
+		('responsible' responsible += [basedsl::User|QualifiedName])*
+		('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		'automation-level' automationLevel=CapabilityAutomationLevel
+		('business-value' businessValue=STRING)
+		(additionalInfo=AdditionalInformation)?
+		(	
+			'inputs' '{'
+				(inputs+=Input)*
+			'}'
+		)?
+		(
+			'outcomes' '{'
+				(outcomes+=Outcome)*
+			'}'
+		)?
+		('uses' '{'
+			(uses+=CapabilityRef)+
+		'}'
+		)? 
+		('contact-info' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		'}')?
+		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
+	'}';
+
+/**
+ * A variant of a capability describing what is varied.
+ */
+CapabilityVariant:
+	(external?='external')? 'capability-variant' name=ID 'based-on' basedOnCapabilty=[Capability|QualifiedName] '{'
+		version=Version
+		'short-description' shortDescription=STRING
+		('description' description=STRING)?
+		'automation-level' automationLevel+=CapabilityAutomationLevel
+		('business-value' businessValue=STRING)
+		(additionalInfo=AdditionalInformation)?
+		('adding' '{'
+			(additions += CapabilityVariation)+
+		'}')?
+		('replacing' '{'
+			(replacements += CapabilityReplacement)+
+		'}')?
+		('removing' '{'
+			(removals += CapabilityVariation)+
+		'}')?
+		(	
+			'inputs' '{'
+				(inputs+=Input)*
+			'}'
+		)?
+		(
+			'outcomes' '{'
+				(outcomes+=Outcome)*
+			'}'
+		)?
+		('uses' '{'
+			(uses+=CapabilityRef)+
+		'}'
+		)? 
+		('contact-info' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		'}')?
+		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
+	'}';
+
+CapabilityVariation:
+ 	varying=CapabilityRef ('{'
+		'context' context=STRING
+	'}')?
+ 	;
+ 	
+CapabilityReplacement:
+ 	varying=CapabilityRef 'with' replacement=CapabilityRef ('{'
+		'context' context=STRING
+	'}')?
+ 	;
+ 	
+CapabilityRef:
+	capability=[Capability|QualifiedName] versionRef=VersionRef;
+	
+enum CapabilityAutomationLevel: automated | semiAutomated = 'semi-automated' | humanAssisted = 'human-assisted' | manual;
+
+/**
+ * The input of a capability
+ */
+Input: 
+	'input' description=STRING
+;
+
+/**
+ * The outcome of a capability
+ */
+Outcome:
+	'outcome' description=STRING
+;
+
+	
+User returns basedsl::User:
+	'user' name=QualifiedName '{'
+		('firstname' firstname = STRING)?
+		('lastname' lastname = STRING)?
+		('org' org = STRING)?
+		('org-unit' orgUnit = STRING)?
+		('email' email = STRING)?
+		('phone' phone = STRING)?
+		('roles' (roles += RoleRef)+)?
+	'}';
+
+Role returns basedsl::Role:
+	'role' name=QualifiedName '{'
+		'grant' '{'
+			grants += PrivilegeRef*
+		'}'
+	'}';
+		
+Privilege returns basedsl::Privilege: 
+	'privilege' name=QualifiedName '{'
+		'read' '{'
+			(readACL += QualifiedName)*
+		'}'
+		'write'  '{'
+			(writeACL += QualifiedName)*
+		'}'
+		'execute'  '{'
+			(executeACL += QualifiedName)*
+		'}'
+	'}'
+;

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.xkonnex.repo.pom</groupId>
+		<artifactId>parent</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+		<relativePath>../org.xkonnex.repo.pom.parent/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>generator-parent</artifactId>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>../../plugins/org.xkonnex.repo.generator.basedsl</module>
+		<module>../../plugins/org.xkonnex.repo.generator.bindingdsl</module>
+		<module>../../plugins/org.xkonnex.repo.generator.businessdsl</module>
+		<module>../../plugins/org.xkonnex.repo.generator.environmentdsl</module>
+		<module>../../plugins/org.xkonnex.repo.generator.moduledsl</module>
+		<module>../../plugins/org.xkonnex.repo.generator.profiledsl</module>
+		<module>../../plugins/org.xkonnex.repo.generator.semanticsdsl</module>
+		<module>../../plugins/org.xkonnex.repo.generator.servicedsl</module>
+		<module>../../plugins/org.xkonnex.repo.generator.solutiondsl</module>
+		<module>../../plugins/org.xkonnex.repo.generator.core</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtext-version}</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<outputDirectory>${basedir}/xtend-gen</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>xtend-install-debug-info</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<!-- these dependencies are contributed in Eclipse by the "Xtend Library" 
+						classpath container -->
+					<dependency>
+						<groupId>org.eclipse.xtend</groupId>
+						<artifactId>org.eclipse.xtend.lib</artifactId>
+						<version>${xtext-version}</version>
+						<type>pom</type>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>plugin-source</id>
+						<goals>
+							<goal>plugin-source</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+ 		</plugins>
+	</build>
+
+</project>

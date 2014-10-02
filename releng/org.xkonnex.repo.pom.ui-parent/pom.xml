@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.xkonnex.repo.pom</groupId>
+		<artifactId>generator-parent</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+		<relativePath>../org.xkonnex.repo.pom.generator-parent/pom.xml</relativePath>
+	</parent>
+
+	<artifactId>ui-parent</artifactId>
+	<packaging>pom</packaging>
+	
+	<modules>
+		<module>../../plugins/org.xkonnex.repo.dsl.basedsl.ui</module>
+		<module>../../plugins/org.xkonnex.repo.dsl.bindingdsl.ui</module>
+		<module>../../plugins/org.xkonnex.repo.dsl.businessdsl.ui</module>
+		<module>../../plugins/org.xkonnex.repo.dsl.environmentdsl.ui</module>
+		<module>../../plugins/org.xkonnex.repo.dsl.moduledsl.ui</module>
+		<module>../../plugins/org.xkonnex.repo.dsl.profiledsl.ui</module>
+		<module>../../plugins/org.xkonnex.repo.dsl.semanticsdsl.ui</module>
+		<module>../../plugins/org.xkonnex.repo.dsl.servicedsl.ui</module>
+		<module>../../plugins/org.xkonnex.repo.dsl.sladsl.ui</module>
+		<module>../../plugins/org.xkonnex.repo.dsl.solutiondsl.ui</module>
+		<module>../../plugins/org.xkonnex.repo.workbench.ui</module>
+	</modules>
+
+	<build>
+		<plugins>
+			<!-- Do not clean the src-gen folder, therefore we remove all paths from 
+				the default configuration in the parent pom. Note the combine.self="override" 
+				statement -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration combine.self="override">
+					<fileset>
+						<directory>${basedir}/bin</directory>
+						<includes>
+							<include>**</include>
+						</includes>
+					</fileset>
+					<fileset>
+						<directory>${basedir}/target</directory>
+						<includes>
+							<include>**</include>
+						</includes>
+					</fileset>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

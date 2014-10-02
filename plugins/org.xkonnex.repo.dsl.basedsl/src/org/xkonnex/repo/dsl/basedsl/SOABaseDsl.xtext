@@ -1,0 +1,151 @@
+/*
+Copyright (c) 2010-2014 André Arnold and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    André Arnold 		- initial API and implementation
+*/
+grammar org.xkonnex.repo.dsl.basedsl.SOABaseDsl with org.eclipse.xtext.common.Terminals
+
+generate sOABaseDsl "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl"
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+/* Java like imports */
+Import: 
+	'import' importedNamespace=QualifiedNameWithWildCard;
+
+/* 
+ * Version numbers, some postfixes are treated in a special way:
+ * <ul>
+ * 	<li>Final:		treated as if the version number ends with ".0"</li>
+ * 	<li>RC:			release candidate, may end with a number</li>
+ * 	<li>CR:			release candidate (snynonym for RC), may end with a number</li></li>
+ * 	<li>Beta:		beta, may end with a number</li>
+ * 	<li>Alpha:		alpha, may end with a number</li>
+ * 	<li>Milestone:	milestone release, may end with a number</li>
+ * </ul>
+ */
+VersionId: INT('.'INT)*(('.'|'-')ID)*;
+
+VersionedName: {VersionedName} QualifiedName|ID (WS)* version=VersionId;
+
+/*
+ * A version qualifier for versioned assets
+ */
+Version:
+	'version' (version=VersionId) (frozen?='frozen')?;
+
+/*
+ * Version constraints applied to referenced assets
+ */
+VersionRef:
+	MinVersionRef | MaxVersionRef | LowerBoundRangeVersionRef | MajorVersionRef | FixedVersionRef;
+
+/*
+ * Assets, where the version is lesser than maximal version: asset version >= minVersion
+ */	
+MinVersionRef:
+	('minVersion') minVersion=VersionId;
+
+/*
+ * Assets, that match a minimal version: asset version >= minVersion
+ */	
+MaxVersionRef:
+	('maxVersion') maxVersion=VersionId;
+
+/*
+ * Matches version in the half open range [minVersion, maxVersion)
+ */	
+LowerBoundRangeVersionRef:
+	('minVersion' '>=') minVersion=VersionId ',' ('maxVersion' '<') maxVersion=VersionId;
+
+/*
+ * Constraint matches assets with any version with the same major version, i.e. the first INT until the first '.' is equal
+ */
+MajorVersionRef:
+	'majorVersion' majorVersion=INT;
+
+/*
+ * Constraint that matches an asset version  explicitely
+ */
+FixedVersionRef:
+	'fixedVersion' fixedVersion=VersionId;
+
+QualifiedNameWithWildCard:
+	QualifiedName '.*'?;
+
+QualifiedName:
+	ID (('.'|'@') ID)*;
+
+/*
+ * Expresses SOA governance decisions
+ * voteing until date will be part of the review ballots captured in the side store
+ */
+GovernanceDecision:
+	'governance-decision' '{'
+		('subject' subject=STRING)
+		('decision-result' decisionResult=GovernanceDecisionResult)
+		('specific-result' specificResult=STRING)?
+		('justification-doc' justificationOrDocURL=STRING )?
+		('decision-date' approvalDate=STRING )? 
+		('decision-by' approvedBy=STRING )?
+		('effective-date' effectiveDate=STRING)?
+	'}'
+;
+
+enum GovernanceDecisionResult:
+	pending | accepted | denied | specific
+;
+
+	
+
+AbstractType: {AbstractType} name=ID;
+
+AdditionalInformation: 
+	'additional-information' '{'
+		infoItems += InfoItem+
+	'}'
+;
+	
+InfoItem:
+	'location' documentLocation=STRING ('reference' reference=STRING)?
+;
+
+User:
+	name = QualifiedName
+	(firstname = STRING)?
+	(lastname = STRING)?
+	(org = STRING)?
+	(orgUnit = STRING)?
+	(email = STRING)?
+	(phone = STRING)?
+	(roles += RoleRef)*
+;
+
+RoleRef:
+	role = [Role|QualifiedName]
+;
+
+Role:
+	name = STRING
+	grants += PrivilegeRef*
+;
+
+PrivilegeRef:
+	privilege = [Privilege|QualifiedName]
+;
+
+Privilege:
+	name=QualifiedName
+		(readACL += QualifiedName)*
+		(writeACL += QualifiedName)*
+		(executeACL += QualifiedName)*
+	;
+	
+AssetRef: asset = [ecore::EObject|QualifiedName] (versionRef=VersionRef)?;
+
+

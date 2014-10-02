@@ -1,0 +1,44 @@
+module org.xkonnex.repo.simple.generator.WSDLGenerator
+
+var modelPath = "../org.fornax.soa.servicerepo.simple.example/src"
+var profile = "SampleArchitectureProfile"
+
+var resSrcGenPath = "src-gen"
+
+Workflow {
+	component = org.eclipse.xtext.mwe.Reader {
+	    path = modelPath
+	    register = org.xkonnex.repo.dsl.servicedsl.ServiceDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.semanticsdsl.SemanticsDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.businessdsl.BusinessDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.bindingdsl.BindingDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.environmentdsl.EnvironmentDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.basedsl.SOABaseDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.profiledsl.SOAProfileDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.moduledsl.ModuleDslStandaloneSetup {}
+	    loadResource = {
+	        slot = 'model'
+	    }
+	}
+	
+	component = org.eclipse.emf.mwe.utils.DirectoryCleaner {
+		directory = resSrcGenPath
+	}
+	
+	component = org.eclipse.xtext.generator.GeneratorComponent {
+		register = org.xkonnex.repo.generator.bindingdsl.DefaultBindingContractGeneratorSetup {
+			serviceModule = {
+				name = "org.example.sales.esb"
+				version = "1.0"
+				generateProvidedServices = true
+				generateUsedServices = false
+			}
+			targetEnvironmentName = 'Dev'
+		}
+		slot = 'model'
+		outlet = {
+			path = "${resSrcGenPath}/contracts"
+		}
+	}
+	
+}

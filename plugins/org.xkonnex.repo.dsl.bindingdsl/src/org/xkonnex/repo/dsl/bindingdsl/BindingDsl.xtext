@@ -1,0 +1,386 @@
+/*
+Copyright (c) 2010-2013 André Arnold and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    André Arnold 		- initial API and implementation
+    Vitaly Markin		- reviews
+*/
+grammar org.xkonnex.repo.dsl.bindingdsl.BindingDsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+
+generate bindingDsl "http://www.xkonnex.org/repo/dsl/bindingdsl/BindingDsl"
+
+import "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" as serviceDsl
+import "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl" as moduleDsl
+import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as environmentDsl
+import "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" as profileDsl
+import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
+
+BindingModel:
+	(imports+=Import)*
+	(bindings+=Binding)*;
+
+
+Binding: ModuleBinding | ServiceBinding | ChannelBinding;
+
+
+
+/* 
+ * Providers are server connetors to outbound endpoints, when using a service
+ */	
+ConnectorQualifier:
+	'on-connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*;
+
+/*
+ * Binds the referenced module to the given target environment. All services provided by the module become available in the
+ * targeted environment
+ */	
+ModuleBinding:
+	'bind-module' module=ModuleRef 'as' name=QualifiedName 'to' 
+		(('environment' environment=[environmentDsl::Environment|QualifiedName] '{') | 
+		 ('server' provServer = [environmentDsl::Server|QualifiedName]  '{' )
+		)
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(governanceDecisions+=GovernanceDecision)*
+		/* The default endpoint protocols to be used by default. The protocols respective connector on the server is used to expose the service */
+		('default-protocols' '{'
+			(protocol+=BindingProtocol)+
+		'}')?
+		
+		('default-policies' '{'
+			(policies+=Policy)*
+		'}')?
+		('default-assertions' '{'
+			(assertions+=Assertion)+
+		'}')?
+		(serviceBindings+=ServiceBinding)*
+	'}'
+;
+
+ModuleRef: module=[moduleDsl::Module|QualifiedName] versionRef=VersionRef;
+
+/*
+ * Overrides the binding of a parent ModuleBinding for the given Service
+ */
+ServiceBinding:
+	'bind-service' service=ServiceRef ('to' 
+		(('environment' environment=[environmentDsl::Environment|QualifiedName]) | 
+		 ('server' provServer = [environmentDsl::Server|QualifiedName])
+		))? '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(governanceDecisions+=GovernanceDecision)*
+		('provided-contract' providedContract=STRING)?
+		'protocols' '{'
+			(protocol+=BindingProtocol)+
+		'}'
+		('policies' '{'
+			(policies+=Policy)*
+		'}')?
+		('assertions' '{'
+			(assertions+=Assertion)+
+		'}')?
+		('references-module' referencedModule = ModuleRef)?
+		(operation+=OperationBinding)*
+	'}';
+
+/*
+ * References a service by  qualified name and a VersionRef constraint
+ */	
+ServiceRef:
+	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
+	
+/*
+ * Overrides the binding of a parent ModuleBinding for the given Channel
+ */
+ChannelBinding:
+	'bind-channel' channel=[serviceDsl::Channel|QualifiedName] ('to' 
+		(('environment' environment=[environmentDsl::Environment|QualifiedName]) | 
+		 ('server' provServer = [environmentDsl::Server|QualifiedName])
+		))? '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(governanceDecisions+=GovernanceDecision)*
+		'protocols' '{'
+			(protocol+=BindingProtocol)+
+		'}'
+		('policies' '{'
+			(policies+=Policy)*
+		'}')?
+		('assertions' '{'
+			(assertions+=Assertion)+
+		'}')?
+		('references-module' referencedModule = ModuleRef)?
+	'}';
+
+
+/*
+ * The endpoint protocol of the entpoint on which the service is provided
+ */																																				
+BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP;
+
+/*
+ * Overrides the binding of a parent ServiceBinding for the given service Operation
+ */
+OperationBinding: 
+	'bind-operation' operation=[serviceDsl::Operation|QualifiedName] '{' 
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(governanceDecisions+=GovernanceDecision)*
+		'protocols' '{'
+			(protocol+=BindingProtocol)+
+		'}'
+		('provider-protocols' '{'
+			(providerProtocol+=BindingProtocol)+
+		'}')?
+		('policies' '{'
+			(policies+=Policy)*
+		'}')?
+		('provider-policies' '{'
+			(providerPolicies+=Policy)*
+		'}')?
+		('assertions' '{'
+			(assertions+=Assertion)+
+		'}')?
+	'}';
+
+
+
+//Protocols 
+
+/* Use SOAP on the endpoint */
+SOAP: 
+	'SOAP' '{'
+		{SOAP}
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		('style' style=SOAPStyle )?
+		('protocol-version' protocolVersion = SOAPProtocolVersion)?
+		('transport' transport=SOAPTransport)?
+		('http-context-root' contextRoot = STRING )?
+		('provided-WSDL-Url' providedWsdlUrl = STRING )?
+	'}';
+	
+enum SOAPStyle: doclitwrap='document/literal-wrapped' | rpclit = 'rpc/literal' | rpcenc='rpc/encoded';
+enum SOAPTransport: HTTP | JMS | SMTP;
+enum SOAPProtocolVersion: SOAP11='SOAP-v1.1' | SOAP12 = 'SOAP-v1.2';
+
+/* SAP endpoint (RFC or IDoc as stated with the SAPTransport */
+SAP: 
+	'SAP' '{'
+		{SAP}
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		('transport' transport=SAPTransport )?
+		('client' client=[environmentDsl::SapClient|QualifiedName] )?
+	'}';
+
+enum SAPTransport: IDOC | RFC;
+
+/* An EJB endpoint protocol (IIOP/RMI) */ 
+EJB: 
+	'EJB' '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		'jndi-name' jndiName=STRING 
+	'}';
+
+/* A  plain HTTP endpoint protocol */	
+HTTP: 
+	'HTTP' '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		'url' url=STRING 
+		'provider-url' providerUrl=STRING  
+		'verb' verb=Verb 
+	'}';
+
+/* A REST endpoint protocol */
+REST: 
+	'REST' '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		'path' path=STRING  
+		'provider-url' providerUrl=STRING  
+		'verb' verb=Verb 
+		('format' format=RESTFormat)? 
+		('consumes-format' consumesFormat=RESTFormat)? 
+		('provides-format' provideFormat=RESTFormat)? 
+	'}';
+
+/* The wire data serialization format */	
+enum RESTFormat: JSON | XML | BISON | OTHER;
+/* The REST operation verb */
+enum Verb: CREATE | RETRIEVE | UPDATE | DELETE | GET | PUT | POST;
+
+/* A JMS endpoint protocol. The actual wire format of the messages is not specified. However, the Broker exposes an JMS API */
+JMS:
+	'JMS' '{'
+		{JMS}
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		(channel=TopicOrQueue)?
+		'jndi-name' jndiName=STRING
+		('provider-jndi-name' providerJndi=STRING )?
+	'}';
+	
+TopicOrQueue: Topic | Queue;
+
+/* JMS topic to send/retrieve messages */
+Topic: 'topic' name=STRING (endpointQualifierRefs=EndpointQualifierRef)?;
+
+/* JMS queue to send/retrieve messages */
+Queue: 'queue' name=STRING (endpointQualifierRefs=EndpointQualifierRef)?;
+
+/* An SCA native endpoint protocol. Messages are accessed via the SCA API or import/export primitives*/	
+SCA:
+	{SCA} 
+	'SCA' (name=STRING)? '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		('promote' promote=STRING )?
+		('reference' reference=STRING (isMultipleRef?='[]')? )?
+	'}' ;
+
+/* A file access protocol for endpoints */
+FILE: 
+	'FILE' '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?
+	'}';
+
+/* Use FTP to access message files on the endpoint */
+FTP: 
+	'FTP' '{' 
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		'access' accessType=ReadWrite ('interval' pollIntervall=STRING)?
+	'}';
+
+/* An IIOP endpoint protocol */ 
+IIOP: 
+	'IIOP' '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		'lookup-name' lookupName=STRING 
+	'}';
+
+AMQP:
+	'AMQP' '{'
+		{AMQP}
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		(channel=TopicOrQueue)?
+		'lookup-name' lookupName=STRING
+		('provider-lookup-name' providerLookupName=STRING )?
+	'}';
+
+enum ReadWrite : read|write;
+
+
+// Policies
+
+/* Service policies */
+Policy: LogPolicy | SecurityPolicy;
+
+/* Logging policy to be applied to the services */
+LogPolicy: 'logging-policy' logPolicy=LogPolicyKind ;
+
+/* Security policy to be applied to the services */
+SecurityPolicy : AuthenticationPolicy | SigningPolicy | EncryptionPolicy;
+
+/* Policy, that defines how consumer are authenticated */
+AuthenticationPolicy : 
+	{AuthenticationPolicy}
+	'authn-policy' (name=ID)? (optional?='optional')? '{'
+		'auth-tokens' '{'
+			(authTokens+=AuthToken)+
+		'}'
+		'hash-algorithms' '{'
+			(hashAlgorithms+=HashAlgorithm)*
+		'}'
+		(useNonce?='use-nonce')?
+		('issuer' issuer = STRING)?
+	'}';
+	
+AuthToken : (optional?='optional')? kind=AuthTokenKind ;
+
+HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgKind ;
+
+enum HashAlgKind : MD5 | SHA1 | SHA256 | RSA | PlainText;
+
+/* How messages are signed, to verify their authenticity */
+SigningPolicy : 
+	{SigningPolicy} 
+	'signing-policy' '{'
+		('supported-algorithms' supportedSigningAlgorithms+=SigningAlgothm+)?
+		('requires-algorithm' requiredSigningAlgorithm=SigningAlgothm)?
+		('signed-message-parts' (signedParts+=MessagePartRef)(',' signedParts+=MessagePartRef)*)?
+	'}'
+;
+
+MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpression=STRING)?;
+
+enum MessagePartRefKind: header | body | attachments | all | expression;
+
+enum SigningAlgothm: NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
+
+/* How messages are encrypted */
+EncryptionPolicy : 
+	{EncryptionPolicy} 
+	'encryption-policy' '{'
+		('supported-algorithms' supportedCipherAlgorithms+=CipherAlgorithmKind+)?
+		('requires-algorithm' requiredCipherAlgorithm=CipherAlgorithmKind)?
+		('encrypted-message-parts' (encryptedParts+=MessagePartRef)(',' encryptedParts+=MessagePartRef)*)?
+	'}'
+;
+
+enum CipherAlgorithmKind: NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES='3DES' | AES128 | AES256;
+
+enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
+
+enum LogPolicyKind: none | header | all;
+
+
+Assertion: AvailabilityAssertion | LatencyAssertion | CapacityAssertion | ReliablityAsserttion | CostAssertion | AccuracyAssertion;
+
+AvailabilityAssertion:
+	{AvailabilityAssertion}
+	('availability' availability=STRING)?
+	('mean-time-between-failure' mtbf=STRING)?
+	('mean-time-to-repair' mttr=STRING (mttrPercentile=Percentile)?)?
+	('regular-down-times' regularDownTimes = STRING)?
+;
+
+LatencyAssertion:
+	'latency' latency="STRING" 'percentile' percentile=Percentile
+;
+
+CapacityAssertion:
+	{CapacityAssertion}
+	('num-of-requests' requestNum=STRING 'per' timeUnit=STRING)?
+	('message-size' messageSize=STRING)?
+;
+
+ReliablityAsserttion:
+	'message-exchange-reliability' reliability=ReliablilityKind
+	(inOrderDelivery ?= 'in-order-delivery')?
+;
+
+enum ReliablilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
+CostAssertion:
+	'costs' costsAmount=STRING
+	'billed-per-unit' billedUnit=STRING
+;
+
+AccuracyAssertion:
+	'max-error-rate' maxErrorRate=STRING
+;
+
+
+Percentile: percentile=INT('.'INT)*'%';
+
+EndpointQualifierRef:
+	'endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName]
+;

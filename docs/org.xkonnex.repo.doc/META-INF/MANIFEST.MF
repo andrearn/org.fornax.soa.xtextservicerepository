@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: XKonneX Repository docs
+Bundle-SymbolicName: org.xkonnex.repo.doc;singleton:=true
+Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: XKonneX.org
+Require-Bundle: org.eclipse.help
+Export-Package: images

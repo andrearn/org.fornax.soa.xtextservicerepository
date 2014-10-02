@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="semanticsDsl" nsURI="http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl"
+    nsPrefix="semanticsDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="SemanticsModel">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
+        eType="#//Import" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="qualifierDefinition" upperBound="-1"
+        eType="#//Qualifier" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="tagDefinition" upperBound="-1"
+        eType="#//Tag" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Import">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractTag">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Tag" eSuperTypes="#//AbstractTag">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extends" unique="false"
+        upperBound="-1" eType="#//Tag"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Qualifier" eSuperTypes="#//AbstractTag"/>
+</ecore:EPackage>

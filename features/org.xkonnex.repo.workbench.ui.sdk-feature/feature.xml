@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.xkonnex.repo.workbench.ui.sdk-feature"
+      label="XkonneX Repository Workbench UI SDK"
+      version="2.0.0.qualifier"
+      provider-name="Fornax Platform">
+
+   <description url="http://www.example.com/description">
+      [Enter Feature Description here.]
+   </description>
+
+   <copyright url="org.xkonnex.repo.doc">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <requires>
+      <import plugin="org.xkonnex.repo.dsl.basedsl.test"/>
+      <import plugin="org.xkonnex.repo.dsl.environmentdsl"/>
+      <import plugin="org.xkonnex.repo.dsl.moduledsl"/>
+      <import plugin="org.xkonnex.repo.dsl.profiledsl"/>
+      <import plugin="org.xkonnex.repo.dsl.semanticsdsl"/>
+      <import plugin="org.xkonnex.repo.dsl.servicedsl"/>
+      <import plugin="org.xkonnex.repo.dsl.sladsl"/>
+      <import plugin="org.xkonnex.repo.dsl.solutiondsl"/>
+      <import plugin="org.xkonnex.repo.core"/>
+   </requires>
+
+   <plugin
+         id="org.xkonnex.repo.workbench.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.basedsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.bindingdsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.businessdsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.environmentdsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.moduledsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.profiledsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.semanticsdsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.servicedsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.sladsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.solutiondsl.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<fragment>
+	<extension point="org.eclipse.xtext.graphview.selectionStrategy">
+		<strategy
+        	class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.graphview.providers.XtextEditorSelectionStrategy">
+    	</strategy>
+	</extension>
+
+</fragment>

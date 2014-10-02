@@ -1,0 +1,21 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xkonnex.repo.generator.profiledsl
+Bundle-Vendor: XKonneX.org
+Bundle-Version: 2.0.0.qualifier
+Bundle-SymbolicName: org.xkonnex.repo.generator.profiledsl; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.xkonnex.repo.dsl.profiledsl;bundle-version="2.0.0";visibility:=reexport,
+ org.eclipse.xtext;bundle-version="2.6.2";visibility:=reexport,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ org.eclipse.emf.mwe.utils;visibility:=reexport,
+ org.xkonnex.repo.dsl.profiledsl;bundle-version="2.0.0",
+ org.xkonnex.repo.generator.basedsl;bundle-version="2.0.0",
+ org.xkonnex.repo.generator.core;bundle-version="2.0.0",
+ org.xkonnex.repo.dsl.environmentdsl;bundle-version="2.0.0",
+ org.eclipse.xtend.lib;bundle-version="2.6.2"
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Export-Package: org.xkonnex.repo.generator.profiledsl;uses:="org.eclipse.xtext,org.xkonnex.repo.dsl.bindingdsl.profiledsl,com.google.inject",
+ org.xkonnex.repo.generator.profiledsl.schema,
+ org.xkonnex.repo.generator.profiledsl.templates

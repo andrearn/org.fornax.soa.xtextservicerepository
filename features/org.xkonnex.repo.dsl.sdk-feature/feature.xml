@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.xkonnex.repo.dsl.sdk-feature"
+      label="XkonneX Repository DSL SDK"
+      version="2.0.0.qualifier"
+      provider-name="Fornax Platform">
+
+   <description url="http://www.eclipse.org/modeling/m2t">
+      %description
+   </description>
+
+   <copyright url="http://www.eclipse.org/legal/epl-v10.html">
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <discovery label="Eclipse Modeling M2T" url="http://www.eclipse.org/modeling/m2t"/>
+      <discovery label="Xtext (Itemis Addons, Antlr...)" url="http://download.itemis.com/updates/"/>
+   </url>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.basedsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.bindingdsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.businessdsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.environmentdsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.moduledsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.profiledsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.semanticsdsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.servicedsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.sladsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.xkonnex.repo.dsl.solutiondsl"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

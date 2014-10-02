@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Environment DSL Test
+Bundle-SymbolicName: org.xkonnex.repo.dsl.environmentdsl.test
+Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: XKonneX.org
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: org.xkonnex.repo.dsl.environmentdsl;bundle-version="2.0.0",
+ org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.xkonnex.repo.dsl.servicedsl;bundle-version="2.0.0",
+ org.junit;bundle-version="4.8.1",
+ org.eclipse.emf.ecore;bundle-version="2.6.0",
+ org.xkonnex.repo.dsl.basedsl;bundle-version="2.0.0",
+ org.xkonnex.repo.dsl.profiledsl;bundle-version="2.0.0",
+ org.eclipse.xtext;bundle-version="2.6.2",
+ org.eclipse.xtext.junit4,
+ org.eclipse.xtext.ui.junit;bundle-version="2.6.2"
+

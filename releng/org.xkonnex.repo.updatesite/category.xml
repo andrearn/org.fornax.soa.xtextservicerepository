@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.xkonnex.repo.workbench.sdk-feature_2.0.0.qualifier.jar" id="org.xkonnex.repo.workbench.sdk-feature" version="2.0.0.qualifier">
+      <category name="org.xkonnex.repo"/>
+   </feature>
+   <feature url="features/org.xkonnex.repo.generator.sdk-feature_2.0.0.qualifier.jar" id="org.xkonnex.repo.generator.sdk-feature" version="2.0.0.qualifier">
+      <category name="org.xkonnex.repo"/>
+   </feature>
+   <feature url="features/org.xkonnex.repo.view.sdk-feature_2.0.0.qualifier.jar" id="org.xkonnex.repo.view.sdk-feature" version="2.0.0.qualifier">
+      <category name="org.xkonnex.repo"/>
+   </feature>
+   <category-def name="org.xkonnex.repo" label="XKonneX Repository">
+      <description>
+         XKonneX Repository is an OpenSource service repository that is based on Xtext for service modelling. It does more than just storing and managing contracts of services in a SOA environment: Based on contracts defined with DSLs as well as applying model validators and code generation, it speeds up the service development and SOA governance approval processes with automated compliance checks.
+      </description>
+   </category-def>
+</site>

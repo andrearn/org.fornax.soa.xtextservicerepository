@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<prerequisites>
+		<maven>3.0</maven>
+	</prerequisites>
+
+	<groupId>org.xkonnex.repo.pom</groupId>
+	<artifactId>parent</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+
+	<licenses>
+		<license>
+			<name>Eclipse Public License 1.0</name>
+			<url>http://www.eclipse.org/legal/epl-v10.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<scm>
+		<url>https://github.com/andrearn/org.fornax.soa.xtextservicerepository.git</url>
+		<connection>scm:git:https://github.com/andrearn/org.fornax.soa.xtextservicerepository.git</connection>
+	</scm>
+	
+	<developers>
+		<developer>
+			<id>andrearn</id>
+			<name>André Arnold</name>
+			<email>andre.arnold@gmx.de</email>
+		</developer>
+	</developers>
+
+	<properties>
+		<tycho-version>0.20.0</tycho-version>
+		<!-- See profiles for xtext version -->
+		<!-- <xtext-version>2.4.0</xtext-version> -->
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<modules>
+		<module>../../releng/org.xkonnex.repo.pom.dsl-parent</module>
+		<module>../../releng/org.xkonnex.repo.pom.generator-parent</module>
+		<module>../../releng/org.xkonnex.repo.pom.ui-parent</module>
+		<module>../../releng/org.xkonnex.repo.pom.feature-parent</module>
+		<module>../../releng/org.xkonnex.repo.pom.view-parent</module>
+		<module>../../releng/org.xkonnex.repo.pom.fragment-parent</module>
+		<module>../../releng/org.xkonnex.repo.pom.test-parent</module>
+
+		
+		<module>../../docs/org.xkonnex.repo.doc</module>
+		<module>../../examples/org.xkonnex.repo.examples/org.xkonnex.repo.examples/</module>
+
+		<module>../../releng/org.xkonnex.repo.updatesite</module>
+	</modules>
+
+	<build>
+		<sourceDirectory>src</sourceDirectory>
+		<resources>
+			<resource>
+				<directory>src</directory>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>tycho-maven-plugin</artifactId>
+				<version>${tycho-version}</version>
+				<extensions>true</extensions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.eclipse.tycho</groupId>
+				<artifactId>target-platform-configuration</artifactId>
+				<version>${tycho-version}</version>
+				<configuration>
+					<resolver>p2</resolver>
+					<pomDependencies>consider</pomDependencies>
+					<environments>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
+					<filters>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.generator</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.xbase.lib</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtend.core</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.junit</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.smap</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.util</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtend.lib</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.apache.log4j</id>
+							<restrictTo>
+								<versionRange>[1.2.15.v201012070815,2.0)</versionRange>
+							</restrictTo>
+						</filter>
+					</filters>
+				</configuration>
+			</plugin>
+		</plugins>
+
+		<pluginManagement>
+			<plugins>
+				<!-- TYCHO -->
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-compiler-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<source>5.0</source>
+						<target>5.0</target>
+						<excludeResources>
+							<exludeResource>**/*.xtend</exludeResource>
+						</excludeResources>
+					</configuration>
+				</plugin>
+
+				<!-- enable source bundle generation -->
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-source-plugin</artifactId>
+					<version>${tycho-version}</version>
+				</plugin>
+       			<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-surefire-plugin</artifactId>
+					<version>${tycho-version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>maven-osgi-test-plugin</artifactId>
+					<version>${tycho-version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.eclipse.tycho</groupId>
+					<artifactId>tycho-p2-repository-plugin</artifactId>
+					<version>${tycho-version}</version>
+					<configuration>
+						<includeAllDependencies>true</includeAllDependencies>
+					</configuration>
+				</plugin>
+
+				<!-- APACHE MAVEN PLUGINS -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.6</version>
+					<configuration>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-antrun-plugin</artifactId>
+					<version>1.3</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.9</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-clean-plugin</artifactId>
+					<version>2.5</version>
+					<configuration>
+						<filesets>
+							<fileset>
+								<directory>${basedir}/xtend-gen</directory>
+								<includes>
+									<include>**</include>
+								</includes>
+							</fileset>
+							<fileset>
+								<directory>${basedir}/src-gen</directory>
+								<includes>
+									<include>**</include>
+								</includes>
+							</fileset>
+							<fileset>
+								<directory>${basedir}/bin</directory>
+								<includes>
+									<include>**</include>
+								</includes>
+							</fileset>
+						</filesets>
+					</configuration>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.3</version>
+				</plugin>
+
+				<!-- OTHER PLUGINS -->
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>build-helper-maven-plugin</artifactId>
+					<version>1.7</version>
+					<executions>
+						<execution>
+							<id>add-source</id>
+							<phase>generate-sources</phase>
+							<goals>
+								<goal>add-source</goal>
+							</goals>
+							<configuration>
+								<sources>
+									<source>${project.build.directory}/src-gen</source>
+								</sources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+
+				<plugin>
+					<groupId>org.eclipse.dash.maven</groupId>
+					<artifactId>eclipse-signing-maven-plugin</artifactId>
+					<version>1.0.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	<pluginRepositories>
+		<!-- Fornax Workflow Runner plugin -->
+		<pluginRepository>
+			<id>fornax</id>
+			<url>http://www.fornax-platform.org/m2/repository</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>xtend</id>
+			<url>http://build.eclipse.org/common/xtend/maven/</url>
+		</pluginRepository>
+	</pluginRepositories>
+
+	<repositories>
+		<repository>
+			<id>itemis</id>
+			<layout>p2</layout>
+			<url>http://download.itemis.com/updates/releases</url>
+		</repository>
+		<!-- See profile for main repository -->
+		<!-- <repository> -->
+		<!-- <id>indigo</id> -->
+		<!-- <layout>p2</layout> -->
+		<!-- <url>http://download.eclipse.org/releases/juno</url> -->
+		<!-- </repository> -->
+		<repository>
+			<id>graphview</id>
+			<layout>p2</layout>
+			<url>http://dl.bintray.com/andrearn/GenericGraphView </url>
+			<!-- url>http://download.anderscore.com/graphview/updates</url-->
+		</repository>
+		<repository>
+			<id>kieler</id>
+			<layout>p2</layout>
+			<url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_0.8</url>
+		</repository>
+		<!--repository>
+			<id>xdoc</id>
+			<layout>p2</layout>
+			<url>file:/C:/Development/Workspace/xDoc/org.eclipse.xtext.xdoc.releng/target/site</url>
+		</repository-->
+		<repository>
+			<id>xtend</id>
+			<url>http://build.eclipse.org/common/xtend/maven/</url>
+		</repository>
+	</repositories>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.sonatype.tycho</groupId>
+						<artifactId>maven-osgi-packaging-plugin</artifactId>
+						<configuration>
+							<strictVersions>false</strictVersions>
+						</configuration>
+					</plugin>
+					<plugin>
+						<artifactId>maven-scm-plugin</artifactId>
+						<configuration>
+							<basedir>${basedir}</basedir>
+							<includes>${basedir}/../feature/feature.xml,${basedir}/../site/site.xml,${basedir}/repository/category.xml</includes>
+							<message>[maven-release-plugin] prepare release of OSGI artifacts</message>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>xtext-latest</id>
+			<properties>
+				<xtext-version>2.7.0</xtext-version>
+				<xtext-version-bound>3.0.0</xtext-version-bound>
+			</properties>
+			<repositories>
+				<repository>
+					<id>juno</id>
+					<layout>p2</layout>
+					<url>http://download.eclipse.org/releases/indigo</url>
+				</repository>
+			</repositories>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+	</profiles>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>org.eclipse.xtend.standalone</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr</artifactId>
+				<version>3.4</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+</project>

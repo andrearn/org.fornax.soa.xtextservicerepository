@@ -1,0 +1,549 @@
+/*
+Copyright (c) 2010-2013 André Arnold and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    André Arnold 		- initial API and implementation
+    Christian Schneider	- reviews
+    Krunoslav Markotic	- reviews
+	Dennis Hauser		- reviews
+    Vitaly Markin
+    Liane Lenke
+*/
+grammar org.xkonnex.repo.dsl.servicedsl.ServiceDsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+
+generate serviceDsl "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl"
+
+import "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" as basedsl
+import "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" as profileDsl
+import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
+import "http://www.xkonnex.org/repo/dsl/businessdsl/BusinessDsl" as businessDsl
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+ServiceModel:
+	(imports+=Import)*
+	(orgNamespaces+=OrganizationNamespace)*
+	(types+=Type)*;
+	
+/*
+ * The toplevel namespace representing an organization
+ */
+OrganizationNamespace :
+	'org-namespace' name= QualifiedName ('shortname' prefix=STRING)? '{'
+		('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
+		(subNamespaces+=SubNamespace)*
+	'}' ;
+
+SubNamespace : DomainNamespace | InternalNamespace;
+	
+/* Namespace of a canonical domain subject to SOA governance rules*/
+DomainNamespace:
+	'domain-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
+		('metadata' '{'
+			('domain' domain=[businessDsl::Domain|QualifiedName])?
+			(version=Version  )?
+			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}')?
+		(types+=Type)*
+		(services+=Service)*
+		(exceptions+=Exception)*
+		(events+=Event)*
+		(channels+=Channel)*
+		(interalNamespaces+=InternalNamespace)*
+	'}';
+
+/* Namespace for internal use with no restrictions */
+InternalNamespace:	
+	'internal-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
+		('metadata' '{'
+			(version=Version)?
+			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
+			('namespace-url' namespaceUrl = STRING)?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}')?
+		(types+=Type)*
+		(services+=Service)*
+		(exceptions+=Exception)*
+		(events+=Event)*
+		(channels+=Channel)*
+		(interalNamespaces+=InternalNamespace)*
+	'}';
+		
+Type:
+	VersionedType;
+
+VersionedType:
+	Enumeration | DataObject;		
+
+DataObject: BusinessObject | QueryObject;
+
+/*
+ * A complex datatype representing a business entity of the domain model. 
+ * BusinessObjects are versioned.
+ */
+BusinessObject:
+	(deprecated?='@deprecated')? 
+	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superObject=BusinessObjectRef)? '{' 
+		'metadata' '{'
+			version=Version 
+			('replaces' replaces=BusinessObjectRef)?
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			(
+				('release-on' releaseDate = STRING )?
+			&	('retirement-on' retirementDate = STRING)?
+			&	('provided-contract' providedContractUrl=STRING)?
+			)
+			(additionalInfo=AdditionalInformation)?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		(properties+=Property)*
+	'}';
+
+/* A QueryObject defined an object that is used as query template for looking up 
+ * BusinessObject instances. All properties are considered optional.
+ */	
+QueryObject:
+	(deprecated?='@deprecated')? 
+	'queryObject'  name=ID ('extends' superObject=QueryObjectRef)? '{' 
+		'metadata' '{'
+			version=Version 
+			('replaces' replaces=QueryObjectRef)?
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			(
+				('release-on' releaseDate = STRING )?
+			&	('retirement-on' retirementDate = STRING)?
+			&	('provided-contract' providedContractUrl=STRING)?
+			)
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		(properties+=Property)*
+	'}';
+
+/* A reference to a type */
+TypeRef : DataTypeRef | AbstractVersionedTypeRef;
+
+/* A reference to a simple datatype */
+DataTypeRef: 
+	type=[profileDsl::DataType|QualifiedName] (many?='[]' (set?='as set')? )? ('content-type' contentType = STRING)?;
+
+AbstractVersionedTypeRef:
+	VersionedTypeRef | EnumTypeRef | DataObjectRef
+;
+
+/* A version constrained reference to any kind of VersionedType */
+VersionedTypeRef:
+	type=[VersionedType|QualifiedName] (many?='[]' (set?='as set')? )? versionRef=VersionRef;
+
+/* A version constrained reference to an Enumeration */	 
+EnumTypeRef:
+	type=[Enumeration|QualifiedName] versionRef=VersionRef;
+
+DataObjectRef:
+	BusinessObjectRef | QueryObjectRef;
+
+/* A version constrained reference to a BO */
+BusinessObjectRef returns DataObjectRef:
+	type=[BusinessObject|QualifiedName] versionRef=VersionRef;
+
+/* A version constrained reference to a QueryObject */
+QueryObjectRef returns DataObjectRef:
+	type=[QueryObject|QualifiedName] versionRef=VersionRef;
+
+
+/* A property field of an BusinessObject or QueryObject */	
+Property:
+	(deprecated?='@deprecated')? 
+	(
+		(((optional?='optional')? (weak?='weak')?) | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
+		(readonly?='read-only')?
+	)
+	((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? 
+	name=ID ':' type=TypeRef ;
+	
+	
+SimpleAttribute:
+	(deprecated?='@deprecated')? (optional?='optional')? name=ID ':' type=TypeRef;
+	
+Enumeration:
+	(deprecated?='@deprecated')? 
+	'enum' name=ID '{'
+		'metadata' '{'
+			version=Version  
+			('replaces' replaces=EnumTypeRef )?
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
+			(governanceApproval=GovernanceApproval)?
+			(
+				('release-on' releaseDate = STRING )?
+			&	('retirement-on' retirementDate = STRING )?
+			&	('provided-contract' providedContractUrl=STRING)?
+			)
+			(additionalInfo=AdditionalInformation)?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+ )?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		(literals+=EnumLiteral )*
+	'}';
+	
+EnumLiteral: 
+	(deprecated?='@deprecated')? name=ID;
+	
+// -- Technical eternal entities
+
+
+
+Service:
+	(deprecated?='@deprecated')? 
+	visibility=Visibility 'service' name=ID '{'
+		'metadata' '{'
+			version=Version  
+			/*
+			 * Used in conjunction with renaming the service. Points to the previous service version
+			 */
+			('replaces' replaces=ServiceRef )?
+			'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			('service-category' category=[profileDsl::ServiceCategory | QualifiedName])?
+			/* To what extend is a service stateful or stateless */ 
+			('statefulness' statefulness=Statefulness)?
+			/* are data persisted by the service ? */ 
+			('persistence' persistence=Persistence )? 
+			(additionalInfo=AdditionalInformation)?
+			(
+				/* The business capabilities the service fully implements */
+				('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?
+				/* The business capabilities that are supported but not fully implemented by this service alone */	
+			&	('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?
+				/* 
+				 * A technical service contract to be used instead of the one generation from this service definition.
+				 * This should only be used with private services, as the technical contract might not meet the architectural
+				 * rules that apply to public and domain scoped services
+				 */	
+			&	('provided-contract' providedContractUrl=STRING )? 
+				/*
+				 * Date, when the service will be or has been released to production
+				 */
+			&	('release-on' releaseDate = STRING )?
+				/*
+				 * Date, when the service will be or was put out of service
+				 */
+			&	('retirement-on' retirementDate = STRING )?
+				/*
+				 * The message header definition being used. Overrides the default from the architecture profile
+				 */
+			&			
+			('message-headers' '{'
+				('request-message-header' requestMessageHeader = MessageHeaderRef )?
+				('response-message-header' responseMessageHeader = MessageHeaderRef )?
+				('publish-message-header' publishMessageHeader = MessageHeaderRef )?
+			'}')?
+
+			)
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			/*
+			 * Semantic tagging
+			 */
+			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		/*
+		 * The service operations
+		 */
+		(operations+=Operation)*
+	'}';
+
+
+	
+/*
+ * A service operation
+ */
+Operation:
+	(deprecated?='@deprecated')? (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
+		(considerationSpec=ConsiderationSpec)?
+		('statefulness' statefulness=Statefulness (updating?='updating')? )?
+		('transaction-spec' transactionSpec=TransactionSpec)?
+		/*
+		 * overrides the default from the service
+		 */ 
+		('persistence' persistence=Persistence )? 
+		/*
+		 * Overrides the message header declaration from the architecture profile or service for this operation
+		 */
+		('message-headers' '{'
+			('request-message-header' requestMessageHeader = MessageHeaderRef )?
+			('response-message-header' responseMessageHeader = MessageHeaderRef )?
+			('publish-message-header' publishMessageHeader = MessageHeaderRef )?
+		'}')?
+		/*
+		 * Services used by this service
+		 */
+		('requires' requires+=RequiredServiceRef )*
+		('requires-channel' requiresChannel+=[Channel|QualifiedName] )*
+		/*
+		 * The operation that is capabale to revert/compensate the effect of this operation
+		 */
+		('compensated-by' compensatedBy+=OperationRef )?
+		('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?	
+		('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?	
+		('tags' (tags+=[semanticsDsl::Tag])+)*
+	'}';
+	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
+
+
+/*
+ * An operation (return) parameter
+ * If the modifier 'as-attachment-ref' is set, the parameter will be transferred out-of-band
+ * as an attach
+ */	 
+Parameter:
+	(optional?='optional')? name=ID ':' type=TypeRef  (attachmentRef?='as-attachment-ref' )?;
+
+/*
+ * Declared service operation exceptions
+ */
+Exception:
+	(deprecated?='@deprecated')? 
+	'exception' name=ID ('extends' superException=ExceptionRef)? '{' 
+		'metadata' '{'
+			version=Version  
+			('replaces' replaces=ExceptionRef )?
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			('release-on' releaseDate = STRING )?
+			('retirement-on' retirementDate = STRING )?
+			('provided-contract' providedContractUrl=STRING)?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		(properties+=SimpleAttribute)*
+	'}';
+
+ExceptionRef:
+	exception=[Exception|QualifiedName] versionRef=VersionRef;
+	
+/* the message exchange pattern */
+enum MEP : 
+	sync | async | oneway | fireForget='fire+forget' | deferredResponse='deferred' | syncAsync='sync+async'; 
+
+/*
+ * Specification of transactional behaviour
+ */
+enum TransactionSpec:
+	requiresNew = "requires-new" | requires='requires' | mandatory
+;
+	
+	
+enum Statefulness: 
+	/* same result, no matter how often the operation has been called with the same parameters*/
+	idempotent | 
+	stateless |
+	/* Operation acts as if stateless, however a state transiently exists */ 
+	transientState="transient-state"| 
+	stateful
+;
+
+enum Persistence: none | read | write | readWrite = "read / write";
+
+/* references a service applying a version constraint */
+ServiceRef:
+	service=[Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')?;
+
+/*
+ * reference to a required service in order to fulfill a service capability
+ */
+RequiredServiceRef:
+	service=[Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')? ('calling' (calledOperations+=SimpleOperationRef) (',' calledOperations+=SimpleOperationRef)*)?;
+
+/*
+ * A reference to a service operation with a version constraint
+ */	
+OperationRef:
+	operation=[Operation|QualifiedName] versionRef=VersionRef;
+	
+/*
+ * A reference to a service operation without a version constraint, 
+ * taking the version constraint from the service reference defined in the same context
+ */	
+SimpleOperationRef: 
+	operation=[Operation|QualifiedName];
+
+/* defines the execution of an operation in terms of considered parameters */
+ConsiderationSpec:
+	'considers' '{' 
+		consideredParam+=ConsiderationParameterRef+ 
+	'}';
+	
+	
+ConsiderationParameterRef:
+	'parameter' param=[Parameter|QualifiedName] ((flat?='flat-only') | ('->' '{' (propertyRef+=ConsiderationPropertyRef
+	)+ '}'));
+	
+ConsiderationPropertyRef:
+	SimpleConsiderationPropertyRef | ComplexConsiderationPropertyRef
+;
+
+SimpleConsiderationPropertyRef:
+	property=[Property|QualifiedName]
+;
+
+		
+ComplexConsiderationPropertyRef:
+	
+	(parentProperty = [Property|QualifiedName] 
+	( 
+		(flat?='flat-only') | 
+		'->' '{' 
+			(nestedPropertyRef+=ConsiderationPropertyRef
+			)+
+		'}')
+	)
+;
+
+/* Reference to a message used in service messages */
+MessageHeaderRef:
+	header = [profileDsl::MessageHeader|QualifiedName] versionRef=VersionRef;
+
+/*
+ * References a business capability
+ */
+CapabilityRef:
+	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
+
+
+
+/*
+ * Event, that is not scoped to an operation
+ */
+Event:
+	(deprecated?='@deprecated')? 
+	'event' name=ID '{'
+		'metadata' '{'
+			version=Version  
+			('replaces' replaces=EventRef )?
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			('release-on' releaseDate = STRING )?
+			('retirement-on' retirementDate = STRING )?
+			('provided-contract' providedContractUrl=STRING)?
+			(additionalInfo=AdditionalInformation)?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		(parameter+=Parameter )*
+	'}';
+
+
+EventRef:
+	event=[Event|QualifiedName] versionRef=VersionRef ('subType' subType=ID)?;
+
+/*
+ * Channel used to publish events to or to watch for events
+ */
+Channel:
+	(deprecated?='@deprecated')? 
+	(isTopic?='topic')? 'channel' name=QualifiedName  '{'
+		('subscribers' '{'
+			subscribers += AssetRef*
+		'}')
+		('publishers' '{'
+			publisher += AssetRef*
+		'}')
+		('transmits-events'  '{'
+			transmitsEvents += EventRef*
+		'}')
+	'}';
+	
+	
+/**
+ * The Visibility of a service etc. <br/><br/>
+ * 
+ * <ul>
+ * 	<li>public:	usable by anyone, potentially remotely available </li>
+ * 	<li>domain:	usable by all services in the same namespace or a subnamespace, potentially remotely available </li>
+ * 	<li>private:	for internal use only, not remotely available on an ESB </li>
+ * </ul>
+ */	
+enum Visibility : public | domain | private; 
+
+/* 
+ * reflects SOA governance approval decisions
+ * voting until date will be part of the review ballots captured in the side store
+ */
+GovernanceApproval:
+	'governance-approval' '{'
+		decision=ApprovalDecision 
+		('justification-doc' justificationOrDocURL=STRING )?
+		('decision-date' approvalDate=STRING )? 
+		('decision-by' approvedBy=STRING )?
+	'}'; 
+	
+enum ApprovalDecision: no | yes | temporarily_tolerated="temporarily-tolerated" | tolerated | denied;

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.xkonnex.repo</groupId>
+		<artifactId>server.parent</artifactId>
+		<relativePath>../../server/org.xkonnex.repo.server.pom.parent/pom.xml</relativePath>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>server.core</artifactId>
+	<packaging>jar</packaging>
+	<version>0.0.1-SNAPSHOT</version>
+	<!-- TODO project name -->
+	<name>Connex core</name>
+	<description></description>
+	<!-- <organization> <name>company name</name> <url>company url</url> </organization> -->
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<properties>
+		<wicket.version>6.12.0</wicket.version>
+		<guice.version>3.0</guice.version>
+		<emfcompare.version>3.8.0</emfcompare.version>
+		<hibernate.version>4.2.7.SP1</hibernate.version>
+		<jgit.version>3.1.0.201310021548-r</jgit.version>
+		<jetty.version>7.6.13.v20130916</jetty.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>ch.qos.logback</groupId>
+			<artifactId>logback-classic</artifactId>
+		</dependency>
+
+		<!-- -->
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>jboss-logging</artifactId>
+					<groupId>org.jboss.logging</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.inject.extensions</groupId>
+			<artifactId>guice-servlet</artifactId>
+		</dependency>
+		<!-- dependency> <groupId>com.google.inject.extensions</groupId> <artifactId>guice-persist</artifactId> 
+			<version>${guice.version}</version> </dependency -->
+
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit.http.server</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.ecore</artifactId>
+			<version>2.9.1-v20130827-0309</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.common</artifactId>
+			<version>2.9.1-v20130827-0309</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.common</artifactId>
+			<version>2.9.1-v20130827-0309</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.ecore.xmi</artifactId>
+			<version>2.9.1-v20130827-0309</version>
+		</dependency>
+		<!-- dependency> <groupId>org.eclipse.maven</groupId> <artifactId>org.eclipse.emf.compare</artifactId> 
+			<version>3.0.0</version> </dependency -->
+		<dependency>
+			<groupId>org.eclipse.emf.compare</groupId>
+			<artifactId>org.eclipse.emf.compare</artifactId>
+			<version>[3.0.0-SNAPSHOT,)</version>
+		</dependency>
+
+		<!-- dependency> <groupId>org.eclipse.emf</groupId> <artifactId>org.eclipse.emf.mwe.core</artifactId> 
+			<version>[1.1.0,)</version> </dependency -->
+		<!-- dependency>
+			<groupId>org.eclipse.emf</groupId>
+			<artifactId>org.eclipse.emf.mwe2.runtime</artifactId>
+			<version>[2.0.0,)</version>
+		</dependency-->
+
+		<!-- LOGGING DEPENDENCIES - LOG4J -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.16</version>
+		</dependency>
+
+		<!-- JUNIT DEPENDENCY FOR TESTING -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>org.eclipse.xtext.builder.standalone</artifactId>
+			<version>2.6.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.basedsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.basedsl</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.bindingdsl.bindingdsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.bindingdsl.bindingdsl</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.bindingdsl.businessdsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.bindingdsl.businessdsl</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.bindingdsl.environmentdsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.bindingdsl.environmentdsl</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.bindingdsl.moduledsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.bindingdsl.moduledsl</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.bindingdsl.profiledsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.bindingdsl.profiledsl</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.bindingdsl.semanticsdsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.bindingdsl.semanticsdsl</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.bindingdsl.servicedsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.bindingdsl.servicedsl</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.bindingdsl.sladsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.bindingdsl.sladsl</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.bindingdsl.solutiondsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.bindingdsl.solutiondsl</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.bindingdsl.servicerepo</groupId>
+			<artifactId>org.xkonnex.repo.dsl.bindingdsl.servicerepo</artifactId>
+			<version>1.6.2-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<!-- <sourceDirectory>src</sourceDirectory> -->
+		<resources>
+			<!-- <resource> -->
+			<!-- <directory>src</directory> -->
+			<!-- </resource> -->
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/resources</directory>
+			</resource>
+			<resource>
+				<filtering>false</filtering>
+				<directory>src/main/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<filtering>false</filtering>
+				<directory>src/test/resources</directory>
+			</testResource>
+			<testResource>
+				<filtering>false</filtering>
+				<directory>src/test/java</directory>
+				<includes>
+					<include>**</include>
+				</includes>
+				<excludes>
+					<exclude>**/*.java</exclude>
+				</excludes>
+			</testResource>
+		</testResources>
+		<plugins>
+			<plugin>
+				<inherited>true</inherited>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>UTF-8</encoding>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>Apache Nexus</id>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>fornax</id>
+			<url>http://www.fornax-platform.org/m2/repository</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+</project>

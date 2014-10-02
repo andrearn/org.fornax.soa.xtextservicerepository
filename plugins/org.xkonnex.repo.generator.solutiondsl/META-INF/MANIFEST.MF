@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Solution DSL generator
+Bundle-Vendor: XKonneX.org
+Bundle-Version: 2.0.0.qualifier
+Bundle-SymbolicName: org.xkonnex.repo.generator.solutiondsl; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.xkonnex.repo.dsl.solutiondsl;bundle-version="2.0.0";visibility:=reexport,
+ org.eclipse.xtext;bundle-version="2.6.2";visibility:=reexport,
+ org.eclipse.emf.mwe2.launch;resolution:=optional,
+ org.eclipse.emf.mwe.utils;visibility:=reexport,
+ org.eclipse.xtend2.lib;bundle-version="2.6.2"
+Import-Package: org.apache.log4j
+Bundle-RequiredExecutionEnvironment: J2SE-1.5

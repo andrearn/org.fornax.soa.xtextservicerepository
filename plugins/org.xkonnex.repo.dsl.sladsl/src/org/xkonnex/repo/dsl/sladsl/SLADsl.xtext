@@ -1,0 +1,252 @@
+/*
+Copyright (c) 2010-2013 André Arnold and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    André Arnold 		- initial API and implementation
+*/
+grammar org.xkonnex.repo.dsl.sladsl.SLADsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+
+generate sLADsl "http://www.xkonnex.org/repo/dsl/sladsl/SLADsl"
+
+import "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" as basedsl
+import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+SlaModel:
+	agreements+=SLA*;
+	
+SLA:
+	'service-level-agreement' name=QualifiedName (version=Version)? '{'
+			'effective-date' effectiveDate = STRING 
+			('effective-until' effectiveUntil = STRING )?
+			(parties+=Party)*
+			('scope' scope = STRING)?
+			('preample' preample = STRING )?
+			('description' description = STRING )?
+			('restrictions' restrictions=STRING )?
+			(priorities+=PriorityDeclaration)*
+			('applies-to' '{'
+				appliesTo += AssetRef* 
+			'}')?
+			(costs = Cost )?
+			('service-quality-requirements' '{'
+				(serviceQualityProperties += ServiceQualityProperty)*
+			'}'
+			)
+			('data-security-and-protection' '{'
+					('general-security-terms' dataSecProtClause = STRING)?
+					('security-requirements' '{' 
+						securityRequirements += SecurityRequirement*
+					'}')
+				'}'
+			)?
+			('additional-services' additionalServices = STRING )?
+			(escalationProcedure=Escalation )?
+			('cancellation' cancellation = STRING )?
+			('extraordinary-cancellation' extraordinaryCancellation = STRING )?
+			(reports+=Report)*
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
+	'}';
+
+
+Cost:
+	'costs' '{'
+		'amount' costsAmount=STRING
+		'billed-per-unit' billedUnit=STRING
+		('effort-accounting' effortAccounting = STRING )?
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}'
+;
+	
+ServiceQualityProperty : Availability | Throughput | Latency  | MaxDownTime | CapacityRequirement | AccuracyRequirement | ReliablityRequirement | LogRequirement;
+
+Availability : 
+	'availability' '{'
+		'availability' availability=STRING
+		('mean-time-between-failure' mtbf=STRING)?
+		('mean-time-to-repair' mttr=STRING (mttrPercentile=Percentile)?)?
+		('regular-down-times' regularDownTimes = STRING)?
+	'}';
+	
+Throughput:
+	'throughput' '{'
+		'throughput' definition = STRING 
+		'score-to-be-kept' score = STRING 
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}';
+
+Latency:
+	'latency' '{'
+		'latency' latency="STRING"
+		'percentile' percentile=Percentile
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}';
+	
+	
+MaxDownTime:
+	'max-downtime' '{'
+		'duration' definition = STRING 
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}';
+	
+CapacityRequirement:
+	'capacity' '{'
+		{CapacityRequirement}
+		('num-of-requests' requestNum=STRING 'per' timeUnit=STRING)?
+		('message-size' messageSize=STRING)?
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}'
+;
+
+ReliablityRequirement:
+	
+	'message-exchange-reliability' '{' 
+		reliability=ReliablilityKind
+		(inOrderDelivery ?= 'in-order-delivery')?
+	'}'
+;
+
+AccuracyRequirement:
+	'accuracy' '{'
+		'max-error-rate' maxErrorRate=STRING
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}'
+;
+
+LogRequirement: 'logging' '{'
+	'message-log-level' logLevel=LogRequirementKind
+	'additional-logging-requirements' additionalLoggingRequirement=STRING
+;
+
+Percentile: percentile=INT('.'INT)*'%';
+	
+/* Security policy to be applied to the services */
+SecurityRequirement : AuthenticationRequirement | SigningRequirement | EncryptionRequirement;
+
+/* Requirement, that defines how consumer are authenticated */
+AuthenticationRequirement : 
+	{AuthenticationRequirement}
+	'authentication-procedure' (optional?='optional')? '{'
+		'auth-tokens' '{'
+			(authTokens+=AuthToken)+
+		'}'
+		'hash-algorithms' '{'
+			(hashAlgorithms+=HashAlgorithm)*
+		'}'
+		(useNonce?='use-nonce')?
+		('issuer' issuer = STRING)?
+	'}';
+	
+AuthToken : (optional?='optional')? kind=AuthTokenKind ;
+
+HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgKind ;
+
+enum HashAlgKind : MD5 | SHA1 | SHA256 | RSA | PlainText;
+
+/* How messages are signed, to verify their authenticity */
+SigningRequirement : 
+	{SigningRequirement} 
+	'signing-policy' '{'
+		('supported-algorithms' supportedSigningAlgorithms+=SigningAlgothm+)?
+		('requires-algorithm' requiredSigningAlgorithm=SigningAlgothm)?
+		('signed-message-parts' (signedParts+=MessagePartRef)(',' signedParts+=MessagePartRef)*)?
+	'}'
+;
+
+MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpression=STRING)?;
+
+enum MessagePartRefKind: header | body | attachments | all | expression;
+
+enum SigningAlgothm: NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
+
+/* How messages are encrypted */
+EncryptionRequirement : 
+	{EncryptionRequirement} 
+	'encryption-policy' '{'
+		('supported-algorithms' supportedCipherAlgorithms+=CipherAlgorithmKind+)?
+		('requires-algorithm' requiredCipherAlgorithm=CipherAlgorithmKind)?
+		('encrypted-message-parts' (encryptedParts+=MessagePartRef)(',' encryptedParts+=MessagePartRef)*)?
+	'}'
+;
+
+enum CipherAlgorithmKind: NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES='3DES' | AES128 | AES256;
+
+enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
+
+enum LogRequirementKind: none | header | all;
+
+
+
+enum ReliablilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
+
+
+PriorityDeclaration: 'priority' name=ID 'description' description=STRING ;
+
+Escalation : 
+	'escalation' '{'
+		('cause' cause=STRING )?
+		'escalate-to' '{'
+			(escalationTargets+=[basedsl::User|QualifiedName])+
+		'}'
+		('procedure' procedure=STRING )?
+	'}';
+				
+Party: CustomerParty | ProviderParty | ThirdParty;
+
+CustomerParty:
+	'customer-party' name=QualifiedName '{'
+		(representatives+=Representative)+
+		(responsibilities+=Responsibility)+
+	'}'; 
+	
+ProviderParty:
+	'provider-party' name=QualifiedName '{'
+		(representatives+=Representative)+
+		(responsibilities+=Responsibility)+
+	'}';
+	
+ThirdParty:
+	'third-party' name=QualifiedName '{'
+		'participation-role' role=STRING 
+		(representatives+=Representative)+
+		(responsibilities+=Responsibility)+
+	'}';
+
+Representative: UserRef | InlineRepresentative;
+
+UserRef: representative = [basedsl::User|QualifiedName];
+
+InlineRepresentative:
+	{InlineRepresentative}
+	'representative' '{'
+		('first-name' firstname = STRING)?
+		('last-name' lastname = STRING)?
+		('org-unit' orgUnit = STRING)?
+		('email' email = STRING)?
+		('phone' phone = STRING)?
+	'}';
+
+
+Responsibility:
+	'responsibility' description=STRING 
+;
+	
+
+Report:
+	'report' name=ID '{'
+		'report-to' reportTo=[basedsl::User|QualifiedName]
+		'contents' content=STRING
+	'}';

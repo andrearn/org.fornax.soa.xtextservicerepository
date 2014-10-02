@@ -1,0 +1,181 @@
+/*
+Copyright (c) 2010-2013 André Arnold and others.
+All rights reserved. This program and the accompanying materials
+are made available under the terms of the Eclipse Public License v1.0
+which accompanies this distribution, and is available at
+http://www.eclipse.org/legal/epl-v10.html
+
+Contributors:
+    André Arnold 		- initial API and implementation
+*/
+grammar org.xkonnex.repo.dsl.moduledsl.ModuleDsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+
+generate moduleDsl "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl"
+
+import "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" as basedsl
+import "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" as serviceDsl
+import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as environmentDsl
+import "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" as profileDsl
+import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
+
+ModuleModel:
+	imports+=Import*
+	modules+=Module*;
+/*
+ * A (deployable) service module. External modules are provided by other organizations.<br/>
+ * Client modules are only users other modules, but don't provide services themselves. 
+ */	
+Module:
+	/* an externally provided module */
+	(external?='external')? 
+	/* The contains service clients only */
+	(client?='client')? 
+	/* the module is publically accessible */
+	(public?='public')?
+	 
+	'module' name = QualifiedName '{'
+		
+		version = Version
+		'lifecycle-state' state = [profileDsl::LifecycleState | QualifiedName]
+		(governanceDecisions+=GovernanceDecision)*
+		/* An additional named Qualifier of the module, may be referred to by bindings or other modules using this module */
+		(qualifiers=QualifierRefs)?
+		/*
+		 * How is the module packaged? SCA, EAR etc.
+		 */
+		('assembly-type' assemblyType = AssemblyType)?
+		('assembly-type-details' assemblyTypeDetails = STRING)?
+		/* override the module name used by default for the modules technical name for deployment */
+		('deployment-module-name' deploymentModuleName = STRING)?
+		('groupId' groupId = STRING)?
+		('artifactId' artifactId = STRING)?
+		(	
+			('release-on' releaseDate = STRING)? &
+			('release-tag' releaseTag = STRING)? &		// Tag in VCS
+			('source-location' source=STRING )? 		// Where can I get the sources? 
+		)
+		(additionalInfo=AdditionalInformation)?
+		/* Declares services provided by the module */
+		('provides' '{'
+			/*
+			 * Services that the module provides
+			 */
+			(providedServices += ServiceRef)*
+			/*
+			 * A namespace to provide all it's services, that match the modules state
+			 */
+			(providedNamespaces += NamespaceRef)*
+		'}')?
+		/* Declares services that are being used by this module. Services can be 
+		 * referenced implicitly by referring to the providing module
+		 */
+		('uses' '{'
+			(usedServices += ImportServiceRef)*
+			(usedModules  += ModuleRef)*
+			('endpoint-protocol' usesEndpointProtocol=ImportBindingProtocol)?
+			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=ImportBindingProtocol) (',' usesAlternativeEndpointProtocols+=ImportBindingProtocol)*)?
+			(endpointQualifierRef=EndpointQualifierRef)?
+		'}')?
+
+		('contact-info' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		'}')?
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])*)?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
+			
+	'}';
+
+AbstractServiceRef: ServiceRef | ImportServiceRef;
+/* 
+ * Refers to a service constrained by the given version constraint
+ */
+ServiceRef: 
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
+	
+/* 
+ * Refers to a service imported by the module constrained by the given version constraint. 
+ * The module to import the service from may be stated explicitely
+ */
+ImportServiceRef:
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef ('{')?
+		/*	specify from which module(s) the service can be used, if not defined use the first module found, 
+			that is not identical with the importing module */
+		('from-any-module-of' '{'
+			(modules+=ServiceModuleRef)(',' modules+=ServiceModuleRef)*
+		'}' 
+		)?
+		/**
+		 * select an endpoint that provides the given endpoint-protocol and has (if defined) 
+		 * the given endpoint qualifier. This can be used to declaratively select a specific endpoint.
+		 * Endpoint qualifiers may become useful in migration scenarios, where you need to select either 
+		 * the legacy endpoint on the legacy server or the new endpoint on the new server. Such a qualifier
+		 * must be declared in the binding to be selected.
+		 */
+		('using-endpoint' '{'
+			('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
+			/* fall back to other supported protocols, if necessary */
+			('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
+			(endpointQualifierRef=EndpointQualifierRef)?
+		'}')?
+	('}')?
+;
+
+/*
+ * References a module matching the name and version constraint. Additional qualifiers, i.e. names 
+ * qualifying the other model, may be used to select the referenced module
+ */
+ServiceModuleRef:
+	module=[Module|QualifiedName] version=VersionRef
+;
+
+ModuleRef:
+	'module' moduleRef=ServiceModuleRef '{'
+		('including' '{'
+			(includedServices+=ServiceRef)+
+		'}')?
+		('excluding' '{'
+			(excludedServices+=ServiceRef)+
+		'}')?
+		('endpoint-protocol' endpointProtocol=ImportBindingProtocol)?
+		('alternative-endpoint-protocols' (alternativeEndpointProtocols+=ImportBindingProtocol) (',' alternativeEndpointProtocols+=ImportBindingProtocol)*)?
+		(endpointQualifierRef=EndpointQualifierRef)?
+	'}'
+;
+
+/* refer to a whole SubNamespace */
+NamespaceRef: 
+	'namespace' namespace=[serviceDsl::SubNamespace | QualifiedName] ('{'
+		('including' '{'
+			(inclSubNamespace?="include-sub-namespaces")?
+			(inclDomainSubNamespace?="include-domain-sub-namespaces")?
+			(includedServices+=ServiceRef)+
+		'}')?
+		('excluding' '{'
+			(excludedServices+=ServiceRef)+
+		'}')?
+	'}')?
+;
+
+/*
+ *	How the module is packaged 
+ */
+
+enum AssemblyType:
+	OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL
+;
+
+enum ImportBindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP;
+
+QualifierRefs:
+	'qualifier' (qualifiers+=[semanticsDsl::Qualifier|QualifiedName])(','qualifiers+=[semanticsDsl::Qualifier|QualifiedName])*
+;
+
+EndpointQualifierRef:
+	'endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName] (acceptOtherEndpoints?='accepting-other-endpoints')?
+;
+
+
