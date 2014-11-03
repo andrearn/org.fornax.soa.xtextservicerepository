@@ -14,7 +14,7 @@
    	<extension
 	      point = "org.eclipse.ui.newWizards">
 		 <wizard
-         category="org.xkonnex.repo.dsl.bindingdsl.ui.newWizards"
+         category="org.xkonnex.repo.workbench.ui.newWizards"
          class="org.xkonnex.repo.dsl.bindingdsl.ui.BindingDslExecutableExtensionFactory:org.xkonnex.repo.dsl.bindingdsl.ui.wizard.NewBindDslFileWizard"
          hasPages="true"
 

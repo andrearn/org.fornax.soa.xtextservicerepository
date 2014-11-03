@@ -29,11 +29,11 @@ import com.google.inject.util.Modules;
  */
 public class ServiceRepositoryActivator extends AbstractUIPlugin {
 
-	public static final String INJECTOR_NAME = "org.xkonnex.repo.dsl.bindingdsl.ServiceRepository";
+	public static final String INJECTOR_NAME = "org.xkonnex.repo.workbench.ui.XKonneXRepository";
 	private Map<String, Injector> injectors = new HashMap<String, Injector>();
 	private static ServiceRepositoryActivator INSTANCE;
-	public static final String PLUGIN_ID = "org.xkonnex.repo.dsl.bindingdsl.servicerepo.ui"; //$NON-NLS-1$
-	public static final String DIALOG_SETTINGS_SECTION = "org.xkonnex.repo.dsl.bindingdsl.servicerepo.ui";
+	public static final String PLUGIN_ID = "org.xkonnex.repo.workbench.ui"; //$NON-NLS-1$
+	public static final String DIALOG_SETTINGS_SECTION = "org.xkonnex.repo.workbench.ui";
 	
 	private IDialogSettings dialogSettings;
 

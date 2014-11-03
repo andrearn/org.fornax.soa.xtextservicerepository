@@ -19,7 +19,7 @@ public class CustomModuleDslActivator extends ModuleDslActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start (context);
-		Injector injector = getInjector ("org.xkonnex.repo.dsl.semanticsdsl.moduledsl.ModuleDsl");
+		Injector injector = getInjector ("org.xkonnex.repo.dsl.moduledsl.ModuleDsl");
 		IPluggableValidatorProvider validatorProvider = injector.getInstance (IPluggableValidatorProvider.class);
 	
         try {

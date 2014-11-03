@@ -1,6 +1,6 @@
-import org.fornax.soa.solutionDsl.*
-import org.fornax.soa.serviceDsl.*
-import org.fornax.soa.profiledsl.sOAProfileDsl.*
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.*
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.*
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.*
 
 diagram SolutionDiagram type Solution {
 	
@@ -48,10 +48,10 @@ diagram SolutionDiagram type Solution {
 		
 	}
 	
-	hidden node HiddenRequiredServiceNode for this  as org.fornax.soa.serviceDsl.Service {
+	hidden node HiddenRequiredServiceNode for this  as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service {
 		label ServiceLabel for "<<Service>>"
 		label ServiceNameLabel for this.name
 		label Version for "[v" + this.version?.version+"]"
 		
-	} unless !(this instanceof org.fornax.soa.serviceDsl.Service)
+	} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service)
 }

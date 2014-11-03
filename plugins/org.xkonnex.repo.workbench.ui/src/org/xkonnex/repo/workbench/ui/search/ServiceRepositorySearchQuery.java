@@ -37,7 +37,7 @@ import com.ibm.icu.text.MessageFormat;
 
 public class ServiceRepositorySearchQuery implements ISearchQuery {
 	
-	private static final String XSR_ASSETTYPE_PREFIX = "org.xkonnex.repo.dsl.bindingdsl";
+	private static final String XSR_ASSETTYPE_PREFIX = "org.xkonnex.repo.dsl";
 
 	@Inject
 	private Injector injector;

@@ -19,7 +19,7 @@
    	<extension
 	      point = "org.eclipse.ui.newWizards">
 		 <wizard
-         category="org.xkonnex.repo.dsl.servicedsl.ui.newWizards"
+         category="org.xkonnex.repo.workbench.ui.newWizards"
          class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.xkonnex.repo.dsl.servicedsl.ui.wizard.NewSvcDslFileWizard"
          hasPages="true"
          
@@ -420,7 +420,7 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<!--handler 
-			class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.xkonnex.repo.dsl.semanticsdsl.service.ui.hierarchy.QuickTypeHierarchyHandler"
+			class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.xkonnex.repo.dsl.servicedsl.service.ui.hierarchy.QuickTypeHierarchyHandler"
 			commandId="org.xkonnex.repo.dsl.servicedsl.service.hierarchy.OpenTypeHierarchy">
 			<activeWhen>
 				<reference
@@ -429,7 +429,7 @@
 			</activeWhen>
 		</handler-->
 		<handler 
-			class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.xkonnex.repo.dsl.semanticsdsl.service.ui.hierarchy.QuickTypeHierarchyHandler"
+			class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.xkonnex.repo.dsl.servicedsl.service.ui.hierarchy.QuickTypeHierarchyHandler"
 			commandId="org.xkonnex.repo.dsl.servicedsl.service.ui.hierarchy.QuickTypeHierarchy">
 			<activeWhen>
 				<reference

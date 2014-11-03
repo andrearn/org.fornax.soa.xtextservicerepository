@@ -2,7 +2,7 @@
 <?eclipse version="3.0"?>
 
 <plugin>
-   <extension-point id="SOAProfileDSLValidator" name="Pluggable SOA Profile DSL validator" schema="schema/SOAProfileDSLValidator.exsd"/>
+   <extension-point id="SOAProfileDSLValidator" name="Pluggable Architecture Profile-DSL validator" schema="schema/SOAProfileDSLValidator.exsd"/>
 
     <extension
             point="org.eclipse.ui.editors">
@@ -12,19 +12,19 @@
             default="true"
             extensions="profdsl"
             id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl"
-            name="SOAProfileDsl Editor">
+            name="Architecture Profile-DSL Editor">
         </editor>
     </extension>
    	<extension
 	      point = "org.eclipse.ui.newWizards">
 		 <wizard
-         category="org.xkonnex.repo.dsl.profiledsl.ui.newWizards"
+         category="org.xkonnex.repo.workbench.ui.newWizards"
          class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.xkonnex.repo.dsl.profiledsl.ui.wizard.NewProfileDslFileWizard"
          hasPages="true"
          
          id="org.xkonnex.repo.dsl.profiledsl.ui.wizard.NewProfileDslFileWizard"
-         name="SOA profile file">
-	       <description>Create a new SOA profile file</description>
+         name="Architecture profile file">
+	       <description>Create a new architecture profile file</description>
 		   <selection class="org.eclipse.core.resources.IResource"/>
 		</wizard>
 	</extension>
@@ -96,7 +96,7 @@
         <page
             class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
             id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl"
-            name="SOAProfileDsl">
+            name="Architecture Profile-DSL">
             <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_SOAProfileDsl"/>
         </page>
         <page
@@ -119,8 +119,8 @@
         <page
             class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
             id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl"
-            name="SOAProfileDsl">
-            <keywordReference id="org.xkonnex.repo.dsl.semanticsdsl.profiledsl.ui.keyword_SOAProfileDsl"/>
+            name="Architecture Profile-DSL">
+            <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_SOAProfileDsl"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -131,7 +131,7 @@
         point="org.eclipse.ui.keywords">
         <keyword
             id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_SOAProfileDsl"
-            label="SOAProfileDsl"/>
+            label="Architecture Profile-DSL"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
@@ -241,21 +241,21 @@
     <!-- marker definitions for org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl -->
     <extension
             id="soaprofiledsl.check.fast"
-            name="SOAProfileDsl Problem"
+            name="Architecture Profile-DSL Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.fast"/>
         <persistent value="true"/>
     </extension>
     <extension
             id="soaprofiledsl.check.normal"
-            name="SOAProfileDsl Problem"
+            name="Architecture Profile-DSL Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.normal"/>
         <persistent value="true"/>
     </extension>
     <extension
             id="soaprofiledsl.check.expensive"
-            name="SOAProfileDsl Problem"
+            name="Architecture Profile-DSL Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.expensive"/>
         <persistent value="true"/>
@@ -332,7 +332,7 @@
   <extension point="org.eclipse.compare.contentMergeViewers">
     <viewer id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.compare.contentMergeViewers"
             class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="profdsl" label="SOAProfileDsl Compare">
+            extensions="profdsl" label="Architecture Profile-DSL Compare">
      </viewer>
   </extension>
   <extension point="org.eclipse.ui.editors.documentProviders">

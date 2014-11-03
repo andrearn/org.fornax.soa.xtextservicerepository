@@ -7,7 +7,7 @@
  * 
  * initial contribution:	André Arnold
  *******************************************************************************/
-import org.fornax.soa.serviceDsl.*
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.*
 
 diagram BusinessObjectDiagram type SubNamespace {
 	
@@ -36,10 +36,10 @@ diagram BusinessObjectDiagram type SubNamespace {
 		}
 		edge EnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-				((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
+				(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+				((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
 				eContainer == p.eContainer?.eContainer) {
-			=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
+			=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 			label EdgeLabel for name + " {" +
 				{if (optional) "0" else "1"} +
 				{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
@@ -95,10 +95,10 @@ diagram BusinessObjectDiagram type SubNamespace {
 		}
 		hidden edge HiddenEnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-				((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
+				(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+				((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
 				eContainer == p.eContainer?.eContainer) {
-			=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
+			=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 			label EdgeLabel for name + " {" +
 				{if (optional) "0" else "1"} +
 				{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
@@ -136,10 +136,10 @@ diagram BusinessObjectDiagram type SubNamespace {
 		}
 		edge EnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-				((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
+				(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+				((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
 				eContainer == p.eContainer?.eContainer) {
-			=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
+			=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 			label EdgeLabel for name + " {" +
 				{if (optional) "0" else "1"} +
 				{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
@@ -194,10 +194,10 @@ diagram BusinessObjectDiagram type SubNamespace {
 		}
 		hidden edge HiddenEnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-				((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
+				(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+				((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
 				eContainer == p.eContainer?.eContainer) {
-			=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
+			=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 			label EdgeLabel for name + " {" +
 				{if (optional) "0" else "1"} +
 				{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
@@ -229,10 +229,10 @@ diagram BusinessObjectDiagram type SubNamespace {
 		}
 		edge EnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-				((p.^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
+				(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+				((p.^type as VersionedTypeRef).^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
 				eContainer == p.eContainer?.eContainer) {
-			=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
+			=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 			label EdgeLabel for name + " {" +
 				{if (optional) "0" else "1"} +
 				{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
@@ -247,10 +247,10 @@ diagram BusinessObjectDiagram type SubNamespace {
 		}
 		hidden edge HiddenEnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-				((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)?.eContainer != p.eContainer.eContainer && 
+				(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+				((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)?.eContainer != p.eContainer.eContainer && 
 				eContainer == p.eContainer.eContainer) {
-			=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
+			=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 			label EdgeLabel for name
 		}
 		 
@@ -260,7 +260,7 @@ diagram BusinessObjectDiagram type SubNamespace {
 	}
 	
 	
-	node EnumNode for each types.filter(typeof (org.fornax.soa.serviceDsl.Enumeration)) {
+	node EnumNode for each types.filter(typeof (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)) {
 		label EnumLabel  for "<<Enum>>"
 		label Name for name
 		label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"

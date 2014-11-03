@@ -130,7 +130,7 @@ class ServiceRepositoryNewProjectGenerator {
 			 * 
 			 * initial contribution:	André Arnold
 			 *******************************************************************************/
-			import org.xkonnex.repo.dsl.bindingdsl.serviceDsl.*
+			import org.xkonnex.repo.dsl.servicedsl.serviceDsl.*
 			
 			diagram ServiceDiagram type SubNamespace {
 				
@@ -153,8 +153,8 @@ class ServiceRepositoryNewProjectGenerator {
 					}
 					hidden edge EnumEdge for each 
 						operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
-						=> call EnumNode for (this as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+							(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+						=> call EnumNode for (this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 					}
 					
 					hidden edge BOReturnEdge for each 
@@ -169,8 +169,8 @@ class ServiceRepositoryNewProjectGenerator {
 					}
 					hidden edge EnumReturnEdge for each 
 						operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
-						=> call EnumNode for (this as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+							(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+						=> call EnumNode for (this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 					}
 					edge ExceptionEdge for each 
 						operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer == t.exception.eContainer).map(e|e.exception).toSet {
@@ -205,9 +205,9 @@ class ServiceRepositoryNewProjectGenerator {
 					} 
 					hidden edge HiddenEnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration) && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
 							eContainer == p.eContainer.eContainer) {
-						=> call EnumNode for ((^type as VersionedTypeRef).^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+						=> call EnumNode for ((^type as VersionedTypeRef).^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 						label EdgeLabel for name
 					}
 					
@@ -236,9 +236,9 @@ class ServiceRepositoryNewProjectGenerator {
 					} 
 					hidden edge HiddenEnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration) && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
 							eContainer == p.eContainer.eContainer) {
-						=> call EnumNode for ((^type as VersionedTypeRef).^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+						=> call EnumNode for ((^type as VersionedTypeRef).^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 						label EdgeLabel for name
 					}
 					
@@ -250,16 +250,16 @@ class ServiceRepositoryNewProjectGenerator {
 				} unless !(this instanceof BusinessObject)
 			
 			
-				node EnumNode for this as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration {
+				node EnumNode for this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration {
 					label EnumLabel  for "<<Enum>>"
 					label Name for name
 					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
 					hidden node EnumLiteralNode for literals {
 						label Label for each map(lit|lit.name)
 					} unless literals.empty
-				} unless !(this instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+				} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 				
-				node HiddenExceptionNode for this as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Exception {
+				node HiddenExceptionNode for this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception {
 					label ExceptionLabel for "<<Exception>>"
 					label Name for name	
 					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
@@ -277,10 +277,10 @@ class ServiceRepositoryNewProjectGenerator {
 					}
 					hidden edge EnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration) && 
-							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
-						=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+						=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 						label EdgeLabel for name
 					}
 					
@@ -295,7 +295,7 @@ class ServiceRepositoryNewProjectGenerator {
 					edge InhertanceEdge for superException?.^exception {
 						=> call HiddenExceptionNode for this
 					} unless superException == null
-				} unless !(this instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Exception)
+				} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception)
 			}
 		'''
 		fsa.generateFile("view/ServiceView.gvmap", content)
@@ -466,7 +466,7 @@ class ServiceRepositoryNewProjectGenerator {
 			 * 
 			 * initial contribution:	André Arnold
 			 *******************************************************************************/
-			import org.xkonnex.repo.dsl.bindingdsl.serviceDsl.*
+			import org.xkonnex.repo.dsl.servicedsl.serviceDsl.*
 			
 			diagram BusinessObjectDiagram type SubNamespace {
 				
@@ -495,10 +495,10 @@ class ServiceRepositoryNewProjectGenerator {
 					}
 					edge EnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration) && 
-							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
-						=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+						=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 						label EdgeLabel for name + " {" +
 							{if (optional) "0" else "1"} +
 							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
@@ -554,10 +554,10 @@ class ServiceRepositoryNewProjectGenerator {
 					}
 					hidden edge HiddenEnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration) && 
-							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
-						=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+						=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 						label EdgeLabel for name + " {" +
 							{if (optional) "0" else "1"} +
 							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
@@ -595,10 +595,10 @@ class ServiceRepositoryNewProjectGenerator {
 					}
 					edge EnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration) && 
-							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
-						=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+						=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 						label EdgeLabel for name + " {" +
 							{if (optional) "0" else "1"} +
 							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
@@ -653,10 +653,10 @@ class ServiceRepositoryNewProjectGenerator {
 					}
 					hidden edge HiddenEnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration) && 
-							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
-						=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+						=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 						label EdgeLabel for name + " {" +
 							{if (optional) "0" else "1"} +
 							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
@@ -688,10 +688,10 @@ class ServiceRepositoryNewProjectGenerator {
 					}
 					edge EnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration) && 
-							((p.^type as VersionedTypeRef).^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
+							(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+							((p.^type as VersionedTypeRef).^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)?.eContainer == p.eContainer?.eContainer && 
 							eContainer == p.eContainer?.eContainer) {
-						=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+						=> ref EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 						label EdgeLabel for name + " {" +
 							{if (optional) "0" else "1"} +
 							{if (^type instanceof VersionedTypeRef && (^type as VersionedTypeRef)?.many) "..*" else "..1"} + "}"
@@ -706,10 +706,10 @@ class ServiceRepositoryNewProjectGenerator {
 					}
 					hidden edge HiddenEnumReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration) && 
-							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)?.eContainer != p.eContainer.eContainer && 
+							(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+							((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)?.eContainer != p.eContainer.eContainer && 
 							eContainer == p.eContainer.eContainer) {
-						=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)
+						=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 						label EdgeLabel for name
 					}
 					 
@@ -719,7 +719,7 @@ class ServiceRepositoryNewProjectGenerator {
 				}
 				
 				
-				node EnumNode for each types.filter(typeof (org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Enumeration)) {
+				node EnumNode for each types.filter(typeof (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)) {
 					label EnumLabel  for "<<Enum>>"
 					label Name for name
 					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
@@ -982,9 +982,9 @@ class ServiceRepositoryNewProjectGenerator {
 	
 	def generateSolutionViewMap (IFileSystemAccess fsa) {
 		val content='''
-			import org.xkonnex.repo.dsl.bindingdsl.solutionDsl.*
-			import org.xkonnex.repo.dsl.bindingdsl.serviceDsl.*
-			import org.xkonnex.repo.dsl.bindingdsl.profiledsl.sOAProfileDsl.*
+			import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.*
+			import org.xkonnex.repo.dsl.servicedsl.serviceDsl.*
+			import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.*
 			
 			diagram SolutionDiagram type Solution {
 				
@@ -1032,12 +1032,12 @@ class ServiceRepositoryNewProjectGenerator {
 					
 				}
 				
-				hidden node HiddenRequiredServiceNode for this  as org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Service {
+				hidden node HiddenRequiredServiceNode for this  as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service {
 					label ServiceLabel for "<<Service>>"
 					label ServiceNameLabel for this.name
 					label Version for "[v" + this.version?.version+"]"
 					
-				} unless !(this instanceof org.xkonnex.repo.dsl.bindingdsl.serviceDsl.Service)
+				} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service)
 			}
 		'''
 		fsa.generateFile("view/SolutionView.gvmap", content)

@@ -1,4 +1,4 @@
-package org.xkonnex.repo.dsl.semanticsdsl.semanticsdsl.ui.wizard;
+package org.xkonnex.repo.dsl.semanticsdsl.ui.wizard;
 
 import java.io.InputStream;
 

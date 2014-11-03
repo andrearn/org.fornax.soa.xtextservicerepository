@@ -2,29 +2,29 @@
 <?eclipse version="3.0"?>
 <plugin>
 	<extension point="org.eclipse.ui.newWizards">
-		<category id="org.xkonnex.repo.dsl.bindingdsl.servicerepo.Examples" 
+		<category id="org.xkonnex.repo.Examples" 
 				  name="%category.name" 
 				  parentCategory="org.eclipse.ui.Examples" />
 	</extension>
 
-	<!-- ========= org.xkonnex.repo.dsl.bindingdsl.servicerepo.simple.example ========= -->
+	<!-- ========= org.xkonnex.repo.simple.example ========= -->
 	<extension point="org.eclipse.ui.newWizards">
-		<wizard	id="org.xkonnex.repo.dsl.bindingdsl.servicerepo.NewSimpleExampleWizard" 
+		<wizard	id="org.xkonnex.repo.NewSimpleExampleWizard" 
 			name="%simple.example.name" 
 			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
-			category="org.eclipse.ui.Examples/org.xkonnex.repo.dsl.bindingdsl.servicerepo.Examples"
+			category="org.eclipse.ui.Examples/org.xkonnex.repo.Examples"
 			icon="icons/genproject.gif" 
 			project="true">
 			<description>%simple.example.description</description>
 		</wizard>
 	</extension>
 	
-	<!-- ========= org.xkonnex.repo.dsl.bindingdsl.servicerepo.advanced.example ========= -->
+	<!-- ========= org.xkonnex.repo.advanced.example ========= -->
 	<extension point="org.eclipse.ui.newWizards">
-		<wizard	id="org.xkonnex.repo.dsl.bindingdsl.servicerepo.NewAdvancedExampleWizard" 
+		<wizard	id="org.xkonnex.repo.NewAdvancedExampleWizard" 
 			name="%advanced.example.name" 
 			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
-			category="org.eclipse.ui.Examples/org.xkonnex.repo.dsl.bindingdsl.servicerepo.Examples"
+			category="org.eclipse.ui.Examples/org.xkonnex.repo.Examples"
 			icon="icons/genproject.gif" 
 			project="true">
 			<description>%advanced.example.description</description>
@@ -32,16 +32,16 @@
 	</extension>
 
 	<extension point="org.eclipse.emf.common.ui.examples">
-	    <example wizardID="org.xkonnex.repo.dsl.bindingdsl.servicerepo.NewSimpleExampleWizard" pageImage="icons/genproject.gif">
-		 	<projectDescriptor name="org.xkonnex.repo.dsl.bindingdsl.servicerepo.simple.example" contentURI="contents/org.xkonnex.repo.dsl.bindingdsl.servicerepo.simple.example.zip" description="%simple.example.repoproject.description"/>
-		 	<projectDescriptor name="org.xkonnex.repo.dsl.bindingdsl.servicerepo.simple.generator.example" contentURI="contents/org.xkonnex.repo.dsl.bindingdsl.servicerepo.simple.generator.example.zip" description="%simple.example.generatorproject.description"/>
+	    <example wizardID="org.xkonnex.repo.NewSimpleExampleWizard" pageImage="icons/genproject.gif">
+		 	<projectDescriptor name="org.xkonnex.repo.simple.example" contentURI="contents/org.xkonnex.repo.simple.example.zip" description="%simple.example.repoproject.description"/>
+		 	<projectDescriptor name="org.xkonnex.repo.simple.generator.example" contentURI="contents/org.xkonnex.repo.simple.generator.example.zip" description="%simple.example.generatorproject.description"/>
 	    </example>
 	</extension>
 	
 	<extension point="org.eclipse.emf.common.ui.examples">
-	    <example wizardID="org.xkonnex.repo.dsl.bindingdsl.servicerepo.NewAdvancedExampleWizard" pageImage="icons/genproject.gif">
-			<projectDescriptor name="org.xkonnex.repo.dsl.bindingdsl.servicerepo.advanced.example" contentURI="contents/org.xkonnex.repo.dsl.bindingdsl.servicerepo.advanced.example.zip" description="%advanced.example.repoproject.description"/>
-			<projectDescriptor name="org.xkonnex.repo.dsl.bindingdsl.servicerepo.advanced.generator.example" contentURI="contents/org.xkonnex.repo.dsl.bindingdsl.servicerepo.advanced.generator.example.zip" description="%advanced.example.generatorproject.description"/>
+	    <example wizardID="org.xkonnex.repo.NewAdvancedExampleWizard" pageImage="icons/genproject.gif">
+			<projectDescriptor name="org.xkonnex.repo.advanced.example" contentURI="contents/org.xkonnex.repo.advanced.example.zip" description="%advanced.example.repoproject.description"/>
+			<projectDescriptor name="org.xkonnex.repo.advanced.generator.example" contentURI="contents/org.xkonnex.repo.advanced.generator.example.zip" description="%advanced.example.generatorproject.description"/>
 	    </example>
 	</extension>   
    

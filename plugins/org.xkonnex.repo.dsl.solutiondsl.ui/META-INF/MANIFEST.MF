@@ -28,4 +28,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: org.xkonnex.repo.dsl.solutiondsl.ui.contentassist.antlr,
  org.xkonnex.repo.dsl.solutiondsl.ui.contentassist,
  org.xkonnex.repo.dsl.solutiondsl.ui.quickfix
-Bundle-Activator: org.xkonnex.repo.dsl.semanticsdsl.ui.internal.CustomSolutionDslActivator
+Bundle-Activator: org.xkonnex.repo.dsl.solutiondsl.ui.internal.CustomSolutionDslActivator

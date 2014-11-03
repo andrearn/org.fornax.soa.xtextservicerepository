@@ -7,7 +7,7 @@
    	<extension
 	      point = "org.eclipse.ui.newWizards">
 		 <wizard
-         category="org.xkonnex.repo.dsl.semanticsdsl.ui.newWizards"
+         category="org.xkonnex.repo.workbench.ui.newWizards"
          class="org.xkonnex.repo.dsl.semanticsdsl.ui.SemanticsDslExecutableExtensionFactory:org.xkonnex.repo.dsl.semanticsdsl.ui.wizard.NewSemanticsDslFileWizard"
          hasPages="true"
          

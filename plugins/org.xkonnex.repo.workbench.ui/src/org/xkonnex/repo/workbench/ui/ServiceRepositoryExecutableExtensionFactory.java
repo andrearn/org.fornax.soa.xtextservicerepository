@@ -13,7 +13,7 @@ public class ServiceRepositoryExecutableExtensionFactory  extends AbstractGuiceA
 	}
 	
 	protected Injector getInjector() {
-		return org.xkonnex.repo.workbench.ui.internal.ServiceRepositoryActivator.getInstance().getInjector("org.xkonnex.repo.dsl.bindingdsl.ServiceRepository");
+		return org.xkonnex.repo.workbench.ui.internal.ServiceRepositoryActivator.getInstance().getInjector("org.xkonnex.repo.workbench.ui.XKonneXRepository");
 	}
 	
 }

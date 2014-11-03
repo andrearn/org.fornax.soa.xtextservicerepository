@@ -24,13 +24,14 @@ import com.google.inject.name.Names;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
+@SuppressWarnings("all")
 public class ServiceRepositoryRuntimeModule extends DefaultRuntimeModule {
 
 	protected Properties properties = null;
 
 	@Override
 	public void configure(Binder binder) {
-		properties = tryBindProperties(binder, "org/fornax/soa/ServiceRepository.properties");
+		properties = tryBindProperties(binder, "org/xkonnex/repo/core/ServiceRepository.properties");
 		super.configure(binder);
 	}
 
@@ -45,5 +46,9 @@ public class ServiceRepositoryRuntimeModule extends DefaultRuntimeModule {
 	
 	public Class<? extends IPredicateSearch> bindIPredicateSearch () {
 		return DefaultPredicateSearch.class;
+	}
+	
+	public Class<? extends org.eclipse.xtext.serializer.ISerializer> bindISerializer() {
+		return org.eclipse.xtext.serializer.impl.Serializer.class;
 	}
 }

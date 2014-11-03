@@ -4,7 +4,7 @@ import org.eclipse.osgi.util.NLS;
 
 public class ServiceRepositorySearchMessages extends NLS {
 
-	private static final String BUNDLE_NAME = "org.xkonnex.repo.dsl.bindingdsl.servicerepo.ui.search.dialog.messages"; //$NON-NLS-1$
+	private static final String BUNDLE_NAME = "org.xkonnex.repo.workbench.ui.search.dialog.messages"; //$NON-NLS-1$
 	
 	public static String SearchPage_expression_label;
 	public static String SearchPage_expression_caseSensitive;
