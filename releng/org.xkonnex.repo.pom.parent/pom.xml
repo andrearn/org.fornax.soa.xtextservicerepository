@@ -190,8 +190,8 @@
 					<version>${tycho-version}</version>
 					<configuration>
 						<encoding>${project.build.sourceEncoding}</encoding>
-						<source>5.0</source>
-						<target>5.0</target>
+						<source>6.0</source>
+						<target>6.0</target>
 						<excludeResources>
 							<exludeResource>**/*.xtend</exludeResource>
 						</excludeResources>
@@ -335,7 +335,7 @@
 		<repository>
 			<id>graphview</id>
 			<layout>p2</layout>
-			<url>http://dl.bintray.com/andrearn/GenericGraphView </url>
+			<url>http://dl.bintray.com/andrearn/GenericGraphView/1.0.4</url>
 			<!-- url>http://download.anderscore.com/graphview/updates</url-->
 		</repository>
 		<repository>
@@ -380,7 +380,7 @@
 		<profile>
 			<id>xtext-latest</id>
 			<properties>
-				<xtext-version>2.7.0</xtext-version>
+				<xtext-version>2.8.0</xtext-version>
 				<xtext-version-bound>3.0.0</xtext-version-bound>
 			</properties>
 			<repositories>

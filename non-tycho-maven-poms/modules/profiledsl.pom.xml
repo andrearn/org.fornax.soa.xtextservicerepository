@@ -3,16 +3,16 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.fornax.soa</groupId>
+	<groupId>org.xkonnex.repo.dsl.maven</groupId>
 	<artifactId>profiledsl</artifactId>
 	<packaging>jar</packaging>
 	<name>Profile DSL</name>
 	<description>Profile DSL for service repository</description>
 
 	<parent>
-		<groupId>org.fornax.soa</groupId>
-		<artifactId>xsr-parent</artifactId>
-		<version>1.6.2</version>
+		<groupId>org.xkonnex.repo.maven</groupId>
+		<artifactId>repo-parent</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 
 	<licenses>
@@ -25,15 +25,15 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.fornax.soa</groupId>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
 			<artifactId>basedsl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.fornax.soa</groupId>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
 			<artifactId>environmentdsl</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>org.fornax.soa</groupId>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
 			<artifactId>semanticsdsl</artifactId>
 		</dependency>
 

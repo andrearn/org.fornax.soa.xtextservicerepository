@@ -15,7 +15,7 @@
 	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<!-- TODO project name -->
-	<name>Connex core</name>
+	<name>XKonneX Repository Server core</name>
 	<description></description>
 	<!-- <organization> <name>company name</name> <url>company url</url> </organization> -->
 	<licenses>
@@ -135,63 +135,63 @@
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext.builder.standalone</artifactId>
-			<version>2.6.2</version>
+			<version>2.7.0</version>
 		</dependency>
 
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.basedsl</groupId>
-			<artifactId>org.xkonnex.repo.dsl.basedsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>basedsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.bindingdsl</groupId>
-			<artifactId>org.xkonnex.repo.dsl.bindingdsl.bindingdsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>bindingdsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.businessdsl</groupId>
-			<artifactId>org.xkonnex.repo.dsl.bindingdsl.businessdsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>businessdsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.environmentdsl</groupId>
-			<artifactId>org.xkonnex.repo.dsl.bindingdsl.environmentdsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>environmentdsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.moduledsl</groupId>
-			<artifactId>org.xkonnex.repo.dsl.bindingdsl.moduledsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>moduledsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.profiledsl</groupId>
-			<artifactId>org.xkonnex.repo.dsl.bindingdsl.profiledsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>profiledsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.semanticsdsl</groupId>
-			<artifactId>org.xkonnex.repo.dsl.bindingdsl.semanticsdsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>semanticsdsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.servicedsl</groupId>
-			<artifactId>org.xkonnex.repo.dsl.bindingdsl.servicedsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>servicedsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.sladsl</groupId>
-			<artifactId>org.xkonnex.repo.dsl.bindingdsl.sladsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>sladsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.solutiondsl</groupId>
-			<artifactId>org.xkonnex.repo.dsl.bindingdsl.solutiondsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>solutiondsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.servicerepo</groupId>
-			<artifactId>org.xkonnex.repo.dsl.bindingdsl.servicerepo</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.maven</groupId>
+			<artifactId>core</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jgit</groupId>

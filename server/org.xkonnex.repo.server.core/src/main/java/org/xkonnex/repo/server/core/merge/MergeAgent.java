@@ -17,33 +17,27 @@ import org.eclipse.emf.compare.match.IMatchEngine;
 import org.eclipse.emf.compare.match.eobject.IEObjectMatcher;
 import org.eclipse.emf.compare.match.impl.MatchEngineFactoryImpl;
 import org.eclipse.emf.compare.match.impl.MatchEngineFactoryRegistryImpl;
+import org.eclipse.emf.compare.scope.DefaultComparisonScope;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.compare.utils.UseIdentifiers;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.diagnostics.Severity;
-import org.eclipse.xtext.mwe.Reader;
-import org.eclipse.xtext.mwe.ResourceSetBasedSlotEntry;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.validation.Issue;
-import org.fornax.soa.BindingDslStandaloneSetup;
-import org.fornax.soa.BusinessDslStandaloneSetup;
-import org.fornax.soa.EnvironmentDslStandaloneSetup;
-import org.fornax.soa.ServiceDslStandaloneSetup;
-import org.fornax.soa.SolutionDslStandaloneSetup;
-import org.fornax.soa.moduledsl.ModuleDslStandaloneSetup;
-import org.fornax.soa.profiledsl.SOAProfileDslStandaloneSetup;
-import org.fornax.soa.sladsl.SLADslStandaloneSetup;
-import org.xkonnex.repo.dsl.basedsl.SOABaseDslStandaloneSetup;
+import org.xkonnex.repo.core.XKonneXRepoDSL;
 import org.xkonnex.repo.server.core.authz.AuthorizationCheckHandler;
 import org.xkonnex.repo.server.core.merge.handler.IComparisonHandler;
 import org.xkonnex.repo.server.core.notification.CommitterMergeNotificationPublisher;
 import org.xkonnex.repo.server.core.notification.MergeNotificationEvent;
 import org.xkonnex.repo.server.core.notification.SubscriberMergeNotificationPublisher;
+import org.xkonnex.repo.server.core.resource.XKonneXReader;
 import org.xkonnex.repo.server.core.validation.IssueFilterPredicate;
+import org.xkonnex.repo.server.core.validation.ModelIssues;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.eventbus.EventBus;
+import com.google.inject.Injector;
 import com.google.inject.Provider;
 
 
@@ -66,6 +60,9 @@ public class MergeAgent {
 	
 	@Inject
 	private EventBus bus;
+	
+	@Inject
+	private Injector injector;
 	
 	/**
 	 * The MergeAgent merges proper commits to the staging repository with the upstream branch head. The MergeAgent 
@@ -94,13 +91,21 @@ public class MergeAgent {
 	 * @param ctx
 	 */
 	public void diffModels (MergeContext ctx) {
-		ResourceSet leftResourceSet = readModel (leftModelPath, "leftModel");
-		ResourceSet rightResourceSet = readModel (rightModelPath, "rightModel");
-		if (leftResourceSet != null && rightResourceSet != null) {
+		ModelIssues leftModelIssues = new ModelIssues();
+		ModelIssues rightModelIssues = new ModelIssues();
+		ResourceSet leftResourceSet = readModel (leftModelPath, leftModelIssues);
+		ResourceSet rightResourceSet = readModel (rightModelPath, rightModelIssues);
+		if (leftResourceSet != null && rightResourceSet != null && !leftModelIssues.hasErrors() && ! rightModelIssues.hasErrors()) {
 			EMFCompare comparator = createComparator();
-			IComparisonScope comparisonScope = EMFCompare.createDefaultScope (leftResourceSet, rightResourceSet);
+			IComparisonScope comparisonScope = new DefaultComparisonScope(leftResourceSet, rightResourceSet, null);
 			Comparison compare = comparator.compare (comparisonScope);
-			handleComparison (compare, ctx);
+			handleComparison (compare, ctx, leftModelIssues);
+		}
+		if (leftModelIssues.hasErrors()) {
+			
+		}
+		if (rightModelIssues.hasErrors()) {
+			
 		}
 		
 	}
@@ -110,24 +115,24 @@ public class MergeAgent {
 	 * @param comparison The EMF Compare comparison model
 	 * @param ctx
 	 */
-	private void handleComparison (Comparison comparison, MergeContext ctx) {
+	private void handleComparison (Comparison comparison, MergeContext ctx, ModelIssues issues) {
 		EList<Conflict> conflicts = comparison.getConflicts();
 		if (conflicts.isEmpty()) {
-			authorizeChanges (comparison, ctx);
-			checkCompliance (comparison, ctx);
-			notifySubscribers (comparison, ctx);
+			authorizeChanges (comparison, ctx, issues);
+			checkCompliance (comparison, ctx, issues);
+			notifySubscribers (comparison, ctx, issues);
 		}
 	}
 	
 	
 
-	private void authorizeChanges(Comparison comparison, MergeContext ctx) {
-		authorizationCheckHandler.handleComparison (comparison, ctx);
+	private void authorizeChanges(Comparison comparison, MergeContext ctx, ModelIssues issues) {
+		authorizationCheckHandler.handleComparison (comparison, ctx, issues);
 	}
 
-	private boolean checkCompliance (Comparison comparison, MergeContext ctx) {
-		Iterable<Issue> issues = complianceCheckHandler.handleComparison (comparison, ctx);
-		Iterable<Issue> errors = Iterables.filter (issues, new IssueFilterPredicate(Severity.ERROR));
+	private boolean checkCompliance (Comparison comparison, MergeContext ctx, ModelIssues issues) {
+		complianceCheckHandler.handleComparison (comparison, ctx, issues);
+		Iterable<Issue> errors = Iterables.filter (issues.getIssues().values(), new IssueFilterPredicate(Severity.ERROR));
 		Iterator<Issue> errorIt = errors.iterator();
 		if (errorIt.hasNext()) {
 			return false;
@@ -136,7 +141,7 @@ public class MergeAgent {
 		}
 	}
 
-	private void notifySubscribers (Comparison comparison, MergeContext ctx) {
+	private void notifySubscribers (Comparison comparison, MergeContext ctx, ModelIssues issues) {
 		MergeNotificationEvent evt = new MergeNotificationEvent ("Changed assets", comparison, ctx);
 		subscriberNotificationHandler.notify (evt);
 	}
@@ -152,28 +157,9 @@ public class MergeAgent {
 		return comparator;
 	}
 
-	private ResourceSet readModel (String path, String modelName) {
-		
-//		IWorkflowContext ctx = new WorkflowContextImpl();
-//		
-//		Reader modelReader = new Reader();
-//		modelReader.addRegister (new SOABaseDslStandaloneSetup());
-//		modelReader.addRegister (new BindingDslStandaloneSetup());
-//		modelReader.addRegister (new BusinessDslStandaloneSetup());
-//		modelReader.addRegister (new EnvironmentDslStandaloneSetup());
-//		modelReader.addRegister (new ModuleDslStandaloneSetup());
-//		modelReader.addRegister (new ServiceDslStandaloneSetup());
-//		modelReader.addRegister (new SLADslStandaloneSetup());
-//		modelReader.addRegister (new SOAProfileDslStandaloneSetup());
-//		modelReader.addRegister (new SolutionDslStandaloneSetup());
-//		modelReader.addPath(path);
-//		ResourceSetBasedSlotEntry outputSlot = new ResourceSetBasedSlotEntry();
-//		outputSlot.setName (modelName);
-//		modelReader.addLoadFromResourceSet (outputSlot);
-////		modelReader.invoke(ctx);
-//		
-//		ResourceSet rs = (ResourceSet)ctx.get (modelName);
-//		return rs;
-		return null;
+	private ResourceSet readModel (String path, ModelIssues modelIssues) {
+		XKonneXReader reader = injector.getInstance(XKonneXReader.class);
+		List<String> pathes = Lists.newArrayList(path);
+		return reader.read(pathes, modelIssues);
 	}
 }

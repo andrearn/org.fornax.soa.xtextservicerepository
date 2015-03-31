@@ -11,13 +11,13 @@
     <artifactId>server.parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>connex-parent</name>
+    <name>xkonnex-server-parent</name>
 
-    <description>Connex Xtext Service Repository server parent</description>
+    <description>XKonneX Repository server parent</description>
 
     <modules>
-        <module>../../connex/org.fornax.soa.xsr.connex.core</module>
-        <module>../../connex/org.fornax.soa.xsr.connex.web</module>
+        <module>../org.xkonnex.repo.server.core</module>
+        <module>../org.xkonnex.server.web</module>
     </modules>
 
     <properties>
@@ -52,6 +52,8 @@
         <jgit.version>3.1.0.201310021548-r</jgit.version>
         <guava.version>10.0.1</guava.version>
         <guice.version>3.0</guice.version>
+        <xtext.version>2.8.0</xtext.version>
+        <xkonnex.repo.version>2.0.0-SNAPSHOT</xkonnex.repo.version>
     </properties>
     
     <build>
@@ -185,71 +187,71 @@
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext</artifactId>
-			<version>2.6.2</version>
+			<version>${xtext.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.lib</artifactId>
-			<version>2.6.2</version>
+			<version>${xtext.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext.dependencies</artifactId>
-			<version>2.6.2</version>
+			<version>${xtext.version}</version>
+			<scope>import</scope>
+			<type>pom</type>
 		</dependency>
 		<dependency>
-			<groupId>org.fornax.soa.basedsl</groupId>
-			<artifactId>org.fornax.soa.basedsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>basedsl</artifactId>
+			<version>${xkonnex.repo.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>bindingdsl</artifactId>
+			<version>${xkonnex.repo.version}</version>
 			<type>eclipse-plugin</type>
 		</dependency>
 		<dependency>
-			<groupId>org.fornax.soa.bindingdsl</groupId>
-			<artifactId>org.fornax.soa.bindingdsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>businessdsl</artifactId>
+			<version>${xkonnex.repo.version}</version>
 			<type>eclipse-plugin</type>
 		</dependency>
 		<dependency>
-			<groupId>org.fornax.soa.businessdsl</groupId>
-			<artifactId>org.fornax.soa.businessdsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>environmentdsl</artifactId>
+			<version>${xkonnex.repo.version}</version>
 			<type>eclipse-plugin</type>
 		</dependency>
 		<dependency>
-			<groupId>org.fornax.soa.environmentdsl</groupId>
-			<artifactId>org.fornax.soa.environmentdsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>semanticsdsl</artifactId>
+			<version>${xkonnex.repo.version}</version>
 			<type>eclipse-plugin</type>
 		</dependency>
 		<dependency>
-			<groupId>org.fornax.soa.semanticsdsl</groupId>
-			<artifactId>org.fornax.soa.semanticsdsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>servicedsl</artifactId>
+			<version>${xkonnex.repo.version}</version>
 			<type>eclipse-plugin</type>
 		</dependency>
 		<dependency>
-			<groupId>org.fornax.soa.servicedsl</groupId>
-			<artifactId>org.fornax.soa.servicedsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>sladsl</artifactId>
+			<version>${xkonnex.repo.version}</version>
 			<type>eclipse-plugin</type>
 		</dependency>
 		<dependency>
-			<groupId>org.fornax.soa.sladsl</groupId>
-			<artifactId>org.fornax.soa.sladsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>solutiondsl</artifactId>
+			<version>${xkonnex.repo.version}</version>
 			<type>eclipse-plugin</type>
 		</dependency>
 		<dependency>
-			<groupId>org.fornax.soa.solutiondsl</groupId>
-			<artifactId>org.fornax.soa.solutiondsl</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
-			<type>eclipse-plugin</type>
-		</dependency>
-		<dependency>
-			<groupId>org.fornax.soa.servicerepo</groupId>
-			<artifactId>org.fornax.soa.servicerepo</artifactId>
-			<version>1.6.2-SNAPSHOT</version>
-			<type>eclipse-plugin</type>
+			<groupId>org.xkonnex.repo.maven</groupId>
+			<artifactId>core</artifactId>
+			<version>${xkonnex.repo.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jgit</groupId>

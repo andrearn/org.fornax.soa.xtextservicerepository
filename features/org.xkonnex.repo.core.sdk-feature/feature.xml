@@ -23,7 +23,7 @@
    </url>
 
    <plugin
-         id="org.xkonnex.repo.doc"
+         id="org.xkonnex.repo.core"
          download-size="0"
          install-size="0"
          version="0.0.0"

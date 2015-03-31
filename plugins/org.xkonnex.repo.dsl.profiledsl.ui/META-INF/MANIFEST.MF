@@ -21,7 +21,7 @@ Require-Bundle: org.xkonnex.repo.dsl.profiledsl;bundle-version="2.0.0";visibilit
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.builder
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.profiledsl.ui.contentassist.antlr,
  org.xkonnex.repo.dsl.profiledsl.ui.contentassist,
  org.xkonnex.repo.dsl.profiledsl.ui.quickfix

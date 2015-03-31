@@ -7,13 +7,13 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
-import org.eclipse.emf.mwe2.language.scoping.QualifiedNameProvider
 import com.google.inject.Inject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.ClassRef
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 /**
  * Derive Java class names from types and type references
@@ -22,7 +22,7 @@ class JavaTypeExtensions {
 	
 	
 	@Inject 
-	private QualifiedNameProvider nameProvider
+	private IQualifiedNameProvider nameProvider
 	
 	@Inject extension SchemaNamespaceExtensions
 	

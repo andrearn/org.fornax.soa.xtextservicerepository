@@ -124,15 +124,10 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="providerUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="verb" eType="#//Verb"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="format" eType="#//RESTFormat"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="consumesFormat" eType="#//RESTFormat"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="provideFormat" eType="#//RESTFormat"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="RESTFormat">
-    <eLiterals name="JSON" literal="JSON"/>
-    <eLiterals name="XML" value="1" literal="XML"/>
-    <eLiterals name="BISON" value="2" literal="BISON"/>
-    <eLiterals name="OTHER" value="3" literal="OTHER"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="consumes" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="provides" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="Verb">
     <eLiterals name="CREATE" literal="CREATE"/>
@@ -217,9 +212,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SigningPolicy" eSuperTypes="#//SecurityPolicy">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="supportedSigningAlgorithms"
-        unique="false" upperBound="-1" eType="#//SigningAlgothm"/>
+        unique="false" upperBound="-1" eType="#//SigningAlgorithm"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiredSigningAlgorithm"
-        eType="#//SigningAlgothm"/>
+        eType="#//SigningAlgorithm"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="signedParts" upperBound="-1"
         eType="#//MessagePartRef" containment="true"/>
   </eClassifiers>
@@ -234,7 +229,7 @@
     <eLiterals name="all" value="3" literal="all"/>
     <eLiterals name="expression" value="4" literal="expression"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="SigningAlgothm">
+  <eClassifiers xsi:type="ecore:EEnum" name="SigningAlgorithm">
     <eLiterals name="NONE" literal="NONE"/>
     <eLiterals name="SHA1" value="1" literal="SHA1"/>
     <eLiterals name="SHA256" value="2" literal="SHA256"/>

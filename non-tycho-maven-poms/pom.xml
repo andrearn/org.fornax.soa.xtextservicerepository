@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
 	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.fornax.soa</groupId>
-	<artifactId>xsr-parent</artifactId>
-	<version>1.6.2</version>
+	<groupId>org.xkonnex.repo.maven</groupId>
+	<artifactId>repo-parent</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Xtext Service Repository parent POM</name>
 	<description>Xtext Service Repository parent POM not using tycho</description>
@@ -34,8 +34,8 @@
 	</developers>
 
 	<properties>
-		<xtext.version>2.6.2</xtext.version>
-		<xtend.version>2.6.2</xtend.version>
+		<xtext.version>2.8.0</xtext.version>
+		<xtend.version>2.8.0</xtend.version>
 	</properties>
 
 	<dependencyManagement>
@@ -43,112 +43,112 @@
 		<dependencies>
 			<!-- core -->
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>servicerepo</artifactId>
+				<groupId>org.xkonnex.repo.maven</groupId>
+				<artifactId>repo.core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<!-- DSLs -->
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
+				<groupId>org.xkonnex.repo.dsl.maven</groupId>
 				<artifactId>basedsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
+				<groupId>org.xkonnex.repo.dsl.maven</groupId>
 				<artifactId>bindingdsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
+				<groupId>org.xkonnex.repo.dsl.maven</groupId>
 				<artifactId>businessdsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
+				<groupId>org.xkonnex.repo.dsl.maven</groupId>
 				<artifactId>environmentdsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
+				<groupId>org.xkonnex.repo.dsl.maven</groupId>
 				<artifactId>moduledsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
+				<groupId>org.xkonnex.repo.dsl.maven</groupId>
 				<artifactId>profiledsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
+				<groupId>org.xkonnex.repo.dsl.maven</groupId>
 				<artifactId>semanticsdsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
+				<groupId>org.xkonnex.repo.dsl.maven</groupId>
 				<artifactId>servicedsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
+				<groupId>org.xkonnex.repo.dsl.maven</groupId>
 				<artifactId>sladsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
+				<groupId>org.xkonnex.repo.dsl.maven</groupId>
 				<artifactId>solutiondsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
 			<!-- generators -->
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>xtextservicerepo.generator</artifactId>
+				<groupId>org.xkonnex.repo.generator.maven</groupId>
+				<artifactId>generator.core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>basedsl.generator</artifactId>
+				<groupId>org.xkonnex.repo.generator.maven</groupId>
+				<artifactId>generator.basedsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>bindingdsl.generator</artifactId>
+				<groupId>org.xkonnex.repo.generator.maven</groupId>
+				<artifactId>generator.bindingdsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>businessdsl.generator</artifactId>
+				<groupId>org.xkonnex.repo.generator.maven</groupId>
+				<artifactId>generator.businessdsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>environmentdsl.generator</artifactId>
+				<groupId>org.xkonnex.repo.generator.maven</groupId>
+				<artifactId>generator.environmentdsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>moduledsl.generator</artifactId>
+				<groupId>org.xkonnex.repo.generator.maven</groupId>
+				<artifactId>generator.moduledsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>profiledsl.generator</artifactId>
+				<groupId>org.xkonnex.repo.generator.maven</groupId>
+				<artifactId>generator.profiledsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>servicedsl.generator</artifactId>
+				<groupId>org.xkonnex.repo.generator.maven</groupId>
+				<artifactId>generator.servicedsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>semanticsdsl.generator</artifactId>
+				<groupId>org.xkonnex.repo.generator.maven</groupId>
+				<artifactId>generator.semanticsdsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>org.fornax.soa</groupId>
-				<artifactId>solutiondsl.generator</artifactId>
+				<groupId>org.xkonnex.repo.generator.maven</groupId>
+				<artifactId>generator.solutiondsl</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 
@@ -162,6 +162,8 @@
 				<groupId>org.eclipse.xtext</groupId>
 				<artifactId>org.eclipse.xtext.dependencies</artifactId>
 				<version>${xtext.version}</version>
+				<scope>import</scope>
+				<type>pom</type>
 			</dependency>
 			<dependency>
 				<groupId>org.eclipse.xtend</groupId>

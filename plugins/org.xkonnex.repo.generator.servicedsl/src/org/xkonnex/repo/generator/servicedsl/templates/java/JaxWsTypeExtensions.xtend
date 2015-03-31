@@ -7,7 +7,6 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
-import org.eclipse.emf.mwe2.language.scoping.QualifiedNameProvider
 import com.google.inject.Inject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
@@ -15,11 +14,12 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 class JaxWsTypeExtensions {
 	@Inject extension SchemaNamespaceExtensions
 	@Inject extension JavaTypeExtensions
-	@Inject QualifiedNameProvider nameProvider
+	@Inject IQualifiedNameProvider nameProvider
 	@Inject JavaTypeExtensions javaTypeExt
 	@Inject IEObjectLookup objLookup
 	

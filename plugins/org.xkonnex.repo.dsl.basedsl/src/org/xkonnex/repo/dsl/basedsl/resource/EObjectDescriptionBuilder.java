@@ -3,7 +3,7 @@ package org.xkonnex.repo.dsl.basedsl.resource;
 import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.mwe2.language.scoping.QualifiedNameProvider;
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -15,7 +15,7 @@ import com.google.inject.Inject;
 public class EObjectDescriptionBuilder implements IEObjectDescriptionBuilder {
 	
 	@Inject
-	private QualifiedNameProvider qualifiedNameProvider;
+	private IQualifiedNameProvider qualifiedNameProvider;
 
 	/* (non-Javadoc)
 	 * @see org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder#buildDescription(org.eclipse.emf.ecore.EObject)
@@ -34,11 +34,11 @@ public class EObjectDescriptionBuilder implements IEObjectDescriptionBuilder {
 		return null;
 	}
 		
-	public void setQualifiedNameProvider(QualifiedNameProvider qualifiedNameProvider) {
+	public void setQualifiedNameProvider(IQualifiedNameProvider qualifiedNameProvider) {
 		this.qualifiedNameProvider = qualifiedNameProvider;
 	}
 
-	public QualifiedNameProvider getQualifiedNameProvider() {
+	public IQualifiedNameProvider getQualifiedNameProvider() {
 		return qualifiedNameProvider;
 	}
 

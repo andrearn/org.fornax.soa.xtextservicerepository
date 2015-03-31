@@ -26,12 +26,6 @@
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SAPTransport/IDOC"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SAPTransport/RFC"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//RESTFormat">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/JSON"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/XML"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/BISON"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/OTHER"/>
-    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//Verb">
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//Verb/CREATE"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//Verb/RETRIEVE"/>
@@ -59,15 +53,15 @@
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//MessagePartRefKind/all"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//MessagePartRefKind/expression"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SigningAlgothm">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/NONE"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/SHA1"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/SHA256"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/MD5"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/RSA_1_5"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES128"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES192"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES256"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SigningAlgorithm">
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgorithm/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgorithm/SHA1"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgorithm/SHA256"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgorithm/MD5"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgorithm/RSA_1_5"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgorithm/AES128"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgorithm/AES192"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgorithm/AES256"/>
     </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//CipherAlgorithmKind">
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//CipherAlgorithmKind/NONE"/>
@@ -100,6 +94,22 @@
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ReliablilityKind/AT_MOST_ONCE"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ReliablilityKind/AT_LEAST_ONCE"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ReliablilityKind/BEST_EFFORT"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//RESTFormat">
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/JSON"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/XML"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/BISON"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/OTHER"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SigningAlgothm">
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/NONE"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/SHA1"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/SHA256"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/MD5"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/RSA_1_5"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES128"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES192"/>
+      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES256"/>
     </genEnums>
     <genClasses ecoreClass="BindingDsl.ecore#//BindingModel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//BindingModel/imports"/>
@@ -177,6 +187,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/path"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/providerUrl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/verb"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/consumes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/provides"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/format"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/consumesFormat"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/provideFormat"/>

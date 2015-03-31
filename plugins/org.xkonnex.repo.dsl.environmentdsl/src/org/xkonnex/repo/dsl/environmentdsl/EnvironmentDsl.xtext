@@ -114,7 +114,7 @@ RMIRegistry:
 	'}'
 ;
 
-/* A interface object repository, where CORBA objec are registered */
+/* A interface object repository, where CORBA objects are registered */
 IOR:
 	'Corba-IOR' '{'
 		'port' port = INT
@@ -264,7 +264,7 @@ DataSource:
 		'schema' schema=[DatabaseSchema|QualifiedName] 
 	'}';
 	
-	
+/** @deprecated */	
 enum DatabaseKind : Other | Oracle | DB2 | MSSQL | MySQL | Postgres | Sybase | HyperSonic | Ingres | Adabas | Derby | MongoDB | Hadoop | CouchDB | Neo4J;
 
 DatabaseSchema: 

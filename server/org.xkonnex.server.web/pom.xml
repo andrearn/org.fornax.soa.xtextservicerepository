@@ -58,8 +58,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.xkonnex.repo.dsl.bindingdsl.xsr</groupId>
-			<artifactId>connex.core</artifactId>
+			<groupId>org.xkonnex.repo</groupId>
+			<artifactId>server.core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>

@@ -4,10 +4,10 @@
 	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
 	<persistence-unit name="ConnexCoreUnit">
 		<jta-data-source>jdbc/XSR_DB</jta-data-source>
-		<class>org.xkonnex.repo.dsl.bindingdsl.xsr.connex.core.config.RepositoryDescription</class>
-		<class>org.xkonnex.repo.dsl.bindingdsl.xsr.connex.core.user.User</class>
-		<class>org.xkonnex.repo.dsl.bindingdsl.xsr.connex.core.user.Role</class>
-		<class>org.xkonnex.repo.dsl.bindingdsl.xsr.connex.core.subscription.Subscription</class>
+		<class>org.xkonnex.repo.server.core.config.RepositoryDescription</class>
+		<class>org.xkonnex.repo.server.core.user.User</class>
+		<class>org.xkonnex.repo.server.core.user.Role</class>
+		<class>org.xkonnex.repo.server.core.subscription.Subscription</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
 			<property name="hibernate.show_sql" value="true" />

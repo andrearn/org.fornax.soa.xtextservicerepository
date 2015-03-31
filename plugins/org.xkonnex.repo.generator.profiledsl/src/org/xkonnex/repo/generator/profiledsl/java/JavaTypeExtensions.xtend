@@ -3,17 +3,17 @@ package org.xkonnex.repo.generator.profiledsl.java
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Type
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType
 import com.google.inject.Inject
-import org.eclipse.emf.mwe2.language.scoping.QualifiedNameProvider
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TypeRef
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataTypeRef
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 class JavaTypeExtensions {
 	
-	@Inject QualifiedNameProvider nameProvider
+	@Inject IQualifiedNameProvider nameProvider
 	@Inject extension ProfileSchemaNamespaceExtensions
 	
 	/*

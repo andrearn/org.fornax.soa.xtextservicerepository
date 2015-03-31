@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.xkonnex.repo.generator.maven</groupId>
+	<artifactId>generator.businessdsl</artifactId>
+	<packaging>jar</packaging>
+	<name>Business DSL generator</name>
+	<description>Business DSL generator for service repository</description>
+
+	<parent>
+		<groupId>org.xkonnex.repo.maven</groupId>
+		<artifactId>repo-parent</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>businessdsl</artifactId>
+		</dependency>
+
+	</dependencies>
+</project>
