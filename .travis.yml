@@ -3,5 +3,5 @@ jdk:
   - openjdk6
 env:
   - MAVEN_PROFILE="xtext-2.3"
-  - MAVEN_PROFILE="xtext-2.4"
-script: cd releng/org.fornax.soa.xtextservicerepository.pom.parent && mvn test -P $MAVEN_PROFILE
+  - MAVEN_PROFILE="xtext-latest"
+script: cd releng/org.xkonnex.repo.pom.parent && mvn test -P $MAVEN_PROFILE
