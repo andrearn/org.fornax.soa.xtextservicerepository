@@ -3,7 +3,7 @@
       id="org.xkonnex.repo.workbench.ui.sdk-feature"
       label="XkonneX Repository Workbench UI SDK"
       version="2.0.0.qualifier"
-      provider-name="Fornax Platform">
+      provider-name="XKonneX.org">
 
    <description url="http://www.example.com/description">
       [Enter Feature Description here.]
@@ -18,7 +18,7 @@
    </license>
 
    <requires>
-      <import plugin="org.xkonnex.repo.dsl.basedsl.test"/>
+      <import plugin="org.xkonnex.repo.dsl.basedsl"/>
       <import plugin="org.xkonnex.repo.dsl.environmentdsl"/>
       <import plugin="org.xkonnex.repo.dsl.moduledsl"/>
       <import plugin="org.xkonnex.repo.dsl.profiledsl"/>
@@ -26,6 +26,8 @@
       <import plugin="org.xkonnex.repo.dsl.servicedsl"/>
       <import plugin="org.xkonnex.repo.dsl.sladsl"/>
       <import plugin="org.xkonnex.repo.dsl.solutiondsl"/>
+      <import plugin="org.xkonnex.repo.dsl.bindingdsl"/>
+      <import plugin="org.xkonnex.repo.dsl.businessdsl"/>
       <import plugin="org.xkonnex.repo.core"/>
    </requires>
 
