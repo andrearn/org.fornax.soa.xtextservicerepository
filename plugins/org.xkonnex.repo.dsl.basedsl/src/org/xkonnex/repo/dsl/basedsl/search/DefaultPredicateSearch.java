@@ -18,7 +18,7 @@ import com.google.inject.Inject;
 public class DefaultPredicateSearch implements IPredicateSearch {
 
 	
-	private static final String XSR_ASSETTYPE_PREFIX = "org.fornax.soa";
+	private static final String XSR_ASSETTYPE_PREFIX = "org.xkonnex.repo.dsl";
 
 	@Inject
 	private IResourceDescriptions resourceDescriptions;

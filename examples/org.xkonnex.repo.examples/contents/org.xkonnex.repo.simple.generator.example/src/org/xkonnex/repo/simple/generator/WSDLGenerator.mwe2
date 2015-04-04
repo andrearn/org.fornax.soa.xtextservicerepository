@@ -1,6 +1,6 @@
 module org.xkonnex.repo.simple.generator.WSDLGenerator
 
-var modelPath = "../org.fornax.soa.servicerepo.simple.example/src"
+var modelPath = "../org.xkonnex.repo.simple.example/src"
 var profile = "SampleArchitectureProfile"
 
 var resSrcGenPath = "src-gen"
