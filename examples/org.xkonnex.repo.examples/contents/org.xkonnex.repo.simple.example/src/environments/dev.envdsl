@@ -7,7 +7,7 @@ environment Dev of type Development-Environment {
 	 * Host, that can host servers. This one is for the ESB
 	 */
 	host dev_airport {
-		full-qualified-name "org.example.dev.airport"
+		full-qualified-name "airport-dev.example.org"
 	}
 	
 	
