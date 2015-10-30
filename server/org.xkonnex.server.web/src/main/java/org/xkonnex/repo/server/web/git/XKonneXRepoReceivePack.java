@@ -10,15 +10,15 @@ import org.eclipse.jgit.transport.ReceivePack;
 import org.xkonnex.repo.server.core.config.RepositoryDescription;
 import org.xkonnex.repo.server.core.config.RepositoryType;
 
-public class ConnexReceivePack extends ReceivePack implements PreReceiveHook, PostReceiveHook {
+public class XKonneXRepoReceivePack extends ReceivePack implements PreReceiveHook, PostReceiveHook {
 	
 	private RepositoryDescription repositoryDescription;
 
-	public ConnexReceivePack(Repository into) {
+	public XKonneXRepoReceivePack(Repository into) {
 		super(into);
 	}
 
-	public ConnexReceivePack(Repository db, RepositoryDescription repositoryDescription) {
+	public XKonneXRepoReceivePack(Repository db, RepositoryDescription repositoryDescription) {
 		this (db);
 		this.repositoryDescription = repositoryDescription;
 	}

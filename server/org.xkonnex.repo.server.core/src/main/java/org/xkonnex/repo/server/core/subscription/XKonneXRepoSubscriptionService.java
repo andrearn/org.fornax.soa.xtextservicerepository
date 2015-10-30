@@ -9,11 +9,11 @@ import org.xkonnex.repo.server.core.Asset;
 
 /**
  * A service that provides access to {@link Subscription}s to {@link Asset}s 
- * managed by XSR Connex
+ * managed by XKonneX Repo
  * @author aarnold
  *
  */
-public class ConnexSubscriptionService implements ISubscriptionService {
+public class XKonneXRepoSubscriptionService implements ISubscriptionService {
 
 	@Inject
 	private ISubscriptionRepository repository;

@@ -20,6 +20,7 @@ import com.google.inject.Injector;
 import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
+import com.google.inject.persist.jpa.JpaPersistModule;
 
 public class XKonneXRepoCoreModule extends AbstractModule {
 
@@ -28,6 +29,7 @@ public class XKonneXRepoCoreModule extends AbstractModule {
 	
 	@Override
 	protected void configure() {
+//		install(new JpaPersistModule(XKONNEX_REPO_CORE_UNIT));
 		final DSLConfigurer configurer = new DSLConfigurer();
 		List<Injector> injectors = configurer.getInjectors();
 		bind(new TypeLiteral<List<Injector>>(){}).annotatedWith(XKonneXRepoDSL.class).toInstance(injectors);
@@ -35,22 +37,22 @@ public class XKonneXRepoCoreModule extends AbstractModule {
 		bind (IRepositoryDescriptionManager.class).to(RepositoryDescriptionManager.class);
 	}
 	
-	@Provides
-	@Singleton
-	public EntityManagerFactory createEntityManagerFactory() {
-		return Persistence.createEntityManagerFactory (XKONNEX_REPO_CORE_UNIT);
-	}
-
-	@Provides
-	public EntityManager createEntityManager(
-			EntityManagerFactory entityManagerFactory) {
-		EntityManager entityManager = ENTITY_MANAGER_CACHE.get();
-		if (entityManager == null) {
-			ENTITY_MANAGER_CACHE.set(entityManager = entityManagerFactory
-					.createEntityManager());
-		}
-		return entityManager;
-	}
+//	@Provides
+//	@Singleton
+//	public EntityManagerFactory createEntityManagerFactory() {
+//		return Persistence.createEntityManagerFactory (XKONNEX_REPO_CORE_UNIT);
+//	}
+//
+//	@Provides
+//	public EntityManager createEntityManager(
+//			EntityManagerFactory entityManagerFactory) {
+//		EntityManager entityManager = ENTITY_MANAGER_CACHE.get();
+//		if (entityManager == null) {
+//			ENTITY_MANAGER_CACHE.set(entityManager = entityManagerFactory
+//					.createEntityManager());
+//		}
+//		return entityManager;
+//	}
 	
 	@Provides
 	public XKonneXReader createXKonneXReader() {

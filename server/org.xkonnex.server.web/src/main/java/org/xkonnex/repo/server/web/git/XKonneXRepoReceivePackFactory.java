@@ -15,7 +15,7 @@ import org.eclipse.jgit.transport.resolver.ServiceNotEnabledException;
 import org.xkonnex.repo.server.core.config.RepositoryDescription;
 import org.xkonnex.repo.server.core.config.RepositoryType;
 
-public class ConnexReceivePackFactory<C> extends DefaultReceivePackFactory {
+public class XKonneXRepoReceivePackFactory<C> extends DefaultReceivePackFactory {
 
 	private static final SectionParser<ServiceConfig> CONFIG = new SectionParser<ServiceConfig>() {
 		public ServiceConfig parse(final Config cfg) {
@@ -36,7 +36,7 @@ public class ConnexReceivePackFactory<C> extends DefaultReceivePackFactory {
 	
 	private RepositoryDescription repositoryDescription;
 
-	public ConnexReceivePackFactory(RepositoryDescription repoDesc) {
+	public XKonneXRepoReceivePackFactory(RepositoryDescription repoDesc) {
 		repositoryDescription = repoDesc;
 	}
 
@@ -61,7 +61,7 @@ public class ConnexReceivePackFactory<C> extends DefaultReceivePackFactory {
 
 	private ReceivePack createFor(final HttpServletRequest req,
 			final Repository db, final String user) {
-		final ConnexReceivePack rp = new ConnexReceivePack(db, repositoryDescription);
+		final XKonneXRepoReceivePack rp = new XKonneXRepoReceivePack(db, repositoryDescription);
 		rp.setRefLogIdent(toPersonIdent(req, user));
 		return rp;
 	}

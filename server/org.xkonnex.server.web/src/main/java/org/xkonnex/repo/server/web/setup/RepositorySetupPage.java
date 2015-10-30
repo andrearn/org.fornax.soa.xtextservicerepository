@@ -1,7 +1,13 @@
 package org.xkonnex.repo.server.web.setup;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -15,8 +21,8 @@ import org.xkonnex.repo.server.core.config.RepositoryConfigException;
 import org.xkonnex.repo.server.web.HomePage;
 import org.xkonnex.repo.server.web.layout.AuthenticatedXKonneXRepoPage;
 
-@MountPath(value = "/", alt = "/reposetup")
-public class RepositorySetupPage<T> extends AuthenticatedXKonneXRepoPage<T> {
+@MountPath(value = "/reposetup")
+public class RepositorySetupPage extends AuthenticatedXKonneXRepoPage<RepositorySetupModel> {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -30,9 +36,9 @@ public class RepositorySetupPage<T> extends AuthenticatedXKonneXRepoPage<T> {
 //	@Inject @Named("repositoryFolder")
 //	private String repositoryFolder;
 
-//	public RepositorySetupPage() {
-//		super(null);
-//	}
+	public RepositorySetupPage() {
+		this(null);
+	}
 	
 	public RepositorySetupPage(PageParameters parameters) {
 		super (parameters);
@@ -54,29 +60,58 @@ public class RepositorySetupPage<T> extends AuthenticatedXKonneXRepoPage<T> {
 			}
 
 			private void doCreateRepositories(IModel<RepositorySetupModel> model) throws RepositoryConfigException {
-				// TODO Auto-generated method stub
 				RepositorySetupModel setupModel = model.getObject();
-				String masterRepoUrl = setupModel.getMasterRepositoryUrl();
-				String stagingRepoUrl = setupModel.getStagingRepositoryUrl();
-				String repositoryFolder = repoDescriptionManager.getRepositoryFolder();
-				if (masterRepoUrl != null && !(masterRepoUrl.startsWith("/") || masterRepoUrl.startsWith("\\"))) {
-					masterRepoUrl = repositoryFolder  + "/" + masterRepoUrl;
+				String masterRepoUrlStr = setupModel.getMasterRepositoryUrl();
+				try {
+					URI masterRepoUrl = normalizeURI(masterRepoUrlStr);
+					String repositoryFolder = repoDescriptionManager.getRepositoryFolder();
+					String stagingRepoUrlStr = setupModel.getStagingRepositoryUrl();
+					URI stagingRepoUrl = normalizeURI(stagingRepoUrlStr);
+					if (stagingRepoUrlStr != null && !(stagingRepoUrlStr.startsWith("/") || stagingRepoUrlStr.startsWith("\\"))) {
+						stagingRepoUrlStr = repositoryFolder + "/" + stagingRepoUrlStr;
+					}
+					if (masterRepoUrl.getScheme().equals("file")) {
+						repositorySetupService.createMasterRepository(masterRepoUrl);
+						
+					} else {
+						repositorySetupService.attachMasterRepository(masterRepoUrl);
+					}
+					if (stagingRepoUrl.getScheme().equals("file")) {
+						repositorySetupService.createStagingRepository(stagingRepoUrl, masterRepoUrl);
+						
+					} else {
+						repositorySetupService.attachStagingRepository(stagingRepoUrl, masterRepoUrl);
+					}
+				} catch (URISyntaxException e) {
+					throw new RepositoryConfigException(e);
 				}
-				if (stagingRepoUrl != null && !(stagingRepoUrl.startsWith("/") || stagingRepoUrl.startsWith("\\"))) {
-					stagingRepoUrl = repositoryFolder + "/" + stagingRepoUrl;
-				}
-				String createdMasterRepositoryUrl = repositorySetupService.createMasterRepository(masterRepoUrl);
-				repositorySetupService.createStagingRepository(stagingRepoUrl, createdMasterRepositoryUrl);
+
 			}
 			
 		};
-		TextField<T> masterRepoUrlField = new TextField<T>("masterRepositoryUrl");
+		TextField masterRepoUrlField = new TextField("masterRepositoryUrl");
 		createReposForm.add (masterRepoUrlField);
 		
-		TextField<T> stagingRepoUrlField = new TextField<T>("stagingRepositoryUrl");
+		TextField stagingRepoUrlField = new TextField("stagingRepositoryUrl");
 		createReposForm.add (stagingRepoUrlField);
 		createReposForm.setDefaultModel (repositorySetupModel);
 		add (createReposForm);
+	}
+	
+	private URI normalizeURI (String url) throws URISyntaxException {
+		String normalizedUrlStr = url;
+		if (!url.contains("://")) {
+			File path = new File(normalizedUrlStr);
+			if (!path.isAbsolute()) {
+				String repositoryFolder = repoDescriptionManager.getRepositoryFolder();
+				normalizedUrlStr = repositoryFolder  + "/" + normalizedUrlStr;
+				normalizedUrlStr = normalizedUrlStr.replaceAll("\\/\\/", "/");
+			}
+			normalizedUrlStr = "file://" + normalizedUrlStr;
+		}
+		URI normalizedUrl = null;
+		normalizedUrl = new URI(normalizedUrlStr);
+		return normalizedUrl;
 	}
 	
 	

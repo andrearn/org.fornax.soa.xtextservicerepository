@@ -1,16 +1,37 @@
 package org.xkonnex.repo.server.core.config;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
+@NamedQueries({
+	@NamedQuery(query="select r from RepositoryDescription r where r.type = :type", name = RepositoryDescription.REPOSITORY_DESCRIPTION_BY_TYPE)
+})
 @Entity
 public class RepositoryDescription {
 	
-	@Id 
+	public static final String REPOSITORY_DESCRIPTION_BY_TYPE = "RepositoryDescription.byType";
+	
+	@Id @GeneratedValue (strategy = GenerationType.AUTO)
+	private Long id;
 	private String url;
 	private String name;
+	@Enumerated(EnumType.STRING)
 	private RepositoryType type;
 	private String workspaceLocation;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getUrl() {
 		return url;

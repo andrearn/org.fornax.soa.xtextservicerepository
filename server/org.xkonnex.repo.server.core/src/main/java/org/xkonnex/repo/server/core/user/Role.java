@@ -11,7 +11,20 @@ public class Role {
 	
 	@Id
 	private String roleName;
-	@ManyToMany
+	@ManyToMany (mappedBy="assignedRoles")
 	private Set<User> users;
+	
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+	public Set<User> getUsers() {
+		return users;
+	}
+	public void setUsers(Set<User> users) {
+		this.users = users;
+	}
 
 }

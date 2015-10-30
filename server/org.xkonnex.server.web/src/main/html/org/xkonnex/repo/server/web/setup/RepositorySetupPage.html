@@ -2,36 +2,36 @@
 <html xmlns:wicket="http://wicket.apache.org">
     <head>
         <meta charset="utf-8"/>
-        <title>XSR Connex Setup</title>
+        <title>XKonneX Repository Setup</title>
     </head>
     <body>
         <wicket:extend>
             <div>
                 <div class="container">
-                    <h1>Setup XSR Connex repository</h1>
+                    <h1>Setup XKonneX Repository</h1>
 
-                    <p>The Xtext Service Repository console</p>
+                    <p>The XKonneX Repository console</p>
 
 
                     <div class="row-fluid">
                         <div class="span6 offset3">
 
 							<form wicket:id="createReposForm" class="form-horizontal">
-								<div class="control-group">
-									<label for="masterRepositoryUrl" class="control-label">Master repository URL</label>
-									<div class="controls">
-										<input type="text" id="masterRepositoryUrl" wicket:id="masterRepositoryUrl"></input>
+								<div class="form-group">
+									<label for="masterRepositoryUrl" class="col-sm-3 control-label">Master repository URL</label>
+									<div class="col-sm-6">
+										<input type="text" id="masterRepositoryUrl" wicket:id="masterRepositoryUrl" class="form-control"></input>
 									</div>
 								</div>
-								<div class="control-group">
-									<label for="stagingRepositoryUrl" class="control-label">Staging repository URL</label>
-									<div class="controls">
-										<input type="text" id="stagingRepositoryUrl" wicket:id="stagingRepositoryUrl"></input>
+								<div class="form-group">
+									<label for="stagingRepositoryUrl" class="col-sm-3 control-label">Staging repository URL</label>
+									<div class="col-sm-6">
+										<input type="text" id="stagingRepositoryUrl" wicket:id="stagingRepositoryUrl" class="form-control"></input>
 									</div>
 								</div>
-								<div class="control-group">
-									<div class="controls">
-										<button type="submit" class="btn">Next</button>
+								<div class="form-group">
+									<div class="col-sm-offset-3 col-sm-6">
+										<button type="submit" class="btn btn-primary">Next</button>
 									</div>
 								</div>
 						</form>

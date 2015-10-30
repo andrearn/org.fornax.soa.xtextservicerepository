@@ -20,7 +20,7 @@ import com.google.inject.name.Named;
 
 
 
-public class ConnexGitServlet extends GitServlet {
+public class XKonneXRepoGitServlet extends GitServlet {
 	
 	@Inject @Staging 
 	private RepositoryDescription stagingRepositoryDescription;
@@ -54,13 +54,12 @@ public class ConnexGitServlet extends GitServlet {
 			}
 			setRepositoryResolver(new FileResolver<HttpServletRequest>(baseFolder, true));
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ServletException(e);
 		}
 		
 
-		setUploadPackFactory (new ConnexUploadPackFactory<HttpServletRequest>(repoDesc));
-		setReceivePackFactory (new ConnexReceivePackFactory<HttpServletRequest>(repoDesc));
+		setUploadPackFactory (new XKonneXRepoUploadPackFactory<HttpServletRequest>(repoDesc));
+		setReceivePackFactory (new XKonneXRepoReceivePackFactory<HttpServletRequest>(repoDesc));
 		super.init(config);
 	}
 

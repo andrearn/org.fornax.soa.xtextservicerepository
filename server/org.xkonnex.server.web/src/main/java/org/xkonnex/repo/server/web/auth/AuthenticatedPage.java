@@ -15,6 +15,7 @@ public abstract class AuthenticatedPage<T> extends GenericWebPage<T> {
 
 	@Override
 	protected void onConfigure() {
+		super.onConfigure();
 		AuthenticatedWebApplication app = (AuthenticatedWebApplication) Application
 				.get();
 		// if user is not signed in, redirect him to sign in page

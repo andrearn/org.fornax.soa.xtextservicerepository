@@ -1,7 +1,9 @@
 package org.xkonnex.repo.server.core.subscription;
 
-import java.util.List;
+import java.util.Set;
 
+import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,15 +15,17 @@ public class Subscription {
 	
 	@Id @GeneratedValue
 	private Long id;
+	@Embedded
 	private Asset asset;
-	private List<EventType> eventTypes;
+	@ElementCollection
+	private Set<EventType> eventTypes;
 	private String userId;
 	
 	public Subscription() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public Subscription(Asset asset, List<EventType> eventTypes, String userId) {
+	public Subscription(Asset asset, Set<EventType> eventTypes, String userId) {
 		this.asset = asset;
 		this.eventTypes = eventTypes;
 		this.userId = userId;
@@ -31,7 +35,7 @@ public class Subscription {
 		return asset;
 	}
 	
-	public List<EventType> getEventTypes() {
+	public Set<EventType> getEventTypes() {
 		return eventTypes;
 	}
 	

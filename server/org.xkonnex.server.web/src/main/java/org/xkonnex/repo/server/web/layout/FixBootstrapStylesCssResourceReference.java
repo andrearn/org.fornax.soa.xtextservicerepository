@@ -10,7 +10,11 @@ import org.apache.wicket.request.resource.CssResourceReference;
  */
 public class FixBootstrapStylesCssResourceReference extends CssResourceReference {
 
-    public static final FixBootstrapStylesCssResourceReference INSTANCE = new FixBootstrapStylesCssResourceReference();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	public static final FixBootstrapStylesCssResourceReference INSTANCE = new FixBootstrapStylesCssResourceReference();
 
     /**
      * Construct.

@@ -1,11 +1,19 @@
 package org.xkonnex.repo.server.web.layout;
 
+import java.util.Properties;
+
 import org.apache.wicket.Application;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebSession;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.filter.FilteredHeaderItem;
+import org.apache.wicket.markup.html.GenericWebPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.xkonnex.repo.server.web.XKonneXRepoApplication;
 
-public class AuthenticatedXKonneXRepoPage<T> extends XKonneXRepoPage<T>{
+public abstract class AuthenticatedXKonneXRepoPage<T> extends GenericWebPage<T>{
 	
 	/**
 	 * 
@@ -13,11 +21,14 @@ public class AuthenticatedXKonneXRepoPage<T> extends XKonneXRepoPage<T>{
 	private static final long serialVersionUID = 1L;
 
 	public AuthenticatedXKonneXRepoPage() {
-		super();
+		this(null);
 	}
 	
 	public AuthenticatedXKonneXRepoPage(PageParameters parameters) {
-		super(parameters);
+        super(parameters);
+
+        add(new AuthenticatedNavBarPanel("navbar"));
+        add(new Footer("footer"));
 	}
 
 	@Override
@@ -29,23 +40,23 @@ public class AuthenticatedXKonneXRepoPage<T> extends XKonneXRepoPage<T>{
 			app.restartResponseAtSignInPage();
 		super.onConfigure();
 	}
+    /**
+     * @return application properties
+     */
+    public Properties getProperties() {
+        return ((XKonneXRepoApplication) XKonneXRepoApplication.get()).getProperties();
+    }
 
-	@Override
-	protected void onInitialize() {
-		super.onInitialize();
-//		add(new Link("goToHomePage") {
-//			@Override
-//			public void onClick() {
-//				setResponsePage(getApplication().getHomePage());
-//			}
-//		});
-//		add(new Link("logOut") {
-//			@Override
-//			public void onClick() {
-//				AuthenticatedWebSession.get().invalidate();
-//				setResponsePage(getApplication().getHomePage());
-//			}
-//		});
-	}
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        super.renderHead(response);
+        response.render(CssHeaderItem.forReference(FixBootstrapStylesCssResourceReference.INSTANCE));
+        response.render(new FilteredHeaderItem(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()), "footer-container"));
+
+    }
+
+    protected boolean hasNavigation() {
+        return false;
+    }
 
 }

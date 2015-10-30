@@ -2,8 +2,6 @@ package org.xkonnex.repo.server.web.layout;
 
 import com.google.common.collect.Lists;
 
-import de.agilecoders.wicket.core.markup.html.references.BootstrapJavaScriptReference;
-
 import org.apache.wicket.Application;
 import org.apache.wicket.markup.head.HeaderItem;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
@@ -29,7 +27,6 @@ public class ApplicationJavaScript extends JavaScriptResourceReference {
     public Iterable<? extends HeaderItem> getDependencies() {
         final List<HeaderItem> dependencies = Lists.newArrayList(super.getDependencies());
         dependencies.add(JavaScriptHeaderItem.forReference(Application.get().getJavaScriptLibrarySettings().getJQueryReference()));
-        dependencies.add(JavaScriptHeaderItem.forReference(BootstrapJavaScriptReference.instance()));
 
         return dependencies;
     }

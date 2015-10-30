@@ -17,7 +17,7 @@ public class TestHomePage
 	@Before
 	public void setUp()
 	{
-		tester = new WicketTester(new XKonneXRepoApplication());
+		tester = new WicketTester(new XKonnexXRepoTestApplication());
 	}
 
 	@Test

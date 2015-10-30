@@ -19,37 +19,26 @@ import org.apache.wicket.serialize.java.DeflatedJavaSerializer;
 import org.apache.wicket.settings.IRequestCycleSettings;
 import org.apache.wicket.util.string.Strings;
 import org.wicketstuff.annotation.scan.AnnotatedMountScanner;
+import org.xkonnex.repo.server.core.XKonneXRepoCoreModule;
+import org.xkonnex.repo.server.core.config.RepositoryDescription;
+import org.xkonnex.repo.server.core.config.impl.RepositoryDescriptionManager;
 import org.xkonnex.repo.server.web.auth.BasicAuthenticationSession;
 import org.xkonnex.repo.server.web.auth.SignInPage;
 import org.xkonnex.repo.server.web.setup.RepositorySetupPage;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.google.inject.persist.PersistService;
+import com.google.inject.persist.jpa.JpaPersistModule;
 import com.google.javascript.jscomp.CompilationLevel;
 
-import de.agilecoders.wicket.core.Bootstrap;
-import de.agilecoders.wicket.core.markup.html.RenderJavaScriptToFooterHeaderResponseDecorator;
-import de.agilecoders.wicket.core.markup.html.references.BootstrapPrettifyCssReference;
-import de.agilecoders.wicket.core.markup.html.references.BootstrapPrettifyJavaScriptReference;
-import de.agilecoders.wicket.core.markup.html.references.ModernizrJavaScriptReference;
-import de.agilecoders.wicket.core.request.resource.caching.version.Adler32ResourceVersion;
-import de.agilecoders.wicket.core.settings.BootstrapSettings;
-import de.agilecoders.wicket.core.settings.ThemeProvider;
-import de.agilecoders.wicket.extensions.javascript.GoogleClosureJavaScriptCompressor;
-import de.agilecoders.wicket.extensions.javascript.YuiCssCompressor;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.html5player.Html5PlayerCssReference;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.html5player.Html5PlayerJavaScriptReference;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.icon.OpenWebIconsCssReference;
-import de.agilecoders.wicket.extensions.markup.html.bootstrap.jqueryui.JQueryUIJavaScriptReference;
-import de.agilecoders.wicket.extensions.request.StaticResourceRewriteMapper;
-import de.agilecoders.wicket.less.BootstrapLess;
-import de.agilecoders.wicket.themes.markup.html.google.GoogleTheme;
-import de.agilecoders.wicket.themes.markup.html.metro.MetroTheme;
-import de.agilecoders.wicket.themes.markup.html.wicket.WicketTheme;
-import de.agilecoders.wicket.themes.settings.BootswatchThemeProvider;
 
 public class XKonneXRepoApplication extends AuthenticatedWebApplication {
 	
+	private static final String XKONNEX_REPO_CORE_UNIT = "XKonneXRepoCoreUnit";
     private Properties properties;
-	
+    protected Injector guiceInjector;
+	protected GuiceComponentInjector componentInjector;
 
     public XKonneXRepoApplication() {
         properties = loadProperties();
@@ -59,24 +48,32 @@ public class XKonneXRepoApplication extends AuthenticatedWebApplication {
 	@Override
 	protected void init() {
 		super.init();
-		getComponentInstantiationListeners().add(
-				new GuiceComponentInjector (this, new XKonneXRepoWebModule()));
-		configureBootstrap();
+		initGuiceModules();
 		configureResourceBundles();
 		optimizeForWebPerformance();
         new AnnotatedMountScanner().scanPackage("org.xkonnex.repo.server.web").mount(this);
 
-        if (Strings.isTrue(properties.getProperty("cdn.useCdn"))) {
-            final String cdn = properties.getProperty("cdn.baseUrl");
-
-            StaticResourceRewriteMapper.withBaseUrl(cdn).install(this);
-        }
-		getResourceSettings().getResourceFinders().add(
-				new WebApplicationPath (getServletContext(), "pages"));
 	}
 
+	protected void initGuiceModules() {
+		guiceInjector = Guice.createInjector(new JpaPersistModule(XKONNEX_REPO_CORE_UNIT), new XKonneXRepoCoreModule(), new XKonneXRepoWebModule());
+		PersistService persistService = guiceInjector.getInstance(PersistService.class);
+		persistService.start();
+		componentInjector = new GuiceComponentInjector (this, guiceInjector);
+		getComponentInstantiationListeners().add(componentInjector);
+	}
+	
+	@Override
+	protected void onDestroy() {
+		PersistService persistService = guiceInjector.getInstance(PersistService.class);
+		persistService.stop();
+		super.onDestroy();
+	}
+
+	
 	@Override
 	public Class<? extends Page> getHomePage() {
+
 		if (isRepositoryInitialized () ) 
 			return HomePage.class;
 		else
@@ -84,9 +81,15 @@ public class XKonneXRepoApplication extends AuthenticatedWebApplication {
 	}
 
 	
-    private boolean isRepositoryInitialized() {
-		// TODO Auto-generated method stub
-		return false;
+    protected boolean isRepositoryInitialized() {
+		RepositoryDescriptionManager repositoryDescriptionManager = guiceInjector.getInstance(RepositoryDescriptionManager.class);
+		RepositoryDescription masterRepository = repositoryDescriptionManager.getMasterRepository();
+		RepositoryDescription stagingRepository = repositoryDescriptionManager.getStagingRepository();
+		if (masterRepository != null && stagingRepository != null) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
     
@@ -98,49 +101,12 @@ public class XKonneXRepoApplication extends AuthenticatedWebApplication {
         getResourceBundles().addJavaScriptBundle(XKonneXRepoApplication.class, "core.js",
                                                  (JavaScriptResourceReference) getJavaScriptLibrarySettings().getJQueryReference(),
                                                  (JavaScriptResourceReference) getJavaScriptLibrarySettings().getWicketEventReference(),
-                                                 (JavaScriptResourceReference) getJavaScriptLibrarySettings().getWicketAjaxReference(),
-                                                 (JavaScriptResourceReference) ModernizrJavaScriptReference.INSTANCE
-        );
-
-        getResourceBundles().addJavaScriptBundle(XKonneXRepoApplication.class, "bootstrap.js",
-                                                 (JavaScriptResourceReference) Bootstrap.getSettings().getJsResourceReference(),
-                                                 (JavaScriptResourceReference) BootstrapPrettifyJavaScriptReference.INSTANCE
-        );
-
-        getResourceBundles().addJavaScriptBundle(XKonneXRepoApplication.class, "bootstrap-extensions.js",
-                                                 JQueryUIJavaScriptReference.instance(),
-                                                 Html5PlayerJavaScriptReference.instance()
-        );
-
-        getResourceBundles().addCssBundle(XKonneXRepoApplication.class, "bootstrap-extensions.css",
-                                          Html5PlayerCssReference.instance(),
-                                          OpenWebIconsCssReference.instance()
+                                                 (JavaScriptResourceReference) getJavaScriptLibrarySettings().getWicketAjaxReference()
         );
 
         getResourceBundles().addCssBundle(XKonneXRepoApplication.class, "application.css",
-                                          (CssResourceReference) BootstrapPrettifyCssReference.INSTANCE,
                                           org.xkonnex.repo.server.web.layout.FixBootstrapStylesCssResourceReference.INSTANCE
         );
-    }
-
-    /**
-     * configures wicket-bootstrap and installs the settings.
-     * taken from wicket-bootstrap-examples
-     */
-    private void configureBootstrap() {
-        final ThemeProvider themeProvider = new BootswatchThemeProvider() {{
-            add(new MetroTheme());
-            add(new GoogleTheme());
-            add(new WicketTheme());
-            defaultTheme("bootstrap-responsive");
-        }};
-
-        final BootstrapSettings settings = new BootstrapSettings();
-        settings.setJsResourceFilterName("footer-container")
-                .setThemeProvider(themeProvider);
-        Bootstrap.install(this, settings);
-
-        BootstrapLess.install(this);
     }
 
     /**
@@ -148,20 +114,11 @@ public class XKonneXRepoApplication extends AuthenticatedWebApplication {
      */
     private void optimizeForWebPerformance() {
         if (usesDeploymentConfig()) {
-            getResourceSettings().setCachingStrategy(new FilenameWithVersionResourceCachingStrategy(
-                    "-v-",
-                    new CachingResourceVersion(new Adler32ResourceVersion())
-            ));
-
-            getResourceSettings().setJavaScriptCompressor(new GoogleClosureJavaScriptCompressor(CompilationLevel.SIMPLE_OPTIMIZATIONS));
-            getResourceSettings().setCssCompressor(new YuiCssCompressor());
-
             getFrameworkSettings().setSerializer(new DeflatedJavaSerializer(getApplicationKey()));
         } else {
             getResourceSettings().setCachingStrategy(new NoOpResourceCachingStrategy());
         }
 
-        setHeaderResponseDecorator(new RenderJavaScriptToFooterHeaderResponseDecorator());
         getRequestCycleSettings().setRenderStrategy(IRequestCycleSettings.RenderStrategy.ONE_PASS_RENDER);
     }
 

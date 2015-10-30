@@ -13,6 +13,7 @@ public class User {
 	private String userId;
 	private String committerId;
 	
+	@ManyToMany 
 	private Set<Role> assignedRoles;
 	
 	public String getUserId() {
@@ -31,7 +32,6 @@ public class User {
 		this.committerId = committerId;
 	}
 	
-	@ManyToMany 
 	public Set<Role> getAssignedRoles() {
 		return assignedRoles;
 	}

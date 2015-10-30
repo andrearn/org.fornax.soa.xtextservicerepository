@@ -13,7 +13,7 @@ import org.eclipse.jgit.transport.resolver.UploadPackFactory;
 import org.xkonnex.repo.server.core.config.RepositoryDescription;
 import org.xkonnex.repo.server.core.config.RepositoryType;
 
-public class ConnexUploadPackFactory<C> extends DefaultUploadPackFactory {
+public class XKonneXRepoUploadPackFactory<C> extends DefaultUploadPackFactory {
 
 	private static final SectionParser<ServiceConfig> CONFIG = new SectionParser<ServiceConfig>() {
 		public ServiceConfig parse(final Config cfg) {
@@ -31,14 +31,14 @@ public class ConnexUploadPackFactory<C> extends DefaultUploadPackFactory {
 	
 	private RepositoryDescription repositoryDescription;
 
-	public ConnexUploadPackFactory(RepositoryDescription repoDesc) {
+	public XKonneXRepoUploadPackFactory(RepositoryDescription repoDesc) {
 		repositoryDescription = repoDesc;
 	}
 
 	public UploadPack create(final HttpServletRequest req, final Repository db)
 			throws ServiceNotEnabledException, ServiceNotAuthorizedException {
 		if (db.getConfig().get(CONFIG).enabled)
-			return new ConnexUploadPack(db, repositoryDescription);
+			return new XKonneXRepoUploadPack(db, repositoryDescription);
 		else
 			throw new ServiceNotEnabledException();
 	}

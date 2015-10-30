@@ -32,7 +32,7 @@
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 		<!-- TODO project name  -->
-	<name>Connex web</name>
+	<name>XKonneX repo web</name>
 	<description></description>
 	<!--
 		<organization>
@@ -48,15 +48,19 @@
 		</license>
 	</licenses>
 	<properties>
-		<wicket.version>6.12.0</wicket.version>
+		<wicket.version>6.19.0</wicket.version>
+		<wicketstuff.version>6.19.0</wicketstuff.version>
 		<guice.version>3.0</guice.version>
-		<hibernate.version>4.2.7.SP1</hibernate.version>
 		<jgit.version>3.1.0.201310021548-r</jgit.version>
 		<jetty.version>7.6.13.v20130916</jetty.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.xkonnex.repo</groupId>
 			<artifactId>server.core</artifactId>
@@ -72,13 +76,13 @@
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-core</artifactId>
-			<version>${wicket.version}</version>
+            <version>${wicket.version}</version>
 		</dependency>
 		<!-- OPTIONAL DEPENDENCY -->
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-extensions</artifactId>
-			<version>${wicket.version}</version>
+            <version>${wicket.version}</version>
 		</dependency>
         <dependency>
             <groupId>org.apache.wicket</groupId>
@@ -104,101 +108,140 @@
             <version>${newrelic.version}</version>
         </dependency>
 
-        <!-- WICKET-BOOTSTRAP -->
-
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-extensions</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-less</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.agilecoders.wicket</groupId>
-            <artifactId>wicket-bootstrap-themes</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.google.javascript</groupId>
             <artifactId>closure-compiler</artifactId>
             <version>${google-closure.version}</version>
+            <exclusions>
+            	<exclusion>
+            		<artifactId>guava</artifactId>
+            		<groupId>com.google.guava</groupId>
+            	</exclusion>
+            </exclusions>
         </dependency>
 
 
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>bootstrap</artifactId>
-            </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootswatch</artifactId>
+			<version>3.3.4+1</version>
+		</dependency>
 
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jquerypp</artifactId>
-            </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquerypp</artifactId>
+        </dependency>
 
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jquery</artifactId>
-            </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+        </dependency>
 
 
 		<!-- -->
 		<dependency>
 			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
 		</dependency>
 		
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-servlet</artifactId>
-            <version>${guice.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.inject.extensions</groupId>
             <artifactId>guice-persist</artifactId>
-            <version>${guice.version}</version>
         </dependency>
 
 		<dependency>
 			<groupId>org.eclipse.jgit</groupId>
 			<artifactId>org.eclipse.jgit</artifactId>
-			<version>${jgit.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jgit</groupId>
 			<artifactId>org.eclipse.jgit.http.server</artifactId>
-			<version>${jgit.version}</version>
 		</dependency>
 
-<dependency>
-	<groupId>commons-lang</groupId>
-	<artifactId>commons-lang</artifactId>
-	<version>2.4</version>
-</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.4</version>
+		</dependency>
+		
+				<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>basedsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>bindingdsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>businessdsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>environmentdsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>moduledsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>profiledsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>semanticsdsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>servicedsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>sladsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl.maven</groupId>
+			<artifactId>solutiondsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.maven</groupId>
+			<artifactId>core</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		
 		
 		<!-- LOGGING DEPENDENCIES - LOG4J -->
 		<dependency>
@@ -216,7 +259,6 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
@@ -225,20 +267,26 @@
 			<version>5.1.27</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.4.189</version>
+			<scope>test</scope>
+		</dependency>
 		
 		<!--  JETTY DEPENDENCIES FOR TESTING  -->
 		<dependency>
 			<groupId>org.eclipse.jetty.aggregate</groupId>
 			<artifactId>jetty-all-server</artifactId>
 			<version>${jetty.version}</version>
-			<scope>provided</scope>
+			<scope>test</scope>
 		</dependency>
 
 
 		<dependency>
 			<groupId>org.apache.wicket</groupId>
 			<artifactId>wicket-auth-roles</artifactId>
-			<version>6.12.0</version>
+			<version>6.19.0</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
@@ -247,6 +295,7 @@
 	</dependencies>
 	
 	<build>
+		<finalName>xkonnex-repo</finalName>
 		<resources>
 			<resource>
 				<filtering>false</filtering>
@@ -288,7 +337,6 @@
 				<inherited>true</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5.1</version>
 				<configuration>
 					<source>1.6</source>
 					<target>1.6</target>

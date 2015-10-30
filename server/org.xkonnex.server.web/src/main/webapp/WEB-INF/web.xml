@@ -6,7 +6,7 @@
 	<display-name>connex.web</display-name>
 
 	<listener>
-	  <listener-class>org.xkonnex.repo.dsl.bindingdsl.xsr.connex.web.ConnexGuiceServletConfig</listener-class>
+	  <listener-class>org.xkonnex.repo.server.web.XKonneXRepoGuiceServletConfig</listener-class>
 	</listener>
 
 	<!--
@@ -30,7 +30,7 @@
 		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
 		<init-param>
 			<param-name>applicationClassName</param-name>
-			<param-value>org.xkonnex.repo.dsl.bindingdsl.xsr.connex.web.ConnexApplication</param-value>
+			<param-value>org.xkonnex.repo.server.web.XKonneXRepoApplication</param-value>
 		</init-param>
 	</filter>
  
@@ -41,12 +41,12 @@
  
 	<filter-mapping>
 		<filter-name>wicket.connex.web</filter-name>
-		<url-pattern>/connex/*</url-pattern>
+		<url-pattern>/console/*</url-pattern>
 	</filter-mapping>
 	
 	<servlet>
-	     <servlet-name>ConnexGitServlet</servlet-name>
-	     <servlet-class>org.xkonnex.repo.dsl.bindingdsl.xsr.connex.web.git.ConnexGitServlet</servlet-class>
+	     <servlet-name>XKonneXGitServlet</servlet-name>
+	     <servlet-class>org.xkonnex.repo.server.web.git.XKonneXRepoGitServlet</servlet-class>
 	     <!-- init-param>
 	       <param-name>base-path</param-name>
 	       <param-value>/var/srv/git</param-value>
@@ -57,7 +57,14 @@
 	     </init-param>
 	 </servlet>
 	 <servlet-mapping>
-	     <servlet-name>ConnexGitServlet</servlet-name>
+	     <servlet-name>XKonneXGitServlet</servlet-name>
 	     <url-pattern>/git/*</url-pattern>
 	 </servlet-mapping>
+	 
+    <resource-ref>
+        <res-ref-name>jdbc/XSR_DB</res-ref-name>
+        <res-type>javax.sql.DataSource</res-type>
+        <res-auth>Container</res-auth>
+        <res-sharing-scope>Shareable</res-sharing-scope>
+    </resource-ref>
 </web-app>

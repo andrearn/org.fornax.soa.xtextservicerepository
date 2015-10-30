@@ -1,198 +1,215 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>de.agilecoders.maven</groupId>
-        <artifactId>maven-parent-pom</artifactId>
-        <version>0.3.4</version>
-    </parent>
+	<!-- parent> <groupId>de.agilecoders.maven</groupId> <artifactId>maven-parent-pom</artifactId> 
+		<version>0.3.4</version> </parent -->
 
-    <groupId>org.xkonnex.repo</groupId>
-    <artifactId>server.parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
-    <name>xkonnex-server-parent</name>
+	<groupId>org.xkonnex.repo</groupId>
+	<artifactId>server.parent</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>xkonnex-server-parent</name>
 
-    <description>XKonneX Repository server parent</description>
+	<description>XKonneX Repository server parent</description>
 
-    <modules>
-        <module>../org.xkonnex.repo.server.core</module>
-        <module>../org.xkonnex.server.web</module>
-    </modules>
+	<modules>
+		<module>../org.xkonnex.repo.server.core</module>
+		<module>../org.xkonnex.server.web</module>
+	</modules>
 
-    <properties>
-        <java.version>1.6</java.version>
-        <github.global.server>github</github.global.server>
+	<properties>
+		<java.version>1.6</java.version>
+		<github.global.server>github</github.global.server>
 
-        <bootstrap.version>2.3.2</bootstrap.version>
-        <config.version>0.3.4</config.version>
+		<bootstrap.version>3.3.4</bootstrap.version>
+		<config.version>0.3.4</config.version>
 
-   		<enforcer.disable>true</enforcer.disable>
-        <pmd.disable>true</pmd.disable>
-        <jacoco.disable>true</jacoco.disable>
-        <checkstyle.disable>true</checkstyle.disable>
-        <findbugs.disable>true</findbugs.disable>
+		<enforcer.disable>true</enforcer.disable>
+		<pmd.disable>true</pmd.disable>
+		<jacoco.disable>true</jacoco.disable>
+		<checkstyle.disable>true</checkstyle.disable>
+		<findbugs.disable>true</findbugs.disable>
 
-        <!-- TODO -->
-        <javax.javaee-web-api.version>6.0</javax.javaee-web-api.version>
-        <rhino.version>1.7R4</rhino.version>
-        <doxia.version>1.0</doxia.version>
-        <lesscss-engine.version>1.3.3</lesscss-engine.version>
-        <less4j.version>1.2.1</less4j.version>
-        <com.fasterxml.jackson.version>2.3.0</com.fasterxml.jackson.version>
-        <modernizr.version>2.6.2-1</modernizr.version>
-        <jetty.version>8.1.11.v20130520</jetty.version>
-        <newrelic.version>2.19.1</newrelic.version>
-        <google-closure.version>v20130603</google-closure.version>
-        <contiperf.version>2.2.0</contiperf.version>
-        <logback.version>1.0.13</logback.version>
-        <jquerypp.version>1.0.1</jquerypp.version>
-        <jquery.version>2.0.3-1</jquery.version>
-        <wicket-bootstrap.version>0.8.4</wicket-bootstrap.version>
-        <jgit.version>3.1.0.201310021548-r</jgit.version>
-        <guava.version>10.0.1</guava.version>
-        <guice.version>3.0</guice.version>
-        <xtext.version>2.8.0</xtext.version>
-        <xkonnex.repo.version>2.0.0-SNAPSHOT</xkonnex.repo.version>
-    </properties>
-    
-    <build>
-    	<plugins>
+		<!-- TODO -->
+		<javax.javaee-web-api.version>6.0</javax.javaee-web-api.version>
+		<rhino.version>1.7R4</rhino.version>
+		<doxia.version>1.0</doxia.version>
+		<lesscss-engine.version>1.3.3</lesscss-engine.version>
+		<less4j.version>1.9.0</less4j.version>
+		<com.fasterxml.jackson.version>2.3.0</com.fasterxml.jackson.version>
+		<modernizr.version>2.6.2-1</modernizr.version>
+		<jetty.version>8.1.11.v20130520</jetty.version>
+		<newrelic.version>2.19.1</newrelic.version>
+		<google-closure.version>v20130603</google-closure.version>
+		<contiperf.version>2.2.0</contiperf.version>
+		<logback.version>1.0.13</logback.version>
+		<jquerypp.version>1.0.1</jquerypp.version>
+		<jquery.version>2.0.3-1</jquery.version>
+		<wicket-bootstrap.version>0.9.8</wicket-bootstrap.version>
+		<wicket-webjars.version>0.4.5</wicket-webjars.version>
+		<jgit.version>3.1.0.201310021548-r</jgit.version>
+		<guava.version>10.0.1</guava.version>
+		<guice.version>3.0</guice.version>
+		<xtext.version>2.8.1</xtext.version>
+		<xkonnex.repo.version>2.0.0-SNAPSHOT</xkonnex.repo.version>
+		<hibernate.version>4.3.6.Final</hibernate.version>
+	</properties>
+
+	<build>
+		<plugins>
 			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>0.18.1</version>
 				<extensions>true</extensions>
 			</plugin>
-    	</plugins>
-    </build>
-    
+		</plugins>
+	</build>
 
-    <dependencyManagement>
-        <dependencies>
 
- 		<!-- -->
-		<dependency>
-			<groupId>org.hibernate.javax.persistence</groupId>
-			<artifactId>hibernate-jpa-2.0-api</artifactId>
-			<version>1.0.1.Final</version>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-entitymanager</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
-		
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-servlet</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject.extensions</groupId>
-            <artifactId>guice-persist</artifactId>
-            <version>${guice.version}</version>
-        </dependency>
+	<dependencyManagement>
+		<dependencies>
 
-		<dependency>
-			<groupId>org.eclipse.jgit</groupId>
-			<artifactId>org.eclipse.jgit</artifactId>
-			<version>${jgit.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jgit</groupId>
-			<artifactId>org.eclipse.jgit.http.server</artifactId>
-			<version>${jgit.version}</version>
-		</dependency>
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>bootstrap</artifactId>
-                <version>${bootstrap.version}</version>
-            </dependency>
+			<!-- -->
+			<dependency>
+				<groupId>org.hibernate.javax.persistence</groupId>
+				<artifactId>hibernate-jpa-2.1-api</artifactId>
+				<version>1.0.0.Final</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate</groupId>
+				<artifactId>hibernate-entitymanager</artifactId>
+				<version>${hibernate.version}</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jquerypp</artifactId>
-                <version>${jquerypp.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.webjars</groupId>
-                        <artifactId>jquery</artifactId>
-                    </exclusion>
-                </exclusions>
-            </dependency>
+			<dependency>
+				<groupId>com.google.inject</groupId>
+				<artifactId>guice</artifactId>
+				<version>${guice.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.inject.extensions</groupId>
+				<artifactId>guice-servlet</artifactId>
+				<version>${guice.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.google.inject.extensions</groupId>
+				<artifactId>guice-persist</artifactId>
+				<version>${guice.version}</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.webjars</groupId>
-                <artifactId>jquery</artifactId>
-                <version>${jquery.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>org.eclipse.jgit</groupId>
+				<artifactId>org.eclipse.jgit</artifactId>
+				<version>${jgit.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.jgit</groupId>
+				<artifactId>org.eclipse.jgit.http.server</artifactId>
+				<version>${jgit.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.webjars</groupId>
+				<artifactId>bootstrap</artifactId>
+				<version>${bootstrap.version}</version>
+			</dependency>
 
-            <dependency>
-                <groupId>de.agilecoders.wicket</groupId>
-                <artifactId>wicket-bootstrap-core</artifactId>
-                <version>${wicket-bootstrap.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>org.webjars</groupId>
+				<artifactId>jquerypp</artifactId>
+				<version>${jquerypp.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.webjars</groupId>
+						<artifactId>jquery</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
 
-            <dependency>
-                <groupId>de.agilecoders.wicket</groupId>
-                <artifactId>wicket-bootstrap-themes</artifactId>
-                <version>${wicket-bootstrap.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>org.webjars</groupId>
+				<artifactId>jquery</artifactId>
+				<version>${jquery.version}</version>
+			</dependency>
 
-            <dependency>
-                <groupId>de.agilecoders.wicket</groupId>
-                <artifactId>wicket-bootstrap-less</artifactId>
-                <version>${wicket-bootstrap.version}</version>
-            </dependency>
 
-            <dependency>
-                <groupId>de.agilecoders.wicket</groupId>
-                <artifactId>wicket-bootstrap-extensions</artifactId>
-                <version>${wicket-bootstrap.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${com.fasterxml.jackson.version}</version>
+			</dependency>
 
-            <dependency>
-                <groupId>com.fasterxml.jackson.core</groupId>
-                <artifactId>jackson-core</artifactId>
-                <version>${com.fasterxml.jackson.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>javax</groupId>
+				<artifactId>javaee-web-api</artifactId>
+				<version>${javax.javaee-web-api.version}</version>
+			</dependency>
 
-            <dependency>
-                <groupId>javax</groupId>
-                <artifactId>javaee-web-api</artifactId>
-                <version>${javax.javaee-web-api.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>org.mozilla</groupId>
+				<artifactId>rhino</artifactId>
+				<version>${rhino.version}</version>
+			</dependency>
 
-            <dependency>
-                <groupId>org.mozilla</groupId>
-                <artifactId>rhino</artifactId>
-                <version>${rhino.version}</version>
-            </dependency>
+			<dependency>
+				<groupId>org.kohsuke</groupId>
+				<artifactId>doxia-module-markdown</artifactId>
+				<version>${doxia.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-classic</artifactId>
+				<version>1.1.3</version>
+			</dependency>
+			<dependency>
+				<groupId>ch.qos.logback</groupId>
+				<artifactId>logback-core</artifactId>
+				<version>1.1.3</version>
+			</dependency>
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>4.12</version>
+			</dependency>
+			<!-- dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>15.0</version>
+				<type>0.jar</type>
+				<classifier>cdi1</classifier>
+			</dependency-->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>18.0</version>
+			</dependency>
+			
+		</dependencies>
+	</dependencyManagement>
 
-            <dependency>
-                <groupId>org.kohsuke</groupId>
-                <artifactId>doxia-module-markdown</artifactId>
-                <version>${doxia.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <dependencies>
+	<dependencies>
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
 			<artifactId>org.eclipse.xtext</artifactId>
 			<version>${xtext.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>guava</artifactId>
+					<groupId>com.google.guava</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtend</groupId>
 			<artifactId>org.eclipse.xtend.lib</artifactId>
 			<version>${xtext.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>guava</artifactId>
+					<groupId>com.google.guava</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.xtext</groupId>
@@ -257,25 +274,38 @@
 			<groupId>org.eclipse.jgit</groupId>
 			<artifactId>org.eclipse.jgit</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
-        </dependency>
-    </dependencies>
-    
-    <repositories>
-    	<repository>
-        <id>localnexus</id>
-        <url>http://localhost:8081/nexus/content/groups/public/</url>
-        <releases>
-           <enabled>true</enabled>
-        </releases>
-        <snapshots>
-          <enabled>true</enabled>
-        </snapshots>   
-        </repository>     
-    </repositories>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse.xtext</groupId>
+			<artifactId>
+				org.eclipse.xtext.builder.standalone
+			</artifactId>
+			<version>2.8.1</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>guava</artifactId>
+					<groupId>com.google.guava</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<repository>
+			<id>localnexus</id>
+			<url>http://localhost:8081/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
 
 
 </project>
