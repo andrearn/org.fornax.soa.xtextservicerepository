@@ -353,7 +353,7 @@ enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELTok
 enum LogPolicyKind: none | header | all;
 
 /** A nonfunctional requirement claimed to be met */
-Assertion: AvailabilityAssertion | LatencyAssertion | CapacityAssertion | ReliablityAsserttion | CostAssertion | AccuracyAssertion;
+Assertion: AvailabilityAssertion | LatencyAssertion | CapacityAssertion | ReliablityAssertion | CostAssertion | AccuracyAssertion;
 
 AvailabilityAssertion:
 	{AvailabilityAssertion}
@@ -373,7 +373,7 @@ CapacityAssertion:
 	('message-size' messageSize=STRING)?
 ;
 
-ReliablityAsserttion:
+ReliablityAssertion:
 	'message-exchange-reliability' reliability=ReliablilityKind
 	(inOrderDelivery ?= 'in-order-delivery')?
 ;

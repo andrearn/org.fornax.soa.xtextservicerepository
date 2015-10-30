@@ -58,7 +58,7 @@ default soa-profile SampleArchitectureProfile {
 		}
 		
 		/* 
-		 * The is under productive use
+		 * The asset is under productive use
 		 */
 		state productive {
 			requires-approval

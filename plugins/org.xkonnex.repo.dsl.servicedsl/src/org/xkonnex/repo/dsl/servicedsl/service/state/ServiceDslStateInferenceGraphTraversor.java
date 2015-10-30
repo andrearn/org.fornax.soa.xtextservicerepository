@@ -14,6 +14,7 @@ import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch;
 import org.xkonnex.repo.dsl.basedsl.traversal.IModelVisitor;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.service.query.ServiceQueries;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property;
@@ -27,6 +28,8 @@ import com.google.inject.Inject;
 
 public class ServiceDslStateInferenceGraphTraversor {
 	
+	private static final String MODULEDSL_PACKAGE_NS_URI = "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl";
+
 	@Inject
 	private IReferenceSearch refSearch;
 	@Inject
@@ -56,6 +59,7 @@ public class ServiceDslStateInferenceGraphTraversor {
 				}
 			}
 		};
+		//FIXME use reference candidates ignoring state instead of linking based references here
 		refSearch.findAllReferences(element, resourceSet, predicate, refCollector);
 		for (IEObjectDescription ref : refs) {
 			EObject obj = ref.getEObjectOrProxy();
@@ -69,13 +73,22 @@ public class ServiceDslStateInferenceGraphTraversor {
 					traverse (ownerDesc, element, visitors, resourceSet);
 				}
 			} else if ("Module".equals(obj.eClass().getName()) && 
-				"http://www.fornax.org/soa/moduledsl/ModuleDsl".equals (obj.eClass().getEPackage().getNsURI())) {
+				MODULEDSL_PACKAGE_NS_URI.equals (obj.eClass().getEPackage().getNsURI())) {
 				if (obj.eIsProxy()) {
 					obj = EcoreUtil2.resolve(obj, resourceSet);
 				}
 				IEObjectDescription objDesc = descriptionBuilder.buildDescription(obj);
 				traverse (objDesc, element, visitors, resourceSet);
 			} else if (obj instanceof Parameter) {
+				if (obj.eIsProxy()) {
+					obj = EcoreUtil2.resolve(obj, resourceSet);
+				}
+				EObject owner = objLookup.getStatefulOwner(obj);
+				if (owner != null) {
+					IEObjectDescription ownerDesc = descriptionBuilder.buildDescription(owner);
+					traverse (ownerDesc, element, visitors, resourceSet);
+				}
+			} else if (obj instanceof ExceptionRef) {
 				if (obj.eIsProxy()) {
 					obj = EcoreUtil2.resolve(obj, resourceSet);
 				}
