@@ -9,8 +9,8 @@ var file.extensions = "profdsl"
 var projectName = "org.xkonnex.repo.dsl.profiledsl"
 var runtimeProject = "../${projectName}"
 
-var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore"
-var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.genmodel"
+var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore"
+var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel"
 
 var envMetaModel = "platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/generated/EnvironmentDsl.ecore"
 var envGenModel = "platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/generated/EnvironmentDsl.genmodel"
@@ -18,7 +18,7 @@ var envGenModel = "platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
-		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" }
+//		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" }
 		uriMap = { to = envMetaModel from = "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" }
 		registerEcoreFile = baseMetaModel
 		registerEcoreFile = envMetaModel
