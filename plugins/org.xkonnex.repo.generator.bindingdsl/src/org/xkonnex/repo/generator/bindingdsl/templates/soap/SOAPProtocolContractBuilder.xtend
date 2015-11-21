@@ -20,7 +20,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleServiceResolver
 import org.xkonnex.repo.generator.profiledsl.templates.MessageHeaderXSDTemplates
 import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
@@ -32,6 +32,7 @@ import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.AssetStateEnvironmentEligibilityChecker
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleStateimport org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
 
 /** 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -65,7 +66,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	@Inject Logger log
 
 
-	override buildServiceContracts (ModuleBinding binding, SOAProfile enforcedProfile) {
+	override buildServiceContracts (ModuleBinding binding, AbstractProfile enforcedProfile) {
 		log.fine ("Generating WSDLs and XSDs for binding " + binding.name)
 		val providedServices = modServiceResolver.getAllProvidedServiceRefs(binding.module.module)
 		for (provSvcRef : providedServices) {
@@ -115,7 +116,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	
 	
 
-	override buildProvidedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile enforcedProfile) {
+	override buildProvidedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, AbstractProfile enforcedProfile) {
 		log.fine ("Generating WSDLs and XSDs for services provided by module " + module.name + " looking up binding for used module to environment " + targetEnvironment.name)
 		val bindingDescs = 	bindingResolver.resolveProvidedServiceBindings (module, targetEnvironment, endpointQualifierRef)
 		for (specBindingDesc : bindingDescs.serviceRefDescriptions) {
@@ -136,7 +137,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	}
 	
 	
-	override buildUsedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, SOAProfile enforcedProfile) {
+	override buildUsedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, AbstractProfile enforcedProfile) {
 		log.fine ("Generating WSDLs and XSDs for used services in module " + module.name + " looking up binding for used module to environment " + targetEnvironment.name)
 		val bindingDescs = bindingResolver.resolveUsedServiceBindings (module, targetEnvironment, endpointQualifierRef)
 		for (curModBindDesc : bindingDescs) {
@@ -160,7 +161,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	}
 	
 	
-	def protected doBuildServiceContracts (ServiceRefBindingDescription serviceBindingDescription, LifecycleState minState, boolean selectTypeVersionsByEnvironment, SOAProfile enforcedProfile) {
+	def protected doBuildServiceContracts (ServiceRefBindingDescription serviceBindingDescription, LifecycleState minState, boolean selectTypeVersionsByEnvironment, AbstractProfile enforcedProfile) {
 		val service = serviceBindingDescription.getServiceRef.service
 		val specBinding = serviceBindingDescription.getApplicableBinding
 		for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
@@ -203,14 +204,14 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 	}
 
 	
-	override buildTypeDefinitions (SubNamespace namespace, Environment env, SOAProfile enforcedProfile) {
+	override buildTypeDefinitions (SubNamespace namespace, Environment env, AbstractProfile enforcedProfile) {
 		val profile = namespace.getApplicableProfile(enforcedProfile)
 		log.fine ("Generating XSDs for namespace " + nameProvider.getFullyQualifiedName(namespace).toString)
 		xsdGenerator.toXSD (namespace, env, profile);
 	}
 
 	
-	override buildTypeDefinitions (VersionedDomainNamespace namespace, Environment env, SOAProfile enforcedProfile) {
+	override buildTypeDefinitions (VersionedDomainNamespace namespace, Environment env, AbstractProfile enforcedProfile) {
 		val profile = (namespace.subdomain as SubNamespace).getApplicableProfile(enforcedProfile)
 		log.fine ("Generating XSD for namespace " + namespace.fqn + " with major version " + namespace.version)
 		xsdGenerator.toXSD (namespace, env, profile);

@@ -10,8 +10,8 @@ var file.extensions = "bizdsl"
 var projectName = "org.xkonnex.repo.dsl.businessdsl"
 var runtimeProject = "../${projectName}"
 
-var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore"
-var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.genmodel"
+var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore"
+var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel"
 
 var semMetaModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore"
 var semGenModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel"

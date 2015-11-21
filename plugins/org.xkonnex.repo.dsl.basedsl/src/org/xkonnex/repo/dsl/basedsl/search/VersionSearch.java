@@ -3,7 +3,7 @@ package org.xkonnex.repo.dsl.basedsl.search;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
 
 import com.google.common.base.Function;

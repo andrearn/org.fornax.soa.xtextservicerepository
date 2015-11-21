@@ -3,7 +3,7 @@ package org.xkonnex.repo.dsl.profiledsl.query.type
 import com.google.inject.Inject
 import java.util.List
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.AbstractType
+import org.xkonnex.repo.dsl.basedsl.baseDsl.AbstractType
 import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceQueries
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AttributeDataTypeRef
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataTypeRef

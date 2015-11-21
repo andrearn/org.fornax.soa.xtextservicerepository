@@ -3,6 +3,12 @@ package org.xkonnex.repo.dsl.profiledsl.scoping.versions;
 import java.util.List;
 
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.FixedVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMajorVersionFilter;
@@ -15,12 +21,6 @@ import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.VersionedOwnerScopeVersionResolver;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.FixedVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MajorVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MaxVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MinVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
 
 import com.google.common.base.Predicate;
 import com.google.inject.Inject;

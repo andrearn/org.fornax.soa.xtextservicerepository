@@ -6,13 +6,13 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.RegistryFactory;
 import org.osgi.framework.BundleContext;
-import org.xkonnex.repo.dsl.basedsl.ui.internal.SOABaseDslActivator;
+import org.xkonnex.repo.dsl.basedsl.ui.internal.BaseDslActivator;
 import org.xkonnex.repo.dsl.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
 
 import com.google.inject.Injector;
 
-public class CustomSOABaseDslActivator extends SOABaseDslActivator {
+public class CustomBaseDslActivator extends BaseDslActivator {
 
 
 	private Set<AbstractPluggableDeclarativeValidator> validatorContributions = new HashSet<AbstractPluggableDeclarativeValidator>();
@@ -20,7 +20,7 @@ public class CustomSOABaseDslActivator extends SOABaseDslActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start (context);
-		Injector injector = getInjector ("org.xkonnex.repo.dsl.basedsl.SOABaseDsl");
+		Injector injector = getInjector (ORG_XKONNEX_REPO_DSL_BASEDSL_BASEDSL);
 		IPluggableValidatorProvider validatorProvider = injector.getInstance (IPluggableValidatorProvider.class);
 	
         try {

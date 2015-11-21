@@ -9,25 +9,61 @@ Contributors:
     André Arnold 		- initial API and implementation
     Christian Schneider	- reviews
 */
-grammar org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+grammar org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl with org.xkonnex.repo.dsl.basedsl.BaseDsl
 
 generate sOAProfileDsl "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl"
 
-import "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" as basedsl
+import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as  environmentDsl
 
 SOAProfileModel:
 	(imports+=Import)*
 	(types+=DataType)+
-	(profiles += SOAProfile)*
+	(profiles += AbstractProfile)*
 	(roles+=Role)*;
+
+AbstractProfile: Profile | SOAProfile;
 
 /*
  * Defines architectural constraints that apply. General foundational governance principles, like lifecycle states 
  * are defined as well in the profile. Usually scoped to an organization
  */	
+Profile:
+	(default?='default')? 'profile' name=QualifiedName '{'
+		/* The scope, where the architecture profile applies to */
+		('scope' scope = STRING)?
+		/* The asset lifecycle states */
+		(lifecycle=Lifecycle)?
+		/* The available service categories */
+		('service-categories' '{'
+			serviceCategory+=ServiceCategory+
+		'}')?
+		(designRules=DesignRules)?
+		(versioningRule = VersioningRule)
+		/* 
+		 * basic message principles, e.g. message headers that have to be set in every service message
+		 * if not stated otherwise in the service definition
+		 */
+		(messaging=Messaging)?
+		(orgNamespaces += OrganizationNamespace)*
+		(namespaceRules = NamespaceRules)?
+		(scopedBasicTypes+=BasicTypes)*
+		(governanceDecisions+=GovernanceDecision)*
+		('contact-info' '{'
+			('owner' owner=[basedsl::User|QualifiedName])?
+			('responsible' responsible += [basedsl::User|QualifiedName])*
+			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+		'}')?
+		('subscriptions' '{'
+			subscriptions += [basedsl::User|QualifiedName]*
+		'}')?
+	'}';
+/*
+ * Defines architectural constraints that apply. General foundational governance principles, like lifecycle states 
+ * are defined as well in the profile. Usually scoped to an organization
+ */	
 SOAProfile:
-	(default?='default')? ('soa-profile'|'profile') name=QualifiedName '{'
+	(default?='default')? 'soa-profile' name=QualifiedName '{'
 		/* The scope, where the architecture profile applies to */
 		('scope' scope = STRING)?
 		/* The asset lifecycle states */
@@ -116,9 +152,12 @@ Role:
  * Defines a service category
  */	
 ServiceCategory:
-	name = ID 'base-category' baseCategory = ServiceBaseCategory
+	name = ID ('parent' p = [ServiceCategory|QualifiedName])? ('base-category' baseCategory = ServiceBaseCategory)?
 ;
 
+/**
+ * @deprecated
+ */
 enum ServiceBaseCategory: process | rule | activity | entity | utility | other;
 
 enum EnvironmentType returns environmentDsl::EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
@@ -171,7 +210,12 @@ BasicTypes:
 	'basic-types' 'for' scope=ID '{'
 		(types+=DataType)+
 	'}';
-	
+
+/**
+ * Translates namespace name fragments to shorter names
+ * 
+ * @deprecated The rule will be removed in a later major version
+ */	
 BaseNamespaceAlias :
 	'shorten' baseNamespaceFragment=QualifiedName 'to' shortenedBaseNamespaceFragment=QualifiedName ;
 
@@ -196,6 +240,9 @@ OrganizationNamespace:
  */	
 TechnicalNamespace: 
 	'namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
+		/**
+		 * @deprecated may be removed in a later release, should be implemented as validation rule
+		 */	
 		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
 		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
@@ -291,14 +338,21 @@ Class:
 		(properties+=AbstractProperty)+
 	'}';
 
-/* Design rule that applies to internal namespaces, e.g. naming convention to be checked by validators */
+/* 
+ * Design rule that applies to internal namespaces, e.g. naming convention to be checked by validators
+ * 
+ * @deprecated may be removed in a later release, should be implemented as validation rule
+ */
 InternalNamespaceRule: 
 	'internal-namespace-rule' name=ID '{'
 		'internal-qualifier' internalNsQualifierPolicy = InternalNsQualifierPolicy  
 		('qualifying-name' qualifyingName = ID )?
 		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
 	'}';
-	
+
+/**
+ * @deprecated may be removed in a later release, should be implemented as validation rule
+ */	
 enum InternalNsQualifierPolicy:
 	MUST_CONTAIN_QUALIFIER = 'must-contain-internal-qualifier' |
 	BEFORE_LAST_ID = 'qualifier-before-last-name' |

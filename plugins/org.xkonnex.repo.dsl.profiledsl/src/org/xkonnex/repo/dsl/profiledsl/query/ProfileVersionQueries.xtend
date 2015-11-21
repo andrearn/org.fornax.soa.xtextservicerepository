@@ -2,7 +2,7 @@ package org.xkonnex.repo.dsl.profiledsl.query
 
 import org.eclipse.emf.ecore.EObject
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 
 class ProfileVersionQueries {
 		

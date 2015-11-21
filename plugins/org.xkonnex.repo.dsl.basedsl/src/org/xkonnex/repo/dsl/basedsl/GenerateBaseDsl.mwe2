@@ -1,11 +1,11 @@
-module org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+module org.xkonnex.repo.dsl.basedsl.BaseDsl
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/org/xkonnex/repo/dsl/basedsl/SOABaseDsl.xtext"
-var file.extensions = "sbasedsl"
+var grammarURI = "classpath:/org/xkonnex/repo/dsl/basedsl/BaseDsl.xtext"
+var file.extensions = "basedsl"
 var projectName = "org.xkonnex.repo.dsl.basedsl"
 var runtimeProject = "../${projectName}"
 

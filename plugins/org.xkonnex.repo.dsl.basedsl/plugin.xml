@@ -5,9 +5,9 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" 
-       class = "org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslPackage"
-       genModel = "model/generated/SOABaseDsl.genmodel" /> 
+       uri = "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" 
+       class = "org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage"
+       genModel = "model/generated/BaseDsl.genmodel" /> 
 	
   </extension>
 

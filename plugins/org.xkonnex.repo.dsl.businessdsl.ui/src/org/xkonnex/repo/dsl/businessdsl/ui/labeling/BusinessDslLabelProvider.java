@@ -5,7 +5,7 @@ package org.xkonnex.repo.dsl.businessdsl.ui.labeling;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
-import org.xkonnex.repo.dsl.basedsl.ui.labeling.SOABaseDslLabelHelper;
+import org.xkonnex.repo.dsl.basedsl.ui.labeling.BaseDslLabelHelper;
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.Capability;
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.CapabilityGroup;
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.CapabilityRef;
@@ -46,11 +46,11 @@ public class BusinessDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text(CapabilityVariation var) {
-		return "~ " + var.getVarying().getCapability().getName() + SOABaseDslLabelHelper.getVersionConstraint (var.getVarying().getVersionRef());
+		return "~ " + var.getVarying().getCapability().getName() + BaseDslLabelHelper.getVersionConstraint (var.getVarying().getVersionRef());
 	}
 	
 	String text (CapabilityRef ref) {
-		return "-> " + ref.getCapability().getName() + SOABaseDslLabelHelper.getVersionConstraint(ref.getVersionRef());
+		return "-> " + ref.getCapability().getName() + BaseDslLabelHelper.getVersionConstraint(ref.getVersionRef());
 	}
 	
 }

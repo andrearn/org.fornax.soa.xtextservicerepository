@@ -4,7 +4,7 @@ import com.google.inject.Inject
 import java.util.Set
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace

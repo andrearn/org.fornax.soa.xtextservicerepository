@@ -13,7 +13,7 @@ import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrateg
  * see
  * http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
-public class SOABaseDslDescriptionLabelProvider extends
+public class BaseDslDescriptionLabelProvider extends
 		DefaultDescriptionLabelProvider {
 
 	// Labels and icons can be computed like this:

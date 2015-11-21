@@ -9,8 +9,8 @@ var file.extensions = "binddsl"
 var projectName = "org.xkonnex.repo.dsl.bindingdsl"
 var runtimeProject = "../${projectName}"
 
-var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore"
-var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.genmodel"
+var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore"
+var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel"
 
 var semMetaModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore"
 var semGenModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel"
@@ -30,7 +30,7 @@ var profGenModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/gener
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
-		uriMap = { to = baseMetaModel from = "http://www.fornax.org/soa/basedsl/SOABaseDsl" }
+//		uriMap = { to = baseMetaModel from = "http://www.fornax.org/soa/basedsl/BaseDsl" }
 		uriMap = { to = semMetaModel from = "http://www.fornax.org/soa/SemanticsDsl" }
 		uriMap = { to = svcMetaModel from = "http://www.fornax.org/soa/ServiceDsl" }
 		uriMap = { to = modMetaModel from = "http://www.fornax.org/soa/moduledsl/ModuletDsl" }

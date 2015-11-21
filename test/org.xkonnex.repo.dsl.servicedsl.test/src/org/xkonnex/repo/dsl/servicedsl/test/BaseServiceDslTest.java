@@ -9,10 +9,10 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslFactory;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MajorVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslFactory;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.servicedsl.ServiceDslStandaloneSetup;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ConsiderationParameterRef;
@@ -125,7 +125,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		lifecycle.getStates ().add (deprecated);
 		lifecycle.getStates ().add (retired);
 
-		SOABaseDslFactory baseDslFactory = SOABaseDslFactory.eINSTANCE;
+		BaseDslFactory baseDslFactory = BaseDslFactory.eINSTANCE;
 		SOAProfileDslFactory profDslFactory = SOAProfileDslFactory.eINSTANCE;
 		ServiceDslFactory dslFactory = ServiceDslFactory.eINSTANCE;
 		bo1 = dslFactory.createBusinessObject();

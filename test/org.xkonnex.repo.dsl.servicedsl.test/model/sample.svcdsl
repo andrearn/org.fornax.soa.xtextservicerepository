@@ -57,7 +57,7 @@ org-namespace org.xkonnex.repo.dsl.bindingdsl shortname "ofs" {
 					decision-date "04.06.2012"
 					decision-by "Mike Approver"
 				}
-				service-category entity
+				service-category Entity
 				statefulness stateful
 			}
 			sync findByName (firstName : string, lastName : string) returns persons : Person [] majorVersion 1 {

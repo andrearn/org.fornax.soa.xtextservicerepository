@@ -3,7 +3,5 @@
  */
 package org.xkonnex.repo.dsl.sladsl.serializer;
 
-import org.xkonnex.repo.dsl.sladsl.serializer.AbstractSLADslSemanticSequencer;
-
 public class SLADslSemanticSequencer extends AbstractSLADslSemanticSequencer {
 }

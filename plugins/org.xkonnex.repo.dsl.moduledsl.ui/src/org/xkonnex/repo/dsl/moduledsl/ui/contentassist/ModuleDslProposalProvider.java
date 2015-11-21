@@ -30,10 +30,10 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceModuleRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.ui.contentassist.AbstractModuleDslProposalProvider;
 import org.xkonnex.repo.dsl.moduledsl.util.ModuleDslAccess;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Import;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MajorVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 

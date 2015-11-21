@@ -18,6 +18,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
 import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
 
 /*
  * Namespace lookup functions
@@ -107,7 +108,7 @@ class NamespaceQuery {
 		ns.exceptionsWithMinState (state).size > 0;
 	}
 	
-	def SOAProfile getApplicableProfile (SubNamespace ns, SOAProfile enforcedProfile) {
+	def AbstractProfile getApplicableProfile (SubNamespace ns, AbstractProfile enforcedProfile) {
 		if (enforcedProfile == null) {
 			if (ns.profile != null) {
 				return ns.profile

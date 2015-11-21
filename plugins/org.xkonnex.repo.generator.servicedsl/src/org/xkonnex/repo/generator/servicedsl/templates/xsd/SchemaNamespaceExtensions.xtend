@@ -7,10 +7,18 @@ import java.util.List
 import java.util.Set
 import org.eclipse.emf.common.util.TreeIterator
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.basedsl.CommonEObjectExtensions
 import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TechnicalNamespace
+import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
+import org.xkonnex.repo.dsl.servicedsl.service.query.ExceptionFinder
+import org.xkonnex.repo.dsl.servicedsl.service.query.ServiceQueries
+import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
+import org.xkonnex.repo.dsl.servicedsl.service.query.type.TypesByLifecycleStateFinder
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
@@ -18,15 +26,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
-import org.xkonnex.repo.dsl.servicedsl.service.query.ExceptionFinder
-import org.xkonnex.repo.dsl.servicedsl.service.query.ServiceQueries
-import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
-import org.xkonnex.repo.dsl.servicedsl.service.query.type.TypesByLifecycleStateFinder
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version
-import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
-
+import com.google.common.collect.Lists
 
 /*
  * domains.ext
@@ -45,6 +45,8 @@ class SchemaNamespaceExtensions {
 	Boolean useNestedPaths
 	
 	@Inject IQualifiedNameProvider nameProvider
+	
+	val NUM_OF_HOST_PARTS = 2
 
 
 
@@ -125,13 +127,15 @@ class SchemaNamespaceExtensions {
 	}
 
 	
-	def dispatch String toUnversionedNamespace (OrganizationNamespace domain) {
-		"http://" + domain.name.split(".").reverse().join (".");
+	def dispatch String toUnversionedNamespace (OrganizationNamespace namespace) {
+		"http://" + namespace.name.split(".").reverse().join (".");
 	}
 	
 	def dispatch String toUnversionedNamespace (SubNamespace leafDomainNamespace) {
+		val orgNs = leafDomainNamespace.findOrgNamespace()
+		var String hostPart = null
 		"http://" + 
-		leafDomainNamespace.findOrgNamespace().toHostPart() + "/" + 
+		orgNs.toHostPart() + "/" + 
 		newArrayList (leafDomainNamespace).toSubNamespacePath().map (n|n.name.stripXtextEscapes().replaceAll("\\.","/")).join("/");
 	}
 	
@@ -140,7 +144,18 @@ class SchemaNamespaceExtensions {
 	}
 
 	def dispatch String toHostPart (OrganizationNamespace d) {
-		 d.name.split("\\.").reverse().join(".");
+		d.name.split("\\.").reverse().join(".");
+	}
+
+	def dispatch String toHostPart (SubNamespace d) {
+		var nsParts = d.name.split("\\.")
+		var List<String> hostParts = Lists.newArrayList(nsParts.get(0))
+		if (nsParts.size > 1) {
+			for (var int i=1; i<NUM_OF_HOST_PARTS; i++) {
+				hostParts.add(nsParts.get(i))
+			}
+		}
+		hostParts.join(".");
 	}
 	
 	def List<SubNamespace> toSubNamespacePath (List<SubNamespace> domList) {

@@ -15,8 +15,11 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.xkonnex.repo.dsl.basedsl.SOABaseDslRuntimeModule;
-import org.xkonnex.repo.dsl.basedsl.SOABaseDslStandaloneSetup;
+import org.xkonnex.repo.dsl.basedsl.BaseDslRuntimeModule;
+import org.xkonnex.repo.dsl.basedsl.BaseDslStandaloneSetup;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.basedsl.resource.EObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
@@ -37,9 +40,6 @@ import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslFactory;
 import org.xkonnex.repo.dsl.profiledsl.search.predicate.VersionAndLifecycleStatePredicate;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslFactory;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Binder;
@@ -62,7 +62,7 @@ public class VersionAndLifecycleStatePredicateTest extends AbstractXtextTests {
 	private org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class versionedAsset;
 	
 	private SOAProfileDslStandaloneSetup setup;
-	private SOABaseDslStandaloneSetup baseDslSetup;
+	private BaseDslStandaloneSetup baseDslSetup;
 	private ResourceSet resourceSet = new  ResourceSetImpl();
 
 	@Before
@@ -79,7 +79,7 @@ public class VersionAndLifecycleStatePredicateTest extends AbstractXtextTests {
 				
 				bind(IScopeVersionResolver.class).to(SimpleScopeVersionResolver.class);
 				
-				bind(SOABaseDslFactory.class).to( SOABaseDslFactoryImpl.class);
+				bind(BaseDslFactory.class).to( BaseDslFactoryImpl.class);
 			}
 		});
 		
@@ -136,7 +136,7 @@ public class VersionAndLifecycleStatePredicateTest extends AbstractXtextTests {
 		lifecycle.getStates ().add (deprecated);
 		lifecycle.getStates ().add (retired);
 		
-		SOABaseDslFactory baseDslFactory = SOABaseDslFactory.eINSTANCE;
+		BaseDslFactory baseDslFactory = BaseDslFactory.eINSTANCE;
 		Version version = baseDslFactory.createVersion();
 		version.setVersion("1.1");
 		

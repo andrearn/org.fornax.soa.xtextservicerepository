@@ -12,7 +12,7 @@ import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 
 @Deprecated
 public class AnyVersionRef implements VersionRef {

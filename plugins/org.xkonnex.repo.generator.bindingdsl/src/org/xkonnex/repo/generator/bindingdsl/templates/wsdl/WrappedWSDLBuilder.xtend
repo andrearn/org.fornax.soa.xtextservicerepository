@@ -1,6 +1,6 @@
 package org.xkonnex.repo.generator.bindingdsl.templates.wsdl
 
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
 import java.util.List
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
@@ -32,24 +32,24 @@ class WrappedWSDLBuilder {
 		will be generated. For each major version of a service WSDL is generated for the latest minor
 		version in that major version matching the minimal Lifecycle constraint is be generated
 	*/
-	def dispatch toWrappedWSDL (SubNamespace ns, SOAProfile profileName, Environment targetEnvironment) {
+	def dispatch toWrappedWSDL (SubNamespace ns, AbstractProfile profileName, Environment targetEnvironment) {
 		ns.services.filter (s|s.isEligibleForEnvironment (targetEnvironment))
 			.forEach (e|e.toWrappedWSDL (profileName, targetEnvironment));
 	}
 	
-	def dispatch toWrappedWSDL (SubNamespace ns, List<SOAProfile> profiles, String profileName, List<Environment> environments, String targetEnvironment) {
+	def dispatch toWrappedWSDL (SubNamespace ns, List<AbstractProfile> profiles, String profileName, List<Environment> environments, String targetEnvironment) {
 		val prof = profiles.findFirst (p|p.name==profileName);
 		val env = environments.findFirst (e|e.name==targetEnvironment);
 		ns.services.filter (s|s.isEligibleForEnvironment (env)).forEach (e|e.toWrappedWSDL (prof, env));
 	}
 	
-	def dispatch toWrappedWSDL (Service svc, List<SOAProfile> profiles, String profileName, List<Environment> environments, String targetEnvironment) {
+	def dispatch toWrappedWSDL (Service svc, List<AbstractProfile> profiles, String profileName, List<Environment> environments, String targetEnvironment) {
 		val env = environments.findFirst (e|e.name==targetEnvironment);
 		svc.toWrappedWSDL (profiles.findFirst (e|e.name==profileName), env);
 	}
 	
 	
-	def dispatch toWrappedWSDL (Service svc, SOAProfile profile, Environment environment) {
+	def dispatch toWrappedWSDL (Service svc, AbstractProfile profile, Environment environment) {
 		svc.toWrappedWSDL (environment.getMinLifecycleState (profile.lifecycle), profile, environment.getRegistryBaseUrl());
 		return null
 	}

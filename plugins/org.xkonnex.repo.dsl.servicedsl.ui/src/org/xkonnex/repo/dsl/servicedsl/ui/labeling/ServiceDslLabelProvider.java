@@ -11,7 +11,7 @@ import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Import;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ComplexConsiderationPropertyRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ConsiderationParameterRef;

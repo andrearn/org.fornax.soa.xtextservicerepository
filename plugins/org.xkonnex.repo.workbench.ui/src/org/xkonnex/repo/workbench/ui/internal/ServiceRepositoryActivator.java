@@ -9,7 +9,7 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.util.Modules2;
 import org.osgi.framework.BundleContext;
-import org.xkonnex.repo.dsl.basedsl.SOABaseDslRuntimeModule;
+import org.xkonnex.repo.dsl.basedsl.BaseDslRuntimeModule;
 import org.xkonnex.repo.dsl.bindingdsl.BindingDslRuntimeModule;
 import org.xkonnex.repo.dsl.environmentdsl.EnvironmentDslRuntimeModule;
 import org.xkonnex.repo.dsl.moduledsl.ModuleDslRuntimeModule;
@@ -52,7 +52,7 @@ public class ServiceRepositoryActivator extends AbstractUIPlugin {
 		try {
 			Injector injector = Guice.createInjector(
 					Modules2.mixin (
-							new SOABaseDslRuntimeModule (),
+							new BaseDslRuntimeModule (),
 							new SOAProfileDslRuntimeModule(),
 							new SemanticsDslRuntimeModule(),
 							new SolutionDslRuntimeModule(),

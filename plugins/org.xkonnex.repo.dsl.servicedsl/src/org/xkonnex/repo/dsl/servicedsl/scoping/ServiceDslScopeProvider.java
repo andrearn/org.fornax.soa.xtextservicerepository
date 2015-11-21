@@ -14,6 +14,14 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.AssetRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.VersionFilteringScope;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.FixedVersionFilter;
@@ -34,14 +42,6 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMinMaxVersi
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMinVersionForOwnerStateFilter;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedMaxVersionForOwnerStateFilter;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.AssetRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.FixedVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MajorVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MaxVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MinVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslPackage;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries;
 import org.xkonnex.repo.dsl.servicedsl.service.util.ServiceDslElementAccessor;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.CapabilityRef;
@@ -265,7 +265,7 @@ public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScop
 			} catch (Throwable ex) {
 //				logger.debug("Error resolving a ComplexConsiderationProperty parentPropertyRef of a ComplexConsiderationPropertyRef", ex);
 			}
-		} else if (reference == SOABaseDslPackage.Literals.ASSET_REF__ASSET
+		} else if (reference == BaseDslPackage.Literals.ASSET_REF__ASSET
 				&& ctx instanceof AssetRef) {
 			final VersionRef v = ((AssetRef) ctx).getVersionRef();
 			return createVersionFilter (v);

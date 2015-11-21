@@ -10,8 +10,8 @@ import org.xkonnex.repo.dsl.basedsl.ui.editor.XtextEditorSelectionStrategy;
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class SOABaseDslUiModule extends org.xkonnex.repo.dsl.basedsl.ui.AbstractSOABaseDslUiModule {
-	public SOABaseDslUiModule(AbstractUIPlugin plugin) {
+public class BaseDslUiModule extends org.xkonnex.repo.dsl.basedsl.ui.AbstractBaseDslUiModule {
+	public BaseDslUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
 	

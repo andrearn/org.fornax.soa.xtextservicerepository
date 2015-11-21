@@ -12,7 +12,7 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.ui.search.IXtextEObjectSearch;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
-import org.xkonnex.repo.dsl.basedsl.ui.contentassist.AbstractSOABaseDslProposalProvider;
+import org.xkonnex.repo.dsl.basedsl.ui.contentassist.AbstractBaseDslProposalProvider;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -24,7 +24,7 @@ import com.google.common.collect.Lists;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
-public class SOABaseDslProposalProvider extends AbstractSOABaseDslProposalProvider {
+public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 
 	@Inject
 	private IXtextEObjectSearch searchEngine;

@@ -3,6 +3,8 @@
  */
 package org.xkonnex.repo.dsl.bindingdsl;
 
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.basedsl.resource.EObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.VersionedGlobalScopeProvider;
@@ -12,8 +14,6 @@ import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch;
 import org.xkonnex.repo.dsl.basedsl.search.PredicateReferenceSearch;
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
 import org.xkonnex.repo.dsl.basedsl.validation.ReflectivePluggableValidatorProvider;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslFactory;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.IModuleRefServiceBindingResolver;
 import org.xkonnex.repo.dsl.environmentdsl.scoping.IEnvironmentPerspectiveSelector;
 import org.xkonnex.repo.dsl.environmentdsl.scoping.impl.DefaultEnvironmentPerspectiveSelector;
@@ -80,8 +80,8 @@ public class BindingDslRuntimeModule extends org.xkonnex.repo.dsl.bindingdsl.Abs
 		return DefaultModuleVersionMatcher.class;
 	}
 
-	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
-		return SOABaseDslFactoryImpl.class;
+	public Class<? extends BaseDslFactory> bindSOABaseDslFactory () {
+		return BaseDslFactoryImpl.class;
 	}
 	
 	public Class<? extends IEObjectDescriptionBuilder> bindIEObjectDescrionBuilder () {

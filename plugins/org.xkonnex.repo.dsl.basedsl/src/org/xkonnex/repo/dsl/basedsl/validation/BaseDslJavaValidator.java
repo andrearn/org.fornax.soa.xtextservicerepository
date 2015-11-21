@@ -9,7 +9,7 @@ import org.eclipse.emf.ecore.EPackage;
 import com.google.inject.Inject;
  
 
-public class SOABaseDslJavaValidator extends AbstractPluggableDeclarativeValidator {
+public class BaseDslJavaValidator extends AbstractPluggableDeclarativeValidator {
 	
 	@Inject
 	protected IPluggableValidatorProvider validatorProvider;
@@ -18,7 +18,7 @@ public class SOABaseDslJavaValidator extends AbstractPluggableDeclarativeValidat
 	@Override
 	protected List<EPackage> getEPackages() {
 	    List<EPackage> result = new ArrayList<EPackage>();
-	    result.add(org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslPackage.eINSTANCE);
+	    result.add(org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage.eINSTANCE);
 		return result;
 	}
 

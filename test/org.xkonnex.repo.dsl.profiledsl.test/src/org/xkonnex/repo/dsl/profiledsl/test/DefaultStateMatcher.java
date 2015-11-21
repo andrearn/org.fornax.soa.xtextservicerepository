@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.xkonnex.repo.dsl.basedsl.SOABaseDslStandaloneSetup;
+import org.xkonnex.repo.dsl.basedsl.BaseDslStandaloneSetup;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
 import org.xkonnex.repo.dsl.profiledsl.SOAProfileDslStandaloneSetup;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle;

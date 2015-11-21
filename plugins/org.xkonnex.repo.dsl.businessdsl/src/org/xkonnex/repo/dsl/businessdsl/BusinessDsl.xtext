@@ -10,11 +10,11 @@ Contributors:
     Krunoslav Markotic	- reviews
     Liane Lenke			- reviews
 */
-grammar org.xkonnex.repo.dsl.businessdsl.BusinessDsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+grammar org.xkonnex.repo.dsl.businessdsl.BusinessDsl with org.xkonnex.repo.dsl.basedsl.BaseDsl
 
 generate businessDsl "http://www.xkonnex.org/repo/dsl/businessdsl/BusinessDsl"
 
-import "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" as basedsl
+import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as  semantics
 
 BusinessModel :

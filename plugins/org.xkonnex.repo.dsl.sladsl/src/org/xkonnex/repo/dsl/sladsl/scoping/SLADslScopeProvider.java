@@ -3,7 +3,7 @@
  */
 package org.xkonnex.repo.dsl.sladsl.scoping;
 
-import org.xkonnex.repo.dsl.basedsl.scoping.SOABaseDslScopeProvider;
+import org.xkonnex.repo.dsl.basedsl.scoping.BaseDslScopeProvider;
 
 /**
  * This class contains custom scoping description.
@@ -12,6 +12,6 @@ import org.xkonnex.repo.dsl.basedsl.scoping.SOABaseDslScopeProvider;
  * on how and when to use it 
  *
  */
-public class SLADslScopeProvider extends SOABaseDslScopeProvider {
+public class SLADslScopeProvider extends BaseDslScopeProvider {
 
 }

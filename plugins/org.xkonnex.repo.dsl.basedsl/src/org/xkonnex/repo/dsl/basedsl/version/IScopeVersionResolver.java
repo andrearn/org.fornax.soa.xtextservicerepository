@@ -2,7 +2,7 @@ package org.xkonnex.repo.dsl.basedsl.version;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 
 public interface IScopeVersionResolver {
 

@@ -1,6 +1,6 @@
 package org.xkonnex.repo.dsl.servicedsl.service.query
 
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 import org.eclipse.emf.ecore.EObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service

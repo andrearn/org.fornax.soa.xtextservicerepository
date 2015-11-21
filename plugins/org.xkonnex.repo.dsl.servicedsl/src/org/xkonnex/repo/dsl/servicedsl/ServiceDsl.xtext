@@ -13,11 +13,11 @@ Contributors:
     Vitaly Markin
     Liane Lenke
 */
-grammar org.xkonnex.repo.dsl.servicedsl.ServiceDsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+grammar org.xkonnex.repo.dsl.servicedsl.ServiceDsl with org.xkonnex.repo.dsl.basedsl.BaseDsl
 
 generate serviceDsl "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl"
 
-import "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" as basedsl
+import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
 import "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" as profileDsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
 import "http://www.xkonnex.org/repo/dsl/businessdsl/BusinessDsl" as businessDsl
@@ -26,6 +26,7 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 ServiceModel:
 	(imports+=Import)*
 	(orgNamespaces+=OrganizationNamespace)*
+	(namespaces+=SubNamespace)*
 	(types+=Type)*;
 	
 /*
@@ -33,7 +34,7 @@ ServiceModel:
  */
 OrganizationNamespace :
 	'org-namespace' name= QualifiedName ('shortname' prefix=STRING)? '{'
-		('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
+		('architecture-profile' profile = [profileDsl::AbstractProfile|QualifiedName])?
 		(subNamespaces+=SubNamespace)*
 	'}' ;
 
@@ -45,7 +46,8 @@ DomainNamespace:
 		('metadata' '{'
 			('domain' domain=[businessDsl::Domain|QualifiedName])?
 			(version=Version  )?
-			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
+			(uri=STRING)?
+			('architecture-profile' profile = [profileDsl::AbstractProfile|QualifiedName])?
 			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
@@ -59,6 +61,7 @@ DomainNamespace:
 		(types+=Type)*
 		(services+=Service)*
 		(exceptions+=Exception)*
+		(commands+=Command)*
 		(events+=Event)*
 		(channels+=Channel)*
 		(interalNamespaces+=InternalNamespace)*
@@ -68,8 +71,9 @@ DomainNamespace:
 InternalNamespace:	
 	'internal-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		('metadata' '{'
+			(uri=STRING)?
 			(version=Version)?
-			('architecture-profile' profile = [profileDsl::SOAProfile|QualifiedName])?
+			('architecture-profile' profile = [profileDsl::AbstractProfile|QualifiedName])?
 			('namespace-url' namespaceUrl = STRING)?
 			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
@@ -84,6 +88,7 @@ InternalNamespace:
 		(types+=Type)*
 		(services+=Service)*
 		(exceptions+=Exception)*
+		(commands+=Command)*
 		(events+=Event)*
 		(channels+=Channel)*
 		(interalNamespaces+=InternalNamespace)*
@@ -97,13 +102,112 @@ VersionedType:
 
 DataObject: BusinessObject | QueryObject;
 
+BusinessObject: GenericBusinessObject | Aggregate | Entity | ValueObject;
+
 /*
  * A complex datatype representing a business entity of the domain model. 
  * BusinessObjects are versioned.
  */
-BusinessObject:
+GenericBusinessObject:
 	(deprecated?='@deprecated')? 
 	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superObject=BusinessObjectRef)? '{' 
+		'metadata' '{'
+			version=Version 
+			('replaces' replaces=BusinessObjectRef)?
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			(
+				('release-on' releaseDate = STRING )?
+			&	('retirement-on' retirementDate = STRING)?
+			&	('provided-contract' providedContractUrl=STRING)?
+			)
+			(additionalInfo=AdditionalInformation)?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		(properties+=Property)*
+	'}';
+	
+/*
+ * A complex datatype representing a business entity of the domain model. 
+ * BusinessObjects are versioned.
+ */
+ValueObject:
+	(deprecated?='@deprecated')? 
+	(abstract?='abstract')? 'valueObject'  name=ID ('extends' superObject=BusinessObjectRef)? '{' 
+		'metadata' '{'
+			version=Version 
+			('replaces' replaces=BusinessObjectRef)?
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			(
+				('release-on' releaseDate = STRING )?
+			&	('retirement-on' retirementDate = STRING)?
+			&	('provided-contract' providedContractUrl=STRING)?
+			)
+			(additionalInfo=AdditionalInformation)?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		(properties+=Property)*
+	'}';
+
+/*
+ * A complex datatype representing a aggregate root entity of the domain model. 
+ * Aggregates are versioned.
+ */
+Aggregate:
+	(deprecated?='@deprecated')? 
+	(abstract?='abstract')? 'aggregate'  name=ID ('extends' superObject=BusinessObjectRef)? '{' 
+		'metadata' '{'
+			version=Version 
+			('replaces' replaces=BusinessObjectRef)?
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			(
+				('release-on' releaseDate = STRING )?
+			&	('retirement-on' retirementDate = STRING)?
+			&	('provided-contract' providedContractUrl=STRING)?
+			)
+			(additionalInfo=AdditionalInformation)?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		(properties+=Property)*
+		(operations+=Operation)*
+	'}';
+	
+/*
+ * A complex datatype representing a aggregate root entity of the domain model. 
+ * Aggregates are versioned.
+ */
+Entity:
+	(deprecated?='@deprecated')? 
+	(abstract?='abstract')? 'entity'  name=ID ('extends' superObject=BusinessObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
 			('replaces' replaces=BusinessObjectRef)?
@@ -470,14 +574,14 @@ MessageHeaderRef:
 CapabilityRef:
 	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
 
-
+//AbstractEvent: Event | Command;
 
 /*
  * Event, that is not scoped to an operation
  */
 Event:
 	(deprecated?='@deprecated')? 
-	'event' name=ID '{'
+	'event' name=ID ('extends' extends=EventRef)?  '{'
 		'metadata' '{'
 			version=Version  
 			('replaces' replaces=EventRef )?
@@ -501,9 +605,40 @@ Event:
 		(parameter+=Parameter )*
 	'}';
 
-
 EventRef:
-	event=[Event|QualifiedName] versionRef=VersionRef ('subType' subType=ID)?;
+	event=[Event|QualifiedName] versionRef=VersionRef;
+/*
+ * Event, that is not scoped to an operation
+ */
+Command:
+	(deprecated?='@deprecated')? 
+	'command' name=ID ('extends' extends=CommandRef)?'{'
+		'metadata' '{'
+			version=Version  
+			('replaces' replaces=CommandRef )?
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			('release-on' releaseDate = STRING )?
+			('retirement-on' retirementDate = STRING )?
+			('provided-contract' providedContractUrl=STRING)?
+			(additionalInfo=AdditionalInformation)?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		(parameter+=Parameter )*
+	'}';
+
+
+CommandRef:
+	command=[Command|QualifiedName] versionRef=VersionRef;
 
 /*
  * Channel used to publish events to or to watch for events
@@ -513,13 +648,16 @@ Channel:
 	(isTopic?='topic')? 'channel' name=QualifiedName  '{'
 		('subscribers' '{'
 			subscribers += AssetRef*
-		'}')
+		'}')?
 		('publishers' '{'
 			publisher += AssetRef*
-		'}')
+		'}')?
 		('transmits-events'  '{'
 			transmitsEvents += EventRef*
-		'}')
+		'}')?
+		('transmits-commands'  '{'
+			transmitsCommands += CommandRef*
+		'}')?
 	'}';
 	
 	

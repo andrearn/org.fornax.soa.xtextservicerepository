@@ -14,7 +14,7 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslFactory
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import java.util.regex.Pattern
@@ -72,7 +72,7 @@ class DefaultWrappedWsdlGenerator implements IGenerator {
 			logger.severe("No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
 			hasValidParameters = false
 		}
-		val SOAProfile profile = profileQueries.getProfileByName(profileName, resourceSet);
+		val AbstractProfile profile = profileQueries.getProfileByName(profileName, resourceSet);
 		if (profile != null) {
 			logger.info ("Enforcing generation with profile " + profile.name)
 			hasValidParameters = hasValidParameters && true
@@ -109,7 +109,7 @@ class DefaultWrappedWsdlGenerator implements IGenerator {
 	}
 	
 	def protected dispatch compile (SubNamespace namespace, Resource res) {
-		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, res, "SOAProfile");
+		val AbstractProfile profile = eObjectLookup.getModelElementByName (profileName, res, "AbstractProfile");
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, res, "Environment");
 		wsdlTpl.toWrappedWSDL(namespace, profile, env);
 	}

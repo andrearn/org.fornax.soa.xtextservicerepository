@@ -9,7 +9,7 @@ import org.xkonnex.repo.generator.bindingdsl.ProvidedProtocolContractBuilder
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
 
 /**
  * A builder that builds service contracts. The builder delegates to a chain of {@link IProtocolContractBuilder}s
@@ -31,7 +31,7 @@ class ServiceContractBuilder {
 	 * @param profile The architecture profile defining the architectural rules, generated service contracts must 
 	 * be compliant to 
 	 */
-	def void build (ModuleBinding binding, SOAProfile profile) {
+	def void build (ModuleBinding binding, AbstractProfile profile) {
 		for (protContractBuilder : protocolContractBuilders) {
 			try {
 				protContractBuilder.buildServiceContracts (binding, profile);
@@ -65,7 +65,7 @@ class ServiceContractBuilder {
 	 * @param endpointQualifierRef Only generate for looked up bindings that are tagged with this endpoint qualifier
 	 * @param profile The architecture profile defining the architectural rules, generated service contracts must be compliant to 
 	 */
-	def void build (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, SOAProfile enforcedProfile) {
+	def void build (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, AbstractProfile enforcedProfile) {
 		for (protContractBuilder : protocolContractBuilders) {
 			try {
 				if (generateProvidedServices)

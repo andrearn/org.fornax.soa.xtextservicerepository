@@ -9,7 +9,7 @@ import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceQueries
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AttributeDataTypeRef
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.ClassRef
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.NamespaceSplitter
 import org.xkonnex.repo.dsl.servicedsl.service.query.VersionQueries
@@ -444,7 +444,7 @@ class SchemaTypeExtensions {
 	 * Determine, whether XSD type definitions should be made extendible for unknown elements in
 	 * the complexType  
 	 */
-	def boolean typesUseExtendibleProperties (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile p) {
+	def boolean typesUseExtendibleProperties (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
 			&& p.designRules.typeDefPolicy.versionEvolution != null) {
@@ -458,7 +458,7 @@ class SchemaTypeExtensions {
 	/**
 	 * Determine, whether XSD type definitions should be made extendible for unknown XML attributes 
 	 */
-	def boolean typesUseExtendibleXMLAttributes (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile p) {
+	def boolean typesUseExtendibleXMLAttributes (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
 			&& p.designRules.typeDefPolicy.versionEvolution != null) {
@@ -472,7 +472,7 @@ class SchemaTypeExtensions {
 	 * Determine, whether XSD type definitions, that subtype another type definition, 
 	 * should be made extendible for unknown XML elements or attributes 
 	 */
-	def boolean useExtendibleSubtypes (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile p) {
+	def boolean useExtendibleSubtypes (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
 			&& p.designRules.typeDefPolicy.versionEvolution != null) {
@@ -487,7 +487,7 @@ class SchemaTypeExtensions {
 	 * Get the XSD any clause that makes complexTypes backward compatible allowing additional 
 	 * optional elements
 	 */
-	def String getTypesExtendiblePropertiesClause (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile p) {
+	def String getTypesExtendiblePropertiesClause (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
 		if (p.typesUseExtendibleProperties) {
 			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause != null) {
 				return p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause;
@@ -508,7 +508,7 @@ class SchemaTypeExtensions {
 	 * Get the XSD anyAttribute clause that makes complexTypes backward compatible allowing additional 
 	 * optional XML attributes in the type
 	 */
-	def String getTypesExtendibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile p) {
+	def String getTypesExtendibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
 		if (p.typesUseExtendibleXMLAttributes) {
 			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributeClause != null) {
 				return p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributeClause;

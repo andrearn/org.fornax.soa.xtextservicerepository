@@ -6,6 +6,8 @@ package org.xkonnex.repo.dsl.servicedsl;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 import org.eclipse.xtext.documentation.impl.MultiLineCommentDocumentationProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.basedsl.documentation.DocFeatureDocumationProvider;
 import org.xkonnex.repo.dsl.basedsl.resource.EObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder;
@@ -25,8 +27,6 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.state.DefaultStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.state.ILifecycleStateInferrer;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslFactory;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.DefaultExceptionResolver;
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.DefaultServiceResolver;
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.DefaultTypeResolver;
@@ -118,8 +118,8 @@ public class ServiceDslRuntimeModule extends org.xkonnex.repo.dsl.servicedsl.Abs
 		return DefaultExceptionResolver.class;
 	}
 	
-	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
-		return SOABaseDslFactoryImpl.class;
+	public Class<? extends BaseDslFactory> bindSOABaseDslFactory () {
+		return BaseDslFactoryImpl.class;
 	}
 
 }

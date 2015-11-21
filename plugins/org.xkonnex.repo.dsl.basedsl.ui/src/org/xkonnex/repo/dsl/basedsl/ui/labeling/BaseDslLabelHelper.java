@@ -1,13 +1,13 @@
 package org.xkonnex.repo.dsl.basedsl.ui.labeling;
 
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.FixedVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MajorVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MaxVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MinVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 
-public class SOABaseDslLabelHelper {
+public class BaseDslLabelHelper {
 	
 	public static String getVersionConstraint (VersionRef v) {
 		if (v instanceof FixedVersionRef) {

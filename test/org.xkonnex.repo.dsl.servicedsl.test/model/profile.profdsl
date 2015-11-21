@@ -27,8 +27,9 @@ default soa-profile test {
 	}
 
 	service-categories {
-		^activity base-category activity
-		^entity base-category entity
+		Activity
+		Entity
+		Utility 
 	}
 
 	versioning-strategy namespace-based

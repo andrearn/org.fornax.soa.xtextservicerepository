@@ -2,7 +2,7 @@ package org.xkonnex.repo.dsl.servicedsl.service.query;
 
 import org.eclipse.emf.ecore.EObject;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.GovernanceApproval;

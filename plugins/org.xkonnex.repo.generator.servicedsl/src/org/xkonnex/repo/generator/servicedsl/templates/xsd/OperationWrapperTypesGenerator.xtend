@@ -12,7 +12,7 @@ import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtens
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
@@ -54,21 +54,21 @@ class OperationWrapperTypesGenerator {
 	@Inject 
 	private Logger log
 
-	def dispatch toOperationWrappersInclSubNamespaces (String serviceName, List<SubNamespace> namespaces, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toOperationWrappersInclSubNamespaces (String serviceName, List<SubNamespace> namespaces, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
 		for (ns : namespaces.filter(e|e.name.startsWith (serviceName))) {
 			ns.toOperationWrappers (minState, profile, registryBaseUrl);
 		}
 	}
 	
-	def dispatch toOperationWrappers (SubNamespace namespace, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toOperationWrappers (SubNamespace namespace, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
 		namespace.services.forEach (s|s.toOperationWrappers (namespace, minState, profile, registryBaseUrl));
 	}
 	
-	def dispatch Void toOperationWrappers (Service service, SubNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch Void toOperationWrappers (Service service, SubNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
 		
 	}
 	
-	def dispatch toOperationWrappers (Service service, DomainNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toOperationWrappers (Service service, DomainNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
 		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
 		var content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -114,7 +114,7 @@ class OperationWrapperTypesGenerator {
 		fsa.generateFile (xsdFileName, content);
 	}
 	
-	def dispatch toOperationWrappers (Service service, InternalNamespace subDom, LifecycleState minState, SOAProfile profile, String registryBaseUrl) {
+	def dispatch toOperationWrappers (Service service, InternalNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
 		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
 		var content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -161,12 +161,12 @@ class OperationWrapperTypesGenerator {
 	}
 	
 	
-	def dispatch toOperationWrapperMessages (Service service, LifecycleState minState, SOAProfile profile) {
+	def dispatch toOperationWrapperMessages (Service service, LifecycleState minState, AbstractProfile profile) {
 		service.operations.map (e|e.toConcreteOperationWrapperTypes (profile)).join
 	}
 	
 	
-	def dispatch toConcreteOperationWrapperTypes (Operation op, SOAProfile profile) '''
+	def dispatch toConcreteOperationWrapperTypes (Operation op, AbstractProfile profile) '''
 		<xsd:complexType name="«op.toOperationWrapperRequestType()»">
 			<xsd:sequence>
 				«IF op.findBestMatchingRequestHeader(profile) != null»

@@ -16,9 +16,9 @@ import org.eclipse.xtext.util.SimpleAttributeResolver;
 import org.eclipse.xtext.validation.INamesAreUniqueValidationHelper;
 import org.eclipse.xtext.validation.NamesAreUniqueValidationHelper;
 import org.eclipse.xtext.validation.ValidationMessageAcceptor;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionedName;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionedName;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.util.Pair;
 

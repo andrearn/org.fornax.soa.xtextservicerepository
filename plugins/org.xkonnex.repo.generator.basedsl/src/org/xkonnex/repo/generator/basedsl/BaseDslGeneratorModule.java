@@ -2,17 +2,17 @@ package org.xkonnex.repo.generator.basedsl;
 
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslFactory;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher;
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions;
-import org.xkonnex.repo.dsl.basedsl.SOABaseDslRuntimeModule;
+import org.xkonnex.repo.dsl.basedsl.BaseDslRuntimeModule;
 
-public class BaseDslGeneratorModule extends SOABaseDslRuntimeModule {
+public class BaseDslGeneratorModule extends BaseDslRuntimeModule {
 
 	
-	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
-		return SOABaseDslFactoryImpl.class;
+	public Class<? extends BaseDslFactory> bindSOABaseDslFactory () {
+		return BaseDslFactoryImpl.class;
 	}
 	
 	public Class<? extends VersionQualifierExtensions> bindVersionQualifierExtensions () {

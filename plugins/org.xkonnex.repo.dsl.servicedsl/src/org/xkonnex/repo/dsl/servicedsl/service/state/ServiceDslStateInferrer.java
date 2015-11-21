@@ -9,6 +9,7 @@ import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.traversal.IModelVisitor;
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile;
 import org.xkonnex.repo.dsl.profiledsl.state.DefaultStateInferrer;
@@ -45,7 +46,7 @@ public class ServiceDslStateInferrer extends DefaultStateInferrer {
 					obj = EcoreUtil2.resolve(obj, resourceSet);
 				}
 				SubNamespace subNamespace = objLookup.getOwnerByType(obj, SubNamespace.class);
-				SOAProfile applicableProfile = namespaceQuery.getApplicableProfile(subNamespace, null);
+				AbstractProfile applicableProfile = namespaceQuery.getApplicableProfile(subNamespace, null);
 				return lifecycleQueries.getInitialState(applicableProfile, resourceSet);
 			}
 		}

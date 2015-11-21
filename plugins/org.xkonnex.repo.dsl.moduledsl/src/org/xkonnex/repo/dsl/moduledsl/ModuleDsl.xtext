@@ -8,11 +8,11 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
     André Arnold 		- initial API and implementation
 */
-grammar org.xkonnex.repo.dsl.moduledsl.ModuleDsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+grammar org.xkonnex.repo.dsl.moduledsl.ModuleDsl with org.xkonnex.repo.dsl.basedsl.BaseDsl
 
 generate moduleDsl "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl"
 
-import "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" as basedsl
+import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
 import "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" as serviceDsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as environmentDsl
 import "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" as profileDsl

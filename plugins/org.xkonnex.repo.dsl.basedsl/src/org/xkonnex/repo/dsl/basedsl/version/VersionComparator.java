@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 
 /**
  * Comparator for version numbers

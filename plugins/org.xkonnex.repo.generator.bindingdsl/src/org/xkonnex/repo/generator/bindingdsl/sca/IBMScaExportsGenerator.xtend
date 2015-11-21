@@ -17,7 +17,7 @@ import org.xkonnex.repo.generator.bindingdsl.templates.vendor.ibm.SCAExportTempl
 import org.xkonnex.repo.generator.bindingdsl.templates.vendor.ibm.SCAExportExtension
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingModel
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
@@ -79,7 +79,7 @@ class IBMScaExportsGenerator implements IGenerator {
 			logger.severe ("No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
 			hasValidParameters = false
 		}
-		val SOAProfile profile = profileQueries.getProfileByName(profileName, resourceSet);
+		val AbstractProfile profile = profileQueries.getProfileByName(profileName, resourceSet);
 		if (profile != null) {
 			logger.info ("Enforcing generation with profile " + profile.name)
 			hasValidParameters = hasValidParameters && true
@@ -106,7 +106,7 @@ class IBMScaExportsGenerator implements IGenerator {
 	}
 	
 	def protected dispatch compile (ModuleBinding binding, Resource res) {
-		val SOAProfile profile = eObjectLookup.getModelElementByName (profileName, res, "SOAProfile");
+		val AbstractProfile profile = eObjectLookup.getModelElementByName (profileName, res, "AbstractProfile");
 		scaExportTpl.toSCAModuleExport (binding, profile);
 	}
 }

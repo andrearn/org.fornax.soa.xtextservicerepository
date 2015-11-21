@@ -13,7 +13,7 @@ Workflow {
 	    register = org.xkonnex.repo.dsl.businessdsl.BusinessDslStandaloneSetup {}
 	    register = org.xkonnex.repo.dsl.bindingdsl.BindingDslStandaloneSetup {}
 	    register = org.xkonnex.repo.dsl.environmentdsl.EnvironmentDslStandaloneSetup {}
-	    register = org.xkonnex.repo.dsl.basedsl.SOABaseDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.basedsl.BaseDslStandaloneSetup {}
 	    register = org.xkonnex.repo.dsl.profiledsl.SOAProfileDslStandaloneSetup {}
 	    register = org.xkonnex.repo.dsl.moduledsl.ModuleDslStandaloneSetup {}
 	    loadResource = {

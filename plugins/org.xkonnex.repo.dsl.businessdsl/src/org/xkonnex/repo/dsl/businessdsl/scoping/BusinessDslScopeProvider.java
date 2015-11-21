@@ -6,13 +6,13 @@ package org.xkonnex.repo.dsl.businessdsl.scoping;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.BusinessDslPackage;
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.CapabilityRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
 
 import com.google.inject.Inject;
 

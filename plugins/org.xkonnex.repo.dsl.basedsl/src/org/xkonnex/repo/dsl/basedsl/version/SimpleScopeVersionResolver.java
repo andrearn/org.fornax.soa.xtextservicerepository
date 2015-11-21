@@ -5,8 +5,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version;
 
 public class SimpleScopeVersionResolver implements IScopeVersionResolver {
 	

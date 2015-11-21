@@ -5,6 +5,8 @@ package org.xkonnex.repo.dsl.moduledsl;
 
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.basedsl.resource.EObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
@@ -26,8 +28,6 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IVersionFilterProvider;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.state.DefaultStateResolver;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslFactory;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleReferenceResolver;
 import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleServiceResolver;
 import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleVersionMatcher;
@@ -78,8 +78,8 @@ public class ModuleDslRuntimeModule extends org.xkonnex.repo.dsl.moduledsl.Abstr
 		return DefaultModuleVersionMatcher.class;
 	}
 	
-	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
-		return SOABaseDslFactoryImpl.class;
+	public Class<? extends BaseDslFactory> bindBaseDslFactory () {
+		return BaseDslFactoryImpl.class;
 	}
 	
 	public Class<? extends IModuleServiceResolver> bindIModuleServiceResolver () {

@@ -4,11 +4,11 @@
 package org.xkonnex.repo.dsl.basedsl;
 
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.basedsl.resource.EObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslFactory;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.basedsl.search.DefaultPredicateSearch;
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch;
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
@@ -19,7 +19,7 @@ import com.google.inject.Binder;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-public class SOABaseDslRuntimeModule extends org.xkonnex.repo.dsl.basedsl.AbstractSOABaseDslRuntimeModule {
+public class BaseDslRuntimeModule extends org.xkonnex.repo.dsl.basedsl.AbstractBaseDslRuntimeModule {
 
 	@org.eclipse.xtext.service.SingletonBinding(eager=true)	
 	public Class<? extends IPluggableValidatorProvider> bindIPluggableValidatorProvider () {
@@ -39,8 +39,8 @@ public class SOABaseDslRuntimeModule extends org.xkonnex.repo.dsl.basedsl.Abstra
 		return EObjectDescriptionBuilder.class;
 	}
 	
-	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
-		return SOABaseDslFactoryImpl.class;
+	public Class<? extends BaseDslFactory> bindSOABaseDslFactory () {
+		return BaseDslFactoryImpl.class;
 	}
 
 

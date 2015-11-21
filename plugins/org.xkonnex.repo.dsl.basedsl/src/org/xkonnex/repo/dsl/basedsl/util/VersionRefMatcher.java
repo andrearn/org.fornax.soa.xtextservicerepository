@@ -1,11 +1,11 @@
 package org.xkonnex.repo.dsl.basedsl.util;
 
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.FixedVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.LowerBoundRangeVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MajorVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MaxVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MinVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMajorVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionFilter;
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator;

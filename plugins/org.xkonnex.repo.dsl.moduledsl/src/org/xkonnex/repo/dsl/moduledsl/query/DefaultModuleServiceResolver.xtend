@@ -2,7 +2,7 @@ package org.xkonnex.repo.dsl.moduledsl.query
 
 import com.google.inject.Inject
 import java.util.Set
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslFactory
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
@@ -119,7 +119,7 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 	
 	def private toServiceRef (Service svc) {
 		val factory = ModuleDslFactory::eINSTANCE
-		val baseDslFactory = SOABaseDslFactory::eINSTANCE
+		val baseDslFactory = BaseDslFactory::eINSTANCE
 		var serviceRef = factory.createServiceRef
 		serviceRef.setService(svc)
 		val verRef = baseDslFactory.createFixedVersionRef

@@ -1,12 +1,12 @@
 package org.xkonnex.repo.dsl.basedsl.version
 
 import com.google.inject.Inject
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslFactory
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 
 class VersionQualifierExtensions {
 	
-	@Inject SOABaseDslFactory dslFactory
+	@Inject BaseDslFactory dslFactory
 	
 	def dispatch String toVersionNumber (Integer v) {
 		v.toString();

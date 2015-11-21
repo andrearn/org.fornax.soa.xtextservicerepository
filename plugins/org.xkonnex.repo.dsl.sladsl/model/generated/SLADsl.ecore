@@ -8,7 +8,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SLA">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//Version"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Version"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="effectiveDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="effectiveUntil" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -21,7 +21,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="priorities" upperBound="-1"
         eType="#//PriorityDeclaration" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="appliesTo" upperBound="-1"
-        eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//AssetRef"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//AssetRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="costs" eType="#//Cost"
         containment="true"/>
@@ -39,7 +39,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="reports" upperBound="-1"
         eType="#//Report" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
-        upperBound="-1" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+        upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore#//Tag"/>
   </eClassifiers>
@@ -209,7 +209,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Escalation">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="cause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="escalationTargets" unique="false"
-        upperBound="-1" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+        upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="procedure" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Party">
@@ -226,7 +226,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Representative"/>
   <eClassifiers xsi:type="ecore:EClass" name="UserRef" eSuperTypes="#//Representative">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="representative" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="representative" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//User"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="InlineRepresentative" eSuperTypes="#//Representative">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="firstname" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -240,7 +240,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Report">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="reportTo" eType="ecore:EClass http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl#//User"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reportTo" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

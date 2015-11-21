@@ -13,7 +13,7 @@ import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
 import org.eclipse.xtext.naming.QualifiedName
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
 
 /*

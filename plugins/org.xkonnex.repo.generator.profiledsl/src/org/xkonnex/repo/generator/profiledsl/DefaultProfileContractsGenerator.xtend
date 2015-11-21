@@ -1,15 +1,15 @@
 package org.xkonnex.repo.generator.profiledsl
 
-import org.eclipse.xtext.generator.IGenerator
+import com.google.inject.Inject
+import com.google.inject.name.Named
+import java.util.regex.Pattern
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileModel
-import com.google.inject.name.Named
-import com.google.inject.Inject
+import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileModel
 import org.xkonnex.repo.generator.profiledsl.templates.MessageHeaderXSDTemplates
-import java.util.regex.Pattern
 
 class DefaultProfileContractsGenerator implements IGenerator {
 	
@@ -32,7 +32,7 @@ class DefaultProfileContractsGenerator implements IGenerator {
 		}
 	}
 	
-	def protected void compile (SOAProfile profile, Resource res) {
+	def protected void compile (AbstractProfile profile, Resource res) {
 		msgHeaderTpl.toMessageHeaderXSD (profile);
 	}
 

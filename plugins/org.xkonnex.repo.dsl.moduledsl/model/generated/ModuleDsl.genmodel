@@ -3,8 +3,8 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.xkonnex.repo.dsl.moduledsl/src-gen" editDirectory="/org.xkonnex.repo.dsl.moduledsl.edit/src"
     editorDirectory="/org.xkonnex.repo.dsl.moduledsl.editor/src" modelPluginID="org.xkonnex.repo.dsl.moduledsl"
     forceOverwrite="true" modelName="ModuleDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="org.xkonnex.repo.dsl.moduledsl.edit"
-    editorPluginID="org.xkonnex.repo.dsl.moduledsl.editor" runtimeVersion="2.10" usedGenPackages="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.genmodel#//sOABaseDsl platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.genmodel#//sOAProfileDsl platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel#//semanticsDsl platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.genmodel#//serviceDsl">
+    complianceLevel="6.0" copyrightFields="false" editPluginID="org.xkonnex.repo.dsl.moduledsl.edit"
+    editorPluginID="org.xkonnex.repo.dsl.moduledsl.editor" runtimeVersion="2.10" usedGenPackages="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel#//baseDsl platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.genmodel#//sOAProfileDsl platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel#//semanticsDsl platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.genmodel#//serviceDsl">
   <genPackages prefix="ModuleDsl" basePackage="org.xkonnex.repo.dsl.moduledsl" disposableProviderFactory="true"
       ecorePackage="ModuleDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="ModuleDsl.ecore#//AssemblyType">

@@ -8,9 +8,9 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
     André Arnold 		- initial API and implementation
 */
-grammar org.xkonnex.repo.dsl.basedsl.SOABaseDsl with org.eclipse.xtext.common.Terminals
+grammar org.xkonnex.repo.dsl.basedsl.BaseDsl with org.eclipse.xtext.common.Terminals
 
-generate sOABaseDsl "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl"
+generate baseDsl "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl"
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 

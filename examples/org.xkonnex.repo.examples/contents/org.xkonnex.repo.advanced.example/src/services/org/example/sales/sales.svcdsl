@@ -79,7 +79,7 @@ org-namespace org.example shortname "ex" {
 					decision-by "John Doe"
 				}
 				
-				service-category entity
+				service-category Entity
 				statefulness idempotent
 				additional-information {
 					location "file://W:\\Desgin\\CustomerManagementServicesSpec_v1.0.doc" reference "3.1.1"

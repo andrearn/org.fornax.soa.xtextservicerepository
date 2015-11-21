@@ -1,12 +1,12 @@
 package org.xkonnex.repo.dsl.basedsl.version
 
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.FixedVersionRef
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.LowerBoundRangeVersionRef
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MajorVersionRef
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MaxVersionRef
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MinVersionRef
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef
 
 import com.google.inject.Inject
 
@@ -43,7 +43,7 @@ class VersionMatcher {
 		v.toVersionNumber() == r.fixedVersion.toVersionNumber();
 	}
 	
-	def dispatch boolean matchesMajorVersion (org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version v, String majorVer) {
+	def dispatch boolean matchesMajorVersion (org.xkonnex.repo.dsl.basedsl.baseDsl.Version v, String majorVer) {
 			v.version.toVersionNumber().split("\\.").head() == majorVer;
 	}
 		

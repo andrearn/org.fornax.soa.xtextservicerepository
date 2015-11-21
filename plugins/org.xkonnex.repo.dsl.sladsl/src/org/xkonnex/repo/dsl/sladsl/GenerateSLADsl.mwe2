@@ -9,8 +9,8 @@ var file.extensions = "sladsl"
 var projectName = "org.xkonnex.repo.dsl.sladsl"
 var runtimeProject = "../${projectName}"
 
-var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore"
-var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.genmodel"
+var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore"
+var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel"
 
 var semMetaModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore"
 var semGenModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel"
@@ -18,7 +18,7 @@ var semGenModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/ge
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
-		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" }
+//		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" }
 		uriMap = { to = semMetaModel from = "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" }
 		registerEcoreFile = baseMetaModel
 		registerEcoreFile = semMetaModel

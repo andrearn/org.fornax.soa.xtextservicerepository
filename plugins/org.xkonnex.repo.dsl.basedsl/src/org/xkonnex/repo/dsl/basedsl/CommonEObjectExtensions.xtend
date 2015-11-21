@@ -1,7 +1,7 @@
 package org.xkonnex.repo.dsl.basedsl
 
 import org.eclipse.emf.ecore.EObject
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Version
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import com.google.inject.Inject
 

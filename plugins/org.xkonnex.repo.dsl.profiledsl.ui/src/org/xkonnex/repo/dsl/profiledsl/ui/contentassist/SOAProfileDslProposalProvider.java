@@ -14,8 +14,9 @@ import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MajorVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.ClassRef;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.EnumRef;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeaderRef;
@@ -69,9 +70,9 @@ public class SOAProfileDslProposalProvider extends AbstractSOAProfileDslProposal
 		if (curObj instanceof SOAProfileModel) {
 			profModel = (SOAProfileModel) curObj;
 			Iterator<ILeafNode> leafIt = nonHidden.iterator();
-			Iterable<String> importedNamespaces = Lists.newArrayList(Lists.transform (profModel.getProfiles(), new Function<SOAProfile, String>() {
+			Iterable<String> importedNamespaces = Lists.newArrayList(Lists.transform (profModel.getProfiles(), new Function<AbstractProfile, String>() {
 
-				public String apply(SOAProfile from) {
+				public String apply(AbstractProfile from) {
 					return from.getName();
 				}
 				

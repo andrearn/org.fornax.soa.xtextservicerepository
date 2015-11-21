@@ -448,7 +448,7 @@ public class AbstractPluggableDeclarativeValidator extends AbstractInjectableVal
 
 	protected Diagnostic createDiagnostic(Severity severity, String message, EObject object, int offset, int length, String code, String... issueData) {
 		int diagnosticSeverity = toDiagnosticSeverity(severity);
-		Diagnostic result = new SOABaseRangeBasedDiagnostic(diagnosticSeverity, message, object, offset, length, state.get().currentCheckType, code, issueData);
+		Diagnostic result = new BaseRangeBasedDiagnostic(diagnosticSeverity, message, object, offset, length, state.get().currentCheckType, code, issueData);
 		return result;
 	}
 	

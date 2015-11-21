@@ -9,8 +9,8 @@ var file.extensions = "svcdsl"
 var projectName = "org.xkonnex.repo.dsl.servicedsl"
 var runtimeProject = "../${projectName}"
 
-var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore"
-var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.genmodel"
+var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore"
+var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel"
 
 var semMetaModel="platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore"
 var semGenModel="platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel"
@@ -25,7 +25,7 @@ Workflow {
     bean = StandaloneSetup {
     	scanClassPath = true
 		platformUri = "${runtimeProject}/.."
-		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" }
+//		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" }
 		uriMap = { to = profMetaModel from = "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" }
 		uriMap = { to = semMetaModel from = "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" }
 		uriMap = { to = bizMetaModel from = "http://www.xkonnex.org/repo/dsl/businessdsl/BusinessDsl" }
@@ -33,8 +33,7 @@ Workflow {
 		registerEcoreFile = profMetaModel
 		registerEcoreFile = semMetaModel
 		registerEcoreFile = bizMetaModel
-		registerGenModelFile  = baseGenModel
-		//registerGeneratedEPackage = "org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslPackage"
+		registerGenModelFile = baseGenModel
 		registerGenModelFile = profGenModel
 		registerGenModelFile = semGenModel
 		registerGenModelFile = bizGenModel

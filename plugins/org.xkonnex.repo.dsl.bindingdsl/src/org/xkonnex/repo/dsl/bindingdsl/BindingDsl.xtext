@@ -9,7 +9,7 @@ Contributors:
     André Arnold 		- initial API and implementation
     Vitaly Markin		- reviews
 */
-grammar org.xkonnex.repo.dsl.bindingdsl.BindingDsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+grammar org.xkonnex.repo.dsl.bindingdsl.BindingDsl with org.xkonnex.repo.dsl.basedsl.BaseDsl
 
 generate bindingDsl "http://www.xkonnex.org/repo/dsl/bindingdsl/BindingDsl"
 

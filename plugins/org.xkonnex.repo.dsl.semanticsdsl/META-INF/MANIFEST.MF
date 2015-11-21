@@ -7,6 +7,7 @@ Bundle-SymbolicName: org.xkonnex.repo.dsl.semanticsdsl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
+ org.eclipse.equinox.common;bundle-version="3.5.0",
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,

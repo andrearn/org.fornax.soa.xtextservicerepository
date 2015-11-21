@@ -4,7 +4,7 @@
     nsPrefix="bindingDsl">
   <eClassifiers xsi:type="ecore:EClass" name="BindingModel">
     <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore#//Import"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Import"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bindings" upperBound="-1"
         eType="#//Binding" containment="true"/>
@@ -15,7 +15,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRef" eType="#//EndpointQualifierRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore#//GovernanceDecision"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//GovernanceDecision"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="protocol" upperBound="-1"
         eType="#//BindingProtocol" containment="true"/>
@@ -37,7 +37,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModuleRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="module" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.moduledsl/model/generated/ModuleDsl.ecore#//Module"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore#//VersionRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//VersionRef"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ServiceBinding" eSuperTypes="#//Binding">
@@ -51,7 +51,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ServiceRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="service" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.ecore#//Service"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore#//VersionRef"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//VersionRef"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ChannelBinding" eSuperTypes="#//Binding">
@@ -70,7 +70,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="endpointQualifierRef" eType="#//EndpointQualifierRef"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore#//GovernanceDecision"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//GovernanceDecision"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="protocol" upperBound="-1"
         eType="#//BindingProtocol" containment="true"/>
@@ -292,7 +292,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ReliablityAsserttion" eSuperTypes="#//Assertion">
+  <eClassifiers xsi:type="ecore:EClass" name="ReliablityAssertion" eSuperTypes="#//Assertion">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reliability" eType="#//ReliablilityKind"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="inOrderDelivery" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>

@@ -3,9 +3,9 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.xkonnex.repo.dsl.profiledsl/src-gen" editDirectory="/org.xkonnex.repo.dsl.profiledsl.edit/src"
     editorDirectory="/org.xkonnex.repo.dsl.profiledsl.editor/src" modelPluginID="org.xkonnex.repo.dsl.profiledsl"
     forceOverwrite="true" modelName="SOAProfileDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="org.xkonnex.repo.dsl.profiledsl.edit"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="org.xkonnex.repo.dsl.profiledsl.edit"
     editorPluginID="org.xkonnex.repo.dsl.profiledsl.editor" runtimeVersion="2.10"
-    usedGenPackages="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.genmodel#//sOABaseDsl platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/generated/EnvironmentDsl.genmodel#//environmentDsl">
+    usedGenPackages="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel#//baseDsl platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/generated/EnvironmentDsl.genmodel#//environmentDsl">
   <genPackages prefix="SOAProfileDsl" basePackage="org.xkonnex.repo.dsl.profiledsl"
       disposableProviderFactory="true" ecorePackage="SOAProfileDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="SOAProfileDsl.ecore#//ServiceBaseCategory">
@@ -37,24 +37,26 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfileModel/profiles"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfileModel/roles"/>
     </genClasses>
-    <genClasses ecoreClass="SOAProfileDsl.ecore#//SOAProfile">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//SOAProfile/default"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//SOAProfile/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//SOAProfile/scope"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/lifecycle"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/serviceCategory"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/designRules"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/versioningRule"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/messaging"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/orgNamespaces"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/namespaceRules"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/scopedBasicTypes"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/governanceDecisions"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/owner"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/responsible"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/budgeting"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//SOAProfile/subscriptions"/>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//AbstractProfile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//AbstractProfile/default"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//AbstractProfile/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//AbstractProfile/scope"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/lifecycle"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/serviceCategory"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/designRules"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/versioningRule"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/messaging"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/orgNamespaces"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/namespaceRules"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/scopedBasicTypes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/governanceDecisions"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/owner"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/responsible"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/budgeting"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//AbstractProfile/subscriptions"/>
     </genClasses>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//Profile"/>
+    <genClasses ecoreClass="SOAProfileDsl.ecore#//SOAProfile"/>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Lifecycle">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//Lifecycle/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//Lifecycle/states"/>
@@ -79,6 +81,7 @@
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Role"/>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//ServiceCategory">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//ServiceCategory/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SOAProfileDsl.ecore#//ServiceCategory/p"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SOAProfileDsl.ecore#//ServiceCategory/baseCategory"/>
     </genClasses>
     <genClasses ecoreClass="SOAProfileDsl.ecore#//Messaging">

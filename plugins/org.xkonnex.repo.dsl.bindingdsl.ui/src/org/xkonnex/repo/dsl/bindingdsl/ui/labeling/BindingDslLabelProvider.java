@@ -5,7 +5,7 @@ package org.xkonnex.repo.dsl.bindingdsl.ui.labeling;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
-import org.xkonnex.repo.dsl.basedsl.ui.labeling.SOABaseDslLabelHelper;
+import org.xkonnex.repo.dsl.basedsl.ui.labeling.BaseDslLabelHelper;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EJB;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding;
@@ -40,7 +40,7 @@ public class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String text (ServiceBinding ele) {
-		return ele.getService().getService().getName() + " " + SOABaseDslLabelHelper.getVersionConstraint(ele.getService().getVersionRef());
+		return ele.getService().getService().getName() + " " + BaseDslLabelHelper.getVersionConstraint(ele.getService().getVersionRef());
 	}
 	
 	String text (ModuleBinding m) {

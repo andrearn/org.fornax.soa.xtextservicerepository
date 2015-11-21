@@ -1,20 +1,20 @@
 package org.xkonnex.repo.dsl.profiledsl.query
 
 import com.google.inject.Inject
+import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
 import org.xkonnex.repo.dsl.basedsl.search.EObjectLookup
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.EnvironmentBasedLifecycleStateComparator
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.EnvironmentBasedLifecycleStateComparator
-import java.util.List
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
-import org.eclipse.emf.ecore.resource.ResourceSet
 
 /*
  * Queries for lifecycle states and stateful objects
@@ -126,7 +126,7 @@ class LifecycleQueries {
 		}
 	}
 	
-	def LifecycleState getInitialState (SOAProfile profile, ResourceSet resourceSet) {
+	def LifecycleState getInitialState (AbstractProfile profile, ResourceSet resourceSet) {
 		if (profile != null) {
 			return profile.lifecycle.states.findFirst[isInitial]
 		} else {

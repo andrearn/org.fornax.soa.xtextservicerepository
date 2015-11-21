@@ -278,41 +278,41 @@ public class ServiceDslJavaValidator extends AbstractServiceDslJavaValidator {
 		}
 	}
 
-	@Check(CheckType.NORMAL)
-	public void checkEntityServicesDontCallActivityServices(ServiceRef svcRef) {
-		EObject o = svcRef.eContainer().eContainer();
-		if (o instanceof Service) {
-			Service s = (Service) o;
-			if (s.getCategory() != null && s.getCategory().getBaseCategory () == ServiceBaseCategory.ACTIVITY) {
-				if (svcRef.getService().getCategory()!= null && svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
-					error("Business entity services may not call business activity services",
-							ServiceDslPackage.Literals.OPERATION__REQUIRES);
-				}
-			}
-		}
-	}
-
-	@Check(CheckType.NORMAL)
-	public void checkEntityServicesDontCallRuleServices(ServiceRef svcRef) {
-		EObject o = svcRef.eContainer().eContainer();
-		if (o instanceof Service) {
-			Service s = (Service) svcRef.eContainer().eContainer();
-			if (s.getCategory() != null && s.getCategory().getBaseCategory () == ServiceBaseCategory.ACTIVITY) {
-				if (svcRef.getService().getCategory()!= null && svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
-					error("Business entity services may not call business rule services",
-							ServiceDslPackage.Literals.OPERATION__REQUIRES);
-				}
-			}
-		}
-	}
-
-	@Check
-	public void checkProvidedContractOnPrivateServiceOnly(Service s) {
-		if (s.getProvidedContractUrl() != null
-				&& s.getVisibility() != Visibility.PRIVATE)
-			error("Only private services may provide a predefined contract such as a WSDL",
-					ServiceDslPackage.Literals.SERVICE__PROVIDED_CONTRACT_URL);
-	}
+//	@Check(CheckType.NORMAL)
+//	public void checkEntityServicesDontCallActivityServices(ServiceRef svcRef) {
+//		EObject o = svcRef.eContainer().eContainer();
+//		if (o instanceof Service) {
+//			Service s = (Service) o;
+//			if (s.getCategory() != null && s.getCategory().getBaseCategory () == ServiceBaseCategory.ACTIVITY) {
+//				if (svcRef.getService().getCategory()!= null && svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
+//					error("Business entity services may not call business activity services",
+//							ServiceDslPackage.Literals.OPERATION__REQUIRES);
+//				}
+//			}
+//		}
+//	}
+//
+//	@Check(CheckType.NORMAL)
+//	public void checkEntityServicesDontCallRuleServices(ServiceRef svcRef) {
+//		EObject o = svcRef.eContainer().eContainer();
+//		if (o instanceof Service) {
+//			Service s = (Service) svcRef.eContainer().eContainer();
+//			if (s.getCategory() != null && s.getCategory().getBaseCategory () == ServiceBaseCategory.ACTIVITY) {
+//				if (svcRef.getService().getCategory()!= null && svcRef.getService().getCategory().getBaseCategory () == ServiceBaseCategory.PROCESS) {
+//					error("Business entity services may not call business rule services",
+//							ServiceDslPackage.Literals.OPERATION__REQUIRES);
+//				}
+//			}
+//		}
+//	}
+//
+//	@Check
+//	public void checkProvidedContractOnPrivateServiceOnly(Service s) {
+//		if (s.getProvidedContractUrl() != null
+//				&& s.getVisibility() != Visibility.PRIVATE)
+//			error("Only private services may provide a predefined contract such as a WSDL",
+//					ServiceDslPackage.Literals.SERVICE__PROVIDED_CONTRACT_URL);
+//	}
 
 	@Check
 	public void checkProvidedDefOnInternalBOOnly(VersionedType o) {

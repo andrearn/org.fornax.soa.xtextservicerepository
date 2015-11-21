@@ -35,16 +35,11 @@ public interface IReferenceSearch {
 	
 	public abstract void findAllReferences (IEObjectDescription iEObjDesc, ResourceSet resourceSet, Predicate<IReferenceDescription> referencePredicate, final IAcceptor<IReferenceDescription> acceptor);
 
-	public abstract void findLocalReferences (Set<? extends EObject> targets, IAcceptor<IReferenceDescription> acceptor,
-			Predicate<IReferenceDescription> filter);
-
 	public abstract void findLocalReferences (final IReferenceQueryData queryData, ILocalResourceAccess localResourceAccess,
 			final IAcceptor<IReferenceDescription> acceptor);
 
 	public abstract void findIndexedReferences (IReferenceQueryData queryData, ResourceSet resourceSet, URI resourceURI,
 			IAcceptor<IReferenceDescription> acceptor);
-
-	public abstract void findIndexedReferences (final IReferenceQueryData queryData, ResourceSet resourceSet, final IAcceptor<IReferenceDescription> acceptor);
 
 	public abstract void findAllReferences (IReferenceQueryData queryData, ResourceSet resourceSet, ILocalResourceAccess localResourceAccess,
 			final IAcceptor<IReferenceDescription> acceptor);

@@ -7,7 +7,7 @@ import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.EcoreUtil2
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module

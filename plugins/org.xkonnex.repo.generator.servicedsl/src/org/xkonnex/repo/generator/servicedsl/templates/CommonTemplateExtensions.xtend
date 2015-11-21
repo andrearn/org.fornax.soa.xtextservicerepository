@@ -1,10 +1,10 @@
 package org.xkonnex.repo.generator.servicedsl.templates
 
 import com.google.inject.Inject
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.LowerBoundRangeVersionRef
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MaxVersionRef
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MinVersionRef
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
 

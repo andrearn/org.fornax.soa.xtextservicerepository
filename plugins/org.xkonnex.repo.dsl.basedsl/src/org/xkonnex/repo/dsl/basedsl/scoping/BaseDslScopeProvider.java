@@ -6,9 +6,9 @@ package org.xkonnex.repo.dsl.basedsl.scoping;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.AssetRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslPackage;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.AssetRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
@@ -20,12 +20,12 @@ import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNam
  * on how and when to use it 
  *
  */
-public class SOABaseDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
+public class BaseDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
 	
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext (
 			EObject ctx, final EReference reference) {
-		if (reference == SOABaseDslPackage.Literals.ASSET_REF__ASSET
+		if (reference == BaseDslPackage.Literals.ASSET_REF__ASSET
 				&& ctx instanceof AssetRef) {
 			final VersionRef v = ((AssetRef) ctx).getVersionRef();
 			return createVersionFilter (v);

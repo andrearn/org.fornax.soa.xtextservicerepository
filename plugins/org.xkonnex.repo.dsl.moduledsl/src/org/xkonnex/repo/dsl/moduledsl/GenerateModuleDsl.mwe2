@@ -10,8 +10,8 @@ var projectName = "org.xkonnex.repo.dsl.moduledsl"
 var runtimeProject = "../${projectName}"
 
 
-var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.ecore"
-var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.genmodel"
+var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore"
+var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel"
 
 var envMetaModel = "platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/generated/EnvironmentDsl.ecore"
 var envGenModel = "platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/generated/EnvironmentDsl.genmodel"
@@ -28,7 +28,7 @@ var profGenModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/gener
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
-		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" }
+//		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" }
 		uriMap = { to = semMetaModel from = "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" }
 		uriMap = { to = svcMetaModel from = "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" }
 		uriMap = { to = profMetaModel from = "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" }

@@ -6,48 +6,48 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
-            extensions="sbasedsl"
-            id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl"
-            name="SOABaseDsl Editor">
+            extensions="basedsl"
+            id="org.xkonnex.repo.dsl.basedsl.BaseDsl"
+            name="BaseDsl Editor">
         </editor>
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened">
+                    definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.validate">
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="org.xkonnex.repo.dsl.basedsl.BaseDsl.validate">
          <activeWhen>
             <reference
-                    definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened">
+                    definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened">
             </reference>
          </activeWhen>
       	</handler>
       	<!-- copy qualified name -->
         <handler
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
             <activeWhen>
-				<reference definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened" />
+				<reference definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened" />
             </activeWhen>
         </handler>
         <handler
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
             <activeWhen>
             	<and>
-            		<reference definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.XtextEditor.opened" />
+            		<reference definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.XtextEditor.opened" />
 	                <iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -56,22 +56,22 @@
         </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened">
+        <definition id="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="org.xkonnex.repo.dsl.basedsl.SOABaseDsl" 
+                        value="org.xkonnex.repo.dsl.basedsl.BaseDsl" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
         </definition>
-        <definition id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.XtextEditor.opened">
+        <definition id="org.xkonnex.repo.dsl.basedsl.BaseDsl.XtextEditor.opened">
             <and>
                 <reference definitionId="isXtextEditorActive"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="org.xkonnex.repo.dsl.basedsl.SOABaseDsl" 
+                        value="org.xkonnex.repo.dsl.basedsl.BaseDsl" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -80,33 +80,33 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl"
-            name="SOABaseDsl">
-            <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_SOABaseDsl"/>
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.xkonnex.repo.dsl.basedsl.BaseDsl"
+            name="BaseDsl">
+            <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_BaseDsl"/>
         </page>
         <page
-            category="org.xkonnex.repo.dsl.basedsl.SOABaseDsl"
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.coloring"
+            category="org.xkonnex.repo.dsl.basedsl.BaseDsl"
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="org.xkonnex.repo.dsl.basedsl.BaseDsl.coloring"
             name="Syntax Coloring">
-            <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_SOABaseDsl"/>
+            <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_BaseDsl"/>
         </page>
         <page
-            category="org.xkonnex.repo.dsl.basedsl.SOABaseDsl"
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.templates"
+            category="org.xkonnex.repo.dsl.basedsl.BaseDsl"
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="org.xkonnex.repo.dsl.basedsl.BaseDsl.templates"
             name="Templates">
-            <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_SOABaseDsl"/>
+            <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_BaseDsl"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl"
-            name="SOABaseDsl">
-            <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_SOABaseDsl"/>
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.xkonnex.repo.dsl.basedsl.BaseDsl"
+            name="BaseDsl">
+            <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_BaseDsl"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -116,14 +116,14 @@
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="org.xkonnex.repo.dsl.basedsl.ui.keyword_SOABaseDsl"
-            label="SOABaseDsl"/>
+            id="org.xkonnex.repo.dsl.basedsl.ui.keyword_BaseDsl"
+            label="BaseDsl"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.validate"
+            id="org.xkonnex.repo.dsl.basedsl.BaseDsl.validate"
             name="Validate">
       </command>
       <!-- copy qualified name -->
@@ -144,12 +144,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.validate"
+                 commandId="org.xkonnex.repo.dsl.basedsl.BaseDsl.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened">
+                    definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -159,7 +159,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
          		style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened" />
+                	<reference definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -167,7 +167,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
             	style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened" />
+                	<reference definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -176,7 +176,7 @@
 				style="push" tooltip="Copy Qualified Name">
          		<visibleWhen checkEnabled="false">
 	            	<and>
-	            		<reference definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.XtextEditor.opened" />
+	            		<reference definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -189,7 +189,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened">
+                	<reference definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -197,11 +197,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened">
+                    definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -212,36 +212,36 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="sbasedsl">
+			class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			type="basedsl">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-            uriExtension="sbasedsl">
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            uriExtension="basedsl">
         </resourceServiceProvider>
     </extension>
 
 
-    <!-- marker definitions for org.xkonnex.repo.dsl.basedsl.SOABaseDsl -->
+    <!-- marker definitions for org.xkonnex.repo.dsl.basedsl.BaseDsl -->
     <extension
-            id="soabasedsl.check.fast"
-            name="SOABaseDsl Problem"
+            id="basedsl.check.fast"
+            name="BaseDsl Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.fast"/>
         <persistent value="true"/>
     </extension>
     <extension
-            id="soabasedsl.check.normal"
-            name="SOABaseDsl Problem"
+            id="basedsl.check.normal"
+            name="BaseDsl Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.normal"/>
         <persistent value="true"/>
     </extension>
     <extension
-            id="soabasedsl.check.expensive"
-            name="SOABaseDsl Problem"
+            id="basedsl.check.expensive"
+            name="BaseDsl Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.expensive"/>
         <persistent value="true"/>
@@ -251,11 +251,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened">
+					definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -275,33 +275,33 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened"/>
+					<reference definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for org.xkonnex.repo.dsl.basedsl.SOABaseDsl -->
+    <!-- quickfix marker resolution generator for org.xkonnex.repo.dsl.basedsl.BaseDsl -->
     <extension
             point="org.eclipse.ui.ide.markerResolution">
         <markerResolutionGenerator
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.xkonnex.repo.dsl.basedsl.ui.soabasedsl.check.fast">
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.xkonnex.repo.dsl.basedsl.ui.basedsl.check.fast">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.xkonnex.repo.dsl.basedsl.ui.soabasedsl.check.normal">
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.xkonnex.repo.dsl.basedsl.ui.basedsl.check.normal">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.xkonnex.repo.dsl.basedsl.ui.soabasedsl.check.expensive">
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.xkonnex.repo.dsl.basedsl.ui.basedsl.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
@@ -310,31 +310,37 @@
     </extension>
 
   <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="sbasedsl">
+    <viewer id="org.xkonnex.repo.dsl.basedsl.BaseDsl.compare.contentViewers"
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="basedsl">
     </viewer>
   </extension>
   <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="sbasedsl" label="SOABaseDsl Compare">
+    <viewer id="org.xkonnex.repo.dsl.basedsl.BaseDsl.compare.contentMergeViewers"
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+            extensions="basedsl" label="BaseDsl Compare">
      </viewer>
   </extension>
   <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="sbasedsl">
+    <provider id="org.xkonnex.repo.dsl.basedsl.BaseDsl.editors.documentProviders"
+            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+            extensions="basedsl">
     </provider>
+  </extension>
+  <extension point="org.eclipse.team.core.fileTypes">
+    <fileTypes
+            extension="basedsl"
+            type="text">
+    </fileTypes>
   </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
-					definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened">
+					definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -346,7 +352,7 @@
                style="push">
             <visibleWhen checkEnabled="false">
                <reference
-                     definitionId="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.Editor.opened">
+                     definitionId="org.xkonnex.repo.dsl.basedsl.BaseDsl.Editor.opened">
                </reference>
             </visibleWhen>
          </command>
@@ -354,11 +360,11 @@
    </extension>
    <extension point="org.eclipse.ui.preferencePages">
 	    <page
-	        category="org.xkonnex.repo.dsl.basedsl.SOABaseDsl"
-	        class="org.xkonnex.repo.dsl.basedsl.ui.SOABaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-	        id="org.xkonnex.repo.dsl.basedsl.SOABaseDsl.refactoring"
+	        category="org.xkonnex.repo.dsl.basedsl.BaseDsl"
+	        class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="org.xkonnex.repo.dsl.basedsl.BaseDsl.refactoring"
 	        name="Refactoring">
-	        <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_SOABaseDsl"/>
+	        <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_BaseDsl"/>
 	    </page>
 	</extension>
 

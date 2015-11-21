@@ -9,11 +9,11 @@ Contributors:
     André Arnold 		- initial API and implementation
     Christian Schneider	- reviews
 */
-grammar org.xkonnex.repo.dsl.solutiondsl.SolutionDsl with org.xkonnex.repo.dsl.basedsl.SOABaseDsl
+grammar org.xkonnex.repo.dsl.solutiondsl.SolutionDsl with org.xkonnex.repo.dsl.basedsl.BaseDsl
 
 generate solutionDsl "http://www.xkonnex.org/repo/dsl/solutiondsl/SolutionDsl"
 
-import "http://www.xkonnex.org/repo/dsl/basedsl/SOABaseDsl" as basedsl
+import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
 import "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" as serviceDsl
 import "http://www.xkonnex.org/repo/dsl/businessdsl/BusinessDsl" as businessDsl

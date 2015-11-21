@@ -93,7 +93,7 @@ default soa-profile SampleArchitectureProfile {
 		 * 
 		 * The service accesses persistent data
 		 */
-		^entity base-category entity
+		Entity base-category entity
 		
 		/** 
 		 * Categorizes a <b>Business Process Service</b> (BPS) <br/><br/>

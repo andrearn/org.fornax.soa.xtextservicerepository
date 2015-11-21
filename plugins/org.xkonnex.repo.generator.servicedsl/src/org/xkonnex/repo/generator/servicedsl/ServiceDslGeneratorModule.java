@@ -3,8 +3,8 @@ package org.xkonnex.repo.generator.servicedsl;
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.xkonnex.repo.generator.core.XtextServiceRepositoryGeneratorConstants;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.SOABaseDslFactory;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.impl.SOABaseDslFactoryImpl;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher;
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
@@ -141,8 +141,8 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 		binder.bind (Boolean.class).annotatedWith (Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
 			.toInstance (false);
 	}
-	public Class<? extends SOABaseDslFactory> bindSOABaseDslFactory () {
-		return SOABaseDslFactoryImpl.class;
+	public Class<? extends BaseDslFactory> bindSOABaseDslFactory () {
+		return BaseDslFactoryImpl.class;
 	}
 	
 	public Class<? extends VersionQualifierExtensions> bindVersionQualifierExtensions () {

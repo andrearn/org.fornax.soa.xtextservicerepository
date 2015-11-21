@@ -3,9 +3,9 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.xkonnex.repo.dsl.businessdsl/src-gen" editDirectory="/org.xkonnex.repo.dsl.businessdsl.edit/src"
     editorDirectory="/org.xkonnex.repo.dsl.businessdsl.editor/src" modelPluginID="org.xkonnex.repo.dsl.businessdsl"
     forceOverwrite="true" modelName="BusinessDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="org.xkonnex.repo.dsl.businessdsl.edit"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="org.xkonnex.repo.dsl.businessdsl.edit"
     editorPluginID="org.xkonnex.repo.dsl.businessdsl.editor" runtimeVersion="2.10"
-    usedGenPackages="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.genmodel#//sOABaseDsl platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel#//semanticsDsl">
+    usedGenPackages="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel#//baseDsl platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel#//semanticsDsl">
   <genPackages prefix="BusinessDsl" basePackage="org.xkonnex.repo.dsl.businessdsl"
       disposableProviderFactory="true" ecorePackage="BusinessDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BusinessDsl.ecore#//CapabilityAutomationLevel">

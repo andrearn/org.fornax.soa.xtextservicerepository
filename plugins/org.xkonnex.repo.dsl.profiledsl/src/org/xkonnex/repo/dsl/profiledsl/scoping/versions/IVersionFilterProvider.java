@@ -3,9 +3,9 @@ package org.xkonnex.repo.dsl.profiledsl.scoping.versions;
 import java.util.List;
 
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionFilter;
 import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
 
 import com.google.common.base.Predicate;
 

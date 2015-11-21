@@ -3,9 +3,9 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.xkonnex.repo.dsl.bindingdsl/src-gen" editDirectory="/org.xkonnex.repo.dsl.bindingdsl.edit/src"
     editorDirectory="/org.xkonnex.repo.dsl.bindingdsl.editor/src" modelPluginID="org.xkonnex.repo.dsl.bindingdsl"
     forceOverwrite="true" modelName="BindingDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
-    complianceLevel="5.0" copyrightFields="false" editPluginID="org.xkonnex.repo.dsl.bindingdsl.edit"
+    complianceLevel="6.0" copyrightFields="false" editPluginID="org.xkonnex.repo.dsl.bindingdsl.edit"
     editorPluginID="org.xkonnex.repo.dsl.bindingdsl.editor" runtimeVersion="2.10"
-    usedGenPackages="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/SOABaseDsl.genmodel#//sOABaseDsl platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/generated/EnvironmentDsl.genmodel#//environmentDsl platform:/resource/org.xkonnex.repo.dsl.moduledsl/model/generated/ModuleDsl.genmodel#//moduleDsl platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel#//semanticsDsl platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.genmodel#//serviceDsl">
+    usedGenPackages="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel#//baseDsl platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/generated/EnvironmentDsl.genmodel#//environmentDsl platform:/resource/org.xkonnex.repo.dsl.moduledsl/model/generated/ModuleDsl.genmodel#//moduleDsl platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel#//semanticsDsl platform:/resource/org.xkonnex.repo.dsl.servicedsl/model/generated/ServiceDsl.genmodel#//serviceDsl">
   <genPackages prefix="BindingDsl" basePackage="org.xkonnex.repo.dsl.bindingdsl" disposableProviderFactory="true"
       ecorePackage="BindingDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SOAPStyle">
@@ -95,22 +95,6 @@
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ReliablilityKind/AT_LEAST_ONCE"/>
       <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//ReliablilityKind/BEST_EFFORT"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//RESTFormat">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/JSON"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/XML"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/BISON"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//RESTFormat/OTHER"/>
-    </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BindingDsl.ecore#//SigningAlgothm">
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/NONE"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/SHA1"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/SHA256"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/MD5"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/RSA_1_5"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES128"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES192"/>
-      <genEnumLiterals ecoreEnumLiteral="BindingDsl.ecore#//SigningAlgothm/AES256"/>
-    </genEnums>
     <genClasses ecoreClass="BindingDsl.ecore#//BindingModel">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//BindingModel/imports"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//BindingModel/bindings"/>
@@ -189,9 +173,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/verb"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/consumes"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/provides"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/format"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/consumesFormat"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//REST/provideFormat"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//JMS">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BindingDsl.ecore#//JMS/channel"/>
@@ -280,9 +261,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//CapacityAssertion/timeUnit"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//CapacityAssertion/messageSize"/>
     </genClasses>
-    <genClasses ecoreClass="BindingDsl.ecore#//ReliablityAsserttion">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//ReliablityAsserttion/reliability"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//ReliablityAsserttion/inOrderDelivery"/>
+    <genClasses ecoreClass="BindingDsl.ecore#//ReliablityAssertion">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//ReliablityAssertion/reliability"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//ReliablityAssertion/inOrderDelivery"/>
     </genClasses>
     <genClasses ecoreClass="BindingDsl.ecore#//CostAssertion">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BindingDsl.ecore#//CostAssertion/costsAmount"/>

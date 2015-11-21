@@ -19,9 +19,9 @@ import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.BusinessDslPackage;
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.BusinessModel;
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.CapabilityRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.Import;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.MajorVersionRef;
-import org.xkonnex.repo.dsl.basedsl.sOABaseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
