@@ -18,15 +18,15 @@ var semGenModel="platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/gene
 var bizMetaModel="platform:/resource/org.xkonnex.repo.dsl.businessdsl/model/generated/BusinessDsl.ecore"
 var bizGenModel="platform:/resource/org.xkonnex.repo.dsl.businessdsl/model/generated/BusinessDsl.genmodel"
 
-var profMetaModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore"
-var profGenModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.genmodel"
+var profMetaModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore"
+var profGenModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.genmodel"
 
 Workflow {
     bean = StandaloneSetup {
     	scanClassPath = true
 		platformUri = "${runtimeProject}/.."
 //		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" }
-		uriMap = { to = profMetaModel from = "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" }
+		uriMap = { to = profMetaModel from = "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" }
 		uriMap = { to = semMetaModel from = "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" }
 		uriMap = { to = bizMetaModel from = "http://www.xkonnex.org/repo/dsl/businessdsl/BusinessDsl" }
 		registerEcoreFile = baseMetaModel

@@ -1,14 +1,14 @@
 package org.xkonnex.repo.generator.profiledsl.java
 
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Type
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Type
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType
 import com.google.inject.Inject
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataTypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedTypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.TypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Property
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 class JavaTypeExtensions {

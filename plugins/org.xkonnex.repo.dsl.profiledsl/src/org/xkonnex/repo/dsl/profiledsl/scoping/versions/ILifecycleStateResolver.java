@@ -5,8 +5,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 
 /**
  * Provides the lifecycle of a stateful asset. If not explicitly set on asset, implementor may

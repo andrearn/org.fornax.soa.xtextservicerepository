@@ -19,7 +19,7 @@ public class CustomBindingDslActivator extends BindingDslActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start (context);
-		Injector injector = getInjector ("org.xkonnex.repo.dsl.bindingdsl.BindingDsl");
+		Injector injector = getInjector (ORG_XKONNEX_REPO_DSL_BINDINGDSL_BINDINGDSL);
 		IPluggableValidatorProvider validatorProvider = injector.getInstance (IPluggableValidatorProvider.class);
 	
         try {

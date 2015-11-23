@@ -6,7 +6,7 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 
 class CommonTemplateExtensions {
 	

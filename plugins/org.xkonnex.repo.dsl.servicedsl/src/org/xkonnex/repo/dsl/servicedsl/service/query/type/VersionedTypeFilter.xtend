@@ -7,7 +7,7 @@ import com.google.inject.Inject
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
 
 class VersionedTypeFilter {

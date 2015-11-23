@@ -3,8 +3,8 @@ package org.xkonnex.repo.generator.servicedsl.templates
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.NamespaceSplitter
 import org.xkonnex.repo.dsl.servicedsl.service.query.ServiceQueries
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
@@ -33,15 +33,15 @@ class ServiceContractGenerator {
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
 
-	def void toOrganizationNamespace (OrganizationNamespace orgNs, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def void toOrganizationNamespace (OrganizationNamespace orgNs, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		orgNs.subNamespaces.forEach (n|n.toSubNamespace (minState, profile, registryBaseUrl));
 	}
 
-	def dispatch void toSubNamespace (SubNamespace ns, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch void toSubNamespace (SubNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		//ERROR "not a concrete type"
 	}
 
-	def dispatch void toSubNamespace (DomainNamespace ns, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch void toSubNamespace (DomainNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		val applicableProfile = ns.getApplicableProfile(profile)
 		ns.interalNamespaces.forEach (n|n.toSubNamespace (minState, applicableProfile, registryBaseUrl));
 		val verNs = ns.splitNamespaceByMajorVersion();
@@ -57,7 +57,7 @@ class ServiceContractGenerator {
 		}
 	}
 	
-	def dispatch void toSubNamespace (InternalNamespace ns, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch void toSubNamespace (InternalNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		val verNs = ns.splitNamespaceByMajorVersion();
 		val applicableProfile = ns.getApplicableProfile(profile)
 		verNs.forEach (
@@ -73,21 +73,21 @@ class ServiceContractGenerator {
 
 
 
-	def dispatch toService (Service s, DomainNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toService (Service s, DomainNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		s.toWSDL (subDom, minState, profile, registryBaseUrl);
 	}
 	
-	def dispatch toService (Service s, InternalNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toService (Service s, InternalNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		s.toWSDL (subDom, minState, profile, registryBaseUrl);
 	}
 
 
 
-	def dispatch toBusinessObject (DomainNamespace ns, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toBusinessObject (DomainNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		ns.toXSD (minState, profile, registryBaseUrl);
 	}
 	
-	def dispatch toBusinessObject (InternalNamespace ns, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toBusinessObject (InternalNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		ns.toXSD (minState, profile, registryBaseUrl);
 	}
 

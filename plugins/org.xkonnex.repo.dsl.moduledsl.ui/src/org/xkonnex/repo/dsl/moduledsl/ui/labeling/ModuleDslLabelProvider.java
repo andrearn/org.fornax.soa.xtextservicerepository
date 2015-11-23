@@ -11,7 +11,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.impl.ServiceImpl;
 

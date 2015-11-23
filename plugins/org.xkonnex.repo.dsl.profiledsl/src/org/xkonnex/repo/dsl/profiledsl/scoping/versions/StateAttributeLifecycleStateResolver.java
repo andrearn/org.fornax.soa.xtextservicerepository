@@ -6,7 +6,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 
 import com.google.inject.Singleton;
 

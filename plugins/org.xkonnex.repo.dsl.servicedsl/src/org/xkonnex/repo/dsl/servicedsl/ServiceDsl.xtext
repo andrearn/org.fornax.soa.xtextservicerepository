@@ -18,7 +18,7 @@ grammar org.xkonnex.repo.dsl.servicedsl.ServiceDsl with org.xkonnex.repo.dsl.bas
 generate serviceDsl "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl"
 
 import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
-import "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" as profileDsl
+import "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" as profileDsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
 import "http://www.xkonnex.org/repo/dsl/businessdsl/BusinessDsl" as businessDsl
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
@@ -34,7 +34,7 @@ ServiceModel:
  */
 OrganizationNamespace :
 	'org-namespace' name= QualifiedName ('shortname' prefix=STRING)? '{'
-		('architecture-profile' profile = [profileDsl::AbstractProfile|QualifiedName])?
+		('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
 		(subNamespaces+=SubNamespace)*
 	'}' ;
 
@@ -47,7 +47,7 @@ DomainNamespace:
 			('domain' domain=[businessDsl::Domain|QualifiedName])?
 			(version=Version  )?
 			(uri=STRING)?
-			('architecture-profile' profile = [profileDsl::AbstractProfile|QualifiedName])?
+			('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
 			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*
@@ -73,7 +73,7 @@ InternalNamespace:
 		('metadata' '{'
 			(uri=STRING)?
 			(version=Version)?
-			('architecture-profile' profile = [profileDsl::AbstractProfile|QualifiedName])?
+			('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
 			('namespace-url' namespaceUrl = STRING)?
 			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?

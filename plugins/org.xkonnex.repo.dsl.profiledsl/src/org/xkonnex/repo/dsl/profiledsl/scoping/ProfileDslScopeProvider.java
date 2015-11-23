@@ -28,11 +28,11 @@ import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.ClassRef;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.EnumRef;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedTypeRef;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ClassRef;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.EnumRef;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslPackage;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
@@ -48,8 +48,8 @@ import com.google.inject.Injector;
  * on how and when to use it 
  *
  */
-public class SOAProfileDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
-	private static final Logger logger = Logger.getLogger(SOAProfileDslScopeProvider.class);
+public class ProfileDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
+	private static final Logger logger = Logger.getLogger(ProfileDslScopeProvider.class);
 
 
 	@Inject
@@ -93,19 +93,19 @@ public class SOAProfileDslScopeProvider extends VersionedImportedNamespaceAwareS
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext (
 			EObject ctx, final EReference reference) {
-		if (reference==SOAProfileDslPackage.Literals.VERSIONED_TYPE_REF__TYPE && ctx instanceof VersionedTypeRef) {
+		if (reference==ProfileDslPackage.Literals.VERSIONED_TYPE_REF__TYPE && ctx instanceof VersionedTypeRef) {
 			final VersionRef v = ((VersionedTypeRef)ctx).getVersionRef();
 			return createVersionFilter (v, ProfileDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		
-		} else if (reference==SOAProfileDslPackage.Literals.CLASS_REF__TYPE && ctx instanceof ClassRef) {
+		} else if (reference==ProfileDslPackage.Literals.CLASS_REF__TYPE && ctx instanceof ClassRef) {
 			final VersionRef v = ((ClassRef)ctx).getVersionRef();
 			return createVersionFilter (v, ProfileDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		
-		} else if (reference==SOAProfileDslPackage.Literals.CLASS__SUPER_CLASS && ctx instanceof ClassRef) {
+		} else if (reference==ProfileDslPackage.Literals.CLASS__SUPER_CLASS && ctx instanceof ClassRef) {
 			final VersionRef v = ((ClassRef)ctx).getVersionRef();
 			return createVersionFilter (v, ProfileDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 			
-		} else if (reference == SOAProfileDslPackage.Literals.ENUM_REF__TYPE && ctx instanceof EnumRef) {
+		} else if (reference == ProfileDslPackage.Literals.ENUM_REF__TYPE && ctx instanceof EnumRef) {
 			final VersionRef v = ((EnumRef)ctx).getVersionRef();
 			return createVersionFilter (v, ProfileDslElementAccessor.INSTANCE.getVersionedOwner(ctx));
 		}

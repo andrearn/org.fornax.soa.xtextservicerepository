@@ -7,10 +7,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.xkonnex.repo.dsl.basedsl.BaseDslStandaloneSetup;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
-import org.xkonnex.repo.dsl.profiledsl.SOAProfileDslStandaloneSetup;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslFactory;
+import org.xkonnex.repo.dsl.profiledsl.ProfileDslStandaloneSetup;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslFactory;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher;
 
 import com.google.inject.Injector;
@@ -26,12 +26,12 @@ public class DefaultStateMatcher {
 	
 	private Lifecycle lifecycle;
 	
-	private SOAProfileDslStandaloneSetup setup;
+	private ProfileDslStandaloneSetup setup;
 	private Injector injector;
 
 	@Before
 	public void setUp () throws Exception {
-		SOAProfileDslFactory factory = SOAProfileDslFactory.eINSTANCE;
+		ProfileDslFactory factory = ProfileDslFactory.eINSTANCE;
 		lifecycle = factory.createLifecycle ();
 		proposed = factory.createLifecycleState ();
 		proposed.setName ("proposed");
@@ -84,7 +84,7 @@ public class DefaultStateMatcher {
 		lifecycle.getStates ().add (deprecated);
 		lifecycle.getStates ().add (retired);
 
-		setup = new SOAProfileDslStandaloneSetup();
+		setup = new ProfileDslStandaloneSetup();
 		injector = setup.createInjectorAndDoEMFRegistration ();
 	}
 	

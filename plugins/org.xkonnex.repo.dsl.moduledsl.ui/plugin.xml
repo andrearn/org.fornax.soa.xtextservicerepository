@@ -341,6 +341,12 @@
             extensions="moddsl">
     </provider>
   </extension>
+  <extension point="org.eclipse.team.core.fileTypes">
+    <fileTypes
+            extension="moddsl"
+            type="text">
+    </fileTypes>
+  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 

@@ -1,7 +1,7 @@
 package org.xkonnex.repo.dsl.servicedsl.service.versioning;
 
 import org.eclipse.emf.ecore.EObject;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type;
@@ -18,5 +18,5 @@ public interface IVersionedTypeRefResolver {
 
 	public boolean typeMatchesMajorVersion (Type t, Integer majorVersion, LifecycleState minState); 
 	public boolean typeMatchesMajorVersion (org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType t, Integer majorVersion);
-	public boolean typeMatchesMajorVersion (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType t, Integer majorVersion);
+	public boolean typeMatchesMajorVersion (org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType t, Integer majorVersion);
 }

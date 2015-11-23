@@ -6,9 +6,9 @@ import org.eclipse.xtext.junit.AbstractXtextTests;
 import org.eclipse.xtext.resource.XtextResource;
 import org.junit.Before;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslFactory;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslFactory;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
@@ -73,7 +73,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 	public void setUp() throws Exception {
 		super.setUp();
 		with (ServiceDslStandaloneSetup.class);
-		SOAProfileDslFactory factory = SOAProfileDslFactory.eINSTANCE;
+		ProfileDslFactory factory = ProfileDslFactory.eINSTANCE;
 		lifecycle = factory.createLifecycle ();
 		proposed = factory.createLifecycleState ();
 		proposed.setName ("proposed");
@@ -126,7 +126,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		lifecycle.getStates ().add (retired);
 
 		BaseDslFactory baseDslFactory = BaseDslFactory.eINSTANCE;
-		SOAProfileDslFactory profDslFactory = SOAProfileDslFactory.eINSTANCE;
+		ProfileDslFactory profDslFactory = ProfileDslFactory.eINSTANCE;
 		ServiceDslFactory dslFactory = ServiceDslFactory.eINSTANCE;
 		bo1 = dslFactory.createBusinessObject();
 		bo1.setName("TestBO1");
@@ -135,7 +135,7 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 		bo1.setVersion(v1);
 		bo1.setState(development);
 		
-		org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType stringType = profDslFactory.createDataType();
+		org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType stringType = profDslFactory.createDataType();
 		stringType.setName("string");
 		
 		attrBo1 = dslFactory.createProperty();

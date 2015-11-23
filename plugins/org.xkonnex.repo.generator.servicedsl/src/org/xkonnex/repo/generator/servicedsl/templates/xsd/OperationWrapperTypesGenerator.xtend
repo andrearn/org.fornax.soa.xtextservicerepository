@@ -9,10 +9,10 @@ import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Property
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
@@ -54,21 +54,21 @@ class OperationWrapperTypesGenerator {
 	@Inject 
 	private Logger log
 
-	def dispatch toOperationWrappersInclSubNamespaces (String serviceName, List<SubNamespace> namespaces, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toOperationWrappersInclSubNamespaces (String serviceName, List<SubNamespace> namespaces, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		for (ns : namespaces.filter(e|e.name.startsWith (serviceName))) {
 			ns.toOperationWrappers (minState, profile, registryBaseUrl);
 		}
 	}
 	
-	def dispatch toOperationWrappers (SubNamespace namespace, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toOperationWrappers (SubNamespace namespace, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		namespace.services.forEach (s|s.toOperationWrappers (namespace, minState, profile, registryBaseUrl));
 	}
 	
-	def dispatch Void toOperationWrappers (Service service, SubNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch Void toOperationWrappers (Service service, SubNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		
 	}
 	
-	def dispatch toOperationWrappers (Service service, DomainNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toOperationWrappers (Service service, DomainNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
 		var content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -114,7 +114,7 @@ class OperationWrapperTypesGenerator {
 		fsa.generateFile (xsdFileName, content);
 	}
 	
-	def dispatch toOperationWrappers (Service service, InternalNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toOperationWrappers (Service service, InternalNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
 		var content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -161,12 +161,12 @@ class OperationWrapperTypesGenerator {
 	}
 	
 	
-	def dispatch toOperationWrapperMessages (Service service, LifecycleState minState, AbstractProfile profile) {
+	def dispatch toOperationWrapperMessages (Service service, LifecycleState minState, Profile profile) {
 		service.operations.map (e|e.toConcreteOperationWrapperTypes (profile)).join
 	}
 	
 	
-	def dispatch toConcreteOperationWrapperTypes (Operation op, AbstractProfile profile) '''
+	def dispatch toConcreteOperationWrapperTypes (Operation op, Profile profile) '''
 		<xsd:complexType name="«op.toOperationWrapperRequestType()»">
 			<xsd:sequence>
 				«IF op.findBestMatchingRequestHeader(profile) != null»
@@ -189,7 +189,7 @@ class OperationWrapperTypesGenerator {
 		<xsd:element name="«param.name»" type="«param.type.toTypeNameRef ()»" «IF param.optional»minOccurs="0" «ENDIF»«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 	
-	def dispatch toParameter (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property prop) '''
+	def dispatch toParameter (org.xkonnex.repo.dsl.profiledsl.profileDsl.Property prop) '''
 		<xsd:element name="«prop.name»" type="«prop.type.toTypeNameRef ()»" «IF prop.optional»minOccurs="0" «ENDIF»«IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 	

@@ -6,10 +6,10 @@ import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaTypeExtensions
 import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceQueries
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AttributeDataTypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.ClassRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.AttributeDataTypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ClassRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.NamespaceSplitter
 import org.xkonnex.repo.dsl.servicedsl.service.query.VersionQueries
@@ -58,7 +58,7 @@ class SchemaTypeExtensions {
 		null;
 	}
 	
-	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TypeRef t) {
+	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.TypeRef t) {
 		null;
 	}
 	
@@ -70,11 +70,11 @@ class SchemaTypeExtensions {
 		profileSchemaTypes.toTypeNameRef (t);
 	}
 	
-	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataTypeRef t) {
+	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef t) {
 		t.type.toTypeNameRef();
 	}
 
-	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AttributeDataTypeRef t) {
+	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.AttributeDataTypeRef t) {
 		t.type.toTypeNameRef();
 	}
 	
@@ -93,7 +93,7 @@ class SchemaTypeExtensions {
 		}
 	}
 	
-	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedTypeRef t) {
+	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef t) {
 		if (profileNSQueries.findTechnicalNamespace (t.type) != null) {
 			var prefix = "tns";
 			if (! (profileNSQueries.findOwnerSubdomain(t) == profileNSQueries.findTechnicalNamespace (t.type)
@@ -166,7 +166,7 @@ class SchemaTypeExtensions {
 	 * Calculate the plain type name used when a type needs to be referenced. The type name is not 
 	 * qualified by namespace prefixes
 	 */
-	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TypeRef typeRef, VersionedDomainNamespace currNs) {
+	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.TypeRef typeRef, VersionedDomainNamespace currNs) {
 		null;
 	}
 	
@@ -298,7 +298,7 @@ class SchemaTypeExtensions {
 	 * Calculate the type name used when a type needs to be referenced. The type name is prefixed 
 	 * with a namespace alias calculate from the (major) versioned namespace
 	 */
-	def dispatch String toNsPrefixedTypeNameRef (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType t) {
+	def dispatch String toNsPrefixedTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType t) {
 	 	switch (t.name) {
 	 		case "attachment":		"xsd:base64Binary"
 	 		case "binary":			"xsd:hexBinary"
@@ -444,7 +444,7 @@ class SchemaTypeExtensions {
 	 * Determine, whether XSD type definitions should be made extendible for unknown elements in
 	 * the complexType  
 	 */
-	def boolean typesUseExtendibleProperties (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
+	def boolean typesUseExtendibleProperties (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
 			&& p.designRules.typeDefPolicy.versionEvolution != null) {
@@ -458,7 +458,7 @@ class SchemaTypeExtensions {
 	/**
 	 * Determine, whether XSD type definitions should be made extendible for unknown XML attributes 
 	 */
-	def boolean typesUseExtendibleXMLAttributes (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
+	def boolean typesUseExtendibleXMLAttributes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
 			&& p.designRules.typeDefPolicy.versionEvolution != null) {
@@ -472,7 +472,7 @@ class SchemaTypeExtensions {
 	 * Determine, whether XSD type definitions, that subtype another type definition, 
 	 * should be made extendible for unknown XML elements or attributes 
 	 */
-	def boolean useExtendibleSubtypes (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
+	def boolean useExtendibleSubtypes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
 			&& p.designRules.typeDefPolicy.versionEvolution != null) {
@@ -487,7 +487,7 @@ class SchemaTypeExtensions {
 	 * Get the XSD any clause that makes complexTypes backward compatible allowing additional 
 	 * optional elements
 	 */
-	def String getTypesExtendiblePropertiesClause (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
+	def String getTypesExtendiblePropertiesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.typesUseExtendibleProperties) {
 			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause != null) {
 				return p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause;
@@ -508,7 +508,7 @@ class SchemaTypeExtensions {
 	 * Get the XSD anyAttribute clause that makes complexTypes backward compatible allowing additional 
 	 * optional XML attributes in the type
 	 */
-	def String getTypesExtendibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
+	def String getTypesExtendibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.typesUseExtendibleXMLAttributes) {
 			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributeClause != null) {
 				return p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributeClause;

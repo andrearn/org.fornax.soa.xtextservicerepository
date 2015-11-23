@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
-import org.xkonnex.repo.dsl.profiledsl.SOAProfileDslStandaloneSetupGenerated;
+import org.xkonnex.repo.dsl.profiledsl.ProfileDslStandaloneSetupGenerated;
 
 import com.google.inject.Injector;
 
@@ -13,7 +13,7 @@ import com.google.inject.Injector;
  * Initialization support for running Xtext languages 
  * without equinox extension registry
  */
-public class SOAProfileDslStandaloneSetup extends SOAProfileDslStandaloneSetupGenerated{
+public class ProfileDslStandaloneSetup extends ProfileDslStandaloneSetupGenerated{
 
 	private List<String> validatorClassName=new ArrayList<String>();
 
@@ -26,7 +26,7 @@ public class SOAProfileDslStandaloneSetup extends SOAProfileDslStandaloneSetupGe
 	}
 
 	public static void doSetup() {
-		new SOAProfileDslStandaloneSetup().createInjectorAndDoEMFRegistration();
+		new ProfileDslStandaloneSetup().createInjectorAndDoEMFRegistration();
 	}
 	
 	public void addValidatorClassName(String validatorClassName) {

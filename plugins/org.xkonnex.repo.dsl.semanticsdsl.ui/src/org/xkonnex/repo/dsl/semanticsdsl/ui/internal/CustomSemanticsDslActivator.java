@@ -19,7 +19,7 @@ public class CustomSemanticsDslActivator extends SemanticsDslActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start (context);
-		Injector injector = getInjector ("org.xkonnex.repo.dsl.semanticsdsl.SemanticsDsl");
+		Injector injector = getInjector (ORG_XKONNEX_REPO_DSL_SEMANTICSDSL_SEMANTICSDSL);
 		IPluggableValidatorProvider validatorProvider = injector.getInstance (IPluggableValidatorProvider.class);
 	
         try {

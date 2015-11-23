@@ -13,7 +13,7 @@ import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
 import org.xkonnex.repo.generator.bindingdsl.templates.naming.DefaultEndpointQualifierNameProvider
 import org.xkonnex.repo.generator.bindingdsl.templates.wsdl.ConcreteWsdlFileNameProvider
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
@@ -57,12 +57,12 @@ class ConcreteWsdlGenerator {
 	 * Generate a concrete pubplic endpoint WSDL for a service bound by a ModuleBinding 
 	 * with the given protocol definition applying the supplied profile
 	 */
-	def dispatch toWSDL (ModuleBinding binding, Service svc, SOAP prot, AbstractProfile profile) {
+	def dispatch toWSDL (ModuleBinding binding, Service svc, SOAP prot, Profile profile) {
 		svc.toWSDL (binding, prot, profile);
 	}
 	
 	
-	def dispatch toWSDL(Service svc, ServiceBinding svcBind, SOAP prot, AbstractProfile enforcedProfile) {
+	def dispatch toWSDL(Service svc, ServiceBinding svcBind, SOAP prot, Profile enforcedProfile) {
 		val profile = svc.findSubdomain.getApplicableProfile(enforcedProfile)
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment(svcBind, prot) + ".wsdl";
 		val content = '''
@@ -91,7 +91,7 @@ class ConcreteWsdlGenerator {
 		fsa.generateFile (wsdlFile, content);
 	}
 	
-	def dispatch toWSDL(Service svc, ModuleBinding modBind, BindingProtocol prot, AbstractProfile enforcedProfile) {
+	def dispatch toWSDL(Service svc, ModuleBinding modBind, BindingProtocol prot, Profile enforcedProfile) {
 		val profile = svc.findSubdomain.getApplicableProfile(enforcedProfile)
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment(modBind, prot) + ".wsdl";
 		val content ='''

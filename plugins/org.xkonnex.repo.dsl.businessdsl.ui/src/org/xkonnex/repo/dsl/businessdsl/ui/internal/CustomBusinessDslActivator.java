@@ -18,7 +18,7 @@ public class CustomBusinessDslActivator extends BusinessDslActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start (context);
-		Injector injector = getInjector ("org.xkonnex.repo.dsl.businessdsl.BusinessDsl");
+		Injector injector = getInjector (ORG_XKONNEX_REPO_DSL_BUSINESSDSL_BUSINESSDSL);
 		IPluggableValidatorProvider validatorProvider = injector.getInstance (IPluggableValidatorProvider.class);
 	
         try {

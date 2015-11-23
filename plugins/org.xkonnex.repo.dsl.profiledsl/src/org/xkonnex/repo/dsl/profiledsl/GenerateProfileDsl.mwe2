@@ -1,10 +1,10 @@
-module org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl
+module org.xkonnex.repo.dsl.profiledsl.ProfileDsl
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/org/xkonnex/repo/dsl/profiledsl/SOAProfileDsl.xtext"
+var grammarURI = "classpath:/org/xkonnex/repo/dsl/profiledsl/ProfileDsl.xtext"
 var file.extensions = "profdsl"
 var projectName = "org.xkonnex.repo.dsl.profiledsl"
 var runtimeProject = "../${projectName}"

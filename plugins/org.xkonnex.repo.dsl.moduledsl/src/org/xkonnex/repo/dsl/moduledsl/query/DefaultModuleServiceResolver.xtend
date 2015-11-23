@@ -12,7 +12,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleDslFactory
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef
 import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 

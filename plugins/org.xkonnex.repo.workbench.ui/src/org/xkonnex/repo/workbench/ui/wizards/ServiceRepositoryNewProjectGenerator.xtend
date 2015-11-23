@@ -984,7 +984,7 @@ class ServiceRepositoryNewProjectGenerator {
 		val content='''
 			import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.*
 			import org.xkonnex.repo.dsl.servicedsl.serviceDsl.*
-			import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.*
+			import org.xkonnex.repo.dsl.profiledsl.profileDsl.*
 			
 			diagram SolutionDiagram type Solution {
 				

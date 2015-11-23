@@ -9,61 +9,26 @@ Contributors:
     André Arnold 		- initial API and implementation
     Christian Schneider	- reviews
 */
-grammar org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl with org.xkonnex.repo.dsl.basedsl.BaseDsl
+grammar org.xkonnex.repo.dsl.profiledsl.ProfileDsl with org.xkonnex.repo.dsl.basedsl.BaseDsl
 
-generate sOAProfileDsl "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl"
+generate profileDsl "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl"
 
 import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as  environmentDsl
 
-SOAProfileModel:
+ProfileModel:
 	(imports+=Import)*
 	(types+=DataType)+
-	(profiles += AbstractProfile)*
+	(profiles += Profile)*
 	(roles+=Role)*;
 
-AbstractProfile: Profile | SOAProfile;
 
 /*
  * Defines architectural constraints that apply. General foundational governance principles, like lifecycle states 
  * are defined as well in the profile. Usually scoped to an organization
  */	
 Profile:
-	(default?='default')? 'profile' name=QualifiedName '{'
-		/* The scope, where the architecture profile applies to */
-		('scope' scope = STRING)?
-		/* The asset lifecycle states */
-		(lifecycle=Lifecycle)?
-		/* The available service categories */
-		('service-categories' '{'
-			serviceCategory+=ServiceCategory+
-		'}')?
-		(designRules=DesignRules)?
-		(versioningRule = VersioningRule)
-		/* 
-		 * basic message principles, e.g. message headers that have to be set in every service message
-		 * if not stated otherwise in the service definition
-		 */
-		(messaging=Messaging)?
-		(orgNamespaces += OrganizationNamespace)*
-		(namespaceRules = NamespaceRules)?
-		(scopedBasicTypes+=BasicTypes)*
-		(governanceDecisions+=GovernanceDecision)*
-		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-		'}')?
-		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
-		'}')?
-	'}';
-/*
- * Defines architectural constraints that apply. General foundational governance principles, like lifecycle states 
- * are defined as well in the profile. Usually scoped to an organization
- */	
-SOAProfile:
-	(default?='default')? 'soa-profile' name=QualifiedName '{'
+	(default?='default')? ('profile'|'soa-profile') name=QualifiedName '{'
 		/* The scope, where the architecture profile applies to */
 		('scope' scope = STRING)?
 		/* The asset lifecycle states */

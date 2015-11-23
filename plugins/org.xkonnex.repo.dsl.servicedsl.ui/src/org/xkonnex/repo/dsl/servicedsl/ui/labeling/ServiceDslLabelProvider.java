@@ -9,7 +9,7 @@ import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.StyledString.Styler;
 import org.eclipse.swt.graphics.TextStyle;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
@@ -256,8 +256,8 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	private String getTypeName (TypeRef t) {
 		if (t instanceof DataTypeRef) {
 			DataTypeRef dtRef = (DataTypeRef) t;
-			if (dtRef.getType() instanceof org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType )
-				return ((org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType) dtRef.getType()).getName();
+			if (dtRef.getType() instanceof org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType )
+				return ((org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType) dtRef.getType()).getName();
 			else
 				_log.error("Unexpected reference type " + dtRef.getType().eClass().getName());
 		}

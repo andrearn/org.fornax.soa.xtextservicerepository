@@ -4,7 +4,7 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile;
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace;
 import org.xkonnex.repo.generator.bindingdsl.templates.IProtocolContractBuilder;
@@ -19,25 +19,25 @@ public class ProvidedProtocolContractBuilder implements IProtocolContractBuilder
 		this.provider = provider;
 	}
 
-	public void buildServiceContracts (ModuleBinding bind, AbstractProfile profile) {
+	public void buildServiceContracts (ModuleBinding bind, Profile profile) {
 		provider.get().buildServiceContracts (bind, profile);
 	}
 
-	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef providerEndpointQualifier, AbstractProfile enforcedProfile) {
+	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef providerEndpointQualifier, Profile enforcedProfile) {
 		provider.get().buildProvidedServiceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, providerEndpointQualifier, enforcedProfile);
 	}
 	
-	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifier, AbstractProfile enforcedProfile) {
+	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifier, Profile enforcedProfile) {
 		provider.get().buildUsedServiceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, endpointQualifier, enforcedProfile);
 	}
 
 	public void buildTypeDefinitions (SubNamespace namespace, Environment env,
-			AbstractProfile profile) {
+			Profile profile) {
 		provider.get ().buildTypeDefinitions (namespace, env, profile);
 	}
 
 	public void buildTypeDefinitions (VersionedDomainNamespace namespace,
-			Environment env, AbstractProfile profile) {
+			Environment env, Profile profile) {
 		provider.get ().buildTypeDefinitions (namespace, env, profile);
 	}
 

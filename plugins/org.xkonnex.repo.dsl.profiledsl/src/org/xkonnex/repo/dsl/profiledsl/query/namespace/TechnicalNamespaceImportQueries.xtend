@@ -5,9 +5,9 @@ import java.util.HashSet
 import java.util.Set
 import org.xkonnex.repo.dsl.profiledsl.query.type.ReferencedTypesFinder
 import org.xkonnex.repo.dsl.profiledsl.query.type.VersionedTypeFilter
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TechnicalNamespace
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Class
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
 import org.xkonnex.repo.dsl.profiledsl.versioning.TechnicalNamespaceSplitter
 import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
 
@@ -51,7 +51,7 @@ class TechnicalNamespaceImportQueries {
 	 *	of the found dependencies are returned.
 	 */
 	def dispatch Set<VersionedTechnicalNamespace> allImportedVersionedNS (TechnicalNamespace s, String nameSpaceMajorVersion) {
-		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class))
+		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class))
 			.map (e|e.allReferencedVersionedTypes()).flatten.map (v|v.createVersionedTechnicalNamespace()).toSet;
 	}
 	
@@ -72,7 +72,7 @@ class TechnicalNamespaceImportQueries {
 	 *	of the found dependencies are returned.
 	 */
 	def dispatch Set<VersionedTechnicalNamespace> importedVersionedNS (TechnicalNamespace s, String nameSpaceMajorVersion) {
-		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class))
+		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class))
 		.map (e|e.allReferencedVersionedTypes()).flatten.map (v|v.createVersionedTechnicalNamespace()).toSet;
 	}
 	

@@ -8,7 +8,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;

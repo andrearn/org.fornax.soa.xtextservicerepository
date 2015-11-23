@@ -3,7 +3,7 @@ package org.xkonnex.repo.dsl.profiledsl.ui.quickfix;
 
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
 
-public class SOAProfileDslQuickfixProvider extends DefaultQuickfixProvider {
+public class ProfileDslQuickfixProvider extends DefaultQuickfixProvider {
 
 //	@Fix(MyJavaValidator.INVALID_NAME)
 //	public void capitalizeName(final Issue issue, IssueResolutionAcceptor acceptor) {

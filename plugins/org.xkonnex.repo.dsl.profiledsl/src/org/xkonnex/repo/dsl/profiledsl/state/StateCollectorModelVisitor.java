@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.xkonnex.repo.dsl.basedsl.traversal.IModelVisitor;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.eclipse.xtext.resource.IEObjectDescription;
 

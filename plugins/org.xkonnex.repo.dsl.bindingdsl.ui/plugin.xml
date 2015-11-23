@@ -348,6 +348,12 @@
             extensions="binddsl">
     </provider>
   </extension>
+  <extension point="org.eclipse.team.core.fileTypes">
+    <fileTypes
+            extension="binddsl"
+            type="text">
+    </fileTypes>
+  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 

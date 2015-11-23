@@ -4,7 +4,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import com.google.inject.Inject
@@ -12,7 +12,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.ClassRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ClassRef
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 /**
@@ -265,7 +265,7 @@ class JavaTypeExtensions {
 	def dispatch String toPackageName (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception exception) {
 		nameProvider.getFullyQualifiedName(exception.eContainer).toString + "." + exception.version.toVersionPostfix
 	}
-	def dispatch String toPackageName (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class type) {
+	def dispatch String toPackageName (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class type) {
 		nameProvider.getFullyQualifiedName(type.eContainer).toString + "." + type.version.toVersionPostfix
 	}
 	def dispatch String toPackageName (TypeRef typeRef) {

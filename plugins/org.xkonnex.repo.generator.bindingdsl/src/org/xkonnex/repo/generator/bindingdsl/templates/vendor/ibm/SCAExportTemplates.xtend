@@ -11,7 +11,7 @@ import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
 import org.xkonnex.repo.generator.bindingdsl.templates.soap.SoapBindingResolver
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyType
 import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleServiceResolver
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
 import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver
@@ -37,11 +37,11 @@ class SCAExportTemplates {
 
 	@Inject IFileSystemAccess fsa
 
-	def dispatch void toSCAModuleExport (BindingProtocol protocol, AbstractProfile profile) {
+	def dispatch void toSCAModuleExport (BindingProtocol protocol, Profile profile) {
 	}
 	
 	
-	def dispatch void toSCAModuleExport (ModuleBinding binding, AbstractProfile enforcedProfile) {
+	def dispatch void toSCAModuleExport (ModuleBinding binding, Profile enforcedProfile) {
 		if (binding.module.module.assemblyType == AssemblyType::SCA_EAR) {
 			for (provSvc : binding.module.module.providedServices) {
 				val svc = provSvc.resolveModuleServiceRef (binding.resolveEnvironment);
@@ -52,10 +52,10 @@ class SCAExportTemplates {
 		}
 	}
 	
-	def dispatch Void toServiceExport (BindingProtocol protocol, ModuleBinding modBind, Service svc, AbstractProfile profile) {
+	def dispatch Void toServiceExport (BindingProtocol protocol, ModuleBinding modBind, Service svc, Profile profile) {
 	}
 	
-	def dispatch toServiceExport (SOAP protocol, ModuleBinding modBind, Service svc, AbstractProfile enforcedProfile) {
+	def dispatch toServiceExport (SOAP protocol, ModuleBinding modBind, Service svc, Profile enforcedProfile) {
 		val profile = svc.findSubdomain.getApplicableProfile(enforcedProfile)
 		val exportFile = svc.getExportFileName (protocol);
 		val content = '''
@@ -79,7 +79,7 @@ class SCAExportTemplates {
 		fsa.generateFile (exportFile, content);
 	}
 	
-	def dispatch toServiceExport (SCA protocol, ModuleBinding modBind, Service svc, AbstractProfile enforcedProfile) {
+	def dispatch toServiceExport (SCA protocol, ModuleBinding modBind, Service svc, Profile enforcedProfile) {
 		val profile = svc.findSubdomain.getApplicableProfile(enforcedProfile)
 		val exportFile = svc.getExportFileName (protocol);
 		val content = '''

@@ -9,6 +9,6 @@ import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider;
  * customization of the default outline structure
  * 
  */
-public class SOAProfileDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
+public class ProfileDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	
 }

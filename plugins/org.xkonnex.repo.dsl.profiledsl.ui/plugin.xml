@@ -2,16 +2,16 @@
 <?eclipse version="3.0"?>
 
 <plugin>
-   <extension-point id="SOAProfileDSLValidator" name="Pluggable Architecture Profile-DSL validator" schema="schema/SOAProfileDSLValidator.exsd"/>
+   <extension-point id="ProfileDSLValidator" name="Pluggable Architecture Profile-DSL validator" schema="schema/SOAProfileDSLValidator.exsd"/>
 
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="profdsl"
-            id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl"
+            id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl"
             name="Architecture Profile-DSL Editor">
         </editor>
     </extension>
@@ -19,7 +19,7 @@
 	      point = "org.eclipse.ui.newWizards">
 		 <wizard
          category="org.xkonnex.repo.workbench.ui.newWizards"
-         class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.xkonnex.repo.dsl.profiledsl.ui.wizard.NewProfileDslFileWizard"
+         class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.xkonnex.repo.dsl.profiledsl.ui.wizard.NewProfileDslFileWizard"
          hasPages="true"
          
          id="org.xkonnex.repo.dsl.profiledsl.ui.wizard.NewProfileDslFileWizard"
@@ -31,37 +31,37 @@
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened">
+                    definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.validate">
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.validate">
          <activeWhen>
             <reference
-                    definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened">
+                    definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened">
             </reference>
          </activeWhen>
       	</handler>
       	<!-- copy qualified name -->
         <handler
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
             <activeWhen>
-				<reference definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened" />
+				<reference definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened" />
             </activeWhen>
         </handler>
         <handler
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
             commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
             <activeWhen>
             	<and>
-            		<reference definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.XtextEditor.opened" />
+            		<reference definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.XtextEditor.opened" />
 	                <iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -70,22 +70,22 @@
         </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened">
+        <definition id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl" 
+                        value="org.xkonnex.repo.dsl.profiledsl.ProfileDsl" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
         </definition>
-        <definition id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.XtextEditor.opened">
+        <definition id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.XtextEditor.opened">
             <and>
                 <reference definitionId="isXtextEditorActive"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl" 
+                        value="org.xkonnex.repo.dsl.profiledsl.ProfileDsl" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -94,33 +94,33 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl"
-            name="Architecture Profile-DSL">
-            <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_SOAProfileDsl"/>
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl"
+            name="ProfileDsl">
+            <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_ProfileDsl"/>
         </page>
         <page
-            category="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl"
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.coloring"
+            category="org.xkonnex.repo.dsl.profiledsl.ProfileDsl"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.coloring"
             name="Syntax Coloring">
-            <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_SOAProfileDsl"/>
+            <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_ProfileDsl"/>
         </page>
         <page
-            category="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl"
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.templates"
+            category="org.xkonnex.repo.dsl.profiledsl.ProfileDsl"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.templates"
             name="Templates">
-            <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_SOAProfileDsl"/>
+            <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_ProfileDsl"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl"
-            name="Architecture Profile-DSL">
-            <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_SOAProfileDsl"/>
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl"
+            name="ProfileDsl">
+            <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_ProfileDsl"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -130,14 +130,14 @@
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_SOAProfileDsl"
-            label="Architecture Profile-DSL"/>
+            id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_ProfileDsl"
+            label="ProfileDsl"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.validate"
+            id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.validate"
             name="Validate">
       </command>
       <!-- copy qualified name -->
@@ -158,12 +158,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.validate"
+                 commandId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened">
+                    definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -173,7 +173,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName" 
          		style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened" />
+                	<reference definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -181,7 +181,7 @@
          	<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
             	style="push" tooltip="Copy Qualified Name">
             	<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened" />
+                	<reference definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened" />
             	</visibleWhen>
          	</command>  
          </menuContribution>
@@ -190,7 +190,7 @@
 				style="push" tooltip="Copy Qualified Name">
          		<visibleWhen checkEnabled="false">
 	            	<and>
-	            		<reference definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.XtextEditor.opened" />
+	            		<reference definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -203,7 +203,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened">
+                	<reference definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -211,11 +211,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened">
+                    definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -226,35 +226,35 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="profdsl">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="profdsl">
         </resourceServiceProvider>
     </extension>
 
 
-    <!-- marker definitions for org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl -->
+    <!-- marker definitions for org.xkonnex.repo.dsl.profiledsl.ProfileDsl -->
     <extension
-            id="soaprofiledsl.check.fast"
+            id="profiledsl.check.fast"
             name="Architecture Profile-DSL Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.fast"/>
         <persistent value="true"/>
     </extension>
     <extension
-            id="soaprofiledsl.check.normal"
+            id="profiledsl.check.normal"
             name="Architecture Profile-DSL Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.normal"/>
         <persistent value="true"/>
     </extension>
     <extension
-            id="soaprofiledsl.check.expensive"
+            id="profiledsl.check.expensive"
             name="Architecture Profile-DSL Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.expensive"/>
@@ -265,11 +265,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened">
+					definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -289,33 +289,33 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened"/>
+					<reference definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-    <!-- quickfix marker resolution generator for org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl -->
+    <!-- quickfix marker resolution generator for org.xkonnex.repo.dsl.profiledsl.ProfileDsl -->
     <extension
             point="org.eclipse.ui.ide.markerResolution">
         <markerResolutionGenerator
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.xkonnex.repo.dsl.profiledsl.ui.soaprofiledsl.check.fast">
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.xkonnex.repo.dsl.profiledsl.ui.profiledsl.check.fast">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.xkonnex.repo.dsl.profiledsl.ui.soaprofiledsl.check.normal">
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.xkonnex.repo.dsl.profiledsl.ui.profiledsl.check.normal">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
             </attribute>
         </markerResolutionGenerator>
         <markerResolutionGenerator
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-            markerType="org.xkonnex.repo.dsl.profiledsl.ui.soaprofiledsl.check.expensive">
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+            markerType="org.xkonnex.repo.dsl.profiledsl.ui.profiledsl.check.expensive">
             <attribute
                 name="FIXABLE_KEY"
                 value="true">
@@ -324,31 +324,37 @@
     </extension>
 
   <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+    <viewer id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.compare.contentViewers"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
             extensions="profdsl">
     </viewer>
   </extension>
   <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+    <viewer id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.compare.contentMergeViewers"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
             extensions="profdsl" label="Architecture Profile-DSL Compare">
      </viewer>
   </extension>
   <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+    <provider id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.editors.documentProviders"
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
             extensions="profdsl">
     </provider>
+  </extension>
+  <extension point="org.eclipse.team.core.fileTypes">
+    <fileTypes
+            extension="profdsl"
+            type="text">
+    </fileTypes>
   </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
-			class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+			class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
-					definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened">
+					definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -360,7 +366,7 @@
                style="push">
             <visibleWhen checkEnabled="false">
                <reference
-                     definitionId="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.Editor.opened">
+                     definitionId="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.Editor.opened">
                </reference>
             </visibleWhen>
          </command>
@@ -368,11 +374,11 @@
    </extension>
    <extension point="org.eclipse.ui.preferencePages">
 	    <page
-	        category="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl"
-	        class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-	        id="org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl.refactoring"
+	        category="org.xkonnex.repo.dsl.profiledsl.ProfileDsl"
+	        class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+	        id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.refactoring"
 	        name="Refactoring">
-	        <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_SOAProfileDsl"/>
+	        <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_ProfileDsl"/>
 	    </page>
 	</extension>
 

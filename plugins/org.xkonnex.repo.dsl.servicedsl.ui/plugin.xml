@@ -353,6 +353,12 @@
             extensions="svcdsl">
     </provider>
   </extension>
+  <extension point="org.eclipse.team.core.fileTypes">
+    <fileTypes
+            extension="svcdsl"
+            type="text">
+    </fileTypes>
+  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 

@@ -14,7 +14,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="domain" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.businessdsl/model/generated/BusinessDsl.ecore#//Domain"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="#//Version"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="productVersion" eType="#//Version"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInfo" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//AdditionalInformation"

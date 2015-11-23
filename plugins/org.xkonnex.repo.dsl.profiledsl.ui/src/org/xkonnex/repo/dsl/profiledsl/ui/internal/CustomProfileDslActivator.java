@@ -8,22 +8,22 @@ import org.eclipse.core.runtime.RegistryFactory;
 import org.osgi.framework.BundleContext;
 import org.xkonnex.repo.dsl.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
-import org.xkonnex.repo.dsl.profiledsl.ui.internal.SOAProfileDslActivator;
+import org.xkonnex.repo.dsl.profiledsl.ui.internal.ProfileDslActivator;
 
 import com.google.inject.Injector;
 
-public class CustomSOAProfileDslActivator extends SOAProfileDslActivator {
+public class CustomProfileDslActivator extends ProfileDslActivator {
 
 	private Set<AbstractPluggableDeclarativeValidator> validatorContributions = new HashSet<AbstractPluggableDeclarativeValidator>();
 
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start (context);
-		Injector injector = getInjector ("org.xkonnex.repo.dsl.profiledsl.SOAProfileDsl");
+		Injector injector = getInjector (ORG_XKONNEX_REPO_DSL_PROFILEDSL_PROFILEDSL);
 		IPluggableValidatorProvider validatorProvider = injector.getInstance (IPluggableValidatorProvider.class);
 	
         try {
-            final IConfigurationElement[] confEl = RegistryFactory.getRegistry().getConfigurationElementsFor ("org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDSLValidator");
+            final IConfigurationElement[] confEl = RegistryFactory.getRegistry().getConfigurationElementsFor ("org.xkonnex.repo.dsl.profiledsl.ui.ProfileDSLValidator");
 
             for (IConfigurationElement curEl: confEl) {
                 final Object o = curEl.createExecutableExtension ("class");

@@ -1,7 +1,7 @@
 package org.xkonnex.repo.dsl.servicedsl.service.versioning
 
 import java.util.List
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef
 import com.google.inject.Inject

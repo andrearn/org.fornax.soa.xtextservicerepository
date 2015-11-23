@@ -6,7 +6,7 @@ import java.util.Set
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation

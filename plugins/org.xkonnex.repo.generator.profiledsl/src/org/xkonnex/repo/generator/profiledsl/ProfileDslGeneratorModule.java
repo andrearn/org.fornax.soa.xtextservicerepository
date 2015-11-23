@@ -1,6 +1,6 @@
 package org.xkonnex.repo.generator.profiledsl;
 
-import org.xkonnex.repo.dsl.profiledsl.SOAProfileDslRuntimeModule;
+import org.xkonnex.repo.dsl.profiledsl.ProfileDslRuntimeModule;
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions;
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaTypeExtensions;
 import org.xkonnex.repo.dsl.profiledsl.query.ProfileVersionQueries;
@@ -11,7 +11,7 @@ import org.xkonnex.repo.dsl.profiledsl.query.type.ReferencedTypesFinder;
 import org.xkonnex.repo.dsl.profiledsl.query.type.VersionedTypeFilter;
 import org.xkonnex.repo.dsl.profiledsl.versioning.TechnicalNamespaceSplitter;
 
-public class ProfileDslGeneratorModule extends SOAProfileDslRuntimeModule {
+public class ProfileDslGeneratorModule extends ProfileDslRuntimeModule {
 
 	public Class<? extends LatestMatchingTypeFinder> bindProfileLatestMatchingTypeFinder () {
 		return LatestMatchingTypeFinder.class;

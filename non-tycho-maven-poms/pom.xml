@@ -34,8 +34,8 @@
 	</developers>
 
 	<properties>
-		<xtext.version>2.8.0</xtext.version>
-		<xtend.version>2.8.0</xtend.version>
+		<xtext.version>2.8.4</xtext.version>
+		<xtend.version>2.8.4</xtend.version>
 	</properties>
 
 	<dependencyManagement>

@@ -13,7 +13,7 @@
 	<packaging>eclipse-plugin</packaging>
 
 	<properties>
-		<workflow>src/org/xkonnex/repo/dsl/profiledsl/GenerateSOAProfileDsl.mwe2</workflow>
+		<workflow>src/org/xkonnex/repo/dsl/profiledsl/GenerateProfileDsl.mwe2</workflow>
 	</properties>
 	<groupId>org.xkonnex.repo.dsl</groupId>
 	

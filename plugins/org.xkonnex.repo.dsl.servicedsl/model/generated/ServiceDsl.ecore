@@ -16,7 +16,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="OrganizationNamespace">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="prefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="profile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//AbstractProfile"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//Profile"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="subNamespaces" upperBound="-1"
         eType="#//SubNamespace" containment="true"/>
   </eClassifiers>
@@ -26,7 +26,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Version"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="uri" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="profile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//AbstractProfile"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="profile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//Profile"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owner" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//User"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="responsible" unique="false"
         upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//User"/>
@@ -62,7 +62,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Version"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="releaseDate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -103,7 +103,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="QueryObject" eSuperTypes="#//DataObject"/>
   <eClassifiers xsi:type="ecore:EClass" name="TypeRef"/>
   <eClassifiers xsi:type="ecore:EClass" name="DataTypeRef" eSuperTypes="#//TypeRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//DataType"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//DataType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="many" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="set" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="contentType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -165,13 +165,13 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//ServiceRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//GovernanceDecision"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//ServiceCategory"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="category" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//ServiceCategory"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="statefulness" eType="#//Statefulness"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="persistence" eType="#//Persistence"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="additionalInfo" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//AdditionalInformation"
@@ -252,7 +252,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//ExceptionRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
@@ -345,7 +345,7 @@
         eType="#//ConsiderationPropertyRef" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MessageHeaderRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="header" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//MessageHeader"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="header" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//MessageHeader"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//VersionRef"
         containment="true"/>
   </eClassifiers>
@@ -363,7 +363,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//EventRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
@@ -399,7 +399,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="replaces" eType="#//CommandRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceApproval" eType="#//GovernanceApproval"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"

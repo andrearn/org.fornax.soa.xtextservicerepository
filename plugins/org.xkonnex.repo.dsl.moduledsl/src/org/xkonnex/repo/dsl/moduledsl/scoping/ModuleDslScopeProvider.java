@@ -37,7 +37,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceModuleRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver;
 import org.xkonnex.repo.dsl.moduledsl.util.ModuleDslAccess;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMinMaxVersionForOwnerStateFilter;

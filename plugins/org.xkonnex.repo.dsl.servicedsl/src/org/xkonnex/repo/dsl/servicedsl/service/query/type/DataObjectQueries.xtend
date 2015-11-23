@@ -10,7 +10,7 @@ import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.xkonnex.repo.dsl.basedsl.ref.DependencyDescription
 import org.xkonnex.repo.dsl.basedsl.util.TreeNode
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace

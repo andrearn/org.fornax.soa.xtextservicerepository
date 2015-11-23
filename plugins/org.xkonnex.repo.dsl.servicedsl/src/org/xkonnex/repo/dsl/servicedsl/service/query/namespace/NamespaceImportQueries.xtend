@@ -3,7 +3,7 @@ package org.xkonnex.repo.dsl.servicedsl.service.query.namespace
 import com.google.inject.Inject
 import java.util.HashSet
 import java.util.Set
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.query.ServiceQueries
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.ReferencedTypesFinder

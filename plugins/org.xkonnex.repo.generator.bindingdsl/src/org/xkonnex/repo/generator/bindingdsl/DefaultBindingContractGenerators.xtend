@@ -17,7 +17,7 @@ import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
 import org.xkonnex.repo.generator.bindingdsl.templates.TechnicalContractArtifactsBuilder
 import org.xkonnex.repo.generator.bindingdsl.templates.xsd.XSDBuilder
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
@@ -35,7 +35,7 @@ import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueriesimport org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries
 import org.eclipse.xtext.EcoreUtil2
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 
 /*
@@ -117,7 +117,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 			logger.severe ("No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
 			hasValidParameters = false
 		}
-		val AbstractProfile profile = profileQueries.getProfileByName(profileName, resourceSet)
+		val Profile profile = profileQueries.getProfileByName(profileName, resourceSet)
 		if (profile != null) {
 			logger.info ("Enforcing generation with profile " + profile.name)
 			hasValidParameters = hasValidParameters && true
@@ -179,7 +179,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 	}
 	
 	
-	def protected compile (ModuleBinding bind, AbstractProfile profile) {
+	def protected compile (ModuleBinding bind, Profile profile) {
 		logger.info("Generating contracts for module binding " + bind.name)
 		if (noDependencies != null && includeSubNamespaces != null)
 			bindingBuilder.build (bind, profile, noDependencies, includeSubNamespaces)
@@ -187,7 +187,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 			bindingBuilder.build (bind, profile);
 	}
 		
-	def protected compile (Module mod, VersionedModuleSelector moduleSelector, AbstractProfile enforcedProfile, Resource resource) {
+	def protected compile (Module mod, VersionedModuleSelector moduleSelector, Profile enforcedProfile, Resource resource) {
 		logger.info("Generating contracts for module " + mod.name + " version " + mod.version.version)
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 		var generateProvidedServices = moduleSelector.generateProvidedServices
@@ -215,7 +215,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 	}
 	
 	def protected compile (SubNamespace namespace, Resource resource) {
-		val AbstractProfile profile = namespace.getApplicableProfile(profileQueries.getProfileByName(profileName, resource.resourceSet))
+		val Profile profile = namespace.getApplicableProfile(profileQueries.getProfileByName(profileName, resource.resourceSet))
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 		if (env == null)
 			logger.severe ("No environment found matching the name expression " + targetEnvironmentName)

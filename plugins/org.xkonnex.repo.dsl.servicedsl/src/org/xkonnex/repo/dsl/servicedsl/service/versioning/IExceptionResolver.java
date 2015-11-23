@@ -1,6 +1,6 @@
 package org.xkonnex.repo.dsl.servicedsl.service.versioning;
 
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
 
 public interface IExceptionResolver {

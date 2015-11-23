@@ -26,7 +26,7 @@ import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;

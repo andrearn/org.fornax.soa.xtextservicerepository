@@ -8,8 +8,8 @@ import java.util.List;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
 import org.xkonnex.repo.dsl.environmentdsl.util.EnvironmentTypeComparator;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;

@@ -9,7 +9,7 @@ import org.eclipse.xtext.validation.Check;
 import org.eclipse.xtext.validation.CheckType;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.validation.AbstractPluggableDeclarativeValidator;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;

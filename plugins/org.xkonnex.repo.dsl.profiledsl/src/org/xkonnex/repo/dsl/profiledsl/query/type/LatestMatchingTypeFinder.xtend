@@ -5,13 +5,13 @@ import java.util.List
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
 import org.xkonnex.repo.dsl.basedsl.baseDsl.AbstractType
 import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceQueries
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AttributeDataTypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataTypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TechnicalNamespace
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Type
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedTypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.AttributeDataTypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Type
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 
 class LatestMatchingTypeFinder {
@@ -22,7 +22,7 @@ class LatestMatchingTypeFinder {
 		
 	
 	
-	def dispatch org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType selectLatestMatchingType (VersionedTypeRef ref) {
+	def dispatch org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType selectLatestMatchingType (VersionedTypeRef ref) {
 		ref.type;
 	}
 
@@ -54,17 +54,17 @@ class LatestMatchingTypeFinder {
 	 *		find the lastest type declaration matching
 	 *  	- the version constraint defined in the reference
 	 */
-	def dispatch org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Type findLatestMatchingType (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataTypeRef t) {
+	def dispatch org.xkonnex.repo.dsl.profiledsl.profileDsl.Type findLatestMatchingType (org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef t) {
 		t.type ;
 	}
 	
-	def dispatch org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Type findLatestMatchingType (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AttributeDataTypeRef t) {
+	def dispatch org.xkonnex.repo.dsl.profiledsl.profileDsl.Type findLatestMatchingType (org.xkonnex.repo.dsl.profiledsl.profileDsl.AttributeDataTypeRef t) {
 		t.type ;
 	}
 	
 	
 		
-	def dispatch org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Type findLatestMatchingType (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataTypeRef t, LifecycleState minState) { 
+	def dispatch org.xkonnex.repo.dsl.profiledsl.profileDsl.Type findLatestMatchingType (org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef t, LifecycleState minState) { 
 		t.type ;
 	}
 

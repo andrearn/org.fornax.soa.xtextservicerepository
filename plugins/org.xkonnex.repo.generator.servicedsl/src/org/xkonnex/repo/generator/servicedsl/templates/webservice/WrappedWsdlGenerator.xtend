@@ -7,10 +7,10 @@ import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Property
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
@@ -60,15 +60,15 @@ class WrappedWsdlGenerator {
 		will be generated. For each major version of a service WSDL is generated for the latest minor
 		version in that major version matching the minimal Lifecycle constraint is be generated
 	*/
-	def void toWrappedWSDL(Service svc, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def void toWrappedWSDL(Service svc, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		svc.toWrappedWSDL (svc.findSubdomain(), minState, profile, registryBaseUrl);
 	}
 	
-	def dispatch void toWrappedWSDL(Service svc, SubNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch void toWrappedWSDL(Service svc, SubNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		throw new UnsupportedOperationException ()
 	}
 	
-	def dispatch void toWrappedWSDL(Service svc, DomainNamespace subDom, LifecycleState minState, AbstractProfile enforcedProfile, String registryBaseUrl) {
+	def dispatch void toWrappedWSDL(Service svc, DomainNamespace subDom, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl) {
 		val profile = subDom.getApplicableProfile(enforcedProfile)
 		val allServiceExceptionRefs = svc.operations.map (o|o.^throws).flatten;
 		svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);
@@ -99,7 +99,7 @@ class WrappedWsdlGenerator {
 		fsa.generateFile (xsdFileName, content);
 	}
 	
-	def dispatch void toWrappedWSDL(Service svc, InternalNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch void toWrappedWSDL(Service svc, InternalNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		val allServiceExceptionRefs = svc.operations.map (o|o.^throws).flatten;
 		
 		svc.toOperationWrappers (subDom, minState, profile, registryBaseUrl);
@@ -132,7 +132,7 @@ class WrappedWsdlGenerator {
 		fsa.generateFile (xsdFileName, content);
 	}
 	
-	def protected toTypes(Service svc, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) '''
+	def protected toTypes(Service svc, LifecycleState minState, Profile profile, String registryBaseUrl) '''
 		<wsdl:types>
 			<xsd:schema targetNamespace="«svc.toWrapperServiceTargetNamespace()»"
 				«FOR imp : svc.importedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
@@ -154,7 +154,7 @@ class WrappedWsdlGenerator {
 		</wsdl:types>
 	'''
 	
-	def protected toOperationWrapperTypes (Operation op, AbstractProfile profile) '''
+	def protected toOperationWrapperTypes (Operation op, Profile profile) '''
 		<xsd:element name="«op.name»">
 			<xsd:complexType>
 				<xsd:sequence>

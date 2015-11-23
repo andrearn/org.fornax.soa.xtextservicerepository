@@ -1,9 +1,9 @@
 package org.xkonnex.repo.dsl.profiledsl.util;
 
 import org.eclipse.emf.ecore.EObject;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Enumeration;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Enumeration;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType;
 
 public class ProfileDslElementAccessor {
 
@@ -14,7 +14,7 @@ public class ProfileDslElementAccessor {
 			return candiate;
 		if (candiate instanceof MessageHeader) {
 				return candiate;
-		} else if (candiate instanceof org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class) {
+		} else if (candiate instanceof org.xkonnex.repo.dsl.profiledsl.profileDsl.Class) {
 			return candiate;
 		} else if (candiate instanceof Enumeration) {
 			return candiate;

@@ -10,8 +10,8 @@ import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver
 import org.xkonnex.repo.dsl.moduledsl.query.IModuleReferenceResolver
 import org.xkonnex.repo.dsl.servicedsl.service.query.VersionQueries
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
 import java.util.logging.Logger
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AbstractServiceRef

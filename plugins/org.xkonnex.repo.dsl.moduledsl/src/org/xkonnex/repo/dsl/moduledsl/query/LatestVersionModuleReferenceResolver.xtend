@@ -7,12 +7,12 @@ import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceModuleRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IVersionFilterProvider
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.eclipse.xtext.EcoreUtil2
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportBindingProtocol

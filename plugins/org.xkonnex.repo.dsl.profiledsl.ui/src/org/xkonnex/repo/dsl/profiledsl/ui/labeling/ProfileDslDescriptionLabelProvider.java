@@ -13,7 +13,7 @@ import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrateg
  * 
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
-public class SOAProfileDslDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
+public class ProfileDslDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
 
 	public Object text(IEObjectDescription ele) {
 		StyledString s = new StyledString (ele.getQualifiedName().toString());

@@ -16,7 +16,7 @@ class VersionQueries {
 		versionedType.version;
 	}
 	
-	def dispatch Version getOwnerVersion (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType technicalVersionedType) {
+	def dispatch Version getOwnerVersion (org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType technicalVersionedType) {
 		technicalVersionedType.version;
 	}
 

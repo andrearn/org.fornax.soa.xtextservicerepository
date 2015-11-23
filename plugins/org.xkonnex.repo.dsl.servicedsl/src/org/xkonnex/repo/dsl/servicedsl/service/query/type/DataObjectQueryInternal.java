@@ -28,7 +28,7 @@ import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch;
 import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch;
 import org.xkonnex.repo.dsl.basedsl.util.BaseDslEqualityHelper;
 import org.xkonnex.repo.dsl.basedsl.util.TreeNode;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ApprovalDecision;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject;

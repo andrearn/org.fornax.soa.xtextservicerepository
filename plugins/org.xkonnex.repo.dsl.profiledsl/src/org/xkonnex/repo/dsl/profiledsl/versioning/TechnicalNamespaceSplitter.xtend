@@ -6,10 +6,10 @@ import org.eclipse.emf.ecore.EObject
 import org.xkonnex.repo.dsl.basedsl.CommonEObjectExtensions
 import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.OrganizationNamespace
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TechnicalNamespace
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Type
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Type
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType
 
 class TechnicalNamespaceSplitter {
 
@@ -50,30 +50,30 @@ class TechnicalNamespaceSplitter {
 		
 	}
 		
-	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType c) {
+	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType c) {
 		if (c.eContainer instanceof TechnicalNamespace) {
-			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TechnicalNamespace).name.stripXtextEscapes();
+			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace).name.stripXtextEscapes();
 			shortName 	= (c.eContainer as TechnicalNamespace).prefix?.stripXtextEscapes();		
 		} 
 		else 	
 		{
-			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.OrganizationNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.OrganizationNamespace).prefix.stripXtextEscapes();
+			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace).name.stripXtextEscapes();
+			shortName 	= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace).prefix.stripXtextEscapes();
 		} 
 		namespace 		= c.eContainer as TechnicalNamespace;
 		fqn 			= c.eContainer.fqn();
 		version 		= c.version.toMajorVersionNumber();
 	}
 	
-	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Type c) {
+	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (org.xkonnex.repo.dsl.profiledsl.profileDsl.Type c) {
 		if (c.eContainer instanceof TechnicalNamespace) {
-			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TechnicalNamespace).name.stripXtextEscapes();
+			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace).name.stripXtextEscapes();
 			shortName 	= (c.eContainer as TechnicalNamespace).prefix?.stripXtextEscapes();		
 		} 
 		else 	
 		{
-			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.OrganizationNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.OrganizationNamespace).prefix.stripXtextEscapes();
+			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace).name.stripXtextEscapes();
+			shortName 	= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace).prefix.stripXtextEscapes();
 		} 
 		namespace 		= c.eContainer as TechnicalNamespace;
 		fqn 			= c.eContainer.fqn();

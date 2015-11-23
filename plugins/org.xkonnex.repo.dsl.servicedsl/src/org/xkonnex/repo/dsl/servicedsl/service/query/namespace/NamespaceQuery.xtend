@@ -3,7 +3,7 @@ package org.xkonnex.repo.dsl.servicedsl.service.query.namespace
 import com.google.inject.Inject
 import org.eclipse.emf.ecore.EObject
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.query.ExceptionFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.ServiceQueries
@@ -16,9 +16,9 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 
 /*
  * Namespace lookup functions
@@ -108,7 +108,7 @@ class NamespaceQuery {
 		ns.exceptionsWithMinState (state).size > 0;
 	}
 	
-	def AbstractProfile getApplicableProfile (SubNamespace ns, AbstractProfile enforcedProfile) {
+	def Profile getApplicableProfile (SubNamespace ns, Profile enforcedProfile) {
 		if (enforcedProfile == null) {
 			if (ns.profile != null) {
 				return ns.profile

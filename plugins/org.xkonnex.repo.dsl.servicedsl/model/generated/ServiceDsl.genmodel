@@ -5,7 +5,7 @@
     forceOverwrite="true" modelName="ServiceDsl" updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="6.0" copyrightFields="false" editPluginID="org.xkonnex.repo.dsl.servicedsl.edit"
     editorPluginID="org.xkonnex.repo.dsl.servicedsl.editor" runtimeVersion="2.10"
-    usedGenPackages="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel#//baseDsl platform:/resource/org.xkonnex.repo.dsl.businessdsl/model/generated/BusinessDsl.genmodel#//businessDsl platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.genmodel#//sOAProfileDsl platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel#//semanticsDsl">
+    usedGenPackages="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel#//baseDsl platform:/resource/org.xkonnex.repo.dsl.businessdsl/model/generated/BusinessDsl.genmodel#//businessDsl platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.genmodel#//sOAProfileDsl platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel#//semanticsDsl platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.genmodel#//profileDsl">
   <genPackages prefix="ServiceDsl" basePackage="org.xkonnex.repo.dsl.servicedsl" disposableProviderFactory="true"
       ecorePackage="ServiceDsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="ServiceDsl.ecore#//MEP">

@@ -8,9 +8,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet
 import org.xkonnex.repo.dsl.basedsl.search.EObjectLookup
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.EnvironmentBasedLifecycleStateComparator
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
@@ -126,7 +126,7 @@ class LifecycleQueries {
 		}
 	}
 	
-	def LifecycleState getInitialState (AbstractProfile profile, ResourceSet resourceSet) {
+	def LifecycleState getInitialState (Profile profile, ResourceSet resourceSet) {
 		if (profile != null) {
 			return profile.lifecycle.states.findFirst[isInitial]
 		} else {

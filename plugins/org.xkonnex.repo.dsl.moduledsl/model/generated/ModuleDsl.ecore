@@ -16,7 +16,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="version" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Version"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore#//LifecycleState"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="state" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore#//LifecycleState"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="governanceDecisions" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//GovernanceDecision"
         containment="true"/>

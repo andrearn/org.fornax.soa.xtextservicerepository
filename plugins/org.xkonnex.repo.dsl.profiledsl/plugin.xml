@@ -5,9 +5,9 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" 
-       class = "org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslPackage"
-       genModel = "model/generated/SOAProfileDsl.genmodel" /> 
+       uri = "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" 
+       class = "org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslPackage"
+       genModel = "model/generated/ProfileDsl.genmodel" /> 
 	
   </extension>
 

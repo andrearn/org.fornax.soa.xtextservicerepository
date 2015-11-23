@@ -1,13 +1,13 @@
 package org.xkonnex.repo.dsl.servicedsl.service.query;
 
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 
 public class MessageHeaderQuery {
 	
-	public MessageHeader getRequestMessageHeader (Service service, SOAProfile profile) {
+	public MessageHeader getRequestMessageHeader (Service service, Profile profile) {
 		if (service.getRequestMessageHeader () != null) {
 			return service.getRequestMessageHeader ().getHeader ();
 		} else {
@@ -15,7 +15,7 @@ public class MessageHeaderQuery {
 		}
 	}
 	
-	public MessageHeader getRequestMessageHeader (Operation operation, SOAProfile profile) {
+	public MessageHeader getRequestMessageHeader (Operation operation, Profile profile) {
 		if (operation.getRequestMessageHeader () != null) {
 			return operation.getRequestMessageHeader ().getHeader ();
 		} else {
@@ -23,7 +23,7 @@ public class MessageHeaderQuery {
 		}
 	}
 	
-	public MessageHeader getResponseMessageHeader (Service service, SOAProfile profile) {
+	public MessageHeader getResponseMessageHeader (Service service, Profile profile) {
 		if (service.getResponseMessageHeader () != null) {
 			return service.getResponseMessageHeader ().getHeader ();
 		} else {
@@ -31,7 +31,7 @@ public class MessageHeaderQuery {
 		}
 	}
 	
-	public MessageHeader getResponseMessageHeader (Operation operation, SOAProfile profile) {
+	public MessageHeader getResponseMessageHeader (Operation operation, Profile profile) {
 		if (operation.getResponseMessageHeader () != null) {
 			return operation.getResponseMessageHeader ().getHeader ();
 		} else {
@@ -39,7 +39,7 @@ public class MessageHeaderQuery {
 		}
 	}
 	
-	public MessageHeader getPublishMessageHeader (Service service, SOAProfile profile) {
+	public MessageHeader getPublishMessageHeader (Service service, Profile profile) {
 		if (service.getPublishMessageHeader () != null) {
 			return service.getPublishMessageHeader ().getHeader ();
 		} else {
@@ -47,7 +47,7 @@ public class MessageHeaderQuery {
 		}
 	}
 	
-	public MessageHeader getPublishMessageHeader (Operation operation, SOAProfile profile) {
+	public MessageHeader getPublishMessageHeader (Operation operation, Profile profile) {
 		if (operation.getPublishMessageHeader () != null) {
 			return operation.getPublishMessageHeader ().getHeader ();
 		} else {

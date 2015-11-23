@@ -16,7 +16,7 @@ generate bindingDsl "http://www.xkonnex.org/repo/dsl/bindingdsl/BindingDsl"
 import "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" as serviceDsl
 import "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl" as moduleDsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as environmentDsl
-import "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" as profileDsl
+import "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" as profileDsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
 
 BindingModel:

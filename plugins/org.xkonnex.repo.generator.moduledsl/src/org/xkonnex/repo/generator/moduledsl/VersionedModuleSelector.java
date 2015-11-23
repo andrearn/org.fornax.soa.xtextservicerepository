@@ -10,7 +10,7 @@ import org.eclipse.xtext.xbase.lib.FunctionExtensions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher;
 import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup;
 

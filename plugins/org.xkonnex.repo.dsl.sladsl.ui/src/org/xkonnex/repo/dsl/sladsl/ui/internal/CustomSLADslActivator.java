@@ -19,7 +19,7 @@ public class CustomSLADslActivator extends SLADslActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start (context);
-		Injector injector = getInjector ("org.xkonnex.repo.dsl.sladsl.SLADsl");
+		Injector injector = getInjector (ORG_XKONNEX_REPO_DSL_SLADSL_SLADSL);
 		IPluggableValidatorProvider validatorProvider = injector.getInstance (IPluggableValidatorProvider.class);
 	
         try {

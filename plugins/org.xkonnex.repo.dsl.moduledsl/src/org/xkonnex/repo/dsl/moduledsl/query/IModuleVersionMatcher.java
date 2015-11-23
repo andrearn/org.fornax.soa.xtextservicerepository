@@ -5,7 +5,7 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceModuleRef;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 
 /**

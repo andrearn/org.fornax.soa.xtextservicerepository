@@ -6,10 +6,10 @@ import java.util.logging.Logger
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Property
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
@@ -47,21 +47,21 @@ class EventXSDGenerator {
 	private Logger log
 	
 	
-	def toEventsInclSubNamespaces (String namespace, List<SubNamespace> namespaces, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def toEventsInclSubNamespaces (String namespace, List<SubNamespace> namespaces, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		for (ns : namespaces.filter (e|e.name.startsWith (namespace))) {
 			ns.toEvents (minState, profile, registryBaseUrl);
 		}
 	}
 	
-	def toEvents (SubNamespace ns, LifecycleState minState, AbstractProfile enforcedProfile, String registryBaseUrl) {
+	def toEvents (SubNamespace ns, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl) {
 		val profile = ns.getApplicableProfile(enforcedProfile)
 		ns.services.forEach (s|s.toEvents (ns, minState, profile, registryBaseUrl));
 	}
 	
-	def dispatch Void toEvents (Service svc, SubNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch Void toEvents (Service svc, SubNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 	}
 	
-	def dispatch toEvents (Service svc, DomainNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toEvents (Service svc, DomainNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		val Set<VersionedTechnicalNamespace> headerImports = svc.collectTechnicalVersionedNamespaceImports (profile)
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -108,7 +108,7 @@ class EventXSDGenerator {
 		fsa.generateFile (xsdFileName, content);
 	}
 	
-	def dispatch toEvents (Service svc, InternalNamespace subDom, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toEvents (Service svc, InternalNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		val Set<VersionedTechnicalNamespace> headerImports = svc.collectTechnicalVersionedNamespaceImports (profile)
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -154,13 +154,13 @@ class EventXSDGenerator {
 	}
 	
 	
-	def toEventMessages(Service svc, LifecycleState minState, AbstractProfile profile) '''
+	def toEventMessages(Service svc, LifecycleState minState, Profile profile) '''
 		«svc.operations.map (o|o.toOperationWrapperTypes (profile)).join»
 		«svc.operations.map (o|o.^throws).flatten.map (t|t.exception.name).toSet().map (o|o.toOperationFaultWrapperTypes(svc.operations.map (op|op.^throws).flatten.toList())).join»
 	'''
 	
 	
-	def toOperationWrapperTypes (Operation op, AbstractProfile profile) '''
+	def toOperationWrapperTypes (Operation op, Profile profile) '''
 		<xsd:element name="«op.name.toFirstUpper()»">
 			<xsd:complexType>
 				<xsd:sequence>
@@ -196,7 +196,7 @@ class EventXSDGenerator {
 		<xsd:element param.name="«param.name»" type="«param.type.toTypeNameRef ()»" «IF param.optional»minOccurs="0" «ENDIF»«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 	
-	def dispatch toParameter (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property prop) '''
+	def dispatch toParameter (org.xkonnex.repo.dsl.profiledsl.profileDsl.Property prop) '''
 		<xsd:element name="«prop.name»" type="«prop.type.toTypeNameRef ()»" «IF prop.optional»minOccurs="0" «ENDIF»«IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 	

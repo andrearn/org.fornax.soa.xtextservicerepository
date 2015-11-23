@@ -8,10 +8,10 @@ import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Property
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
@@ -30,7 +30,7 @@ import org.xkonnex.repo.generator.servicedsl.templates.CommonTemplateExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SwaRefSchemaGenerator
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 
 /*
  * Template class for generation of abstract WSDLs
@@ -62,7 +62,7 @@ class WSDLGenerator {
 	@Inject 
 	private Logger log
 	
-	def dispatch toWSDL (Service s, DomainNamespace subDom, LifecycleState minState, AbstractProfile enforcedProfile, String registryBaseUrl) {
+	def dispatch toWSDL (Service s, DomainNamespace subDom, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl) {
 		val profile = subDom.getApplicableProfile(enforcedProfile)
 		val allServiceExceptionRefs = s.operations.map (o|o.^throws).flatten;
 		val content = '''
@@ -92,7 +92,7 @@ class WSDLGenerator {
 		fsa.generateFile (wsdlFileName, content);
 	}
 
-	def dispatch toWSDL (Service s, InternalNamespace subDom, LifecycleState minState, AbstractProfile enforcedProfile, String registryBaseUrl) {
+	def dispatch toWSDL (Service s, InternalNamespace subDom, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl) {
 		val profile = subDom.getApplicableProfile(enforcedProfile)
 		val allServiceExceptionRefs = s.operations.map (o|o.^throws).flatten;
 		val content = '''
@@ -126,7 +126,7 @@ class WSDLGenerator {
 	}
 
 
-	def toTypes(Service s, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def toTypes(Service s, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		swarefSchemaGenerator.generateSwaRefSchema11
 		val Set<VersionedTechnicalNamespace> headerImports = s.collectTechnicalVersionedNamespaceImports (profile)
 		'''
@@ -167,7 +167,7 @@ class WSDLGenerator {
 	}
 
 
-	def toOperationWrapperTypes (Operation o, AbstractProfile profile)  '''
+	def toOperationWrapperTypes (Operation o, Profile profile)  '''
 		<xsd:element name="«o.name»">
 			<xsd:complexType>
 				<xsd:sequence>
@@ -230,7 +230,7 @@ class WSDLGenerator {
 	}
 	
 	
-	def dispatch toParameter (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property prop) '''
+	def dispatch toParameter (org.xkonnex.repo.dsl.profiledsl.profileDsl.Property prop) '''
 		<xsd:element name="«prop.name»" type="«prop.type.toTypeNameRef ()»" «IF prop.optional»minOccurs="0" «ENDIF»«IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 

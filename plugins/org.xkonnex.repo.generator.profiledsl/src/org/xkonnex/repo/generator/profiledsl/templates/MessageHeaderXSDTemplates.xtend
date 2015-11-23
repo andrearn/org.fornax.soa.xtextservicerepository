@@ -10,19 +10,19 @@ import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtens
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaTypeExtensions
 import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceImportQueries
 import org.xkonnex.repo.dsl.profiledsl.query.type.LatestMatchingTypeFinder
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Attribute
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.EnumLiteral
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Enumeration
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Property
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TechnicalNamespace
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedTypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Attribute
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Class
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.EnumLiteral
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Enumeration
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Property
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.profiledsl.versioning.TechnicalNamespaceSplitter
 import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 
 /* A template class to generate an XSD for a TechnicalNamespace 
  * declaring the complextype used by message headers
@@ -44,12 +44,12 @@ class MessageHeaderXSDTemplates {
 	@Inject IEObjectDocumentationProvider docProvider
 
 	/*
-		<b>CARTRIDGE ENTRYPOINT</b> for generation message headers defined in the give AbstractProfile<br/><br/>
+		<b>CARTRIDGE ENTRYPOINT</b> for generation message headers defined in the give Profile<br/><br/>
 	
 		An XSD for each TechnicalNamespace of all parameters of all message headers defined in
-		the AbstractProfile will be generated
+		the Profile will be generated
 	*/
-	def dispatch toMessageHeaderXSD (AbstractProfile profile) {
+	def dispatch toMessageHeaderXSD (Profile profile) {
 		for (h : profile.messaging.messageHeaders) {
 			h.parameters.map (p|p.type).filter (typeof (VersionedTypeRef))
 				.map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet()
@@ -58,39 +58,39 @@ class MessageHeaderXSDTemplates {
 	}
 	
 	/*
-		<b>CARTRIDGE ENTRYPOINT</b> for generation message headers defined in the give AbstractProfile<br/><br/>
+		<b>CARTRIDGE ENTRYPOINT</b> for generation message headers defined in the give Profile<br/><br/>
 	
 		An XSD for each TechnicalNamespace of all parameters of all message headers defined in
-		the AbstractProfile will be generated
+		the Profile will be generated
 		Prefixes all imports with given registryBaseUrl. Referenced imported XSDs must be
 		available under the calculated URL
 	*/
-	def dispatch toAllMessageHeadersXSD (AbstractProfile profile) {
+	def dispatch toAllMessageHeadersXSD (Profile profile) {
 		for (h : profile.messaging.messageHeaders) {
 			h.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, h));
 		}
 	}
-	def dispatch toAllMessageHeadersXSD (AbstractProfile profile, Void registryBaseUrl) {
+	def dispatch toAllMessageHeadersXSD (Profile profile, Void registryBaseUrl) {
 		for (h : profile.messaging.messageHeaders) {
 			h.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, h));
 		}
 	}
 	
-	def dispatch toAllMessageHeadersXSD (AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toAllMessageHeadersXSD (Profile profile, String registryBaseUrl) {
 		for (h : profile.messaging.messageHeaders) {
 			h.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, registryBaseUrl, h));
 		}
 	}
 	
-	def dispatch toMessageHeaderXSD (MessageHeader header, AbstractProfile profile) {
+	def dispatch toMessageHeaderXSD (MessageHeader header, Profile profile) {
 		header.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, header));
 	}
 	
-	def dispatch toMessageHeaderXSD (MessageHeader header, AbstractProfile profile, Void registryBaseUrl) {
+	def dispatch toMessageHeaderXSD (MessageHeader header, Profile profile, Void registryBaseUrl) {
 		header.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, header));
 	}
 	
-	def dispatch toMessageHeaderXSD (MessageHeader header, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toMessageHeaderXSD (MessageHeader header, Profile profile, String registryBaseUrl) {
 		header.parameters.map (p|p.type).filter (typeof (VersionedTypeRef)).map (vRef|vRef.type.eContainer).filter (typeof (TechnicalNamespace)).toSet().forEach (ns|ns.toMessageHeaderXSD (profile, registryBaseUrl, header));
 	}
 	
@@ -102,7 +102,7 @@ class MessageHeaderXSDTemplates {
 	 * @param profile			the Profile to be applied<br/>
 	 * @param header			the header definition of the profile to be selected for generation<br/>
 	 */
-	def dispatch toMessageHeaderXSD (TechnicalNamespace namespace, AbstractProfile profile, MessageHeader header) {
+	def dispatch toMessageHeaderXSD (TechnicalNamespace namespace, Profile profile, MessageHeader header) {
 		namespace.toVersionedTechnicalNamespaces().forEach (vns|vns.toMessageHeaderXSD (profile, header));
 	}
 	
@@ -115,16 +115,16 @@ class MessageHeaderXSDTemplates {
 	 * @param registryBaseUrl	Import URLs are prefixed with the registryBaseUrl<br/>
 	 * @param header			the header definition of the profile to be selected for generation<br/>
 	 */
-	def dispatch toMessageHeaderXSD (TechnicalNamespace namespace, AbstractProfile profile, String registryBaseUrl, MessageHeader header) {
+	def dispatch toMessageHeaderXSD (TechnicalNamespace namespace, Profile profile, String registryBaseUrl, MessageHeader header) {
 		namespace.toVersionedTechnicalNamespaces().forEach (vns|vns.toMessageHeaderXSD (profile, registryBaseUrl, header));
 	}
 	
 	/* 
 	 * Generates a message header XSD for a major version of a TechnicalNamespace
 	 */
-	def dispatch toMessageHeaderXSD (VersionedTechnicalNamespace vns, AbstractProfile profile, MessageHeader header) {
+	def dispatch toMessageHeaderXSD (VersionedTechnicalNamespace vns, Profile profile, MessageHeader header) {
 		val imports = vns.allImportedVersionedNS().filter (e| !(e.namespace == vns.namespace && e.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber()));
-		val classes = (vns.namespace as TechnicalNamespace).types.filter (typeof (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class)).filter (e|e.version.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber());
+		val classes = (vns.namespace as TechnicalNamespace).types.filter (typeof (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class)).filter (e|e.version.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber());
 		val enumerations = (vns.namespace as TechnicalNamespace).types.filter (typeof (Enumeration)).filter (e|e.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger() ));
 
 		val content = '''
@@ -149,10 +149,10 @@ class MessageHeaderXSDTemplates {
 	
 	
 	
-	def dispatch toMessageHeaderXSD (VersionedTechnicalNamespace vns, AbstractProfile profile, String registryBaseUrl, MessageHeader header) {
+	def dispatch toMessageHeaderXSD (VersionedTechnicalNamespace vns, Profile profile, String registryBaseUrl, MessageHeader header) {
 		val imports = vns.allImportedVersionedNS()
 				.filter (e| !(e.namespace == vns.namespace && e.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber()));
-		val classes = (vns.namespace as TechnicalNamespace).types.filter (typeof (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class))
+		val classes = (vns.namespace as TechnicalNamespace).types.filter (typeof (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class))
 				.filter (e|e.version.version.toMajorVersionNumber() == vns.version.toMajorVersionNumber());
 		val enumerations = (vns.namespace as TechnicalNamespace).types.filter (typeof (Enumeration))
 				.filter (e|e.isLatestMatchingType (vns.version.toMajorVersionNumber().asInteger() ));
@@ -193,7 +193,7 @@ class MessageHeaderXSDTemplates {
 	'''
 	
 	
-	def protected dispatch toComplexType (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, AbstractProfile profile, MessageHeader header) '''
+	def protected dispatch toComplexType (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class cls, VersionedTechnicalNamespace currNs, Profile profile, MessageHeader header) '''
 
 		<xsd:complexType name="«cls.name»">
 			<xsd:annotation>
@@ -221,7 +221,7 @@ class MessageHeaderXSDTemplates {
 		</xsd:complexType>
 	'''
 	
-	def protected dispatch toPropertySequenceWithAny (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, AbstractProfile profile, MessageHeader header) '''
+	def protected dispatch toPropertySequenceWithAny (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class cls, VersionedTechnicalNamespace currNs, Profile profile, MessageHeader header) '''
 		<xsd:sequence>
 			«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
 			«IF header.typesUseExtendibleProperties»
@@ -234,7 +234,7 @@ class MessageHeaderXSDTemplates {
 		«ENDIF»
 	'''
 	
-	def protected dispatch toPropertySequence (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class cls, VersionedTechnicalNamespace currNs, AbstractProfile profile) '''
+	def protected dispatch toPropertySequence (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class cls, VersionedTechnicalNamespace currNs, Profile profile) '''
 		<xsd:sequence>
 			«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
 		</xsd:sequence>
@@ -244,7 +244,7 @@ class MessageHeaderXSDTemplates {
 	    «ENDIF»
 	'''
 	
-	def protected dispatch toSimpleType (Enumeration enumeration, AbstractProfile profile) '''
+	def protected dispatch toSimpleType (Enumeration enumeration, Profile profile) '''
 	    <xsd:simpleType name="«enumeration.name»">
 	    	<xsd:annotation>
 	    		<xsd:documentation>
@@ -262,7 +262,7 @@ class MessageHeaderXSDTemplates {
 	'''
 	
 	
-	def protected dispatch toProperty (Property prop, VersionedTechnicalNamespace currNs, AbstractProfile profile) '''
+	def protected dispatch toProperty (Property prop, VersionedTechnicalNamespace currNs, Profile profile) '''
 		«IF docProvider.getDocumentation (prop) == null»
 			<xsd:element name="«prop.name»" «IF prop.optional»minOccurs="0"«ENDIF» «IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«prop.type.toTypeNameRef(currNs)»" />
 		«ELSE»		
@@ -276,7 +276,7 @@ class MessageHeaderXSDTemplates {
 		«ENDIF»
 	'''
 	
-	def protected dispatch toProperty (Attribute attr, VersionedTechnicalNamespace currNs, AbstractProfile profile) '''
+	def protected dispatch toProperty (Attribute attr, VersionedTechnicalNamespace currNs, Profile profile) '''
 		«IF docProvider.getDocumentation (attr) == null»
 		   	<xsd:attribute name="«attr.name»" «IF attr.optional»use="optional"«ENDIF» type="«attr.type.toTypeNameRef (currNs)»" />
 		«ELSE»		
@@ -291,7 +291,7 @@ class MessageHeaderXSDTemplates {
 	'''
 	
 	
-	def protected dispatch toEnumLiteral (EnumLiteral enumLit, AbstractProfile profile) '''
+	def protected dispatch toEnumLiteral (EnumLiteral enumLit, Profile profile) '''
    		<xsd:enumeration value="«enumLit.name»"/>
 	'''
 }

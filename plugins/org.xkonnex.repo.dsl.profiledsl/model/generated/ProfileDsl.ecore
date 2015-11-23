@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sOAProfileDsl" nsURI="http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl"
-    nsPrefix="sOAProfileDsl">
-  <eClassifiers xsi:type="ecore:EClass" name="SOAProfileModel">
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="profileDsl" nsURI="http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl"
+    nsPrefix="profileDsl">
+  <eClassifiers xsi:type="ecore:EClass" name="ProfileModel">
     <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Import"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="types" upperBound="-1"
         eType="#//DataType" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="profiles" upperBound="-1"
-        eType="#//AbstractProfile" containment="true"/>
+        eType="#//Profile" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="roles" upperBound="-1"
         eType="#//Role" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AbstractProfile">
+  <eClassifiers xsi:type="ecore:EClass" name="Profile">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="scope" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -43,8 +43,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="subscriptions" unique="false"
         upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//User"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Profile" eSuperTypes="#//AbstractProfile"/>
-  <eClassifiers xsi:type="ecore:EClass" name="SOAProfile" eSuperTypes="#//AbstractProfile"/>
   <eClassifiers xsi:type="ecore:EClass" name="Lifecycle">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="states" upperBound="-1"

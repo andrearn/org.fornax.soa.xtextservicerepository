@@ -5,14 +5,14 @@ import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceQueries
 import org.xkonnex.repo.dsl.profiledsl.query.ProfileVersionQueries
 import org.xkonnex.repo.dsl.profiledsl.query.type.LatestMatchingTypeFinder
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AttributeDataTypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataTypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TechnicalNamespace
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Type
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.TypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedTypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.AttributeDataTypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Type
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.TypeRef
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.profiledsl.versioning.TechnicalNamespaceSplitter
 import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
 
@@ -69,7 +69,7 @@ class ProfileSchemaTypeExtensions {
 	}
 	
 			
-	def dispatch String toFullTypeNameRef (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataTypeRef t, VersionedTechnicalNamespace currentDomNs) { 
+	def dispatch String toFullTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef t, VersionedTechnicalNamespace currentDomNs) { 
 		t.findLatestMatchingType () .toFullTypeNameRef();
 	}
 		
@@ -80,7 +80,7 @@ class ProfileSchemaTypeExtensions {
 	def dispatch String toFullTypeNameRef (Type t) {
 		"";
 	}
-	def dispatch String toFullTypeNameRef (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType t) {
+	def dispatch String toFullTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType t) {
 	 	switch (t.name) {
 	 		case "attachment":		"xsd:base64Binary"
 	 		case "binary":			"xsd:hexBinary"

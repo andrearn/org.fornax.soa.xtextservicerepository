@@ -7,7 +7,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.core.query.predicates.CanonicalOrNotPredicate;
 import org.xkonnex.repo.core.query.predicates.HasTagPredicate;
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.search.predicate.VersionAndLifecycleStatePredicate;
 
 import com.google.common.base.Predicates;

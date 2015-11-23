@@ -20,7 +20,7 @@ import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionFilter;
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.VersionedOwnerScopeVersionResolver;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 
 import com.google.common.base.Predicate;
 import com.google.inject.Inject;

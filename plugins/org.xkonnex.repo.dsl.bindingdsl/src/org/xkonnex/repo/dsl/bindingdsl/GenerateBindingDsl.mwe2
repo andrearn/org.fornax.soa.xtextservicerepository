@@ -24,8 +24,8 @@ var modGenModel = "platform:/resource/org.xkonnex.repo.dsl.moduledsl/model/gener
 var envMetaModel = "platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/generated/EnvironmentDsl.ecore"
 var envGenModel = "platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/generated/EnvironmentDsl.genmodel"
 
-var profMetaModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.ecore"
-var profGenModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/SOAProfileDsl.genmodel"
+var profMetaModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore"
+var profGenModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.genmodel"
 
 Workflow {
     bean = StandaloneSetup {
@@ -35,7 +35,7 @@ Workflow {
 		uriMap = { to = svcMetaModel from = "http://www.fornax.org/soa/ServiceDsl" }
 		uriMap = { to = modMetaModel from = "http://www.fornax.org/soa/moduledsl/ModuletDsl" }
 		uriMap = { to = envMetaModel from = "http://www.fornax.org/soa/EnvironmentDsl" }
-		uriMap = { to = profMetaModel from = "http://www.fornax.org/soa/profiledsl/SOAProfileDsl" }
+		uriMap = { to = profMetaModel from = "http://www.fornax.org/soa/profiledsl/ProfileDsl" }
 		registerEcoreFile = baseMetaModel
 		registerEcoreFile = semMetaModel
 		registerEcoreFile = svcMetaModel

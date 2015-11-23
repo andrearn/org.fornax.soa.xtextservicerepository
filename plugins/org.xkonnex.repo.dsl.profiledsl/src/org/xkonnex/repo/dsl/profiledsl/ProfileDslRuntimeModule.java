@@ -24,7 +24,7 @@ import com.google.inject.Binder;
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-public class SOAProfileDslRuntimeModule extends org.xkonnex.repo.dsl.profiledsl.AbstractSOAProfileDslRuntimeModule {
+public class ProfileDslRuntimeModule extends org.xkonnex.repo.dsl.profiledsl.AbstractProfileDslRuntimeModule {
 
 	public Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
 		return VersionedGlobalScopeProvider.class;

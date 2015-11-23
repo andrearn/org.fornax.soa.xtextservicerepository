@@ -19,7 +19,7 @@ public class CustomEnvironmentDslActivator extends EnvironmentDslActivator {
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start (context);
-		Injector injector = getInjector ("org.xkonnex.repo.dsl.environmentdsl.EnvironmentDsl");
+		Injector injector = getInjector (ORG_XKONNEX_REPO_DSL_ENVIRONMENTDSL_ENVIRONMENTDSL);
 		IPluggableValidatorProvider validatorProvider = injector.getInstance (IPluggableValidatorProvider.class);
 	
         try {

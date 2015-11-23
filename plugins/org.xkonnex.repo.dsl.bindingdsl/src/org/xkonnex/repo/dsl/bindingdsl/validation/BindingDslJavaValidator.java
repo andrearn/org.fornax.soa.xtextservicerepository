@@ -43,7 +43,7 @@ import org.xkonnex.repo.dsl.bindingdsl.validation.AbstractBindingDslJavaValidato
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver;
 import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup;

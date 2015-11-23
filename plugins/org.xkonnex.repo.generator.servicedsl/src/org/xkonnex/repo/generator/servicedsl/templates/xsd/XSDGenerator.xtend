@@ -9,8 +9,8 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.NamespaceSplitter
@@ -78,11 +78,11 @@ class XSDGenerator {
 		applying splitting by major version of owned VersionedTypes and Exceptions in the 
 		given minimal LifecycleState.
 	*/
-	def dispatch toXSD (SubNamespace ns, String minState, org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toXSD (SubNamespace ns, String minState, org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile profile, String registryBaseUrl) {
 		ns.toXSD (lifecycleQueries.stateByName (minState, ns.eResource), profile, registryBaseUrl);
 	}
 	
-	def dispatch toXSD (SubNamespace ns, String minState, AbstractProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+	def dispatch toXSD (SubNamespace ns, String minState, Profile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		ns.toXSD (lifecycleQueries.stateByName (minState, ns.eResource), profile, registryBaseUrl, noDeps, includeSubNamespaces);
 	}
 	
@@ -92,7 +92,7 @@ class XSDGenerator {
 		applying splitting by major version of owned VersionedTypes and Exceptions in the 
 		given minimal LifecycleState.
 	*/
-	def dispatch toXSD (SubNamespace ns, LifecycleState minState, AbstractProfile enforcedProfile, String registryBaseUrl) {
+	def dispatch toXSD (SubNamespace ns, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl) {
 		val profile = ns.getApplicableProfile(enforcedProfile)
 		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
 		for (nsVer : nsVersions) {
@@ -108,7 +108,7 @@ class XSDGenerator {
 	/*
 	 * TODO: review for use as noDependencies flag is being injected already
 	 */
-	def dispatch toXSD (SubNamespace ns, LifecycleState minState, AbstractProfile enforcedProfile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+	def dispatch toXSD (SubNamespace ns, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val profile = ns.getApplicableProfile(enforcedProfile)
 		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
 		for (nsVer : nsVersions) {
@@ -121,7 +121,7 @@ class XSDGenerator {
 		}
 	}
 
-	def dispatch toXSD (VersionedDomainNamespace ns, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def dispatch toXSD (VersionedDomainNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		ns.toXSDVersion (minState, profile, registryBaseUrl);
 		ns.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
 				.filter(e| !(e.subdomain == ns.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(ns.version)))
@@ -132,7 +132,7 @@ class XSDGenerator {
 		Generate XSDs for all VersionedDomainNamespaces derived from the given SubNamespace by applying
 		the major version splitting algorithm filtered by the given minimal LifecycleState
 	*/
-	def toXSDForImports (SubNamespace ns, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def toXSDForImports (SubNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		for (nsVer : ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion()) {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl);
 			nsVer.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
@@ -146,7 +146,7 @@ class XSDGenerator {
 		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
 		that match the given minimal LifecycleState.
 	*/
-	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, AbstractProfile profile, String registryBaseUrl) {
+	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		val resSet = profile.eResource.resourceSet
 		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
 		val imports = vns.importedVersionedNS (minState).filter (e|schemaNsExt.toNamespace(e) != schemaNsExt.toNamespace(vns));
@@ -195,7 +195,7 @@ class XSDGenerator {
 		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
 		that match the given minimal LifecycleState.
 	*/
-	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, AbstractProfile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, Profile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
 		val imports = vns.importedVersionedNS(minState).filter(e|schemaNsExt.toNamespace(e) != schemaNsExt.toNamespace(vns));
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
@@ -255,9 +255,9 @@ class XSDGenerator {
 		
 		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
 							XSD being generated
-		@param		profile	The AbstractProfile defining the governing architecture rules.
+		@param		profile	The Profile defining the governing architecture rules.
 	*/
-	def toComplexType(DataObject bo, VersionedDomainNamespace currNs, AbstractProfile profile, LifecycleState minState) '''
+	def toComplexType(DataObject bo, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 
 		<xsd:complexType name="«bo.name»"«IF isAbstract(bo)» abstract="true"«ENDIF»>
 			<xsd:annotation>
@@ -315,9 +315,9 @@ class XSDGenerator {
 		
 		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
 							XSD being generated
-		@param		profile	The AbstractProfile defining the governing architecture rules.
+		@param		profile	The Profile defining the governing architecture rules.
 	*/
-	def dispatch toPropertySequenceWithAny(BusinessObject bo, VersionedDomainNamespace currNs, AbstractProfile profile, LifecycleState minState) '''
+	def dispatch toPropertySequenceWithAny(BusinessObject bo, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«bo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 			«IF profile.typesUseExtendibleProperties ()»
@@ -332,9 +332,9 @@ class XSDGenerator {
 		
 		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
 							XSD being generated
-		@param		profile	The AbstractProfile defining the governing architecture rules.
+		@param		profile	The Profile defining the governing architecture rules.
 	*/
-	def dispatch toPropertySequenceWithAny(QueryObject qo, VersionedDomainNamespace currNs, AbstractProfile profile, LifecycleState minState) '''
+	def dispatch toPropertySequenceWithAny(QueryObject qo, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«qo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 			«IF profile.typesUseExtendibleProperties ()»
@@ -349,9 +349,9 @@ class XSDGenerator {
 		
 		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
 							XSD being generated
-		@param		profile	The AbstractProfile defining the governing architecture rules.
+		@param		profile	The Profile defining the governing architecture rules.
 	*/
-	def dispatch toPropertySequence(BusinessObject bo, VersionedDomainNamespace currNs, AbstractProfile profile, LifecycleState minState) '''
+	def dispatch toPropertySequence(BusinessObject bo, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«bo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 		</xsd:sequence>
@@ -363,15 +363,15 @@ class XSDGenerator {
 		
 		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
 							XSD being generated
-		@param		profile	The AbstractProfile defining the governing architecture rules.
+		@param		profile	The Profile defining the governing architecture rules.
 	*/
-	def dispatch toPropertySequence(QueryObject qo, VersionedDomainNamespace currNs, AbstractProfile profile, LifecycleState minState) '''
+	def dispatch toPropertySequence(QueryObject qo, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«qo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 		</xsd:sequence>
 	'''
 	
-	def dispatch toPropertySequenceWithAny (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception ex, VersionedDomainNamespace currNs, AbstractProfile profile, LifecycleState minState) '''
+	def dispatch toPropertySequenceWithAny (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception ex, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«ex.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 			«IF profile.typesUseExtendibleProperties ()»
@@ -380,7 +380,7 @@ class XSDGenerator {
 		</xsd:sequence>
 	'''
 	
-	def dispatch toPropertySequence(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception ex, VersionedDomainNamespace currNs, AbstractProfile profile, LifecycleState minState) '''
+	def dispatch toPropertySequence(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception ex, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«ex.properties.map (e|e.toProperty (currNs, profile, minState)).join»
 		</xsd:sequence>
@@ -411,9 +411,9 @@ class XSDGenerator {
 		
 		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
 							XSD being generated
-		@param		profile	The AbstractProfile defining the governing architecture rules.
+		@param		profile	The Profile defining the governing architecture rules.
 	*/
-	def toFaultType (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception ex, VersionedDomainNamespace currNs, AbstractProfile profile, LifecycleState minState) '''
+	def toFaultType (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception ex, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 
 		<xsd:complexType name="«ex.name»">
 			<xsd:annotation>
@@ -457,7 +457,7 @@ class XSDGenerator {
 	'''
 	
 	
-	def dispatch toProperty (Property attr, VersionedDomainNamespace currNs, AbstractProfile profile, LifecycleState minState) '''
+	def dispatch toProperty (Property attr, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		«IF docProvider.getDocumentation (attr) != null»
 			<xsd:element name="«attr.name»" «attr.toElementCardinality» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isMimeContent()»«attr.type.toMimeFragment()»«ENDIF» >
 				<xsd:annotation>
@@ -480,7 +480,7 @@ class XSDGenerator {
 		«ENDIF»
 	'''
 	
-	def dispatch toProperty (SimpleAttribute attr, VersionedDomainNamespace currNs, AbstractProfile profile, LifecycleState minState) '''
+	def dispatch toProperty (SimpleAttribute attr, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		«IF docProvider.getDocumentation (attr) == null»
 			<xsd:element name="«attr.name»" «attr.toElementCardinality» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isMimeContent()»«attr.type.toMimeFragment ()»«ENDIF»/>
 		«ELSE»

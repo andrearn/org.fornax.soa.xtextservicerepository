@@ -8,8 +8,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class SOAProfileDslUiModule extends org.xkonnex.repo.dsl.profiledsl.ui.AbstractSOAProfileDslUiModule {
-	public SOAProfileDslUiModule(AbstractUIPlugin plugin) {
+public class ProfileDslUiModule extends org.xkonnex.repo.dsl.profiledsl.ui.AbstractProfileDslUiModule {
+	public ProfileDslUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
 }

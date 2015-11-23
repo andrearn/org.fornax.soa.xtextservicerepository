@@ -33,12 +33,12 @@ import org.xkonnex.repo.dsl.basedsl.version.VersionedOwnerScopeVersionResolver;
 import org.xkonnex.repo.dsl.environmentdsl.EnvironmentDslRuntimeModule;
 import org.xkonnex.repo.dsl.environmentdsl.EnvironmentDslStandaloneSetup;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
-import org.xkonnex.repo.dsl.profiledsl.SOAProfileDslRuntimeModule;
-import org.xkonnex.repo.dsl.profiledsl.SOAProfileDslStandaloneSetup;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslFactory;
+import org.xkonnex.repo.dsl.profiledsl.ProfileDslRuntimeModule;
+import org.xkonnex.repo.dsl.profiledsl.ProfileDslStandaloneSetup;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Class;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslFactory;
 import org.xkonnex.repo.dsl.profiledsl.search.predicate.VersionAndLifecycleStatePredicate;
 
 import com.google.inject.AbstractModule;
@@ -59,16 +59,16 @@ public class VersionAndLifecycleStatePredicateTest extends AbstractXtextTests {
 	private Lifecycle lifecycle;
 	private Injector testInjector;
 	
-	private org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Class versionedAsset;
+	private org.xkonnex.repo.dsl.profiledsl.profileDsl.Class versionedAsset;
 	
-	private SOAProfileDslStandaloneSetup setup;
+	private ProfileDslStandaloneSetup setup;
 	private BaseDslStandaloneSetup baseDslSetup;
 	private ResourceSet resourceSet = new  ResourceSetImpl();
 
 	@Before
 	public void setUp () throws Exception {
 		super.setUp();
-		setup = new SOAProfileDslStandaloneSetup();
+		setup = new ProfileDslStandaloneSetup();
 		with (setup);
 		testInjector = getInjector().createChildInjector(new AbstractModule () {
 
@@ -83,7 +83,7 @@ public class VersionAndLifecycleStatePredicateTest extends AbstractXtextTests {
 			}
 		});
 		
-		SOAProfileDslFactory factory = SOAProfileDslFactory.eINSTANCE;
+		ProfileDslFactory factory = ProfileDslFactory.eINSTANCE;
 		lifecycle = factory.createLifecycle ();
 		proposed = factory.createLifecycleState ();
 		proposed.setName ("proposed");
@@ -145,7 +145,7 @@ public class VersionAndLifecycleStatePredicateTest extends AbstractXtextTests {
 		versionedAsset.setVersion(version);
 		versionedAsset.setState(development);
 
-		setup = new SOAProfileDslStandaloneSetup();
+		setup = new ProfileDslStandaloneSetup();
 	}
 	
 	@Test

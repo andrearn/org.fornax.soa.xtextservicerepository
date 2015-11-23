@@ -12,7 +12,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
 import com.google.inject.Inject
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResolver

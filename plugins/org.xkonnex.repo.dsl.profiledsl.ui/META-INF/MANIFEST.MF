@@ -25,4 +25,4 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.profiledsl.ui.contentassist.antlr,
  org.xkonnex.repo.dsl.profiledsl.ui.contentassist,
  org.xkonnex.repo.dsl.profiledsl.ui.quickfix
-Bundle-Activator: org.xkonnex.repo.dsl.profiledsl.ui.internal.CustomSOAProfileDslActivator
+Bundle-Activator: org.xkonnex.repo.dsl.profiledsl.ui.internal.CustomProfileDslActivator

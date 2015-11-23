@@ -2,7 +2,7 @@ package org.xkonnex.repo.generator.servicedsl.templates.webservice
 
 import com.google.inject.Inject
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
@@ -59,7 +59,7 @@ class ServiceTemplateExtensions {
 	}
 	
 	
-	def boolean operationsUseExtendableParameters (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
+	def boolean operationsUseExtendableParameters (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.serviceDefPolicy != null 
 			&& p.designRules.serviceDefPolicy.operationRules != null
@@ -70,7 +70,7 @@ class ServiceTemplateExtensions {
 		}
 		
 	}
-	def boolean operationsUseExtendableXMLAttributes (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
+	def boolean operationsUseExtendableXMLAttributes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.serviceDefPolicy != null 
 			&& p.designRules.serviceDefPolicy.operationRules != null
@@ -80,7 +80,7 @@ class ServiceTemplateExtensions {
 			return false
 		}
 	}		
-	def String getOperationsExtendibleParametersClause (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
+	def String getOperationsExtendibleParametersClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.operationsUseExtendableParameters) {
 			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause != null) {
 				return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLClause;
@@ -96,7 +96,7 @@ class ServiceTemplateExtensions {
 		}
 		
 	}
-	def String getOperationsExtendibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile p) {
+	def String getOperationsExtendibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.operationsUseExtendableXMLAttributes) {
 			if (p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLAttributeClause != null) {
 				return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLAttributeClause;
@@ -133,7 +133,7 @@ class ServiceTemplateExtensions {
 		}
 	}
 	
-	def collectTechnicalVersionedNamespaceImports (Service service, AbstractProfile profile) {
+	def collectTechnicalVersionedNamespaceImports (Service service, Profile profile) {
 		val Set<VersionedTechnicalNamespace> headerImports = newHashSet
 		if (service.findBestMatchingRequestHeader(profile) != null) {
 			for (headerImp : techNsImportQueries.allImportedVersionedNS(service.findBestMatchingRequestHeader (profile), versionQualifier.toMajorVersionNumber(service.version))) {

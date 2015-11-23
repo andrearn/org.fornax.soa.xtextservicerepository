@@ -13,7 +13,7 @@ import org.xkonnex.repo.dsl.basedsl.BaseDslRuntimeModule;
 import org.xkonnex.repo.dsl.bindingdsl.BindingDslRuntimeModule;
 import org.xkonnex.repo.dsl.environmentdsl.EnvironmentDslRuntimeModule;
 import org.xkonnex.repo.dsl.moduledsl.ModuleDslRuntimeModule;
-import org.xkonnex.repo.dsl.profiledsl.SOAProfileDslRuntimeModule;
+import org.xkonnex.repo.dsl.profiledsl.ProfileDslRuntimeModule;
 import org.xkonnex.repo.dsl.semanticsdsl.SemanticsDslRuntimeModule;
 import org.xkonnex.repo.dsl.servicedsl.ServiceDslRuntimeModule;
 import org.xkonnex.repo.dsl.solutiondsl.SolutionDslRuntimeModule;
@@ -53,7 +53,7 @@ public class ServiceRepositoryActivator extends AbstractUIPlugin {
 			Injector injector = Guice.createInjector(
 					Modules2.mixin (
 							new BaseDslRuntimeModule (),
-							new SOAProfileDslRuntimeModule(),
+							new ProfileDslRuntimeModule(),
 							new SemanticsDslRuntimeModule(),
 							new SolutionDslRuntimeModule(),
 							new EnvironmentDslRuntimeModule(),

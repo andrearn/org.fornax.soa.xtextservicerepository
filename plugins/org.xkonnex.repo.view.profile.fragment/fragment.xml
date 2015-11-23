@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.xtext.graphview.selectionStrategy">
       <strategy
-            class="org.xkonnex.repo.dsl.profiledsl.ui.SOAProfileDslExecutableExtensionFactory:org.eclipse.xtext.graphview.providers.XtextEditorSelectionStrategy">
+            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.graphview.providers.XtextEditorSelectionStrategy">
       </strategy>
    </extension>
 

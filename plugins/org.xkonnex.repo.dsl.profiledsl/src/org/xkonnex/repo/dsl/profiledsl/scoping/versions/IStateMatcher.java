@@ -2,8 +2,8 @@ package org.xkonnex.repo.dsl.profiledsl.scoping.versions;
 
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 
 public interface IStateMatcher {
 

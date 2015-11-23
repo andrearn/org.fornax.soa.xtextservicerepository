@@ -30,7 +30,7 @@ public class AbstractModelBasedTest extends AbstractXtextTests {
 		reader.addRegister (new org.xkonnex.repo.dsl.environmentdsl.EnvironmentDslStandaloneSetup ());
 		reader.addRegister (new org.xkonnex.repo.dsl.sladsl.SLADslStandaloneSetup ());
 		reader.addRegister (new org.xkonnex.repo.dsl.basedsl.BaseDslStandaloneSetup ());
-		reader.addRegister (new org.xkonnex.repo.dsl.profiledsl.SOAProfileDslStandaloneSetup ());
+		reader.addRegister (new org.xkonnex.repo.dsl.profiledsl.ProfileDslStandaloneSetup ());
 		reader.addRegister (new org.xkonnex.repo.dsl.moduledsl.ModuleDslStandaloneSetup ());
 		
 		ResourceLoadingSlotEntry slotEntry = new ResourceLoadingSlotEntry ();

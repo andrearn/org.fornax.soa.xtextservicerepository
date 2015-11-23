@@ -8,7 +8,7 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.EventXSDGenerator
 import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
@@ -46,7 +46,7 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 	 *	LifecycleState derived from the profile's Environment and the minimal required LifecycleState 
 	 *	of the respective Service / owning SubNamespace
 	 */
-	override build (ModuleBinding binding, AbstractProfile enforcedProfile) {
+	override build (ModuleBinding binding, Profile enforcedProfile) {
 		log.info ("Generating technical service contracts for binding " + binding.name)
 		try {
 			contractBuilder.build (binding, enforcedProfile);
@@ -55,7 +55,7 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 		}
 	}
 	
-	override build (ModuleBinding binding, AbstractProfile enforcedProfile, boolean noDeps, boolean includeSubNamespaces) {
+	override build (ModuleBinding binding, Profile enforcedProfile, boolean noDeps, boolean includeSubNamespaces) {
 		log.info ("Generating technical service contracts for binding " + binding.name)
 		try {
 			contractBuilder.build (binding, enforcedProfile);
@@ -64,7 +64,7 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 		}
 	}
 
-	override build (Module module, Environment environment, boolean selectTypeVersionsByEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, AbstractProfile enforcedProfile) {
+	override build (Module module, Environment environment, boolean selectTypeVersionsByEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, Profile enforcedProfile) {
 		log.info ("Generating technical service contracts for services used by module " + module.name + " with modules providing the services bound to environment " + environment.name)
 		try {
 			contractBuilder.build (module, environment, selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, endpointQualifierRef, enforcedProfile);
@@ -77,7 +77,7 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 	/**
 	 *	Event XSDs for Services having an request and an response event for each service operation
 	 */
-	override buildEventsInclSubNamespaces (String namespaceName, List<SubNamespace> namespaces, List<Environment> environments, String targetEnv, AbstractProfile enforcedProfile) {
+	override buildEventsInclSubNamespaces (String namespaceName, List<SubNamespace> namespaces, List<Environment> environments, String targetEnv, Profile enforcedProfile) {
 		if (namespaceName != null) {
 			for (ns : namespaces.filter (e|e.name.startsWith (namespaceName))) {
 				val profile = ns.getApplicableProfile(enforcedProfile)
@@ -88,7 +88,7 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 		}
 	}
 	
-	override buildEvents (SubNamespace ns, List<Environment> environments, String targetEnv, AbstractProfile enforcedProfile) { 
+	override buildEvents (SubNamespace ns, List<Environment> environments, String targetEnv, Profile enforcedProfile) { 
 		val env = environments.findFirst (e|e.name == targetEnv);
 		val profile = ns.getApplicableProfile(enforcedProfile)
 		log.info ("Generating event data definitions for services in namespace " + nameProvider.getFullyQualifiedName(ns) + " applicable for Environment " + env.name)

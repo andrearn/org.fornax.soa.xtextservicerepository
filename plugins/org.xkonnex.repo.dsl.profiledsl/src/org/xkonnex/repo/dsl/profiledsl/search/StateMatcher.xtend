@@ -2,7 +2,7 @@ package org.xkonnex.repo.dsl.profiledsl.search
 
 import com.google.inject.Inject
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 
 /*
  * @deprecated

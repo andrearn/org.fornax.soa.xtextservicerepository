@@ -13,7 +13,7 @@ import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;
 import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 
 import com.google.inject.Inject;

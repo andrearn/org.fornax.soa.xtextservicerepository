@@ -9,9 +9,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries;
 import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries;
 

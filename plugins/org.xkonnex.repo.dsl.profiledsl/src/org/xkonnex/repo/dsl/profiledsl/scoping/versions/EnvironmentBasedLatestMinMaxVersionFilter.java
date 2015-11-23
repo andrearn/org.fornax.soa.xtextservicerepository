@@ -9,7 +9,7 @@ import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMinInclMaxExcl
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;

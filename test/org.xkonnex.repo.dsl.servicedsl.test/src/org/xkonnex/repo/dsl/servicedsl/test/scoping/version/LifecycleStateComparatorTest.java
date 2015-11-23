@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.xkonnex.repo.dsl.servicedsl.test.BaseServiceDslTest;
 import org.junit.Before;
 import org.junit.Test;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
 
 import com.google.inject.Inject;

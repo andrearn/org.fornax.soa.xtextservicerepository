@@ -7,7 +7,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 
 class LatestMinorVersionExceptionResolver implements IExceptionResolver {
 	

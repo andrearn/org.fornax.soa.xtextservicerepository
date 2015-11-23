@@ -5,7 +5,7 @@ import java.util.Set;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AbstractServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 
 /**

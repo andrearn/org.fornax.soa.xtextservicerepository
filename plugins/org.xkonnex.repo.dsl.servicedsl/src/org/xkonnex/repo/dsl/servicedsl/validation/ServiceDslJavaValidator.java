@@ -15,7 +15,7 @@ import org.xkonnex.repo.dsl.basedsl.ref.DependencyDescription;
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch;
 import org.xkonnex.repo.dsl.basedsl.validation.NameAndVersionAreUniqueValidator;
 import org.xkonnex.repo.dsl.basedsl.validation.PluggableChecks;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.ServiceBaseCategory;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ServiceBaseCategory;
 import org.xkonnex.repo.dsl.profiledsl.util.ReferencedStateChecker;
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries;
 import org.xkonnex.repo.dsl.servicedsl.service.validation.version.BusinessObjectVersionValidator;

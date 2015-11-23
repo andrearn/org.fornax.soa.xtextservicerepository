@@ -15,7 +15,7 @@ generate moduleDsl "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl"
 import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
 import "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" as serviceDsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as environmentDsl
-import "http://www.xkonnex.org/repo/dsl/profiledsl/SOAProfileDsl" as profileDsl
+import "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" as profileDsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
 
 ModuleModel:

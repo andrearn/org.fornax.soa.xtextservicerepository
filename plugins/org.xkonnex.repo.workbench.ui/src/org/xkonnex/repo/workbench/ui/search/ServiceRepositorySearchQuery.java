@@ -23,8 +23,8 @@ import org.xkonnex.repo.core.query.FindUnapprovedAssetsQuery;
 import org.xkonnex.repo.core.query.predicates.CanonicalOrNotPredicate;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslPackage;
 import org.xkonnex.repo.workbench.ui.internal.ServiceRepositoryActivator;
 import org.xkonnex.repo.workbench.ui.search.dialog.ServiceRepositorySearchMessages;
 
@@ -123,11 +123,11 @@ public class ServiceRepositorySearchQuery implements ISearchQuery {
 		String maxStateName = querySpec.getMaxState();
 		LifecycleState minState = null;
 		if (minStateName != null && minStateName != "") {
-			minState = eObjectLookup.getModelElementByName(minStateName, rs, SOAProfileDslPackage.Literals.LIFECYCLE.getName());
+			minState = eObjectLookup.getModelElementByName(minStateName, rs, ProfileDslPackage.Literals.LIFECYCLE.getName());
 		}
 		LifecycleState maxState = null;
 		if (maxStateName != null && minStateName != "") {
-			maxState = eObjectLookup.getModelElementByName(maxStateName, rs, SOAProfileDslPackage.Literals.LIFECYCLE.getName());
+			maxState = eObjectLookup.getModelElementByName(maxStateName, rs, ProfileDslPackage.Literals.LIFECYCLE.getName());
 		}
 		String minVersion = null;
 		if (! "".equals(querySpec.getMinVersion()))

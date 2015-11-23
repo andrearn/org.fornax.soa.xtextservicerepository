@@ -2,7 +2,7 @@ package org.xkonnex.repo.dsl.bindingdsl.binding.query.environment
 
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Lifecycle
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
 import com.google.inject.Inject
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType

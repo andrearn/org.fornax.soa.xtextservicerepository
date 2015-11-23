@@ -2,8 +2,8 @@ package org.xkonnex.repo.dsl.servicedsl.service.query
 
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeader
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 
@@ -13,11 +13,11 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 class HeaderFinder {
 	
 	
-	def dispatch MessageHeader findBestMatchingRequestHeader (EObject o, AbstractProfile p ) { 
+	def dispatch MessageHeader findBestMatchingRequestHeader (EObject o, Profile p ) { 
 		p.messaging?.defaultRequestHeader?.header;
 	}
 		
-	def dispatch MessageHeader findBestMatchingRequestHeader (Operation o, AbstractProfile p ) {
+	def dispatch MessageHeader findBestMatchingRequestHeader (Operation o, Profile p ) {
 		if (o.requestMessageHeader?.header != null) { 
 			o.requestMessageHeader.header;
 		} else {
@@ -25,7 +25,7 @@ class HeaderFinder {
 		}
 	}
 			
-	def dispatch MessageHeader findBestMatchingRequestHeader (Service s, AbstractProfile p ) {
+	def dispatch MessageHeader findBestMatchingRequestHeader (Service s, Profile p ) {
 		if (s.requestMessageHeader?.header != null) { 
 			s.requestMessageHeader.header;
 		} else {
@@ -33,11 +33,11 @@ class HeaderFinder {
 		}
 	}
 	
-	def dispatch MessageHeader findBestMatchingResponseHeader (EObject o, AbstractProfile p ) { 
+	def dispatch MessageHeader findBestMatchingResponseHeader (EObject o, Profile p ) { 
 		p.messaging?.defaultResponseHeader?.header;
 	}
 		
-	def dispatch MessageHeader findBestMatchingResponseHeader (Operation o, AbstractProfile p ) {
+	def dispatch MessageHeader findBestMatchingResponseHeader (Operation o, Profile p ) {
 		if (o.responseMessageHeader?.header != null) { 
 			o.responseMessageHeader.header;
 		} else {
@@ -45,7 +45,7 @@ class HeaderFinder {
 		}
 	}
 			
-	def dispatch MessageHeader findBestMatchingResponseHeader (Service s, AbstractProfile p ) {
+	def dispatch MessageHeader findBestMatchingResponseHeader (Service s, Profile p ) {
 		if (s.responseMessageHeader?.header != null) { 
 			s.responseMessageHeader.header;
 		} else {
@@ -53,11 +53,11 @@ class HeaderFinder {
 		}
 	}
 	
-	def dispatch MessageHeader findBestMatchingPublishHeader (EObject o, AbstractProfile p ) { 
+	def dispatch MessageHeader findBestMatchingPublishHeader (EObject o, Profile p ) { 
 		p.messaging?.defaultPublishHeader?.header;
 	}
 		
-	def dispatch MessageHeader findBestMatchingPublishHeader (Operation o, AbstractProfile p ) {
+	def dispatch MessageHeader findBestMatchingPublishHeader (Operation o, Profile p ) {
 		if (o.publishMessageHeader?.header != null) { 
 			o.publishMessageHeader.header;
 		} else {
@@ -65,7 +65,7 @@ class HeaderFinder {
 		}
 	}
 			
-	def dispatch MessageHeader findBestMatchingPublishHeader (Service s, AbstractProfile p ) {
+	def dispatch MessageHeader findBestMatchingPublishHeader (Service s, Profile p ) {
 		if (s.publishMessageHeader?.header != null) { 
 			s.publishMessageHeader.header;
 		} else {
@@ -73,7 +73,7 @@ class HeaderFinder {
 		}
 	}
 	
-	def List<MessageHeader> getLatestMajorVersions (AbstractProfile p) {
+	def List<MessageHeader> getLatestMajorVersions (Profile p) {
 		p.messaging?.messageHeaders;
 	}
 	

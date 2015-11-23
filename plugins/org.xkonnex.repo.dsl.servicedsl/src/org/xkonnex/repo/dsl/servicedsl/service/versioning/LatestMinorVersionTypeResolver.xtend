@@ -5,7 +5,7 @@ import java.util.List
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
@@ -94,9 +94,9 @@ class LatestMinorVersionTypeResolver implements IVersionedTypeRefResolver {
 	 *		Checks if type declaration is the latest version matching the following constraint
 	 *		- same major version
 	 */
-	override boolean typeMatchesMajorVersion (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType t, Integer majorVersion) { 
+	override boolean typeMatchesMajorVersion (org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType t, Integer majorVersion) { 
 		(findMatchingVersionedTypeFromProfile ( 
-			(t.eContainer as SubNamespace).types.filter (typeof (org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType)).filter (e|e.name == t.name).toList, 
+			(t.eContainer as SubNamespace).types.filter (typeof (org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType)).filter (e|e.name == t.name).toList, 
 			majorVersion)
 		 == t);
 	}		
@@ -148,7 +148,7 @@ class LatestMinorVersionTypeResolver implements IVersionedTypeRefResolver {
 			.sortBy (e|e.version.version).last( );
 	}
 	
-//	override org.xkonnex.repo.dsl.semanticsdsl.profiledsl.sOAProfileDsl.Type findMatchingType (DataTypeRef t) {
+//	override org.xkonnex.repo.dsl.semanticsdsl.profiledsl.profileDsl.Type findMatchingType (DataTypeRef t) {
 //		t.type;
 //	}
 		
@@ -201,7 +201,7 @@ class LatestMinorVersionTypeResolver implements IVersionedTypeRefResolver {
 		).sortBy(e|e.version.version).last();
 	}
 	
-	def private org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.Type findMatchingVersionedTypeFromProfile (List<org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedType> types, Integer majorVersion) { 
+	def private org.xkonnex.repo.dsl.profiledsl.profileDsl.Type findMatchingVersionedTypeFromProfile (List<org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType> types, Integer majorVersion) { 
 		types.filter (
 			e|e.version.versionMatches (majorVersion) 
 		).sortBy(e|e.version.version).last();

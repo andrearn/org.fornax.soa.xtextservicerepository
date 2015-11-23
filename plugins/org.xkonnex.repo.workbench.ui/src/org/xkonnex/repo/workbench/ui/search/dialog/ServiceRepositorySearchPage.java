@@ -45,7 +45,7 @@ import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.xkonnex.repo.core.query.FindAssetsWithStateQuery;
 import org.xkonnex.repo.core.query.FindUnapprovedAssetsQuery;
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslPackage;
 import org.xkonnex.repo.workbench.ui.internal.ServiceRepositoryActivator;
 import org.xkonnex.repo.workbench.ui.search.ServiceRepositoryQuerySpec;
 import org.xkonnex.repo.workbench.ui.search.ServiceRepositorySearchQuery;
@@ -369,7 +369,7 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
     	minStateCombo.add("");
     	maxStateCombo.add("");
     	Predicate<IEObjectDescription> predicate = Predicates.alwaysTrue();
-    	Iterable<IEObjectDescription> states = predicateSearch.search(SOAProfileDslPackage.Literals.LIFECYCLE_STATE.getName(), predicate);
+    	Iterable<IEObjectDescription> states = predicateSearch.search(ProfileDslPackage.Literals.LIFECYCLE_STATE.getName(), predicate);
     	List<String> stateNames = new ArrayList<String>();
     	for (IEObjectDescription stateDesc : states) {
 			String state = stateDesc.getQualifiedName().getLastSegment();

@@ -16,15 +16,15 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.AbstractProfile;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.ClassRef;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.EnumRef;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.MessageHeaderRef;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfile;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileDslPackage;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.SOAProfileModel;
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.VersionedTypeRef;
-import org.xkonnex.repo.dsl.profiledsl.ui.contentassist.AbstractSOAProfileDslProposalProvider;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ClassRef;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.EnumRef;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeaderRef;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslPackage;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileModel;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef;
+import org.xkonnex.repo.dsl.profiledsl.ui.contentassist.AbstractProfileDslProposalProvider;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -34,7 +34,7 @@ import com.google.common.collect.Lists;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
-public class SOAProfileDslProposalProvider extends AbstractSOAProfileDslProposalProvider {
+public class ProfileDslProposalProvider extends AbstractProfileDslProposalProvider {
 
 	public void complete_VersionId (EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		calculateVersionProposals(model, context, acceptor, false);
@@ -62,17 +62,17 @@ public class SOAProfileDslProposalProvider extends AbstractSOAProfileDslProposal
 			}
 			
 		});
-		SOAProfileModel profModel = null;
+		ProfileModel profModel = null;
 		EObject curObj = model;
 		while (! (curObj instanceof Model) && curObj.eContainer() != null) {
 			curObj = curObj.eContainer();
 		}
-		if (curObj instanceof SOAProfileModel) {
-			profModel = (SOAProfileModel) curObj;
+		if (curObj instanceof ProfileModel) {
+			profModel = (ProfileModel) curObj;
 			Iterator<ILeafNode> leafIt = nonHidden.iterator();
-			Iterable<String> importedNamespaces = Lists.newArrayList(Lists.transform (profModel.getProfiles(), new Function<AbstractProfile, String>() {
+			Iterable<String> importedNamespaces = Lists.newArrayList(Lists.transform (profModel.getProfiles(), new Function<Profile, String>() {
 
-				public String apply(AbstractProfile from) {
+				public String apply(Profile from) {
 					return from.getName();
 				}
 				
@@ -89,7 +89,7 @@ public class SOAProfileDslProposalProvider extends AbstractSOAProfileDslProposal
 						nameParts.append (curNode.getText());
 				}
 				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
-				Iterable<String> canditateVersions = getCanditateVersions (typeName, SOAProfileDslPackage.Literals.MESSAGE_HEADER.getName(), importedNamespaces, majorVersionsOnly);
+				Iterable<String> canditateVersions = getCanditateVersions (typeName, ProfileDslPackage.Literals.MESSAGE_HEADER.getName(), importedNamespaces, majorVersionsOnly);
 				for (String version : canditateVersions) {
 					acceptor.accept (createCompletionProposal (version, context));
 				}
@@ -105,7 +105,7 @@ public class SOAProfileDslProposalProvider extends AbstractSOAProfileDslProposal
 						nameParts.append (curNode.getText());
 				}
 				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
-				Iterable<String> canditateVersions = getCanditateVersions (typeName, SOAProfileDslPackage.Literals.CLASS.getName(), importedNamespaces, majorVersionsOnly);
+				Iterable<String> canditateVersions = getCanditateVersions (typeName, ProfileDslPackage.Literals.CLASS.getName(), importedNamespaces, majorVersionsOnly);
 				for (String version : canditateVersions) {
 					acceptor.accept (createCompletionProposal (version, context));
 				}
@@ -121,7 +121,7 @@ public class SOAProfileDslProposalProvider extends AbstractSOAProfileDslProposal
 						nameParts.append (curNode.getText());
 				}
 				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
-				Iterable<String> canditateVersions = getCanditateVersions (typeName, SOAProfileDslPackage.Literals.ENUMERATION.getName(), importedNamespaces, majorVersionsOnly);
+				Iterable<String> canditateVersions = getCanditateVersions (typeName, ProfileDslPackage.Literals.ENUMERATION.getName(), importedNamespaces, majorVersionsOnly);
 				for (String version : canditateVersions) {
 					acceptor.accept (createCompletionProposal (version, context));
 				}
@@ -137,7 +137,7 @@ public class SOAProfileDslProposalProvider extends AbstractSOAProfileDslProposal
 						nameParts.append (curNode.getText());
 				}
 				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
-				List<String> classNames = Lists.newArrayList(SOAProfileDslPackage.Literals.VERSIONED_TYPE.getName(), SOAProfileDslPackage.Literals.CLASS.getName(), SOAProfileDslPackage.Literals.ENUMERATION.getName());
+				List<String> classNames = Lists.newArrayList(ProfileDslPackage.Literals.VERSIONED_TYPE.getName(), ProfileDslPackage.Literals.CLASS.getName(), ProfileDslPackage.Literals.ENUMERATION.getName());
 				Iterable<String> canditateVersions = getCanditateVersions (typeName, classNames, importedNamespaces, majorVersionsOnly);
 				for (String version : canditateVersions) {
 					acceptor.accept (createCompletionProposal (version, context));

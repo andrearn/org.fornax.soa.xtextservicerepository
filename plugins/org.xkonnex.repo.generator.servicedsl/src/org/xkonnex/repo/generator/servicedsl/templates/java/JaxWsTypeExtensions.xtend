@@ -4,7 +4,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
-import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.DataType
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import com.google.inject.Inject
