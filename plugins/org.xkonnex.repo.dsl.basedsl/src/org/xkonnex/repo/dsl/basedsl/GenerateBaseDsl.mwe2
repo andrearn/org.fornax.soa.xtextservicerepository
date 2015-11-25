@@ -25,6 +25,7 @@ Workflow {
 	component = Generator {
 		pathRtProject = runtimeProject
 		pathUiProject = "${runtimeProject}.ui"
+    	pathTestProject = "${runtimeProject}/../../test/${projectName}.test"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
 		language = {
@@ -101,6 +102,8 @@ Workflow {
 			}
 			
 			fragment = refactoring.RefactorElementNameFragment {}
+
+    		fragment = junit.Junit4Fragment auto-inject {}
 
 			// project wizard (optional) 
 			// fragment = projectWizard.SimpleProjectWizardFragment {

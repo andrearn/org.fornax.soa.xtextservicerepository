@@ -2,23 +2,28 @@ package org.xkonnex.repo.dsl.servicedsl.test.scoping.version;
 
 import static org.junit.Assert.assertEquals;
 
-import org.xkonnex.repo.dsl.servicedsl.test.BaseServiceDslTest;
+import javax.inject.Inject;
+
+import org.eclipse.xtext.junit4.InjectWith;
+import org.eclipse.xtext.junit4.XtextRunner;
 import org.junit.Before;
 import org.junit.Test;
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
+import org.junit.runner.RunWith;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
+import org.xkonnex.repo.dsl.servicedsl.test.BaseServiceDslTest;
+import org.xkonnex.repo.dsl.servicedsl.test.ServiceDslWithDependenciesInjector;
 
-import com.google.inject.Inject;
-
+@RunWith(XtextRunner.class)
+@InjectWith(ServiceDslWithDependenciesInjector.class)
 public class LifecycleStateComparatorTest extends BaseServiceDslTest {
 	
 
+	@Inject
 	private LifecycleStateComparator comparator;
 	
 	@Before
 	public void setUp() throws Exception {
 		super.setUp ();
-		comparator = getInjector ().getInstance (LifecycleStateComparator.class);
 		
 	}
 

@@ -13,7 +13,8 @@ Require-Bundle: org.xkonnex.repo.dsl.basedsl;bundle-version="2.0.0";visibility:=
  org.eclipse.ui,
  org.eclipse.xtext.builder;bundle-version="2.8.0";visibility:=reexport,
  org.antlr.runtime,
- org.eclipse.compare
+ org.eclipse.compare,
+ org.eclipse.xtext.ui.codetemplates.ui
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.basedsl.ui.contentassist,
@@ -22,5 +23,6 @@ Export-Package: org.xkonnex.repo.dsl.basedsl.ui.contentassist,
  org.xkonnex.repo.dsl.basedsl.ui.hierarchy,
  org.xkonnex.repo.dsl.basedsl.ui.highlighting,
  org.xkonnex.repo.dsl.basedsl.ui.labeling,
- org.xkonnex.repo.dsl.basedsl.ui.quickfix
+ org.xkonnex.repo.dsl.basedsl.ui.quickfix,
+ org.xkonnex.repo.dsl.basedsl.ui.internal
 Bundle-Activator: org.xkonnex.repo.dsl.basedsl.ui.internal.CustomBaseDslActivator

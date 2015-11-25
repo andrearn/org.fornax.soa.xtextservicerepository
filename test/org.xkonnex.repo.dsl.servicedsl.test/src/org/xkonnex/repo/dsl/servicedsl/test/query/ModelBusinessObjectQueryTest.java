@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.junit4.InjectWith;
 import org.eclipse.xtext.junit4.XtextRunner;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.junit.Before;
@@ -14,12 +15,14 @@ import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel;
+import org.xkonnex.repo.dsl.servicedsl.test.ServiceDslWithDependenciesInjector;
 import org.xkonnex.repo.test.AbstractModelBasedTest;
 
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
 @RunWith(XtextRunner.class)
+@InjectWith(ServiceDslWithDependenciesInjector.class)
 public class ModelBusinessObjectQueryTest extends AbstractModelBasedTest {
 
 	@Inject

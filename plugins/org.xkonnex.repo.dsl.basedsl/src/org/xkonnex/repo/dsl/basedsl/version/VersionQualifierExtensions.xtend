@@ -6,8 +6,6 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 
 class VersionQualifierExtensions {
 	
-	@Inject BaseDslFactory dslFactory
-	
 	def dispatch String toVersionNumber (Integer v) {
 		v.toString();
 	}
@@ -59,7 +57,7 @@ class VersionQualifierExtensions {
 		"1.0";
 	}
 
-	def Version create dslFactory.createVersion() toVersion (String v) {
+	def Version create BaseDslFactory.eINSTANCE.createVersion() toVersion (String v) {
 		version = v;
 	}
 	

@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
 import org.xkonnex.repo.dsl.servicedsl.ServiceDslStandaloneSetupGenerated;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.impl.ServiceDslPackageImpl;
 
 import com.google.inject.Injector;
 import com.google.inject.Singleton;

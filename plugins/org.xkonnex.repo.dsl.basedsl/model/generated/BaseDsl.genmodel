@@ -89,5 +89,10 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//AssetRef/asset"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//AssetRef/versionRef"/>
     </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//Namespace">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//Namespace/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//Namespace/prefix"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//Namespace/uri"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

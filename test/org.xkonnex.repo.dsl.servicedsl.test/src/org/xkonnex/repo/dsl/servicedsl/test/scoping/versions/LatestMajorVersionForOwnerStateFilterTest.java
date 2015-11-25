@@ -1,16 +1,28 @@
 package org.xkonnex.repo.dsl.servicedsl.test.scoping.versions;
 
-import org.xkonnex.repo.dsl.servicedsl.test.BaseServiceDslTest;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import javax.inject.Inject;
+
+import org.eclipse.xtext.junit4.InjectWith;
+import org.eclipse.xtext.junit4.XtextRunner;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LatestMajorVersionForOwnerStateFilter;
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
+import org.xkonnex.repo.dsl.servicedsl.test.BaseServiceDslTest;
+import org.xkonnex.repo.dsl.servicedsl.test.ServiceDslWithDependenciesInjector;
 
+import com.google.inject.Injector;
+
+@RunWith(XtextRunner.class)
+@InjectWith(ServiceDslWithDependenciesInjector.class)
 public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTest {
 
 	private LatestMajorVersionForOwnerStateFilter devFilter;
@@ -20,11 +32,14 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 	private LatestMajorVersionForOwnerStateFilter propFilter;
 	private LatestMajorVersionForOwnerStateFilter deprFilter;
 	
+	@Inject
+	private Injector injector;
+	
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
 		IScopeVersionResolver verRes = new SimpleScopeVersionResolver(null);
-		ILifecycleStateResolver stateResolver = getInjector().getInstance(ILifecycleStateResolver.class);
+		ILifecycleStateResolver stateResolver = injector.getInstance(ILifecycleStateResolver.class);
 		String majorVersion = "1";
 		LifecycleState minDevLifecycleState = defined;
 		LifecycleState minTestLifecycleState = test;
@@ -38,12 +53,12 @@ public class LatestMajorVersionForOwnerStateFilterTest extends BaseServiceDslTes
 		propFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , proposed, resource.getResourceSet());
 		deprFilter = new LatestMajorVersionForOwnerStateFilter(verRes, majorVersion, stateResolver , deprecated, resource.getResourceSet());
 		
-		getInjector().injectMembers (devFilter);
-		getInjector().injectMembers (testFilter);
-		getInjector().injectMembers (prodFilter);
-		getInjector().injectMembers (defFilter);
-		getInjector().injectMembers (propFilter);
-		getInjector().injectMembers (deprFilter);
+		injector.injectMembers (devFilter);
+		injector.injectMembers (testFilter);
+		injector.injectMembers (prodFilter);
+		injector.injectMembers (defFilter);
+		injector.injectMembers (propFilter);
+		injector.injectMembers (deprFilter);
 	}
 
 	

@@ -9,6 +9,7 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
 import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 
 class ProfileSchemaNamespaceExtensions {
 	
@@ -94,30 +95,38 @@ class ProfileSchemaNamespaceExtensions {
 		!ns.noTrailingSlash;
 	}
 		
-	def dispatch String toVersionPostfix (org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace d) {
+	def dispatch String toVersionPostfix (Object o) { 
+		throw new UnsupportedOperationException();
+	}
+	
+	def dispatch String toVersionPostfix (Version v) {
+		versionQualifier.toVersionPostfix(v);
+	}
+
+	def dispatch String toVersionPostfix (OrganizationNamespace d) {
 		versionQualifier.toDefaultVersionPostfix();
 	}
 		
-	def dispatch String toVersionPostfix (org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace s) {
+	def dispatch String toVersionPostfix (TechnicalNamespace s) {
 		versionQualifier.toDefaultVersionPostfix();
 	}
 	
-	def dispatch String toUnversionedNamespace (org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace domain) {
+	def dispatch String toUnversionedNamespace (OrganizationNamespace domain) {
 		"http://" + domain.name.split(".").reverse().join (".");
 	}
 	
-	def dispatch String toUnversionedNamespace (org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace leafDomainNamespace) { 
+	def dispatch String toUnversionedNamespace (TechnicalNamespace leafDomainNamespace) { 
 		"http://" + 
 		leafDomainNamespace.findOrgNamespace().toHostPart() + "/" + 
 		(newArrayList (leafDomainNamespace).toNamespacePath().map (n|n.name.stripXtextEscapes().replaceAll("\\.","/")).join("/"));
 	}
 	
-	def dispatch String toHostPart (org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace d) {
+	def String toHostPart (org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace d) {
 		 d.name.split("\\.").reverse().join(".");
 	}
 
 		
-	def dispatch org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace findOrgNamespace (TechnicalNamespace o) { 
+	def org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace findOrgNamespace (TechnicalNamespace o) { 
 		if (o.eContainer instanceof OrganizationNamespace) {
 			o.eContainer as OrganizationNamespace;
 		} else {
@@ -125,7 +134,7 @@ class ProfileSchemaNamespaceExtensions {
 		}
 	}
 	
-	def dispatch String toShortName (TechnicalNamespace s) {
+	def String toShortName (TechnicalNamespace s) {
 		if (s.prefix == null ) {
 			s.toPrefix()
 		} else {
@@ -142,7 +151,7 @@ class ProfileSchemaNamespaceExtensions {
 		}
 	}
 	
-	def dispatch String shorten (org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace d) {
+	def String shorten (org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace d) {
 		d.prefix;
 	}
 

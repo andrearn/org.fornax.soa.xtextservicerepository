@@ -15,6 +15,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
 
 /* 
  * Split SubNamespaces by major major versions of it's owned services, BOs, enums and exceptions
@@ -104,7 +105,7 @@ class NamespaceSplitter {
 				name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
 				shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
 			} 
-		subdomain 	= c.eContainer;
+		namespace 	= c.eContainer as Namespace;
 		fqn 		= nameProvider.getFullyQualifiedName(c.eContainer).toString;
 		version 	= c.version.toMajorVersionNumber();
 		types 		= (c.eContainer as SubNamespace).allTypesByMajorVersion (c.version.toMajorVersionNumber()).map (t|t as Type).toList;
@@ -124,7 +125,7 @@ class NamespaceSplitter {
 			name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
 			shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
 		}
-		subdomain 	= c.eContainer;
+		namespace 	= c.eContainer as Namespace;
 		fqn 		= nameProvider.getFullyQualifiedName(c.eContainer).toString;
 		version		= c.version.toMajorVersionNumber();
 		types 		= (c.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).map (t|t as Type).toList;
@@ -140,7 +141,7 @@ class NamespaceSplitter {
 			name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
 			shortName 	= (c.eContainer as OrganizationNamespace).prefix?.stripXtextEscapes();
 		}
-		subdomain 	= c.eContainer;
+		namespace 	= c.eContainer as Namespace;
 		fqn 		= nameProvider.getFullyQualifiedName(c.eContainer).toString;
 		version		= c.version.toMajorVersionNumber();
 		types 		= (c.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).map (t|t as Type).toList;

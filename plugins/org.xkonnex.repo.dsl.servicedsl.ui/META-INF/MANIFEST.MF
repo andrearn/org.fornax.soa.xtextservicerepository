@@ -20,11 +20,13 @@ Require-Bundle: org.xkonnex.repo.dsl.servicedsl;bundle-version="1.6.2";visibilit
  org.eclipse.compare,
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
- org.eclipse.xtext.builder
+ org.eclipse.xtext.builder,
+ org.eclipse.xtext.ui.codetemplates.ui
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.servicedsl.ui,
  org.xkonnex.repo.dsl.servicedsl.ui.contentassist,
  org.xkonnex.repo.dsl.servicedsl.ui.contentassist.antlr,
- org.xkonnex.repo.dsl.servicedsl.ui.quickfix
+ org.xkonnex.repo.dsl.servicedsl.ui.quickfix,
+ org.xkonnex.repo.dsl.servicedsl.ui.internal
 Bundle-Activator: org.xkonnex.repo.dsl.servicedsl.ui.internal.ServiceDslCustomActivator

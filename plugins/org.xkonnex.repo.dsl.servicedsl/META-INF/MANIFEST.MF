@@ -32,7 +32,9 @@ Export-Package: org.xkonnex.repo.dsl.servicedsl,
  org.xkonnex.repo.dsl.servicedsl.parser.antlr,
  org.xkonnex.repo.dsl.servicedsl.parser.antlr.internal,
  org.xkonnex.repo.dsl.servicedsl.scoping,
+ org.xkonnex.repo.dsl.servicedsl.serializer,
  org.xkonnex.repo.dsl.servicedsl.service,
+ org.xkonnex.repo.dsl.servicedsl.service.namespace,
  org.xkonnex.repo.dsl.servicedsl.service.query,
  org.xkonnex.repo.dsl.servicedsl.service.query.namespace,
  org.xkonnex.repo.dsl.servicedsl.service.query.type,
@@ -45,6 +47,5 @@ Export-Package: org.xkonnex.repo.dsl.servicedsl,
  org.xkonnex.repo.dsl.servicedsl.serviceDsl.impl,
  org.xkonnex.repo.dsl.servicedsl.serviceDsl.util,
  org.xkonnex.repo.dsl.servicedsl.services,
- org.xkonnex.repo.dsl.servicedsl.validation,
- org.xkonnex.repo.dsl.servicedsl.serializer
+ org.xkonnex.repo.dsl.servicedsl.validation
 

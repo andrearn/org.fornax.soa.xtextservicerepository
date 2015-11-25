@@ -2,63 +2,14 @@ package org.xkonnex.repo.dsl.profiledsl.versioning;
 
 import java.util.List;
 
+import org.xkonnex.repo.dsl.basedsl.namespace.VersionedNamespace;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Type;
 
-public class VersionedTechnicalNamespace {
+public class VersionedTechnicalNamespace extends VersionedNamespace {
 
-	private TechnicalNamespace namespace;
-	
-	private String fqn;
-	
-	private String name;
-	
-	private String shortName;
-	
-	private String version;
-	
 	private List<Type> types;
 	
-	public TechnicalNamespace getNamespace() {
-		return namespace;
-	}
-
-	public void setNamespace(TechnicalNamespace namespace) {
-		this.namespace = namespace;
-	}
-
-	public String getFqn() {
-		return fqn;
-	}
-
-	public void setFqn(String fqn) {
-		this.fqn = fqn;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getShortName() {
-		return shortName;
-	}
-
-	public void setShortName(String shortName) {
-		this.shortName = shortName;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
-
 	public List<Type> getTypes() {
 		return types;
 	}

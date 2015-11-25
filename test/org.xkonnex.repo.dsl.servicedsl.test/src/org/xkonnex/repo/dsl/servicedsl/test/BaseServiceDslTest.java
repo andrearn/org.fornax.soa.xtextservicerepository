@@ -3,8 +3,10 @@ package org.xkonnex.repo.dsl.servicedsl.test;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.junit.AbstractXtextTests;
+import org.eclipse.xtext.junit4.XtextRunner;
 import org.eclipse.xtext.resource.XtextResource;
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
@@ -31,7 +33,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslFactory;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SimpleConsiderationPropertyRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef;
 
-public class BaseServiceDslTest extends AbstractXtextTests {
+public abstract class BaseServiceDslTest {
 
 	protected DomainNamespace dns;
 	protected InternalNamespace ins;
@@ -71,8 +73,6 @@ public class BaseServiceDslTest extends AbstractXtextTests {
 
 	@Before
 	public void setUp() throws Exception {
-		super.setUp();
-		with (ServiceDslStandaloneSetup.class);
 		ProfileDslFactory factory = ProfileDslFactory.eINSTANCE;
 		lifecycle = factory.createLifecycle ();
 		proposed = factory.createLifecycleState ();

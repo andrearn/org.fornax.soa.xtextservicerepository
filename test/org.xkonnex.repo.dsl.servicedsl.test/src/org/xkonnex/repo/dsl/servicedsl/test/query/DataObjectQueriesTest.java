@@ -1,13 +1,16 @@
 package org.xkonnex.repo.dsl.servicedsl.test.query;
 
+import static org.junit.Assert.*;
 
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.xtext.junit4.InjectWith;
 import org.eclipse.xtext.junit4.XtextRunner;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.servicedsl.test.BaseServiceDslTest;
+import org.xkonnex.repo.dsl.servicedsl.test.ServiceDslWithDependenciesInjector;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +29,7 @@ import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 
 @RunWith(XtextRunner.class)
+@InjectWith(ServiceDslWithDependenciesInjector.class)
 public class DataObjectQueriesTest extends BaseServiceDslTest {
 	
 	@Inject
@@ -45,7 +49,6 @@ public class DataObjectQueriesTest extends BaseServiceDslTest {
 	@Before
 	public void setUp() throws Exception {
 		super.setUp();
-		injectMembers(this);
 	}
 	
 	@Test

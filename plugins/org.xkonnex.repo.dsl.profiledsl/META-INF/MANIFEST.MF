@@ -23,6 +23,7 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.profiledsl,
  org.xkonnex.repo.dsl.profiledsl.formatting,
+ org.xkonnex.repo.dsl.profiledsl.namespace,
  org.xkonnex.repo.dsl.profiledsl.parser.antlr,
  org.xkonnex.repo.dsl.profiledsl.parser.antlr.internal,
  org.xkonnex.repo.dsl.profiledsl.profileDsl,

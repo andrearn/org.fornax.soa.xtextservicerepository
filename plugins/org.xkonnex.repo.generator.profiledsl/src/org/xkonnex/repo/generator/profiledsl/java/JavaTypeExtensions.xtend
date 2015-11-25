@@ -19,11 +19,11 @@ class JavaTypeExtensions {
 	/*
 	 * Returns the fully qualified java class name for a Type.
 	 */
-	def dispatch toQualifiedJavaTypeName (Type type, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (Type type, boolean optionalField) {
 		
 	}
 	
-	def dispatch toQualifiedJavaTypeName (DataType type, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (DataType type, boolean optionalField) {
 		switch (type.name) {
 			case "date":			"java.util.Date"
 			case "datetime":		"java.util.Date"
@@ -43,18 +43,18 @@ class JavaTypeExtensions {
 		}
 	}
 	
-	def dispatch toQualifiedJavaTypeName (VersionedType type, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (VersionedType type, boolean optionalField) {
 		nameProvider.getFullyQualifiedName(type.eContainer).toString + "." + type.version.toVersionPostfix + "." + type.name
 	}
 	
 	
-	def dispatch toQualifiedJavaTypeName (TypeRef typeRef, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (TypeRef typeRef, boolean optionalField) {
 		
 	}
-	def dispatch toQualifiedJavaTypeName (DataTypeRef typeRef, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (DataTypeRef typeRef, boolean optionalField) {
 		typeRef.type.toQualifiedJavaTypeName(optionalField)
 	}
-	def dispatch toQualifiedJavaTypeName (VersionedTypeRef typeRef, boolean optionalField) {
+	def dispatch String toQualifiedJavaTypeName (VersionedTypeRef typeRef, boolean optionalField) {
 		typeRef.type.toQualifiedJavaTypeName(optionalField)
 	}
 	

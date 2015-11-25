@@ -112,6 +112,11 @@ Workflow {
 
 			fragment = refactoring.RefactorElementNameFragment {}
 
+//    		fragment = junit.Junit4Fragment auto-inject {}
+
+    		// provides a preference page for template proposals
+    		fragment = templates.CodetemplatesGeneratorFragment auto-inject {}
+
 		}
 	}
 }

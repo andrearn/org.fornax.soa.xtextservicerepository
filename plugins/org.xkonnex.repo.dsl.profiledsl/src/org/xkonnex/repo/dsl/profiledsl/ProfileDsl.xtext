@@ -200,24 +200,29 @@ OrganizationNamespace:
 		'}')?
 	'}' ;
 
+ProfileNameSpace returns basedsl::Namespace: TechnicalNamespace | OrganizationNamespace;
+
 /*
  * A technical namespace, e.g. used to declare message object types
  */	
 TechnicalNamespace: 
 	'namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
-		/**
-		 * @deprecated may be removed in a later release, should be implemented as validation rule
-		 */	
-		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
-		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-		'}')?
+		('meta-data' '{')?
+			('URI' uri=STRING)?
+			/**
+			 * @deprecated may be removed in a later release, should be implemented as validation rule
+			 */	
+			(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
 		(types+=Type)*
-		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
-		'}')?
 	'}';
  
 /*
@@ -312,7 +317,11 @@ InternalNamespaceRule:
 	'internal-namespace-rule' name=ID '{'
 		'internal-qualifier' internalNsQualifierPolicy = InternalNsQualifierPolicy  
 		('qualifying-name' qualifyingName = ID )?
-		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
+		
+		(
+			/** @deprecated */
+			noTrailingSlash?='no-trailing-slash-in-namespace-uri'
+		)?
 	'}';
 
 /**

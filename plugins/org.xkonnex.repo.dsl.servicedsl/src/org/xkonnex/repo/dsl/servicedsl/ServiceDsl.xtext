@@ -28,13 +28,17 @@ ServiceModel:
 	(orgNamespaces+=OrganizationNamespace)*
 	(namespaces+=SubNamespace)*
 	(types+=Type)*;
-	
+
+ServiceNamespace returns basedsl::Namespace: OrganizationNamespace | SubNamespace;	
 /*
  * The toplevel namespace representing an organization
  */
 OrganizationNamespace :
 	'org-namespace' name= QualifiedName ('shortname' prefix=STRING)? '{'
-		('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
+		('URI' uri=STRING)?
+		('metadata' '{')?
+			('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
+		('}')?
 		(subNamespaces+=SubNamespace)*
 	'}' ;
 
@@ -46,7 +50,7 @@ DomainNamespace:
 		('metadata' '{'
 			('domain' domain=[businessDsl::Domain|QualifiedName])?
 			(version=Version  )?
-			(uri=STRING)?
+			('URI' uri=STRING)?
 			('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
 			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
@@ -71,10 +75,10 @@ DomainNamespace:
 InternalNamespace:	
 	'internal-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		('metadata' '{'
-			(uri=STRING)?
 			(version=Version)?
+			('URI' uri=STRING)?
 			('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
-			('namespace-url' namespaceUrl = STRING)?
+//			('namespace-url' namespaceUrl = STRING)?
 			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*

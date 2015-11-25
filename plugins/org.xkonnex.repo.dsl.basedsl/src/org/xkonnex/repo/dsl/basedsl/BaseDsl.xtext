@@ -148,4 +148,6 @@ Privilege:
 	
 AssetRef: asset = [ecore::EObject|QualifiedName] (versionRef=VersionRef)?;
 
-
+Namespace:
+	name=QualifiedName (prefix=STRING)? (uri=STRING)?
+;

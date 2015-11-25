@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xkonnex.repo.dsl.basedsl.BaseDslStandaloneSetupGenerated;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
 
 import com.google.inject.Injector;
