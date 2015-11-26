@@ -1,39 +1,25 @@
 package org.xkonnex.repo.dsl.basedsl.namespace
 
-import java.util.List
 import javax.inject.Inject
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
+import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 
 class DefaultNamespaceURIProvider implements NamespaceURIProvider {
+	
+	val SEGMENT_SHORTNAME_LENGTH = 1
+	val URI_PROTOCOL_QUALIFIER = "http://"
 
-	val NUM_OF_HOST_PARTS = 2
-
-	@Inject extension CommonStringExtensions
-	@Inject IQualifiedNameProvider nameProvider
+	@Inject extension NamespaceNameFragmentProvider 
+	@Inject extension IQualifiedNameProvider
+	@Inject extension VersionQualifierExtensions versionQualifier
 
 	override getHostPart(Namespace ns) {
-		var List<String> hostParts = newArrayList()
-		var nsParts = nameProvider.getFullyQualifiedName(ns).segments.map(n|n.stripXtextEscapes)
-		hostParts.add(nsParts.get(0))
-		if (nsParts.size > 1) {
-			for (var int i = 1; i < NUM_OF_HOST_PARTS; i++) {
-				hostParts.add(nsParts.get(i))
-			}
-		}
-		return "http://" + hostParts.reverse.join(".");
+		return URI_PROTOCOL_QUALIFIER + ns.organizationNameFragment.split("\\.").reverse.join(".");
 	}
 
 	override getPathPart(Namespace ns) {
-		var List<String> pathParts = newArrayList
-		pathParts.addAll(nameProvider.getFullyQualifiedName(ns).segments)
-		if (pathParts.size >= NUM_OF_HOST_PARTS) {
-			for (var int i = 0; i < NUM_OF_HOST_PARTS; i++) {
-				pathParts.remove(0)
-			}
-		}
-		return pathParts.join("/")
+		return ns.subNamespaceFragment.split("\\.").join("/")
 	}
 
 	override getUnversionedNamespaceURI(Namespace ns) {
@@ -44,12 +30,54 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 			nsURI = ns.hostPart + "/" + ns.pathPart
 		nsURI.addTrailingSlashIfRequired(ns)
 	}
+	
+	override getNamespacePrefix(String qualifiedNameFragment) {
+		qualifiedNameFragment.split("\\.").map (e|e.segmentToShortName).join
+	}
+	
+	override getNamespacePrefix(Namespace ns) {
+		if (ns.prefix != null) { 
+			ns.prefix;
+		} else {
+			ns.fullyQualifiedName.segments.map (e|e.segmentToShortName).join;
+		}
+	}
+	
+	override getNamespacePrefix(VersionedNamespace ns) {
+		if (ns.shortName != null) {
+			ns.shortName
+		} else if (ns.namespace.prefix != null) {
+			ns.namespace.prefix
+		} else {
+			ns.namespace.fullyQualifiedName.segments.map (e|e.segmentToShortName).join;
+		}
+	}
+	
+	override getVersionPostfix(Namespace ns) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override getVersionedNamespacePrefix(String qualifiedNameFragment) {
+		qualifiedNameFragment.namespacePrefix + versionQualifier.toDefaultMajorVersion
+	}
+	
+	override getVersionedNamespacePrefix(Namespace ns) {
+		ns.namespacePrefix + versionQualifier.toDefaultMajorVersion
+	}
+	
+	override getVersionedNamespacePrefix(VersionedNamespace ns) {
+		getNamespacePrefix(ns) + ns.version.toMajorVersionNumber
+	}
 
 	override requiresTrailingSlash(Namespace ns) {
 		if (ns.uri != null)
 			ns.uri.endsWith("/")
 		else
 			true;
+	}
+	
+	private def segmentToShortName (String segment) {
+		segment.substring(0, SEGMENT_SHORTNAME_LENGTH)
 	}
 
 	
@@ -59,7 +87,6 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 		} else {
 			return nsURI + "";
 		}
-	}
-	
+	}	
 
 }

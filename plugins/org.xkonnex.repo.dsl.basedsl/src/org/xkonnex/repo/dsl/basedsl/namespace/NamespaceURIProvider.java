@@ -1,6 +1,7 @@
 package org.xkonnex.repo.dsl.basedsl.namespace;
 
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 
 import com.google.inject.ImplementedBy;
 
@@ -14,5 +15,15 @@ public interface NamespaceURIProvider {
 	String getPathPart(Namespace ns);
 	
 	boolean requiresTrailingSlash (Namespace ns);
+	
+	String getNamespacePrefix(String qualifiedNameFragment);
+	String getNamespacePrefix(Namespace ns);
+	String getNamespacePrefix(VersionedNamespace ns);
+	
+	String getVersionedNamespacePrefix(String qualifiedNameFragment);
+	String getVersionedNamespacePrefix(Namespace ns);
+	String getVersionedNamespacePrefix(VersionedNamespace ns);
+	
+	String getVersionPostfix(Namespace ns);
 
 }

@@ -1,45 +1,38 @@
 package org.xkonnex.repo.dsl.servicedsl.service.namespace
 
-import java.util.List
 import javax.inject.Inject
-import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
-import org.xkonnex.repo.dsl.basedsl.namespace.NamespaceURIProvider;
+import org.xkonnex.repo.dsl.basedsl.namespace.NamespaceURIProvider
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
+import org.xkonnex.repo.dsl.basedsl.namespace.VersionedNamespace
 
 class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider {
 	
 	@Inject extension CommonStringExtensions
 	@Inject extension NamespaceQuery
+	@Inject extension ServiceNamespaceNameFragmentProvider
 	@Inject VersionQualifierExtensions versionQualifier	
-	@Inject IQualifiedNameProvider nameProvider
 	@Inject NamespaceURIProvider namespaceURIProvider
 
 	
-	override getUnversionedNamespaceURI(OrganizationNamespace orgNs) {
-		orgNs.toUnversionedNamespaceURI
-	}
-	override getUnversionedNamespaceURI(SubNamespace ns) {
+	override getUnversionedNamespaceURI(Namespace ns) {
 		ns.toUnversionedNamespaceURI
 	}
-	override getUnversionedNamespaceURI(VersionedDomainNamespace ns) {
-		ns.toUnversionedNamespaceURI
+	override getUnversionedNamespaceURI(VersionedNamespace ns) {
+		var nsURI = ns.namespace.toUnversionedNamespaceURI;
+		nsURI.addTrailingSlashIfReqired(ns)
 	}
 	
-	override getVersionedNamespaceURI(OrganizationNamespace orgNs) {
-		orgNs.toNamespaceURI
-	}
-	override getVersionedNamespaceURI(SubNamespace ns) {
+	override getVersionedNamespaceURI(Namespace ns) {
 		ns.toNamespaceURI
 	}
-	override getVersionedNamespaceURI(VersionedDomainNamespace ns) {
+	override getVersionedNamespaceURI(VersionedNamespace ns) {
 		ns.toNamespaceURI
 	}
 
@@ -53,17 +46,13 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	}
 
 	override String getHostPart (OrganizationNamespace d) {
-		"http://" + d.name.stripXtextEscapes().split("\\.").reverse().join(".");
+		"http://" + d.organizationNameFragment.split("\\.").reverse().join(".");
 	}
 	
 	override String getPathPart(SubNamespace ns) {
-		var List<String> pathParts = newArrayList
 		val orgNs = ns.findOrgNamespace
 		if (orgNs != null) {
-			getAllSubNamespaces(ns).map (n|n.name.stripXtextEscapes()).join(".")
-			val nsParts = ns.allSubNamespaces.map(n|n.name.stripXtextEscapes()).join(".").split("\\.")
-			pathParts.addAll(nsParts)
-			return pathParts.join("/")
+			return ns.subNamespaceFragment.split("\\.").join("/")
 		} else {
 			return namespaceURIProvider.getPathPart(ns)
 		}
@@ -75,8 +64,37 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	override boolean requiresTrailingSlash (SubNamespace ns) {
 		namespaceURIProvider.requiresTrailingSlash(ns)
 	}
-	override boolean requiresTrailingSlash (VersionedDomainNamespace ns) {
-		requiresTrailingSlash(ns.subdomain as SubNamespace)
+	override boolean requiresTrailingSlash (VersionedNamespace ns) {
+		requiresTrailingSlash(ns.namespace as SubNamespace)
+	}
+
+	
+	override getNamespacePrefix(Namespace ns) {
+		namespaceURIProvider.getNamespacePrefix(ns)
+	}
+	
+	override getNamespacePrefix(VersionedNamespace ns) {
+		namespaceURIProvider.getNamespacePrefix(ns)
+	}
+	
+	override getNamespacePrefix(String qualifiedNameFragment) {
+		namespaceURIProvider.getNamespacePrefix(qualifiedNameFragment)
+	}
+	
+	override getVersionedNamespacePrefix(VersionedNamespace ns) {
+		ns.namespacePrefix + ns.version
+	}
+	
+	override getVersionedNamespacePrefix(Namespace ns) {
+		ns.namespacePrefix + "1"
+	}
+	
+	override getVersionedNamespacePrefix(String qualifiedNameFragment) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override getVersionPostfix(Namespace ns) {
+		ns.toVersionPostfix
 	}
 	
 	
@@ -104,7 +122,7 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 			versionQualifier.toDefaultVersionPostfix();
 	}
 		
-	private def dispatch String toVersionPostfix (VersionedDomainNamespace s) {
+	private def dispatch String toVersionPostfix (VersionedNamespace s) {
 		if (s.version != null) 
 			versionQualifier.toVersionPostfix(s.version) 
 		else
@@ -165,10 +183,14 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 			return ns + "";
 		}
 	}
-	private def addTrailingSlashIfReqired(String ns, VersionedDomainNamespace s) {
-		ns.addTrailingSlashIfReqired(s.subdomain as SubNamespace)
+	private def addTrailingSlashIfReqired(String ns, VersionedNamespace s) {
+		ns.addTrailingSlashIfReqired(s.namespace as SubNamespace)
 	}
 	
+	
+	private def dispatch String toUnversionedNamespaceURI (Namespace namespace) {
+		namespaceURIProvider.toUnversionedNamespaceURI
+	}
 	
 	private def dispatch String toUnversionedNamespaceURI (OrganizationNamespace namespace) {
 		var ns = namespace.hostPart
@@ -187,21 +209,6 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 		else
 			ns = leafDomainNamespace.hostPart + "/" + leafDomainNamespace.pathPart
 		ns.addTrailingSlashIfReqired(leafDomainNamespace)
-	}
-	
-	private def List<SubNamespace> getAllSubNamespaces (SubNamespace ns) {
-		val List<SubNamespace> nsList = newArrayList(ns)
-		return getAllSubNamespaces(nsList)
-	}
-	
-	private def List<SubNamespace> getAllSubNamespaces (List<SubNamespace> domList) {
-		if (domList.last()?.eContainer instanceof SubNamespace) {
-			domList.add (domList.last().eContainer as SubNamespace) 
-			getAllSubNamespaces (domList);
-			return domList;
-		} else { 
-			return domList.filter (typeof (SubNamespace)).toList().reverse();
-		}
 	}
 		
 }

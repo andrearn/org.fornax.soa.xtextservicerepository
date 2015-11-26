@@ -165,7 +165,7 @@ public class ServiceNamespaceUriProviderTest extends BaseServiceDslTest {
 	}
 	
 	@Test
-	public void testGetPathPart() {
+	public void testGetPathPartNoOrg() {
 		ServiceDslFactory f = ServiceDslFactory.eINSTANCE;
 		DomainNamespace domNs = f.createDomainNamespace();
 		domNs.setName("org.example.customer.contract");
@@ -195,7 +195,7 @@ public class ServiceNamespaceUriProviderTest extends BaseServiceDslTest {
 	}
 	
 	@Test
-	public void testGetHostPartOrg() {
+	public void testGetHostPartWithOrg() {
 		ServiceDslFactory f = ServiceDslFactory.eINSTANCE;
 		OrganizationNamespace orgNs = f.createOrganizationNamespace();
 		orgNs.setName("org.example");
@@ -212,6 +212,25 @@ public class ServiceNamespaceUriProviderTest extends BaseServiceDslTest {
 		
 		assertEquals("http://example.org", domNsHostPart);
 		assertEquals("http://example.org", intNsHostPart);
+	}
+	
+	@Test
+	public void testGetPathPartWithOrg() {
+		ServiceDslFactory f = ServiceDslFactory.eINSTANCE;
+		OrganizationNamespace orgNs = f.createOrganizationNamespace();
+		orgNs.setName("org.example");
+		DomainNamespace domNs = f.createDomainNamespace();
+		domNs.setName("customer.contract");
+		InternalNamespace internalNs = f.createInternalNamespace();
+		internalNs.setName("internal.legacy");
+		domNs.getInteralNamespaces().add(internalNs);
+		orgNs.getSubNamespaces().add(domNs);
+
+		String domNsPathPart = provider.getPathPart(domNs);
+		String intNsPathPart = provider.getPathPart(internalNs);
+		
+		assertEquals("customer/contract", domNsPathPart);
+		assertEquals("customer/contract/internal/legacy", intNsPathPart);
 	}
 
 }

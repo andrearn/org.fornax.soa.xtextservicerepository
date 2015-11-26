@@ -189,15 +189,17 @@ BaseNamespaceAlias :
  */
 OrganizationNamespace:
 	'org-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
-		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
-		'}')?
+		('meta-data' '{')?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		('}')?
 		(subNamespaces+=TechnicalNamespace)*
-		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
-		'}')?
 	'}' ;
 
 ProfileNameSpace returns basedsl::Namespace: TechnicalNamespace | OrganizationNamespace;
@@ -221,7 +223,7 @@ TechnicalNamespace:
 			('subscriptions' '{'
 				subscriptions += [basedsl::User|QualifiedName]*
 			'}')?
-		'}'
+		('}')?
 		(types+=Type)*
 	'}';
  
