@@ -20,10 +20,28 @@ Require-Bundle: org.xkonnex.repo.dsl.moduledsl;bundle-version="2.0.0";visibility
  org.xkonnex.repo.dsl.profiledsl;bundle-version="2.0.0",
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
- org.eclipse.xtext.builder
+ org.eclipse.xtext.builder,
+ org.eclipse.xtext.ui.codetemplates.ui
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.xkonnex.repo.dsl.moduledsl.ui.contentassist.antlr,
- org.xkonnex.repo.dsl.moduledsl.ui.contentassist,
- org.xkonnex.repo.dsl.moduledsl.ui.quickfix
+Export-Package: org.xkonnex.repo.dsl.moduledsl.ui,
+ org.xkonnex.repo.dsl.moduledsl.ui.contentassist;
+  uses:="org.eclipse.emf.ecore,
+   org.eclipse.xtext.ui.editor.contentassist,
+   org.eclipse.xtext,
+   org.xkonnex.repo.dsl.basedsl.ui.contentassist",
+ org.xkonnex.repo.dsl.moduledsl.ui.contentassist.antlr;
+  uses:="org.eclipse.xtext.ui.codetemplates.ui.partialEditing,
+   org.eclipse.xtext.ui.editor.contentassist.antlr.internal,
+   org.xkonnex.repo.dsl.moduledsl.services,
+   org.eclipse.xtext,
+   org.eclipse.xtext.ui.editor.contentassist.antlr,
+   org.xkonnex.repo.dsl.moduledsl.ui.contentassist.antlr.internal",
+ org.xkonnex.repo.dsl.moduledsl.ui.contentassist.antlr.internal,
+ org.xkonnex.repo.dsl.moduledsl.ui.highlighting,
+ org.xkonnex.repo.dsl.moduledsl.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
+ org.xkonnex.repo.dsl.moduledsl.ui.labeling,
+ org.xkonnex.repo.dsl.moduledsl.ui.outline,
+ org.xkonnex.repo.dsl.moduledsl.ui.quickfix;uses:="org.eclipse.xtext.ui.editor.quickfix",
+ org.xkonnex.repo.dsl.moduledsl.ui.wizard
 Bundle-Activator: org.xkonnex.repo.dsl.moduledsl.ui.internal.CustomModuleDslActivator

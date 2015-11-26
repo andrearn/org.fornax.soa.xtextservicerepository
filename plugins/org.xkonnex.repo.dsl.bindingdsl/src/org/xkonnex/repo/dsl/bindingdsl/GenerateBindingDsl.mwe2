@@ -61,6 +61,7 @@ Workflow {
 	component = Generator {
 		pathRtProject = runtimeProject
 		pathUiProject = "${runtimeProject}.ui"
+	   	pathTestProject = "${runtimeProject}/../../test/${projectName}.test"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
 		language = {
@@ -137,12 +138,10 @@ Workflow {
 
 			fragment = refactoring.RefactorElementNameFragment {}
 
-			// project wizard (optional) 
-			/*fragment = projectWizard.SimpleProjectWizardFragment {
-				generatorProjectName = "${projectName}.generator" 
-				modelFileExtension = file.extensions
-				pluginProject = true
-			}*/
+    		fragment = junit.Junit4Fragment auto-inject {}
+
+    		// provides a preference page for template proposals
+    		fragment = templates.CodetemplatesGeneratorFragment auto-inject {}
 		}
 	}
 }

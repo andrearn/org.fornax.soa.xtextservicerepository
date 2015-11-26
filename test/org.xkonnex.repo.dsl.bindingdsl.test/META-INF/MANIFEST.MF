@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Service DSL tests
-Bundle-SymbolicName: org.xkonnex.repo.dsl.servicedsl.test
+Bundle-Name: Binding DSL tests
+Bundle-SymbolicName: org.xkonnex.repo.dsl.bindingdsl.test
 Bundle-Version: 2.0.0.qualifier
-Bundle-Activator: org.xkonnex.repo.dsl.servicedsl.test.Activator
+Bundle-Activator: org.xkonnex.repo.dsl.bindingdsl.test.Activator
 Bundle-Vendor: XKonneX.org
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -17,12 +17,17 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.ui.junit;bundle-version="2.6.2",
  org.xkonnex.repo.dsl.environmentdsl;bundle-version="2.0.0",
  org.xkonnex.repo.test;bundle-version="2.0.0",
- org.xkonnex.repo.dsl.servicedsl.ui,
  org.eclipse.xtext.xbase.lib,
- org.eclipse.ui.workbench;resolution:=optional
+ org.eclipse.ui.workbench;resolution:=optional,
+ org.xkonnex.repo.dsl.moduledsl;bundle-version="2.0.0",
+ org.xkonnex.repo.dsl.bindingdsl;bundle-version="2.0.0",
+ org.xkonnex.repo.dsl.bindingdsl.ui,
+ org.xkonnex.repo.dsl.businessdsl;bundle-version="2.0.0",
+ org.xkonnex.repo.dsl.semanticsdsl;bundle-version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Export-Package: org.xkonnex.repo.dsl.servicedsl
+Export-Package: org.xkonnex.repo.dsl.bindingdsl.test,
+ org.xkonnex.repo.dsl.bindingdsl
 Import-Package: org.junit.runner;version="4.5.0",
  org.junit.runner.manipulation;version="4.5.0",
  org.junit.runner.notification;version="4.5.0",

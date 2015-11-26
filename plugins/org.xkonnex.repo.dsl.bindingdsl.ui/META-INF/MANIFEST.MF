@@ -22,10 +22,17 @@ Require-Bundle: org.xkonnex.repo.dsl.bindingdsl;bundle-version="2.0.0";visibilit
  org.xkonnex.repo.dsl.moduledsl;bundle-version="2.0.0",
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
- org.eclipse.xtext.builder
+ org.eclipse.xtext.builder,
+ org.eclipse.xtext.ui.codetemplates.ui
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.xkonnex.repo.dsl.bindingdsl.ui.contentassist.antlr,
+Export-Package: org.xkonnex.repo.dsl.bindingdsl.ui,
  org.xkonnex.repo.dsl.bindingdsl.ui.contentassist,
- org.xkonnex.repo.dsl.bindingdsl.ui.quickfix
+ org.xkonnex.repo.dsl.bindingdsl.ui.contentassist.antlr,
+ org.xkonnex.repo.dsl.bindingdsl.ui.contentassist.antlr.internal,
+ org.xkonnex.repo.dsl.bindingdsl.ui.internal,
+ org.xkonnex.repo.dsl.bindingdsl.ui.labeling,
+ org.xkonnex.repo.dsl.bindingdsl.ui.outline,
+ org.xkonnex.repo.dsl.bindingdsl.ui.quickfix,
+ org.xkonnex.repo.dsl.bindingdsl.ui.wizard
 Bundle-Activator: org.xkonnex.repo.dsl.bindingdsl.ui.internal.CustomBindingDslActivator

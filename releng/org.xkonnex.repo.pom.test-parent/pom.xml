@@ -18,6 +18,8 @@
 		<module>../../test/org.xkonnex.repo.dsl.environmentdsl.test</module>
 		<module>../../test/org.xkonnex.repo.dsl.profiledsl.test</module>
 		<module>../../test/org.xkonnex.repo.dsl.servicedsl.test</module>
+		<module>../../test/org.xkonnex.repo.dsl.moduledsl.test</module>
+		<module>../../test/org.xkonnex.repo.dsl.bindingdsl.test</module>
 		<module>../../test/org.xkonnex.repo.test</module>
 	</modules>
 
