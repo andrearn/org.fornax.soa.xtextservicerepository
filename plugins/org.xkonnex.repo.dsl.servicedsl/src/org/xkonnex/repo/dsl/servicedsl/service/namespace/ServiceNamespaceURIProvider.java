@@ -31,6 +31,9 @@ public interface ServiceNamespaceURIProvider {
 	String getNamespacePrefix(String qualifiedNameFragment);
 	String getNamespacePrefix(Namespace ns);
 	String getNamespacePrefix(VersionedNamespace ns);
+	String getOrgNamespacePrefix(String qualifiedNameFragment);
+	String getOrgNamespacePrefix(Namespace ns);
+	String getOrgNamespacePrefix(VersionedNamespace ns);
 	
 	String getVersionedNamespacePrefix(String qualifiedNameFragment);
 	String getVersionedNamespacePrefix(Namespace ns);

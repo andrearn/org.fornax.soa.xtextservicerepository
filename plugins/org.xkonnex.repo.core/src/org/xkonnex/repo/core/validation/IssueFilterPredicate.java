@@ -1,4 +1,4 @@
-package org.xkonnex.repo.server.core.validation;
+package org.xkonnex.repo.core.validation;
 
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.validation.Issue;

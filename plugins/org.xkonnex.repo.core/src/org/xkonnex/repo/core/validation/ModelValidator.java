@@ -1,4 +1,4 @@
-package org.xkonnex.repo.server.core.validation;
+package org.xkonnex.repo.core.validation;
 
 import java.io.IOException;
 import java.util.List;

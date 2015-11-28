@@ -77,7 +77,7 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 				findLocalReferences(queryData, localResourceAccess, acceptor);
 			}
 			Set<URI> targetURIsAsSet = newLinkedHashSet(targetURIs);
-			findAllIndexedReferences(acceptor, targetURIsAsSet, localResourceAccess);
+			findAllIndexedReferences(acceptor, targetURIsAsSet, localResourceAccess, resourceSet);
 		}
 //		if (!queryData.getTargetURIs().isEmpty()) {
 //			findLocalReferences(queryData, localResourceAccess, acceptor);
@@ -85,25 +85,47 @@ public class PredicateReferenceSearch implements IReferenceSearch {
 //		}
 	}
 	
-	protected void findAllIndexedReferences(IAcceptor<IReferenceDescription> referenceAcceptor, 
-			Set<URI> targetURIsAsSet, ILocalResourceAccess localResourceAccess) {
-		for (IResourceDescription resourceDescription : index.getAllResourceDescriptions()) {
-			IResourceServiceProvider serviceProvider = serviceProviderRegistry.getResourceServiceProvider(resourceDescription.getURI());
-			IReferenceSearch referenceFinder = serviceProvider.get(IReferenceSearch.class);
-			// don't use the language specific reference finder here for backwards compatibility reasons
-			findReferences(targetURIsAsSet, resourceDescription, referenceAcceptor, localResourceAccess);
+	protected void findAllIndexedReferences(
+			IAcceptor<IReferenceDescription> referenceAcceptor,
+			Set<URI> targetURIsAsSet, ILocalResourceAccess localResourceAccess,
+			ResourceSet resourceSet) {
+		if (resourceSet != null
+				&& index instanceof ResourceSetBasedResourceDescriptions
+				&& ((ResourceSetBasedResourceDescriptions) index)
+						.getResourceSet() == null)
+			((ResourceSetBasedResourceDescriptions) index)
+					.setContext(resourceSet);
+		for (IResourceDescription resourceDescription : index
+				.getAllResourceDescriptions()) {
+			IResourceServiceProvider serviceProvider = serviceProviderRegistry
+					.getResourceServiceProvider(resourceDescription.getURI());
+			IReferenceSearch referenceFinder = serviceProvider
+					.get(IReferenceSearch.class);
+			// don't use the language specific reference finder here for
+			// backwards compatibility reasons
+			findReferences(targetURIsAsSet, resourceDescription,
+					referenceAcceptor, localResourceAccess);
 		}
 	}
 
-	public void findIndexedReferences(IReferenceQueryData queryData, ResourceSet resourceSet, URI resourceURI, IAcceptor<IReferenceDescription> acceptor) {
-		if (index instanceof ResourceSetBasedResourceDescriptions)
-			((ResourceSetBasedResourceDescriptions)index).setContext (resourceSet);
-		IResourceDescription resourceDescription = index.getResourceDescription(resourceURI.trimFragment());
+	public void findIndexedReferences(IReferenceQueryData queryData,
+			ResourceSet resourceSet, URI resourceURI,
+			IAcceptor<IReferenceDescription> acceptor) {
+		if (resourceSet != null
+				&& index instanceof ResourceSetBasedResourceDescriptions
+				&& ((ResourceSetBasedResourceDescriptions) index)
+						.getResourceSet() == null)
+			((ResourceSetBasedResourceDescriptions) index)
+					.setContext(resourceSet);
+		IResourceDescription resourceDescription = index
+				.getResourceDescription(resourceURI.trimFragment());
 		if (resourceDescription != null) {
-			for (IReferenceDescription referenceDescription : resourceDescription.getReferenceDescriptions()) {
-				if (queryData.getTargetURIs().contains(referenceDescription.getTargetEObjectUri())
-						&& (queryData.getResultFilter() == null || queryData.getResultFilter().apply(
-								referenceDescription))) {
+			for (IReferenceDescription referenceDescription : resourceDescription
+					.getReferenceDescriptions()) {
+				if (queryData.getTargetURIs().contains(
+						referenceDescription.getTargetEObjectUri())
+						&& (queryData.getResultFilter() == null || queryData
+								.getResultFilter().apply(referenceDescription))) {
 					acceptor.accept(referenceDescription);
 				}
 			}

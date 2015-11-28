@@ -34,7 +34,7 @@ class ProfileQueries {
 	}
 	
 	def List<Profile> getAllProfiles (ResourceSet resourceSet) {
-		val profiles = search.search("Profile ", Predicates::alwaysTrue).map (p|p.EObjectOrProxy).filter (typeof (Profile))
+		val profiles = search.search("Profile ", Predicates::alwaysTrue, resourceSet).map (p|p.EObjectOrProxy).filter (typeof (Profile))
 		return profiles.map [if (it.eIsProxy) {EcoreUtil2::resolve(it, resourceSet) as Profile} else {it}].toList
 	}
 }

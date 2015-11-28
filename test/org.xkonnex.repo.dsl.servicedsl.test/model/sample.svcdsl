@@ -1,7 +1,7 @@
 import test.TestLifecycle.*
 import test.*
 
-org-namespace org.xkonnex.repo.dsl.bindingdsl shortname "ofs" {
+org-namespace org.xkonnex shortname "ofs" {
 	
 	domain-namespace samples shortname "samp" {
 		businessObject AbstractAddress {

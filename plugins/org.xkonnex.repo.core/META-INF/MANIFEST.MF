@@ -34,4 +34,6 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.core,
  org.xkonnex.repo.core.query,
- org.xkonnex.repo.core.query.predicates
+ org.xkonnex.repo.core.query.predicates,
+ org.xkonnex.repo.core.resource,
+ org.xkonnex.repo.core.validation

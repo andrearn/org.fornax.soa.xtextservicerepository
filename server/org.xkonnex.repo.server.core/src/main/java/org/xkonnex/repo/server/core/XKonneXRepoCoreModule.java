@@ -3,8 +3,6 @@ package org.xkonnex.repo.server.core;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import org.xkonnex.repo.core.XKonneXRepoDSL;
 import org.xkonnex.repo.server.core.config.IRepositoryDescriptionManager;
@@ -12,15 +10,10 @@ import org.xkonnex.repo.server.core.config.IRepositorySetupService;
 import org.xkonnex.repo.server.core.config.impl.GitRepositorySetupService;
 import org.xkonnex.repo.server.core.config.impl.RepositoryDescriptionManager;
 import org.xkonnex.repo.server.core.resource.DSLConfigurer;
-import org.xkonnex.repo.server.core.resource.XKonneXReader;
 
 import com.google.inject.AbstractModule;
-import com.google.inject.Binder;
 import com.google.inject.Injector;
-import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import com.google.inject.TypeLiteral;
-import com.google.inject.persist.jpa.JpaPersistModule;
 
 public class XKonneXRepoCoreModule extends AbstractModule {
 
@@ -53,10 +46,5 @@ public class XKonneXRepoCoreModule extends AbstractModule {
 //		}
 //		return entityManager;
 //	}
-	
-	@Provides
-	public XKonneXReader createXKonneXReader() {
-		return null;
-	}
 
 }

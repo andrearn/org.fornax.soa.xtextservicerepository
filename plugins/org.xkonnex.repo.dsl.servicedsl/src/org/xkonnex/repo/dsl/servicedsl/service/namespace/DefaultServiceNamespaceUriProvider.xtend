@@ -97,6 +97,18 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 		ns.toVersionPostfix
 	}
 	
+	override getOrgNamespacePrefix(String qualifiedNameFragment) {
+		qualifiedNameFragment.orgNamespacePrefix
+	}
+	
+	override getOrgNamespacePrefix(Namespace ns) {
+		ns.organizationShortnameFragment
+	}
+	
+	override getOrgNamespacePrefix(VersionedNamespace ns) {
+		ns.organizationShortnameFragment
+	}
+	
 	
 
 	private def dispatch String toVersionPostfix (Object o) { 
@@ -210,5 +222,24 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 			ns = leafDomainNamespace.hostPart + "/" + leafDomainNamespace.pathPart
 		ns.addTrailingSlashIfReqired(leafDomainNamespace)
 	}
+	
+	
+	private def dispatch String toOrgNamespacePrefix (Namespace namespace) {
+		namespaceURIProvider.toUnversionedNamespaceURI
+	}
+	
+	private def dispatch String toOrgNamespacePrefix (OrganizationNamespace namespace) {
+		if (namespace.prefix != null) {
+			return namespace.prefix
+		} else {
+			return namespace.namespacePrefix
+		}
+	}
+	
+	private def dispatch String toOrgNamespacePrefix (VersionedDomainNamespace s) {
+		var ns = s.subdomain.toUnversionedNamespaceURI;
+		ns.addTrailingSlashIfReqired(s)
+	}
+	
 		
 }

@@ -179,7 +179,6 @@ BasicTypes:
 /**
  * Translates namespace name fragments to shorter names
  * 
- * @deprecated The rule will be removed in a later major version
  */	
 BaseNamespaceAlias :
 	'shorten' baseNamespaceFragment=QualifiedName 'to' shortenedBaseNamespaceFragment=QualifiedName ;

@@ -2,12 +2,14 @@ package org.xkonnex.repo.dsl.basedsl.search;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.naming.IQualifiedNameConverter;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.impl.ResourceDescriptionsProvider;
+import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -135,10 +137,15 @@ public class DefaultPredicateSearch implements IPredicateSearch {
 	}
 	
 	protected Iterable<IEObjectDescription> getSearchScope (ResourceSet resourceSet) {
+		IResourceDescriptions descriptions = getResourceDescriptions ();
+		if (resourceSet != null && descriptions instanceof ResourceSetBasedResourceDescriptions) {
+			ResourceSetBasedResourceDescriptions rsDescs = (ResourceSetBasedResourceDescriptions)descriptions;
+			rsDescs.setContext((Notifier)resourceSet); 
+		}
 		return Iterables
 				.concat (Iterables
 						.transform (
-								getResourceDescriptions ()
+								descriptions
 										.getAllResourceDescriptions (),
 								new Function<IResourceDescription, Iterable<IEObjectDescription>> () {
 									public Iterable<IEObjectDescription> apply (

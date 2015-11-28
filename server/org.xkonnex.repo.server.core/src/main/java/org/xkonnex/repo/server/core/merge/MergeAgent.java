@@ -24,15 +24,14 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.diagnostics.Severity;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.validation.Issue;
-import org.xkonnex.repo.core.XKonneXRepoDSL;
+import org.xkonnex.repo.core.resource.XKonneXReader;
+import org.xkonnex.repo.core.validation.IssueFilterPredicate;
+import org.xkonnex.repo.core.validation.ModelIssues;
 import org.xkonnex.repo.server.core.authz.AuthorizationCheckHandler;
 import org.xkonnex.repo.server.core.merge.handler.IComparisonHandler;
 import org.xkonnex.repo.server.core.notification.CommitterMergeNotificationPublisher;
 import org.xkonnex.repo.server.core.notification.MergeNotificationEvent;
 import org.xkonnex.repo.server.core.notification.SubscriberMergeNotificationPublisher;
-import org.xkonnex.repo.server.core.resource.XKonneXReader;
-import org.xkonnex.repo.server.core.validation.IssueFilterPredicate;
-import org.xkonnex.repo.server.core.validation.ModelIssues;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;

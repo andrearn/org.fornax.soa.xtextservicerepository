@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF8"?>
+<toolchains>
+  <!-- JDK toolchains -->
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.6</version>
+      <vendor>sun</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>PATH TO jdk1.6.0</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.7</version>
+      <vendor>sun</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>PATH TO jdk1.7.0</jdkHome>
+    </configuration>
+  </toolchain>
+  <toolchain>
+    <type>jdk</type>
+    <provides>
+      <version>1.8</version>
+      <vendor>sun</vendor>
+    </provides>
+    <configuration>
+      <jdkHome>PATH TO jdk1.8.0</jdkHome>
+    </configuration>
+  </toolchain>
+     
+      <!-- other toolchains -->
+</toolchains>

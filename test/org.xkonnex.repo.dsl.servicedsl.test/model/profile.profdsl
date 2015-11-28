@@ -35,4 +35,8 @@ default soa-profile test {
 	versioning-strategy namespace-based
 	
 	
+	namespace-rules {
+		shorten org.xkonnex to xkx
+	}	
+	
 }

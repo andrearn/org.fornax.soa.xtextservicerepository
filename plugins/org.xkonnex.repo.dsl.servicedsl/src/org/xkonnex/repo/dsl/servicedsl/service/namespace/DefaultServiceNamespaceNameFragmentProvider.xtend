@@ -10,12 +10,15 @@ import org.xkonnex.repo.dsl.basedsl.namespace.VersionedNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.xkonnex.repo.dsl.profiledsl.namespace.NamespaceNameTransformer
 
 class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNameFragmentProvider {
 
 	@Inject extension CommonStringExtensions
 	@Inject extension IQualifiedNameProvider
 	@Inject extension NamespaceQuery
+	@Inject extension NamespaceNameTransformer
+	
 	@Inject NamespaceNameFragmentProvider baseDslNsNameFragmentProvider
 	
 	override getOrganizationNameFragment(Namespace ns) {
@@ -33,6 +36,53 @@ class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNam
 	override getSubNamespaceFragment(VersionedNamespace ns) {
 		ns.namespace.toSubNamespaceFragment
 	}
+	
+	override getOrganizationShortnameFragment(Namespace ns) {
+		ns.toOrgShortnameFragment
+	}
+	
+	override getOrganizationShortnameFragment(VersionedNamespace ns) {
+		ns.namespace.toOrgShortnameFragment
+	}
+	
+	
+	private def dispatch String toOrgShortnameFragment(Namespace ns) {
+		val orgNs = ns.findOrgNamespace
+		if (orgNs != null) {
+			orgNs.toOrgShortnameFragment
+		} else {
+			return baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
+		}
+	}
+	
+	private def dispatch String toOrgShortnameFragment(SubNamespace ns) {
+		val orgNs = ns.findOrgNamespace
+		if (orgNs != null) {
+			return orgNs.toOrgShortnameFragment
+		} else {
+			val profile = ns.getApplicableProfile(null)
+			val orgNsFQN = ns.fullyQualifiedName.toString
+			val shortName = orgNsFQN.getNamespaceShortBaseName(profile)
+			if (shortName != null)
+				return shortName
+		}
+		return baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
+	}
+	
+	private def dispatch String toOrgShortnameFragment(OrganizationNamespace ns) {
+		if (ns.prefix != null)
+			return ns.prefix
+		else {
+			val profile = ns.getApplicableProfile(null)
+			val orgNsFQN = ns.fullyQualifiedName.toString
+			val shortName = orgNsFQN.getNamespaceShortBaseName(profile)
+			if (shortName != null)
+				return shortName
+			else
+				return baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
+		} 
+	}
+	
 	
 	private def dispatch String toOrgNameFragment(Namespace ns) {
 		val orgNs = ns.findOrgNamespace

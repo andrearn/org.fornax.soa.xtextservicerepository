@@ -14,4 +14,7 @@ public interface ServiceNamespaceNameFragmentProvider {
 	String getSubNamespaceFragment(Namespace ns);
 	String getSubNamespaceFragment(VersionedNamespace ns);
 
+	String getOrganizationShortnameFragment(Namespace ns);
+	String getOrganizationShortnameFragment(VersionedNamespace ns);
+
 }

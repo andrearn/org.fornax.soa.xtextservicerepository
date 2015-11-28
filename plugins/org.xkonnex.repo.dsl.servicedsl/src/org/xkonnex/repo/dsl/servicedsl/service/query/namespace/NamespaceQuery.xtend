@@ -119,5 +119,17 @@ class NamespaceQuery {
 			return enforcedProfile
 		}
 	}
+	
+	def Profile getApplicableProfile (OrganizationNamespace ns, Profile enforcedProfile) {
+		if (enforcedProfile == null) {
+			if (ns.profile != null) {
+				return ns.profile
+			} else {
+				profileQuery.getDefaultProfile (ns.eResource.resourceSet)
+			}
+		} else {
+			return enforcedProfile
+		}
+	}
 		
 }
