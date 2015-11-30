@@ -32,6 +32,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResolver
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
 
 /**
  * Extension functions for 
@@ -47,6 +48,7 @@ class SchemaTypeExtensions {
 	@Inject extension IVersionedTypeRefResolver
 	@Inject extension IExceptionResolver
 	@Inject extension IEObjectLookup
+	@Inject extension ServiceNamespaceURIProvider serviceNamespaceURIProvider
 	
 	@Inject ProfileSchemaTypeExtensions profileSchemaTypes
 	@Inject TechnicalNamespaceQueries profileNSQueries
@@ -183,14 +185,14 @@ class SchemaTypeExtensions {
 	 * qualified by namespace prefixes
 	 */
 	def dispatch String toTypeNameRef (VersionedTypeRef typeRef, VersionedDomainNamespace currNs) { 
-		if (typeRef.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  
+		if (typeRef.type.findSubdomain().namespacePrefix == currNs.subdomain.namespacePrefix  
 			&& typeRef.getOwnerVersion().toMajorVersionNumber() == typeRef.type.version.toMajorVersionNumber()
 			&& ! (typeRef.getStatefulOwner() instanceof Service)
 		
 		) {
 			"tns:" +typeRef.type.name;
 		} else {
-			typeRef.type.findSubdomain().toShortName() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
+			typeRef.type.findSubdomain().namespacePrefix + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
 		}
 	}
 		
@@ -205,7 +207,7 @@ class SchemaTypeExtensions {
 		) {
 			"tns:" +typeRef.type.name;
 		} else {
-			typeRef.type.findSubdomain().toShortName() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
+			typeRef.type.findSubdomain().toUnversionedNamespace() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
 		}
 	}
 			
@@ -221,7 +223,7 @@ class SchemaTypeExtensions {
 		) {
 			"tns:" +typeRef.type.name;
 		} else {
-			typeRef.type.findSubdomain().toShortName() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
+			typeRef.type.findSubdomain().toUnversionedNamespace() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
 		}
 	}
 	
@@ -241,7 +243,7 @@ class SchemaTypeExtensions {
 		if (typeRef.type.findSubdomain().toUnversionedNamespace() == currNs.subdomain.toUnversionedNamespace()  && currNs.version.toVersion().versionMatches(typeRef.versionRef)) {
 			"tns:" +typeRef.type.name
 		} else {
-			typeRef.type.findSubdomain().toShortName() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
+			typeRef.type.findSubdomain().toUnversionedNamespace() + typeRef.type.version.toMajorVersionNumber() + ":" +typeRef.type.name;
 		}
 	}
 	
@@ -345,7 +347,7 @@ class SchemaTypeExtensions {
 		) {
 			"tns:" +t.exception.name;
 		} else {
-			t.exception.findSubdomain().toShortName() + t.exception.version.toMajorVersionNumber() + ":" +t.exception.name;
+			t.exception.findSubdomain().toUnversionedNamespace() + t.exception.version.toMajorVersionNumber() + ":" +t.exception.name;
 		}
 	}
 	  

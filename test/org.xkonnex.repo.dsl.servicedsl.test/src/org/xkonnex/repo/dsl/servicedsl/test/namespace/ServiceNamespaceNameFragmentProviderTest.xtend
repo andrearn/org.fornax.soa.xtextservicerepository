@@ -193,7 +193,7 @@ class ServiceNamespaceNameFragmentProviderTest {
 	def void testGetOrgNamespaceShortname() {
 		val reader = injector.getInstance(typeof(XKonneXReader))
 		val modelIssues = new ModelIssues
-		val List<String> pathes = newArrayList("model")
+		val List<String> pathes = newArrayList("model/withShortNames")
 		val resourceSet = reader.read(pathes, modelIssues)
 		descriptions.setContext(resourceSet);
 		descriptions.setRegistry(IResourceServiceProvider.Registry.INSTANCE);

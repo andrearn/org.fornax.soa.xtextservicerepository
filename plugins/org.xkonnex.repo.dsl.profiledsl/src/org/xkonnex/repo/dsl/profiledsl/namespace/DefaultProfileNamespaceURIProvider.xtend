@@ -11,6 +11,7 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
 import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceQueries
 import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
+import org.xkonnex.repo.dsl.basedsl.namespace.VersionedNamespace
 
 class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider {
 	
@@ -18,6 +19,7 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 	@Inject extension TechnicalNamespaceQueries
 	@Inject VersionQualifierExtensions versionQualifier	
 	@Inject NamespaceURIProvider namespaceURIProvider
+	@Inject extension ProfileNamespaceNameFragmentProvider 
 	
 
 	override String getHostPart (TechnicalNamespace ns) {
@@ -218,6 +220,40 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 		}
 	}
 	
+	override getNamespacePrefix(Namespace ns) {
+		namespaceURIProvider.getNamespacePrefix(ns)
+	}
 	
+	override getNamespacePrefix(VersionedNamespace ns) {
+		namespaceURIProvider.getNamespacePrefix(ns)
+	}
+	
+	override getNamespacePrefix(String qualifiedNameFragment) {
+		namespaceURIProvider.getNamespacePrefix(qualifiedNameFragment)
+	}
+	
+	override getVersionedNamespacePrefix(VersionedNamespace ns) {
+		ns.namespacePrefix + ns.version
+	}
+	
+	override getVersionedNamespacePrefix(Namespace ns) {
+		ns.namespacePrefix + "1"
+	}
+	
+	override getVersionedNamespacePrefix(String qualifiedNameFragment) {
+		namespaceURIProvider.getVersionedNamespacePrefix(qualifiedNameFragment)
+	}
+	
+	override getOrgNamespacePrefix(String qualifiedNameFragment) {
+		qualifiedNameFragment.orgNamespacePrefix
+	}
+	
+	override getOrgNamespacePrefix(Namespace ns) {
+		ns.organizationShortnameFragment
+	}
+	
+	override getOrgNamespacePrefix(VersionedNamespace ns) {
+		ns.organizationShortnameFragment
+	}
 		
 }

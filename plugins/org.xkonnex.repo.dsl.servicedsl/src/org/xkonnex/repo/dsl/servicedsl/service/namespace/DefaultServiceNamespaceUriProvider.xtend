@@ -241,5 +241,34 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 		ns.addTrailingSlashIfReqired(s)
 	}
 	
+//	
+//	def dispatch toNamespacePrefix(Namespace ns) {
+//		namespaceURIProvider.getNamespacePrefix(ns)
+//	}
+//	
+//	def dispatch toNamespacePrefix(SubNamespace ns) {
+//		namespaceURIProvider.getNamespacePrefix(ns)
+//	}
+//	
+//	def dispatch toNamespacePrefix(VersionedNamespace ns) {
+//		namespaceURIProvider.getNamespacePrefix(ns)
+//	}
+//	
+//	def dispatch toNamespacePrefix(String qualifiedNameFragment) {
+//		namespaceURIProvider.getNamespacePrefix(qualifiedNameFragment)
+//	}
+//	
+//	def dispatch toVersionedNamespacePrefix(VersionedNamespace ns) {
+//		ns.namespacePrefix + ns.version
+//	}
+//	
+//	def dispatch toVersionedNamespacePrefix(Namespace ns) {
+//		ns.namespacePrefix + "1"
+//	}
+//	
+//	def dispatch toVersionedNamespacePrefix(String qualifiedNameFragment) {
+//		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+//	}
+//	
 		
 }

@@ -13,6 +13,7 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 	@Inject extension NamespaceNameFragmentProvider 
 	@Inject extension IQualifiedNameProvider
 	@Inject extension VersionQualifierExtensions versionQualifier
+	@Inject extension NamespaceQueries
 
 	override getHostPart(Namespace ns) {
 		return URI_PROTOCOL_QUALIFIER + ns.organizationNameFragment.split("\\.").reverse.join(".");
@@ -39,17 +40,16 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 		if (ns.prefix != null) { 
 			ns.prefix;
 		} else {
-			ns.fullyQualifiedName.segments.map (e|e.segmentToShortName).join;
+			val path = ns.namespacePath.map[name].join(".")
+			path.split("\\.").map (e|e.segmentToShortName).join;
 		}
 	}
 	
 	override getNamespacePrefix(VersionedNamespace ns) {
 		if (ns.shortName != null) {
 			ns.shortName
-		} else if (ns.namespace.prefix != null) {
-			ns.namespace.prefix
 		} else {
-			ns.namespace.fullyQualifiedName.segments.map (e|e.segmentToShortName).join;
+			ns.namespace.namespacePrefix;
 		}
 	}
 	

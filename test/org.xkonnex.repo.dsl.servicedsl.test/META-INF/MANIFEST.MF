@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.ui,
  org.xkonnex.repo.dsl.servicedsl.ui,
  org.eclipse.xtext.xbase.lib,
  org.eclipse.ui.workbench;resolution:=optional,
- org.xkonnex.repo.core;bundle-version="2.0.0"
+ org.xkonnex.repo.core;bundle-version="2.0.0",
+ org.xkonnex.repo.generator.servicedsl;bundle-version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.xkonnex.repo.dsl.servicedsl

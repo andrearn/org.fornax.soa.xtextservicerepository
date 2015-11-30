@@ -2,31 +2,26 @@ package org.xkonnex.repo.generator.servicedsl.templates.xsd
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import java.util.ArrayList
 import java.util.List
-import java.util.Set
-import org.eclipse.emf.common.util.TreeIterator
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.xkonnex.repo.dsl.basedsl.CommonEObjectExtensions
 import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
+import org.xkonnex.repo.dsl.basedsl.namespace.NamespaceURIProvider
+import org.xkonnex.repo.dsl.basedsl.namespace.VersionedNamespace
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
-import org.xkonnex.repo.dsl.servicedsl.service.query.ExceptionFinder
-import org.xkonnex.repo.dsl.servicedsl.service.query.ServiceQueries
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceNameFragmentProvider
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
-import org.xkonnex.repo.dsl.servicedsl.service.query.type.TypesByLifecycleStateFinder
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import com.google.common.collect.Lists
+import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceURIProvider
 
 /*
  * domains.ext
@@ -35,8 +30,11 @@ class SchemaNamespaceExtensions {
 	
 	@Inject extension CommonStringExtensions
 	@Inject extension NamespaceQuery
-
-	@Inject VersionQualifierExtensions versionQualifier
+	@Inject extension ServiceNamespaceURIProvider serviceNsURIProvider
+	@Inject extension ServiceNamespaceNameFragmentProvider serviceNsNameFragmentProvider
+	@Inject ProfileNamespaceURIProvider profileNsURIProvider
+	@Inject NamespaceURIProvider nsURIProvider
+	@Inject VersionQualifierExtensions versionQualifier	
 	
 	@Inject @Named ("useRegistryBasedFilePaths") 
 	Boolean useRegistryBasedFilePaths
@@ -46,9 +44,6 @@ class SchemaNamespaceExtensions {
 	
 	@Inject IQualifiedNameProvider nameProvider
 	
-	val NUM_OF_HOST_PARTS = 2
-
-
 
 	def boolean useRegistryBasedFilePaths () {
 		useRegistryBasedFilePaths;
@@ -57,41 +52,21 @@ class SchemaNamespaceExtensions {
 	def dispatch String toUnversionedNamespace (Object o) {
 		"unknown";
 	}
-
-	def dispatch String fqn (SubNamespace s) {
-		(s.findOrgNamespace() as OrganizationNamespace).name.stripXtextEscapes() + "."
-			 + toSubNamespacePath(newArrayList(s)).map(n|n.name.stripXtextEscapes()).join(".");
-	}
 	
 	def dispatch String toNamespace (EObject o) {
 		null;
 	}
 	
-	def dispatch String toNamespace (OrganizationNamespace domain) {
-		var ns = domain.toUnversionedNamespace() + "/" + domain.toVersionPostfix();
-		if (domain.hasTrailingSlash() ) {
-			return ns + ("/"); 
-		} else {
-			return ns + "";
-		}
+	def dispatch String toNamespace (OrganizationNamespace orgNs) {
+		serviceNsURIProvider.getVersionedNamespaceURI(orgNs)
 	}
 	
 	def dispatch String toNamespace (SubNamespace leafDomainNamespace) { 
-		var ns = leafDomainNamespace.toUnversionedNamespace() +  "/" + leafDomainNamespace.toVersionPostfix();
-		if (leafDomainNamespace.hasTrailingSlash() ) {
-			return ns + ("/"); 
-		} else {
-			return ns + "";
-		}
+		serviceNsURIProvider.getVersionedNamespaceURI(leafDomainNamespace)
 	}
 	
-	def dispatch String toNamespace (VersionedDomainNamespace s) { 
-		var ns = s.subdomain.toUnversionedNamespace().stripXtextEscapes() + "/" + s.toVersionPostfix(); 
-		if (s.subdomain.hasTrailingSlash() )  {
-			return ns + ("/"); 
-		} else {
-			return ns + "";
-		}
+	def dispatch String toNamespace (VersionedDomainNamespace versionedNamespace) { 
+		serviceNsURIProvider.getVersionedNamespaceURI(versionedNamespace)
 	}
 	
 
@@ -128,34 +103,23 @@ class SchemaNamespaceExtensions {
 
 	
 	def dispatch String toUnversionedNamespace (OrganizationNamespace namespace) {
-		"http://" + namespace.name.split(".").reverse().join (".");
+		serviceNsURIProvider.getUnversionedNamespaceURI(namespace)
 	}
 	
-	def dispatch String toUnversionedNamespace (SubNamespace leafDomainNamespace) {
-		val orgNs = leafDomainNamespace.findOrgNamespace()
-		var String hostPart = null
-		"http://" + 
-		orgNs.toHostPart() + "/" + 
-		newArrayList (leafDomainNamespace).toSubNamespacePath().map (n|n.name.stripXtextEscapes().replaceAll("\\.","/")).join("/");
+	def dispatch String toUnversionedNamespace (SubNamespace namespace) {
+		serviceNsURIProvider.getUnversionedNamespaceURI(namespace)
 	}
 	
-	def dispatch String toUnversionedNamespace (VersionedDomainNamespace s) {
-		s.subdomain.toUnversionedNamespace();
+	def dispatch String toUnversionedNamespace (VersionedDomainNamespace namespace) {
+		serviceNsURIProvider.getUnversionedNamespaceURI(namespace)
 	}
 
 	def dispatch String toHostPart (OrganizationNamespace d) {
-		d.name.split("\\.").reverse().join(".");
+		serviceNsURIProvider.getHostPart(d)
 	}
 
 	def dispatch String toHostPart (SubNamespace d) {
-		var nsParts = d.name.split("\\.")
-		var List<String> hostParts = Lists.newArrayList(nsParts.get(0))
-		if (nsParts.size > 1) {
-			for (var int i=1; i<NUM_OF_HOST_PARTS; i++) {
-				hostParts.add(nsParts.get(i))
-			}
-		}
-		hostParts.join(".");
+		serviceNsURIProvider.getHostPart(d)
 	}
 	
 	def List<SubNamespace> toSubNamespacePath (List<SubNamespace> domList) {
@@ -170,11 +134,12 @@ class SchemaNamespaceExtensions {
 
 		
 	def dispatch String toShortName(SubNamespace s) {
-		if (s.prefix == null ) s.toPrefix() else s.prefix;
+				serviceNsURIProvider.getNamespacePrefix(s)
+		s.namespacePrefix
 	}
 	
 	def dispatch String toShortName(TechnicalNamespace s) {
-		if (s.prefix == null ) s.toPrefix() else s.prefix;
+		profileNsURIProvider.getNamespacePrefix(s)
 	}
 
 
@@ -246,24 +211,16 @@ class SchemaNamespaceExtensions {
 		s.eContainer.toFileNameFragment().replaceAll("\\." , "-") + "-" + s.name.stripXtextEscapes() + "-" + s.version.toVersionPostfix();
 	}
 	
-	def dispatch String toFileNameFragment (OrganizationNamespace s) {
-		s.findOrgNamespace().toPrefix().replaceAll("\\." , "-");
+	def dispatch String toFileNameFragment (OrganizationNamespace ns) {
+		ns.organizationShortnameFragment.replaceAll("\\." , "-");
 	}
 	
-	def dispatch String toFileNameFragment (DomainNamespace s) {
-		val namespaces = new ArrayList<SubNamespace>();
-		namespaces.add (s);
-		s.findOrgNamespace().toPrefix().replaceAll("\\." , "-") + "-" + toSubNamespacePath (namespaces).map(n|n.name.stripXtextEscapes().replaceAll("\\." , "-")).join("-");
+	def dispatch String toFileNameFragment (SubNamespace ns) {
+		ns.organizationShortnameFragment.replaceAll("\\." , "-") + "-" + ns.subNamespaceFragment.replaceAll("\\." , "-")
 	}
 	
-	def dispatch String toFileNameFragment (InternalNamespace s) {
-		val namespaces = new ArrayList<SubNamespace>();
-		namespaces.add (s);
-		s.findOrgNamespace().toPrefix().replaceAll("\\." , "-") + "-" + toSubNamespacePath (namespaces).map(n|n.name.stripXtextEscapes().replaceAll("\\." , "-")).join("-");
-	}
-	
-	def dispatch String toFileNameFragment (VersionedDomainNamespace s) {
-		s.subdomain.toFileNameFragment() + "-v" + versionQualifier.toMajorVersionNumber(s.version);
+	def dispatch String toFileNameFragment (VersionedNamespace ns) {
+		ns.namespace.toFileNameFragment() + "-v" + versionQualifier.toMajorVersionNumber(ns.version);
 	}
 		
 	
@@ -272,7 +229,6 @@ class SchemaNamespaceExtensions {
 			d.prefix;
 		} else { 
 			d.name;
-			
 		}
 	}
 		
@@ -283,28 +239,18 @@ class SchemaNamespaceExtensions {
 	def dispatch String toPrefix(EObject o) {
 		"tns";
 	}
-	def dispatch String toPrefix(OrganizationNamespace o) {
-		if (o.prefix != null) {
-			o.prefix;
-		} else { 
-			nameProvider.getFullyQualifiedName(o).segments.map (e|e.substring(0,1)).join;
-		}
+	def dispatch String toPrefix(Namespace s) {
+		serviceNsURIProvider.getNamespacePrefix(s)
 	}
-	
-	def dispatch String toPrefix (SubNamespace s) {
-		if (s.prefix != null) { 
-			s.prefix;
-		} else {
-			nameProvider.getFullyQualifiedName(s).segments.map (e|e.substring(0,1)).join;
-		}
+	def dispatch String toPrefix(TechnicalNamespace s) {
+		profileNsURIProvider.getNamespacePrefix(s)
 	}
-	
-	def dispatch String toPrefix (VersionedDomainNamespace s) {
-		if (s.shortName != null) {
-			s.shortName
-		} else {
-			nameProvider.getFullyQualifiedName(s.subdomain as EObject).segments.map (e|e.substring(0,1)).join;
-		}
+	def dispatch String toPrefix(org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace s) {
+		profileNsURIProvider.getNamespacePrefix(s)
+	}
+		
+	def dispatch String toPrefix (VersionedNamespace s) {
+		serviceNsURIProvider.getNamespacePrefix(s)
 	}
 	
 }

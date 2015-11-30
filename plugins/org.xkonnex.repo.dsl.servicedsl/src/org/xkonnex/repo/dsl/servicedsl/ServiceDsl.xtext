@@ -104,20 +104,20 @@ Type:
 VersionedType:
 	Enumeration | DataObject;		
 
-DataObject: BusinessObject | QueryObject;
+DataObject: AbstractBusinessObject | QueryObject;
 
-BusinessObject: GenericBusinessObject | Aggregate | Entity | ValueObject;
+AbstractBusinessObject: BusinessObject | Aggregate | Entity | ValueObject;
 
 /*
  * A complex datatype representing a business entity of the domain model. 
  * BusinessObjects are versioned.
  */
-GenericBusinessObject:
+BusinessObject:
 	(deprecated?='@deprecated')? 
-	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superObject=BusinessObjectRef)? '{' 
+	(abstract?='abstract')? 'businessObject'  name=ID ('extends' superObject=AbstractBusinessObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
-			('replaces' replaces=BusinessObjectRef)?
+			('replaces' replaces=AbstractBusinessObjectRef)?
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
@@ -146,10 +146,10 @@ GenericBusinessObject:
  */
 ValueObject:
 	(deprecated?='@deprecated')? 
-	(abstract?='abstract')? 'valueObject'  name=ID ('extends' superObject=BusinessObjectRef)? '{' 
+	(abstract?='abstract')? 'valueObject'  name=ID ('extends' superObject=AbstractBusinessObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
-			('replaces' replaces=BusinessObjectRef)?
+			('replaces' replaces=AbstractBusinessObjectRef)?
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
@@ -178,10 +178,10 @@ ValueObject:
  */
 Aggregate:
 	(deprecated?='@deprecated')? 
-	(abstract?='abstract')? 'aggregate'  name=ID ('extends' superObject=BusinessObjectRef)? '{' 
+	(abstract?='abstract')? 'aggregate'  name=ID ('extends' superObject=AbstractBusinessObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
-			('replaces' replaces=BusinessObjectRef)?
+			('replaces' replaces=AbstractBusinessObjectRef)?
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
@@ -211,10 +211,10 @@ Aggregate:
  */
 Entity:
 	(deprecated?='@deprecated')? 
-	(abstract?='abstract')? 'entity'  name=ID ('extends' superObject=BusinessObjectRef)? '{' 
+	(abstract?='abstract')? 'entity'  name=ID ('extends' superObject=AbstractBusinessObjectRef)? '{' 
 		'metadata' '{'
 			version=Version 
-			('replaces' replaces=BusinessObjectRef)?
+			('replaces' replaces=AbstractBusinessObjectRef)?
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
@@ -287,11 +287,11 @@ EnumTypeRef:
 	type=[Enumeration|QualifiedName] versionRef=VersionRef;
 
 DataObjectRef:
-	BusinessObjectRef | QueryObjectRef;
+	AbstractBusinessObjectRef | QueryObjectRef;
 
 /* A version constrained reference to a BO */
-BusinessObjectRef returns DataObjectRef:
-	type=[BusinessObject|QualifiedName] versionRef=VersionRef;
+AbstractBusinessObjectRef returns DataObjectRef:
+	type=[AbstractBusinessObject|QualifiedName] versionRef=VersionRef;
 
 /* A version constrained reference to a QueryObject */
 QueryObjectRef returns DataObjectRef:
