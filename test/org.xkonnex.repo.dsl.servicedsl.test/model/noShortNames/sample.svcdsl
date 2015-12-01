@@ -1,5 +1,6 @@
 import test.TestLifecycle.*
 import test.*
+import org.xkonnex.other.*
 
 org-namespace org.xkonnex {
 	
@@ -46,6 +47,17 @@ org-namespace org.xkonnex {
 				
 			}
 			address : AbstractAddress majorVersion 1
+			other : Other majorVersion 1
+		}
+		
+		businessObject Person {
+			metadata {
+				version 2.0
+				lifecycle-state productive
+				
+			}
+			address : AbstractAddress majorVersion 1
+			other : Other majorVersion 1
 		}
 		
 		public service PersonLookupBES {

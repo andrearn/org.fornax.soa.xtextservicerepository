@@ -10,10 +10,12 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
 import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
+import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceURIProvider
 
 class ProfileSchemaNamespaceExtensions {
 	
 	@Inject extension CommonStringExtensions
+	@Inject extension ProfileNamespaceURIProvider
 	@Inject VersionQualifierExtensions versionQualifier
 	
 	@Inject @Named ("useRegistryBasedFilePaths") 
@@ -57,7 +59,7 @@ class ProfileSchemaNamespaceExtensions {
 		if (s.prefix != null) { 
 			s.prefix;
 		} else {
-			toNamespacePath( newArrayList(s)).map (n|n.name.split("\\.").map (e|e.substring(0,1)).join).join;
+			s.namespacePrefix;
 		}
 	}
 	
@@ -65,7 +67,7 @@ class ProfileSchemaNamespaceExtensions {
 		if (s.shortName != null) {
 			s.shortName
 		} else {
-			toNamespacePath (newArrayList (s.namespace)).map (n|n.name.split("\\.").map (e|e.substring(0,1)).join).join;
+			s.namespace.toPrefix
 		}
 	}
 		

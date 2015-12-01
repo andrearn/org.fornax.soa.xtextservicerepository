@@ -27,22 +27,42 @@ class ProfileSchemaTypeExtensions {
 
 	@Inject VersionQualifierExtensions versionQualifiers
 
+	/**
+	 * Reference to type qualified by the namespace prefix defined for the namespace URI of namespace the referenced type belongs to
+	 * The prefix is derived from the namespace URI or it's shortname.
+	 */		
 	def dispatch String toTypeNameRef (TypeRef t, VersionedTechnicalNamespace currNs) {
 		null;
 	}
 	
+	/**
+	 * Reference to type qualified by the namespace prefix defined for the namespace URI of namespace the referenced type belongs to
+	 * The prefix is derived from the namespace URI or it's shortname.
+	 */		
 	def dispatch String toTypeNameRef (DataTypeRef t, VersionedTechnicalNamespace currentDomNs) { 
 		t.findLatestMatchingType () .toTypeNameRef (currentDomNs);
 	}
 	
+	/**
+	 * Reference to type qualified by the namespace prefix defined for the namespace URI of namespace the referenced type belongs to
+	 * The prefix is derived from the namespace URI or it's shortname.
+	 */		
 	def dispatch String toTypeNameRef (DataType t, VersionedTechnicalNamespace currentDomNs) { 
 		t.toTypeNameRef ();
 	}
-		
+
+	/**
+	 * Reference to type qualified by the namespace prefix defined for the namespace URI of namespace the referenced type belongs to
+	 * The prefix is derived from the namespace URI or it's shortname.
+	 */		
 	def dispatch String toTypeNameRef (AttributeDataTypeRef t, VersionedTechnicalNamespace currentDomNs) { 
 		t.findLatestMatchingType () .toTypeNameRef (currentDomNs);
 	}
 	
+	/**
+	 * Reference to type qualified by the namespace prefix defined for the namespace URI of namespace the referenced type belongs to
+	 * The prefix is derived from the namespace URI or it's shortname.
+	 */		
 	/*<b>TODO CHECK</b> getOwnerVersion for VersionedTypeRef!!!*/
 	def dispatch String toTypeNameRef (VersionedTypeRef t, VersionedTechnicalNamespace currNs) { 
 		if (t.type.findTechnicalNamespace().toUnversionedNamespace() == (currNs.namespace as TechnicalNamespace).toUnversionedNamespace()  
@@ -54,6 +74,10 @@ class ProfileSchemaTypeExtensions {
 		}
 	}
 
+	/**
+	 * Reference to type qualified by the namespace prefix defined for the namespace URI of namespace the referenced type belongs to
+	 * The prefix is derived from the namespace URI or it's shortname. (uses "xsd:" for XmlSchema itself)
+	 */		
 	def dispatch String toTypeNameRef (DataType t) {
 	 	switch (t.name) {
 	 		case "attachment":		"xsd:base64Binary"
@@ -68,18 +92,31 @@ class ProfileSchemaTypeExtensions {
 		};
 	}
 	
-			
+	
+	/**
+	 * Reference to type qualified by the  full namespace URI of namespace the referenced type belongs to
+	 */		
 	def dispatch String toFullTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef t, VersionedTechnicalNamespace currentDomNs) { 
 		t.findLatestMatchingType () .toFullTypeNameRef();
 	}
 		
+	/**
+	 * Reference to type qualified by the  full namespace URI of namespace the referenced type belongs to
+	 */		
 	def dispatch String toFullTypeNameRef (VersionedTypeRef t, VersionedTechnicalNamespace currNs) { 
 		t.type.findTechnicalNamespace().toNamespace() + t.type.name;
 	}
 		
+	/**
+	 * Reference to type qualified by the  full namespace URI of namespace the referenced type belongs to
+	 */		
 	def dispatch String toFullTypeNameRef (Type t) {
 		"";
 	}
+
+	/**
+	 * Reference to type qualified by the  full namespace URI of namespace the referenced type belongs to
+	 */		
 	def dispatch String toFullTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType t) {
 	 	switch (t.name) {
 	 		case "attachment":		"xsd:base64Binary"

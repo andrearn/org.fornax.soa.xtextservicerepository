@@ -8,22 +8,26 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultNamespaceURIProvider.class)
 public interface NamespaceURIProvider {
 
-	String getUnversionedNamespaceURI(Namespace ns);
+	String getUnversionedNamespaceURI (Namespace ns);
+	String getUnversionedNamespaceURI (String ns);
 	
 	String getHostPart (Namespace ns);
+	String getPathPart (Namespace ns);
 	
-	String getPathPart(Namespace ns);
+	String getHostPart (String ns);
+	String getPathPart (String ns);
 	
 	boolean requiresTrailingSlash (Namespace ns);
 	
-	String getNamespacePrefix(String qualifiedNameFragment);
-	String getNamespacePrefix(Namespace ns);
-	String getNamespacePrefix(VersionedNamespace ns);
+	String getNamespacePrefix (String qualifiedNameFragment);
+	String getNamespacePrefix (Namespace ns);
+	String getNamespacePrefix (VersionedNamespace ns);
 	
-	String getVersionedNamespacePrefix(String qualifiedNameFragment);
-	String getVersionedNamespacePrefix(Namespace ns);
-	String getVersionedNamespacePrefix(VersionedNamespace ns);
+	String getVersionedNamespacePrefix (String qualifiedNameFragment);
+	String getVersionedNamespacePrefix (Namespace ns);
+	String getVersionedNamespacePrefix (VersionedNamespace ns);
 	
-	String getVersionPostfix(Namespace ns);
+	String getVersionPostfix (Namespace ns);
+	String getVersionPostfix (VersionedNamespace ns);
 
 }

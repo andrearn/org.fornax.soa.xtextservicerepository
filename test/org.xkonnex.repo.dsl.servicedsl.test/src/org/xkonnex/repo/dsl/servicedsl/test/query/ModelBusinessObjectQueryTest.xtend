@@ -1,12 +1,12 @@
 package org.xkonnex.repo.dsl.servicedsl.test.query
 
-import static org.junit.Assert.*
 import com.google.inject.Inject
 import com.google.inject.Injector
 import java.util.List
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.resource.IResourceServiceProvider
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions
 import org.junit.Before
@@ -16,15 +16,16 @@ import org.xkonnex.repo.core.resource.XKonneXReader
 import org.xkonnex.repo.core.validation.ModelIssues
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
-import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries
-import org.xkonnex.repo.dsl.servicedsl.test.ServiceDslWithDependenciesInjector
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
 import org.xkonnex.repo.dsl.basedsl.util.TreeNode
-import org.eclipse.xtext.resource.IEObjectDescription
+import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
+import org.xkonnex.repo.dsl.servicedsl.test.ServiceDslWithDependenciesInjector
 
-@RunWith(XtextRunner) @InjectWith(ServiceDslWithDependenciesInjector) class ModelBusinessObjectQueryTest {
+import static org.junit.Assert.*
+
+@RunWith(XtextRunner) 
+@InjectWith(ServiceDslWithDependenciesInjector) 
+class ModelBusinessObjectQueryTest {
 	@Inject 
 	DataObjectQueries boQuery
 	@Inject 

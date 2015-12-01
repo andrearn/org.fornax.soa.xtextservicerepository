@@ -2,7 +2,7 @@ import test.TestLifecycle.*
 import test.*
 
 	
-	domain-namespace org.xkonnex.repo.dsl.bindingdsl.other {
+	domain-namespace org.xkonnex.other {
 		businessObject Other {
 			metadata {
 				version 1.0

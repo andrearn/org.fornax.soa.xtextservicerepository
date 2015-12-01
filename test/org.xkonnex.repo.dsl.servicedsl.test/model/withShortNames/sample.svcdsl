@@ -1,5 +1,6 @@
 import test.TestLifecycle.*
 import test.*
+import org.xkonnex.other.*
 
 org-namespace org.xkonnex shortname "ofs" {
 	
@@ -46,6 +47,7 @@ org-namespace org.xkonnex shortname "ofs" {
 				
 			}
 			address : AbstractAddress majorVersion 1
+			other : Other majorVersion 1
 		}
 		
 		public service PersonLookupBES {

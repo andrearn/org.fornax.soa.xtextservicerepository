@@ -402,16 +402,22 @@ class SchemaTypeExtensions {
 	/**
 	 * Calculate the namespace URL
 	 */
-	def dispatch String toNamespace (VersionedTypeRef t) { 
-		t.type.eContainer.toUnversionedNamespace() + "/"
-			+ schemaNamespaceExt.toVersionPostfix((t.findMatchingTypeVersion() as VersionedType).version) + "/";
+	def dispatch String toNamespace (VersionedTypeRef t) {
+		var nsUri = t.type.eContainer.toUnversionedNamespace()
+		if (!nsUri.endsWith("/")) {
+			nsUri = nsUri + "/"
+		}
+		nsUri + schemaNamespaceExt.toVersionPostfix((t.findMatchingTypeVersion() as VersionedType).version) + "/";
 	}
 	/**
 	 * Calculate the namespace URL
 	 */
 	def dispatch String toNamespace (DataObjectRef t) { 
-		t.type.eContainer.toUnversionedNamespace() + "/"
-			+ schemaNamespaceExt.toVersionPostfix((t.findMatchingTypeVersion() as BusinessObject).version) + "/";
+		var nsUri = t.type.eContainer.toUnversionedNamespace()
+		if (!nsUri.endsWith("/")) {
+			nsUri = nsUri + "/"
+		}
+		nsUri + schemaNamespaceExt.toVersionPostfix((t.findMatchingTypeVersion() as BusinessObject).version) + "/";
 	}
 	/**
 	 * Calculate the namespace URL
@@ -424,22 +430,25 @@ class SchemaTypeExtensions {
 	 * Calculate the namespace URL
 	 */
 	def dispatch String toNamespace (ExceptionRef t) {
-		t.exception.eContainer.toUnversionedNamespace() + "/"
-			+ schemaNamespaceExt.toVersionPostfix((t.findMatchingException() as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception).version) + "/";
+		var nsUri = t.exception.eContainer.toUnversionedNamespace()
+		if (!nsUri.endsWith("/")) {
+			nsUri = nsUri + "/"
+		}
+		nsUri + schemaNamespaceExt.toVersionPostfix((t.findMatchingException() as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception).version) + "/";
 	}
 	
 	/**
 	 * Calculate the namespace URL
 	 */
 	def dispatch String toNamespace (SubNamespace ns) {
-		ns.toUnversionedNamespace()+"/"
+		serviceNamespaceURIProvider.getVersionedNamespaceURI(ns)
 	}
 	
 	/**
 	 * Calculate the namespace URL
 	 */
 	def dispatch String toNamespace (VersionedDomainNamespace ns) {
-		ns.toUnversionedNamespace() + "/" + schemaNamespaceExt.toVersionPostfix(ns.version.toMajorVersionNumber) + "/"
+		serviceNamespaceURIProvider.getVersionedNamespaceURI(ns)
 	}
 	
 	/**
