@@ -10,9 +10,11 @@ import java.util.List
 class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvider {
 	
 	val NUM_OF_HOST_PARTS = 2
+	val SEGMENT_SHORTNAME_LENGTH 	= 1
 	
 	@Inject extension IQualifiedNameProvider 
 	@Inject extension CommonStringExtensions
+	@Inject extension NamespaceQueries
 	
 	override getOrganizationNameFragment(Namespace ns) {
 		val segments = ns.fullyQualifiedName.segments
@@ -22,6 +24,7 @@ class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvi
 	override getOrganizationNameFragment(VersionedNamespace ns) {
 		ns.namespace.organizationNameFragment
 	}
+	
 	
 	override getSubNamespaceFragment(Namespace ns) {
 		val segments = ns.fullyQualifiedName.segments
@@ -38,6 +41,29 @@ class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvi
 	
 	override getSubNamespaceFragment(String qualfiedNamespaceName) {
 		fqnSegmentsToSubNsNameFragment(qualfiedNamespaceName.split("\\."))
+	}
+	
+	
+	override getShortname(String qualifiedNamespaceName) {
+		qualifiedNamespaceName.split("\\.").map (e|e.segmentToShortName).join;
+	}
+	
+	override getShortname(Namespace ns) {
+		if (ns.prefix != null) { 
+			ns.prefix;
+		} else {
+			val path = ns.namespacePath.map[name].join(".")
+			path.split("\\.").map (e|e.segmentToShortName).join
+		}
+	}
+	
+	override getShortname(VersionedNamespace ns) {
+		ns.namespace.shortname
+	}
+
+
+	override def segmentToShortName (String segment) {
+		segment.substring(0, SEGMENT_SHORTNAME_LENGTH)
 	}
 	
 	private def String fqnSegmentsToOrgNameFragment (List<String> fqnSegments) {

@@ -51,7 +51,8 @@ class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNam
 		if (orgNs != null) {
 			orgNs.toOrgShortnameFragment
 		} else {
-			return baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
+			val orgNsFragment = baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
+			return baseDslNsNameFragmentProvider.getShortname(orgNsFragment)
 		}
 	}
 	
@@ -66,7 +67,8 @@ class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNam
 			if (shortName != null)
 				return shortName
 		}
-		return baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
+		val orgNsFragment = baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
+		return baseDslNsNameFragmentProvider.getShortname(orgNsFragment)
 	}
 	
 	private def dispatch String toOrgShortnameFragment(OrganizationNamespace ns) {
@@ -79,7 +81,7 @@ class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNam
 			if (shortName != null)
 				return shortName
 			else
-				return baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
+				return baseDslNsNameFragmentProvider.getShortname(ns)
 		} 
 	}
 	

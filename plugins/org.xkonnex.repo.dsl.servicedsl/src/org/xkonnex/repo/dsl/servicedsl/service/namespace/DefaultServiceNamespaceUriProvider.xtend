@@ -21,19 +21,19 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	@Inject NamespaceURIProvider namespaceURIProvider
 
 	
-	override getUnversionedNamespaceURI(Namespace ns) {
-		ns.toUnversionedNamespaceURI
+	override getNamespaceURI(Namespace ns) {
+		ns.toNamespaceURI
 	}
-	override getUnversionedNamespaceURI(VersionedNamespace ns) {
-		var nsURI = ns.namespace.toUnversionedNamespaceURI;
+	override getNamespaceURI(VersionedNamespace ns) {
+		var nsURI = ns.namespace.toNamespaceURI;
 		nsURI.addTrailingSlashIfReqired(ns)
 	}
 	
 	override getVersionedNamespaceURI(Namespace ns) {
-		ns.toNamespaceURI
+		ns.toVersionedNamespaceURI
 	}
 	override getVersionedNamespaceURI(VersionedNamespace ns) {
-		ns.toNamespaceURI
+		ns.toVersionedNamespaceURI
 	}
 
 	override String getHostPart (SubNamespace ns) {
@@ -110,11 +110,6 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	}
 	
 	
-
-	private def dispatch String toVersionPostfix (Object o) { 
-		throw new UnsupportedOperationException();
-	}
-	
 	private def dispatch String toVersionPostfix (Version v) {
 		versionQualifier.toVersionPostfix(v);
 	}
@@ -144,13 +139,13 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	
 	
 		
-	private def dispatch String toNamespaceURI (Namespace ns) {
+	private def dispatch String toVersionedNamespaceURI (Namespace ns) {
 		namespaceURIProvider.getUnversionedNamespaceURI(ns);
 		ns.toVersionPostfix
 	}
 	
-	private def dispatch String toNamespaceURI (OrganizationNamespace domain) {
-		var ns = domain.toUnversionedNamespaceURI 
+	private def dispatch String toVersionedNamespaceURI (OrganizationNamespace domain) {
+		var ns = domain.toNamespaceURI 
 		if (!ns.endsWith("/")) 
 			ns = ns +  "/" 
 		ns = ns + domain.toVersionPostfix;
@@ -161,8 +156,8 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 		}
 	}
 	
-	private def dispatch String toNamespaceURI (SubNamespace leafDomainNamespace) { 
-		var ns = leafDomainNamespace.toUnversionedNamespaceURI
+	private def dispatch String toVersionedNamespaceURI (SubNamespace leafDomainNamespace) { 
+		var ns = leafDomainNamespace.toNamespaceURI
 		if (!ns.endsWith("/")) 
 			ns = ns +  "/" 
 		ns = ns + leafDomainNamespace.toVersionPostfix();
@@ -173,8 +168,8 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 		}
 	}
 	
-	private def dispatch String toNamespaceURI (VersionedDomainNamespace s) { 
-		var ns = s.subdomain.toUnversionedNamespaceURI.stripXtextEscapes()
+	private def dispatch String toVersionedNamespaceURI (VersionedDomainNamespace s) { 
+		var ns = s.subdomain.toNamespaceURI.stripXtextEscapes()
 		if (!ns.endsWith("/")) 
 			ns = ns +  "/" 
 		ns = ns + s.toVersionPostfix();
@@ -200,21 +195,21 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	}
 	
 	
-	private def dispatch String toUnversionedNamespaceURI (Namespace namespace) {
-		namespaceURIProvider.toUnversionedNamespaceURI
+	private def dispatch String toNamespaceURI (Namespace namespace) {
+		namespaceURIProvider.toNamespaceURI
 	}
 	
-	private def dispatch String toUnversionedNamespaceURI (OrganizationNamespace namespace) {
+	private def dispatch String toNamespaceURI (OrganizationNamespace namespace) {
 		var ns = namespace.hostPart
 		ns.addTrailingSlashIfReqired(namespace);
 	}
 	
-	private def dispatch String toUnversionedNamespaceURI (VersionedDomainNamespace s) {
-		var ns = s.subdomain.toUnversionedNamespaceURI;
+	private def dispatch String toNamespaceURI (VersionedDomainNamespace s) {
+		var ns = s.subdomain.toNamespaceURI;
 		ns.addTrailingSlashIfReqired(s)
 	}
 	
-	private def dispatch String toUnversionedNamespaceURI (SubNamespace leafDomainNamespace) {
+	private def dispatch String toNamespaceURI (SubNamespace leafDomainNamespace) {
 		var ns = ""
 		if (leafDomainNamespace.uri != null)
 			ns = leafDomainNamespace.uri
@@ -225,7 +220,7 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	
 	
 	private def dispatch String toOrgNamespacePrefix (Namespace namespace) {
-		namespaceURIProvider.toUnversionedNamespaceURI
+		namespaceURIProvider.toNamespaceURI
 	}
 	
 	private def dispatch String toOrgNamespacePrefix (OrganizationNamespace namespace) {
@@ -237,38 +232,8 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	}
 	
 	private def dispatch String toOrgNamespacePrefix (VersionedDomainNamespace s) {
-		var ns = s.subdomain.toUnversionedNamespaceURI;
+		var ns = s.subdomain.toNamespaceURI;
 		ns.addTrailingSlashIfReqired(s)
 	}
-	
-//	
-//	def dispatch toNamespacePrefix(Namespace ns) {
-//		namespaceURIProvider.getNamespacePrefix(ns)
-//	}
-//	
-//	def dispatch toNamespacePrefix(SubNamespace ns) {
-//		namespaceURIProvider.getNamespacePrefix(ns)
-//	}
-//	
-//	def dispatch toNamespacePrefix(VersionedNamespace ns) {
-//		namespaceURIProvider.getNamespacePrefix(ns)
-//	}
-//	
-//	def dispatch toNamespacePrefix(String qualifiedNameFragment) {
-//		namespaceURIProvider.getNamespacePrefix(qualifiedNameFragment)
-//	}
-//	
-//	def dispatch toVersionedNamespacePrefix(VersionedNamespace ns) {
-//		ns.namespacePrefix + ns.version
-//	}
-//	
-//	def dispatch toVersionedNamespacePrefix(Namespace ns) {
-//		ns.namespacePrefix + "1"
-//	}
-//	
-//	def dispatch toVersionedNamespacePrefix(String qualifiedNameFragment) {
-//		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-//	}
-//	
 		
 }

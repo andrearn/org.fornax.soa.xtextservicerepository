@@ -1,0 +1,119 @@
+datatype int
+datatype long
+datatype float
+datatype double
+datatype boolean
+datatype date
+datatype datetime
+datatype string
+
+default soa-profile test {
+	scope "JUnit tests"
+
+	lifecycle TestLifecycle {
+		initial state proposed {
+			qualifies-for Local-Environment
+		}
+		state development {
+			qualifies-for Development-Environment, Local-Environment
+		}
+		state test {
+			qualifies-for Test-Environment, Development-Environment, Local-Environment
+		}
+		state productive {
+			qualifies-for Production-Environment, Test-Environment, Development-Environment, Local-Environment
+		}
+		end state retired {
+		}
+	}
+
+	service-categories {
+		Activity
+		Entity
+		Utility 
+	}
+
+	versioning-strategy namespace-based
+	
+	
+	/**
+	 * Define general rules for messaging:
+	 * 
+	 * Canonical services must use the message header defined below
+	 */
+	messaging {
+		message-headers ExOrgServiceMessageContext {
+			metadata {
+				version 1.0
+				lifecycle-state TestLifecycle.productive
+				for request , response , publish
+				version-evolution {
+					extendible-properties
+					extendible-XML-attributes
+					extendible-sub-types
+				}
+			}
+			msgCtx : org.example.soa.ServiceMessageContext majorVersion 1
+		}
+		/**
+		 * All services define in domain-namespaces use per default the following message header for every request message.
+		 */
+		default-request-header ExOrgServiceMessageContext majorVersion 1
+		/**
+		 * All services define in domain-namespaces use per default the following message header for every response message.
+		 */
+		default-response-header ExOrgServiceMessageContext majorVersion 1
+		/**
+		 * All services define in domain-namespaces use per default the following message header for every published event.
+		 */
+		default-publish-header ExOrgServiceMessageContext majorVersion 1
+	}
+	
+	
+	
+	/**
+	 * Define some technical datatypes for messaging
+	 */
+	org-namespace org.example {
+		namespace soa {
+			class ServiceMessageContext {
+				metadata {
+					version 1.0
+					lifecycle-state TestLifecycle.productive
+					governance-decision {
+						subject "approval"
+						decision-result accepted
+					}
+				}
+				/** logical endpoint to route the call to */
+				^to : string
+				/** identify the caller */
+				from : string
+				/** where should the response be routed to */
+				optional replyTo : string
+				/** a unique message ID */
+				messageId : string
+				/** set in a response message - the messageId of the original request */
+				optional requestId : string
+				/** attributes for message correlation */
+				optional correlation : Correlation majorVersion 1
+			}
+			
+			class Correlation {
+				metadata {
+					version 1.0
+					lifecycle-state TestLifecycle.productive
+					governance-decision {
+						subject "approval"
+						decision-result accepted
+					}
+				}
+				correlationId : string
+				optional sequenceId : string
+				optional sequenceNum : long
+			}
+		}
+	}
+	
+	
+}

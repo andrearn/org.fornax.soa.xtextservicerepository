@@ -1,0 +1,80 @@
+import test.TestLifecycle.*
+import test.*
+import org.xkonnex.other.*
+
+org-namespace org.xkonnex {
+	
+	domain-namespace samples {
+		businessObject AbstractAddress {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+				
+			}
+			city : string
+			zipcode : string
+		}
+		
+		businessObject StreetAddress extends AbstractAddress majorVersion 1 {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+			}
+			street : string
+			houseNum : string
+		}
+		
+		businessObject POBoxAddress extends AbstractAddress majorVersion 1 {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+			}
+			poBoxNum : string
+		}
+		
+		businessObject ExtStreetAddress extends StreetAddress majorVersion 1 {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+			}
+			building : string
+		}
+		
+		businessObject Person {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+				
+			}
+			address : AbstractAddress majorVersion 1
+			other : Other majorVersion 1
+		}
+		
+		businessObject Person {
+			metadata {
+				version 2.0
+				lifecycle-state productive
+				
+			}
+			address : AbstractAddress majorVersion 1
+			other : Other majorVersion 1
+		}
+		
+		public service PersonLookupBES {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+				governance-approval {
+					yes
+					decision-date "04.06.2012"
+					decision-by "Mike Approver"
+				}
+				service-category Entity
+				statefulness stateful
+			}
+			sync findByName (firstName : string, lastName : string) returns persons : Person [] majorVersion 1 {
+				
+			}
+		}
+	}
+}

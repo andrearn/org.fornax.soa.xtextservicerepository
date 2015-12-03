@@ -103,15 +103,15 @@ class SchemaNamespaceExtensions {
 
 	
 	def dispatch String toUnversionedNamespace (OrganizationNamespace namespace) {
-		serviceNsURIProvider.getUnversionedNamespaceURI(namespace)
+		serviceNsURIProvider.getNamespaceURI(namespace)
 	}
 	
 	def dispatch String toUnversionedNamespace (SubNamespace namespace) {
-		serviceNsURIProvider.getUnversionedNamespaceURI(namespace)
+		serviceNsURIProvider.getNamespaceURI(namespace)
 	}
 	
 	def dispatch String toUnversionedNamespace (VersionedDomainNamespace namespace) {
-		serviceNsURIProvider.getUnversionedNamespaceURI(namespace)
+		serviceNsURIProvider.getNamespaceURI(namespace)
 	}
 
 	def dispatch String toHostPart (OrganizationNamespace d) {

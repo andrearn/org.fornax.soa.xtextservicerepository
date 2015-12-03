@@ -1,22 +1,17 @@
 package org.xkonnex.repo.dsl.basedsl.namespace
 
 import javax.inject.Inject
-import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
-import java.util.regex.Pattern
 
 class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 	
-	val SEGMENT_SHORTNAME_LENGTH 	= 1
 	val URI_PROTOCOL_QUALIFIER 		= "http://"
 	val PROTOCOL_SEPARATOR 			= "://"
 	val PATH_SEPARATOR 				= "/"
 
-	@Inject extension NamespaceNameFragmentProvider 
-	@Inject extension IQualifiedNameProvider
+	@Inject extension NamespaceNameFragmentProvider nameFragmentProvider
 	@Inject extension VersionQualifierExtensions versionQualifier
-	@Inject extension NamespaceQueries
 	@Inject VersionQualifierExtensions verExt
 
 	override getHostPart(Namespace ns) {
@@ -81,24 +76,15 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 	}
 	
 	override getNamespacePrefix(String qualifiedNameFragment) {
-		qualifiedNameFragment.split("\\.").map (e|e.segmentToShortName).join
+		qualifiedNameFragment.shortname
 	}
 	
 	override getNamespacePrefix(Namespace ns) {
-		if (ns.prefix != null) { 
-			ns.prefix;
-		} else {
-			val path = ns.namespacePath.map[name].join(".")
-			path.split("\\.").map (e|e.segmentToShortName).join;
-		}
+		ns.shortname
 	}
 	
 	override getNamespacePrefix(VersionedNamespace ns) {
-		if (ns.shortName != null) {
-			ns.shortName
-		} else {
-			ns.namespace.namespacePrefix;
-		}
+		nameFragmentProvider.getShortname(ns)
 	}
 	
 	override getVersionPostfix(Namespace ns) {
@@ -127,11 +113,6 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 		else
 			true
 	}
-	
-	private def segmentToShortName (String segment) {
-		segment.substring(0, SEGMENT_SHORTNAME_LENGTH)
-	}
-
 	
 	private def addTrailingSlashIfRequired(String nsURI, Namespace ns) {
 		if (!nsURI.endsWith("/") && ns.requiresTrailingSlash() )  {

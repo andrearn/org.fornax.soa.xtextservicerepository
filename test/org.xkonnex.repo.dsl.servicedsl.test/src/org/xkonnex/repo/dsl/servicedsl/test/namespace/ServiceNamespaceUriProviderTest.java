@@ -32,21 +32,21 @@ public class ServiceNamespaceUriProviderTest extends BaseServiceDslTest {
 	}
 	
 	@Test
-	public void testGetUnversionedNamespaceURI() {
+	public void testGetNamespaceURI() {
 		ServiceDslFactory f = ServiceDslFactory.eINSTANCE;
 		OrganizationNamespace orgNs = f.createOrganizationNamespace();
 		orgNs.setName("org.example");
 		DomainNamespace domNs = f.createDomainNamespace();
 		domNs.setName("customer.contract");
 		orgNs.getSubNamespaces().add(domNs);
-		String orgNsURI = provider.getUnversionedNamespaceURI(orgNs);
-		String domNsURI = provider.getUnversionedNamespaceURI(domNs);
+		String orgNsURI = provider.getNamespaceURI(orgNs);
+		String domNsURI = provider.getNamespaceURI(domNs);
 		assertEquals("http://example.org/", orgNsURI);
 		assertEquals("http://example.org/customer/contract/", domNsURI);
 		VersionedDomainNamespace verNs = new VersionedDomainNamespace();
 		verNs.setSubdomain(domNs);
 		verNs.setVersion("1");
-		assertEquals("http://example.org/customer/contract/", provider.getUnversionedNamespaceURI(verNs));
+		assertEquals("http://example.org/customer/contract/", provider.getNamespaceURI(verNs));
 	}
 	
 	@Test
@@ -68,7 +68,7 @@ public class ServiceNamespaceUriProviderTest extends BaseServiceDslTest {
 	}
 	
 	@Test
-	public void testGetUnversionedNamespaceURIWithURI() {
+	public void testGetNamespaceURIWithURI() {
 		ServiceDslFactory f = ServiceDslFactory.eINSTANCE;
 		OrganizationNamespace orgNs = f.createOrganizationNamespace();
 		orgNs.setName("org.example");
@@ -77,13 +77,13 @@ public class ServiceNamespaceUriProviderTest extends BaseServiceDslTest {
 		domNs.setUri("https://ex.com/cust/contr/");
 		orgNs.getSubNamespaces().add(domNs);
 		
-		String orgNsURI = provider.getUnversionedNamespaceURI(orgNs);
-		String domNsURI = provider.getUnversionedNamespaceURI(domNs);
+		String orgNsURI = provider.getNamespaceURI(orgNs);
+		String domNsURI = provider.getNamespaceURI(domNs);
 		assertEquals("https://ex.com/cust/contr/", domNsURI);
 		VersionedDomainNamespace verNs = new VersionedDomainNamespace();
 		verNs.setSubdomain(domNs);
 		verNs.setVersion("2");
-		assertEquals("https://ex.com/cust/contr/", provider.getUnversionedNamespaceURI(verNs));
+		assertEquals("https://ex.com/cust/contr/", provider.getNamespaceURI(verNs));
 	}
 	
 	@Test
@@ -106,16 +106,16 @@ public class ServiceNamespaceUriProviderTest extends BaseServiceDslTest {
 	}
 	
 	@Test
-	public void testGetUnversionedNamespaceNoOrg() {
+	public void testGetNamespaceNoOrg() {
 		ServiceDslFactory f = ServiceDslFactory.eINSTANCE;
 		DomainNamespace domNs = f.createDomainNamespace();
 		domNs.setName("org.example.customer.contract");
-		String domNsURI = provider.getUnversionedNamespaceURI(domNs);
+		String domNsURI = provider.getNamespaceURI(domNs);
 		assertEquals("http://example.org/customer/contract/", domNsURI);
 		VersionedDomainNamespace verNs = new VersionedDomainNamespace();
 		verNs.setSubdomain(domNs);
 		verNs.setVersion("1");
-		assertEquals("http://example.org/customer/contract/", provider.getUnversionedNamespaceURI(verNs));
+		assertEquals("http://example.org/customer/contract/", provider.getNamespaceURI(verNs));
 	}
 	
 	@Test
@@ -131,7 +131,7 @@ public class ServiceNamespaceUriProviderTest extends BaseServiceDslTest {
 		assertEquals("http://example.org/customer/contract/v2/", provider.getVersionedNamespaceURI(verNs));
 	}
 	@Test
-	public void testGetUnversionedNamespaceNestedNoOrg() {
+	public void testGetNamespaceNestedNoOrg() {
 		ServiceDslFactory f = ServiceDslFactory.eINSTANCE;
 		DomainNamespace domNs = f.createDomainNamespace();
 		domNs.setName("org.example.customer.contract");
@@ -139,12 +139,12 @@ public class ServiceNamespaceUriProviderTest extends BaseServiceDslTest {
 		internalNs.setName("internal.legacy");
 		domNs.getInteralNamespaces().add(internalNs);
 
-		String intNsURI = provider.getUnversionedNamespaceURI(internalNs);
+		String intNsURI = provider.getNamespaceURI(internalNs);
 		assertEquals("http://example.org/customer/contract/internal/legacy/", intNsURI);
 		VersionedDomainNamespace verNs = new VersionedDomainNamespace();
 		verNs.setSubdomain(internalNs);
 		verNs.setVersion("2");
-		assertEquals("http://example.org/customer/contract/internal/legacy/", provider.getUnversionedNamespaceURI(verNs));
+		assertEquals("http://example.org/customer/contract/internal/legacy/", provider.getNamespaceURI(verNs));
 	}
 	
 	@Test
@@ -232,5 +232,6 @@ public class ServiceNamespaceUriProviderTest extends BaseServiceDslTest {
 		assertEquals("customer/contract", domNsPathPart);
 		assertEquals("customer/contract/internal/legacy", intNsPathPart);
 	}
+	
 
 }

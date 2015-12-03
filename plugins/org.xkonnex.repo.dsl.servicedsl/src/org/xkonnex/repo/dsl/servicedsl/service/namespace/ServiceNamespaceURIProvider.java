@@ -13,8 +13,8 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultServiceNamespaceUriProvider.class)
 public interface ServiceNamespaceURIProvider {
 	
-	String getUnversionedNamespaceURI(Namespace orgNs);
-	String getUnversionedNamespaceURI(VersionedNamespace ns);
+	String getNamespaceURI(Namespace orgNs);
+	String getNamespaceURI(VersionedNamespace ns);
 	
 	String getVersionedNamespaceURI(Namespace ns);
 	String getVersionedNamespaceURI(VersionedNamespace ns) ;
