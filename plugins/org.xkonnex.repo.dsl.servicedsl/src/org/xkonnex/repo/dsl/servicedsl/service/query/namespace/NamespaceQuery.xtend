@@ -19,6 +19,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import java.util.List
 
 /*
  * Namespace lookup functions
@@ -81,6 +82,21 @@ class NamespaceQuery {
 	 */
 	def SubNamespace findServiceRefOwnerSubdomain (ServiceRef s) {
 		s?.getStatefulOwner()?.eContainer as SubNamespace;
+	}
+	
+	def List<SubNamespace> getSubNamespacePath (SubNamespace ns) {
+		val List<SubNamespace> nsList = newLinkedList(ns)
+		return getSubNamespacePath(nsList)
+	}
+	
+	private def List<SubNamespace> getSubNamespacePath (List<SubNamespace> domList) {
+		if (domList.head()?.eContainer instanceof SubNamespace) {
+			domList.add (0, domList.head().eContainer as SubNamespace) 
+			getSubNamespacePath (domList);
+			return domList;
+		} else { 
+			return domList.filter (typeof (SubNamespace)).toList();
+		}
 	}
 
 	

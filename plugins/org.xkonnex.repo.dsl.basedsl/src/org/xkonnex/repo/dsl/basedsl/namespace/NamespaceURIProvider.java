@@ -8,8 +8,8 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultNamespaceURIProvider.class)
 public interface NamespaceURIProvider {
 
-	String getUnversionedNamespaceURI (Namespace ns);
-	String getUnversionedNamespaceURI (String ns);
+	String getNamespaceURI (Namespace ns);
+	String getNamespaceURI (String ns);
 	
 	String getHostPart (Namespace ns);
 	String getPathPart (Namespace ns);

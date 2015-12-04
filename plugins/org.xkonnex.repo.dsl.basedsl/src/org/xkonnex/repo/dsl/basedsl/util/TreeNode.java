@@ -1,13 +1,9 @@
 package org.xkonnex.repo.dsl.basedsl.util;
 
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-
-import org.eclipse.xtext.resource.IEObjectDescription;
-import org.xkonnex.repo.dsl.basedsl.ref.DependencyDescription;
 
 public class TreeNode<T>  implements Iterable<TreeNode<T>> {
 

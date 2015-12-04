@@ -7,15 +7,15 @@ class CommonStringExtensions {
 	}
 	
 	def String stripXtextEscapes (String s) {
-		s.replaceFirst("\\^", "");
+		s.replaceFirst("\\^", "")
 	}
 	
 	def String stripTrailingSlash (String s) {
-		if (s.endsWith("/") )  {
-			s.substring (0, s.length-1) 
-		} else { 
-			s;
+		var result = s
+		while (result.endsWith("/") )  {
+			result.substring (0, result.length-1) 
 		}
+		result
 	}
 	
 	def Integer asInteger (String s) {

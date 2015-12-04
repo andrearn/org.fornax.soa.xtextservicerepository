@@ -23,14 +23,14 @@ class DefaultNamespaceURIProviderTest {
 		val ns = BaseDslFactory.eINSTANCE.createNamespace
 		ns.name = "org.example.customer.contract"
 
-		assertEquals("http://example.org/customer/contract/", nsUriProvider.getUnversionedNamespaceURI(ns))
-		assertEquals("http://example.org/customer/contract/", nsUriProvider.getUnversionedNamespaceURI("org.example.customer.contract"))
+		assertEquals("http://example.org/customer/contract/", nsUriProvider.getNamespaceURI(ns))
+		assertEquals("http://example.org/customer/contract/", nsUriProvider.getNamespaceURI("org.example.customer.contract"))
 
 		val nsWithUri = BaseDslFactory.eINSTANCE.createNamespace
 		nsWithUri.name = "org.example.customer.contract"
 		nsWithUri.uri = "http://ex.org/cust/contr/"
 
-		assertEquals("http://ex.org/cust/contr/", nsUriProvider.getUnversionedNamespaceURI(nsWithUri))
+		assertEquals("http://ex.org/cust/contr/", nsUriProvider.getNamespaceURI(nsWithUri))
 	}
 	
 	@Test

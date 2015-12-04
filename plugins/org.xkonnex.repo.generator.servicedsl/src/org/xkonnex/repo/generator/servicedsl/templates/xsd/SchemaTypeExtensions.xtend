@@ -347,7 +347,7 @@ class SchemaTypeExtensions {
 		) {
 			"tns:" +t.exception.name;
 		} else {
-			t.exception.findSubdomain().toUnversionedNamespace() + t.exception.version.toMajorVersionNumber() + ":" +t.exception.name;
+			t.exception.findSubdomain().toShortName() + t.exception.version.toMajorVersionNumber() + ":" +t.exception.name;
 		}
 	}
 	  

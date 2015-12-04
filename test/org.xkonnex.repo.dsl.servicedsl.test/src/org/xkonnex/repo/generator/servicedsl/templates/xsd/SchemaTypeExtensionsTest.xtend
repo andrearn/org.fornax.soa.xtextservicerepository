@@ -10,6 +10,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslFactory
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 
 class SchemaTypeExtensionsTest extends AbstractModelBasedServiceTests {
 		
@@ -88,6 +89,76 @@ class SchemaTypeExtensionsTest extends AbstractModelBasedServiceTests {
 		verTypeRef2.many = false
 		verTypeRef2.type = bo2		
 		assertFalse(typeExt.isMany(verTypeRef2))
+	}
+	
+	@Test
+	def void testIsOptional() {
+		val rs = readModel("model/noShortNames")
+		val typeExt = get(SchemaTypeExtensions)
+		val innerDoc = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "innerDocument"]
+		
+		val innerDocRef = typeExt.isOptionalElement(innerDoc)
+		assertTrue(innerDocRef)
+	}
+
+	//@TODO REVIEW BEHAVIOUR OF isMimeContent vs isMimeContentMultiPartAttachment
+	@Test
+	def void testIsMimeContent() {
+		val rs = readModel("model/noShortNames")
+		val typeExt = get(SchemaTypeExtensions)
+		
+		val address = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "address"]
+		val addressRef = typeExt.isMimeContent(address.type)		
+		assertFalse(addressRef)
+
+		val innerDoc = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "innerDocument"]
+		val innerDocRef = typeExt.isMimeContent(innerDoc.type)		
+		assertTrue(innerDocRef)
+		
+		val attachedDoc = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "attachedDocument"]
+		val attachedDocRef = typeExt.isMimeContent(attachedDoc.type)
+		assertTrue (attachedDocRef)
+	}
+
+	@Test
+	def void testIsMimeContentMultiPartAttachment() {
+		val rs = readModel("model/noShortNames")
+		val typeExt = get(SchemaTypeExtensions)
+		
+		val address = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "address"]
+		val addressRef = typeExt.isMimeContent(address.type)		
+		assertFalse(addressRef)
+
+		val innerDoc = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "innerDocument"]
+		val innerDocRef = typeExt.isMimeContentMultiPartAttachment(innerDoc.type)
+		assertFalse(innerDocRef)
+		
+		val attachedDoc = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "attachedDocument"]
+		val attachedDocRef = typeExt.isMimeContentMultiPartAttachment(attachedDoc.type)
+		assertTrue (attachedDocRef)
+	}
+	
+	@Test
+	def void testToExceptionNameRef() {
+		val rs = readModel("model/noShortNames")
+		val typeExt = get(SchemaTypeExtensions)
+
+		val op = rs.allContents.toIterable.filter(Operation).findFirst[name=="findByName"]
+		val exRef = typeExt.toExceptionNameRef(op.throws.get(0))
+		assertEquals("oxs1:NotFoundException", exRef)
+
+		val ns = rs.allContents.toIterable.filter(DomainNamespace).findFirst[name == "samples"]
+		val verNs = new VersionedDomainNamespace
+		verNs.namespace = ns
+		verNs.version = "1"
+		
+		val exRef2 = typeExt.toExceptionNameRef(op.throws.get(0), verNs)
+		assertEquals("oxs1:NotFoundException", exRef2)
+		verNs.version = "2"
+		
+		val exRef3 = typeExt.toExceptionNameRef(op.throws.get(0), verNs)
+		assertEquals("oxs1:NotFoundException", exRef2)
+				
 	}
 	
 	

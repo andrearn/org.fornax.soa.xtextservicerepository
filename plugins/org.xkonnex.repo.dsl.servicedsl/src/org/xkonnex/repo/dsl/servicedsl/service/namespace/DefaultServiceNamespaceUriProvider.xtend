@@ -97,6 +97,10 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 		ns.toVersionPostfix
 	}
 	
+	override getVersionPostfix(VersionedNamespace ns) {
+		ns.toVersionPostfix
+	}
+	
 	override getOrgNamespacePrefix(String qualifiedNameFragment) {
 		qualifiedNameFragment.orgNamespacePrefix
 	}
@@ -140,7 +144,7 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	
 		
 	private def dispatch String toVersionedNamespaceURI (Namespace ns) {
-		namespaceURIProvider.getUnversionedNamespaceURI(ns);
+		namespaceURIProvider.getNamespaceURI(ns);
 		ns.toVersionPostfix
 	}
 	

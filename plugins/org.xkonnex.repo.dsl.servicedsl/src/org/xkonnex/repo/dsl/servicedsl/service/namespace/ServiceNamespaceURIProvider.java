@@ -40,5 +40,6 @@ public interface ServiceNamespaceURIProvider {
 	String getVersionedNamespacePrefix(VersionedNamespace ns);
 	
 	String getVersionPostfix(Namespace ns);
+	String getVersionPostfix(VersionedNamespace ns);
 
 }

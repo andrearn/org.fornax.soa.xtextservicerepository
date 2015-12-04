@@ -3,6 +3,7 @@ package org.xkonnex.repo.dsl.basedsl.namespace
 import javax.inject.Inject
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
+import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
 
 class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 	
@@ -12,6 +13,7 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 
 	@Inject extension NamespaceNameFragmentProvider nameFragmentProvider
 	@Inject extension VersionQualifierExtensions versionQualifier
+	@Inject extension CommonStringExtensions
 	@Inject VersionQualifierExtensions verExt
 
 	override getHostPart(Namespace ns) {
@@ -46,9 +48,7 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 			while (pathPart.startsWith("/")) {
 				pathPart = pathPart.substring(1, pathPart.length)
 			}
-			while (pathPart.endsWith("/")) {
-				pathPart = pathPart.substring(0, pathPart.length - 1)
-			}
+			pathPart = pathPart.stripTrailingSlash
 			return pathPart
 		}
 		return ns.subNamespaceFragment.split("\\.").join("/")
@@ -62,7 +62,7 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 		return ns.subNamespaceFragment.split("\\.").join("/")
 	}
 
-	override getUnversionedNamespaceURI(Namespace ns) {
+	override getNamespaceURI(Namespace ns) {
 		var nsURI = ""
 		if (ns.uri != null)
 			nsURI = ns.uri
@@ -70,7 +70,7 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 			nsURI = ns.hostPart + "/" + ns.pathPart
 		nsURI.addTrailingSlashIfRequired(ns)
 	}
-	override getUnversionedNamespaceURI(String ns) {
+	override getNamespaceURI(String ns) {
 		var nsURI = ns.hostPart + "/" + ns.pathPart
 		nsURI.addTrailingSlashIfRequired(ns)
 	}

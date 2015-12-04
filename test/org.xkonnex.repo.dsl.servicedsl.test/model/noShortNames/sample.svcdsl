@@ -13,6 +13,7 @@ org-namespace org.xkonnex {
 			}
 			city : string
 			zipcode : string
+			optional state : string
 		}
 		
 		businessObject StreetAddress extends AbstractAddress majorVersion 1 {
@@ -48,6 +49,8 @@ org-namespace org.xkonnex {
 			}
 			address : AbstractAddress majorVersion 1
 			other : Other majorVersion 1
+			optional innerDocument : base64Binary content-type "application/octet-stream"
+			optional attachedDocument : attachment content-type "application/octet-stream" 
 		}
 		
 		businessObject Person {
@@ -72,9 +75,30 @@ org-namespace org.xkonnex {
 				service-category Entity
 				statefulness stateful
 			}
-			sync findByName (firstName : string, lastName : string) returns persons : Person [] majorVersion 1 {
+			sync findByName (firstName : string, lastName : string) 
+			returns persons : Person [] majorVersion 1 
+			throws NotFoundException majorVersion 1 {
 				
 			}
+		}
+		
+		public service PersonManagerBAS {
+			metadata {
+				version 1.0
+				lifecycle-state productive
+				service-category Activity
+				statefulness stateful
+			}
+			sync createPerson (person : Person majorVersion 1) {
+				
+			}
+		}
+		
+		exception NotFoundException {
+			metadata {
+				version 1.0
+			}
+			reason : string
 		}
 	}
 }

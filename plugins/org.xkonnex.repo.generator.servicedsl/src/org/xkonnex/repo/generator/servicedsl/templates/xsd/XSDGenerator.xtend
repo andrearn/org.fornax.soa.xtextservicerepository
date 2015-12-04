@@ -33,6 +33,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResolver
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
 
 /**
  * Templates for XSD generation
@@ -45,6 +46,7 @@ class XSDGenerator {
 	@Inject extension CommonTemplateExtensions
 	@Inject extension CommonStringExtensions
 	@Inject extension SchemaNamespaceExtensions schemaNsExt
+	@Inject extension ServiceNamespaceURIProvider
 	@Inject extension SchemaTypeExtensions
 	@Inject extension NamespaceSplitter
 	@Inject extension NamespaceImportQueries
@@ -78,11 +80,11 @@ class XSDGenerator {
 		applying splitting by major version of owned VersionedTypes and Exceptions in the 
 		given minimal LifecycleState.
 	*/
-	def dispatch toXSD (SubNamespace ns, String minState, org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile profile, String registryBaseUrl) {
+	def dispatch void toXSD (SubNamespace ns, String minState, org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile profile, String registryBaseUrl) {
 		ns.toXSD (lifecycleQueries.stateByName (minState, ns.eResource), profile, registryBaseUrl);
 	}
 	
-	def dispatch toXSD (SubNamespace ns, String minState, Profile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+	def dispatch void toXSD (SubNamespace ns, String minState, Profile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		ns.toXSD (lifecycleQueries.stateByName (minState, ns.eResource), profile, registryBaseUrl, noDeps, includeSubNamespaces);
 	}
 	
@@ -92,7 +94,7 @@ class XSDGenerator {
 		applying splitting by major version of owned VersionedTypes and Exceptions in the 
 		given minimal LifecycleState.
 	*/
-	def dispatch toXSD (SubNamespace ns, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl) {
+	def dispatch void toXSD (SubNamespace ns, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl) {
 		val profile = ns.getApplicableProfile(enforcedProfile)
 		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
 		for (nsVer : nsVersions) {
@@ -108,7 +110,7 @@ class XSDGenerator {
 	/*
 	 * TODO: review for use as noDependencies flag is being injected already
 	 */
-	def dispatch toXSD (SubNamespace ns, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+	def dispatch void toXSD (SubNamespace ns, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val profile = ns.getApplicableProfile(enforcedProfile)
 		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
 		for (nsVer : nsVersions) {
@@ -121,7 +123,7 @@ class XSDGenerator {
 		}
 	}
 
-	def dispatch toXSD (VersionedDomainNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
+	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		ns.toXSDVersion (minState, profile, registryBaseUrl);
 		ns.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
 				.filter(e| !(e.subdomain == ns.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(ns.version)))
@@ -221,7 +223,7 @@ class XSDGenerator {
 			*/»
 				elementFormDefault="qualified"
 				attributeFormDefault="unqualified"
-				targetNamespace="«schemaNsExt.toNamespace(vns)»"
+				targetNamespace="«vns.versionedNamespaceURI»"
 				>
 				«imports.map (e|e.toImportDeclaration (registryBaseUrl)).join» 	
 				«IF (vns.subdomain instanceof SubNamespace)»
@@ -241,12 +243,12 @@ class XSDGenerator {
 	
 	
 	def toNamespaceDeclaration (VersionedDomainNamespace vns) '''
-		xmlns:«vns.toPrefix() + versionQualifier.toMajorVersionNumber(vns.version)»="«schemaNsExt.toNamespace(vns)»"
+		xmlns:«vns.versionedNamespacePrefix»="«schemaNsExt.toNamespace(vns)»"
 	'''
 	
 	def toImportDeclaration (VersionedDomainNamespace vns, String registryBaseUrl) '''
 		<xsd:import schemaLocation="«vns.toSchemaAssetUrl (registryBaseUrl)».xsd"
-			namespace="«schemaNsExt.toNamespace(vns)»"></xsd:import>
+			namespace="«vns.versionedNamespaceURI»"></xsd:import>
 	'''
 	
 	/**

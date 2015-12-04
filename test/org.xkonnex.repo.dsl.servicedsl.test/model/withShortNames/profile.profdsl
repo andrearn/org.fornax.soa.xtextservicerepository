@@ -6,6 +6,9 @@ datatype boolean
 datatype date
 datatype datetime
 datatype string
+datatype attachment
+datatype binary
+datatype base64Binary
 
 default soa-profile test {
 	scope "JUnit tests"
