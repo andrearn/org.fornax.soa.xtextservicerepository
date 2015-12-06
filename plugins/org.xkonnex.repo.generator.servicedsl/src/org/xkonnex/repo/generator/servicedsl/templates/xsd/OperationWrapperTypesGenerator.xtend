@@ -25,7 +25,8 @@ import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplat
 import java.util.Set
 import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
 import org.xkonnex.repo.generator.servicedsl.templates.CommonTemplateExtensions
-
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
+import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceURIProvider
 
 /**
  * Create XSDs defining wrapper types for service operations
@@ -36,6 +37,7 @@ class OperationWrapperTypesGenerator {
 
 	@Inject extension CommonTemplateExtensions
 	@Inject extension SchemaNamespaceExtensions schemaNamespaceExt
+	@Inject extension ServiceNamespaceURIProvider
 	@Inject extension SchemaTemplateExtensions
 	@Inject extension SchemaTypeExtensions schemaTypeExt
 	@Inject extension ServiceTemplateExtensions
@@ -44,6 +46,7 @@ class OperationWrapperTypesGenerator {
 	@Inject extension NamespaceImportQueries
 	
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
+	@Inject ProfileNamespaceURIProvider profileNamespaceURIProvider
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
@@ -76,11 +79,11 @@ class OperationWrapperTypesGenerator {
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 			«FOR imp : service.allImportedVersionedNS (service.version.toMajorVersionNumber(), minState)»
-				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(imp)»"
+				xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
-					xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp) + headerImp.version.toMajorVersionNumber()»="«profileSchemaNamespaceExt.toNamespace (headerImp)»"
+					xmlns:«profileNamespaceURIProvider.getVersionedNamespacePrefix(headerImp)»="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"
 				«ENDFOR»
 			«ENDIF»
 			elementFormDefault="qualified"
@@ -94,7 +97,7 @@ class OperationWrapperTypesGenerator {
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
 					<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
-						namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
+						namespace="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"/>
 				«ENDFOR»
 			«ENDIF»
 			
@@ -121,11 +124,11 @@ class OperationWrapperTypesGenerator {
 		<xsd:schema targetNamespace="«service.toWrapperTargetNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
-				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(imp)»"
+				xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
-					xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp) + headerImp.version.toMajorVersionNumber()»="«profileSchemaNamespaceExt.toNamespace (headerImp)»"
+					xmlns:«profileNamespaceURIProvider.getVersionedNamespacePrefix(headerImp)»="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"
 				«ENDFOR»
 			«ENDIF»
 			elementFormDefault="qualified"
@@ -134,12 +137,12 @@ class OperationWrapperTypesGenerator {
 			
 			«FOR imp : service.allImportedVersionedNS(service.version.toMajorVersionNumber(), minState)»
 			<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-				namespace="«schemaNamespaceExt.toNamespace(imp)»"/>
+				namespace="«imp.versionedNamespaceURI»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
 					<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
-						namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
+						namespace="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"/>
 				«ENDFOR»
 			«ENDIF»
 			

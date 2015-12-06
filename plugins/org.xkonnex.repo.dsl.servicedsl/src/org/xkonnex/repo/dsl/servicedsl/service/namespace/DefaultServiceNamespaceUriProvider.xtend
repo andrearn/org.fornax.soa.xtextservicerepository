@@ -11,12 +11,15 @@ import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.basedsl.namespace.VersionedNamespace
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 
 class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider {
 	
 	@Inject extension CommonStringExtensions
 	@Inject extension NamespaceQuery
 	@Inject extension ServiceNamespaceNameFragmentProvider
+	@Inject extension IEObjectLookup
 	@Inject VersionQualifierExtensions versionQualifier	
 	@Inject NamespaceURIProvider namespaceURIProvider
 
@@ -29,11 +32,29 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 		nsURI.addTrailingSlashIfReqired(ns)
 	}
 	
+	override getServiceNamespaceURI(Service service) {
+		val ns = service.getOwnerByType(SubNamespace)
+		var tns = ns.namespaceURI 
+		if (!tns.endsWith("/")) 
+			tns = tns + "/" 
+		tns = tns + service.name
+		tns.addTrailingSlashIfReqired(ns)
+	}
+	
 	override getVersionedNamespaceURI(Namespace ns) {
 		ns.toVersionedNamespaceURI
 	}
 	override getVersionedNamespaceURI(VersionedNamespace ns) {
 		ns.toVersionedNamespaceURI
+	}
+	
+	override getVersionedServiceNamespaceURI(Service service) {
+		val ns = service.getOwnerByType(SubNamespace)
+		var tns = ns.namespaceURI 
+		if (!tns.endsWith("/")) 
+			tns = tns + "/" 
+		tns = tns + service.name + "/" + service.version.toVersionPostfix()
+		tns.addTrailingSlashIfReqired(ns)
 	}
 
 	override String getHostPart (SubNamespace ns) {

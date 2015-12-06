@@ -25,6 +25,8 @@ import java.util.Set
 import org.xkonnex.repo.generator.servicedsl.templates.CommonTemplateExtensions
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
+import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceURIProvider
 
 class EventXSDGenerator {
 	
@@ -34,6 +36,7 @@ class EventXSDGenerator {
 	@Inject extension CommonTemplateExtensions
 	@Inject extension SchemaNamespaceExtensions schemaNamespaceExt
 	@Inject extension SchemaTypeExtensions schemaTypeExt
+	@Inject extension ServiceNamespaceURIProvider
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension VersionQualifierExtensions versionQualifier
 	@Inject extension HeaderFinder
@@ -42,6 +45,7 @@ class EventXSDGenerator {
 	@Inject extension ILifecycleStateResolver
 	
 	@Inject IEObjectDocumentationProvider docProvider
+	@Inject ProfileNamespaceURIProvider profileNamespaceURIProvider
 
 	@Inject 
 	private Logger log
@@ -69,11 +73,11 @@ class EventXSDGenerator {
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(imp)»"
+				xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
-					xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(headerImp)»"
+					xmlns:«profileNamespaceURIProvider.getVersionedNamespacePrefix(headerImp)»="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"
 				«ENDFOR»
 			«ENDIF»
 			elementFormDefault="qualified"
@@ -82,12 +86,12 @@ class EventXSDGenerator {
 			
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
 				<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-					namespace="«schemaNamespaceExt.toNamespace(imp)»"/>
+					namespace="«imp.versionedNamespaceURI»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
 					<xsd:import schemaLocation="«headerImp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-						namespace="«schemaNamespaceExt.toNamespace(headerImp)»"/>
+						namespace="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"/>
 				«ENDFOR»
 			«ENDIF»
 			
@@ -115,11 +119,11 @@ class EventXSDGenerator {
 		<xsd:schema targetNamespace="«svc.toTargetNamespace()»"
 			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-				xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(imp)»"
+				xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
-					xmlns:«headerImp.toPrefix()+headerImp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(headerImp)»"
+					xmlns:«profileNamespaceURIProvider.getVersionedNamespacePrefix(headerImp)»="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"
 				«ENDFOR»
 			«ENDIF»
 			elementFormDefault="qualified"
@@ -128,12 +132,12 @@ class EventXSDGenerator {
 			
 			«FOR imp : svc.allImportedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
 				<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-					namespace="«schemaNamespaceExt.toNamespace(imp)»"/>
+					namespace="«imp.versionedNamespaceURI»"/>
 			«ENDFOR»
 			«IF !headerImports.empty»
 				«FOR headerImp : headerImports»
 					<xsd:import schemaLocation="«headerImp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-						namespace="«schemaNamespaceExt.toNamespace(headerImp)»"/>
+						namespace="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"/>
 				«ENDFOR»
 			«ENDIF»
 			

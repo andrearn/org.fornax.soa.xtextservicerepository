@@ -20,6 +20,10 @@ class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNam
 	@Inject extension NamespaceNameTransformer
 	
 	@Inject NamespaceNameFragmentProvider baseDslNsNameFragmentProvider
+
+	override getNamespaceFQN (Namespace ns) {
+		baseDslNsNameFragmentProvider.getNamespaceFQN(ns)
+	}
 	
 	override getOrganizationNameFragment(Namespace ns) {
 		ns.toOrgNameFragment

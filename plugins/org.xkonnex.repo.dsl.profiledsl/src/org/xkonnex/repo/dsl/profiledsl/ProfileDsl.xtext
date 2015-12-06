@@ -44,7 +44,7 @@ Profile:
 		 * if not stated otherwise in the service definition
 		 */
 		(messaging=Messaging)?
-		(orgNamespaces += OrganizationNamespace)*
+		(namespaces += ProfileNamespace)*
 		(namespaceRules = NamespaceRules)?
 		(scopedBasicTypes+=BasicTypes)*
 		(governanceDecisions+=GovernanceDecision)*
@@ -201,7 +201,7 @@ OrganizationNamespace:
 		(subNamespaces+=TechnicalNamespace)*
 	'}' ;
 
-ProfileNameSpace returns basedsl::Namespace: TechnicalNamespace | OrganizationNamespace;
+ProfileNamespace returns basedsl::Namespace: TechnicalNamespace | OrganizationNamespace;
 
 /*
  * A technical namespace, e.g. used to declare message object types

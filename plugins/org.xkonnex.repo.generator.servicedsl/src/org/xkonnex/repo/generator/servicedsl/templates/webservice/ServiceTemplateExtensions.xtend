@@ -1,49 +1,62 @@
 package org.xkonnex.repo.generator.servicedsl.templates.webservice
 
 import com.google.inject.Inject
+import java.util.Set
+import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceImportQueries
+import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
+import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTemplateExtensions
-import java.util.Set
-import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
-import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceImportQueries
-import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 
 class ServiceTemplateExtensions {
 
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject TechnicalNamespaceImportQueries techNsImportQueries
-	@Inject extension org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
+	@Inject extension SchemaNamespaceExtensions
 	@Inject extension SchemaTemplateExtensions
 	@Inject extension HeaderFinder
+	@Inject extension ServiceNamespaceURIProvider
+	@Inject extension IEObjectLookup
 	
 	def dispatch String toTargetNamespace (Object svc) {
 		"";
 	}
 	def dispatch String toTargetNamespace (Service svc) { 
-		var tns = svc.eContainer.toUnversionedNamespace() + "/" + svc.name + "/" + svc.toVersionPostfix() + "/";
-		tns;
+		svc.versionedServiceNamespaceURI
 	}
 	
-	def dispatch String toWrapperTargetNamespace (Object svc) {"";}
+	def dispatch String toWrapperTargetNamespace (Object svc) {""}
+	
 	def dispatch String toWrapperTargetNamespace (Service svc) {
-		svc.eContainer.toUnversionedNamespace() + 
-		"/" + svc.name + "Wrapped/" + svc.toVersionPostfix() + "/wrapper/";
+		val ns = svc.getOwnerByType(SubNamespace)
+		var tns = ns.namespaceURI 
+		if (!tns.endsWith("/")) 
+			tns = tns + "/" 
+		tns = tns + svc.name + "Wrapped/" + svc.version.toVersionPostfix() + "/wrapper/"
+		tns
 	}
 	
 	def String toWrapperServiceTargetNamespace (Service svc) {
-		svc.eContainer.toUnversionedNamespace() + 
-		"/" + svc.name + "Wrapped/" + svc.toVersionPostfix() + "/";
+		val ns = svc.getOwnerByType(SubNamespace)
+		var tns = ns.namespaceURI 
+		if (!tns.endsWith("/")) 
+			tns = tns + "/" 
+		tns = tns + svc.name + "Wrapped/" + svc.version.toVersionPostfix() + "/"
+		tns
 	}
 		
 	def String toVersionPostfix (Service svc) {
 		if (svc.version != null) {
-			versionQualifier.toVersionPostfix(svc.version);
+			versionQualifier.toVersionPostfix(svc.version)
 		} else {
-			versionQualifier.toDefaultVersionPostfix();
+			versionQualifier.toDefaultVersionPostfix()
 		}
 	}
 	
@@ -59,7 +72,7 @@ class ServiceTemplateExtensions {
 	}
 	
 	
-	def boolean operationsUseExtendableParameters (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
+	def boolean operationsUseExtendableParameters (Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.serviceDefPolicy != null 
 			&& p.designRules.serviceDefPolicy.operationRules != null
@@ -70,7 +83,7 @@ class ServiceTemplateExtensions {
 		}
 		
 	}
-	def boolean operationsUseExtendableXMLAttributes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
+	def boolean operationsUseExtendableXMLAttributes (Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.serviceDefPolicy != null 
 			&& p.designRules.serviceDefPolicy.operationRules != null
@@ -80,7 +93,7 @@ class ServiceTemplateExtensions {
 			return false
 		}
 	}		
-	def String getOperationsExtendibleParametersClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
+	def String getOperationsExtendibleParametersClause (Profile p) {
 		if (p.operationsUseExtendableParameters) {
 			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause != null) {
 				return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLClause;
@@ -96,7 +109,7 @@ class ServiceTemplateExtensions {
 		}
 		
 	}
-	def String getOperationsExtendibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
+	def String getOperationsExtendibleXMLAttributesClause (Profile p) {
 		if (p.operationsUseExtendableXMLAttributes) {
 			if (p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLAttributeClause != null) {
 				return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLAttributeClause;

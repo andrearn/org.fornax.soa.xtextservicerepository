@@ -1,5 +1,8 @@
 package org.xkonnex.repo.dsl.basedsl
 
+import java.util.Collections
+import java.util.List
+
 class CommonStringExtensions {
 	
 	def String stripCommentBraces (String s) {
@@ -24,6 +27,10 @@ class CommonStringExtensions {
 		} catch (Exception ex) {
 			
 		}
+	}
+	
+	def List<String> segments (String fqn) {
+		Collections.unmodifiableList(fqn.stripXtextEscapes.split("\\."))
 	}
 	
 }

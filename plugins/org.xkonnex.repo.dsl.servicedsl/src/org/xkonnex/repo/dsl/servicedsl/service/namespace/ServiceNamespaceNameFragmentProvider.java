@@ -8,6 +8,13 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultServiceNamespaceNameFragmentProvider.class)
 public interface ServiceNamespaceNameFragmentProvider {
 	
+	/**
+	 * Calculates the logical fully qualified name of the namespace
+	 * @param ns The namespace
+	 * @return The namspace's logical FQN
+	 */
+	String getNamespaceFQN (Namespace ns);
+	
 	String getOrganizationNameFragment(Namespace ns);
 	String getOrganizationNameFragment(VersionedNamespace ns);
 	

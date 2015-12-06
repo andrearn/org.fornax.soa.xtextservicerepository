@@ -35,11 +35,8 @@ class ProfileSchemaTypeExtensionsTest extends AbstractModelBasedProfileTests {
 		val rs = readModel("model/noShortNames")
 		val header = rs.allContents.toIterable.filter(MessageHeader).get(0)
 		val typeExt = get(ProfileSchemaTypeExtensions)
-		val ns = rs.allContents.toIterable.filter(TechnicalNamespace).get(0)
-		val vns = new VersionedTechnicalNamespace
-		vns.namespace = ns
-		vns.version = "1"
-		val ref = typeExt.toFullTypeNameRef(header.parameters.findFirst[name=="msgCtx"].type, vns)
+		val typeRef = header.parameters.findFirst[name=="msgCtx"].type
+		val ref = typeExt.toFullTypeNameRef(typeRef)
 		assertEquals("http://example.org/soa/v1/ServiceMessageContext", ref)
 	}
 	
@@ -54,6 +51,7 @@ class ProfileSchemaTypeExtensionsTest extends AbstractModelBasedProfileTests {
 		verTypeRef.many = true
 		verTypeRef.type = class		
 		assertTrue(typeExt.isMany(verTypeRef))
+		
 		val verTypeRef2 = ProfileDslFactory.eINSTANCE.createVersionedTypeRef
 		val class2 = ProfileDslFactory.eINSTANCE.createClass
 		class2.name = "TestClass"
@@ -63,5 +61,5 @@ class ProfileSchemaTypeExtensionsTest extends AbstractModelBasedProfileTests {
 		verTypeRef2.type = class2		
 		assertFalse(typeExt.isMany(verTypeRef2))
 	}
-	
+		
 }

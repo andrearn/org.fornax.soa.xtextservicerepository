@@ -11,9 +11,9 @@ import com.google.inject.ImplementedBy;
 @ImplementedBy(DefaultProfileNamespaceURIProvider.class)
 public interface ProfileNamespaceURIProvider {
 	
-	String getUnversionedNamespaceURI(OrganizationNamespace orgNs);
-	String getUnversionedNamespaceURI(TechnicalNamespace ns);
-	String getUnversionedNamespaceURI(VersionedTechnicalNamespace ns);
+	String getNamespaceURI(OrganizationNamespace orgNs);
+	String getNamespaceURI(TechnicalNamespace ns);
+	String getNamespaceURI(VersionedTechnicalNamespace ns);
 	
 	String getVersionedNamespaceURI(OrganizationNamespace orgNs);
 	String getVersionedNamespaceURI(TechnicalNamespace ns);

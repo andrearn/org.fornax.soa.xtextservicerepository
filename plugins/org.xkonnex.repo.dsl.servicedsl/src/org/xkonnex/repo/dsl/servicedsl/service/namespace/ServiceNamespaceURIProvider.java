@@ -6,6 +6,7 @@ import org.xkonnex.repo.dsl.basedsl.namespace.NamespaceURIProvider;
 import org.xkonnex.repo.dsl.basedsl.namespace.VersionedNamespace;
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace;
 
 import com.google.inject.ImplementedBy;
@@ -15,9 +16,11 @@ public interface ServiceNamespaceURIProvider {
 	
 	String getNamespaceURI(Namespace orgNs);
 	String getNamespaceURI(VersionedNamespace ns);
+	String getServiceNamespaceURI(Service service);
 	
 	String getVersionedNamespaceURI(Namespace ns);
 	String getVersionedNamespaceURI(VersionedNamespace ns) ;
+	String getVersionedServiceNamespaceURI(Service service) ;
 
 	String getHostPart (SubNamespace d);
 	String getHostPart (OrganizationNamespace d);

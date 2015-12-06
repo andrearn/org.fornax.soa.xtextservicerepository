@@ -25,8 +25,7 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 ServiceModel:
 	(imports+=Import)*
-	(orgNamespaces+=OrganizationNamespace)*
-	(namespaces+=SubNamespace)*
+	(namespaces+=ServiceNamespace)*
 	(types+=Type)*;
 
 ServiceNamespace returns basedsl::Namespace: OrganizationNamespace | SubNamespace;	

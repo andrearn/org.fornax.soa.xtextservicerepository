@@ -161,5 +161,29 @@ class SchemaTypeExtensionsTest extends AbstractModelBasedServiceTests {
 				
 	}
 	
+	@Test
+	def void testToNamespace() {
+		val rs = readModel("model/noShortNames");
+		val typeExt = get(SchemaTypeExtensions)
+		val msgCtxParam = rs.allContents.toIterable.filter(typeof(MessageHeader)).map[parameters].flatten.findFirst[name == "msgCtx"]
+		val ref = typeExt.toTypeNameRef(msgCtxParam.type)
+		assertEquals("oes1:ServiceMessageContext", ref)
+
+		val ns = rs.allContents.toIterable.filter(DomainNamespace).findFirst[name == "samples"]
+		val person = rs.allContents.toIterable.filter(BusinessObject).findFirst[name == "Person" && version.version == "1.0"]
+		val personV2 = rs.allContents.toIterable.filter(BusinessObject).findFirst[name == "Person" && version.version == "2.0"]
+		val addressProp = person.properties.findFirst[name == "address"]
+		val otherProp = person.properties.findFirst[name == "other"]
+		val vns = new VersionedDomainNamespace
+		vns.namespace = ns
+		vns.version = "1"
+		
+		val addrNs = typeExt.toNamespace(addressProp.type)
+		val otherNs = typeExt.toNamespace(otherProp.type)
+		
+		assertEquals("http://xkonnex.org/samples/v1/", addrNs)
+		assertEquals("http://xkonnex.org/other/v1/", otherNs)
+	}
+	
 	
 }

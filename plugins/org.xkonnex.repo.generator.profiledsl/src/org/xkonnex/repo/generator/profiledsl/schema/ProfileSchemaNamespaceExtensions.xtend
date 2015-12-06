@@ -11,12 +11,17 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
 import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceURIProvider
+import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceQueries
+import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceNameFragmentProvider
+import org.xkonnex.repo.dsl.basedsl.namespace.NamespaceNameFragmentProvider
 
 class ProfileSchemaNamespaceExtensions {
 	
-	@Inject extension CommonStringExtensions
-	@Inject extension ProfileNamespaceURIProvider
+	@Inject extension ProfileNamespaceURIProvider nsURIProvider
+	@Inject extension ProfileNamespaceNameFragmentProvider
+	@Inject TechnicalNamespaceQueries nsQueries
 	@Inject VersionQualifierExtensions versionQualifier
+	@Inject NamespaceNameFragmentProvider baseDslNameFregmentProvider
 	
 	@Inject @Named ("useRegistryBasedFilePaths") 
 	Boolean useRegistryBasedFilePaths
@@ -25,7 +30,7 @@ class ProfileSchemaNamespaceExtensions {
 	Boolean useNestedPaths
 		
 	def dispatch String fqn (org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace s) {
-		s.name.stripXtextEscapes();
+		baseDslNameFregmentProvider.getNamespaceFQN(s)
 	}
 
 	def dispatch List<TechnicalNamespace> toNamespacePath (Object o) {
@@ -33,26 +38,16 @@ class ProfileSchemaNamespaceExtensions {
 	}
 
 	def dispatch List<TechnicalNamespace> toNamespacePath (List<TechnicalNamespace> nsList) { 
-		if (nsList.last().eContainer instanceof TechnicalNamespace) {
-			nsList.add ((nsList.toList().last().eContainer  as TechnicalNamespace));
-			toNamespacePath (nsList);
-		} else {
-			nsList.filter (typeof (TechnicalNamespace)).toList.reverse();
-		}
-			
+		nsQueries.getSubNamespacePath(nsList.last)
 	}
 	
 	
 	def dispatch String fqn (TechnicalNamespace s) {
-		(s.findOrgNamespace() as OrganizationNamespace).name.stripXtextEscapes() + "." + toNamespacePath (newArrayList(s)).map(n|n.name.stripXtextEscapes()).join(".");
+		baseDslNameFregmentProvider.getNamespaceFQN(s)
 	}
 
 	def dispatch String toPrefix(OrganizationNamespace o) {
-		if (o.prefix != null) {
-			o.prefix;
-		} else { 
-			o.name.split("\\.").map (e|e.substring(0, 1)).join;
-		}
+		o.namespacePrefix
 	}
 	
 	def dispatch String toPrefix (TechnicalNamespace s) {
@@ -64,29 +59,15 @@ class ProfileSchemaNamespaceExtensions {
 	}
 	
 	def dispatch String toPrefix (VersionedTechnicalNamespace s) {
-		if (s.shortName != null) {
-			s.shortName
-		} else {
-			s.namespace.toPrefix
-		}
+		s.namespacePrefix
 	}
 		
-	def dispatch String toNamespace (OrganizationNamespace org) { 
-		var ns = org.toUnversionedNamespace() + "/" + org.toVersionPostfix();
-		if (org.hasTrailingSlash() ){
-			return ns + ("/"); 
-		} else {
-			return ns + "";
-		}
+	def dispatch String toNamespace (OrganizationNamespace org) {
+		org.namespaceURI
 	}
 
 	def dispatch String toNamespace (org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace leafNamespace) {
-		var ns = leafNamespace.toUnversionedNamespace() +  "/" + leafNamespace.toVersionPostfix(); 
-		if (leafNamespace.hasTrailingSlash() ) {
-			return ns + ("/"); 
-		} else {
-			return ns + "";
-		}
+		leafNamespace.namespaceURI
 	}
 
 	def dispatch boolean hasTrailingSlash (OrganizationNamespace ns) {
@@ -118,9 +99,7 @@ class ProfileSchemaNamespaceExtensions {
 	}
 	
 	def dispatch String toUnversionedNamespace (TechnicalNamespace leafDomainNamespace) { 
-		"http://" + 
-		leafDomainNamespace.findOrgNamespace().toHostPart() + "/" + 
-		(newArrayList (leafDomainNamespace).toNamespacePath().map (n|n.name.stripXtextEscapes().replaceAll("\\.","/")).join("/"));
+		leafDomainNamespace.namespaceURI
 	}
 	
 	def String toHostPart (org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace d) {
@@ -129,32 +108,26 @@ class ProfileSchemaNamespaceExtensions {
 
 		
 	def org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace findOrgNamespace (TechnicalNamespace o) { 
-		if (o.eContainer instanceof OrganizationNamespace) {
-			o.eContainer as OrganizationNamespace;
-		} else {
-			this?.findOrgNamespace (o.eContainer as TechnicalNamespace) as OrganizationNamespace;
-		}
+		nsQueries.findOrgNamespace(o)
 	}
 	
 	def String toShortName (TechnicalNamespace s) {
-		if (s.prefix == null ) {
-			s.toPrefix()
-		} else {
-			s.prefix;
-		}
+		s.namespacePrefix
 	}
 
-	
+	@Deprecated
 	def String shorten (OrganizationNamespace d, Profile p) {
-		if (!p.namespaceRules.aliases.filter (e|e.baseNamespaceFragment == d.name).isEmpty) {
-			p.namespaceRules.aliases.filter (e|e.baseNamespaceFragment == d.name).map (n|n.shortenedBaseNamespaceFragment).join();
-		} else {
-			d.name;
-		}
+		d.organizationShortnameFragment
 	}
 	
-	def String shorten (org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace d) {
-		d.prefix;
+	@Deprecated
+	def dispatch String shorten (org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace d) {
+		d.organizationShortnameFragment
+	}
+	
+	@Deprecated
+	def dispatch String shorten (TechnicalNamespace d) {
+		d.organizationShortnameFragment
 	}
 
 	 
@@ -172,7 +145,7 @@ class ProfileSchemaNamespaceExtensions {
 	}
 	
 	def dispatch String toFileNameFragment (org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace s) {
-		s.findOrgNamespace().shorten().replaceAll("\\." , "-") + "-" + newArrayList(s).toNamespacePath().map(n|n.name.stripXtextEscapes().replaceAll("\\." , "-")).join("-");
+		s.organizationShortnameFragment.replaceAll("\\." , "-") + "-" + s.subNamespaceFragment.replaceAll("\\." , "-");
 	}
 	
 	def dispatch String toFileNameFragment (VersionedTechnicalNamespace s) {
@@ -180,12 +153,7 @@ class ProfileSchemaNamespaceExtensions {
 	}
 	
 	def dispatch String toNamespace (VersionedTechnicalNamespace s) { 
-		var ns = s.namespace.toUnversionedNamespace().stripXtextEscapes() + "/" + versionQualifier.toVersionPostfix(s.version); 
-		if (s.namespace.hasTrailingSlash() )  {
-			return ns + ("/"); 
-		} else {
-			return ns + "";
-		}
+		s.versionedNamespaceURI
 	}
 	
 }

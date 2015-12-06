@@ -1,12 +1,13 @@
 package org.xkonnex.repo.generator.bindingdsl.templates.soap
 
 import com.google.inject.Inject
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
+import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.bindingdsl.binding.IContextRootProvider
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
-import org.xkonnex.repo.generator.bindingdsl.templates.naming.IEndpointQualifierNameProvider
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.AppServer
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Broker
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Database
@@ -17,56 +18,56 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SAP
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.WebServer
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceNameFragmentProvider
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.xkonnex.repo.generator.bindingdsl.templates.naming.IEndpointQualifierNameProvider
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 
 class SoapVendorEndpointAddressResolver {
 	
+	@Inject extension IEObjectLookup
 	@Inject extension IEndpointQualifierNameProvider
-	@Inject extension org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
+	@Inject extension SchemaNamespaceExtensions
+	@Inject extension ServiceNamespaceNameFragmentProvider
 	@Inject IContextRootProvider ctxRootProvider
 	@Inject SoapBindingResolver soapBindRes
 	
 	
-	def dispatch String toEndpointAddressPath (Module mod, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
+	def dispatch String toEndpointAddressPath (Module mod, Service s, Server server, Binding bind, BindingProtocol prot) {
 		val serverType = server.toServerTypeName ();
 		val serverVersion = server.toServerTypeVersion ();
 		val ctxRoot = ctxRootProvider.getContextRoot(mod, serverType, serverVersion, prot);
-		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+		toEndpointAddressPath (ctxRoot, s, server, bind, prot)
 	}
 	
-	def dispatch String toEndpointAddressPath (ServiceBinding bind, BindingProtocol prot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server) {
-		val serverType = server.toServerTypeName ();
-		val serverVersion = server.toServerTypeVersion ();
+	def dispatch String toEndpointAddressPath (ServiceBinding bind, BindingProtocol prot, Service s, Server server) {
 		val ctxRoot = ctxRootProvider.getContextRoot(bind);
-		toEndpointAddressPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+		toEndpointAddressPath (ctxRoot, s, server, bind, prot)
 	}
 	
 	
-	def dispatch String toEndpointAddressPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
+	def dispatch String toEndpointAddressPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
 		val serverType = server.toServerTypeName ();
-		val serverVersion = server.toServerTypeVersion ();
 		if (serverType != null) {
 			switch (serverType.toLowerCase()) {
-			case "tomcat": 			tomcatEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "websphere":		websphereSCAEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "webmethods":		webmethodsEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "oraclesb":		oraclesbEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "weblogic":		weblogicEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "aqualogic":		aqualogicEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "sappi":			sappiEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "sapce":			sapceEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "sapnetweaver":	sapNetweaverEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "jboss":			jbossEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "jbossesb":		jbossesbEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "mule":			muleEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			case "fuseesb":			fuseesbEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
-			default: 				defaultPatternEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot)
+			case "tomcat": 			tomcatEndpointPath (ctxRoot, s, server, bind, prot)
+			case "websphere":		websphereSCAEndpointPath (ctxRoot, s, server, bind, prot)
+			case "webmethods":		webmethodsEndpointPath (ctxRoot, s, server, bind, prot)
+			case "oraclesb":		oraclesbEndpointPath (ctxRoot, s, server, bind, prot)
+			case "weblogic":		weblogicEndpointPath (ctxRoot, s, server, bind, prot)
+			case "aqualogic":		aqualogicEndpointPath (ctxRoot, s, server, bind, prot)
+			case "sappi":			sappiEndpointPath (ctxRoot, s, server, bind, prot)
+			case "sapce":			sapceEndpointPath (ctxRoot, s, server, bind, prot)
+			case "sapnetweaver":	sapNetweaverEndpointPath (ctxRoot, s, server, bind, prot)
+			case "jboss":			jbossEndpointPath (ctxRoot, s, server, bind, prot)
+			case "jbossesb":		jbossesbEndpointPath (ctxRoot, s, server, bind, prot)
+			case "mule":			muleEndpointPath (ctxRoot, s, server, bind, prot)
+			case "fuseesb":			fuseesbEndpointPath (ctxRoot, s, server, bind, prot)
+			default: 				defaultPatternEndpointPath (ctxRoot, s, server, bind, prot)
 			}
 		} else {
-			defaultPatternEndpointPath (ctxRoot, orgNs, subNs, s, server, bind, prot);
+			defaultPatternEndpointPath (ctxRoot, s, server, bind, prot);
 		}
 	}
 	def String toServerTypeName (Server s) {
@@ -107,34 +108,32 @@ class SoapVendorEndpointAddressResolver {
 			return "undefined"
 	}
 		
-	def String defaultPatternEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String defaultPatternEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String tomcatEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String tomcatEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String websphereEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String websphereEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String websphereSCAEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
+	def String websphereSCAEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(SubNamespace)
 		ctxRoot
-		+ orgNs.toPrefix() + "_" 
-		+ subNs.name.replaceAll("\\.","_") +"_" + s.name + "SOAP" + bind.getEndpointQualifierName (s, prot) + "_" + s.version.toVersionPostfix();
+		+ namespace.organizationShortnameFragment + "_" 
+		+ namespace.subNamespaceFragment.replaceAll("\\.","_") +"_" + s.name + "SOAP" + bind.getEndpointQualifierName (s, prot) + "_" + s.version.toVersionPostfix();
 	}
 	
-	def String webmethodsEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
+	def String webmethodsEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
 		val servicePath = ctxRoot
-		+ orgNs.name + "." 
-		+ subNs.name + "." + s.name + "." + s.version.toVersionPostfix() + ":" + s.name;
+		+ namespace.namespaceFQN + "." + s.name + "." + s.version.toVersionPostfix() + ":" + s.name;
 		var scopedPortName = ""
 		if (prot instanceof SOAP) {
 			scopedPortName = soapBindRes.toScopedPortName (s, bind, prot as SOAP, bind.getEndpointQualifierName (s, prot))
@@ -152,64 +151,54 @@ class SoapVendorEndpointAddressResolver {
 		return servicePath
 	}
 	
-	def String oraclesbEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String oraclesbEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String weblogicEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String weblogicEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String aqualogicEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String aqualogicEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String sappiEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String sappiEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String sapceEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String sapceEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String sapNetweaverEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String sapNetweaverEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String jbossEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String jbossEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String jbossesbEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String jbossesbEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String muleEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String muleEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
-	def String fuseesbEndpointPath (String ctxRoot, OrganizationNamespace orgNs, SubNamespace subNs, Service s, Server server, Binding bind, BindingProtocol prot) {
-		ctxRoot
-		+ orgNs.name.replaceAll("\\.","/") + "/" 
-		+ subNs.name.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	def String fuseesbEndpointPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
 	}
 	
 }

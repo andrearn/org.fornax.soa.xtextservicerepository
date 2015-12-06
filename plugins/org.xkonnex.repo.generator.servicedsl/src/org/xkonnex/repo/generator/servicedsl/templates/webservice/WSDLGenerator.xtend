@@ -31,6 +31,8 @@ import org.xkonnex.repo.generator.servicedsl.templates.xsd.SwaRefSchemaGenerator
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
+import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceURIProvider
 
 /*
  * Template class for generation of abstract WSDLs
@@ -43,6 +45,7 @@ class WSDLGenerator {
 	@Inject extension org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions schemaNamespaceExt
 	@Inject extension SchemaTypeExtensions schemaTypeExt
 	@Inject extension ServiceTemplateExtensions
+	@Inject extension ServiceNamespaceURIProvider
 	@Inject extension HeaderFinder
 	@Inject extension NamespaceQuery
 	@Inject extension NamespaceImportQueries
@@ -55,6 +58,7 @@ class WSDLGenerator {
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
 	@Inject IEObjectDocumentationProvider docProvider
 	@Inject SwaRefSchemaGenerator swarefSchemaGenerator
+	@Inject ProfileNamespaceURIProvider profileNamespaceURIProvider
 	
 	@Inject @Named ("noDependencies") 		
 	Boolean noDependencies
@@ -134,11 +138,11 @@ class WSDLGenerator {
 			<xsd:schema targetNamespace="«s.toTargetNamespace()»"
 				xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd"
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber (s.version), minState) »
-					xmlns:«imp.toPrefix() + versionQualifier.toMajorVersionNumber (imp.version)»="«schemaNamespaceExt.toNamespace(imp)»"
+					xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
 				«ENDFOR»
 				«IF !headerImports.empty»
 					«FOR headerImp : headerImports»
-						xmlns:«profileSchemaNamespaceExt.toPrefix (headerImp)+versionQualifier.toMajorVersionNumber (headerImp.version)»="«profileSchemaNamespaceExt.toNamespace(headerImp)»"
+						xmlns:«profileNamespaceURIProvider.getVersionedNamespacePrefix(headerImp)»="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"
 					«ENDFOR»
 				«ENDIF»
 				elementFormDefault="qualified"
@@ -151,12 +155,12 @@ class WSDLGenerator {
 					schemaLocation="http://ws-i.org/profiles/basic/1.1/xsd"/>*/»
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
 					<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-						namespace="«schemaNamespaceExt.toNamespace (imp)»"/>
+						namespace="«imp.versionedNamespaceURI»"/>
 				«ENDFOR»
 				«IF !headerImports.empty»
 					«FOR headerImp : headerImports»
 						<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
-							namespace="«profileSchemaNamespaceExt.toNamespace (headerImp)»"/>
+							namespace="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"/>
 					«ENDFOR»
 				«ENDIF»
 				«s.operations.map (e|e.toOperationWrapperTypes (profile)).join»

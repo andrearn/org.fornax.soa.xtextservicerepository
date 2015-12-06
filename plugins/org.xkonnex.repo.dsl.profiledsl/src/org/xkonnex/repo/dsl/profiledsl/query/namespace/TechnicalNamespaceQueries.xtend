@@ -19,20 +19,11 @@ class TechnicalNamespaceQueries {
 	
 		
 	def TechnicalNamespace findTechnicalNamespace (VersionedType c) {
-		if (c.eContainer instanceof TechnicalNamespace)
-			c.eContainer as TechnicalNamespace 
-		else 
-			null;
+		c.getOwnerByType(TechnicalNamespace)
 	}
 	
 	def OrganizationNamespace findOrgNamespace (TechnicalNamespace o) { 
-		if (o.eContainer instanceof OrganizationNamespace) {
-			o.eContainer as OrganizationNamespace;
-		} else if (o.eContainer instanceof TechnicalNamespace) {
-			this?.findOrgNamespace (o.eContainer as TechnicalNamespace) as OrganizationNamespace;
-		} else {
-			return null
-		}
+		o.getOwnerByType(OrganizationNamespace)
 	}
 	
 	def List<TechnicalNamespace> getSubNamespacePath (TechnicalNamespace ns) {

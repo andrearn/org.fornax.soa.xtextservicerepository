@@ -48,28 +48,28 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 		}
 	}
 	
-	override getUnversionedNamespaceURI(OrganizationNamespace orgNs) {
-		orgNs.toUnversionedNamespaceURI
-	}
-	
-	override getUnversionedNamespaceURI(TechnicalNamespace ns) {
-		ns.toUnversionedNamespaceURI
-	}
-	
-	override getUnversionedNamespaceURI(VersionedTechnicalNamespace ns) {
-		ns.namespace.toUnversionedNamespaceURI
-	}
-	
-	override getVersionedNamespaceURI(OrganizationNamespace orgNs) {
+	override getNamespaceURI(OrganizationNamespace orgNs) {
 		orgNs.toNamespaceURI
 	}
 	
+	override getNamespaceURI(TechnicalNamespace ns) {
+		ns.toNamespaceURI
+	}
+	
+	override getNamespaceURI(VersionedTechnicalNamespace ns) {
+		ns.namespace.toNamespaceURI
+	}
+	
+	override getVersionedNamespaceURI(OrganizationNamespace orgNs) {
+		orgNs.toVersionedNamespaceURI
+	}
+	
 	override getVersionedNamespaceURI(TechnicalNamespace leafDomainNamespace) { 
-		leafDomainNamespace.toNamespaceURI
+		leafDomainNamespace.toVersionedNamespaceURI
 	}
 	
 	override getVersionedNamespaceURI(VersionedTechnicalNamespace ns) {
-		ns.toNamespaceURI
+		ns.toVersionedNamespaceURI
 	}
 	
 	override requiresTrailingSlash(OrganizationNamespace ns) {
@@ -119,8 +119,8 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 	
 	
 		
-	private def dispatch String toNamespaceURI (Namespace o) {
-		var ns = o.toUnversionedNamespaceURI 
+	private def dispatch String toVersionedNamespaceURI (Namespace o) {
+		var ns = o.toNamespaceURI 
 		if (!ns.endsWith("/")) 
 			ns = ns +  "/" 
 		ns = ns + o.toVersionPostfix;
@@ -131,8 +131,8 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 		}
 	}
 	
-	private def dispatch String toNamespaceURI (OrganizationNamespace domain) {
-		var ns = domain.toUnversionedNamespaceURI 
+	private def dispatch String toVersionedNamespaceURI (OrganizationNamespace domain) {
+		var ns = domain.toNamespaceURI 
 		if (!ns.endsWith("/")) 
 			ns = ns +  "/" 
 		ns = ns + domain.toVersionPostfix;
@@ -143,8 +143,8 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 		}
 	}
 	
-	private def dispatch String toNamespaceURI (TechnicalNamespace leafDomainNamespace) { 
-		var ns = leafDomainNamespace.toUnversionedNamespaceURI
+	private def dispatch String toVersionedNamespaceURI (TechnicalNamespace leafDomainNamespace) { 
+		var ns = leafDomainNamespace.toNamespaceURI
 		if (!ns.endsWith("/")) 
 			ns = ns +  "/" 
 		ns = ns + leafDomainNamespace.toVersionPostfix();
@@ -155,8 +155,8 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 		}
 	}
 	
-	private def dispatch String toNamespaceURI (VersionedTechnicalNamespace s) { 
-		var ns = s.namespace.toUnversionedNamespaceURI.stripXtextEscapes()
+	private def dispatch String toVersionedNamespaceURI (VersionedTechnicalNamespace s) { 
+		var ns = s.namespace.toNamespaceURI.stripXtextEscapes()
 		if (!ns.endsWith("/")) 
 			ns = ns +  "/" 
 		ns = ns + s.toVersionPostfix();
@@ -182,21 +182,21 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 	}
 	
 	
-	private def dispatch String toUnversionedNamespaceURI (Namespace leafDomainNamespace) {
+	private def dispatch String toNamespaceURI (Namespace leafDomainNamespace) {
 		
 	}
 	
-	private def dispatch String toUnversionedNamespaceURI (OrganizationNamespace namespace) {
+	private def dispatch String toNamespaceURI (OrganizationNamespace namespace) {
 		var ns = namespace.hostPart
 		ns.addTrailingSlashIfReqired(namespace);
 	}
 	
-	private def dispatch String toUnversionedNamespaceURI (VersionedTechnicalNamespace s) {
-		var ns = s.namespace.toUnversionedNamespaceURI;
+	private def dispatch String toNamespaceURI (VersionedTechnicalNamespace s) {
+		var ns = s.namespace.toNamespaceURI;
 		ns.addTrailingSlashIfReqired(s)
 	}
 	
-	private def dispatch String toUnversionedNamespaceURI (TechnicalNamespace leafDomainNamespace) {
+	private def dispatch String toNamespaceURI (TechnicalNamespace leafDomainNamespace) {
 		var ns = ""
 		if (leafDomainNamespace.uri != null)
 			ns = leafDomainNamespace.uri

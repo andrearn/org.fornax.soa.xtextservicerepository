@@ -28,6 +28,7 @@ import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTypeExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.XSDGenerator
 import org.xkonnex.repo.generator.servicedsl.templates.CommonTemplateExtensions
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
 
 class WrappedWsdlGenerator {
 	
@@ -38,6 +39,7 @@ class WrappedWsdlGenerator {
 	@Inject extension org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions schemaNamespaceExt
 	@Inject extension SchemaTypeExtensions schemaTypeExt
 	@Inject extension ServiceTemplateExtensions
+	@Inject extension ServiceNamespaceURIProvider
 	@Inject extension VersionQualifierExtensions
 	@Inject extension NamespaceQuery
 	@Inject extension NamespaceImportQueries
@@ -136,7 +138,7 @@ class WrappedWsdlGenerator {
 		<wsdl:types>
 			<xsd:schema targetNamespace="«svc.toWrapperServiceTargetNamespace()»"
 				«FOR imp : svc.importedVersionedNS(svc.version.toMajorVersionNumber(), minState)»
-					xmlns:«imp.toPrefix()+imp.version.toMajorVersionNumber()»="«schemaNamespaceExt.toNamespace(imp)»"
+					xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
 				«ENDFOR»
 				xmlns:svc="«svc.toWrapperTargetNamespace()»"
 				elementFormDefault="qualified"

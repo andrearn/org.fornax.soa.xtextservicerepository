@@ -12,12 +12,16 @@ class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvi
 	val NUM_OF_HOST_PARTS = 2
 	val SEGMENT_SHORTNAME_LENGTH 	= 1
 	
-	@Inject extension IQualifiedNameProvider 
 	@Inject extension CommonStringExtensions
 	@Inject extension NamespaceQueries
 	
+	
+	override getNamespaceFQN (Namespace ns) {
+		ns.namespacePath.map[name].join(".")
+	}
+	
 	override getOrganizationNameFragment(Namespace ns) {
-		val segments = ns.fullyQualifiedName.segments
+		val segments = ns.namespaceFQN.segments
 		fqnSegmentsToOrgNameFragment(segments)
 	}
 	
@@ -27,7 +31,7 @@ class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvi
 	
 	
 	override getSubNamespaceFragment(Namespace ns) {
-		val segments = ns.fullyQualifiedName.segments
+		val segments = ns.namespaceFQN.segments
 		fqnSegmentsToSubNsNameFragment(segments)
 	}
 	
@@ -36,24 +40,23 @@ class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvi
 	}
 	
 	override getOrganizationNameFragment(String qualfiedNamespaceName) {
-		fqnSegmentsToOrgNameFragment(qualfiedNamespaceName.split("\\."))
+		fqnSegmentsToOrgNameFragment(qualfiedNamespaceName.segments)
 	}
 	
 	override getSubNamespaceFragment(String qualfiedNamespaceName) {
-		fqnSegmentsToSubNsNameFragment(qualfiedNamespaceName.split("\\."))
+		fqnSegmentsToSubNsNameFragment(qualfiedNamespaceName.segments)
 	}
 	
 	
 	override getShortname(String qualifiedNamespaceName) {
-		qualifiedNamespaceName.split("\\.").map (e|e.segmentToShortName).join;
+		qualifiedNamespaceName.segments.map (e|e.segmentToShortName).join;
 	}
 	
 	override getShortname(Namespace ns) {
 		if (ns.prefix != null) { 
 			ns.prefix;
 		} else {
-			val path = ns.namespacePath.map[name].join(".")
-			path.split("\\.").map (e|e.segmentToShortName).join
+			ns.namespaceFQN.segments.map (e|e.segmentToShortName).join
 		}
 	}
 	
@@ -79,11 +82,12 @@ class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvi
 		else
 			return fqnSegments.map(n|n.stripXtextEscapes).join(".")
 	}
+	
 	def dispatch String toPrefix (Namespace s) {
 		if (s.prefix != null) { 
 			s.prefix;
 		} else {
-			s.fullyQualifiedName.segments.map (e|e.substring(0,1)).join;
+			s.namespaceFQN.segments.map (e|e.substring(0,1)).join;
 		}
 	}
 	
@@ -91,7 +95,7 @@ class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvi
 		if (s.shortName != null) {
 			s.shortName
 		} else {
-			s.namespace.fullyQualifiedName.segments.map (e|e.substring(0,1)).join;
+			s.namespace.namespaceFQN.segments.map (e|e.substring(0,1)).join;
 		}
 	}
 	

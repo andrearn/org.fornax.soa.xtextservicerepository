@@ -79,36 +79,32 @@ class DefaultWrappedWsdlGenerator implements IGenerator {
 		}
 
 		if (hasValidParameters) {
-			val contentRoot = resource.contents.head;
-			if (contentRoot instanceof ServiceModel) {
-				val svcModel = contentRoot as ServiceModel;
-				val Iterable<? extends SubNamespace> subNamespaces = svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten;
-				for (ns : subNamespaces) {
-					for (nsName : namespaces) {
-						if (Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString)) {
-							compile (ns as SubNamespace, resource); 
-						}
+			val subNamespaces = resource.allContents.toIterable.filter(SubNamespace)
+			for (ns : subNamespaces) {
+				for (nsName : namespaces) {
+					if (Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString)) {
+						compile (ns, resource); 
 					}
 				}
-				for (ns : subNamespaces.filter (typeof (DomainNamespace))) {
-					for (nsName : domainNamespaces) {
-						if (Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString)) {
-							compile (ns as SubNamespace, resource); 
-						}
+			}
+			for (ns : subNamespaces.filter (typeof (DomainNamespace))) {
+				for (nsName : domainNamespaces) {
+					if (Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString)) {
+						compile (ns as SubNamespace, resource); 
 					}
 				}
-				for (ns : subNamespaces.filter (typeof (InternalNamespace))) {
-					for (nsName : internalNamespaces) {
-						if (Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString)) {
-							compile (ns as SubNamespace, resource); 
-						}
+			}
+			for (ns : subNamespaces.filter (typeof (InternalNamespace))) {
+				for (nsName : internalNamespaces) {
+					if (Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString)) {
+						compile (ns as SubNamespace, resource); 
 					}
 				}
 			}
 		}
 	}
 	
-	def protected dispatch compile (SubNamespace namespace, Resource res) {
+	def protected compile (SubNamespace namespace, Resource res) {
 		val Profile profile = eObjectLookup.getModelElementByName (profileName, res, "Profile");
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, res, "Environment");
 		wsdlTpl.toWrappedWSDL(namespace, profile, env);

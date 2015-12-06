@@ -31,7 +31,7 @@ class SoapEndpointAddressResolver {
 		val bind = prot.eContainer as Binding
 		val connector = connectorResolver.resolveConnector(server, bind, prot);
 		server.getSOAPHttpEndpointUrl(connector) 
-		+ mod.toEndpointAddressPath (service.findOrgNamespace(), service.findSubdomain(), service, server, bind, prot);
+		+ mod.toEndpointAddressPath (service, server, bind, prot);
 	}
 	
 	/*
@@ -41,7 +41,7 @@ class SoapEndpointAddressResolver {
 	def dispatch String toEndpointAddress (Service service, Server server, BindingProtocol prot, ServiceBinding bind) { 
 		val connector = connectorResolver.resolveConnector(server, bind, prot);
 		server.getSOAPHttpEndpointUrl(connector) 
-		+ bind.toEndpointAddressPath (prot, service.findOrgNamespace(), service.findSubdomain(), service, server);
+		+ bind.toEndpointAddressPath (prot, service, server);
 	}
 
 	

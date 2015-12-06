@@ -3,40 +3,43 @@ package org.xkonnex.repo.generator.bindingdsl
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import java.util.List
+import java.util.logging.Level
+import java.util.logging.Logger
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.resource.Resource
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingModel
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
-import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
-import org.xkonnex.repo.generator.bindingdsl.templates.TechnicalContractArtifactsBuilder
-import org.xkonnex.repo.generator.bindingdsl.templates.xsd.XSDBuilder
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleDslFactory
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleModel
+import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
+import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
+import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier
+import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleModel
-import java.util.logging.Logger
-import java.util.logging.Level
-import org.xkonnex.repo.generator.moduledsl.VersionedModuleSelector
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleDslFactory
-import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier
+import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
 import org.xkonnex.repo.generator.bindingdsl.templates.IArtifactBuilder
-import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
-import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueriesimport org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries
-import org.eclipse.xtext.EcoreUtil2
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
-import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
+import org.xkonnex.repo.generator.bindingdsl.templates.TechnicalContractArtifactsBuilder
+import org.xkonnex.repo.generator.bindingdsl.templates.xsd.XSDBuilder
+import org.xkonnex.repo.generator.moduledsl.VersionedModuleSelector
 
 /*
  * Generate technical service and datamodel contract artifacts like WSDLs, XSDs or IDLs for ModuleBindings
@@ -107,12 +110,11 @@ class DefaultBindingContractGenerators implements IGenerator {
 	@Inject extension EnvironmentBindingResolver		
 	
 	override void doGenerate (Resource resource, IFileSystemAccess fsa) {
-		var contentRoot = resource.contents.head;
 		var resourceSet = resource.resourceSet;
 		resourceDescriptions.setContext (resourceSet);
 		
 		var hasValidParameters = true
-		
+			
 		if (targetEnvironmentName == null || "".equals(targetEnvironmentName)) {
 			logger.severe ("No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
 			hasValidParameters = false
@@ -124,62 +126,61 @@ class DefaultBindingContractGenerators implements IGenerator {
 		}
 		if (hasValidParameters) {
 			val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
-			if (contentRoot instanceof BindingModel) {
-				var model = resource.contents.head as BindingModel;
-				for (binding : model.bindings) {
-					if (binding instanceof ModuleBinding) {
-						val modBind = binding as ModuleBinding;
-						if (moduleBindingNames.exists (modBindName | Pattern::matches (modBindName, modBind.name)) 
-							&& Pattern::matches (targetEnvironmentName, modBind.resolveEnvironment.name)
-						) {
-							compile (modBind, profile);
-						}
-						for (modBindingSelector : moduleBindingSelectors) {
-							if (modBindingSelector.matches(modBind, nameProvider)) {
-								compile (modBind, profile);
-							}
-						}
-					}
-				}
+
+			generateForModuleBindings (resource, profile)
+			generateForModules(resource, env, profile)
+			generateForSubNamespaces(resource)
+		}
+	}
+	
+	private def generateForSubNamespaces(Resource resource) {
+		val subNamespaces = resource.allContents.toIterable.filter(SubNamespace)
+		for (ns : subNamespaces) {
+			if (namespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
+				compile (ns as SubNamespace, resource); 
 			}
-			
-			if (contentRoot instanceof ModuleModel) {
-				var modModel = contentRoot as ModuleModel
-				if (modModel.eIsProxy) {
-					modModel = EcoreUtil2::resolve(modModel, resourceSet) as ModuleModel
-				}
-				if (!modModel.modules.empty) {
-					val moduleLifecycle = modModel.modules.head.state.eContainer as Lifecycle
-					val minState = lifecycleQueries.getMinLifecycleState(env, moduleLifecycle)
-					for (module : modModel.modules) {
-						if (modules.exists(mod | mod.matches(module, minState, modLookup, stateMatcher, nameProvider))) {
-							val moduleSelector = modules.findFirst(modSel | modSel.matches(module, minState, modLookup, stateMatcher, nameProvider))
-							module.compile (moduleSelector, profile, resource)
-						}
-					}
-				}
+			if (ns instanceof DomainNamespace && domainNamespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
+				compile (ns as SubNamespace, resource); 
 			}
-			
-			if  (contentRoot instanceof ServiceModel) {
-				val svcModel = contentRoot as ServiceModel;
-				val Iterable<? extends SubNamespace> subNamespaces = svcModel.orgNamespaces.map (ons | ons.subNamespaces).flatten;
-				for (ns : subNamespaces) {
-					if (namespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
-						compile (ns as SubNamespace, resource); 
-					}
-					if (ns instanceof DomainNamespace && domainNamespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
-						compile (ns as SubNamespace, resource); 
-					}
-					if (ns instanceof InternalNamespace && internalNamespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
-						compile (ns as SubNamespace, resource); 
-					}
+			if (ns instanceof InternalNamespace && internalNamespaces.exists (nsName | Pattern::matches (nsName, nameProvider.getFullyQualifiedName (ns).toString))) {
+				compile (ns as SubNamespace, resource); 
+			}
+		}
+	}
+	
+	private def generateForModules(Resource resource, Environment env, Profile profile) {
+		val resourceSet = resource.resourceSet
+		val modelModules  = resource.allContents.toIterable.filter(Module)
+		for (module : modelModules) {
+			val resolvedModule = EcoreUtil2::resolve (module, resourceSet) as Module
+			val moduleLifecycle = resolvedModule.state.eContainer as Lifecycle
+			val minState = lifecycleQueries.getMinLifecycleState (env, moduleLifecycle)
+				
+			if (modules.exists(mod | mod.matches (resolvedModule, minState, modLookup, stateMatcher, nameProvider))) {
+				val moduleSelector = modules.findFirst (modSel | modSel.matches(resolvedModule, minState, modLookup, stateMatcher, nameProvider))
+				compile (resolvedModule, moduleSelector, profile, resource)
+			}
+		}
+	}
+	
+	private def generateForModuleBindings(Resource resource, Profile profile) {
+		val bindings = resource.allContents.toIterable.filter (ModuleBinding)
+		for (modBind : bindings) {
+			if (moduleBindingNames.exists (modBindName | Pattern::matches (modBindName, modBind.name)) 
+				&& Pattern::matches (targetEnvironmentName, modBind.resolveEnvironment.name)
+			) {
+				compile (modBind, profile);
+			}
+			for (modBindingSelector : moduleBindingSelectors) {
+				if (modBindingSelector.matches(modBind, nameProvider)) {
+					compile (modBind, profile);
 				}
 			}
 		}
 	}
 	
 	
-	def protected compile (ModuleBinding bind, Profile profile) {
+	protected def compile (ModuleBinding bind, Profile profile) {
 		logger.info("Generating contracts for module binding " + bind.name)
 		if (noDependencies != null && includeSubNamespaces != null)
 			bindingBuilder.build (bind, profile, noDependencies, includeSubNamespaces)
@@ -187,7 +188,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 			bindingBuilder.build (bind, profile);
 	}
 		
-	def protected compile (Module mod, VersionedModuleSelector moduleSelector, Profile enforcedProfile, Resource resource) {
+	protected def compile (Module mod, VersionedModuleSelector moduleSelector, Profile enforcedProfile, Resource resource) {
 		logger.info("Generating contracts for module " + mod.name + " version " + mod.version.version)
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 		var generateProvidedServices = moduleSelector.generateProvidedServices
@@ -214,7 +215,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 		}
 	}
 	
-	def protected compile (SubNamespace namespace, Resource resource) {
+	protected def compile (SubNamespace namespace, Resource resource) {
 		val Profile profile = namespace.getApplicableProfile(profileQueries.getProfileByName(profileName, resource.resourceSet))
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
 		if (env == null)

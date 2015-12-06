@@ -34,7 +34,7 @@ class ServiceContractGenerator {
 	Boolean noDependencies
 
 	def void toOrganizationNamespace (OrganizationNamespace orgNs, LifecycleState minState, Profile profile, String registryBaseUrl) {
-		orgNs.subNamespaces.forEach (n|n.toSubNamespace (minState, profile, registryBaseUrl));
+		orgNs?.subNamespaces.forEach (n|n.toSubNamespace (minState, profile, registryBaseUrl));
 	}
 
 	def dispatch void toSubNamespace (SubNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {

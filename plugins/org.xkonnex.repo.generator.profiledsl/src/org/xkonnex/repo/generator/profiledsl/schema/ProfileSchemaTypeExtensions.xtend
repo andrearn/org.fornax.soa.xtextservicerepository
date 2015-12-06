@@ -2,9 +2,7 @@ package org.xkonnex.repo.generator.profiledsl.schema
 
 import com.google.inject.Inject
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
-import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceQueries
-import org.xkonnex.repo.dsl.profiledsl.query.ProfileVersionQueries
-import org.xkonnex.repo.dsl.profiledsl.query.type.LatestMatchingTypeFinder
+import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceURIProvider
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.AttributeDataTypeRef
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef
@@ -13,17 +11,18 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Type
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.TypeRef
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef
-import org.xkonnex.repo.dsl.profiledsl.versioning.TechnicalNamespaceSplitter
+import org.xkonnex.repo.dsl.profiledsl.query.ProfileVersionQueries
+import org.xkonnex.repo.dsl.profiledsl.query.namespace.TechnicalNamespaceQueries
+import org.xkonnex.repo.dsl.profiledsl.query.type.LatestMatchingTypeFinder
 import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
 
 class ProfileSchemaTypeExtensions {
 	
-	@Inject extension TechnicalNamespaceSplitter
+	@Inject extension ProfileNamespaceURIProvider
 	@Inject extension TechnicalNamespaceQueries
 	@Inject extension ProfileSchemaNamespaceExtensions
 	@Inject ProfileVersionQueries profileVersionQueries
 	@Inject extension LatestMatchingTypeFinder
-//	@Inject extension CommonEObjectExtensions
 
 	@Inject VersionQualifierExtensions versionQualifiers
 
@@ -40,7 +39,7 @@ class ProfileSchemaTypeExtensions {
 	 * The prefix is derived from the namespace URI or it's shortname.
 	 */		
 	def dispatch String toTypeNameRef (DataTypeRef t, VersionedTechnicalNamespace currentDomNs) { 
-		t.findLatestMatchingType () .toTypeNameRef (currentDomNs);
+		t.findLatestMatchingType ().toTypeNameRef (currentDomNs);
 	}
 	
 	/**
@@ -70,7 +69,7 @@ class ProfileSchemaTypeExtensions {
 		) {
 			"tns:" +t.type.name
 		} else {
-			t.type.findTechnicalNamespace().toShortName() + versionQualifiers.toMajorVersionNumber(t.type.version) + ":" +t.type.name;
+			t.type.findTechnicalNamespace().namespacePrefix + versionQualifiers.toMajorVersionNumber(t.type.version) + ":" + t.type.name;
 		}
 	}
 
@@ -96,15 +95,19 @@ class ProfileSchemaTypeExtensions {
 	/**
 	 * Reference to type qualified by the  full namespace URI of namespace the referenced type belongs to
 	 */		
-	def dispatch String toFullTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef t, VersionedTechnicalNamespace currentDomNs) { 
+	def dispatch String toFullTypeNameRef (DataTypeRef t) { 
 		t.findLatestMatchingType () .toFullTypeNameRef();
 	}
 		
 	/**
-	 * Reference to type qualified by the  full namespace URI of namespace the referenced type belongs to
+	 * Reference to type qualified by the full namespace URI of namespace the referenced type belongs to
 	 */		
-	def dispatch String toFullTypeNameRef (VersionedTypeRef t, VersionedTechnicalNamespace currNs) { 
-		t.type.findTechnicalNamespace().toNamespace() + t.type.name;
+	def dispatch String toFullTypeNameRef (VersionedTypeRef t) {
+		var ref = t.type.findTechnicalNamespace().namespaceURI
+		if (!ref.endsWith("/")) {
+			ref = ref + "/"
+		}
+		ref + t.type.version.toVersionPostfix + "/" + t.type.name
 	}
 		
 	/**
@@ -117,7 +120,7 @@ class ProfileSchemaTypeExtensions {
 	/**
 	 * Reference to type qualified by the  full namespace URI of namespace the referenced type belongs to
 	 */		
-	def dispatch String toFullTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType t) {
+	def dispatch String toFullTypeNameRef (DataType t) {
 	 	switch (t.name) {
 	 		case "attachment":		"xsd:base64Binary"
 	 		case "binary":			"xsd:hexBinary"
@@ -132,9 +135,6 @@ class ProfileSchemaTypeExtensions {
 	}
 
 	def dispatch boolean isMany (TypeRef t) {
-		false;
-	}
-	def dispatch boolean isMany (DataTypeRef t) {
 		false;
 	}
 	def dispatch boolean isMany (VersionedTypeRef t) {
@@ -164,8 +164,8 @@ class ProfileSchemaTypeExtensions {
 			} else {
 				return 
 				'''
-				<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
-						processContents="skip"/>
+					<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="http://www.w3.org/2001/XMLSchema ##local"
+							processContents="skip"/>
 				'''
 			}
 		} else {
@@ -173,6 +173,7 @@ class ProfileSchemaTypeExtensions {
 		}
 		
 	}
+	
 	def String getTypesExtendibleXMLAttributesClause (MessageHeader header) {
 		if (header.typesUseExtendibleXMLAttributes) {
 			if (header.versionEvolution.extendibleXMLAttributeClause != null) {
@@ -180,7 +181,7 @@ class ProfileSchemaTypeExtensions {
 			} else {
 				return 
 				'''
-				<xsd:anyAttribute namespace="##any"/>
+					<xsd:anyAttribute namespace="##any"/>
 				'''
 			}
 		} else {

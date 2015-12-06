@@ -58,12 +58,13 @@ class DefaultProfileNamespaceNameFragmentProvider implements ProfileNamespaceNam
 			return orgNs.toOrgShortnameFragment
 		} else {
 			val profile = ns.getApplicableProfile
-			val orgNsFQN = ns.fullyQualifiedName.toString
+			val orgNsFQN = baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
 			val shortName = orgNsFQN.getNamespaceShortBaseName(profile)
 			if (shortName != null)
 				return shortName
 		}
-		return baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
+		val nsName = baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
+		return baseDslNsNameFragmentProvider.getShortname(nsName)
 	}
 	
 	private def dispatch String toOrgShortnameFragment(OrganizationNamespace ns) {
@@ -71,7 +72,7 @@ class DefaultProfileNamespaceNameFragmentProvider implements ProfileNamespaceNam
 			return ns.prefix
 		else {
 			val profile = ns.applicableProfile
-			val orgNsFQN = ns.fullyQualifiedName.toString
+			val orgNsFQN = baseDslNsNameFragmentProvider.getNamespaceFQN(ns)
 			val shortName = orgNsFQN.getNamespaceShortBaseName(profile)
 			if (shortName != null)
 				return shortName

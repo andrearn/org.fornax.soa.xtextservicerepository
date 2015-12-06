@@ -40,13 +40,11 @@ class ConcreteWsdlGenerator {
 	@Inject extension ConcreteWsdlFileNameProvider
 	@Inject extension SoapBindingResolver
 	@Inject extension org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
-	@Inject extension SchemaTypeExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension SoapEndpointAddressResolver
 	@Inject extension EnvironmentBindingResolver
 	@Inject extension DefaultEndpointQualifierNameProvider
 	@Inject extension ILifecycleStateResolver
-	@Inject extension NamespaceQuery
 
 	@Inject VersionQualifierExtensions versionQualifier
 	@Inject IEObjectDocumentationProvider docProvider
@@ -57,13 +55,12 @@ class ConcreteWsdlGenerator {
 	 * Generate a concrete pubplic endpoint WSDL for a service bound by a ModuleBinding 
 	 * with the given protocol definition applying the supplied profile
 	 */
-	def dispatch toWSDL (ModuleBinding binding, Service svc, SOAP prot, Profile profile) {
+	def dispatch void toWSDL (ModuleBinding binding, Service svc, SOAP prot, Profile profile) {
 		svc.toWSDL (binding, prot, profile);
 	}
 	
 	
-	def dispatch toWSDL(Service svc, ServiceBinding svcBind, SOAP prot, Profile enforcedProfile) {
-		val profile = svc.findSubdomain.getApplicableProfile(enforcedProfile)
+	def dispatch void toWSDL(Service svc, ServiceBinding svcBind, SOAP prot, Profile enforcedProfile) {
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment(svcBind, prot) + ".wsdl";
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -91,8 +88,7 @@ class ConcreteWsdlGenerator {
 		fsa.generateFile (wsdlFile, content);
 	}
 	
-	def dispatch toWSDL(Service svc, ModuleBinding modBind, BindingProtocol prot, Profile enforcedProfile) {
-		val profile = svc.findSubdomain.getApplicableProfile(enforcedProfile)
+	def dispatch void toWSDL(Service svc, ModuleBinding modBind, BindingProtocol prot, Profile enforcedProfile) {
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment(modBind, prot) + ".wsdl";
 		val content ='''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -161,7 +157,6 @@ class ConcreteWsdlGenerator {
 		</wsdl:operation>
 	'''
 	
-	def dispatch toWsdlService (BindingProtocol protocol, Service svc) {}
 	def dispatch toWsdlService (BindingProtocol protocol, Service svc, String qualifierName) {}
 	
 	def dispatch toWsdlService(SOAP protocol, Service svc, Binding bind) '''
