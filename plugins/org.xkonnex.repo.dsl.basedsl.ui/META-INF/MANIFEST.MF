@@ -24,5 +24,6 @@ Export-Package: org.xkonnex.repo.dsl.basedsl.ui.contentassist,
  org.xkonnex.repo.dsl.basedsl.ui.highlighting,
  org.xkonnex.repo.dsl.basedsl.ui.labeling,
  org.xkonnex.repo.dsl.basedsl.ui.quickfix,
- org.xkonnex.repo.dsl.basedsl.ui.internal
+ org.xkonnex.repo.dsl.basedsl.ui.internal,
+ org.xkonnex.repo.dsl.basedsl.ui.contentassist.antlr.internal
 Bundle-Activator: org.xkonnex.repo.dsl.basedsl.ui.internal.CustomBaseDslActivator

@@ -27,5 +27,6 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.solutiondsl.ui.contentassist.antlr,
  org.xkonnex.repo.dsl.solutiondsl.ui.contentassist,
- org.xkonnex.repo.dsl.solutiondsl.ui.quickfix
+ org.xkonnex.repo.dsl.solutiondsl.ui.quickfix,
+ org.xkonnex.repo.dsl.solutiondsl.ui.contentassist.antlr.internal
 Bundle-Activator: org.xkonnex.repo.dsl.solutiondsl.ui.internal.CustomSolutionDslActivator

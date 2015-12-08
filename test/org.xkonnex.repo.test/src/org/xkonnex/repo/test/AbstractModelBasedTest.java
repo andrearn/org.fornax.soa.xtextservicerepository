@@ -1,13 +1,10 @@
 package org.xkonnex.repo.test;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.mwe2.runtime.workflow.IWorkflowContext;
 import org.eclipse.emf.mwe2.runtime.workflow.WorkflowContextImpl;
-import org.eclipse.xtext.junit.AbstractXtextTests;
 import org.eclipse.xtext.mwe.ResourceLoadingSlotEntry;
 import org.junit.Before;
 

@@ -26,5 +26,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.sladsl.ui.contentassist,
  org.xkonnex.repo.dsl.sladsl.ui.contentassist.antlr,
  org.xkonnex.repo.dsl.sladsl.ui.quickfix,
- org.xkonnex.repo.dsl.sladsl.ui.internal
+ org.xkonnex.repo.dsl.sladsl.ui.internal,
+ org.xkonnex.repo.dsl.sladsl.ui.contentassist.antlr.internal
 Bundle-Activator: org.xkonnex.repo.dsl.sladsl.ui.internal.CustomSLADslActivator

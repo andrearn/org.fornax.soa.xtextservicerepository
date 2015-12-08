@@ -26,5 +26,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.businessdsl.ui.quickfix,
  org.xkonnex.repo.dsl.businessdsl.ui.contentassist,
  org.xkonnex.repo.dsl.businessdsl.ui.contentassist.antlr,
- org.xkonnex.repo.dsl.businessdsl.ui.internal
+ org.xkonnex.repo.dsl.businessdsl.ui.internal,
+ org.xkonnex.repo.dsl.businessdsl.ui.contentassist.antlr.internal
 Bundle-Activator: org.xkonnex.repo.dsl.businessdsl.ui.internal.CustomBusinessDslActivator
