@@ -3,8 +3,10 @@
  */
 package org.xkonnex.repo.dsl.environmentdsl;
 
+import org.eclipse.xtext.conversion.IValueConverterService;
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
 import org.xkonnex.repo.dsl.basedsl.validation.ReflectivePluggableValidatorProvider;
+import org.xkonnex.repo.dsl.environmentdsl.converter.EnvironmentDslValueConverterService;
 import org.xkonnex.repo.dsl.environmentdsl.scoping.IEnvironmentPerspectiveSelector;
 import org.xkonnex.repo.dsl.environmentdsl.scoping.impl.DefaultEnvironmentPerspectiveSelector;
 
@@ -21,6 +23,11 @@ public class EnvironmentDslRuntimeModule extends org.xkonnex.repo.dsl.environmen
 	@org.eclipse.xtext.service.SingletonBinding	
 	public Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector () {
 		return DefaultEnvironmentPerspectiveSelector.class;
+	}
+	
+	@Override
+	public Class<? extends IValueConverterService> bindIValueConverterService() {
+		return EnvironmentDslValueConverterService.class;
 	}
 
 }
