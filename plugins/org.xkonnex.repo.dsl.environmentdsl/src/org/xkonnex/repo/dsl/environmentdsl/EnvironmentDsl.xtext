@@ -9,10 +9,10 @@ Contributors:
     André Arnold 		- initial API and implementation
 */
 grammar org.xkonnex.repo.dsl.environmentdsl.EnvironmentDsl with org.eclipse.xtext.common.Terminals
-
 generate environmentDsl "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl"
 
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as  semanticsDsl
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 EnvModel:
 	(imports+=EnvImport)*
@@ -20,7 +20,7 @@ EnvModel:
 	(environments+=Environment)*;
 	
 EnvImport :
-	'import' importedNamespace=QualifiedNameWithWildCard ; 
+	'import' importedNamespace=QualifiedNameWithWildcard ; 
 	
 EnvFileImport:
 	'import' importURI=STRING ;
@@ -274,8 +274,25 @@ DatabaseSchema:
  * A protocol, connector available on the server that support a specific protocol. E.g. used to expose service endpoints
  */
 Connector:
-	SOAPHTTP | SOAPJMS | REST | EJB | JMS | AMQP | IIOP | RMI | Tuxedo | RFC | FTP | IMAP | POP3 | SMTP | HTTP | TCP
+	SOAPHTTP | SOAPJMS | REST | EJB | JMS | AMQP | IIOP | RMI | Tuxedo | RFC | FTP | IMAP | POP3 | SMTP | HTTP | TCP | ExtensibleConnector
 ;
+
+ExtensibleConnector:
+	(isDefault?='default')? 'connector' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
+		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
+		('protocol-versions' (version+=STRING)+)?
+		('configuration' '{'
+			(parameters+=ConnectorParameter)+ 
+		'}')?
+	'}'
+;
+
+ConnectorParameter: SimpleConnectorParameter|ComplexConnectorParameter;
+SimpleConnectorParameter: name=[jvmTypes::JvmField|QualifiedName] '=' value=STRING;
+ComplexConnectorParameter: 
+	'->' name=[jvmTypes::JvmField|QualifiedName] '{'
+		(value += ConnectorParameter)+
+	'}';
 
 enum EndpointVisibility: private | public | external;
 
@@ -504,7 +521,7 @@ User:
 	
 enum SecurityProtocol: NONE | SSLv2 | SSLv3 | TLS | IPSec;
 	
-QualifiedNameWithWildCard:
+QualifiedNameWithWildcard:
 	QualifiedName '.*'?;
 
 QualifiedName:

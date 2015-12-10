@@ -3,8 +3,24 @@
  */
 package org.xkonnex.repo.dsl.environmentdsl.scoping;
 
-import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
+import javax.inject.Inject;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.common.types.JvmDeclaredType;
+import org.eclipse.xtext.common.types.JvmFeature;
+import org.eclipse.xtext.common.types.JvmField;
+import org.eclipse.xtext.common.types.JvmType;
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
+import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.Scopes;
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ConnectorParameter;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentDslPackage;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector;
+
+import com.google.common.base.Function;
 
 /**
  * This class contains custom scoping description.
@@ -14,5 +30,43 @@ import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
  *
  */
 public class EnvironmentDslScopeProvider extends ImportedNamespaceAwareLocalScopeProvider {
+	
+	@Inject IQualifiedNameProvider nameProvider;
 
+	@Override
+	public IScope getScope(EObject context, EReference reference) {
+		// TODO Auto-generated method stub
+		if (reference == EnvironmentDslPackage.Literals.CONNECTOR_PARAMETER__NAME) {
+			if (context instanceof ConnectorParameter) {
+				JvmType jvmType = getTypeForContext(context);
+				if (jvmType instanceof JvmDeclaredType) {
+					JvmDeclaredType declaredType = (JvmDeclaredType)jvmType;
+					Iterable<JvmField> declaredFields = declaredType.getDeclaredFields();
+					return Scopes.scopeFor(declaredFields, new Function<JvmField, QualifiedName>() {
+
+						@Override
+						public QualifiedName apply(JvmField field) {
+							return QualifiedName.create(field.getSimpleName());
+						}
+						
+					}, IScope.NULLSCOPE);
+				}
+			}
+		}
+		return super.getScope(context, reference);
+	}
+	
+	private JvmType getTypeForContext(EObject ctx) {
+		EObject container = ctx.eContainer();
+		if (container instanceof ExtensibleConnector) {
+			ExtensibleConnector con = (ExtensibleConnector)container;
+			return con.getType();
+		} else if (container instanceof ConnectorParameter) {
+			ConnectorParameter param = (ConnectorParameter)container;
+			JvmFeature field = param.getName();
+			JvmDeclaredType declaringType = field.getDeclaringType();
+			return declaringType;
+		}
+		return null;
+	}
 }

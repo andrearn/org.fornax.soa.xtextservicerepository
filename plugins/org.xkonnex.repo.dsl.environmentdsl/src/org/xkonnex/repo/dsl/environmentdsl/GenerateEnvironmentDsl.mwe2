@@ -16,6 +16,10 @@ Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
 		uriMap = { to = semMetaModel from = "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" }
+		scanClassPath  = true
+		registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
+//		registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
+		registerGenModelFile = "platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel"
 		registerEcoreFile = semMetaModel
 		registerGenModelFile = semGenModel
 	}
@@ -103,6 +107,10 @@ Workflow {
 					backtrack = true
 				}
 			}
+
+			// Xbase support
+			fragment = types.TypesGeneratorFragment {}
+//			fragment = xbase.XbaseGeneratorFragment {}
 
 			fragment = refactoring.RefactorElementNameFragment {}
 
