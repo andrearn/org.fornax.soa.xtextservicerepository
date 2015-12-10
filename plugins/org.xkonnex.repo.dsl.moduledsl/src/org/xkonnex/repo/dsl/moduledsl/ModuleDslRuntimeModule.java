@@ -3,10 +3,12 @@
  */
 package org.xkonnex.repo.dsl.moduledsl;
 
+import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl;
+import org.xkonnex.repo.dsl.basedsl.converter.BaseDslValueConverterService;
 import org.xkonnex.repo.dsl.basedsl.resource.EObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
@@ -92,6 +94,11 @@ public class ModuleDslRuntimeModule extends org.xkonnex.repo.dsl.moduledsl.Abstr
 	
 	public Class<? extends IVersionFilterProvider> bindIVersionFilterProvider () {
 		return DefaultVersionFilterProvider.class;
+	}
+	
+	@Override
+	public Class<? extends IValueConverterService> bindIValueConverterService() {
+		return BaseDslValueConverterService.class;
 	}
 
 }

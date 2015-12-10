@@ -3,8 +3,10 @@
  */
 package org.xkonnex.repo.dsl.businessdsl;
 
+import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.xkonnex.repo.dsl.basedsl.converter.BaseDslValueConverterService;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.VersionedGlobalScopeProvider;
 import org.xkonnex.repo.dsl.basedsl.search.DefaultPredicateSearch;
@@ -45,6 +47,11 @@ public class BusinessDslRuntimeModule extends org.xkonnex.repo.dsl.businessdsl.A
 	
 	public Class<? extends ILifecycleStateResolver> bindILifecycleStateResolver () {
 		return StateAttributeLifecycleStateResolver.class;
+	}
+	
+	@Override
+	public Class<? extends IValueConverterService> bindIValueConverterService() {
+		return BaseDslValueConverterService.class;
 	}
 
 }
