@@ -18,10 +18,15 @@ Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
  org.antlr.runtime,
  org.xkonnex.repo.dsl.semanticsdsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.basedsl;bundle-version="2.0.0";visibility:=reexport,
- org.eclipse.xtext;bundle-version="2.8.0"
+ org.eclipse.xtext;bundle-version="2.8.0",
+ org.eclipse.xtext.common.types,
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
+ org.eclipse.xtext.xbase,
+ org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.environmentdsl,
+ org.xkonnex.repo.dsl.environmentdsl.converter,
  org.xkonnex.repo.dsl.environmentdsl.environment.query,
  org.xkonnex.repo.dsl.environmentdsl.environmentDsl,
  org.xkonnex.repo.dsl.environmentdsl.environmentDsl.impl,
@@ -31,8 +36,8 @@ Export-Package: org.xkonnex.repo.dsl.environmentdsl,
  org.xkonnex.repo.dsl.environmentdsl.parser.antlr.internal,
  org.xkonnex.repo.dsl.environmentdsl.scoping,
  org.xkonnex.repo.dsl.environmentdsl.scoping.impl,
+ org.xkonnex.repo.dsl.environmentdsl.serializer,
  org.xkonnex.repo.dsl.environmentdsl.services,
  org.xkonnex.repo.dsl.environmentdsl.util,
- org.xkonnex.repo.dsl.environmentdsl.validation,
- org.xkonnex.repo.dsl.environmentdsl.serializer
+ org.xkonnex.repo.dsl.environmentdsl.validation
 
