@@ -18,6 +18,7 @@ var envGenModel = "platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
+		scanClassPath=true
 //		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" }
 		uriMap = { to = envMetaModel from = "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" }
 		registerEcoreFile = baseMetaModel

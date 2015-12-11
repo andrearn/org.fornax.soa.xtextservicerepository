@@ -18,6 +18,7 @@ var semGenModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/ge
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
+		scanClassPath=true
 //		uriMap = { to = baseMetaModel from = "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" }
 		uriMap = { to = semMetaModel from = "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" }
 		registerEcoreFile = baseMetaModel

@@ -15,6 +15,7 @@ var semGenModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/ge
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
+		scanClassPath=true
 		uriMap = { to = semMetaModel from = "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" }
 		scanClassPath  = true
 		registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"

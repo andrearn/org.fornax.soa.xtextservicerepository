@@ -30,6 +30,7 @@ var profGenModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/gener
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
+		scanClassPath=true
 //		uriMap = { to = baseMetaModel from = "http://www.fornax.org/soa/basedsl/BaseDsl" }
 		uriMap = { to = semMetaModel from = "http://www.fornax.org/soa/SemanticsDsl" }
 		uriMap = { to = svcMetaModel from = "http://www.fornax.org/soa/ServiceDsl" }
