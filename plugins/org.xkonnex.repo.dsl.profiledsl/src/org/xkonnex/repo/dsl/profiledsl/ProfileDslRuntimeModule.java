@@ -3,8 +3,10 @@
  */
 package org.xkonnex.repo.dsl.profiledsl;
 
+import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.xkonnex.repo.dsl.basedsl.converter.BaseDslValueConverterService;
 import org.xkonnex.repo.dsl.basedsl.documentation.DocFeatureDocumationProvider;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.VersionedGlobalScopeProvider;
@@ -58,6 +60,11 @@ public class ProfileDslRuntimeModule extends org.xkonnex.repo.dsl.profiledsl.Abs
 	
 	public Class<? extends ILifecycleStateResolver> bindILifecycleStateResolver () {
 		return StateAttributeLifecycleStateResolver.class;
+	}
+	
+	@Override
+	public Class<? extends IValueConverterService> bindIValueConverterService() {
+		return BaseDslValueConverterService.class;
 	}
 
 }

@@ -3,7 +3,9 @@
  */
 package org.xkonnex.repo.dsl.solutiondsl;
 
+import org.eclipse.xtext.conversion.IValueConverterService;
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
+import org.xkonnex.repo.dsl.basedsl.converter.BaseDslValueConverterService;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.VersionedGlobalScopeProvider;
 import org.xkonnex.repo.dsl.basedsl.search.DefaultPredicateSearch;
@@ -67,7 +69,11 @@ public class SolutionDslRuntimeModule extends org.xkonnex.repo.dsl.solutiondsl.A
 	public Class<? extends ILifecycleStateResolver> bindILifecycleStateResolver () {
 		return StateAttributeLifecycleStateResolver.class;
 	}
-
+	
+	@Override
+	public Class<? extends IValueConverterService> bindIValueConverterService() {
+		return BaseDslValueConverterService.class;
+	}
 
 }	
 
