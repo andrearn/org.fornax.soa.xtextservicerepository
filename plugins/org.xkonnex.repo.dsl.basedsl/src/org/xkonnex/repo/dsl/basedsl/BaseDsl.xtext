@@ -13,6 +13,7 @@ grammar org.xkonnex.repo.dsl.basedsl.BaseDsl with org.eclipse.xtext.common.Termi
 generate baseDsl "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl"
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 /* Java like imports */
 Import: 
@@ -151,3 +152,29 @@ AssetRef: asset = [ecore::EObject|QualifiedName] (versionRef=VersionRef)?;
 Namespace:
 	name=QualifiedName (prefix=STRING)? (uri=STRING)?
 ;
+
+Assignment:
+	feature=[jvmTypes::JvmIdentifiableElement|QualifiedName] '=' value=Value;
+
+Value:
+	Component|
+	StringValue|
+	BooleanValue|
+	IntValue;
+
+BooleanValue:
+	{BooleanLiteral} (isTrue?='true'|'false');
+
+Reference:
+	referable=[Component|QualifiedName];
+
+StringValue:
+	value = STRING
+;
+
+IntValue : value=INT;
+
+Component:
+	{Component} (name=QualifiedName ':')? (type=[jvmTypes::JvmType|QualifiedName])? '{'
+		assignment+=Assignment* 
+	'}';

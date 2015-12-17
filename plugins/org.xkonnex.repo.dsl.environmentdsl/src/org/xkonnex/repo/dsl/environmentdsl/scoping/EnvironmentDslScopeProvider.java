@@ -32,28 +32,34 @@ import com.google.common.base.Function;
 public class EnvironmentDslScopeProvider extends ImportedNamespaceAwareLocalScopeProvider {
 	
 	@Inject IQualifiedNameProvider nameProvider;
+	@Inject EnvironmentDslComponentScopeProvider componentScopeProvider;
 
 	@Override
 	public IScope getScope(EObject context, EReference reference) {
 		// TODO Auto-generated method stub
-		if (reference == EnvironmentDslPackage.Literals.CONNECTOR_PARAMETER__NAME) {
-			if (context instanceof ConnectorParameter) {
-				JvmType jvmType = getTypeForContext(context);
-				if (jvmType instanceof JvmDeclaredType) {
-					JvmDeclaredType declaredType = (JvmDeclaredType)jvmType;
-					Iterable<JvmField> declaredFields = declaredType.getDeclaredFields();
-					return Scopes.scopeFor(declaredFields, new Function<JvmField, QualifiedName>() {
-
-						@Override
-						public QualifiedName apply(JvmField field) {
-							return QualifiedName.create(field.getSimpleName());
-						}
-						
-					}, IScope.NULLSCOPE);
-				}
-			}
+//		if (reference == EnvironmentDslPackage.Literals.CONNECTOR_PARAMETER__NAME) {
+//			if (context instanceof ConnectorParameter) {
+//				JvmType jvmType = getTypeForContext(context);
+//				if (jvmType instanceof JvmDeclaredType) {
+//					JvmDeclaredType declaredType = (JvmDeclaredType)jvmType;
+//					Iterable<JvmField> declaredFields = declaredType.getDeclaredFields();
+//					return Scopes.scopeFor(declaredFields, new Function<JvmField, QualifiedName>() {
+//
+//						@Override
+//						public QualifiedName apply(JvmField field) {
+//							return QualifiedName.create(field.getSimpleName());
+//						}
+//						
+//					}, IScope.NULLSCOPE);
+//				}
+//			}
+//		}
+		IScope scope = componentScopeProvider.getScope(context, reference);
+		if (scope.getAllElements().iterator().hasNext()) {
+			return scope;
+		} else {
+			return super.getScope(context, reference);
 		}
-		return super.getScope(context, reference);
 	}
 	
 	private JvmType getTypeForContext(EObject ctx) {

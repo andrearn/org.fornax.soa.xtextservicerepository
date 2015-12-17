@@ -49,6 +49,7 @@ Workflow {
 		registerGenModelFile = bizGenModel
 		registerGenModelFile = envGenModel
 		registerGenModelFile = profGenModel
+		registerGenModelFile = "platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel"
 	}
 
 	component = DirectoryCleaner {
@@ -138,6 +139,9 @@ Workflow {
 
 			fragment = refactoring.RefactorElementNameFragment {}
 
+			fragment = types.TypesGeneratorFragment {}
+	
+	   		fragment = templates.CodetemplatesGeneratorFragment auto-inject {}
 		}
 	}
 }

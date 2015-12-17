@@ -44,6 +44,7 @@ Workflow {
 		registerGenModelFile = svcGenModel
 		registerGenModelFile = profGenModel
 		registerGenModelFile = envGenModel
+		registerGenModelFile = "platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel"
 	}
 
 	component = DirectoryCleaner {
@@ -133,6 +134,8 @@ Workflow {
 			}
 
 			fragment = refactoring.RefactorElementNameFragment {}
+
+			fragment = types.TypesGeneratorFragment {}
 
     		fragment = junit.Junit4Fragment auto-inject {}
 

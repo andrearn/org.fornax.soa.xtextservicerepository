@@ -9,6 +9,9 @@ var file.extensions = "envdsl"
 var projectName = "org.xkonnex.repo.dsl.environmentdsl"
 var runtimeProject = "../${projectName}"
 
+var baseMetaModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore"
+var baseGenModel="platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.genmodel"
+
 var semMetaModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore"
 var semGenModel = "platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.genmodel"
 
@@ -20,9 +23,11 @@ Workflow {
 		scanClassPath  = true
 		registerGeneratedEPackage = "org.eclipse.xtext.xbase.XbasePackage"
 //		registerGenModelFile = "platform:/resource/org.eclipse.xtext.xbase/model/Xbase.genmodel"
-		registerGenModelFile = "platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel"
+		registerEcoreFile = baseMetaModel
 		registerEcoreFile = semMetaModel
 		registerGenModelFile = semGenModel
+		registerGenModelFile = baseGenModel
+		registerGenModelFile = "platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel"
 	}
 
 	component = DirectoryCleaner {

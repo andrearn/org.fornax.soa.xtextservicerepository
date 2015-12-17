@@ -18,7 +18,7 @@ import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
 
 public abstract class VersionedImportedNamespaceAwareScopeProvider extends ImportedNamespaceAwareLocalScopeProvider {
-	
+
 	protected IScope getLocalElementsScope(IScope parent, final EObject context,
 			final EReference reference) {
 		IScope result = super.getLocalElementsScope(parent, context, reference);
@@ -75,5 +75,6 @@ public abstract class VersionedImportedNamespaceAwareScopeProvider extends Impor
 		}
 		return filter;
 	}
-	
+
+
 }

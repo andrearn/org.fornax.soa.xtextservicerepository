@@ -8,9 +8,10 @@ http://www.eclipse.org/legal/epl-v10.html
 Contributors:
     André Arnold 		- initial API and implementation
 */
-grammar org.xkonnex.repo.dsl.environmentdsl.EnvironmentDsl with org.eclipse.xtext.common.Terminals
+grammar org.xkonnex.repo.dsl.environmentdsl.EnvironmentDsl with org.xkonnex.repo.dsl.basedsl.BaseDsl
 generate environmentDsl "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl"
 
+import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as  baseDsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as  semanticsDsl
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
@@ -20,7 +21,7 @@ EnvModel:
 	(environments+=Environment)*;
 	
 EnvImport :
-	'import' importedNamespace=QualifiedNameWithWildcard ; 
+	'import' importedNamespace=QualifiedNameWithWildCard ; 
 	
 EnvFileImport:
 	'import' importURI=STRING ;
@@ -29,13 +30,15 @@ Environment:
 	'environment' name=ID 'of type' (type=EnvironmentType) '{'
 		(hosts+=Host)*
 		(servers+=Server)*
-		('default' 'ESB' defaultESB=[ESB])? 
-		('default' 'Registry' defaultRegistry=[Registry])? 
-		('default' 'AppServer' defaultAppServer=[AppServer])? 
-		('default' 'Broker' defaultBroker=[Broker])? 
+		('default' 'ESB' defaultESB=[ESB|QualifiedName])? 
+		('default' 'Registry' defaultRegistry=[Registry|QualifiedName])? 
+		('default' 'AppServer' defaultAppServer=[AppServer|QualifiedName])? 
+		('default' 'Broker' defaultBroker=[Broker|QualifiedName])? 
 	'}';
 	
 enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
+
+EnvironmentComponent returns baseDsl::Component: Connector|Server;
 
 Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP;
 
@@ -43,7 +46,7 @@ Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Databa
 ESB: 
 	'esb' name=ID '{'
 		('identifier' dslCode=STRING )?
-		('admins' admins+=[User|QualifiedName] )? 
+		('admins' admins+=[baseDsl::User|QualifiedName] )? 
 		'host' host=[Host|QualifiedName] 
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING )?
@@ -60,14 +63,14 @@ ESB:
 				(registries+=RegistryService)+
 			'}'
 		)?
-		('tags' (tags+=[semanticsDsl::Tag])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
 /* A service registry */
 Registry:
 	'registry' name=ID '{'
 		('identifier' dslCode=STRING )?
-		('admins' admins+=[User|QualifiedName] )? 
+		('admins' admins+=[baseDsl::User|QualifiedName] )? 
 		'host' host=[Host|QualifiedName] 
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING )?
@@ -79,7 +82,7 @@ Registry:
 				(connectors+=Connector)+
 			'}'
 		)?
-		('tags' (tags+=[semanticsDsl::Tag])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 	
 enum RegistryKind : UDDI | HTTP | File | Native;
@@ -134,7 +137,7 @@ UDDIRegistry:
 AppServer: 
 	'appserver' name=ID '{'
 		('identifier' dslCode=STRING )?
-		('admins' (admins+=[User|QualifiedName])+ )? 
+		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName] 
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING  )?
@@ -152,14 +155,14 @@ AppServer:
 				(registries+=RegistryService)+
 			'}'
 		)?
-		('tags' (tags+=[semanticsDsl::Tag])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
 /* A HTTP webserver, e.g. Apache */
 WebServer: 
 	'webserver' name=ID '{'
 		('identifier' dslCode=STRING )?
-		('admins' (admins+=[User|QualifiedName])+ )? 
+		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName] 
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING  )?
@@ -171,18 +174,18 @@ WebServer:
 				(connectors+=Connector)+
 			'}'
 		)?
-		('tags' (tags+=[semanticsDsl::Tag])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 	
 /* A business process server */
 ProcessServer:
 	'processserver'  name=ID '{'
 		('identifier' dslCode=STRING )?
-		('admins' (admins+=[User|QualifiedName])+ )? 
+		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName] 
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING  )?
-		('deployUser' deployUser=[User] )?
+		('deployUser' deployUser=[baseDsl::User|QualifiedName] )?
 		('adminUrl' adminUrl=STRING  )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
@@ -196,14 +199,14 @@ ProcessServer:
 				(registries+=RegistryService)+
 			'}'
 		)?
-		('tags' (tags+=[semanticsDsl::Tag])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
 /* A message broker */
 Broker: 
 	'broker' name=ID '{'
 		('identifier' dslCode=STRING )? 
-		('admins' (admins+=[User|QualifiedName])+ )? 
+		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName] 'dir' home=STRING 
 		('deployDir' deployDir=STRING )?
 		('adminUrl' adminUrl=STRING )?
@@ -219,13 +222,13 @@ Broker:
 				(registries+=RegistryService)+
 			'}'
 		)?
-		('tags' (tags+=[semanticsDsl::Tag])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}'; 
 
 Database:  
 	'database' name=ID '{'
 		('identifier' dslCode=STRING )?
-		('admins' (admins+=[User|QualifiedName])+ )? 
+		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName]  
 		('dir' home=STRING )? 
 		('dataDir' dataDir=STRING )? 
@@ -234,21 +237,21 @@ Database:
 		('database-type' serverType=STRING )?
 		('database-version' serverVersion=STRING )?
 		('{' (schema+=DatabaseSchema)+ '}')? 
-		('tags' (tags+=[semanticsDsl::Tag])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
 /* A SAP system */
 SAP:  
 	'sap' name=ID '{'
 		('identifier' dslCode=STRING )?
-		('admins' (admins+=[User|QualifiedName])+ )? 
+		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName] 
 		'system-id' systemId = INT 
 		('dir' home=STRING )?
 		('dataDir' dataDir=STRING )?
 		('adminUrl' adminUrl=STRING )? 
 		('{' (client+=SapClient)+ '}')? 
-		('tags' (tags+=[semanticsDsl::Tag])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 	
 SapClient: 
@@ -282,7 +285,7 @@ ExtensibleConnector:
 		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('protocol-versions' (version+=STRING)+)?
 		('configuration' '{'
-			(parameters+=ConnectorParameter)+ 
+			(assignment+=Assignment)+ 
 		'}')?
 	'}'
 ;
@@ -508,11 +511,11 @@ Host:
 		'full-qualified-name' fqn=STRING 
 		('ip-address' ip=STRING)? 
 		('identifier' dshCode=STRING )?
-		('admins' admins+=[User|QualifiedName])?
+		('admins' admins+=[baseDsl::User|QualifiedName])?
 	'}';
 
 /* A system user */	
-User: 
+User returns baseDsl::User: 
 	'user' name=ID '{'
 		('firstname' firstname=STRING 'lastname' lastname=STRING )? 
 		'email' email=STRING 
@@ -521,8 +524,9 @@ User:
 	
 enum SecurityProtocol: NONE | SSLv2 | SSLv3 | TLS | IPSec;
 	
-QualifiedNameWithWildcard:
-	QualifiedName '.*'?;
+//QualifiedNameWithWildcard:
+//	QualifiedName '.*'?;
+//
+//QualifiedName:
+//	ID ('.' ID)*;
 
-QualifiedName:
-	ID ('.' ID)*;

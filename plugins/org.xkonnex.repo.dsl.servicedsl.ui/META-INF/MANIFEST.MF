@@ -21,7 +21,8 @@ Require-Bundle: org.xkonnex.repo.dsl.servicedsl;bundle-version="1.6.2";visibilit
  org.eclipse.xtext.ui,
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.builder,
- org.eclipse.xtext.ui.codetemplates.ui
+ org.eclipse.xtext.ui.codetemplates.ui,
+ org.eclipse.xtext.common.types.ui
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.servicedsl.service.ui,
