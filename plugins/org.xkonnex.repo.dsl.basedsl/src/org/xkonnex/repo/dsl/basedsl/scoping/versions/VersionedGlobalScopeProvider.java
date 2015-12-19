@@ -9,6 +9,7 @@ import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
 
 import com.google.common.base.Predicate;
 
+@SuppressWarnings("restriction")
 public class VersionedGlobalScopeProvider extends TypesAwareDefaultGlobalScopeProvider {
 
 	protected IScope createContainerScope (IScope parent, IContainer container, Predicate<IEObjectDescription> filter, EClass type, boolean ignoreCase) {

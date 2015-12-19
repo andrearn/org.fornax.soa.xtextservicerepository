@@ -15,5 +15,10 @@ public class BaseDslValueConverterService extends DefaultTerminalConverters {
 	public IValueConverter<String> QualifiedName() {
 		return qualifiedNameValueConverter;
 	}
+	
+	@ValueConverter(rule="QualifiedNameWithWildCard")
+	public IValueConverter<String> QualifiedNameWithWildCard() {
+		return qualifiedNameValueConverter;
+	}
 
 }
