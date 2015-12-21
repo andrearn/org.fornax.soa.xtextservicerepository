@@ -11,6 +11,7 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EJB;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ESB;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvImport;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleServer;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Host;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.JMS;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.REST;
@@ -95,6 +96,10 @@ public class EnvironmentDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String image (SAP ele) {
+		return "full/obj16/servnode.gif";	
+	}
+	
+	String image (ExtensibleServer ele) {
 		return "full/obj16/servnode.gif";	
 	}
 	

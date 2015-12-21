@@ -33,6 +33,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.AssetStateEnvironmentEligibilityChecker
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleStateimport org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportBindingProtocolEnum
 
 /** 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -123,7 +124,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 			val svc = specBindingDesc.getResolvedService
 			if (svc != null) {
 				try {
-					if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocol::SOAP)) {
+					if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocolEnum::SOAP)) {
 						doBuildServiceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, enforcedProfile)
 					}
 				} catch (Exception ex) {
@@ -145,7 +146,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				val svc = specBindingDesc.getResolvedService
 				if (svc != null) {
 					try {
-						if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocol::SOAP)) {
+						if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocolEnum::SOAP)) {
 							doBuildServiceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, enforcedProfile)
 						}
 					} catch (Exception ex) {

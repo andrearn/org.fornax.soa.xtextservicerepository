@@ -23,9 +23,11 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.Value
 import org.eclipse.emf.ecore.EReference
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Reference
+import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider
+import org.eclipse.xtext.scoping.impl.ImportNormalizer
 
 @SuppressWarnings("restriction") 
-abstract class AbstractComponentScopeProvider extends ImportedNamespaceAwareLocalScopeProvider {
+abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
 	
 	@Inject extension ComponentExtensions
 	@Inject IInjectableFeatureLookup featureLookup
@@ -47,7 +49,7 @@ abstract class AbstractComponentScopeProvider extends ImportedNamespaceAwareLoca
 		if (context instanceof Assignment && reference == BaseDslPackage.Literals.REFERENCE__REFERABLE) {
 			return createComponentReferenceScopeUpTo(context.eContainer(), true);
 		}
-		return javaNamespaceAwareScopeProvider.getScope(context, reference);
+		return super.getScope(context, reference)
 	}
 
 	def IScope createComponentReferenceScopeUpTo(EObject object, boolean allowObjects) {
@@ -117,4 +119,12 @@ abstract class AbstractComponentScopeProvider extends ImportedNamespaceAwareLoca
 			return null
 		}
 	}
+
+	
+	protected override List<ImportNormalizer> getImplicitImports(boolean ignoreCase) {
+		val List<ImportNormalizer> result = newArrayList();
+		result.add(createImportedNamespaceResolver("java.lang.*", ignoreCase));
+		return result;
+	}
+
 }

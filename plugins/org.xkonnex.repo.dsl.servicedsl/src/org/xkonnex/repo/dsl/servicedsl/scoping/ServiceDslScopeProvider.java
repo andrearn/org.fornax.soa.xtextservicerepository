@@ -22,6 +22,7 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.scoping.ComponentAwareVersionedScopeProvider;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.VersionFilteringScope;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.FixedVersionFilter;
@@ -79,7 +80,7 @@ import com.google.inject.Injector;
  * on how and when to use it 
  *
  */
-public class ServiceDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
+public class ServiceDslScopeProvider extends ComponentAwareVersionedScopeProvider {
 	private static final Logger logger = Logger.getLogger(ServiceDslScopeProvider.class);
 
 	

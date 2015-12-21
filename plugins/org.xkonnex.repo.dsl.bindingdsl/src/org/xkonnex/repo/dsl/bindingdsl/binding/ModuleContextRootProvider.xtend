@@ -6,7 +6,7 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyType
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
-
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyTypeEnum
 
 /**
  * Provide context root paths based on  
@@ -52,8 +52,8 @@ class ModuleContextRootProvider implements IContextRootProvider {
 		if (serverType != null && serverType.toLowerCase.trim == "webmethods") {
 			""
 		} else {
-			switch (mod.assemblyType) {
-				case AssemblyType::SCA_EAR: mod.technicalModuleName + "Web/sca/"
+			switch (mod.assemblyType.typeEnum) {
+				case AssemblyTypeEnum::SCA_EAR: mod.technicalModuleName + "Web/sca/"
 				default: mod.technicalModuleName + "/"
 			}
 		}
@@ -63,8 +63,8 @@ class ModuleContextRootProvider implements IContextRootProvider {
 		if (serverType != null && serverType.toLowerCase.trim == "webmethods") {
 			""
 		} else {
-			switch (mod.assemblyType) {
-				case AssemblyType::SCA_EAR: mod.technicalModuleName + "Web/sca/"
+			switch (mod.assemblyType.typeEnum) {
+				case AssemblyTypeEnum::SCA_EAR: mod.technicalModuleName + "Web/sca/"
 				default: mod.technicalModuleName + "/"
 			}
 		}

@@ -3,7 +3,14 @@
 */
 package org.xkonnex.repo.dsl.environmentdsl.ui.labeling;
 
+import org.eclipse.xtext.common.types.JvmMember;
+import org.eclipse.xtext.common.types.JvmType;
 import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Component;
+import org.xkonnex.repo.dsl.basedsl.scoping.ComponentExtensions;
+
+import com.google.inject.Inject;
 
 /**
  * Provides labels for a IEObjectDescriptions and IResourceDescriptions.
@@ -11,17 +18,25 @@ import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#labelProvider
  */
 public class EnvironmentDslDescriptionLabelProvider extends DefaultDescriptionLabelProvider {
-
-/*
-	//Labels and icons can be computed like this:
 	
-	String text(IEObjectDescription ele) {
-	  return "my "+ele.getName();
+	@Inject
+	private ComponentExtensions componentExtensions;
+
+	
+	public String text(Component component) {
+		if (component.getName() != null)
+			return component.getName();
+		JvmType type = componentExtensions.getActualType(component);
+		if (type != null) {
+			if (type instanceof JvmMember)
+				return ((JvmMember) type).getSimpleName();
+			return type.getQualifiedName('.');
+		}
+		return "Component";
 	}
-	 
-    String image(IEObjectDescription ele) {
-      return ele.getEClass().getName() + ".gif";
-    }	 
-*/
+	
+	public String text(Assignment assignment) {
+		return assignment.getFeature().getSimpleName();
+	}
 
 }

@@ -7,6 +7,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.scoping.ComponentAwareVersionedScopeProvider;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
@@ -24,7 +25,7 @@ import com.google.inject.Inject;
  * on how and when to use it 
  *
  */
-public class BusinessDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
+public class BusinessDslScopeProvider extends ComponentAwareVersionedScopeProvider {
 
 	@Inject IEObjectLookup objLookup;
 	

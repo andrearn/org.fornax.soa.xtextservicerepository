@@ -3,6 +3,12 @@
  */
 package org.xkonnex.repo.dsl.basedsl.ui.labeling;
 
+import org.eclipse.xtext.common.types.JvmMember;
+import org.eclipse.xtext.common.types.JvmType;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Component;
+import org.xkonnex.repo.dsl.basedsl.scoping.ComponentExtensions;
+
 import com.google.inject.Inject;
 
 /**
@@ -11,19 +17,29 @@ import com.google.inject.Inject;
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#label-provider
  */
 public class BaseDslLabelProvider extends org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider {
+	
+	@Inject
+	private ComponentExtensions componentExtensions;
 
 	@Inject
 	public BaseDslLabelProvider(org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider delegate) {
 		super(delegate);
 	}
-
-	// Labels and icons can be computed like this:
 	
-//	String text(Greeting ele) {
-//		return "A greeting to " + ele.getName();
-//	}
-//
-//	String image(Greeting ele) {
-//		return "Greeting.gif";
-//	}
+	public String text(Component component) {
+		if (component.getName() != null)
+			return component.getName();
+		JvmType type = componentExtensions.getActualType(component);
+		if (type != null) {
+			if (type instanceof JvmMember)
+				return ((JvmMember) type).getSimpleName();
+			return type.getQualifiedName('.');
+		}
+		return "Component";
+	}
+	
+	public String text(Assignment assignment) {
+		return assignment.getFeature().getSimpleName();
+	}
+
 }

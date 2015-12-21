@@ -6,21 +6,31 @@ package org.xkonnex.repo.dsl.basedsl.ui.contentassist;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.common.types.JvmIdentifiableElement;
+import org.eclipse.xtext.common.types.JvmOperation;
+import org.eclipse.xtext.common.types.JvmType;
+import org.eclipse.xtext.common.types.xtext.ui.ITypesProposalProvider;
+import org.eclipse.xtext.common.types.xtext.ui.TypeMatchFilters;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.ui.search.IXtextEObjectSearch;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Component;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
-import org.xkonnex.repo.dsl.basedsl.ui.contentassist.AbstractBaseDslProposalProvider;
+import org.xkonnex.repo.dsl.basedsl.scoping.BaseDslScopeProvider;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
-import com.google.common.collect.Lists;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
@@ -28,6 +38,12 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 
 	@Inject
 	private IXtextEObjectSearch searchEngine;
+	
+	@Inject
+	private ITypesProposalProvider typeProposalProvider;
+	
+	@Inject
+	private BaseDslScopeProvider componentScopeProvider; 
 
 	public void complete_QualifiedName(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		super.complete_QualifiedName(model, ruleCall, context, acceptor);
@@ -86,5 +102,62 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 		});
 		return Sets.newTreeSet (Iterables.filter(versions, Predicates.notNull()));
 	}
+
+
+	
+	@Override
+	public BaseDslScopeProvider getScopeProvider() {
+		return (BaseDslScopeProvider) super.getScopeProvider();
+	}
+	
+	@Override
+	public void completeAssignment_Feature(EObject model,
+			org.eclipse.xtext.Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof Assignment && model.eContainer() instanceof Component) {
+			createFeatureProposals((Component) model.eContainer(), context, acceptor);
+		} else if (model instanceof Component) {
+			createFeatureProposals((Component) model, context, acceptor);
+		}
+	}
+	
+	protected void createFeatureProposals(Component component,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		IScope scope = componentScopeProvider.createComponentFeaturesScope(component);
+		Iterable<IEObjectDescription> candidates = scope.getAllElements();
+		Function<IEObjectDescription, ICompletionProposal> factory = getProposalFactory("FQN", context);
+		for (IEObjectDescription candidate: candidates) {
+			if (!acceptor.canAcceptMoreProposals())
+				return;
+			acceptor.accept(factory.apply(candidate));
+		}
+	}
+		
+	@Override
+	public void completeComponent_Type(EObject model,
+			org.eclipse.xtext.Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (model instanceof Component)
+			model = model.eContainer();
+//		if (model instanceof Module) {
+//			typeProposalProvider.createTypeProposals(this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);	
+//		} else 
+			if (model instanceof Assignment) {
+			Assignment attribute = (Assignment) model;
+			if (attribute.getFeature() == null || attribute.getFeature().eIsProxy())
+				return;
+			JvmIdentifiableElement feature = attribute.getFeature();
+			if (feature instanceof JvmOperation) {
+				JvmType parameterType = ((JvmOperation) feature).getParameters().get(0).getParameterType().getType();
+				typeProposalProvider.createSubTypeProposals(parameterType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+			}
+		}
+	}
+	
+	@Override
+	protected String getDisplayString(EObject element, String qualifiedName,
+			String shortName) {
+		return super.getDisplayString(element, qualifiedName, shortName);
+	}	
 
 }

@@ -17,6 +17,7 @@ import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplat
 import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyTypeEnum
 
 /* 
  * Generator for IBM SCA export components for the IBM WebSphere ESB. For each service provided from the module referenced in the binding
@@ -42,7 +43,7 @@ class SCAExportTemplates {
 	
 	
 	def dispatch void toSCAModuleExport (ModuleBinding binding, Profile enforcedProfile) {
-		if (binding.module.module.assemblyType == AssemblyType::SCA_EAR) {
+		if (binding.module.module.assemblyType.typeEnum == AssemblyTypeEnum::SCA_EAR) {
 			for (provSvc : binding.module.module.providedServices) {
 				val svc = provSvc.resolveModuleServiceRef (binding.resolveEnvironment);
 				if (svc != null) {

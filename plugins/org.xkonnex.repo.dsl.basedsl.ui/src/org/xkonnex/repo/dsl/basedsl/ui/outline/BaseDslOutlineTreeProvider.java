@@ -3,11 +3,66 @@
  */
 package org.xkonnex.repo.dsl.basedsl.ui.outline;
 
+import javax.inject.Inject;
+
+import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.xtext.common.types.JvmIdentifiableElement;
+import org.eclipse.xtext.common.types.JvmOperation;
+import org.eclipse.xtext.ui.IImageHelper;
+import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
+import org.eclipse.xtext.ui.editor.utils.TextStyle;
+import org.eclipse.xtext.ui.label.StylerFactory;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Component;
+
 /**
  * Customization of the default outline structure.
  *
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#outline
  */
 public class BaseDslOutlineTreeProvider extends org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider {
+
+	private static final String COMPONENT_TYPE_SEPARATOR = " : ";
+
+	@Inject
+	private StylerFactory stylerFactory;
+
+	@Inject
+	private IImageHelper imageHelper;
+
+
+	protected boolean _isLeaf(Assignment assignment) {
+		return !(assignment.getValue() instanceof Component);
+	}
+
+	protected Object _text(Assignment assignment) {
+		StyledString styledText = (StyledString) super._text(assignment);
+		if (assignment.getFeature() instanceof JvmOperation) {
+			return appendSimpleName(styledText, ((JvmOperation)assignment.getFeature()).getParameters().get(0));
+		}
+		return styledText;
+	}
+
+	protected Object _text(Component component) {
+		StyledString styledText = (StyledString) super._text(component);
+		if (component.getType() != null) {
+			return appendSimpleName(styledText, component.getType());
+		}
+		return styledText;
+	}
+
+	protected StyledString appendSimpleName(StyledString styledText, JvmIdentifiableElement element) {
+		String typeName = element.getSimpleName();
+		return styledText.append(new StyledString(COMPONENT_TYPE_SEPARATOR + typeName, stylerFactory
+				.createXtextStyleAdapterStyler(getTypeTextStyle())));
+	}
+	
+	protected TextStyle getTypeTextStyle() {
+		TextStyle textStyle = new TextStyle();
+		textStyle.setColor(new RGB(149, 125, 71));
+		return textStyle;
+	}
 	
 }

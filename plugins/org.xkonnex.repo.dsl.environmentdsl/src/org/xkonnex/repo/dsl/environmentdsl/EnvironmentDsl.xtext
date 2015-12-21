@@ -40,9 +40,31 @@ enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environ
 
 EnvironmentComponent returns baseDsl::Component: Connector|Server;
 
-Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP;
+Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP | ExtensibleServer;
 
-/* An Enterprise Service Bus */
+ExtensibleServer:
+	(isDefault?='default')? 'server' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
+		('identifier' dslCode=STRING )?
+		('admins' admins+=[baseDsl::User|QualifiedName] )? 
+		'host' host=[Host|QualifiedName] 
+		('server-type' serverType=STRING )?
+		('server-version' serverVersion=STRING )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
+		(
+			'registries' '{'
+				(registries+=RegistryService)+
+			'}'
+		)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+	'}'
+;/* An Enterprise Service Bus */
 ESB: 
 	'esb' name=ID '{'
 		('identifier' dslCode=STRING )?
@@ -289,13 +311,6 @@ ExtensibleConnector:
 		'}')?
 	'}'
 ;
-
-ConnectorParameter: SimpleConnectorParameter|ComplexConnectorParameter;
-SimpleConnectorParameter: name=[jvmTypes::JvmField|QualifiedName] '=' value=STRING;
-ComplexConnectorParameter: 
-	'->' name=[jvmTypes::JvmField|QualifiedName] '{'
-		(value += ConnectorParameter)+
-	'}';
 
 enum EndpointVisibility: private | public | external;
 

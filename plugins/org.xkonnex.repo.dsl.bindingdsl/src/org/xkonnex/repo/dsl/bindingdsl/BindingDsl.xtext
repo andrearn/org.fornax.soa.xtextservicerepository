@@ -18,6 +18,7 @@ import "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl" as moduleDsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as environmentDsl
 import "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" as profileDsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 BindingModel:
 	(imports+=Import)*
@@ -33,6 +34,8 @@ Binding: ModuleBinding | ServiceBinding | ChannelBinding;
  */	
 ConnectorQualifier:
 	'on-connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*;
+
+BindingComponent returns Component: BindingProtocol;
 
 /*
  * Binds the referenced module to the given target environment. All services provided by the module become available in the
@@ -118,7 +121,7 @@ ChannelBinding:
 /*
  * The endpoint protocol of the entpoint on which the service is provided
  */																																				
-BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP;
+BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP | ExtensibleProtocol;
 
 /*
  * Overrides the binding of a parent ServiceBinding for the given service Operation
@@ -147,6 +150,12 @@ OperationBinding:
 
 
 //Protocols 
+
+ExtensibleProtocol: 'protocol' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(endpointConnector=ConnectorQualifier)?
+		assignment+=Assignment+ 
+	'}';
 
 /* Use SOAP on the endpoint */
 SOAP: 

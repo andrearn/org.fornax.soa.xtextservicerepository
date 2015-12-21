@@ -26,6 +26,7 @@ import java.util.regex.Pattern
 import java.util.logging.Logger
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
 import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyTypeEnum
 
 class IBMScaExportsGenerator implements IGenerator {
 	
@@ -94,7 +95,7 @@ class IBMScaExportsGenerator implements IGenerator {
 					val module = modBind.module.module
 					val assemblyType = module.assemblyType
 					if ((Pattern::matches (targetEnvironmentName, modBind.resolveEnvironment.name))
-							&& assemblyType == AssemblyType::SCA_EAR
+							&& assemblyType.typeEnum == AssemblyTypeEnum::SCA_EAR
 					) {
 						if (moduleBindingNames.exists(bindName | Pattern::matches (bindName, modBind.name) )) {
 							compile (modBind, resource);

@@ -17,6 +17,7 @@ import "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" as serviceDsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as environmentDsl
 import "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" as profileDsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 ModuleModel:
 	imports+=Import*
@@ -88,7 +89,7 @@ Module:
 		'}')?
 			
 	'}';
-
+	
 AbstractServiceRef: ServiceRef | ImportServiceRef;
 /* 
  * Refers to a service constrained by the given version constraint
@@ -164,11 +165,22 @@ NamespaceRef:
  *	How the module is packaged 
  */
 
-enum AssemblyType:
-	OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL
-;
+//enum AssemblyType:
+//	OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL
+//;
 
-enum ImportBindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP;
+AssemblyType: typeEnum=AssemblyTypeEnum | ExtensibleAssemblyType;
+
+enum AssemblyTypeEnum: OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL;
+ExtensibleAssemblyType: type=[jvmTypes::JvmType|QualifiedName];
+
+
+//enum ImportBindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP;
+
+ImportBindingProtocol: protocolEnum=ImportBindingProtocolEnum | ExtensibleImportBindingProtocol;
+enum ImportBindingProtocolEnum: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP;
+
+ExtensibleImportBindingProtocol: type=[jvmTypes::JvmType|QualifiedName];
 
 QualifierRefs:
 	'qualifier' (qualifiers+=[semanticsDsl::Qualifier|QualifiedName])(','qualifiers+=[semanticsDsl::Qualifier|QualifiedName])*

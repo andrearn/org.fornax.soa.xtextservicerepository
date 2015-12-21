@@ -20,7 +20,7 @@ import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNam
  * on how and when to use it 
  *
  */
-public class BaseDslScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
+public class BaseDslScopeProvider extends ComponentAwareVersionedScopeProvider {
 	
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext (
