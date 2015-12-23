@@ -16,7 +16,7 @@ class CommonStringExtensions {
 	def String stripTrailingSlash (String s) {
 		var result = s
 		while (result.endsWith("/") )  {
-			result.substring (0, result.length-1) 
+			result = result.substring (0, result.length-1) 
 		}
 		result
 	}
