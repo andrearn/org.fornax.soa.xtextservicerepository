@@ -139,10 +139,7 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		if (model instanceof Component)
 			model = model.eContainer();
-//		if (model instanceof Module) {
-//			typeProposalProvider.createTypeProposals(this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);	
-//		} else 
-			if (model instanceof Assignment) {
+		if (model instanceof Assignment) {
 			Assignment attribute = (Assignment) model;
 			if (attribute.getFeature() == null || attribute.getFeature().eIsProxy())
 				return;

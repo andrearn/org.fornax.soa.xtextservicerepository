@@ -28,6 +28,8 @@ Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.moduledsl,
+ org.xkonnex.repo.dsl.moduledsl.ext.assembly,
+ org.xkonnex.repo.dsl.moduledsl.ext.protocol,
  org.xkonnex.repo.dsl.moduledsl.formatting,
  org.xkonnex.repo.dsl.moduledsl.moduleDsl,
  org.xkonnex.repo.dsl.moduledsl.moduleDsl.impl,
@@ -36,8 +38,9 @@ Export-Package: org.xkonnex.repo.dsl.moduledsl,
  org.xkonnex.repo.dsl.moduledsl.parser.antlr.internal,
  org.xkonnex.repo.dsl.moduledsl.query,
  org.xkonnex.repo.dsl.moduledsl.scoping,
+ org.xkonnex.repo.dsl.moduledsl.serializer,
  org.xkonnex.repo.dsl.moduledsl.services,
+ org.xkonnex.repo.dsl.moduledsl.state,
  org.xkonnex.repo.dsl.moduledsl.util,
- org.xkonnex.repo.dsl.moduledsl.validation,
- org.xkonnex.repo.dsl.moduledsl.serializer
+ org.xkonnex.repo.dsl.moduledsl.validation
 

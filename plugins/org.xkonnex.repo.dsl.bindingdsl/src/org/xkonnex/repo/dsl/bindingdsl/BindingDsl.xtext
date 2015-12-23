@@ -13,6 +13,7 @@ grammar org.xkonnex.repo.dsl.bindingdsl.BindingDsl with org.xkonnex.repo.dsl.bas
 
 generate bindingDsl "http://www.xkonnex.org/repo/dsl/bindingdsl/BindingDsl"
 
+import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as  baseDsl
 import "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" as serviceDsl
 import "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl" as moduleDsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as environmentDsl
@@ -35,7 +36,7 @@ Binding: ModuleBinding | ServiceBinding | ChannelBinding;
 ConnectorQualifier:
 	'on-connector' (connectors+=[environmentDsl::Connector | QualifiedName]) (',' connectors+=[environmentDsl::Connector | QualifiedName])*;
 
-BindingComponent returns Component: BindingProtocol;
+BindingComponent returns baseDsl::Component: BindingProtocol;
 
 /*
  * Binds the referenced module to the given target environment. All services provided by the module become available in the
@@ -151,10 +152,12 @@ OperationBinding:
 
 //Protocols 
 
-ExtensibleProtocol: 'protocol' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
+ExtensibleProtocol: 'protocol' type=[jvmTypes::JvmType|QualifiedName] '{'
 		(endpointQualifierRef=EndpointQualifierRef)?
 		(endpointConnector=ConnectorQualifier)?
-		assignment+=Assignment+ 
+		('configuration' '{'
+			assignment+=Assignment*
+		'}')? 
 	'}';
 
 /* Use SOAP on the endpoint */

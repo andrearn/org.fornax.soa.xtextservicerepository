@@ -32,7 +32,6 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 	@Inject extension ComponentExtensions
 	@Inject IInjectableFeatureLookup featureLookup
 	@Inject Provider<NameComputation> nameComputationProvider
-	@Inject JavaNamespaceAwareScopeProvider javaNamespaceAwareScopeProvider
 	
 	def override IScope getScope(EObject context, EReference reference) {
 		if (context instanceof Assignment && reference == BaseDslPackage.Literals.ASSIGNMENT__FEATURE) {

@@ -7,44 +7,52 @@ import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.RuleCall;
-import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.common.types.JvmType;
+import org.eclipse.xtext.common.types.access.IJvmTypeProvider;
+import org.eclipse.xtext.common.types.xtext.AbstractTypeScopeProvider;
+import org.eclipse.xtext.common.types.xtext.ui.ITypesProposalProvider;
+import org.eclipse.xtext.common.types.xtext.ui.TypeMatchFilters;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
-import org.eclipse.xtext.resource.IContainer;
-import org.eclipse.xtext.resource.IResourceDescription;
-import org.eclipse.xtext.resource.IResourceFactory;
-import org.eclipse.xtext.resource.IResourceServiceProvider;
-import org.eclipse.xtext.scoping.IScopeProvider;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
+import org.xkonnex.repo.dsl.moduledsl.ext.assembly.IAssemblyType;
+import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleImportProtocol;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleAssemblyType;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleImportBindingProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleDslPackage;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleModel;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceModuleRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef;
-import org.xkonnex.repo.dsl.moduledsl.ui.contentassist.AbstractModuleDslProposalProvider;
 import org.xkonnex.repo.dsl.moduledsl.util.ModuleDslAccess;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
+
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
+@SuppressWarnings("restriction")
 public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider {
+	
+	@Inject
+	private ITypesProposalProvider typeProposalProvider;
+	
+	@Inject
+	private AbstractTypeScopeProvider typeScopeProvider;
 
 	public void complete_VersionId(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		calculateVersionProposals(model, context, acceptor, false);
@@ -121,6 +129,33 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 				acceptor.accept (createCompletionProposal ("1", context));
 			else
 				acceptor.accept (createCompletionProposal ("1.0", context));
+		}
+	}
+	
+	@Override
+	public void completeExtensibleAssemblyType_Type(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof ExtensibleAssemblyType) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType assemblyType = typeProvider.findTypeByName(IAssemblyType.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(assemblyType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeExtensibleAssemblyType_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void complete_ExtensibleImportBindingProtocol(EObject model,
+			RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof ExtensibleImportBindingProtocol) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType importBindingType = typeProvider.findTypeByName(IModuleImportProtocol.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(importBindingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.complete_ExtensibleImportBindingProtocol(model, ruleCall, context,
+				acceptor);
 		}
 	}
 }
