@@ -25,6 +25,8 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Reference
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider
 import org.eclipse.xtext.scoping.impl.ImportNormalizer
+import org.xkonnex.repo.dsl.basedsl.baseDsl.EnumLiteralValue
+import javax.sound.sampled.EnumControl.Type
 
 @SuppressWarnings("restriction") 
 abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
@@ -47,6 +49,10 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 		}
 		if (context instanceof Assignment && reference == BaseDslPackage.Literals.REFERENCE__REFERABLE) {
 			return createComponentReferenceScopeUpTo(context.eContainer(), true);
+		}
+		if (context instanceof EnumLiteralValue && reference == BaseDslPackage.Literals.ENUM_LITERAL_VALUE__VALUE) {
+			val eńumLitType = context as EnumLiteralValue
+			return createEnumLiteralValueFeaturesScope(eńumLitType)
 		}
 		return super.getScope(context, reference)
 	}
@@ -95,6 +101,19 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 		return new MapBasedScope(features);
 	}
 
+	def IScope createEnumLiteralValueFeaturesScope(EnumLiteralValue container) {
+		val JvmType containerType = container.getActualType();
+		if (containerType == null || containerType.eIsProxy())
+			return IScope.NULLSCOPE;
+		val Map<QualifiedName, JvmFeature> features = Maps.newHashMap();
+//		var JvmType createType = factorySupport.findFactoriesCreationType(containerType);
+//		if (createType != null) {
+//			features.putAll(featureLookup.getInjectableFeatures(createType));
+//		}
+		features.putAll(featureLookup.getInjectableFeatures(containerType));
+		return new MapBasedScope(features);
+	}
+	
 	def protected IScope createLocalComponentScope(List<? extends EObject> elements) {
 		return Scopes.scopeFor(elements, nameComputationProvider.get(), IScope.NULLSCOPE)
 	}

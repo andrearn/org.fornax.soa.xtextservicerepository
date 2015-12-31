@@ -157,13 +157,19 @@ Assignment:
 	feature=[jvmTypes::JvmIdentifiableElement|QualifiedName] '=' value=Value;
 
 Value:
-	Component|
-	StringValue|
-	BooleanValue|
-	IntValue;
+	Component |
+	StringValue |
+	BooleanValue |
+	IntValue |
+	EnumLiteralValue
+;
 
 BooleanValue:
 	{BooleanLiteral} (isTrue?='true'|'false');
+	
+EnumLiteralValue: 
+	value = [jvmTypes::JvmIdentifiableElement|QualifiedName]
+;
 
 Reference:
 	referable=[Component|QualifiedName];
@@ -175,6 +181,6 @@ StringValue:
 IntValue : value=INT;
 
 Component:
-	{Component} (name=QualifiedName ':')? (type=[jvmTypes::JvmType|QualifiedName])? '{'
+	{Component} (name=QualifiedName 'type')? (type=[jvmTypes::JvmType|QualifiedName])? '{'
 		assignment+=Assignment* 
 	'}';

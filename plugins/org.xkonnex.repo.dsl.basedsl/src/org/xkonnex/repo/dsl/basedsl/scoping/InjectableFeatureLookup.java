@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.xtext.common.types.JvmDeclaredType;
+import org.eclipse.xtext.common.types.JvmEnumerationLiteral;
 import org.eclipse.xtext.common.types.JvmFeature;
 import org.eclipse.xtext.common.types.JvmMember;
 import org.eclipse.xtext.common.types.JvmOperation;
@@ -44,6 +45,11 @@ public class InjectableFeatureLookup implements IInjectableFeatureLookup {
 							result.put(QualifiedName.create(name), op);
 						}
 					}
+				}
+				if (member instanceof JvmEnumerationLiteral) {
+					JvmEnumerationLiteral literal = (JvmEnumerationLiteral)member;
+					String simpleName = literal.getSimpleName();
+					result.put(QualifiedName.create(simpleName), literal);
 				}
 			}
 		}

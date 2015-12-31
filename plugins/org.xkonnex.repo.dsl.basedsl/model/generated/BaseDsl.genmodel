@@ -100,6 +100,9 @@
     </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//Value"/>
     <genClasses ecoreClass="BaseDsl.ecore#//BooleanValue"/>
+    <genClasses ecoreClass="BaseDsl.ecore#//EnumLiteralValue">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//EnumLiteralValue/value"/>
+    </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//Reference">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//Reference/referable"/>
     </genClasses>
