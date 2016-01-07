@@ -32,11 +32,11 @@ Workflow {
 		platformUri = "${runtimeProject}/.."
 		scanClassPath=true
 //		uriMap = { to = baseMetaModel from = "http://www.fornax.org/soa/basedsl/BaseDsl" }
-		uriMap = { to = semMetaModel from = "http://www.fornax.org/soa/SemanticsDsl" }
-		uriMap = { to = svcMetaModel from = "http://www.fornax.org/soa/ServiceDsl" }
-		uriMap = { to = modMetaModel from = "http://www.fornax.org/soa/moduledsl/ModuletDsl" }
-		uriMap = { to = envMetaModel from = "http://www.fornax.org/soa/EnvironmentDsl" }
-		uriMap = { to = profMetaModel from = "http://www.fornax.org/soa/profiledsl/ProfileDsl" }
+		uriMap = { to = semMetaModel from = "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" }
+		uriMap = { to = svcMetaModel from = "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" }
+		uriMap = { to = modMetaModel from = "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl" }
+		uriMap = { to = envMetaModel from = "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" }
+		uriMap = { to = profMetaModel from = "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" }
 		registerEcoreFile = baseMetaModel
 		registerEcoreFile = semMetaModel
 		registerEcoreFile = svcMetaModel

@@ -1,6 +1,5 @@
-package org.xkonnex.repo.dsl.bindingdsl.ext.protocol.ftam;
+package org.xkonnex.repo.dsl.bindingdsl.ext.protocol;
 
-import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleImportBindingProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportBindingProtocol;
 

@@ -328,9 +328,11 @@ AuthenticationPolicy :
 	
 AuthToken : (optional?='optional')? kind=AuthTokenKind ;
 
-HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgKind ;
+HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgorithmKind ;
 
-enum HashAlgKind : MD5 | SHA1 | SHA256 | RSA | PlainText;
+HashAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName];
+
+//enum HashAlgKind : MD5 | SHA1 | SHA256 | RSA | PlainText;
 
 /* How messages are signed, to verify their authenticity */
 SigningPolicy : 
@@ -346,7 +348,8 @@ MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpress
 
 enum MessagePartRefKind: header | body | attachments | all | expression;
 
-enum SigningAlgorithm: NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
+SigningAlgorithm: type=[jvmTypes::JvmType|QualifiedName];
+//enum SigningAlgorithm: NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
 
 /* How messages are encrypted */
 EncryptionPolicy : 
@@ -358,9 +361,11 @@ EncryptionPolicy :
 	'}'
 ;
 
-enum CipherAlgorithmKind: NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES='3DES' | AES128 | AES256;
+CipherAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName];
+//enum CipherAlgorithmKind: NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES='3DES' | AES128 | AES256;
 
-enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
+AuthTokenKind: type=[jvmTypes::JvmType|QualifiedName];
+//enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
 
 enum LogPolicyKind: none | header | all;
 

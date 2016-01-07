@@ -3,6 +3,8 @@
  */
 package org.xkonnex.repo.dsl.moduledsl.scoping;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +16,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.scoping.impl.ImportNormalizer;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
@@ -291,4 +294,13 @@ public class ModuleDslScopeProvider extends ComponentAwareVersionedScopeProvider
 		}
 		return filter;
 	}
+	
+	@Override
+	protected List<ImportNormalizer> getImplicitImports(boolean ignoreCase) {
+		List<ImportNormalizer> result = newArrayList();
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.moduledsl.ext.protocol.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.moduledsl.ext.assembly.*", ignoreCase));
+		return result;
+	}
+	
 }

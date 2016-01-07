@@ -3,6 +3,8 @@
  */
 package org.xkonnex.repo.dsl.bindingdsl.scoping;
 
+import static com.google.common.collect.Lists.newArrayList;
+
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -14,6 +16,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.ISelectable;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.FilteringScope;
+import org.eclipse.xtext.scoping.impl.ImportNormalizer;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
@@ -152,4 +155,14 @@ public class BindingDslScopeProvider extends ComponentAwareVersionedScopeProvide
 			}
 		});
 	}
+	
+	@Override
+	protected List<ImportNormalizer> getImplicitImports(boolean ignoreCase) {
+		List<ImportNormalizer> result = newArrayList();
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.bindingdsl.ext.crypto.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.bindingdsl.ext.protocol.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.bindingdsl.ext.crypto.token.*", ignoreCase));
+		return result;
+	}
+
 }

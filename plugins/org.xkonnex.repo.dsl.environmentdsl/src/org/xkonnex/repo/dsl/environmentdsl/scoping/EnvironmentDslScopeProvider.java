@@ -3,6 +3,10 @@
  */
 package org.xkonnex.repo.dsl.environmentdsl.scoping;
 
+import static com.google.common.collect.Lists.newArrayList;
+
+import java.util.List;
+
 import javax.inject.Inject;
 
 import org.eclipse.emf.ecore.EObject;
@@ -12,6 +16,7 @@ import org.eclipse.xtext.common.types.xtext.AbstractTypeScope;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.impl.ImportNormalizer;
 import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.AbstractType;
 import org.xkonnex.repo.dsl.basedsl.scoping.ComponentAwareVersionedScopeProvider;
@@ -36,4 +41,14 @@ public class EnvironmentDslScopeProvider extends ComponentAwareVersionedScopePro
 			EObject context, EReference reference) {
 		return new NullVersionFilter<IEObjectDescription>();
 	}
+	
+	
+	@Override
+	protected List<ImportNormalizer> getImplicitImports(boolean ignoreCase) {
+		List<ImportNormalizer> result = newArrayList();
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.connector.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.server.*", ignoreCase));
+		return result;
+	}
+
 }

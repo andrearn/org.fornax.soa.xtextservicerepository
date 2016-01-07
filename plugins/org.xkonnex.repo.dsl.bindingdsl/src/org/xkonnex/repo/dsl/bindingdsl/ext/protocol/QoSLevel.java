@@ -1,4 +1,4 @@
-package org.xkonnex.repo.dsl.bindingdsl.ext.protocol.mqtt;
+package org.xkonnex.repo.dsl.bindingdsl.ext.protocol;
 
 public enum QoSLevel {
 	
