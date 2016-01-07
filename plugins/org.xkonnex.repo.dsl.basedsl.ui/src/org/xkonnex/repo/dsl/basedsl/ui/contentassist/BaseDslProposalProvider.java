@@ -5,11 +5,17 @@ package org.xkonnex.repo.dsl.basedsl.ui.contentassist;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.common.types.JvmEnumerationLiteral;
+import org.eclipse.xtext.common.types.JvmEnumerationType;
+import org.eclipse.xtext.common.types.JvmGenericType;
 import org.eclipse.xtext.common.types.JvmIdentifiableElement;
 import org.eclipse.xtext.common.types.JvmOperation;
+import org.eclipse.xtext.common.types.JvmPrimitiveType;
 import org.eclipse.xtext.common.types.JvmType;
 import org.eclipse.xtext.common.types.xtext.ui.ITypesProposalProvider;
 import org.eclipse.xtext.common.types.xtext.ui.TypeMatchFilters;
@@ -149,6 +155,42 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 				typeProposalProvider.createSubTypeProposals(parameterType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 			}
 		}
+	}
+	
+	@Override
+	public void completeAssignment_Value(EObject model,
+			org.eclipse.xtext.Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if(model instanceof Assignment) {
+			Assignment attribute = (Assignment) model;
+			if (attribute.getFeature() == null || attribute.getFeature().eIsProxy())
+				return;
+			JvmIdentifiableElement feature = attribute.getFeature();
+			if (feature instanceof JvmOperation) {
+				JvmType parameterType = ((JvmOperation) feature).getParameters().get(0).getParameterType().getType();
+				if (parameterType instanceof JvmEnumerationType) {
+					JvmEnumerationType enumType = (JvmEnumerationType)parameterType;
+					EList<JvmEnumerationLiteral> literals = enumType.getLiterals();
+					for (JvmEnumerationLiteral jvmEnumerationLiteral : literals) {
+						if (!acceptor.canAcceptMoreProposals())
+							return;
+						String proposalText = jvmEnumerationLiteral.getSimpleName();
+						StyledString displayText = new StyledString(proposalText + " - Value");
+						ICompletionProposal proposal = createCompletionProposal(proposalText, displayText, null, 600,
+								context.getPrefix(), context);
+						acceptor.accept(proposal);
+					}
+				} else if(parameterType instanceof JvmGenericType) {
+					JvmGenericType genericType = (JvmGenericType)parameterType;
+					if (!("Boolean".equals(genericType.getSimpleName()) || "String".equals(genericType.getSimpleName()) || "Integer".equals(genericType.getSimpleName()))) {
+						String proposalText = "{";
+						acceptor.accept(createCompletionProposal(proposalText,  new StyledString(proposalText + " - Value"), null, 600,
+								context.getPrefix(), context));
+					}
+				}
+			}
+		}
+			
 	}
 	
 	@Override

@@ -69,11 +69,7 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 	}
 
 	def protected boolean isAllowed(Value value, boolean allowObjects) {
-		return allowObjects || !(value instanceof Component) // TODO: discuss
-		// how we handle
-		// component
-		// references in
-		// strings
+		return allowObjects || !(value instanceof Component) 
 	}
 
 	def boolean collectReferablesUpTo(Component component, EObject object, List<Component> result) {

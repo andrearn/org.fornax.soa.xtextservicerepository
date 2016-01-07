@@ -18,10 +18,10 @@ class AbstractModelBasedServiceTests extends AbstractXtextTests {
 	@Before
 	override setUp() throws Exception {
 		super.setUp
-		with(BaseDslStandaloneSetup)
-		with(EnvironmentDslStandaloneSetup)
-		with(ProfileDslStandaloneSetup)
-		with(ServiceDslTestSetup)
+		with (typeof (BaseDslStandaloneSetup))
+		with (typeof (EnvironmentDslStandaloneSetup))
+		with (typeof (ProfileDslStandaloneSetup))
+		with (typeof (ServiceDslTestSetup))
 	}
 	
 	protected def ResourceSet readModel(String modelPath) {

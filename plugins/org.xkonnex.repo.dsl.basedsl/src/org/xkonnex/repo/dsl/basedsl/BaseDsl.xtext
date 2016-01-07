@@ -157,7 +157,7 @@ Assignment:
 	feature=[jvmTypes::JvmIdentifiableElement|QualifiedName] '=' value=Value;
 
 Value:
-	Component |
+	NestedComponent |
 	StringValue |
 	BooleanValue |
 	IntValue |
@@ -168,7 +168,7 @@ BooleanValue:
 	{BooleanLiteral} (isTrue?='true'|'false');
 	
 EnumLiteralValue: 
-	value = [jvmTypes::JvmIdentifiableElement|QualifiedName]
+	value = [jvmTypes::JvmEnumerationLiteral|QualifiedName]
 ;
 
 Reference:
@@ -184,3 +184,9 @@ Component:
 	{Component} (name=QualifiedName 'type')? (type=[jvmTypes::JvmType|QualifiedName])? '{'
 		assignment+=Assignment* 
 	'}';
+	
+NestedComponent returns Component:
+	{Component} '{'
+		assignment+=Assignment* 
+	'}';
+	

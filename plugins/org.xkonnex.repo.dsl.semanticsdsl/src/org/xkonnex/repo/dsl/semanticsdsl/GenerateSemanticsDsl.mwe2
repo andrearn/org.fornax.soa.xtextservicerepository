@@ -50,9 +50,7 @@ Workflow {
 
 			// The antlr parser generator fragment.
 			fragment = parser.antlr.XtextAntlrGeneratorFragment {
-			//  options = {
-			//		backtrack = true
-			//	}
+
 			}
 
 			// java-based API for validation 
@@ -94,9 +92,7 @@ Workflow {
 
 			// generates a more lightweight Antlr parser and lexer tailored for content assist  
 			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
-//				options = {
-//					backtrack = true
-//				}
+
 			}
 
 			fragment = refactoring.RefactorElementNameFragment {}
@@ -106,11 +102,6 @@ Workflow {
     		// provides a preference page for template proposals
     		fragment = templates.CodetemplatesGeneratorFragment auto-inject {}
 
-			// project wizard (optional) 
-			// fragment = projectWizard.SimpleProjectWizardFragment {
-			// 		generatorProjectName = "${projectName}.generator" 
-			//		modelFileExtension = file.extensions
-			// }
 		}
 	}
 }
