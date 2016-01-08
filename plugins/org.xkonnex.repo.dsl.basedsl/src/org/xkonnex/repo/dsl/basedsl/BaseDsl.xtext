@@ -190,3 +190,15 @@ NestedComponent returns Component:
 		assignment+=Assignment* 
 	'}';
 	
+AuthToken : (optional?='optional')? kind=AuthTokenKind ;
+AuthTokenKind: type=[jvmTypes::JvmType|QualifiedName];
+
+HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgorithmKind ;
+HashAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName];
+
+SigningAlgorithm: type=[jvmTypes::JvmType|QualifiedName];
+
+CipherAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName];
+
+
+	

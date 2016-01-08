@@ -22,9 +22,11 @@ Require-Bundle: org.eclipse.xtext.generator;bundle-version="2.8.0";resolution:=o
  org.xkonnex.repo.dsl.moduledsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.profiledsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.semanticsdsl;bundle-version="2.0.0",
+ org.xkonnex.repo.dsl.sladsl;bundle-version="2.0.0",
  org.eclipse.xtext;bundle-version="2.8.0",
  org.eclipse.xtext.common.types,
- org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
+ org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.bindingdsl,
@@ -35,8 +37,6 @@ Export-Package: org.xkonnex.repo.dsl.bindingdsl,
  org.xkonnex.repo.dsl.bindingdsl.bindingDsl,
  org.xkonnex.repo.dsl.bindingdsl.bindingDsl.impl,
  org.xkonnex.repo.dsl.bindingdsl.bindingDsl.util,
- org.xkonnex.repo.dsl.bindingdsl.ext.crypto,
- org.xkonnex.repo.dsl.bindingdsl.ext.crypto.token,
  org.xkonnex.repo.dsl.bindingdsl.ext.protocol,
  org.xkonnex.repo.dsl.bindingdsl.formatting,
  org.xkonnex.repo.dsl.bindingdsl.parser.antlr,

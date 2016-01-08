@@ -97,6 +97,9 @@ Workflow {
 			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
 				
 			}
+
+			// Xbase support
+			fragment = types.TypesGeneratorFragment {}
 			
 			fragment = refactoring.RefactorElementNameFragment {}
 

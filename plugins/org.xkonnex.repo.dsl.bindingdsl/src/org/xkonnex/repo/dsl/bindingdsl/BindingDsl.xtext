@@ -19,6 +19,7 @@ import "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl" as moduleDsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as environmentDsl
 import "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" as profileDsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
+import "http://www.xkonnex.org/repo/dsl/sladsl/SLADsl" as slaDsl
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 BindingModel:
@@ -326,12 +327,6 @@ AuthenticationPolicy :
 		('issuer' issuer = STRING)?
 	'}';
 	
-AuthToken : (optional?='optional')? kind=AuthTokenKind ;
-
-HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgorithmKind ;
-
-HashAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName];
-
 //enum HashAlgKind : MD5 | SHA1 | SHA256 | RSA | PlainText;
 
 /* How messages are signed, to verify their authenticity */
@@ -348,7 +343,6 @@ MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpress
 
 enum MessagePartRefKind: header | body | attachments | all | expression;
 
-SigningAlgorithm: type=[jvmTypes::JvmType|QualifiedName];
 //enum SigningAlgorithm: NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
 
 /* How messages are encrypted */
@@ -361,23 +355,25 @@ EncryptionPolicy :
 	'}'
 ;
 
-CipherAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName];
 //enum CipherAlgorithmKind: NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES='3DES' | AES128 | AES256;
 
-AuthTokenKind: type=[jvmTypes::JvmType|QualifiedName];
 //enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
 
 enum LogPolicyKind: none | header | all;
 
 /** A nonfunctional requirement claimed to be met */
-Assertion: AvailabilityAssertion | LatencyAssertion | CapacityAssertion | ReliablityAssertion | CostAssertion | AccuracyAssertion;
+Assertion: AvailabilityAssertion | LatencyAssertion | CapacityAssertion | ReliablityAssertion | CostAssertion | AccuracyAssertion | PredefinedAssertion;
+
+PredefinedAssertion: 'predefined-assertion' assertion=[slaDsl::Assertion|QualifiedName];
 
 AvailabilityAssertion:
 	{AvailabilityAssertion}
-	('availability' availability=STRING)?
-	('mean-time-between-failure' mtbf=STRING)?
-	('mean-time-to-repair' mttr=STRING (mttrPercentile=Percentile)?)?
-	('regular-down-times' regularDownTimes = STRING)?
+	'availability-assertion' '{'
+		('availability' availability=STRING)? 
+		('mean-time-between-failure' mtbf=STRING)?
+		('mean-time-to-repair' mttr=STRING ('percentile' mttrPercentile=Percentile)?)?
+		('regular-down-times' regularDownTimes = STRING)?
+	'}'
 ;
 
 LatencyAssertion:
@@ -386,28 +382,37 @@ LatencyAssertion:
 
 CapacityAssertion:
 	{CapacityAssertion}
-	('num-of-requests' requestNum=STRING 'per' timeUnit=STRING)?
-	('message-size' messageSize=STRING)?
+	'capacity-assertion' '{' 
+		('num-of-requests' requestNum=STRING 'per' timeUnit=STRING)?
+		('message-size' messageSize=STRING)?
+	'}'
 ;
 
 ReliablityAssertion:
-	'message-exchange-reliability' reliability=ReliablilityKind
-	(inOrderDelivery ?= 'in-order-delivery')?
+	'reliablility-assertion' '{'
+		'message-exchange-reliability' reliability=ReliablilityKind
+		(inOrderDelivery ?= 'in-order-delivery')?
+	'}'
 ;
 
 enum ReliablilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
 CostAssertion:
-	'costs' costsAmount=STRING
-	'billed-per-unit' billedUnit=STRING
+	'costs-assertion' '{'
+		'costs' costsAmount=STRING
+		'billed-per-unit' billedUnit=STRING
+	'}'
 ;
 
 AccuracyAssertion:
-	'max-error-rate' maxErrorRate=STRING
+	'accuracy-assertion' '{'
+		'max-error-rate' maxErrorRate=STRING
+	'}'
 ;
 
 
-Percentile: percentile=INT('.'INT)*'%';
+Percentile: percentile=INT('.'INT)?'%';
 
 EndpointQualifierRef:
 	'endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName]
 ;
+

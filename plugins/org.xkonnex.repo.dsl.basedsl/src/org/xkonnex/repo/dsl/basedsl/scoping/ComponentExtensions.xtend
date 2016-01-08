@@ -28,9 +28,6 @@ class ComponentExtensions {
 	}
 	
 	def JvmType getActualType(EnumLiteralValue component) {
-//		val JvmType result = component.enumType;
-//		if (result != null)
-//			return result;
 		val EObject container = component.eContainer();
 		if (container instanceof Assignment) {
 			val JvmIdentifiableElement containerFeature = (container as Assignment).getFeature();
@@ -39,7 +36,6 @@ class ComponentExtensions {
 				return parameter.getParameterType().getType();
 			}
 		}
-//		return result;
 		return null
 		
 	}

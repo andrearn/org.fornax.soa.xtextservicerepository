@@ -27,6 +27,9 @@ var envGenModel = "platform:/resource/org.xkonnex.repo.dsl.environmentdsl/model/
 var profMetaModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.ecore"
 var profGenModel="platform:/resource/org.xkonnex.repo.dsl.profiledsl/model/generated/ProfileDsl.genmodel"
 
+var slaMetaModel="platform:/resource/org.xkonnex.repo.dsl.sladsl/model/generated/SLADsl.ecore"
+var slaGenModel="platform:/resource/org.xkonnex.repo.dsl.sladsl/model/generated/SLADsl.genmodel"
+
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
@@ -37,18 +40,21 @@ Workflow {
 		uriMap = { to = modMetaModel from = "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl" }
 		uriMap = { to = envMetaModel from = "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" }
 		uriMap = { to = profMetaModel from = "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" }
+		uriMap = { to = slaMetaModel from = "http://www.xkonnex.org/repo/dsl/sladsl/SLADsl" }
 		registerEcoreFile = baseMetaModel
 		registerEcoreFile = semMetaModel
 		registerEcoreFile = svcMetaModel
 		registerEcoreFile = modMetaModel
 		registerEcoreFile = envMetaModel
 		registerEcoreFile = profMetaModel
+		registerEcoreFile = slaMetaModel
 		registerGenModelFile = baseGenModel
 		registerGenModelFile = semGenModel
 		registerGenModelFile = svcGenModel
 		registerGenModelFile = modGenModel
 		registerGenModelFile = envGenModel
 		registerGenModelFile = profGenModel
+		registerGenModelFile = slaGenModel
 		registerGenModelFile = "platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.genmodel"
 	}
 
@@ -88,7 +94,6 @@ Workflow {
 			// The antlr parser generator fragment.
 			fragment = parser.antlr.XtextAntlrGeneratorFragment {
 				options = {
-					backtrack = true
 					classSplitting = true
 				}
 			}
@@ -115,6 +120,7 @@ Workflow {
 			// labeling API 
 			fragment = labeling.LabelProviderFragment {
 				generateStub = false
+				generateXtendStub = true
 			}
 
 			// outline API 
@@ -135,7 +141,6 @@ Workflow {
 			// generates a more lightweight Antlr parser and lexer tailored for content assist  
 			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
 				options = {
-					backtrack = true
 					classSplitting = true
 				}
 			}

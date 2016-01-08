@@ -1,4 +1,4 @@
-package org.xkonnex.repo.dsl.bindingdsl.ext.crypto.token;
+package org.xkonnex.repo.dsl.basedsl.ext.token;
 
 public class UsernamePassword implements IAuthTokenKind {
 

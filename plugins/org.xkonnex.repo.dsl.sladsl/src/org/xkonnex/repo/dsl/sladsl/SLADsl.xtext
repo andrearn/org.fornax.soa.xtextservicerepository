@@ -15,9 +15,11 @@ generate sLADsl "http://www.xkonnex.org/repo/dsl/sladsl/SLADsl"
 import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
 import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 SlaModel:
-	agreements+=SLA*;
+	agreements+=SLA*
+	assertions+=Assertion*;
 	
 SLA:
 	'service-level-agreement' name=QualifiedName (version=Version)? '{'
@@ -49,6 +51,25 @@ SLA:
 			('cancellation' cancellation = STRING )?
 			('extraordinary-cancellation' extraordinaryCancellation = STRING )?
 			(reports+=Report)*
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+ )*
+	'}';
+	
+Assertion:
+	'service-level-assertions' name=QualifiedName '{'
+			('description' description = STRING )?
+			('restrictions' restrictions=STRING )?
+			'service-quality-assertions' '{'
+				(serviceQualityProperties += ServiceQualityAssertionProperty)*
+			'}'
+			('data-security-and-protection' '{'
+					('security-guaranties' '{' 
+						securityRequirements += SecurityRequirement*
+					'}')
+				'}'
+			)?
 			('subscriptions' '{'
 				subscriptions += [basedsl::User|QualifiedName]*
 			'}')?
@@ -150,18 +171,18 @@ AuthenticationRequirement :
 		('issuer' issuer = STRING)?
 	'}';
 	
-AuthToken : (optional?='optional')? kind=AuthTokenKind ;
+//AuthToken : (optional?='optional')? kind=AuthTokenKind ;
 
-HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgKind ;
+//HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgKind ;
 
-enum HashAlgKind : MD5 | SHA1 | SHA256 | RSA | PlainText;
+//enum HashAlgKind : MD5 | SHA1 | SHA256 | RSA | PlainText;
 
 /* How messages are signed, to verify their authenticity */
 SigningRequirement : 
 	{SigningRequirement} 
 	'signing-policy' '{'
-		('supported-algorithms' supportedSigningAlgorithms+=SigningAlgothm+)?
-		('requires-algorithm' requiredSigningAlgorithm=SigningAlgothm)?
+		('supported-algorithms' supportedSigningAlgorithms+=SigningAlgorithm+)?
+		('requires-algorithm' requiredSigningAlgorithm=SigningAlgorithm)?
 		('signed-message-parts' (signedParts+=MessagePartRef)(',' signedParts+=MessagePartRef)*)?
 	'}'
 ;
@@ -170,7 +191,7 @@ MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpress
 
 enum MessagePartRefKind: header | body | attachments | all | expression;
 
-enum SigningAlgothm: NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
+//enum SigningAlgothm: NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
 
 /* How messages are encrypted */
 EncryptionRequirement : 
@@ -182,9 +203,9 @@ EncryptionRequirement :
 	'}'
 ;
 
-enum CipherAlgorithmKind: NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES='3DES' | AES128 | AES256;
+//enum CipherAlgorithmKind: NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES='3DES' | AES128 | AES256;
 
-enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
+//enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
 
 enum LogRequirementKind: none | header | all;
 
@@ -250,3 +271,58 @@ Report:
 		'report-to' reportTo=[basedsl::User|QualifiedName]
 		'contents' content=STRING
 	'}';
+	
+	
+	
+ServiceQualityAssertionProperty : AvailabilityAssertion | ThroughputAssertion | LatencyAssertion  | MaxDownTimeAssertion | CapacityAssertion | AccuracyAssertion | ReliablityRequirement;
+
+AvailabilityAssertion : 
+	'availability-assertion' '{'
+		'availability' availability=STRING
+		('mean-time-between-failure' mtbf=STRING)?
+		('mean-time-to-repair' mttr=STRING (mttrPercentile=Percentile)?)?
+		('regular-down-times' regularDownTimes = STRING)?
+	'}';
+	
+ThroughputAssertion:
+	'throughput-assertion' '{'
+		'throughput' definition = STRING 
+		'score-to-be-kept' score = STRING 
+	'}';
+
+LatencyAssertion:
+	'latency' '{'
+		'latency' latency="STRING"
+		'percentile' percentile=Percentile
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}';
+	
+	
+MaxDownTimeAssertion:
+	'max-downtime-assertion' '{'
+		'duration' definition = STRING 
+	'}';
+	
+CapacityAssertion:
+	'capacity-assertion' '{'
+		{CapacityAssertion}
+		('num-of-requests' requestNum=STRING 'per' timeUnit=STRING)?
+		('message-size' messageSize=STRING)?
+	'}'
+;
+
+AccuracyAssertion:
+	'accuracy-assertion' '{'
+		'max-error-rate' maxErrorRate=STRING
+	'}'
+;
+
+LogAssertion: 'logging' '{'
+	'message-log-level' logLevel=LogRequirementKind
+	'additional-logging-requirements' additionalLoggingRequirement=STRING
+;
+
+/* Security policy to be applied to the services */
+SecurityAssertion : AuthenticationRequirement | SigningRequirement | EncryptionRequirement;
+

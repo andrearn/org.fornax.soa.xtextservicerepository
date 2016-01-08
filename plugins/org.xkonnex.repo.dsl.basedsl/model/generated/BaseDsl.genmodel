@@ -117,6 +117,27 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//Component/type"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//Component/assignment"/>
     </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//AuthToken">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//AuthToken/optional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//AuthToken/kind"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//AuthTokenKind">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//AuthTokenKind/type"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//HashAlgorithm">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//HashAlgorithm/optional"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//HashAlgorithm/useBase64"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//HashAlgorithm/kind"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//HashAlgorithmKind">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//HashAlgorithmKind/type"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//SigningAlgorithm">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//SigningAlgorithm/type"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//CipherAlgorithmKind">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//CipherAlgorithmKind/type"/>
+    </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//BooleanLiteral">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//BooleanLiteral/isTrue"/>
     </genClasses>

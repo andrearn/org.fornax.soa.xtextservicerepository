@@ -159,9 +159,9 @@ public class BindingDslScopeProvider extends ComponentAwareVersionedScopeProvide
 	@Override
 	protected List<ImportNormalizer> getImplicitImports(boolean ignoreCase) {
 		List<ImportNormalizer> result = newArrayList();
-		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.bindingdsl.ext.crypto.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.basedsl.ext.crypto.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.basedsl.ext.token.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.bindingdsl.ext.protocol.*", ignoreCase));
-		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.bindingdsl.ext.crypto.token.*", ignoreCase));
 		return result;
 	}
 

@@ -3,9 +3,14 @@
  */
 package org.xkonnex.repo.dsl.basedsl.scoping;
 
+import static com.google.common.collect.Lists.newArrayList;
+
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.xtext.resource.IEObjectDescription;
+import org.eclipse.xtext.scoping.impl.ImportNormalizer;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.AssetRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
@@ -31,6 +36,14 @@ public class BaseDslScopeProvider extends ComponentAwareVersionedScopeProvider {
 			return createVersionFilter (v);
 		}
 		return new NullVersionFilter<IEObjectDescription>();
+	}
+	
+	@Override
+	protected List<ImportNormalizer> getImplicitImports(boolean ignoreCase) {
+		List<ImportNormalizer> result = newArrayList();
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.basedsl.ext.token.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.basedsl.ext.crypto.*", ignoreCase));
+		return result;
 	}
 
 }
