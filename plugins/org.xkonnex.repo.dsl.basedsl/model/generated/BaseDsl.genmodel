@@ -99,7 +99,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//Assignment/value"/>
     </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//Value"/>
-    <genClasses ecoreClass="BaseDsl.ecore#//BooleanValue"/>
+    <genClasses ecoreClass="BaseDsl.ecore#//BooleanValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//BooleanValue/isTrue"/>
+    </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//EnumLiteralValue">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//EnumLiteralValue/value"/>
     </genClasses>

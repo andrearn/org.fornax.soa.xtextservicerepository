@@ -18,7 +18,7 @@ class DefaultServiceNamespaceURIProviderTest extends AbstractModelBasedServiceTe
 	@Test
 	def void testGetOrgNamespacePrefixSimple() {
 		val rs = readModel("model/simple")
-		val domNs = rs.allContents.toIterable.filter(DomainNamespace).findFirst[name == "samples"]
+		val domNs = rs.allContents.toIterable.filter(typeof(DomainNamespace)).findFirst[name == "samples"]
 		val orgNs = domNs.eContainer as OrganizationNamespace
 		val provider = get(DefaultServiceNamespaceUriProvider)		
 		val orgNsURI = provider.getOrgNamespacePrefix(orgNs);
@@ -36,7 +36,7 @@ class DefaultServiceNamespaceURIProviderTest extends AbstractModelBasedServiceTe
 	@Test
 	def void testGetOrgNamespacePrefixRule() {
 		val rs = readModel("model/noShortNames")
-		val domNs = rs.allContents.toIterable.filter(DomainNamespace).findFirst[name == "samples"]
+		val domNs = rs.allContents.toIterable.filter(typeof(DomainNamespace)).findFirst[name == "samples"]
 		val orgNs = domNs.eContainer as OrganizationNamespace
 		val provider = get(DefaultServiceNamespaceUriProvider)		
 		val orgNsURI = provider.getOrgNamespacePrefix(orgNs);
@@ -54,7 +54,7 @@ class DefaultServiceNamespaceURIProviderTest extends AbstractModelBasedServiceTe
 	@Test
 	def void testGetOrgNamespacePrefixWithShortnameRule() {
 		val rs = readModel("model/withShortNames")
-		val domNs = rs.allContents.toIterable.filter(DomainNamespace).findFirst[name == "samples"]
+		val domNs = rs.allContents.toIterable.filter(typeof(DomainNamespace)).findFirst[name == "samples"]
 		val orgNs = domNs.eContainer as OrganizationNamespace
 		val provider = get(DefaultServiceNamespaceUriProvider)		
 		val orgNsURI = provider.getOrgNamespacePrefix(orgNs);

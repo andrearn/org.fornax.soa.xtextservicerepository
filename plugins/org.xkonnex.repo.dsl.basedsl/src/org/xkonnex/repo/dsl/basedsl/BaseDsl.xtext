@@ -165,7 +165,7 @@ Value:
 ;
 
 BooleanValue:
-	{BooleanLiteral} (isTrue?='true'|'false');
+	{BooleanValue} ('false' | isTrue?='true');
 	
 EnumLiteralValue: 
 	value = [jvmTypes::JvmEnumerationLiteral|QualifiedName]

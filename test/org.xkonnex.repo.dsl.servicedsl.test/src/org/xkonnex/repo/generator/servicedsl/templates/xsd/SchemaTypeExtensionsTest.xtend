@@ -27,9 +27,9 @@ class SchemaTypeExtensionsTest extends AbstractModelBasedServiceTests {
 		val ref = typeExt.toTypeNameRef(msgCtxParam.type)
 		assertEquals("oes1:ServiceMessageContext", ref)
 
-		val ns = rs.allContents.toIterable.filter(DomainNamespace).findFirst[name == "samples"]
-		val person = rs.allContents.toIterable.filter(BusinessObject).findFirst[name == "Person" && version.version == "1.0"]
-		val personV2 = rs.allContents.toIterable.filter(BusinessObject).findFirst[name == "Person" && version.version == "2.0"]
+		val ns = rs.allContents.toIterable.filter(typeof(DomainNamespace)).findFirst[name == "samples"]
+		val person = rs.allContents.toIterable.filter(typeof(BusinessObject)).findFirst[name == "Person" && version.version == "1.0"]
+		val personV2 = rs.allContents.toIterable.filter(typeof(BusinessObject)).findFirst[name == "Person" && version.version == "2.0"]
 		val addressProp = person.properties.findFirst[name == "address"]
 		val otherProp = person.properties.findFirst[name == "other"]
 		val vns = new VersionedDomainNamespace
@@ -55,8 +55,8 @@ class SchemaTypeExtensionsTest extends AbstractModelBasedServiceTests {
 	def void testToFullTypeNameRef() {
 		val rs = readModel("model/noShortNames")
 		val typeExt = get(SchemaTypeExtensions)
-		val ns = rs.allContents.toIterable.filter(DomainNamespace).findFirst[name == "samples"]
-		val person = rs.allContents.toIterable.filter(BusinessObject).findFirst[name == "Person" && version.version == "1.0"]
+		val ns = rs.allContents.toIterable.filter(typeof(DomainNamespace)).findFirst[name == "samples"]
+		val person = rs.allContents.toIterable.filter(typeof(BusinessObject)).findFirst[name == "Person" && version.version == "1.0"]
 		val addressProp = person.properties.findFirst[name == "address"]
 		val otherProp = person.properties.findFirst[name == "other"]
 		val vns = new VersionedDomainNamespace
@@ -95,7 +95,7 @@ class SchemaTypeExtensionsTest extends AbstractModelBasedServiceTests {
 	def void testIsOptional() {
 		val rs = readModel("model/noShortNames")
 		val typeExt = get(SchemaTypeExtensions)
-		val innerDoc = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "innerDocument"]
+		val innerDoc = rs.allContents.toIterable.filter(typeof(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property)).findFirst[name == "innerDocument"]
 		
 		val innerDocRef = typeExt.isOptionalElement(innerDoc)
 		assertTrue(innerDocRef)
@@ -107,15 +107,15 @@ class SchemaTypeExtensionsTest extends AbstractModelBasedServiceTests {
 		val rs = readModel("model/noShortNames")
 		val typeExt = get(SchemaTypeExtensions)
 		
-		val address = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "address"]
+		val address = rs.allContents.toIterable.filter(typeof(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property)).findFirst[name == "address"]
 		val addressRef = typeExt.isMimeContent(address.type)		
 		assertFalse(addressRef)
 
-		val innerDoc = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "innerDocument"]
+		val innerDoc = rs.allContents.toIterable.filter(typeof(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property)).findFirst[name == "innerDocument"]
 		val innerDocRef = typeExt.isMimeContent(innerDoc.type)		
 		assertTrue(innerDocRef)
 		
-		val attachedDoc = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "attachedDocument"]
+		val attachedDoc = rs.allContents.toIterable.filter(typeof(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property)).findFirst[name == "attachedDocument"]
 		val attachedDocRef = typeExt.isMimeContent(attachedDoc.type)
 		assertTrue (attachedDocRef)
 	}
@@ -125,15 +125,15 @@ class SchemaTypeExtensionsTest extends AbstractModelBasedServiceTests {
 		val rs = readModel("model/noShortNames")
 		val typeExt = get(SchemaTypeExtensions)
 		
-		val address = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "address"]
+		val address = rs.allContents.toIterable.filter(typeof(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property)).findFirst[name == "address"]
 		val addressRef = typeExt.isMimeContent(address.type)		
 		assertFalse(addressRef)
 
-		val innerDoc = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "innerDocument"]
+		val innerDoc = rs.allContents.toIterable.filter(typeof(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property)).findFirst[name == "innerDocument"]
 		val innerDocRef = typeExt.isMimeContentMultiPartAttachment(innerDoc.type)
 		assertFalse(innerDocRef)
 		
-		val attachedDoc = rs.allContents.toIterable.filter(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property).findFirst[name == "attachedDocument"]
+		val attachedDoc = rs.allContents.toIterable.filter(typeof(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property)).findFirst[name == "attachedDocument"]
 		val attachedDocRef = typeExt.isMimeContentMultiPartAttachment(attachedDoc.type)
 		assertTrue (attachedDocRef)
 	}
@@ -143,11 +143,11 @@ class SchemaTypeExtensionsTest extends AbstractModelBasedServiceTests {
 		val rs = readModel("model/noShortNames")
 		val typeExt = get(SchemaTypeExtensions)
 
-		val op = rs.allContents.toIterable.filter(Operation).findFirst[name=="findByName"]
+		val op = rs.allContents.toIterable.filter(typeof(Operation)).findFirst[name=="findByName"]
 		val exRef = typeExt.toExceptionNameRef(op.throws.get(0))
 		assertEquals("oxs1:NotFoundException", exRef)
 
-		val ns = rs.allContents.toIterable.filter(DomainNamespace).findFirst[name == "samples"]
+		val ns = rs.allContents.toIterable.filter(typeof(DomainNamespace)).findFirst[name == "samples"]
 		val verNs = new VersionedDomainNamespace
 		verNs.namespace = ns
 		verNs.version = "1"
@@ -169,9 +169,9 @@ class SchemaTypeExtensionsTest extends AbstractModelBasedServiceTests {
 		val ref = typeExt.toTypeNameRef(msgCtxParam.type)
 		assertEquals("oes1:ServiceMessageContext", ref)
 
-		val ns = rs.allContents.toIterable.filter(DomainNamespace).findFirst[name == "samples"]
-		val person = rs.allContents.toIterable.filter(BusinessObject).findFirst[name == "Person" && version.version == "1.0"]
-		val personV2 = rs.allContents.toIterable.filter(BusinessObject).findFirst[name == "Person" && version.version == "2.0"]
+		val ns = rs.allContents.toIterable.filter(typeof(DomainNamespace)).findFirst[name == "samples"]
+		val person = rs.allContents.toIterable.filter(typeof(BusinessObject)).findFirst[name == "Person" && version.version == "1.0"]
+		val personV2 = rs.allContents.toIterable.filter(typeof(BusinessObject)).findFirst[name == "Person" && version.version == "2.0"]
 		val addressProp = person.properties.findFirst[name == "address"]
 		val otherProp = person.properties.findFirst[name == "other"]
 		val vns = new VersionedDomainNamespace

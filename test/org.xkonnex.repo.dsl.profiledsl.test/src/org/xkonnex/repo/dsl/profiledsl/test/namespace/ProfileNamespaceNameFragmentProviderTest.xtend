@@ -17,7 +17,7 @@ class ProfileNamespaceNameFragmentProviderTest extends AbstractModelBasedProfile
 	def void testGetOrganizationNameFragment() {
 		val rs = readModel("model/noOrg")
 		val provider = get(ProfileNamespaceNameFragmentProvider)
-		val tns = rs.allContents.toIterable.filter(TechnicalNamespace).findFirst[name == "org.example.soa"]
+		val tns = rs.allContents.toIterable.filter(typeof (TechnicalNamespace)).findFirst[name == "org.example.soa"]
 		
 		val orgName = provider.getOrganizationNameFragment(tns)
 		assertEquals("org.example", orgName)
@@ -27,7 +27,7 @@ class ProfileNamespaceNameFragmentProviderTest extends AbstractModelBasedProfile
 	def void testGetOrganizationShortnameFragment() {
 		val rs = readModel("model/noOrg")
 		val provider = get(ProfileNamespaceNameFragmentProvider)
-		val tns = rs.allContents.toIterable.filter(TechnicalNamespace).findFirst[name == "org.example.soa"]
+		val tns = rs.allContents.toIterable.filter(typeof (TechnicalNamespace)).findFirst[name == "org.example.soa"]
 		
 		val orgName = provider.getOrganizationShortnameFragment(tns)
 		assertEquals("ex", orgName)
