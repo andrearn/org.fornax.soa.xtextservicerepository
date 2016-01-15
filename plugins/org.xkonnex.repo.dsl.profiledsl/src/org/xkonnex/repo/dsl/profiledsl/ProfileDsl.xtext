@@ -15,12 +15,13 @@ generate profileDsl "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl"
 
 import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as  environmentDsl
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 ProfileModel:
 	(imports+=Import)*
 	(types+=DataType)+
 	(profiles += Profile)*
-	(roles+=Role)*;
+;
 
 
 /*
@@ -38,7 +39,7 @@ Profile:
 			serviceCategory+=ServiceCategory+
 		'}')?
 		(designRules=DesignRules)?
-		(versioningRule = VersioningRule)
+		(versioningRule = VersioningStrategy)
 		/* 
 		 * basic message principles, e.g. message headers that have to be set in every service message
 		 * if not stated otherwise in the service definition
@@ -105,13 +106,7 @@ LifecycleState:
 		(transitions+=Transition)*
 	'}';
 	
-Transition: '->' targetState = [LifecycleState | QualifiedName] ('by' (roles+=[Role | QualifiedName])(',' roles+=[Role | QualifiedName])*)?;
-
-/*
- * User role, e.g. to authorize asset lifecycle state transition
- */
-Role: 
-	'role' name=ID;
+Transition: '->' targetState = [LifecycleState | QualifiedName] ('by' (roles+=RoleRef)(',' roles+=RoleRef)*)?;
 
 /* 
  * Defines a service category
@@ -147,6 +142,7 @@ DesignRules:
 		(internalNamespaceRules+=InternalNamespaceRule)*
 		(typeDefPolicy=TypeDefPolicy)?
 		(serviceDefPolicy=ServiceDefPolicy)?
+		(designRules+=CustomDesignRule)*
 	'}';
 
 /*
@@ -157,7 +153,12 @@ NamespaceRules:
 	'namespace-rules' '{'
 		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
 		(aliases+=BaseNamespaceAlias)*
+		(namespaceRules+=CustomNamespaceRule)*
 	'}';
+	
+CustomNamespaceRule: 'namespace-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
+			(assignment+=Assignment)+ 
+		'}')?;
 
 /*
  * How technical assets with the same name declare a version
@@ -166,7 +167,16 @@ NamespaceRules:
  * 	<li>by using different names, but the same namespace</li>
  * </ul>
  */	
-VersioningRule: 'versioning-strategy' versioningStrategy = VersioningStrategy;
+VersioningStrategy: 'versioning-strategy' versioningStrategy=VersioningStrategyDefinition;
+
+VersioningStrategyDefinition: SimpleVersioningStrategy | CustomVersioningStrategy;
+
+SimpleVersioningStrategy: strategyKind = VersioningStrategyKind;
+
+CustomVersioningStrategy: type=[jvmTypes::JvmType|QualifiedName] ('{'
+			assignment+=Assignment+ 
+	'}')?
+;
 
 /*
  * Definies the basic / primitive types
@@ -235,7 +245,7 @@ MessageHeader:
 			version=Version 
 			'lifecycle-state' state=[LifecycleState | QualifiedName]
 			(governanceDecisions+=GovernanceDecision)*
-			/* For which message exchange patterns the header is being used */
+			/* For which message exchange patterns / flows the header is being used */
 			'for' (exchanges+=MEPMessageKind) (',' exchanges+=MEPMessageKind)*
 			(versionEvolution = TypeVersionEvolution)?
 		'}'
@@ -246,7 +256,7 @@ MessageHeader:
 	
 enum MEPMessageKind: REQUEST = 'request' | RESPONSE = 'response' | PUBLISH = 'publish';
 
-enum VersioningStrategy: NAMESPACE = 'namespace-based' | NAME = 'name-based';
+enum VersioningStrategyKind: NAMESPACE = 'namespace-based' | NAME = 'name-based';
 
 AbstractProperty : 
 	Property | Attribute;	
@@ -323,7 +333,8 @@ InternalNamespaceRule:
 			/** @deprecated */
 			noTrailingSlash?='no-trailing-slash-in-namespace-uri'
 		)?
-	'}';
+	'}'
+;
 
 /**
  * @deprecated may be removed in a later release, should be implemented as validation rule
@@ -333,8 +344,15 @@ enum InternalNsQualifierPolicy:
 	BEFORE_LAST_ID = 'qualifier-before-last-name' |
 	USE_IF_DEFINED = 'use-when-defined' |
 	NO_QUALIFIER = 'no-qualifier'
- 	; 
+; 
 
+/**
+ * Design rule for types, such as
+ * <ul>
+ * 	<li>support for inheritance</li>
+ * 	<li>support for polymorphism</li>
+ * </ul>
+ */	
 TypeDefPolicy: 
 	{TypeDefPolicy}
 	'types' '{'
@@ -342,7 +360,28 @@ TypeDefPolicy:
 		(allowEnums?='allow-enums' )?
 		(allowInheritance?='allow-inheritance' )?
 		(allowPolymorphism?='allow-polymorphism' )?
+		(typeRules+=TypeRule)*
 	'}';
+/**
+ * Custom design rule for types implemented in Java
+ */	
+TypeRule: 'type-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
+			(assignment+=Assignment)+ 
+		'}')?;
+		
+/**
+ * Custom design rules for services implemented in Java
+ */
+ServiceRule: 'service-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
+			(assignment+=Assignment)+ 
+		'}')?;
+
+/**
+ * General custom design rule implemented in Java
+ */		
+CustomDesignRule: 'design-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
+			(assignment+=Assignment)+ 
+		'}')?;
 	
 TypeVersionEvolution:
 	{TypeVersionEvolution}
@@ -352,6 +391,7 @@ TypeVersionEvolution:
 		(extendibleXMLAttributes?='extendible-XML-attributes' )?
 		('extendible-XML-attribute-clause' extendibleXMLAttributeClause = STRING)?
 		(extendibleSubTypes?='extendible-sub-types')?
+		policies+=VersionEvolutionPolicy*
 	'}'
 ;
 
@@ -362,8 +402,16 @@ ServiceDefPolicy:
 	{ServiceDefPolicy}
 	'services' '{'
 		(operationRules=OperationDefPolicy)?
+		(serviceRules+=ServiceRule)*
 	'}';
 
+/**
+ * Design policies for service operations, such as
+ * <ul>
+ * 	<li>version evolution policies/strategies
+ * 	<li>support for polymorphic parameters</li>
+ * </ul>
+ */
 OperationDefPolicy:
 	{OperationDefPolicy}
 	'operations' '{'
@@ -371,7 +419,10 @@ OperationDefPolicy:
 		(allowPolymorphism?='allow-polymorphism' )?
 	'}'
 ;
-	
+
+/**
+ * Define how service versions can evolve. Evolution strategies depend on the technology used 
+ */	
 ServiceVersionEvolution:
 	{ServiceVersionEvolution}
 	'version-evolution' '{'
@@ -379,6 +430,18 @@ ServiceVersionEvolution:
 		('extendible-XML-clause' extendibleXMLClause = STRING )?
 		(extendibleXMLAttributes?='extendible-XML-attributes' )?
 		('extendible-XML-attribute-clause' extendibleXMLAttributeClause = STRING)?
+		policies+=VersionEvolutionPolicy*
 	'}'
 ;
+
+/**
+ * Custom version evolution policy implemented in Java
+ */
+VersionEvolutionPolicy: 
+	'version-evolution-policy' type=[jvmTypes::JvmType|QualifiedName] ('{'
+			(assignment+=Assignment)+ 
+	'}')?
+;
+
+ProfileComponent: CustomDesignRule | CustomNamespaceRule | ServiceRule | TypeRule | CustomVersioningStrategy | VersionEvolutionPolicy;
 	

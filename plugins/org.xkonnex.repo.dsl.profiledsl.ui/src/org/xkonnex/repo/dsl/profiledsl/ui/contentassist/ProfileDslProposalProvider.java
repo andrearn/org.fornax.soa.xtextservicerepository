@@ -8,33 +8,55 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.ui.internal.Model;
+import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.common.types.JvmType;
+import org.eclipse.xtext.common.types.access.IJvmTypeProvider;
+import org.eclipse.xtext.common.types.xtext.AbstractTypeScopeProvider;
+import org.eclipse.xtext.common.types.xtext.ui.ITypesProposalProvider;
+import org.eclipse.xtext.common.types.xtext.ui.TypeMatchFilters;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile;
+import org.xkonnex.repo.dsl.profiledsl.ext.rule.IDesignRule;
+import org.xkonnex.repo.dsl.profiledsl.ext.rule.INamespaceRule;
+import org.xkonnex.repo.dsl.profiledsl.ext.rule.IServiceRule;
+import org.xkonnex.repo.dsl.profiledsl.ext.rule.IServiceVersionEvolutionPolicy;
+import org.xkonnex.repo.dsl.profiledsl.ext.rule.ITypeRule;
+import org.xkonnex.repo.dsl.profiledsl.ext.rule.ITypeVersionEvolutionPolicy;
+import org.xkonnex.repo.dsl.profiledsl.ext.rule.IVersioningStrategy;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.ClassRef;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.EnumRef;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeaderRef;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslPackage;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileModel;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ServiceVersionEvolution;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.TypeVersionEvolution;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef;
-import org.xkonnex.repo.dsl.profiledsl.ui.contentassist.AbstractProfileDslProposalProvider;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
+@SuppressWarnings("restriction")
 public class ProfileDslProposalProvider extends AbstractProfileDslProposalProvider {
+	
+	@Inject
+	private ITypesProposalProvider typeProposalProvider;
+	
+	@Inject
+	private AbstractTypeScopeProvider typeScopeProvider;
 
 	public void complete_VersionId (EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		calculateVersionProposals(model, context, acceptor, false);
@@ -149,6 +171,63 @@ public class ProfileDslProposalProvider extends AbstractProfileDslProposalProvid
 				else
 					acceptor.accept (createCompletionProposal ("1.0", context));
 			}
+		}
+	}
+	
+	@Override
+	public void completeServiceRule_Type(EObject model, Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+		JvmType rule = typeProvider.findTypeByName(IServiceRule.class.getCanonicalName());
+		typeProposalProvider.createSubTypeProposals(rule, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+	}
+	
+	@Override
+	public void completeTypeRule_Type(EObject model, Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+		JvmType rule = typeProvider.findTypeByName(ITypeRule.class.getCanonicalName());
+		typeProposalProvider.createSubTypeProposals(rule, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+	}
+	
+	@Override
+	public void completeCustomDesignRule_Type(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+		JvmType rule = typeProvider.findTypeByName(IDesignRule.class.getCanonicalName());
+		typeProposalProvider.createSubTypeProposals(rule, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+	}
+	
+	@Override
+	public void complete_CustomNamespaceRule(EObject model, RuleCall ruleCall,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+		JvmType rule = typeProvider.findTypeByName(INamespaceRule.class.getCanonicalName());
+		typeProposalProvider.createSubTypeProposals(rule, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+	}
+	
+	@Override
+	public void completeCustomVersioningStrategy_Type(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+		JvmType policy = typeProvider.findTypeByName(IVersioningStrategy.class.getCanonicalName());
+		typeProposalProvider.createSubTypeProposals(policy, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+	}
+	
+	@Override
+	public void completeVersionEvolutionPolicy_Type(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model.eContainer() instanceof TypeVersionEvolution || model.eContainer().eContainer() instanceof TypeVersionEvolution) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType policy = typeProvider.findTypeByName(ITypeVersionEvolutionPolicy.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(policy, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else if (model.eContainer() instanceof ServiceVersionEvolution || model.eContainer().eContainer() instanceof ServiceVersionEvolution) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType policy = typeProvider.findTypeByName(IServiceVersionEvolutionPolicy.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(policy, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		}
 	}
 

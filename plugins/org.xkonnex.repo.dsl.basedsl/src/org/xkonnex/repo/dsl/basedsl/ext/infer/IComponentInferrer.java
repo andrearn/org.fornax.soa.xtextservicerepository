@@ -15,11 +15,21 @@ import com.google.inject.ImplementedBy;
  * Should be used to access Java extensible model elements for in in code
  * generators or other components.
  * 
- * @author aarnold
+ * @author André Arnold
  * 
  */
 @ImplementedBy(ComponentInferrer.class)
 public interface IComponentInferrer {
+
+	/**
+	 * infer a new instance of the referenced JvmType. 
+	 * 
+	 * @param type
+	 *            The referenced Java type. Should be acquired from the
+	 *            extensible model element.
+	 * @return
+	 */
+	public <T> T inferComponent(JvmType type);
 
 	/**
 	 * infer a new instance of the referenced JvmType with all assignments

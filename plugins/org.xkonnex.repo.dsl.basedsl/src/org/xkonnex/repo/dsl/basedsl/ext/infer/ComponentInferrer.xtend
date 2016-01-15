@@ -28,6 +28,15 @@ class ComponentInferrer implements IComponentInferrer {
 	@Inject extension ComponentExtensions
 
 	@SuppressWarnings("unchecked") 
+	override <T> T inferComponent(JvmType type) {
+		var Object compInst = createInstance(type)
+		if (compInst !== null) {
+			return (compInst as T)
+		}
+		return null
+	}
+	
+	@SuppressWarnings("unchecked") 
 	override <T> T inferComponent(JvmType type, List<Assignment> assignments) {
 		var Object compInst = createInstance(type)
 		if (compInst !== null) {

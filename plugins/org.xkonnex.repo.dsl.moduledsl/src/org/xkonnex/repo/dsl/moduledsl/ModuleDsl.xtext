@@ -190,4 +190,6 @@ EndpointQualifierRef:
 	'endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName] (acceptOtherEndpoints?='accepting-other-endpoints')?
 ;
 
+ModuleDslComponent returns basedsl::Component: ExtensibleAssemblyType | ExtensibleImportBindingProtocol;
+
 

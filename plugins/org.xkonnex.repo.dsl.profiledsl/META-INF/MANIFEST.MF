@@ -24,6 +24,7 @@ Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.profiledsl,
+ org.xkonnex.repo.dsl.profiledsl.ext.rule,
  org.xkonnex.repo.dsl.profiledsl.formatting,
  org.xkonnex.repo.dsl.profiledsl.namespace,
  org.xkonnex.repo.dsl.profiledsl.parser.antlr,

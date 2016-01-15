@@ -128,7 +128,7 @@ User:
 ;
 
 RoleRef:
-	role = [Role|QualifiedName]
+	role = [Role|STRING]
 ;
 
 Role:
@@ -194,11 +194,18 @@ AuthToken : (optional?='optional')? kind=AuthTokenKind ;
 AuthTokenKind: type=[jvmTypes::JvmType|QualifiedName];
 
 HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgorithmKind ;
-HashAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName];
+HashAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName] ('{'
+		assignment+=Assignment* 
+	'}')?;
 
-SigningAlgorithm: type=[jvmTypes::JvmType|QualifiedName];
+SigningAlgorithm: type=[jvmTypes::JvmType|QualifiedName] ('{'
+		assignment+=Assignment* 
+	'}')?;
 
-CipherAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName];
+CipherAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName] ('{'
+		assignment+=Assignment* 
+	'}')?;
 
+AnyBaseDslComponent returns Component: HashAlgorithmKind | SigningAlgorithm | CipherAlgorithmKind | AuthTokenKind;
 
 	

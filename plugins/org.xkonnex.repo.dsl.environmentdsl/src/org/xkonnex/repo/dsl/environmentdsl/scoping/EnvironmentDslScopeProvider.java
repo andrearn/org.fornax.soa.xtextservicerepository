@@ -48,6 +48,7 @@ public class EnvironmentDslScopeProvider extends ComponentAwareVersionedScopePro
 		List<ImportNormalizer> result = newArrayList();
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.connector.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.server.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.security.*", ignoreCase));
 		return result;
 	}
 

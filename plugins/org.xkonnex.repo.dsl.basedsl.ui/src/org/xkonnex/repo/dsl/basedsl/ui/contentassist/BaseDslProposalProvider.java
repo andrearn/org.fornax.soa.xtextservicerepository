@@ -222,7 +222,7 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 		if (model instanceof AuthTokenKind || model instanceof AuthToken) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType protocolType = typeProvider.findTypeByName(IAuthTokenKind.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(protocolType, this, context, BaseDslPackage.Literals.AUTH_TOKEN_KIND__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+			typeProposalProvider.createSubTypeProposals(protocolType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		}
 	}
 	
@@ -233,7 +233,7 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 		if (model instanceof HashAlgorithmKind || model instanceof HashAlgorithm) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType hashType = typeProvider.findTypeByName(IHashAlgorithm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(hashType, this, context, BaseDslPackage.Literals.HASH_ALGORITHM_KIND__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+			typeProposalProvider.createSubTypeProposals(hashType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		}
 	}
 	
@@ -244,7 +244,7 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 		if (model instanceof CipherAlgorithmKind) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType cipherType = typeProvider.findTypeByName(ICipherAlgoritm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(cipherType, this, context, BaseDslPackage.Literals.CIPHER_ALGORITHM_KIND__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+			typeProposalProvider.createSubTypeProposals(cipherType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		}
 	}
 	
@@ -255,7 +255,7 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 		if (model instanceof SigningAlgorithm) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType signingType = typeProvider.findTypeByName(ISigningAlgorithm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(signingType, this, context, BaseDslPackage.Literals.SIGNING_ALGORITHM__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+			typeProposalProvider.createSubTypeProposals(signingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		}
 	}
 
@@ -266,7 +266,7 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 		if (model instanceof AuthTokenKind) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType protocolType = typeProvider.findTypeByName(IAuthTokenKind.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(protocolType, this, context, BaseDslPackage.Literals.AUTH_TOKEN_KIND__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+			typeProposalProvider.createSubTypeProposals(protocolType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		}
 	}
 	
@@ -277,7 +277,7 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 		if (model instanceof HashAlgorithmKind) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType hashType = typeProvider.findTypeByName(IHashAlgorithm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(hashType, this, context, BaseDslPackage.Literals.HASH_ALGORITHM_KIND__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+			typeProposalProvider.createSubTypeProposals(hashType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		}
 	}
 	
@@ -288,7 +288,7 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 		if (model instanceof CipherAlgorithmKind) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType cipherType = typeProvider.findTypeByName(ICipherAlgoritm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(cipherType, this, context, BaseDslPackage.Literals.CIPHER_ALGORITHM_KIND__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+			typeProposalProvider.createSubTypeProposals(cipherType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		}
 	}
 	
@@ -299,7 +299,7 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 		if (model instanceof SigningAlgorithm) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType signingType = typeProvider.findTypeByName(ISigningAlgorithm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(signingType, this, context, BaseDslPackage.Literals.SIGNING_ALGORITHM__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+			typeProposalProvider.createSubTypeProposals(signingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		}
 	}
 

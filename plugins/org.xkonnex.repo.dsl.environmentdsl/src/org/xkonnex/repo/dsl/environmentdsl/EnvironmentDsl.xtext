@@ -38,7 +38,7 @@ Environment:
 	
 enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
 
-EnvironmentComponent returns baseDsl::Component: Connector|Server;
+EnvironmentComponent returns baseDsl::Component: Connector|Server|SecurityProtocol;
 
 Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP | ExtensibleServer;
 
@@ -537,7 +537,7 @@ User returns baseDsl::User:
 		('phone' phone=STRING )?
 	'}';
 	
-enum SecurityProtocol: NONE | SSLv2 | SSLv3 | TLS | IPSec;
+SecurityProtocol: type = [jvmTypes::JvmType|QualifiedName];
 	
 //QualifiedNameWithWildcard:
 //	QualifiedName '.*'?;
