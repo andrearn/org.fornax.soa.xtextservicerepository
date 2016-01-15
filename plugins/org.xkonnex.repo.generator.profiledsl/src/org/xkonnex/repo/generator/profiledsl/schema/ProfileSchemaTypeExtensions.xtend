@@ -141,26 +141,26 @@ class ProfileSchemaTypeExtensions {
 		t.many;
 	}
 	
-	def boolean typesUseExtendibleProperties (MessageHeader header) {
+	def boolean typesUseExtensibleProperties (MessageHeader header) {
 		if (header.versionEvolution != null) {
-			return  header.versionEvolution.extendibleProperties;
+			return  header.versionEvolution.extensibleProperties;
 		} else {
 			return false
 		}
 		
 	}
-	def boolean typesUseExtendibleXMLAttributes (MessageHeader header) {
+	def boolean typesUseExtensibleXMLAttributes (MessageHeader header) {
 		if (header.versionEvolution != null) {
-			return  header.versionEvolution.extendibleXMLAttributes;
+			return  header.versionEvolution.extensibleXMLAttributes;
 		} else {
 			return false
 		}
 	}
 	
-	def String getTypesExtendiblePropertiesClause (MessageHeader header) {
-		if (header.typesUseExtendibleProperties) {
-			if (header.versionEvolution.extendibleXMLClause != null) {
-				return header.versionEvolution.extendibleXMLClause;
+	def String getTypesExtensiblePropertiesClause (MessageHeader header) {
+		if (header.typesUseExtensibleProperties) {
+			if (header.versionEvolution.extensibleXMLClause != null) {
+				return header.versionEvolution.extensibleXMLClause;
 			} else {
 				return 
 				'''
@@ -174,10 +174,10 @@ class ProfileSchemaTypeExtensions {
 		
 	}
 	
-	def String getTypesExtendibleXMLAttributesClause (MessageHeader header) {
-		if (header.typesUseExtendibleXMLAttributes) {
-			if (header.versionEvolution.extendibleXMLAttributeClause != null) {
-				return header.versionEvolution.extendibleXMLAttributeClause;
+	def String getTypesExtensibleXMLAttributesClause (MessageHeader header) {
+		if (header.typesUseExtensibleXMLAttributes) {
+			if (header.versionEvolution.extensibleXMLAttributeClause != null) {
+				return header.versionEvolution.extensibleXMLAttributeClause;
 			} else {
 				return 
 				'''

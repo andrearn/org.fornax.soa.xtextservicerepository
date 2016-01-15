@@ -131,11 +131,11 @@ default soa-profile SampleArchitectureProfile {
 			 */
 			version-evolution {
 				/* XSDs will need a placeholder element for response messages. By default a list of "any"-elements */
-				extendible-properties
+				extensible-properties
 				/* 
 				 * And placeholders for XSD attributes is defined will be used as well
 				 */
-				extendible-XML-attributes	
+				extensible-XML-attributes	
 			}
 		}
 	}
@@ -160,9 +160,9 @@ default soa-profile SampleArchitectureProfile {
 				lifecycle-state ExSOALifecycle.productive
 				for request , response , publish
 				version-evolution {
-					extendible-properties
-					extendible-XML-attributes
-					extendible-sub-types
+					extensible-properties
+					extensible-XML-attributes
+					extensible-sub-types
 				}
 			}
 			msgCtx : org.example.soa.ServiceMessageContext majorVersion 1

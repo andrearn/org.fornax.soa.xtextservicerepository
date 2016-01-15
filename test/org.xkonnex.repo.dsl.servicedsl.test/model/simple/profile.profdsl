@@ -51,9 +51,9 @@ default soa-profile test {
 				lifecycle-state TestLifecycle.productive
 				for request , response , publish
 				version-evolution {
-					extendible-properties
-					extendible-XML-attributes
-					extendible-sub-types
+					extensible-properties
+					extensible-XML-attributes
+					extensible-sub-types
 				}
 			}
 			msgCtx : org.example.soa.ServiceMessageContext majorVersion 1

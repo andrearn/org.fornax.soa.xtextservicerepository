@@ -73,11 +73,11 @@ default soa-profile SampleArchitectureProfile {
 			version-evolution {
 				
 				/* XSDs will need a placeholder element for response messages. By default a list of "any"-elements */
-				extendible-properties
+				extensible-properties
 				/* 
 				 * And placeholders for XSD attributes is defined will be used as well
 				 */
-				extendible-XML-attributes	
+				extensible-XML-attributes	
 			}
 		}
 	}

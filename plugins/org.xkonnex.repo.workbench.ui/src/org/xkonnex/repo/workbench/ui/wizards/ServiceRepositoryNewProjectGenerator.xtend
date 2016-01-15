@@ -97,8 +97,8 @@ class ServiceRepositoryNewProjectGenerator {
 					
 					types {
 						version-evolution {
-							extendible-properties
-							extendible-XML-attributes
+							extensible-properties
+							extensible-XML-attributes
 						}
 						allow-enums
 						allow-inheritance

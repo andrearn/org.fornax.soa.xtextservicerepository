@@ -72,31 +72,31 @@ class ServiceTemplateExtensions {
 	}
 	
 	
-	def boolean operationsUseExtendableParameters (Profile p) {
+	def boolean operationsUseExtensibleParameters (Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.serviceDefPolicy != null 
 			&& p.designRules.serviceDefPolicy.operationRules != null
 			&& p.designRules.serviceDefPolicy.operationRules.versionEvolution != null) {
-			return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleParameters;
+			return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extensibleParameters;
 		} else {
 			return false
 		}
 		
 	}
-	def boolean operationsUseExtendableXMLAttributes (Profile p) {
+	def boolean operationsUseExtensibleXMLAttributes (Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.serviceDefPolicy != null 
 			&& p.designRules.serviceDefPolicy.operationRules != null
 			&& p.designRules.serviceDefPolicy.operationRules.versionEvolution != null) {
-			return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLAttributes;
+			return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extensibleXMLAttributes;
 		} else {
 			return false
 		}
 	}		
-	def String getOperationsExtendibleParametersClause (Profile p) {
-		if (p.operationsUseExtendableParameters) {
-			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause != null) {
-				return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLClause;
+	def String getOperationsExtensibleParametersClause (Profile p) {
+		if (p.operationsUseExtensibleParameters) {
+			if (p.designRules.typeDefPolicy.versionEvolution.extensibleXMLClause != null) {
+				return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extensibleXMLClause;
 			} else {
 				return 
 				'''
@@ -109,10 +109,10 @@ class ServiceTemplateExtensions {
 		}
 		
 	}
-	def String getOperationsExtendibleXMLAttributesClause (Profile p) {
-		if (p.operationsUseExtendableXMLAttributes) {
-			if (p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLAttributeClause != null) {
-				return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extendibleXMLAttributeClause;
+	def String getOperationsExtensibleXMLAttributesClause (Profile p) {
+		if (p.operationsUseExtensibleXMLAttributes) {
+			if (p.designRules.serviceDefPolicy.operationRules.versionEvolution.extensibleXMLAttributeClause != null) {
+				return p.designRules.serviceDefPolicy.operationRules.versionEvolution.extensibleXMLAttributeClause;
 			} else {
 				return 
 				'''

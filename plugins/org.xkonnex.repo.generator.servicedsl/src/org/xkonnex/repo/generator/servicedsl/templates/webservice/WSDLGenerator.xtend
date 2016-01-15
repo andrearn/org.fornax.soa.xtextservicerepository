@@ -184,12 +184,12 @@ class WSDLGenerator {
 					<xsd:element name="fetchProfileName" type="xsd:string" minOccurs="0" maxOccurs="1" />
 					«ENDIF-»
 					*/»
-					«IF profile.operationsUseExtendableParameters()»
+					«IF profile.operationsUseExtensibleParameters()»
 						<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
 							processContents="skip"/>
 					«ENDIF»
 				</xsd:sequence>
-				«IF profile.operationsUseExtendableXMLAttributes()»
+				«IF profile.operationsUseExtensibleXMLAttributes()»
 					<xsd:anyAttribute namespace="##any"/>
 	    		«ENDIF»
 			</xsd:complexType>
@@ -201,12 +201,12 @@ class WSDLGenerator {
 						«o.findBestMatchingResponseHeader (profile).toParameter»
 					«ENDIF»
 					«o.^return.map(r|r.toParameter()).join»
-					«IF profile.operationsUseExtendableParameters()»
+					«IF profile.operationsUseExtensibleParameters()»
 						<xsd:any maxOccurs="unbounded" minOccurs="0" namespace="##other"
 							processContents="skip"/>
 					«ENDIF»
 				</xsd:sequence>
-				«IF profile.operationsUseExtendableXMLAttributes()»
+				«IF profile.operationsUseExtensibleXMLAttributes()»
 					<xsd:anyAttribute namespace="##any"/>
 	    		«ENDIF»
 			</xsd:complexType>

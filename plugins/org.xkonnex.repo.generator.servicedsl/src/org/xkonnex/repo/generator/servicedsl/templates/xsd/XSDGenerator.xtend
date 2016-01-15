@@ -295,8 +295,8 @@ class XSDGenerator {
 				</xsd:complexContent>
 			«ELSE»
 				«bo.toPropertySequenceWithAny (currNs, profile, minState)»
-				«IF profile.typesUseExtendibleXMLAttributes()»
-					«profile.typesExtendibleXMLAttributesClause»
+				«IF profile.typesUseExtensibleXMLAttributes()»
+					«profile.typesExtensibleXMLAttributesClause»
 				«ENDIF»
 			«ENDIF»
 		</xsd:complexType>
@@ -322,8 +322,8 @@ class XSDGenerator {
 	def dispatch toPropertySequenceWithAny(BusinessObject bo, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«bo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
-			«IF profile.typesUseExtendibleProperties ()»
-				«profile.typesExtendiblePropertiesClause»
+			«IF profile.typesUseExtensibleProperties ()»
+				«profile.typesExtensiblePropertiesClause»
 			«ENDIF»
 		</xsd:sequence>
 	'''
@@ -339,8 +339,8 @@ class XSDGenerator {
 	def dispatch toPropertySequenceWithAny(QueryObject qo, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«qo.properties.map (e|e.toProperty (currNs, profile, minState)).join»
-			«IF profile.typesUseExtendibleProperties ()»
-				«profile.typesExtendiblePropertiesClause»
+			«IF profile.typesUseExtensibleProperties ()»
+				«profile.typesExtensiblePropertiesClause»
 			«ENDIF»
 		</xsd:sequence>
 	'''
@@ -376,8 +376,8 @@ class XSDGenerator {
 	def dispatch toPropertySequenceWithAny (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception ex, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 		<xsd:sequence>
 			«ex.properties.map (e|e.toProperty (currNs, profile, minState)).join»
-			«IF profile.typesUseExtendibleProperties ()»
-				«profile.typesExtendiblePropertiesClause»
+			«IF profile.typesUseExtensibleProperties ()»
+				«profile.typesExtensiblePropertiesClause»
 			«ENDIF»
 		</xsd:sequence>
 	'''
@@ -451,8 +451,8 @@ class XSDGenerator {
 				</xsd:complexContent>
 			«ELSE»
 				«ex.toPropertySequenceWithAny (currNs, profile, minState)»
-				«IF profile.typesUseExtendibleXMLAttributes()»
-					«profile.typesExtendibleXMLAttributesClause»
+				«IF profile.typesUseExtensibleXMLAttributes()»
+					«profile.typesExtensibleXMLAttributesClause»
 				«ENDIF»
 			«ENDIF»
 		</xsd:complexType>

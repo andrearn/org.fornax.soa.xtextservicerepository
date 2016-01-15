@@ -452,14 +452,14 @@ class SchemaTypeExtensions {
 	}
 	
 	/**
-	 * Determine, whether XSD type definitions should be made extendible for unknown elements in
+	 * Determine, whether XSD type definitions should be made extensible for unknown elements in
 	 * the complexType  
 	 */
-	def boolean typesUseExtendibleProperties (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
+	def boolean typesUseExtensibleProperties (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
 			&& p.designRules.typeDefPolicy.versionEvolution != null) {
-			return  p.designRules.typeDefPolicy.versionEvolution.extendibleProperties;
+			return  p.designRules.typeDefPolicy.versionEvolution.extensibleProperties;
 		} else {
 			return false
 		}
@@ -467,13 +467,13 @@ class SchemaTypeExtensions {
 	}
 	
 	/**
-	 * Determine, whether XSD type definitions should be made extendible for unknown XML attributes 
+	 * Determine, whether XSD type definitions should be made extensible for unknown XML attributes 
 	 */
-	def boolean typesUseExtendibleXMLAttributes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
+	def boolean typesUseExtensibleXMLAttributes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
 			&& p.designRules.typeDefPolicy.versionEvolution != null) {
-			return  p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributes;
+			return  p.designRules.typeDefPolicy.versionEvolution.extensibleXMLAttributes;
 		} else {
 			return false
 		}
@@ -481,13 +481,13 @@ class SchemaTypeExtensions {
 	
 	/**
 	 * Determine, whether XSD type definitions, that subtype another type definition, 
-	 * should be made extendible for unknown XML elements or attributes 
+	 * should be made extensible for unknown XML elements or attributes 
 	 */
-	def boolean useExtendibleSubtypes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
+	def boolean useExtensibleSubtypes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules != null 
 			&& p.designRules.typeDefPolicy != null 
 			&& p.designRules.typeDefPolicy.versionEvolution != null) {
-			return  p.designRules.typeDefPolicy.versionEvolution.extendibleSubTypes;
+			return  p.designRules.typeDefPolicy.versionEvolution.extensibleSubTypes;
 		} else {
 			return false
 		}
@@ -498,10 +498,10 @@ class SchemaTypeExtensions {
 	 * Get the XSD any clause that makes complexTypes backward compatible allowing additional 
 	 * optional elements
 	 */
-	def String getTypesExtendiblePropertiesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
-		if (p.typesUseExtendibleProperties) {
-			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause != null) {
-				return p.designRules.typeDefPolicy.versionEvolution.extendibleXMLClause;
+	def String getTypesExtensiblePropertiesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
+		if (p.typesUseExtensibleProperties) {
+			if (p.designRules.typeDefPolicy.versionEvolution.extensibleXMLClause != null) {
+				return p.designRules.typeDefPolicy.versionEvolution.extensibleXMLClause;
 			} else {
 				return 
 				'''
@@ -519,10 +519,10 @@ class SchemaTypeExtensions {
 	 * Get the XSD anyAttribute clause that makes complexTypes backward compatible allowing additional 
 	 * optional XML attributes in the type
 	 */
-	def String getTypesExtendibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
-		if (p.typesUseExtendibleXMLAttributes) {
-			if (p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributeClause != null) {
-				return p.designRules.typeDefPolicy.versionEvolution.extendibleXMLAttributeClause;
+	def String getTypesExtensibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
+		if (p.typesUseExtensibleXMLAttributes) {
+			if (p.designRules.typeDefPolicy.versionEvolution.extensibleXMLAttributeClause != null) {
+				return p.designRules.typeDefPolicy.versionEvolution.extensibleXMLAttributeClause;
 			} else {
 				return 
 				'''

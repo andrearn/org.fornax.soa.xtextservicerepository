@@ -386,11 +386,11 @@ CustomDesignRule: 'design-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
 TypeVersionEvolution:
 	{TypeVersionEvolution}
 	'version-evolution' '{'
-		(extendibleProperties?='extendible-properties' )?
-		('extendible-XML-clause' extendibleXMLClause = STRING )?
-		(extendibleXMLAttributes?='extendible-XML-attributes' )?
-		('extendible-XML-attribute-clause' extendibleXMLAttributeClause = STRING)?
-		(extendibleSubTypes?='extendible-sub-types')?
+		(extensibleProperties?=('extensible-properties'|'extendible-properties') )?
+		(('extensible-XML-clause'|'extendible-XML-clause') extensibleXMLClause = STRING )?
+		(extensibleXMLAttributes?=('extensible-XML-attributes'|'extendible-XML-attributes') )?
+		(('extensible-XML-attribute-clause'|'extendible-XML-attribute-clause') extensibleXMLAttributeClause = STRING)?
+		(extensibleSubTypes?=('extensible-sub-types'|'extendible-sub-types'))?
 		policies+=VersionEvolutionPolicy*
 	'}'
 ;
@@ -426,10 +426,10 @@ OperationDefPolicy:
 ServiceVersionEvolution:
 	{ServiceVersionEvolution}
 	'version-evolution' '{'
-		(extendibleParameters?='extendible-parameters' )?
-		('extendible-XML-clause' extendibleXMLClause = STRING )?
-		(extendibleXMLAttributes?='extendible-XML-attributes' )?
-		('extendible-XML-attribute-clause' extendibleXMLAttributeClause = STRING)?
+		(extensibleParameters?=('extensible-parameters'|'extendible-parameters') )?
+		(('extensible-XML-clause'|'extendible-XML-clause') extensibleXMLClause = STRING )?
+		(extensibleXMLAttributes?=('extensible-XML-attributes'|'extendible-XML-attributes') )?
+		(('extensible-XML-attribute-clause'|'extendible-XML-attribute-clause') extensibleXMLAttributeClause = STRING)?
 		policies+=VersionEvolutionPolicy*
 	'}'
 ;

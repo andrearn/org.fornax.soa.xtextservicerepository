@@ -214,8 +214,8 @@ class MessageHeaderXSDTemplates {
 				</xsd:complexContent>
 			«ELSE»
 				«cls.toPropertySequenceWithAny (currNs, profile, header)»
-				«IF header.typesUseExtendibleXMLAttributes»
-					«header.getTypesExtendibleXMLAttributesClause»
+				«IF header.typesUseExtensibleXMLAttributes»
+					«header.getTypesExtensibleXMLAttributesClause»
 				«ENDIF»
 			«ENDIF»
 		</xsd:complexType>
@@ -224,8 +224,8 @@ class MessageHeaderXSDTemplates {
 	def protected dispatch toPropertySequenceWithAny (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class cls, VersionedTechnicalNamespace currNs, Profile profile, MessageHeader header) '''
 		<xsd:sequence>
 			«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
-			«IF header.typesUseExtendibleProperties»
-				«header.getTypesExtendiblePropertiesClause»
+			«IF header.typesUseExtensibleProperties»
+				«header.getTypesExtensiblePropertiesClause»
 			«ENDIF»
 		</xsd:sequence>
 		«IF !cls.properties.filter (typeof (Attribute)).isEmpty»
