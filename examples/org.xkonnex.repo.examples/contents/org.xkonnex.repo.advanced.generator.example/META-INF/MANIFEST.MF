@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Example
-Bundle-SymbolicName: org.xkonnex.repo.simple.generator.example
+Bundle-Name: Advanced XkonneX repo example
+Bundle-SymbolicName: org.xkonnex.repo.advanced.generator.example
 Bundle-Version: 1.0.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -23,7 +23,8 @@ Require-Bundle: org.eclipse.ui,
  org.xkonnex.repo.generator.servicedsl;bundle-version="2.0.0",
  org.xkonnex.repo.core;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.solutiondsl;bundle-version="2.0.0",
- org.objectweb.asm;bundle-version="5.0.1";resolution:=optional
+ org.objectweb.asm;bundle-version="5.0.1";resolution:=optional,
+ org.xkonnex.repo.dsl.sladsl;bundle-version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.apache.commons.logging,
  org.apache.log4j

@@ -25,6 +25,7 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.moduledsl.ext.assembly.IAssemblyType;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyType;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Endpoint;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleAssemblyType;
@@ -137,13 +138,43 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 	public void completeExtensibleAssemblyType_Type(EObject model,
 			Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof ExtensibleAssemblyType) {
+		if (model instanceof ExtensibleAssemblyType || model instanceof AssemblyType) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType assemblyType = typeProvider.findTypeByName(IAssemblyType.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(assemblyType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
-		} else {
-			super.completeExtensibleAssemblyType_Type(model, assignment, context, acceptor);
+//		} else {
+//			super.completeExtensibleAssemblyType_Type(model, assignment, context, acceptor);
 		}
+	}
+	
+	@Override
+	public void complete_ExtensibleAssemblyType(EObject model,
+			RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof ExtensibleAssemblyType || model instanceof AssemblyType) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType assemblyType = typeProvider.findTypeByName(IAssemblyType.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(assemblyType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		}
+	}
+	
+	@Override
+	public void completeAssemblyType_TypeEnum(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+		JvmType assemblyType = typeProvider.findTypeByName(IAssemblyType.class.getCanonicalName());
+		typeProposalProvider.createSubTypeProposals(assemblyType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		super.completeAssemblyType_TypeEnum(model, assignment, context, acceptor);
+	}
+	
+	@Override
+	public void complete_AssemblyTypeEnum(EObject model, RuleCall ruleCall,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+		JvmType assemblyType = typeProvider.findTypeByName(IAssemblyType.class.getCanonicalName());
+		typeProposalProvider.createSubTypeProposals(assemblyType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		super.complete_AssemblyTypeEnum(model, ruleCall, context, acceptor);
 	}
 	
 	@Override

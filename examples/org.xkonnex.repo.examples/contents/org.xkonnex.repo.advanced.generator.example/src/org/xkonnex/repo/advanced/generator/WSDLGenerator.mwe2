@@ -16,6 +16,7 @@ Workflow {
 	    register = org.xkonnex.repo.dsl.basedsl.BaseDslStandaloneSetup {}
 	    register = org.xkonnex.repo.dsl.profiledsl.ProfileDslStandaloneSetup {}
 	    register = org.xkonnex.repo.dsl.moduledsl.ModuleDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.sladsl.SLADslStandaloneSetup {}
 	    loadResource = {
 	        slot = 'model'
 	    }
