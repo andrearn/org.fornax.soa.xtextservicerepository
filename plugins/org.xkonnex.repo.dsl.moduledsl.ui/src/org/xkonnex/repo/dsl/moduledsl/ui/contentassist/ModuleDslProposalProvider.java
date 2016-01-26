@@ -24,9 +24,10 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.moduledsl.ext.assembly.IAssemblyType;
-import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleImportProtocol;
+import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Endpoint;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleAssemblyType;
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleImportBindingProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleDslPackage;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleModel;
@@ -146,15 +147,29 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 	}
 	
 	@Override
-	public void complete_ExtensibleImportBindingProtocol(EObject model,
+	public void complete_EndpointProtocol(EObject model,
 			RuleCall ruleCall, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof ExtensibleImportBindingProtocol) {
+		if (model instanceof EndpointProtocol || model instanceof Endpoint) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
-			JvmType importBindingType = typeProvider.findTypeByName(IModuleImportProtocol.class.getCanonicalName());
+			JvmType importBindingType = typeProvider.findTypeByName(IModuleEndpointProtocol.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(importBindingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		} else {
-			super.complete_ExtensibleImportBindingProtocol(model, ruleCall, context,
+			super.complete_EndpointProtocol(model, ruleCall, context,
+				acceptor);
+		}
+	}
+	
+	@Override
+	public void completeEndpointProtocol_Type(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof EndpointProtocol || model instanceof Endpoint) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType importBindingType = typeProvider.findTypeByName(IModuleEndpointProtocol.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(importBindingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeEndpointProtocol_Type(model, assignment, context,
 				acceptor);
 		}
 	}

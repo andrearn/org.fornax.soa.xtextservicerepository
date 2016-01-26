@@ -1,7 +1,7 @@
 package org.xkonnex.repo.dsl.bindingdsl.ext.protocol;
 
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleImportBindingProtocol;
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportBindingProtocol;
+import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
 
 public class FTAM implements IProtocol {
 	
@@ -16,14 +16,18 @@ public class FTAM implements IProtocol {
 	}
 
 	@Override
-	public boolean supportsModuleImportBindingProtocol(
-			ImportBindingProtocol importBindingProtocol) {
-		if (importBindingProtocol instanceof ExtensibleImportBindingProtocol) {
-			ExtensibleImportBindingProtocol extProt = (ExtensibleImportBindingProtocol)importBindingProtocol;
-			if (extProt.getType().getQualifiedName().equals(org.xkonnex.repo.dsl.moduledsl.ext.protocol.FTAM.class.getCanonicalName()))
-				return true;
-		}
-		return false;
+	public boolean supportsModuleEndpointProtocol(
+			EndpointProtocol importBindingProtocol) {
+		if (importBindingProtocol instanceof org.xkonnex.repo.dsl.moduledsl.ext.protocol.FTAM)
+			return true;
+		else
+			return false;
+	}
+
+	@Override
+	public boolean supportsModuleEndpointProtocol(
+			Class<? extends IModuleEndpointProtocol> endpointProtocol) {
+		return org.xkonnex.repo.dsl.moduledsl.ext.protocol.FTAM.class.isAssignableFrom(endpointProtocol);
 	}
 
 }

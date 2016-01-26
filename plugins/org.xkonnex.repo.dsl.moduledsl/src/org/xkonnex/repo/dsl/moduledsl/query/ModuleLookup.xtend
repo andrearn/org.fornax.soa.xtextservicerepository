@@ -135,8 +135,8 @@ class ModuleLookup {
 	 * Get the endpoint qualifier
 	 */	
 	def dispatch String getQualifier (ModuleRef moduleRef) {
-		if (moduleRef.endpointQualifierRef?.endpointQualifier != null)
-			return moduleRef.endpointQualifierRef.endpointQualifier.name
+		if (moduleRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier != null)
+			return moduleRef.usingEndpoint?.endpointQualifierRef.endpointQualifier.name
 		else
 			return (moduleRef.eContainer as Module).qualifier
 	}
@@ -145,8 +145,8 @@ class ModuleLookup {
 	 * Get the endpoint qualifier
 	 */	
 	def dispatch String getQualifier (ImportServiceRef impServiceRef) {
-		if (impServiceRef.endpointQualifierRef?.endpointQualifier != null)
-			return impServiceRef.endpointQualifierRef.endpointQualifier.name
+		if (impServiceRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier != null)
+			return impServiceRef.usingEndpoint?.endpointQualifierRef.endpointQualifier.name
 		else
 			return (impServiceRef.eContainer as Module).qualifier
 	}
@@ -156,15 +156,15 @@ class ModuleLookup {
 	}
 	
 	def dispatch String getBindingQualifier (ModuleRef moduleRef) {
-		if (moduleRef.endpointQualifierRef?.endpointQualifier != null)
-			return moduleRef.endpointQualifierRef.endpointQualifier.name
+		if (moduleRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier != null)
+			return moduleRef.usingEndpoint?.endpointQualifierRef.endpointQualifier.name
 		else
 			return (moduleRef.eContainer as Module).endpointQualifierRef?.endpointQualifier.name
 	}
 	
 	def dispatch String getBindingQualifier (ImportServiceRef impServiceRef) {
-		if (impServiceRef.endpointQualifierRef?.endpointQualifier != null)
-			return impServiceRef.endpointQualifierRef.endpointQualifier.name
+		if (impServiceRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier != null)
+			return impServiceRef.usingEndpoint?.endpointQualifierRef.endpointQualifier.name
 		else
 			return (impServiceRef.eContainer as Module).endpointQualifierRef?.endpointQualifier.name
 	}

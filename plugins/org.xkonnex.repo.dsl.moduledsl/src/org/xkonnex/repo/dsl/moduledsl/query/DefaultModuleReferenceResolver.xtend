@@ -9,8 +9,8 @@ import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
 import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportBindingProtocol
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceModuleRef
@@ -64,7 +64,7 @@ class DefaultModuleReferenceResolver implements IModuleReferenceResolver {
 	}
 	
 
-	override resolveModuleRef(ModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, ImportBindingProtocol usedProtocol) {
+	override resolveModuleRef(ModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, EndpointProtocol usedProtocol) {
 		val svcModuleRef = moduleRef.moduleRef
 		val Module referringModule = objLookup.getOwnerByType (moduleRef, typeof (Module))
 		val minState = referringModule.state
@@ -81,7 +81,7 @@ class DefaultModuleReferenceResolver implements IModuleReferenceResolver {
 		return resolvedMod
 	}
 	
-	override resolveModuleServiceRef(ServiceModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, ImportBindingProtocol usedProtocol) {
+	override resolveModuleServiceRef(ServiceModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, EndpointProtocol usedProtocol) {
 		val Module referringModule = objLookup.getOwnerByType (moduleRef, typeof (Module))
 		val minState = referringModule.state
 		val moduleName = nameProvider.getFullyQualifiedName (moduleRef.module)

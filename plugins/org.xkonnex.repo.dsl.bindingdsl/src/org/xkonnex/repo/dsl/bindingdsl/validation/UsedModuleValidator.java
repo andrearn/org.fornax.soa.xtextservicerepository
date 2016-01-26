@@ -114,10 +114,10 @@ public class UsedModuleValidator extends AbstractPluggableDeclarativeValidator {
 					}
 					
 				});
-				if (svcRef.getEndpointQualifierRef() != null) {
-					providingModules = moduleLookup.findProvidingModules(svcRef.getService(), candModules, svcRef.getEndpointQualifierRef().getEndpointQualifier().getName());
+				if (svcRef.getUsingEndpoint() != null && svcRef.getUsingEndpoint().getEndpointQualifierRef() != null) {
+					providingModules = moduleLookup.findProvidingModules(svcRef.getService(), candModules, svcRef.getUsingEndpoint().getEndpointQualifierRef().getEndpointQualifier().getName());
 					if (!providingModules.iterator().hasNext())
-						warning("The service "+ svcRef.getService().getName() + " is not provided by any of the candidate Modules with the endpoint qualifier " + svcRef.getEndpointQualifierRef().getEndpointQualifier().getName() + ".", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
+						warning("The service "+ svcRef.getService().getName() + " is not provided by any of the candidate Modules with the endpoint qualifier " + svcRef.getUsingEndpoint().getEndpointQualifierRef().getEndpointQualifier().getName() + ".", ModuleDslPackage.Literals.ABSTRACT_SERVICE_REF__SERVICE);
 				}
 				else
 					providingModules = moduleLookup.findProvidingModules(svcRef.getService(), candModules);

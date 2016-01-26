@@ -5,35 +5,32 @@ import com.google.inject.name.Named
 import java.util.logging.Level
 import java.util.logging.Logger
 import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.DefaultModuleRefServiceBindingResolver
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.ProtocolMatcher
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.services.ServiceRefBindingDescription
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.AssetStateEnvironmentEligibilityChecker
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.services.ServiceRefBindingDescription
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
-import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
-import org.xkonnex.repo.generator.bindingdsl.templates.IProtocolContractBuilder
-import org.xkonnex.repo.generator.bindingdsl.templates.xsd.XSDBuilder
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportBindingProtocol
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
-import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleServiceResolver
-import org.xkonnex.repo.generator.profiledsl.templates.MessageHeaderXSDTemplates
-import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
+import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
+import org.xkonnex.repo.generator.bindingdsl.templates.IProtocolContractBuilder
+import org.xkonnex.repo.generator.bindingdsl.templates.xsd.XSDBuilder
+import org.xkonnex.repo.generator.profiledsl.templates.MessageHeaderXSDTemplates
 import org.xkonnex.repo.generator.servicedsl.templates.webservice.WSDLGenerator
-import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.AssetStateEnvironmentEligibilityChecker
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleStateimport org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportBindingProtocolEnum
 
 /** 
  * Generates WSDLs and XSDs for SOAP based service endpoints 
@@ -124,7 +121,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 			val svc = specBindingDesc.getResolvedService
 			if (svc != null) {
 				try {
-					if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocolEnum::SOAP)) {
+					if (protocolMatcher.supportsModuleEndpointProtocol (specBindingDesc.getApplicableBinding, typeof (org.xkonnex.repo.dsl.moduledsl.ext.protocol.SOAP))) {
 						doBuildServiceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, enforcedProfile)
 					}
 				} catch (Exception ex) {
@@ -146,7 +143,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 				val svc = specBindingDesc.getResolvedService
 				if (svc != null) {
 					try {
-						if (protocolMatcher.supportsImportBindingProtocol (specBindingDesc.getApplicableBinding, ImportBindingProtocolEnum::SOAP)) {
+						if (protocolMatcher.supportsModuleEndpointProtocol (specBindingDesc.getApplicableBinding, typeof (org.xkonnex.repo.dsl.moduledsl.ext.protocol.SOAP))) {
 							doBuildServiceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, enforcedProfile)
 						}
 					} catch (Exception ex) {

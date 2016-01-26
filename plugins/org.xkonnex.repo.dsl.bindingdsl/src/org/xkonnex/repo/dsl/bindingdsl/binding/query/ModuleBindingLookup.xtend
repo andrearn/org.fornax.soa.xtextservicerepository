@@ -9,15 +9,11 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportBindingProtocol
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IVersionFilterProvider
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 
 class ModuleBindingLookup {
 	

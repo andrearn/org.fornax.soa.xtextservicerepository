@@ -70,8 +70,8 @@ class EndpointQualifierQueries {
 	}
 	
 	def dispatch Qualifier getEffectiveEndpointQualifier (ModuleRef ref) {
-		if (ref.endpointQualifierRef != null)
-			return ref.endpointQualifierRef.endpointQualifier
+		if (ref.usingEndpoint?.endpointQualifierRef != null)
+			return ref.usingEndpoint?.endpointQualifierRef.endpointQualifier
 		else {
 			val Module mod = objLookup.getOwnerByType(ref, typeof (Module))
 			return mod.endpointQualifierRef?.endpointQualifier
@@ -79,8 +79,8 @@ class EndpointQualifierQueries {
 	}
 	
 	def dispatch Qualifier getEffectiveEndpointQualifier (ImportServiceRef ref) {
-		if (ref.endpointQualifierRef != null)
-			return ref.endpointQualifierRef.endpointQualifier
+		if (ref.usingEndpoint?.endpointQualifierRef != null)
+			return ref.usingEndpoint?.endpointQualifierRef.endpointQualifier
 		else {
 			val Module mod = objLookup.getOwnerByType(ref, typeof (Module))
 			return mod.endpointQualifierRef?.endpointQualifier

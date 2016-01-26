@@ -1,23 +1,23 @@
 package org.xkonnex.repo.dsl.moduledsl.query
 
 import com.google.inject.Inject
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.eclipse.xtext.resource.IEObjectDescription
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectDescriptionIsInstancePredicate
+import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
+import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceModuleRef
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IVersionFilterProvider
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
-import org.eclipse.xtext.EcoreUtil2
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
-import org.eclipse.xtext.resource.IEObjectDescription
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportBindingProtocol
-import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch
-import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IVersionFilterProvider
 
 class LatestVersionModuleReferenceResolver implements IModuleReferenceResolver {
 	
@@ -63,7 +63,7 @@ class LatestVersionModuleReferenceResolver implements IModuleReferenceResolver {
 	}
 	
 
-	override resolveModuleRef(ModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, ImportBindingProtocol usedProtocol) {
+	override resolveModuleRef(ModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, EndpointProtocol usedProtocol) {
 		val svcModuleRef = moduleRef.moduleRef
 		val minState = stateMatcher.getLowestStateByEnvironment (lifecycle, targetEnvironment)
 		val moduleName = nameProvider.getFullyQualifiedName (svcModuleRef.module)
@@ -79,7 +79,7 @@ class LatestVersionModuleReferenceResolver implements IModuleReferenceResolver {
 		return resolvedMod
 	}
 	
-	override resolveModuleServiceRef(ServiceModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, ImportBindingProtocol usedProtocol) {
+	override resolveModuleServiceRef(ServiceModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, EndpointProtocol usedProtocol) {
 		val minState = stateMatcher.getLowestStateByEnvironment (lifecycle, targetEnvironment)
 		val moduleName = nameProvider.getFullyQualifiedName (moduleRef.module)
 		val moduleDescs = search.search (moduleName.toString, "Module ", new IEObjectDescriptionIsInstancePredicate(typeof (Module)))

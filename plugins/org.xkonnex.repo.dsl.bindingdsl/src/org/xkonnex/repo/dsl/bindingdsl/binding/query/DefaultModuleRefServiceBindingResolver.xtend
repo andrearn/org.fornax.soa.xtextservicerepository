@@ -150,7 +150,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 				val canditateModules = svcRef.modules.map (m|modRefResolver.resolveModuleServiceRef(m, targetEnvironment, lifecycle))
 				
 				for (candMod : canditateModules) {
-					val selectingEndpointQualifierRef = if (svcRef.endpointQualifierRef != null) svcRef.endpointQualifierRef else module.endpointQualifierRef
+					val selectingEndpointQualifierRef = if (svcRef.usingEndpoint?.endpointQualifierRef != null) svcRef.usingEndpoint?.endpointQualifierRef else module.endpointQualifierRef
 					val candBindings = bindingLookup.findApplicableBindingsToModuleByEnvAndQualifier (candMod, targetEnvironment, selectingEndpointQualifierRef?.endpointQualifier)
 				
 					for (bind : candBindings) {
@@ -160,7 +160,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 					 	curSvcBindDesc.resolvedService = svc
 					 	curSvcBindDesc.serviceRef = svcRef
 					 	curSvcBindDesc.providingModule = candMod
-			 			curSvcBindDesc.endpointQualifier = svcRef.endpointQualifierRef?.endpointQualifier
+			 			curSvcBindDesc.endpointQualifier = svcRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier
 						if (svcBindDescs.containsKey(curSvcBindDesc.providingModule)) {
 							svcBindDescs.get(curSvcBindDesc.providingModule).add (curSvcBindDesc)
 						} else {
@@ -175,8 +175,8 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 	}
 		
 	def private EndpointQualifierRef getSelectingEndpointQualifier (ModuleRef usedModRef, Module module, EndpointQualifierRef endpointQualifierRef) {
-		val moduleEndpointQualifierRef = 	if (usedModRef.endpointQualifierRef?.endpointQualifier != null) {
-													usedModRef.endpointQualifierRef 
+		val moduleEndpointQualifierRef = 	if (usedModRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier != null) {
+													usedModRef.usingEndpoint?.endpointQualifierRef 
 											} else {
 													module.endpointQualifierRef
 											}

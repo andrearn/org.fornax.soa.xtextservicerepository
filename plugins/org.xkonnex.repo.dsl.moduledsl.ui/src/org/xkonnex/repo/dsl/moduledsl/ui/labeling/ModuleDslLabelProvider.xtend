@@ -3,21 +3,20 @@
  */
 package org.xkonnex.repo.dsl.moduledsl.ui.labeling
 
+import com.google.inject.Inject
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider
 import org.eclipse.jface.viewers.StyledString
+import org.eclipse.xtext.common.types.JvmIdentifiableElement
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment
 import org.xkonnex.repo.dsl.basedsl.ui.labeling.BaseDslLabelHelper
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.impl.ServiceImpl
-import com.google.inject.Inject
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment
-import org.eclipse.xtext.common.types.JvmIdentifiableElement
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleImportBindingProtocol
 
 /** 
  * Provides labels for a EObjects.
@@ -73,7 +72,7 @@ class ModuleDslLabelProvider extends DefaultEObjectLabelProvider {
 				return name
 	}
 	
-	def String text (ExtensibleImportBindingProtocol ele) {
+	def String text (EndpointProtocol ele) {
 		return ele.type.simpleName
 	}
 	

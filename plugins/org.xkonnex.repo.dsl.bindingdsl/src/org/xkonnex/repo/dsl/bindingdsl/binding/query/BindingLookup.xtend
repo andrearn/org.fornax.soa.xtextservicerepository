@@ -16,18 +16,14 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportBindingProtocol
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
+import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver
+import org.xkonnex.repo.dsl.moduledsl.query.IModuleVersionMatcher
 import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IVersionFilterProvider
 import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.EndpointQualifierQueries
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
-import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver
-import org.xkonnex.repo.dsl.moduledsl.query.IModuleVersionMatcher
-
 
 /**
  * Lookup of Bindings for different criteria, e.g. find a binding for a module to an environment
