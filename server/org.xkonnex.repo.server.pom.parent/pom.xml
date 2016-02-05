@@ -6,7 +6,7 @@
 		<version>0.3.4</version> </parent -->
 
 	<groupId>org.xkonnex.repo</groupId>
-	<artifactId>server.parent</artifactId>
+	<artifactId>org.xkonnex.repo.server.parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>xkonnex-server-parent</name>
@@ -30,7 +30,7 @@
 
 	<modules>
 		<module>../org.xkonnex.repo.server.core</module>
-		<module>../org.xkonnex.server.web</module>
+		<module>../org.xkonnex.repo.server.web</module>
 	</modules>
 
 	<properties>

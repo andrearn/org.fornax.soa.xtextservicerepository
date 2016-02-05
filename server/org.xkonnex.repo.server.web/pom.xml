@@ -23,12 +23,12 @@
 	
 	<parent>
 	    <groupId>org.xkonnex.repo</groupId>
-	    <artifactId>server.parent</artifactId>
+	    <artifactId>org.xkonnex.repo.server.parent</artifactId>
 	    <relativePath>../../server/org.xkonnex.repo.server.pom.parent/pom.xml</relativePath>
 	    <version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>server.web</artifactId>
+	<artifactId>org.xkonnex.repo.server.web</artifactId>
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 		<!-- TODO project name  -->
@@ -69,7 +69,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.xkonnex.repo</groupId>
-			<artifactId>server.core</artifactId>
+			<artifactId>org.xkonnex.repo.server.core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 			<exclusions>
 				<exclusion>

@@ -6,12 +6,12 @@
 
 	<parent>
 		<groupId>org.xkonnex.repo</groupId>
-		<artifactId>server.parent</artifactId>
+		<artifactId>org.xkonnex.repo.server.parent</artifactId>
 		<relativePath>../../server/org.xkonnex.repo.server.pom.parent/pom.xml</relativePath>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>server.core</artifactId>
+	<artifactId>org.xkonnex.repo.server.core</artifactId>
 	<packaging>jar</packaging>
 	<!-- TODO project name -->
 	<name>XKonneX Repository Server core</name>
