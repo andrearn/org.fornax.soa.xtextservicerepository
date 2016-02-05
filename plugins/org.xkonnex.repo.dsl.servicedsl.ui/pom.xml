@@ -12,4 +12,17 @@
 	<artifactId>org.xkonnex.repo.dsl.servicedsl.ui</artifactId>
 	<packaging>eclipse-plugin</packaging>
 	<groupId>org.xkonnex.repo.dsl</groupId>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.servicedsl</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.xkonnex.repo.dsl</groupId>
+			<artifactId>org.xkonnex.repo.dsl.basedsl.ui</artifactId>
+			<version>2.0.0-SNAPSHOT</version>
+		</dependency>
+	</dependencies>
 </project>

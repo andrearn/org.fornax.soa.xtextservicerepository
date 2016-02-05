@@ -291,11 +291,9 @@ ThroughputAssertion:
 	'}';
 
 LatencyAssertion:
-	'latency' '{'
+	'latency-assertion' '{'
 		'latency' latency="STRING"
 		'percentile' percentile=Percentile
-		(escalation = Escalation)?
-		('penalty' penalty = STRING )?
 	'}';
 	
 	

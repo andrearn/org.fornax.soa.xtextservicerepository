@@ -25,7 +25,14 @@
 		<url>https://github.com/andrearn/org.fornax.soa.xtextservicerepository.git</url>
 		<connection>scm:git:https://github.com/andrearn/org.fornax.soa.xtextservicerepository.git</connection>
 	</scm>
-
+	
+	<distributionManagement>
+	   <snapshotRepository>
+	      <id>central</id>
+	      <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+	   </snapshotRepository>
+	</distributionManagement>
+	
 	<developers>
 		<developer>
 			<id>andrearn</id>
@@ -83,6 +90,7 @@
 				<artifactId>target-platform-configuration</artifactId>
 				<version>${tycho-version}</version>
 				<configuration>
+					<pomDependencies>consider</pomDependencies>
 					<target>
 						<artifact>
 							<groupId>org.xkonnex.repo</groupId>
@@ -277,6 +285,7 @@
 
 		</pluginManagement>
 	</build>
+		
 	<pluginRepositories>
 		<!-- Fornax Workflow Runner plugin -->
 		<pluginRepository>
@@ -369,11 +378,66 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext.generator</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+<!-- 			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext.xtext.generator</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+ -->			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext.java</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext.ecore</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext.util</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext.ui</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext.ide</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.xtext</groupId>
+				<artifactId>org.eclipse.xtext.common.types</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>org.eclipse.xtend.lib</artifactId>
+				<version>${xtext-version}</version>
+			</dependency>
+<!-- 			<dependency>
 				<groupId>org.eclipse.xtend</groupId>
 				<artifactId>org.eclipse.xtend.standalone</artifactId>
 				<version>${xtext-version}</version>
 			</dependency>
-			<dependency>
+ -->			<dependency>
 				<groupId>org.antlr</groupId>
 				<artifactId>antlr</artifactId>
 				<version>3.4</version>

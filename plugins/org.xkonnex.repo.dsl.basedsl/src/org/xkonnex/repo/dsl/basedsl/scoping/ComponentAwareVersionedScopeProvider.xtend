@@ -8,6 +8,7 @@ import com.google.inject.Provider
 import java.util.List
 import java.util.Map
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.emf.ecore.EReference
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.common.types.JvmFeature
 import org.eclipse.xtext.common.types.JvmType
@@ -15,18 +16,15 @@ import org.eclipse.xtext.naming.IQualifiedNameConverter
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.scoping.IScope
 import org.eclipse.xtext.scoping.Scopes
-import org.eclipse.xtext.scoping.impl.ImportedNamespaceAwareLocalScopeProvider
+import org.eclipse.xtext.scoping.impl.ImportNormalizer
 import org.eclipse.xtext.util.SimpleAttributeResolver
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Component
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Value
-import org.eclipse.emf.ecore.EReference
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Reference
-import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider
-import org.eclipse.xtext.scoping.impl.ImportNormalizer
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Component
 import org.xkonnex.repo.dsl.basedsl.baseDsl.EnumLiteralValue
-import javax.sound.sampled.EnumControl.Type
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Reference
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Value
+import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider
 
 @SuppressWarnings("restriction") 
 abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {

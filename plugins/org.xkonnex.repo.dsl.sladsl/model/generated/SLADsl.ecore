@@ -234,9 +234,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="latency" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="percentile" eType="#//Percentile"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="escalation" eType="#//Escalation"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MaxDownTimeAssertion" eSuperTypes="#//ServiceQualityAssertionProperty">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="definition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
