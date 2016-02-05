@@ -13,6 +13,21 @@
 
 	<description>XKonneX Repository server parent</description>
 
+	<distributionManagement>
+	   <snapshotRepository>
+	      <id>central</id>
+	      <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
+	   </snapshotRepository>
+	</distributionManagement>
+	
+	<developers>
+		<developer>
+			<id>andrearn</id>
+			<name>André Arnold</name>
+			<email>andre.arnold@gmx.de</email>
+		</developer>
+	</developers>
+
 	<modules>
 		<module>../org.xkonnex.repo.server.core</module>
 		<module>../org.xkonnex.server.web</module>
@@ -20,6 +35,9 @@
 
 	<properties>
 		<java.version>1.6</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.6</maven.compiler.source>
+		<maven.compiler.target>1.6</maven.compiler.target>
 		<github.global.server>github</github.global.server>
 
 		<bootstrap.version>3.3.4</bootstrap.version>
@@ -59,10 +77,53 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.eclipse.tycho</groupId>
-				<artifactId>tycho-maven-plugin</artifactId>
-				<version>0.18.1</version>
-				<extensions>true</extensions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-toolchains-plugin</artifactId>
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>toolchain</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<toolchains>
+						<jdk>
+							<version>1.6</version>
+							<vendor>sun</vendor>
+						</jdk>
+					</toolchains>
+				</configuration>
+			</plugin>
+
+ 			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtext.version}</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>xtend-install-debug-info</goal>
+							<goal>testCompile</goal>
+							<goal>xtend-test-install-debug-info</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<!-- these dependencies are contributed in Eclipse by the "Xtend Library" 
+						classpath container -->
+					<dependency>
+						<groupId>org.eclipse.xtend</groupId>
+						<artifactId>org.eclipse.xtend.lib</artifactId>
+						<version>${xtext.version}</version>
+						<type>pom</type>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
