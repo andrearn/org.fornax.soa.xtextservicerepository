@@ -23,8 +23,8 @@
 <repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.9.1/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.xtext.graphview.feature.feature.group" version="1.0.4.201410220000"/>
-<repository location="http://dl.bintray.com/andrearn/GenericGraphView/1.0.4"/>
+<unit id="org.eclipse.xtext.graphview.feature.feature.group" version="1.0.5.201602110801"/>
+<repository location="https://dl.bintray.com/andrearn/GenericGraphView/1.0.5/"/>
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="de.cau.cs.kieler.kiml.ogdf.feature.feature.group" version="0.5.1.201303011228"/>
