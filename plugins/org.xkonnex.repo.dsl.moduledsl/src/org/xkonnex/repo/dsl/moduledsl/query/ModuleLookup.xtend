@@ -18,6 +18,7 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator
 import org.eclipse.xtext.naming.QualifiedName
+import org.eclipse.xtext.resource.IEObjectDescription
 
 class ModuleLookup {
 	
@@ -26,7 +27,11 @@ class ModuleLookup {
 	@Inject extension IStateMatcher
 	
 	def findAllModules (ResourceSet resourceSet) {
-		var moduleDescs = search.search ("Module ", Predicates::alwaysTrue)
+		var Iterable<IEObjectDescription> moduleDescs = null
+		if (resourceSet != null)
+			moduleDescs = search.search ("Module ", Predicates::alwaysTrue, resourceSet)
+		else
+			moduleDescs = search.search ("Module ", Predicates::alwaysTrue)
 		var List<Module> allModules = newArrayList()
 		for (moduleDesc : moduleDescs) {
 			val obj = moduleDesc.EObjectOrProxy
@@ -46,7 +51,11 @@ class ModuleLookup {
 	}
 	
 	def findAllModuleVersionsByName (String moduleName, ResourceSet resourceSet) {
-		var moduleDescs = search.search (moduleName, "Module ", Predicates::alwaysTrue)
+		var Iterable<IEObjectDescription> moduleDescs = null
+		if (resourceSet != null)
+			moduleDescs = search.search (moduleName, "Module ", Predicates::alwaysTrue, resourceSet)
+		else
+			moduleDescs = search.search (moduleName, "Module ", Predicates::alwaysTrue)
 		var List<Module> allModules = newArrayList()
 		for (moduleDesc : moduleDescs) {
 			val obj = moduleDesc.EObjectOrProxy

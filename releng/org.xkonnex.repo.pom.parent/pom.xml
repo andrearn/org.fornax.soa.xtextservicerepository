@@ -98,32 +98,23 @@
 							<version>1.0.0-SNAPSHOT</version>
 						</artifact>
 					</target>
-					<!-- <resolver>p2</resolver> <pomDependencies>consider</pomDependencies> 
-						<environments> <environment> <os>win32</os> <ws>win32</ws> <arch>x86</arch> 
-						</environment> <environment> <os>win32</os> <ws>win32</ws> <arch>x86_64</arch> 
-						</environment> <environment> <os>macosx</os> <ws>cocoa</ws> <arch>x86_64</arch> 
-						</environment> <environment> <os>macosx</os> <ws>cocoa</ws> <arch>x86</arch> 
-						</environment> <environment> <os>linux</os> <ws>gtk</ws> <arch>x86</arch> 
-						</environment> <environment> <os>linux</os> <ws>gtk</ws> <arch>x86_64</arch> 
-						</environment> </environments> <filters> <filter> <type>eclipse-plugin</type> 
-						<id>org.eclipse.xtext</id> <restrictTo> <versionRange>[${xtext-version},${xtext-version-bound})</versionRange> 
-						</restrictTo> </filter> <filter> <type>eclipse-plugin</type> <id>org.eclipse.xtext.generator</id> 
-						<restrictTo> <versionRange>[${xtext-version},${xtext-version-bound})</versionRange> 
-						</restrictTo> </filter> <filter> <type>eclipse-plugin</type> <id>org.eclipse.xtext.xbase.lib</id> 
-						<restrictTo> <versionRange>[${xtext-version},${xtext-version-bound})</versionRange> 
-						</restrictTo> </filter> <filter> <type>eclipse-plugin</type> <id>org.eclipse.xtend.core</id> 
-						<restrictTo> <versionRange>[${xtext-version},${xtext-version-bound})</versionRange> 
-						</restrictTo> </filter> <filter> <type>eclipse-plugin</type> <id>org.eclipse.xtext.junit</id> 
-						<restrictTo> <versionRange>[${xtext-version},${xtext-version-bound})</versionRange> 
-						</restrictTo> </filter> <filter> <type>eclipse-plugin</type> <id>org.eclipse.xtext.smap</id> 
-						<restrictTo> <versionRange>[${xtext-version},${xtext-version-bound})</versionRange> 
-						</restrictTo> </filter> <filter> <type>eclipse-plugin</type> <id>org.eclipse.xtext.util</id> 
-						<restrictTo> <versionRange>[${xtext-version},${xtext-version-bound})</versionRange> 
-						</restrictTo> </filter> <filter> <type>eclipse-plugin</type> <id>org.eclipse.xtend.lib</id> 
-						<restrictTo> <versionRange>[${xtext-version},${xtext-version-bound})</versionRange> 
-						</restrictTo> </filter> <filter> <type>eclipse-plugin</type> <id>org.apache.log4j</id> 
-						<restrictTo> <versionRange>[1.2.15.v201012070815,2.0)</versionRange> </restrictTo> 
-						</filter> </filters> -->
+					<environments>
+						<environment>
+							<os>macosx</os>
+							<ws>cocoa</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
+							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86_64</arch>
+						</environment>
+					</environments>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -298,45 +289,20 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<repositories>
-		<!-- repository> <id>itemis</id> <layout>p2</layout> <url>http://download.itemis.com/updates/releases</url> 
-			</repository -->
+<!-- 	<repositories>
 		<repository>
-			<id>mars</id>
-			<layout>p2</layout>
-			<url>http://download.eclipse.org/releases/mars/</url>
-		</repository>
-		<!-- <repository> <id>xtext</id> <layout>p2</layout> <url>http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.8.4/</url> 
-			</repository> <repository> <id>emf</id> <layout>p2</layout> <url>http://download.eclipse.org/modeling/emf/emf/updates/2.10.x/core/S201501230452/</url> 
-			</repository> <repository> <id>mwe</id> <layout>p2</layout> <url>http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.8.0/</url> 
-			</repository> <repository> <id>xpand</id> <layout>p2</layout> <url>http://download.eclipse.org/modeling/m2t/xpand/updates/releases/R201505260349</url> 
-			</repository> <repository> <id>eclipse</id> <layout>p2</layout> <url>http://download.eclipse.org/eclipse/updates/3.6/R-3.6-201006080911/</url> 
-			</repository> -->
-		<!-- See profile for main repository -->
-		<!-- <repository> -->
-		<!-- <id>indigo</id> -->
-		<!-- <layout>p2</layout> -->
-		<!-- <url>http://download.eclipse.org/releases/juno</url> -->
-		<!-- </repository> -->
-		<repository>
-			<id>graphview</id>
-			<layout>p2</layout>
-			<url>http://dl.bintray.com/andrearn/GenericGraphView/1.0.4</url>
-			<!-- url>http://download.anderscore.com/graphview/updates</url -->
-		</repository>
-		<repository>
-			<id>kieler</id>
-			<layout>p2</layout>
-			<url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_0.8</url>
-		</repository>
-		<!--repository> <id>xdoc</id> <layout>p2</layout> <url>file:/C:/Development/Workspace/xDoc/org.eclipse.xtext.xdoc.releng/target/site</url> 
-			</repository -->
-		<repository>
-			<id>xtend</id>
-			<url>http://build.eclipse.org/common/xtend/maven/</url>
+			<id>codehaus-snapshots</id>
+			<name>disable dead 'Codehaus Snapshots' repository, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=481478</name>
+			<url>http://nexus.codehaus.org/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
 		</repository>
 	</repositories>
-
+ -->
 	<profiles>
 		<profile>
 			<id>release</id>
@@ -363,13 +329,9 @@
 		<profile>
 			<id>xtext-latest</id>
 			<properties>
-				<xtext-version>2.9.0</xtext-version>
+				<xtext-version>2.9.1</xtext-version>
 				<xtext-version-bound>3.0.0</xtext-version-bound>
 			</properties>
-			<repositories>
-				<!-- repository> <id>juno</id> <layout>p2</layout> <url>http://download.eclipse.org/releases/indigo</url> 
-					</repository -->
-			</repositories>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
@@ -432,12 +394,7 @@
 				<artifactId>org.eclipse.xtend.lib</artifactId>
 				<version>${xtext-version}</version>
 			</dependency>
-<!-- 			<dependency>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>org.eclipse.xtend.standalone</artifactId>
-				<version>${xtext-version}</version>
-			</dependency>
- -->			<dependency>
+			<dependency>
 				<groupId>org.antlr</groupId>
 				<artifactId>antlr</artifactId>
 				<version>3.4</version>
