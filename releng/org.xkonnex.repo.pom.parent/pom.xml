@@ -42,9 +42,10 @@
 	</developers>
 
 	<properties>
-		<tycho-version>0.20.0</tycho-version>
+		<!-- As Java 1.6 must be supported, this is the latest usable tycho version. Version 0.23 requires Java 7 -->
+		<tycho-version>0.22.0</tycho-version>
 		<!-- See profiles for xtext version -->
-		<!-- <xtext-version>2.4.0</xtext-version> -->
+		<!-- <xtext-version>2.9.1</xtext-version> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.6</maven.compiler.source>
 		<java.version>1.6</java.version>
@@ -107,7 +108,17 @@
 						<environment>
 							<os>win32</os>
 							<ws>win32</ws>
+							<arch>x86</arch>
+						</environment>
+						<environment>
+							<os>win32</os>
+							<ws>win32</ws>
 							<arch>x86_64</arch>
+						</environment>
+						<environment>
+							<os>linux</os>
+							<ws>gtk</ws>
+							<arch>x86</arch>
 						</environment>
 						<environment>
 							<os>linux</os>
@@ -166,6 +177,9 @@
 					<groupId>org.eclipse.tycho</groupId>
 					<artifactId>tycho-surefire-plugin</artifactId>
 					<version>${tycho-version}</version>
+					<configuration>
+						<failIfNoTests>false</failIfNoTests>
+					</configuration>
 				</plugin>
 				<plugin>
 					<groupId>org.eclipse.tycho</groupId>
@@ -289,20 +303,6 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-<!-- 	<repositories>
-		<repository>
-			<id>codehaus-snapshots</id>
-			<name>disable dead 'Codehaus Snapshots' repository, see https://bugs.eclipse.org/bugs/show_bug.cgi?id=481478</name>
-			<url>http://nexus.codehaus.org/snapshots/</url>
-			<releases>
-				<enabled>false</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
- -->
 	<profiles>
 		<profile>
 			<id>release</id>
