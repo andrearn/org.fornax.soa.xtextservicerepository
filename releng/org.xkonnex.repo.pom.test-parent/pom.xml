@@ -53,6 +53,54 @@
 				</configuration>
 			</plugin>
 			<plugin>
+				<groupId>org.eclipse.xtend</groupId>
+				<artifactId>xtend-maven-plugin</artifactId>
+				<version>${xtext-version}</version>
+				<configuration>
+					<encoding>UTF-8</encoding>
+					<outputDirectory>${basedir}/xtend-gen</outputDirectory>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>xtend-install-debug-info</goal>
+							<goal>testCompile</goal>
+							<goal>xtend-test-install-debug-info</goal>
+						</goals>
+					</execution>
+				</executions>
+				<dependencies>
+					<!-- these dependencies are contributed in Eclipse by the "Xtend Library" 
+						classpath container -->
+					<dependency>
+						<groupId>org.eclipse.xtend</groupId>
+						<artifactId>org.eclipse.xtend.lib</artifactId>
+						<version>${xtext-version}</version>
+						<type>pom</type>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>add-source</goal>
+						</goals>
+						<configuration>
+							<sources>
+								<source>model/generated</source>
+								<source>src-gen</source>
+							</sources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-source-plugin</artifactId>
 				<executions>
