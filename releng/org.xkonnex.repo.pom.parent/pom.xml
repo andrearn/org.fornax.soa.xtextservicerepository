@@ -59,6 +59,7 @@
 		<module>../../releng/org.xkonnex.repo.pom.generator-parent</module>
 		<module>../../releng/org.xkonnex.repo.pom.ui-parent</module>
 		<module>../../releng/org.xkonnex.repo.pom.feature-parent</module>
+		<module>../../releng/org.xkonnex.repo.pom.web-parent</module>
 		<module>../../releng/org.xkonnex.repo.pom.view-parent</module>
 		<module>../../releng/org.xkonnex.repo.pom.fragment-parent</module>
 		<module>../../releng/org.xkonnex.repo.pom.test-parent</module>
