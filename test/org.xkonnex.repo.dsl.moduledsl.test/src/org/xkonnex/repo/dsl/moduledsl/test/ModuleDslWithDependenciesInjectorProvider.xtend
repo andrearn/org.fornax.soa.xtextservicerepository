@@ -2,11 +2,11 @@ package org.xkonnex.repo.dsl.moduledsl.test
 
 import org.xkonnex.repo.dsl.basedsl.BaseDslStandaloneSetup
 import org.xkonnex.repo.dsl.environmentdsl.EnvironmentDslStandaloneSetup
-import org.xkonnex.repo.dsl.moduledsl.ModuleDslInjectorProvider
 import org.xkonnex.repo.dsl.profiledsl.ProfileDslStandaloneSetup
 import org.xkonnex.repo.dsl.servicedsl.ServiceDslStandaloneSetup
 import org.xkonnex.repo.dsl.businessdsl.BusinessDslStandaloneSetup
 import org.xkonnex.repo.dsl.semanticsdsl.SemanticsDslStandaloneSetup
+import org.xkonnex.repo.dsl.moduledsl.tests.ModuleDslInjectorProvider
 
 class ModuleDslWithDependenciesInjectorProvider extends ModuleDslInjectorProvider {
 	

@@ -329,31 +329,6 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
-
-  <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.bindingdsl.BindingDsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.bindingdsl.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="binddsl">
-    </viewer>
-  </extension>
-  <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.bindingdsl.BindingDsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.bindingdsl.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="binddsl" label="BindingDsl Compare">
-     </viewer>
-  </extension>
-  <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.bindingdsl.BindingDsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.bindingdsl.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="binddsl">
-    </provider>
-  </extension>
-  <extension point="org.eclipse.team.core.fileTypes">
-    <fileTypes
-            extension="binddsl"
-            type="text">
-    </fileTypes>
-  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
@@ -388,5 +363,28 @@
 	        <keywordReference id="org.xkonnex.repo.dsl.bindingdsl.ui.keyword_BindingDsl"/>
 	    </page>
 	</extension>
-
+	<extension point="org.eclipse.compare.contentViewers">
+		<viewer id="org.xkonnex.repo.dsl.bindingdsl.BindingDsl.compare.contentViewers"
+			class="org.xkonnex.repo.dsl.bindingdsl.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="binddsl">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.compare.contentMergeViewers">
+		<viewer id="org.xkonnex.repo.dsl.bindingdsl.BindingDsl.compare.contentMergeViewers"
+			class="org.xkonnex.repo.dsl.bindingdsl.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="binddsl" label="BindingDsl Compare">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.ui.editors.documentProviders">
+		<provider id="org.xkonnex.repo.dsl.bindingdsl.BindingDsl.editors.documentProviders"
+			class="org.xkonnex.repo.dsl.bindingdsl.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			extensions="binddsl">
+		</provider>
+	</extension>
+	<extension point="org.eclipse.team.core.fileTypes">
+		<fileTypes
+			extension="binddsl"
+			type="text">
+		</fileTypes>
+	</extension>
 </plugin>

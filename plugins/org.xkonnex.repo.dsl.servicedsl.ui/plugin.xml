@@ -334,31 +334,6 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
-
-  <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.servicedsl.ServiceDsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="svcdsl">
-    </viewer>
-  </extension>
-  <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.servicedsl.ServiceDsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="svcdsl" label="ServiceDsl Compare">
-     </viewer>
-  </extension>
-  <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.servicedsl.ServiceDsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="svcdsl">
-    </provider>
-  </extension>
-  <extension point="org.eclipse.team.core.fileTypes">
-    <fileTypes
-            extension="svcdsl"
-            type="text">
-    </fileTypes>
-  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
@@ -392,6 +367,30 @@
 	        name="Refactoring">
 	        <keywordReference id="org.xkonnex.repo.dsl.servicedsl.ui.keyword_ServiceDsl"/>
 	    </page>
+	</extension>
+	<extension point="org.eclipse.compare.contentViewers">
+		<viewer id="org.xkonnex.repo.dsl.servicedsl.ServiceDsl.compare.contentViewers"
+			class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="svcdsl">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.compare.contentMergeViewers">
+		<viewer id="org.xkonnex.repo.dsl.servicedsl.ServiceDsl.compare.contentMergeViewers"
+			class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="svcdsl" label="ServiceDsl Compare">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.ui.editors.documentProviders">
+		<provider id="org.xkonnex.repo.dsl.servicedsl.ServiceDsl.editors.documentProviders"
+			class="org.xkonnex.repo.dsl.servicedsl.ui.ServiceDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			extensions="svcdsl">
+		</provider>
+	</extension>
+	<extension point="org.eclipse.team.core.fileTypes">
+		<fileTypes
+			extension="svcdsl"
+			type="text">
+		</fileTypes>
 	</extension>
 
 	<!-- Type Hierarchy  -->

@@ -241,21 +241,21 @@
     <!-- marker definitions for org.xkonnex.repo.dsl.profiledsl.ProfileDsl -->
     <extension
             id="profiledsl.check.fast"
-            name="Architecture Profile-DSL Problem"
+			name="ProfileDsl Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.fast"/>
         <persistent value="true"/>
     </extension>
     <extension
             id="profiledsl.check.normal"
-            name="Architecture Profile-DSL Problem"
+			name="ProfileDsl Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.normal"/>
         <persistent value="true"/>
     </extension>
     <extension
             id="profiledsl.check.expensive"
-            name="Architecture Profile-DSL Problem"
+			name="ProfileDsl Problem"
             point="org.eclipse.core.resources.markers">
         <super type="org.eclipse.xtext.ui.check.expensive"/>
         <persistent value="true"/>
@@ -322,31 +322,6 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
-
-  <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="profdsl">
-    </viewer>
-  </extension>
-  <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="profdsl" label="Architecture Profile-DSL Compare">
-     </viewer>
-  </extension>
-  <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="profdsl">
-    </provider>
-  </extension>
-  <extension point="org.eclipse.team.core.fileTypes">
-    <fileTypes
-            extension="profdsl"
-            type="text">
-    </fileTypes>
-  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
@@ -381,5 +356,28 @@
 	        <keywordReference id="org.xkonnex.repo.dsl.profiledsl.ui.keyword_ProfileDsl"/>
 	    </page>
 	</extension>
-
+	<extension point="org.eclipse.compare.contentViewers">
+		<viewer id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.compare.contentViewers"
+			class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="profdsl">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.compare.contentMergeViewers">
+		<viewer id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.compare.contentMergeViewers"
+			class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="profdsl" label="ProfileDsl Compare">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.ui.editors.documentProviders">
+		<provider id="org.xkonnex.repo.dsl.profiledsl.ProfileDsl.editors.documentProviders"
+			class="org.xkonnex.repo.dsl.profiledsl.ui.ProfileDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			extensions="profdsl">
+		</provider>
+	</extension>
+	<extension point="org.eclipse.team.core.fileTypes">
+		<fileTypes
+			extension="profdsl"
+			type="text">
+		</fileTypes>
+	</extension>
 </plugin>

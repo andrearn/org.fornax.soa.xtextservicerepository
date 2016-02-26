@@ -6,13 +6,13 @@ import java.util.Set;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.RegistryFactory;
 import org.osgi.framework.BundleContext;
-import org.xkonnex.repo.dsl.basedsl.ui.internal.BaseDslActivator;
+import org.xkonnex.repo.dsl.basedsl.ui.internal.BasedslActivator;
 import org.xkonnex.repo.dsl.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
 
 import com.google.inject.Injector;
 
-public class CustomBaseDslActivator extends BaseDslActivator {
+public class CustomBaseDslActivator extends BasedslActivator {
 
 
 	private Set<AbstractPluggableDeclarativeValidator> validatorContributions = new HashSet<AbstractPluggableDeclarativeValidator>();

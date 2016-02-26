@@ -37,7 +37,7 @@ import org.xkonnex.repo.dsl.servicedsl.service.ui.hierarchy.SuperTypeHierarchyVi
 import org.xkonnex.repo.dsl.servicedsl.service.ui.hierarchy.TraditionalHierarchyViewer.TraditionalHierarchyContentProvider;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property;
 import org.xkonnex.repo.dsl.servicedsl.ui.internal.Messages;
-import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServiceDslActivator;
+import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServicedslActivator;
 import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServiceDslCustomActivator;
 
 import com.google.common.base.Predicate;
@@ -141,7 +141,7 @@ public class HierarchyInformationControl extends org.xkonnex.repo.dsl.servicedsl
 
 		treeViewer.setComparator(new HierarchyViewerSorter(fLifeCycle));
 		treeViewer.setAutoExpandLevel(AbstractTreeViewer.ALL_LEVELS);
-		injector = ServiceDslCustomActivator.getInstance().getInjector(ServiceDslActivator.ORG_XKONNEX_REPO_DSL_SERVICEDSL_SERVICEDSL);
+		injector = ServiceDslCustomActivator.getInstance().getInjector(ServicedslActivator.ORG_XKONNEX_REPO_DSL_SERVICEDSL_SERVICEDSL);
 		fLabelProvider= injector.getInstance (HierarchyLabelProvider.class);
 
 		treeViewer.setLabelProvider(fLabelProvider);

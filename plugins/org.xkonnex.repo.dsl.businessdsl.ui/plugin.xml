@@ -329,31 +329,6 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
-
-  <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.businessdsl.BusinessDsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.businessdsl.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="bizdsl">
-    </viewer>
-  </extension>
-  <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.businessdsl.BusinessDsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.businessdsl.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="bizdsl" label="BusinessDsl Compare">
-     </viewer>
-  </extension>
-  <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.businessdsl.BusinessDsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.businessdsl.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="bizdsl">
-    </provider>
-  </extension>
-  <extension point="org.eclipse.team.core.fileTypes">
-    <fileTypes
-            extension="bizdsl"
-            type="text">
-    </fileTypes>
-  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
@@ -388,5 +363,28 @@
 	        <keywordReference id="org.xkonnex.repo.dsl.businessdsl.ui.keyword_BusinessDsl"/>
 	    </page>
 	</extension>
-
+	<extension point="org.eclipse.compare.contentViewers">
+		<viewer id="org.xkonnex.repo.dsl.businessdsl.BusinessDsl.compare.contentViewers"
+			class="org.xkonnex.repo.dsl.businessdsl.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="bizdsl">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.compare.contentMergeViewers">
+		<viewer id="org.xkonnex.repo.dsl.businessdsl.BusinessDsl.compare.contentMergeViewers"
+			class="org.xkonnex.repo.dsl.businessdsl.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="bizdsl" label="BusinessDsl Compare">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.ui.editors.documentProviders">
+		<provider id="org.xkonnex.repo.dsl.businessdsl.BusinessDsl.editors.documentProviders"
+			class="org.xkonnex.repo.dsl.businessdsl.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			extensions="bizdsl">
+		</provider>
+	</extension>
+	<extension point="org.eclipse.team.core.fileTypes">
+		<fileTypes
+			extension="bizdsl"
+			type="text">
+		</fileTypes>
+	</extension>
 </plugin>

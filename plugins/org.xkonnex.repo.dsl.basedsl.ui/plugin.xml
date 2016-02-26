@@ -308,31 +308,6 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
-
-  <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.basedsl.BaseDsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="basedsl">
-    </viewer>
-  </extension>
-  <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.basedsl.BaseDsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="basedsl" label="BaseDsl Compare">
-     </viewer>
-  </extension>
-  <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.basedsl.BaseDsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="basedsl">
-    </provider>
-  </extension>
-  <extension point="org.eclipse.team.core.fileTypes">
-    <fileTypes
-            extension="basedsl"
-            type="text">
-    </fileTypes>
-  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
@@ -367,5 +342,28 @@
 	        <keywordReference id="org.xkonnex.repo.dsl.basedsl.ui.keyword_BaseDsl"/>
 	    </page>
 	</extension>
-
+	<extension point="org.eclipse.compare.contentViewers">
+		<viewer id="org.xkonnex.repo.dsl.basedsl.BaseDsl.compare.contentViewers"
+			class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="basedsl">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.compare.contentMergeViewers">
+		<viewer id="org.xkonnex.repo.dsl.basedsl.BaseDsl.compare.contentMergeViewers"
+			class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="basedsl" label="BaseDsl Compare">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.ui.editors.documentProviders">
+		<provider id="org.xkonnex.repo.dsl.basedsl.BaseDsl.editors.documentProviders"
+			class="org.xkonnex.repo.dsl.basedsl.ui.BaseDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			extensions="basedsl">
+		</provider>
+	</extension>
+	<extension point="org.eclipse.team.core.fileTypes">
+		<fileTypes
+			extension="basedsl"
+			type="text">
+		</fileTypes>
+	</extension>
 </plugin>

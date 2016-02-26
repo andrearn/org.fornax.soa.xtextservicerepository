@@ -330,31 +330,6 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
-
-  <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.environmentdsl.EnvironmentDsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.environmentdsl.ui.EnvironmentDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="envdsl">
-    </viewer>
-  </extension>
-  <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.environmentdsl.EnvironmentDsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.environmentdsl.ui.EnvironmentDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="envdsl" label="EnvironmentDsl Compare">
-     </viewer>
-  </extension>
-  <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.environmentdsl.EnvironmentDsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.environmentdsl.ui.EnvironmentDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="envdsl">
-    </provider>
-  </extension>
-  <extension point="org.eclipse.team.core.fileTypes">
-    <fileTypes
-            extension="envdsl"
-            type="text">
-    </fileTypes>
-  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
@@ -389,5 +364,28 @@
 	        <keywordReference id="org.xkonnex.repo.dsl.environmentdsl.ui.keyword_EnvironmentDsl"/>
 	    </page>
 	</extension>
-
+	<extension point="org.eclipse.compare.contentViewers">
+		<viewer id="org.xkonnex.repo.dsl.environmentdsl.EnvironmentDsl.compare.contentViewers"
+			class="org.xkonnex.repo.dsl.environmentdsl.ui.EnvironmentDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="envdsl">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.compare.contentMergeViewers">
+		<viewer id="org.xkonnex.repo.dsl.environmentdsl.EnvironmentDsl.compare.contentMergeViewers"
+			class="org.xkonnex.repo.dsl.environmentdsl.ui.EnvironmentDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="envdsl" label="EnvironmentDsl Compare">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.ui.editors.documentProviders">
+		<provider id="org.xkonnex.repo.dsl.environmentdsl.EnvironmentDsl.editors.documentProviders"
+			class="org.xkonnex.repo.dsl.environmentdsl.ui.EnvironmentDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			extensions="envdsl">
+		</provider>
+	</extension>
+	<extension point="org.eclipse.team.core.fileTypes">
+		<fileTypes
+			extension="envdsl"
+			type="text">
+		</fileTypes>
+	</extension>
 </plugin>

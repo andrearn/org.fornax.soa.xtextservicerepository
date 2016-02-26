@@ -20,17 +20,20 @@ Require-Bundle: org.eclipse.xtext,
  org.antlr.runtime,
  org.xkonnex.repo.dsl.basedsl;bundle-version="2.0.0",
  org.eclipse.xtext.common.types,
- org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.sladsl,
- org.xkonnex.repo.dsl.sladsl.services,
+ org.xkonnex.repo.dsl.sladsl.formatting,
+ org.xkonnex.repo.dsl.sladsl.formatting2,
+ org.xkonnex.repo.dsl.sladsl.parser.antlr,
+ org.xkonnex.repo.dsl.sladsl.parser.antlr.internal,
  org.xkonnex.repo.dsl.sladsl.sLADsl,
  org.xkonnex.repo.dsl.sladsl.sLADsl.impl,
  org.xkonnex.repo.dsl.sladsl.sLADsl.util,
- org.xkonnex.repo.dsl.sladsl.parser.antlr,
- org.xkonnex.repo.dsl.sladsl.parser.antlr.internal,
- org.xkonnex.repo.dsl.sladsl.validation,
  org.xkonnex.repo.dsl.sladsl.scoping,
- org.xkonnex.repo.dsl.sladsl.formatting,
- org.xkonnex.repo.dsl.sladsl.serializer
+ org.xkonnex.repo.dsl.sladsl.serializer,
+ org.xkonnex.repo.dsl.sladsl.services,
+ org.xkonnex.repo.dsl.sladsl.validation

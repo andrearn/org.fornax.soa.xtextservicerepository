@@ -5,7 +5,7 @@ import javax.inject.Inject
 import org.eclipse.xtext.junit4.InjectWith
 import org.eclipse.xtext.junit4.XtextRunner
 import org.junit.runner.RunWith
-import org.xkonnex.repo.dsl.basedsl.BaseDslInjectorProvider
+import org.xkonnex.repo.dsl.basedsl.tests.BaseDslInjectorProvider
 import org.xkonnex.repo.dsl.basedsl.namespace.DefaultNamespaceURIProvider
 import org.junit.Test
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory

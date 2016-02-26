@@ -8,11 +8,10 @@ import org.eclipse.core.runtime.RegistryFactory;
 import org.osgi.framework.BundleContext;
 import org.xkonnex.repo.dsl.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
-import org.xkonnex.repo.dsl.semanticsdsl.ui.internal.SemanticsDslActivator;
 
 import com.google.inject.Injector;
 
-public class CustomSemanticsDslActivator extends SemanticsDslActivator {
+public class CustomSemanticsDslActivator extends SemanticsdslActivator {
 
 	private Set<AbstractPluggableDeclarativeValidator> validatorContributions = new HashSet<AbstractPluggableDeclarativeValidator>();
 

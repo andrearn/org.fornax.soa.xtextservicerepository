@@ -21,12 +21,12 @@ Require-Bundle: org.xkonnex.repo.dsl.businessdsl;bundle-version="2.0.0",
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.builder,
  org.eclipse.xtext.ui.codetemplates.ui,
- org.eclipse.xtext.common.types.ui
+ org.eclipse.xtext.common.types.ui,
+ org.xkonnex.repo.dsl.businessdsl.ide;bundle-version="2.0.0",
+ org.eclipse.xtend.lib
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Export-Package: org.xkonnex.repo.dsl.businessdsl.ui.quickfix,
  org.xkonnex.repo.dsl.businessdsl.ui.contentassist,
- org.xkonnex.repo.dsl.businessdsl.ui.contentassist.antlr,
- org.xkonnex.repo.dsl.businessdsl.ui.internal,
- org.xkonnex.repo.dsl.businessdsl.ui.contentassist.antlr.internal
+ org.xkonnex.repo.dsl.businessdsl.ui.internal
 Bundle-Activator: org.xkonnex.repo.dsl.businessdsl.ui.internal.CustomBusinessDslActivator

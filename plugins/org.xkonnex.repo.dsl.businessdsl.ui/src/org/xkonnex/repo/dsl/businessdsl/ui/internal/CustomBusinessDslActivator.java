@@ -11,7 +11,7 @@ import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
 
 import com.google.inject.Injector;
 
-public class CustomBusinessDslActivator extends BusinessDslActivator {
+public class CustomBusinessDslActivator extends BusinessdslActivator {
 
 	private Set<AbstractPluggableDeclarativeValidator> validatorContributions = new HashSet<AbstractPluggableDeclarativeValidator>();
 

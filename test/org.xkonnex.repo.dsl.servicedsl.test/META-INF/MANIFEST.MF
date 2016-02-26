@@ -21,19 +21,22 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.workbench;resolution:=optional,
  org.xkonnex.repo.core;bundle-version="2.0.0",
  org.xkonnex.repo.generator.servicedsl;bundle-version="2.0.0",
- org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
+ org.xkonnex.repo.generator.profiledsl;bundle-version="2.0.0",
+ org.xkonnex.repo.generator.core;bundle-version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
-Export-Package: org.xkonnex.repo.dsl.servicedsl,
- org.xkonnex.repo.dsl.servicedsl.test,
+Export-Package: org.xkonnex.repo.dsl.servicedsl.test,
  org.xkonnex.repo.dsl.servicedsl.test.namespace,
  org.xkonnex.repo.dsl.servicedsl.test.query,
  org.xkonnex.repo.dsl.servicedsl.test.scoping.version,
  org.xkonnex.repo.dsl.servicedsl.test.scoping.versions,
- org.xkonnex.repo.generator.servicedsl.templates.xsd
+ org.xkonnex.repo.generator.servicedsl.templates.xsd,
+ org.xkonnex.repo.dsl.servicedsl.tests
 Import-Package: org.junit.runner;version="4.5.0",
  org.junit.runner.manipulation;version="4.5.0",
  org.junit.runner.notification;version="4.5.0",
  org.junit.runners;version="4.5.0",
  org.junit.runners.model;version="4.5.0",
- org.hamcrest.core
+ org.hamcrest.core,
+ org.junit;version="4.5.0"

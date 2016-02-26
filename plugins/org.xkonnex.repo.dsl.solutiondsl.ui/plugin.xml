@@ -127,7 +127,7 @@
             class="org.xkonnex.repo.dsl.solutiondsl.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
             id="org.xkonnex.repo.dsl.solutiondsl.SolutionDsl"
             name="SolutionDsl">
-            <keywordReference id="org.xkonnex.repo.dsl.semanticsdsl.ui.keyword_SolutionDsl"/>
+			<keywordReference id="org.xkonnex.repo.dsl.solutiondsl.ui.keyword_SolutionDsl"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -329,31 +329,6 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
-
-  <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.solutiondsl.SolutionDsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.solutiondsl.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="soldsl">
-    </viewer>
-  </extension>
-  <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.solutiondsl.SolutionDsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.solutiondsl.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="soldsl" label="SolutionDsl Compare">
-     </viewer>
-  </extension>
-  <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.solutiondsl.SolutionDsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.solutiondsl.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="soldsl">
-    </provider>
-  </extension>
-  <extension point="org.eclipse.team.core.fileTypes">
-    <fileTypes
-            extension="soldsl"
-            type="text">
-    </fileTypes>
-  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
@@ -388,5 +363,28 @@
 	        <keywordReference id="org.xkonnex.repo.dsl.solutiondsl.ui.keyword_SolutionDsl"/>
 	    </page>
 	</extension>
-
+	<extension point="org.eclipse.compare.contentViewers">
+		<viewer id="org.xkonnex.repo.dsl.solutiondsl.SolutionDsl.compare.contentViewers"
+			class="org.xkonnex.repo.dsl.solutiondsl.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="soldsl">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.compare.contentMergeViewers">
+		<viewer id="org.xkonnex.repo.dsl.solutiondsl.SolutionDsl.compare.contentMergeViewers"
+			class="org.xkonnex.repo.dsl.solutiondsl.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="soldsl" label="SolutionDsl Compare">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.ui.editors.documentProviders">
+		<provider id="org.xkonnex.repo.dsl.solutiondsl.SolutionDsl.editors.documentProviders"
+			class="org.xkonnex.repo.dsl.solutiondsl.ui.SolutionDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			extensions="soldsl">
+		</provider>
+	</extension>
+	<extension point="org.eclipse.team.core.fileTypes">
+		<fileTypes
+			extension="soldsl"
+			type="text">
+		</fileTypes>
+	</extension>
 </plugin>

@@ -322,31 +322,6 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
-
-  <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.moduledsl.ModuleDsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.moduledsl.ui.ModuleDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="moddsl">
-    </viewer>
-  </extension>
-  <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.moduledsl.ModuleDsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.moduledsl.ui.ModuleDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="moddsl" label="ModuleDsl Compare">
-     </viewer>
-  </extension>
-  <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.moduledsl.ModuleDsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.moduledsl.ui.ModuleDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="moddsl">
-    </provider>
-  </extension>
-  <extension point="org.eclipse.team.core.fileTypes">
-    <fileTypes
-            extension="moddsl"
-            type="text">
-    </fileTypes>
-  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
@@ -381,5 +356,28 @@
 	        <keywordReference id="org.xkonnex.repo.dsl.moduledsl.ui.keyword_ModuleDsl"/>
 	    </page>
 	</extension>
-
+	<extension point="org.eclipse.compare.contentViewers">
+		<viewer id="org.xkonnex.repo.dsl.moduledsl.ModuleDsl.compare.contentViewers"
+			class="org.xkonnex.repo.dsl.moduledsl.ui.ModuleDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="moddsl">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.compare.contentMergeViewers">
+		<viewer id="org.xkonnex.repo.dsl.moduledsl.ModuleDsl.compare.contentMergeViewers"
+			class="org.xkonnex.repo.dsl.moduledsl.ui.ModuleDslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="moddsl" label="ModuleDsl Compare">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.ui.editors.documentProviders">
+		<provider id="org.xkonnex.repo.dsl.moduledsl.ModuleDsl.editors.documentProviders"
+			class="org.xkonnex.repo.dsl.moduledsl.ui.ModuleDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			extensions="moddsl">
+		</provider>
+	</extension>
+	<extension point="org.eclipse.team.core.fileTypes">
+		<fileTypes
+			extension="moddsl"
+			type="text">
+		</fileTypes>
+	</extension>
 </plugin>

@@ -329,31 +329,6 @@
             </attribute>
         </markerResolutionGenerator>
     </extension>
-
-  <extension point="org.eclipse.compare.contentViewers">
-    <viewer id="org.xkonnex.repo.dsl.sladsl.SLADsl.compare.contentViewers"
-            class="org.xkonnex.repo.dsl.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="sladsl">
-    </viewer>
-  </extension>
-  <extension point="org.eclipse.compare.contentMergeViewers">
-    <viewer id="org.xkonnex.repo.dsl.sladsl.SLADsl.compare.contentMergeViewers"
-            class="org.xkonnex.repo.dsl.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-            extensions="sladsl" label="SLADsl Compare">
-     </viewer>
-  </extension>
-  <extension point="org.eclipse.ui.editors.documentProviders">
-    <provider id="org.xkonnex.repo.dsl.sladsl.SLADsl.editors.documentProviders"
-            class="org.xkonnex.repo.dsl.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
-            extensions="sladsl">
-    </provider>
-  </extension>
-  <extension point="org.eclipse.team.core.fileTypes">
-    <fileTypes
-            extension="sladsl"
-            type="text">
-    </fileTypes>
-  </extension>
    	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
 		<handler 
@@ -388,5 +363,28 @@
 	        <keywordReference id="org.xkonnex.repo.dsl.sladsl.ui.keyword_SLADsl"/>
 	    </page>
 	</extension>
-
+	<extension point="org.eclipse.compare.contentViewers">
+		<viewer id="org.xkonnex.repo.dsl.sladsl.SLADsl.compare.contentViewers"
+			class="org.xkonnex.repo.dsl.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="sladsl">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.compare.contentMergeViewers">
+		<viewer id="org.xkonnex.repo.dsl.sladsl.SLADsl.compare.contentMergeViewers"
+			class="org.xkonnex.repo.dsl.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="sladsl" label="SLADsl Compare">
+		</viewer>
+	</extension>
+	<extension point="org.eclipse.ui.editors.documentProviders">
+		<provider id="org.xkonnex.repo.dsl.sladsl.SLADsl.editors.documentProviders"
+			class="org.xkonnex.repo.dsl.sladsl.ui.SLADslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+			extensions="sladsl">
+		</provider>
+	</extension>
+	<extension point="org.eclipse.team.core.fileTypes">
+		<fileTypes
+			extension="sladsl"
+			type="text">
+		</fileTypes>
+	</extension>
 </plugin>

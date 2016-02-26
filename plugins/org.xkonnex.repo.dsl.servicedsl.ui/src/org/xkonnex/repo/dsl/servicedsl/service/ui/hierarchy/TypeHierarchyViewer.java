@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.IEObjectDescriptionHierarchyLifeCycle;
-import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServiceDslActivator;
+import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServicedslActivator;
 import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServiceDslCustomActivator;
 
 import com.google.common.base.Predicate;
@@ -49,7 +49,7 @@ public abstract class TypeHierarchyViewer extends TreeViewer {
 	public TypeHierarchyViewer(Composite parent, IContentProvider contentProvider, IEObjectDescriptionHierarchyLifeCycle lifeCycle) {
 		super(new Tree(parent, SWT.SINGLE));
 
-		Injector injector = ServiceDslCustomActivator.getInstance().getInjector(ServiceDslActivator.ORG_XKONNEX_REPO_DSL_SERVICEDSL_SERVICEDSL);
+		Injector injector = ServiceDslCustomActivator.getInstance().getInjector(ServicedslActivator.ORG_XKONNEX_REPO_DSL_SERVICEDSL_SERVICEDSL);
 		fLabelProvider=injector.getInstance(HierarchyLabelProvider.class);
 
 		setLabelProvider(fLabelProvider);

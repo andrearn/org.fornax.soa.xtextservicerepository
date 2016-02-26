@@ -1,0 +1,14 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.xkonnex.repo.dsl.businessdsl.ide
+Bundle-SymbolicName: org.xkonnex.repo.dsl.businessdsl.ide
+Bundle-Version: 2.0.0.qualifier
+Bundle-Vendor: XKonneX.org
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.xtext.ide;bundle-version="2.9.1",
+ org.eclipse.xtext.common.types;bundle-version="2.9.1",
+ org.xkonnex.repo.dsl.businessdsl;bundle-version="2.0.0",
+ org.xkonnex.repo.dsl.basedsl;bundle-version="2.0.0"
+Export-Package: org.xkonnex.repo.dsl.businessdsl.ide.contentassist.antlr.internal,
+ org.xkonnex.repo.dsl.businessdsl.ide.contentassist.antlr
+
