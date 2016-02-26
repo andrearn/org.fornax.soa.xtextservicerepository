@@ -16,43 +16,33 @@
 	<modules>
 		<module>../../plugins/org.xkonnex.repo.dsl.basedsl.ide</module>
 		<module>../../plugins/org.xkonnex.repo.dsl.basedsl.ui</module>
-		<module>../../plugins/org.xkonnex.repo.dsl.basedsl.web</module>
 		
 		<module>../../plugins/org.xkonnex.repo.dsl.bindingdsl.ide</module>
 		<module>../../plugins/org.xkonnex.repo.dsl.bindingdsl.ui</module>
-		<module>../../plugins/org.xkonnex.repo.dsl.bindingdsl.web</module>
 		
 		<module>../../plugins/org.xkonnex.repo.dsl.businessdsl.ide</module>
 		<module>../../plugins/org.xkonnex.repo.dsl.businessdsl.ui</module>
-		<module>../../plugins/org.xkonnex.repo.dsl.businessdsl.web</module>
 		
 		<module>../../plugins/org.xkonnex.repo.dsl.environmentdsl.ide</module>
 		<module>../../plugins/org.xkonnex.repo.dsl.environmentdsl.ui</module>
-		<module>../../plugins/org.xkonnex.repo.dsl.environmentdsl.web</module>
 		
 		<module>../../plugins/org.xkonnex.repo.dsl.moduledsl.ide</module>
 		<module>../../plugins/org.xkonnex.repo.dsl.moduledsl.ui</module>
-		<module>../../plugins/org.xkonnex.repo.dsl.moduledsl.web</module>
 		
 		<module>../../plugins/org.xkonnex.repo.dsl.profiledsl.ide</module>
 		<module>../../plugins/org.xkonnex.repo.dsl.profiledsl.ui</module>
-		<module>../../plugins/org.xkonnex.repo.dsl.profiledsl.web</module>
 		
 		<module>../../plugins/org.xkonnex.repo.dsl.semanticsdsl.ide</module>
 		<module>../../plugins/org.xkonnex.repo.dsl.semanticsdsl.ui</module>
-		<module>../../plugins/org.xkonnex.repo.dsl.semanticsdsl.web</module>
 		
 		<module>../../plugins/org.xkonnex.repo.dsl.servicedsl.ide</module>
 		<module>../../plugins/org.xkonnex.repo.dsl.servicedsl.ui</module>
-		<module>../../plugins/org.xkonnex.repo.dsl.servicedsl.web</module>
 		
 		<module>../../plugins/org.xkonnex.repo.dsl.sladsl.ide</module>
 		<module>../../plugins/org.xkonnex.repo.dsl.sladsl.ui</module>
-		<module>../../plugins/org.xkonnex.repo.dsl.sladsl.web</module>
 		
 		<module>../../plugins/org.xkonnex.repo.dsl.solutiondsl.ide</module>
 		<module>../../plugins/org.xkonnex.repo.dsl.solutiondsl.ui</module>
-		<module>../../plugins/org.xkonnex.repo.dsl.solutiondsl.web</module>
 		
 		<module>../../plugins/org.xkonnex.repo.workbench.ui</module>
 	</modules>
