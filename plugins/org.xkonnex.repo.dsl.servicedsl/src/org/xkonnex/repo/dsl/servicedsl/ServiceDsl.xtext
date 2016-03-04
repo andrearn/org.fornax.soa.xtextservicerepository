@@ -420,6 +420,9 @@ Service:
 Operation:
 	(deprecated?='@deprecated')? (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' ('returns' (return+=Parameter) (',' return+=Parameter)*)? ('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
 		(considerationSpec=ConsiderationSpec)?
+		('return-codes' '{'
+			returnCodes+=ReturnCode+
+		'}')?
 		('statefulness' statefulness=Statefulness (updating?='updating')? )?
 		('transaction-spec' transactionSpec=TransactionSpec)?
 		/*
@@ -439,6 +442,9 @@ Operation:
 		 */
 		('requires' requires+=RequiredServiceRef )*
 		('requires-channel' requiresChannel+=[Channel|QualifiedName] )*
+		('links' '{'
+			links+=Link+
+		'}')?
 		/*
 		 * The operation that is capabale to revert/compensate the effect of this operation
 		 */
@@ -449,6 +455,9 @@ Operation:
 	'}';
 	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
 
+ReturnCode: IntReturnCode | StringReturnCode;
+IntReturnCode: returnCode=INT;
+StringReturnCode: returnCode=STRING;
 
 /*
  * An operation (return) parameter
@@ -576,6 +585,8 @@ MessageHeaderRef:
  */
 CapabilityRef:
 	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
+	
+Link: name=ID (('links-to' link=OperationRef)|('links-to-url' url=STRING));
 
 //AbstractEvent: Event | Command;
 

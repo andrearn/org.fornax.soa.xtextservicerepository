@@ -8,6 +8,7 @@ import java.util.Iterator;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.common.types.JvmType;
 import org.eclipse.xtext.common.types.access.IJvmTypeProvider;
@@ -20,6 +21,7 @@ import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Component;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
@@ -28,13 +30,17 @@ import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyType;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Endpoint;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocolConfiguration;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleAssemblyType;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleDslPackage;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleModel;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.OperationRef;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ProvidingEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceModuleRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.UsingEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.util.ModuleDslAccess;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 
@@ -190,18 +196,72 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 				acceptor);
 		}
 	}
-	
 	@Override
-	public void completeEndpointProtocol_Type(EObject model,
-			Assignment assignment, ContentAssistContext context,
+	public void complete_UsingEndpointProtocol(EObject model,
+			RuleCall ruleCall, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
 		if (model instanceof EndpointProtocol || model instanceof Endpoint) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType importBindingType = typeProvider.findTypeByName(IModuleEndpointProtocol.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(importBindingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		} else {
-			super.completeEndpointProtocol_Type(model, assignment, context,
+			super.complete_UsingEndpointProtocol(model, ruleCall, context,
 				acceptor);
 		}
 	}
+	
+	@Override
+	public void complete_ProvidingEndpointProtocol(EObject model,
+			RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof EndpointProtocol || model instanceof Endpoint) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType importBindingType = typeProvider.findTypeByName(IModuleEndpointProtocol.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(importBindingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.complete_ProvidingEndpointProtocol(model, ruleCall, context,
+				acceptor);
+		}
+	}
+	
+	@Override
+	public void completeUsingEndpointProtocol_Type(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof UsingEndpointProtocol || model instanceof Endpoint) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType importBindingType = typeProvider.findTypeByName(IModuleEndpointProtocol.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(importBindingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeUsingEndpointProtocol_Type(model, assignment, context,
+				acceptor);
+		}
+	}
+	
+	@Override
+	public void completeProvidingEndpointProtocol_Type(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof ProvidingEndpointProtocol || model instanceof Endpoint) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType importBindingType = typeProvider.findTypeByName(IModuleEndpointProtocol.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(importBindingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeProvidingEndpointProtocol_Type(model, assignment, context,
+				acceptor);
+		}
+	}
+
+	@Override
+	public void completeAssignment_Feature(EObject model,
+			org.eclipse.xtext.Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		Component component = EcoreUtil2.getContainerOfType(model, Component.class);
+		if ((model instanceof OperationRef || model instanceof org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment || model instanceof EndpointProtocolConfiguration) && component != null) {
+			createFeatureProposals((Component) component, context, acceptor);
+		} else if (model instanceof Component) {
+			createFeatureProposals((Component) model, context, acceptor);
+		}
+	}
+
 }

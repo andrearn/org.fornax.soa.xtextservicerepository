@@ -37,10 +37,10 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 		if (context instanceof Assignment && reference == BaseDslPackage.Literals.ASSIGNMENT__FEATURE) {
 			if (context.eContainer() == null)
 				throw new IllegalStateException("context.eContainer may not be null");
-			if (!(context.eContainer() instanceof Component))
-				throw new IllegalStateException("context.eContainer has to be instance of Component");
-			val container = context.eContainer() as Component;
-			return createComponentFeaturesScope(container);
+			val component = EcoreUtil2.getContainerOfType(context, typeof(Component))
+			if (component == null)
+				throw new IllegalStateException("No containing Component");
+			return createComponentFeaturesScope(component);
 		}
 		if (context instanceof Reference && reference == BaseDslPackage.Literals.REFERENCE__REFERABLE) {
 			return createComponentReferenceScopeUpTo(context.eContainer(), false);

@@ -6,10 +6,14 @@ package org.xkonnex.repo.dsl.bindingdsl.scoping;
 import static com.google.common.collect.Lists.newArrayList;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -17,13 +21,17 @@ import org.eclipse.xtext.resource.ISelectable;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.FilteringScope;
 import org.eclipse.xtext.scoping.impl.ImportNormalizer;
+import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
+import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder;
+import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;
 import org.xkonnex.repo.dsl.basedsl.scoping.ComponentAwareVersionedScopeProvider;
+import org.xkonnex.repo.dsl.basedsl.scoping.MapBasedScope;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.VersionFilteringScope;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.VersioningContainerBasedScope;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
@@ -33,25 +41,34 @@ import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMaxExclVersion
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMinInclMaxExclRangeVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMinInclVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.NullVersionFilter;
-import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingDslPackage;
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingModel;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ConnectorQualifier;
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleRef;
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceRef;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server;
 import org.xkonnex.repo.dsl.environmentdsl.util.ServerAccessUtil;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AbstractServiceRef;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
+import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.EnvironmentBasedLatestMajorVersionFilter;
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -69,6 +86,33 @@ public class BindingDslScopeProvider extends ComponentAwareVersionedScopeProvide
 	@Inject Injector injector;
 	@Inject IQualifiedNameProvider nameProvider;
 	@Inject EnvironmentBindingResolver envBindResolver;
+	@Inject IModuleServiceResolver moduleServiceResolver;
+	@Inject IEObjectDescriptionBuilder descriptionBuilder;
+	
+	@Override
+	public IScope getScope(EObject context, EReference reference) {
+		if (reference == BindingDslPackage.Literals.OPERATION_BINDING__OPERATION) {
+			MapBasedScope operationsScope = createServiceOperationsScope(context);
+			if (operationsScope != null) {
+				return operationsScope;
+			}
+		}
+		return super.getScope(context, reference);
+	}
+
+	private MapBasedScope createServiceOperationsScope(EObject context) {
+		ServiceBinding serviceBinding = EcoreUtil2.getContainerOfType(context, ServiceBinding.class);
+		if (serviceBinding != null && serviceBinding.getService() != null &&  serviceBinding.getService().getService() != null) {
+			Service service = serviceBinding.getService().getService();
+			EList<Operation> operations = service.getOperations();
+			Map<QualifiedName, EObject> operationsMap = Maps.newHashMap();
+			for (Operation operation : operations) {
+				operationsMap.put(QualifiedName.create(operation.getName()), operation);
+			}
+			return new MapBasedScope(operationsMap);
+		}
+		return null;
+	}
 
 	@Override
 	protected IScope getLocalElementsScope(IScope parent, final EObject context,
@@ -97,7 +141,19 @@ public class BindingDslScopeProvider extends ComponentAwareVersionedScopeProvide
 			EObject ctx, EReference reference) {
 		if (reference == BindingDslPackage.Literals.SERVICE_BINDING__SERVICE && ctx instanceof ServiceRef) {
 			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
-			return createVersionFilter(v, ctx);
+			return createServiceVersionFilter(v, ctx);
+		}
+		if (reference == BindingDslPackage.Literals.SERVICE_REF__SERVICE && ctx instanceof ServiceRef) {
+			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
+			return createServiceVersionFilter(v, ctx);
+		}
+		if (reference == BindingDslPackage.Literals.SERVICE_REF__SERVICE && ctx instanceof BindingModel) {
+			EList<Binding> bindings = ((BindingModel)ctx).getBindings();
+			Iterable<ModuleBinding> moduleBindings = Iterables.filter(bindings, ModuleBinding.class);
+			if (moduleBindings.iterator().hasNext()) {
+				ModuleBinding moduleBinding = moduleBindings.iterator().next();
+				return createServiceVersionFilter(null, moduleBinding);
+			}
 		}
 		if (reference == ServiceDslPackage.Literals.SERVICE_REF__SERVICE && ctx instanceof ServiceRef) {
 			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
@@ -112,6 +168,55 @@ public class BindingDslScopeProvider extends ComponentAwareVersionedScopeProvide
 			return createVersionFilter(v, ctx);
 		}
 		return new NullVersionFilter<IEObjectDescription>();
+	}
+
+	private AbstractPredicateVersionFilter<IEObjectDescription> createServiceVersionFilter(
+			VersionRef v, EObject ctx) {
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
+		if (v != null) {
+			IScopeVersionResolver verResolver = new SimpleScopeVersionResolver (v.eResource().getResourceSet());
+			if (v instanceof MajorVersionRef)
+				return new LatestMajorVersionFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString());
+			if (v instanceof MaxVersionRef)
+				return new LatestMaxExclVersionFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion());
+			if (v instanceof MinVersionRef)
+				return new LatestMinInclVersionFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion());
+			if (v instanceof LowerBoundRangeVersionRef)
+				return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+			if (v instanceof FixedVersionRef)
+				return new FixedVersionFilter<IEObjectDescription> (verResolver, ((FixedVersionRef)v).getFixedVersion());
+		}
+		ModuleBinding moduleBinding = EcoreUtil2.getContainerOfType(ctx, ModuleBinding.class);
+		if (moduleBinding != null && moduleBinding.getModule() != null && moduleBinding.getModule().getModule() != null) {
+			Module module = moduleBinding.getModule().getModule();
+			Set<AbstractServiceRef> providedServiceRefs = moduleServiceResolver.getAllProvidedServiceRefs(module);
+			Iterable<org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef> serviceRefs = Iterables.filter(providedServiceRefs, org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef.class);
+			final List<IEObjectDescription> descs = Lists.newArrayList();
+			for (org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef serviceRef : serviceRefs) {
+				Service service = serviceRef.getService();
+				final IEObjectDescription serviceDesc = descriptionBuilder.buildDescription(service);
+				if (serviceDesc != null) {
+					descs.add(serviceDesc);
+				}
+			}
+			filter.setPreFilterPredicate(new Predicate<IEObjectDescription>() {
+
+				@Override
+				public boolean apply(IEObjectDescription desc) {
+					for (IEObjectDescription serviceDesc : descs) {
+						String canditateVersion = serviceDesc.getUserData(VersionedResourceDescriptionStrategy.VERSION_KEY);
+						String descVersion = serviceDesc.getUserData(VersionedResourceDescriptionStrategy.VERSION_KEY);
+						if (serviceDesc.getQualifiedName().equals(
+								desc.getQualifiedName())
+								&& canditateVersion.equals(descVersion)) {
+							return true;
+						}
+					}
+					return false;
+				}
+			});
+		}
+		return filter;
 	}
 
 	protected AbstractPredicateVersionFilter<IEObjectDescription> createVersionFilter(final VersionRef v, ModuleRef owner) {

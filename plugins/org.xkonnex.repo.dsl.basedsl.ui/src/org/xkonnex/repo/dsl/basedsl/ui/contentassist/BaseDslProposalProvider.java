@@ -9,6 +9,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.common.types.JvmEnumerationLiteral;
 import org.eclipse.xtext.common.types.JvmEnumerationType;
@@ -135,8 +136,9 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 	public void completeAssignment_Feature(EObject model,
 			org.eclipse.xtext.Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof Assignment && model.eContainer() instanceof Component) {
-			createFeatureProposals((Component) model.eContainer(), context, acceptor);
+		Component component = EcoreUtil2.getContainerOfType(model, Component.class);
+		if (model instanceof Assignment && component != null) {
+			createFeatureProposals((Component) component, context, acceptor);
 		} else if (model instanceof Component) {
 			createFeatureProposals((Component) model, context, acceptor);
 		}

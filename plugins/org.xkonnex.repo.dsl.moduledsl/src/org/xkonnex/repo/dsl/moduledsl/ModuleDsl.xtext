@@ -73,8 +73,8 @@ Module:
 		('uses' '{'
 			(usedServices += ImportServiceRef)*
 			(usedModules  += ModuleRef)*
-			('endpoint-protocol' usesEndpointProtocol=EndpointProtocol)?
-			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=EndpointProtocol) (',' usesAlternativeEndpointProtocols+=EndpointProtocol)*)?
+			('endpoint-protocol' usesEndpointProtocol=UsingEndpointProtocol)?
+			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=UsingEndpointProtocol) (',' usesAlternativeEndpointProtocols+=UsingEndpointProtocol)*)?
 			(endpointQualifierRef=EndpointQualifierRef)?
 		'}')?
 
@@ -102,10 +102,11 @@ Endpoint: ProvidingEndpoint | UsingEndpoint;
 ProvidingEndpoint:
 	{ProvidingEndpoint}
 	'providing-endpoint' '{'
-		('endpoint-protocol' endpointProtocol=EndpointProtocol)?
+		('endpoint-protocol' endpointProtocol=ProvidingEndpointProtocol)?
 		(endpointQualifierRef=EndpointQualifierRef)?
 	'}'
 ;
+
 /**
  * select an endpoint that provides the given endpoint-protocol and has (if defined) 
  * the given endpoint qualifier. This can be used to declaratively select a specific endpoint.
@@ -116,9 +117,9 @@ ProvidingEndpoint:
 UsingEndpoint:
 	{UsingEndpoint}
 	'using-endpoint' '{'
-		('endpoint-protocol' endpointProtocol=EndpointProtocol)?
+		('endpoint-protocol' endpointProtocol=UsingEndpointProtocol)?
 		/* fall back to other supported protocols, if necessary */
-		('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=EndpointProtocol) (',' alternativeEndpointProtocols+=EndpointProtocol)*)?
+		('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=UsingEndpointProtocol) (',' alternativeEndpointProtocols+=UsingEndpointProtocol)*)?
 		(endpointQualifierRef=EndpointQualifierRef)?
 	'}'
 ;
@@ -131,21 +132,32 @@ ServiceRef:
 		providingEndpoints+=ProvidingEndpoint+
 	'}')?
 ;
+
+OperationRef:
+	operation=[serviceDsl::Operation|QualifiedName] '{'
+		(configuration = EndpointProtocolConfiguration)
+	'}'
+;
 	
 /* 
  * Refers to a service imported by the module constrained by the given version constraint. 
- * The module to import the service from may be stated explicitely
+ * The module to import the service from may be stated explicitly
  */
-ImportServiceRef:
-	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef ('{')?
+ImportServiceRef: SimpleImportServiceRef | DetailedImportServiceRef;
+	
+SimpleImportServiceRef returns ImportServiceRef:
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 
+;
+
+DetailedImportServiceRef returns ImportServiceRef:
+	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef '{'
 		/*	specify from which module(s) the service can be used, if not defined use the first module found, 
 			that is not identical with the importing module */
 		('from-any-module-of' '{'
 			(modules+=ServiceModuleRef)(',' modules+=ServiceModuleRef)*
-		'}' 
-		)?
+		'}')?
 		(usingEndpoint=UsingEndpoint)?
-	('}')?
+	'}'
 ;
 
 /*
@@ -190,15 +202,42 @@ NamespaceRef:
 //	OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL
 //;
 
+/**
+ * Defines the type of an assembly / module. 
+ */
 AssemblyType: typeEnum=AssemblyTypeEnum | ExtensibleAssemblyType;
 
 enum AssemblyTypeEnum: OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL;
+
+/**
+ * Extensible variant of AssemblyType. 
+ * Defines the type of an assembly / module. Only JvmTypes implementing the interface 
+ * org.xkonnex.repo.dsl.moduledsl.ext.assembly.IAssemblyType are applicable
+ */
 ExtensibleAssemblyType: type=[jvmTypes::JvmType|QualifiedName];
 
 
-//enum ImportBindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP;
+/**
+ * Defines a protocol to use for the service endpoint. Only JvmTypes implementing the interface 
+ * org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol are applicable
+ */
+EndpointProtocol: ProvidingEndpointProtocol|UsingEndpointProtocol;
 
-EndpointProtocol: type=[jvmTypes::JvmType|QualifiedName];
+ProvidingEndpointProtocol:
+	type=[jvmTypes::JvmType|QualifiedName] ('{'
+		(configuration = EndpointProtocolConfiguration)?
+		('operations' '{'
+			operationEndpointConfigs+=OperationRef+
+		'}')?
+	'}')? 
+;
+UsingEndpointProtocol: 
+	type=[jvmTypes::JvmType|QualifiedName]
+;
+
+EndpointProtocolConfiguration:		
+	assignment+=Assignment+
+;
 
 QualifierRefs:
 	'qualifier' (qualifiers+=[semanticsDsl::Qualifier|QualifiedName])(','qualifiers+=[semanticsDsl::Qualifier|QualifiedName])*
@@ -208,6 +247,6 @@ EndpointQualifierRef:
 	'endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName] (acceptOtherEndpoints?='accepting-other-endpoints')?
 ;
 
-ModuleDslComponent returns basedsl::Component: ExtensibleAssemblyType | EndpointProtocol;
+ModuleDslComponent returns basedsl::Component: ExtensibleAssemblyType | ProvidingEndpointProtocol | UsingEndpointProtocol;
 
 
