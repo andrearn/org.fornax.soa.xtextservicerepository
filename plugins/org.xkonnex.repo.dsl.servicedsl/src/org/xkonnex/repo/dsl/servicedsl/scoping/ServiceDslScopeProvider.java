@@ -5,11 +5,14 @@ package org.xkonnex.repo.dsl.servicedsl.scoping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -23,6 +26,7 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.ComponentAwareVersionedScopeProvider;
+import org.xkonnex.repo.dsl.basedsl.scoping.MapBasedScope;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.VersionFilteringScope;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.FixedVersionFilter;
@@ -60,6 +64,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OperationRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredServiceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SimpleConsiderationPropertyRef;
@@ -70,6 +75,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -100,6 +106,24 @@ public class ServiceDslScopeProvider extends ComponentAwareVersionedScopeProvide
 
 	public IQualifiedNameProvider getNameProvider() {
 		return nameProvider;
+	}
+	
+	@Override
+	public IScope getScope(EObject context, EReference reference) {
+		if (reference == ServiceDslPackage.Literals.CALL_OPERATION_REF__OPERATION) {
+			RequiredServiceRef requiredServiceRef = EcoreUtil2.getContainerOfType(context, RequiredServiceRef.class);
+			if (requiredServiceRef != null && requiredServiceRef.getService() != null) {
+				Service service = requiredServiceRef.getService();
+				EList<Operation> operations = service.getOperations();
+				Map<QualifiedName, EObject> opsMap = Maps.newHashMap();
+				for (Operation operation : operations) {
+					opsMap.put(QualifiedName.create(operation.getName()), operation);
+				}
+				MapBasedScope scope = new MapBasedScope(opsMap);
+				return scope;
+			}
+		}
+		return super.getScope(context, reference);
 	}
 	
 	@Override

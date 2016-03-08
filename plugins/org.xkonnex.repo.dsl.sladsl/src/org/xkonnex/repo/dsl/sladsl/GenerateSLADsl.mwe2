@@ -112,7 +112,7 @@ Workflow {
 //		    fragment = generator.GeneratorFragment2 {}
 		    fragment = formatting.Formatter2Fragment2 {}
 		    fragment = ui.labeling.LabelProviderFragment2 {
-		    	generateStub = false
+		    	generateStub = true
 		    	generateXtendStub = false
 		    }
 		    fragment = ui.outline.QuickOutlineFragment2 {}

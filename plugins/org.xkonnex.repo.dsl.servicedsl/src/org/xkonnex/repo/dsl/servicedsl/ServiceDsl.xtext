@@ -523,13 +523,13 @@ enum Persistence: none | read | write | readWrite = "read / write";
 
 /* references a service applying a version constraint */
 ServiceRef:
-	service=[Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')?;
+	service=[Service|QualifiedName] versionRef=VersionRef;
 
 /*
  * reference to a required service in order to fulfill a service capability
  */
 RequiredServiceRef:
-	service=[Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')? ('calling' (calledOperations+=SimpleOperationRef) (',' calledOperations+=SimpleOperationRef)*)?;
+	service=[Service|QualifiedName] versionRef=VersionRef (RequiredServiceCallFragment)?;
 
 /*
  * A reference to a service operation with a version constraint
@@ -543,6 +543,15 @@ OperationRef:
  */	
 SimpleOperationRef: 
 	operation=[Operation|QualifiedName];
+
+fragment RequiredServiceCallFragment: '{'
+		'calling' '{'
+			(calledOperations+=CallOperationRef) (',' calledOperations+=CallOperationRef)* 
+		'}'
+	'}'
+;
+
+CallOperationRef: operation=[Operation|QualifiedName] ('handle-response-with' responseHandler=OperationRef)?;
 
 /* defines the execution of an operation in terms of considered parameters */
 ConsiderationSpec:

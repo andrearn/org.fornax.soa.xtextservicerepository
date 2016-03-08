@@ -22,6 +22,7 @@ import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 ModuleModel:
 	imports+=Import*
 	modules+=Module*;
+
 /*
  * A (deployable) service module. External modules are provided by other organizations.<br/>
  * Client modules are only users other modules, but don't provide services themselves. 
@@ -73,9 +74,10 @@ Module:
 		('uses' '{'
 			(usedServices += ImportServiceRef)*
 			(usedModules  += ModuleRef)*
-			('endpoint-protocol' usesEndpointProtocol=UsingEndpointProtocol)?
-			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=UsingEndpointProtocol) (',' usesAlternativeEndpointProtocols+=UsingEndpointProtocol)*)?
-			(endpointQualifierRef=EndpointQualifierRef)?
+			DefaultUsingEndpoint
+//			('endpoint-protocol' usesEndpointProtocol=UsingEndpointProtocol)?
+//			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=UsingEndpointProtocol) (',' usesAlternativeEndpointProtocols+=UsingEndpointProtocol)*)?
+//			(endpointQualifierRef=EndpointQualifierRef)?
 		'}')?
 
 		('contact-info' '{'
@@ -89,6 +91,7 @@ Module:
 		'}')?
 			
 	'}';
+
 
 /**
  * Defines an endpoint on a module with protocol being used 
@@ -123,6 +126,15 @@ UsingEndpoint:
 		(endpointQualifierRef=EndpointQualifierRef)?
 	'}'
 ;
+
+fragment DefaultUsingEndpoint:
+	('using-endpoint' '{'
+		('endpoint-protocol' usesEndpointProtocol=UsingEndpointProtocol)?
+		('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=UsingEndpointProtocol) (',' usesAlternativeEndpointProtocols+=UsingEndpointProtocol)*)?
+		(endpointQualifierRef=EndpointQualifierRef)?
+	'}')?
+;
+
 AbstractServiceRef: ServiceRef | ImportServiceRef;
 /* 
  * Refers to a service constrained by the given version constraint
