@@ -11,17 +11,13 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculato
 import org.eclipse.xtext.util.ITextRegion;
 import org.eclipse.xtext.util.Strings;
 import org.xkonnex.repo.dsl.basedsl.ui.highlighting.BaseDslHighLightingConfiguration;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ComplexConsiderationPropertyRef;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ConsiderationPropertyRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OperationRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.QueryObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;

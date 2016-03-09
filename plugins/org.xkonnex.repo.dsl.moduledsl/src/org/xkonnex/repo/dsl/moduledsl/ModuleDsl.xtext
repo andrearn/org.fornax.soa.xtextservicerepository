@@ -57,6 +57,7 @@ Module:
 			('source-location' source=STRING )? 		// Where can I get the sources? 
 		)
 		(additionalInfo=AdditionalInformation)?
+		
 		/* Declares services provided by the module */
 		('provides' '{'
 			/*
@@ -67,14 +68,16 @@ Module:
 			 * A namespace to provide all it's services, that match the modules state
 			 */
 			(providedNamespaces += NamespaceRef)*
+			(defaultProvidingEndpoint = ProvidingEndpoint)?
 		'}')?
+		
 		/* Declares services that are being used by this module. Services can be 
 		 * referenced implicitly by referring to the providing module
 		 */
 		('uses' '{'
 			(usedServices += ImportServiceRef)*
 			(usedModules  += ModuleRef)*
-			DefaultUsingEndpoint
+			UsingEndpointFragment
 //			('endpoint-protocol' usesEndpointProtocol=UsingEndpointProtocol)?
 //			('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=UsingEndpointProtocol) (',' usesAlternativeEndpointProtocols+=UsingEndpointProtocol)*)?
 //			(endpointQualifierRef=EndpointQualifierRef)?
@@ -85,7 +88,9 @@ Module:
 			('responsible' responsible += [basedsl::User|QualifiedName])*
 			('budgeting' budgeting = [basedsl::User|QualifiedName])?
 		'}')?
+		
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])*)?
+		
 		('subscriptions' '{'
 			subscriptions += [basedsl::User|QualifiedName]*
 		'}')?
@@ -102,12 +107,11 @@ Endpoint: ProvidingEndpoint | UsingEndpoint;
  * Provide an endpoint on the module that provides the given endpoint-protocol and has 
  * the given endpoint qualifier. 
  */
+
 ProvidingEndpoint:
 	{ProvidingEndpoint}
-	'providing-endpoint' '{'
-		('endpoint-protocol' endpointProtocol=ProvidingEndpointProtocol)?
+		'endpoint-protocol' endpointProtocol=ProvidingEndpointProtocol
 		(endpointQualifierRef=EndpointQualifierRef)?
-	'}'
 ;
 
 /**
@@ -119,20 +123,16 @@ ProvidingEndpoint:
  */
 UsingEndpoint:
 	{UsingEndpoint}
-	'using-endpoint' '{'
-		('endpoint-protocol' endpointProtocol=UsingEndpointProtocol)?
+		'endpoint-protocol' endpointProtocol=UsingEndpointProtocol
 		/* fall back to other supported protocols, if necessary */
 		('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=UsingEndpointProtocol) (',' alternativeEndpointProtocols+=UsingEndpointProtocol)*)?
 		(endpointQualifierRef=EndpointQualifierRef)?
-	'}'
 ;
 
-fragment DefaultUsingEndpoint:
-	('using-endpoint' '{'
+fragment UsingEndpointFragment:
 		('endpoint-protocol' usesEndpointProtocol=UsingEndpointProtocol)?
 		('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=UsingEndpointProtocol) (',' usesAlternativeEndpointProtocols+=UsingEndpointProtocol)*)?
 		(endpointQualifierRef=EndpointQualifierRef)?
-	'}')?
 ;
 
 AbstractServiceRef: ServiceRef | ImportServiceRef;
@@ -141,13 +141,16 @@ AbstractServiceRef: ServiceRef | ImportServiceRef;
  */
 ServiceRef: 
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef ('{'
+		('operations' '{'
+			operations+=OperationRef+
+		'}')?
 		providingEndpoints+=ProvidingEndpoint+
 	'}')?
 ;
 
 OperationRef:
 	operation=[serviceDsl::Operation|QualifiedName] '{'
-		(configuration = EndpointProtocolConfiguration)
+		providingEndpoints+=ProvidingEndpoint+
 	'}'
 ;
 	
@@ -238,9 +241,6 @@ EndpointProtocol: ProvidingEndpointProtocol|UsingEndpointProtocol;
 ProvidingEndpointProtocol:
 	type=[jvmTypes::JvmType|QualifiedName] ('{'
 		(configuration = EndpointProtocolConfiguration)?
-		('operations' '{'
-			operationEndpointConfigs+=OperationRef+
-		'}')?
 	'}')? 
 ;
 UsingEndpointProtocol: 

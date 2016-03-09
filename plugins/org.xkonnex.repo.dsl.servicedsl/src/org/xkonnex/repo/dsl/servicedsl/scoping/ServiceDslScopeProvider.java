@@ -182,29 +182,11 @@ public class ServiceDslScopeProvider extends ComponentAwareVersionedScopeProvide
 			final VersionRef v = ((EventRef) ctx).getVersionRef();
 			return createVersionFilter(v, objLookup.getVersionedOwner(ctx));
 		
-		} else if (reference == ServiceDslPackage.Literals.OPERATION_REF__OPERATION 
-				&& ctx instanceof OperationRef) {
+		} else if (reference == ServiceDslPackage.Literals.OPERATION_REF__OPERATION && ctx instanceof OperationRef) {
 			final VersionRef v = ((OperationRef) ctx).getVersionRef();
 			return createEContainerVersionFilter(v, objLookup.getVersionedOwner(ctx));
 		
 			
-		} else if (reference == ServiceDslPackage.Literals.SIMPLE_OPERATION_REF__OPERATION 
-				&& ctx instanceof SimpleOperationRef && ctx.eContainer() instanceof RequiredServiceRef) {
-			RequiredServiceRef requiredServiceRef =	(RequiredServiceRef) ctx.eContainer();
-			final VersionRef v = requiredServiceRef.getVersionRef();
-			final QualifiedName serviceName = nameProvider.getFullyQualifiedName(requiredServiceRef.getService());
-			AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = createEContainerVersionFilter(v, objLookup.getVersionedOwner(ctx));
-			versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription>() {
-
-				public boolean apply(IEObjectDescription input) {
-					if (input.getQualifiedName().startsWith(serviceName))
-						return true;
-					else
-						return false;
-				}
-				
-			});
-			return versionFilter;
 		} else if (reference == ServiceDslPackage.Literals.CONSIDERATION_PARAMETER_REF__PARAM 
 				&& ctx instanceof ConsiderationParameterRef 
 				&& ctx.eContainer() instanceof ConsiderationSpec) {
@@ -259,10 +241,6 @@ public class ServiceDslScopeProvider extends ComponentAwareVersionedScopeProvide
 			final VersionRef v = ((CapabilityRef) ctx).getVersionRef();
 			return createVersionFilter (v, objLookup.getVersionedOwner(ctx));
 
-		} else if (reference.eContainer() instanceof EClass && "operation".equals(reference.getName()) 
-				&& ctx instanceof RequiredServiceRef) {
-			return createFilterForOperationRef(ctx);
-			
 		} else if (reference == ServiceDslPackage.Literals.SIMPLE_CONSIDERATION_PROPERTY_REF__PROPERTY 
 				&& ctx.eContainer() instanceof ConsiderationParameterRef) {
 			//FIXME obsolete

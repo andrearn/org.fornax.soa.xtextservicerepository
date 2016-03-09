@@ -9,30 +9,35 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
-import org.xkonnex.repo.dsl.businessdsl.businessDsl.BusinessDslPackage;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
+import org.xkonnex.repo.dsl.businessdsl.businessDsl.BusinessDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.CapabilityRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.EventRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.Model;
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.OperationRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.ServiceRef;
-import org.xkonnex.repo.dsl.solutiondsl.ui.contentassist.AbstractSolutionDslProposalProvider;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.google.inject.Inject;
 /**
  * see http://www.eclipse.org/Xtext/documentation/latest/xtext.html#contentAssist on how to customize content assistant
  */
 public class SolutionDslProposalProvider extends AbstractSolutionDslProposalProvider {
+
+	@Inject
+	protected IQualifiedNameProvider nameProvider;
 
 	public void complete_VersionId (EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		calculateVersionProposals(model, context, acceptor, false);
@@ -125,6 +130,31 @@ public class SolutionDslProposalProvider extends AbstractSolutionDslProposalProv
 				Iterable<String> canditateVersions = getCanditateVersions (typeName, classNames, importedNamespaces, majorVersionsOnly);
 				for (String version : canditateVersions) {
 					acceptor.accept (createCompletionProposal (version, context));
+				}
+			} else if (model.eContainer() instanceof OperationRef) {
+				boolean versionConstraintFound = false;
+				StringBuilder nameParts = new StringBuilder();
+				while (leafIt.hasNext() && !versionConstraintFound) {
+					ILeafNode curNode = leafIt.next();
+					if (curNode.getSemanticElement() instanceof VersionRef)
+						versionConstraintFound = true;
+					else
+						nameParts.append(curNode.getText());
+				}
+				String typeName = nameParts.toString().trim()
+						.replaceAll("\\[\\]", "").trim();
+				String[] opNameParts = typeName.split("\\.");
+				if (opNameParts.length >1) {
+					typeName = typeName.replaceAll("\\."+opNameParts[opNameParts.length-1], "");
+				}
+				String className = ServiceDslPackage.Literals.SERVICE
+						.getName();
+				Iterable<String> canditateVersions = getCanditateVersions(
+						typeName, className, importedNamespaces,
+						majorVersionsOnly);
+				for (String version : canditateVersions) {
+					acceptor.accept(createCompletionProposal(version,
+							context));
 				}
 			} else {
 				if (majorVersionsOnly)

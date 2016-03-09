@@ -3,14 +3,10 @@
 */
 package org.xkonnex.repo.dsl.servicedsl.ui.labeling;
 
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.jface.viewers.StyledString;
-import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescriptions;
-import org.eclipse.xtext.resource.IResourceDescriptions.IContextAware;
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions;
 import org.eclipse.xtext.ui.label.DefaultDescriptionLabelProvider;
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy;

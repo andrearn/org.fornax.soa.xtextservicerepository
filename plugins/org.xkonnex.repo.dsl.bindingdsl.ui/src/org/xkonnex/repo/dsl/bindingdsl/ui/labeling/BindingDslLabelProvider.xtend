@@ -3,26 +3,49 @@
  */
 package org.xkonnex.repo.dsl.bindingdsl.ui.labeling
 
+import com.google.inject.Inject
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider
 import org.eclipse.xtext.common.types.JvmIdentifiableElement
 import org.eclipse.xtext.common.types.JvmType
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment
 import org.xkonnex.repo.dsl.basedsl.ui.labeling.BaseDslLabelHelper
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AccuracyAssertion
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AuthenticationPolicy
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AvailabilityAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.CapacityAssertion
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.CostAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EJB
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EncryptionPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.LatencyAssertion
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.LogPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.PredefinedAssertion
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ReliablityAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SigningPolicy
 import org.xkonnex.repo.dsl.bindingdsl.util.BindingDslHelper
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import com.google.inject.Inject
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ChannelBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.REST
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.FTP
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.JMS
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.FILE
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.HTTP
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.IIOP
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AMQP
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SCA
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.OperationBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
+import org.eclipse.xtext.EcoreUtil2
 
 /** 
  * Provides labels for a EObjects.
@@ -35,22 +58,61 @@ class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 		super(delegate)
 	}
 
-	def String image(ModuleBinding ele) {
+	def String image(Binding ele) {
 		return "full/obj16/messageexchange.gif"
-	}
-
-	def String text(
-		ServiceBinding ele) {
-		return '''«ele.getService().getService().getName()» «BaseDslLabelHelper.getVersionConstraint(ele.getService().getVersionRef())»'''
 	}
 
 	def String text(ModuleBinding m) {
 		return '''«m.getModule().getModule().getName()» -> «envBindResolver.resolveEnvironment(m).getName()»'''
 	}
 
+	def String text(ServiceBinding ele) {
+		return '''«ele.getService().getService().getName()» «BaseDslLabelHelper.getVersionConstraint(ele.getService().getVersionRef())»'''
+	}
+	
+	def String text(ChannelBinding ele) {
+		return '''«ele.channel.name»'''
+	}
+	
+	def String text(OperationBinding ele) {
+		return '''«ele.operation.name»'''
+	}
+	
 	def String text(SOAP ele) {
 		var Server server = envBindResolver.resolveServer(ele)
 		if(server !== null) return '''SOAP -> «server.getName()»''' else return "SOAP"
+	}
+	def String text(REST ele) {
+		var Server server = envBindResolver.resolveServer(ele)
+		if(server !== null) return '''REST -> «server.getName()»''' else return "REST"
+	}
+	def String text(HTTP ele) {
+		var Server server = envBindResolver.resolveServer(ele)
+		if(server !== null) return '''HTTP -> «server.getName()»''' else return "HTTP"
+	}
+	def String text(FTP ele) {
+		var Server server = envBindResolver.resolveServer(ele)
+		if(server !== null) return '''FTP -> «server.getName()»''' else return "FTP"
+	}
+	def String text(FILE ele) {
+		var Server server = envBindResolver.resolveServer(ele)
+		if(server !== null) return '''File -> «server.getName()»''' else return "File"
+	}
+	def String text(JMS ele) {
+		var Server server = envBindResolver.resolveServer(ele)
+		if(server !== null) return '''JMS -> «server.getName()»''' else return "JMS"
+	}
+	def String text(IIOP ele) {
+		var Server server = envBindResolver.resolveServer(ele)
+		if(server !== null) return '''IIOP -> «server.getName()»''' else return "IIOP"
+	}
+	def String text(AMQP ele) {
+		var Server server = envBindResolver.resolveServer(ele)
+		if(server !== null) return '''AMQP -> «server.getName()»''' else return "AMQP"
+	}
+	def String text(SCA ele) {
+		var Server server = envBindResolver.resolveServer(ele)
+		if(server !== null) return '''SCA -> «server.getName()»''' else return "SCA"
 	}
 
 	def String text(SAP ele) {
@@ -100,7 +162,49 @@ class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 			return "Unnamed"
 		}
 	}
+	
+	def Object text(LogPolicy ele) {
+		return '''Log policy «ele.logPolicy.literal»'''
+	}
+	
+	def Object text(AuthenticationPolicy ele) {
+		if (ele.name != null) {
+			return ele.name			
+		} else {
+			return "Authentication policy"
+		}
+	}
+	
+	def Object text(SigningPolicy ele) {
+		return '''Signing policy «ele.requiredSigningAlgorithm?.name»'''
+	}
+	
+	def Object text(EncryptionPolicy ele) {
+		return '''Encryption policy «ele.requiredCipherAlgorithm?.name»'''
+	}
 
+	def Object text(AvailabilityAssertion ele) {
+		return "Availability assertion"
+	}
+	def Object text(LatencyAssertion ele) {
+		return "Latency assertion"
+	}
+	def Object text(CapacityAssertion ele) {
+		return "Encryption assertion"
+	}
+	def Object text(ReliablityAssertion ele) {
+		return "Capacity assertion"
+	}
+	def Object text(CostAssertion ele) {
+		return "Costs assertion"
+	}
+	def Object text(AccuracyAssertion ele) {
+		return "Accuracy assertion"
+	}
+	def Object text(PredefinedAssertion ele) {
+		return ele.assertion?.name
+	}
+	
 	def package String image(ServiceBinding ele) {
 		return "full/obj16/invoke.gif"
 	}

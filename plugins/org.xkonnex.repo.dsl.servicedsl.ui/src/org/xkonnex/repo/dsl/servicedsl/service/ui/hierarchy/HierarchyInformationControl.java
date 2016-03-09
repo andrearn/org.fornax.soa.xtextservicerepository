@@ -37,8 +37,8 @@ import org.xkonnex.repo.dsl.servicedsl.service.ui.hierarchy.SuperTypeHierarchyVi
 import org.xkonnex.repo.dsl.servicedsl.service.ui.hierarchy.TraditionalHierarchyViewer.TraditionalHierarchyContentProvider;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property;
 import org.xkonnex.repo.dsl.servicedsl.ui.internal.Messages;
-import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServicedslActivator;
 import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServiceDslCustomActivator;
+import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServicedslActivator;
 
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;

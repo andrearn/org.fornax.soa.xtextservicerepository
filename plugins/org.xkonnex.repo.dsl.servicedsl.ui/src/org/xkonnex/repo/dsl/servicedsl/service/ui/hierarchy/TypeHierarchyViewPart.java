@@ -45,7 +45,6 @@ import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.actions.ActionContext;
-import org.eclipse.ui.actions.ActionGroup;
 import org.eclipse.ui.part.PageBook;
 import org.eclipse.ui.part.ViewPart;
 import org.eclipse.xtext.resource.IEObjectDescription;
@@ -53,10 +52,8 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 //import org.xkonnex.repo.dsl.semanticsdsl.service.ui.hierarchy.ITypeHierarchyViewPart;
 import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.EObjectDescriptionHierarchy;
 import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.IEObjDescrHierarchyLifeCycleListener;
-import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.IEObjectDescrHierarchyChangedListener;
 import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.IEObjectDescriptionHierarchyLifeCycle;
 import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.IEObjectDescriptionHierarchyViewPart;
-import org.xkonnex.repo.dsl.servicedsl.service.ui.hierarchy.TraditionalHierarchyViewer;
 
 
 public class TypeHierarchyViewPart extends ViewPart implements

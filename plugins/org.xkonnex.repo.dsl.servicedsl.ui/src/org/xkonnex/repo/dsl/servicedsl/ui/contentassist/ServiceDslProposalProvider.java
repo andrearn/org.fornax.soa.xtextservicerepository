@@ -7,6 +7,7 @@ import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
@@ -23,7 +24,9 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Entity;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OperationRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.QueryObject;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;
@@ -240,6 +243,35 @@ public class ServiceDslProposalProvider extends
 					String typeName = nameParts.toString().trim()
 							.replaceAll("\\[\\]", "").trim();
 					String className = ServiceDslPackage.Literals.EXCEPTION
+							.getName();
+					Iterable<String> canditateVersions = getCanditateVersions(
+							typeName, className, importedNamespaces,
+							majorVersionsOnly);
+					for (String version : canditateVersions) {
+						acceptor.accept(createCompletionProposal(version,
+								context));
+					}
+				} else if (model.eContainer() instanceof OperationRef) {
+					boolean versionConstraintFound = false;
+					StringBuilder nameParts = new StringBuilder();
+					while (leafIt.hasNext() && !versionConstraintFound) {
+						ILeafNode curNode = leafIt.next();
+						if (curNode.getSemanticElement() instanceof VersionRef)
+							versionConstraintFound = true;
+						else
+							nameParts.append(curNode.getText());
+					}
+					String typeName = nameParts.toString().trim()
+							.replaceAll("\\[\\]", "").trim();
+					String[] opNameParts = typeName.split("\\.");
+					if (opNameParts.length >1) {
+						typeName = typeName.replaceAll("\\."+opNameParts[opNameParts.length-1], "");
+					} else {
+						Service owningService = EcoreUtil2.getContainerOfType(model, Service.class);
+						if (owningService != null)
+							typeName = nameProvider.getFullyQualifiedName(owningService).toString();
+					}
+					String className = ServiceDslPackage.Literals.SERVICE
 							.getName();
 					Iterable<String> canditateVersions = getCanditateVersions(
 							typeName, className, importedNamespaces,

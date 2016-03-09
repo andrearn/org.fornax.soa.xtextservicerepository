@@ -8,7 +8,6 @@ import org.eclipse.core.runtime.RegistryFactory;
 import org.osgi.framework.BundleContext;
 import org.xkonnex.repo.dsl.basedsl.validation.AbstractPluggableDeclarativeValidator;
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider;
-import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServicedslActivator;
 
 import com.google.inject.Injector;
 

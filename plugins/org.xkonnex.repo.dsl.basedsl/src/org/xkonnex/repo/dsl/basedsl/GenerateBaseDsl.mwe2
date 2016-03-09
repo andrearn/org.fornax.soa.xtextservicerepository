@@ -99,7 +99,7 @@ Workflow {
 		    fragment = ui.outline.QuickOutlineFragment2 {}
 		    fragment = ui.outline.OutlineTreeProviderFragment2 {
 		    	generateStub = true
-		    	generateXtendStub = false
+		    	generateXtendStub = true
 		    }
 		    fragment = ui.quickfix.QuickfixProviderFragment2 {
 		    	generateStub = true

@@ -21,7 +21,14 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.xtext.resource.IEObjectDescription;
+import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.EObjectDescriptionHierarchy;
+import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.IEObjDescrHierarchyLifeCycleListener;
+import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.IEObjectDescriptionHierarchyLifeCycle;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 
+import com.google.common.base.Predicate;
 //import org.eclipse.jdt.core.Flags;
 //import org.eclipse.jdt.core.IJavaElement;
 //import org.eclipse.jdt.core.IMember;
@@ -32,17 +39,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 //
 //import org.eclipse.jdt.internal.corext.util.JavaModelUtil;
 //import org.eclipse.jdt.internal.corext.util.MethodOverrideTester;
-
 import org.eclipse.jdt.ui.IWorkingCopyProvider;
-import org.eclipse.xtext.resource.IEObjectDescription;
-import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.EObjectDescriptionHierarchy;
-import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.IEObjDescrHierarchyLifeCycleListener;
-import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.IEObjectDescriptionHierarchyLifeCycle;
-import org.xkonnex.repo.dsl.basedsl.util.TreeNode;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
-
-import com.google.common.base.Predicate;
 
 /**
  * Base class for content providers for type hierarchy viewers.

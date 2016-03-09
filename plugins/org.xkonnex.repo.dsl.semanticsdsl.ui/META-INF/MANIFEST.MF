@@ -25,7 +25,11 @@ Require-Bundle: org.xkonnex.repo.dsl.semanticsdsl;bundle-version="2.0.0";visibil
  org.eclipse.xtend.lib
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Export-Package: org.xkonnex.repo.dsl.semanticsdsl.ui.contentassist,
+Export-Package: org.xkonnex.repo.dsl.semanticsdsl.ui,
+ org.xkonnex.repo.dsl.semanticsdsl.ui.contentassist,
+ org.xkonnex.repo.dsl.semanticsdsl.ui.internal,
+ org.xkonnex.repo.dsl.semanticsdsl.ui.labeling,
+ org.xkonnex.repo.dsl.semanticsdsl.ui.outline,
  org.xkonnex.repo.dsl.semanticsdsl.ui.quickfix,
- org.xkonnex.repo.dsl.semanticsdsl.ui.internal
+ org.xkonnex.repo.dsl.semanticsdsl.ui.wizard
 Bundle-Activator: org.xkonnex.repo.dsl.semanticsdsl.ui.internal.CustomSemanticsDslActivator

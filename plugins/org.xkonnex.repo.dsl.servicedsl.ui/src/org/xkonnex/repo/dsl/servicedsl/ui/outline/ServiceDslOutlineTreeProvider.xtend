@@ -3,7 +3,26 @@
  */
 package org.xkonnex.repo.dsl.servicedsl.ui.outline
 
+import org.eclipse.xtext.ui.editor.outline.IOutlineNode
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider
+import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Command
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Event
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredServiceRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage
+import org.eclipse.xtext.ui.IImageHelper
+import com.google.inject.Inject
 
 /**
  * Customization of the default outline structure.
@@ -11,5 +30,151 @@ import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider
  * See https://www.eclipse.org/Xtext/documentation/304_ide_concepts.html#outline
  */
 class ServiceDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
+	
+	@Inject
+	private IImageHelper imageHelper;
+
+	def _isLeaf(RequiredServiceRef svcRef) {
+		true
+	}
+	
+	def _isLeaf(Parameter param) {
+		true
+	}
+	
+	
+	def protected _createChildren(DocumentRootNode parentNode, ServiceModel model) {
+		parentNode.createEStructuralFeatureNode(model, ServiceDslPackage.Literals.SERVICE_MODEL__IMPORTS,
+			imageHelper.getImage("impc_obj.gif"), "import declarations", false);
+		for (ns : model.namespaces) {
+			parentNode.createNode(ns)
+		}
+		for (type : model.types) {
+			parentNode.createNode(type);			
+		}
+	}
+	
+	def protected _createChildren(IOutlineNode parentNode, SubNamespace ns) {
+		for (type : ns.types) {
+			parentNode.createNode(type);			
+		}
+		for (svc : ns.services) {
+			parentNode.createNode(svc);			
+		}
+		for (ex : ns.exceptions) {
+			parentNode.createNode(ex);			
+		}
+		for (com : ns.commands) {
+			parentNode.createNode(com);			
+		}
+		for (evt : ns.events) {
+			parentNode.createNode(evt);			
+		}
+		for (ch : ns.channels) {
+			parentNode.createNode(ch);			
+		}
+	}
+	
+	def protected _createChildren(IOutlineNode parentNode, DomainNamespace ns) {
+		for (ins : ns.interalNamespaces) {
+			parentNode.createNode(ins);			
+		}
+		for (type : ns.types) {
+			parentNode.createNode(type);			
+		}
+		for (svc : ns.services) {
+			parentNode.createNode(svc);			
+		}
+		for (ex : ns.exceptions) {
+			parentNode.createNode(ex);			
+		}
+		for (com : ns.commands) {
+			parentNode.createNode(com);			
+		}
+		for (evt : ns.events) {
+			parentNode.createNode(evt);			
+		}
+		for (ch : ns.channels) {
+			parentNode.createNode(ch);			
+		}
+	}
+	
+	def protected _createChildren(IOutlineNode parentNode, InternalNamespace ns) {
+		for (ins : ns.interalNamespaces) {
+			parentNode.createNode(ins);			
+		}
+		for (type : ns.types) {
+			parentNode.createNode(type);			
+		}
+		for (svc : ns.services) {
+			parentNode.createNode(svc);			
+		}
+		for (ex : ns.exceptions) {
+			parentNode.createNode(ex);			
+		}
+		for (com : ns.commands) {
+			parentNode.createNode(com);			
+		}
+		for (evt : ns.events) {
+			parentNode.createNode(evt);			
+		}
+		for (ch : ns.channels) {
+			parentNode.createNode(ch);			
+		}
+	}
+	
+	def protected _createChildren(IOutlineNode parentNode, DataObject obj) {
+		for (prop : obj.properties) {
+			parentNode.createNode(prop);			
+		}
+	}
+	
+	def protected _createChildren(IOutlineNode parentNode, Aggregate obj) {
+		for (prop : obj.properties) {
+			parentNode.createNode(prop);			
+		}
+		for (op : obj.operations) {
+			parentNode.createNode(op);			
+		}
+	}
+	
+	def protected _createChildren(IOutlineNode parentNode, Enumeration obj) {
+		for (lit : obj.literals) {
+			parentNode.createNode(lit);			
+		}
+	}
+	
+	def protected _createChildren(IOutlineNode parentNode, Exception ex) {
+		for (prop : ex.properties) {
+			parentNode.createNode(prop);			
+		}
+	}
+	
+	def protected _createChildren(IOutlineNode parentNode, Service svc) {
+		for (op : svc.operations) {
+			parentNode.createNode(op);			
+		}
+	}
+	
+	def protected _createChildren(IOutlineNode parentNode, Operation op) {
+		for (param : op.parameters) {
+			parentNode.createNode(param)
+		}
+		for (requiredSvc : op.requires) {
+			parentNode.createNode(requiredSvc)
+		}
+	}
+	
+	def protected _createChildren(DocumentRootNode parentNode, Event evt) {
+		for (param : evt.parameter) {
+			parentNode.createNode(param);			
+		}
+	}
+	
+	def protected _createChildren(DocumentRootNode parentNode, Command evt) {
+		for (param : evt.parameter) {
+			parentNode.createNode(param);			
+		}
+	}
 
 }

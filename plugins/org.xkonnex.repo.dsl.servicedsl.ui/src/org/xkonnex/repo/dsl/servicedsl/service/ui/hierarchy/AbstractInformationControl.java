@@ -15,7 +15,6 @@ package org.xkonnex.repo.dsl.servicedsl.service.ui.hierarchy;
 
 import java.util.List;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 //import org.eclipse.jdt.core.IJavaElement;
@@ -66,7 +65,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeItem;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ActionHandler;

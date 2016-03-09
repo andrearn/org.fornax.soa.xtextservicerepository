@@ -91,11 +91,26 @@ Feature:
 	'}';
 	
 ServiceRef:
-	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (isResponseHandler?='handling responses')? ('calling' (calledOperations+=SimpleOperationRef) (',' calledOperations+=SimpleOperationRef)*)?;
+	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (ServiceRefCallFragment)?;
+
+fragment ServiceRefCallFragment: '{'
+		'calling' '{'
+			(calledOperations+=CallOperationRef) (',' calledOperations+=CallOperationRef)* 
+		'}'
+	'}'
+;
+
+CallOperationRef: operation=[serviceDsl::Operation|QualifiedName] ('handle-response-with' responseHandler=OperationRef)?;
 
 
-SimpleOperationRef: 
-	operation=[serviceDsl::Operation|QualifiedName];
+/*
+ * A reference to a service operation with a version constraint
+ */	
+OperationRef:
+	operation=[serviceDsl::Operation|QualifiedName] versionRef=VersionRef;
+
+//SimpleOperationRef: 
+//	operation=[serviceDsl::Operation|QualifiedName];
 
 	
 CapabilityRef:

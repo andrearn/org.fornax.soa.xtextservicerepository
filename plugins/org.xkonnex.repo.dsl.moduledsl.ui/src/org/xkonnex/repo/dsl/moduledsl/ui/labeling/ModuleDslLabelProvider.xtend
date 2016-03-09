@@ -18,6 +18,11 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.UsingEndpointProtocol
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.NamespaceRef
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.OperationRef
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocolConfiguration
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ProvidingEndpoint
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 
 /** 
  * Provides labels for a EObjects.
@@ -52,6 +57,10 @@ class ModuleDslLabelProvider extends DefaultEObjectLabelProvider {
 		name.append(versionAndState)
 		return name
 	}
+	
+	def String text (OperationRef ele) {
+		ele.operation.name
+	}
 
 	def package Object text(ImportServiceRef s) {
 		var StyledString name = new StyledString(
@@ -73,12 +82,46 @@ class ModuleDslLabelProvider extends DefaultEObjectLabelProvider {
 				return name
 	}
 	
+	def String text (NamespaceRef ele) {
+		ele.namespace.name
+	}
+	
+	def String image (NamespaceRef ele) {
+		return "package_obj.gif"
+	}
+	
+	def String image (Assignment ele) {
+		return "assignment.gif"
+	}
+	
+	def Object text (EndpointProtocolConfiguration ele) {
+		"Protocol config"
+	}
+	
+	def String image (EndpointProtocolConfiguration ele) {
+		"settings_obj.gif"
+	}
+	
 	def String text (UsingEndpointProtocol ele) {
 		return ele.type.simpleName
 	}
 	
+	def String image (UsingEndpointProtocol ele) {
+		"full/obj16/message_part.gif"
+	}
+	def String text (ProvidingEndpoint ele) {
+		"Providing endpoint"
+	}
+	
+	def String text (EndpointQualifierRef ele) {
+		ele.endpointQualifier.name
+	}
+	
 	def String text (ProvidingEndpointProtocol ele) {
 		return ele.type.simpleName
+	}	
+	def String image (ProvidingEndpointProtocol ele) {
+		"full/obj16/message_part.gif"
 	}
 	
 	def String text(Assignment ele) {

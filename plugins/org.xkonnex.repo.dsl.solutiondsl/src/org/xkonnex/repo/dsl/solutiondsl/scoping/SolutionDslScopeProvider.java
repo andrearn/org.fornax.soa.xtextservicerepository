@@ -3,40 +3,57 @@
  */
 package org.xkonnex.repo.dsl.solutiondsl.scoping;
 
+import java.util.Map;
+
 import org.apache.log4j.Logger;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IResourceDescription;
 import org.eclipse.xtext.resource.IResourceServiceProvider;
 import org.eclipse.xtext.scoping.IGlobalScopeProvider;
+import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.util.IResourceScopeCache;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.ComponentAwareVersionedScopeProvider;
+import org.xkonnex.repo.dsl.basedsl.scoping.MapBasedScope;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
+import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.FixedVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMaxExclVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMinInclMaxExclRangeVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMinInclVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.NullVersionFilter;
-import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
+import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
+import org.xkonnex.repo.dsl.basedsl.version.VersionedOwnerScopeVersionResolver;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMinMaxVersionForOwnerStateFilter;
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMinVersionForOwnerStateFilter;
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedMaxVersionForOwnerStateFilter;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.CapabilityRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.EventRef;
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.OperationRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.ServiceRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.SolutionDslPackage;
 
+import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
@@ -57,7 +74,11 @@ public class SolutionDslScopeProvider extends ComponentAwareVersionedScopeProvid
 	private IGlobalScopeProvider globalScopeProvider;
 	@Inject
 	private ILifecycleStateResolver stateResolver;
-
+	@Inject 
+	private IEObjectLookup objLookup;
+	@Inject
+	private StateAttributeLifecycleStateResolver staticStateResolver;
+	
 	public void setGlobalScopeProvider(IGlobalScopeProvider globalScopeProvider) {
 		this.globalScopeProvider = globalScopeProvider;
 	}
@@ -90,16 +111,37 @@ public class SolutionDslScopeProvider extends ComponentAwareVersionedScopeProvid
 	}
 
 	@Override
+	public IScope getScope(EObject context, EReference reference) {
+		if (reference == SolutionDslPackage.Literals.CALL_OPERATION_REF__OPERATION) {
+			ServiceRef requiredServiceRef = EcoreUtil2.getContainerOfType(context, ServiceRef.class);
+			if (requiredServiceRef != null && requiredServiceRef.getService() != null) {
+				Service service = requiredServiceRef.getService();
+				EList<Operation> operations = service.getOperations();
+				Map<QualifiedName, EObject> opsMap = Maps.newHashMap();
+				for (Operation operation : operations) {
+					opsMap.put(QualifiedName.create(operation.getName()), operation);
+				}
+				MapBasedScope scope = new MapBasedScope(opsMap);
+				return scope;
+			}
+		}
+		return super.getScope(context, reference);
+	}
+	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
 			EObject ctx, EReference reference) {
 		if (reference == SolutionDslPackage.Literals.SERVICE_REF__SERVICE && ctx instanceof ServiceRef) {
 			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);
 		}
-		if (reference == SolutionDslPackage.Literals.SERVICE_REF__CALLED_OPERATIONS && ctx instanceof ServiceRef) {
-			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
-			return createVersionFilter(v, ctx);
+		if (reference == ServiceDslPackage.Literals.OPERATION_REF__OPERATION && ctx instanceof OperationRef) {
+			final VersionRef v = ((OperationRef) ctx).getVersionRef();
+			return createEContainerVersionFilter(v, objLookup.getVersionedOwner(ctx));
 		}
+//		if (reference == SolutionDslPackage.Literals.SERVICE_REF__CALLED_OPERATIONS && ctx instanceof ServiceRef) {
+//			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
+//			return createVersionFilter(v, ctx);
+//		}
 		if (reference == ServiceDslPackage.Literals.EVENT_REF__EVENT && ctx instanceof EventRef) {
 			final VersionRef v = ((EventRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);
@@ -130,6 +172,37 @@ public class SolutionDslScopeProvider extends ComponentAwareVersionedScopeProvid
 				return new LatestMinInclVersionFilter<IEObjectDescription>(verResolver, ((MinVersionRef)v).getMinVersion());
 			if (v instanceof LowerBoundRangeVersionRef)
 				return new LatestMinInclMaxExclRangeVersionFilter<IEObjectDescription>(verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion());
+		}
+		return filter;
+	}
+	
+	private AbstractPredicateVersionFilter<IEObjectDescription> createEContainerVersionFilter(final VersionRef v, EObject owner) {
+		AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
+		if (v != null) {
+			IScopeVersionResolver verResolver = new VersionedOwnerScopeVersionResolver (v.eResource().getResourceSet());
+			LifecycleState ownerState = staticStateResolver.getLifecycleState(owner);
+			if (v instanceof MajorVersionRef) {
+				RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMajorVersionForOwnerStateFilter<IEObjectDescription> (verResolver, new Integer(((MajorVersionRef)v).getMajorVersion()).toString(), staticStateResolver, ownerState, v.eResource().getResourceSet());
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof MaxVersionRef) {
+				RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedMaxVersionForOwnerStateFilter<IEObjectDescription> (verResolver, ((MaxVersionRef)v).getMaxVersion(), staticStateResolver, ownerState, v.eResource().getResourceSet());
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof MinVersionRef) {
+				RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMinVersionForOwnerStateFilter<IEObjectDescription> (verResolver, ((MinVersionRef)v).getMinVersion(), staticStateResolver, ownerState, v.eResource().getResourceSet());
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof LowerBoundRangeVersionRef) {
+				RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription> stateFilter = new RelaxedLatestMinMaxVersionForOwnerStateFilter<IEObjectDescription> (verResolver, ((LowerBoundRangeVersionRef)v).getMinVersion(), ((LowerBoundRangeVersionRef)v).getMaxVersion(), staticStateResolver, ownerState, v.eResource().getResourceSet());
+				injector.injectMembers (stateFilter);
+				return stateFilter;
+			}
+			if (v instanceof FixedVersionRef)
+				return new FixedVersionFilter<IEObjectDescription>(verResolver, ((FixedVersionRef) v).getFixedVersion());
 		}
 		return filter;
 	}

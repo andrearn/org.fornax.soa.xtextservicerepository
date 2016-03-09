@@ -28,5 +28,6 @@ Export-Package: org.xkonnex.repo.dsl.basedsl.ui,
  org.xkonnex.repo.dsl.basedsl.ui.highlighting,
  org.xkonnex.repo.dsl.basedsl.ui.internal,
  org.xkonnex.repo.dsl.basedsl.ui.labeling,
+ org.xkonnex.repo.dsl.basedsl.ui.outline,
  org.xkonnex.repo.dsl.basedsl.ui.quickfix
 Bundle-Activator: org.xkonnex.repo.dsl.basedsl.ui.internal.CustomBaseDslActivator

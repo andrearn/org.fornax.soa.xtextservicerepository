@@ -35,8 +35,8 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.basedsl.ui.hierarchy.IEObjectDescriptionHierarchyLifeCycle;
-import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServicedslActivator;
 import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServiceDslCustomActivator;
+import org.xkonnex.repo.dsl.servicedsl.ui.internal.ServicedslActivator;
 
 import com.google.common.base.Predicate;
 import com.google.inject.Injector;

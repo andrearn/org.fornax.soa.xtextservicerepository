@@ -5,9 +5,23 @@ package org.xkonnex.repo.dsl.profiledsl.ui.labeling;
 
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.xtext.common.types.JvmType;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.CustomDesignRule;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.CustomVersioningStrategy;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DesignRules;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Messaging;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.NamespaceRules;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Property;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.ServiceDefPolicy;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.SimpleVersioningStrategy;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Transition;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersioningStrategy;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersioningStrategyDefinition;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersioningStrategyKind;
 
 import com.google.inject.Inject;
 
@@ -28,8 +42,63 @@ public class ProfileDslLabelProvider extends DefaultEObjectLabelProvider {
 		return "full/obj16/datatype_obj.gif";
 	}
 	
+	Object text (Messaging ele) {
+		return "Messaging";
+	}
+	
+	String image(Messaging ele) {
+		return "full/obj16/messageexchange.gif";
+	}
+	
+	Object text (CustomDesignRule ele) {
+		return ele.getType().getSimpleName();
+	}
+	
+	Object text (ServiceDefPolicy ele) {
+		return "Service def policy";
+	}
+	
+	Object text (MessageHeader ele) {
+		StyledString name = new StyledString(ele.getName());
+		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + ele.getState().getName (), StyledString.DECORATIONS_STYLER);
+		name.append(versionAndState);
+		return name;
+	}
+	
+	Object text (Property ele) {
+		return ele.getName();
+	}
+	
 	String image (MessageHeader ele) {
 		return "full/obj16/message_part.gif";
+	}
+	
+	Object text (DesignRules ele) {
+		return "Design rules";
+	}
+	
+	Object text (VersioningStrategy ele) {
+		VersioningStrategyDefinition strategy = ele.getVersioningStrategy();
+		if (strategy instanceof SimpleVersioningStrategy) {
+			VersioningStrategyKind strategyKind = ((SimpleVersioningStrategy)strategy).getStrategyKind();
+			return "Versioning stategy " + strategyKind.getName();
+		}
+		if (strategy instanceof CustomVersioningStrategy) {
+			JvmType strategyKind = ((CustomVersioningStrategy)strategy).getType();
+			return "Versioning stategy " + strategyKind.getSimpleName();
+		}
+		return "Versioning stategy";
+	}
+	
+	Object text (Transition t) {
+		if (t.getTargetState() != null) 
+			return "-> "+ t.getTargetState().getName();
+		else
+			return "-> ???";
+	}
+	
+	String image (TechnicalNamespace ele) {
+		return "full/obj16/package_obj.gif";
 	}
 
 	Object text (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class ele) {
@@ -40,7 +109,7 @@ public class ProfileDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	String image (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class ele) {
-		return "full/obj16/bo_obj.gif";
+		return "full/obj16/Class.gif";
 	}
 	
 	Object text (org.xkonnex.repo.dsl.profiledsl.profileDsl.Enumeration ele) {
@@ -51,5 +120,9 @@ public class ProfileDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	String image (org.xkonnex.repo.dsl.profiledsl.profileDsl.Enumeration ele) {
 		return "full/obj16/enum_obj.gif";
+	}
+	
+	Object text (NamespaceRules ele) {
+		return "Namespace rules";
 	}
 }
