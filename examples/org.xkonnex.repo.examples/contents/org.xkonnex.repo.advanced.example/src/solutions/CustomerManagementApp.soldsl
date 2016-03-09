@@ -45,7 +45,11 @@ solution CustomerManagementApp {
 			// The feature uses this service to create the customer
 			requires CustomerManagerBAS majorVersion 1
 			// The feature uses a specific operation of this service to identify a customer i
-			requires CustomerLookupBES majorVersion 1 calling CustomerLookupBES.findByQueryTemplate
+			requires CustomerLookupBES majorVersion 1 {
+				calling {
+					findByQueryTemplate
+				}
+			}
 		}
 	}
 }

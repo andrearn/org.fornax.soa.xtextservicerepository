@@ -132,15 +132,22 @@ OperationBinding:
 	'bind-operation' operation=[serviceDsl::Operation|QualifiedName] '{' 
 		(endpointQualifierRef=EndpointQualifierRef)?
 		(governanceDecisions+=GovernanceDecision)*
+		//protocol on inbound endpoint 
 		'protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}'
+		/** protocol on outbound endpoint of channel on a bus, 
+		 * i.e. the protocol of the actual service provider 
+		 to which the call is delegated*/ 
 		('provider-protocols' '{'
 			(providerProtocol+=BindingProtocol)+
 		'}')?
 		('policies' '{'
 			(policies+=Policy)*
 		'}')?
+		/** policies on the outbound endpoint of a channel on a bus, 
+		 * i.e. the protocol of the actual service provider 
+		 to which the call is delegated*/ 
 		('provider-policies' '{'
 			(providerPolicies+=Policy)*
 		'}')?
@@ -152,7 +159,10 @@ OperationBinding:
 
 
 //Protocols 
-
+/**
+ * Protocol definition as Java class implementing 
+ * {@link org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol}
+ */
 ExtensibleProtocol: 'protocol' type=[jvmTypes::JvmType|QualifiedName] '{'
 		(endpointQualifierRef=EndpointQualifierRef)?
 		(endpointConnector=ConnectorQualifier)?
@@ -224,15 +234,10 @@ REST:
 		 */
 		'provider-url' providerUrl=STRING  
 		'verb' verb=Verb 
-//		('format' format=RESTFormat)? 
-//		('consumes-format' consumesFormat=RESTFormat)? 
-//		('provides-format' provideFormat=RESTFormat)? 
 		('consumes' consumes+=STRING)* 
 		('provides' provides+=STRING)* 
 	'}';
 
-/* The wire data serialization format */	
-//enum RESTFormat: JSON | XML | BISON | OTHER;
 /* The REST operation verb */
 enum Verb: CREATE | RETRIEVE | UPDATE | DELETE | GET | PUT | POST;
 
@@ -327,8 +332,6 @@ AuthenticationPolicy :
 		('issuer' issuer = STRING)?
 	'}';
 	
-//enum HashAlgKind : MD5 | SHA1 | SHA256 | RSA | PlainText;
-
 /* How messages are signed, to verify their authenticity */
 SigningPolicy : 
 	{SigningPolicy} 
@@ -343,7 +346,6 @@ MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpress
 
 enum MessagePartRefKind: header | body | attachments | all | expression;
 
-//enum SigningAlgorithm: NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
 
 /* How messages are encrypted */
 EncryptionPolicy : 
@@ -354,10 +356,6 @@ EncryptionPolicy :
 		('encrypted-message-parts' (encryptedParts+=MessagePartRef)(',' encryptedParts+=MessagePartRef)*)?
 	'}'
 ;
-
-//enum CipherAlgorithmKind: NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES='3DES' | AES128 | AES256;
-
-//enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
 
 enum LogPolicyKind: none | header | all;
 
