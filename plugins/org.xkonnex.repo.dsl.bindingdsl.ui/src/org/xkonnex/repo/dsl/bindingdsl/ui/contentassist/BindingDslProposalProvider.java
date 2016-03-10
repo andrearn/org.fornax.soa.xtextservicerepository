@@ -135,13 +135,9 @@ public class BindingDslProposalProvider extends AbstractBindingDslProposalProvid
 	public void completeExtensibleProtocol_Type(EObject model,
 			Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof ExtensibleProtocol) {
-			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
-			JvmType protocolType = typeProvider.findTypeByName(IProtocol.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(protocolType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
-		} else {
-			super.completeExtensibleProtocol_Type(model, assignment, context, acceptor);
-		}
+		IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+		JvmType protocolType = typeProvider.findTypeByName(IProtocol.class.getCanonicalName());
+		typeProposalProvider.createSubTypeProposals(protocolType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 	}
 	
 	@Override

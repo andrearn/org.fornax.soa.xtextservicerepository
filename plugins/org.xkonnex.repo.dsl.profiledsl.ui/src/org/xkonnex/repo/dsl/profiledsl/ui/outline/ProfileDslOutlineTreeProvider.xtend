@@ -18,6 +18,7 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslPackage
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileModel
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Transition
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.TypeDefPolicy
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Enumeration
 
 /**
  * Customization of the default outline structure.
@@ -79,6 +80,18 @@ class ProfileDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 			parentNode.createNode(transition)
 		}
 	}
+	
+	def protected _createChildren(IOutlineNode parentNode, Enumeration enumeration) {
+		for (lit : enumeration.literals) {
+			parentNode.createNode(lit)
+		}
+	}
+	def protected _createChildren(IOutlineNode parentNode, org.xkonnex.repo.dsl.profiledsl.profileDsl.Class clazz) {
+		for (prop : clazz.properties) {
+			parentNode.createNode(prop)
+		}
+	}
+	
 	 
 	def protected _isLeaf(Transition modelElement) {
 		true

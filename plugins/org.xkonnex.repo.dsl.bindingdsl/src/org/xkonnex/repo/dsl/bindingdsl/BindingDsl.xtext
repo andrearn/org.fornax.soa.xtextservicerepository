@@ -87,7 +87,7 @@ ServiceBinding:
 		('assertions' '{'
 			(assertions+=Assertion)+
 		'}')?
-		('references-module' referencedModule = ModuleRef)?
+//		('references-module' referencedModule = ModuleRef)?
 		(operation+=OperationBinding)*
 	'}';
 
@@ -163,12 +163,10 @@ OperationBinding:
  * Protocol definition as Java class implementing 
  * {@link org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol}
  */
-ExtensibleProtocol: 'protocol' type=[jvmTypes::JvmType|QualifiedName] '{'
+ExtensibleProtocol: type=[jvmTypes::JvmType|QualifiedName] '{'
 		(endpointQualifierRef=EndpointQualifierRef)?
 		(endpointConnector=ConnectorQualifier)?
-		('configuration' '{'
-			assignment+=Assignment*
-		'}')? 
+		assignment+=Assignment*
 	'}';
 
 /* Use SOAP on the endpoint */
