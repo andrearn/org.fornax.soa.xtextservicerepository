@@ -65,6 +65,10 @@ Module:
 			 */
 			(providedServices += ServiceRef)*
 			/*
+			 * Channels that the module provides
+			 */
+			(providedChannels += ChannelRef)*
+			/*
 			 * A namespace to provide all it's services, that match the modules state
 			 */
 			(providedNamespaces += NamespaceRef)*
@@ -153,6 +157,12 @@ OperationRef:
 		providingEndpoints+=ProvidingEndpoint+
 	'}'
 ;
+
+ChannelRef:
+	'channel' channel=[serviceDsl::Channel|QualifiedName] ('{'
+		providingEndpoints+=ProvidingEndpoint+
+	'}')?
+;
 	
 /* 
  * Refers to a service imported by the module constrained by the given version constraint. 
@@ -240,15 +250,11 @@ EndpointProtocol: ProvidingEndpointProtocol|UsingEndpointProtocol;
 
 ProvidingEndpointProtocol:
 	type=[jvmTypes::JvmType|QualifiedName] ('{'
-		(configuration = EndpointProtocolConfiguration)?
+		assignment+=Assignment+
 	'}')? 
 ;
 UsingEndpointProtocol: 
 	type=[jvmTypes::JvmType|QualifiedName]
-;
-
-EndpointProtocolConfiguration:		
-	assignment+=Assignment+
 ;
 
 QualifierRefs:

@@ -30,7 +30,6 @@ import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyType;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Endpoint;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocolConfiguration;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleAssemblyType;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleDslPackage;
@@ -257,7 +256,7 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 			org.eclipse.xtext.Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
 		Component component = EcoreUtil2.getContainerOfType(model, Component.class);
-		if ((model instanceof OperationRef || model instanceof org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment || model instanceof EndpointProtocolConfiguration) && component != null) {
+		if ((model instanceof OperationRef || model instanceof org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment) && component != null) {
 			createFeatureProposals((Component) component, context, acceptor);
 		} else if (model instanceof Component) {
 			createFeatureProposals((Component) model, context, acceptor);

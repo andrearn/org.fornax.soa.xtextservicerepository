@@ -14,6 +14,7 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.EcoreUtil2
 
 /**
  * Resolver, that resolves environment assets such as servers from Bindings
@@ -78,15 +79,23 @@ class EnvironmentBindingResolver {
 	def dispatch Environment resolveEnvironment (EObject o) {
 		o.eContainer?.resolveEnvironment
 	}
-	def dispatch Environment resolveEnvironment (Binding bind) {
-		bind.resolveEnvironment
-	}
+	
 	def dispatch Environment resolveEnvironment (ModuleBinding bind) {
 		if (bind.provServer != null) {
 			bind.provServer.resolveEnvironment
 		} else {
 			bind.environment
 		}
+	}
+	
+	def dispatch Environment resolveEnvironment (ServiceBinding bind) {
+		val modBind = EcoreUtil2.getContainerOfType(bind, typeof(ModuleBinding))
+		modBind.resolveEnvironment
+	}
+	
+	def dispatch Environment resolveEnvironment (OperationBinding bind) {
+		val modBind = EcoreUtil2.getContainerOfType(bind, typeof(ModuleBinding))
+		modBind.resolveEnvironment
 	}
 	
 	/*

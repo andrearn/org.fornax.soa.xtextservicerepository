@@ -28,6 +28,7 @@ BindingModel:
 
 
 Binding: ModuleBinding | ServiceBinding | ChannelBinding;
+AnyBinding: Binding | OperationBinding;
 
 
 
@@ -358,7 +359,7 @@ EncryptionPolicy :
 enum LogPolicyKind: none | header | all;
 
 /** A nonfunctional requirement claimed to be met */
-Assertion: AvailabilityAssertion | LatencyAssertion | CapacityAssertion | ReliablityAssertion | CostAssertion | AccuracyAssertion | PredefinedAssertion;
+Assertion: AvailabilityAssertion | LatencyAssertion | CapacityAssertion | ReliabilityAssertion | CostAssertion | AccuracyAssertion | PredefinedAssertion;
 
 PredefinedAssertion: 'predefined-assertion' assertion=[slaDsl::Assertion|QualifiedName];
 
@@ -384,14 +385,14 @@ CapacityAssertion:
 	'}'
 ;
 
-ReliablityAssertion:
-	'reliablility-assertion' '{'
-		'message-exchange-reliability' reliability=ReliablilityKind
+ReliabilityAssertion:
+	'reliability-assertion' '{'
+		'message-exchange-reliability' reliability=ReliabilityKind
 		(inOrderDelivery ?= 'in-order-delivery')?
 	'}'
 ;
 
-enum ReliablilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
+enum ReliabilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
 CostAssertion:
 	'costs-assertion' '{'
 		'costs' costsAmount=STRING

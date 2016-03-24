@@ -12,8 +12,11 @@ import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.services.BindingServiceRefMatcher
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ChannelBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.OperationBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
@@ -23,7 +26,9 @@ import org.xkonnex.repo.dsl.moduledsl.query.IModuleVersionMatcher
 import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IVersionFilterProvider
 import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.EndpointQualifierQueries
 
 /**
  * Lookup of Bindings for different criteria, e.g. find a binding for a module to an environment
@@ -229,6 +234,67 @@ class BindingLookup {
 			return binding
 		else
 			return null
+	}
+	
+	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, AnyBinding binding) {
+		return null
+	}
+	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, OperationBinding binding) {
+		if (binding.operation == operation)
+			return binding
+		else
+			return null
+	}
+	
+	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, ServiceBinding binding) {
+		if (binding.operation == operation)
+			return binding
+		else
+			return null
+	}
+	
+	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, ModuleBinding binding) {
+		val service = EcoreUtil2.getContainerOfType(operation, typeof (Service))
+		if (!binding.serviceBindings.empty) {
+			for (svcBind : binding.serviceBindings) {
+				if (serviceRefMatcher.matches(service, svcBind.service)) {
+					for (opBind : svcBind.operation) {
+						if (opBind.operation == operation) {
+							return opBind
+						}
+					}
+					return svcBind
+				}
+			}
+		}
+		return binding
+	}
+	
+	def List<AnyBinding> getBottomUpBindingHierarchy(Service service, ModuleBinding binding) {
+		val specBind = getMostSpecificBinding(service, binding);
+		var hierarchy = getBottomUpHierarchyForSpecificBinding(specBind)
+		hierarchy
+	}
+	def List<AnyBinding> getBottomUpBindingHierarchy(Operation operation, ModuleBinding binding) {
+		val specBind = getMostSpecificOperationBinding(operation, binding);
+		var hierarchy = getBottomUpHierarchyForSpecificBinding(specBind)
+		hierarchy
+	}
+	
+	def List<AnyBinding> getBottomUpHierarchyForSpecificBinding(AnyBinding specBind) {
+		var List<AnyBinding> hierarchy = newArrayList()
+		val opBind = EcoreUtil2.getContainerOfType(specBind, typeof(OperationBinding))
+		val channelBind = EcoreUtil2.getContainerOfType(specBind, typeof(ChannelBinding))
+		val svcBind = EcoreUtil2.getContainerOfType(specBind, typeof(ServiceBinding))
+		val modBind = EcoreUtil2.getContainerOfType(specBind, typeof(ModuleBinding))
+		if (opBind != null)
+			hierarchy+=opBind
+		if (channelBind != null)
+			hierarchy+=channelBind
+		if (svcBind != null)
+			hierarchy+=svcBind
+		hierarchy+=modBind
+		hierarchy
 	}
 	
 	/**

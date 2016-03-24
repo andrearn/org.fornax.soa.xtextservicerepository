@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.eclipse.xtext.common.types.JvmType;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Component;
 
 import com.google.inject.ImplementedBy;
 
@@ -20,6 +21,15 @@ import com.google.inject.ImplementedBy;
  */
 @ImplementedBy(ComponentInferrer.class)
 public interface IComponentInferrer {
+	
+	/**
+	 * infer a new instance of the referenced JvmType. 
+	 * 
+	 * @param compnent
+	 *            The component to infer a Java Bean of it's referenced type with all assignments applied.
+	 * @return
+	 */
+	public <T> T inferComponent(Component component);
 
 	/**
 	 * infer a new instance of the referenced JvmType. 

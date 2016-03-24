@@ -11,21 +11,32 @@ import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment
 import org.xkonnex.repo.dsl.basedsl.ui.labeling.BaseDslLabelHelper
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AMQP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AccuracyAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AuthenticationPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AvailabilityAssertion
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.CapacityAssertion
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ChannelBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.CostAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EJB
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EncryptionPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.FILE
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.FTP
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.HTTP
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.IIOP
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.JMS
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.LatencyAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.LogPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.OperationBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.PredefinedAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ReliablityAssertion
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.REST
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ReliabilityAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SAP
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SCA
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SigningPolicy
@@ -34,18 +45,6 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ChannelBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.REST
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.FTP
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.JMS
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.FILE
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.HTTP
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.IIOP
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AMQP
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SCA
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.OperationBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
-import org.eclipse.xtext.EcoreUtil2
 
 /** 
  * Provides labels for a EObjects.
@@ -192,7 +191,7 @@ class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	def Object text(CapacityAssertion ele) {
 		return "Encryption assertion"
 	}
-	def Object text(ReliablityAssertion ele) {
+	def Object text(ReliabilityAssertion ele) {
 		return "Capacity assertion"
 	}
 	def Object text(CostAssertion ele) {

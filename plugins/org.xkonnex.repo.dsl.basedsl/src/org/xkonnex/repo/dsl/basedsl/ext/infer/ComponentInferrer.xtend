@@ -20,12 +20,20 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.IntValue
 import org.xkonnex.repo.dsl.basedsl.baseDsl.StringValue
 import org.eclipse.xtext.common.types.JvmEnumerationLiteral
 import org.xkonnex.repo.dsl.basedsl.scoping.ComponentExtensions
+import java.beans.Introspector
 
 @SuppressWarnings("restriction") 
 class ComponentInferrer implements IComponentInferrer {
 	
 	@Inject JavaReflectAccess reflectAccess
 	@Inject extension ComponentExtensions
+	
+	override <T> inferComponent(Component component) {
+		if (component.assignment != null)
+			inferComponent(component.type, component.assignment)
+		else
+			inferComponent(component.type)
+	}
 
 	@SuppressWarnings("unchecked") 
 	override <T> T inferComponent(JvmType type) {
@@ -132,4 +140,5 @@ class ComponentInferrer implements IComponentInferrer {
 		enumInst = valueOfMethod.invoke(null, enumLiteral.simpleName)
 		return enumInst
 	}
+	
 }

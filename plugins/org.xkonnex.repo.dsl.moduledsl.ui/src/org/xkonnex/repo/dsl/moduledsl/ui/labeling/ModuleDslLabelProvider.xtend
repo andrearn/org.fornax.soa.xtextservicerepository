@@ -20,7 +20,6 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.NamespaceRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.OperationRef
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocolConfiguration
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ProvidingEndpoint
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 
@@ -92,14 +91,6 @@ class ModuleDslLabelProvider extends DefaultEObjectLabelProvider {
 	
 	def String image (Assignment ele) {
 		return "assignment.gif"
-	}
-	
-	def Object text (EndpointProtocolConfiguration ele) {
-		"Protocol config"
-	}
-	
-	def String image (EndpointProtocolConfiguration ele) {
-		"settings_obj.gif"
 	}
 	
 	def String text (UsingEndpointProtocol ele) {
