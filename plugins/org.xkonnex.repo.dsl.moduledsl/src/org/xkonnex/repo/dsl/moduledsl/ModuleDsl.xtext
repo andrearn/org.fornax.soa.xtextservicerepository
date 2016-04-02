@@ -100,7 +100,9 @@ Module:
 		'}')?
 			
 	'}';
+	
 
+ProvidingEndpointConfig: ServiceRef | OperationRef;
 
 /**
  * Defines an endpoint on a module with protocol being used 

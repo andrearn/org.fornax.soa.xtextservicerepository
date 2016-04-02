@@ -1,0 +1,34 @@
+import SampleArchitectureProfile.ExSOALifecycle.*
+
+import org.example.sales.*
+
+
+/* 
+ * A module for services of the sales domain
+ */
+module org.example.sales.esb {
+	version 1.0
+	lifecycle-state development
+	
+	/*
+	 * Two services are provided by the module and we know exactly their versions
+	 */
+	provides {
+		service CustomerLookupBES fixedVersion 1.0 {
+			operations {
+				getCustomerDetails {
+					endpoint-protocol REST {
+						path = "customer/details"
+						verb = GET
+					}
+				}
+			}
+			endpoint-protocol REST {
+				path = "customer"
+				verb = POST
+				requestContentType = "application/json"
+				responseContentType = "application/json"
+			}
+		}
+	}
+}

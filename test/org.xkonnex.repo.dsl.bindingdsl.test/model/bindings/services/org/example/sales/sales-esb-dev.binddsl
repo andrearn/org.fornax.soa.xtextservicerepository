@@ -1,0 +1,36 @@
+/*
+ * We make the module org.example.sales.esb available in the development environment
+ */
+bind-module org.example.sales.esb majorVersion 1 as org.example.sales.esb.dev 
+	/* The module will be deployed on this server (the ESB) */
+	to server Dev.DevESB {
+	
+	/*
+	 * Per default, all services of the module are provided as HTTP/SOAP services
+	 */
+	default-protocols {
+		SOAP {
+			
+		}
+	}
+	
+	bind-service org.example.sales.CustomerLookupBES majorVersion 1 {
+		protocols {
+			^REST {
+				^path = "customer"
+				^verb = ^POST
+				requestContentType = "application/json"
+				responseContentType = "application/json"
+			}
+		}
+		
+		bind-operation getCustomerDetails {
+			protocols {
+				^REST {
+					^path = "customer/details"
+					^verb = ^GET
+				}
+			}
+		}
+	}
+}

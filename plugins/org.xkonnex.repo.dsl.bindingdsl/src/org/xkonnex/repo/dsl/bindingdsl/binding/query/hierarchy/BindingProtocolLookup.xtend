@@ -9,7 +9,7 @@ class BindingProtocolLookup {
 	
 	def getCorrespondingProtocolInBinding (AnyBinding binding, BindingProtocol protocol) {
 		if (protocol.type != null) {
-			val candidates = binding.protocol.filter[type != null type.qualifiedName==protocol.type.qualifiedName]
+			val candidates = binding.protocol.filter[type != null && type.qualifiedName==protocol.type?.qualifiedName]
 			if (!candidates.empty)
 				return candidates.head
 			else
@@ -38,7 +38,9 @@ class BindingProtocolLookup {
 	def collectCorrespondingProtocolsFromHierarchy (List<AnyBinding> bindings, BindingProtocol protocol) {
 		var List<BindingProtocol> protocolDefs = newArrayList()
 		for (bind : bindings) {
-			protocolDefs += getCorrespondingProtocolInBinding(bind, protocol)
+			val bindProt = getCorrespondingProtocolInBinding(bind, protocol)
+			if (bindProt != null)
+				protocolDefs += bindProt
 		}
 		protocolDefs
 	}

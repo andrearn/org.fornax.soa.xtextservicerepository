@@ -85,7 +85,7 @@ public class ModuleDslScopeProvider extends ComponentAwareVersionedScopeProvider
 	
 	@Override
 	public IScope getScope(EObject context, EReference reference) {
-		if (reference == ModuleDslPackage.Literals.OPERATION_REF__OPERATION && (context instanceof OperationRef || context instanceof ProvidingEndpointProtocol)) {
+		if (reference == ModuleDslPackage.Literals.OPERATION_REF__OPERATION /*&& (context instanceof OperationRef || context instanceof ProvidingEndpointProtocol)*/) {
 			ServiceRef serviceRef = EcoreUtil2.getContainerOfType(context, ServiceRef.class);
 			Map<QualifiedName, EObject> operationsMap = Maps.newHashMap();
 			if (serviceRef.getService() != null) {

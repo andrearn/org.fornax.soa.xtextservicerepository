@@ -54,7 +54,7 @@ class JavaBeanMerger {
 							val value = readMethod.invoke(source);
 							val targetValue = targetReadMethod.invoke(target)
 							if ((isCollectionType (targetPd.propertyType) || isSimpleValueType(targetPd.propertyType)) &&
-								value != null) {
+								value != null && targetValue == null) {
 								if (!Modifier.isPublic (writeMethod.getDeclaringClass().getModifiers())) {
 									writeMethod.setAccessible(true);
 								}
@@ -75,8 +75,16 @@ class JavaBeanMerger {
 	}
 	
 	def <T> T merge (List<T> bottomUpBeanHierarchy) {
-		var T mergedBean = bottomUpBeanHierarchy.get(0)
-		for (var int i=1; i < bottomUpBeanHierarchy.size; i++) {
+		val protClazz = bottomUpBeanHierarchy.head.class
+		var T mergedBean = protClazz.newInstance as T
+		for (var int i=0; i < bottomUpBeanHierarchy.size; i++) {
+			mergedBean = merge(bottomUpBeanHierarchy.get(i), mergedBean)
+		}
+		return mergedBean
+	}
+	def <T> T merge (List<T> bottomUpBeanHierarchy, T target) {
+		var T mergedBean = target
+		for (var int i=0; i < bottomUpBeanHierarchy.size; i++) {
 			mergedBean = merge(bottomUpBeanHierarchy.get(i), mergedBean)
 		}
 		return mergedBean

@@ -1,0 +1,35 @@
+/*
+ * We define a development environment
+ */
+environment Dev of type Development-Environment {
+	
+	/*
+	 * Host, that can host servers. This one is for the ESB
+	 */
+	host dev_airport {
+		full-qualified-name "airport-dev.example.org"
+	}
+	
+	
+	/*
+	 * We have an ESB on the dev_airport host
+	 */
+	esb DevESB {
+		host dev_airport
+		connectors {
+			default SOAP/HTTP defaultSoap {
+				endpoint-visibility public
+				port 8080
+				secured-port 8443
+				context-root "soap"
+			}
+			default REST defaultREST {
+				port 8080
+				secured-port 8443
+				context-root "rest"
+			}
+		}
+	}
+	
+	
+}

@@ -7,26 +7,31 @@ Bundle-Activator: org.xkonnex.repo.dsl.bindingdsl.test.Activator
 Bundle-Vendor: XKonneX.org
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.xkonnex.repo.dsl.servicedsl;bundle-version="2.0.0",
  org.junit;bundle-version="4.8.1",
+ org.eclipse.xtext;bundle-version="2.9.0",
  org.eclipse.emf.ecore;bundle-version="2.6.0",
+ org.xkonnex.repo.dsl.bindingdsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.basedsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.profiledsl;bundle-version="2.0.0",
- org.eclipse.xtext;bundle-version="2.9.0",
- org.eclipse.xtext.junit4,
+ org.xkonnex.repo.dsl.servicedsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.environmentdsl;bundle-version="2.0.0",
+ org.xkonnex.repo.dsl.moduledsl;bundle-version="2.0.0",
  org.xkonnex.repo.test;bundle-version="2.0.0",
  org.eclipse.xtext.xbase.lib,
  org.eclipse.ui.workbench;resolution:=optional,
- org.xkonnex.repo.dsl.moduledsl;bundle-version="2.0.0",
- org.xkonnex.repo.dsl.bindingdsl;bundle-version="2.0.0",
+ org.eclipse.xtext.junit4,
  org.xkonnex.repo.dsl.bindingdsl.ui,
  org.xkonnex.repo.dsl.businessdsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.semanticsdsl;bundle-version="2.0.0",
- org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional
+ org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
+ org.xkonnex.repo.generator.bindingdsl;bundle-version="2.0.0",
+ org.xkonnex.repo.core;bundle-version="2.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
 Export-Package: org.xkonnex.repo.dsl.bindingdsl.test,
+ org.xkonnex.repo.dsl.bindingdsl.test.binding.query,
+ org.xkonnex.repo.dsl.bindingdsl.test.binding.query.hierarchy,
+ org.xkonnex.repo.dsl.bindingdsl.test.model,
  org.xkonnex.repo.dsl.bindingdsl.tests
 Import-Package: org.junit.runner;version="4.5.0",
  org.junit.runner.manipulation;version="4.5.0",

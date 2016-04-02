@@ -25,12 +25,15 @@ class BottomUpEffectiveComponentInferrer implements IEffectiveFeatureInferrer {
 	
 	override <T> T inferFeatureValue(List<EObject> objectHierarchy, EStructuralFeature feature) {
 		var Object effectiveFeatureValue = null
-		val hierarchyIt = objectHierarchy.iterator
-		while (effectiveFeatureValue == null && hierarchyIt.hasNext) {
-			val curObj = hierarchyIt.next
-			effectiveFeatureValue = curObj.eGet(feature);
+		for (curObj : objectHierarchy) {
+			val objFeature = curObj.eClass.getEStructuralFeature(feature.name)
+			if (objFeature != null) {
+				effectiveFeatureValue = curObj.eGet(objFeature, true);
+				if (effectiveFeatureValue != null)
+					return effectiveFeatureValue as T
+			}
 		}
-		effectiveFeatureValue as T
+		return null
 	}
 	
 	override EObject inferFeatureValues(List<EObject> objectHierarchy, EObject target) {

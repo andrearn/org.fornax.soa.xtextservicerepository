@@ -33,7 +33,7 @@ class EffectiveBinding extends DelegatingEObject implements AnyBinding {
 	
 	ModuleBinding moduleBinding
 	
-	new(Binding delegate) {
+	new(AnyBinding delegate) {
 		super(delegate)
 		if (delegate instanceof OperationBinding)
 			operationBinding = delegate as OperationBinding

@@ -1,6 +1,10 @@
 package org.xkonnex.repo.dsl.bindingdsl.model;
 
+import java.util.List;
+
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding;
+import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveBindingProtocol;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 
@@ -12,5 +16,6 @@ public interface IEffectiveBindingBuilder {
 	public EffectiveBinding createEffectiveBinding (Operation operation, Binding binding);
 	
 	public EffectiveBinding createEffectiveBinding (Service service, Binding binding);
-	
+
+	public List<EffectiveBindingProtocol> createEffectiveBindingProtocol (List<AnyBinding> bindingsBottomUp);
 }

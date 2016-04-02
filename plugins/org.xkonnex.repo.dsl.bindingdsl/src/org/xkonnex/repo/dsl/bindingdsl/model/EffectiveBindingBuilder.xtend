@@ -68,9 +68,10 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 	private IComponentInferrer componentInferrer
 	
 	override EffectiveBinding createEffectiveBinding (Operation operation, Binding binding) {
-		val bindingHierarchy = bindingLookup.getBottomUpHierarchyForSpecificBinding(binding);
+		val specBinding = bindingLookup.getMostSpecificOperationBinding(operation, binding)
+		val bindingHierarchy = bindingLookup.getBottomUpHierarchyForSpecificBinding(specBinding);
 		val hierarchyEObjects = bindingHierarchy.map[it as EObject]
-		var effBind = new EffectiveBinding(binding)
+		var effBind = new EffectiveBinding(specBinding)
 		effBind.protocol += createEffectiveBindingProtocol(bindingHierarchy)
 		effBind.policies += createEffectivePolicies(bindingHierarchy)
 		effBind.assertions += createEffectiveAssertions(bindingHierarchy)
@@ -81,10 +82,10 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 	}
 	
 	def List<GovernanceDecision> createEffectiveGovernanceDecisions(List<AnyBinding> bindings) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+		newArrayList
 	}
 	
-	def List<EffectiveBindingProtocol> createEffectiveBindingProtocol (List<AnyBinding> bindingsBottomUp) {
+	override List<EffectiveBindingProtocol> createEffectiveBindingProtocol (List<AnyBinding> bindingsBottomUp) {
 		var List<EffectiveBindingProtocol> effProts = newArrayList()
 		var Set<Class<?>> protocolTypes = newHashSet
 		for (bind : bindingsBottomUp) {
@@ -157,8 +158,8 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		for (prot : protDefs) {
 			val IProtocol protInst = componentInferrer.inferComponent(prot)
 			protInstances += protInst
-			effExtProt.protocol = beanMerger.merge(protInstances)
 		}
+		effExtProt.extensibleProtocol = beanMerger.merge(protInstances)
 		val protDefEObjects = protDefs.map[it as EObject]
 		effExtProt.endpointConnector = featureInferrer.inferFeatureValue(protDefEObjects, BindingDslPackage.Literals.BINDING_PROTOCOL__ENDPOINT_CONNECTOR) 
 		effExtProt.endpointQualifierRef = featureInferrer.inferFeatureValue(protDefEObjects, BindingDslPackage.Literals.BINDING_PROTOCOL__ENDPOINT_QUALIFIER_REF) 
