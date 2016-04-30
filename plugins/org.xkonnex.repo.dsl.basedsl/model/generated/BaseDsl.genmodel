@@ -98,8 +98,18 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//Assignment/value"/>
     </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//Value"/>
+    <genClasses ecoreClass="BaseDsl.ecore#//SimpleValue"/>
     <genClasses ecoreClass="BaseDsl.ecore#//BooleanValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//BooleanValue/isTrue"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//DateValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//DateValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//DateTimeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//DateTimeValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//TimeValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//TimeValue/value"/>
     </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//EnumLiteralValue">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//EnumLiteralValue/value"/>
@@ -131,5 +141,8 @@
     <genClasses ecoreClass="BaseDsl.ecore#//HashAlgorithmKind"/>
     <genClasses ecoreClass="BaseDsl.ecore#//SigningAlgorithm"/>
     <genClasses ecoreClass="BaseDsl.ecore#//CipherAlgorithmKind"/>
+    <genClasses ecoreClass="BaseDsl.ecore#//DefaultValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//DefaultValue/defaultValue"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -23,6 +23,8 @@ import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb
 import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveBindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ESB
 
 @RunWith(typeof(XtextRunner)) 
 @InjectWith(typeof(BindingDslWithDependenciesInjectorProvider)) 
@@ -50,6 +52,10 @@ class EffectiveBindingBuilderTest {
 		val bind = rs.allContents.toIterable.filter(typeof(ModuleBinding)).findFirst[name == "org.example.sales.esb.dev"]
 		val effBind = bindingBuilder.createEffectiveBinding(op, bind)
 		
+		assertNotNull(effBind.provServer)
+		assertTrue(effBind.provServer instanceof ESB)
+		assertFalse((effBind.provServer as ESB).connectors.nullOrEmpty)
+		
 		val effProtocols = effBind.protocol.map[it as EffectiveBindingProtocol]
 		assertEquals(2, effProtocols.size)
 
@@ -59,8 +65,8 @@ class EffectiveBindingBuilderTest {
 		val rest = extProts.head as REST
 		assertEquals("customer/details", rest.path)
 		assertEquals(HttpVerb::GET, rest.verb)
-		assertEquals("application/json", rest.requestContentType)
-		assertEquals("application/json", rest.responseContentType)
+		assertEquals("application/json", rest.requestContentType.head)
+		assertEquals("application/json", rest.response.head.contentType.head)
 
 		val soapProts = effProtocols.filter(SOAP)
 		assertEquals(1, soapProts.size)
@@ -90,7 +96,10 @@ class EffectiveBindingBuilderTest {
 		val rest = extProts.head as REST
 		assertEquals("customer/details", rest.path)
 		assertEquals(HttpVerb::GET, rest.verb)
-		assertEquals("application/json", rest.requestContentType)
-		assertEquals("application/json", rest.responseContentType)
+		assertEquals("application/json", rest.requestContentType.head)
+		assertEquals("application/json", rest.response.head.contentType.head)
+		
+		val extensibleProt = protocols.filter(typeof(ExtensibleProtocol)).head
+		assertNotNull(extensibleProt.type)
 	}
 }

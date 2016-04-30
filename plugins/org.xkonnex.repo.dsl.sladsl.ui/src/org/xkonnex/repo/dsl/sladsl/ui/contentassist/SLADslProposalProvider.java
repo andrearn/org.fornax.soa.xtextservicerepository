@@ -3,6 +3,10 @@
 */
 package org.xkonnex.repo.dsl.sladsl.ui.contentassist;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.common.types.JvmType;
@@ -34,6 +38,8 @@ public class SLADslProposalProvider extends AbstractSLADslProposalProvider {
 	
 	@Inject
 	private AbstractTypeScopeProvider typeScopeProvider;
+
+	private DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 	
 	@Override
 	public void completeAuthenticationRequirement_AuthTokens(EObject model,
@@ -94,8 +100,25 @@ public class SLADslProposalProvider extends AbstractSLADslProposalProvider {
 	public void completeSigningRequirement_SupportedSigningAlgorithms(
 			EObject model, Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		// TODO Auto-generated method stub
-		super.completeSigningRequirement_SupportedSigningAlgorithms(model, assignment,
-				context, acceptor);
+		if (model instanceof SigningRequirement) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType signingType = typeProvider.findTypeByName(ISigningAlgorithm.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(signingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		}
+	}
+	
+	@Override
+	public void completeSLA_EffectiveDate(EObject model, Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		String proposal = dateFormat.format(new Date());
+		acceptor.accept(createCompletionProposal(proposal , context));
+	}
+	
+	@Override
+	public void completeSLA_EffectiveUntil(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		String proposal = dateFormat.format(new Date());
+		acceptor.accept(createCompletionProposal(proposal , context));
 	}
 }

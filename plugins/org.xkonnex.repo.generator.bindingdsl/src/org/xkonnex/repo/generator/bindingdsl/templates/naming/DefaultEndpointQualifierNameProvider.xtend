@@ -3,7 +3,7 @@ package org.xkonnex.repo.generator.bindingdsl.templates.naming
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.EndpointQualifierQueries
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Visibility
@@ -15,7 +15,7 @@ class DefaultEndpointQualifierNameProvider implements IEndpointQualifierNameProv
 	@Inject @Named ("ignoreEndpointQualifierNames")
 	private boolean ignoreEndpointQualifierNames
 	
-	override String getEndpointQualifierName (Binding bind, Service svc, BindingProtocol prot) {
+	override String getEndpointQualifierName (AnyBinding bind, Service svc, BindingProtocol prot) {
 		var detailedQualifierName = ""
 		if (prot.effectiveEndpointQualifier != null) {
 			detailedQualifierName = prot.effectiveEndpointQualifier.name.replaceAll("\\.","_")

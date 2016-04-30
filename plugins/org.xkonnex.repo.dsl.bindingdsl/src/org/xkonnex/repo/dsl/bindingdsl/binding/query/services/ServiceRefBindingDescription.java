@@ -1,6 +1,7 @@
 package org.xkonnex.repo.dsl.bindingdsl.binding.query.services;
 
 import org.eclipse.emf.ecore.EObject;
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AbstractServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
@@ -15,7 +16,7 @@ public class ServiceRefBindingDescription {
 	
 	private AbstractServiceRef serviceRef;
 	private Service resolvedService;
-	private Binding applicableBinding;
+	private AnyBinding applicableBinding;
 	private Module providingModule;
 	private Qualifier endpointQualifier;
 	
@@ -33,10 +34,10 @@ public class ServiceRefBindingDescription {
 		this.resolvedService = resolvedService;
 	}
 	
-	public Binding getApplicableBinding() {
+	public AnyBinding getApplicableBinding() {
 		return applicableBinding;
 	}
-	public void setApplicableBinding(Binding applicableBinding) {
+	public void setApplicableBinding(AnyBinding applicableBinding) {
 		this.applicableBinding = applicableBinding;
 	}
 	

@@ -30,6 +30,16 @@ class BottomUpProvidingEndpointBuilder implements IEffectiveProvidingEndpointBui
 	override createEffectiveProvidingEndpoint(Operation operation, ProvidingEndpoint endpoint) {
 		val protType = componentInferrer.inferComponent(endpoint.endpointProtocol.type)
 		val module = EcoreUtil2.getContainerOfType(endpoint, typeof(Module))
+		createEffectiveProvidingEndpoint(operation, module, protType)
+	}
+	
+	override createEffectiveProvidingEndpoint(Service service, ProvidingEndpoint endpoint) {
+		val protType = componentInferrer.inferComponent(endpoint.endpointProtocol.type)
+		val module = EcoreUtil2.getContainerOfType(endpoint, typeof(Module))
+		createEffectiveProvidingEndpoint(service, module, protType)
+	}
+	
+	override createEffectiveProvidingEndpoint(Operation operation, Module module, IModuleEndpointProtocol protType) {
 		val specEP = endpointResolver.getMostSpecificProvidingEndpointByType(operation, module, protType)
 		val epHierarchy = endpointResolver.collectProvidingEndpointHierarchyByType(operation, module, protType)
 		val epProtHierarchy = endpointProtocolLookup.collectEndpointProtocolHierarchyByType(operation, module, protType)
@@ -43,9 +53,7 @@ class BottomUpProvidingEndpointBuilder implements IEffectiveProvidingEndpointBui
 		effEndpoint
 	}
 	
-	override createEffectiveProvidingEndpoint(Service service, ProvidingEndpoint endpoint) {
-		val protType = componentInferrer.inferComponent(endpoint.endpointProtocol.type)
-		val module = EcoreUtil2.getContainerOfType(endpoint, typeof(Module))
+	override createEffectiveProvidingEndpoint(Service service, Module module, IModuleEndpointProtocol protType) {
 		val specEP = endpointResolver.getMostSpecificProvidingEndpointByType(service, module, protType)
 		val epHierarchy = endpointResolver.collectProvidingEndpointHierarchyByType(service, module, protType)
 		val epProtHierarchy = endpointProtocolLookup.collectEndpointProtocolHierarchyByType(service, module, protType)
@@ -57,6 +65,22 @@ class BottomUpProvidingEndpointBuilder implements IEffectiveProvidingEndpointBui
 		effEndpoint.endpointProtocol = effProt
 		effEndpoint.endpointQualifierRef = featureInferrer.inferFeatureValue(epHierarchy, ModuleDslPackage.Literals.ENDPOINT__ENDPOINT_QUALIFIER_REF)
 		effEndpoint
+	}
+	
+	override createEffectiveProvidingEndpointForClazz(Operation operation, Module module, Class<? extends IModuleEndpointProtocol> endpointProtocolClazz) {
+		null
+	}
+	
+	override createEffectiveProvidingEndpointForClazz(Service service, Module module, Class<? extends IModuleEndpointProtocol> endpointProtocolClazz) {
+		null
+	}
+	
+	override createEffectiveProvidingEndpoints(Operation operation, Module module) {
+		newArrayList()
+	}
+	
+	override createEffectiveProvidingEndpoints(Service service, Module module) {
+		newArrayList()
 	}
 	
 }

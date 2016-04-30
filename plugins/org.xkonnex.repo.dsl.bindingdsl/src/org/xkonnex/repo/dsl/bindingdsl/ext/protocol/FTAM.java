@@ -1,5 +1,7 @@
 package org.xkonnex.repo.dsl.bindingdsl.ext.protocol;
 
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
+import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
 
@@ -28,6 +30,18 @@ public class FTAM implements IProtocol {
 	public boolean supportsModuleEndpointProtocol(
 			Class<? extends IModuleEndpointProtocol> endpointProtocol) {
 		return org.xkonnex.repo.dsl.moduledsl.ext.protocol.FTAM.class.isAssignableFrom(endpointProtocol);
+	}
+
+	@Override
+	public boolean supportedOnConnector(Connector connector) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean supportedOnConnector(IConnector connector) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

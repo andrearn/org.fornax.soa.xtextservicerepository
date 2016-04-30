@@ -11,7 +11,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 /**
  * Get and resolve service references from modules
  * 
- * @author aarnold
+ * @author André Arnold
  *
  */
 public interface IModuleServiceResolver {

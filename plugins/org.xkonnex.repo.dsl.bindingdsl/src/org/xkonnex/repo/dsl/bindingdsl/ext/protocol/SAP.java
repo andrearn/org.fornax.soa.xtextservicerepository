@@ -1,7 +1,9 @@
 package org.xkonnex.repo.dsl.bindingdsl.ext.protocol;
 
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SAPTransport;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SapClient;
+import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
 
@@ -39,6 +41,16 @@ public class SAP implements IProtocol {
 
 	public void setClient(SapClient client) {
 		this.client = client;
+	}
+
+	@Override
+	public boolean supportedOnConnector(Connector connector) {
+		return connector instanceof org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SAP;
+	}
+
+	@Override
+	public boolean supportedOnConnector(IConnector connector) {
+		return false;
 	}
 
 }

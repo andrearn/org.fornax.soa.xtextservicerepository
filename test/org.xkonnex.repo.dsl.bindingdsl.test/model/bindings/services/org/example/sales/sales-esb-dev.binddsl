@@ -20,7 +20,9 @@ bind-module org.example.sales.esb majorVersion 1 as org.example.sales.esb.dev
 				^path = "customer"
 				^verb = ^POST
 				requestContentType = "application/json"
-				responseContentType = "application/json"
+				response = {
+					contentType = "application/json"
+				}
 			}
 		}
 		

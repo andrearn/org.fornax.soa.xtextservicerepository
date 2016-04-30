@@ -1,5 +1,7 @@
 package org.xkonnex.repo.dsl.bindingdsl.ext.protocol;
 
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
+import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
@@ -39,6 +41,16 @@ public class HTTP implements IProtocol {
 
 	public void setVerb(HttpVerb verb) {
 		this.verb = verb;
+	}
+
+	@Override
+	public boolean supportedOnConnector(Connector connector) {
+		return connector instanceof org.xkonnex.repo.dsl.environmentdsl.environmentDsl.HTTP;
+	}
+
+	@Override
+	public boolean supportedOnConnector(IConnector connector) {
+		return false;
 	}
 
 }

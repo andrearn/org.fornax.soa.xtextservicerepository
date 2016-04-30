@@ -49,6 +49,9 @@ import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveExtensibleProtoco
 import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveSOAPProtocol
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.moduledsl.model.IEffectiveProvidingEndpointBuilder
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage
 
 class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 	
@@ -66,9 +69,15 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 	private BindingLookup bindingLookup
 	@Inject
 	private IComponentInferrer componentInferrer
+	@Inject
+	private IEffectiveProvidingEndpointBuilder providingEndpointBuilder
 	
 	override EffectiveBinding createEffectiveBinding (Operation operation, Binding binding) {
-		val specBinding = bindingLookup.getMostSpecificOperationBinding(operation, binding)
+		createEffectiveBinding(operation, binding, null)
+	}
+	
+	override EffectiveBinding createEffectiveBinding(Operation operation, Binding binding, EndpointQualifierRef endpointQualifier) {
+		val specBinding = bindingLookup.getMostSpecificOperationBinding(operation, binding, endpointQualifier)
 		val bindingHierarchy = bindingLookup.getBottomUpHierarchyForSpecificBinding(specBinding);
 		val hierarchyEObjects = bindingHierarchy.map[it as EObject]
 		var effBind = new EffectiveBinding(specBinding)
@@ -78,6 +87,26 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		effBind.environment = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__ENVIRONMENT)
 		effBind.provServer = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__PROV_SERVER)
 		effBind.governanceDecisions += createEffectiveGovernanceDecisions(bindingHierarchy)
+		effBind.providingEndpoints += providingEndpointBuilder.createEffectiveProvidingEndpoints(operation, effBind.moduleBinding.module.module)
+		return effBind
+	}
+	
+	override EffectiveBinding createEffectiveBinding(Service service, Binding binding) {
+		createEffectiveBinding(service, binding, null)
+	}
+	
+	override EffectiveBinding createEffectiveBinding(Service service, Binding binding, EndpointQualifierRef endpointQualifier) {
+		val specBinding = bindingLookup.getMostSpecificBinding(service, binding, endpointQualifier)
+		val bindingHierarchy = bindingLookup.getBottomUpHierarchyForSpecificBinding(specBinding);
+		val hierarchyEObjects = bindingHierarchy.map[it as EObject]
+		var effBind = new EffectiveBinding(specBinding)
+		effBind.protocol += createEffectiveBindingProtocol(bindingHierarchy)
+		effBind.policies += createEffectivePolicies(bindingHierarchy)
+		effBind.assertions += createEffectiveAssertions(bindingHierarchy)
+		effBind.environment = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__ENVIRONMENT)
+		effBind.provServer = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__PROV_SERVER)
+		effBind.governanceDecisions += createEffectiveGovernanceDecisions(bindingHierarchy)
+		effBind.providingEndpoints += providingEndpointBuilder.createEffectiveProvidingEndpoints(service, effBind.moduleBinding.module.module)
 		return effBind
 	}
 	
@@ -162,12 +191,13 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		effExtProt.extensibleProtocol = beanMerger.merge(protInstances)
 		val protDefEObjects = protDefs.map[it as EObject]
 		effExtProt.endpointConnector = featureInferrer.inferFeatureValue(protDefEObjects, BindingDslPackage.Literals.BINDING_PROTOCOL__ENDPOINT_CONNECTOR) 
-		effExtProt.endpointQualifierRef = featureInferrer.inferFeatureValue(protDefEObjects, BindingDslPackage.Literals.BINDING_PROTOCOL__ENDPOINT_QUALIFIER_REF) 
+		effExtProt.endpointQualifierRef = featureInferrer.inferFeatureValue(protDefEObjects, BindingDslPackage.Literals.BINDING_PROTOCOL__ENDPOINT_QUALIFIER_REF)
+		effExtProt.type = featureInferrer.inferFeatureValue(protDefEObjects, BaseDslPackage.Literals.COMPONENT__TYPE)
+		val assignments = featureInferrer.inferFeatureValue(protDefEObjects, BaseDslPackage.Literals.COMPONENT__ASSIGNMENT)
+		if (assignments != null) 
+			effExtProt.assignment += assignments
+		effExtProt.name =  featureInferrer.inferFeatureValue(protDefEObjects, BaseDslPackage.Literals.COMPONENT__NAME)
 		return effExtProt
-	}
-	
-	override createEffectiveBinding(Service service, Binding binding) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
 	private def Class<?> getProtocolType(BindingProtocol prot) {

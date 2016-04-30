@@ -23,8 +23,8 @@ SlaModel:
 	
 SLA:
 	'service-level-agreement' name=QualifiedName (version=Version)? '{'
-			'effective-date' effectiveDate = STRING 
-			('effective-until' effectiveUntil = STRING )?
+			'effective-date' effectiveDate = (STRING|DATE) 
+			('effective-until' effectiveUntil = (STRING|DATE) )?
 			(parties+=Party)*
 			('scope' scope = STRING)?
 			('preample' preample = STRING )?

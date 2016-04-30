@@ -16,7 +16,7 @@ import org.eclipse.xtext.naming.QualifiedName
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
 
-/*
+/**
  * Checks, whether to two module versions are compatible.<br/>
  * 
  * A Module is considered compatible, if it has
@@ -31,7 +31,7 @@ class DefaultModuleVersionMatcher implements IModuleVersionMatcher {
 	@Inject extension IQualifiedNameProvider
 	@Inject extension VersionMatcher
 
-	/* 
+	/** 
 	 * Check, whether the Module module is compatible to Module originalModule based on their versions
 	 * 
 	 * returns true, if module is compatible to originalModule

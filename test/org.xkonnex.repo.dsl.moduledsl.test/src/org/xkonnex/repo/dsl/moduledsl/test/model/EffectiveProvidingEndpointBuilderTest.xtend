@@ -53,8 +53,8 @@ class EffectiveProvidingEndpointBuilderTest {
 		val protBean = effProt.endpointProtocol as REST
 		assertEquals("customer/details", protBean.path)
 		assertEquals(HttpVerb.GET, protBean.verb)
-		assertEquals("application/json", protBean.requestContentType)
-		assertEquals("application/json", protBean.responseContentType)
+		assertEquals("application/json", protBean.requestContentType.head)
+		assertEquals("application/json", protBean.response.head.contentType.head)
 		
 	}
 }

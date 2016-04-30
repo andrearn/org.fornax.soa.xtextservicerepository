@@ -1,5 +1,7 @@
 package org.xkonnex.repo.dsl.bindingdsl.ext.protocol;
 
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
+import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
 
@@ -91,6 +93,17 @@ public class JMS implements IProtocol {
 
 	public void setJndiName(String jndiName) {
 		this.jndiName = jndiName;
+	}
+
+	@Override
+	public boolean supportedOnConnector(Connector connector) {
+		return connector instanceof org.xkonnex.repo.dsl.environmentdsl.environmentDsl.JMS;
+	}
+
+	@Override
+	public boolean supportedOnConnector(IConnector connector) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

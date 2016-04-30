@@ -53,15 +53,25 @@ class JavaBeanMerger {
 							}
 							val value = readMethod.invoke(source);
 							val targetValue = targetReadMethod.invoke(target)
-							if ((isCollectionType (targetPd.propertyType) || isSimpleValueType(targetPd.propertyType)) &&
+							if (isSimpleValueType(targetPd.propertyType) &&
 								value != null && targetValue == null) {
 								if (!Modifier.isPublic (writeMethod.getDeclaringClass().getModifiers())) {
 									writeMethod.setAccessible(true);
 								}
 								writeMethod.invoke (target, value);
+							} else if (isCollectionType (targetPd.propertyType) &&
+								value != null && (targetValue == null || (targetValue as Collection).isEmpty())) {
+								if (!Modifier.isPublic (writeMethod.getDeclaringClass().getModifiers())) {
+									writeMethod.setAccessible(true);
+								}
+								writeMethod.invoke (target, value);
 							} else if (!isCollectionType (targetPd.propertyType) &&
-								!isSimpleValueType (targetPd.propertyType) && value != null) {
-								merge(value, targetValue)
+								!isSimpleValueType (targetPd.propertyType) && value != null && value != null) {
+								if (targetValue != null) {
+									merge(value, targetValue)
+								} else {
+									writeMethod.invoke (target, value);
+								}
 							}
 						} catch (Throwable ex) {
 							throw new RuntimeException(
@@ -82,6 +92,7 @@ class JavaBeanMerger {
 		}
 		return mergedBean
 	}
+	
 	def <T> T merge (List<T> bottomUpBeanHierarchy, T target) {
 		var T mergedBean = target
 		for (var int i=0; i < bottomUpBeanHierarchy.size; i++) {

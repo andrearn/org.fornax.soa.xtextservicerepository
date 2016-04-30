@@ -1,5 +1,6 @@
 package org.xkonnex.repo.dsl.bindingdsl.model.protocol;
 
+import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.common.types.JvmType;
@@ -16,7 +17,7 @@ public class EffectiveBindingProtocol extends DelegatingEObject implements
 
 	protected String name;
 	private JvmType type;
-	private EList<Assignment> assignment;
+	private EList<Assignment> assignment = new BasicEList<Assignment>();
 	private EndpointQualifierRef endpointQualifierRef;
 	private ConnectorQualifier endpointConnector;
 	private IProtocol extensibleProtocol;

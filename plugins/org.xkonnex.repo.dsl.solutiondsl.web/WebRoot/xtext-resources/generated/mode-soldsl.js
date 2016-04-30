@@ -1,6 +1,6 @@
 define(["ace/lib/oop", "ace/mode/text", "ace/mode/text_highlight_rules"], function(oop, mText, mTextHighlightRules) {
 	var HighlightRules = function() {
-		var keywords = "Batch|BusinessLogic|OTHER|Persistence|Security|UI|accepted|budgeting|calling|denied|description|domain|false|feature|fixedVersion|import|kind|location|majorVersion|maxVersion|minVersion|module|optional|owner|pending|reference|requires|responsible|solution|specific|subject|subscriptions|tags|true|type|version";
+		var keywords = "Batch|BusinessLogic|OTHER|Persistence|Security|UI|accepted|budgeting|calling|default|denied|description|domain|false|feature|fixedVersion|import|kind|location|majorVersion|maxVersion|minVersion|module|optional|owner|pending|reference|requires|responsible|solution|specific|subject|subscriptions|tags|true|type|version";
 		this.$rules = {
 			"start": [
 				{token: "comment", regex: "\\/\\/.*$"},

@@ -13,6 +13,7 @@ public class ModuleRefServiceBindingDescription {
 	private Module module;
 	private Qualifier endpointQualifier;
 	private List<ServiceRefBindingDescription> serviceRefDescriptions = new ArrayList<ServiceRefBindingDescription>();
+	private List<ChannelRefBindingDescription> channelRefDescriptions = new ArrayList<ChannelRefBindingDescription>();
 	
 	public Module getModule() {
 		return module;
@@ -33,6 +34,13 @@ public class ModuleRefServiceBindingDescription {
 			List<ServiceRefBindingDescription> serviceRefDescriptions) {
 		this.serviceRefDescriptions = serviceRefDescriptions;
 	}
+	public List<ChannelRefBindingDescription> getChannelRefDescriptions() {
+		return channelRefDescriptions;
+	}
+	public void setChannelRefDescriptions(List<ChannelRefBindingDescription> channelRefDescriptions) {
+		this.channelRefDescriptions = channelRefDescriptions;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

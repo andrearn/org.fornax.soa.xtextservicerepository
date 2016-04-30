@@ -21,6 +21,7 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.StringValue
 import org.eclipse.xtext.common.types.JvmEnumerationLiteral
 import org.xkonnex.repo.dsl.basedsl.scoping.ComponentExtensions
 import java.beans.Introspector
+import org.eclipse.xtext.common.types.JvmGenericType
 
 @SuppressWarnings("restriction") 
 class ComponentInferrer implements IComponentInferrer {
@@ -59,7 +60,8 @@ class ComponentInferrer implements IComponentInferrer {
 			var Method setter = findSetter(type, assignment.getFeature().getSimpleName())
 			var Object value = getValue(assignment.value, assignment.feature)
 			try {
-				setter.invoke(o, value)
+				if (setter != null)
+					setter.invoke(o, value)
 			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace()

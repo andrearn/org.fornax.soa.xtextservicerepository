@@ -1,12 +1,17 @@
 package org.xkonnex.repo.dsl.bindingdsl.binding
 
+import com.google.inject.Inject
+import org.xkonnex.repo.dsl.basedsl.ext.infer.IComponentInferrer
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.REST
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyType
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
+import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
+import org.xkonnex.repo.dsl.moduledsl.ext.assembly.IAssemblyType
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyType
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyTypeEnum
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ExtensibleAssemblyType
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 
 /**
  * Provide context root paths based on  
@@ -18,6 +23,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyTypeEnum
  */
 class ModuleContextRootProvider implements IContextRootProvider {
 	
+	@Inject IComponentInferrer componentInferrer
 	
 	override String getContextRoot (Module mod, String serverTypeName, BindingProtocol prot ) {
 		val ctxRoot = prot.getContextRootByProtocol
@@ -49,24 +55,26 @@ class ModuleContextRootProvider implements IContextRootProvider {
 	}
 	
 	override String getCtxRootByAssemblyType (Module mod, String serverType) {
-		if (serverType != null && serverType.toLowerCase.trim == "webmethods") {
-			""
-		} else {
-			switch (mod.assemblyType.typeEnum) {
-				case AssemblyTypeEnum::SCA_EAR: mod.technicalModuleName + "Web/sca/"
-				default: mod.technicalModuleName + "/"
-			}
-		}
+		getCtxRootByAssemblyTypeInternal(serverType, mod)
 	}
 	
 	override String getCtxRootByAssemblyType (Module mod, String serverType, String serverVersion) {
+		getCtxRootByAssemblyTypeInternal(serverType, mod)
+	}
+	
+	def getCtxRootByAssemblyTypeInternal(String serverType, Module mod) {
 		if (serverType != null && serverType.toLowerCase.trim == "webmethods") {
 			""
-		} else {
+		} else if (mod.assemblyType instanceof ExtensibleAssemblyType) {
+			val IAssemblyType assemblyType = componentInferrer.inferComponent(mod.assemblyType as ExtensibleAssemblyType)
+			mod.technicalModuleName + "/"
+		} else if (mod.assemblyType instanceof AssemblyType) {
 			switch (mod.assemblyType.typeEnum) {
 				case AssemblyTypeEnum::SCA_EAR: mod.technicalModuleName + "Web/sca/"
 				default: mod.technicalModuleName + "/"
 			}
+		} else {
+			mod.technicalModuleName + "/"
 		}
 	}
 	
@@ -90,4 +98,16 @@ class ModuleContextRootProvider implements IContextRootProvider {
 		else 
 			return mod.name
 	}
+	
+	override getContextRoot(EffectiveBinding b) {
+		val soapBindings = b.protocol.filter ( typeof (SOAP));
+		if (!soapBindings.empty  
+			&& soapBindings.head.contextRoot != null)
+		{
+			"/" + soapBindings.head.contextRoot + "/";
+		} else {
+			"/"
+		}
+	}
+	
 }

@@ -3,6 +3,9 @@
 */
 package org.xkonnex.repo.dsl.basedsl.ui.contentassist;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
@@ -66,6 +69,8 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 	
 	@Inject
 	private AbstractTypeScopeProvider typeScopeProvider;
+	
+	private DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 
 	public void complete_QualifiedName(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		super.complete_QualifiedName(model, ruleCall, context, acceptor);
@@ -303,6 +308,29 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 			JvmType signingType = typeProvider.findTypeByName(ISigningAlgorithm.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(signingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		}
+	}
+	
+	@Override
+	public void complete_DATE(EObject model, RuleCall ruleCall,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		String proposal = dateFormat.format(new Date());
+		acceptor.accept(createCompletionProposal(proposal , context));
+	}
+	
+	@Override
+	public void completeGovernanceDecision_ApprovalDate(EObject model,
+			org.eclipse.xtext.Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		String proposal = dateFormat.format(new Date());
+		acceptor.accept(createCompletionProposal(proposal , context));
+	}
+	
+	@Override
+	public void completeGovernanceDecision_EffectiveDate(EObject model,
+			org.eclipse.xtext.Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		String proposal = dateFormat.format(new Date());
+		acceptor.accept(createCompletionProposal(proposal , context));
 	}
 
 }

@@ -2,6 +2,8 @@ package org.xkonnex.repo.dsl.basedsl.test.util;
 
 import java.util.List;
 
+import com.google.common.collect.Lists;
+
 public class NestedBean {
 	
 	private int port;
@@ -11,6 +13,7 @@ public class NestedBean {
 	private boolean ignoredFlag;
 	private Boolean wrapperFlag;
 	private List<String> stringList;
+	private List<String> emptyStringList = Lists.newArrayList();
 	private SampleEnum sampleEnum;
 	private SampleEnum defaultSampleEnum;
 
@@ -84,6 +87,17 @@ public class NestedBean {
 
 	public void setWrapperFlag(Boolean wrapperFlag) {
 		this.wrapperFlag = wrapperFlag;
+	}
+
+	public List<String> getEmptyStringList() {
+		return emptyStringList;
+	}
+
+	public void setEmptyStringList(List<String> emptyStringList) {
+		this.emptyStringList = emptyStringList;
+	}
+	public void addEmptyStringList(String aString) {
+		this.emptyStringList.add(aString);
 	}
 
 }

@@ -1,5 +1,8 @@
 package org.xkonnex.repo.dsl.bindingdsl.ext.protocol;
 
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.RMI;
+import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
 
@@ -46,6 +49,16 @@ public class SCA implements IProtocol {
 
 	public void setMultipleRef(boolean isMultipleRef) {
 		this.isMultipleRef = isMultipleRef;
+	}
+
+	@Override
+	public boolean supportedOnConnector(Connector connector) {
+		return connector instanceof org.xkonnex.repo.dsl.environmentdsl.environmentDsl.IIOP || connector instanceof RMI || connector instanceof EJB;
+	}
+
+	@Override
+	public boolean supportedOnConnector(IConnector connector) {
+		return false;
 	}
 
 }

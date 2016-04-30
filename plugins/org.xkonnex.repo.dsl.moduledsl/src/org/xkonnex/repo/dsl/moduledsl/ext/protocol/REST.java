@@ -1,11 +1,16 @@
 package org.xkonnex.repo.dsl.moduledsl.ext.protocol;
 
+import java.util.List;
+
+import com.google.common.collect.Lists;
+
 public class REST implements IModuleEndpointProtocol {
 	
 	private String path;
 	private HttpVerb verb;
-	private String requestContentType;
-	private String responseContentType;
+	private RESTParameterStyle style;
+	private List<String> requestContentType = Lists.newArrayList();
+	private List<HttpResponse> response = Lists.newArrayList();
 
 	public String getPath() {
 		return path;
@@ -23,20 +28,36 @@ public class REST implements IModuleEndpointProtocol {
 		this.verb = verb;
 	}
 
-	public String getRequestContentType() {
+	public RESTParameterStyle getStyle() {
+		return style;
+	}
+
+	public void setStyle(RESTParameterStyle style) {
+		this.style = style;
+	}
+
+	public List<String> getRequestContentType() {
 		return requestContentType;
 	}
 
-	public void setRequestContentType(String requestContentType) {
+	public void setRequestContentType(List<String> requestContentType) {
 		this.requestContentType = requestContentType;
 	}
 
-	public String getResponseContentType() {
-		return responseContentType;
+	public void addRequestContentType(String requestContentType) {
+		this.requestContentType.add(requestContentType);
 	}
 
-	public void setResponseContentType(String responseContentType) {
-		this.responseContentType = responseContentType;
+	public List<HttpResponse> getResponse() {
+		return response;
+	}
+
+	public void setResponse(List<HttpResponse> response) {
+		this.response = response;
+	}
+
+	public void addResponse(HttpResponse response) {
+		this.response.add(response);
 	}
 
 }

@@ -56,6 +56,7 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedMaxVersionForOwne
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.xkonnex.repo.dsl.servicedsl.service.util.CandidateServicesPredicate;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 
@@ -85,7 +86,7 @@ public class ModuleDslScopeProvider extends ComponentAwareVersionedScopeProvider
 	
 	@Override
 	public IScope getScope(EObject context, EReference reference) {
-		if (reference == ModuleDslPackage.Literals.OPERATION_REF__OPERATION /*&& (context instanceof OperationRef || context instanceof ProvidingEndpointProtocol)*/) {
+		if (reference == ModuleDslPackage.Literals.OPERATION_REF__OPERATION) {
 			ServiceRef serviceRef = EcoreUtil2.getContainerOfType(context, ServiceRef.class);
 			Map<QualifiedName, EObject> operationsMap = Maps.newHashMap();
 			if (serviceRef.getService() != null) {
@@ -95,6 +96,16 @@ public class ModuleDslScopeProvider extends ComponentAwareVersionedScopeProvider
 				}
 			}
 			return new MapBasedScope(operationsMap);
+		} else if (reference == ModuleDslPackage.Literals.PARAMETER_REF__PARAMETER) {
+				OperationRef opRef = EcoreUtil2.getContainerOfType(context, OperationRef.class);
+				Map<QualifiedName, EObject> parametersMap = Maps.newHashMap();
+				if (opRef.getOperation() != null) {
+					EList<Parameter> parameters = opRef.getOperation().getParameters();
+					for (Parameter param : parameters) {
+						parametersMap.put(QualifiedName.create(param.getName()), param);
+					}
+				}
+				return new MapBasedScope(parametersMap);
 		} else {
 			return super.getScope(context, reference);
 		}

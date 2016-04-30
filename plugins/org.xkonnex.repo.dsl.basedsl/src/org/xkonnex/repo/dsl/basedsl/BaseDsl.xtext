@@ -92,9 +92,9 @@ GovernanceDecision:
 		('decision-result' decisionResult=GovernanceDecisionResult)
 		('specific-result' specificResult=STRING)?
 		('justification-doc' justificationOrDocURL=STRING )?
-		('decision-date' approvalDate=STRING )? 
+		('decision-date' approvalDate=(STRING|DATE) )? 
 		('decision-by' approvedBy=STRING )?
-		('effective-date' effectiveDate=STRING)?
+		('effective-date' effectiveDate=(STRING|DATE))?
 	'}'
 ;
 
@@ -161,12 +161,30 @@ Value:
 	StringValue |
 	BooleanValue |
 	IntValue |
+	DateValue |
+	DateTimeValue |
+	TimeValue |
 	EnumLiteralValue
 ;
-
+SimpleValue: StringValue |
+	BooleanValue |
+	IntValue |
+	DateValue |
+	DateTimeValue |
+	TimeValue |
+	TimeValue |
+	EnumLiteralValue;
 BooleanValue:
 	{BooleanValue} ('false' | isTrue?='true');
-	
+DateValue:
+	value=DATE
+;	
+DateTimeValue:
+	value=DATETIME
+;	
+TimeValue:
+	value=TIME
+;	
 EnumLiteralValue: 
 	value = [jvmTypes::JvmEnumerationLiteral|QualifiedName]
 ;
@@ -207,5 +225,11 @@ CipherAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName] ('{'
 	'}')?;
 
 AnyBaseDslComponent returns Component: HashAlgorithmKind | SigningAlgorithm | CipherAlgorithmKind | AuthTokenKind;
+
+fragment DefaultValue: 'default' defaultValue=STRING;
+
+terminal DATE: ('0'..'9')('0'..'9')('0'..'9')('0'..'9')'-'('0'..'1')('0'..'9')'-'('0'..'3')('0'..'9');
+terminal DATETIME: ('0'..'9')('0'..'9')('0'..'9')('0'..'9')'-'('0'..'1')('0'..'9')'-'('0'..'3')('0'..'9')'T'('0'..'2')('0'..'9')':'('0'..'5')('0'..'9')':'('0'..'5')('0'..'9');
+terminal TIME: ('0'..'2')('0'..'9')':'('0'..'5')('0'..'9')':'('0'..'5')('0'..'9');
 
 	

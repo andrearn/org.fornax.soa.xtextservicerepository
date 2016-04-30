@@ -27,7 +27,9 @@ module org.example.sales.esb {
 				path = "customer"
 				verb = POST
 				requestContentType = "application/json"
-				responseContentType = "application/json"
+				response = {
+					contentType = "application/json"
+				}
 			}
 		}
 	}

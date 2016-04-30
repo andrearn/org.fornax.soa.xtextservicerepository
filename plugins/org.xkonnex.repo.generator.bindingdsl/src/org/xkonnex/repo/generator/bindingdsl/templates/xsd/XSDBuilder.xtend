@@ -19,6 +19,8 @@ import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBind
 import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.XSDGenerator
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
+import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
 
 /*
  * Generate an XSD for a SubNamespace. Types and exceptions are filtered by their lifecycle state, determining whether it
@@ -67,7 +69,7 @@ class XSDBuilder {
 	
 	
 
-	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, Binding bind, Profile enforcedProfile) {
+	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, AnyBinding bind, Profile enforcedProfile) {
 		
 	}
 	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, ServiceBinding bind, Profile enforcedProfile) {
@@ -81,6 +83,17 @@ class XSDBuilder {
 		try {
 			xsdGenerator.toXSD (ns, minState, profile, bind.getRegistryBaseUrl());
 //			xsdGenerator.toXSD (ns, bind.resolveEnvironment.getMinLifecycleState(profile.lifecycle), profile, bind.getRegistryBaseUrl());
+		} catch (Exception ex) {
+			log.log (Level::SEVERE, "Error generating XSDs for namespace " + ns.fqn + " with major version " + ns.version + "\n", ex)
+		}
+		
+	}
+	
+	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, EffectiveBinding bind, Profile enforcedProfile) {
+		val profile = (ns.subdomain as SubNamespace).getApplicableProfile(enforcedProfile)
+		log.fine("Generating XSDs for namespace " + ns.fqn + " with major version " + ns.version)
+		try {
+			xsdGenerator.toXSD (ns, minState, profile, bind.getRegistryBaseUrl());
 		} catch (Exception ex) {
 			log.log (Level::SEVERE, "Error generating XSDs for namespace " + ns.fqn + " with major version " + ns.version + "\n", ex)
 		}

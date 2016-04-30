@@ -8,6 +8,7 @@ import java.util.Set;
 import org.xkonnex.repo.generator.profiledsl.ProfileGeneratorConstants;
 import org.xkonnex.repo.dsl.bindingdsl.BindingDslRuntimeModule;
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup;
+import org.xkonnex.repo.generator.bindingdsl.rest.wadl.DefaultWADLContractBuilder;
 import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions;
 import org.xkonnex.repo.generator.bindingdsl.templates.TechnicalContractArtifactsBuilder;
 import org.xkonnex.repo.generator.bindingdsl.templates.naming.DefaultEndpointQualifierNameProvider;
@@ -108,6 +109,7 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 			new HashSet<ProvidedProtocolContractBuilder> () {
 				{
 					add (getLazyProtocolContractProvider (binder, SOAPProtocolContractBuilder.class));
+					add (getLazyProtocolContractProvider(binder, DefaultWADLContractBuilder.class));
 				}
 			}
 		);

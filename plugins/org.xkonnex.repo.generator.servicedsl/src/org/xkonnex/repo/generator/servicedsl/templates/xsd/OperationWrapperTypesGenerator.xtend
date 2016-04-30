@@ -57,13 +57,13 @@ class OperationWrapperTypesGenerator {
 	@Inject 
 	private Logger log
 
-	def dispatch toOperationWrappersInclSubNamespaces (String serviceName, List<SubNamespace> namespaces, LifecycleState minState, Profile profile, String registryBaseUrl) {
+	def toOperationWrappersInclSubNamespaces (String serviceName, List<SubNamespace> namespaces, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		for (ns : namespaces.filter(e|e.name.startsWith (serviceName))) {
 			ns.toOperationWrappers (minState, profile, registryBaseUrl);
 		}
 	}
 	
-	def dispatch toOperationWrappers (SubNamespace namespace, LifecycleState minState, Profile profile, String registryBaseUrl) {
+	def toOperationWrappers (SubNamespace namespace, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		namespace.services.forEach (s|s.toOperationWrappers (namespace, minState, profile, registryBaseUrl));
 	}
 	
@@ -164,12 +164,12 @@ class OperationWrapperTypesGenerator {
 	}
 	
 	
-	def dispatch toOperationWrapperMessages (Service service, LifecycleState minState, Profile profile) {
+	def toOperationWrapperMessages (Service service, LifecycleState minState, Profile profile) {
 		service.operations.map (e|e.toConcreteOperationWrapperTypes (profile)).join
 	}
 	
 	
-	def dispatch toConcreteOperationWrapperTypes (Operation op, Profile profile) '''
+	def toConcreteOperationWrapperTypes (Operation op, Profile profile) '''
 		<xsd:complexType name="«op.toOperationWrapperRequestType()»">
 			<xsd:sequence>
 				«IF op.findBestMatchingRequestHeader(profile) != null»
@@ -188,15 +188,15 @@ class OperationWrapperTypesGenerator {
 		</xsd:complexType>
 	'''
 	
-	def dispatch toParameter (Parameter param) '''
+	def toParameter (Parameter param) '''
 		<xsd:element name="«param.name»" type="«param.type.toTypeNameRef ()»" «IF param.optional»minOccurs="0" «ENDIF»«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 	
-	def dispatch toParameter (org.xkonnex.repo.dsl.profiledsl.profileDsl.Property prop) '''
+	def toParameter (org.xkonnex.repo.dsl.profiledsl.profileDsl.Property prop) '''
 		<xsd:element name="«prop.name»" type="«prop.type.toTypeNameRef ()»" «IF prop.optional»minOccurs="0" «ENDIF»«IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 	
-	def dispatch toParameter (MessageHeader header) '''
+	def toParameter (MessageHeader header) '''
 		«header.parameters.map (p|p.toParameter()).join»
 	'''
 	

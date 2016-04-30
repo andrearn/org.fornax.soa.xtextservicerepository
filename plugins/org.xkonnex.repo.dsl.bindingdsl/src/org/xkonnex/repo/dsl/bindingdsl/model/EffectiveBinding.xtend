@@ -1,5 +1,6 @@
 package org.xkonnex.repo.dsl.bindingdsl.model
 
+import java.util.List
 import org.eclipse.emf.common.util.BasicEList
 import org.eclipse.emf.common.util.EList
 import org.eclipse.xtext.EcoreUtil2
@@ -17,6 +18,7 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Policy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
+import org.xkonnex.repo.dsl.moduledsl.model.EffectiveProvidingEndpoint
 
 class EffectiveBinding extends DelegatingEObject implements AnyBinding {
 	
@@ -30,6 +32,8 @@ class EffectiveBinding extends DelegatingEObject implements AnyBinding {
 	private ServiceBinding serviceBinding
 	private OperationBinding operationBinding
 	private ChannelBinding channelBinding
+	
+	private List<EffectiveProvidingEndpoint> providingEndpoints = newArrayList()
 	
 	ModuleBinding moduleBinding
 	
@@ -89,5 +93,9 @@ class EffectiveBinding extends DelegatingEObject implements AnyBinding {
 	
 	def Binding getBindingDelegate() {
 		delegate as Binding
+	}
+	
+	def List<EffectiveProvidingEndpoint> getProvidingEndpoints() {
+		providingEndpoints
 	}
 }

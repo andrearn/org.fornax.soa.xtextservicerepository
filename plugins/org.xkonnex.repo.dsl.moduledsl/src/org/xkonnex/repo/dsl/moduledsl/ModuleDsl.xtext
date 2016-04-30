@@ -52,7 +52,7 @@ Module:
 		('groupId' groupId = STRING)?
 		('artifactId' artifactId = STRING)?
 		(	
-			('release-on' releaseDate = STRING)? &
+			('release-on' releaseDate = STRING|DATE)? &
 			('release-tag' releaseTag = STRING)? &		// Tag in VCS
 			('source-location' source=STRING )? 		// Where can I get the sources? 
 		)
@@ -102,7 +102,7 @@ Module:
 	'}';
 	
 
-ProvidingEndpointConfig: ServiceRef | OperationRef;
+ProvidingEndpointConfig: ServiceRef | OperationRef | ParameterRef;
 
 /**
  * Defines an endpoint on a module with protocol being used 
@@ -156,7 +156,16 @@ ServiceRef:
 
 OperationRef:
 	operation=[serviceDsl::Operation|QualifiedName] '{'
+		('parameters' '{'
+			parameters+=ParameterRef
+		'}')?
 		providingEndpoints+=ProvidingEndpoint+
+	'}'
+;
+
+ParameterRef:
+	parameter=[serviceDsl::Parameter|QualifiedName] '{'
+		providingEndpoints+=ProvidingEndpointProtocol+
 	'}'
 ;
 

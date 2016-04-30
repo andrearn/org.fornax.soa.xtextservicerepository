@@ -19,6 +19,7 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 
 /*
  * Matches BindingProtocols of the Binding DSL to the respective Connector protocol
@@ -52,32 +53,35 @@ class ProtocolMatcher {
 	
 	def boolean matchesModuleEndpointProtocol (BindingProtocol bindingProtocol, Class<? extends IModuleEndpointProtocol> prot) {
 		if (prot != null) {
-			switch (prot) {
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.SCA) && bindingProtocol instanceof SCA: return true
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.SOAP) && bindingProtocol instanceof SOAP: return true
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.EJB) && bindingProtocol instanceof EJB: return true
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.HTTP) && bindingProtocol instanceof HTTP: return true
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST) && bindingProtocol instanceof REST: return true
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.SAP) && bindingProtocol instanceof SAP: return true
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.JMS) && bindingProtocol instanceof JMS: return true
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.FILE) && bindingProtocol instanceof FILE: return true
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.FTP) && bindingProtocol instanceof FTP: return true
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.IIOP) && bindingProtocol instanceof IIOP: return true
-				case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.AMQP) && bindingProtocol instanceof AMQP: return true
+			if (bindingProtocol instanceof ExtensibleProtocol) {
+				val protType = (bindingProtocol as ExtensibleProtocol).type
+				val IProtocol extProt = componentInferrer.inferComponent(protType)
+				return extProt.supportsModuleEndpointProtocol(prot)
+			} else { 
+				switch (prot) {
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.SCA) && bindingProtocol instanceof SCA: return true
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.SOAP) && bindingProtocol instanceof SOAP: return true
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.EJB) && bindingProtocol instanceof EJB: return true
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.HTTP) && bindingProtocol instanceof HTTP: return true
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST) && bindingProtocol instanceof REST: return true
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.SAP) && bindingProtocol instanceof SAP: return true
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.JMS) && bindingProtocol instanceof JMS: return true
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.FILE) && bindingProtocol instanceof FILE: return true
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.FTP) && bindingProtocol instanceof FTP: return true
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.IIOP) && bindingProtocol instanceof IIOP: return true
+					case prot.isAssignableFrom(org.xkonnex.repo.dsl.moduledsl.ext.protocol.AMQP) && bindingProtocol instanceof AMQP: return true
+				}
+				
 			}
-		} else if (bindingProtocol instanceof ExtensibleProtocol) {
-			val protType = (bindingProtocol as ExtensibleProtocol).type
-			val IProtocol extProt = componentInferrer.inferComponent(protType)
-			return extProt.supportsModuleEndpointProtocol(prot)
 		}
 		return false
 	}
 	
-	def supportsModuleEndpointProtocol (Binding binding, EndpointProtocol prot) {
+	def supportsModuleEndpointProtocol (AnyBinding binding, EndpointProtocol prot) {
 		return binding.protocol.exists(p | p.matchesModuleEndpointProtocol(prot))
 	}
 	
-	def supportsModuleEndpointProtocol (Binding binding, Class<? extends IModuleEndpointProtocol> prot) {
+	def supportsModuleEndpointProtocol (AnyBinding binding, Class<? extends IModuleEndpointProtocol> prot) {
 		return binding.protocol.exists(p | p.matchesModuleEndpointProtocol(prot))
 	}
 }

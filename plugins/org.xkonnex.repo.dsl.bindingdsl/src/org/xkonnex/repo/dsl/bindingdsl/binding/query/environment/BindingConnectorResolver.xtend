@@ -27,21 +27,43 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.FTP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AMQP
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.RFC
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SAP
-
+import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
+import org.xkonnex.repo.dsl.basedsl.ext.infer.IComponentInferrer
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol
 
 /*
  * Lookup and resolution of connectors for bindings
  */
 class BindingConnectorResolver {
 	
-	@Inject extension EnvironmentBindingResolver;
+	@Inject extension EnvironmentBindingResolver
+	@Inject extension IComponentInferrer
 	@Inject Logger log
 	
 	/*
 	 * Find the closest matching connector for the given protocol and connector name. If the connector name
 	 * is not provided the first closest match based on the supported protocol is returned
 	 */	
-	def dispatch Connector resolveConnector (Server s, EObject bind, BindingProtocol prot) {
+	def dispatch Connector resolveConnector (Server s, AnyBinding bind, BindingProtocol prot) {
+	}
+	
+	/*
+	 * Find the closest matching connector for the given protocol and connector name. If the connector name
+	 * is not provided the first closest match based on the supported protocol is returned
+	 */	
+	def dispatch Connector resolveConnector (Server s, EffectiveBinding bind, BindingProtocol prot) {
+		val serverConnectors = if (!bind.resolveServer(prot)?.connectors.nullOrEmpty) 
+				bind.resolveServer(prot)?.connectors
+			else 
+				s.connectors 
+		val chosenConnectors = prot?.endpointConnector?.connectors
+		if (!chosenConnectors.nullOrEmpty && !serverConnectors.nullOrEmpty) {
+			selectBestMatchingConnector (prot, chosenConnectors, serverConnectors)
+		} else {
+			s.findConnectorsByProtocol(prot, serverConnectors)
+		}
 	}
 	
 	def dispatch Connector resolveConnector (Server s, ModuleBinding bind, BindingProtocol prot) {
@@ -110,7 +132,7 @@ class BindingConnectorResolver {
 	 * 
 	 * TODO: complete this for all protocols and possible matches!!!
 	 */
-	def boolean supportsProtocol (Connector con, BindingProtocol prot) {
+	def dispatch boolean supportsProtocol (Connector con, BindingProtocol prot) {
 		switch (prot) {
 			SOAP: 		con instanceof SOAPHTTP || con instanceof org.xkonnex.repo.dsl.environmentdsl.environmentDsl.HTTP
 			EJB:		con instanceof RMI || con instanceof IIOP
@@ -123,6 +145,11 @@ class BindingConnectorResolver {
 			SAP:		con instanceof RFC
 			default: 	false
 		}
+	}
+	
+	def dispatch boolean supportsProtocol (Connector con, ExtensibleProtocol extensibleProtocol) {
+		val IProtocol prot = extensibleProtocol.inferComponent
+		return prot.supportedOnConnector(con)
 	}
 	
 	def getConnectors (Server server) {

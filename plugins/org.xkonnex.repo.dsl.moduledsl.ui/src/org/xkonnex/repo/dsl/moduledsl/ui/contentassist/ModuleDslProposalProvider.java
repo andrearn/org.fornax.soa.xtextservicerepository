@@ -3,6 +3,9 @@
 */
 package org.xkonnex.repo.dsl.moduledsl.ui.contentassist;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
@@ -60,6 +63,8 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 	
 	@Inject
 	private AbstractTypeScopeProvider typeScopeProvider;
+
+	private DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 
 	public void complete_VersionId(EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		calculateVersionProposals(model, context, acceptor, false);
@@ -261,6 +266,14 @@ public class ModuleDslProposalProvider extends AbstractModuleDslProposalProvider
 		} else if (model instanceof Component) {
 			createFeatureProposals((Component) model, context, acceptor);
 		}
+	}
+	
+	@Override
+	public void completeModule_ReleaseDate(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		String proposal = dateFormat.format(new Date());
+		acceptor.accept(createCompletionProposal(proposal , context));
 	}
 
 }

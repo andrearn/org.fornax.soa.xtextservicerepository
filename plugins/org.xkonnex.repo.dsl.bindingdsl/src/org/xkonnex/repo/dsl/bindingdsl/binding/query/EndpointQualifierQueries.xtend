@@ -21,6 +21,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 
 class EndpointQualifierQueries {
 	
@@ -93,13 +94,13 @@ class EndpointQualifierQueries {
 	 * more general binding definition. 
 	 * Endpoint qualifiers on the protocols defined inside the binding are added at end of the list.
 	 */
-	def EndpointQualifierDescriptor getPotentialEffectiveEndpointQualifiers (Binding binding) {
+	def EndpointQualifierDescriptor getPotentialEffectiveEndpointQualifiers (AnyBinding binding) {
 		var qualifierDesc = new EndpointQualifierDescriptor()
 		qualifierDesc =  getPotentialEffectiveEndpointQualifiersInternal (binding, qualifierDesc)
 		return qualifierDesc
 	}
 	
-	def private EndpointQualifierDescriptor getPotentialEffectiveEndpointQualifiersInternal (Binding binding, EndpointQualifierDescriptor qualifierDescriptor) {
+	def private EndpointQualifierDescriptor getPotentialEffectiveEndpointQualifiersInternal (AnyBinding binding, EndpointQualifierDescriptor qualifierDescriptor) {
 		if (binding.endpointQualifierRef?.endpointQualifier != null && qualifierDescriptor.effectiveEndpointQualifier == null) {
 			qualifierDescriptor.setEffectiveEndpointQualifier(binding.endpointQualifierRef.endpointQualifier)
 		}
@@ -116,17 +117,17 @@ class EndpointQualifierQueries {
 	}
 	
 	
-	def isPublicEndpoint (Service service, Binding binding, BindingProtocol prot) {
+	def isPublicEndpoint (Service service, AnyBinding binding, BindingProtocol prot) {
 		val Connector connector = connectorResolver.resolveConnector(envResolver.resolveServer (binding, prot), binding, prot)
-		return connector.endpointVisibility == EndpointVisibility::PUBLIC && service.visibility != Visibility::PRIVATE
+		return connector?.endpointVisibility == EndpointVisibility::PUBLIC && service.visibility != Visibility::PRIVATE
 	}
-	def isExtenalEndpoint (Service service, Binding binding, BindingProtocol prot) {
+	def isExtenalEndpoint (Service service, AnyBinding binding, BindingProtocol prot) {
 		val Connector connector = connectorResolver.resolveConnector(envResolver.resolveServer (binding, prot), binding, prot)
-		return connector.endpointVisibility == EndpointVisibility::EXTERNAL
+		return connector?.endpointVisibility == EndpointVisibility::EXTERNAL
 	}
-	def isPrivateEndpoint (Service service, Binding binding, BindingProtocol prot) {
+	def isPrivateEndpoint (Service service, AnyBinding binding, BindingProtocol prot) {
 		val Connector connector = connectorResolver.resolveConnector(envResolver.resolveServer (binding, prot), binding, prot)
-		return connector.endpointVisibility == EndpointVisibility::PRIVATE || connector.endpointVisibility == null
+		return connector?.endpointVisibility == EndpointVisibility::PRIVATE || connector.endpointVisibility == null
 	}
 	
 }

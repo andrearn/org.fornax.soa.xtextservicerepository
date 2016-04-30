@@ -270,6 +270,54 @@ class BindingLookup {
 		return binding
 	}
 	
+	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, AnyBinding binding, EndpointQualifierRef endpointQualifier) {
+		return null
+	}
+	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, OperationBinding binding, EndpointQualifierRef endpointQualifier) {
+		if (binding.operation == operation)
+			return binding
+		else
+			return null
+	}
+	
+	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, ServiceBinding binding, EndpointQualifierRef endpointQualifier) {
+		if (binding.operation == operation)
+			return binding
+		else
+			return null
+	}
+	
+	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, ModuleBinding binding, EndpointQualifierRef endpointQualifier) {
+		val service = EcoreUtil2.getContainerOfType(operation, typeof (Service))
+		if (!binding.serviceBindings.empty) {
+			for (svcBind : binding.serviceBindings) {
+				if (serviceRefMatcher.matches(service, svcBind.service)) {
+					for (opBind : svcBind.operation) {
+						if (opBind.operation == operation) {
+							val bindEndpointQualifiers = opBind.getPotentialEffectiveEndpointQualifiers
+							if (endpointQualifier != null && opBind != null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
+								return opBind
+							} else if (endpointQualifier == null) {
+								return opBind
+							} else {
+								return null
+							}
+						}
+					}
+					val bindEndpointQualifiers = svcBind.getPotentialEffectiveEndpointQualifiers
+					if (endpointQualifier != null && svcBind != null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
+						return svcBind
+					} else if (endpointQualifier == null) {
+						return svcBind
+					} else {
+						return null
+					}
+				}
+			}
+		}
+		return binding
+	}
+	
 	def List<AnyBinding> getBottomUpBindingHierarchy(Service service, ModuleBinding binding) {
 		val specBind = getMostSpecificBinding(service, binding);
 		var hierarchy = getBottomUpHierarchyForSpecificBinding(specBind)

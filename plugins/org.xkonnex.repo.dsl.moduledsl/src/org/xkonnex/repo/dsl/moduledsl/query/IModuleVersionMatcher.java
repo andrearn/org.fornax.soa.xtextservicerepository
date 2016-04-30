@@ -1,28 +1,24 @@
 package org.xkonnex.repo.dsl.moduledsl.query;
 
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.naming.QualifiedName;
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef;
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ServiceModuleRef;
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
 
 /**
  * Checks whether two module versions are compatible
- * @author aarnold
+ * @author André Arnold
  *
  */
 public interface IModuleVersionMatcher {
 	
-	/* 
-	 * Check, whether the Module module is compatible to Module originalModule based on thein versions
+	/** 
+	 * Check, whether the Module module is compatible to Module originalModule based on their versions
 	 * 
 	 * returns true, if module is compatible to originalModule
 	 */
 	public boolean isCompatibleTo (Module module, Module originalModule);
 	
-	/* 
+	/** 
 	 * Check, whether the Module module is effectively referenced by the given  qualified module name an version
 	 * constraint
 	 * 

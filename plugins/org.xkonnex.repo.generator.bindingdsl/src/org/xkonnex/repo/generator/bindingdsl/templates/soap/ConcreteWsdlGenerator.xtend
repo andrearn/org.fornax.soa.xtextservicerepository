@@ -24,6 +24,8 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.generator.servicedsl.templates.CommonTemplateExtensions
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
+import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -58,9 +60,44 @@ class ConcreteWsdlGenerator {
 	def dispatch void toWSDL (ModuleBinding binding, Service svc, SOAP prot, Profile profile) {
 		svc.toWSDL (binding, prot, profile);
 	}
+	/* 
+	 * Generate a concrete pubplic endpoint WSDL for a service bound by a ModuleBinding 
+	 * with the given protocol definition applying the supplied profile
+	 */
+	def dispatch void toWSDL (EffectiveBinding binding, Service svc, SOAP prot, Profile profile) {
+		svc.toWSDL (binding.moduleBinding, prot, profile);
+	}
 	
 	
 	def dispatch void toWSDL(Service svc, ServiceBinding svcBind, SOAP prot, Profile enforcedProfile) {
+		val wsdlFile = svc.getConcreteWsdlFileNameFragment(svcBind, prot) + ".wsdl";
+		val content = '''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+			xmlns:tns="«svc.toTargetNamespace()»"
+			xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			name="«svc.name»" 
+			targetNamespace="«svc.toTargetNamespace()»">
+
+			<wsdl:documentation>
+				Version «versionQualifier.toVersionNumber(svc.version)»
+				Lifecycle state: «svc.lifecycleState.toStateName»
+				
+				«docProvider.getDocumentation (svc)»
+			</wsdl:documentation>
+
+		    <wsdl:import namespace="«svc.toTargetNamespace()»" location="«svc.toSchemaAssetUrl (svcBind.getRegistryBaseUrl())».wsdl"></wsdl:import>
+			
+			«svcBind.protocol.filter (typeof(SOAP)).map (p|p.toSOAPBinding (svc)).join»
+
+			«svcBind.protocol.filter (typeof(SOAP)).map (p|p.toWsdlService(svc, svcBind.resolveServer, svcBind)).join»
+		</wsdl:definitions>
+		''';
+		fsa.generateFile (wsdlFile, content);
+	}
+	
+	def dispatch void toWSDL(Service svc, AnyBinding svcBind, SOAP prot, Profile enforcedProfile) {
 		val wsdlFile = svc.getConcreteWsdlFileNameFragment(svcBind, prot) + ".wsdl";
 		val content = '''
 		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
@@ -184,6 +221,15 @@ class ConcreteWsdlGenerator {
 			<wsdl:port binding="tns:«svc.toBindingName (protocol, bind.getEndpointQualifierName (svc, protocol))»"
 				name="«svc.toScopedPortName (bind, protocol, bind.getEndpointQualifierName (svc, protocol))»">
 				<soap:address location="«svc.toEndpointAddress (server, protocol, bind.module.module)»" />
+			</wsdl:port>
+		</wsdl:service>
+	'''
+	
+	def dispatch toWsdlService (SOAP protocol, Service svc, Server server, EffectiveBinding bind) '''
+		<wsdl:service name="«svc.name»">
+			<wsdl:port binding="tns:«svc.toBindingName (protocol, bind.getEndpointQualifierName (svc, protocol))»"
+				name="«svc.toScopedPortName (bind.moduleBinding, protocol, bind.getEndpointQualifierName (svc, protocol))»">
+				<soap:address location="«svc.toEndpointAddress (server, protocol, bind.moduleBinding.module.module)»" />
 			</wsdl:port>
 		</wsdl:service>
 	'''

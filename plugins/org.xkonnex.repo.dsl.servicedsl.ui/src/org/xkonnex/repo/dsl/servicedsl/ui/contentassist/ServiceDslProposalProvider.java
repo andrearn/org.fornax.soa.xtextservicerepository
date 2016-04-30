@@ -3,10 +3,14 @@
  */
 package org.xkonnex.repo.dsl.servicedsl.ui.contentassist;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Iterator;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
@@ -52,6 +56,8 @@ public class ServiceDslProposalProvider extends
 
 	@Inject
 	protected IEObjectLookup objLookup;
+
+	private DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 
 	public void complete_VersionId(EObject model, RuleCall ruleCall,
 			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
@@ -289,5 +295,28 @@ public class ServiceDslProposalProvider extends
 			}
 		}
 	}
-
+	
+	@Override
+	public void completeGovernanceApproval_ApprovalDate(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		String proposal = dateFormat.format(new Date());
+		acceptor.accept(createCompletionProposal(proposal , context));
+	}
+	
+	@Override
+	public void completeLifecycleTrigger_ReleaseDate(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		String proposal = dateFormat.format(new Date());
+		acceptor.accept(createCompletionProposal(proposal , context));
+	}
+	
+	@Override
+	public void completeLifecycleTrigger_RetirementDate(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		String proposal = dateFormat.format(new Date());
+		acceptor.accept(createCompletionProposal(proposal , context));
+	}
 }

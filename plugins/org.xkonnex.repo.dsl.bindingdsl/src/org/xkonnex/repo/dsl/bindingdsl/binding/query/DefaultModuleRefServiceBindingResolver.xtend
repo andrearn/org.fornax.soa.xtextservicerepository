@@ -16,10 +16,10 @@ import java.util.logging.Logger
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AbstractServiceRef
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.ModuleRefServiceBindingDescription
-import java.util.Map
+import java.util.Mapimport org.xkonnex.repo.dsl.bindingdsl.model.IEffectiveBindingBuilder
 
 /**
- * Resolves Bindings of service/modules as explicit descriptions describing which Binding applies to which service 
+ * Resolves Bindings of services/modules as explicit descriptions describing which Binding applies to which service 
  * provided or used by a module.
  */
 class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBindingResolver {
@@ -28,6 +28,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 	@Inject BindingLookup bindingLookup
 	@Inject EndpointQualifierQueries endpointQualifierQuery
 	@Inject IModuleReferenceResolver modRefResolver
+	@Inject IEffectiveBindingBuilder bindingBuilder
 	@Inject Logger log
 	
 	/**
@@ -49,7 +50,8 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 		for (provSvcRef : providedServices) {
 			 val svc = modServiceResolver.resolveModuleServiceRef (provSvcRef, targetEnvironment)
 			 for (bind : candBindings) {
-			 	val specBind = bindingLookup.getMostSpecificBinding(svc, bind, endpointQualifier)
+//			 	val specBind = bindingLookup.getMostSpecificBinding(svc, bind, endpointQualifier)
+			 	val specBind = bindingBuilder.createEffectiveBinding(svc, bind, endpointQualifier)
 			 	if (specBind != null) {
 				 	val curSvcBindDesc = new ServiceRefBindingDescription
 				 	curSvcBindDesc.applicableBinding = specBind

@@ -14,6 +14,7 @@ import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier
 import org.xkonnex.repo.generator.bindingdsl.templates.naming.IEndpointQualifierNameProvider
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 
 class ConcreteWsdlFileNameProvider {
 	
@@ -21,13 +22,24 @@ class ConcreteWsdlFileNameProvider {
 	@Inject extension IEndpointQualifierNameProvider
 	@Inject extension SchemaNamespaceExtensions
 	
-	def String getConcreteWsdlFileNameFragment (Service service, Binding binding) {
+	def dispatch String getConcreteWsdlFileNameFragment (Service service, AnyBinding binding) {
+		var specBinding = binding
+		val soapProt = specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP).head
+		return service.getConcreteWsdlFileNameFragment(specBinding.getEndpointQualifierName (service, soapProt))
+	}
+	
+	def dispatch String getConcreteWsdlFileNameFragment (Service service, AnyBinding binding, BindingProtocol protocol) {
+		var specBinding = binding
+		return service.getConcreteWsdlFileNameFragment(specBinding.getEndpointQualifierName (service, protocol))
+	}
+	
+	def dispatch String getConcreteWsdlFileNameFragment (Service service, Binding binding) {
 		var specBinding = service.getMostSpecificBinding(binding)
 		val soapProt = specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP).head
 		return service.getConcreteWsdlFileNameFragment(specBinding.getEndpointQualifierName (service, soapProt))
 	}
 	
-	def String getConcreteWsdlFileNameFragment (Service service, Binding binding, BindingProtocol protocol) {
+	def dispatch String getConcreteWsdlFileNameFragment (Service service, Binding binding, BindingProtocol protocol) {
 		var specBinding = service.getMostSpecificBinding(binding)
 		return service.getConcreteWsdlFileNameFragment(specBinding.getEndpointQualifierName (service, protocol))
 	}
