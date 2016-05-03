@@ -32,6 +32,7 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
 import org.xkonnex.repo.dsl.basedsl.ext.infer.IComponentInferrer
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleServer
 
 /*
  * Lookup and resolution of connectors for bindings
@@ -156,11 +157,12 @@ class BindingConnectorResolver {
 		if (server == null)
 			throw new IllegalArgumentException("Server may not be null");
 		switch (server) {
-			AppServer:		(server as AppServer).connectors
-			Broker:			(server as Broker).connectors
-			ESB:			(server as ESB).connectors
-			ProcessServer:	(server as ProcessServer).connectors
-			WebServer:		(server as WebServer).connectors
+			AppServer:			(server as AppServer).connectors
+			Broker:				(server as Broker).connectors
+			ESB:				(server as ESB).connectors
+			ProcessServer:		(server as ProcessServer).connectors
+			WebServer:			(server as WebServer).connectors
+			ExtensibleServer: 	(server as ExtensibleServer).connectors
 			default:		{
 				log.severe ("Server " + server.name + " of type " + server.eClass.name + " dos not support connectors.")
 				throw new ServerNotConnectableException()

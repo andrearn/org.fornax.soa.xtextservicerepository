@@ -43,6 +43,7 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 import java.util.logging.Logger
 import java.util.logging.Level
 import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
 
 class ConcreteWADLBuilder {
 	
@@ -86,7 +87,7 @@ class ConcreteWADLBuilder {
 		log.info('''Generating WADL for Service «service.fullyQualifiedName»'''.toString)
 		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
 		val effBind = bindingBuilder.createEffectiveBinding(service, binding)
-//		val prot = effBind.protocol.filter(typeof(ExtensibleProtocol)).filter[type == REST.getClass()].head
+		val prot = effBind.protocol.filter(typeof(ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
 		val wadlFile = service.getServiceContractFileNameFragment(effBind.moduleBinding, typeof(REST)) + ".wadl";
 		val environment = environmentResolver.resolveEnvironment(binding)
 		wrapperTypesGenerator.toOperationWrappers (service, service.findSubdomain(), minState, profile, environment.getRegistryBaseUrl());
@@ -106,7 +107,7 @@ class ConcreteWADLBuilder {
 				«ENDIF»
 				xmlns="http://wadl.dev.java.net/2009/02">
 				«toGrammars(service, minState, profile, headerImports)»
-				<resources base="«service.getEndpointBaseAddress(effBind, binding.module.module)»">
+				<resources base="«service.toEndpointAddress (effBind.provServer, prot, effBind)»">
 					«service.operations.map[toOperation(effBind)].join»
 				</resources>
 			</application>

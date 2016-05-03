@@ -30,7 +30,7 @@ class SoapEndpointAddressResolver {
 	def dispatch String toEndpointAddress (Service service, Server server, BindingProtocol prot, Module mod) { 
 		val bind = prot.eContainer as Binding
 		val connector = connectorResolver.resolveConnector(server, bind, prot);
-		server.getSOAPHttpEndpointUrl(connector) 
+		connector.getEndpointUrl() 
 		+ mod.toEndpointAddressPath (service, server, bind, prot);
 	}
 	
@@ -40,7 +40,7 @@ class SoapEndpointAddressResolver {
 	 */
 	def dispatch String toEndpointAddress (Service service, Server server, BindingProtocol prot, ServiceBinding bind) { 
 		val connector = connectorResolver.resolveConnector(server, bind, prot);
-		server.getSOAPHttpEndpointUrl(connector) 
+		connector.getEndpointUrl() 
 		+ bind.toEndpointAddressPath (prot, service, server);
 	}
 

@@ -1,5 +1,6 @@
 package org.example;
 
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector;
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 
 public class SomeConnector implements IConnector {
@@ -43,6 +44,16 @@ public class SomeConnector implements IConnector {
 	}
 	public void setNested(Nested nested) {
 		this.nested = nested;
+	}
+	@Override
+	public String getEndpointUrl(ExtensibleConnector connectorDefinition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public String getSecuredEndpointUrl(ExtensibleConnector connectorDefinition) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

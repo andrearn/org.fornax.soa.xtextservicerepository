@@ -259,6 +259,11 @@ Database:
 		('database-type' serverType=STRING )?
 		('database-version' serverVersion=STRING )?
 		('{' (schema+=DatabaseSchema)+ '}')? 
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
@@ -273,6 +278,11 @@ SAP:
 		('dataDir' dataDir=STRING )?
 		('adminUrl' adminUrl=STRING )? 
 		('{' (client+=SapClient)+ '}')? 
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 	

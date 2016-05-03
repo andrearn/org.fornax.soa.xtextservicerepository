@@ -1,80 +1,106 @@
 package org.xkonnex.repo.generator.environmentdsl
 
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.AppServer
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Broker
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ESB
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ProcessServer
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SOAPHTTP
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.WebServer
 import com.google.inject.Inject
 import java.util.logging.Logger
+import org.eclipse.xtext.EcoreUtil2
+import org.xkonnex.repo.dsl.basedsl.ext.infer.IComponentInferrer
+import org.xkonnex.repo.dsl.environmentdsl.environment.query.ConnectorLookup
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.HTTP
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.REST
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SOAPHTTP
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
+import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector
 
 class EndpointResolver {
 	
 	@Inject Logger log
 	
-	def dispatch String getSOAPHttpEndpointUrl (Server s) {
-		if (s.getSOAPHttpEndpoint() != null) {
-			if (s.getSOAPHttpEndpoint().contextRoot != null) {
-				("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString() + s.getSOAPHttpEndpoint().contextRoot.toContextRootPath)
-			} else {
-				("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString())
-			}
-		}
-	}
-	def dispatch String getSOAPHttpEndpointUrl (Server s, Connector con) {
-		if (s.getSOAPHttpEndpoint(con) != null) {
-			if (s.getSOAPHttpEndpoint(con).contextRoot != null) {
-				("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint(con).port.toString() + s.getSOAPHttpEndpoint(con).contextRoot.toContextRootPath)
-			} else {
-				("http://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint(con).port.toString())
-			}
-		}
-	}
-			
-	def dispatch String getSecuredSOAPHttpEndpointUrl (Server s) {
-		if (s.getSOAPHttpEndpoint() != null) {
-			if (s.getSOAPHttpEndpoint().contextRoot != null) { 
-				("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString() + s.getSOAPHttpEndpoint().contextRoot.toContextRootPath)
-			} else {
-				("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint().port.toString())
-			}
-		}
-	}
-			
-	def dispatch String getSecuredSOAPHttpEndpointUrl (Server s, Connector con) {
-		if (s.getSOAPHttpEndpoint() != null) {
-			if (s.getSOAPHttpEndpoint(con).contextRoot != null) { 
-				("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint(con).port.toString() + s.getSOAPHttpEndpoint(con).contextRoot.toContextRootPath)
-			} else {
-				("https://" + s.host.fqn + ":" + s.getSOAPHttpEndpoint(con).port.toString())
-			}
-		}
+	@Inject extension ConnectorLookup
+	@Inject extension IComponentInferrer
+	
+	def getEndpointUrlByConnectorType(Server server, Class<? extends Connector> connectorType) {
+		val Connector con = server.getConnectorByType(connectorType)
+		con.getEndpointUrl
 	}
 	
-	def dispatch SOAPHTTP getSOAPHttpEndpoint (Server s) {}
-	def dispatch SOAPHTTP getSOAPHttpEndpoint (Server s, Connector con) {}
-	
-	def dispatch SOAPHTTP getSOAPHttpEndpoint (AppServer s) {
-		val con = s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e.isDefault);
-		if (con == null) 
-			return s.connectors.filter (typeof (SOAPHTTP)).head;
-		return con;
-	}
-	def dispatch SOAPHTTP getSOAPHttpEndpoint (AppServer s, Connector con) {
-		s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e == con);
+	def dispatch getEndpointUrl(Connector connector) {
 	}
 	
-	def dispatch SOAPHTTP getSOAPHttpEndpoint (ESB s) {
-		val con = s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e.isDefault);
-		if (con == null) 
-			return s.connectors.filter (typeof (SOAPHTTP)).head;
-		return con;
+	def dispatch getEndpointUrl(SOAPHTTP connector) {
+		getHttpEndpointUrl(connector)
 	}
-	def dispatch SOAPHTTP getSOAPHttpEndpoint (ESB s, Connector con) {
-		s.connectors.filter (typeof (SOAPHTTP)).findFirst (e|e == con);
+	def dispatch getEndpointUrl(HTTP connector) {
+		getHttpEndpointUrl(connector)
+	}
+	def dispatch getEndpointUrl(REST connector) {
+		getHttpEndpointUrl(connector)
+	}
+	def dispatch getEndpointUrl(ExtensibleConnector connector) {
+		val IConnector conBean = connector.inferComponent
+		conBean.getEndpointUrl(connector)
+	}
+	
+	def dispatch getSecuredEndpointUrl(Connector connector) {
+	}
+	
+	def dispatch getSecuredEndpointUrl(SOAPHTTP connector) {
+		getSecuredHttpEndpointUrl(connector)
+	}
+	def dispatch getSecuredEndpointUrl(HTTP connector) {
+		getSecuredHttpEndpointUrl(connector)
+	}
+	def dispatch getSecuredEndpointUrl(REST connector) {
+		getSecuredHttpEndpointUrl(connector)
+	}
+	def dispatch getSecuredEndpointUrl(ExtensibleConnector connector) {
+		val IConnector conBean = connector.inferComponent
+		conBean.getSecuredEndpointUrl(connector)
+	}
+	
+	def getSecuredEndpointUrlByConnectorType(Server server, Class<? extends Connector> connectorType) {
+		val Connector con = server.getConnectorByType(connectorType)
+		getSecuredHttpEndpointUrl(con)
+	}
+	
+	def String getEndpointUrl(String protocolQualifier, String host, String port, String path) {
+		val url = new StringBuilder('''«protocolQualifier»://''')
+		if (host != null)
+			url.append(host)
+		if (port != null)
+			url.append(''':«port»''')
+		if (path != null) {
+			if (path.startsWith("/")) url.append(path) else url.append('''/«path»''')
+		}
+		url.toString
+	}
+	
+	private def dispatch String getHttpEndpointUrl(SOAPHTTP con) {
+		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
+		getEndpointUrl("http", s.host.fqn, con.port.toString(), con.contextRoot?.toContextRootPath)
+	}
+	private def dispatch String getHttpEndpointUrl(HTTP con) {
+		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
+		getEndpointUrl("http", s.host.fqn, con.port.toString(), con.contextRoot?.toContextRootPath)
+	}
+	private def dispatch String getHttpEndpointUrl(REST con) {
+		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
+		getEndpointUrl("http", s.host.fqn, con.port.toString(), con.contextRoot?.toContextRootPath)
+	}
+	
+	
+	private def dispatch String getSecuredHttpEndpointUrl(SOAPHTTP con) {
+		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
+		getEndpointUrl("https", s.host.fqn, con.securedPort.toString(), con.contextRoot?.toContextRootPath)
+	}
+	private def dispatch String getSecuredHttpEndpointUrl(HTTP con) {
+		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
+		getEndpointUrl("https", s.host.fqn, con.securedPort.toString(), con.contextRoot?.toContextRootPath)
+	}
+	private def dispatch String getSecuredHttpEndpointUrl(REST con) {
+		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
+		getEndpointUrl("https", s.host.fqn, con.securedPort.toString(), con.contextRoot?.toContextRootPath)
 	}
 	
 	def private toContextRootPath (String path) {

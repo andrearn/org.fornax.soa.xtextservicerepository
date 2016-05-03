@@ -1,5 +1,7 @@
 package org.xkonnex.repo.dsl.environmentdsl.ext.connector;
 
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector;
+
 @Connector
 public class MQTTConnector implements IConnector {
 
@@ -20,5 +22,17 @@ public class MQTTConnector implements IConnector {
 
 	public void setSecurePort(String securePort) {
 		this.securePort = securePort;
+	}
+
+	@Override
+	public String getEndpointUrl(ExtensibleConnector connectorDefinition) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getSecuredEndpointUrl(ExtensibleConnector connectorDefinition) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

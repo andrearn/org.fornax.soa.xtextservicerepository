@@ -13,6 +13,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.generator.environmentdsl.EndpointResolver
+import org.eclipse.xtext.EcoreUtil2
 
 class RESTEndpointAddressResolver {
 	
@@ -27,17 +28,19 @@ class RESTEndpointAddressResolver {
 //		val baseEx = "http://api.search.yahoo.com/NewsSearchService/V1/"
 		val server = binding.resolveServer
 		val prot = binding.protocol.filter (typeof (ExtensibleProtocol)).filter[inferComponent instanceof REST].head
-		service.toEndpointAddress (server, prot, binding);
+		service.toEndpointAddress (server, prot, binding)
 		
 	}
 	def dispatch String toEndpointAddress (Service service, Server server, EffectiveBinding binding, ExtensibleProtocol prot, Module mod) { 
 		val connector = connectorResolver.resolveConnector(server, binding, prot);
-		server.getSOAPHttpEndpointUrl(connector) 
-		+ mod.toEndpointAddressPath (service, server, binding, prot);
+		connector.getEndpointUrl() 
+		+ mod.toEndpointAddressPath (service, server, binding, prot)
 	}
 	
 	def String getOperationPath(Operation operation, EffectiveBinding binding) {
-		
+		val prot = binding.protocol.filter (typeof (ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
+		val REST restProt = prot.inferComponent
+		if (restProt.path.nullOrEmpty) restProt.path else operation.name
 	}
 
 	/*
@@ -45,9 +48,8 @@ class RESTEndpointAddressResolver {
 	 * Public endpoints are usually located on an ESB
 	 */
 	def String toEndpointAddress (Service service, Server server, ExtensibleProtocol prot, EffectiveBinding bind) {
-//		val modEndpoint  
 		val connector = connectorResolver.resolveConnector(server, bind, prot);
-		server.getSOAPHttpEndpointUrl(connector) 
+		connector.getEndpointUrl()
 		+ vendorEndpointResolver.toEndpointAddressPath (bind, prot, service, server);
 	}
 	
