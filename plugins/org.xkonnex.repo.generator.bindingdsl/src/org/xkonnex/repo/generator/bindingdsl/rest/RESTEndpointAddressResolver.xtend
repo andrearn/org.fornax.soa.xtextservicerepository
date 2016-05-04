@@ -1,4 +1,4 @@
-package org.xkonnex.repo.generator.bindingdsl.rest.wadl
+package org.xkonnex.repo.generator.bindingdsl.rest
 
 import com.google.inject.Inject
 import org.xkonnex.repo.dsl.basedsl.ext.infer.IComponentInferrer

@@ -1,4 +1,4 @@
-package org.xkonnex.repo.generator.bindingdsl.rest.wadl
+package org.xkonnex.repo.generator.bindingdsl.rest
 
 import org.xkonnex.repo.generator.bindingdsl.http.HttpVendorEndpointResolver
 

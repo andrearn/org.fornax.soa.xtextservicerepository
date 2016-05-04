@@ -29,7 +29,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
-import org.xkonnex.repo.generator.bindingdsl.rest.wadl.RESTEndpointAddressResolver
+import org.xkonnex.repo.generator.bindingdsl.rest.RESTEndpointAddressResolver
 import org.xkonnex.repo.generator.bindingdsl.templates.DefaultServiceContractFilenameProvider
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
@@ -44,8 +44,10 @@ import java.util.logging.Logger
 import java.util.logging.Level
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
+import java.util.List
 
-class ConcreteWADLBuilder {
+class ConcreteWADLGenerator {
 	
 	@Inject extension SchemaTypeExtensions schemaTypeExt
 	@Inject extension ServiceTemplateExtensions
@@ -159,17 +161,44 @@ class ConcreteWADLBuilder {
 	def toResponses(Operation op, REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint) {
 		val responses = getResponses(bindingRESTProtocol, endpoint)
 		'''
-			«responses.map[toResponse(op.^return.head)].join»
-		'''
+			«responses.filter[statusCode == null || statusCode < 400].map[toResponse(op.^return.head)].join»
+			«responses.filter[statusCode != null && statusCode >= 400].map[toErrorResponse(op.throws)].join»		'''
 	}
 	
 	def toResponse(HttpResponse response, Parameter param) {
 		val content = '''
-			<response status="«response.statusCode»">
-				«FOR mediaType : response.contentType»
-					<representation mediaType="«mediaType»" element="«param.type.toTypeNameRef ()» />
-				«ENDFOR»		
-			</response>
+			«IF response.statusCode == null»
+				<response>
+					«FOR mediaType : response.contentType»
+						<representation mediaType="«mediaType»"» />
+					«ENDFOR»		
+				</response>
+			«ELSE»
+				<response status="«response.statusCode»">
+					«FOR mediaType : response.contentType»
+						<representation mediaType="«mediaType»" element="«param.type.toTypeNameRef ()» />
+					«ENDFOR»		
+				</response>
+			«ENDIF»
+		'''
+		return content
+	}
+	
+	def toErrorResponse(HttpResponse response, List<ExceptionRef> exception) {
+		val content = '''
+			«IF !exception.nullOrEmpty && exception.size == 1»
+				<response status="«response.statusCode»">
+					«FOR mediaType : response.contentType»
+						<representation mediaType="«mediaType»" element="«exception.head.toExceptionNameRef ()»" />
+					«ENDFOR»		
+				</response>
+			«ELSE»
+				<response status="«response.statusCode»">
+					«FOR mediaType : response.contentType»
+						<representation mediaType="«mediaType»" />
+					«ENDFOR»		
+				</response>
+			«ENDIF»
 		'''
 		return content
 	}

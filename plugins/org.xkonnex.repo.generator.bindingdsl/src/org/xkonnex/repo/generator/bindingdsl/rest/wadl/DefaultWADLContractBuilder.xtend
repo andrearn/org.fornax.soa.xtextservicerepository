@@ -20,7 +20,6 @@ import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import org.xkonnex.repo.generator.bindingdsl.rest.wadl.templates.ConcreteWADLBuilder
 import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
 import org.xkonnex.repo.generator.bindingdsl.templates.IProtocolContractBuilder
 import org.xkonnex.repo.generator.bindingdsl.templates.xsd.XSDBuilder
@@ -33,6 +32,7 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol
+import org.xkonnex.repo.generator.bindingdsl.rest.wadl.templates.ConcreteWADLGenerator
 
 class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 	
@@ -44,7 +44,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 	@Inject extension HeaderFinder
 	@Inject extension EnvironmentBindingResolver		
 		
-	@Inject ConcreteWADLBuilder 		wadlBuilder
+	@Inject ConcreteWADLGenerator 		wadlBuilder
 	@Inject XSDBuilder 					xsdGenerator
 	@Inject MessageHeaderXSDTemplates 	msgHeaderGenerator
 	@Inject DefaultModuleRefServiceBindingResolver				bindingResolver
