@@ -25,6 +25,7 @@ import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveBindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ESB
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb
 
 @RunWith(typeof(XtextRunner)) 
 @InjectWith(typeof(BindingDslWithDependenciesInjectorProvider)) 
@@ -64,7 +65,7 @@ class EffectiveBindingBuilderTest {
 		
 		val rest = extProts.head as REST
 		assertEquals("customer/details", rest.path)
-		assertEquals(HttpVerb::GET, rest.verb)
+		assertEquals(Verb::GET, rest.verb)
 		assertEquals("application/json", rest.requestContentType.head)
 		assertEquals("application/json", rest.response.head.contentType.head)
 
@@ -95,7 +96,7 @@ class EffectiveBindingBuilderTest {
 		
 		val rest = extProts.head as REST
 		assertEquals("customer/details", rest.path)
-		assertEquals(HttpVerb::GET, rest.verb)
+		assertEquals(Verb::GET, rest.verb)
 		assertEquals("application/json", rest.requestContentType.head)
 		assertEquals("application/json", rest.response.head.contentType.head)
 		

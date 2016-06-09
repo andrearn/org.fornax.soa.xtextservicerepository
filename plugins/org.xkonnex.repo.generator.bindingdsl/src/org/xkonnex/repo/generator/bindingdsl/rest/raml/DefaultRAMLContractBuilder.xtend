@@ -35,4 +35,16 @@ class DefaultRAMLContractBuilder implements IProtocolContractBuilder {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
+	override buildProvidedResourceContracts(Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef providerEndpointQualifierRef, Profile enforcedProfile) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override buildResourceContracts(ModuleBinding bind, Profile enforcedProfile) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override buildUsedResourceContracts(Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, Profile enforcedProfile) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
 }

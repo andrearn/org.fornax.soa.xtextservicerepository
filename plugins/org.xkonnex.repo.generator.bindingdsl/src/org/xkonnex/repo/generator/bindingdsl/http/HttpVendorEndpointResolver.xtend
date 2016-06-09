@@ -24,6 +24,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.generator.bindingdsl.templates.naming.IEndpointQualifierNameProvider
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 class HttpVendorEndpointResolver {
 	
@@ -43,6 +44,17 @@ class HttpVendorEndpointResolver {
 	}	
 	
 	def dispatch String toEndpointAddressPath (EffectiveBinding bind, ExtensibleProtocol prot, Service s, Server server) {
+		val ctxRoot = ctxRootProvider.getContextRoot(bind);
+		toEndpointAddressPath (ctxRoot, s, server, bind, prot)
+	}
+	def dispatch String toEndpointAddressPath (Module mod, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val serverType = server.toServerTypeName ();
+		val serverVersion = server.toServerTypeVersion ();
+		val ctxRoot = ctxRootProvider.getContextRoot(mod, serverType, serverVersion, prot);
+		toEndpointAddressPath (ctxRoot, s, server, bind, prot)
+	}	
+	
+	def dispatch String toEndpointAddressPath (EffectiveBinding bind, ExtensibleProtocol prot, Resource s, Server server) {
 		val ctxRoot = ctxRootProvider.getContextRoot(bind);
 		toEndpointAddressPath (ctxRoot, s, server, bind, prot)
 	}

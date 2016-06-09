@@ -33,11 +33,11 @@ class EnvironmentDslFormatter extends BaseDslFormatter {
 
 	def dispatch void format(Environment environment, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (Host hosts : environment.getHosts()) {
-			hosts.format;
+		for (host : environment.getHosts()) {
+			host.format;
 		}
-		for (Server servers : environment.getServers()) {
-			servers.format;
+		for (executable : environment.executables) {
+			executable.format;
 		}
 	}
 	

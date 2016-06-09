@@ -64,6 +64,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OperationRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredServiceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;
@@ -165,6 +166,11 @@ public class ServiceDslScopeProvider extends ComponentAwareVersionedScopeProvide
 		} else if (reference == ServiceDslPackage.Literals.ENUM_TYPE_REF__TYPE 
 				&& ctx instanceof EnumTypeRef) {
 			final VersionRef v = ((EnumTypeRef) ctx).getVersionRef();
+			return createVersionFilter (v, objLookup.getVersionedOwner(ctx));
+		
+		} else if (reference == ServiceDslPackage.Literals.RESOURCE_REF__RESOURCE 
+				&& ctx instanceof ResourceRef) {
+			final VersionRef v = ((ResourceRef) ctx).getVersionRef();
 			return createVersionFilter (v, objLookup.getVersionedOwner(ctx));
 		
 		} else if (reference == ServiceDslPackage.Literals.SERVICE_REF__SERVICE 

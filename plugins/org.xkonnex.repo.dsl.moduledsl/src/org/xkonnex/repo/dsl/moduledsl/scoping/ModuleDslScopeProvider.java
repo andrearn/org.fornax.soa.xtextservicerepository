@@ -34,6 +34,7 @@ import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.NullVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AbstractResourceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AbstractServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
@@ -57,6 +58,7 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleS
 import org.xkonnex.repo.dsl.servicedsl.service.util.CandidateServicesPredicate;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 
@@ -174,6 +176,11 @@ public class ModuleDslScopeProvider extends ComponentAwareVersionedScopeProvider
 			final VersionRef v = ((ServiceModuleRef) context).getVersion();
 			Module owningModule = ModuleDslAccess.getOwningModule (context);
 			return createVersionFilter(v, owningModule, staticStateResolver);
+		}
+		if (reference == ModuleDslPackage.Literals.ABSTRACT_RESOURCE_REF__RESOURCE && context instanceof AbstractResourceRef) {
+			final VersionRef v = ((AbstractResourceRef) context).getVersionRef();
+			AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = createVersionFilter(v, context, staticStateResolver);
+			return versionFilter;
 		}
 		return new NullVersionFilter<IEObjectDescription>();
 	}

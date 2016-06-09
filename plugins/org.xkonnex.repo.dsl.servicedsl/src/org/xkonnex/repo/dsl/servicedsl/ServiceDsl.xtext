@@ -101,11 +101,13 @@ Type:
 	VersionedType;
 
 VersionedType:
-	Enumeration | DataObject;		
+	Enumeration | DataObject | Resource;		
 
 DataObject: AbstractBusinessObject | QueryObject;
 
 AbstractBusinessObject: BusinessObject | Aggregate | Entity | ValueObject;
+
+ResourceRepresentableObject: BusinessObject | Aggregate | Entity;
 
 /*
  * A complex datatype representing a business entity of the domain model. 
@@ -261,6 +263,45 @@ QueryObject:
 		(properties+=Property)*
 	'}';
 
+/*
+ * A resource supporting operations named GET, .
+ */
+Resource:
+	(deprecated?='@deprecated')? 
+	visibility=Visibility 'resource' name=ID '{' 
+		'metadata' '{'
+			version=Version 
+			('replaces' replaces=ResourceRef)?
+			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
+			(governanceApproval=GovernanceApproval)?
+			(governanceDecisions+=GovernanceDecision)*
+			(
+				(lifecycleTrigger=LifecycleTrigger)?
+			&	('provided-contract' providedContractUrl=STRING)?
+			)
+			(additionalInfo=AdditionalInformation)?
+			('contact-info' '{'
+				('owner' owner=[basedsl::User|QualifiedName])?
+				('responsible' responsible += [basedsl::User|QualifiedName])*
+				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			'}')?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('subscriptions' '{'
+				subscriptions += [basedsl::User|QualifiedName]*
+			'}')?
+		'}'
+		('URI' uri=STRING)?
+		('content-type' contentType = STRING)?
+		('represents' represents=[ResourceRepresentableObject|QualifiedName])?
+		(properties+=Property)*
+		(operations+=Operation)+
+		(resources+=Resource)*
+	'}';
+	
+ResourceRef:
+	resource=[Resource|QualifiedName] versionRef=VersionRef;
+	
+
 /* A reference to a type */
 TypeRef : DataTypeRef | AbstractVersionedTypeRef;
 
@@ -404,8 +445,8 @@ Service:
  * A service operation
  */
 Operation:
-	(deprecated?='@deprecated')? (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' 
-	('returns' (return+=Parameter) (',' return+=Parameter)*|(return+=SingleReturnParameter))? 
+	(deprecated?='@deprecated')? (mep=MEP)? (transactional?='transactional')? verb=Verb? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' 
+	('returns' (return+=Parameter) (',' return+=Parameter)*|('returns' return+=SingleReturnParameter))? 
 	('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
 		(considerationSpec=ConsiderationSpec)?
 		('statefulness' statefulness=Statefulness (updating?='updating')? )?
@@ -489,6 +530,9 @@ ExceptionRef:
 enum MEP : 
 	sync | async | oneway | fireForget='fire+forget' | deferredResponse='deferred' | syncAsync='sync+async'; 
 
+enum Verb:
+	POST | GET | PUT | DELETE | PATCH | HEAD
+;
 /*
  * Specification of transactional behaviour
  */

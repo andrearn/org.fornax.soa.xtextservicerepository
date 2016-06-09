@@ -11,9 +11,10 @@ import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingModel
+import org.xkonnex.repo.dsl.bindingdsl.test.BindingDslWithDependenciesInjectorProvider
 
 @RunWith(XtextRunner)
-@InjectWith(BindingDslInjectorProvider)
+@InjectWith(BindingDslWithDependenciesInjectorProvider)
 class BindingDslParsingTest{
 
 	@Inject

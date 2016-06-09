@@ -1,5 +1,8 @@
 package org.xkonnex.repo.dsl.bindingdsl.binding.query.services;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding;
@@ -19,7 +22,9 @@ public class ServiceRefBindingDescription {
 	private AnyBinding applicableBinding;
 	private Module providingModule;
 	private Qualifier endpointQualifier;
+	private List<OperationRefBindingDescription> operationDescriptions = new ArrayList<OperationRefBindingDescription>();
 	
+
 	public AbstractServiceRef getServiceRef() {
 		return serviceRef;
 	}
@@ -111,6 +116,12 @@ public class ServiceRefBindingDescription {
 		} else if (!serviceRef.equals(other.serviceRef))
 			return false;
 		return true;
+	}
+	public List<OperationRefBindingDescription> getOperationDescriptions() {
+		return operationDescriptions;
+	}
+	public void setOperationDescriptions(List<OperationRefBindingDescription> operationDescriptions) {
+		this.operationDescriptions = operationDescriptions;
 	}
 	
 

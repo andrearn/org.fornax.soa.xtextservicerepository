@@ -14,6 +14,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.generator.environmentdsl.EndpointResolver
 import org.eclipse.xtext.EcoreUtil2
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 class RESTEndpointAddressResolver {
 	
@@ -48,6 +49,16 @@ class RESTEndpointAddressResolver {
 	 * Public endpoints are usually located on an ESB
 	 */
 	def String toEndpointAddress (Service service, Server server, ExtensibleProtocol prot, EffectiveBinding bind) {
+		val connector = connectorResolver.resolveConnector(server, bind, prot);
+		connector.getEndpointUrl()
+		+ vendorEndpointResolver.toEndpointAddressPath (bind, prot, service, server);
+	}
+
+	/*
+	 * Calculate the endpoint address assuming, that it is a public endpoint. 
+	 * Public endpoints are usually located on an ESB
+	 */
+	def String toEndpointAddress (Resource service, Server server, ExtensibleProtocol prot, EffectiveBinding bind) {
 		val connector = connectorResolver.resolveConnector(server, bind, prot);
 		connector.getEndpointUrl()
 		+ vendorEndpointResolver.toEndpointAddressPath (bind, prot, service, server);

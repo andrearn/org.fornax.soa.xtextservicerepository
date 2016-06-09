@@ -52,6 +52,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.moduledsl.model.IEffectiveProvidingEndpointBuilder
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 	
@@ -95,6 +96,10 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		createEffectiveBinding(service, binding, null)
 	}
 	
+	override createEffectiveBinding(Resource resource, Binding binding) {
+		createEffectiveBinding(resource, binding, null)
+	}
+	
 	override EffectiveBinding createEffectiveBinding(Service service, Binding binding, EndpointQualifierRef endpointQualifier) {
 		val specBinding = bindingLookup.getMostSpecificBinding(service, binding, endpointQualifier)
 		val bindingHierarchy = bindingLookup.getBottomUpHierarchyForSpecificBinding(specBinding);
@@ -107,6 +112,21 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		effBind.provServer = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__PROV_SERVER)
 		effBind.governanceDecisions += createEffectiveGovernanceDecisions(bindingHierarchy)
 		effBind.providingEndpoints += providingEndpointBuilder.createEffectiveProvidingEndpoints(service, effBind.moduleBinding.module.module)
+		return effBind
+	}
+	
+	override createEffectiveBinding(Resource resource, Binding binding, EndpointQualifierRef endpointQualifier) {
+		val specBinding = bindingLookup.getMostSpecificBinding(resource, binding, endpointQualifier)
+		val bindingHierarchy = bindingLookup.getBottomUpHierarchyForSpecificBinding(specBinding);
+		val hierarchyEObjects = bindingHierarchy.map[it as EObject]
+		var effBind = new EffectiveBinding(specBinding)
+		effBind.protocol += createEffectiveBindingProtocol(bindingHierarchy)
+		effBind.policies += createEffectivePolicies(bindingHierarchy)
+		effBind.assertions += createEffectiveAssertions(bindingHierarchy)
+		effBind.environment = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__ENVIRONMENT)
+		effBind.provServer = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__PROV_SERVER)
+		effBind.governanceDecisions += createEffectiveGovernanceDecisions(bindingHierarchy)
+		effBind.providingEndpoints += providingEndpointBuilder.createEffectiveProvidingEndpoints(resource, effBind.moduleBinding.module.module)
 		return effBind
 	}
 	

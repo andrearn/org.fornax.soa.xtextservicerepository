@@ -10,13 +10,14 @@ import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.RESTParameterStyle;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb;
 
 import com.google.common.collect.Lists;
 
 public class REST implements IProtocol {
 	
 	private String path;
-	private HttpVerb verb;
+	private Verb verb;
 	private RESTParameterStyle style;
 	private List<String> requestContentType = Lists.newArrayList();
 	private List<HttpResponse> response = Lists.newArrayList();
@@ -44,11 +45,11 @@ public class REST implements IProtocol {
 		this.path = path;
 	}
 
-	public HttpVerb getVerb() {
+	public Verb getVerb() {
 		return verb;
 	}
 
-	public void setVerb(HttpVerb verb) {
+	public void setVerb(Verb verb) {
 		this.verb = verb;
 	}
 

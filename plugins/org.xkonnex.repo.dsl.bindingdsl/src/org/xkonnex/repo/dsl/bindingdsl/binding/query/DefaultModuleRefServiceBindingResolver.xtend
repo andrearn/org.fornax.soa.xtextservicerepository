@@ -17,6 +17,10 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AbstractServiceRef
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.ModuleRefServiceBindingDescription
 import java.util.Mapimport org.xkonnex.repo.dsl.bindingdsl.model.IEffectiveBindingBuilder
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.services.OperationRefBindingDescription
+import org.xkonnex.repo.dsl.moduledsl.model.IEffectiveProvidingEndpointBuilder
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.resource.ResourceRefBindingDescription
+import org.xkonnex.repo.dsl.moduledsl.query.IModuleResourceResolver
 
 /**
  * Resolves Bindings of services/modules as explicit descriptions describing which Binding applies to which service 
@@ -25,10 +29,12 @@ import java.util.Mapimport org.xkonnex.repo.dsl.bindingdsl.model.IEffectiveBind
 class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBindingResolver {
 	
 	@Inject IModuleServiceResolver modServiceResolver
+	@Inject IModuleResourceResolver modResourceResolver
 	@Inject BindingLookup bindingLookup
 	@Inject EndpointQualifierQueries endpointQualifierQuery
 	@Inject IModuleReferenceResolver modRefResolver
 	@Inject IEffectiveBindingBuilder bindingBuilder
+	@Inject IEffectiveProvidingEndpointBuilder endpointBuilder
 	@Inject Logger log
 	
 	/**
@@ -45,12 +51,12 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 	override ModuleRefServiceBindingDescription resolveProvidedServiceBindings (Module module, Environment targetEnvironment, EndpointQualifierRef endpointQualifier) {
 		val candBindings = bindingLookup.findApplicableBindingsToModuleByEnvAndQualifier (module, targetEnvironment, endpointQualifier?.endpointQualifier)
 		var Set<ServiceRefBindingDescription> svcBindDescs= newHashSet
+		var Set<ResourceRefBindingDescription> resBindDescs= newHashSet
 		
 		val providedServices = modServiceResolver.getAllProvidedServiceRefs(module)
 		for (provSvcRef : providedServices) {
 			 val svc = modServiceResolver.resolveModuleServiceRef (provSvcRef, targetEnvironment)
 			 for (bind : candBindings) {
-//			 	val specBind = bindingLookup.getMostSpecificBinding(svc, bind, endpointQualifier)
 			 	val specBind = bindingBuilder.createEffectiveBinding(svc, bind, endpointQualifier)
 			 	if (specBind != null) {
 				 	val curSvcBindDesc = new ServiceRefBindingDescription
@@ -59,14 +65,45 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 				 	curSvcBindDesc.serviceRef = provSvcRef
 				 	curSvcBindDesc.providingModule = module
 				 	curSvcBindDesc.endpointQualifier = endpointQualifier?.endpointQualifier
+				 	for (op : svc.operations) {
+				 		val opBind = bindingBuilder.createEffectiveBinding(op, specBind.bindingDelegate)
+				 		if (opBind != null) {
+				 			val curOpBindDesc = new OperationRefBindingDescription(op, specBind, module, endpointQualifier?.endpointQualifier)
+				 			curSvcBindDesc.operationDescriptions += curOpBindDesc
+				 		}
+				 	}
 				 	svcBindDescs.add (curSvcBindDesc)
+			 	}
+			 }
+		}
+		val providedResources = modResourceResolver.getAllProvidedResourceRefs(module)
+		for (provResRef : providedResources) {
+			 val res = modResourceResolver.resolveModuleResourceRef (provResRef, targetEnvironment)
+			 for (bind : candBindings) {
+			 	val specBind = bindingBuilder.createEffectiveBinding(res, bind, endpointQualifier)
+			 	if (specBind != null) {
+				 	val curResBindDesc = new ResourceRefBindingDescription
+				 	curResBindDesc.applicableBinding = specBind
+				 	curResBindDesc.resolvedResource = res
+				 	curResBindDesc.resourceRef = provResRef
+				 	curResBindDesc.providingModule = module
+				 	curResBindDesc.endpointQualifier = endpointQualifier?.endpointQualifier
+				 	for (op : res.operations) {
+				 		val opBind = bindingBuilder.createEffectiveBinding(op, specBind.bindingDelegate)
+				 		if (opBind != null) {
+				 			val curOpBindDesc = new OperationRefBindingDescription(op, specBind, module, endpointQualifier?.endpointQualifier)
+				 			curResBindDesc.operationDescriptions += curOpBindDesc
+				 		}
+				 	}
+				 	resBindDescs.add (curResBindDesc)
 			 	}
 			 }
 		}
 		var modRefBindingDescription = new ModuleRefServiceBindingDescription
 		modRefBindingDescription.module = module
 		modRefBindingDescription.endpointQualifier = endpointQualifier?.endpointQualifier
-		modRefBindingDescription.serviceRefDescriptions.addAll(svcBindDescs) 
+		modRefBindingDescription.serviceRefDescriptions += svcBindDescs
+		modRefBindingDescription.resourceRefDescriptions += resBindDescs
 		return modRefBindingDescription
 	}
 	
@@ -156,13 +193,25 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 					val candBindings = bindingLookup.findApplicableBindingsToModuleByEnvAndQualifier (candMod, targetEnvironment, selectingEndpointQualifierRef?.endpointQualifier)
 				
 					for (bind : candBindings) {
-					 	var specBind = bindingLookup.getMostSpecificBinding(svc, bind, selectingEndpointQualifierRef)
+//					 	var specBind = bindingLookup.getMostSpecificBinding(svc, bind, selectingEndpointQualifierRef)
+					 	val specBind = bindingBuilder.createEffectiveBinding(svc, bind, selectingEndpointQualifierRef)
 					 	val curSvcBindDesc = new ServiceRefBindingDescription
 					 	curSvcBindDesc.applicableBinding = specBind
 					 	curSvcBindDesc.resolvedService = svc
 					 	curSvcBindDesc.serviceRef = svcRef
 					 	curSvcBindDesc.providingModule = candMod
 			 			curSvcBindDesc.endpointQualifier = svcRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier
+					 	for (op : svc.operations) {
+					 		val opBind = bindingBuilder.createEffectiveBinding(op, specBind.bindingDelegate)
+					 		if (opBind != null) {
+					 			val curOpBindDesc = new OperationRefBindingDescription
+					 			curOpBindDesc.applicableBinding = specBind
+					 			curOpBindDesc.resolvedOperation = op
+					 			curOpBindDesc.providingModule = module
+					 			curOpBindDesc.endpointQualifier = endpointQualifierRef?.endpointQualifier
+					 			curSvcBindDesc.operationDescriptions += curOpBindDesc
+					 		}
+					 	}
 						if (svcBindDescs.containsKey(curSvcBindDesc.providingModule)) {
 							svcBindDescs.get(curSvcBindDesc.providingModule).add (curSvcBindDesc)
 						} else {

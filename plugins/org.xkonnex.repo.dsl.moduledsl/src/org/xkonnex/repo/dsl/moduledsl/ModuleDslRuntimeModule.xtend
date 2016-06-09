@@ -34,6 +34,8 @@ import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleReferenceResolver
 import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleServiceResolver
 import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleVersionMatcher
 import com.google.inject.Binder
+import org.xkonnex.repo.dsl.moduledsl.query.IModuleResourceResolver
+import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleResourceResolver
 
 /** 
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -82,6 +84,10 @@ class ModuleDslRuntimeModule extends org.xkonnex.repo.dsl.moduledsl.AbstractModu
 
 	def Class<? extends IModuleServiceResolver> bindIModuleServiceResolver() {
 		return DefaultModuleServiceResolver
+	}
+
+	def Class<? extends IModuleResourceResolver> bindIModuleResourceResolver() {
+		return DefaultModuleResourceResolver
 	}
 
 	def Class<? extends IModuleReferenceResolver> bindIModuleReferenceResolver() {

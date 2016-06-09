@@ -3,7 +3,6 @@ package org.xkonnex.repo.dsl.bindingdsl.binding
 import com.google.inject.Inject
 import org.xkonnex.repo.dsl.basedsl.ext.infer.IComponentInferrer
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.REST
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
 import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
@@ -87,9 +86,6 @@ class ModuleContextRootProvider implements IContextRootProvider {
 	}
 	def dispatch String getContextRootByProtocolInternal (SOAP prot) {
 		return prot.contextRoot
-	}
-	def dispatch String getContextRootByProtocolInternal (REST prot) {
-		return prot.path
 	}
 	
 	def String getTechnicalModuleName (Module mod) {

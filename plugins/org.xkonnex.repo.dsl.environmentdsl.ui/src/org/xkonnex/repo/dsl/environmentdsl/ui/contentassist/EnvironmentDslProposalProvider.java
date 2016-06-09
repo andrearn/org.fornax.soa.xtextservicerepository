@@ -14,13 +14,21 @@ import org.eclipse.xtext.common.types.xtext.ui.TypeMatchFilters;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ConfigurationScript;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Container;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentDslPackage;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Executable;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SecurityProtocol;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.VM;
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
+import org.xkonnex.repo.dsl.environmentdsl.ext.container.IContainer;
+import org.xkonnex.repo.dsl.environmentdsl.ext.executable.IExecutable;
+import org.xkonnex.repo.dsl.environmentdsl.ext.image.IImageConfigurationScript;
 import org.xkonnex.repo.dsl.environmentdsl.ext.security.ISecurityProtocol;
 import org.xkonnex.repo.dsl.environmentdsl.ext.server.IServer;
+import org.xkonnex.repo.dsl.environmentdsl.ext.vm.IVirtualMachine;
 
 import com.google.inject.Inject;
 /**
@@ -71,6 +79,56 @@ public class EnvironmentDslProposalProvider extends AbstractEnvironmentDslPropos
 			typeProposalProvider.createSubTypeProposals(securityProtocol, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		} else {
 			super.completeSecurityProtocol_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeExecutable_Type(EObject model, Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (model instanceof Executable) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType securityProtocol = typeProvider.findTypeByName(IExecutable.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(securityProtocol, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeExecutable_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeContainer_Type(EObject model, Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (model instanceof Container) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType container = typeProvider.findTypeByName(IContainer.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(container, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeContainer_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	
+	@Override
+	public void completeVM_Type(EObject model, Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (model instanceof VM) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType vm = typeProvider.findTypeByName(IVirtualMachine.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(vm, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeVM_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeConfigurationScript_Type(EObject model,
+			Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof ConfigurationScript) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType imageConfigScript = typeProvider.findTypeByName(IImageConfigurationScript.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(imageConfigScript, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeVM_Type(model, assignment, context, acceptor);
 		}
 	}
 }

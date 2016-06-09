@@ -33,6 +33,8 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol
 import org.xkonnex.repo.generator.bindingdsl.rest.wadl.templates.ConcreteWADLGenerator
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.IModuleRefServiceBindingResolver
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.resource.ResourceRefBindingDescription
 
 class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 	
@@ -47,7 +49,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 	@Inject ConcreteWADLGenerator 		wadlBuilder
 	@Inject XSDBuilder 					xsdGenerator
 	@Inject MessageHeaderXSDTemplates 	msgHeaderGenerator
-	@Inject DefaultModuleRefServiceBindingResolver				bindingResolver
+	@Inject IModuleRefServiceBindingResolver				bindingResolver
 	@Inject IQualifiedNameProvider		nameProvider
 	@Inject ProtocolMatcher				protocolMatcher
 	@Inject LifecycleQueries 			lifecycleQueries
@@ -124,6 +126,30 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 		}
 	}
 	
+	override buildProvidedResourceContracts(Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef providerEndpointQualifierRef, Profile enforcedProfile) {
+		log.info ("Generating WADLs and XSDs for resources provided by module " + module.name + " looking up binding for used module to environment " + targetEnvironment.name)
+		val bindingDescs = 	bindingResolver.resolveProvidedServiceBindings(module, targetEnvironment, providerEndpointQualifierRef)
+		for (specBindingDesc : bindingDescs.resourceRefDescriptions) {
+			val svc = specBindingDesc.resolvedResource
+			if (svc != null) {
+				try {
+					if (protocolMatcher.supportsModuleEndpointProtocol (specBindingDesc.getApplicableBinding, typeof(org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST))) {
+						doBuildResourceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, enforcedProfile)
+					}
+				} catch (Exception ex) {
+					log.log (Level::SEVERE, "Error generating contracts for resource " + nameProvider.getFullyQualifiedName (svc).toString + " and version " + svc.version.version + "\n", ex)
+				}
+			} else {
+				log.severe ("Error generating contracts for resource " + nameProvider.getFullyQualifiedName (specBindingDesc.getResourceRef.resource).toString + " and version " + specBindingDesc.getResourceRef.resource.version.version 
+					+ " of module " + module.name +". Resource could not be resolved for environment "+ targetEnvironment.name)
+			}
+		}
+	}
+	
+	override buildResourceContracts(ModuleBinding bind, Profile enforcedProfile) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
 	override buildTypeDefinitions(SubNamespace namespace, Environment env, Profile enforcedProfile) {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
@@ -175,6 +201,51 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 				log.log (Level::SEVERE, "Error generating contracts for service " + nameProvider.getFullyQualifiedName(service).toString + " and version " + service.version.version + "\n", ex)
 			}
 		}
+	}
+
+	def protected doBuildResourceContracts (ResourceRefBindingDescription serviceBindingDescription, LifecycleState minState, boolean selectTypeVersionsByEnvironment, Profile enforcedProfile) {
+		val service = serviceBindingDescription.getResourceRef.resource
+		val specBinding = serviceBindingDescription.getApplicableBinding
+		for (restProt : specBinding.protocol.filter (ExtensibleProtocol).filter [e|e.type?.identifier == typeof(REST).canonicalName]) {
+			try {
+				if (service.providedContractUrl == null && service.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
+					val namespace = service.findSubdomain();
+					val profile = namespace.getApplicableProfile(enforcedProfile)
+					val typesMinState = if (selectTypeVersionsByEnvironment) 
+											lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, minState.eContainer as Lifecycle)
+										else
+											minState
+					wadlBuilder.toWADL(specBinding, service, minState, profile);
+							
+					if ( ! noDependencies) {
+						val verNamespaces = service.importedVersionedNS (typesMinState);
+						verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile));
+								
+						val requestHeader = service.findBestMatchingRequestHeader (profile);
+						if (requestHeader != null) {
+							if (useRegistryBasedFilePaths)
+								msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, specBinding.getRegistryBaseUrl())
+							else 
+								msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile)
+						}
+
+						val responseHeader = service.findBestMatchingRequestHeader (profile);
+						if (responseHeader != null) {
+							if (useRegistryBasedFilePaths)
+								msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, specBinding.getRegistryBaseUrl())
+							else 
+								msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile)
+						}
+					}
+				}
+			} catch (Exception ex) {
+				log.log (Level::SEVERE, "Error generating contracts for service " + nameProvider.getFullyQualifiedName(service).toString + " and version " + service.version.version + "\n", ex)
+			}
+		}
+	}
+	
+	override buildUsedResourceContracts(Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, Profile enforcedProfile) {
+		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
 }

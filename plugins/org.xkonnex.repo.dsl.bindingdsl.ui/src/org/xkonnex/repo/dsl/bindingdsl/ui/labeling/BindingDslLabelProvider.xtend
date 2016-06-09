@@ -11,7 +11,6 @@ import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment
 import org.xkonnex.repo.dsl.basedsl.ui.labeling.BaseDslLabelHelper
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AMQP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AccuracyAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AuthenticationPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AvailabilityAssertion
@@ -20,28 +19,29 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.CapacityAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ChannelBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.CostAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EJB
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EncryptionPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.FILE
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.FTP
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.HTTP
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.IIOP
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.JMS
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.LatencyAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.LogPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.OperationBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.PredefinedAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.REST
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ReliabilityAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SAP
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SCA
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SigningPolicy
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.AMQP
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.EJB
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.FILE
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.FTP
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.HTTP
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IIOP
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.JMS
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.REST
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.SCA
 import org.xkonnex.repo.dsl.bindingdsl.util.BindingDslHelper
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SAP
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
@@ -81,55 +81,55 @@ class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 		var Server server = envBindResolver.resolveServer(ele)
 		if(server !== null) return '''SOAP -> «server.getName()»''' else return "SOAP"
 	}
-	def String text(REST ele) {
-		var Server server = envBindResolver.resolveServer(ele)
+	def String text(REST ele, ExtensibleProtocol prot) {
+		var Server server = envBindResolver.resolveServer(prot)
 		if(server !== null) return '''REST -> «server.getName()»''' else return "REST"
 	}
-	def String text(HTTP ele) {
-		var Server server = envBindResolver.resolveServer(ele)
+	def String text(HTTP ele, ExtensibleProtocol prot) {
+		var Server server = envBindResolver.resolveServer(prot)
 		if(server !== null) return '''HTTP -> «server.getName()»''' else return "HTTP"
 	}
-	def String text(FTP ele) {
-		var Server server = envBindResolver.resolveServer(ele)
+	def String text(FTP ele, ExtensibleProtocol prot) {
+		var Server server = envBindResolver.resolveServer(prot)
 		if(server !== null) return '''FTP -> «server.getName()»''' else return "FTP"
 	}
-	def String text(FILE ele) {
-		var Server server = envBindResolver.resolveServer(ele)
+	def String text(FILE ele, ExtensibleProtocol prot) {
+		var Server server = envBindResolver.resolveServer(prot)
 		if(server !== null) return '''File -> «server.getName()»''' else return "File"
 	}
-	def String text(JMS ele) {
-		var Server server = envBindResolver.resolveServer(ele)
+	def String text(JMS ele, ExtensibleProtocol prot) {
+		var Server server = envBindResolver.resolveServer(prot)
 		if(server !== null) return '''JMS -> «server.getName()»''' else return "JMS"
 	}
-	def String text(IIOP ele) {
-		var Server server = envBindResolver.resolveServer(ele)
+	def String text(IIOP ele, ExtensibleProtocol prot) {
+		var Server server = envBindResolver.resolveServer(prot)
 		if(server !== null) return '''IIOP -> «server.getName()»''' else return "IIOP"
 	}
-	def String text(AMQP ele) {
-		var Server server = envBindResolver.resolveServer(ele)
+	def String text(AMQP ele, ExtensibleProtocol prot) {
+		var Server server = envBindResolver.resolveServer(prot)
 		if(server !== null) return '''AMQP -> «server.getName()»''' else return "AMQP"
 	}
-	def String text(SCA ele) {
-		var Server server = envBindResolver.resolveServer(ele)
+	def String text(SCA ele, ExtensibleProtocol prot) {
+		var Server server = envBindResolver.resolveServer(prot)
 		if(server !== null) return '''SCA -> «server.getName()»''' else return "SCA"
 	}
 
-	def String text(SAP ele) {
+	def String text(org.xkonnex.repo.dsl.bindingdsl.ext.protocol.SAP ele) {
 		var String clientText = null
 		if (ele.getClient() !== null) {
-			var org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SAP sapServer = (ele.getClient().
-				eContainer() as org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SAP)
+			var SAP sapServer = (ele.getClient().
+				eContainer() as SAP)
 			clientText = sapServer.getName() + ele.getClient().getClient()
 		}
 		if(clientText !== null) return '''SAP -> «clientText»''' else return "SAP"
 	}
 
-	def String text(EJB ele) {
-		var Server server = envBindResolver.resolveServer(ele)
+	def String text(EJB ele, ExtensibleProtocol prot) {
+		var Server server = envBindResolver.resolveServer(prot)
 		var StringBuffer label = new StringBuffer("EJB")
-		var SubNamespace ns = BindingDslHelper.getSubNamespace(ele)
+		var SubNamespace ns = BindingDslHelper.getSubNamespace(prot)
 		if (server === null) {
-			var Environment env = envBindResolver.resolveEnvironment(ele)
+			var Environment env = envBindResolver.resolveEnvironment(prot)
 			if(ns instanceof DomainNamespace) server = env.getDefaultESB() else server = env.getDefaultAppServer()
 		}
 		if(server !== null) label.append(''' -> «server.getName()»''')
@@ -216,7 +216,7 @@ class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 		return "full/obj16/message_part.gif"
 	}
 
-	def package String image(SAP ele) {
+	def package String image(org.xkonnex.repo.dsl.bindingdsl.ext.protocol.SAP ele) {
 		return "full/obj16/message_part.gif"
 	}
 }

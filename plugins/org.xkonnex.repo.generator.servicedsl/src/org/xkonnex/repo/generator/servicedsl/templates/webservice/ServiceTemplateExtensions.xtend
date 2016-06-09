@@ -14,6 +14,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTemplateExtensions
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 class ServiceTemplateExtensions {
 
@@ -147,6 +148,21 @@ class ServiceTemplateExtensions {
 	}
 	
 	def collectTechnicalVersionedNamespaceImports (Service service, Profile profile) {
+		val Set<VersionedTechnicalNamespace> headerImports = newHashSet
+		if (service.findBestMatchingRequestHeader(profile) != null) {
+			for (headerImp : techNsImportQueries.allImportedVersionedNS(service.findBestMatchingRequestHeader (profile), versionQualifier.toMajorVersionNumber(service.version))) {
+				headerImports.add (headerImp)
+			}
+		}
+		if (service.findBestMatchingResponseHeader(profile) != null) {
+			for (headerImp : techNsImportQueries.allImportedVersionedNS(service.findBestMatchingResponseHeader (profile), versionQualifier.toMajorVersionNumber(service.version))) {
+				headerImports.add (headerImp)
+			}
+		}
+		return headerImports
+	}
+	
+	def collectTechnicalVersionedNamespaceImports (Resource service, Profile profile) {
 		val Set<VersionedTechnicalNamespace> headerImports = newHashSet
 		if (service.findBestMatchingRequestHeader(profile) != null) {
 			for (headerImp : techNsImportQueries.allImportedVersionedNS(service.findBestMatchingRequestHeader (profile), versionQualifier.toMajorVersionNumber(service.version))) {

@@ -10,6 +10,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ProvidingEndpoint;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ProvidingEndpointConfig;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Channel;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 
 import com.google.inject.ImplementedBy;
@@ -18,6 +19,8 @@ import com.google.inject.ImplementedBy;
 public interface IProvidingEndpointResolver {
 	
 	public ProvidingEndpointConfig getMostSpecificProvidingEndpointConfig(Service service, Module module);
+
+	public ProvidingEndpointConfig getMostSpecificProvidingEndpointConfig(Resource resource, Module module);
 	
 	public ProvidingEndpointConfig getMostSpecificProvidingEndpointConfig(Operation operation, Module module);
 
@@ -25,6 +28,8 @@ public interface IProvidingEndpointResolver {
 
 	public ProvidingEndpoint getMostSpecificProvidingEndpointByType(Service service, Module module, IModuleEndpointProtocol protocol);
 	
+	public ProvidingEndpoint getMostSpecificProvidingEndpointByType(Resource resource, Module module, IModuleEndpointProtocol protocol);
+
 	public ProvidingEndpoint getMostSpecificProvidingEndpointByType(Operation operation, Module module, IModuleEndpointProtocol protocol);
 
 	public ProvidingEndpoint getMostSpecificProvidingEndpointByType(Channel channel, Module module, IModuleEndpointProtocol protocol);
@@ -33,7 +38,11 @@ public interface IProvidingEndpointResolver {
 	
 	public EList<ProvidingEndpoint> getServiceProvidingEndpoints(Service service, Module module);
 
+	public EList<ProvidingEndpoint> getResourceProvidingEndpoints(Resource resource, Module module);
+
 	public List<EObject> collectProvidingEndpointHierarchyByType (Service service, Module module, IModuleEndpointProtocol protocol);
+
+	public List<EObject> collectProvidingEndpointHierarchyByType (Resource resource, Module module, IModuleEndpointProtocol protocol);
 	
 	public List<EObject> collectProvidingEndpointHierarchyByType (Operation operation, Module module, IModuleEndpointProtocol protocol);
 

@@ -25,7 +25,6 @@ public abstract interface IProtocolContractBuilder {
 	 */
 	public void buildProvidedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef providerEndpointQualifierRef, Profile enforcedProfile);
 	
-	
 	/**
 	 * Build technical service contracts for all services used by this module as stated by implicit or explicit reference
 	 * in the "uses" clause of this modules definition. Generation is done for all of these services, that are bound 
@@ -33,6 +32,25 @@ public abstract interface IProtocolContractBuilder {
 	 * The bindings of the modules used by explicit or implicit reference from this module are used as bindings.
 	 */
 	public void buildUsedServiceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, Profile enforcedProfile);
+
+	/**
+	 * Build technical service contracts for all services provided by the module referenced in the binding. 
+	 */
+	public void buildResourceContracts (ModuleBinding bind, Profile enforcedProfile);
+	
+	/**
+	 * Build technical service contracts for all services provided by this module. A binding of this module (or to
+	 * a compatible module version) to the given target environment will be used.
+	 */
+	public void buildProvidedResourceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef providerEndpointQualifierRef, Profile enforcedProfile);
+	
+	/**
+	 * Build technical service contracts for all services used by this module as stated by implicit or explicit reference
+	 * in the "uses" clause of this modules definition. Generation is done for all of these services, that are bound 
+	 * to the given environment.
+	 * The bindings of the modules used by explicit or implicit reference from this module are used as bindings.
+	 */
+	public void buildUsedResourceContracts (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, EndpointQualifierRef endpointQualifierRef, Profile enforcedProfile);
 	
 	/**
 	 * Build technical type definitions for all types defined in the given namespace. The latest minor versions 

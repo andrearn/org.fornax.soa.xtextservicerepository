@@ -46,6 +46,8 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import java.util.List
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.generator.bindingdsl.templates.DefaultResourceContractFilenameProvider
 
 class ConcreteWADLGenerator {
 	
@@ -69,6 +71,7 @@ class ConcreteWADLGenerator {
 	@Inject IEffectiveBindingBuilder bindingBuilder
 	@Inject IEffectiveProvidingEndpointBuilder endpointBuilder
 	@Inject extension DefaultServiceContractFilenameProvider
+	@Inject DefaultResourceContractFilenameProvider resourceFilenameProvider
 	@Inject OperationWrapperTypesGenerator wrapperTypesGenerator
 
 	@Inject IFileSystemAccess fsa
@@ -82,6 +85,17 @@ class ConcreteWADLGenerator {
 	}
 
 	def dispatch void toWADL (EffectiveBinding binding, Service svc, LifecycleState minState, Profile profile) {
+		svc.toWADL (minState, binding.moduleBinding, profile);
+	}
+	
+	def dispatch void toWADL (AnyBinding binding, Resource svc, LifecycleState minState, Profile profile) {
+	}
+
+	def dispatch void toWADL (ModuleBinding binding, Resource svc, LifecycleState minState, Profile profile) {
+		svc.toWADL (minState, binding, profile);
+	}
+
+	def dispatch void toWADL (EffectiveBinding binding, Resource svc, LifecycleState minState, Profile profile) {
 		svc.toWADL (minState, binding.moduleBinding, profile);
 	}
 	
@@ -117,7 +131,54 @@ class ConcreteWADLGenerator {
 		fsa.generateFile(wadlFile, content)
 	}
 	
+	def toWADL(Resource resource, LifecycleState minState, ModuleBinding binding, Profile profile) {
+		log.info('''Generating WADL for Resource «resource.fullyQualifiedName»'''.toString)
+		val Set<VersionedTechnicalNamespace> headerImports = resource.collectTechnicalVersionedNamespaceImports (profile)
+		val effBind = bindingBuilder.createEffectiveBinding(resource, binding)
+		val prot = effBind.protocol.filter(typeof(ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
+		val wadlFile = resourceFilenameProvider.getResourceContractFileNameFragment(resource, effBind.moduleBinding, typeof(REST)) + ".wadl";
+		val environment = environmentResolver.resolveEnvironment(binding)
+//		wrapperTypesGenerator.toOperationWrappers (resource, resource.findSubdomain(), minState, profile, environment.getRegistryBaseUrl());
+		val content = '''
+			<?xml version="1.0" encoding="UTF-8"?>
+			<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd"
+				xmlns:tns="«resource.toTargetNamespace()»" 
+				xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+				«FOR imp : resource.importedVersionedNS (versionQualifier.toMajorVersionNumber (resource.version), minState) »
+					xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
+				«ENDFOR»
+				«IF !headerImports.empty»
+					«FOR headerImp : headerImports»
+						xmlns:«profileNamespaceURIProvider.getVersionedNamespacePrefix(headerImp)»="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"
+					«ENDFOR»
+				«ENDIF»
+				xmlns="http://wadl.dev.java.net/2009/02">
+				«toGrammars(resource, minState, profile, headerImports)»
+				<resources base="«resource.toEndpointAddress (effBind.provServer, prot, effBind)»">
+					«resource.operations.map[toOperation(effBind)].join»
+				</resources>
+			</application>
+		'''
+		fsa.generateFile(wadlFile, content)
+	}
+	
 	def toGrammars(Service s, LifecycleState minState, Profile profile, Set<VersionedTechnicalNamespace> headerImports) {
+		val content = '''
+			<grammars>
+				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
+					<include href="«imp.toSchemaAssetUrl (null)».xsd" />
+				«ENDFOR»
+				«IF !headerImports.empty»
+					«FOR headerImp : headerImports»
+						<include href="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, null)».xsd"/>
+					«ENDFOR»
+				«ENDIF»
+			</grammars>		'''
+		return content
+	}
+	
+	def toGrammars(Resource s, LifecycleState minState, Profile profile, Set<VersionedTechnicalNamespace> headerImports) {
 		val content = '''
 			<grammars>
 				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»

@@ -7,6 +7,7 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Visibility
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 class DefaultEndpointQualifierNameProvider implements IEndpointQualifierNameProvider {
 	
@@ -39,6 +40,32 @@ class DefaultEndpointQualifierNameProvider implements IEndpointQualifierNameProv
 			case Visibility::PUBLIC : "Public"
 			case Visibility::DOMAIN : "Domain"
 			default: "Private"
+		}
+	}
+	def String getResourceVisibilityName (Resource s) {
+		switch (s.visibility) {
+			case Visibility::PUBLIC : "Public"
+			case Visibility::DOMAIN : "Domain"
+			default: "Private"
+		}
+	}
+	
+	override getEndpointQualifierName(AnyBinding bind, Resource res, BindingProtocol prot) {
+		var detailedQualifierName = ""
+		if (prot.effectiveEndpointQualifier != null) {
+			detailedQualifierName = prot.effectiveEndpointQualifier.name.replaceAll("\\.","_")
+		
+		}
+		if (res.isPublicEndpoint(bind, prot)) {
+			if (ignoreEndpointQualifierNames)
+				return "Public"
+			else
+				return detailedQualifierName + "Public"
+		} else {
+			if (ignoreEndpointQualifierNames)
+				return "Private"
+			else
+				return detailedQualifierName + "Private"
 		}
 	}
 	

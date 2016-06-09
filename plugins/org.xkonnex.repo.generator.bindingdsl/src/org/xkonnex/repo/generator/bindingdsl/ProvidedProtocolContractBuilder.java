@@ -41,4 +41,27 @@ public class ProvidedProtocolContractBuilder implements IProtocolContractBuilder
 		provider.get ().buildTypeDefinitions (namespace, env, profile);
 	}
 
+	@Override
+	public void buildResourceContracts(ModuleBinding bind,
+			Profile enforcedProfile) {
+		provider.get().buildResourceContracts (bind, enforcedProfile);
+	}
+
+	@Override
+	public void buildProvidedResourceContracts(Module module,
+			Environment targetEnvironment,
+			boolean selectTypeVersionsByEnvironment,
+			EndpointQualifierRef providerEndpointQualifierRef,
+			Profile enforcedProfile) {
+		provider.get().buildProvidedResourceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, providerEndpointQualifierRef, enforcedProfile);
+	}
+
+	@Override
+	public void buildUsedResourceContracts(Module module,
+			Environment targetEnvironment,
+			boolean selectTypeVersionsByEnvironment,
+			EndpointQualifierRef endpointQualifierRef, Profile enforcedProfile) {
+		provider.get().buildUsedResourceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, endpointQualifierRef, enforcedProfile);
+	}
+
 }

@@ -4,12 +4,13 @@ import com.google.inject.Inject
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SCA
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.SCA
 import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceNameFragmentProvider
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.generator.bindingdsl.templates.naming.DefaultEndpointQualifierNameProvider
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol
 
 class SCAExportExtension {
 	
@@ -63,6 +64,10 @@ class SCAExportExtension {
 	}
 	
 		
+	def String getExportFileName (Service s, IProtocol prot) {
+		s.getExportName (prot) + ".export";
+	}
+	
 	def String getExportFileName (Service s, BindingProtocol prot) {
 		s.getExportName (prot) + ".export";
 	}

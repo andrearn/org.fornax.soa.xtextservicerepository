@@ -29,16 +29,23 @@ EnvFileImport:
 Environment:
 	'environment' name=ID 'of type' (type=EnvironmentType) '{'
 		(hosts+=Host)*
-		(servers+=Server)*
+		(executables+=AbstractExecutable)*
+		
+		/* for centralized architectures, should be avoided */
 		('default' 'ESB' defaultESB=[ESB|QualifiedName])? 
 		('default' 'Registry' defaultRegistry=[Registry|QualifiedName])? 
 		('default' 'AppServer' defaultAppServer=[AppServer|QualifiedName])? 
 		('default' 'Broker' defaultBroker=[Broker|QualifiedName])? 
 	'}';
 	
-enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
+enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | InfrastructureLibrary="Infrastructure-Library" |Other="Other-Environment";
 
-EnvironmentComponent returns baseDsl::Component: Connector|Server|SecurityProtocol;
+EnvironmentComponent returns baseDsl::Component: Connector|AbstractExecutable|SecurityProtocol|Host|ConfigurationScript;
+
+Host: Node | Cluster | Container;
+AbstractExecutable: Server | Executable;
+
+	
 
 Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP | ExtensibleServer;
 
@@ -299,6 +306,21 @@ DataSource:
 		'schema' schema=[DatabaseSchema|QualifiedName] 
 	'}';
 	
+Executable:
+	'executable' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
+		(version=Version)?
+		('identifier' dslCode=STRING )?
+		'host' host=[Host|QualifiedName] 
+		('dir' home=STRING )?
+		('baseUrl' baseUrl=STRING  )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+	'}';
+	
 /** @deprecated */	
 enum DatabaseKind : Other | Oracle | DB2 | MSSQL | MySQL | Postgres | Sybase | HyperSonic | Ingres | Adabas | Derby | MongoDB | Hadoop | CouchDB | Neo4J;
 
@@ -529,16 +551,67 @@ TCP:
 		'port' port = INT
 		('security-protocol' securityProtocol=SecurityProtocol)?
 	'}';
+
+Node: BareHost|VM;
 	
 /* A host, i.e. hardware */
-Host:
+BareHost:
 	'host' name=ID '{'
 		'full-qualified-name' fqn=STRING 
 		('ip-address' ip=STRING)? 
-		('identifier' dshCode=STRING )?
+		('identifier' dhsCode=STRING )?
 		('admins' admins+=[baseDsl::User|QualifiedName])?
+		('virtual-machines' '{'
+			vm+=[VM|QualifiedName]+
+		'}')?
+		('containers' '{'
+			container+=[Container|QualifiedName]+
+		'}')?
 	'}';
 
+Cluster:
+	'cluster' name=ID '{'
+		'full-qualified-name' fqn=STRING 
+		('ip-address' ip=STRING)? 
+		('identifier' dhsCode=STRING )?
+		('admins' admins+=[baseDsl::User|QualifiedName])?
+		('containers' '{'
+			container+=[Container|QualifiedName]+
+		'}')?
+	'}';
+
+VM:
+	'virtual-machine' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])?'{'
+		(image=Image)?
+		'full-qualified-name' fqn=STRING 
+		('ip-address' ip=STRING)? 
+		('identifier' dhsCode=STRING )?
+		('admins' admins+=[baseDsl::User|QualifiedName])?
+		('containers' '{'
+			container+=[Container|QualifiedName]+
+		'}')?
+	'}';
+	
+Container:
+	'container' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
+		(image=Image)?
+		'full-qualified-name' fqn=STRING 
+		('ip-address' ip=STRING)? 
+		('identifier' dhsCode=STRING )?
+	'}';
+
+Image:
+	'image' name=ID '{'
+		version=Version
+		("URL" url = STRING)?
+		(script = ConfigurationScript)?
+	'}'
+;
+
+ConfigurationScript:
+	'config-script' name=STRING 'type' type=[jvmTypes::JvmType|QualifiedName]
+;
+	
 /* A system user */	
 User returns baseDsl::User: 
 	'user' name=ID '{'
@@ -548,10 +621,4 @@ User returns baseDsl::User:
 	'}';
 	
 SecurityProtocol: type = [jvmTypes::JvmType|QualifiedName];
-	
-//QualifiedNameWithWildcard:
-//	QualifiedName '.*'?;
-//
-//QualifiedName:
-//	ID ('.' ID)*;
 

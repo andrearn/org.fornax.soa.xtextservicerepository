@@ -10,16 +10,15 @@ import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.util.IAcceptor;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch;
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.OperationBinding;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding;
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver;
 import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup;
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace;
 
 import com.google.common.base.Predicate;

@@ -1,6 +1,7 @@
 package org.xkonnex.repo.dsl.bindingdsl.binding.query.services;
 
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding;
+import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.OperationRef;
 import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier;
@@ -14,7 +15,32 @@ public class OperationRefBindingDescription {
 	private Module providingModule;
 	private Qualifier endpointQualifier;
 
+	public OperationRefBindingDescription() {
+		// TODO Auto-generated constructor stub
+	}
 	
+	
+	public OperationRefBindingDescription(Operation resolvedOperation, AnyBinding applicableBinding,
+			Module providingModule, Qualifier endpointQualifier) {
+		super();
+		this.resolvedOperation = resolvedOperation;
+		this.applicableBinding = applicableBinding;
+		this.providingModule = providingModule;
+		this.endpointQualifier = endpointQualifier;
+	}
+	
+	public OperationRefBindingDescription(OperationRef operationRef,
+			Operation resolvedOperation, AnyBinding applicableBinding,
+			Module providingModule, Qualifier endpointQualifier) {
+		super();
+		this.operationRef = operationRef;
+		this.resolvedOperation = resolvedOperation;
+		this.applicableBinding = applicableBinding;
+		this.providingModule = providingModule;
+		this.endpointQualifier = endpointQualifier;
+	}
+
+
 	public OperationRef getOperationRef() {
 		return operationRef;
 	}

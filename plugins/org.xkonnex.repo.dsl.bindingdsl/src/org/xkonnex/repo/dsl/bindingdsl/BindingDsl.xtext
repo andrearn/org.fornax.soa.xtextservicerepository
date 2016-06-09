@@ -27,7 +27,7 @@ BindingModel:
 	(bindings+=Binding)*;
 
 
-Binding: ModuleBinding | ServiceBinding | ChannelBinding;
+Binding: ModuleBinding | ServiceBinding | ResourceBinding | ChannelBinding;
 AnyBinding: Binding | OperationBinding;
 
 
@@ -47,7 +47,8 @@ BindingComponent returns baseDsl::Component: BindingProtocol;
 ModuleBinding:
 	'bind-module' module=ModuleRef 'as' name=QualifiedName 'to' 
 		(('environment' environment=[environmentDsl::Environment|QualifiedName] '{') | 
-		 ('server' provServer = [environmentDsl::Server|QualifiedName]  '{' )
+		 ('server' provServer = [environmentDsl::Server|QualifiedName]  '{' ) |
+		 ('executable' provExecutable = [environmentDsl::Executable|QualifiedName]  '{' )
 		)
 		(endpointQualifierRef=EndpointQualifierRef)?
 		(governanceDecisions+=GovernanceDecision)*
@@ -63,6 +64,7 @@ ModuleBinding:
 			(assertions+=Assertion)+
 		'}')?
 		(serviceBindings+=ServiceBinding)*
+		(resourceBindings+=ResourceBinding)*
 	'}'
 ;
 
@@ -97,6 +99,36 @@ ServiceBinding:
  */	
 ServiceRef:
 	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef;
+
+/*
+ * Overrides the binding of a parent ModuleBinding for the given Resource
+ */
+ResourceBinding:
+	'bind-resource' resource=ResourceRef ('to' 
+		(('environment' environment=[environmentDsl::Environment|QualifiedName]) | 
+		 ('server' provServer = [environmentDsl::Server|QualifiedName])
+		))? '{'
+		(endpointQualifierRef=EndpointQualifierRef)?
+		(governanceDecisions+=GovernanceDecision)*
+		('provided-contract' providedContract=STRING)?
+		'protocols' '{'
+			(protocol+=BindingProtocol)+
+		'}'
+		('policies' '{'
+			(policies+=Policy)*
+		'}')?
+		('assertions' '{'
+			(assertions+=Assertion)+
+		'}')?
+//		('references-module' referencedModule = ModuleRef)?
+		(operation+=OperationBinding)*
+	'}';
+
+/*
+ * References a resource by  qualified name and a VersionRef constraint
+ */	
+ResourceRef:
+	resource=[serviceDsl::Resource|QualifiedName] versionRef=VersionRef;
 	
 /*
  * Overrides the binding of a parent ModuleBinding for the given Channel
@@ -124,7 +156,7 @@ ChannelBinding:
 /*
  * The endpoint protocol of the entpoint on which the service is provided
  */																																				
-BindingProtocol: SCA | SOAP | EJB | HTTP | REST | SAP | JMS | FILE | FTP | IIOP | AMQP | ExtensibleProtocol;
+BindingProtocol: SOAP | ExtensibleProtocol;
 
 /*
  * Overrides the binding of a parent ServiceBinding for the given service Operation
@@ -186,124 +218,6 @@ SOAP:
 enum SOAPStyle: doclitwrap='document/literal-wrapped' | rpclit = 'rpc/literal' | rpcenc='rpc/encoded';
 enum SOAPTransport: HTTP | JMS | SMTP;
 enum SOAPProtocolVersion: SOAP11='SOAP-v1.1' | SOAP12 = 'SOAP-v1.2';
-
-/* SAP endpoint (RFC or IDoc as stated with the SAPTransport */
-SAP: 
-	'SAP' '{'
-		{SAP}
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
-		('transport' transport=SAPTransport )?
-		('client' client=[environmentDsl::SapClient|QualifiedName] )?
-	'}';
-
-enum SAPTransport: IDOC | RFC;
-
-/* An EJB endpoint protocol (IIOP/RMI) */ 
-EJB: 
-	'EJB' '{'
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
-		'jndi-name' jndiName=STRING 
-	'}';
-
-/* A  plain HTTP endpoint protocol */	
-HTTP: 
-	'HTTP' '{'
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
-		'url' url=STRING 
-		/** 
-		 * URL the proxying service should delegate to
-		 * TODO deprecate / remove ?
-		 */
-		'provider-url' providerUrl=STRING  
-		'verb' verb=Verb 
-	'}';
-
-/* A REST endpoint protocol */
-REST: 
-	'REST' '{'
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
-		'path' path=STRING  
-		/** 
-		 * URL the proxying service should delegate to
-		 * TODO deprecate / remove ?
-		 */
-		'provider-url' providerUrl=STRING  
-		'verb' verb=Verb 
-		('consumes' consumes+=STRING)* 
-		('provides' provides+=STRING)* 
-	'}';
-
-/* The REST operation verb */
-enum Verb: CREATE | RETRIEVE | UPDATE | DELETE | GET | PUT | POST;
-
-/* A JMS endpoint protocol. The actual wire format of the messages is not specified. However, the Broker exposes an JMS API */
-JMS:
-	'JMS' '{'
-		{JMS}
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
-		(channel=TopicOrQueue)?
-		'jndi-name' jndiName=STRING
-		('provider-jndi-name' providerJndi=STRING )?
-	'}';
-	
-TopicOrQueue: Topic | Queue;
-
-/* JMS topic to send/retrieve messages */
-Topic: 'topic' name=STRING (endpointQualifierRefs=EndpointQualifierRef)?;
-
-/* JMS queue to send/retrieve messages */
-Queue: 'queue' name=STRING (endpointQualifierRefs=EndpointQualifierRef)?;
-
-/* An SCA native endpoint protocol. Messages are accessed via the SCA API or import/export primitives*/	
-SCA:
-	{SCA} 
-	'SCA' (name=STRING)? '{'
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
-		('promote' promote=STRING )?
-		('reference' reference=STRING (isMultipleRef?='[]')? )?
-	'}' ;
-
-/* A file access protocol for endpoints */
-FILE: 
-	'FILE' '{'
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
-		url=STRING accessType=ReadWrite ('interval' pollIntervall=STRING)?
-	'}';
-
-/* Use FTP to access message files on the endpoint */
-FTP: 
-	'FTP' '{' 
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
-		'access' accessType=ReadWrite ('interval' pollIntervall=STRING)?
-	'}';
-
-/* An IIOP endpoint protocol */ 
-IIOP: 
-	'IIOP' '{'
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
-		'lookup-name' lookupName=STRING 
-	'}';
-
-AMQP:
-	'AMQP' '{'
-		{AMQP}
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
-		(channel=TopicOrQueue)?
-		'lookup-name' lookupName=STRING
-		('provider-lookup-name' providerLookupName=STRING )?
-	'}';
-
-enum ReadWrite : read|write;
 
 
 // Policies

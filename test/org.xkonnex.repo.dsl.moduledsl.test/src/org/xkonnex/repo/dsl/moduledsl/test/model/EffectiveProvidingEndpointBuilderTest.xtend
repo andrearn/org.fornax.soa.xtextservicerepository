@@ -21,6 +21,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.OperationRef
 import org.xkonnex.repo.dsl.moduledsl.model.EffectiveProvidingEndpointProtocol
 import org.junit.Test
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb
 
 @RunWith(typeof(XtextRunner)) 
 @InjectWith(typeof(ModuleDslWithDependenciesInjectorProvider)) 
@@ -52,7 +53,7 @@ class EffectiveProvidingEndpointBuilderTest {
 		
 		val protBean = effProt.endpointProtocol as REST
 		assertEquals("customer/details", protBean.path)
-		assertEquals(HttpVerb.GET, protBean.verb)
+		assertEquals(Verb.GET, protBean.verb)
 		assertEquals("application/json", protBean.requestContentType.head)
 		assertEquals("application/json", protBean.response.head.contentType.head)
 		

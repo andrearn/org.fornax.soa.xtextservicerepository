@@ -1,6 +1,6 @@
 define(["ace/lib/oop", "ace/mode/text", "ace/mode/text_highlight_rules"], function(oop, mText, mTextHighlightRules) {
 	var HighlightRules = function() {
-		var keywords = "AMQP|CREATE|DELETE|EJB|FILE|FTP|GET|HTTP|IDOC|IIOP|JMS|POST|PUT|REST|RETRIEVE|RFC|SAP|SCA|SMTP|SOAP|STRING|UPDATE|accepted|access|all|as|assertions|attachments|availability|body|client|consumes|costs|default|denied|environment|expression|false|fixedVersion|frozen|header|import|interval|issuer|latency|location|majorVersion|maxVersion|minVersion|none|optional|path|pending|per|percentile|policies|promote|protocols|provides|queue|read|reference|server|specific|style|subject|to|topic|transport|true|type|url|verb|version|write";
+		var keywords = "HTTP|JMS|SMTP|SOAP|STRING|accepted|all|as|assertions|attachments|availability|body|costs|default|denied|environment|executable|expression|false|fixedVersion|frozen|header|import|issuer|latency|location|majorVersion|maxVersion|minVersion|none|optional|pending|per|percentile|policies|protocols|reference|server|specific|style|subject|to|transport|true|type|version";
 		this.$rules = {
 			"start": [
 				{token: "comment", regex: "\\/\\/.*$"},

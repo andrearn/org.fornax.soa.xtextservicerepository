@@ -65,6 +65,10 @@ Module:
 			 */
 			(providedServices += ServiceRef)*
 			/*
+			 * Services that the module provides
+			 */
+			(providedResources += ResourceRef)*
+			/*
 			 * Channels that the module provides
 			 */
 			(providedChannels += ChannelRef)*
@@ -80,6 +84,7 @@ Module:
 		 */
 		('uses' '{'
 			(usedServices += ImportServiceRef)*
+			(usedResource += ImportResourceRef)*
 			(usedModules  += ModuleRef)*
 			UsingEndpointFragment
 //			('endpoint-protocol' usesEndpointProtocol=UsingEndpointProtocol)?
@@ -142,11 +147,21 @@ fragment UsingEndpointFragment:
 ;
 
 AbstractServiceRef: ServiceRef | ImportServiceRef;
+AbstractResourceRef: ResourceRef | ImportResourceRef;
+
 /* 
  * Refers to a service constrained by the given version constraint
  */
 ServiceRef: 
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef ('{'
+		('operations' '{'
+			operations+=OperationRef+
+		'}')?
+		providingEndpoints+=ProvidingEndpoint+
+	'}')?
+;
+ResourceRef: 
+	'resource' resource=[serviceDsl::Resource|QualifiedName] versionRef=VersionRef ('{'
 		('operations' '{'
 			operations+=OperationRef+
 		'}')?
@@ -180,6 +195,7 @@ ChannelRef:
  * The module to import the service from may be stated explicitly
  */
 ImportServiceRef: SimpleImportServiceRef | DetailedImportServiceRef;
+ImportResourceRef: SimpleImportResourceRef | DetailedImportResourceRef;
 	
 SimpleImportServiceRef returns ImportServiceRef:
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef 
@@ -187,6 +203,21 @@ SimpleImportServiceRef returns ImportServiceRef:
 
 DetailedImportServiceRef returns ImportServiceRef:
 	'service' service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef '{'
+		/*	specify from which module(s) the service can be used, if not defined use the first module found, 
+			that is not identical with the importing module */
+		('from-any-module-of' '{'
+			(modules+=ServiceModuleRef)(',' modules+=ServiceModuleRef)*
+		'}')?
+		(usingEndpoint=UsingEndpoint)?
+	'}'
+;
+
+SimpleImportResourceRef returns ImportResourceRef:
+	'resource' resource=[serviceDsl::Resource|QualifiedName] versionRef=VersionRef 
+;
+
+DetailedImportResourceRef returns ImportResourceRef:
+	'resource' resource=[serviceDsl::Resource|QualifiedName] versionRef=VersionRef '{'
 		/*	specify from which module(s) the service can be used, if not defined use the first module found, 
 			that is not identical with the importing module */
 		('from-any-module-of' '{'
@@ -207,10 +238,12 @@ ServiceModuleRef:
 ModuleRef:
 	'module' moduleRef=ServiceModuleRef '{'
 		('including' '{'
-			(includedServices+=ServiceRef)+
+			(includedServices+=ServiceRef)*
+			(includedResources+=ResourceRef)*
 		'}')?
 		('excluding' '{'
-			(excludedServices+=ServiceRef)+
+			(excludedServices+=ServiceRef)*
+			(excludedResources+=ResourceRef)*
 		'}')?
 		(usingEndpoint=UsingEndpoint)?
 	'}'
@@ -222,10 +255,12 @@ NamespaceRef:
 		('including' '{'
 			(inclSubNamespace?="include-sub-namespaces")?
 			(inclDomainSubNamespace?="include-domain-sub-namespaces")?
-			(includedServices+=ServiceRef)+
+			(includedServices+=ServiceRef)*
+			(includedResources+=ResourceRef)*
 		'}')?
 		('excluding' '{'
-			(excludedServices+=ServiceRef)+
+			(excludedServices+=ServiceRef)*
+			(excludedResources+=ResourceRef)*
 		'}')?
 	'}')?
 ;

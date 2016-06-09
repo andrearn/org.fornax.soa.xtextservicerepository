@@ -14,6 +14,7 @@ import org.xkonnex.repo.dsl.moduledsl.query.IModuleOperationResolver
 import org.xkonnex.repo.dsl.basedsl.ext.infer.IComponentInferrer
 import org.eclipse.xtext.EcoreUtil2
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Channel
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 class BottomUpModuleEndpointProtocolLookup implements IModuleEndpointProtocolLookup {
 	
@@ -46,6 +47,16 @@ class BottomUpModuleEndpointProtocolLookup implements IModuleEndpointProtocolLoo
 	
 	override collectEndpointProtocolHierarchyByType(Channel channel, Module module, IModuleEndpointProtocol protocol) {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
+	}
+	
+	override collectEndpointProtocolHierarchyByType(Resource resource, Module module, IModuleEndpointProtocol protocol) {
+		val specEndpoint = endpointResolver.getMostSpecificProvidingEndpointByType(resource, module, protocol)
+		var List<IModuleEndpointProtocol> hierarchy = newArrayList()
+		val IModuleEndpointProtocol prot = componentInferrer.inferComponent(specEndpoint.endpointProtocol)
+		if (prot != null && protocol.class.isAssignableFrom(prot.class)) {
+			hierarchy+=prot
+		}
+		return hierarchy
 	}
 	
 }

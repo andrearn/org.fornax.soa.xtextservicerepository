@@ -2,22 +2,19 @@ package org.xkonnex.repo.generator.bindingdsl.templates.vendor.ibm
 
 import com.google.inject.Inject
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SCA
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
-import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
-import org.xkonnex.repo.generator.bindingdsl.templates.soap.SoapBindingResolver
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyType
-import org.xkonnex.repo.dsl.moduledsl.query.DefaultModuleServiceResolver
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
-import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
-import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
-import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.SCA
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AssemblyTypeEnum
+import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.generator.bindingdsl.templates.soap.SoapBindingResolver
+import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
 
 /* 
  * Generator for IBM SCA export components for the IBM WebSphere ESB. For each service provided from the module referenced in the binding

@@ -1,6 +1,5 @@
 package org.xkonnex.repo.dsl.bindingdsl.ext.protocol;
 
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ReadWrite;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;

@@ -29,6 +29,9 @@ import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.EndpointQualifierQueries
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.resource.BindingResourceRefMatcher
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ResourceBinding
 
 /**
  * Lookup of Bindings for different criteria, e.g. find a binding for a module to an environment
@@ -57,6 +60,8 @@ class BindingLookup {
 	private ProtocolMatcher protocolMatcher
 	@Inject 
 	private BindingServiceRefMatcher serviceRefMatcher
+	@Inject
+	private BindingResourceRefMatcher resourceRefMatcher
 	
 	/**
 	 * Find all ModuleBindings that refer to this module by name and version constraint and bind it to the given 
@@ -217,6 +222,22 @@ class BindingLookup {
 			return null
 		}
 	}
+	/**
+	 * Get the most specific binding for the service matching that is tagged with the given endpoint qualifier. 
+	 * The most specific binding is by default the top level binding. This might be overridden in a nested binding 
+	 * declaration. If such an override is defined, it will be returned instead.
+	 */
+	def Binding getMostSpecificBinding (Resource resource, Binding binding, EndpointQualifierRef endpointQualifier) {
+		val candBind = resource.getMostSpecificBinding (binding)
+		val bindEndpointQualifiers = candBind.getPotentialEffectiveEndpointQualifiers
+		if (endpointQualifier != null && candBind != null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
+			return candBind
+		} else if (endpointQualifier == null) {
+			return candBind
+		} else {
+			return null
+		}
+	}
 
 	def dispatch Binding getMostSpecificBinding (Service service, ModuleBinding binding) {
 		
@@ -231,6 +252,23 @@ class BindingLookup {
 	}
 	def dispatch Binding getMostSpecificBinding (Service service, ServiceBinding binding) {
 		if (binding.service.service == service)
+			return binding
+		else
+			return null
+	}
+	def dispatch Binding getMostSpecificBinding (Resource service, ModuleBinding binding) {
+		
+		if (!binding.resourceBindings.empty) {
+			for (svcBind : binding.resourceBindings) {
+				if (resourceRefMatcher.matches(service, svcBind.resource)) {
+					return svcBind
+				}
+			}
+		}
+		return binding
+	}
+	def dispatch Binding getMostSpecificBinding (Resource resource, ResourceBinding binding) {
+		if (binding.resource.resource == resource)
 			return binding
 		else
 			return null

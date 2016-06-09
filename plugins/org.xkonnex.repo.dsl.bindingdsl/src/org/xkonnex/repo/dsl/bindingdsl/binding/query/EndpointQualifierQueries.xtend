@@ -22,6 +22,7 @@ import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 class EndpointQualifierQueries {
 	
@@ -126,6 +127,19 @@ class EndpointQualifierQueries {
 		return connector?.endpointVisibility == EndpointVisibility::EXTERNAL
 	}
 	def isPrivateEndpoint (Service service, AnyBinding binding, BindingProtocol prot) {
+		val Connector connector = connectorResolver.resolveConnector(envResolver.resolveServer (binding, prot), binding, prot)
+		return connector?.endpointVisibility == EndpointVisibility::PRIVATE || connector.endpointVisibility == null
+	}
+	
+	def isPublicEndpoint (Resource resource, AnyBinding binding, BindingProtocol prot) {
+		val Connector connector = connectorResolver.resolveConnector(envResolver.resolveServer (binding, prot), binding, prot)
+		return connector?.endpointVisibility == EndpointVisibility::PUBLIC && resource.visibility != Visibility::PRIVATE
+	}
+	def isExtenalEndpoint (Resource resource, AnyBinding binding, BindingProtocol prot) {
+		val Connector connector = connectorResolver.resolveConnector(envResolver.resolveServer (binding, prot), binding, prot)
+		return connector?.endpointVisibility == EndpointVisibility::EXTERNAL
+	}
+	def isPrivateEndpoint (Resource resource, AnyBinding binding, BindingProtocol prot) {
 		val Connector connector = connectorResolver.resolveConnector(envResolver.resolveServer (binding, prot), binding, prot)
 		return connector?.endpointVisibility == EndpointVisibility::PRIVATE || connector.endpointVisibility == null
 	}
