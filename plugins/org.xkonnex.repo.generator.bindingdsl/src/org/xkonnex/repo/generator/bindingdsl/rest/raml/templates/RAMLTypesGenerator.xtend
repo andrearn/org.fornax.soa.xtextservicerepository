@@ -11,6 +11,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
 
 class RAMLTypesGenerator {
 	
@@ -36,7 +37,8 @@ class RAMLTypesGenerator {
 			  	type: «typeRef.type.toBaseType»
 			  		«IF(typeRef.type instanceof DataObject)»
 			  			properties:
-				  			«(typeRef.type as DataObject).properties.map(p|p.toProperty)»
+			  				«(typeRef.type as DataObject).properties.map(p|p.toProperty)»
+				  	«ELSEIF (typeRef.type instanceof Enumeration)»
 			  		«ENDIF»
 			
 		'''
@@ -45,39 +47,43 @@ class RAMLTypesGenerator {
 		'''
 			«type.toContextualTypeNameRef»:
 			  	type: «type.toBaseType»
-			  		«IF(type instanceof DataObject)»
-			  			properties:
-				  			«(type as DataObject).properties.map(p|p.toProperty).join(",\n")»
-			  		«ENDIF»
+			  		properties:
+			  			«type.properties.map(p|p.toProperty).join(",\n")»
+			
+		'''
+	}
+	def dispatch toTypeDeclaration (Enumeration type) {
+		'''
+			«type.toContextualTypeNameRef»:
+			  	type: «type.toBaseType»
+			  		enum: 
+			  			[«type.literals.map[name].join(", ")»]
 			
 		'''
 	}
 	def dispatch toTypeDeclaration (VersionedType type) {
-		'''
-			«type.toContextualTypeNameRef»:
-			  	type: «type.toBaseType»
-			  		«IF(type instanceof DataObject)»
-			  			properties:
-				  			«(type as DataObject).properties.map(p|p.toProperty).join(",\n")»
-			  		«ENDIF»
-			
-		'''
+		''''''
 	}
 	
-	def toBaseType(VersionedType type) {
-		if(type instanceof DataObject && (type as DataObject).superObject != null) {
-			(type as DataObject).superObject.toContextualTypeNameRef
-		} else if (type instanceof DataObject && (type as DataObject).superObject == null){
+	def dispatch toBaseType(VersionedType type) {
+		"object"
+	}
+	
+	def dispatch toBaseType(DataObject type) {
+		if (type.superObject == null){
 			"object"
+		} else if(type.superObject.type != null) {
+			type.superObject.type.toContextualTypeNameRef
 		} else {
 			""
 		}
 	}
+	def dispatch toBaseType(Enumeration type) {
+		"string"
+	}
 	
 	def toProperty (Property p) {
-		'''
-			«p.name»«IF p.optional»?«ENDIF»: «p.type.toPropertyType»
-		'''
+		'''«p.name»«IF p.optional»?«ENDIF»: «p.type.toPropertyType»'''
 	}
 	
 	def dispatch String toPropertyType (TypeRef typeRef) {

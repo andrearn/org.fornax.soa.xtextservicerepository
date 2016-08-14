@@ -117,14 +117,19 @@ class ReferencedTypesFinder {
 	def Set<VersionedType> allTransitiveReferencedVersionedTypes(DataObject object, boolean includeInheritedProperties, boolean includeSuperTypes, LifecycleState minState) {
 		val resSet = object.eResource.resourceSet
 		val Set<VersionedType> allReferencedTypes = newHashSet()
-		val deps = object.properties.map(p| p.getTransitiveDependencies(includeInheritedProperties, false, new LinkedList<IEObjectDescription>(), null))
-		val types = deps.flatten.map[d | 
-			var eObj = d.target.EObjectOrProxy
-			if (eObj.eIsProxy) {
-				eObj = EcoreUtil2.resolve(eObj, resSet)
+		val Set<VersionedType> types = newHashSet()
+		for (p : object.properties) { 
+			val transDeps =  p.getTransitiveDependencies(includeInheritedProperties, false, null, null)
+			if (transDeps != null) {
+				types.addAll(transDeps.flatten.map [
+					var eObj = target.EObjectOrProxy
+					if (eObj.eIsProxy) {
+						eObj = EcoreUtil2.resolve(eObj, resSet)
+					}
+					eObj
+				].filter(typeof (VersionedType)))
 			}
-			return eObj
-		].filterNull.filter(typeof (VersionedType))
+		}
 		allReferencedTypes.addAll(types)
 		if (includeSuperTypes) {
 			for (aType : types) {
@@ -142,7 +147,7 @@ class ReferencedTypesFinder {
 		val respTypeRefs = service.operations.map(op|op.^return).flatten.map(p|p.type)
 		typeRefs.addAll(respTypeRefs)
 		val verTypes = typeRefs.filter(typeof(AbstractVersionedTypeRef)).map[toVersionedType]
-		val allRefTypes = verTypes.filter(typeof(DataObject)).map(t | allTransitiveReferencedVersionedTypes(t, true, true, state)).flatten.filter(typeof(VersionedType))
+		val allRefTypes = verTypes.filter(typeof(DataObject)).map[t | allTransitiveReferencedVersionedTypes(t, true, true, state)].filterNull.flatten.filter(typeof(VersionedType))
 		val Set<VersionedType> allVerTypes = newHashSet()
 		allVerTypes.addAll(verTypes)
 		for (aType : verTypes) {
@@ -151,7 +156,8 @@ class ReferencedTypesFinder {
 				allVerTypes.addAll(dataObj.getAllSuperTypes(state))
 			}
 		}
-//		allVerTypes.addAll(allRefTypes)
+		if (allRefTypes != null)
+			allVerTypes.addAll(allRefTypes)
 		allVerTypes
 	}
 
@@ -160,7 +166,7 @@ class ReferencedTypesFinder {
 		val respTypeRefs = resource.operations.map(op|op.^return).flatten.map(p|p.type)
 		typeRefs.addAll(respTypeRefs)
 		val verTypes = typeRefs.filter(typeof(AbstractVersionedTypeRef)).map[toVersionedType]
-		val allRefTypes = verTypes.filter(typeof(DataObject)).map(t | allTransitiveReferencedVersionedTypes(t, true, true, state)).flatten.filter(typeof(VersionedType))
+		val allRefTypes = verTypes.filter(typeof(DataObject)).map(t | allTransitiveReferencedVersionedTypes(t, true, true, state)).filterNull.flatten.filter(typeof(VersionedType))
 		val Set<VersionedType> allVerTypes = newHashSet()
 		allVerTypes.addAll(verTypes)
 		for (aType : verTypes) {
@@ -169,7 +175,8 @@ class ReferencedTypesFinder {
 				allVerTypes.addAll(dataObj.getAllSuperTypes(state))
 			}
 		}
-		allVerTypes.addAll(allRefTypes)
+		if (allRefTypes != null)
+			allVerTypes.addAll(allRefTypes)
 		allVerTypes
 	}
 	
