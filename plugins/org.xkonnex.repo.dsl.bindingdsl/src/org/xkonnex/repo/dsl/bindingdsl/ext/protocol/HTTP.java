@@ -1,16 +1,22 @@
 package org.xkonnex.repo.dsl.bindingdsl.ext.protocol;
 
+import java.util.List;
+
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
+import org.xkonnex.repo.dsl.moduledsl.ext.protocol.Header;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
+
+import com.google.common.collect.Lists;
 
 
 public class HTTP implements IProtocol {
 
 	private String url;
 	private HttpVerb verb;
+	private List<Header> header = Lists.newArrayList();
 
 	@Override
 	public boolean supportsModuleEndpointProtocol(
@@ -41,6 +47,14 @@ public class HTTP implements IProtocol {
 
 	public void setVerb(HttpVerb verb) {
 		this.verb = verb;
+	}
+
+	public List<Header> getHeader() {
+		return header;
+	}
+
+	public void addHeader(Header header) {
+		this.header.add(header);
 	}
 
 	@Override

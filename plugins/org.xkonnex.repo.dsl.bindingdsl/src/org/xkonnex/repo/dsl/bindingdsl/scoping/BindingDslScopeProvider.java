@@ -267,6 +267,7 @@ public class BindingDslScopeProvider extends ComponentAwareVersionedScopeProvide
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.basedsl.ext.crypto.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.basedsl.ext.token.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.bindingdsl.ext.protocol.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb", ignoreCase));
 		return result;
 	}
 

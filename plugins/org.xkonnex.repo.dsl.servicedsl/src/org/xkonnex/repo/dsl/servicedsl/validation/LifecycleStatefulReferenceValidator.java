@@ -22,6 +22,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;
@@ -52,6 +53,16 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 				&& svcRef.getService().getState() != null
 				&& svcRef.getService().getState().isIsEnd()) 
 			error ("A service in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.SERVICE_REF__SERVICE);
+	}
+	
+	@Check
+	public void checkDoesNotRefRetiredService(ResourceRef resRef) {
+		EObject owner = objLookup.getStatefulOwner(resRef);
+		LifecycleState ownerState = stateResolver.getLifecycleState(owner);
+		if (owner != null && stateResolver.definesState(owner) && ownerState.isIsEnd() 
+				&& resRef.getResource().getState() != null
+				&& resRef.getResource().getState().isIsEnd()) 
+			error ("A resource in state " + ownerState.getName() + " cannot be referenced", ServiceDslPackage.Literals.RESOURCE_REF__RESOURCE);
 	}
 
 	@Check

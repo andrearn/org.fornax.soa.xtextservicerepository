@@ -15,6 +15,13 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.basedsl.ref.DependencyDescription
 import java.util.List
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
 
 class TypeQueries {
 	
@@ -60,10 +67,31 @@ class TypeQueries {
 		findUsingServiceOperations(enumeration).map (o|o.getOwnerByType(typeof(Service))).toSet
 	}
 	
+	def dispatch Set<Resource> findUsingResources (DataType type) {
+		findUsingServiceOperations(type).map (o|o.getOwnerByType(typeof(Resource))).toSet
+	}
+	
+	def dispatch Set<Resource> findUsingResources (DataObject obj) {
+		findUsingServiceOperations(obj).map (o|o.getOwnerByType(typeof(Resource))).toSet
+	}
+	
+	def dispatch Set<Resource> findUsingResources (Enumeration enumeration) {
+		findUsingServiceOperations(enumeration).map (o|o.getOwnerByType(typeof(Resource))).toSet
+	}
+	
 	def List getStatesOfClosestReferrers (VersionedType type) {
 		
 	}
 	
 	def List<DependencyDescription> getReferrersAsGraph (VersionedType type) {
+	}
+	
+	def dispatch toVersionedType(AbstractVersionedTypeRef typeRef) {
+	}
+	def dispatch toVersionedType(VersionedTypeRef typeRef) {
+		typeRef.type
+	}
+	def dispatch toVersionedType(EnumTypeRef typeRef) {
+		typeRef.type
 	}
 }

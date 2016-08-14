@@ -48,6 +48,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import java.util.List
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.generator.bindingdsl.templates.DefaultResourceContractFilenameProvider
+import org.xkonnex.repo.generator.servicedsl.templates.xsd.XSDGenerator
 
 class ConcreteWADLGenerator {
 	
@@ -73,6 +74,7 @@ class ConcreteWADLGenerator {
 	@Inject extension DefaultServiceContractFilenameProvider
 	@Inject DefaultResourceContractFilenameProvider resourceFilenameProvider
 	@Inject OperationWrapperTypesGenerator wrapperTypesGenerator
+	@Inject XSDGenerator xsdGenerator
 
 	@Inject IFileSystemAccess fsa
 	@Inject Logger log
@@ -81,22 +83,22 @@ class ConcreteWADLGenerator {
 	}
 
 	def dispatch void toWADL (ModuleBinding binding, Service svc, LifecycleState minState, Profile profile) {
-		svc.toWADL (minState, binding, profile);
+		svc.toWADL (minState, binding, profile)
 	}
 
 	def dispatch void toWADL (EffectiveBinding binding, Service svc, LifecycleState minState, Profile profile) {
-		svc.toWADL (minState, binding.moduleBinding, profile);
+		svc.toWADL (minState, binding.moduleBinding, profile)
 	}
 	
 	def dispatch void toWADL (AnyBinding binding, Resource svc, LifecycleState minState, Profile profile) {
 	}
 
 	def dispatch void toWADL (ModuleBinding binding, Resource svc, LifecycleState minState, Profile profile) {
-		svc.toWADL (minState, binding, profile);
+		svc.toWADL (minState, binding, profile)
 	}
 
 	def dispatch void toWADL (EffectiveBinding binding, Resource svc, LifecycleState minState, Profile profile) {
-		svc.toWADL (minState, binding.moduleBinding, profile);
+		svc.toWADL (minState, binding.moduleBinding, profile)
 	}
 	
 	def toWADL(Service service, LifecycleState minState, ModuleBinding binding, Profile profile) {
@@ -106,6 +108,7 @@ class ConcreteWADLGenerator {
 		val prot = effBind.protocol.filter(typeof(ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
 		val wadlFile = service.getServiceContractFileNameFragment(effBind.moduleBinding, typeof(REST)) + ".wadl";
 		val environment = environmentResolver.resolveEnvironment(binding)
+		
 		wrapperTypesGenerator.toOperationWrappers (service, service.findSubdomain(), minState, profile, environment.getRegistryBaseUrl());
 		val content = '''
 			<?xml version="1.0" encoding="UTF-8"?>
@@ -138,7 +141,6 @@ class ConcreteWADLGenerator {
 		val prot = effBind.protocol.filter(typeof(ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
 		val wadlFile = resourceFilenameProvider.getResourceContractFileNameFragment(resource, effBind.moduleBinding, typeof(REST)) + ".wadl";
 		val environment = environmentResolver.resolveEnvironment(binding)
-//		wrapperTypesGenerator.toOperationWrappers (resource, resource.findSubdomain(), minState, profile, environment.getRegistryBaseUrl());
 		val content = '''
 			<?xml version="1.0" encoding="UTF-8"?>
 			<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"

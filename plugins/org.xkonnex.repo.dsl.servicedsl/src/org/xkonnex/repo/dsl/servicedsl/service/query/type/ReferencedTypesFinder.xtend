@@ -16,6 +16,11 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResolver
+import java.util.LinkedList
+import org.eclipse.xtext.resource.IEObjectDescription
+import org.eclipse.xtext.EcoreUtil2
+import java.util.Set
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 /*
  * Find type references of a model object
@@ -23,6 +28,8 @@ import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResol
 class ReferencedTypesFinder {
 	
 	@Inject extension IVersionedTypeRefResolver
+	@Inject extension DataObjectQueries
+	@Inject extension TypeQueries
 	
 	
 	def dispatch List<VersionedType> allReferencedVersionedTypes (Type t, LifecycleState minState) {newArrayList()}
@@ -83,6 +90,106 @@ class ReferencedTypesFinder {
 		s.operations.map(o|o.allReferencedTypeRefs()).flatten.map (e|e as TypeRef).toList;
 	}
 	
+	
+	def Set<Type> allTransitiveReferencedVersionedTypes(DataObject object, boolean includeInheritedProperties, boolean includeSuperTypes) {
+		val resSet = object.eResource.resourceSet
+		val Set<Type> allReferencedTypes = newHashSet()
+		val deps = object.properties.map(p| p.getTransitiveDependencies(includeInheritedProperties, false, new LinkedList<IEObjectDescription>(), null))
+		val types = deps.flatten.map(d | {
+			var eObj = d.target.EObjectOrProxy
+			if (eObj.eIsProxy) {
+				eObj = EcoreUtil2.resolve(eObj, resSet)
+			}
+			eObj
+		}).filter(typeof (Type))
+		allReferencedTypes.addAll(types)
+		if (includeSuperTypes) {
+			for (aType : types) {
+				if (aType instanceof DataObject) {
+					val dataObj = aType as DataObject
+					allReferencedTypes.addAll(dataObj.getAllSuperTypes(dataObj.state))
+				}
+			}
+		}
+		allReferencedTypes
+	}
+	
+	def Set<VersionedType> allTransitiveReferencedVersionedTypes(DataObject object, boolean includeInheritedProperties, boolean includeSuperTypes, LifecycleState minState) {
+		val resSet = object.eResource.resourceSet
+		val Set<VersionedType> allReferencedTypes = newHashSet()
+		val deps = object.properties.map(p| p.getTransitiveDependencies(includeInheritedProperties, false, new LinkedList<IEObjectDescription>(), null))
+		val types = deps.flatten.map[d | 
+			var eObj = d.target.EObjectOrProxy
+			if (eObj.eIsProxy) {
+				eObj = EcoreUtil2.resolve(eObj, resSet)
+			}
+			return eObj
+		].filterNull.filter(typeof (VersionedType))
+		allReferencedTypes.addAll(types)
+		if (includeSuperTypes) {
+			for (aType : types) {
+				if (aType instanceof DataObject) {
+					val dataObj = aType as DataObject
+					allReferencedTypes.addAll(dataObj.getAllSuperTypes(minState).filterNull)
+				}
+			}
+		}
+		allReferencedTypes
+	}
+
+	def getAllReferencedVersionedTypes(Service service, LifecycleState state) {
+		val typeRefs = service.operations.map(op|op.parameters).flatten.map(p|p.type).toList
+		val respTypeRefs = service.operations.map(op|op.^return).flatten.map(p|p.type)
+		typeRefs.addAll(respTypeRefs)
+		val verTypes = typeRefs.filter(typeof(AbstractVersionedTypeRef)).map[toVersionedType]
+		val allRefTypes = verTypes.filter(typeof(DataObject)).map(t | allTransitiveReferencedVersionedTypes(t, true, true, state)).flatten.filter(typeof(VersionedType))
+		val Set<VersionedType> allVerTypes = newHashSet()
+		allVerTypes.addAll(verTypes)
+		for (aType : verTypes) {
+			if (aType instanceof DataObject) {
+				val dataObj = aType as DataObject
+				allVerTypes.addAll(dataObj.getAllSuperTypes(state))
+			}
+		}
+//		allVerTypes.addAll(allRefTypes)
+		allVerTypes
+	}
+
+	def getAllReferencedVersionedTypes(Resource resource, LifecycleState state) {
+		val typeRefs = resource.operations.map(op|op.parameters).flatten.map(p|p.type).toList
+		val respTypeRefs = resource.operations.map(op|op.^return).flatten.map(p|p.type)
+		typeRefs.addAll(respTypeRefs)
+		val verTypes = typeRefs.filter(typeof(AbstractVersionedTypeRef)).map[toVersionedType]
+		val allRefTypes = verTypes.filter(typeof(DataObject)).map(t | allTransitiveReferencedVersionedTypes(t, true, true, state)).flatten.filter(typeof(VersionedType))
+		val Set<VersionedType> allVerTypes = newHashSet()
+		allVerTypes.addAll(verTypes)
+		for (aType : verTypes) {
+			if (aType instanceof DataObject) {
+				val dataObj = aType as DataObject
+				allVerTypes.addAll(dataObj.getAllSuperTypes(state))
+			}
+		}
+		allVerTypes.addAll(allRefTypes)
+		allVerTypes
+	}
+	
+	def getAllReferencedVersionedTypes(Operation op, LifecycleState state) {
+		val typeRefs = op.parameters.map(p|p.type).toList
+		val respTypeRefs = op.^return.map(p|p.type)
+		typeRefs.addAll(respTypeRefs)
+		val verTypes = typeRefs.filter(typeof(AbstractVersionedTypeRef)).map[toVersionedType]
+		val allRefTypes = verTypes.filter(typeof(DataObject)).map(t | allTransitiveReferencedVersionedTypes(t, true, true, state)).flatten.filter(typeof(VersionedType))
+		val Set<VersionedType> allVerTypes = newHashSet()
+		allVerTypes.addAll(verTypes)
+		for (aType : verTypes) {
+			if (aType instanceof DataObject) {
+				val dataObj = aType as DataObject
+				allVerTypes.addAll(dataObj.getAllSuperTypes(state))
+			}
+		}
+		allVerTypes.addAll(allRefTypes)
+		allVerTypes
+	}
 
 	
 }

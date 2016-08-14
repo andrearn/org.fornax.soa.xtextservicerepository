@@ -13,6 +13,7 @@ public class REST implements IModuleEndpointProtocol {
 	private RESTParameterStyle style;
 	private List<String> requestContentType = Lists.newArrayList();
 	private List<HttpResponse> response = Lists.newArrayList();
+	private List<Header> header = Lists.newArrayList();
 
 	public String getPath() {
 		return path;
@@ -60,6 +61,14 @@ public class REST implements IModuleEndpointProtocol {
 
 	public void addResponse(HttpResponse response) {
 		this.response.add(response);
+	}
+
+	public List<Header> getHeader() {
+		return header;
+	}
+
+	public void addHeader(Header header) {
+		this.header.add(header);
 	}
 
 }

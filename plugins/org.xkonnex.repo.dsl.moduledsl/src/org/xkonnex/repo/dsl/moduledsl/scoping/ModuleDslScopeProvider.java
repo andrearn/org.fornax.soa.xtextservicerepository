@@ -342,6 +342,7 @@ public class ModuleDslScopeProvider extends ComponentAwareVersionedScopeProvider
 		List<ImportNormalizer> result = newArrayList();
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.moduledsl.ext.protocol.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.moduledsl.ext.assembly.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb", ignoreCase));
 		return result;
 	}
 	

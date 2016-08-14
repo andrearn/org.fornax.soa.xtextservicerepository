@@ -8,6 +8,7 @@ public class HttpResponse {
 	
 	private Integer statusCode;
 	private List<String> contentType = Lists.newArrayList();
+	private List<Header> header = Lists.newArrayList();
 	
 	public Integer getStatusCode() {
 		return statusCode;
@@ -24,6 +25,14 @@ public class HttpResponse {
 	}
 	public void addContentType(String contentType) {
 		this.contentType.add(contentType);
+	}
+
+	public List<Header> getHeader() {
+		return header;
+	}
+
+	public void addHeader(Header header) {
+		this.header.add(header);
 	}
 
 }

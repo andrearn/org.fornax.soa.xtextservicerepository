@@ -130,16 +130,20 @@ class ComponentInferrer implements IComponentInferrer {
 
 	def private Object createInstance(JvmType type) {
 		var Object compInst = null
-		var Class<?> compClazz = reflectAccess.getRawType(type)
-		compInst = compClazz.newInstance()
+		if (type != null) {
+			var Class<?> compClazz = reflectAccess.getRawType(type)
+			compInst = compClazz.newInstance()
+		}
 		return compInst
 	}
 	
 	def private Object createInstance(JvmType type, JvmEnumerationLiteral enumLiteral) {
 		var Object enumInst = null
-		var Class<?> enumClazz = reflectAccess.getRawType(type)
-		val valueOfMethod = enumClazz.getMethod("valueOf", typeof(String))
-		enumInst = valueOfMethod.invoke(null, enumLiteral.simpleName)
+		if (type != null) {
+			var Class<?> enumClazz = reflectAccess.getRawType(type)
+			val valueOfMethod = enumClazz.getMethod("valueOf", typeof(String))
+			enumInst = valueOfMethod.invoke(null, enumLiteral.simpleName)
+		}
 		return enumInst
 	}
 	

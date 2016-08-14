@@ -270,9 +270,10 @@ Resource:
 	(deprecated?='@deprecated')? 
 	visibility=Visibility 'resource' name=ID '{' 
 		'metadata' '{'
-			version=Version 
+			version=Version
 			('replaces' replaces=ResourceRef)?
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
+			('short-description' shortDescription=STRING)? 
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
 			(
@@ -472,7 +473,7 @@ Operation:
 			links+=Link+
 		'}')?
 		/*
-		 * The operation that is capabale to revert/compensate the effect of this operation
+		 * The operation that is capable to revert/compensate the effect of this operation
 		 */
 		('compensated-by' compensatedBy+=OperationRef )?
 		('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?	

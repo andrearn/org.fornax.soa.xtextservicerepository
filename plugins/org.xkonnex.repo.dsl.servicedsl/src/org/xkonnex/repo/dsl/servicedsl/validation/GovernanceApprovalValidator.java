@@ -19,6 +19,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.GovernanceApproval;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.QueryObject;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType;
@@ -119,6 +120,16 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 						.getApprovalDate())))
 			warning("Please provide the date of the governance decision!",
 					ServiceDslPackage.Literals.SERVICE__GOVERNANCE_APPROVAL);
+	}
+	@Check
+	public void checkApprovedAssetHasDate (Resource s) {
+		GovernanceApproval g = s.getGovernanceApproval();
+		if (s.eContainer() instanceof DomainNamespace
+				&& g.getDecision() != ApprovalDecision.NO
+				&& (g.getApprovalDate() == null || "".equals(g
+						.getApprovalDate())))
+			warning("Please provide the date of the governance decision!",
+					ServiceDslPackage.Literals.VERSIONED_TYPE__GOVERNANCE_APPROVAL);
 	}
 	
 	@Check

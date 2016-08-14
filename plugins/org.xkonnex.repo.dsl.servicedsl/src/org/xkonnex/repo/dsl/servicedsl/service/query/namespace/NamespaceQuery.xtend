@@ -1,25 +1,28 @@
 package org.xkonnex.repo.dsl.servicedsl.service.query.namespace
 
 import com.google.inject.Inject
+import java.util.List
 import org.eclipse.emf.ecore.EObject
+import org.eclipse.xtext.EcoreUtil2
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.query.ExceptionFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.ServiceQueries
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.TypesByLifecycleStateFinder
+import org.xkonnex.repo.dsl.servicedsl.service.versioning.NamespaceSplitter
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
-import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
-import java.util.List
 
 /*
  * Namespace lookup functions
@@ -31,6 +34,7 @@ class NamespaceQuery {
 	@Inject extension ServiceQueries
 	@Inject extension ExceptionFinder
 	@Inject ProfileQueries profileQuery
+	@Inject NamespaceSplitter namespaceSplitter
 
 	def OrganizationNamespace findOrgNamespace (EObject o) {
 		val OrganizationNamespace orgNs = o.getOwnerByType(typeof (OrganizationNamespace))
@@ -84,6 +88,13 @@ class NamespaceQuery {
 		s?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
+	/**
+	 *	Find the owning namespace of the owner of the service reference
+	 */
+	def SubNamespace findResourceRefOwnerSubdomain (ResourceRef s) {
+		s?.getStatefulOwner()?.eContainer as SubNamespace;
+	}
+	
 	def List<SubNamespace> getSubNamespacePath (SubNamespace ns) {
 		val List<SubNamespace> nsList = newLinkedList(ns)
 		return getSubNamespacePath(nsList)
@@ -108,6 +119,10 @@ class NamespaceQuery {
 		ns.servicesWithMinState (state).size > 0;
 	}
 	
+	def dispatch boolean hasResourcesInMinState (SubNamespace ns, LifecycleState state) {
+		ns.resourcesWithMinState (state).size > 0;
+	}
+	
 	def dispatch boolean hasExceptionsInMinState (SubNamespace ns, LifecycleState state) {
 		ns.exceptionsWithMinState (state).size > 0;
 	}
@@ -118,6 +133,10 @@ class NamespaceQuery {
 	
 	def dispatch boolean hasServicesInMinState (VersionedDomainNamespace ns, LifecycleState state) {
 		ns.servicesWithMinState (state).size > 0;
+	}
+	
+	def dispatch boolean hasResourcesInMinState (VersionedDomainNamespace ns, LifecycleState state) {
+		ns.resourcesWithMinState (state).size > 0;
 	}
 	
 	def dispatch boolean hasExceptionsInMinState (VersionedDomainNamespace ns, LifecycleState state) {
@@ -146,6 +165,11 @@ class NamespaceQuery {
 		} else {
 			return enforcedProfile
 		}
+	}
+	
+	def VersionedDomainNamespace getVersionedNamespace(VersionedType type) {
+		val ns = EcoreUtil2::getContainerOfType(type, typeof(SubNamespace))
+		namespaceSplitter.createVersionedDomainNamespace(ns, type.version)
 	}
 		
 }

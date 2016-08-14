@@ -88,7 +88,7 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		effBind.environment = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__ENVIRONMENT)
 		effBind.provServer = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__PROV_SERVER)
 		effBind.governanceDecisions += createEffectiveGovernanceDecisions(bindingHierarchy)
-		effBind.providingEndpoints += providingEndpointBuilder.createEffectiveProvidingEndpoints(operation, effBind.moduleBinding.module.module)
+		effBind.providingEndpoints += providingEndpointBuilder.createEffectiveProvidingEndpoints(operation, effBind.moduleBinding?.module?.module)
 		return effBind
 	}
 	
@@ -111,7 +111,7 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		effBind.environment = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__ENVIRONMENT)
 		effBind.provServer = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__PROV_SERVER)
 		effBind.governanceDecisions += createEffectiveGovernanceDecisions(bindingHierarchy)
-		effBind.providingEndpoints += providingEndpointBuilder.createEffectiveProvidingEndpoints(service, effBind.moduleBinding.module.module)
+		effBind.providingEndpoints += providingEndpointBuilder.createEffectiveProvidingEndpoints(service, effBind.moduleBinding?.module?.module)
 		return effBind
 	}
 	
@@ -126,7 +126,7 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		effBind.environment = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__ENVIRONMENT)
 		effBind.provServer = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__PROV_SERVER)
 		effBind.governanceDecisions += createEffectiveGovernanceDecisions(bindingHierarchy)
-		effBind.providingEndpoints += providingEndpointBuilder.createEffectiveProvidingEndpoints(resource, effBind.moduleBinding.module.module)
+		effBind.providingEndpoints += providingEndpointBuilder.createEffectiveProvidingEndpoints(resource, effBind.moduleBinding?.module?.module)
 		return effBind
 	}
 	

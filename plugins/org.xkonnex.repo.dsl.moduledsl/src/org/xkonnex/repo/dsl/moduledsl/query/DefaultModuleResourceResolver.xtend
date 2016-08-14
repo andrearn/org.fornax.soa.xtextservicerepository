@@ -20,11 +20,23 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportResourceRef
 class DefaultModuleResourceResolver implements IModuleResourceResolver {
 	
 	@Inject extension VersionQualifierExtensions
-	@Inject IStateMatcher stateMatcher
-	@Inject LifecycleQueries lifecycleQueries
 	@Inject
 	private IEObjectLookup objLookup
 	
+	
+	override getAllUsedServiceRefs(Module module) {
+		var Set<AbstractResourceRef> resourceRefs = newHashSet
+		resourceRefs.addAll (module.usedModules.map (usedMod | usedMod.includedResources).flatten)
+		for (usedMod : module.usedModules) {
+			for (resRef : usedMod.moduleRef.module.allProvidedResourceRefs) {
+				if (! usedMod.excludedServices.contains(resRef)) {
+					resourceRefs.add (resRef)
+				}
+			}
+		}
+		resourceRefs.addAll (module.usedResource)
+		return resourceRefs
+	}
 	
 	/** 
 	 * Get explicit and implicit references to resources provided from the module.

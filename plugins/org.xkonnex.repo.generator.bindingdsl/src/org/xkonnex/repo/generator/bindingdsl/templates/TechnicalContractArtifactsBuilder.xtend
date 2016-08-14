@@ -38,7 +38,7 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 
 	/**
 	 *	ENTRYPOINT for generation of concrete and imported abstract WSDLs and their required XSDs 
-	 *	for a gibven ModuleBindings. The ModuleBinding binds all Services provided by the module
+	 *	for a given ModuleBinding. The ModuleBinding binds all Services provided by the module
 	 *	to a certain Environment. Generates artifacts for all ModuleBindings
 	 *	that target an Environment matching the given environment name.
 	 *	

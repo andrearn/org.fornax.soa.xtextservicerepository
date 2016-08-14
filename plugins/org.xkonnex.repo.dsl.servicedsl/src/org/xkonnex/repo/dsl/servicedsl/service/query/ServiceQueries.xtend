@@ -22,6 +22,14 @@ import org.eclipse.xtext.resource.IEObjectDescription
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
 import com.google.common.base.Predicates
 import java.util.Set
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 
 class ServiceQueries {
 	
@@ -44,8 +52,22 @@ class ServiceQueries {
 		ns.subdomain.servicesWithMinState (state);
 	}
 	
+	def dispatch List resourcesWithMinState (Object ns, LifecycleState state) {null;}
+	
+	def dispatch List<Service> resourcesWithMinState (SubNamespace ns, LifecycleState state) {
+		ns.services.filter (e|e.state.matchesMinStateLevel (state)).toList;
+	}
+
+	def dispatch List resourcesWithMinState (VersionedDomainNamespace ns, LifecycleState state) {
+		ns.subdomain.resourcesWithMinState (state);
+	}
+	
 	def Set<Service> findAllServices () {
 		search.search("Service ", Predicates::alwaysTrue).filter(typeof (Service)).toSet
+	}
+	
+	def Set<Service> findAllResources () {
+		search.search("Resource ", Predicates::alwaysTrue).filter(typeof (Service)).toSet
 	}
 	
 	def List<EObject> findAllServiceConsumers (Service service) {
@@ -54,6 +76,14 @@ class ServiceQueries {
 	
 	def List<EObject> findAllProvidingModules (Service service) {
 		svcQueriesInt.findAllProvidingModules(service)
+	}
+	
+	def List<EObject> findAllResourceConsumers (Resource resource) {
+		svcQueriesInt.findAllResourceConsumers(resource) 
+	}
+	
+	def List<EObject> findAllProvidingModules (Resource resource) {
+		svcQueriesInt.findAllProvidingModules(resource)
 	}
 
 	
@@ -65,7 +95,23 @@ class ServiceQueries {
 		s.findSubdomain().exceptions.filter (e|e.version.version.split("\\.").head == majorVersion).toList;
 	}
 	
+	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allExceptionsByMajorVersion (Resource s, String majorVersion)  {
+		s.findSubdomain().exceptions.filter (e|e.version.version.split("\\.").head == majorVersion).toList;
+	}
+	
+	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allExceptionsByMajorVersion (Aggregate s, String majorVersion)  {
+		s.findSubdomain().exceptions.filter (e|e.version.version.split("\\.").head == majorVersion).toList;
+	}
+	
 	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allReferencedExceptions (Service s) {
+		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
+	}
+	
+	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allReferencedExceptions (Resource s) {
+		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
+	}
+	
+	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allReferencedExceptions (Aggregate s) {
 		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
 	}
 	

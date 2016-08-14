@@ -20,6 +20,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage
 import org.eclipse.xtext.ui.IImageHelper
 import com.google.inject.Inject
@@ -39,6 +40,10 @@ class ServiceDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	}
 	
 	def _isLeaf(Parameter param) {
+		true
+	}
+	
+	def _isLeaf(Property param) {
 		true
 	}
 	

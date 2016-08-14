@@ -16,6 +16,8 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResolver
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 
 /*********************************************************************************
  *	Calculation of all VersionedDomainNamespaces imported by a given or derived 
@@ -138,7 +140,24 @@ class NamespaceImportQueries {
 	 *	VersiondDomainNamespace of the found dependencies are returned.
 	 */
 	def dispatch Set<VersionedDomainNamespace> allImportedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) {
-		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (BusinessObject))
+		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (DataObject))
+			.map (b|b.allReferencedVersionedTypes (minState)).flatten.map (r|namespaceSplitter.createVersionedDomainNamespace(r)).toSet;
+		imports.addAll (s.allReferencedVersionedTypes (minState).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
+		imports.addAll (serviceFinder.allReferencedExceptions (s).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
+
+		val exByMajor = serviceFinder.allExceptionsByMajorVersion (s, nameSpaceMajorVersion);
+		imports.addAll (exByMajor.map (e|e.allReferencedVersionedTypes (minState)).flatten.map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
+		imports.addAll (exByMajor.map (ex|ex.superException).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace (excResolver.findMatchingException(e))));
+		imports.add (namespaceSplitter.createVersionedDomainNamespace(s));
+		return imports;
+	}
+	/**
+	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
+	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
+	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 */
+	def dispatch Set<VersionedDomainNamespace> allImportedVersionedNS (Resource s, String nameSpaceMajorVersion, LifecycleState minState) {
+		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (DataObject))
 			.map (b|b.allReferencedVersionedTypes (minState)).flatten.map (r|namespaceSplitter.createVersionedDomainNamespace(r)).toSet;
 		imports.addAll (s.allReferencedVersionedTypes (minState).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		imports.addAll (serviceFinder.allReferencedExceptions (s).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));

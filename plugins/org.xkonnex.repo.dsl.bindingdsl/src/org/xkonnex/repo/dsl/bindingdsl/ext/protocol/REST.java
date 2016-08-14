@@ -5,6 +5,7 @@ import java.util.List;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.HTTP;
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
+import org.xkonnex.repo.dsl.moduledsl.ext.protocol.Header;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpResponse;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
@@ -21,6 +22,7 @@ public class REST implements IProtocol {
 	private RESTParameterStyle style;
 	private List<String> requestContentType = Lists.newArrayList();
 	private List<HttpResponse> response = Lists.newArrayList();
+	private List<Header> header = Lists.newArrayList();
 
 	@Override
 	public boolean supportsModuleEndpointProtocol(
@@ -83,6 +85,14 @@ public class REST implements IProtocol {
 
 	public void addResponse(HttpResponse response) {
 		this.response.add(response);
+	}
+
+	public List<Header> getHeader() {
+		return header;
+	}
+
+	public void addHeader(Header header) {
+		this.header.add(header);
 	}
 
 	@Override

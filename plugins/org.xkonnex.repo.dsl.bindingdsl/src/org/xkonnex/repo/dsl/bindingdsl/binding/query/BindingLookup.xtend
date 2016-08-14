@@ -379,7 +379,8 @@ class BindingLookup {
 			hierarchy+=channelBind
 		if (svcBind != null)
 			hierarchy+=svcBind
-		hierarchy+=modBind
+		if (modBind != null)
+			hierarchy+=modBind
 		hierarchy
 	}
 	
