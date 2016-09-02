@@ -12,10 +12,12 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
+import org.xkonnex.repo.generator.servicedsl.templates.json.JSONSchemaGenerator
 
 class RAMLTypesGenerator {
 	
 	@Inject extension JSONTypeExtensions
+	@Inject extension JSONSchemaGenerator
 	
 	def dispatch toTypeDeclaration (TypeRef typeRef) {
 		
@@ -23,47 +25,79 @@ class RAMLTypesGenerator {
 	def dispatch toTypeDeclaration (DataObjectRef typeRef) {
 		'''
 			«typeRef.toContextualTypeNameRef»:
-			  	type: «typeRef.type.toBaseType»
-			  		«IF(typeRef.type instanceof DataObject)»
-			  			properties:
-				  			«(typeRef.type as DataObject).properties.map(p|p.toProperty)»
-			  		«ENDIF»
-			
+			    type: «typeRef.type.toBaseType»
+			      «IF(typeRef.type instanceof DataObject)»
+			        properties:
+			            «(typeRef.type as DataObject).properties.map(p|p.toProperty).join("\n")»
+			      «ENDIF»
 		'''
 	}
 	def dispatch toTypeDeclaration (VersionedTypeRef typeRef) {
 		'''
 			«typeRef.toContextualTypeNameRef»:
-			  	type: «typeRef.type.toBaseType»
-			  		«IF(typeRef.type instanceof DataObject)»
-			  			properties:
-			  				«(typeRef.type as DataObject).properties.map(p|p.toProperty)»
-				  	«ELSEIF (typeRef.type instanceof Enumeration)»
-			  		«ENDIF»
-			
+				type: «typeRef.type.toBaseType»
+			    «IF(typeRef.type instanceof DataObject)»
+			      properties:
+			        «(typeRef.type as DataObject).properties.map(p|p.toProperty).join("\n")»
+				«ELSEIF (typeRef.type instanceof Enumeration)»
+			      enum: 
+			        [«(typeRef.type as Enumeration).literals.map[name].join(", ")»]
+			    «ENDIF»
 		'''
 	}
 	def dispatch toTypeDeclaration (DataObject type) {
 		'''
 			«type.toContextualTypeNameRef»:
-			  	type: «type.toBaseType»
-			  		properties:
-			  			«type.properties.map(p|p.toProperty).join(",\n")»
-			
+			    type: «type.toBaseType»
+			    properties:
+			      «type.properties.map(p|p.toProperty).join("\n")»
 		'''
 	}
 	def dispatch toTypeDeclaration (Enumeration type) {
 		'''
 			«type.toContextualTypeNameRef»:
-			  	type: «type.toBaseType»
-			  		enum: 
-			  			[«type.literals.map[name].join(", ")»]
-			
+			    type: «type.toBaseType»
+			    enum: 
+			      [«type.literals.map[name].join(", ")»]
 		'''
 	}
 	def dispatch toTypeDeclaration (VersionedType type) {
 		''''''
 	}
+
+
+
+	def dispatch tJSONTypeDeclaration (TypeRef typeRef) {
+		
+	}
+	def dispatch toJSONTypeDeclaration (DataObjectRef typeRef) {
+		'''
+			- «typeRef.toContextualTypeNameRef»: |
+			    «typeRef.type.toJSONSchema»
+		'''
+	}
+	def dispatch toJSONTypeDeclaration (VersionedTypeRef typeRef) {
+		'''
+			- «typeRef.toContextualTypeNameRef»: |
+				«typeRef.type.toJSONSchema»
+		'''
+	}
+	def dispatch toJSONTypeDeclaration (DataObject type) {
+		'''
+			- «type.toContextualTypeNameRef»: |
+			    «type.toJSONSchema»
+		'''
+	}
+	def dispatch toJSONTypeDeclaration (Enumeration type) {
+		'''
+			- «type.toContextualTypeNameRef»: |
+			    «type.toJSONSchema»
+		'''
+	}
+	def dispatch toJSONTypeDeclaration (VersionedType type) {
+		''''''
+	}
+
 	
 	def dispatch toBaseType(VersionedType type) {
 		"object"
@@ -97,9 +131,11 @@ class RAMLTypesGenerator {
 			case "int": "integer" + typeRef.toArrayIndicator
 			case "double": "number" + typeRef.toArrayIndicator
 			case "float": "number" + typeRef.toArrayIndicator
-			case "date": "date-only" + typeRef.toArrayIndicator
-			case "time": "time-only" + typeRef.toArrayIndicator
-			case "datetime": "datetime" + typeRef.toArrayIndicator
+			case "date": "date" + typeRef.toArrayIndicator
+			case "date-only": "date-only" + typeRef.toArrayIndicator
+			case "time": "time" + typeRef.toArrayIndicator
+			case "time-only": "time-only" + typeRef.toArrayIndicator
+			case "datetime": "dateTime" + typeRef.toArrayIndicator
 			// file, integer
 			default: typeRef.type.name + typeRef.toArrayIndicator
 		}
