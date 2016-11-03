@@ -13,11 +13,14 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
+import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 
 class JSONSchemaFilenameProvider {
 		
 	@Inject extension CommonStringExtensions
 	@Inject extension ServiceNamespaceNameFragmentProvider serviceNsNameFragmentProvider
+	@Inject extension NamespaceQuery
 	@Inject VersionQualifierExtensions versionQualifier	
 	
 	@Inject @Named ("useRegistryBasedFilePaths") 
@@ -150,7 +153,12 @@ class JSONSchemaFilenameProvider {
 	 * Calculates a part of Schema filename
 	 */
 	def dispatch String toFileNameFragment (VersionedNamespace ns) {
-		ns.namespace.toFileNameFragment() + "-v" + versionQualifier.toMajorVersionNumber(ns.version);
+		ns.namespace.toFileNameFragment() + "-" + versionQualifier.toVersionPostfix(ns.version);
+	}
+
+	def dispatch String toFileNameFragment (VersionedType type) {
+		val ns = type.findSubdomain
+		ns.toFileNameFragment + "-" + type.name + "-" + versionQualifier.toVersionPostfix(type.version);
 	}
 		
 		

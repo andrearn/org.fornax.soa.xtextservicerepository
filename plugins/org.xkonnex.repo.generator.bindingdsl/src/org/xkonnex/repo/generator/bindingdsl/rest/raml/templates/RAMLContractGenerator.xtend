@@ -51,6 +51,7 @@ import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplat
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.OperationWrapperTypesGenerator
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTypeExtensions
+import org.xkonnex.repo.generator.servicedsl.templates.json.JSONSchemaGenerator
 
 class RAMLContractGenerator {
     
@@ -69,6 +70,7 @@ class RAMLContractGenerator {
     @Inject extension DataObjectQueries
 
     @Inject RAMLTypesGenerator inlineTypeGenerator
+    @Inject JSONSchemaGenerator jsonSchemaGenerator
     @Inject extension SchemaNamespaceExtensions schemaNamespaceExt
     @Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
     @Inject IEObjectDocumentationProvider docProvider
@@ -110,7 +112,7 @@ class RAMLContractGenerator {
         svc.toRAML (minState, binding.moduleBinding, profile);
     }
     
-    def toRAML(Service service, LifecycleState minState, ModuleBinding binding, Profile profile) {
+    def dispatch void toRAML(Service service, LifecycleState minState, ModuleBinding binding, Profile profile) {
         log.info('''Generating RAML description for Service «service.fullyQualifiedName»'''.toString)
         val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
         val effBind = bindingBuilder.createEffectiveBinding(service, binding)
@@ -152,7 +154,7 @@ class RAMLContractGenerator {
         fsa.generateFile(ramlFile, content)
     }
     
-    def toRAML(Resource resource, LifecycleState minState, ModuleBinding binding, Profile profile) {
+    def dispatch void toRAML(Resource resource, LifecycleState minState, ModuleBinding binding, Profile profile) {
         log.info('''Generating RAML description for Service «resource.fullyQualifiedName»'''.toString)
         val Set<VersionedTechnicalNamespace> headerImports = resource.collectTechnicalVersionedNamespaceImports (profile)
         val effBind = bindingBuilder.createEffectiveBinding(resource, binding)
@@ -242,9 +244,10 @@ class RAMLContractGenerator {
     
     def String toTypes(Service service, LifecycleState state, Profile profile, Set<VersionedTechnicalNamespace> namespaces) {
         val allVerTypes = service.getAllReferencedVersionedTypes(state).toList.sortBy[name]
+        allVerTypes.filter(typeof(DataObject)).forEach(t|jsonSchemaGenerator.generateSchema(t))
         '''
             types:
-                «allVerTypes.map(t|inlineTypeGenerator.toJSONTypeDeclaration(t)).filterNull.map(t|t.toString).toSet.join("\n")»
+                «allVerTypes.map(t|inlineTypeGenerator.toTypeDeclaration(t)).filterNull.map(t|t.toString).toSet.join("\n")»
         '''
     }
     
@@ -256,7 +259,7 @@ class RAMLContractGenerator {
         val types = typeRefs.filter(t| !(t instanceof DataTypeRef || t instanceof org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef))
         '''
             types:
-                «types.map(t|inlineTypeGenerator.toJSONTypeDeclaration(t)).filterNull.toSet.join("\n")»
+                «types.map(t|inlineTypeGenerator.toTypeDeclaration(t)).filterNull.toSet.join("\n")»
         '''
     }
     

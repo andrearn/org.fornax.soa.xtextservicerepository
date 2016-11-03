@@ -67,7 +67,7 @@ class RAMLTypesGenerator {
 
 
 
-	def dispatch tJSONTypeDeclaration (TypeRef typeRef) {
+	def dispatch toJSONTypeDeclaration (TypeRef typeRef) {
 		
 	}
 	def dispatch toJSONTypeDeclaration (DataObjectRef typeRef) {

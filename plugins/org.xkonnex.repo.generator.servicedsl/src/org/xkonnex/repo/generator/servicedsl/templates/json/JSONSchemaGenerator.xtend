@@ -14,6 +14,7 @@ class JSONSchemaGenerator {
 	
 	@Inject extension JSONTypeExtensions
 	@Inject extension JSONSchemaFilenameProvider
+	@Inject extension JSONSchemaReferenceProvider
 	@Inject IEObjectDocumentationProvider docProvider
 	@Inject IFileSystemAccess fsa
 	
@@ -60,43 +61,73 @@ class JSONSchemaGenerator {
 	def toProperty(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property p) {
 		val doc = docProvider.getDocumentation(p)
 		'''
-		"«p.name»" : {
-		«IF doc != null»
-		  "description": "«doc»",
-		«ENDIF»
-		  "type": "«p.type.toPropertyType»", 
-		  "required": "«if(p.isOptional)"true" else "false"»"
-		}
+			"«p.name»" : {
+			  «IF doc != null»
+			    "description": "«doc»",
+			  «ENDIF»
+			  «p.type.toPropertyType (p.optional)»,
+			  "required": "«if(p.isOptional)"true" else "false"»"
+			}
 		'''	
 	}
 	
-	def dispatch String toPropertyType (TypeRef typeRef) {
+	def dispatch String toPropertyType (TypeRef typeRef, boolean optional) {
 		
 	}
-	def dispatch String toPropertyType (VersionedTypeRef typeRef) {
-		typeRef.toContextualTypeNameRef + typeRef.toArrayIndicator
+	def dispatch String toPropertyType (VersionedTypeRef typeRef, boolean optional) {
+		typeRef.type.toPropertyType
+		if (typeRef.many) {
+			'''
+				"type":  "array",
+				"items": {
+					«typeRef.type.toPropertyType»
+				},
+				"minItems": «IF optional»0«ELSE»1«ENDIF»,
+				"uniqueItems": «IF typeRef.set»true«ELSE»false«ENDIF»
+			'''
+		} else {
+			'''«typeRef.type.toPropertyType»'''
+		}
 	}
-	def dispatch String toPropertyType (DataTypeRef typeRef) {
+	
+	def dispatch String toPropertyType (DataTypeRef typeRef, boolean optional) {
+		if (typeRef.many) {
+			'''
+				"type":  "array",
+				"items": { "type": "«typeRef.toType»" },
+				"minItems": «IF optional»0«ELSE»1«ENDIF»,
+				"uniqueItems": «IF typeRef.set»true«ELSE»false«ENDIF»
+			'''
+		} else {
+			'''"type": "«typeRef.toType»"'''
+		}
+	}
+	
+	def String toType (DataTypeRef typeRef) {
 		switch (typeRef.type.name) {
-			case "int": "integer" + typeRef.toArrayIndicator
-			case "double": "number" + typeRef.toArrayIndicator
-			case "float": "number" + typeRef.toArrayIndicator
-			case "date": "date" + typeRef.toArrayIndicator
-			case "date-only": "date-only" + typeRef.toArrayIndicator
-			case "time": "time" + typeRef.toArrayIndicator
-			case "time-only": "time-only" + typeRef.toArrayIndicator
-			case "datetime": "dateTime" + typeRef.toArrayIndicator
+			case "int": "integer"
+			case "double": "number"
+			case "float": "number"
+			case "date": "date"
+			case "date-only": "date-only"
+			case "time": "time"
+			case "time-only": "time-only"
+			case "datetime": "dateTime"
 			// file, integer
-			default: typeRef.type.name + typeRef.toArrayIndicator
+			default: typeRef.type.name
 		}
 	}
 	def dispatch String toPropertyType (VersionedType type) {
-		type.name
+		'''"$ref": "«type.toTypeReferenceURI»"'''
 	}
 	def dispatch String toPropertyType (Enumeration type) {
 		'''
 		"string",
 		"enum": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]'''
+	}
+	
+	def toTypeRefURI (VersionedType type) {
+		
 	}
 	
 	private def toArrayIndicator(VersionedTypeRef typeRef) {
