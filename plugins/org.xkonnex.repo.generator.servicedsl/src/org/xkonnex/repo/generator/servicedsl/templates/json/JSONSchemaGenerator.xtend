@@ -9,6 +9,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
 import javax.inject.Inject
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType
 
 class JSONSchemaGenerator {
 	
@@ -39,7 +40,8 @@ class JSONSchemaGenerator {
 		        «ENDIF»
 		        "properties": {
 		          «type.properties.map[toProperty].join(",\n")»
-		        }
+		        },
+		        «type.toRequired»
 		      }
 		'''
 	}
@@ -65,10 +67,14 @@ class JSONSchemaGenerator {
 			  «IF doc != null»
 			    "description": "«doc»",
 			  «ENDIF»
-			  «p.type.toPropertyType (p.optional)»,
-			  "required": "«if(p.isOptional)"true" else "false"»"
+			  «p.type.toPropertyType (p.optional)»
 			}
 		'''	
+	}
+	
+	def toRequired(DataObject obj) {
+		val requiredProps = obj.properties.filter[!optional]
+		'''«IF !requiredProps.empty»"required": [«requiredProps.map["\"" + name + "\""].join(", ")»]«ENDIF»'''
 	}
 	
 	def dispatch String toPropertyType (TypeRef typeRef, boolean optional) {
@@ -86,7 +92,9 @@ class JSONSchemaGenerator {
 				"uniqueItems": «IF typeRef.set»true«ELSE»false«ENDIF»
 			'''
 		} else {
-			'''«typeRef.type.toPropertyType»'''
+			'''
+				«typeRef.type.toPropertyType»
+			'''
 		}
 	}
 	
@@ -94,12 +102,14 @@ class JSONSchemaGenerator {
 		if (typeRef.many) {
 			'''
 				"type":  "array",
-				"items": { "type": "«typeRef.toType»" },
+				"items": {
+					«typeRef.type.toPropertyType»
+				},
 				"minItems": «IF optional»0«ELSE»1«ENDIF»,
 				"uniqueItems": «IF typeRef.set»true«ELSE»false«ENDIF»
 			'''
 		} else {
-			'''"type": "«typeRef.toType»"'''
+			'''«typeRef.type.toPropertyType»'''
 		}
 	}
 	
@@ -117,13 +127,52 @@ class JSONSchemaGenerator {
 			default: typeRef.type.name
 		}
 	}
+	
 	def dispatch String toPropertyType (VersionedType type) {
 		'''"$ref": "«type.toTypeReferenceURI»"'''
 	}
+	
 	def dispatch String toPropertyType (Enumeration type) {
 		'''
-		"string",
+		"type": "string",
 		"enum": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]'''
+	}
+	
+	def dispatch String toPropertyType (DataType type) {
+		switch (type.name) {
+			case "int": 		'''
+									"type" : "integer"
+								'''
+			case "double": 		'''
+									"type" : "number"
+								'''
+			case "float": 		'''
+									"type" : "number"
+								'''
+			case "date":  		'''
+									"type" : "string",
+									"format" : "date"
+								'''
+			case "date-only": 	'''
+									"type" : "string",
+									"format" : "date"
+								'''
+			case "time":  		'''
+									"type" : "string",
+									"format" : "time"
+								'''
+			case "time-only":  	'''
+									"type" : "string",
+									"format" : "time"
+								'''
+			case "datetime": 	'''
+									"type" : "string",
+									"format" : "date-time"
+								'''
+			// file, integer
+			default: '''
+									"type" : "«type.name»"'''
+		}
 	}
 	
 	def toTypeRefURI (VersionedType type) {
