@@ -11,6 +11,7 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.OperationBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.HTTP
+import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
 
 class BindingExtensions {
 	
@@ -28,6 +29,9 @@ class BindingExtensions {
 	}
 	
 	def dispatch String getRegistryBaseUrl (ModuleBinding b) {
+		b.resolveEnvironment?.registryBaseUrl
+	}
+	def dispatch String getRegistryBaseUrl (EffectiveBinding b) {
 		b.resolveEnvironment?.registryBaseUrl
 	}
 	

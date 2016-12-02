@@ -1,15 +1,17 @@
 package org.xkonnex.repo.generator.servicedsl.templates.json
 
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
 import javax.inject.Inject
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
+import javax.inject.Named
 
 class JSONSchemaGenerator {
 	
@@ -19,16 +21,22 @@ class JSONSchemaGenerator {
 	@Inject IEObjectDocumentationProvider docProvider
 	@Inject IFileSystemAccess fsa
 	
-	def generateSchema (DataObject dataObject) {
-		val content = dataObject.toJSONSchema
+	@Inject @Named ("useRegistryBasedFilePaths") 
+	Boolean useRegistryBasedFilePaths
+	
+	@Inject @Named ("useNestedPaths") 
+	Boolean useNestedPaths
+
+	def generateSchema (DataObject dataObject, String registryBaseUrl) {
+		val content = dataObject.toJSONSchema(registryBaseUrl)
 		fsa.generateFile(dataObject.toFileNameFragment + ".json", content)
 	}
 	
-	def dispatch toJSONSchema(VersionedType type) {
+	def dispatch toJSONSchema(VersionedType type, String registryBaseUrl) {
 		
 	}
 	
-	def dispatch toJSONSchema(DataObject type) {
+	def dispatch toJSONSchema(DataObject type, String registryBaseUrl) {
 		val doc = docProvider.getDocumentation(type)
 		//- Address : |
 		'''
@@ -39,13 +47,13 @@ class JSONSchemaGenerator {
 		          "description": "«doc»",
 		        «ENDIF»
 		        "properties": {
-		          «type.properties.map[toProperty].join(",\n")»
+		          «type.properties.map[toProperty(registryBaseUrl)].join(",\n")»
 		        },
 		        «type.toRequired»
 		      }
 		'''
 	}
-	def dispatch toJSONSchema(Enumeration type) {
+	def dispatch toJSONSchema(Enumeration type, String registryBaseUrl) {
 		val doc = docProvider.getDocumentation(type)
 		//- Address : |
 		'''
@@ -60,14 +68,14 @@ class JSONSchemaGenerator {
 		'''
 	}
 	
-	def toProperty(org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property p) {
+	def toProperty(Property p, String registryBaseUrl) {
 		val doc = docProvider.getDocumentation(p)
 		'''
 			"«p.name»" : {
 			  «IF doc != null»
 			    "description": "«doc»",
 			  «ENDIF»
-			  «p.type.toPropertyType (p.optional)»
+			  «p.type.toPropertyType (p.optional, registryBaseUrl)»
 			}
 		'''	
 	}
@@ -77,68 +85,53 @@ class JSONSchemaGenerator {
 		'''«IF !requiredProps.empty»"required": [«requiredProps.map["\"" + name + "\""].join(", ")»]«ENDIF»'''
 	}
 	
-	def dispatch String toPropertyType (TypeRef typeRef, boolean optional) {
+	def dispatch String toPropertyType (TypeRef typeRef, boolean optional, String registryBaseUrl) {
 		
 	}
-	def dispatch String toPropertyType (VersionedTypeRef typeRef, boolean optional) {
-		typeRef.type.toPropertyType
+	def dispatch String toPropertyType (VersionedTypeRef typeRef, boolean optional, String registryBaseUrl) {
+		typeRef.type.toPropertyType(registryBaseUrl)
 		if (typeRef.many) {
 			'''
 				"type":  "array",
 				"items": {
-					«typeRef.type.toPropertyType»
+					«typeRef.type.toPropertyType(registryBaseUrl)»
 				},
 				"minItems": «IF optional»0«ELSE»1«ENDIF»,
 				"uniqueItems": «IF typeRef.set»true«ELSE»false«ENDIF»
 			'''
 		} else {
 			'''
-				«typeRef.type.toPropertyType»
+				«typeRef.type.toPropertyType(registryBaseUrl)»
 			'''
 		}
 	}
 	
-	def dispatch String toPropertyType (DataTypeRef typeRef, boolean optional) {
+	def dispatch String toPropertyType (DataTypeRef typeRef, boolean optional, String registryBaseUrl) {
 		if (typeRef.many) {
 			'''
 				"type":  "array",
 				"items": {
-					«typeRef.type.toPropertyType»
+					«typeRef.type.toPropertyType(registryBaseUrl)»
 				},
 				"minItems": «IF optional»0«ELSE»1«ENDIF»,
 				"uniqueItems": «IF typeRef.set»true«ELSE»false«ENDIF»
 			'''
 		} else {
-			'''«typeRef.type.toPropertyType»'''
+			'''«typeRef.type.toPropertyType(registryBaseUrl)»'''
 		}
 	}
 	
-	def String toType (DataTypeRef typeRef) {
-		switch (typeRef.type.name) {
-			case "int": "integer"
-			case "double": "number"
-			case "float": "number"
-			case "date": "date"
-			case "date-only": "date-only"
-			case "time": "time"
-			case "time-only": "time-only"
-			case "datetime": "dateTime"
-			// file, integer
-			default: typeRef.type.name
-		}
+	def dispatch String toPropertyType (VersionedType type, String registryBaseUrl) {
+		'''"$ref": "«type.toTypeReferenceURI(registryBaseUrl)»"'''
 	}
 	
-	def dispatch String toPropertyType (VersionedType type) {
-		'''"$ref": "«type.toTypeReferenceURI»"'''
-	}
-	
-	def dispatch String toPropertyType (Enumeration type) {
+	def dispatch String toPropertyType (Enumeration type, String registryBaseUrl) {
 		'''
 		"type": "string",
 		"enum": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]'''
 	}
 	
-	def dispatch String toPropertyType (DataType type) {
+	def dispatch String toPropertyType (DataType type, String registryBaseUrl) {
 		switch (type.name) {
 			case "int": 		'''
 									"type" : "integer"
@@ -177,13 +170,6 @@ class JSONSchemaGenerator {
 	
 	def toTypeRefURI (VersionedType type) {
 		
-	}
-	
-	private def toArrayIndicator(VersionedTypeRef typeRef) {
-		if(typeRef.many)'''[]'''else''''''
-	}
-	private def toArrayIndicator(DataTypeRef typeRef) {
-		if(typeRef.many)'''[]'''else''''''
 	}
 	
 }

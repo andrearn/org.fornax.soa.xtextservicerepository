@@ -2,9 +2,16 @@ package org.xkonnex.repo.generator.servicedsl.templates.json
 
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import javax.inject.Inject
+import javax.inject.Named
 
 class JSONSchemaReferenceProvider {
 	
+	@Inject @Named ("useRegistryBasedFilePaths") 
+	Boolean useRegistryBasedFilePaths
+	
+	@Inject @Named ("useNestedPaths") 
+	Boolean useNestedPaths
+
 	@Inject
 	private extension JSONSchemaFilenameProvider
 	
@@ -13,7 +20,10 @@ class JSONSchemaReferenceProvider {
 	}
 
 	def String toTypeReferenceURI(VersionedType type, String registryBaseUrl) {
-		'''«registryBaseUrl»/«type.toFileNameFragment».json'''
+		if (useRegistryBasedFilePaths)
+			'''«registryBaseUrl»/«type.toFileNameFragment».json'''
+		else
+			type.toTypeReferenceURI
 	}
 	
 }

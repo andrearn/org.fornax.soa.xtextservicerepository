@@ -67,31 +67,31 @@ class RAMLTypesGenerator {
 
 
 
-	def dispatch toJSONTypeDeclaration (TypeRef typeRef) {
+	def dispatch toJSONTypeDeclaration (TypeRef typeRef, String registryBaseUrl) {
 		
 	}
-	def dispatch toJSONTypeDeclaration (DataObjectRef typeRef) {
+	def dispatch toJSONTypeDeclaration (DataObjectRef typeRef, String registryBaseUrl) {
 		'''
 			- «typeRef.toContextualTypeNameRef»: |
-			    «typeRef.type.toJSONSchema»
+			    «typeRef.type.toJSONSchema(registryBaseUrl)»
 		'''
 	}
-	def dispatch toJSONTypeDeclaration (VersionedTypeRef typeRef) {
+	def dispatch toJSONTypeDeclaration (VersionedTypeRef typeRef, String registryBaseUrl) {
 		'''
 			- «typeRef.toContextualTypeNameRef»: |
-				«typeRef.type.toJSONSchema»
+				«typeRef.type.toJSONSchema(registryBaseUrl)»
 		'''
 	}
-	def dispatch toJSONTypeDeclaration (DataObject type) {
+	def dispatch toJSONTypeDeclaration (DataObject type, String registryBaseUrl) {
 		'''
 			- «type.toContextualTypeNameRef»: |
-			    «type.toJSONSchema»
+			    «type.toJSONSchema(registryBaseUrl)»
 		'''
 	}
-	def dispatch toJSONTypeDeclaration (Enumeration type) {
+	def dispatch toJSONTypeDeclaration (Enumeration type, String registryBaseUrl) {
 		'''
 			- «type.toContextualTypeNameRef»: |
-			    «type.toJSONSchema»
+			    «type.toJSONSchema(registryBaseUrl)»
 		'''
 	}
 	def dispatch toJSONTypeDeclaration (VersionedType type) {

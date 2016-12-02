@@ -126,7 +126,7 @@ class RAMLContractGenerator {
             title: «service.name» API
             version: v«service.version.version»
             baseUri: «service.toEndpointAddress (effBind.provServer, prot, effBind)»
-            «toTypes(service, minState, profile, headerImports)»
+            «toTypes(service, minState, profile, headerImports, environment.registryBaseUrl)»
             «service.operations.map[toOperation(effBind)].join»
         '''
 //            #%RAML 1.0
@@ -242,9 +242,9 @@ class RAMLContractGenerator {
         '''
     }
     
-    def String toTypes(Service service, LifecycleState state, Profile profile, Set<VersionedTechnicalNamespace> namespaces) {
+    def String toTypes(Service service, LifecycleState state, Profile profile, Set<VersionedTechnicalNamespace> namespaces, String registryBaseUrl) {
         val allVerTypes = service.getAllReferencedVersionedTypes(state).toList.sortBy[name]
-        allVerTypes.filter(typeof(DataObject)).forEach(t|jsonSchemaGenerator.generateSchema(t))
+        allVerTypes.filter(typeof(DataObject)).forEach(t|jsonSchemaGenerator.generateSchema(t, registryBaseUrl))
         '''
             types:
                 «allVerTypes.map(t|inlineTypeGenerator.toTypeDeclaration(t)).filterNull.map(t|t.toString).toSet.join("\n")»

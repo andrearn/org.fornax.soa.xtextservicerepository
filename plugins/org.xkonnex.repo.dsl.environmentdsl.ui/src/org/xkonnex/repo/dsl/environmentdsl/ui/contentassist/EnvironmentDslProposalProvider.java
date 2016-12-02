@@ -20,12 +20,15 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Container;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentDslPackage;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Executable;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.InfrastructureManager;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SecurityProtocol;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.VM;
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.environmentdsl.ext.container.IContainer;
+import org.xkonnex.repo.dsl.environmentdsl.ext.db.IDataBase;
 import org.xkonnex.repo.dsl.environmentdsl.ext.executable.IExecutable;
 import org.xkonnex.repo.dsl.environmentdsl.ext.image.IImageConfigurationScript;
+import org.xkonnex.repo.dsl.environmentdsl.ext.management.IInfrastructureManager;
 import org.xkonnex.repo.dsl.environmentdsl.ext.security.ISecurityProtocol;
 import org.xkonnex.repo.dsl.environmentdsl.ext.server.IServer;
 import org.xkonnex.repo.dsl.environmentdsl.ext.vm.IVirtualMachine;
@@ -91,6 +94,30 @@ public class EnvironmentDslProposalProvider extends AbstractEnvironmentDslPropos
 			typeProposalProvider.createSubTypeProposals(securityProtocol, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		} else {
 			super.completeExecutable_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeInfrastructureManager_Type(EObject model, Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (model instanceof InfrastructureManager) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType infrastructureManager = typeProvider.findTypeByName(IInfrastructureManager.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(infrastructureManager, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeExecutable_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeDatabase_Type(EObject model, Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (model instanceof Container) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType container = typeProvider.findTypeByName(IDataBase.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(container, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeContainer_Type(model, assignment, context, acceptor);
 		}
 	}
 	

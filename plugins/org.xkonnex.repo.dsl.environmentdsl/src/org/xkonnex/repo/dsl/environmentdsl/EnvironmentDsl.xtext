@@ -36,18 +36,19 @@ Environment:
 		('default' 'Registry' defaultRegistry=[Registry|QualifiedName])? 
 		('default' 'AppServer' defaultAppServer=[AppServer|QualifiedName])? 
 		('default' 'Broker' defaultBroker=[Broker|QualifiedName])? 
+		('default' 'InfrastructureManager' defaultManager=[InfrastructureManager|QualifiedName])? 
 	'}';
 	
 enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | InfrastructureLibrary="Infrastructure-Library" |Other="Other-Environment";
 
-EnvironmentComponent returns baseDsl::Component: Connector|AbstractExecutable|SecurityProtocol|Host|ConfigurationScript;
+EnvironmentComponent returns baseDsl::Component: Connector|AbstractExecutable|SecurityProtocol|Host|ConfigurationScript|Database;
 
 Host: Node | Cluster | Container;
 AbstractExecutable: Server | Executable;
 
 	
 
-Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP | ExtensibleServer;
+Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Database | SAP | ExtensibleServer | InfrastructureManager;
 
 ExtensibleServer:
 	(isDefault?='default')? 'server' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
@@ -64,6 +65,11 @@ ExtensibleServer:
 		(
 			'registries' '{'
 				(registries+=RegistryService)+
+			'}'
+		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
 		('configuration' '{'
@@ -92,6 +98,11 @@ ESB:
 				(registries+=RegistryService)+
 			'}'
 		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
@@ -105,15 +116,43 @@ Registry:
 		('deployDir' deployDir=STRING )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
+		//deprecated
 		('kind' kind=RegistryKind )?
 		(
 			'connectors' '{'
 				(connectors+=Connector)+
 			'}'
 		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
+			'}'
+		)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 	
+//Configuration servers like Zookeeper, Deployment automation server, monitoring system
+InfrastructureManager:
+	'infrastructure-manager' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
+		('identifier' dslCode=STRING )?
+		('admins' admins+=[baseDsl::User|QualifiedName] )? 
+		'host' host=[Host|QualifiedName] 
+		('server-type' serverType=STRING )?
+		('server-version' serverVersion=STRING )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+	'}'
+;
 enum RegistryKind : UDDI | HTTP | File | Native;
 
 RegistryService: JNDIRegistry | COSNamingRegistry | RMIRegistry | IOR | UDDIRegistry;
@@ -184,6 +223,11 @@ AppServer:
 				(registries+=RegistryService)+
 			'}'
 		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
@@ -201,6 +245,11 @@ WebServer:
 		(
 			'connectors' '{'
 				(connectors+=Connector)+
+			'}'
+		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
@@ -228,6 +277,11 @@ ProcessServer:
 				(registries+=RegistryService)+
 			'}'
 		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
@@ -251,11 +305,16 @@ Broker:
 				(registries+=RegistryService)+
 			'}'
 		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
+			'}'
+		)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}'; 
 
 Database:  
-	'database' name=ID '{'
+	'database' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
 		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName]  
@@ -271,6 +330,14 @@ Database:
 				(connectors+=Connector)+
 			'}'
 		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
+			'}'
+		)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
@@ -288,6 +355,11 @@ SAP:
 		(
 			'connectors' '{'
 				(connectors+=Connector)+
+			'}'
+		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
@@ -316,6 +388,11 @@ Executable:
 		(
 			'connectors' '{'
 				(connectors+=Connector)+
+			'}'
+		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
