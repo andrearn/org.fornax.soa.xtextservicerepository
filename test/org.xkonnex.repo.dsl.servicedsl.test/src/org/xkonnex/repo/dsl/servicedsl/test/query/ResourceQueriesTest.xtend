@@ -3,8 +3,8 @@ package org.xkonnex.repo.dsl.servicedsl.test.query
 import static org.junit.Assert.*
 
 import org.junit.runner.RunWith
-import org.eclipse.xtext.junit4.XtextRunner
-import org.eclipse.xtext.junit4.InjectWith
+import org.eclipse.xtext.testing.XtextRunner
+import org.eclipse.xtext.testing.InjectWith
 import org.xkonnex.repo.dsl.servicedsl.test.ServiceDslWithDependenciesInjector
 import javax.inject.Inject
 import org.xkonnex.repo.dsl.servicedsl.service.query.resource.ResourceQueries

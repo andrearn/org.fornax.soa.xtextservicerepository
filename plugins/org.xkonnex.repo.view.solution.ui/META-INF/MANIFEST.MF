@@ -4,4 +4,4 @@ Bundle-Name: Solution DSL Graph Views
 Bundle-SymbolicName: org.xkonnex.repo.view.solution.ui
 Bundle-Version: 2.0.0.qualifier
 Bundle-Vendor: XKonneX.org
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8

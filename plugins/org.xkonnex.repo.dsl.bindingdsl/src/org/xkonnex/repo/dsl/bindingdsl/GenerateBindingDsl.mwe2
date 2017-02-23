@@ -176,7 +176,7 @@ Workflow {
 		    }
 //		    fragment = idea.IdeaPluginGenerator {}
 		    fragment = web.WebIntegrationFragment {
-		        framework = "Ace"
+		        framework = "Orion"
 		    }			
 		}
 	}

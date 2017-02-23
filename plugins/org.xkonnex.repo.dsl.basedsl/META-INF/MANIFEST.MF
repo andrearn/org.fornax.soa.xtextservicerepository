@@ -5,8 +5,8 @@ Bundle-Vendor: XKonneX.org
 Bundle-Version: 2.0.0.qualifier
 Bundle-SymbolicName: org.xkonnex.repo.dsl.basedsl;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.9.0";visibility:=reexport,
- org.eclipse.xtext.generator;bundle-version="2.9.0";resolution:=optional,
+Require-Bundle: org.eclipse.xtext;bundle-version="2.11.0";visibility:=reexport,
+ org.eclipse.xtext.generator;bundle-version="2.11.0";resolution:=optional,
  org.eclipse.equinox.common;bundle-version="3.5.0",
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
@@ -14,17 +14,17 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.9.0";visibility:=reexport,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.mwe2.language,
  com.ibm.icu;resolution:=optional,
- org.eclipse.xtext.util;bundle-version="2.9.0",
+ org.eclipse.xtext.util;bundle-version="2.11.0",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.eclipse.xtext.xbase;bundle-version="2.9.0";visibility:=reexport,
+ org.eclipse.xtext.xbase;bundle-version="2.11.0";visibility:=reexport,
  org.eclipse.xtext.common.types,
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
  org.eclipse.xtend.lib,
  org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.xkonnex.repo.dsl.basedsl,
  org.xkonnex.repo.dsl.basedsl.baseDsl,
  org.xkonnex.repo.dsl.basedsl.baseDsl.impl,

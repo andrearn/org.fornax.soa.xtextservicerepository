@@ -3,8 +3,8 @@ package org.xkonnex.repo.dsl.servicedsl.test.query
 import com.google.inject.Inject
 import com.google.inject.Injector
 import java.util.List
-import org.eclipse.xtext.junit4.InjectWith
-import org.eclipse.xtext.junit4.XtextRunner
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.XtextRunner
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.eclipse.xtext.resource.IResourceServiceProvider

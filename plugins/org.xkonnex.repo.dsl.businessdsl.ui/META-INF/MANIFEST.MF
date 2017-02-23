@@ -25,7 +25,7 @@ Require-Bundle: org.xkonnex.repo.dsl.businessdsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.businessdsl.ide;bundle-version="2.0.0",
  org.eclipse.xtend.lib
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.xkonnex.repo.dsl.businessdsl.ui.quickfix,
  org.xkonnex.repo.dsl.businessdsl.ui.contentassist,
  org.xkonnex.repo.dsl.businessdsl.ui.internal

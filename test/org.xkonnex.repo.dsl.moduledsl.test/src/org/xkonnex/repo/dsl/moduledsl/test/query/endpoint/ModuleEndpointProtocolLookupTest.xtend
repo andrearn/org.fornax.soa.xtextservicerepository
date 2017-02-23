@@ -8,9 +8,9 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.query.endpoint.IModuleEndpointProtocolLookup
 import org.xkonnex.repo.dsl.moduledsl.test.AbstractModelBasedModuleTests
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
-import org.eclipse.xtext.junit4.InjectWith
+import org.eclipse.xtext.testing.InjectWith
 import org.junit.runner.RunWith
-import org.eclipse.xtext.junit4.XtextRunner
+import org.eclipse.xtext.testing.XtextRunner
 import org.xkonnex.repo.dsl.moduledsl.test.ModuleDslWithDependenciesInjectorProvider
 import com.google.inject.Injector
 import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions

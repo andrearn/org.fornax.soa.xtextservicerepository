@@ -2,8 +2,8 @@ package org.xkonnex.repo.dsl.basedsl.test.namespace
 
 import static org.junit.Assert.*
 import javax.inject.Inject
-import org.eclipse.xtext.junit4.InjectWith
-import org.eclipse.xtext.junit4.XtextRunner
+import org.eclipse.xtext.testing.InjectWith
+import org.eclipse.xtext.testing.XtextRunner
 import org.junit.runner.RunWith
 import org.xkonnex.repo.dsl.basedsl.tests.BaseDslInjectorProvider
 import org.xkonnex.repo.dsl.basedsl.namespace.DefaultNamespaceURIProvider

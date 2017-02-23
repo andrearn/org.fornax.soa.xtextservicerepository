@@ -5,7 +5,7 @@ Bundle-Vendor: XKonneX.org
 Bundle-Version: 2.0.0.qualifier
 Bundle-SymbolicName: org.xkonnex.repo.dsl.solutiondsl;singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.8.0",
+Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.generator;resolution:=optional,
  org.eclipse.equinox.common;bundle-version="3.5.0",
  org.apache.commons.logging;resolution:=optional,
@@ -28,7 +28,7 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.8.0",
  org.eclipse.xtend.lib,
  org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.xkonnex.repo.dsl.solutiondsl,
  org.xkonnex.repo.dsl.solutiondsl.services,
  org.xkonnex.repo.dsl.solutiondsl.solutionDsl,
@@ -39,5 +39,6 @@ Export-Package: org.xkonnex.repo.dsl.solutiondsl,
  org.xkonnex.repo.dsl.solutiondsl.validation,
  org.xkonnex.repo.dsl.solutiondsl.scoping,
  org.xkonnex.repo.dsl.solutiondsl.formatting,
- org.xkonnex.repo.dsl.solutiondsl.serializer
+ org.xkonnex.repo.dsl.solutiondsl.serializer,
+ org.xkonnex.repo.dsl.solutiondsl.formatting2
 

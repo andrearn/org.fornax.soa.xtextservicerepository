@@ -54,7 +54,7 @@ public abstract class AbstractHierarchyViewerSorter extends ViewerComparator {
 
 
 	private int compareInHierarchy(IEObjectDescription def1, IEObjectDescription def2) {
-		return getComparator().compare(def1.getName(), def2.getName());
+		return getComparator().compare(def1.getName().toString(), def2.getName().toString());
 	}
 
 

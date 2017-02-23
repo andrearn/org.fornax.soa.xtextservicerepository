@@ -12,20 +12,20 @@ Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
- org.eclipse.xtext.util;bundle-version="2.8.0",
+ org.eclipse.xtext.util;bundle-version="2.11.0",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
  org.xkonnex.repo.dsl.semanticsdsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.basedsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.profiledsl;bundle-version="2.0.0",
- org.eclipse.xtext;bundle-version="2.8.0",
+ org.eclipse.xtext;bundle-version="2.11.0",
  org.eclipse.xtext.common.types,
  org.objectweb.asm;bundle-version="[5.0.1,6.0.0)";resolution:=optional,
  org.eclipse.xtend.lib,
  org.eclipse.xtext.xbase.lib
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.xkonnex.repo.dsl.businessdsl,
  org.xkonnex.repo.dsl.businessdsl.business.documentation,
  org.xkonnex.repo.dsl.businessdsl.businessDsl,

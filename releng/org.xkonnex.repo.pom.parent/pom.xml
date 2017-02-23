@@ -42,13 +42,13 @@
 	</developers>
 
 	<properties>
-		<!-- As Java 1.6 must be supported, this is the latest usable tycho version. Version 0.23 requires Java 7 -->
-		<tycho-version>0.22.0</tycho-version>
+		<!-- As Java 1.8 must be supported, this is the latest usable tycho version. Version 0.23 requires Java 7 -->
+		<tycho-version>1.0.0</tycho-version>
 		<!-- See profiles for xtext version -->
 		<!-- <xtext-version>2.9.1</xtext-version> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.6</maven.compiler.source>
-		<java.version>1.6</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<java.version>1.8</java.version>
 
 	</properties>
 
@@ -143,7 +143,7 @@
 				<configuration>
 					<toolchains>
 						<jdk>
-							<version>1.6</version>
+							<version>1.8</version>
 							<vendor>sun</vendor>
 						</jdk>
 					</toolchains>
@@ -160,8 +160,8 @@
 					<version>${tycho-version}</version>
 					<configuration>
 						<encoding>${project.build.sourceEncoding}</encoding>
-						<source>1.6</source>
-						<target>1.6</target>
+						<source>1.8</source>
+						<target>1.8</target>
 						<excludeResources> 
 							<exludeResource>**/*.xtend</exludeResource> 
 						</excludeResources>
@@ -283,8 +283,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.3</version>
 					<configuration>
-						<source>1.6</source>
-						<target>1.6</target>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
 				</plugin>
 			</plugins>
@@ -330,7 +330,7 @@
 		<profile>
 			<id>xtext-latest</id>
 			<properties>
-				<xtext-version>2.9.1</xtext-version>
+				<xtext-version>2.11.0</xtext-version>
 				<xtext-version-bound>3.0.0</xtext-version-bound>
 			</properties>
 			<activation>

@@ -5,8 +5,8 @@ import static org.junit.Assert.*;
 import java.util.Iterator;
 import java.util.List;
 
-import org.eclipse.xtext.junit4.InjectWith;
-import org.eclipse.xtext.junit4.XtextRunner;
+import org.eclipse.xtext.testing.InjectWith;
+import org.eclipse.xtext.testing.XtextRunner;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.servicedsl.test.BaseServiceDslTest;

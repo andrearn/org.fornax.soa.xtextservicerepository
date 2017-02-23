@@ -116,7 +116,7 @@ Workflow {
 		    fragment = idea.parser.antlr.XtextAntlrIDEAGeneratorFragment {}
 //		    fragment = idea.IdeaPluginGenerator {}
 		    fragment = web.WebIntegrationFragment {
-		        framework = "Ace"
+		        framework = "Orion"
 		    }			
 		}
 	}
