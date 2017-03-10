@@ -44,7 +44,7 @@ enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environ
 EnvironmentComponent returns baseDsl::Component: Connector|AbstractExecutable|SecurityProtocol|Host|ConfigurationScript|Database;
 
 Host: BareHost|VM|Container;
-AbstractExecutable: Server | Cluster | Executable | Gateway;
+AbstractExecutable: Server | Cluster | Executable | Gateway | IdentityAccessManager;
 
 	
 
@@ -72,6 +72,7 @@ ExtensibleServer:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
@@ -103,6 +104,7 @@ ESB:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
@@ -129,12 +131,13 @@ Gateway:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
 /* A service registry */
 Registry:
-	'registry' name=ID '{'
+	'registry' name=ID  (type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
 		('admins' admins+=[baseDsl::User|QualifiedName] )? 
 		'host' host=[Host|QualifiedName] 
@@ -154,6 +157,7 @@ Registry:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
@@ -173,6 +177,7 @@ InfrastructureManager:
 				(connectors+=Connector)+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
@@ -254,6 +259,7 @@ AppServer:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
@@ -278,6 +284,7 @@ WebServer:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 	
@@ -308,6 +315,7 @@ ProcessServer:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
@@ -336,6 +344,7 @@ Broker:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}'; 
 
@@ -361,6 +370,7 @@ Database:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
@@ -388,6 +398,7 @@ SAP:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 	
@@ -421,6 +432,7 @@ Executable:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 	
@@ -692,6 +704,7 @@ Cluster:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
+		(iam=IAMReference)?
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
@@ -732,6 +745,27 @@ Image:
 ConfigurationScript:
 	'config-script' name=STRING 'type' type=[jvmTypes::JvmType|QualifiedName]
 ;
+
+IdentityAccessManager:
+	'identity-access-manager' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
+		('identifier' dslCode=STRING )?
+		('admins' admins+=[baseDsl::User|QualifiedName] )? 
+		'host' host=[Host|QualifiedName] 
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+	'}'
+;
+
+IAMReference: 'use-IAM' identityAccessManager=[IdentityAccessManager|QualifiedName] 
+;
+
 	
 /* A system user */	
 User returns baseDsl::User: 

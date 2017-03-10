@@ -58,6 +58,7 @@ public class EnvironmentDslScopeProvider extends ComponentAwareVersionedScopePro
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.management.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.cluster.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.gateway.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.registry.*", ignoreCase));
 		return result;
 	}
 

@@ -22,7 +22,9 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentDslPackage;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Executable;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Gateway;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.IdentityAccessManager;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.InfrastructureManager;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Registry;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SecurityProtocol;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.VM;
 import org.xkonnex.repo.dsl.environmentdsl.ext.cluster.ICluster;
@@ -33,6 +35,8 @@ import org.xkonnex.repo.dsl.environmentdsl.ext.executable.IExecutable;
 import org.xkonnex.repo.dsl.environmentdsl.ext.gateway.IGateway;
 import org.xkonnex.repo.dsl.environmentdsl.ext.image.IImageConfigurationScript;
 import org.xkonnex.repo.dsl.environmentdsl.ext.management.IInfrastructureManager;
+import org.xkonnex.repo.dsl.environmentdsl.ext.registry.IRegistry;
+import org.xkonnex.repo.dsl.environmentdsl.ext.security.IIdentityAccessManager;
 import org.xkonnex.repo.dsl.environmentdsl.ext.security.ISecurityProtocol;
 import org.xkonnex.repo.dsl.environmentdsl.ext.server.IServer;
 import org.xkonnex.repo.dsl.environmentdsl.ext.vm.IVirtualMachine;
@@ -184,6 +188,30 @@ public class EnvironmentDslProposalProvider extends AbstractEnvironmentDslPropos
 			typeProposalProvider.createSubTypeProposals(gateway, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		} else {
 			super.completeGateway_Type(model, assignment, context, acceptor);
+		}
+	}
+
+	@Override
+	public void completeIAMReference_IdentityAccessManager(EObject model, Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		if (model instanceof IdentityAccessManager) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType iam = typeProvider.findTypeByName(IIdentityAccessManager.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(iam, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeIAMReference_IdentityAccessManager(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeRegistry_Type(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof Registry) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType registry = typeProvider.findTypeByName(IRegistry.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(registry, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeRegistry_Type(model, assignment, context, acceptor);
 		}
 	}
 }
