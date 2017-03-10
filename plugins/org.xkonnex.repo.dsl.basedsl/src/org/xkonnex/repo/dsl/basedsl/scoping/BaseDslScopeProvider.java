@@ -13,6 +13,7 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.impl.ImportNormalizer;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.AssetRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Reference;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.AbstractPredicateVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.NullVersionFilter;
@@ -33,6 +34,11 @@ public class BaseDslScopeProvider extends ComponentAwareVersionedScopeProvider {
 		if (reference == BaseDslPackage.Literals.ASSET_REF__ASSET
 				&& ctx instanceof AssetRef) {
 			final VersionRef v = ((AssetRef) ctx).getVersionRef();
+			return createVersionFilter (v);
+		}
+		if (reference == BaseDslPackage.Literals.REFERENCE__REFERABLE
+				&& ctx instanceof Reference) {
+			final VersionRef v = ((Reference) ctx).getVersionRef();
 			return createVersionFilter (v);
 		}
 		return new NullVersionFilter<IEObjectDescription>();

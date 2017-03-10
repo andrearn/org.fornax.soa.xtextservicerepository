@@ -43,8 +43,8 @@ enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environ
 
 EnvironmentComponent returns baseDsl::Component: Connector|AbstractExecutable|SecurityProtocol|Host|ConfigurationScript|Database;
 
-Host: Node | Cluster | Container;
-AbstractExecutable: Server | Executable;
+Host: BareHost|VM|Container;
+AbstractExecutable: Server | Cluster | Executable | Gateway;
 
 	
 
@@ -88,6 +88,32 @@ ESB:
 		('adminUrl' adminUrl=STRING )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
+		(
+			'registries' '{'
+				(registries+=RegistryService)+
+			'}'
+		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
+			'}'
+		)?
+		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+	'}';
+
+Gateway: 
+	(isDefault?='default')? 'gateway' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
+		('identifier' dslCode=STRING )?
+		('admins' admins+=[baseDsl::User|QualifiedName] )? 
+		'host' host=[Host|QualifiedName] 
+		('dir' home=STRING )?
+		('deployDir' deployDir=STRING )?
+		('adminUrl' adminUrl=STRING )?
 		(
 			'connectors' '{'
 				(connectors+=Connector)+
@@ -629,7 +655,6 @@ TCP:
 		('security-protocol' securityProtocol=SecurityProtocol)?
 	'}';
 
-Node: BareHost|VM;
 	
 /* A host, i.e. hardware */
 BareHost:
@@ -647,13 +672,28 @@ BareHost:
 	'}';
 
 Cluster:
-	'cluster' name=ID '{'
-		'full-qualified-name' fqn=STRING 
-		('ip-address' ip=STRING)? 
-		('identifier' dhsCode=STRING )?
-		('admins' admins+=[baseDsl::User|QualifiedName])?
-		('containers' '{'
-			container+=[Container|QualifiedName]+
+	(isDefault?='default')? 'cluster' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
+		('identifier' dslCode=STRING )?
+		('admins' admins+=[baseDsl::User|QualifiedName] )? 
+		'host' host=[Host|QualifiedName] 
+		('server-type' serverType=STRING )?
+		(
+			'connectors' '{'
+				(connectors+=Connector)+
+			'}'
+		)?
+		(
+			'registries' '{'
+				(registries+=RegistryService)+
+			'}'
+		)?
+		(
+			'management-servers' '{'
+				(managementServers+=[InfrastructureManager|QualifiedName])+
+			'}'
+		)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
 		'}')?
 	'}';
 
@@ -667,6 +707,7 @@ VM:
 		('containers' '{'
 			container+=[Container|QualifiedName]+
 		'}')?
+		portMappings+=PortMapping*
 	'}';
 	
 Container:
@@ -675,7 +716,10 @@ Container:
 		'full-qualified-name' fqn=STRING 
 		('ip-address' ip=STRING)? 
 		('identifier' dhsCode=STRING )?
+		portMappings+=PortMapping*
 	'}';
+	
+PortMapping: 'map-port' sourcePort=INT 'to' targetPort=INT;
 
 Image:
 	'image' name=ID '{'

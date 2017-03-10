@@ -25,6 +25,9 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.EnumLiteralValue
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Reference
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Value
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider
+import org.eclipse.xtext.scoping.impl.FilteringScope
+import java.util.function.Predicate
+import org.eclipse.xtext.resource.IEObjectDescription
 
 @SuppressWarnings("restriction") 
 abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNamespaceAwareScopeProvider {
@@ -43,10 +46,21 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 			return createComponentFeaturesScope(component);
 		}
 		if (context instanceof Reference && reference == BaseDslPackage.Literals.REFERENCE__REFERABLE) {
-			return createComponentReferenceScopeUpTo(context.eContainer(), false);
+//			return createComponentReferenceScopeUpTo(context.eContainer(), false);
+			return super.getScope(context, reference)
 		}
 		if (context instanceof Assignment && reference == BaseDslPackage.Literals.REFERENCE__REFERABLE) {
-			return createComponentReferenceScopeUpTo(context.eContainer(), true);
+			val assign = context as Assignment
+			val type = assign.getActualType
+			val delegateScope = super.getScope(context, reference)
+			val scope = new FilteringScope(delegateScope, new com.google.common.base.Predicate<IEObjectDescription>() {
+				
+				override apply(IEObjectDescription desc) {
+					return desc.EClass.instanceClass.canonicalName == type.qualifiedName
+				}
+				
+			})
+			return scope
 		}
 		if (context instanceof EnumLiteralValue && reference == BaseDslPackage.Literals.ENUM_LITERAL_VALUE__VALUE) {
 			val eńumLitType = context as EnumLiteralValue
@@ -75,7 +89,7 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 		if(component === object) return false
 		for (Assignment assignment : component.getAssignment()) {
 			if(assignment === object) return false
-			if (assignment.getValue() instanceof Component) {
+			if (assignment.getValue() instanceof EObject) {
 				if(!collectReferablesUpTo((assignment.getValue() as Component), object, result)) return false
 			}
 		}

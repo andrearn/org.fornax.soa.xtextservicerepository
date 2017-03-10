@@ -11,6 +11,7 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.EnumLiteralValue
 
 class ComponentExtensions {
 	
+	
 	def JvmType getActualType(Component component) {
 		val JvmType result = component.type;
 		if (result != null)
@@ -25,6 +26,15 @@ class ComponentExtensions {
 		}
 		return result;
 		
+	}
+	
+	def JvmType getActualType(Assignment assignment) {
+		val JvmIdentifiableElement containerFeature = assignment.getFeature();
+		if (containerFeature != null && containerFeature instanceof JvmOperation) {
+			val JvmFormalParameter parameter = (containerFeature as JvmOperation).getParameters().get(0);
+			return parameter.getParameterType().getType();
+		}
+		return null;
 	}
 	
 	def JvmType getActualType(EnumLiteralValue component) {

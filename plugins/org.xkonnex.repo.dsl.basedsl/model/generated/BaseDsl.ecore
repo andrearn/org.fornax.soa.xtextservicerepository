@@ -119,8 +119,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="EnumLiteralValue" eSuperTypes="#//Value #//SimpleValue">
     <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass platform:/resource/org.eclipse.xtext.common.types/model/JavaVMTypes.ecore#//JvmEnumerationLiteral"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Reference">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="referable" eType="#//Component"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Reference" eSuperTypes="#//Value">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="referable" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="versionRef" eType="#//VersionRef"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StringValue" eSuperTypes="#//Value #//SimpleValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

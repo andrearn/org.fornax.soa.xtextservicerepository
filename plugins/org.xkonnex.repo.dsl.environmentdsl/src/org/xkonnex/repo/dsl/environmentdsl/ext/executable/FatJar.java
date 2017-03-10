@@ -1,5 +1,5 @@
 package org.xkonnex.repo.dsl.environmentdsl.ext.executable;
 
-public class SpringBootFatJar implements IExecutable {
+public class FatJar implements IExecutable {
 
 }

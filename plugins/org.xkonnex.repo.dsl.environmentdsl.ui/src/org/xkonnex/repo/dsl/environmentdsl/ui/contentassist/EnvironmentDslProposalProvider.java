@@ -14,19 +14,23 @@ import org.eclipse.xtext.common.types.xtext.ui.TypeMatchFilters;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Cluster;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ConfigurationScript;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Container;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentDslPackage;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Executable;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Gateway;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.InfrastructureManager;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SecurityProtocol;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.VM;
+import org.xkonnex.repo.dsl.environmentdsl.ext.cluster.ICluster;
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.environmentdsl.ext.container.IContainer;
 import org.xkonnex.repo.dsl.environmentdsl.ext.db.IDataBase;
 import org.xkonnex.repo.dsl.environmentdsl.ext.executable.IExecutable;
+import org.xkonnex.repo.dsl.environmentdsl.ext.gateway.IGateway;
 import org.xkonnex.repo.dsl.environmentdsl.ext.image.IImageConfigurationScript;
 import org.xkonnex.repo.dsl.environmentdsl.ext.management.IInfrastructureManager;
 import org.xkonnex.repo.dsl.environmentdsl.ext.security.ISecurityProtocol;
@@ -105,7 +109,7 @@ public class EnvironmentDslProposalProvider extends AbstractEnvironmentDslPropos
 			JvmType infrastructureManager = typeProvider.findTypeByName(IInfrastructureManager.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(infrastructureManager, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		} else {
-			super.completeExecutable_Type(model, assignment, context, acceptor);
+			super.completeInfrastructureManager_Type(model, assignment, context, acceptor);
 		}
 	}
 	
@@ -155,7 +159,31 @@ public class EnvironmentDslProposalProvider extends AbstractEnvironmentDslPropos
 			JvmType imageConfigScript = typeProvider.findTypeByName(IImageConfigurationScript.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(imageConfigScript, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		} else {
-			super.completeVM_Type(model, assignment, context, acceptor);
+			super.completeConfigurationScript_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeCluster_Type(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof Cluster) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType clusterManager = typeProvider.findTypeByName(ICluster.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(clusterManager, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeCluster_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeGateway_Type(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof Gateway) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType gateway = typeProvider.findTypeByName(IGateway.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(gateway, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeGateway_Type(model, assignment, context, acceptor);
 		}
 	}
 }
