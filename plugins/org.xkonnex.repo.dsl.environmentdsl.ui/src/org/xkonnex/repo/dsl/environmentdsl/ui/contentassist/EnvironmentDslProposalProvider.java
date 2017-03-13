@@ -4,8 +4,8 @@
 package org.xkonnex.repo.dsl.environmentdsl.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.xtext.Assignment;
-import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.common.types.JvmType;
 import org.eclipse.xtext.common.types.access.IJvmTypeProvider;
 import org.eclipse.xtext.common.types.xtext.AbstractTypeScopeProvider;
@@ -14,19 +14,23 @@ import org.eclipse.xtext.common.types.xtext.ui.TypeMatchFilters;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.AppServer;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Broker;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Cluster;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ConfigurationScript;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Container;
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentDslPackage;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ESB;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Executable;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Gateway;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.IdentityAccessManager;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.InfrastructureManager;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ProcessServer;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Registry;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SecurityProtocol;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.VM;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.WebServer;
 import org.xkonnex.repo.dsl.environmentdsl.ext.cluster.ICluster;
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.environmentdsl.ext.container.IContainer;
@@ -38,7 +42,12 @@ import org.xkonnex.repo.dsl.environmentdsl.ext.management.IInfrastructureManager
 import org.xkonnex.repo.dsl.environmentdsl.ext.registry.IRegistry;
 import org.xkonnex.repo.dsl.environmentdsl.ext.security.IIdentityAccessManager;
 import org.xkonnex.repo.dsl.environmentdsl.ext.security.ISecurityProtocol;
+import org.xkonnex.repo.dsl.environmentdsl.ext.server.IAppServer;
+import org.xkonnex.repo.dsl.environmentdsl.ext.server.IESB;
+import org.xkonnex.repo.dsl.environmentdsl.ext.server.IMessagingServer;
+import org.xkonnex.repo.dsl.environmentdsl.ext.server.IProcessServer;
 import org.xkonnex.repo.dsl.environmentdsl.ext.server.IServer;
+import org.xkonnex.repo.dsl.environmentdsl.ext.server.IWebserver;
 import org.xkonnex.repo.dsl.environmentdsl.ext.vm.IVirtualMachine;
 
 import com.google.inject.Inject;
@@ -212,6 +221,66 @@ public class EnvironmentDslProposalProvider extends AbstractEnvironmentDslPropos
 			typeProposalProvider.createSubTypeProposals(registry, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		} else {
 			super.completeRegistry_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeProcessServer_Type(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof ProcessServer) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType server = typeProvider.findTypeByName(IProcessServer.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(server, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeProcessServer_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeAppServer_Type(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof AppServer) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType server = typeProvider.findTypeByName(IAppServer.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(server, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeAppServer_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeBroker_Type(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof Broker) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType server = typeProvider.findTypeByName(IMessagingServer.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(server, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeBroker_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeESB_Type(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof ESB) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType server = typeProvider.findTypeByName(IESB.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(server, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeESB_Type(model, assignment, context, acceptor);
+		}
+	}
+	
+	@Override
+	public void completeWebServer_Type(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		if (model instanceof WebServer) {
+			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+			JvmType server = typeProvider.findTypeByName(IWebserver.class.getCanonicalName());
+			typeProposalProvider.createSubTypeProposals(server, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
+		} else {
+			super.completeWebServer_Type(model, assignment, context, acceptor);
 		}
 	}
 }

@@ -80,7 +80,7 @@ ExtensibleServer:
 	'}'
 ;/* An Enterprise Service Bus */
 ESB: 
-	'esb' name=ID '{'
+	'esb' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
 		('admins' admins+=[baseDsl::User|QualifiedName] )? 
 		'host' host=[Host|QualifiedName] 
@@ -105,6 +105,9 @@ ESB:
 			'}'
 		)?
 		(iam=IAMReference)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
@@ -132,12 +135,15 @@ Gateway:
 			'}'
 		)?
 		(iam=IAMReference)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
 /* A service registry */
 Registry:
-	'registry' name=ID  (type=[jvmTypes::JvmType|QualifiedName])? '{'
+	'registry' name=ID  ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
 		('admins' admins+=[baseDsl::User|QualifiedName] )? 
 		'host' host=[Host|QualifiedName] 
@@ -234,7 +240,7 @@ UDDIRegistry:
 
 /* An application server */	
 AppServer: 
-	'appserver' name=ID '{'
+	'appserver' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
 		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName] 
@@ -260,12 +266,15 @@ AppServer:
 			'}'
 		)?
 		(iam=IAMReference)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
 /* A HTTP webserver, e.g. Apache */
 WebServer: 
-	'webserver' name=ID '{'
+	'webserver' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
 		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName] 
@@ -285,12 +294,15 @@ WebServer:
 			'}'
 		)?
 		(iam=IAMReference)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 	
 /* A business process server */
 ProcessServer:
-	'processserver'  name=ID '{'
+	'processserver'  name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
 		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName] 
@@ -316,12 +328,15 @@ ProcessServer:
 			'}'
 		)?
 		(iam=IAMReference)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 
 /* A message broker */
 Broker: 
-	'broker' name=ID '{'
+	'broker' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )? 
 		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
 		'host' host=[Host|QualifiedName] 'dir' home=STRING 
@@ -433,6 +448,9 @@ Executable:
 			'}'
 		)?
 		(iam=IAMReference)?
+		('configuration' '{'
+			(assignment+=Assignment)+ 
+		'}')?
 		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
 	'}';
 	
