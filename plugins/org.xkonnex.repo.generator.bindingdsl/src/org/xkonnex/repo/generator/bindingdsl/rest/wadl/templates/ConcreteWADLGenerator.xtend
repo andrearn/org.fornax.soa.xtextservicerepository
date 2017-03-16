@@ -30,7 +30,6 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.generator.bindingdsl.rest.RESTEndpointAddressResolver
-import org.xkonnex.repo.generator.bindingdsl.templates.DefaultServiceContractFilenameProvider
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
@@ -47,8 +46,9 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import java.util.List
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
-import org.xkonnex.repo.generator.bindingdsl.templates.DefaultResourceContractFilenameProvider
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.XSDGenerator
+import org.xkonnex.repo.generator.bindingdsl.templates.DefaultResourceContractFilenameProvider
+import org.xkonnex.repo.generator.bindingdsl.templates.DefaultServiceContractFilenameProvider
 
 class ConcreteWADLGenerator {
 	
@@ -71,8 +71,8 @@ class ConcreteWADLGenerator {
 	@Inject EnvironmentBindingResolver environmentResolver
 	@Inject IEffectiveBindingBuilder bindingBuilder
 	@Inject IEffectiveProvidingEndpointBuilder endpointBuilder
-	@Inject extension DefaultServiceContractFilenameProvider
-	@Inject DefaultResourceContractFilenameProvider resourceFilenameProvider
+	@Inject extension DefaultResourceContractFilenameProvider
+	@Inject DefaultServiceContractFilenameProvider resourceFilenameProvider
 	@Inject OperationWrapperTypesGenerator wrapperTypesGenerator
 	@Inject XSDGenerator xsdGenerator
 
@@ -101,7 +101,7 @@ class ConcreteWADLGenerator {
 		svc.toWADL (minState, binding.moduleBinding, profile)
 	}
 	
-	def toWADL(Service service, LifecycleState minState, ModuleBinding binding, Profile profile) {
+	def dispatch void toWADL(Service service, LifecycleState minState, ModuleBinding binding, Profile profile) {
 		log.info('''Generating WADL for Service «service.fullyQualifiedName»'''.toString)
 		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
 		val effBind = bindingBuilder.createEffectiveBinding(service, binding)
@@ -134,7 +134,7 @@ class ConcreteWADLGenerator {
 		fsa.generateFile(wadlFile, content)
 	}
 	
-	def toWADL(Resource resource, LifecycleState minState, ModuleBinding binding, Profile profile) {
+	def dispatch void toWADL(Resource resource, LifecycleState minState, ModuleBinding binding, Profile profile) {
 		log.info('''Generating WADL for Resource «resource.fullyQualifiedName»'''.toString)
 		val Set<VersionedTechnicalNamespace> headerImports = resource.collectTechnicalVersionedNamespaceImports (profile)
 		val effBind = bindingBuilder.createEffectiveBinding(resource, binding)
@@ -224,13 +224,13 @@ class ConcreteWADLGenerator {
 	def toResponses(Operation op, REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint) {
 		val responses = getResponses(bindingRESTProtocol, endpoint)
 		'''
-			«responses.filter[statusCode == null || statusCode < 400].map[toResponse(op.^return.head)].join»
-			«responses.filter[statusCode != null && statusCode >= 400].map[toErrorResponse(op.throws)].join»		'''
+			«responses.filter[statusCode === null || statusCode < 400].map[toResponse(op.^return.head)].join»
+			«responses.filter[statusCode !== null && statusCode >= 400].map[toErrorResponse(op.throws)].join»		'''
 	}
 	
 	def toResponse(HttpResponse response, Parameter param) {
 		val content = '''
-			«IF response.statusCode == null»
+			«IF response.statusCode === null»
 				<response>
 					«FOR mediaType : response.contentType»
 						<representation mediaType="«mediaType»"» />

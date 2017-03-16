@@ -18,7 +18,6 @@ import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 
 class JSONSchemaFilenameProvider {
 		
-	@Inject extension CommonStringExtensions
 	@Inject extension ServiceNamespaceNameFragmentProvider serviceNsNameFragmentProvider
 	@Inject extension NamespaceQuery
 	@Inject VersionQualifierExtensions versionQualifier	
@@ -49,7 +48,7 @@ class JSONSchemaFilenameProvider {
 	 * Calulates the URL to the Schema location
 	 */
 	def dispatch String toSchemaAssetUrl (OrganizationNamespace s, String registryUrl) { 
-		if (registryUrl != null && useRegistryBasedFilePaths() ) 
+		if (registryUrl !== null && useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
@@ -59,7 +58,7 @@ class JSONSchemaFilenameProvider {
 	 * Calulates the URL to the Schema location
 	 */
 	def dispatch String toSchemaAssetUrl (DomainNamespace s, String registryUrl) { 
-		if (registryUrl != null && useRegistryBasedFilePaths() ) 
+		if (registryUrl !== null && useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
@@ -69,7 +68,7 @@ class JSONSchemaFilenameProvider {
 	 * Calulates the URL to the Schema location
 	 */
 	def dispatch String toSchemaAssetUrl (InternalNamespace s, String registryUrl) {
-		if (registryUrl != null && useRegistryBasedFilePaths() ) 
+		if (registryUrl !== null && useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
@@ -78,7 +77,7 @@ class JSONSchemaFilenameProvider {
 	 * Calulates the URL to the Schema location
 	 */
 	def dispatch String toSchemaAssetUrl (VersionedDomainNamespace s, String registryUrl) { 
-		if (registryUrl != null && useRegistryBasedFilePaths() ) 
+		if (registryUrl !== null && useRegistryBasedFilePaths() ) 
 			registryUrl + "/" +s.toFileNameFragment() 
 		else
 			s.toFileNameFragment(); 

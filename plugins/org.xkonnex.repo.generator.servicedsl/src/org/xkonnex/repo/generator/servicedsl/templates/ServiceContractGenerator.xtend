@@ -48,7 +48,7 @@ class ServiceContractGenerator {
 		verNs.forEach (
 			v|v.servicesWithMinState (minState)
 				.filter (typeof (Service)).filter(e|e.isMatchingService(v.version.asInteger(), minState))
-				.filter(e|e.providedContractUrl == null)
+				.filter(e|e.providedContractUrl === null)
 				.forEach (s|s.toService (ns, minState, applicableProfile, registryBaseUrl))
 		);
 
@@ -63,7 +63,7 @@ class ServiceContractGenerator {
 		verNs.forEach (
 			v|v.servicesWithMinState (minState).filter (typeof (Service))
 				.filter (e|e.isMatchingService(v.version.asInteger(), minState))
-				.filter (e|e.providedContractUrl == null)
+				.filter (e|e.providedContractUrl === null)
 				.forEach (s|s.toService (ns, minState, applicableProfile, registryBaseUrl))
 		)
 		if ( ! noDependencies ) {

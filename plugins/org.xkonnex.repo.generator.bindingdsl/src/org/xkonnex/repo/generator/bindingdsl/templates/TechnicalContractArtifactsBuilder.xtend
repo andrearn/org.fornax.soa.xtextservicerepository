@@ -78,7 +78,7 @@ class TechnicalContractArtifactsBuilder implements IArtifactBuilder {
 	 *	Event XSDs for Services having an request and an response event for each service operation
 	 */
 	override buildEventsInclSubNamespaces (String namespaceName, List<SubNamespace> namespaces, List<Environment> environments, String targetEnv, Profile enforcedProfile) {
-		if (namespaceName != null) {
+		if (namespaceName !== null) {
 			for (ns : namespaces.filter (e|e.name.startsWith (namespaceName))) {
 				val profile = ns.getApplicableProfile(enforcedProfile)
 				ns.buildEvents (environments, targetEnv, profile);

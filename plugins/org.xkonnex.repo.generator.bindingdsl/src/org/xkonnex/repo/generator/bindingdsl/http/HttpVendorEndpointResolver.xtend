@@ -61,7 +61,7 @@ class HttpVendorEndpointResolver {
 	
 	def dispatch String toEndpointAddressPath (String ctxRoot, Service s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
 		val serverType = server.toServerTypeName ();
-		if (serverType != null) {
+		if (serverType !== null) {
 			switch (serverType.toLowerCase()) {
 			case "tomcat": 			tomcatEndpointPath (ctxRoot, s, server, bind, prot)
 			case "websphere":		websphereSCAEndpointPath (ctxRoot, s, server, bind, prot)
@@ -95,7 +95,7 @@ class HttpVendorEndpointResolver {
 			Registry:		serverTypeName = (s as Registry).serverType
 			default: return "undefined"
 		}
-		if (serverTypeName != null)
+		if (serverTypeName !== null)
 			return serverTypeName
 		else
 			return "undefined"
@@ -114,7 +114,7 @@ class HttpVendorEndpointResolver {
 			Registry:		serverTypeVersion = (s as Registry).serverVersion
 			default: return "undefined"
 		}
-		if (serverTypeVersion != null)
+		if (serverTypeVersion !== null)
 			return serverTypeVersion
 		else 
 			return "undefined"
@@ -153,7 +153,7 @@ class HttpVendorEndpointResolver {
 		if (server instanceof ESB) {
 			val esb = (server as ESB)
 			val esbVersion = esb.serverVersion
-			if (esbVersion != null) {
+			if (esbVersion !== null) {
 				val esbVersionDigits = esbVersion.split("\\.")
 				if (esbVersionDigits.get(0) >= "8" && scopedPortName != "") {
 					return servicePath + "/" + scopedPortName

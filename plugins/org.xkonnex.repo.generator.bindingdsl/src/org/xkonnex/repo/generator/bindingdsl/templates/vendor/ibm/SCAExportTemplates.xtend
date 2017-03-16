@@ -43,7 +43,7 @@ class SCAExportTemplates {
 		if (binding.module.module.assemblyType.typeEnum == AssemblyTypeEnum::SCA_EAR) {
 			for (provSvc : binding.module.module.providedServices) {
 				val svc = provSvc.resolveModuleServiceRef (binding.resolveEnvironment);
-				if (svc != null) {
+				if (svc !== null) {
 					svc.getMostSpecificBinding (binding).protocol.forEach (p|p.toServiceExport (binding, svc, enforcedProfile));
 				}
 			}
@@ -100,6 +100,6 @@ class SCAExportTemplates {
 		fsa.generateFile (exportFile, content);
 	}
 	
-	def dispatch void toSCAModuleExport (SCA protocol) {
+	def void toSCAModuleExport (SCA protocol) {
 	}
 }

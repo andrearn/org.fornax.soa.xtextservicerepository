@@ -179,21 +179,21 @@ class MessageHeaderXSDTemplates {
 	}
 	
 	
-	def protected dispatch toNamespaceDeclaration (VersionedTechnicalNamespace vns) '''
+	def protected toNamespaceDeclaration (VersionedTechnicalNamespace vns) '''
 		xmlns:«vns.toPrefix() + vns.version.toMajorVersionNumber()»="«vns.toNamespace()»"
 	'''
 	
-	def protected dispatch toImportDeclaration (VersionedTechnicalNamespace vns) '''
+	def protected toImportDeclaration (VersionedTechnicalNamespace vns) '''
 		<xsd:import schemaLocation="«vns.toRegistryAssetUrl (null)».xsd"
 			namespace="«vns.toNamespace()»"></xsd:import>
 	'''
-	def protected dispatch toImportDeclaration (VersionedTechnicalNamespace vns, String registryBaseUrl) '''
+	def protected toImportDeclaration (VersionedTechnicalNamespace vns, String registryBaseUrl) '''
 		<xsd:import schemaLocation="«vns.toRegistryAssetUrl (registryBaseUrl)».xsd"
 			namespace="«vns.toNamespace()»"></xsd:import>
 	'''
 	
 	
-	def protected dispatch toComplexType (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class cls, VersionedTechnicalNamespace currNs, Profile profile, MessageHeader header) '''
+	def protected toComplexType (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class cls, VersionedTechnicalNamespace currNs, Profile profile, MessageHeader header) '''
 
 		<xsd:complexType name="«cls.name»">
 			<xsd:annotation>
@@ -206,7 +206,7 @@ class MessageHeaderXSDTemplates {
 				</xsd:documentation>
 			</xsd:annotation>
 
-			«IF cls.superClass != null»
+			«IF cls.superClass !== null»
 				<xsd:complexContent>
 					<xsd:extension base="«cls.superClass.toTypeNameRef(currNs)»">
 						«cls.toPropertySequence (currNs, profile)»
@@ -221,7 +221,7 @@ class MessageHeaderXSDTemplates {
 		</xsd:complexType>
 	'''
 	
-	def protected dispatch toPropertySequenceWithAny (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class cls, VersionedTechnicalNamespace currNs, Profile profile, MessageHeader header) '''
+	def protected toPropertySequenceWithAny (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class cls, VersionedTechnicalNamespace currNs, Profile profile, MessageHeader header) '''
 		<xsd:sequence>
 			«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
 			«IF header.typesUseExtensibleProperties»
@@ -234,7 +234,7 @@ class MessageHeaderXSDTemplates {
 		«ENDIF»
 	'''
 	
-	def protected dispatch toPropertySequence (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class cls, VersionedTechnicalNamespace currNs, Profile profile) '''
+	def protected toPropertySequence (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class cls, VersionedTechnicalNamespace currNs, Profile profile) '''
 		<xsd:sequence>
 			«cls.properties.filter (typeof (Property)).map (p|p.toProperty (currNs, profile)).join»
 		</xsd:sequence>
@@ -244,7 +244,7 @@ class MessageHeaderXSDTemplates {
 	    «ENDIF»
 	'''
 	
-	def protected dispatch toSimpleType (Enumeration enumeration, Profile profile) '''
+	def protected toSimpleType (Enumeration enumeration, Profile profile) '''
 	    <xsd:simpleType name="«enumeration.name»">
 	    	<xsd:annotation>
 	    		<xsd:documentation>
@@ -263,7 +263,7 @@ class MessageHeaderXSDTemplates {
 	
 	
 	def protected dispatch toProperty (Property prop, VersionedTechnicalNamespace currNs, Profile profile) '''
-		«IF docProvider.getDocumentation (prop) == null»
+		«IF docProvider.getDocumentation (prop) === null»
 			<xsd:element name="«prop.name»" «IF prop.optional»minOccurs="0"«ENDIF» «IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«prop.type.toTypeNameRef(currNs)»" />
 		«ELSE»		
 			<xsd:element name="«prop.name»" «IF prop.optional»minOccurs="0"«ENDIF» «IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF» type="«prop.type.toTypeNameRef(currNs)»" >
@@ -277,7 +277,7 @@ class MessageHeaderXSDTemplates {
 	'''
 	
 	def protected dispatch toProperty (Attribute attr, VersionedTechnicalNamespace currNs, Profile profile) '''
-		«IF docProvider.getDocumentation (attr) == null»
+		«IF docProvider.getDocumentation (attr) === null»
 		   	<xsd:attribute name="«attr.name»" «IF attr.optional»use="optional"«ENDIF» type="«attr.type.toTypeNameRef (currNs)»" />
 		«ELSE»		
 			<xsd:attribute name="«attr.name»" «IF attr.optional»use="optional"«ENDIF» type="«attr.type.toTypeNameRef (currNs)»" >
@@ -291,7 +291,7 @@ class MessageHeaderXSDTemplates {
 	'''
 	
 	
-	def protected dispatch toEnumLiteral (EnumLiteral enumLit, Profile profile) '''
+	def protected toEnumLiteral (EnumLiteral enumLit, Profile profile) '''
    		<xsd:enumeration value="«enumLit.name»"/>
 	'''
 }

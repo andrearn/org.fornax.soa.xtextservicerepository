@@ -2,16 +2,21 @@ package org.xkonnex.repo.generator.servicedsl.templates.xsd
 
 import com.google.inject.Inject
 import java.util.List
-import java.util.logging.Logger
+import java.util.Set
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
+import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceURIProvider
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Property
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Property
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
+import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
+import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
 import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
+import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
@@ -19,14 +24,8 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
-import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
-import java.util.Set
 import org.xkonnex.repo.generator.servicedsl.templates.CommonTemplateExtensions
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
-import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
-import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
-import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceURIProvider
+import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
 
 class EventXSDGenerator {
 	
@@ -47,9 +46,6 @@ class EventXSDGenerator {
 	@Inject IEObjectDocumentationProvider docProvider
 	@Inject ProfileNamespaceURIProvider profileNamespaceURIProvider
 
-	@Inject 
-	private Logger log
-	
 	
 	def toEventsInclSubNamespaces (String namespace, List<SubNamespace> namespaces, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		for (ns : namespaces.filter (e|e.name.startsWith (namespace))) {
@@ -168,7 +164,7 @@ class EventXSDGenerator {
 		<xsd:element name="«op.name.toFirstUpper()»">
 			<xsd:complexType>
 				<xsd:sequence>
-					«IF op.findBestMatchingRequestHeader(profile) != null»
+					«IF op.findBestMatchingRequestHeader(profile) !== null»
 						«op.findBestMatchingRequestHeader (profile).toParameter()»
 					«ENDIF»
 					«op.parameters.map (p|p.toParameter ()).join»
@@ -178,7 +174,7 @@ class EventXSDGenerator {
 		<xsd:element name="«op.name.toFirstUpper()»Response">
 			<xsd:complexType>
 				<xsd:sequence>
-					«IF op.findBestMatchingResponseHeader(profile) != null»
+					«IF op.findBestMatchingResponseHeader(profile) !== null»
 						«op.findBestMatchingResponseHeader (profile).toParameter ()»
 					«ENDIF»
 					«op.^return?.map (r|r.toParameter ()).join»
@@ -189,22 +185,22 @@ class EventXSDGenerator {
 	
 	def toOperationFaultWrapperTypes(String faultName, List<ExceptionRef> exceptions) { 
 		val exceptionRef = exceptions.findFirst(e|e.exception.name == faultName);
-		if (exceptionRef != null) {
+		if (exceptionRef !== null) {
 			'''
 	    	<xsd:element name="«exceptionRef?.exception.name»" type="«exceptionRef?.toExceptionNameRef()»"/>
 			'''
 		}
 	}
 	
-	def dispatch toParameter (Parameter param) '''
+	def dispatch String toParameter (Parameter param) '''
 		<xsd:element param.name="«param.name»" type="«param.type.toTypeNameRef ()»" «IF param.optional»minOccurs="0" «ENDIF»«IF param.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 	
-	def dispatch toParameter (org.xkonnex.repo.dsl.profiledsl.profileDsl.Property prop) '''
+	def dispatch String toParameter (Property prop) '''
 		<xsd:element name="«prop.name»" type="«prop.type.toTypeNameRef ()»" «IF prop.optional»minOccurs="0" «ENDIF»«IF prop.type.isMany()»maxOccurs="unbounded"«ENDIF»></xsd:element>
 	'''
 	
-	def dispatch toParameter (MessageHeader header) '''
+	def dispatch String toParameter (MessageHeader header) '''
 		«header.parameters.map (p|p.toParameter).join»
 	'''
 		

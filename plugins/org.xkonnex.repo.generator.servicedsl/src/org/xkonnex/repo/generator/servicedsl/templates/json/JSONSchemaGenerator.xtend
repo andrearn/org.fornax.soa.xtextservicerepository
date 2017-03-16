@@ -12,12 +12,14 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import javax.inject.Named
+import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries
 
 class JSONSchemaGenerator {
 	
 	@Inject extension JSONTypeExtensions
 	@Inject extension JSONSchemaFilenameProvider
 	@Inject extension JSONSchemaReferenceProvider
+	@Inject extension DataObjectQueries
 	@Inject IEObjectDocumentationProvider docProvider
 	@Inject IFileSystemAccess fsa
 	
@@ -43,7 +45,7 @@ class JSONSchemaGenerator {
 		      {
 		        "$schema": "http://json-schema.org/draft-04/schema",
 		        "type": "«type.toBaseType»",
-		        «IF doc != null»
+		        «IF doc !== null»
 		          "description": "«doc»",
 		        «ENDIF»
 		        "properties": {
@@ -60,7 +62,7 @@ class JSONSchemaGenerator {
 		      {
 		        "$schema": "http://json-schema.org/draft-04/schema",
 		        "type": "«type.toBaseType»",
-		        «IF doc != null»
+		        «IF doc !== null»
 		          "description": "«doc»",
 		        «ENDIF»
 		        "enum": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
@@ -72,7 +74,7 @@ class JSONSchemaGenerator {
 		val doc = docProvider.getDocumentation(p)
 		'''
 			"«p.name»" : {
-			  «IF doc != null»
+			  «IF doc !== null»
 			    "description": "«doc»",
 			  «ENDIF»
 			  «p.type.toPropertyType (p.optional, registryBaseUrl)»

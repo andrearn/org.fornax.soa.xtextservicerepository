@@ -13,11 +13,13 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
 import org.xkonnex.repo.generator.servicedsl.templates.json.JSONSchemaGenerator
+import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries
 
 class RAMLTypesGenerator {
 	
 	@Inject extension JSONTypeExtensions
 	@Inject extension JSONSchemaGenerator
+	@Inject extension DataObjectQueries
 	
 	def dispatch toTypeDeclaration (TypeRef typeRef) {
 		

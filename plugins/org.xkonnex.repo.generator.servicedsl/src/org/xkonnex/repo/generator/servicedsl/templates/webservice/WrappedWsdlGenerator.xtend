@@ -175,7 +175,7 @@ class WrappedWsdlGenerator {
 	
 	def protected toOperationFaultWrapperTypes(String faultName, List<ExceptionRef> exceptions) {
 		val exceptionRef = exceptions.findFirst(e|e.exception.name == faultName);
-		if (exceptionRef != null) {
+		if (exceptionRef !== null) {
 			'''
 			<xsd:element name="«exceptionRef?.exception.name»" type="«exceptionRef?.toExceptionNameRef()»"/>
 			'''
@@ -248,7 +248,7 @@ class WrappedWsdlGenerator {
 	
 	def protected toFaultMessages(String faultName, List<ExceptionRef> exceptions) {
 		val exceptionRef = exceptions.findFirst(e|e.exception.name == faultName);
-		if (exceptionRef != null) {
+		if (exceptionRef !== null) {
 			'''
 			<wsdl:message name="«exceptions.findFirst(e|e.exception.name == faultName).exception.name»">
 				<wsdl:part name="parameters" element="tns:«exceptionRef?.exception.name»"></wsdl:part>

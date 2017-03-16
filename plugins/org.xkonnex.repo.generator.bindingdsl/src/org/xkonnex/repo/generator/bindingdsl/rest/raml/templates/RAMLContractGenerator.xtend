@@ -44,14 +44,14 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.generator.bindingdsl.rest.RESTEndpointAddressResolver
 import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
-import org.xkonnex.repo.generator.bindingdsl.templates.DefaultResourceContractFilenameProvider
-import org.xkonnex.repo.generator.bindingdsl.templates.DefaultServiceContractFilenameProvider
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.OperationWrapperTypesGenerator
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTypeExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.json.JSONSchemaGenerator
+import org.xkonnex.repo.generator.bindingdsl.templates.DefaultResourceContractFilenameProvider
+import org.xkonnex.repo.generator.bindingdsl.templates.DefaultServiceContractFilenameProvider
 
 class RAMLContractGenerator {
     
@@ -78,8 +78,8 @@ class RAMLContractGenerator {
     @Inject EnvironmentBindingResolver environmentResolver
     @Inject IEffectiveBindingBuilder bindingBuilder
     @Inject IEffectiveProvidingEndpointBuilder endpointBuilder
-    @Inject extension DefaultServiceContractFilenameProvider
-    @Inject DefaultResourceContractFilenameProvider resourceFilenameProvider
+    @Inject extension DefaultResourceContractFilenameProvider
+    @Inject DefaultServiceContractFilenameProvider resourceFilenameProvider
     @Inject OperationWrapperTypesGenerator wrapperTypesGenerator
     @Inject OperationBindingQueries operationBindingQueries
     @Inject ResourceQueries resourceQueries
@@ -129,28 +129,6 @@ class RAMLContractGenerator {
             «toTypes(service, minState, profile, headerImports, environment.registryBaseUrl)»
             «service.operations.map[toOperation(effBind)].join»
         '''
-//            #%RAML 1.0
-//            title: «service.name» API
-//            version: v«service.version.version»
-//            baseUri: «service.toEndpointAddress (effBind.provServer, prot, effBind)»
-//              «toTypes(service, minState, profile, headerImports)»
-//            types:
-//              TestType:
-//                type: object
-//                properties:
-//                  id: number
-//                  optional?: string
-//                  expanded:
-//                    type: object
-//                    properties:
-//                      count: number
-//              «service.operations.map[toOperation(effBind)].join»
-//              /details:
-//                get:
-//                  responses:
-//                    200:
-//                      body:
-//                        application/json:
         fsa.generateFile(ramlFile, content)
     }
     
@@ -187,7 +165,7 @@ class RAMLContractGenerator {
             }
         }
         val basePath = operation.getOperationPath(binding)
-        val uri = if(restProt?.path != null) restProt?.path else null
+        val uri = if(restProt?.path !== null) restProt?.path else null
         val params = resourceQueries.extractParametersFromURI(uri, operation).toList
         val content = '''
             
@@ -204,7 +182,7 @@ class RAMLContractGenerator {
     }
     
     def toRequestResponse(Operation op, REST binding, org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST endpoint) {
-        val verb = if (binding.verb != null) binding.verb else if (endpoint?.verb != null) endpoint.verb else Verb::POST
+        val verb = if (binding.verb !== null) binding.verb else if (endpoint?.verb !== null) endpoint.verb else Verb::POST
         val responses = if (!binding.response.nullOrEmpty) binding.response else (endpoint?.response)
         '''
             «verb.toRAMLVerb»:
@@ -215,7 +193,7 @@ class RAMLContractGenerator {
                                 «FOR header : response.header»
                                     «header.name»:
                                         type:
-                                            - «IF (header.type != null)»«header.type»«ELSE»string«ENDIF»
+                                            - «IF (header.type !== null)»«header.type»«ELSE»string«ENDIF»
                                             «/*default: «header.messageHeader*/»
                                 «ENDFOR»
                             body:
@@ -269,7 +247,7 @@ class RAMLContractGenerator {
     }
     
     def toRequestVerb(REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint) {
-        val verb = if (bindingRESTProtocol.verb != null) bindingRESTProtocol.verb else Verb.POST
+        val verb = if (bindingRESTProtocol.verb !== null) bindingRESTProtocol.verb else Verb.POST
         return verb.toRAMLVerb
     }
     

@@ -2,7 +2,7 @@ package org.xkonnex.repo.generator.servicedsl;
 
 import org.eclipse.xtext.generator.IFileSystemAccess;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
-import org.xkonnex.repo.generator.core.XtextServiceRepositoryGeneratorConstants;
+import org.xkonnex.repo.generator.core.XSRGeneratorConstants;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl;
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher;
@@ -138,7 +138,7 @@ public class ServiceDslGeneratorModule extends ServiceDslRuntimeModule {
 	}
 	
 	public void configureUseNestedPaths (Binder binder) {
-		binder.bind (Boolean.class).annotatedWith (Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
+		binder.bind (Boolean.class).annotatedWith (Names.named (XSRGeneratorConstants.USE_NESTED_PATHS))
 			.toInstance (false);
 	}
 	public Class<? extends BaseDslFactory> bindSOABaseDslFactory () {

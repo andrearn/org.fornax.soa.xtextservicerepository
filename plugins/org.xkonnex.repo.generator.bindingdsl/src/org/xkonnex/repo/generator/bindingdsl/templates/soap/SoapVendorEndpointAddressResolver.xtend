@@ -41,7 +41,7 @@ class SoapVendorEndpointAddressResolver {
 		toEndpointAddressPath (ctxRoot, s, server, bind, prot)
 	}
 	
-	def dispatch String toEndpointAddressPath (ServiceBinding bind, BindingProtocol prot, Service s, Server server) {
+	def String toEndpointAddressPath (ServiceBinding bind, BindingProtocol prot, Service s, Server server) {
 		val ctxRoot = ctxRootProvider.getContextRoot(bind);
 		toEndpointAddressPath (ctxRoot, s, server, bind, prot)
 	}
@@ -49,7 +49,7 @@ class SoapVendorEndpointAddressResolver {
 	
 	def dispatch String toEndpointAddressPath (String ctxRoot, Service s, Server server, Binding bind, BindingProtocol prot) {
 		val serverType = server.toServerTypeName ();
-		if (serverType != null) {
+		if (serverType !== null) {
 			switch (serverType.toLowerCase()) {
 			case "tomcat": 			tomcatEndpointPath (ctxRoot, s, server, bind, prot)
 			case "websphere":		websphereSCAEndpointPath (ctxRoot, s, server, bind, prot)
@@ -83,7 +83,7 @@ class SoapVendorEndpointAddressResolver {
 			Registry:		serverTypeName = (s as Registry).serverType
 			default: return "undefined"
 		}
-		if (serverTypeName != null)
+		if (serverTypeName !== null)
 			return serverTypeName
 		else
 			return "undefined"
@@ -102,7 +102,7 @@ class SoapVendorEndpointAddressResolver {
 			Registry:		serverTypeVersion = (s as Registry).serverVersion
 			default: return "undefined"
 		}
-		if (serverTypeVersion != null)
+		if (serverTypeVersion !== null)
 			return serverTypeVersion
 		else 
 			return "undefined"
@@ -141,7 +141,7 @@ class SoapVendorEndpointAddressResolver {
 		if (server instanceof ESB) {
 			val esb = (server as ESB)
 			val esbVersion = esb.serverVersion
-			if (esbVersion != null) {
+			if (esbVersion !== null) {
 				val esbVersionDigits = esbVersion.split("\\.")
 				if (esbVersionDigits.get(0) >= "8" && scopedPortName != "") {
 					return servicePath + "/" + scopedPortName

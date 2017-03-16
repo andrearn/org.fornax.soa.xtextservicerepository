@@ -32,7 +32,7 @@ class SCAExportExtension {
 	}
 	
 	def dispatch String getExportName (Service s, SCA prot) { 
-		if (prot.promote != null) {
+		if (prot.promote !== null) {
 			prot.promote;
 		} else {
 			val namespace = s.getOwnerByType(Namespace)
@@ -54,7 +54,7 @@ class SCAExportExtension {
 	}
 	
 	def dispatch String getExportDisplayName (Service s, SCA prot) {
-		if (prot.promote != null) {
+		if (prot.promote !== null) {
 			prot.promote;
 		} else {
 			val namespace = s.getOwnerByType(Namespace)

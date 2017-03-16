@@ -172,7 +172,7 @@ class OperationWrapperTypesGenerator {
 	def toConcreteOperationWrapperTypes (Operation op, Profile profile) '''
 		<xsd:complexType name="«op.toOperationWrapperRequestType()»">
 			<xsd:sequence>
-				«IF op.findBestMatchingRequestHeader(profile) != null»
+				«IF op.findBestMatchingRequestHeader(profile) !== null»
 					«op.findBestMatchingRequestHeader (profile)?.toParameter()»
 				«ENDIF»
 				«op.parameters.map (p|p.toParameter()).join»
@@ -180,7 +180,7 @@ class OperationWrapperTypesGenerator {
 		</xsd:complexType>
 		<xsd:complexType name="«op.toOperationWrapperResponseType()»">
 			<xsd:sequence>
-				«IF op.findBestMatchingResponseHeader(profile) != null»
+				«IF op.findBestMatchingResponseHeader(profile) !== null»
 					«op.findBestMatchingResponseHeader (profile)?.toParameter()»
 				«ENDIF»
 				«op.^return.map (r|r.toParameter()).join»

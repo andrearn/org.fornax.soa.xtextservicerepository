@@ -1,10 +1,5 @@
 package org.xkonnex.repo.generator.servicedsl.templates.java
 
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.DataType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import com.google.inject.Inject
@@ -13,7 +8,6 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 
 class JaxWsTypeExtensions {
@@ -104,7 +98,7 @@ class JaxWsTypeExtensions {
 	 */
 	def String toJaxWsServiceOperationPackageName (Operation operation) {
 		val Service service = objLookup.getOwnerByType(operation, typeof (Service))
-		if (service != null) {
+		if (service !== null) {
 			return nameProvider.getFullyQualifiedName(service.eContainer).toString + "." + service.name.toLowerCase + "." + service.version.toVersionPostfix
 		} else {
 			return null
@@ -116,7 +110,7 @@ class JaxWsTypeExtensions {
 	 */
 	def String toJaxWsServiceExceptionPackageName (ExceptionRef exceptionRef) {
 		val Service service = objLookup.getOwnerByType(exceptionRef, typeof (Service))
-		if (service != null) {
+		if (service !== null) {
 			return nameProvider.getFullyQualifiedName(service.eContainer).toString + "." + service.name.toLowerCase + "." + service.version.toVersionPostfix
 		} else {
 			return null

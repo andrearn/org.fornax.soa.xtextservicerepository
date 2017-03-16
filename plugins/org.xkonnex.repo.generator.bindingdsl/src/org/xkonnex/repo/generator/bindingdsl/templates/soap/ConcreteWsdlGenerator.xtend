@@ -5,27 +5,25 @@ import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
-import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
-import org.xkonnex.repo.generator.bindingdsl.templates.naming.DefaultEndpointQualifierNameProvider
-import org.xkonnex.repo.generator.bindingdsl.templates.wsdl.ConcreteWsdlFileNameProvider
+import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
+import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
+import org.xkonnex.repo.generator.bindingdsl.templates.naming.DefaultEndpointQualifierNameProvider
+import org.xkonnex.repo.generator.bindingdsl.templates.wsdl.ConcreteWsdlFileNameProvider
+import org.xkonnex.repo.generator.servicedsl.templates.CommonTemplateExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
-import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTypeExtensions
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
-import org.xkonnex.repo.generator.servicedsl.templates.CommonTemplateExtensions
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
-import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
-import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 
 /*
  * Generate concrete public endpoint WSDLs that define port, binding and service endpoint for each elegible service 
@@ -41,7 +39,7 @@ class ConcreteWsdlGenerator {
 	@Inject extension BindingExtensions
 	@Inject extension ConcreteWsdlFileNameProvider
 	@Inject extension SoapBindingResolver
-	@Inject extension org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
+	@Inject extension SchemaNamespaceExtensions
 	@Inject extension ServiceTemplateExtensions
 	@Inject extension SoapEndpointAddressResolver
 	@Inject extension EnvironmentBindingResolver

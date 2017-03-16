@@ -81,7 +81,7 @@ class SchemaTypeExtensions {
 	}
 	
 	def dispatch String toTypeNameRef (VersionedTypeRef t) {
-		if (t.type.findSubdomain() != null) {
+		if (t.type.findSubdomain() !== null) {
 			var prefix = "tns";
 			if (! (t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
@@ -96,7 +96,7 @@ class SchemaTypeExtensions {
 	}
 	
 	def dispatch String toTypeNameRef (org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef t) {
-		if (profileNSQueries.findTechnicalNamespace (t.type) != null) {
+		if (profileNSQueries.findTechnicalNamespace (t.type) !== null) {
 			var prefix = "tns";
 			if (! (profileNSQueries.findOwnerSubdomain(t) == profileNSQueries.findTechnicalNamespace (t.type)
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber())
@@ -110,7 +110,7 @@ class SchemaTypeExtensions {
 	}
 	
 	def dispatch String toTypeNameRef (DataObjectRef t) { 
-		if (t.type.findSubdomain() != null) {
+		if (t.type.findSubdomain() !== null) {
 			var prefix = "tns";
 			if (!(t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
@@ -125,7 +125,7 @@ class SchemaTypeExtensions {
 	}
 	
 	def dispatch String toTypeNameRef (EnumTypeRef t) { 
-		if (t.type.findSubdomain() != null) {
+		if (t.type.findSubdomain() !== null) {
 			var prefix = "tns";
 			if (!(t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t. getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
@@ -140,7 +140,7 @@ class SchemaTypeExtensions {
 	}
 	
 	def String toExceptionNameRef (ExceptionRef exRef) {
-		if (exRef.exception.findSubdomain() != null) {
+		if (exRef.exception.findSubdomain() !== null) {
 			var prefix = "tns";
 			if (!(exRef.findExceptionRefOwnerSubdomain() == exRef.exception.findSubdomain()
 			 && exRef.getOwnerVersion().toMajorVersionNumber() == exRef.exception.version.toMajorVersionNumber()
@@ -320,7 +320,7 @@ class SchemaTypeExtensions {
 	}
 	
 	def dispatch boolean isMimeContent (DataTypeRef t) {
-		return t.contentType != null || t.type.name == "attachment"
+		return t.contentType !== null || t.type.name == "attachment"
 	}
 	
 	def dispatch boolean isMimeContentMultiPartAttachment (TypeRef t) {
@@ -328,7 +328,7 @@ class SchemaTypeExtensions {
 	}
 	
 	def dispatch boolean isMimeContentMultiPartAttachment (DataTypeRef t) {
-		if (t.contentType != null) {
+		if (t.contentType !== null) {
 			switch (t.type.name) {
 				case "attachment":		true
 				default:				false
@@ -456,9 +456,9 @@ class SchemaTypeExtensions {
 	 * the complexType  
 	 */
 	def boolean typesUseExtensibleProperties (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
-		if (p.designRules != null 
-			&& p.designRules.typeDefPolicy != null 
-			&& p.designRules.typeDefPolicy.versionEvolution != null) {
+		if (p.designRules !== null 
+			&& p.designRules.typeDefPolicy !== null 
+			&& p.designRules.typeDefPolicy.versionEvolution !== null) {
 			return  p.designRules.typeDefPolicy.versionEvolution.extensibleProperties;
 		} else {
 			return false
@@ -470,9 +470,9 @@ class SchemaTypeExtensions {
 	 * Determine, whether XSD type definitions should be made extensible for unknown XML attributes 
 	 */
 	def boolean typesUseExtensibleXMLAttributes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
-		if (p.designRules != null 
-			&& p.designRules.typeDefPolicy != null 
-			&& p.designRules.typeDefPolicy.versionEvolution != null) {
+		if (p.designRules !== null 
+			&& p.designRules.typeDefPolicy !== null 
+			&& p.designRules.typeDefPolicy.versionEvolution !== null) {
 			return  p.designRules.typeDefPolicy.versionEvolution.extensibleXMLAttributes;
 		} else {
 			return false
@@ -484,9 +484,9 @@ class SchemaTypeExtensions {
 	 * should be made extensible for unknown XML elements or attributes 
 	 */
 	def boolean useExtensibleSubtypes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
-		if (p.designRules != null 
-			&& p.designRules.typeDefPolicy != null 
-			&& p.designRules.typeDefPolicy.versionEvolution != null) {
+		if (p.designRules !== null 
+			&& p.designRules.typeDefPolicy !== null 
+			&& p.designRules.typeDefPolicy.versionEvolution !== null) {
 			return  p.designRules.typeDefPolicy.versionEvolution.extensibleSubTypes;
 		} else {
 			return false
@@ -500,7 +500,7 @@ class SchemaTypeExtensions {
 	 */
 	def String getTypesExtensiblePropertiesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.typesUseExtensibleProperties) {
-			if (p.designRules.typeDefPolicy.versionEvolution.extensibleXMLClause != null) {
+			if (p.designRules.typeDefPolicy.versionEvolution.extensibleXMLClause !== null) {
 				return p.designRules.typeDefPolicy.versionEvolution.extensibleXMLClause;
 			} else {
 				return 
@@ -521,7 +521,7 @@ class SchemaTypeExtensions {
 	 */
 	def String getTypesExtensibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.typesUseExtensibleXMLAttributes) {
-			if (p.designRules.typeDefPolicy.versionEvolution.extensibleXMLAttributeClause != null) {
+			if (p.designRules.typeDefPolicy.versionEvolution.extensibleXMLAttributeClause !== null) {
 				return p.designRules.typeDefPolicy.versionEvolution.extensibleXMLAttributeClause;
 			} else {
 				return 

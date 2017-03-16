@@ -1,20 +1,14 @@
 package org.xkonnex.repo.generator.bindingdsl.templates.wsdl
 
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import com.google.inject.Inject
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
-import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
-import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
-import org.xkonnex.repo.generator.bindingdsl.templates.naming.DefaultEndpointQualifierNameProvider
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.EndpointQualifierQueries
-import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier
-import org.xkonnex.repo.generator.bindingdsl.templates.naming.IEndpointQualifierNameProvider
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.generator.bindingdsl.templates.naming.IEndpointQualifierNameProvider
+import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 
 class ConcreteWsdlFileNameProvider {
 	
@@ -22,7 +16,7 @@ class ConcreteWsdlFileNameProvider {
 	@Inject extension IEndpointQualifierNameProvider
 	@Inject extension SchemaNamespaceExtensions
 	
-	def dispatch String getConcreteWsdlFileNameFragment (Service service, AnyBinding binding) {
+	def String getConcreteWsdlFileNameFragment (Service service, AnyBinding binding) {
 		var specBinding = binding
 		val soapProt = specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP).head
 		return service.getConcreteWsdlFileNameFragment(specBinding.getEndpointQualifierName (service, soapProt))
@@ -33,7 +27,7 @@ class ConcreteWsdlFileNameProvider {
 		return service.getConcreteWsdlFileNameFragment(specBinding.getEndpointQualifierName (service, protocol))
 	}
 	
-	def dispatch String getConcreteWsdlFileNameFragment (Service service, Binding binding) {
+	def String getConcreteWsdlFileNameFragment (Service service, Binding binding) {
 		var specBinding = service.getMostSpecificBinding(binding)
 		val soapProt = specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP).head
 		return service.getConcreteWsdlFileNameFragment(specBinding.getEndpointQualifierName (service, soapProt))

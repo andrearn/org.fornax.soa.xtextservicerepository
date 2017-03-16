@@ -8,8 +8,8 @@ import org.eclipse.xtext.generator.IGenerator;
 import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
 import org.eclipse.xtext.generator.OutputConfiguration;
 import org.eclipse.xtext.util.Modules2;
-import org.xkonnex.repo.generator.core.XtextServiceRepositoryGeneratorConstants;
-import org.xkonnex.repo.generator.core.XtextServiceRepositoryGeneratorModule;
+import org.xkonnex.repo.generator.core.XSRGeneratorConstants;
+import org.xkonnex.repo.generator.core.XSRGeneratorModule;
 import org.xkonnex.repo.generator.basedsl.BaseDslGeneratorModule;
 
 import com.google.common.collect.Maps;
@@ -29,7 +29,7 @@ public class DefaultProfileContractsGeneratorSetup implements ISetup {
 		Injector injector = Guice.createInjector (Modules2.mixin (
 				new BaseDslGeneratorModule (),
 				new ProfileDslGeneratorModule (), 
-				new XtextServiceRepositoryGeneratorModule (),
+				new XSRGeneratorModule (),
 				
 				new AbstractModule () {
 
@@ -40,11 +40,11 @@ public class DefaultProfileContractsGeneratorSetup implements ISetup {
 
 						bind (Boolean.class)
 								.annotatedWith (
-										Names.named (XtextServiceRepositoryGeneratorConstants.USE_REGISTRY_BASED_FILE_PATHS))
+										Names.named (XSRGeneratorConstants.USE_REGISTRY_BASED_FILE_PATHS))
 								.toInstance (useRegistryBasedFilePaths);
 						bind (Boolean.class)
 								.annotatedWith (
-										Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
+										Names.named (XSRGeneratorConstants.USE_NESTED_PATHS))
 								.toInstance (useNestedPaths);
 						bind (String.class)
 								.annotatedWith (

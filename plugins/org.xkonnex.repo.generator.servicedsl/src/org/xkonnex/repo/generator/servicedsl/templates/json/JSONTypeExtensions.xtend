@@ -9,11 +9,11 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration
 
 class JSONTypeExtensions {
 	
-	def toContextualTypeNameRef(VersionedType type) {
+	def dispatch toContextualTypeNameRef(VersionedType type) {
 		type.name	
 	}
 	
-	def dispatch String toContextualTypeNameRef(TypeRef type) {
+	def dispatch toContextualTypeNameRef(TypeRef type) {
 		""	
 	}
 	
@@ -30,9 +30,9 @@ class JSONTypeExtensions {
 	}
 	
 	def dispatch toBaseType(DataObject type) {
-		if (type.superObject == null){
+		if (type.superObject === null){
 			"object"
-		} else if(type.superObject.type != null) {
+		} else if(type.superObject.type !== null) {
 			type.superObject.type.toContextualTypeNameRef
 		} else {
 			""

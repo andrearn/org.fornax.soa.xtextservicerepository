@@ -8,19 +8,17 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
-import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
-import org.xkonnex.repo.generator.environmentdsl.EndpointResolver
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
-import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
+import org.xkonnex.repo.generator.environmentdsl.EndpointResolver
 
 /*
  * Resolves SOAP endpoint addresses according to the naming conventions 
  */
 class SoapEndpointAddressResolver {
 
-	@Inject extension NamespaceQuery
 	@Inject extension BindingExtensions
 	@Inject extension SoapVendorEndpointAddressResolver
 	@Inject extension EndpointResolver

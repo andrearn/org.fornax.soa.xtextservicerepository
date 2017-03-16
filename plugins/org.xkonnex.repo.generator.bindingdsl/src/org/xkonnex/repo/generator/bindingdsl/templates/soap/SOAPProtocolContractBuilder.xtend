@@ -70,11 +70,11 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 		for (provSvcRef : providedServices) {
 			val svc = modServiceResolver.resolveModuleServiceRef (provSvcRef, binding.resolveEnvironment)
 
-			if (svc != null) {
+			if (svc !== null) {
 				try {
 					val specBinding = svc.getMostSpecificBinding (binding);
 					for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
-						if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (binding.resolveEnvironment)) {
+						if (svc.providedContractUrl === null && svc.isEligibleForEnvironment (binding.resolveEnvironment)) {
 							val namespace = svc.findSubdomain();
 							val profile = namespace.getApplicableProfile(enforcedProfile)
 							val typesMinState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
@@ -88,7 +88,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 								verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, binding, profile));
 										
 								val requestHeader = svc.findBestMatchingRequestHeader (profile);
-								if (requestHeader != null) {
+								if (requestHeader !== null) {
 									if (useRegistryBasedFilePaths)
 										msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, binding.getRegistryBaseUrl())
 									else 
@@ -96,7 +96,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 								}
 								
 								val responseHeader = svc.findBestMatchingResponseHeader (profile);
-								if (responseHeader != null) {
+								if (responseHeader !== null) {
 									if (useRegistryBasedFilePaths)
 										msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, binding.getRegistryBaseUrl())
 									else 
@@ -119,7 +119,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 		val bindingDescs = 	bindingResolver.resolveProvidedServiceBindings (module, targetEnvironment, endpointQualifierRef)
 		for (specBindingDesc : bindingDescs.serviceRefDescriptions) {
 			val svc = specBindingDesc.getResolvedService
-			if (svc != null) {
+			if (svc !== null) {
 				try {
 					if (protocolMatcher.supportsModuleEndpointProtocol (specBindingDesc.getApplicableBinding, typeof (org.xkonnex.repo.dsl.moduledsl.ext.protocol.SOAP))) {
 						doBuildServiceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, enforcedProfile)
@@ -141,7 +141,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 		for (curModBindDesc : bindingDescs) {
 			for (specBindingDesc : curModBindDesc.serviceRefDescriptions) {
 				val svc = specBindingDesc.getResolvedService
-				if (svc != null) {
+				if (svc !== null) {
 					try {
 						if (protocolMatcher.supportsModuleEndpointProtocol (specBindingDesc.getApplicableBinding, typeof (org.xkonnex.repo.dsl.moduledsl.ext.protocol.SOAP))) {
 							doBuildServiceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, enforcedProfile)
@@ -164,7 +164,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 		val specBinding = serviceBindingDescription.getApplicableBinding
 		for (soapProt : specBinding.protocol.filter (p| p instanceof SOAP).map (e| e as SOAP)) {
 			try {
-				if (service.providedContractUrl == null && service.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
+				if (service.providedContractUrl === null && service.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
 					val namespace = service.findSubdomain();
 					val profile = namespace.getApplicableProfile(enforcedProfile)
 					val typesMinState = if (selectTypeVersionsByEnvironment) 
@@ -179,7 +179,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 						verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile));
 								
 						val requestHeader = service.findBestMatchingRequestHeader (profile);
-						if (requestHeader != null) {
+						if (requestHeader !== null) {
 							if (useRegistryBasedFilePaths)
 								msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, specBinding.getRegistryBaseUrl())
 							else 
@@ -187,7 +187,7 @@ class SOAPProtocolContractBuilder implements IProtocolContractBuilder {
 						}
 
 						val responseHeader = service.findBestMatchingRequestHeader (profile);
-						if (responseHeader != null) {
+						if (responseHeader !== null) {
 							if (useRegistryBasedFilePaths)
 								msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, specBinding.getRegistryBaseUrl())
 							else 

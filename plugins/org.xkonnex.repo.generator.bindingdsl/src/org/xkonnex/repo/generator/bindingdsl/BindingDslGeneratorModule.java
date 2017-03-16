@@ -108,6 +108,9 @@ public class BindingDslGeneratorModule extends BindingDslRuntimeModule {
 	public void configureBindingTemplates (final Binder binder) {
 		binder.bind (new TypeLiteral<Set<ProvidedProtocolContractBuilder>> () {}).toInstance (
 			new HashSet<ProvidedProtocolContractBuilder> () {
+
+				private static final long serialVersionUID = 1L;
+
 				{
 					add (getLazyProtocolContractProvider (binder, SOAPProtocolContractBuilder.class));
 					add (getLazyProtocolContractProvider(binder, DefaultWADLContractBuilder.class));

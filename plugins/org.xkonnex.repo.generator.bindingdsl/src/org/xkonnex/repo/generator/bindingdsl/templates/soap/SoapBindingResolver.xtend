@@ -1,13 +1,11 @@
 package org.xkonnex.repo.generator.bindingdsl.templates.soap
 
 import com.google.inject.Inject
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAPStyle
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
-import org.xkonnex.repo.generator.bindingdsl.templates.naming.DefaultEndpointQualifierNameProvider
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.generator.bindingdsl.templates.naming.IEndpointQualifierNameProvider
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 
 class SoapBindingResolver {
 	

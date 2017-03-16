@@ -46,19 +46,24 @@ public class EnvironmentDslScopeProvider extends ComponentAwareVersionedScopePro
 	@Override
 	protected List<ImportNormalizer> getImplicitImports(boolean ignoreCase) {
 		List<ImportNormalizer> result = newArrayList();
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.cluster.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.connector.*", ignoreCase));
-		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.server.*", ignoreCase));
-		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.security.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.container.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.db.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.executable.*", ignoreCase));
-		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.script.*", ignoreCase));
-		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.vm.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.gateway.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.image.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.management.*", ignoreCase));
-		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.cluster.*", ignoreCase));
-		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.gateway.*", ignoreCase));
 		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.registry.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.server.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.server.corba.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.server.esb.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.server.jee.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.server.messaging.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.server.process.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.script.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.security.*", ignoreCase));
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.environmentdsl.ext.vm.*", ignoreCase));
 		return result;
 	}
 

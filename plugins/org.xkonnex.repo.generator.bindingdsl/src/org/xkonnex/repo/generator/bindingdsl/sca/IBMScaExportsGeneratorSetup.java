@@ -13,8 +13,8 @@ import org.eclipse.xtext.util.Modules2;
 import org.xkonnex.repo.generator.moduledsl.ModuleDslGeneratorModule;
 import org.xkonnex.repo.generator.profiledsl.ProfileDslGeneratorModule;
 import org.xkonnex.repo.generator.profiledsl.ProfileGeneratorConstants;
-import org.xkonnex.repo.generator.core.XtextServiceRepositoryGeneratorConstants;
-import org.xkonnex.repo.generator.core.XtextServiceRepositoryGeneratorModule;
+import org.xkonnex.repo.generator.core.XSRGeneratorConstants;
+import org.xkonnex.repo.generator.core.XSRGeneratorModule;
 import org.xkonnex.repo.generator.environmentdsl.EnvironmentDslGeneratorModule;
 import org.xkonnex.repo.generator.basedsl.BaseDslGeneratorModule;
 import org.xkonnex.repo.generator.bindingdsl.BindingDSLGeneratorConstants;
@@ -46,7 +46,7 @@ public class IBMScaExportsGeneratorSetup implements ISetup {
 				new ModuleDslGeneratorModule (),
 				new ProfileDslGeneratorModule (), 
 				new BindingDslGeneratorModule (),
-				new XtextServiceRepositoryGeneratorModule (),
+				new XSRGeneratorModule (),
 				
 				new AbstractModule () {
 
@@ -57,11 +57,11 @@ public class IBMScaExportsGeneratorSetup implements ISetup {
 
 						bind (Boolean.class)
 								.annotatedWith (
-										Names.named (XtextServiceRepositoryGeneratorConstants.USE_REGISTRY_BASED_FILE_PATHS))
+										Names.named (XSRGeneratorConstants.USE_REGISTRY_BASED_FILE_PATHS))
 								.toInstance (useRegistryBasedFilePaths);
 						bind (Boolean.class)
 								.annotatedWith (
-										Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
+										Names.named (XSRGeneratorConstants.USE_NESTED_PATHS))
 								.toInstance (useNestedPaths);
 						bind (String.class)
 								.annotatedWith (

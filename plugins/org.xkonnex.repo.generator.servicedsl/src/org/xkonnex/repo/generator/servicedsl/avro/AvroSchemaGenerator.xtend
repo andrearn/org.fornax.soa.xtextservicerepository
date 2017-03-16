@@ -33,6 +33,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import org.xkonnex.repo.generator.servicedsl.VersionedTypeDescriptor
 import org.xkonnex.repo.generator.servicedsl.templates.java.JavaTypeExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.json.JSONTypeExtensions
+import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries
 
 class AvroSchemaGenerator implements IGenerator2 {
 
@@ -45,6 +46,7 @@ class AvroSchemaGenerator implements IGenerator2 {
 	@Inject extension AvroSchemaFilenameProvider
 	@Inject extension JavaTypeExtensions
 	@Inject extension NamespaceQuery
+	@Inject extension DataObjectQueries
 	@Inject IEObjectDocumentationProvider docProvider
 	@Inject IFileSystemAccess fsa
 	@Inject
@@ -56,6 +58,7 @@ class AvroSchemaGenerator implements IGenerator2 {
 	
 	@Inject @Named ("profileName")
 	String profileName
+	
 	@Inject @Named ("registryUrl")
 	String registryUrl
 	
@@ -82,16 +85,20 @@ class AvroSchemaGenerator implements IGenerator2 {
 
 	
 	override afterGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
 	override beforeGenerate(Resource input, IFileSystemAccess2 fsa, IGeneratorContext context) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
 	override doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		var resourceSet = resource.resourceSet;
 		resourceDescriptions.setContext (resourceSet);
+		
+		val Profile profile = profileQueries.getProfileByName(profileName, resourceSet)
+		if (profile !== null) {
+			logger.info ("Enforcing generation with profile " + profile.name)
+		}
+		generateForSubNamespaces(resource)
 	}
 
 	private def generateForSubNamespaces(Resource resource) {
@@ -111,10 +118,10 @@ class AvroSchemaGenerator implements IGenerator2 {
 	
 	protected def compile (SubNamespace namespace, Resource resource) {
 		val Profile profile = namespace.getApplicableProfile(profileQueries.getProfileByName(profileName, resource.resourceSet))
-		if (profile == null)
+		if (profile === null)
 			logger.severe ("No applicable architecture profile found")
 		
-		if (profile != null) {
+		if (profile !== null) {
 			logger.info ("Generating Avro schemas for namespace " + nameProvider.getFullyQualifiedName(namespace).toString)
 			generateSchemas (namespace, null);
 		}
@@ -137,26 +144,25 @@ class AvroSchemaGenerator implements IGenerator2 {
 		val doc = docProvider.getDocumentation(type)
 		'''
 		      {
-		        "name": «type.name»
-		        "namespace": «type.toPackageName»
+		        "name": «type.name»,
+		        "namespace": «type.toPackageName»,
 		        "type": "record",
-		        «IF doc != null»
+		        «IF doc !== null»
 		          "doc": "«doc»",
 		        «ENDIF»
 		        "fields": [
-		          «type.properties.map[toProperty(registryBaseUrl)].join(",\n")»
+		          «type.getAllVisibleProperties.map[toProperty(registryBaseUrl)].join(",\n")»
 		        ]
 		      }
 		'''
 	}
 	def dispatch toRecord(Enumeration type, String registryBaseUrl) {
 		val doc = docProvider.getDocumentation(type)
-		//- Address : |
 		'''
 		      {
-		        "type": "enum"
+		        "type": "enum",
 		        "name":	«type.name»",
-		        «IF doc != null»
+		        «IF doc !== null»
 		          "doc": "«doc»",
 		        «ENDIF»
 		        "symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
@@ -167,26 +173,29 @@ class AvroSchemaGenerator implements IGenerator2 {
 	def dispatch toInnerRecord(DataObject type, String registryBaseUrl) {
 		val doc = docProvider.getDocumentation(type)
 		'''
+		      {
+		        "name": «type.name»,
+		        "namespace": «type.toPackageName»,
 		        "type": "record",
-		        "name": «type.toQualifiedJavaTypeName»
-		        «IF doc != null»
+		        «IF doc !== null»
 		          "doc": "«doc»",
 		        «ENDIF»
-		        "fields": {
-		          «type.properties.map[toProperty(registryBaseUrl)].join(",\n")»
-		        },
+		        "fields": [
+		          «type.getAllVisibleProperties.map[toProperty(registryBaseUrl)].join(",\n")»
+		        ],
 		        «type.toRequired»
+		      }
 		'''
 	}
 	def dispatch toInnerRecord(Enumeration type, String registryBaseUrl) {
 		val doc = docProvider.getDocumentation(type)
 		'''
-		        "type": "enum"
-		        "name":	«type.name»",
-		        «IF doc != null»
-		          "doc": "«doc»",
-		        «ENDIF»
-		        "symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
+		    "type": "enum",
+		    "name":	«type.name»",
+		    «IF doc !== null»
+		      "doc": "«doc»",
+		    «ENDIF»
+		    "symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
 		'''
 	}
 	def toProperty(Property p, String registryBaseUrl) {
@@ -194,7 +203,7 @@ class AvroSchemaGenerator implements IGenerator2 {
 		'''
 			{
 			  "name": "«p.name»" : {
-			  «IF doc != null»
+			  «IF doc !== null»
 			    "doc": "«doc»",
 			  «ENDIF»
 			  «p.type.toPropertyType (p.optional, registryBaseUrl)»
@@ -240,7 +249,7 @@ class AvroSchemaGenerator implements IGenerator2 {
 	}
 	
 	def dispatch String toPropertyType (VersionedType type, String registryBaseUrl) {
-		'''«type.toRecord(registryBaseUrl)»'''
+		'''«type.toInnerRecord(registryBaseUrl)»'''
 	}
 	
 	def dispatch String toPropertyType (Enumeration type, String registryBaseUrl) {

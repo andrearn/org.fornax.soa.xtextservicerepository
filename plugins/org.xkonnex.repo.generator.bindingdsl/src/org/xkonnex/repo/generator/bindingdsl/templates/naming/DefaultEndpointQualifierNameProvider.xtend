@@ -18,7 +18,7 @@ class DefaultEndpointQualifierNameProvider implements IEndpointQualifierNameProv
 	
 	override String getEndpointQualifierName (AnyBinding bind, Service svc, BindingProtocol prot) {
 		var detailedQualifierName = ""
-		if (prot.effectiveEndpointQualifier != null) {
+		if (prot.effectiveEndpointQualifier !== null) {
 			detailedQualifierName = prot.effectiveEndpointQualifier.name.replaceAll("\\.","_")
 		
 		}
@@ -52,7 +52,7 @@ class DefaultEndpointQualifierNameProvider implements IEndpointQualifierNameProv
 	
 	override getEndpointQualifierName(AnyBinding bind, Resource res, BindingProtocol prot) {
 		var detailedQualifierName = ""
-		if (prot.effectiveEndpointQualifier != null) {
+		if (prot.effectiveEndpointQualifier !== null) {
 			detailedQualifierName = prot.effectiveEndpointQualifier.name.replaceAll("\\.","_")
 		
 		}

@@ -201,7 +201,7 @@ class SchemaNamespaceExtensions {
 	 * Calulates the URL to the Schema location
 	 */
 	def dispatch String toSchemaAssetUrl (Service s, String registryUrl) { 
-		if (registryUrl != null && useRegistryBasedFilePaths() ) 
+		if (registryUrl !== null && useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
@@ -211,7 +211,7 @@ class SchemaNamespaceExtensions {
 	 * Calulates the URL to the Schema location
 	 */
 	def dispatch String toSchemaAssetUrl (OrganizationNamespace s, String registryUrl) { 
-		if (registryUrl != null && useRegistryBasedFilePaths() ) 
+		if (registryUrl !== null && useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
@@ -221,7 +221,7 @@ class SchemaNamespaceExtensions {
 	 * Calulates the URL to the Schema location
 	 */
 	def dispatch String toSchemaAssetUrl (DomainNamespace s, String registryUrl) { 
-		if (registryUrl != null && useRegistryBasedFilePaths() ) 
+		if (registryUrl !== null && useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
@@ -231,7 +231,7 @@ class SchemaNamespaceExtensions {
 	 * Calulates the URL to the Schema location
 	 */
 	def dispatch String toSchemaAssetUrl (InternalNamespace s, String registryUrl) {
-		if (registryUrl != null && useRegistryBasedFilePaths() ) 
+		if (registryUrl !== null && useRegistryBasedFilePaths() ) 
 			registryUrl + "/" + s.toFileNameFragment() 
 		else
 			s.toFileNameFragment();
@@ -240,7 +240,7 @@ class SchemaNamespaceExtensions {
 	 * Calulates the URL to the Schema location
 	 */
 	def dispatch String toSchemaAssetUrl (VersionedDomainNamespace s, String registryUrl) { 
-		if (registryUrl != null && useRegistryBasedFilePaths() ) 
+		if (registryUrl !== null && useRegistryBasedFilePaths() ) 
 			registryUrl + "/" +s.toFileNameFragment() 
 		else
 			s.toFileNameFragment(); 

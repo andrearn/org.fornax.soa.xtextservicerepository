@@ -4,7 +4,6 @@
 package org.xkonnex.repo.dsl.environmentdsl.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.ui.browser.IWebBrowser;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.common.types.JvmType;
 import org.eclipse.xtext.common.types.access.IJvmTypeProvider;
@@ -43,11 +42,11 @@ import org.xkonnex.repo.dsl.environmentdsl.ext.registry.IRegistry;
 import org.xkonnex.repo.dsl.environmentdsl.ext.security.IIdentityAccessManager;
 import org.xkonnex.repo.dsl.environmentdsl.ext.security.ISecurityProtocol;
 import org.xkonnex.repo.dsl.environmentdsl.ext.server.IAppServer;
-import org.xkonnex.repo.dsl.environmentdsl.ext.server.IESB;
-import org.xkonnex.repo.dsl.environmentdsl.ext.server.IMessagingServer;
-import org.xkonnex.repo.dsl.environmentdsl.ext.server.IProcessServer;
 import org.xkonnex.repo.dsl.environmentdsl.ext.server.IServer;
 import org.xkonnex.repo.dsl.environmentdsl.ext.server.IWebserver;
+import org.xkonnex.repo.dsl.environmentdsl.ext.server.esb.IESB;
+import org.xkonnex.repo.dsl.environmentdsl.ext.server.messaging.IMessagingServer;
+import org.xkonnex.repo.dsl.environmentdsl.ext.server.process.IProcessServer;
 import org.xkonnex.repo.dsl.environmentdsl.ext.vm.IVirtualMachine;
 
 import com.google.inject.Inject;

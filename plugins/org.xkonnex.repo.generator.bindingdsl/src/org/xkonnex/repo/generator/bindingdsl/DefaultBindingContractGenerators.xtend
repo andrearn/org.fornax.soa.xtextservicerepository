@@ -115,12 +115,12 @@ class DefaultBindingContractGenerators implements IGenerator {
 		
 		var hasValidParameters = true
 			
-		if (targetEnvironmentName == null || "".equals(targetEnvironmentName)) {
+		if (targetEnvironmentName === null || "".equals(targetEnvironmentName)) {
 			logger.severe ("No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
 			hasValidParameters = false
 		}
 		val Profile profile = profileQueries.getProfileByName(profileName, resourceSet)
-		if (profile != null) {
+		if (profile !== null) {
 			logger.info ("Enforcing generation with profile " + profile.name)
 			hasValidParameters = hasValidParameters && true
 		}
@@ -182,7 +182,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 	
 	protected def compile (ModuleBinding bind, Profile profile) {
 		logger.info("Generating contracts for module binding " + bind.name)
-		if (noDependencies != null && includeSubNamespaces != null)
+		if (noDependencies !== null && includeSubNamespaces !== null)
 			bindingBuilder.build (bind, profile, noDependencies, includeSubNamespaces)
 		else
 			bindingBuilder.build (bind, profile);
@@ -195,11 +195,11 @@ class DefaultBindingContractGenerators implements IGenerator {
 		var generateUsedServices = moduleSelector.generateUsedServices
 		if (!generateProvidedServices && !generateUsedServices)
 			generateUsedServices = true
-		if (env != null) {
-			if (moduleSelector.endpointQualifier != null) {
+		if (env !== null) {
+			if (moduleSelector.endpointQualifier !== null) {
 				val endpointQualifierRef =  ModuleDslFactory::eINSTANCE.createEndpointQualifierRef
 				val Qualifier endpointQualifier = eObjectLookup.getModelElementByName(moduleSelector.endpointQualifier, resource, "Qualifier")
-				if (endpointQualifierRef != null) {
+				if (endpointQualifierRef !== null) {
 					endpointQualifierRef.setEndpointQualifier(endpointQualifier)
 					bindingBuilder.build(mod, env, moduleSelector.selectTypeVersionsByEnvironment, generateProvidedServices, generateUsedServices, endpointQualifierRef, enforcedProfile)
 				} else {
@@ -218,12 +218,12 @@ class DefaultBindingContractGenerators implements IGenerator {
 	protected def compile (SubNamespace namespace, Resource resource) {
 		val Profile profile = namespace.getApplicableProfile(profileQueries.getProfileByName(profileName, resource.resourceSet))
 		val Environment env = eObjectLookup.getModelElementByName (targetEnvironmentName, resource, "Environment");
-		if (env == null)
+		if (env === null)
 			logger.severe ("No environment found matching the name expression " + targetEnvironmentName)
-		if (profile == null)
+		if (profile === null)
 			logger.severe ("No applicable architecture profile found")
 		
-		if (env != null && profile != null) {
+		if (env !== null && profile !== null) {
 			logger.info ("Generating XSDs for namespace " + nameProvider.getFullyQualifiedName(namespace).toString)
 			xsdGen.toXSD (namespace, env, profile);
 		}

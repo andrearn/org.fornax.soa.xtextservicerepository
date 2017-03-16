@@ -32,7 +32,7 @@ class RESTEndpointAddressResolver {
 		service.toEndpointAddress (server, prot, binding)
 		
 	}
-	def dispatch String toEndpointAddress (Service service, Server server, EffectiveBinding binding, ExtensibleProtocol prot, Module mod) { 
+	def String toEndpointAddress (Service service, Server server, EffectiveBinding binding, ExtensibleProtocol prot, Module mod) { 
 		val connector = connectorResolver.resolveConnector(server, binding, prot);
 		connector.getEndpointUrl() 
 		+ mod.toEndpointAddressPath (service, server, binding, prot)

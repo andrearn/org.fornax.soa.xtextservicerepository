@@ -29,7 +29,7 @@ class CommonTemplateExtensions {
 	}
 	
 	def String toStateName (LifecycleState state) {
-		if (state != null)
+		if (state !== null)
 			state.name
 		else
 			"undefined"

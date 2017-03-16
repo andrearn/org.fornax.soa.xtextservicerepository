@@ -68,12 +68,12 @@ class DefaultWrappedWsdlGenerator implements IGenerator {
 		resourceDescriptions.setContext (resourceSet);
 
 		var hasValidParameters = true
-		if (targetEnvironmentName == null || "".equals(targetEnvironmentName)) {
+		if (targetEnvironmentName === null || "".equals(targetEnvironmentName)) {
 			logger.severe("No targetEnvironmentName has been supplied to the Generator. Please provide the name of the environment to generate contracts for.")
 			hasValidParameters = false
 		}
 		val Profile profile = profileQueries.getProfileByName(profileName, resourceSet);
-		if (profile != null) {
+		if (profile !== null) {
 			logger.info ("Enforcing generation with profile " + profile.name)
 			hasValidParameters = hasValidParameters && true
 		}

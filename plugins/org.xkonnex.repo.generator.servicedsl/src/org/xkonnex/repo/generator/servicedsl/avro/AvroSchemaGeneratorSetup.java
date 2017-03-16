@@ -13,8 +13,8 @@ import org.eclipse.xtext.util.Modules2;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.state.DefaultStateResolver;
 import org.xkonnex.repo.generator.basedsl.BaseDslGeneratorModule;
-import org.xkonnex.repo.generator.core.XtextServiceRepositoryGeneratorConstants;
-import org.xkonnex.repo.generator.core.XtextServiceRepositoryGeneratorModule;
+import org.xkonnex.repo.generator.core.XSRGeneratorConstants;
+import org.xkonnex.repo.generator.core.XSRGeneratorModule;
 import org.xkonnex.repo.generator.profiledsl.ProfileDslGeneratorModule;
 import org.xkonnex.repo.generator.servicedsl.ServiceDslGeneratorModule;
 import org.xkonnex.repo.generator.servicedsl.VersionedTypeDescriptor;
@@ -37,6 +37,7 @@ public class AvroSchemaGeneratorSetup implements ISetup {
 	public final static String PROFILE_NAME = "profileName";
 
 	private String profileName = "";
+	private String registryUrl = "";
 	private List<VersionedTypeDescriptor> versionedTypes = new ArrayList<VersionedTypeDescriptor>();
 	private List<String> namespaces = new ArrayList<String>();
 	private List<String> domainNamespaces = new ArrayList<String>();
@@ -52,7 +53,7 @@ public class AvroSchemaGeneratorSetup implements ISetup {
 				new BaseDslGeneratorModule (),
 				new ServiceDslGeneratorModule (),
 				new ProfileDslGeneratorModule (), 
-				new XtextServiceRepositoryGeneratorModule (),
+				new XSRGeneratorModule (),
 				
 				new AbstractModule () {
 
@@ -63,16 +64,16 @@ public class AvroSchemaGeneratorSetup implements ISetup {
 
 						bind (Boolean.class)
 							.annotatedWith (
-								Names.named (XtextServiceRepositoryGeneratorConstants.USE_REGISTRY_BASED_FILE_PATHS))
+								Names.named (XSRGeneratorConstants.USE_REGISTRY_BASED_FILE_PATHS))
 							.toInstance (useRegistryBasedFilePaths);
 						bind (Boolean.class)
 							.annotatedWith (
-								Names.named (XtextServiceRepositoryGeneratorConstants.USE_NESTED_PATHS))
+								Names.named (XSRGeneratorConstants.USE_NESTED_PATHS))
 							.toInstance (useNestedPaths);
 
 						bind (new TypeLiteral<List<VersionedTypeDescriptor>>() {})
 							.annotatedWith (
-								Names.named ("versionTypes"))
+								Names.named ("versionedTypes"))
 							.toInstance (versionedTypes);
 						bind (new TypeLiteral<List<String>>() {})
 							.annotatedWith (
@@ -95,9 +96,9 @@ public class AvroSchemaGeneratorSetup implements ISetup {
 								Names.named (INCLUDE_SUB_NAMESPACES))
 							.toInstance (includeSubNamespaces);
 						bind (String.class)
-							.annotatedWith (
-								Names.named (PROFILE_NAME))
-							.toInstance (getProfileName ());
+							.annotatedWith (Names.named (PROFILE_NAME)).toInstance (getProfileName ());
+						bind (String.class)
+							.annotatedWith(Names.named("registryUrl")).toInstance(getRegistryUrl());
 
 						JavaIoFileSystemAccess fileSystemAccess = new JavaIoFileSystemAccess ();
 						OutputConfiguration out = new OutputConfiguration ("DEFAULT_OUTPUT");
@@ -196,6 +197,14 @@ public class AvroSchemaGeneratorSetup implements ISetup {
 
 	public List<String> getInternalNamespaces() {
 		return internalNamespaces;
+	}
+
+	public String getRegistryUrl() {
+		return registryUrl;
+	}
+
+	public void setRegistryUrl(String registryUrl) {
+		this.registryUrl = registryUrl;
 	}
 
 }

@@ -175,7 +175,7 @@ class WSDLGenerator {
 		<xsd:element name="«o.name»">
 			<xsd:complexType>
 				<xsd:sequence>
-					«IF o.findBestMatchingRequestHeader (profile) != null»
+					«IF o.findBestMatchingRequestHeader (profile) !== null»
 						«o.findBestMatchingRequestHeader (profile).toParameter»
 					«ENDIF»
 					«o.parameters.map (p|p.toParameter()).join»
@@ -197,7 +197,7 @@ class WSDLGenerator {
 		<xsd:element name="«o.name»Response">
 			<xsd:complexType>
 				<xsd:sequence>
-					«IF o.findBestMatchingResponseHeader(profile) != null»
+					«IF o.findBestMatchingResponseHeader(profile) !== null»
 						«o.findBestMatchingResponseHeader (profile).toParameter»
 					«ENDIF»
 					«o.^return.map(r|r.toParameter()).join»
@@ -215,7 +215,7 @@ class WSDLGenerator {
 	
 	def toOperationFaultWrapperTypes(String name, List<ExceptionRef> exceptions) {
 		val exRef = exceptions.findFirst (e|e.exception.name == name)
-		if (exRef != null) {
+		if (exRef !== null) {
 			'''
 			<xsd:element name="«exRef.exception.name»" type="«exRef.toExceptionNameRef()»"/>
 			'''
