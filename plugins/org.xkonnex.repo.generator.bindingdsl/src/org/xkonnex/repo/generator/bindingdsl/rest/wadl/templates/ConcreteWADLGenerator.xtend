@@ -71,8 +71,8 @@ class ConcreteWADLGenerator {
 	@Inject EnvironmentBindingResolver environmentResolver
 	@Inject IEffectiveBindingBuilder bindingBuilder
 	@Inject IEffectiveProvidingEndpointBuilder endpointBuilder
-	@Inject extension DefaultResourceContractFilenameProvider
-	@Inject DefaultServiceContractFilenameProvider resourceFilenameProvider
+	@Inject extension DefaultServiceContractFilenameProvider
+	@Inject DefaultResourceContractFilenameProvider resourceFilenameProvider
 	@Inject OperationWrapperTypesGenerator wrapperTypesGenerator
 	@Inject XSDGenerator xsdGenerator
 

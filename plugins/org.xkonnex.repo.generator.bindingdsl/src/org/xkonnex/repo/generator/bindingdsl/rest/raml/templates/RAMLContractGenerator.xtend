@@ -78,8 +78,8 @@ class RAMLContractGenerator {
     @Inject EnvironmentBindingResolver environmentResolver
     @Inject IEffectiveBindingBuilder bindingBuilder
     @Inject IEffectiveProvidingEndpointBuilder endpointBuilder
-    @Inject extension DefaultResourceContractFilenameProvider
-    @Inject DefaultServiceContractFilenameProvider resourceFilenameProvider
+    @Inject extension DefaultServiceContractFilenameProvider
+    @Inject DefaultResourceContractFilenameProvider resourceFilenameProvider
     @Inject OperationWrapperTypesGenerator wrapperTypesGenerator
     @Inject OperationBindingQueries operationBindingQueries
     @Inject ResourceQueries resourceQueries
