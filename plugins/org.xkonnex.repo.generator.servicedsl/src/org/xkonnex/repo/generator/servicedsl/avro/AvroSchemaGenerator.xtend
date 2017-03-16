@@ -144,8 +144,8 @@ class AvroSchemaGenerator implements IGenerator2 {
 		val doc = docProvider.getDocumentation(type)
 		'''
 		      {
-		        "name": «type.name»,
-		        "namespace": «type.toPackageName»,
+		        "name": "«type.name»",
+		        "namespace": "«type.toPackageName»",
 		        "type": "record",
 		        «IF doc !== null»
 		          "doc": "«doc»",
@@ -161,7 +161,7 @@ class AvroSchemaGenerator implements IGenerator2 {
 		'''
 		      {
 		        "type": "enum",
-		        "name":	«type.name»",
+		        "name":	"«type.name»",
 		        «IF doc !== null»
 		          "doc": "«doc»",
 		        «ENDIF»
@@ -182,55 +182,132 @@ class AvroSchemaGenerator implements IGenerator2 {
 		        «ENDIF»
 		        "fields": [
 		          «type.getAllVisibleProperties.map[toProperty(registryBaseUrl)].join(",\n")»
-		        ],
-		        «type.toRequired»
+		        ]
 		      }
 		'''
 	}
+	
+	def dispatch toInnerRecord(DataObject type, boolean optional, String registryBaseUrl) {
+		val doc = docProvider.getDocumentation(type)
+		'''
+			«IF optional»
+				[
+				  {
+				    "name": "«type.name»",
+				    "namespace": "«type.toPackageName»",
+				    "type": "record",
+				    «IF doc !== null»
+				      "doc": "«doc»",
+				    «ENDIF»
+				    "fields": [
+				      «type.getAllVisibleProperties.map[toProperty(optional, registryBaseUrl)].join(",\n")»
+				    ]
+				  }, 
+				  "null"
+				], "default": null
+		    «ELSE»
+				{
+				  "name": "«type.name»",
+				  "namespace": "«type.toPackageName»",
+				  "type": "record",
+				  «IF doc !== null»
+				    "doc": "«doc»",
+				  «ENDIF»
+				  "fields": [
+				    «type.getAllVisibleProperties.map[toProperty(optional, registryBaseUrl)].join(",\n")»
+				  ]
+				}
+		    «ENDIF»
+		'''
+	}
+
 	def dispatch toInnerRecord(Enumeration type, String registryBaseUrl) {
 		val doc = docProvider.getDocumentation(type)
 		'''
-		    "type": "enum",
-		    "name":	«type.name»",
-		    «IF doc !== null»
-		      "doc": "«doc»",
-		    «ENDIF»
-		    "symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
+			{
+			  "type": "enum",
+			  "name": "«type.name»",
+			  "namespace": "«type.toPackageName»",
+			  «IF doc !== null»
+			    "doc": "«doc»",
+			  «ENDIF»
+			  "symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
+			}
 		'''
 	}
+	
+	def dispatch toInnerRecord(Enumeration type, boolean optional, String registryBaseUrl) {
+		val doc = docProvider.getDocumentation(type)
+		'''
+			«IF optional»
+				[
+				  {
+				    "type": "enum",
+				    "name": "«type.name»",
+				    "namespace": "«type.toPackageName»",
+				    «IF doc !== null»
+				      "doc": "«doc»",
+				    «ENDIF»
+				    "symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
+				  },
+				  "null"
+				], "default": null
+		    «ELSE»
+				{
+				  "type": "enum",
+				  "name": "«type.name»",
+				  "namespace": "«type.toPackageName»",
+				  «IF doc !== null»
+				    "doc": "«doc»",
+				  «ENDIF»
+				  "symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
+				}
+		    «ENDIF»
+		'''
+	}
+	
 	def toProperty(Property p, String registryBaseUrl) {
 		val doc = docProvider.getDocumentation(p)
 		'''
 			{
-			  "name": "«p.name»" : {
+			  "name": "«p.name»",
 			  «IF doc !== null»
 			    "doc": "«doc»",
 			  «ENDIF»
 			  «p.type.toPropertyType (p.optional, registryBaseUrl)»
-			}
-		'''	
+			}'''	
 	}
 	
-	def toRequired(DataObject obj) {
-		val requiredProps = obj.properties.filter[!optional]
-		'''«IF !requiredProps.empty»"required": [«requiredProps.map["\"" + name + "\""].join(", ")»]«ENDIF»'''
+	def toProperty(Property p, boolean optional, String registryBaseUrl) {
+		val doc = docProvider.getDocumentation(p)
+		'''
+			{
+			  "name": "«p.name»",
+			  «IF doc !== null»
+			    "doc": "«doc»",
+			  «ENDIF»
+			  «p.type.toPropertyType (p.optional, registryBaseUrl)»
+			}'''	
 	}
-	
+		
 	def dispatch String toPropertyType (TypeRef typeRef, boolean optional, String registryBaseUrl) {
 		
 	}
 	def dispatch String toPropertyType (VersionedTypeRef typeRef, boolean optional, String registryBaseUrl) {
-		typeRef.type.toPropertyType(registryBaseUrl)
 		if (typeRef.many) {
 			'''
-				"type":  "array",
+				«IF optional»
+					"type":  ["array","null"], "default": null,
+				«ELSE»
+					"type":  "array",
+				«ENDIF»
 				"items": {
 					«typeRef.type.toPropertyType(registryBaseUrl)»
 				},
 			'''
 		} else {
 			'''
-				«typeRef.type.toPropertyType(registryBaseUrl)»
+				«typeRef.type.toPropertyType(optional, registryBaseUrl)»
 			'''
 		}
 	}
@@ -244,54 +321,111 @@ class AvroSchemaGenerator implements IGenerator2 {
 				},
 			'''
 		} else {
-			'''«typeRef.type.toPropertyType(registryBaseUrl)»'''
+			'''«typeRef.type.toPropertyType(optional, registryBaseUrl)»'''
 		}
 	}
 	
 	def dispatch String toPropertyType (VersionedType type, String registryBaseUrl) {
-		'''«type.toInnerRecord(registryBaseUrl)»'''
+		'''"type": «type.toInnerRecord(registryBaseUrl)»'''
+	}
+	def dispatch String toPropertyType (VersionedType type, boolean optional, String registryBaseUrl) {
+		'''"type": «type.toInnerRecord(optional, registryBaseUrl)»'''
 	}
 	
 	def dispatch String toPropertyType (Enumeration type, String registryBaseUrl) {
 		'''
-		"type": "enum",
-		"symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]'''
+			"type": {
+			  "type": "enum",
+			  "name": "«type.name»",
+			  "namespace": "«type.toPackageName»",
+			  "symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
+			}
+		'''
+		
+	}
+	
+	def dispatch String toPropertyType (Enumeration type, boolean optional, String registryBaseUrl) {
+		'''
+			«IF optional»
+				"type": [{
+				    "type": "enum",
+				    "name": "«type.name»",
+				    "namespace": "«type.toPackageName»",
+				    "symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
+				  }, 
+				  "null"
+				], "default": null
+			«ELSE»
+				"type": {
+				  "type": "enum",
+				  "name": "«type.name»",
+				  "namespace": "«type.toPackageName»",
+				  "symbols": [ «type.literals.map(e|"\"" + e.name + "\"").join(", ")» ]
+				}
+			«ENDIF»
+		'''
 	}
 	
 	def dispatch String toPropertyType (DataType type, String registryBaseUrl) {
 		switch (type.name) {
-			case "int": 		'''
-									"type" : "integer"
-								'''
-			case "double": 		'''
-									"type" : "number"
-								'''
-			case "float": 		'''
-									"type" : "number"
-								'''
 			case "date":  		'''
 									"type" : "string",
-									"format" : "date"
+									"logicalType" : "date"
 								'''
 			case "date-only": 	'''
 									"type" : "string",
-									"format" : "date"
+									"logicalType" : "date"
 								'''
 			case "time":  		'''
 									"type" : "string",
-									"format" : "time"
+									"logicalType" : "time-millis"
 								'''
 			case "time-only":  	'''
 									"type" : "string",
-									"format" : "time"
+									"logicalType" : "time-millis"
 								'''
 			case "datetime": 	'''
 									"type" : "string",
-									"format" : "date-time"
+									"logicalType" : "timestamp-millis"
+								'''
+			case "decimal":		'''
+									"type" : "bytes",
+									"logicalType" : "decimal"
 								'''
 			// file, integer
-			default: '''
+			default: 			'''
 									"type" : "«type.name»"'''
+		}
+	}
+	def dispatch String toPropertyType (DataType type, boolean optional, String registryBaseUrl) {
+		switch (type.name) {
+			case "date":  		'''
+									"type" : «IF optional»["int", "null"], "default": null,«ELSE»"int",«ENDIF»
+									"logicalType" : "date"
+								'''
+			case "date-only": 	'''
+									"type" : «IF optional»["int", "null"], "default": null,«ELSE»"int",«ENDIF»
+									"logicalType" : "date"
+								'''
+			case "time":  		'''
+									"type" : «IF optional»["int", "null"], "default": null,«ELSE»"int",«ENDIF»
+									"logicalType" : "time-millis"
+								'''
+			case "time-only":  	'''
+									"type" : «IF optional»["int", "null"], "default": null,«ELSE»"int",«ENDIF»
+									"logicalType" : "time-millis"
+								'''
+			case "datetime": 	'''
+									"type" : «IF optional»["long", "null"], "default": null,«ELSE»"long",«ENDIF»
+									"logicalType" : "timestamp-millis"
+								'''
+			case "decimal":		'''
+									"type" : «IF optional»["bytes", "null"], "default": null,«ELSE»"bytes",«ENDIF»,
+									"logicalType" : "decimal"
+								'''
+			// int, long, double ...
+			default: 			'''
+									"type" : «IF optional»["«type.name»", "null"]«ELSE»"«type.name»"«ENDIF»'''
 		}
 	}
 	

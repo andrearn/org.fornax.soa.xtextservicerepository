@@ -40,7 +40,6 @@ class JSONSchemaGenerator {
 	
 	def dispatch toJSONSchema(DataObject type, String registryBaseUrl) {
 		val doc = docProvider.getDocumentation(type)
-		//- Address : |
 		'''
 		      {
 		        "$schema": "http://json-schema.org/draft-04/schema",
@@ -52,6 +51,7 @@ class JSONSchemaGenerator {
 		          «type.properties.map[toProperty(registryBaseUrl)].join(",\n")»
 		        },
 		        «type.toRequired»
+		        "additionalProperties": true
 		      }
 		'''
 	}
@@ -78,8 +78,7 @@ class JSONSchemaGenerator {
 			    "description": "«doc»",
 			  «ENDIF»
 			  «p.type.toPropertyType (p.optional, registryBaseUrl)»
-			}
-		'''	
+			}'''	
 	}
 	
 	def toRequired(DataObject obj) {
