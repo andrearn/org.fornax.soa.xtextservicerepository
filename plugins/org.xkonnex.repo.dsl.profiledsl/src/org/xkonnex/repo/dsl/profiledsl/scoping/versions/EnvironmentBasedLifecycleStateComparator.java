@@ -41,8 +41,6 @@ public class EnvironmentBasedLifecycleStateComparator implements Comparator<Life
 		
 		EObject o = s1.eContainer ();
 		if (o instanceof Lifecycle) {
-			Lifecycle lifecycle = (Lifecycle) o;
-			EList<LifecycleState> states = lifecycle.getStates ();
 			if (leftEnvTypes.size () == rightEnvTypes.size()) {
 				EnvironmentType greatestLeftEnvType = envTypeComparator.getGreatestEnvType (leftEnvTypes);
 				EnvironmentType greatestRightEnvType = envTypeComparator.getGreatestEnvType (rightEnvTypes);

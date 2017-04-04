@@ -7,15 +7,15 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.validation.Check;
 import org.xkonnex.repo.dsl.basedsl.validation.AbstractPluggableDeclarativeValidator;
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher;
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.util.ReferencedStateChecker;
 import org.xkonnex.repo.dsl.servicedsl.service.query.VersionedObjectQueryHelper;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ApprovalDecision;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Entity;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.GovernanceApproval;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.QueryObject;
@@ -223,12 +223,18 @@ public class GovernanceApprovalValidator extends AbstractPluggableDeclarativeVal
 			return "businessObject";
 		else if (o instanceof QueryObject)
 			return "queryObject";
+		else if (o instanceof Entity)
+			return "entity";
+		else if (o instanceof Aggregate)
+			return "aggregate";
 		else if (o instanceof Enumeration)
 			return "enum";
 		else if (o instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception)
 			return "exception";
 		else if (o instanceof Service)
 			return "service";
+		else if (o instanceof Resource)
+			return "resource";
 		else
 			return "";
 	}

@@ -1,10 +1,7 @@
 package org.xkonnex.repo.dsl.servicedsl.service.namespace;
 
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
-import org.xkonnex.repo.dsl.basedsl.namespace.NamespaceURIProvider;
 import org.xkonnex.repo.dsl.basedsl.namespace.VersionedNamespace;
-import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace;

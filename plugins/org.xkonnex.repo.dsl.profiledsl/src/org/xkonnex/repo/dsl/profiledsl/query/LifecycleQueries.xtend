@@ -20,7 +20,6 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator
  * Queries for lifecycle states and stateful objects
  */
 class LifecycleQueries {
-	String STATE_ATTR_NAME = "state"
 	
 	@Inject EObjectLookup lookup
 	@Inject extension LifecycleStateComparator stateComparator
@@ -37,14 +36,14 @@ class LifecycleQueries {
 	 * Get the minimal state for an environment of type LOCAL based on a given lifecycle definition
 	 */
 	def LifecycleState getMinLocalState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::LOCAL)).sort (stateComparator).head
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::LOCAL)).sortWith (stateComparator).head
 	}
 	
 	/*
 	 * Get the minimal state for an environment of type DEV based on a given lifecycle definition
 	 */
 	def LifecycleState getMinDevState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::DEV)).sort (stateComparator).head
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::DEV)).sortWith (stateComparator).head
 	}
 
 
@@ -52,21 +51,21 @@ class LifecycleQueries {
 	 * Get the minimal state for an environment of type TEST based on a given lifecycle definition
 	 */
 	def LifecycleState getMinTestState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::TEST)).sort (stateComparator).head
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::TEST)).sortWith (stateComparator).head
 	}
 
 	/*
 	 * Get the minimal state for an environment of type STAGING based on a given lifecycle definition
 	 */
 	def LifecycleState getMinStagingState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::STAGING)).sort (stateComparator).head
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::STAGING)).sortWith (stateComparator).head
 	}
 
 	/*
 	 * Get the minimal state for an environment of type PROD based on a given lifecycle definition
 	 */
 	def LifecycleState getMinProdState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::PROD)).sort (stateComparator).head
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::PROD)).sortWith (stateComparator).head
 	}
 	
 	def LifecycleState getMinLifecycleState (Environment env, Lifecycle l) {
@@ -83,14 +82,14 @@ class LifecycleQueries {
 	 * Get the minimal state for an environment of type LOCAL based on a given lifecycle definition
 	 */
 	def LifecycleState getMaxLocalState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::LOCAL)).sort (stateComparator).last
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::LOCAL)).sortWith (stateComparator).last
 	}
 	
 	/*
 	 * Get the minimal state for an environment of type DEV based on a given lifecycle definition
 	 */
 	def LifecycleState getMaxDevState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::DEV)).sort (stateComparator).last
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::DEV)).sortWith (stateComparator).last
 	}
 
 
@@ -98,21 +97,21 @@ class LifecycleQueries {
 	 * Get the minimal state for an environment of type TEST based on a given lifecycle definition
 	 */
 	def LifecycleState getMaxTestState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::TEST)).sort (stateComparator).last
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::TEST)).sortWith (stateComparator).last
 	}
 
 	/*
 	 * Get the minimal state for an environment of type STAGING based on a given lifecycle definition
 	 */
 	def LifecycleState getMaxStagingState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::STAGING)).sort (stateComparator).last
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::STAGING)).sortWith (stateComparator).last
 	}
 
 	/*
 	 * Get the minimal state for an environment of type PROD based on a given lifecycle definition
 	 */
 	def LifecycleState getMaxProdState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::PROD)).sort (stateComparator).last
+		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::PROD)).sortWith (stateComparator).last
 	}
 	
 	def LifecycleState getMaxLifecycleState (Environment env, Lifecycle l) {
@@ -127,7 +126,7 @@ class LifecycleQueries {
 	}
 	
 	def LifecycleState getInitialState (Profile profile, ResourceSet resourceSet) {
-		if (profile != null) {
+		if (profile !== null) {
 			return profile.lifecycle.states.findFirst[isInitial]
 		} else {
 			return profileQuery.getDefaultProfile(resourceSet)?.lifecycle.states.findFirst[isInitial]
@@ -150,7 +149,7 @@ class LifecycleQueries {
 		var LifecycleState highestState = null
 		if (!states.nullOrEmpty) {
 			for (state : states) {
-				if (highestState == null || envLifecycleComparator.compare(state, highestState) > 0) {
+				if (highestState === null || envLifecycleComparator.compare(state, highestState) > 0) {
 					highestState = state
 				}
 			}

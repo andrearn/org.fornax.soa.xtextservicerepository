@@ -1,5 +1,8 @@
 package org.xkonnex.repo.generator.core;
 
+import static com.google.common.collect.Maps.newLinkedHashMap;
+import static com.google.common.collect.Maps.uniqueIndex;
+
 import java.util.Map;
 import java.util.Set;
 
@@ -10,9 +13,6 @@ import org.eclipse.xtext.generator.OutputConfiguration;
 
 import com.google.common.base.Function;
 import com.google.inject.Injector;
-
-import static com.google.common.collect.Lists.*;
-import static com.google.common.collect.Maps.*;
 
 public class XSRGeneratorComponent extends GeneratorComponent {
 

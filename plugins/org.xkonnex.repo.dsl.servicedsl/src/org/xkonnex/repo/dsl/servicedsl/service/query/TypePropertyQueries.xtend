@@ -1,9 +1,8 @@
 package org.xkonnex.repo.dsl.servicedsl.service.query
 
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
 import java.util.List
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
 
 class TypePropertyQueries {
 	

@@ -144,8 +144,8 @@ class NamespaceQuery {
 	}
 	
 	def Profile getApplicableProfile (SubNamespace ns, Profile enforcedProfile) {
-		if (enforcedProfile == null) {
-			if (ns.profile != null) {
+		if (enforcedProfile === null) {
+			if (ns.profile !== null) {
 				return ns.profile
 			} else {
 				profileQuery.getDefaultProfile (ns.eResource.resourceSet)
@@ -156,8 +156,8 @@ class NamespaceQuery {
 	}
 	
 	def Profile getApplicableProfile (OrganizationNamespace ns, Profile enforcedProfile) {
-		if (enforcedProfile == null) {
-			if (ns.profile != null) {
+		if (enforcedProfile === null) {
+			if (ns.profile !== null) {
 				return ns.profile
 			} else {
 				profileQuery.getDefaultProfile (ns.eResource.resourceSet)

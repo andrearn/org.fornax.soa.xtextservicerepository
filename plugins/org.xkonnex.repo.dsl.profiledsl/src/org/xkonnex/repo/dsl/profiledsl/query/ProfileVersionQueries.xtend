@@ -6,7 +6,7 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 
 class ProfileVersionQueries {
 		
-	def dispatch EObject getOwningType (VersionedType o) {
+	def EObject getOwningType (VersionedType o) {
 		o;
 	}
 

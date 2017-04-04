@@ -1,40 +1,24 @@
 package org.xkonnex.repo.dsl.servicedsl.service.query
 
+import com.google.common.base.Predicates
 import com.google.inject.Inject
 import java.util.List
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
-import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef
-import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
-import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
+import java.util.Set
+import org.eclipse.emf.ecore.EObject
+import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
-import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch
-import com.google.common.base.Predicate
-import org.eclipse.xtext.resource.IReferenceDescription
-import org.eclipse.emf.ecore.EObject
-import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
-import org.eclipse.xtext.util.IAcceptor
-import org.eclipse.xtext.resource.IEObjectDescription
-import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
-import com.google.common.base.Predicates
-import java.util.Set
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
+import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 
 class ServiceQueries {
 	
 	@Inject extension StateMatcher
-	@Inject extension VersionQualifierExtensions
 	@Inject extension NamespaceQuery
 	
 	@Inject
@@ -87,31 +71,31 @@ class ServiceQueries {
 	}
 
 	
-	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allExceptionsByMajorVersion (SubNamespace s, String majorVersion) {
+	def List<Exception> allExceptionsByMajorVersion (SubNamespace s, String majorVersion) {
 		s.exceptions.filter (e|e.version.version.split("\\.").head == majorVersion).toList;
 	}
 	
-	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allExceptionsByMajorVersion (Service s, String majorVersion)  {
+	def List<Exception> allExceptionsByMajorVersion (Service s, String majorVersion)  {
 		s.findSubdomain().exceptions.filter (e|e.version.version.split("\\.").head == majorVersion).toList;
 	}
 	
-	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allExceptionsByMajorVersion (Resource s, String majorVersion)  {
+	def List<Exception> allExceptionsByMajorVersion (Resource s, String majorVersion)  {
 		s.findSubdomain().exceptions.filter (e|e.version.version.split("\\.").head == majorVersion).toList;
 	}
 	
-	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allExceptionsByMajorVersion (Aggregate s, String majorVersion)  {
+	def List<Exception> allExceptionsByMajorVersion (Aggregate s, String majorVersion)  {
 		s.findSubdomain().exceptions.filter (e|e.version.version.split("\\.").head == majorVersion).toList;
 	}
 	
-	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allReferencedExceptions (Service s) {
+	def List<Exception> allReferencedExceptions (Service s) {
 		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
 	}
 	
-	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allReferencedExceptions (Resource s) {
+	def List<Exception> allReferencedExceptions (Resource s) {
 		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
 	}
 	
-	def List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> allReferencedExceptions (Aggregate s) {
+	def List<Exception> allReferencedExceptions (Aggregate s) {
 		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
 	}
 	

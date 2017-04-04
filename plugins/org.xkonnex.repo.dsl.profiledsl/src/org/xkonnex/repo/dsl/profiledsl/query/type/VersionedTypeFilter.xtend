@@ -10,7 +10,7 @@ class VersionedTypeFilter {
 	
 	@Inject extension VersionMatcher
 	
-	def dispatch List<VersionedType> allTypesByMajorVersion (TechnicalNamespace s, String majorVersion) { 
+	def List<VersionedType> allTypesByMajorVersion (TechnicalNamespace s, String majorVersion) { 
 		s.types.filter (typeof (org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType))
 			.filter (t|t.version.matchesMajorVersion (majorVersion)).toList();
 	}

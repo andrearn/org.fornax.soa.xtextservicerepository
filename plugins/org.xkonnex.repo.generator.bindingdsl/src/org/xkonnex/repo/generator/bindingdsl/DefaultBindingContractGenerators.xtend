@@ -3,11 +3,9 @@ package org.xkonnex.repo.generator.bindingdsl
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import java.util.List
-import java.util.logging.Level
 import java.util.logging.Logger
 import java.util.regex.Pattern
 import org.eclipse.emf.ecore.resource.Resource
-import org.eclipse.emf.ecore.resource.ResourceSet
 import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.generator.IFileSystemAccess
 import org.eclipse.xtext.generator.IGenerator
@@ -16,13 +14,10 @@ import org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingModel
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleDslFactory
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleModel
 import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
@@ -33,11 +28,8 @@ import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
-import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
 import org.xkonnex.repo.generator.bindingdsl.templates.IArtifactBuilder
-import org.xkonnex.repo.generator.bindingdsl.templates.TechnicalContractArtifactsBuilder
 import org.xkonnex.repo.generator.bindingdsl.templates.xsd.XSDBuilder
 import org.xkonnex.repo.generator.moduledsl.VersionedModuleSelector
 

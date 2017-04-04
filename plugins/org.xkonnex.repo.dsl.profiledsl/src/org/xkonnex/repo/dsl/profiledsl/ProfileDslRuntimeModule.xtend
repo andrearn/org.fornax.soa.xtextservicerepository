@@ -3,11 +3,12 @@
  */
 package org.xkonnex.repo.dsl.profiledsl
 
+import com.google.inject.Binder
 import org.eclipse.xtext.conversion.IValueConverterService
-import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy
+import org.eclipse.xtext.scoping.IGlobalScopeProvider
+import org.eclipse.xtext.service.SingletonBinding
 import org.xkonnex.repo.dsl.basedsl.converter.BaseDslValueConverterService
-import org.xkonnex.repo.dsl.basedsl.documentation.DocFeatureDocumationProvider
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.VersionedGlobalScopeProvider
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider
@@ -20,17 +21,16 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver
-import com.google.inject.Binder
 
 /** 
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-class ProfileDslRuntimeModule extends org.xkonnex.repo.dsl.profiledsl.AbstractProfileDslRuntimeModule {
-	override Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
+class ProfileDslRuntimeModule extends AbstractProfileDslRuntimeModule {
+	override Class<? extends IGlobalScopeProvider> bindIGlobalScopeProvider() {
 		return VersionedGlobalScopeProvider
 	}
 
-	@org.eclipse.xtext.service.SingletonBinding(eager=true) def Class<? extends IPluggableValidatorProvider> bindIPluggableValidatorProvider() {
+	@SingletonBinding(eager=true) def Class<? extends IPluggableValidatorProvider> bindIPluggableValidatorProvider() {
 		return ReflectivePluggableValidatorProvider
 	}
 
@@ -51,7 +51,7 @@ class ProfileDslRuntimeModule extends org.xkonnex.repo.dsl.profiledsl.AbstractPr
 		return LifecycleStateComparator
 	}
 
-	@org.eclipse.xtext.service.SingletonBinding def Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector() {
+	@SingletonBinding def Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector() {
 		return DefaultEnvironmentPerspectiveSelector
 	}
 

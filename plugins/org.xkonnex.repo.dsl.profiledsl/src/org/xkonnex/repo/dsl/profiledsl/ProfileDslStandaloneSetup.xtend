@@ -1,13 +1,11 @@
 package org.xkonnex.repo.dsl.profiledsl
 
+import com.google.inject.Injector
 import java.util.ArrayList
 import java.util.List
 import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl
 import org.xkonnex.repo.dsl.basedsl.validation.IPluggableValidatorProvider
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.impl.EnvironmentDslFactoryImpl
-import org.xkonnex.repo.dsl.profiledsl.ProfileDslStandaloneSetupGenerated
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.impl.ProfileDslPackageImpl
-import com.google.inject.Injector
 
 /** 
  * Initialization support for running Xtext languages 

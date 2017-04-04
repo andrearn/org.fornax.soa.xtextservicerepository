@@ -1,7 +1,5 @@
 package org.xkonnex.repo.dsl.profiledsl.scoping.versions;
 
-import java.util.List;
-
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;

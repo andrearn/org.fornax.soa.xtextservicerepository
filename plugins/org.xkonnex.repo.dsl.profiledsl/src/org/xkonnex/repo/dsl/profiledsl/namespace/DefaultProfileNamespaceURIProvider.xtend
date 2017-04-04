@@ -24,7 +24,7 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 
 	override String getHostPart (TechnicalNamespace ns) {
 		val orgNs = ns.findOrgNamespace
-		if (orgNs != null) {
+		if (orgNs !== null) {
 			return orgNs.hostPart
 		} else {
 			return namespaceURIProvider.getHostPart(ns)
@@ -38,7 +38,7 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 	override String getPathPart(TechnicalNamespace ns) {
 		var List<String> pathParts = newArrayList
 		val orgNs = ns.findOrgNamespace
-		if (orgNs != null) {
+		if (orgNs !== null) {
 			getAllTechnicalNamespaces(ns).map (n|n.name.stripXtextEscapes()).join(".")
 			val nsParts = ns.getAllTechnicalNamespaces.map(n|n.name.stripXtextEscapes()).join(".").split("\\.")
 			pathParts.addAll(nsParts)
@@ -110,7 +110,7 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 	}
 		
 	private def dispatch String toVersionPostfix (VersionedTechnicalNamespace s) {
-		if (s.version != null) 
+		if (s.version !== null) 
 			versionQualifier.toVersionPostfix(s.version) 
 		else
 			versionQualifier.toDefaultVersionPostfix();
@@ -198,7 +198,7 @@ class DefaultProfileNamespaceURIProvider implements ProfileNamespaceURIProvider 
 	
 	private def dispatch String toNamespaceURI (TechnicalNamespace leafDomainNamespace) {
 		var ns = ""
-		if (leafDomainNamespace.uri != null)
+		if (leafDomainNamespace.uri !== null)
 			ns = leafDomainNamespace.uri
 		else
 			ns = leafDomainNamespace.hostPart + "/" + leafDomainNamespace.pathPart

@@ -123,7 +123,6 @@ public class EnumerationVersionValidator extends AbstractServiceDslVersionValida
 	}
 	
 	private void notifyLiteralVersionConflicts (EnumLiteral attr, Set<VersionedObjectFeatureConflicts> conflicts) {
-		Enumeration en = (Enumeration) attr.eContainer ();
 		for (VersionedObjectFeatureConflicts conflict : conflicts) {
 			if (conflict.equals (VersionedObjectFeatureConflicts.NAME_CONFLICT)) {
 				error ("The enum literal " + attr.getName () + " has a different name than the enum literal in the same position of the previous version of the BusinessObject.  This is an incompatible change.", ServiceDslPackage.Literals.ENUM_LITERAL__NAME );

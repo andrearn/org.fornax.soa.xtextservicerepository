@@ -154,7 +154,6 @@ public class BusinessObjectVersionValidator extends AbstractServiceDslVersionVal
 	}
 	
 	private void notifyPropertyVersionConflicts (Property attr, Set<VersionedObjectFeatureConflicts> conflicts) {
-		BusinessObject bo = (BusinessObject) attr.eContainer ();
 		for (VersionedObjectFeatureConflicts conflict : conflicts) {
 			if (conflict.equals (VersionedObjectFeatureConflicts.NAME_CONFLICT)) {
 				error ("The property " + attr.getName () + " has a different name than the property in the same position of the previous version of the BusinessObject.  This is an incompatible change.", ServiceDslPackage.Literals.PROPERTY__NAME );

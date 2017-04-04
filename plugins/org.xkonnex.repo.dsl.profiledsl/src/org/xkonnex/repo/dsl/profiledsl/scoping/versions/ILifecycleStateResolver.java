@@ -4,8 +4,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment;
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 
 /**

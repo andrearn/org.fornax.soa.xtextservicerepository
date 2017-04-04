@@ -4,14 +4,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
-import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries;
 
 import com.google.common.base.Predicate;
 import com.google.inject.Inject;

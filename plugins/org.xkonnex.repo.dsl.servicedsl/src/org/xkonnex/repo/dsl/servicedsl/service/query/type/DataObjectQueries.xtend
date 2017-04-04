@@ -15,7 +15,6 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
-import java.util.LinkedList
 
 class DataObjectQueries {
 	@Inject

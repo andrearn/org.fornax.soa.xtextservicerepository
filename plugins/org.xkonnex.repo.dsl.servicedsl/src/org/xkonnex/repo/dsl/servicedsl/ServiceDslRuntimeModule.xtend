@@ -3,14 +3,16 @@
  */
 package org.xkonnex.repo.dsl.servicedsl
 
+import com.google.inject.Binder
 import org.eclipse.xtext.conversion.IValueConverterService
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 import org.eclipse.xtext.documentation.impl.MultiLineCommentDocumentationProvider
 import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy
+import org.eclipse.xtext.scoping.IGlobalScopeProvider
+import org.eclipse.xtext.service.SingletonBinding
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory
 import org.xkonnex.repo.dsl.basedsl.baseDsl.impl.BaseDslFactoryImpl
 import org.xkonnex.repo.dsl.basedsl.converter.BaseDslValueConverterService
-import org.xkonnex.repo.dsl.basedsl.documentation.DocFeatureDocumationProvider
 import org.xkonnex.repo.dsl.basedsl.resource.EObjectDescriptionBuilder
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder
 import org.xkonnex.repo.dsl.basedsl.resource.VersionedResourceDescriptionStrategy
@@ -26,36 +28,32 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.DefaultStateMatcher
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver
 import org.xkonnex.repo.dsl.profiledsl.state.DefaultStateResolver
 import org.xkonnex.repo.dsl.profiledsl.state.ILifecycleStateInferrer
+import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueryInternal
+import org.xkonnex.repo.dsl.servicedsl.service.state.ServiceDslStateInferrer
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.DefaultExceptionResolver
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.DefaultServiceResolver
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.DefaultTypeResolver
-import org.xkonnex.repo.dsl.servicedsl.service.versioning.LatestMinorVersionExceptionResolver
-import org.xkonnex.repo.dsl.servicedsl.service.versioning.LatestMinorVersionServiceResolver
-import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueryInternal
-import org.xkonnex.repo.dsl.servicedsl.service.state.ServiceDslStateInferrer
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IExceptionResolver
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IServiceResolver
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResolver
-import com.google.inject.Binder
 import org.xkonnex.repo.dsl.servicedsl.validation.ServiceDslValidator
 
 /** 
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
-class ServiceDslRuntimeModule extends org.xkonnex.repo.dsl.servicedsl.AbstractServiceDslRuntimeModule {
-	override Class<? extends org.eclipse.xtext.scoping.IGlobalScopeProvider> bindIGlobalScopeProvider() {
+class ServiceDslRuntimeModule extends AbstractServiceDslRuntimeModule {
+	override Class<? extends IGlobalScopeProvider> bindIGlobalScopeProvider() {
 		return VersionedGlobalScopeProvider
 	}
 
-	@org.eclipse.xtext.service.SingletonBinding(eager=true) 
+	@SingletonBinding(eager=true) 
 	override Class<? extends ServiceDslValidator> bindServiceDslValidator() {
-		return org.xkonnex.repo.dsl.servicedsl.validation.ServiceDslValidator
+		return ServiceDslValidator
 	}
 
-	@org.eclipse.xtext.service.SingletonBinding(eager=true) 
+	@SingletonBinding(eager=true) 
 	def Class<? extends IPluggableValidatorProvider> bindIPluggableValidatorProvider() {
 		return ReflectivePluggableValidatorProvider
 	}
@@ -69,7 +67,7 @@ class ServiceDslRuntimeModule extends org.xkonnex.repo.dsl.servicedsl.AbstractSe
 			MultiLineCommentDocumentationProvider)
 	}
 
-	@org.eclipse.xtext.service.SingletonBinding(eager=true) def Class<org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueryInternal> bindBusinessObjectQuery() {
+	@SingletonBinding(eager=true) def Class<DataObjectQueryInternal> bindBusinessObjectQuery() {
 		return DataObjectQueryInternal
 	}
 
@@ -77,7 +75,7 @@ class ServiceDslRuntimeModule extends org.xkonnex.repo.dsl.servicedsl.AbstractSe
 		return DefaultPredicateSearch
 	}
 
-	@org.eclipse.xtext.service.SingletonBinding(eager=true) def Class<? extends IEObjectDescriptionBuilder> bindEObjectDescriptionBuilder() {
+	@SingletonBinding(eager=true) def Class<? extends IEObjectDescriptionBuilder> bindEObjectDescriptionBuilder() {
 		return EObjectDescriptionBuilder
 	}
 
@@ -101,7 +99,7 @@ class ServiceDslRuntimeModule extends org.xkonnex.repo.dsl.servicedsl.AbstractSe
 		return ServiceDslStateInferrer
 	}
 
-	@org.eclipse.xtext.service.SingletonBinding def Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector() {
+	@SingletonBinding def Class<? extends IEnvironmentPerspectiveSelector> bindIEnvironmentPerspectiveSelector() {
 		return DefaultEnvironmentPerspectiveSelector
 	}
 

@@ -71,34 +71,12 @@ public class SolutionDslScopeProvider extends ComponentAwareVersionedScopeProvid
 	@Inject Injector injector;
 
 	@Inject
-	private IGlobalScopeProvider globalScopeProvider;
-	@Inject
 	private ILifecycleStateResolver stateResolver;
 	@Inject 
 	private IEObjectLookup objLookup;
 	@Inject
 	private StateAttributeLifecycleStateResolver staticStateResolver;
 	
-	public void setGlobalScopeProvider(IGlobalScopeProvider globalScopeProvider) {
-		this.globalScopeProvider = globalScopeProvider;
-	}
-
-	@Inject 
-	private IResourceServiceProvider.Registry resourceServiceProviderRegistry;
-
-	private IResourceDescription.Manager getManager(Resource res) {
-		IResourceServiceProvider resourceServiceProvider = resourceServiceProviderRegistry
-				.getResourceServiceProvider(res.getURI());
-		return resourceServiceProvider.getResourceDescriptionManager();
-	}
-
-	@Inject
-	private IResourceScopeCache cache = IResourceScopeCache.NullImpl.INSTANCE;
-
-	public void setCache(IResourceScopeCache cache) {
-		this.cache = cache;
-	}
-
 	@Inject
 	private IQualifiedNameProvider nameProvider;
 

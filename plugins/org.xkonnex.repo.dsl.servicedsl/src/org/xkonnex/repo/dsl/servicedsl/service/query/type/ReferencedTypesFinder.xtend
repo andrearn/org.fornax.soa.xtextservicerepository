@@ -1,26 +1,26 @@
 package org.xkonnex.repo.dsl.servicedsl.service.query.type
 
-import java.util.List
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
+import com.google.inject.Inject
 import java.util.ArrayList
 import java.util.HashSet
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
-import com.google.inject.Inject
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver
-import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResolver
 import java.util.LinkedList
-import org.eclipse.xtext.resource.IEObjectDescription
-import org.eclipse.xtext.EcoreUtil2
+import java.util.List
 import java.util.Set
+import org.eclipse.xtext.EcoreUtil2
+import org.eclipse.xtext.resource.IEObjectDescription
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResolver
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 
 /*
  * Find type references of a model object
@@ -38,7 +38,7 @@ class ReferencedTypesFinder {
 		t.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingTypeVersion () as VersionedType).toList;	
 	}
 	
-	def dispatch List<VersionedType> allReferencedVersionedTypes (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception t, LifecycleState minState) { 
+	def dispatch List<VersionedType> allReferencedVersionedTypes (Exception t, LifecycleState minState) { 
 		t.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingTypeVersion () as VersionedType).toList;
 	}
 	
@@ -71,7 +71,7 @@ class ReferencedTypesFinder {
 		return refs;
 	}
 		
-	def private dispatch List<TypeRef> allReferencedTypeRefs (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception t) {
+	def private dispatch List<TypeRef> allReferencedTypeRefs (Exception t) {
 		t.properties.map (p|p.type);
 	}
 	

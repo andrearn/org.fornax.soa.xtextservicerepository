@@ -1,7 +1,6 @@
 package org.xkonnex.repo.generator.environmentdsl
 
 import com.google.inject.Inject
-import java.util.logging.Logger
 import org.eclipse.xtext.EcoreUtil2
 import org.xkonnex.repo.dsl.basedsl.ext.infer.IComponentInferrer
 import org.xkonnex.repo.dsl.environmentdsl.environment.query.ConnectorLookup
@@ -14,8 +13,6 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector
 
 class EndpointResolver {
-	
-	@Inject Logger log
 	
 	@Inject extension ConnectorLookup
 	@Inject extension IComponentInferrer
@@ -66,11 +63,11 @@ class EndpointResolver {
 	
 	def String getEndpointUrl(String protocolQualifier, String host, String port, String path) {
 		val url = new StringBuilder('''«protocolQualifier»://''')
-		if (host != null)
+		if (host !== null)
 			url.append(host)
-		if (port != null)
+		if (port !== null)
 			url.append(''':«port»''')
-		if (path != null) {
+		if (path !== null) {
 			if (path.startsWith("/")) url.append(path) else url.append('''/«path»''')
 		}
 		url.toString

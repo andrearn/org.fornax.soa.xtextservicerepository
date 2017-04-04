@@ -10,14 +10,9 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.eclipse.xtext.resource.IResourceDescription;
-import org.eclipse.xtext.resource.IResourceServiceProvider;
-import org.eclipse.xtext.scoping.IGlobalScopeProvider;
 import org.eclipse.xtext.scoping.impl.ImportNormalizer;
-import org.eclipse.xtext.util.IResourceScopeCache;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
@@ -31,7 +26,6 @@ import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMaxExclVersion
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMinInclMaxExclRangeVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMinInclVersionFilter;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.NullVersionFilter;
-import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionedImportedNamespaceAwareScopeProvider;
 import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.SimpleScopeVersionResolver;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.ClassRef;
@@ -41,7 +35,6 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslPackage;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMajorVersionForOwnerStateFilter;
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.util.ProfileDslElementAccessor;
 
 import com.google.inject.Inject;
@@ -59,31 +52,10 @@ public class ProfileDslScopeProvider extends ComponentAwareVersionedScopeProvide
 
 
 	@Inject
-	private IGlobalScopeProvider globalScopeProvider;
-	@Inject
 	private ILifecycleStateResolver stateResolver;
 	
 	@Inject Injector injector;
 
-	public void setGlobalScopeProvider(IGlobalScopeProvider globalScopeProvider) {
-		this.globalScopeProvider = globalScopeProvider;
-	}
-
-	@Inject 
-	private IResourceServiceProvider.Registry resourceServiceProviderRegistry;
-
-	private IResourceDescription.Manager getManager(Resource res) {
-		IResourceServiceProvider resourceServiceProvider = resourceServiceProviderRegistry
-				.getResourceServiceProvider(res.getURI());
-		return resourceServiceProvider.getResourceDescriptionManager();
-	}
-
-	@Inject
-	private IResourceScopeCache cache = IResourceScopeCache.NullImpl.INSTANCE;
-
-	public void setCache(IResourceScopeCache cache) {
-		this.cache = cache;
-	}
 
 	@Inject
 	private IQualifiedNameProvider nameProvider;

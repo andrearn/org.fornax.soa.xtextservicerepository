@@ -3,10 +3,8 @@ package org.xkonnex.repo.dsl.servicedsl.service.search.predicate;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ApprovalDecision;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.GovernanceApproval;
 

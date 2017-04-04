@@ -22,9 +22,11 @@ import org.xkonnex.repo.dsl.servicedsl.service.validation.version.BusinessObject
 import org.xkonnex.repo.dsl.servicedsl.service.validation.version.EnumerationVersionValidator;
 import org.xkonnex.repo.dsl.servicedsl.service.validation.version.ExceptionVersionValidator;
 import org.xkonnex.repo.dsl.servicedsl.service.validation.version.ServiceVersionValidator;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Entity;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumLiteral;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.GovernanceApproval;
@@ -32,6 +34,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.QueryObject;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;
@@ -41,8 +44,6 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Visibility;
-import org.xkonnex.repo.dsl.servicedsl.validation.AbstractServiceDslValidator;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
@@ -442,12 +443,18 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
 			return "businessObject";
 		else if (o instanceof QueryObject)
 			return "queryObject";
+		else if (o instanceof Entity)
+			return "entity";
+		else if (o instanceof Aggregate)
+			return "aggregate";
 		else if (o instanceof Enumeration)
 			return "enum";
 		else if (o instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception)
 			return "exception";
 		else if (o instanceof Service)
 			return "service";
+		else if (o instanceof Resource)
+			return "resource";
 		else
 			return "";
 	}
@@ -458,12 +465,18 @@ public class ServiceDslValidator extends AbstractServiceDslValidator {
 			return "businessObject";
 		else if (o instanceof QueryObject)
 			return "queryObject";
+		else if (o instanceof Entity)
+			return "entity";
+		else if (o instanceof Aggregate)
+			return "aggregate";
 		else if (o instanceof Enumeration)
 			return "enum";
 		else if (o instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception)
 			return "exception";
 		else if (o instanceof Service)
 			return "service";
+		else if (o instanceof Resource)
+			return "resource";
 		else
 			return "";
 	}

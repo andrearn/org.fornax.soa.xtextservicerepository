@@ -308,7 +308,7 @@ TypeRef : DataTypeRef | AbstractVersionedTypeRef;
 
 /* A reference to a simple datatype */
 DataTypeRef: 
-	type=[profileDsl::DataType|QualifiedName] (many?='[]' (set?='as set')? )? ('content-type' contentType = STRING)?;
+	type=[profileDsl::DataType|QualifiedName] (many?='[]' ('as' set?='set')? )? ('content-type' contentType = STRING)?;
 
 AbstractVersionedTypeRef:
 	VersionedTypeRef | EnumTypeRef | DataObjectRef
@@ -316,7 +316,7 @@ AbstractVersionedTypeRef:
 
 /* A version constrained reference to any kind of VersionedType */
 VersionedTypeRef:
-	type=[VersionedType|QualifiedName] (many?='[]' (set?='as set')? )? versionRef=VersionRef;
+	type=[VersionedType|QualifiedName] (many?='[]' ('as' set?='set')? )? versionRef=VersionRef;
 
 /* A version constrained reference to an Enumeration */	 
 EnumTypeRef:

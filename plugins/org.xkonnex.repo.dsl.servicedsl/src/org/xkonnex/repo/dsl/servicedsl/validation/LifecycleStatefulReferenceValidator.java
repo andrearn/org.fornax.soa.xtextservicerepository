@@ -13,15 +13,16 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.util.ReferencedStateChecker;
-import org.xkonnex.repo.dsl.servicedsl.service.query.VersionedObjectQueryHelper;
-import org.xkonnex.repo.dsl.servicedsl.service.util.ServiceDslElementAccessor;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Entity;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.QueryObject;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
@@ -225,12 +226,20 @@ public class LifecycleStatefulReferenceValidator extends AbstractPluggableDeclar
 	private String getObjectTypeName(EObject o) {
 		if (o instanceof BusinessObject)
 			return "businessObject";
+		else if (o instanceof QueryObject)
+			return "queryObject";
+		else if (o instanceof Entity)
+			return "entity";
+		else if (o instanceof Aggregate)
+			return "aggregate";
 		else if (o instanceof Enumeration)
 			return "enum";
 		else if (o instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception)
 			return "exception";
 		else if (o instanceof Service)
 			return "service";
+		else if (o instanceof Resource)
+			return "resource";
 		else
 			return "";
 	}

@@ -11,10 +11,9 @@ import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.generator.environmentdsl.EndpointResolver
-import org.eclipse.xtext.EcoreUtil2
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 class RESTEndpointAddressResolver {
 	
@@ -26,7 +25,6 @@ class RESTEndpointAddressResolver {
 	@Inject extension RESTVendorEndpointResolver vendorEndpointResolver
 	
 	def String getEndpointBaseAddress(Service service, EffectiveBinding binding, Module module) {
-//		val baseEx = "http://api.search.yahoo.com/NewsSearchService/V1/"
 		val server = binding.resolveServer
 		val prot = binding.protocol.filter (typeof (ExtensibleProtocol)).filter[inferComponent instanceof REST].head
 		service.toEndpointAddress (server, prot, binding)

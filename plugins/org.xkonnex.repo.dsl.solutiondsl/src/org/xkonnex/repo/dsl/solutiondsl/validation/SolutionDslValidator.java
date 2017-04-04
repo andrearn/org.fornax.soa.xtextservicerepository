@@ -6,18 +6,14 @@ import org.eclipse.xtext.validation.CheckType;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.validation.NameAndVersionAreUniqueValidator;
 import org.xkonnex.repo.dsl.basedsl.validation.PluggableChecks;
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
-import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries;
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
+import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Visibility;
-import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.Module;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.ServiceRef;
-import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.Solution;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.SolutionDslPackage;
-import org.xkonnex.repo.dsl.solutiondsl.validation.AbstractSolutionDslValidator;
 
 import com.google.inject.Inject;
  

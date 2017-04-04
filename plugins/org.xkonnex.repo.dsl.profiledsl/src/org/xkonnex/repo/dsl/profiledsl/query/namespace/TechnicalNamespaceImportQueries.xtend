@@ -3,11 +3,11 @@ package org.xkonnex.repo.dsl.profiledsl.query.namespace
 import com.google.inject.Inject
 import java.util.HashSet
 import java.util.Set
-import org.xkonnex.repo.dsl.profiledsl.query.type.ReferencedTypesFinder
-import org.xkonnex.repo.dsl.profiledsl.query.type.VersionedTypeFilter
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Class
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.MessageHeader
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace
+import org.xkonnex.repo.dsl.profiledsl.query.type.ReferencedTypesFinder
+import org.xkonnex.repo.dsl.profiledsl.query.type.VersionedTypeFilter
 import org.xkonnex.repo.dsl.profiledsl.versioning.TechnicalNamespaceSplitter
 import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
 
@@ -51,7 +51,7 @@ class TechnicalNamespaceImportQueries {
 	 *	of the found dependencies are returned.
 	 */
 	def dispatch Set<VersionedTechnicalNamespace> allImportedVersionedNS (TechnicalNamespace s, String nameSpaceMajorVersion) {
-		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class))
+		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (Class))
 			.map (e|e.allReferencedVersionedTypes()).flatten.map (v|v.createVersionedTechnicalNamespace()).toSet;
 	}
 	
@@ -71,8 +71,8 @@ class TechnicalNamespaceImportQueries {
 	 *	TechnicalNamespace matching the given major version. The owning VersiondDomainNamespace 
 	 *	of the found dependencies are returned.
 	 */
-	def dispatch Set<VersionedTechnicalNamespace> importedVersionedNS (TechnicalNamespace s, String nameSpaceMajorVersion) {
-		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (org.xkonnex.repo.dsl.profiledsl.profileDsl.Class))
+	def Set<VersionedTechnicalNamespace> importedVersionedNS (TechnicalNamespace s, String nameSpaceMajorVersion) {
+		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (Class))
 		.map (e|e.allReferencedVersionedTypes()).flatten.map (v|v.createVersionedTechnicalNamespace()).toSet;
 	}
 	

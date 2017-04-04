@@ -1,27 +1,18 @@
 package org.xkonnex.repo.dsl.servicedsl.service.util;
 
-import java.util.List;
-
 import org.xkonnex.repo.dsl.basedsl.util.VersionRefMatcher;
-import org.xkonnex.repo.dsl.servicedsl.service.query.TypePropertyQueries;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef;
 
-import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
-import com.ibm.icu.util.ULocale.Type;
 
 public class TypeRefMatcher {
 	
 	@Inject
 	private VersionRefMatcher versionRefMatcher;
-	
-	@Inject
-	private TypePropertyQueries typePropQueries;
 	
 	/**
 	 * tests whether the type reference in the version range of ref1 complies to types in the version range of ref2

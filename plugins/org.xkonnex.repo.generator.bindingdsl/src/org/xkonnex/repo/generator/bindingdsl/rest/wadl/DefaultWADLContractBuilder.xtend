@@ -1,18 +1,27 @@
 package org.xkonnex.repo.generator.bindingdsl.rest.wadl
 
 import com.google.inject.Inject
+import com.google.inject.name.Named
+import java.util.logging.Level
 import java.util.logging.Logger
 import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.DefaultModuleRefServiceBindingResolver
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.IModuleRefServiceBindingResolver
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.ProtocolMatcher
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.AssetStateEnvironmentEligibilityChecker
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.resource.ResourceRefBindingDescription
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.services.ServiceRefBindingDescription
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
+import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.REST
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
+import org.xkonnex.repo.dsl.moduledsl.query.IModuleResourceResolver
 import org.xkonnex.repo.dsl.moduledsl.query.IModuleServiceResolver
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
@@ -20,22 +29,11 @@ import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.xkonnex.repo.generator.bindingdsl.rest.wadl.templates.ConcreteWADLGenerator
 import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
 import org.xkonnex.repo.generator.bindingdsl.templates.IProtocolContractBuilder
 import org.xkonnex.repo.generator.bindingdsl.templates.xsd.XSDBuilder
 import org.xkonnex.repo.generator.profiledsl.templates.MessageHeaderXSDTemplates
-import com.google.inject.name.Named
-import java.util.logging.Level
-import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.REST
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.services.ServiceRefBindingDescription
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle
-import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol
-import org.xkonnex.repo.generator.bindingdsl.rest.wadl.templates.ConcreteWADLGenerator
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.IModuleRefServiceBindingResolver
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.resource.ResourceRefBindingDescription
-import org.xkonnex.repo.dsl.moduledsl.query.IModuleResourceResolver
 
 class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 	

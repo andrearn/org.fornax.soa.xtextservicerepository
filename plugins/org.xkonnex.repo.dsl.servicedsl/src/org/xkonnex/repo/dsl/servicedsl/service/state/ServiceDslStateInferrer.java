@@ -9,16 +9,13 @@ import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.traversal.IModelVisitor;
-import org.xkonnex.repo.dsl.profiledsl.state.DefaultStateInferrer;
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile;
-import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries;
+import org.xkonnex.repo.dsl.profiledsl.state.DefaultStateInferrer;
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace;
 
 import com.google.inject.Inject;
-import com.google.inject.Injector;
 
 public class ServiceDslStateInferrer extends DefaultStateInferrer {
 	

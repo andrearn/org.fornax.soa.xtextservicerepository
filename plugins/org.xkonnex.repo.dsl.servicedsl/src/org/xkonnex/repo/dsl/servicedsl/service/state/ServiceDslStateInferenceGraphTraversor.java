@@ -12,8 +12,6 @@ import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch;
 import org.xkonnex.repo.dsl.basedsl.traversal.IModelVisitor;
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedTypeRef;
-import org.xkonnex.repo.dsl.servicedsl.service.query.ServiceQueries;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
@@ -36,9 +34,6 @@ public class ServiceDslStateInferenceGraphTraversor {
 	private IEObjectLookup objLookup;
 	@Inject
 	private IEObjectDescriptionBuilder descriptionBuilder;
-	
-	@Inject 
-	private ServiceQueries serviceQueries;
 	
 	public void traverse (final IEObjectDescription element, final IEObjectDescription referrer, final List<IModelVisitor<IEObjectDescription>> visitors, final ResourceSet resourceSet) {
 		for (IModelVisitor<IEObjectDescription> visitor : visitors) {

@@ -5,14 +5,12 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.util.IAcceptor;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredServiceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 
 import com.google.common.base.Predicate;
@@ -30,7 +28,6 @@ class ServiceQueriesInternal {
 
 			public boolean apply (final IReferenceDescription input) {
 				if (input.getContainerEObjectURI () != null) {
-					IEObjectDescription sourceObjDesc = objLookup.getIEOBjectDescriptionByURI (input.getSourceEObjectUri(), resourceSet);
 					EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
 					if (sourceObj != null && (
 							sourceObj instanceof RequiredServiceRef ||
@@ -65,7 +62,6 @@ class ServiceQueriesInternal {
 
 			public boolean apply (final IReferenceDescription input) {
 				if (input.getContainerEObjectURI () != null) {
-					IEObjectDescription sourceObjDesc = objLookup.getIEOBjectDescriptionByURI (input.getSourceEObjectUri(), resourceSet);
 					EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
 					if (sourceObj != null && (
 							("ServiceRef".equals(sourceObj.eClass().getName()) && 
@@ -99,7 +95,6 @@ class ServiceQueriesInternal {
 
 			public boolean apply (final IReferenceDescription input) {
 				if (input.getContainerEObjectURI () != null) {
-					IEObjectDescription sourceObjDesc = objLookup.getIEOBjectDescriptionByURI (input.getSourceEObjectUri(), resourceSet);
 					EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
 					if (sourceObj != null && (
 							sourceObj instanceof RequiredServiceRef ||
@@ -134,7 +129,6 @@ class ServiceQueriesInternal {
 
 			public boolean apply (final IReferenceDescription input) {
 				if (input.getContainerEObjectURI () != null) {
-					IEObjectDescription sourceObjDesc = objLookup.getIEOBjectDescriptionByURI (input.getSourceEObjectUri(), resourceSet);
 					EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
 					if (sourceObj != null && (
 							("ResourceRef".equals(sourceObj.eClass().getName()) && 

@@ -50,30 +50,30 @@ class TechnicalNamespaceSplitter {
 		
 	}
 		
-	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType c) {
+	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (VersionedType c) {
 		if (c.eContainer instanceof TechnicalNamespace) {
-			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace).name.stripXtextEscapes();
+			name 		= (c.eContainer as TechnicalNamespace).name.stripXtextEscapes();
 			shortName 	= (c.eContainer as TechnicalNamespace).prefix?.stripXtextEscapes();		
 		} 
 		else 	
 		{
-			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace).prefix.stripXtextEscapes();
+			name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
+			shortName 	= (c.eContainer as OrganizationNamespace).prefix.stripXtextEscapes();
 		} 
 		namespace 		= c.eContainer as TechnicalNamespace;
 		fqn 			= c.eContainer.fqn();
 		version 		= c.version.toMajorVersionNumber();
 	}
 	
-	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (org.xkonnex.repo.dsl.profiledsl.profileDsl.Type c) {
+	def dispatch VersionedTechnicalNamespace create new VersionedTechnicalNamespace() createVersionedTechnicalNamespace (Type c) {
 		if (c.eContainer instanceof TechnicalNamespace) {
-			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace).name.stripXtextEscapes();
+			name 		= (c.eContainer as TechnicalNamespace).name.stripXtextEscapes();
 			shortName 	= (c.eContainer as TechnicalNamespace).prefix?.stripXtextEscapes();		
 		} 
 		else 	
 		{
-			name 		= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace).name.stripXtextEscapes();
-			shortName 	= (c.eContainer as org.xkonnex.repo.dsl.profiledsl.profileDsl.OrganizationNamespace).prefix.stripXtextEscapes();
+			name 		= (c.eContainer as OrganizationNamespace).name.stripXtextEscapes();
+			shortName 	= (c.eContainer as OrganizationNamespace).prefix.stripXtextEscapes();
 		} 
 		namespace 		= c.eContainer as TechnicalNamespace;
 		fqn 			= c.eContainer.fqn();

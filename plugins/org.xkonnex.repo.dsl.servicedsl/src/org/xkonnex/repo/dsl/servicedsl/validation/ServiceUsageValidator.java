@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
-import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.validation.Check;
 import org.xkonnex.repo.dsl.servicedsl.service.query.ServiceQueries;
 import org.xkonnex.repo.dsl.servicedsl.service.validation.version.AbstractServiceDslVersionValidator;

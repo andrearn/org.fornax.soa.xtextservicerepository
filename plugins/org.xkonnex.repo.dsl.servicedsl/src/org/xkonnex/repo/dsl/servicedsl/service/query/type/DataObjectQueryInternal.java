@@ -20,7 +20,6 @@ import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.util.IAcceptor;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 import org.xkonnex.repo.dsl.basedsl.ref.DependencyDescription;
 import org.xkonnex.repo.dsl.basedsl.resource.IEObjectDescriptionBuilder;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
@@ -44,7 +43,6 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
@@ -292,7 +290,6 @@ public class DataObjectQueryInternal {
 			if (prop .getType() instanceof VersionedTypeRef) {
 				VersionedTypeRef verTypeRef = (VersionedTypeRef) prop.getType();
 				VersionedType verType = verTypeRef.getType();
-				Version v = verType.getVersion();
 				if (verType.eIsProxy())
 					EcoreUtil.resolve (verType, verType.eResource());
 				result.put (prop, verType);

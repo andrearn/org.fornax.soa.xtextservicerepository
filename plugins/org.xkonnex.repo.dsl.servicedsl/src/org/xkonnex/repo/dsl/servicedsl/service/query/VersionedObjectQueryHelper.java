@@ -1,13 +1,11 @@
 package org.xkonnex.repo.dsl.servicedsl.service.query;
 
 import org.eclipse.emf.ecore.EObject;
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.GovernanceApproval;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType;
 
 public class VersionedObjectQueryHelper {

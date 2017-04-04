@@ -270,10 +270,10 @@ Attribute:
 TypeRef:	DataTypeRef | VersionedTypeRef;
 
 VersionedTypeRef:
-	type=[VersionedType|QualifiedName] (many?='[]' (set?='as set')? )? versionRef=VersionRef;
+	type=[VersionedType|QualifiedName] (many?='[]' ('as' set?='set')? )? versionRef=VersionRef;
 	
 DataTypeRef: 
-	type=[DataType|QualifiedName] (many?='[]' (set?='as set')? )?;
+	type=[DataType|QualifiedName] (many?='[]' ('as' set?='set')? )?;
 	
 AttributeDataTypeRef: 
 	type=[DataType|QualifiedName];

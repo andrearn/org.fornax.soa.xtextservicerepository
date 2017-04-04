@@ -3,7 +3,6 @@ package org.xkonnex.repo.dsl.profiledsl.versioning;
 import java.util.List;
 
 import org.xkonnex.repo.dsl.basedsl.namespace.VersionedNamespace;
-import org.xkonnex.repo.dsl.profiledsl.profileDsl.TechnicalNamespace;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Type;
 
 public class VersionedTechnicalNamespace extends VersionedNamespace {

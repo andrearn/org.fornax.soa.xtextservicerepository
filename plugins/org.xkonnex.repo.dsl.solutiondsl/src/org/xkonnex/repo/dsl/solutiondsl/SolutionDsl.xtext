@@ -116,10 +116,6 @@ OperationRef:
 CapabilityRef:
 	capability=[businessDsl::Capability|QualifiedName] versionRef=VersionRef;
 
-	
-Version:
-	'version' (version=VersionId)  ;
-	
 ProductVersion returns Version:
 	'product-version' (version=VersionId)  ;
 	

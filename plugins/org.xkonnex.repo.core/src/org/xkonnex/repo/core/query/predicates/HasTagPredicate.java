@@ -66,6 +66,7 @@ public class HasTagPredicate implements Predicate<IEObjectDescription> {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	private boolean hasTag(EObject o) {
 		EStructuralFeature tagsFeature = o.eClass()
 				.getEStructuralFeature(TAGS_ATTR_NAME);

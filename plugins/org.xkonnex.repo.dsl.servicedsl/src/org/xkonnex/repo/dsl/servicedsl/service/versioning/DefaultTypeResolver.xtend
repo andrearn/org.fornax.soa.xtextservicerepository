@@ -3,11 +3,9 @@ package org.xkonnex.repo.dsl.servicedsl.service.versioning
 import com.google.inject.Inject
 import java.util.List
 import org.eclipse.emf.ecore.EObject
-import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
-import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef
@@ -21,8 +19,6 @@ class DefaultTypeResolver implements IVersionedTypeRefResolver {
 	
 	@Inject extension VersionMatcher
 	@Inject extension StateMatcher
-	@Inject extension NamespaceQuery
-	@Inject extension IQualifiedNameProvider
 	
 	override selectMatchingTypeVersion(AbstractVersionedTypeRef ref) {
 		selectMatchingTypeImpl(ref)

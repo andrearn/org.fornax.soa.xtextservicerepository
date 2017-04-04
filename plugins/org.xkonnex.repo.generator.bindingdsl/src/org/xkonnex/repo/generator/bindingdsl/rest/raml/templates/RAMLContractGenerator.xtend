@@ -127,7 +127,7 @@ class RAMLContractGenerator {
             version: v«service.version.version»
             baseUri: «service.toEndpointAddress (effBind.provServer, prot, effBind)»
             «toTypes(service, minState, profile, headerImports, environment.registryBaseUrl)»
-            «service.operations.map[toOperation(effBind)].join»
+            «service.operations.map[op | op.toOperation(bindingBuilder.createEffectiveBinding(op, binding))].join»
         '''
         fsa.generateFile(ramlFile, content)
     }
@@ -146,7 +146,7 @@ class RAMLContractGenerator {
             version: v«resource.version.version»
             baseUri: «resource.toEndpointAddress (effBind.provServer, prot, effBind)»
             «toTypes(resource, minState, profile, headerImports)»
-            «resource.operations.map[toOperation(effBind)].join»
+            «resource.operations.map[op | op.toOperation(bindingBuilder.createEffectiveBinding(op, binding))].join»
         '''
         fsa.generateFile(ramlFile, content)
     }

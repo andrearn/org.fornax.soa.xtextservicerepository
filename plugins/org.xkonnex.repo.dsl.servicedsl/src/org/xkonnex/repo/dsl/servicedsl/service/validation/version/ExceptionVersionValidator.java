@@ -144,7 +144,6 @@ public class ExceptionVersionValidator extends AbstractServiceDslVersionValidato
 	}
 	
 	private void notifySimpleAttrVersionConflicts (SimpleAttribute attr, Set<VersionedObjectFeatureConflicts> conflicts) {
-		org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception exc = (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception) attr.eContainer ();
 		for (VersionedObjectFeatureConflicts conflict : conflicts) {
 			if (conflict.equals (VersionedObjectFeatureConflicts.NAME_CONFLICT)) {
 				error ("The property "

@@ -4,10 +4,9 @@ import com.google.inject.Inject
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.bindingdsl.binding.IContextRootProvider
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.HTTP
+import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.AppServer
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Broker
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Database
@@ -19,12 +18,11 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.WebServer
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceNameFragmentProvider
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.generator.bindingdsl.templates.naming.IEndpointQualifierNameProvider
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
-import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 class HttpVendorEndpointResolver {
 	

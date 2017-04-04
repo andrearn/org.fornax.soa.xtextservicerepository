@@ -1,19 +1,17 @@
 package org.xkonnex.repo.generator.bindingdsl.rest.raml.templates
 
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import javax.inject.Inject
-import org.xkonnex.repo.generator.servicedsl.templates.json.JSONTypeExtensions
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
+import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import org.xkonnex.repo.generator.servicedsl.templates.json.JSONSchemaGenerator
-import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries
+import org.xkonnex.repo.generator.servicedsl.templates.json.JSONTypeExtensions
 
 class RAMLTypesGenerator {
 	
@@ -96,7 +94,7 @@ class RAMLTypesGenerator {
 			    «type.toJSONSchema(registryBaseUrl)»
 		'''
 	}
-	def dispatch toJSONTypeDeclaration (VersionedType type) {
+	def toJSONTypeDeclaration (VersionedType type) {
 		''''''
 	}
 

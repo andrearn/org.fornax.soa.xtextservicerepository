@@ -243,22 +243,4 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 		ns.addTrailingSlashIfReqired(leafDomainNamespace)
 	}
 	
-	
-	private def dispatch String toOrgNamespacePrefix (Namespace namespace) {
-		namespaceURIProvider.toNamespaceURI
-	}
-	
-	private def dispatch String toOrgNamespacePrefix (OrganizationNamespace namespace) {
-		if (namespace.prefix !== null) {
-			return namespace.prefix
-		} else {
-			return namespace.namespacePrefix
-		}
-	}
-	
-	private def dispatch String toOrgNamespacePrefix (VersionedDomainNamespace s) {
-		var ns = s.subdomain.toNamespaceURI;
-		ns.addTrailingSlashIfReqired(s)
-	}
-		
 }

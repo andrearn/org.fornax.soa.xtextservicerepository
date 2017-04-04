@@ -1,11 +1,17 @@
 package org.xkonnex.repo.generator.bindingdsl.rest.wadl.templates
 
 import com.google.inject.Inject
+import java.util.List
 import java.util.Set
+import java.util.logging.Logger
 import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
-import org.eclipse.xtext.generator.IFileSystemAccess2
+import org.eclipse.xtext.generator.IFileSystemAccess
+import org.eclipse.xtext.naming.IQualifiedNameProvider
 import org.xkonnex.repo.dsl.basedsl.ext.infer.IComponentInferrer
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
+import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.REST
 import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
@@ -26,29 +32,21 @@ import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.generator.bindingdsl.rest.RESTEndpointAddressResolver
-import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions
-import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
-import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
-import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTypeExtensions
-import org.xkonnex.repo.generator.servicedsl.templates.xsd.OperationWrapperTypesGenerator
 import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
-import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
-import org.eclipse.xtext.generator.IFileSystemAccess
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
-import java.util.logging.Logger
-import java.util.logging.Level
-import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
-import java.util.List
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
-import org.xkonnex.repo.generator.servicedsl.templates.xsd.XSDGenerator
 import org.xkonnex.repo.generator.bindingdsl.templates.DefaultResourceContractFilenameProvider
 import org.xkonnex.repo.generator.bindingdsl.templates.DefaultServiceContractFilenameProvider
+import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions
+import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
+import org.xkonnex.repo.generator.servicedsl.templates.xsd.OperationWrapperTypesGenerator
+import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
+import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTypeExtensions
+import org.xkonnex.repo.generator.servicedsl.templates.xsd.XSDGenerator
 
 class ConcreteWADLGenerator {
 	
@@ -127,7 +125,7 @@ class ConcreteWADLGenerator {
 				xmlns="http://wadl.dev.java.net/2009/02">
 				«toGrammars(service, minState, profile, headerImports)»
 				<resources base="«service.toEndpointAddress (effBind.provServer, prot, effBind)»">
-					«service.operations.map[toOperation(effBind)].join»
+					«service.operations.map[op | op.toOperation(bindingBuilder.createEffectiveBinding(op, binding))].join»
 				</resources>
 			</application>
 		'''
@@ -158,7 +156,7 @@ class ConcreteWADLGenerator {
 				xmlns="http://wadl.dev.java.net/2009/02">
 				«toGrammars(resource, minState, profile, headerImports)»
 				<resources base="«resource.toEndpointAddress (effBind.provServer, prot, effBind)»">
-					«resource.operations.map[toOperation(effBind)].join»
+					«resource.operations.map[op | op.toOperation(bindingBuilder.createEffectiveBinding(op, binding))].join»
 				</resources>
 			</application>
 		'''

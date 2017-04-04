@@ -13,7 +13,6 @@ import org.xkonnex.repo.dsl.profiledsl.search.predicate.VersionAndLifecycleState
 import com.google.common.base.Predicates;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.ibm.icu.text.CanonicalIterator;
 
 public class FindAssetsWithStateQuery {
 	
