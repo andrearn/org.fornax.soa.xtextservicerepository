@@ -59,7 +59,7 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 
 	override String getHostPart (SubNamespace ns) {
 		val orgNs = ns.findOrgNamespace
-		if (orgNs != null) {
+		if (orgNs !== null) {
 			return orgNs.hostPart
 		} else {
 			return namespaceURIProvider.getHostPart(ns)
@@ -72,7 +72,7 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	
 	override String getPathPart(SubNamespace ns) {
 		val orgNs = ns.findOrgNamespace
-		if (orgNs != null) {
+		if (orgNs !== null) {
 			return ns.subNamespaceFragment.split("\\.").join("/")
 		} else {
 			return namespaceURIProvider.getPathPart(ns)
@@ -148,14 +148,14 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	}
 	
 	private def dispatch String toVersionPostfix (SubNamespace s) {
-		if (s.version != null && s.version.version != null ) 
+		if (s.version !== null && s.version.version !== null ) 
 			versionQualifier.toVersionPostfix(s.version) 
 		else
 			versionQualifier.toDefaultVersionPostfix();
 	}
 		
 	private def dispatch String toVersionPostfix (VersionedNamespace s) {
-		if (s.version != null) 
+		if (s.version !== null) 
 			versionQualifier.toVersionPostfix(s.version) 
 		else
 			versionQualifier.toDefaultVersionPostfix();
@@ -236,7 +236,7 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	
 	private def dispatch String toNamespaceURI (SubNamespace leafDomainNamespace) {
 		var ns = ""
-		if (leafDomainNamespace.uri != null)
+		if (leafDomainNamespace.uri !== null)
 			ns = leafDomainNamespace.uri
 		else
 			ns = leafDomainNamespace.hostPart + "/" + leafDomainNamespace.pathPart
@@ -249,7 +249,7 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	}
 	
 	private def dispatch String toOrgNamespacePrefix (OrganizationNamespace namespace) {
-		if (namespace.prefix != null) {
+		if (namespace.prefix !== null) {
 			return namespace.prefix
 		} else {
 			return namespace.namespacePrefix

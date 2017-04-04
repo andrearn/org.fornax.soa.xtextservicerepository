@@ -18,7 +18,7 @@ class HeaderFinder {
 	}
 		
 	def dispatch MessageHeader findBestMatchingRequestHeader (Operation o, Profile p ) {
-		if (o.requestMessageHeader?.header != null) { 
+		if (o.requestMessageHeader?.header !== null) { 
 			o.requestMessageHeader.header;
 		} else {
 			o.eContainer.findBestMatchingRequestHeader (p);
@@ -26,7 +26,7 @@ class HeaderFinder {
 	}
 			
 	def dispatch MessageHeader findBestMatchingRequestHeader (Service s, Profile p ) {
-		if (s.requestMessageHeader?.header != null) { 
+		if (s.requestMessageHeader?.header !== null) { 
 			s.requestMessageHeader.header;
 		} else {
 			s.eContainer.findBestMatchingRequestHeader (p);
@@ -38,7 +38,7 @@ class HeaderFinder {
 	}
 		
 	def dispatch MessageHeader findBestMatchingResponseHeader (Operation o, Profile p ) {
-		if (o.responseMessageHeader?.header != null) { 
+		if (o.responseMessageHeader?.header !== null) { 
 			o.responseMessageHeader.header;
 		} else {
 			o.eContainer.findBestMatchingResponseHeader (p);
@@ -46,7 +46,7 @@ class HeaderFinder {
 	}
 			
 	def dispatch MessageHeader findBestMatchingResponseHeader (Service s, Profile p ) {
-		if (s.responseMessageHeader?.header != null) { 
+		if (s.responseMessageHeader?.header !== null) { 
 			s.responseMessageHeader.header;
 		} else {
 			s.eContainer.findBestMatchingResponseHeader (p);
@@ -58,7 +58,7 @@ class HeaderFinder {
 	}
 		
 	def dispatch MessageHeader findBestMatchingPublishHeader (Operation o, Profile p ) {
-		if (o.publishMessageHeader?.header != null) { 
+		if (o.publishMessageHeader?.header !== null) { 
 			o.publishMessageHeader.header;
 		} else {
 			o.eContainer.findBestMatchingPublishHeader (p);
@@ -66,7 +66,7 @@ class HeaderFinder {
 	}
 			
 	def dispatch MessageHeader findBestMatchingPublishHeader (Service s, Profile p ) {
-		if (s.publishMessageHeader?.header != null) { 
+		if (s.publishMessageHeader?.header !== null) { 
 			s.publishMessageHeader.header;
 		} else {
 			s.eContainer.findBestMatchingPublishHeader (p);

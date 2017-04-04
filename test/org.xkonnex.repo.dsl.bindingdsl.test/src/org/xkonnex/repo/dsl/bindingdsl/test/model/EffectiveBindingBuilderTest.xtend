@@ -60,7 +60,7 @@ class EffectiveBindingBuilderTest {
 		val effProtocols = effBind.protocol.map[it as EffectiveBindingProtocol]
 		assertEquals(2, effProtocols.size)
 
-		val extProts = effProtocols.filter[it.extensibleProtocol != null].map[it.extensibleProtocol as IProtocol]
+		val extProts = effProtocols.filter[it.extensibleProtocol !== null].map[it.extensibleProtocol as IProtocol]
 		assertEquals(1, extProts.size)
 		
 		val rest = extProts.head as REST

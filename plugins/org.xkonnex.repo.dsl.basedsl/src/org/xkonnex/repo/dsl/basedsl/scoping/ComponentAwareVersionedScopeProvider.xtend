@@ -38,10 +38,10 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 	
 	def override IScope getScope(EObject context, EReference reference) {
 		if (context instanceof Assignment && reference == BaseDslPackage.Literals.ASSIGNMENT__FEATURE) {
-			if (context.eContainer() == null)
+			if (context.eContainer() === null)
 				throw new IllegalStateException("context.eContainer may not be null");
 			val component = EcoreUtil2.getContainerOfType(context, typeof(Component))
-			if (component == null)
+			if (component === null)
 				throw new IllegalStateException("No containing Component");
 			return createComponentFeaturesScope(component);
 		}
@@ -98,7 +98,7 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 
 	def IScope createComponentFeaturesScope(Component container) {
 		val JvmType containerType = container.getActualType();
-		if (containerType == null || containerType.eIsProxy())
+		if (containerType === null || containerType.eIsProxy())
 			return IScope.NULLSCOPE;
 		val Map<QualifiedName, JvmFeature> features = Maps.newHashMap();
 //		var JvmType createType = factorySupport.findFactoriesCreationType(containerType);
@@ -111,7 +111,7 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 
 	def IScope createEnumLiteralValueFeaturesScope(EnumLiteralValue container) {
 		val JvmType containerType = container.getActualType();
-		if (containerType == null || containerType.eIsProxy())
+		if (containerType === null || containerType.eIsProxy())
 			return IScope.NULLSCOPE;
 		val Map<QualifiedName, JvmFeature> features = Maps.newHashMap();
 //		var JvmType createType = factorySupport.findFactoriesCreationType(containerType);

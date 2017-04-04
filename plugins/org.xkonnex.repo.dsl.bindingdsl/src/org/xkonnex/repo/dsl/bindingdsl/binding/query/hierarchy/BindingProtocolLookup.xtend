@@ -8,8 +8,8 @@ import java.util.List
 class BindingProtocolLookup {
 	
 	def getCorrespondingProtocolInBinding (AnyBinding binding, BindingProtocol protocol) {
-		if (protocol.type != null) {
-			val candidates = binding.protocol.filter[type != null && type.qualifiedName==protocol.type?.qualifiedName]
+		if (protocol.type !== null) {
+			val candidates = binding.protocol.filter[type !== null && type.qualifiedName==protocol.type?.qualifiedName]
 			if (!candidates.empty)
 				return candidates.head
 			else
@@ -26,9 +26,9 @@ class BindingProtocolLookup {
 	def findCorrespondingProtocolDefinitionInParent (BindingProtocol protocol) {
 		val owningBinding = EcoreUtil2.getContainerOfType(protocol, typeof (AnyBinding))
 		var parent = EcoreUtil2.getContainerOfType(owningBinding.eContainer, typeof (AnyBinding))
-		while (parent != null) {
+		while (parent !== null) {
 			val correspondant =  getCorrespondingProtocolInBinding(parent, protocol)
-			if (correspondant != null)
+			if (correspondant !== null)
 				return correspondant
 			else 
 				parent = EcoreUtil2.getContainerOfType(owningBinding.eContainer, typeof (AnyBinding))
@@ -39,7 +39,7 @@ class BindingProtocolLookup {
 		var List<BindingProtocol> protocolDefs = newArrayList()
 		for (bind : bindings) {
 			val bindProt = getCorrespondingProtocolInBinding(bind, protocol)
-			if (bindProt != null)
+			if (bindProt !== null)
 				protocolDefs += bindProt
 		}
 		protocolDefs

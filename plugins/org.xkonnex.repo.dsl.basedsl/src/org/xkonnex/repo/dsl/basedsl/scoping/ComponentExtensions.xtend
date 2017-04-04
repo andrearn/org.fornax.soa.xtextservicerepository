@@ -14,12 +14,12 @@ class ComponentExtensions {
 	
 	def JvmType getActualType(Component component) {
 		val JvmType result = component.type;
-		if (result != null)
+		if (result !== null)
 			return result;
 		val EObject container = component.eContainer();
 		if (container instanceof Assignment) {
 			val JvmIdentifiableElement containerFeature = (container as Assignment).getFeature();
-			if (containerFeature != null && containerFeature instanceof JvmOperation) {
+			if (containerFeature !== null && containerFeature instanceof JvmOperation) {
 				val JvmFormalParameter parameter = (containerFeature as JvmOperation).getParameters().get(0);
 				return parameter.getParameterType().getType();
 			}
@@ -30,7 +30,7 @@ class ComponentExtensions {
 	
 	def JvmType getActualType(Assignment assignment) {
 		val JvmIdentifiableElement containerFeature = assignment.getFeature();
-		if (containerFeature != null && containerFeature instanceof JvmOperation) {
+		if (containerFeature !== null && containerFeature instanceof JvmOperation) {
 			val JvmFormalParameter parameter = (containerFeature as JvmOperation).getParameters().get(0);
 			return parameter.getParameterType().getType();
 		}
@@ -41,7 +41,7 @@ class ComponentExtensions {
 		val EObject container = component.eContainer();
 		if (container instanceof Assignment) {
 			val JvmIdentifiableElement containerFeature = (container as Assignment).getFeature();
-			if (containerFeature != null && containerFeature instanceof JvmOperation) {
+			if (containerFeature !== null && containerFeature instanceof JvmOperation) {
 				val JvmFormalParameter parameter = (containerFeature as JvmOperation).getParameters().get(0);
 				return parameter.getParameterType().getType();
 			}

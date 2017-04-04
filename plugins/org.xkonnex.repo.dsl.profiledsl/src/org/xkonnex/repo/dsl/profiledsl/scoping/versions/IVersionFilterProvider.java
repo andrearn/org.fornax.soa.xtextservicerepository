@@ -1,7 +1,5 @@
 package org.xkonnex.repo.dsl.profiledsl.scoping.versions;
 
-import java.util.List;
-
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionFilter;

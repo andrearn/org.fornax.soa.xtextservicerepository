@@ -45,7 +45,7 @@ class LatestVersionModuleReferenceResolver implements IModuleReferenceResolver {
 		val moduleMap = versionFilter.getBestMatchByNames(moduleDescs, false)
 		val resolvedModuleDesc = moduleMap.get(moduleName)?.head as IEObjectDescription
 		var resolvedMod = resolvedModuleDesc.EObjectOrProxy as Module
-		if (resolvedMod != null && resolvedMod.eIsProxy) {
+		if (resolvedMod !== null && resolvedMod.eIsProxy) {
 			resolvedMod = EcoreUtil2::resolve(resolvedMod, moduleRef.eResource?.resourceSet) as Module
 		}
 		return resolvedMod
@@ -73,7 +73,7 @@ class LatestVersionModuleReferenceResolver implements IModuleReferenceResolver {
 		val moduleMap = versionFilter.getBestMatchByNames (moduleDescs, false)
 		val resolvedModuleDesc = moduleMap.get (moduleName)?.head as IEObjectDescription
 		var resolvedMod = resolvedModuleDesc.EObjectOrProxy as Module
-		if (resolvedMod != null && resolvedMod.eIsProxy) {
+		if (resolvedMod !== null && resolvedMod.eIsProxy) {
 			resolvedMod = EcoreUtil2::resolve (resolvedMod, svcModuleRef.eResource?.resourceSet) as Module
 		}
 		return resolvedMod
@@ -88,7 +88,7 @@ class LatestVersionModuleReferenceResolver implements IModuleReferenceResolver {
 		val moduleMap = versionFilter.getBestMatchByNames (moduleDescs, false)
 		val resolvedModuleDesc = moduleMap.get (moduleName)?.head as IEObjectDescription
 		var resolvedMod = resolvedModuleDesc.EObjectOrProxy as Module
-		if (resolvedMod != null && resolvedMod.eIsProxy) {
+		if (resolvedMod !== null && resolvedMod.eIsProxy) {
 			resolvedMod = EcoreUtil2::resolve (resolvedMod, moduleRef.eResource?.resourceSet) as Module
 		}
 		return resolvedMod

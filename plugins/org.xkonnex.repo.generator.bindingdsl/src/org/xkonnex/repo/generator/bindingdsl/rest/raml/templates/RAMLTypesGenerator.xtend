@@ -106,9 +106,9 @@ class RAMLTypesGenerator {
 	}
 	
 	def dispatch toBaseType(DataObject type) {
-		if (type.superObject == null){
+		if (type.superObject === null){
 			"object"
-		} else if(type.superObject.type != null) {
+		} else if(type.superObject.type !== null) {
 			type.superObject.type.toContextualTypeNameRef
 		} else {
 			""

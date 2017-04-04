@@ -9,7 +9,6 @@ import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
 import org.xkonnex.repo.dsl.basedsl.version.VersionQualifierExtensions
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.VersionedTypeFilter
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OrganizationNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace

@@ -27,21 +27,21 @@ class AssetStateEnvironmentEligibilityChecker {
 	}
 	
 	def dispatch boolean isEligibleForEnvironment (Service service, Environment env) {
-		if (service.state != null)
+		if (service.state !== null)
 			stateMatcher.matches (env.getMinLifecycleState (service.state.eContainer as Lifecycle), service.state)
 		else
 			true
 	}
 	
 	def dispatch boolean isEligibleForEnvironment (VersionedType type, Environment env) {
-		if (type.state != null)
+		if (type.state !== null)
 			stateMatcher.matches (env.getMinLifecycleState (type.state.eContainer as Lifecycle), type.state)
 		else
 			true
 	}
 	
 	def dispatch boolean isEligibleForEnvironment (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception exception, Environment env) {
-		if (exception.state != null)
+		if (exception.state !== null)
 			stateMatcher.matches (env.getMinLifecycleState (exception.state.eContainer as Lifecycle), exception.state)
 		else
 			true

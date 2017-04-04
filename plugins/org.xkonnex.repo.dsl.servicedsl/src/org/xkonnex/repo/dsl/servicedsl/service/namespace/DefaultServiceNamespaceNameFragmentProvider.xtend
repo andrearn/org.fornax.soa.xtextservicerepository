@@ -52,7 +52,7 @@ class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNam
 	
 	private def dispatch String toOrgShortnameFragment(Namespace ns) {
 		val orgNs = ns.findOrgNamespace
-		if (orgNs != null) {
+		if (orgNs !== null) {
 			orgNs.toOrgShortnameFragment
 		} else {
 			val orgNsFragment = baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
@@ -62,13 +62,13 @@ class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNam
 	
 	private def dispatch String toOrgShortnameFragment(SubNamespace ns) {
 		val orgNs = ns.findOrgNamespace
-		if (orgNs != null) {
+		if (orgNs !== null) {
 			return orgNs.toOrgShortnameFragment
 		} else {
 			val profile = ns.getApplicableProfile(null)
 			val orgNsFQN = ns.fullyQualifiedName.toString
 			val shortName = orgNsFQN.getNamespaceShortBaseName(profile)
-			if (shortName != null)
+			if (shortName !== null)
 				return shortName
 		}
 		val orgNsFragment = baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
@@ -76,13 +76,13 @@ class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNam
 	}
 	
 	private def dispatch String toOrgShortnameFragment(OrganizationNamespace ns) {
-		if (ns.prefix != null)
+		if (ns.prefix !== null)
 			return ns.prefix
 		else {
 			val profile = ns.getApplicableProfile(null)
 			val orgNsFQN = ns.fullyQualifiedName.toString
 			val shortName = orgNsFQN.getNamespaceShortBaseName(profile)
-			if (shortName != null)
+			if (shortName !== null)
 				return shortName
 			else
 				return baseDslNsNameFragmentProvider.getShortname(ns)
@@ -92,7 +92,7 @@ class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNam
 	
 	private def dispatch String toOrgNameFragment(Namespace ns) {
 		val orgNs = ns.findOrgNamespace
-		if (orgNs != null) {
+		if (orgNs !== null) {
 			orgNs.toOrgNameFragment
 		} else {
 			baseDslNsNameFragmentProvider.getOrganizationNameFragment(ns)
@@ -109,7 +109,7 @@ class DefaultServiceNamespaceNameFragmentProvider implements ServiceNamespaceNam
 	private def dispatch String toSubNamespaceFragment(SubNamespace ns) {
 		val subNamespaces = ns.allSubNamespaces
 		val nameFragment = subNamespaces.map(n|n.name.stripXtextEscapes).join(".")
-		if (ns.findOrgNamespace != null)
+		if (ns.findOrgNamespace !== null)
 			return nameFragment
 		else
 			baseDslNsNameFragmentProvider.getSubNamespaceFragment(nameFragment)

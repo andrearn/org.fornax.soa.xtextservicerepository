@@ -83,7 +83,7 @@ class BindingLookup {
 				bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
 			}
 			val referredModuleName = nameProvider.getFullyQualifiedName(bind.module.module)
-			if (module.isEffectivelyReferencedVersion (referredModuleName, bind.module.versionRef) && bind.resolveEnvironment == targetEnvironment && (endpointQualifier == null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
+			if (module.isEffectivelyReferencedVersion (referredModuleName, bind.module.versionRef) && bind.resolveEnvironment == targetEnvironment && (endpointQualifier === null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
 				modBindings.add(bind)
 			}
 		}
@@ -154,7 +154,7 @@ class BindingLookup {
 				bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
 			}
 			val referredModuleName = nameProvider.getFullyQualifiedName(bind.module.module)
-			if (module.isEffectivelyReferencedVersion (referredModuleName, bind.module.versionRef) && (endpointQualifier == null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
+			if (module.isEffectivelyReferencedVersion (referredModuleName, bind.module.versionRef) && (endpointQualifier === null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
 				modBindings.add(bind)
 			}
 		}
@@ -198,7 +198,7 @@ class BindingLookup {
 			if (b.eIsProxy) {
 				bind = EcoreUtil2::resolve(b, module.eResource?.resourceSet) as ModuleBinding
 			}
-			if (module == bind.module.module && (endpointQualifier == null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
+			if (module == bind.module.module && (endpointQualifier === null || bind.potentialEffectiveEndpointQualifiers.containsEndpointQualifier(endpointQualifier))) {
 				modBindings.add(bind)
 			}
 		}
@@ -214,9 +214,9 @@ class BindingLookup {
 	def Binding getMostSpecificBinding (Service service, Binding binding, EndpointQualifierRef endpointQualifier) {
 		val candBind = service.getMostSpecificBinding (binding)
 		val bindEndpointQualifiers = candBind.getPotentialEffectiveEndpointQualifiers
-		if (endpointQualifier != null && candBind != null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
+		if (endpointQualifier !== null && candBind !== null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
 			return candBind
-		} else if (endpointQualifier == null) {
+		} else if (endpointQualifier === null) {
 			return candBind
 		} else {
 			return null
@@ -230,9 +230,9 @@ class BindingLookup {
 	def Binding getMostSpecificBinding (Resource resource, Binding binding, EndpointQualifierRef endpointQualifier) {
 		val candBind = resource.getMostSpecificBinding (binding)
 		val bindEndpointQualifiers = candBind.getPotentialEffectiveEndpointQualifiers
-		if (endpointQualifier != null && candBind != null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
+		if (endpointQualifier !== null && candBind !== null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
 			return candBind
-		} else if (endpointQualifier == null) {
+		} else if (endpointQualifier === null) {
 			return candBind
 		} else {
 			return null
@@ -333,9 +333,9 @@ class BindingLookup {
 					for (opBind : svcBind.operation) {
 						if (opBind.operation == operation) {
 							val bindEndpointQualifiers = opBind.getPotentialEffectiveEndpointQualifiers
-							if (endpointQualifier != null && opBind != null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
+							if (endpointQualifier !== null && opBind !== null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
 								return opBind
-							} else if (endpointQualifier == null) {
+							} else if (endpointQualifier === null) {
 								return opBind
 							} else {
 								return null
@@ -343,9 +343,9 @@ class BindingLookup {
 						}
 					}
 					val bindEndpointQualifiers = svcBind.getPotentialEffectiveEndpointQualifiers
-					if (endpointQualifier != null && svcBind != null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
+					if (endpointQualifier !== null && svcBind !== null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
 						return svcBind
-					} else if (endpointQualifier == null) {
+					} else if (endpointQualifier === null) {
 						return svcBind
 					} else {
 						return null
@@ -373,13 +373,13 @@ class BindingLookup {
 		val channelBind = EcoreUtil2.getContainerOfType(specBind, typeof(ChannelBinding))
 		val svcBind = EcoreUtil2.getContainerOfType(specBind, typeof(ServiceBinding))
 		val modBind = EcoreUtil2.getContainerOfType(specBind, typeof(ModuleBinding))
-		if (opBind != null)
+		if (opBind !== null)
 			hierarchy+=opBind
-		if (channelBind != null)
+		if (channelBind !== null)
 			hierarchy+=channelBind
-		if (svcBind != null)
+		if (svcBind !== null)
 			hierarchy+=svcBind
-		if (modBind != null)
+		if (modBind !== null)
 			hierarchy+=modBind
 		hierarchy
 	}

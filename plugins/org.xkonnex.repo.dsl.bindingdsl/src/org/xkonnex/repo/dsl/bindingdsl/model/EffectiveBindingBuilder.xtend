@@ -214,7 +214,7 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		effExtProt.endpointQualifierRef = featureInferrer.inferFeatureValue(protDefEObjects, BindingDslPackage.Literals.BINDING_PROTOCOL__ENDPOINT_QUALIFIER_REF)
 		effExtProt.type = featureInferrer.inferFeatureValue(protDefEObjects, BaseDslPackage.Literals.COMPONENT__TYPE)
 		val assignments = featureInferrer.inferFeatureValue(protDefEObjects, BaseDslPackage.Literals.COMPONENT__ASSIGNMENT)
-		if (assignments != null) 
+		if (assignments !== null) 
 			effExtProt.assignment += assignments
 		effExtProt.name =  featureInferrer.inferFeatureValue(protDefEObjects, BaseDslPackage.Literals.COMPONENT__NAME)
 		return effExtProt

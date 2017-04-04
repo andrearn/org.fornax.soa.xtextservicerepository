@@ -79,7 +79,7 @@ class BindingDslRuntimeModule extends org.xkonnex.repo.dsl.bindingdsl.AbstractBi
 		return DefaultModuleVersionMatcher
 	}
 
-	def Class<? extends BaseDslFactory> bindSOABaseDslFactory() {
+	def Class<? extends BaseDslFactory> bindBaseDslFactory() {
 		return BaseDslFactoryImpl
 	}
 

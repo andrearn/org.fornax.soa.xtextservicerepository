@@ -37,12 +37,12 @@ class JavaBeanMerger {
 
 		for (targetPd : targetPds) {
 			val writeMethod = targetPd.getWriteMethod();
-			if (writeMethod != null) {
+			if (writeMethod !== null) {
 				val sourcePd = getPropertyDescriptor(source.class, targetPd.name);
-				if (sourcePd != null) {
+				if (sourcePd !== null) {
 					val readMethod = sourcePd.getReadMethod();
 					val targetReadMethod = targetPd.getReadMethod();
-					if (readMethod != null &&
+					if (readMethod !== null &&
 						isAssignable (writeMethod.parameterTypes.get(0), readMethod.getReturnType())) {
 						try {
 							if (!Modifier.isPublic (readMethod.getDeclaringClass().getModifiers())) {
@@ -54,20 +54,20 @@ class JavaBeanMerger {
 							val value = readMethod.invoke(source);
 							val targetValue = targetReadMethod.invoke(target)
 							if (isSimpleValueType(targetPd.propertyType) &&
-								value != null && targetValue == null) {
+								value !== null && targetValue === null) {
 								if (!Modifier.isPublic (writeMethod.getDeclaringClass().getModifiers())) {
 									writeMethod.setAccessible(true);
 								}
 								writeMethod.invoke (target, value);
 							} else if (isCollectionType (targetPd.propertyType) &&
-								value != null && (targetValue == null || (targetValue as Collection).isEmpty())) {
+								value !== null && (targetValue === null || (targetValue as Collection).isEmpty())) {
 								if (!Modifier.isPublic (writeMethod.getDeclaringClass().getModifiers())) {
 									writeMethod.setAccessible(true);
 								}
 								writeMethod.invoke (target, value);
 							} else if (!isCollectionType (targetPd.propertyType) &&
-								!isSimpleValueType (targetPd.propertyType) && value != null && value != null) {
-								if (targetValue != null) {
+								!isSimpleValueType (targetPd.propertyType) && value !== null && value !== null) {
+								if (targetValue !== null) {
 									merge(value, targetValue)
 								} else {
 									writeMethod.invoke (target, value);

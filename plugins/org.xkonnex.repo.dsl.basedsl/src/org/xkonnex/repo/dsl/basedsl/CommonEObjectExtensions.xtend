@@ -10,7 +10,7 @@ class CommonEObjectExtensions {
 	@Inject IQualifiedNameProvider nameProvider
 	
 	def EObject eRootContainer (EObject o) {
-		if (o.eContainer != null) {
+		if (o.eContainer !== null) {
 			o.eRootContainer
 		} else {
 			return o;

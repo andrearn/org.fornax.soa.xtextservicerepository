@@ -9,7 +9,6 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace

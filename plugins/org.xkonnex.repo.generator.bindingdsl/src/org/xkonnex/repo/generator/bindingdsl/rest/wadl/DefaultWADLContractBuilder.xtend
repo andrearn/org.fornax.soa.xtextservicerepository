@@ -69,7 +69,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 		val bindingDescs = 	bindingResolver.resolveProvidedServiceBindings (module, targetEnvironment, providerEndpointQualifierRef)
 		for (specBindingDesc : bindingDescs.serviceRefDescriptions) {
 			val svc = specBindingDesc.getResolvedService
-			if (svc != null) {
+			if (svc !== null) {
 				try {
 					if (protocolMatcher.supportsModuleEndpointProtocol (specBindingDesc.getApplicableBinding, typeof(org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST))) {
 						doBuildServiceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, enforcedProfile)
@@ -90,9 +90,9 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 		for (provSvcRef : providedServices) {
 			val svc = modServiceResolver.resolveModuleServiceRef (provSvcRef, binding.resolveEnvironment)
 
-			if (svc != null) {
+			if (svc !== null) {
 				try {
-					if (svc.providedContractUrl == null && svc.isEligibleForEnvironment (binding.resolveEnvironment)) {
+					if (svc.providedContractUrl === null && svc.isEligibleForEnvironment (binding.resolveEnvironment)) {
 						val namespace = svc.findSubdomain();
 						val profile = namespace.getApplicableProfile(enforcedProfile)
 						val typesMinState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
@@ -105,7 +105,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 							verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, binding, profile));
 									
 							val requestHeader = svc.findBestMatchingRequestHeader (profile);
-							if (requestHeader != null) {
+							if (requestHeader !== null) {
 								if (useRegistryBasedFilePaths)
 									msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, binding.getRegistryBaseUrl())
 								else 
@@ -113,7 +113,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 							}
 							
 							val responseHeader = svc.findBestMatchingResponseHeader (profile);
-							if (responseHeader != null) {
+							if (responseHeader !== null) {
 								if (useRegistryBasedFilePaths)
 									msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, binding.getRegistryBaseUrl())
 								else 
@@ -133,7 +133,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 		val bindingDescs = 	bindingResolver.resolveProvidedServiceBindings(module, targetEnvironment, providerEndpointQualifierRef)
 		for (specBindingDesc : bindingDescs.resourceRefDescriptions) {
 			val svc = specBindingDesc.resolvedResource
-			if (svc != null) {
+			if (svc !== null) {
 				try {
 					if (protocolMatcher.supportsModuleEndpointProtocol (specBindingDesc.getApplicableBinding, typeof(org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST))) {
 						doBuildResourceContracts (specBindingDesc, module.state, selectTypeVersionsByEnvironment, enforcedProfile)
@@ -154,9 +154,9 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 		for (provResRef : providedResources) {
 			val res = modResourceResolver.resolveModuleResourceRef (provResRef, binding.resolveEnvironment)
 
-			if (res != null) {
+			if (res !== null) {
 				try {
-					if (res.providedContractUrl == null && res.isEligibleForEnvironment (binding.resolveEnvironment)) {
+					if (res.providedContractUrl === null && res.isEligibleForEnvironment (binding.resolveEnvironment)) {
 						val namespace = res.findSubdomain();
 						val profile = namespace.getApplicableProfile(enforcedProfile)
 						val typesMinState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
@@ -172,7 +172,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 							verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, binding, profile));
 									
 							val requestHeader = res.findBestMatchingRequestHeader (profile);
-							if (requestHeader != null) {
+							if (requestHeader !== null) {
 								if (useRegistryBasedFilePaths)
 									msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, binding.getRegistryBaseUrl())
 								else 
@@ -180,7 +180,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 							}
 							
 							val responseHeader = res.findBestMatchingResponseHeader (profile);
-							if (responseHeader != null) {
+							if (responseHeader !== null) {
 								if (useRegistryBasedFilePaths)
 									msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, binding.getRegistryBaseUrl())
 								else 
@@ -212,7 +212,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 		val specBinding = serviceBindingDescription.getApplicableBinding
 		for (restProt : specBinding.protocol.filter (ExtensibleProtocol).filter [e|e.type?.identifier == typeof(REST).canonicalName]) {
 			try {
-				if (service.providedContractUrl == null && service.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
+				if (service.providedContractUrl === null && service.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
 					val namespace = service.findSubdomain();
 					val profile = namespace.getApplicableProfile(enforcedProfile)
 					val typesMinState = if (selectTypeVersionsByEnvironment) 
@@ -226,7 +226,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 						verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile));
 								
 						val requestHeader = service.findBestMatchingRequestHeader (profile);
-						if (requestHeader != null) {
+						if (requestHeader !== null) {
 							if (useRegistryBasedFilePaths)
 								msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, specBinding.getRegistryBaseUrl())
 							else 
@@ -234,7 +234,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 						}
 
 						val responseHeader = service.findBestMatchingRequestHeader (profile);
-						if (responseHeader != null) {
+						if (responseHeader !== null) {
 							if (useRegistryBasedFilePaths)
 								msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, specBinding.getRegistryBaseUrl())
 							else 
@@ -253,7 +253,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 		val specBinding = resourceBindingDescription.getApplicableBinding
 		for (restProt : specBinding.protocol.filter (ExtensibleProtocol).filter [e|e.type?.identifier == typeof(REST).canonicalName]) {
 			try {
-				if (resource.providedContractUrl == null && resource.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
+				if (resource.providedContractUrl === null && resource.isEligibleForEnvironment (specBinding.resolveEnvironment)) {
 					val namespace = resource.findSubdomain();
 					val profile = namespace.getApplicableProfile(enforcedProfile)
 					val typesMinState = if (selectTypeVersionsByEnvironment) 
@@ -266,7 +266,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 						verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile))
 								
 						val requestHeader = resource.findBestMatchingRequestHeader (profile);
-						if (requestHeader != null) {
+						if (requestHeader !== null) {
 							if (useRegistryBasedFilePaths)
 								msgHeaderGenerator.toMessageHeaderXSD(requestHeader, profile, specBinding.getRegistryBaseUrl())
 							else 
@@ -274,7 +274,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 						}
 
 						val responseHeader = resource.findBestMatchingRequestHeader (profile);
-						if (responseHeader != null) {
+						if (responseHeader !== null) {
 							if (useRegistryBasedFilePaths)
 								msgHeaderGenerator.toMessageHeaderXSD(responseHeader, profile, specBinding.getRegistryBaseUrl())
 							else 

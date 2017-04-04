@@ -26,7 +26,7 @@ class ModuleContextRootProvider implements IContextRootProvider {
 	
 	override String getContextRoot (Module mod, String serverTypeName, BindingProtocol prot ) {
 		val ctxRoot = prot.getContextRootByProtocol
-		if (ctxRoot != null) {
+		if (ctxRoot !== null) {
 			"/" + ctxRoot
 		} else {
 			"/" + mod.getCtxRootByAssemblyType (serverTypeName)
@@ -35,7 +35,7 @@ class ModuleContextRootProvider implements IContextRootProvider {
 	
 	override String getContextRoot (Module mod, String serverTypeName, String serverVersion, BindingProtocol prot) {
 		val ctxRoot = prot.getContextRootByProtocol
-		if (ctxRoot != null) {
+		if (ctxRoot !== null) {
 			"/" + ctxRoot
 		} else {
 			"/" + mod.getCtxRootByAssemblyType (serverTypeName, serverVersion)
@@ -45,7 +45,7 @@ class ModuleContextRootProvider implements IContextRootProvider {
 	override String getContextRoot (ServiceBinding b) {
 		val soapBindings = b.protocol.filter ( typeof (SOAP));
 		if (!soapBindings.empty  
-			&& soapBindings.head.contextRoot != null)
+			&& soapBindings.head.contextRoot !== null)
 		{
 			"/" + soapBindings.head.contextRoot + "/";
 		} else {
@@ -62,7 +62,7 @@ class ModuleContextRootProvider implements IContextRootProvider {
 	}
 	
 	def getCtxRootByAssemblyTypeInternal(String serverType, Module mod) {
-		if (serverType != null && serverType.toLowerCase.trim == "webmethods") {
+		if (serverType !== null && serverType.toLowerCase.trim == "webmethods") {
 			""
 		} else if (mod.assemblyType instanceof ExtensibleAssemblyType) {
 			val IAssemblyType assemblyType = componentInferrer.inferComponent(mod.assemblyType as ExtensibleAssemblyType)
@@ -89,7 +89,7 @@ class ModuleContextRootProvider implements IContextRootProvider {
 	}
 	
 	def String getTechnicalModuleName (Module mod) {
-		if (mod.deploymentModuleName != null)
+		if (mod.deploymentModuleName !== null)
 			return mod.deploymentModuleName
 		else 
 			return mod.name
@@ -98,7 +98,7 @@ class ModuleContextRootProvider implements IContextRootProvider {
 	override getContextRoot(EffectiveBinding b) {
 		val soapBindings = b.protocol.filter ( typeof (SOAP));
 		if (!soapBindings.empty  
-			&& soapBindings.head.contextRoot != null)
+			&& soapBindings.head.contextRoot !== null)
 		{
 			"/" + soapBindings.head.contextRoot + "/";
 		} else {

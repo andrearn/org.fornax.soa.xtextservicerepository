@@ -41,7 +41,7 @@ class RESTEndpointAddressResolver {
 	def String getOperationPath(Operation operation, EffectiveBinding binding) {
 		val prot = binding.protocol.filter (typeof (ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
 		val REST restProt = prot.inferComponent
-		if (restProt.path.nullOrEmpty) restProt.path else operation.name
+		if (!restProt.path.nullOrEmpty) restProt.path else operation.name
 	}
 
 	/*

@@ -18,7 +18,7 @@ module org.example.sales.esb {
 			operations {
 				getCustomerDetails {
 					endpoint-protocol REST {
-						path = "details"
+						path = "customer/details"
 						verb = GET
 					}
 				}

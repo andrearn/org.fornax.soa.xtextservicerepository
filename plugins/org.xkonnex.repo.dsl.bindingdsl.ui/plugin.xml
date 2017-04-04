@@ -101,6 +101,7 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
+            category="org.xkonnex.repo.Workbench"
             class="org.xkonnex.repo.dsl.bindingdsl.ui.BindingDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
             id="org.xkonnex.repo.dsl.bindingdsl.BindingDsl"
             name="BindingDsl">

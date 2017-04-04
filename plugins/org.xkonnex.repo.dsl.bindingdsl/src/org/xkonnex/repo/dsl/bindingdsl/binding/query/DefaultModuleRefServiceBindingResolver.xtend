@@ -58,7 +58,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 			 val svc = modServiceResolver.resolveModuleServiceRef (provSvcRef, targetEnvironment)
 			 for (bind : candBindings) {
 			 	val specBind = bindingBuilder.createEffectiveBinding(svc, bind, endpointQualifier)
-			 	if (specBind != null) {
+			 	if (specBind !== null) {
 				 	val curSvcBindDesc = new ServiceRefBindingDescription
 				 	curSvcBindDesc.applicableBinding = specBind
 				 	curSvcBindDesc.resolvedService = svc
@@ -67,7 +67,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 				 	curSvcBindDesc.endpointQualifier = endpointQualifier?.endpointQualifier
 				 	for (op : svc.operations) {
 				 		val opBind = bindingBuilder.createEffectiveBinding(op, specBind.bindingDelegate)
-				 		if (opBind != null) {
+				 		if (opBind !== null) {
 				 			val curOpBindDesc = new OperationRefBindingDescription(op, specBind, module, endpointQualifier?.endpointQualifier)
 				 			curSvcBindDesc.operationDescriptions += curOpBindDesc
 				 		}
@@ -81,7 +81,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 			 val res = modResourceResolver.resolveModuleResourceRef (provResRef, targetEnvironment)
 			 for (bind : candBindings) {
 			 	val specBind = bindingBuilder.createEffectiveBinding(res, bind, endpointQualifier)
-			 	if (specBind != null) {
+			 	if (specBind !== null) {
 				 	val curResBindDesc = new ResourceRefBindingDescription
 				 	curResBindDesc.applicableBinding = specBind
 				 	curResBindDesc.resolvedResource = res
@@ -90,7 +90,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 				 	curResBindDesc.endpointQualifier = endpointQualifier?.endpointQualifier
 				 	for (op : res.operations) {
 				 		val opBind = bindingBuilder.createEffectiveBinding(op, specBind.bindingDelegate)
-				 		if (opBind != null) {
+				 		if (opBind !== null) {
 				 			val curOpBindDesc = new OperationRefBindingDescription(op, specBind, module, endpointQualifier?.endpointQualifier)
 				 			curResBindDesc.operationDescriptions += curOpBindDesc
 				 		}
@@ -134,7 +134,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 			val curSvcBind = svcBindDescs.get (modKey)
 			curBindDesc.serviceRefDescriptions.addAll(curSvcBind)
 			curBindDesc.module = modKey
-			if (curBindDesc.endpointQualifier == null) {
+			if (curBindDesc.endpointQualifier === null) {
 				curBindDesc.endpointQualifier = curSvcBind.map (b|b.endpointQualifier).head
 			}
 			modBindDescs.add(curBindDesc)
@@ -151,7 +151,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 			
 			for (curDesc : impModSvcBindDescs.serviceRefDescriptions.filter (d | usedServiceRefs.contains (d.getServiceRef))) {
 				val curEndpointQualifiers = endpointQualifierQuery.getPotentialEffectiveEndpointQualifiers (curDesc.getApplicableBinding)
-				if (curDesc.getEndpointQualifier == null || curEndpointQualifiers.containsEndpointQualifier (curDesc.getEndpointQualifier)) {
+				if (curDesc.getEndpointQualifier === null || curEndpointQualifiers.containsEndpointQualifier (curDesc.getEndpointQualifier)) {
 					if (svcBindDescs.containsKey(curDesc.providingModule)) {
 						svcBindDescs.get(curDesc.providingModule).add (curDesc)
 					} else {
@@ -166,8 +166,8 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 			val allImpModSvcBindDescs = resolveProvidedServiceBindings (usedModRef.moduleRef.module, targetEnvironment, selectingEndpointQualifierRef)
 			
 			for (curBindDesc : allImpModSvcBindDescs.serviceRefDescriptions) {
-				if (!svcRefsForEndpointQualifier.contains(curBindDesc.getServiceRef) && (selectingEndpointQualifierRef == null || selectingEndpointQualifierRef.acceptOtherEndpoints)) {
-					if (curBindDesc != null && !svcBindDescs.values.flatten.toSet.filterNull.map(d|d.getServiceRef).toList.contains(curBindDesc.getServiceRef)) {
+				if (!svcRefsForEndpointQualifier.contains(curBindDesc.getServiceRef) && (selectingEndpointQualifierRef === null || selectingEndpointQualifierRef.acceptOtherEndpoints)) {
+					if (curBindDesc !== null && !svcBindDescs.values.flatten.toSet.filterNull.map(d|d.getServiceRef).toList.contains(curBindDesc.getServiceRef)) {
 						if (svcBindDescs.containsKey(curBindDesc.providingModule)) {
 							svcBindDescs.get(curBindDesc.providingModule).add (curBindDesc)
 						} else {
@@ -189,7 +189,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 				val canditateModules = svcRef.modules.map (m|modRefResolver.resolveModuleServiceRef(m, targetEnvironment, lifecycle))
 				
 				for (candMod : canditateModules) {
-					val selectingEndpointQualifierRef = if (svcRef.usingEndpoint?.endpointQualifierRef != null) svcRef.usingEndpoint?.endpointQualifierRef else module.endpointQualifierRef
+					val selectingEndpointQualifierRef = if (svcRef.usingEndpoint?.endpointQualifierRef !== null) svcRef.usingEndpoint?.endpointQualifierRef else module.endpointQualifierRef
 					val candBindings = bindingLookup.findApplicableBindingsToModuleByEnvAndQualifier (candMod, targetEnvironment, selectingEndpointQualifierRef?.endpointQualifier)
 				
 					for (bind : candBindings) {
@@ -203,7 +203,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 			 			curSvcBindDesc.endpointQualifier = svcRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier
 					 	for (op : svc.operations) {
 					 		val opBind = bindingBuilder.createEffectiveBinding(op, specBind.bindingDelegate)
-					 		if (opBind != null) {
+					 		if (opBind !== null) {
 					 			val curOpBindDesc = new OperationRefBindingDescription
 					 			curOpBindDesc.applicableBinding = specBind
 					 			curOpBindDesc.resolvedOperation = op
@@ -226,13 +226,13 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 	}
 		
 	def private EndpointQualifierRef getSelectingEndpointQualifier (ModuleRef usedModRef, Module module, EndpointQualifierRef endpointQualifierRef) {
-		val moduleEndpointQualifierRef = 	if (usedModRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier != null) {
+		val moduleEndpointQualifierRef = 	if (usedModRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier !== null) {
 													usedModRef.usingEndpoint?.endpointQualifierRef 
 											} else {
 													module.endpointQualifierRef
 											}
-		val selectingEndpointQualifierRef = if (endpointQualifierRef != null 
-														&& moduleEndpointQualifierRef?.endpointQualifier?.name != null
+		val selectingEndpointQualifierRef = if (endpointQualifierRef !== null 
+														&& moduleEndpointQualifierRef?.endpointQualifier?.name !== null
 												) {
 													if (!endpointQualifierRef.endpointQualifier.name.equals(moduleEndpointQualifierRef?.endpointQualifier?.name)) {
 														log.warning ("The modules endpoint qualifier " + 
@@ -242,7 +242,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 														)
 													}
 													moduleEndpointQualifierRef 
-												} else if (endpointQualifierRef != null)  {
+												} else if (endpointQualifierRef !== null)  {
 													endpointQualifierRef 
 												} else { 
 													module.endpointQualifierRef

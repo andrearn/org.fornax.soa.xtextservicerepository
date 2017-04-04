@@ -16,9 +16,9 @@ bind-module org.example.sales.esb majorVersion 1 as org.example.sales.esb.dev
 	
 	bind-service org.example.sales.CustomerLookupBES majorVersion 1 {
 		protocols {
-			^REST {
-				^path = "customer"
-				^verb = ^POST
+			REST {
+				path = "customer"
+				verb = POST
 				requestContentType = "application/json"
 				response = {
 					contentType = "application/json"
@@ -28,9 +28,9 @@ bind-module org.example.sales.esb majorVersion 1 as org.example.sales.esb.dev
 		
 		bind-operation getCustomerDetails {
 			protocols {
-				^REST {
-					^path = "customer/details"
-					^verb = ^GET
+				REST {
+					path = "customer/details"
+					verb = GET
 				}
 			}
 		}

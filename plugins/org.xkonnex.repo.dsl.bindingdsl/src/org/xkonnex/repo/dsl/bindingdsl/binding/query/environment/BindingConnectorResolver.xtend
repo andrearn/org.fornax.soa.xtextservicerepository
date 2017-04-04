@@ -2,7 +2,6 @@ package org.xkonnex.repo.dsl.bindingdsl.binding.query.environment
 
 import com.google.inject.Inject
 import java.util.logging.Logger
-import org.eclipse.emf.ecore.EObject
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
@@ -105,7 +104,7 @@ class BindingConnectorResolver {
 	
 	
 	def Connector selectBestMatchingConnector (Iterable<Connector> con, String connectorName) {
-		if (connectorName != null) {
+		if (connectorName !== null) {
 			con.findFirst (c | c.name == connectorName)
 		} else {
 			con.head
@@ -135,7 +134,7 @@ class BindingConnectorResolver {
 	}
 	
 	def getConnectors (Server server) {
-		if (server == null)
+		if (server === null)
 			throw new IllegalArgumentException("Server may not be null");
 		switch (server) {
 			AppServer:			(server as AppServer).connectors

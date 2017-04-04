@@ -34,7 +34,7 @@ class EndpointQualifierQueries {
 	private IEObjectLookup objLookup
 	
 	def dispatch Qualifier getEffectiveEndpointQualifier (EObject o) {
-		if (o.eContainer != null)
+		if (o.eContainer !== null)
 			o.eContainer.effectiveEndpointQualifier
 		else
 			return null
@@ -45,7 +45,7 @@ class EndpointQualifierQueries {
 	 * Endpoint qualifiers on the protocols defined inside the binding are ignored.
 	 */
 	def dispatch Qualifier getEffectiveEndpointQualifier (Binding binding) {
-		if (binding.endpointQualifierRef?.endpointQualifier != null) {
+		if (binding.endpointQualifierRef?.endpointQualifier !== null) {
 			return binding.endpointQualifierRef.endpointQualifier
 		} else if (! (binding instanceof ModuleBinding) && binding.eContainer instanceof Binding) {
 			return getEffectiveEndpointQualifier (binding.eContainer as Binding)
@@ -59,7 +59,7 @@ class EndpointQualifierQueries {
 	 * overrides an endpoint qualifier from it's declaring binding or a higher level more general binding definition.
 	 */
 	def dispatch Qualifier getEffectiveEndpointQualifier (BindingProtocol prot) {
-		if (prot.endpointQualifierRef?.endpointQualifier != null)
+		if (prot.endpointQualifierRef?.endpointQualifier !== null)
 			return prot.endpointQualifierRef?.endpointQualifier
 		else if (prot.eContainer instanceof Binding)
 			return getEffectiveEndpointQualifier (prot.eContainer as Binding)
@@ -72,7 +72,7 @@ class EndpointQualifierQueries {
 	}
 	
 	def dispatch Qualifier getEffectiveEndpointQualifier (ModuleRef ref) {
-		if (ref.usingEndpoint?.endpointQualifierRef != null)
+		if (ref.usingEndpoint?.endpointQualifierRef !== null)
 			return ref.usingEndpoint?.endpointQualifierRef.endpointQualifier
 		else {
 			val Module mod = objLookup.getOwnerByType(ref, typeof (Module))
@@ -81,7 +81,7 @@ class EndpointQualifierQueries {
 	}
 	
 	def dispatch Qualifier getEffectiveEndpointQualifier (ImportServiceRef ref) {
-		if (ref.usingEndpoint?.endpointQualifierRef != null)
+		if (ref.usingEndpoint?.endpointQualifierRef !== null)
 			return ref.usingEndpoint?.endpointQualifierRef.endpointQualifier
 		else {
 			val Module mod = objLookup.getOwnerByType(ref, typeof (Module))
@@ -102,11 +102,11 @@ class EndpointQualifierQueries {
 	}
 	
 	def private EndpointQualifierDescriptor getPotentialEffectiveEndpointQualifiersInternal (AnyBinding binding, EndpointQualifierDescriptor qualifierDescriptor) {
-		if (binding.endpointQualifierRef?.endpointQualifier != null && qualifierDescriptor.effectiveEndpointQualifier == null) {
+		if (binding.endpointQualifierRef?.endpointQualifier !== null && qualifierDescriptor.effectiveEndpointQualifier === null) {
 			qualifierDescriptor.setEffectiveEndpointQualifier(binding.endpointQualifierRef.endpointQualifier)
 		}
 		for (prot : binding.protocol) {
-			if (prot.endpointQualifierRef?.endpointQualifier != null && qualifierDescriptor.potentialEndpointQualifiers.get(prot) == null) {
+			if (prot.endpointQualifierRef?.endpointQualifier !== null && qualifierDescriptor.potentialEndpointQualifiers.get(prot) === null) {
 				qualifierDescriptor.addPotentialEndpointQualifiers(prot, prot.endpointQualifierRef.endpointQualifier)
 			}
 		}
@@ -128,7 +128,7 @@ class EndpointQualifierQueries {
 	}
 	def isPrivateEndpoint (Service service, AnyBinding binding, BindingProtocol prot) {
 		val Connector connector = connectorResolver.resolveConnector(envResolver.resolveServer (binding, prot), binding, prot)
-		return connector?.endpointVisibility == EndpointVisibility::PRIVATE || connector.endpointVisibility == null
+		return connector?.endpointVisibility == EndpointVisibility::PRIVATE || connector.endpointVisibility === null
 	}
 	
 	def isPublicEndpoint (Resource resource, AnyBinding binding, BindingProtocol prot) {
@@ -141,7 +141,7 @@ class EndpointQualifierQueries {
 	}
 	def isPrivateEndpoint (Resource resource, AnyBinding binding, BindingProtocol prot) {
 		val Connector connector = connectorResolver.resolveConnector(envResolver.resolveServer (binding, prot), binding, prot)
-		return connector?.endpointVisibility == EndpointVisibility::PRIVATE || connector.endpointVisibility == null
+		return connector?.endpointVisibility == EndpointVisibility::PRIVATE || connector.endpointVisibility === null
 	}
 	
 }

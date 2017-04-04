@@ -40,7 +40,7 @@ class EnvironmentBindingResolver {
 	 */
 	def dispatch Server resolveServer (ModuleBinding bind, BindingProtocol prot) {
 		val server = bind.provServer
-		return if (server != null) server else bind.resolveEnvironment.defaultESB
+		return if (server !== null) server else bind.resolveEnvironment.defaultESB
 	}
 		
 	def dispatch Server resolveServer (ServiceBinding bind, BindingProtocol prot) {
@@ -58,7 +58,7 @@ class EnvironmentBindingResolver {
 	
 	def dispatch Server resolveServer (ModuleBinding bind) {
 		val server = bind.provServer
-		return if (server != null) server else bind.resolveEnvironment.defaultESB
+		return if (server !== null) server else bind.resolveEnvironment.defaultESB
 	}
 		
 	def dispatch Server resolveServer (ServiceBinding bind) {
@@ -74,7 +74,7 @@ class EnvironmentBindingResolver {
 	}
 	def dispatch Server resolveServer (EffectiveBinding bind) {
 		val server = bind.provServer
-		return if (server != null) server else bind.resolveEnvironment.defaultESB
+		return if (server !== null) server else bind.resolveEnvironment.defaultESB
 	}
 	
 	def dispatch Environment resolveEnvironment (Server server) {
@@ -86,7 +86,7 @@ class EnvironmentBindingResolver {
 	}
 	
 	def dispatch Environment resolveEnvironment (EffectiveBinding bind) {
-		if (bind.provServer != null) {
+		if (bind.provServer !== null) {
 			bind.provServer.resolveEnvironment
 		} else {
 			bind.environment
@@ -94,7 +94,7 @@ class EnvironmentBindingResolver {
 	}
 	
 	def dispatch Environment resolveEnvironment (ModuleBinding bind) {
-		if (bind.provServer != null) {
+		if (bind.provServer !== null) {
 			bind.provServer.resolveEnvironment
 		} else {
 			bind.environment

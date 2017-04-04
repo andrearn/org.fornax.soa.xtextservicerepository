@@ -19,7 +19,7 @@ class ProtocolMatcher {
 	@Inject IComponentInferrer componentInferrer
 	
 	def boolean matchesModuleEndpointProtocol (BindingProtocol bindingProtocol, EndpointProtocol prot) {
-		if (prot != null) {
+		if (prot !== null) {
 			switch (prot) {
 				case org.xkonnex.repo.dsl.moduledsl.ext.protocol.SOAP:	if (bindingProtocol instanceof SOAP) return true else return false
 			}
@@ -32,7 +32,7 @@ class ProtocolMatcher {
 	}
 	
 	def boolean matchesModuleEndpointProtocol (BindingProtocol bindingProtocol, Class<? extends IModuleEndpointProtocol> prot) {
-		if (prot != null) {
+		if (prot !== null) {
 			if (bindingProtocol instanceof ExtensibleProtocol) {
 				val protType = (bindingProtocol as ExtensibleProtocol).type
 				val IProtocol extProt = componentInferrer.inferComponent(protType)

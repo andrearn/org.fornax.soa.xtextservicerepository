@@ -34,7 +34,7 @@ class ModuleLookup {
 	 */
 	def findAllModules (ResourceSet resourceSet) {
 		var Iterable<IEObjectDescription> moduleDescs = null
-		if (resourceSet != null)
+		if (resourceSet !== null)
 			moduleDescs = search.search ("Module ", Predicates::alwaysTrue, resourceSet)
 		else
 			moduleDescs = search.search ("Module ", Predicates::alwaysTrue)
@@ -61,7 +61,7 @@ class ModuleLookup {
 	 */
 	def findAllModuleVersionsByName (String moduleName, ResourceSet resourceSet) {
 		var Iterable<IEObjectDescription> moduleDescs = null
-		if (resourceSet != null)
+		if (resourceSet !== null)
 			moduleDescs = search.search (moduleName, "Module ", Predicates::alwaysTrue, resourceSet)
 		else
 			moduleDescs = search.search (moduleName, "Module ", Predicates::alwaysTrue)
@@ -143,7 +143,7 @@ class ModuleLookup {
 		var Module matchingModule = null
 		for (mod : modules) {
 			if (minState.matches(mod.state)) {
-				if (matchingModule == null 
+				if (matchingModule === null 
 					|| VersionComparator::compare(mod.version.version, matchingModule.version.version) > 0
 				) {
 					matchingModule = mod
@@ -164,7 +164,7 @@ class ModuleLookup {
 	 * Get the endpoint qualifier
 	 */	
 	def dispatch String getQualifier (ModuleRef moduleRef) {
-		if (moduleRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier != null)
+		if (moduleRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier !== null)
 			return moduleRef.usingEndpoint?.endpointQualifierRef.endpointQualifier.name
 		else
 			return (moduleRef.eContainer as Module).qualifier
@@ -174,7 +174,7 @@ class ModuleLookup {
 	 * Get the endpoint qualifier
 	 */	
 	def dispatch String getQualifier (ImportServiceRef impServiceRef) {
-		if (impServiceRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier != null)
+		if (impServiceRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier !== null)
 			return impServiceRef.usingEndpoint?.endpointQualifierRef.endpointQualifier.name
 		else
 			return (impServiceRef.eContainer as Module).qualifier
@@ -185,14 +185,14 @@ class ModuleLookup {
 	}
 	
 	def dispatch String getBindingQualifier (ModuleRef moduleRef) {
-		if (moduleRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier != null)
+		if (moduleRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier !== null)
 			return moduleRef.usingEndpoint?.endpointQualifierRef.endpointQualifier.name
 		else
 			return (moduleRef.eContainer as Module).endpointQualifierRef?.endpointQualifier.name
 	}
 	
 	def dispatch String getBindingQualifier (ImportServiceRef impServiceRef) {
-		if (impServiceRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier != null)
+		if (impServiceRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier !== null)
 			return impServiceRef.usingEndpoint?.endpointQualifierRef.endpointQualifier.name
 		else
 			return (impServiceRef.eContainer as Module).endpointQualifierRef?.endpointQualifier.name
@@ -202,7 +202,7 @@ class ModuleLookup {
 	 * Get the module that contains the model element.
 	 */
 	def dispatch getOwningModule (EObject modelElement) {
-		if (modelElement?.eContainer != null)
+		if (modelElement?.eContainer !== null)
 			return modelElement.eContainer
 		else 
 			return null

@@ -101,6 +101,7 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
+            category="org.xkonnex.repo.Workbench"
             class="org.xkonnex.repo.dsl.businessdsl.ui.BusinessDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
             id="org.xkonnex.repo.dsl.businessdsl.BusinessDsl"
             name="BusinessDsl">

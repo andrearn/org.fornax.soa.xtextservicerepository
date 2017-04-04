@@ -39,6 +39,13 @@
 			class="org.xkonnex.repo.workbench.ui.search.dialog.ServiceRepositorySearchViewPage">
 		</viewPage>
 	</extension>
-
+    <extension
+            point="org.eclipse.ui.preferencePages">
+        <page
+            class="org.eclipse.ui.internal.dialogs.EmptyPreferencePage"
+            id="org.xkonnex.repo.Workbench"
+            name="XKonneX Repository">
+        </page>
+	</extension>
 
 </plugin>

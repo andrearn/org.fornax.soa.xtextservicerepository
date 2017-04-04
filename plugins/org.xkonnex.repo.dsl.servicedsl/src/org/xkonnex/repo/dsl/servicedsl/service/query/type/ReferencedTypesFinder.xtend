@@ -62,7 +62,7 @@ class ReferencedTypesFinder {
 	
 	def private dispatch List<TypeRef> allReferencedTypeRefs (DataObject t) { 
 		var refs = new ArrayList<TypeRef>();
-		if (t.superObject != null) {
+		if (t.superObject !== null) {
 			refs.add (t.superObject);
 			refs.addAll(t.properties.map (p|p.type));
 		} else {
@@ -120,7 +120,7 @@ class ReferencedTypesFinder {
 		val Set<VersionedType> types = newHashSet()
 		for (p : object.properties) { 
 			val transDeps =  p.getTransitiveDependencies(includeInheritedProperties, false, null, null)
-			if (transDeps != null) {
+			if (transDeps !== null) {
 				types.addAll(transDeps.flatten.map [
 					var eObj = target.EObjectOrProxy
 					if (eObj.eIsProxy) {
@@ -156,7 +156,7 @@ class ReferencedTypesFinder {
 				allVerTypes.addAll(dataObj.getAllSuperTypes(state))
 			}
 		}
-		if (allRefTypes != null)
+		if (allRefTypes !== null)
 			allVerTypes.addAll(allRefTypes)
 		allVerTypes
 	}
@@ -175,7 +175,7 @@ class ReferencedTypesFinder {
 				allVerTypes.addAll(dataObj.getAllSuperTypes(state))
 			}
 		}
-		if (allRefTypes != null)
+		if (allRefTypes !== null)
 			allVerTypes.addAll(allRefTypes)
 		allVerTypes
 	}

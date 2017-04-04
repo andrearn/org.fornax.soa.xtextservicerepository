@@ -1,5 +1,4 @@
 package org.xkonnex.repo.dsl.bindingdsl.test;
-
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

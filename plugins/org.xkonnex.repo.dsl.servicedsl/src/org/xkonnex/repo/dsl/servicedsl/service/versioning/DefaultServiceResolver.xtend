@@ -7,7 +7,6 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef
 import com.google.inject.Inject
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
-import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 
 class DefaultServiceResolver implements IServiceResolver {

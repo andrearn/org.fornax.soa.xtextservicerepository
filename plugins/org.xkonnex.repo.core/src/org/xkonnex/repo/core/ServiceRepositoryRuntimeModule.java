@@ -14,10 +14,12 @@ import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.resource.impl.SimpleResourceDescriptionsBasedContainerManager;
 import org.eclipse.xtext.service.AbstractGenericModule;
 import org.eclipse.xtext.service.DefaultRuntimeModule;
+import org.xkonnex.repo.core.resource.XKonneXResourceSetProvider;
 import org.xkonnex.repo.dsl.basedsl.search.DefaultPredicateSearch;
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch;
 
 import com.google.inject.Binder;
+import com.google.inject.Provider;
 import com.google.inject.name.Names;
 
 
@@ -50,5 +52,9 @@ public class ServiceRepositoryRuntimeModule extends DefaultRuntimeModule {
 	
 	public Class<? extends org.eclipse.xtext.serializer.ISerializer> bindISerializer() {
 		return org.eclipse.xtext.serializer.impl.Serializer.class;
+	}
+	
+	public Class<? extends Provider<XtextResourceSet>> provideXtextResourceSet() {
+		return XKonneXResourceSetProvider.class;
 	}
 }

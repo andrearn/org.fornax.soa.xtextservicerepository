@@ -1,39 +1,62 @@
 package org.xkonnex.repo.dsl.basedsl.ext.infer
 
 import com.google.inject.Inject
+import com.google.inject.Provider
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 import java.util.List
 import org.eclipse.emf.common.util.EList
+import org.eclipse.emf.ecore.resource.ResourceSet
+import org.eclipse.xtext.EcoreUtil2
 import org.eclipse.xtext.common.types.JvmDeclaredType
+import org.eclipse.xtext.common.types.JvmEnumerationLiteral
 import org.eclipse.xtext.common.types.JvmIdentifiableElement
 import org.eclipse.xtext.common.types.JvmMember
 import org.eclipse.xtext.common.types.JvmOperation
 import org.eclipse.xtext.common.types.JvmType
 import org.eclipse.xtext.common.types.util.JavaReflectAccess
-import org.eclipse.xtext.util.Strings
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BooleanValue
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Component
 import org.xkonnex.repo.dsl.basedsl.baseDsl.EnumLiteralValue
 import org.xkonnex.repo.dsl.basedsl.baseDsl.IntValue
 import org.xkonnex.repo.dsl.basedsl.baseDsl.StringValue
-import org.eclipse.xtext.common.types.JvmEnumerationLiteral
 import org.xkonnex.repo.dsl.basedsl.scoping.ComponentExtensions
-import java.beans.Introspector
-import org.eclipse.xtext.common.types.JvmGenericType
 
 @SuppressWarnings("restriction") 
 class ComponentInferrer implements IComponentInferrer {
 	
 	@Inject JavaReflectAccess reflectAccess
 	@Inject extension ComponentExtensions
+	@Inject
+	private Provider<ResourceSet> resourceSetProvider;
 	
+//	override <T> inferComponent(Component component) {
+//		var comp = component
+//		if (comp.eIsProxy) {
+//			EcoreUtil2.resolveAll(comp)
+//		}
+//		if (comp.assignment !== null)
+//			inferComponent(comp.type, comp.assignment)
+//		else
+//			inferComponent(comp.type)
+//	}
+
 	override <T> inferComponent(Component component) {
-		if (component.assignment != null)
-			inferComponent(component.type, component.assignment)
+		inferComponent(component, component.eResource.resourceSet)
+	}
+	
+	override <T> inferComponent(Component component, ResourceSet resourceSet) {
+		var comp = component
+		EcoreUtil2.resolveAll(resourceSet)
+		val res = resourceSet.resources
+		if (comp.eIsProxy) {
+			EcoreUtil2.resolveAll(resourceSet)
+		}
+		if (comp.assignment !== null)
+			inferComponent(comp.type, comp.assignment)
 		else
-			inferComponent(component.type)
+			inferComponent(comp.type)
 	}
 
 	@SuppressWarnings("unchecked") 
@@ -130,7 +153,7 @@ class ComponentInferrer implements IComponentInferrer {
 
 	def private Object createInstance(JvmType type) {
 		var Object compInst = null
-		if (type != null) {
+		if (type !== null) {
 			var Class<?> compClazz = reflectAccess.getRawType(type)
 			compInst = compClazz.newInstance()
 		}
@@ -139,7 +162,7 @@ class ComponentInferrer implements IComponentInferrer {
 	
 	def private Object createInstance(JvmType type, JvmEnumerationLiteral enumLiteral) {
 		var Object enumInst = null
-		if (type != null) {
+		if (type !== null) {
 			var Class<?> enumClazz = reflectAccess.getRawType(type)
 			val valueOfMethod = enumClazz.getMethod("valueOf", typeof(String))
 			enumInst = valueOfMethod.invoke(null, enumLiteral.simpleName)

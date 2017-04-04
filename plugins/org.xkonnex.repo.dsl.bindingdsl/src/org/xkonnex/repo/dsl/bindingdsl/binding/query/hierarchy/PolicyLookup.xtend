@@ -18,9 +18,9 @@ class PolicyLookup {
 	def findCorrespondingPolicyDefinitionInParent (Policy policy) {
 		val owningBinding = EcoreUtil2.getContainerOfType(policy, typeof (AnyBinding))
 		var parent = EcoreUtil2.getContainerOfType(owningBinding.eContainer, typeof (AnyBinding))
-		while (parent != null) {
+		while (parent !== null) {
 			val correspondant =  getCorrespondingPolicyInBinding(parent, policy)
-			if (correspondant != null)
+			if (correspondant !== null)
 				return correspondant
 			else 
 				parent = EcoreUtil2.getContainerOfType(owningBinding.eContainer, typeof (AnyBinding))

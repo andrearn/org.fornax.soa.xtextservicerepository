@@ -21,14 +21,14 @@ class ProfileQueries {
 	def Profile getDefaultProfile (ResourceSet resourceSet) {
 		val profiles = getAllProfiles(resourceSet)
 		var profile = profiles.filter(e|e.isDefault == true).head
-		if (profile == null && profiles.size == 1) {
+		if (profile === null && profiles.size == 1) {
 			profile = profiles.head
 		}
 		return profile
 	}
 	
 	def Profile getProfileByName (String profileName, ResourceSet resourceSet) {
-		if (profileName != null && profileName != "") {
+		if (profileName !== null && profileName != "") {
 			var Profile profile = lookup.getModelElementByName(profileName, resourceSet, ProfileDslPackage.Literals.PROFILE.name)
 			return profile
 		} else {
@@ -43,15 +43,15 @@ class ProfileQueries {
 	
 	def Profile getApplicableProfile (EObject profileModelElement) {
 		var EObject element = profileModelElement
-		while (element.eContainer != null) {
+		while (element.eContainer !== null) {
 			element = element.eContainer
 			if (element instanceof ProfileModel) {
 				var provile = (element as ProfileModel).profiles.findFirst[isDefault]
-				if (provile != null) {
+				if (provile !== null) {
 					return provile
 				} else {
 					provile = (element as ProfileModel).profiles.head
-					if (provile != null)
+					if (provile !== null)
 						return provile
 					else
 						return getDefaultProfile(profileModelElement.eResource.resourceSet)

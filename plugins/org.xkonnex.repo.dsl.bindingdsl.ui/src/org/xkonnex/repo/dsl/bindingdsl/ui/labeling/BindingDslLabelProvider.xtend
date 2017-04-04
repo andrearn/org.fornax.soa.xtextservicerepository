@@ -167,7 +167,7 @@ class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 	
 	def Object text(AuthenticationPolicy ele) {
-		if (ele.name != null) {
+		if (ele.name !== null) {
 			return ele.name			
 		} else {
 			return "Authentication policy"

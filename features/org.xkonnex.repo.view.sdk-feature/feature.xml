@@ -26,17 +26,17 @@
 
    <requires>
       <import plugin="org.eclipse.core.runtime"/>
-      <import plugin="org.eclipse.xtext.graphview" version="1.0.3" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtext.graphview.providers" version="1.0.3" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.graphview" version="1.0.6" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.graphview.providers" version="1.0.6" match="greaterOrEqual"/>
       <import plugin="org.xkonnex.repo.dsl.moduledsl.ui" version="2.0.0" match="greaterOrEqual"/>
       <import plugin="org.xkonnex.repo.dsl.profiledsl.ui" version="2.0.0" match="greaterOrEqual"/>
       <import plugin="org.xkonnex.repo.dsl.servicedsl.ui" version="2.0.0" match="greaterOrEqual"/>
       <import plugin="org.xkonnex.repo.dsl.servicedsl" version="2.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtext.xbase.lib" version="2.6.2" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.xbase.lib" version="2.11.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.jdt.core" version="3.6.2" match="greaterOrEqual"/>
       <import plugin="org.xkonnex.repo.dsl.basedsl" version="2.0.0" match="greaterOrEqual"/>
       <import plugin="org.xkonnex.repo.dsl.profiledsl" version="2.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.xtend.lib" version="2.6.2" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtend.lib" version="2.11.0" match="greaterOrEqual"/>
       <import plugin="org.xkonnex.repo.dsl.solutiondsl.ui" version="2.0.0" match="greaterOrEqual"/>
    </requires>
 

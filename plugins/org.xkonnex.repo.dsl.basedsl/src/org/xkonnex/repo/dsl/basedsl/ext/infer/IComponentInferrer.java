@@ -2,6 +2,7 @@ package org.xkonnex.repo.dsl.basedsl.ext.infer;
 
 import java.util.List;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.common.types.JvmType;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Component;
@@ -30,6 +31,15 @@ public interface IComponentInferrer {
 	 * @return
 	 */
 	public <T> T inferComponent(Component component);
+	
+	/**
+	 * infer a new instance of the referenced JvmType. 
+	 * 
+	 * @param compnent
+	 *            The component to infer a Java Bean of it's referenced type with all assignments applied.
+	 * @return
+	 */
+	public <T> T inferComponent(Component component, ResourceSet resourceSet);
 
 	/**
 	 * infer a new instance of the referenced JvmType. 

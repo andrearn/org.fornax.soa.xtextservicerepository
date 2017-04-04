@@ -94,6 +94,7 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
+            category="org.xkonnex.repo.Workbench"
             class="org.xkonnex.repo.dsl.moduledsl.ui.ModuleDslExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
             id="org.xkonnex.repo.dsl.moduledsl.ModuleDsl"
             name="ModuleDsl">

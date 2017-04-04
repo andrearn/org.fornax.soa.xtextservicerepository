@@ -29,9 +29,9 @@ class OperationBindingQueries {
 			val REST restProt = prot.inferComponent
 			val endpoint = endpointBuilder.createEffectiveProvidingEndpointForClazz(op, binding.module.module, typeof(org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST))
 			val org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST restEndpoint = endpoint?.endpointProtocol?.inferComponent
-			val verb = if (restProt.verb != null) restProt.verb else if (restEndpoint?.verb != null) restEndpoint.verb else Verb.POST
+			val verb = if (restProt.verb !== null) restProt.verb else if (restEndpoint?.verb !== null) restEndpoint.verb else Verb.POST
 			var registerdOps = ops.get(verb)
-			if (registerdOps == null) {
+			if (registerdOps === null) {
 				registerdOps = newArrayList(op)
 			} else {
 				registerdOps += op
@@ -50,9 +50,9 @@ class OperationBindingQueries {
 			val REST restProt = prot.inferComponent
 			val endpoint = endpointBuilder.createEffectiveProvidingEndpointForClazz(op, binding.module.module, typeof(org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST))
 			val org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST restEndpoint = endpoint.endpointProtocol.inferComponent
-			val verb = if (restProt.verb != null) restProt.verb else if (restEndpoint.verb != null) restEndpoint.verb else Verb.POST
+			val verb = if (restProt.verb !== null) restProt.verb else if (restEndpoint.verb !== null) restEndpoint.verb else Verb.POST
 			var registerdOps = ops.get(verb)
-			if (registerdOps == null) {
+			if (registerdOps === null) {
 				registerdOps = newArrayList(op)
 			} else {
 				registerdOps += op

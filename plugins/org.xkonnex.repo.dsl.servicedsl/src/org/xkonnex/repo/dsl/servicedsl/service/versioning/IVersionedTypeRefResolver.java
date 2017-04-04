@@ -3,9 +3,7 @@ package org.xkonnex.repo.dsl.servicedsl.service.versioning;
 import org.eclipse.emf.ecore.EObject;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType;
 
 public interface IVersionedTypeRefResolver {

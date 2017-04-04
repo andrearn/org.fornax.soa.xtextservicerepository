@@ -7,10 +7,8 @@ import org.xkonnex.repo.dsl.bindingdsl.binding.query.services.OperationRefBindin
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AbstractResourceRef;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
-import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ResourceRef;
 import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 
 public class ResourceRefBindingDescription {
 	

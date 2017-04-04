@@ -193,7 +193,6 @@ EnumLiteralValue:
 Reference:
 //	referable=[Component|QualifiedName];
 	'-->>' referable = [ecore::EObject|QualifiedName] (versionRef=VersionRef)?;
-	// zookeeper = -->> Zookeeper majorVersion 1
 
 StringValue:
 	value = STRING
