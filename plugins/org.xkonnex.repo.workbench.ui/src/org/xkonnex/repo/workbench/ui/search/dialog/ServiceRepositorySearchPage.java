@@ -4,19 +4,21 @@
 package org.xkonnex.repo.workbench.ui.search.dialog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-
-import javax.swing.ButtonGroup;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jdt.core.compiler.IScanner;
+import org.eclipse.jface.bindings.keys.KeyStroke;
+import org.eclipse.jface.bindings.keys.ParseException;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.DialogPage;
 import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogSettings;
+import org.eclipse.jface.fieldassist.ContentProposalAdapter;
+import org.eclipse.jface.fieldassist.SimpleContentProposalProvider;
+import org.eclipse.jface.fieldassist.TextContentAdapter;
 import org.eclipse.search.ui.ISearchPage;
 import org.eclipse.search.ui.ISearchPageContainer;
 import org.eclipse.search.ui.NewSearchUI;
@@ -40,20 +42,20 @@ import org.eclipse.ui.IWorkingSetManager;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.contentassist.FQNPrefixMatcher;
 import org.eclipse.xtext.ui.editor.utils.EditorUtils;
 import org.xkonnex.repo.core.query.FindAssetsWithStateQuery;
 import org.xkonnex.repo.core.query.FindUnapprovedAssetsQuery;
 import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslPackage;
+import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.SemanticsDslFactory;
+import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.SemanticsDslPackage;
 import org.xkonnex.repo.workbench.ui.internal.ServiceRepositoryActivator;
 import org.xkonnex.repo.workbench.ui.search.ServiceRepositoryQuerySpec;
 import org.xkonnex.repo.workbench.ui.search.ServiceRepositorySearchQuery;
 
-import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.google.inject.Injector;
 
 public class ServiceRepositorySearchPage extends DialogPage implements ISearchPage {
@@ -311,7 +313,20 @@ public class ServiceRepositorySearchPage extends DialogPage implements ISearchPa
         
         tagsText = new Text (limitToGroup, SWT.BORDER);
         tagsText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 1, 1));
-
+        try {
+        	KeyStroke keyStroke = KeyStroke.getInstance("Ctrl+Space");
+			final List<IEObjectDescription> tagDescs = Lists.newArrayList(predicateSearch.search(SemanticsDslPackage.Literals.TAG.getName() + " ", Predicates.alwaysTrue()));
+			List<String> tagNames = tagDescs.stream().map(td -> td.getQualifiedName().toString()).collect(Collectors.toList());
+			char[] autoActivationCharacters = { '#' };
+			ContentProposalAdapter tagProposalAdapter = new ContentProposalAdapter(
+					tagsText, new TextContentAdapter(), 
+					new SimpleContentProposalProvider(tagNames.toArray(new String[tagNames.size()])),
+					keyStroke, autoActivationCharacters );
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
         nonCanonicalCheckButton = new Button(limitToGroup, SWT.CHECK);
         nonCanonicalCheckButton.setText(ServiceRepositorySearchMessages.SearchPage_noncanonical_label);
 

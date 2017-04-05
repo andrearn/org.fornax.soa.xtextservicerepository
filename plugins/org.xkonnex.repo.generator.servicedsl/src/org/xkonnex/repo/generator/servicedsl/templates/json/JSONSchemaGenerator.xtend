@@ -50,7 +50,7 @@ class JSONSchemaGenerator {
 		        "properties": {
 		          «type.properties.map[toProperty(registryBaseUrl)].join(",\n")»
 		        },
-		        «type.toRequired»
+		        «type.toRequired»,
 		        "additionalProperties": true
 		      }
 		'''

@@ -237,7 +237,7 @@ class ConcreteWADLGenerator {
 			«ELSE»
 				<response status="«response.statusCode»">
 					«FOR mediaType : response.contentType»
-						<representation mediaType="«mediaType»" element="«param.type.toTypeNameRef ()» />
+						<representation mediaType="«mediaType»" element="«param.type.toTypeNameRef ()»" />
 					«ENDFOR»		
 				</response>
 			«ENDIF»

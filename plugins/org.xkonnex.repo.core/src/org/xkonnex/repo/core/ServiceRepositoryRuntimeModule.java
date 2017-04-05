@@ -53,8 +53,4 @@ public class ServiceRepositoryRuntimeModule extends DefaultRuntimeModule {
 	public Class<? extends org.eclipse.xtext.serializer.ISerializer> bindISerializer() {
 		return org.eclipse.xtext.serializer.impl.Serializer.class;
 	}
-	
-	public Class<? extends Provider<XtextResourceSet>> provideXtextResourceSet() {
-		return XKonneXResourceSetProvider.class;
-	}
 }
