@@ -14,11 +14,13 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class DefaultTypeResolver implements IVersionedTypeRefResolver {
 	
 	@Inject extension VersionMatcher
 	@Inject extension StateMatcher
+	@Inject extension ModelExtensions
 	
 	override selectMatchingTypeVersion(AbstractVersionedTypeRef ref) {
 		selectMatchingTypeImpl(ref)

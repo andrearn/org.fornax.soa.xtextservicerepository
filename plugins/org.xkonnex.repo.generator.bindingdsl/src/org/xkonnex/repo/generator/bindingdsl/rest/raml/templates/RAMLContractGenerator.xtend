@@ -17,7 +17,6 @@ import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.REST
 import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
 import org.xkonnex.repo.dsl.bindingdsl.model.IEffectiveBindingBuilder
 import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveExtensibleProtocol
-import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb
 import org.xkonnex.repo.dsl.moduledsl.model.EffectiveProvidingEndpoint
 import org.xkonnex.repo.dsl.moduledsl.model.EffectiveProvidingEndpointProtocol
 import org.xkonnex.repo.dsl.moduledsl.model.IEffectiveProvidingEndpointBuilder
@@ -33,25 +32,25 @@ import org.xkonnex.repo.dsl.servicedsl.service.query.resource.ResourceQueries
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.ReferencedTypesFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.TypeQueries
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractVersionedTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.generator.bindingdsl.rest.RESTEndpointAddressResolver
 import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
+import org.xkonnex.repo.generator.bindingdsl.templates.DefaultResourceContractFilenameProvider
+import org.xkonnex.repo.generator.bindingdsl.templates.DefaultServiceContractFilenameProvider
 import org.xkonnex.repo.generator.profiledsl.schema.ProfileSchemaNamespaceExtensions
+import org.xkonnex.repo.generator.servicedsl.templates.json.JSONSchemaGenerator
 import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.OperationWrapperTypesGenerator
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTypeExtensions
-import org.xkonnex.repo.generator.servicedsl.templates.json.JSONSchemaGenerator
-import org.xkonnex.repo.generator.bindingdsl.templates.DefaultResourceContractFilenameProvider
-import org.xkonnex.repo.generator.bindingdsl.templates.DefaultServiceContractFilenameProvider
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Response
 
 class RAMLContractGenerator {
     
@@ -151,7 +150,7 @@ class RAMLContractGenerator {
         fsa.generateFile(ramlFile, content)
     }
     
-    def String toOperation(Operation operation, EffectiveBinding binding) {
+    def String toOperation(AbstractOperation operation, EffectiveBinding binding) {
         val restExtProt = binding.protocol.filter(typeof(EffectiveExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
         val REST restProt = restExtProt.inferComponent
         val module = binding.moduleBinding.module.module
@@ -181,7 +180,9 @@ class RAMLContractGenerator {
         content
     }
     
-    def toRequestResponse(Operation op, REST binding, org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST endpoint) {
+    def dispatch toRequestResponse(AbstractOperation op, REST binding, org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST endpoint) {
+    }
+    def dispatch toRequestResponse(Operation op, REST binding, org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST endpoint) {
         val verb = if (binding.verb !== null) binding.verb else if (endpoint?.verb !== null) endpoint.verb else Verb::POST
         val responses = if (!binding.response.nullOrEmpty) binding.response else (endpoint?.response)
         '''
@@ -219,6 +220,44 @@ class RAMLContractGenerator {
                     «ENDIF»
         '''
     }
+    def dispatch toRequestResponse(ResourceOperation op, REST binding, org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST endpoint) {
+        val verb = if (binding.verb !== null) binding.verb else if (endpoint?.verb !== null) endpoint.verb else Verb::POST
+        val responses = if (!binding.response.nullOrEmpty) binding.response else (endpoint?.response)
+        '''
+            «verb.toRAMLVerb»:
+                responses:
+                    «FOR response : op.response»
+                        «response.responseCode»:
+                            headers:
+«««                                «FOR header : response.header»
+«««                                    «header.name»:
+«««                                        type:
+«««                                            - «IF (header.type !== null)»«header.type»«ELSE»string«ENDIF»
+«««                                            «/*default: «header.messageHeader*/»
+«««                                «ENDFOR»
+                            body:
+                                «FOR contentType : response.contentType»
+                                    «contentType»:
+                                        «response.toReturnType»
+                                            «/* example:
+                                                {
+                                                    "message" : "Hello World"
+                                                } 
+                                            */»
+                                «ENDFOR»                            
+                    «ENDFOR»
+                    «IF responses.nullOrEmpty»
+                        200:
+                            body:
+                                application/json:
+                                    «op.toReturnType»
+                                    «/*example:
+                                        {
+                                            "message" : "Hello World"
+                                        } */»
+                    «ENDIF»
+        '''
+    }
     
     def String toTypes(Service service, LifecycleState state, Profile profile, Set<VersionedTechnicalNamespace> namespaces, String registryBaseUrl) {
         val allVerTypes = service.getAllReferencedVersionedTypes(state).toList.sortBy[name]
@@ -232,7 +271,7 @@ class RAMLContractGenerator {
     
     def String toTypes(Resource resource, LifecycleState state, Profile profile, Set<VersionedTechnicalNamespace> namespaces) {
         val typeRefs = resource.operations.map(op|op.parameters).flatten.map(p|p.type).toList
-        val respTypeRefs = resource.operations.map(op|op.^return).flatten.map(p|p.type)
+        val respTypeRefs = resource.operations.map(op|op.response).flatten.map[it.^return].flatten.map(p|p.type)
         typeRefs.addAll(respTypeRefs)
         val types = typeRefs.filter(t| !(t instanceof DataTypeRef || t instanceof org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef))
         '''
@@ -255,7 +294,28 @@ class RAMLContractGenerator {
         verb.getName().toLowerCase
     }
     
-    private def toReturnType (Operation op) {
+    private def dispatch toReturnType (Response response) {
+        if (response.^return.size > 1) {
+            '''
+                type: object
+                    properties: 
+                        «FOR param : response.^return»
+                            «param.name» «inlineTypeGenerator.toPropertyType(param.type)»
+                        «ENDFOR»
+            '''
+        } else if(response.^return.size == 1) {
+            '''
+                type: «inlineTypeGenerator.toPropertyType(response.^return.get(0).type)»
+            '''
+        } else {
+            ''''''
+        }
+    }
+    private def dispatch toReturnType (AbstractOperation op) {
+    	
+    }
+
+    private def dispatch toReturnType (Operation op) {
         if (op.^return.size > 1) {
             '''
                 type: object

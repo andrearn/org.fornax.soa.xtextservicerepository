@@ -27,6 +27,7 @@ import org.xkonnex.repo.dsl.profiledsl.versioning.VersionedTechnicalNamespace
 import org.xkonnex.repo.generator.servicedsl.templates.CommonTemplateExtensions
 import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
 import org.xkonnex.repo.dsl.profiledsl.namespace.ProfileNamespaceURIProvider
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 /**
  * Create XSDs defining wrapper types for service operations
@@ -44,6 +45,7 @@ class OperationWrapperTypesGenerator {
 	@Inject extension VersionQualifierExtensions
 	@Inject extension HeaderFinder
 	@Inject extension NamespaceImportQueries
+	@Inject extension ModelExtensions
 	
 	@Inject ProfileSchemaNamespaceExtensions profileSchemaNamespaceExt
 	@Inject ProfileNamespaceURIProvider profileNamespaceURIProvider

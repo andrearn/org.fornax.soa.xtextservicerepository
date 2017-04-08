@@ -32,6 +32,7 @@ import org.xkonnex.repo.dsl.bindingdsl.binding.query.EndpointQualifierQueries
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.resource.BindingResourceRefMatcher
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ResourceBinding
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
 
 /**
  * Lookup of Bindings for different criteria, e.g. find a binding for a module to an environment
@@ -274,24 +275,24 @@ class BindingLookup {
 			return null
 	}
 	
-	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, AnyBinding binding) {
+	def dispatch AnyBinding getMostSpecificOperationBinding (AbstractOperation operation, AnyBinding binding) {
 		return null
 	}
-	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, OperationBinding binding) {
+	def dispatch AnyBinding getMostSpecificOperationBinding (AbstractOperation operation, OperationBinding binding) {
 		if (binding.operation == operation)
 			return binding
 		else
 			return null
 	}
 	
-	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, ServiceBinding binding) {
+	def dispatch AnyBinding getMostSpecificOperationBinding (AbstractOperation operation, ServiceBinding binding) {
 		if (binding.operation == operation)
 			return binding
 		else
 			return null
 	}
 	
-	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, ModuleBinding binding) {
+	def dispatch AnyBinding getMostSpecificOperationBinding (AbstractOperation operation, ModuleBinding binding) {
 		val service = EcoreUtil2.getContainerOfType(operation, typeof (Service))
 		if (!binding.serviceBindings.empty) {
 			for (svcBind : binding.serviceBindings) {
@@ -308,24 +309,24 @@ class BindingLookup {
 		return binding
 	}
 	
-	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, AnyBinding binding, EndpointQualifierRef endpointQualifier) {
+	def dispatch AnyBinding getMostSpecificOperationBinding (AbstractOperation operation, AnyBinding binding, EndpointQualifierRef endpointQualifier) {
 		return null
 	}
-	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, OperationBinding binding, EndpointQualifierRef endpointQualifier) {
+	def dispatch AnyBinding getMostSpecificOperationBinding (AbstractOperation operation, OperationBinding binding, EndpointQualifierRef endpointQualifier) {
 		if (binding.operation == operation)
 			return binding
 		else
 			return null
 	}
 	
-	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, ServiceBinding binding, EndpointQualifierRef endpointQualifier) {
+	def dispatch AnyBinding getMostSpecificOperationBinding (AbstractOperation operation, ServiceBinding binding, EndpointQualifierRef endpointQualifier) {
 		if (binding.operation == operation)
 			return binding
 		else
 			return null
 	}
 	
-	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, ModuleBinding binding, EndpointQualifierRef endpointQualifier) {
+	def dispatch AnyBinding getMostSpecificOperationBinding (AbstractOperation operation, ModuleBinding binding, EndpointQualifierRef endpointQualifier) {
 		val service = EcoreUtil2.getContainerOfType(operation, typeof (Service))
 		if (!binding.serviceBindings.empty) {
 			for (svcBind : binding.serviceBindings) {

@@ -15,12 +15,13 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class ServiceQueries {
 	
 	@Inject extension StateMatcher
 	@Inject extension NamespaceQuery
-	
+	@Inject extension ModelExtensions	
 	@Inject
 	private ServiceQueriesInternal svcQueriesInt
 	@Inject
@@ -92,7 +93,7 @@ class ServiceQueries {
 	}
 	
 	def List<Exception> allReferencedExceptions (Resource s) {
-		s.operations.map (o|o.^throws).flatten.map (e|e.exception).toList;
+		s.operations.map (o|o.^throws).flatten.map[it.exception.exception].toList;
 	}
 	
 	def List<Exception> allReferencedExceptions (Aggregate s) {

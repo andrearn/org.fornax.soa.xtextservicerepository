@@ -16,8 +16,8 @@ import org.xkonnex.repo.dsl.basedsl.search.IPredicateSearch;
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator;
 import org.xkonnex.repo.dsl.servicedsl.service.util.TypeRefMatchResult;
 import org.xkonnex.repo.dsl.servicedsl.service.util.TypeRefMatcher;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ErrorResponse;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
@@ -28,7 +28,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.inject.Inject;
 
-public class ServiceVersionValidator extends AbstractServiceDslVersionValidator {
+public class ResourceVersionValidator extends AbstractServiceDslVersionValidator {
 
 	@Inject
 	IPredicateSearch lookup;
@@ -40,7 +40,7 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 	TypeRefMatcher typeRefMatcher;
 
 	@Check
-	public void checkServiceCompatibility(final Service svc) {
+	public void checkResourceCompatibility(final org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource svc) {
 		QualifiedName svcName = nameProvider.getFullyQualifiedName(svc);
 		final Resource res = svc.eResource();
 		IEObjectDescription nextLesserVersion = getNextLesserVersion(svcName.toString(), svc.getVersion().getVersion(),
@@ -51,19 +51,19 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 			if (eObject.eIsProxy())
 				eObject = EcoreUtil2.resolve(eObject, res.getResourceSet());
 			if (eObject instanceof Service) {
-				Service otherSvc = (Service) eObject;
+				org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource otherSvc = (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource) eObject;
 				if (otherSvc.getState() == null || !otherSvc.getState().isIsEnd()) {
-					for (final Operation op : otherSvc.getOperations()) {
-						boolean lesserVerHasOp = Iterables.any(svc.getOperations(), new Predicate<Operation>() {
+					for (final ResourceOperation op : otherSvc.getOperations()) {
+						boolean lesserVerHasOp = Iterables.any(svc.getOperations(), new Predicate<ResourceOperation>() {
 
-							public boolean apply(Operation input) {
+							public boolean apply(ResourceOperation input) {
 								return input.getName().equals(op.getName());
 							}
 						});
 						if (!lesserVerHasOp) {
 							error("The operation " + op.getName()
 									+ " has been removed. This is an incompatible change!",
-									ServiceDslPackage.Literals.SERVICE__NAME);
+									ServiceDslPackage.Literals.RESOURCE__NAME);
 						}
 					}
 				}
@@ -72,8 +72,8 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 	}
 
 	@Check
-	public void checkOperationCompatibility(final Operation op) {
-		Service svc = (Service) op.eContainer();
+	public void checkOperationCompatibility(final ResourceOperation op) {
+		org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource svc = (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource) op.eContainer();
 		QualifiedName svcName = nameProvider.getFullyQualifiedName(svc);
 		final Resource res = svc.eResource();
 		IEObjectDescription nextLesserVersion = getNextLesserVersion(svcName.toString(), svc.getVersion().getVersion(),
@@ -83,18 +83,18 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 			EObject eObject = nextLesserVersion.getEObjectOrProxy();
 			if (eObject.eIsProxy())
 				eObject = EcoreUtil2.resolve(eObject, res.getResourceSet());
-			if (eObject instanceof Service) {
-				Service otherSvc = (Service) eObject;
+			if (eObject instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource) {
+				org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource otherSvc = (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource) eObject;
 				if (otherSvc.getState() == null || !otherSvc.getState().isIsEnd()) {
-					boolean lesserVerHasOp = Iterables.any(otherSvc.getOperations(), new Predicate<Operation>() {
-						public boolean apply(Operation input) {
+					boolean lesserVerHasOp = Iterables.any(otherSvc.getOperations(), new Predicate<ResourceOperation>() {
+						public boolean apply(ResourceOperation input) {
 							return input.getName().equals(op.getName());
 						}
 					});
 					if (lesserVerHasOp) {
-						Operation lesserVerOp = Iterables.find(otherSvc.getOperations(), new Predicate<Operation>() {
+						ResourceOperation lesserVerOp = Iterables.find(otherSvc.getOperations(), new Predicate<ResourceOperation>() {
 
-							public boolean apply(Operation input) {
+							public boolean apply(ResourceOperation input) {
 								return input.getName().equals(op.getName());
 							}
 						});
@@ -112,8 +112,8 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 							}
 
 						}
-						for (final Parameter returnParam : lesserVerOp.getReturn()) {
-							boolean hasReturnParam = Iterables.any(op.getReturn(), new Predicate<Parameter>() {
+						for (final Parameter returnParam : lesserVerOp.getResponse().get(0).getReturn()) {
+							boolean hasReturnParam = Iterables.any(op.getResponse().get(0).getReturn(), new Predicate<Parameter>() {
 
 								public boolean apply(Parameter input) {
 									return input.getName().equals(returnParam.getName());
@@ -126,12 +126,13 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 							}
 
 						}
-						for (final ExceptionRef exRef : op.getThrows()) {
+						for (final ErrorResponse errorResp : op.getThrows()) {
+							ExceptionRef exRef = errorResp.getException();
 							boolean hasReturnParam = Iterables.any(lesserVerOp.getThrows(),
-									new Predicate<ExceptionRef>() {
+									new Predicate<ErrorResponse>() {
 
-										public boolean apply(ExceptionRef input) {
-											return input.getException().getName()
+										public boolean apply(ErrorResponse input) {
+											return input.getException().getException().getName()
 													.equals(exRef.getException().getName());
 										}
 									});
@@ -150,9 +151,9 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 
 	@Check
 	public void checkOperationParameters(final Parameter param) {
-		if (param.eContainer() instanceof Service) {
-			final Operation op = (Operation) param.eContainer();
-			final Service svc = (Service) op.eContainer();
+		if (param.eContainer() instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource) {
+			final ResourceOperation op = (ResourceOperation) param.eContainer();
+			final org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource svc = (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource) op.eContainer();
 
 			QualifiedName opName = nameProvider.getFullyQualifiedName(op.eContainer());
 			final Resource res = op.eResource();
@@ -163,21 +164,21 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 				EObject eObject = nextLesserVersion.getEObjectOrProxy();
 				if (eObject.eIsProxy())
 					eObject = EcoreUtil2.resolve(eObject, res.getResourceSet());
-				if (eObject instanceof Service) {
-					Service otherSvc = (Service) eObject;
+				if (eObject instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource) {
+					org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource otherSvc = (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource) eObject;
 					if (otherSvc.getState() == null || !otherSvc.getState().isIsEnd()) {
-						boolean lesserHasOp = Iterables.any(otherSvc.getOperations(), new Predicate<Operation>() {
+						boolean lesserHasOp = Iterables.any(otherSvc.getOperations(), new Predicate<ResourceOperation>() {
 
-							public boolean apply(Operation input) {
+							public boolean apply(ResourceOperation input) {
 								return input.getName().equals(op.getName());
 							}
 						});
 
 						if (lesserHasOp) {
-							Operation lesserVerOp = Iterables.find(otherSvc.getOperations(),
-									new Predicate<Operation>() {
+							ResourceOperation lesserVerOp = Iterables.find(otherSvc.getOperations(),
+									new Predicate<ResourceOperation>() {
 
-										public boolean apply(Operation input) {
+										public boolean apply(ResourceOperation input) {
 											return input.getName().equals(op.getName());
 										}
 									});
@@ -188,9 +189,9 @@ public class ServiceVersionValidator extends AbstractServiceDslVersionValidator 
 								checkOpParameters(param, lesserVerParams, currVerParams, false);
 
 							} else if (param.eContainingFeature()
-									.equals(ServiceDslPackage.Literals.OPERATION__RETURN)) {
-								EList<Parameter> lesserVerParams = lesserVerOp.getReturn();
-								EList<Parameter> currVerParams = op.getReturn();
+									.equals(ServiceDslPackage.Literals.RESPONSE__RETURN)) {
+								EList<Parameter> lesserVerParams = lesserVerOp.getResponse().get(0).getReturn();
+								EList<Parameter> currVerParams = op.getResponse().get(0).getReturn();
 								checkOpParameters(param, lesserVerParams, currVerParams, true);
 							}
 						}

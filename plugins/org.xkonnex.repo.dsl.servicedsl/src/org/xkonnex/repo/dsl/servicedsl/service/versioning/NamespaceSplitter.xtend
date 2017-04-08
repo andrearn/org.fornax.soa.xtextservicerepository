@@ -15,6 +15,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 /* 
  * Split SubNamespaces by major major versions of it's owned services, BOs, enums and exceptions
@@ -25,6 +26,7 @@ class NamespaceSplitter {
 	@Inject extension VersionQualifierExtensions
 	@Inject extension CommonStringExtensions
 	@Inject extension VersionedTypeFilter
+	@Inject extension ModelExtensions
 	@Inject IQualifiedNameProvider nameProvider
 	
 	/* 
@@ -43,6 +45,9 @@ class NamespaceSplitter {
 		if (s.types.size > 0 || s.services.size > 0 || s.exceptions.size > 0) {
 			verNS.addAll (s.types.map (t|t.createVersionedDomainNamespace()));
 			verNS.addAll (s.services.map (svc|svc.createVersionedDomainNamespace()));
+			verNS.addAll (s.resources.map (svc|svc.createVersionedDomainNamespace()));
+			verNS.addAll (s.events.map (svc|svc.createVersionedDomainNamespace()));
+			verNS.addAll (s.commands.map (svc|svc.createVersionedDomainNamespace()));
 			verNS.addAll (s.exceptions.map (e|e.createVersionedDomainNamespace())); 
 			return verNS;
 		} else {
@@ -91,7 +96,10 @@ class NamespaceSplitter {
 		version 	= v.toMajorVersionNumber();
 		types 		= ns.allTypesByMajorVersion (v.version.toMajorVersionNumber()).map (t|t as Type).toList;
 		services 	= ns.services.filter (t|t.version.matchesMajorVersion (v.version.toMajorVersionNumber())).toList;
+		resources 	= ns.resources.filter (t|t.version.matchesMajorVersion (v.version.toMajorVersionNumber())).toList;
 		exceptions 	= ns.exceptions.filter (t|t.version.matchesMajorVersion (v.version.toMajorVersionNumber())).toList;
+		events 		= ns.events.filter (t|t.version.matchesMajorVersion (v.version.toMajorVersionNumber())).toList;
+		commands 	= ns.commands.filter (t|t.version.matchesMajorVersion (v.version.toMajorVersionNumber())).toList;
 	}
 
 	
@@ -109,7 +117,10 @@ class NamespaceSplitter {
 		version 	= c.version.toMajorVersionNumber();
 		types 		= (c.eContainer as SubNamespace).allTypesByMajorVersion (c.version.toMajorVersionNumber()).map (t|t as Type).toList;
 		services 	= (c.eContainer as SubNamespace).services.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+		resources 	= (c.eContainer as SubNamespace).resources.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
 		exceptions 	= (c.eContainer as SubNamespace).exceptions.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+		commands 	= (c.eContainer as SubNamespace).commands.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+		events 		= (c.eContainer as SubNamespace).events.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
 	}
 		
 	
@@ -129,7 +140,10 @@ class NamespaceSplitter {
 		version		= c.version.toMajorVersionNumber();
 		types 		= (c.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).map (t|t as Type).toList;
 		services 	= (c.eContainer as SubNamespace).services.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+		resources 	= (c.eContainer as SubNamespace).resources.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
 		exceptions 	= (c.eContainer as SubNamespace).exceptions.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+		commands 	= (c.eContainer as SubNamespace).commands.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+		events 		= (c.eContainer as SubNamespace).events.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
 	}
 	
 	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (Service c) {
@@ -145,6 +159,9 @@ class NamespaceSplitter {
 		version		= c.version.toMajorVersionNumber();
 		types 		= (c.eContainer as SubNamespace).types.filter (typeof (VersionedType)).filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).map (t|t as Type).toList;
 		services 	= (c.eContainer as SubNamespace).services.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+		resources 	= (c.eContainer as SubNamespace).resources.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
 		exceptions 	= (c.eContainer as SubNamespace).exceptions.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+		commands 	= (c.eContainer as SubNamespace).commands.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
+		events 		= (c.eContainer as SubNamespace).events.filter (t|t.version.matchesMajorVersion (c.version.toMajorVersionNumber())).toList;
 	}
 }

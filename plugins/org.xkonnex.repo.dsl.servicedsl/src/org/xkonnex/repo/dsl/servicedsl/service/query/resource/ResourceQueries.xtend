@@ -4,6 +4,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import java.util.regex.Pattern
 import java.util.List
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
 
 class ResourceQueries {
 	
@@ -24,7 +25,7 @@ class ResourceQueries {
 		return paramNames
 	}
 	
-	def Iterable<Parameter> extractParametersFromURI (String uri, Operation op) {
+	def Iterable<Parameter> extractParametersFromURI (String uri, AbstractOperation op) {
 		val uriParamNames = uri.extractParametersFromURI.toSet
 		op.parameters.filter(p|uriParamNames.contains(p.name))
 	}

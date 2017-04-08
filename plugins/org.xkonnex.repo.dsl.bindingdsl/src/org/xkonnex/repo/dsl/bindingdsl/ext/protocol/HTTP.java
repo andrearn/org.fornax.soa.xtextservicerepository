@@ -5,9 +5,9 @@ import java.util.List;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Connector;
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.Header;
-import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb;
 
 import com.google.common.collect.Lists;
 
@@ -15,7 +15,7 @@ import com.google.common.collect.Lists;
 public class HTTP implements IProtocol {
 
 	private String url;
-	private HttpVerb verb;
+	private Verb verb;
 	private List<Header> header = Lists.newArrayList();
 
 	@Override
@@ -41,11 +41,11 @@ public class HTTP implements IProtocol {
 		this.url = url;
 	}
 
-	public HttpVerb getVerb() {
+	public Verb getVerb() {
 		return verb;
 	}
 
-	public void setVerb(HttpVerb verb) {
+	public void setVerb(Verb verb) {
 		this.verb = verb;
 	}
 

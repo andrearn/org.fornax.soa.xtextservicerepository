@@ -8,12 +8,12 @@ import com.google.common.collect.Lists;
 
 public class REST implements IModuleEndpointProtocol {
 	
-	private String path;
-	private Verb verb;
-	private RESTParameterStyle style;
-	private List<String> requestContentType = Lists.newArrayList();
-	private List<HttpResponse> response = Lists.newArrayList();
-	private List<Header> header = Lists.newArrayList();
+	protected String path;
+	protected Verb verb;
+	protected RESTParameterStyle style;
+	protected List<String> requestContentType = Lists.newArrayList();
+	protected List<HttpResponse> response = Lists.newArrayList();
+	protected List<Header> header = Lists.newArrayList();
 
 	public String getPath() {
 		return path;

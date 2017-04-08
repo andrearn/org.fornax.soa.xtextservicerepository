@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.moduledsl.query.IModuleResourceResolver
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ResourceRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
 
 class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 	
@@ -37,7 +38,7 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 		return null
 	}
 	
-	override getMostSpecificProvidingEndpointByType(Operation operation, Module module, IModuleEndpointProtocol protocol) {
+	override getMostSpecificProvidingEndpointByType(AbstractOperation operation, Module module, IModuleEndpointProtocol protocol) {
 		for (ep : getOperationProvidingEndpoints(operation, module)) {
 			val IModuleEndpointProtocol prot = componentInferrer.inferComponent(ep.endpointProtocol.type)
 			if (protocol.class.isAssignableFrom(prot.class)) {
@@ -51,7 +52,7 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
-	override getOperationProvidingEndpoints(Operation operation, Module module) {
+	override getOperationProvidingEndpoints(AbstractOperation operation, Module module) {
 		val opRefs = operationResolver.getAllProvidedOperationRefs(module)
 		val selectedOpRefs = opRefs?.filter[it.operation == operation]
 		val opProvEndpoints = selectedOpRefs?.head?.providingEndpoints
@@ -73,7 +74,7 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 		throw new UnsupportedOperationException("TODO: auto-generated method stub")
 	}
 	
-	override getMostSpecificProvidingEndpointConfig(Operation operation, Module module) {
+	override getMostSpecificProvidingEndpointConfig(AbstractOperation operation, Module module) {
 		val opRefs = operationResolver.getAllProvidedOperationRefs(module)
 		val selectedOpRefs = opRefs?.filter[it.operation == operation]
 		val opProvEndpointConfig = selectedOpRefs?.head
@@ -106,7 +107,7 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 		return hierarchy
 	}
 	
-	override collectProvidingEndpointHierarchyByType(Operation operation, Module module, IModuleEndpointProtocol protocol) {
+	override collectProvidingEndpointHierarchyByType(AbstractOperation operation, Module module, IModuleEndpointProtocol protocol) {
 		val specEndpoint = endpointResolver.getMostSpecificProvidingEndpointByType(operation, module, protocol)
 		var List<EObject> hierarchy = newArrayList()
 		val IModuleEndpointProtocol prot = componentInferrer.inferComponent(specEndpoint.endpointProtocol)

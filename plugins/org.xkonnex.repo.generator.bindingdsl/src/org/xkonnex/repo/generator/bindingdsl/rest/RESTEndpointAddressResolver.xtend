@@ -14,6 +14,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.generator.environmentdsl.EndpointResolver
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
 
 class RESTEndpointAddressResolver {
 	
@@ -36,7 +37,7 @@ class RESTEndpointAddressResolver {
 		+ mod.toEndpointAddressPath (service, server, binding, prot)
 	}
 	
-	def String getOperationPath(Operation operation, EffectiveBinding binding) {
+	def String getOperationPath(AbstractOperation operation, EffectiveBinding binding) {
 		val prot = binding.protocol.filter (typeof (ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
 		val REST restProt = prot.inferComponent
 		if (!restProt.path.nullOrEmpty) restProt.path else operation.name

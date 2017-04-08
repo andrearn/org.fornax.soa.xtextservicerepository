@@ -9,12 +9,14 @@ import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class LatestMinorVersionServiceResolver implements IServiceResolver {
 	
 	@Inject extension StateMatcher
 	@Inject extension VersionMatcher
 	@Inject extension NamespaceQuery
+	@Inject extension ModelExtensions
 	
 	override Service findMatchingServiceByMajorVersionAndState (String majorVersion, List<Service> s, LifecycleState minState) {
 		s.filter (e|e.version.version.split("\\.").head == majorVersion && e.state.matchesMinStateLevel (minState))

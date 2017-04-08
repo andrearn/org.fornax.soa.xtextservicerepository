@@ -159,9 +159,9 @@ d	@Inject XSDBuilder 					xsdGenerator
 						val typesMinState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
 						val minState = binding.module.module.state
 									
-						if (!res.properties.isEmpty) {
-							xsdGenerator.toXSD(res.versionedNamespace, minState, binding, enforcedProfile)
-						}
+//						if (!res.properties.isEmpty) {
+//							xsdGenerator.toXSD(res.versionedNamespace, minState, binding, enforcedProfile)
+//						}
 						ramlBuilder.toRAML(binding, res, minState, profile);
 								
 						if ( ! noDependencies) {

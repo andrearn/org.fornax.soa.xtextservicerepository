@@ -8,6 +8,7 @@ import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ProvidingEndpoint;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ProvidingEndpointConfig;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Channel;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
@@ -22,7 +23,7 @@ public interface IProvidingEndpointResolver {
 
 	public ProvidingEndpointConfig getMostSpecificProvidingEndpointConfig(Resource resource, Module module);
 	
-	public ProvidingEndpointConfig getMostSpecificProvidingEndpointConfig(Operation operation, Module module);
+	public ProvidingEndpointConfig getMostSpecificProvidingEndpointConfig(AbstractOperation operation, Module module);
 
 	public ProvidingEndpointConfig getMostSpecificProvidingEndpointConfig(Channel channel, Module module);
 
@@ -30,11 +31,11 @@ public interface IProvidingEndpointResolver {
 	
 	public ProvidingEndpoint getMostSpecificProvidingEndpointByType(Resource resource, Module module, IModuleEndpointProtocol protocol);
 
-	public ProvidingEndpoint getMostSpecificProvidingEndpointByType(Operation operation, Module module, IModuleEndpointProtocol protocol);
+	public ProvidingEndpoint getMostSpecificProvidingEndpointByType(AbstractOperation operation, Module module, IModuleEndpointProtocol protocol);
 
 	public ProvidingEndpoint getMostSpecificProvidingEndpointByType(Channel channel, Module module, IModuleEndpointProtocol protocol);
 	
-	public EList<ProvidingEndpoint> getOperationProvidingEndpoints(Operation operation, Module module);
+	public EList<ProvidingEndpoint> getOperationProvidingEndpoints(AbstractOperation operation, Module module);
 	
 	public EList<ProvidingEndpoint> getServiceProvidingEndpoints(Service service, Module module);
 
@@ -44,7 +45,7 @@ public interface IProvidingEndpointResolver {
 
 	public List<EObject> collectProvidingEndpointHierarchyByType (Resource resource, Module module, IModuleEndpointProtocol protocol);
 	
-	public List<EObject> collectProvidingEndpointHierarchyByType (Operation operation, Module module, IModuleEndpointProtocol protocol);
+	public List<EObject> collectProvidingEndpointHierarchyByType (AbstractOperation operation, Module module, IModuleEndpointProtocol protocol);
 
 	public List<EObject> collectProvidingEndpointHierarchyByType (Channel channel, Module module, IModuleEndpointProtocol protocol);
 	

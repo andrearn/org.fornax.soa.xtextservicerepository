@@ -8,6 +8,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class LatestMinorVersionExceptionResolver implements IExceptionResolver {
 	
@@ -15,6 +16,7 @@ class LatestMinorVersionExceptionResolver implements IExceptionResolver {
 	@Inject extension VersionMatcher
 	
 	@Inject extension NamespaceQuery
+	@Inject extension ModelExtensions
 
 	/**
 	 *	Find the latest minor version of the referenced Exceptiontype matching the 

@@ -7,7 +7,6 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.HTTP;
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.Header;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpResponse;
-import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.RESTParameterStyle;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointProtocol;

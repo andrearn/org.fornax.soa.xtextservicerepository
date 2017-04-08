@@ -18,12 +18,15 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class LatestVersionModuleServiceResolver implements IModuleServiceResolver {
 	
 	@Inject extension VersionMatcher
 	@Inject extension NamespaceQuery
 	@Inject extension VersionQualifierExtensions
+	@Inject extension ModelExtensions
+	
 	@Inject IStateMatcher stateMatcher
 	@Inject LifecycleQueries lifecycleQueries
 	@Inject

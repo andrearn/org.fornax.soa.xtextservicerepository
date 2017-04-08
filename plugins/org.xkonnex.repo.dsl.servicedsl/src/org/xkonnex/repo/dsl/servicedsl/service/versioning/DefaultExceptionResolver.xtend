@@ -7,11 +7,13 @@ import java.util.List
 import com.google.inject.Inject
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class DefaultExceptionResolver implements IExceptionResolver {
 	
 	@Inject extension StateMatcher
 	@Inject extension VersionMatcher
+	@Inject extension ModelExtensions
 
 	override findMatchingException(ExceptionRef excRef, LifecycleState minState) {
 		excRef.exception

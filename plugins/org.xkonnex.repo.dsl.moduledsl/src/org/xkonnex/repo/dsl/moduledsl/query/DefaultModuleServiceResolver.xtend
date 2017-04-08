@@ -15,10 +15,13 @@ import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class DefaultModuleServiceResolver implements IModuleServiceResolver {
 	
 	@Inject extension VersionQualifierExtensions
+	@Inject extension ModelExtensions
+
 	@Inject IStateMatcher stateMatcher
 	@Inject LifecycleQueries lifecycleQueries
 	@Inject

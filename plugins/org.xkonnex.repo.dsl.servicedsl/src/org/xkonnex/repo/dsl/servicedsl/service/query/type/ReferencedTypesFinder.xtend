@@ -163,7 +163,7 @@ class ReferencedTypesFinder {
 
 	def getAllReferencedVersionedTypes(Resource resource, LifecycleState state) {
 		val typeRefs = resource.operations.map(op|op.parameters).flatten.map(p|p.type).toList
-		val respTypeRefs = resource.operations.map(op|op.^return).flatten.map(p|p.type)
+		val respTypeRefs = resource.operations.map(op|op.response).flatten.map(r|r.^return).flatten.map(p|p.type)
 		typeRefs.addAll(respTypeRefs)
 		val verTypes = typeRefs.filter(typeof(AbstractVersionedTypeRef)).map[toVersionedType]
 		val allRefTypes = verTypes.filter(typeof(DataObject)).map(t | allTransitiveReferencedVersionedTypes(t, true, true, state)).filterNull.flatten.filter(typeof(VersionedType))

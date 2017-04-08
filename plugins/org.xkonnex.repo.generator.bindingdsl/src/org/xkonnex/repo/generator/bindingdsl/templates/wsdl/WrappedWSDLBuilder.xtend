@@ -10,6 +10,7 @@ import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
 import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.AssetStateEnvironmentEligibilityChecker
 import org.xkonnex.repo.generator.servicedsl.templates.webservice.WrappedWsdlGenerator
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 /*
  * Generate a WSDL where all input and output parameters are wrapped into a Wrappertype. 
@@ -21,6 +22,7 @@ class WrappedWSDLBuilder {
 	@Inject extension BindingExtensions
 	@Inject extension LifecycleQueries
 	@Inject extension AssetStateEnvironmentEligibilityChecker
+	@Inject extension ModelExtensions
 	
 	
 	/*

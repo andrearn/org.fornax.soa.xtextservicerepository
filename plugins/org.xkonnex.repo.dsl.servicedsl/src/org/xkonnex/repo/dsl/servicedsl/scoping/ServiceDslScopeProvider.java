@@ -4,6 +4,7 @@
 package org.xkonnex.repo.dsl.servicedsl.scoping;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,7 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedLatestMinVersionF
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.RelaxedMaxVersionForOwnerStateFilter;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleStateResolver;
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.CapabilityRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ComplexConsiderationPropertyRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ConsiderationParameterRef;
@@ -60,7 +62,9 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OperationRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredServiceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Response;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;
@@ -380,9 +384,79 @@ public class ServiceDslScopeProvider extends ComponentAwareVersionedScopeProvide
 	
 	private AbstractPredicateVersionFilter<IEObjectDescription> createConsiderationParameterScopeFilter(ConsiderationParameterRef paramRef) {
 		try {
-			Operation op = objLookup.getOwnerByType(paramRef, Operation.class);
+			AbstractOperation abstractOp = objLookup.getOwnerByType(paramRef, AbstractOperation.class);
+			if (abstractOp != null) {
+				if (abstractOp instanceof Operation) {
+					Operation op = (Operation)abstractOp;
+					Iterable<Parameter> params = Iterables.concat(op.getParameters(), op.getReturn());
+					final Iterable<QualifiedName> paramNames = Iterables.transform(params, new Function<Parameter, QualifiedName>() {
+	
+						public QualifiedName apply(Parameter input) {
+							return nameProvider.getFullyQualifiedName(input);
+						}
+						
+					});
+					AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
+					filter.setPreFilterPredicate (new Predicate<IEObjectDescription>(){
+						
+						public boolean apply(IEObjectDescription input) {
+							try {
+								for(QualifiedName paramName : paramNames) {
+									if (paramName.equals (input.getQualifiedName()))
+										return true;
+								}
+							} catch (Exception e) {
+								logger.error("Error filtering Parameters", e);
+							}
+							return false;
+						}
+						
+					});
+					return filter;
+				} else if(abstractOp instanceof ResourceOperation) {
+					ResourceOperation op = (ResourceOperation)abstractOp;
+					List<Parameter> respParams = new LinkedList<>();
+					for (Response response : op.getResponse()) {
+						respParams.addAll(response.getReturn());
+					}
+					Iterable<Parameter> params = Iterables.concat(op.getParameters(), respParams);
+					final Iterable<QualifiedName> paramNames = Iterables.transform(params, new Function<Parameter, QualifiedName>() {
+					
+					public QualifiedName apply(Parameter input) {
+						return nameProvider.getFullyQualifiedName(input);
+					}
+					
+				});
+				AbstractPredicateVersionFilter<IEObjectDescription> filter = new NullVersionFilter<IEObjectDescription>();
+				filter.setPreFilterPredicate (new Predicate<IEObjectDescription>(){
+					
+					public boolean apply(IEObjectDescription input) {
+						try {
+							for(QualifiedName paramName : paramNames) {
+								if (paramName.equals (input.getQualifiedName()))
+									return true;
+							}
+						} catch (Exception e) {
+							logger.error("Error filtering Parameters", e);
+						}
+						return false;
+					}
+					
+				});
+				return filter;
+			}
+
+			}
+		} catch (Exception ex) {
+			logger.error("Error creating scope filter for ConsiderationParameterRefs", ex);
+		}
+		return null;
+	}
+	private AbstractPredicateVersionFilter<IEObjectDescription> createConsiderationParameterScopeFilterOnResourceOp(ConsiderationParameterRef paramRef) {
+		try {
+			ResourceOperation op = objLookup.getOwnerByType(paramRef, ResourceOperation.class);
 			if (op != null) {
-				Iterable<Parameter> params = Iterables.concat(op.getParameters(), op.getReturn());
+				Iterable<Parameter> params = Iterables.concat(op.getParameters(), op.getResponse().get(0).getReturn());
 				final Iterable<QualifiedName> paramNames = Iterables.transform(params, new Function<Parameter, QualifiedName>() {
 
 					public QualifiedName apply(Parameter input) {

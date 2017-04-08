@@ -24,6 +24,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage
 import org.eclipse.xtext.ui.IImageHelper
 import com.google.inject.Inject
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 /**
  * Customization of the default outline structure.
@@ -34,6 +35,7 @@ class ServiceDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	
 	@Inject
 	private IImageHelper imageHelper;
+	@Inject extension ModelExtensions
 
 	def _isLeaf(RequiredServiceRef svcRef) {
 		true

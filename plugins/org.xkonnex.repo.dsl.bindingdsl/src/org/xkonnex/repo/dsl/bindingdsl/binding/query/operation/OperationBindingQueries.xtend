@@ -14,6 +14,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation
 
 class OperationBindingQueries {
 	
@@ -42,8 +43,8 @@ class OperationBindingQueries {
 	}
 	
 	
-	def Map<Verb, List<Operation>> getRESTOperationsByVerb(Resource resource, ModuleBinding binding) {
-		var HashMap<Verb, List<Operation>> ops = new HashMap<Verb, List<Operation>>()
+	def Map<Verb, List<ResourceOperation>> getRESTOperationsByVerb(Resource resource, ModuleBinding binding) {
+		var HashMap<Verb, List<ResourceOperation>> ops = new HashMap<Verb, List<ResourceOperation>>()
 		for (op : resource.operations) {
 			val effBind = bindingBuilder.createEffectiveBinding(op, binding)
 			val prot = effBind.protocol.filter(typeof(ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head

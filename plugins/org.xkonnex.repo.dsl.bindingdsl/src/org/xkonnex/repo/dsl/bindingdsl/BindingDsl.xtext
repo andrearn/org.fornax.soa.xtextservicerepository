@@ -162,7 +162,7 @@ BindingProtocol: SOAP | ExtensibleProtocol;
  * Overrides the binding of a parent ServiceBinding for the given service Operation
  */
 OperationBinding: 
-	'bind-operation' operation=[serviceDsl::Operation|QualifiedName] '{' 
+	'bind-operation' operation=[serviceDsl::AbstractOperation|QualifiedName] '{' 
 		(endpointQualifierRef=EndpointQualifierRef)?
 		(governanceDecisions+=GovernanceDecision)*
 		//protocol on inbound endpoint 

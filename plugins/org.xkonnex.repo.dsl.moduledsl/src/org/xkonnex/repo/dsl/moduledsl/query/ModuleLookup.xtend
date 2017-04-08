@@ -19,6 +19,7 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IEObjectDescription
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 /**
  * This class provides operations to find {@link Module}s 
@@ -28,6 +29,7 @@ class ModuleLookup {
 	@Inject IPredicateSearch search
 	@Inject extension IModuleVersionMatcher
 	@Inject extension IStateMatcher
+	@Inject extension ModelExtensions
 	
 	/**
 	 * Find all available {@link Module}s (defined by the model represented by the given {@link ResourceSet})

@@ -20,7 +20,6 @@ import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.REST
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol
-import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb
 import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveBindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol

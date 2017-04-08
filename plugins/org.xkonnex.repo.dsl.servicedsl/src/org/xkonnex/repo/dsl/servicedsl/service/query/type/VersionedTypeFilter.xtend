@@ -9,13 +9,15 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class VersionedTypeFilter {
 	
 	@Inject extension VersionMatcher
 	@Inject extension NamespaceQuery 
 	@Inject extension StateMatcher
-	
+	@Inject extension ModelExtensions
+		
 	/* all types from the namespace with the given major version */
 	def dispatch List<VersionedType> allTypesByMajorVersion (SubNamespace s, String majorVersion) {
 		s.types.filter (typeof (VersionedType))

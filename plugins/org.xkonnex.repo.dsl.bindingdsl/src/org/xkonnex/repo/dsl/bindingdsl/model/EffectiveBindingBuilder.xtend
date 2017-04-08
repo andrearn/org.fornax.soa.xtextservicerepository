@@ -53,6 +53,7 @@ import org.xkonnex.repo.dsl.moduledsl.model.IEffectiveProvidingEndpointBuilder
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
 
 class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 	
@@ -73,11 +74,11 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 	@Inject
 	private IEffectiveProvidingEndpointBuilder providingEndpointBuilder
 	
-	override EffectiveBinding createEffectiveBinding (Operation operation, Binding binding) {
+	override EffectiveBinding createEffectiveBinding (AbstractOperation operation, Binding binding) {
 		createEffectiveBinding(operation, binding, null)
 	}
 	
-	override EffectiveBinding createEffectiveBinding(Operation operation, Binding binding, EndpointQualifierRef endpointQualifier) {
+	override EffectiveBinding createEffectiveBinding(AbstractOperation operation, Binding binding, EndpointQualifierRef endpointQualifier) {
 		val specBinding = bindingLookup.getMostSpecificOperationBinding(operation, binding, endpointQualifier)
 		val bindingHierarchy = bindingLookup.getBottomUpHierarchyForSpecificBinding(specBinding);
 		val hierarchyEObjects = bindingHierarchy.map[it as EObject]

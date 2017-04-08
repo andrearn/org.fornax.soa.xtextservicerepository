@@ -16,10 +16,13 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.AbstractResourceRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.impl.ImportResourceRefImpl
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportResourceRef
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class DefaultModuleResourceResolver implements IModuleResourceResolver {
 	
 	@Inject extension VersionQualifierExtensions
+	@Inject extension ModelExtensions
+
 	@Inject
 	private IEObjectLookup objLookup
 	

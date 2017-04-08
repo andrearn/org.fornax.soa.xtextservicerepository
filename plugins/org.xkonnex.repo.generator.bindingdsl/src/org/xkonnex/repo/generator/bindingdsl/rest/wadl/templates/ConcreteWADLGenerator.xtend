@@ -18,7 +18,6 @@ import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
 import org.xkonnex.repo.dsl.bindingdsl.model.IEffectiveBindingBuilder
 import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveExtensibleProtocol
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpResponse
-import org.xkonnex.repo.dsl.moduledsl.ext.protocol.HttpVerb
 import org.xkonnex.repo.dsl.moduledsl.model.EffectiveProvidingEndpoint
 import org.xkonnex.repo.dsl.moduledsl.model.EffectiveProvidingEndpointProtocol
 import org.xkonnex.repo.dsl.moduledsl.model.IEffectiveProvidingEndpointBuilder
@@ -31,12 +30,14 @@ import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProv
 import org.xkonnex.repo.dsl.servicedsl.service.query.HeaderFinder
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQueries
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb
 import org.xkonnex.repo.generator.bindingdsl.rest.RESTEndpointAddressResolver
 import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
 import org.xkonnex.repo.generator.bindingdsl.templates.DefaultResourceContractFilenameProvider
@@ -47,6 +48,9 @@ import org.xkonnex.repo.generator.servicedsl.templates.xsd.OperationWrapperTypes
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTypeExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.XSDGenerator
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ErrorResponse
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Response
 
 class ConcreteWADLGenerator {
 	
@@ -193,7 +197,7 @@ class ConcreteWADLGenerator {
 		return content
 	}
 	
-	def toOperation(Operation operation, EffectiveBinding binding) {
+	def toOperation(AbstractOperation operation, EffectiveBinding binding) {
 		val restExtProt = binding.protocol.filter(typeof(EffectiveExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
 		val REST restProt = restExtProt.inferComponent
 		val module = binding.moduleBinding.module.module
@@ -219,12 +223,22 @@ class ConcreteWADLGenerator {
 		return content
 	}
 	
+	def toResponses(AbstractOperation op, REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint) {
+	}
 	def toResponses(Operation op, REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint) {
 		val responses = getResponses(bindingRESTProtocol, endpoint)
 		'''
 			«responses.filter[statusCode === null || statusCode < 400].map[toResponse(op.^return.head)].join»
 			«responses.filter[statusCode !== null && statusCode >= 400].map[toErrorResponse(op.throws)].join»		'''
 	}
+	def toResponses(ResourceOperation op, REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint) {
+		val responses = op.response
+		val errorResponses = op.^throws
+		'''
+			«responses.map[it.toResponse].join»
+			«errorResponses.map[it.toErrorResponse].join»		'''
+	}
+	
 	
 	def toResponse(HttpResponse response, Parameter param) {
 		val content = '''
@@ -238,6 +252,24 @@ class ConcreteWADLGenerator {
 				<response status="«response.statusCode»">
 					«FOR mediaType : response.contentType»
 						<representation mediaType="«mediaType»" element="«param.type.toTypeNameRef ()»" />
+					«ENDFOR»		
+				</response>
+			«ENDIF»
+		'''
+		return content
+	}
+	def toResponse(Response response) {
+		val content = '''
+			«IF response.responseCode === null»
+				<response>
+					«FOR mediaType : response.contentType»
+						<representation mediaType="«mediaType»"» />
+					«ENDFOR»		
+				</response>
+			«ELSE»
+				<response status="«response.responseCode»">
+					«FOR mediaType : response.contentType»
+						<representation mediaType="«mediaType»" element="«response.^return.head.type.toTypeNameRef ()»" />
 					«ENDFOR»		
 				</response>
 			«ENDIF»
@@ -263,6 +295,25 @@ class ConcreteWADLGenerator {
 		'''
 		return content
 	}
+	def toErrorResponse(ErrorResponse response) {
+		val exception = response.exception
+		val content = '''
+			«IF exception !== null»
+				<response status="«response.responseCode»">
+					«FOR mediaType : response.contentType»
+						<representation mediaType="«mediaType»" element="«exception.toExceptionNameRef ()»" />
+					«ENDFOR»		
+				</response>
+			«ELSE»
+				<response status="«response.responseCode»">
+					«FOR mediaType : response.contentType»
+						<representation mediaType="«mediaType»" />
+					«ENDFOR»		
+				</response>
+			«ENDIF»
+		'''
+		return content
+	}
 	
 	private def getResponses(REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint) {
 		if (!bindingRESTProtocol.response.nullOrEmpty) {
@@ -275,16 +326,20 @@ class ConcreteWADLGenerator {
 	}
 	
 	def toRequestVerb(REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint) {
-		val verb = if (bindingRESTProtocol.verb != null) bindingRESTProtocol.verb else HttpVerb.POST
-		return verb.name
+		val verb = if (bindingRESTProtocol.verb !== null) bindingRESTProtocol.verb else Verb.POST
+		return verb.getName()
 	}
 	
 	private def isVoid(OperationRef opRef) {
-		opRef.operation.^return.nullOrEmpty || 
-			(opRef.operation.^return.size == 1 && 
-				opRef.operation.^return.head.type instanceof DataTypeRef && 
-				(opRef.operation.^return.head.type as DataTypeRef).type.name == 'void'
-			)
+		val op = opRef.operation
+		if (op instanceof Operation) {
+			val svcOp = op as Operation
+			return svcOp.^return.nullOrEmpty || 
+				(svcOp.^return.size == 1 && 
+					svcOp.^return.head.type instanceof DataTypeRef && 
+					(svcOp.^return.head.type as DataTypeRef).type.name == 'void'
+				)
+		}
 	}
 	
 }

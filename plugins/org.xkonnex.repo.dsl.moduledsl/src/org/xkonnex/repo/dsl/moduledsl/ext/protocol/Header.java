@@ -2,11 +2,11 @@ package org.xkonnex.repo.dsl.moduledsl.ext.protocol;
 
 public class Header {
 	
-	private String name;
-	private String messageHeader;
-	private String description;
-	private String type;
-	private Boolean optional;
+	protected String name;
+	protected String messageHeader;
+	protected String description;
+	protected String type;
+	protected Boolean optional;
 	
 	public String getName() {
 		return name;

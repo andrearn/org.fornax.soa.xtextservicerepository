@@ -14,6 +14,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleDslPackage
 import org.xkonnex.repo.dsl.basedsl.util.JavaBeanMerger
 import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
 
 class BottomUpProvidingEndpointBuilder implements IEffectiveProvidingEndpointBuilder {
 	
@@ -28,7 +29,7 @@ class BottomUpProvidingEndpointBuilder implements IEffectiveProvidingEndpointBui
 	@Inject
 	private JavaBeanMerger beanMerger
 	
-	override createEffectiveProvidingEndpoint(Operation operation, ProvidingEndpoint endpoint) {
+	override createEffectiveProvidingEndpoint(AbstractOperation operation, ProvidingEndpoint endpoint) {
 		val protType = componentInferrer.inferComponent(endpoint.endpointProtocol.type)
 		val module = EcoreUtil2.getContainerOfType(endpoint, typeof(Module))
 		createEffectiveProvidingEndpoint(operation, module, protType)
@@ -40,7 +41,7 @@ class BottomUpProvidingEndpointBuilder implements IEffectiveProvidingEndpointBui
 		createEffectiveProvidingEndpoint(service, module, protType)
 	}
 	
-	override createEffectiveProvidingEndpoint(Operation operation, Module module, IModuleEndpointProtocol protType) {
+	override createEffectiveProvidingEndpoint(AbstractOperation operation, Module module, IModuleEndpointProtocol protType) {
 		val specEP = endpointResolver.getMostSpecificProvidingEndpointByType(operation, module, protType)
 		val epHierarchy = endpointResolver.collectProvidingEndpointHierarchyByType(operation, module, protType)
 		val epProtHierarchy = endpointProtocolLookup.collectEndpointProtocolHierarchyByType(operation, module, protType)
@@ -68,7 +69,7 @@ class BottomUpProvidingEndpointBuilder implements IEffectiveProvidingEndpointBui
 		effEndpoint
 	}
 	
-	override createEffectiveProvidingEndpointForClazz(Operation operation, Module module, Class<? extends IModuleEndpointProtocol> endpointProtocolClazz) {
+	override createEffectiveProvidingEndpointForClazz(AbstractOperation operation, Module module, Class<? extends IModuleEndpointProtocol> endpointProtocolClazz) {
 		null
 	}
 	
@@ -76,7 +77,7 @@ class BottomUpProvidingEndpointBuilder implements IEffectiveProvidingEndpointBui
 		null
 	}
 	
-	override createEffectiveProvidingEndpoints(Operation operation, Module module) {
+	override createEffectiveProvidingEndpoints(AbstractOperation operation, Module module) {
 		newArrayList()
 	}
 	

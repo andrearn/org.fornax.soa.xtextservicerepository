@@ -114,7 +114,7 @@ Workflow {
 		    }
 		    fragment = validation.ValidatorFragment2 {
 		    	generateStub = true
-		    	generateXtendStub = false
+		    	generateXtendStub = true
 		    }
 		    fragment = scoping.ImportNamespacesScopingFragment2 {
 		    	generateStub = true

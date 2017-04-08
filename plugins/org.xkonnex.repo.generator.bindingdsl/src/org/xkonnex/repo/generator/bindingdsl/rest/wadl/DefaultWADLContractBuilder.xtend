@@ -160,9 +160,9 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 						val typesMinState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
 						val minState = binding.module.module.state
 									
-						if (!res.properties.isEmpty) {
-							xsdGenerator.toXSD(res.versionedNamespace, minState, binding, enforcedProfile)
-						}
+//						if (!res.properties.isEmpty) {
+//							xsdGenerator.toXSD(res.versionedNamespace, minState, binding, enforcedProfile)
+//						}
 						wadlBuilder.toWADL(binding, res, minState, profile);
 								
 						if ( ! noDependencies) {

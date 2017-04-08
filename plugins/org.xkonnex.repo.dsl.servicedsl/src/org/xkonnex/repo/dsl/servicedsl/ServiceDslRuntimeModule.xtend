@@ -39,6 +39,8 @@ import org.xkonnex.repo.dsl.servicedsl.service.versioning.IExceptionResolver
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IServiceResolver
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResolver
 import org.xkonnex.repo.dsl.servicedsl.validation.ServiceDslValidator
+import org.xkonnex.repo.dsl.servicedsl.service.versioning.IResourceResolver
+import org.xkonnex.repo.dsl.servicedsl.service.versioning.DefaultResourceResolver
 
 /** 
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
@@ -109,6 +111,10 @@ class ServiceDslRuntimeModule extends AbstractServiceDslRuntimeModule {
 
 	def Class<? extends IServiceResolver> bindIServiceResolver() {
 		return DefaultServiceResolver
+	}
+	
+	def Class<? extends IResourceResolver> bindIResourceResolver() {
+		return DefaultResourceResolver
 	}
 
 	def Class<? extends IExceptionResolver> bindIExceptionResolver() {

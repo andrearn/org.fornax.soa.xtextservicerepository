@@ -5,12 +5,13 @@ import org.xkonnex.repo.dsl.moduledsl.ext.protocol.IModuleEndpointProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.OperationRef;
 import org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.Qualifier;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 
 public class OperationRefBindingDescription {
 	
 	private OperationRef operationRef;
-	private Operation resolvedOperation;
+	private AbstractOperation resolvedOperation;
 	private AnyBinding applicableBinding;
 	private Module providingModule;
 	private Qualifier endpointQualifier;
@@ -20,7 +21,7 @@ public class OperationRefBindingDescription {
 	}
 	
 	
-	public OperationRefBindingDescription(Operation resolvedOperation, AnyBinding applicableBinding,
+	public OperationRefBindingDescription(AbstractOperation resolvedOperation, AnyBinding applicableBinding,
 			Module providingModule, Qualifier endpointQualifier) {
 		super();
 		this.resolvedOperation = resolvedOperation;
@@ -48,10 +49,10 @@ public class OperationRefBindingDescription {
 		this.operationRef = operationRef;
 	}
 	
-	public Operation getResolvedOperation() {
+	public AbstractOperation getResolvedOperation() {
 		return resolvedOperation;
 	}
-	public void setResolvedOperation(Operation resolvedOperation) {
+	public void setResolvedOperation(AbstractOperation resolvedOperation) {
 		this.resolvedOperation = resolvedOperation;
 	}
 	

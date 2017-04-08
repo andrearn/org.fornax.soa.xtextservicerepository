@@ -5,4 +5,14 @@ package org.xkonnex.repo.dsl.moduledsl.ext.protocol;
  */
 public class EJB implements IModuleEndpointProtocol {
 
+	protected String jndiName;
+
+	public String getJndiName() {
+		return jndiName;
+	}
+
+	public void setJndiName(String jndiName) {
+		this.jndiName = jndiName;
+	}
+
 }

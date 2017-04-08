@@ -1,5 +1,7 @@
 package org.xkonnex.repo.dsl.moduledsl.ext.protocol;
 
-public class SapIDOC extends SAP {
+public enum ReadWrite {
+	
+	read, write
 
 }

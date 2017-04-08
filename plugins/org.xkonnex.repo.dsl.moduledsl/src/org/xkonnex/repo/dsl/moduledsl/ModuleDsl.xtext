@@ -170,7 +170,7 @@ ResourceRef:
 ;
 
 OperationRef:
-	operation=[serviceDsl::Operation|QualifiedName] '{'
+	operation=[serviceDsl::AbstractOperation|QualifiedName] '{'
 		('parameters' '{'
 			parameters+=ParameterRef
 		'}')?

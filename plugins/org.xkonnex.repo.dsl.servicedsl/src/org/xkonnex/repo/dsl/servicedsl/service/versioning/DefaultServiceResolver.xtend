@@ -8,11 +8,13 @@ import com.google.inject.Inject
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class DefaultServiceResolver implements IServiceResolver {
 	
 	@Inject extension StateMatcher
 	@Inject extension VersionMatcher
+	@Inject extension ModelExtensions
 
 	override findMatchingService(ServiceRef s) {
 		s.service

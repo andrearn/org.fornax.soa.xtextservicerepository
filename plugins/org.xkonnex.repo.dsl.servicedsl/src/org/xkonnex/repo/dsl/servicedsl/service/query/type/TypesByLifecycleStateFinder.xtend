@@ -13,11 +13,13 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class TypesByLifecycleStateFinder {
 	
 	@Inject extension StateMatcher
-	
+	@Inject extension ModelExtensions
+		
 	def List<Type> typesWithMinState (SubNamespace ns, LifecycleState state) {
 		var Set<Type> types = new HashSet<Type>();
 		types.addAll (ns.types.filter (typeof (BusinessObject)).filter (e|e.state.matchesMinStateLevel (state)));

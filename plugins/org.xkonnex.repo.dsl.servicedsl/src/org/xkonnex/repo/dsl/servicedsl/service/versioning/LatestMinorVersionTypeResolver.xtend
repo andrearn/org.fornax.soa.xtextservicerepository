@@ -18,6 +18,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class LatestMinorVersionTypeResolver implements IVersionedTypeRefResolver {
 	
@@ -25,6 +26,7 @@ class LatestMinorVersionTypeResolver implements IVersionedTypeRefResolver {
 	@Inject extension StateMatcher
 	@Inject extension NamespaceQuery
 	@Inject extension IQualifiedNameProvider
+	@Inject extension ModelExtensions
 	
 	override selectMatchingTypeVersion(AbstractVersionedTypeRef ref) {
 		selectMatchingTypeVersion(ref)

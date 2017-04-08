@@ -61,13 +61,18 @@ DomainNamespace:
 				subscriptions += [basedsl::User|QualifiedName]*
 			'}')?
 		'}')?
-		(types+=Type)*
-		(services+=Service)*
-		(exceptions+=Exception)*
-		(commands+=Command)*
-		(events+=Event)*
-		(channels+=Channel)*
-		(interalNamespaces+=InternalNamespace)*
+		
+		objects += ServiceObject*
+
+//		(types+=Type)*
+//		(resources += Resource)*
+//		(services+=Service)*
+//		(exceptions+=Exception)*
+//		(commands+=Command)*
+//		(events+=Event)*
+//		(channels+=Channel)*
+		
+		(interalNamespaces += InternalNamespace)*
 	'}';
 
 /* Namespace for internal use with no restrictions */
@@ -88,26 +93,31 @@ InternalNamespace:
 				subscriptions += [basedsl::User|QualifiedName]*
 			'}')?
 		'}')?
-		(types+=Type)*
-		(services+=Service)*
-		(exceptions+=Exception)*
-		(commands+=Command)*
-		(events+=Event)*
-		(channels+=Channel)*
+		
+		objects += ServiceObject*
+
+//		(types+=Type)*
+//		(resources += Resource)*
+//		(services+=Service)*
+//		(exceptions+=Exception)*
+//		(commands+=Command)*
+//		(events+=Event)*
+//		(channels+=Channel)*
 		(interalNamespaces+=InternalNamespace)*
+		
 	'}';
 		
 Type:
 	VersionedType;
 
 VersionedType:
-	Enumeration | DataObject | Resource;		
+	Enumeration | DataObject ;		
 
 DataObject: AbstractBusinessObject | QueryObject;
 
 AbstractBusinessObject: BusinessObject | Aggregate | Entity | ValueObject;
 
-ResourceRepresentableObject: BusinessObject | Aggregate | Entity;
+ServiceObject: Type | Resource | Service | Exception | Command | Event | Channel;
 
 /*
  * A complex datatype representing a business entity of the domain model. 
@@ -291,13 +301,11 @@ Resource:
 				subscriptions += [basedsl::User|QualifiedName]*
 			'}')?
 		'}'
-		('URI' uri=STRING)?
-		('content-type' contentType = STRING)?
-		('represents' represents=[ResourceRepresentableObject|QualifiedName])?
-		(properties+=Property)*
-		(operations+=Operation)+
+		('base-URI' uri=STRING)?
+		(operations+=ResourceOperation)+
 		(resources+=Resource)*
 	'}';
+
 	
 ResourceRef:
 	resource=[Resource|QualifiedName] versionRef=VersionRef;
@@ -442,13 +450,15 @@ Service:
 		(operations+=Operation)*
 	'}';
 
+AbstractOperation: Operation | ResourceOperation;
 /*
  * A service operation
  */
 Operation:
-	(deprecated?='@deprecated')? (mep=MEP)? (transactional?='transactional')? verb=Verb? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' 
+	(deprecated?='@deprecated')? verb=Verb? (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' 
 	('returns' (return+=Parameter) (',' return+=Parameter)*|('returns' return+=SingleReturnParameter))? 
 	('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
+		('accepts-content-type' (contentType += STRING)(',' contentType += STRING)*)?
 		(considerationSpec=ConsiderationSpec)?
 		('statefulness' statefulness=Statefulness (updating?='updating')? )?
 		('transaction-spec' transactionSpec=TransactionSpec)?
@@ -481,6 +491,60 @@ Operation:
 		('tags' (tags+=[semanticsDsl::Tag])+)*
 	'}';
 	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
+
+ResourceOperation:
+	(deprecated?='@deprecated')? uri=STRING verb=Verb (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' 
+	('returns' '{'
+		(response+=Response) (response+=Response)*
+	'}'
+	)?
+	('throws' '{'
+		(throws+=ErrorResponse)? (throws+=ErrorResponse)*
+	'}'
+	)? '{'
+		('accepts-content-type' (contentType += STRING)(',' contentType += STRING)*)?
+		(considerationSpec=ConsiderationSpec)?
+		('statefulness' statefulness=Statefulness (updating?='updating')? )?
+		('transaction-spec' transactionSpec=TransactionSpec)?
+		/*
+		 * overrides the default from the service
+		 */ 
+		('persistence' persistence=Persistence )? 
+		/*
+		 * Overrides the message header declaration from the architecture profile or service for this operation
+		 */
+		('message-headers' '{'
+			('request-message-header' requestMessageHeader = MessageHeaderRef )?
+			('response-message-header' responseMessageHeader = MessageHeaderRef )?
+			('publish-message-header' publishMessageHeader = MessageHeaderRef )?
+		'}')?
+		/*
+		 * Services used by this service
+		 */
+		('requires' requires+=RequiredServiceRef )*
+		('requires-channel' requiresChannel+=[Channel|QualifiedName] )*
+		('links' '{'
+			links+=Link+
+		'}')?
+		/*
+		 * The operation that is capable to revert/compensate the effect of this operation
+		 */
+		('compensated-by' compensatedBy+=OperationRef )?
+		('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?	
+		('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?	
+		('tags' (tags+=[semanticsDsl::Tag])+)*
+	'}';
+
+Response: 'response-code' responseCode = ReturnCode '{'
+	(((return+=Parameter) (',' return+=Parameter)*) | (return+=SingleReturnParameter))?
+	('content-type' (contentType += STRING)(',' contentType += STRING)*)?
+	'}'
+;
+ErrorResponse: 'response-code' responseCode = ReturnCode '{' 
+	exception=ExceptionRef
+	('content-type' (contentType += STRING)(',' contentType += STRING)*)?
+	'}'
+;
 
 ReturnCode: IntReturnCode | StringReturnCode;
 IntReturnCode: returnCode=INT;
@@ -567,14 +631,14 @@ RequiredServiceRef:
  * A reference to a service operation with a version constraint
  */	
 OperationRef:
-	operation=[Operation|QualifiedName] versionRef=VersionRef;
+	operation=[AbstractOperation|QualifiedName] versionRef=VersionRef;
 	
 /*
  * A reference to a service operation without a version constraint, 
  * taking the version constraint from the service reference defined in the same context
  */	
 SimpleOperationRef: 
-	operation=[Operation|QualifiedName];
+	operation=[AbstractOperation|QualifiedName];
 
 fragment RequiredServiceCallFragment: '{'
 		'calling' '{'
@@ -583,7 +647,7 @@ fragment RequiredServiceCallFragment: '{'
 	'}'
 ;
 
-CallOperationRef: operation=[Operation|QualifiedName] ('handle-response-with' responseHandler=OperationRef)?;
+CallOperationRef: operation=[AbstractOperation|QualifiedName] ('handle-response-with' responseHandler=OperationRef)?;
 
 /* defines the execution of an operation in terms of considered parameters */
 ConsiderationSpec:

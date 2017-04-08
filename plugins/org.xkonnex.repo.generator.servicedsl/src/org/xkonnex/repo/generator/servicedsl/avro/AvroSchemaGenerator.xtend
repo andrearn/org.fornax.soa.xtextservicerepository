@@ -34,6 +34,7 @@ import org.xkonnex.repo.generator.servicedsl.VersionedTypeDescriptor
 import org.xkonnex.repo.generator.servicedsl.templates.java.JavaTypeExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.json.JSONTypeExtensions
 import org.xkonnex.repo.dsl.servicedsl.service.query.type.DataObjectQueries
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class AvroSchemaGenerator implements IGenerator2 {
 
@@ -47,6 +48,8 @@ class AvroSchemaGenerator implements IGenerator2 {
 	@Inject extension JavaTypeExtensions
 	@Inject extension NamespaceQuery
 	@Inject extension DataObjectQueries
+	@Inject extension ModelExtensions
+
 	@Inject IEObjectDocumentationProvider docProvider
 	@Inject IFileSystemAccess fsa
 	@Inject

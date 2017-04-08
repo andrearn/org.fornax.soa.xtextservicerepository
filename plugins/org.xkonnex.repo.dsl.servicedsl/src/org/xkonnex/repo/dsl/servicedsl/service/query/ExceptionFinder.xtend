@@ -6,6 +6,7 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.search.StateMatcher
 import org.xkonnex.repo.dsl.servicedsl.service.VersionedDomainNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 /*
  * Search for Exception type definitions
@@ -13,7 +14,8 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 class ExceptionFinder {
 	
 	@Inject extension StateMatcher
-
+	@Inject extension ModelExtensions
+	
 	def dispatch List exceptionsWithMinState (Object ns, LifecycleState state) {
 		newArrayList();
 	}

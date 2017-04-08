@@ -6,9 +6,9 @@ import com.google.common.collect.Lists;
 
 public class HttpResponse {
 	
-	private Integer statusCode;
-	private List<String> contentType = Lists.newArrayList();
-	private List<Header> header = Lists.newArrayList();
+	protected Integer statusCode;
+	protected List<String> contentType = Lists.newArrayList();
+	protected List<Header> header = Lists.newArrayList();
 	
 	public Integer getStatusCode() {
 		return statusCode;

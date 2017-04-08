@@ -26,6 +26,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.generator.servicedsl.templates.CommonTemplateExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.webservice.ServiceTemplateExtensions
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class EventXSDGenerator {
 	
@@ -42,6 +43,7 @@ class EventXSDGenerator {
 	@Inject extension NamespaceImportQueries
 	@Inject extension NamespaceQuery
 	@Inject extension ILifecycleStateResolver
+	@Inject extension ModelExtensions
 	
 	@Inject IEObjectDocumentationProvider docProvider
 	@Inject ProfileNamespaceURIProvider profileNamespaceURIProvider
