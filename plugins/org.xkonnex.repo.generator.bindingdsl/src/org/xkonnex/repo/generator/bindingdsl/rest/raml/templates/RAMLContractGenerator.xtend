@@ -179,6 +179,35 @@ class RAMLContractGenerator {
         '''
         content
     }
+    def String toOperation(ResourceOperation operation, EffectiveBinding binding) {
+        val restExtProt = binding.protocol.filter(typeof(EffectiveExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
+        val REST restProt = restExtProt.inferComponent
+        val module = binding.moduleBinding.module.module
+        val effProvEndpoint = endpointBuilder.createEffectiveProvidingEndpoint(operation, module, new org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST)
+        var EffectiveProvidingEndpointProtocol effProvEndpointProt = null
+        var org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST restModuleEndpoint = null
+        if (effProvEndpoint?.endpointProtocol instanceof EffectiveProvidingEndpointProtocol) {
+            effProvEndpointProt = effProvEndpoint.endpointProtocol as EffectiveProvidingEndpointProtocol
+            if (effProvEndpointProt?.endpointProtocol instanceof org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST) {
+                restModuleEndpoint = effProvEndpointProt.endpointProtocol as org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST
+            }
+        }
+        val basePath = operation.getOperationPath(binding)
+        val uri = if(restProt?.path !== null) restProt?.path else null
+        val params = resourceQueries.extractParametersFromURI(uri, operation).toList
+        val content = '''
+            
+            «basePath.normalizePath»:
+                «IF !params.nullOrEmpty»
+                    uriParameters:
+                        «FOR param : params»
+                            «param.name» : «param.toTypeNameRef»
+                        «ENDFOR»
+                «ENDIF»
+                «operation.toRequestResponse(restProt, restModuleEndpoint)»
+        '''
+        content
+    }
     
     def dispatch toRequestResponse(AbstractOperation op, REST binding, org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST endpoint) {
     }
@@ -221,8 +250,8 @@ class RAMLContractGenerator {
         '''
     }
     def dispatch toRequestResponse(ResourceOperation op, REST binding, org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST endpoint) {
-        val verb = if (binding.verb !== null) binding.verb else if (endpoint?.verb !== null) endpoint.verb else Verb::POST
-        val responses = if (!binding.response.nullOrEmpty) binding.response else (endpoint?.response)
+        val verb = if (binding.verb !== null) binding.verb else if (op.verb !== null) op.verb else Verb::POST
+        val responses = if (!binding.response.nullOrEmpty) binding.response else (op?.response)
         '''
             «verb.toRAMLVerb»:
                 responses:

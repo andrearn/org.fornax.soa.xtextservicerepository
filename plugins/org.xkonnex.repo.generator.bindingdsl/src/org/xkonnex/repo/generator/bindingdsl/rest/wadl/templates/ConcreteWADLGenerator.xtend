@@ -329,6 +329,10 @@ class ConcreteWADLGenerator {
 		val verb = if (bindingRESTProtocol.verb !== null) bindingRESTProtocol.verb else Verb.POST
 		return verb.getName()
 	}
+	def toRequestVerb(REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint, ResourceOperation operation) {
+		val verb = if (bindingRESTProtocol.verb !== null) bindingRESTProtocol.verb else operation.verb
+		return verb.getName()
+	}
 	
 	private def isVoid(OperationRef opRef) {
 		val op = opRef.operation

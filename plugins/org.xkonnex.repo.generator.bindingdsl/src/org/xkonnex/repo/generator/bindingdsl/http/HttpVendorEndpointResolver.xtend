@@ -80,6 +80,29 @@ class HttpVendorEndpointResolver {
 			defaultPatternEndpointPath (ctxRoot, s, server, bind, prot);
 		}
 	}
+	def dispatch String toEndpointAddressPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val serverType = server.toServerTypeName ();
+		if (serverType !== null) {
+			switch (serverType.toLowerCase()) {
+			case "tomcat": 			tomcatEndpointPath (ctxRoot, s, server, bind, prot)
+			case "websphere":		websphereSCAEndpointPath (ctxRoot, s, server, bind, prot)
+			case "webmethods":		webmethodsEndpointPath (ctxRoot, s, server, bind, prot)
+			case "oraclesb":		oraclesbEndpointPath (ctxRoot, s, server, bind, prot)
+			case "weblogic":		weblogicEndpointPath (ctxRoot, s, server, bind, prot)
+			case "aqualogic":		aqualogicEndpointPath (ctxRoot, s, server, bind, prot)
+			case "sappi":			sappiEndpointPath (ctxRoot, s, server, bind, prot)
+			case "sapce":			sapceEndpointPath (ctxRoot, s, server, bind, prot)
+			case "sapnetweaver":	sapNetweaverEndpointPath (ctxRoot, s, server, bind, prot)
+			case "jboss":			jbossEndpointPath (ctxRoot, s, server, bind, prot)
+			case "jbossesb":		jbossesbEndpointPath (ctxRoot, s, server, bind, prot)
+			case "mule":			muleEndpointPath (ctxRoot, s, server, bind, prot)
+			case "fuseesb":			fuseesbEndpointPath (ctxRoot, s, server, bind, prot)
+			default: 				defaultPatternEndpointPath (ctxRoot, s, server, bind, prot)
+			}
+		} else {
+			defaultPatternEndpointPath (ctxRoot, s, server, bind, prot);
+		}
+	}
 	def String toServerTypeName (Server s) {
 		var serverTypeName = "undefined"
 		switch (s) {
@@ -209,6 +232,110 @@ class HttpVendorEndpointResolver {
 	def String fuseesbEndpointPath (String ctxRoot, Service s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
 		val namespace = s.getOwnerByType(Namespace)
 		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.name + "/" + s.version.toVersionPostfix();
+	}
+	
+//
+	def String defaultPatternEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String tomcatEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String websphereEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String websphereSCAEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(SubNamespace)
+		ctxRoot
+		+ namespace.organizationShortnameFragment + "_" 
+		+ namespace.subNamespaceFragment.replaceAll("\\.","_") +"_" + s.name + "HTTP" + bind.getEndpointQualifierName (s, prot) + "_" + s.version.toVersionPostfix();
+	}
+	
+	def String webmethodsEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		val servicePath = ctxRoot
+		+ namespace.namespaceFQN + "." + s.name + "." + s.version.toVersionPostfix() + ":" + s.name;
+		var scopedPortName = ""
+		if (prot.type.identifier == HTTP.getClass().canonicalName) {
+			scopedPortName = httpBindRes.toScopedPortName (s, bind, prot, bind.getEndpointQualifierName (s, prot))
+		}
+		if (server instanceof ESB) {
+			val esb = (server as ESB)
+			val esbVersion = esb.serverVersion
+			if (esbVersion !== null) {
+				val esbVersionDigits = esbVersion.split("\\.")
+				if (esbVersionDigits.get(0) >= "8" && scopedPortName != "") {
+					return servicePath + "/" + scopedPortName
+				}
+			}
+		}
+		return servicePath
+	}
+	
+	def String oraclesbEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String weblogicEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String aqualogicEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String sappiEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String sapceEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String sapNetweaverEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String jbossEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String jbossesbEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String muleEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String fuseesbEndpointPath (String ctxRoot, Resource s, Server server, EffectiveBinding bind, ExtensibleProtocol prot) {
+		val namespace = s.getOwnerByType(Namespace)
+		ctxRoot	+ namespace.namespaceFQN.replaceAll("\\.","/") +"/" + s.toBaseURI
+	}
+	
+	def String toBaseURI (Resource resource) {
+		var String baseURI = null
+		if (resource.uri !== null) {
+			baseURI = resource.uri 
+		} else {
+			baseURI = resource.name + "/" + resource.version.toVersionPostfix()
+		}
+		return baseURI.replaceAll("//", "/")
 	}
 	
 }
