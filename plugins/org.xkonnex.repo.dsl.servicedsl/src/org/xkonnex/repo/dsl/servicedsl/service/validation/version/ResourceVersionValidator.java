@@ -127,20 +127,22 @@ public class ResourceVersionValidator extends AbstractServiceDslVersionValidator
 
 						}
 						for (final ErrorResponse errorResp : op.getThrows()) {
-							ExceptionRef exRef = errorResp.getException();
-							boolean hasReturnParam = Iterables.any(lesserVerOp.getThrows(),
-									new Predicate<ErrorResponse>() {
-
-										public boolean apply(ErrorResponse input) {
-											return input.getException().getException().getName()
-													.equals(exRef.getException().getName());
-										}
-									});
-							if (!hasReturnParam) {
-								warning("The operation " + op.getName() + " declares a new exception "
-										+ exRef.getException().getName()
-										+ ". Depending on the consumer this is an incompatible change in most cases!",
-										ServiceDslPackage.Literals.ABSTRACT_OPERATION__NAME);
+							EList<ExceptionRef> exRefs = errorResp.getException();
+							for(ExceptionRef exRef : exRefs) {
+								boolean hasReturnParam = Iterables.any(lesserVerOp.getThrows(),
+										new Predicate<ErrorResponse>() {
+	
+											public boolean apply(ErrorResponse input) {
+												return input.getException().stream().anyMatch(ex -> ex.getException().getName()
+														.equals(exRef.getException().getName()));
+											}
+										});
+								if (!hasReturnParam) {
+									warning("The operation " + op.getName() + " declares a new exception "
+											+ exRef.getException().getName()
+											+ ". Depending on the consumer this is an incompatible change in most cases!",
+											ServiceDslPackage.Literals.ABSTRACT_OPERATION__NAME);
+								}
 							}
 						}
 					}

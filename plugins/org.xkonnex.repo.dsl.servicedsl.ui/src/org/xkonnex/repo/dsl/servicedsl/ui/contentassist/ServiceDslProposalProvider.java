@@ -23,6 +23,7 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Entity;
@@ -30,6 +31,8 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OperationRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.QueryObject;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel;
@@ -182,6 +185,9 @@ public class ServiceDslProposalProvider extends
 					else if (versionedOwner instanceof BusinessObject)
 						className = ServiceDslPackage.Literals.BUSINESS_OBJECT
 								.getName();
+					else if (versionedOwner instanceof Aggregate)
+						className = ServiceDslPackage.Literals.AGGREGATE
+								.getName();
 					Iterable<String> canditateVersions = getCanditateVersions(
 							typeName, className, importedNamespaces,
 							majorVersionsOnly);
@@ -227,6 +233,29 @@ public class ServiceDslProposalProvider extends
 					String svcName = nameParts.toString().trim()
 							.replaceAll("\\[\\]", "").trim();
 					String className = ServiceDslPackage.Literals.SERVICE
+							.getName();
+					Iterable<String> canditateVersions = getCanditateVersions(
+							svcName, className, importedNamespaces,
+							majorVersionsOnly);
+					for (String version : canditateVersions) {
+						acceptor.accept(createCompletionProposal(version,
+								context));
+					}
+
+				} else if (model.eContainer() instanceof ResourceRef) {
+					ResourceRef svcRef = (ResourceRef) model.eContainer();
+					boolean versionConstraintFound = false;
+					StringBuilder nameParts = new StringBuilder();
+					while (leafIt.hasNext() && !versionConstraintFound) {
+						ILeafNode curNode = leafIt.next();
+						if (curNode.getSemanticElement() instanceof VersionRef)
+							versionConstraintFound = true;
+						else
+							nameParts.append(curNode.getText());
+					}
+					String svcName = nameParts.toString().trim()
+							.replaceAll("\\[\\]", "").trim();
+					String className = ServiceDslPackage.Literals.RESOURCE
 							.getName();
 					Iterable<String> canditateVersions = getCanditateVersions(
 							svcName, className, importedNamespaces,

@@ -493,7 +493,7 @@ Operation:
 	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
 
 ResourceOperation:
-	(deprecated?='@deprecated')? uri=STRING verb=Verb (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' 
+	(deprecated?='@deprecated')? verb=Verb uri=STRING (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' 
 	('returns' '{'
 		(response+=Response) (response+=Response)*
 	'}'
@@ -540,10 +540,10 @@ Response: 'response-code' responseCode = ReturnCode '{'
 	('content-type' (contentType += STRING)(',' contentType += STRING)*)?
 	'}'
 ;
-ErrorResponse: 'response-code' responseCode = ReturnCode '{' 
-	exception=ExceptionRef
-	('content-type' (contentType += STRING)(',' contentType += STRING)*)?
-	'}'
+ErrorResponse: 'response-code' responseCode = ReturnCode ('{' 
+	(exception+=ExceptionRef)?(',' exception+=ExceptionRef)*
+	'content-type' (contentType += STRING)(',' contentType += STRING)*
+	'}')?
 ;
 
 ReturnCode: IntReturnCode | StringReturnCode;
@@ -615,7 +615,7 @@ enum Statefulness:
 	stateful
 ;
 
-enum Persistence: none | read | write | readWrite = "read / write";
+enum Persistence: none | read | write | readWrite = "read/write";
 
 /* references a service applying a version constraint */
 ServiceRef:

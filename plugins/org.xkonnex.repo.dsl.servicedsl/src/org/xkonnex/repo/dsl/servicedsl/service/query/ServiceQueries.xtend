@@ -93,7 +93,7 @@ class ServiceQueries {
 	}
 	
 	def List<Exception> allReferencedExceptions (Resource s) {
-		s.operations.map (o|o.^throws).flatten.map[it.exception.exception].toList;
+		s.operations.map (o|o.^throws).flatten.map[it.exception].flatten.map[it.exception].toList;
 	}
 	
 	def List<Exception> allReferencedExceptions (Aggregate s) {

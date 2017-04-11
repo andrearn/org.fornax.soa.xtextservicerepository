@@ -68,6 +68,9 @@ class ServiceDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 		for (svc : ns.services) {
 			parentNode.createNode(svc);			
 		}
+		for (res : ns.resources) {
+			parentNode.createNode(res);			
+		}
 		for (ex : ns.exceptions) {
 			parentNode.createNode(ex);			
 		}
@@ -92,6 +95,9 @@ class ServiceDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 		for (svc : ns.services) {
 			parentNode.createNode(svc);			
 		}
+		for (res : ns.resources) {
+			parentNode.createNode(res);			
+		}
 		for (ex : ns.exceptions) {
 			parentNode.createNode(ex);			
 		}
@@ -115,6 +121,9 @@ class ServiceDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 		}
 		for (svc : ns.services) {
 			parentNode.createNode(svc);			
+		}
+		for (res : ns.resources) {
+			parentNode.createNode(res);			
 		}
 		for (ex : ns.exceptions) {
 			parentNode.createNode(ex);			

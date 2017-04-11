@@ -20,7 +20,9 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DomainNamespace;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ErrorResponse;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.IntReturnCode;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OperationRef;
@@ -28,9 +30,13 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.QueryObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredServiceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Response;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SimpleConsiderationPropertyRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.StringReturnCode;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef;
 
@@ -61,6 +67,20 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	}
 
 	Object text (Service ele) {
+		StyledString name = new StyledString(ele.getName());
+		LifecycleState state = stateResolver.getLifecycleState(ele);
+		String stateName = state != null ? state.getName () : "";
+		StyledString versionAndState  = new StyledString(" " + ele.getVersion().getVersion() + " " + stateName, StyledString.DECORATIONS_STYLER);
+		name.append(versionAndState);
+		if (ele.isDeprecated()) {
+			name.setStyle(0, name.length(), STRIKETHROUGH);
+		}
+		return name;
+	}
+	String image (Resource ele) {
+		return "full/obj16/service_obj.gif";
+	}
+	Object text (Resource ele) {
 		StyledString name = new StyledString(ele.getName());
 		LifecycleState state = stateResolver.getLifecycleState(ele);
 		String stateName = state != null ? state.getName () : "";
@@ -172,6 +192,37 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 			name.setStyle(0, name.length(), STRIKETHROUGH);
 		}
 		return name;
+	}
+	Object text (ResourceOperation ele) {
+		StyledString uri = new StyledString(ele.getUri());
+		if (ele.isDeprecated()) {
+			uri.setStyle(0, uri.length(), STRIKETHROUGH);
+		}
+		return uri;
+	}
+	
+	Object text (Response ele) {
+		if (ele.getResponseCode() instanceof IntReturnCode) {
+			Integer returnCode = ((IntReturnCode)ele.getResponseCode()).getReturnCode();
+			StyledString code = new StyledString(returnCode.toString());
+			return code;
+		} else {
+			String returnCode = ((StringReturnCode)ele.getResponseCode()).getReturnCode();
+			StyledString code = new StyledString(returnCode);
+			return code;
+		}
+	}
+	
+	Object text (ErrorResponse ele) {
+		if (ele.getResponseCode() instanceof IntReturnCode) {
+			Integer returnCode = ((IntReturnCode)ele.getResponseCode()).getReturnCode();
+			StyledString code = new StyledString(returnCode.toString());
+			return code;
+		} else {
+			String returnCode = ((StringReturnCode)ele.getResponseCode()).getReturnCode();
+			StyledString code = new StyledString(returnCode);
+			return code;
+		}
 	}
 	Object text (OperationRef ele) {
 		StyledString name = new StyledString(ele.getOperation().getName());

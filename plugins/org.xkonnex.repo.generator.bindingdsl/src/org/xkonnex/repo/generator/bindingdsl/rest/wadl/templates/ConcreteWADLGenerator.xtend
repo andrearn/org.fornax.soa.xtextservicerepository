@@ -301,7 +301,7 @@ class ConcreteWADLGenerator {
 			«IF exception !== null»
 				<response status="«response.responseCode»">
 					«FOR mediaType : response.contentType»
-						<representation mediaType="«mediaType»" element="«exception.toExceptionNameRef ()»" />
+						<representation mediaType="«mediaType»" element="«exception.get(0).toExceptionNameRef ()»" />
 					«ENDFOR»		
 				</response>
 			«ELSE»
