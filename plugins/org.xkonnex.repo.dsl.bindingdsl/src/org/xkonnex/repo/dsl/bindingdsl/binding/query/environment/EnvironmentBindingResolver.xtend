@@ -16,6 +16,7 @@ import org.xkonnex.repo.dsl.moduledsl.query.ModuleLookup
 import org.eclipse.emf.ecore.EObject
 import org.eclipse.xtext.EcoreUtil2
 import org.xkonnex.repo.dsl.bindingdsl.model.EffectiveBinding
+import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ResourceBinding
 
 /**
  * Resolver, that resolves environment assets such as servers from Bindings
@@ -46,6 +47,10 @@ class EnvironmentBindingResolver {
 	def dispatch Server resolveServer (ServiceBinding bind, BindingProtocol prot) {
 		(bind.eContainer as Binding).resolveServer(prot)
 	}
+		
+	def dispatch Server resolveServer (ResourceBinding bind, BindingProtocol prot) {
+		(bind.eContainer as Binding).resolveServer(prot)
+	}
 	
 	def dispatch Server resolveServer (OperationBinding bind, BindingProtocol prot) {
 		(bind.eContainer as Binding).resolveServer(prot)
@@ -62,6 +67,10 @@ class EnvironmentBindingResolver {
 	}
 		
 	def dispatch Server resolveServer (ServiceBinding bind) {
+		(bind.eContainer as Binding).resolveServer
+	}
+		
+	def dispatch Server resolveServer (ResourceBinding bind) {
 		(bind.eContainer as Binding).resolveServer
 	}
 	

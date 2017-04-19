@@ -51,6 +51,9 @@ import org.xkonnex.repo.generator.servicedsl.templates.xsd.XSDGenerator
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ErrorResponse
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Response
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ReturnCode
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.IntReturnCode
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.StringReturnCode
 
 class ConcreteWADLGenerator {
 	
@@ -197,7 +200,7 @@ class ConcreteWADLGenerator {
 		return content
 	}
 	
-	def toOperation(AbstractOperation operation, EffectiveBinding binding) {
+	def dispatch toOperation(AbstractOperation operation, EffectiveBinding binding) {
 		val restExtProt = binding.protocol.filter(typeof(EffectiveExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
 		val REST restProt = restExtProt.inferComponent
 		val module = binding.moduleBinding.module.module
@@ -206,6 +209,24 @@ class ConcreteWADLGenerator {
 		val content = '''
 			<resource path="«basePath»">
 				<method name="«toRequestVerb(restProt, effProvEndpoint)»" id="«operation.name»">
+					<request>
+						«operation.parameters.map[toRequestParam(binding, restProt)].join»
+					</request>
+					«toResponses(operation, restProt, effProvEndpoint)»
+				</method>
+			</resource>		
+		'''
+		return content
+	}
+	def dispatch toOperation(ResourceOperation operation, EffectiveBinding binding) {
+		val restExtProt = binding.protocol.filter(typeof(EffectiveExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
+		val REST restProt = restExtProt.inferComponent
+		val module = binding.moduleBinding.module.module
+		val effProvEndpoint = endpointBuilder.createEffectiveProvidingEndpoint(operation, module, new org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST)
+		val basePath = operation.getOperationPath(binding)
+		val content = '''
+			<resource path="«basePath»">
+				<method name="«toRequestVerb(restProt, effProvEndpoint, operation)»" id="«operation.name»">
 					<request>
 						«operation.parameters.map[toRequestParam(binding, restProt)].join»
 					</request>
@@ -267,7 +288,7 @@ class ConcreteWADLGenerator {
 					«ENDFOR»		
 				</response>
 			«ELSE»
-				<response status="«response.responseCode»">
+				<response status="«response.responseCode.toReturnCode»">
 					«FOR mediaType : response.contentType»
 						<representation mediaType="«mediaType»" element="«response.^return.head.type.toTypeNameRef ()»" />
 					«ENDFOR»		
@@ -299,13 +320,13 @@ class ConcreteWADLGenerator {
 		val exception = response.exception
 		val content = '''
 			«IF exception !== null»
-				<response status="«response.responseCode»">
+				<response status="«response.responseCode.toReturnCode»">
 					«FOR mediaType : response.contentType»
 						<representation mediaType="«mediaType»" element="«exception.get(0).toExceptionNameRef ()»" />
 					«ENDFOR»		
 				</response>
 			«ELSE»
-				<response status="«response.responseCode»">
+				<response status="«response.responseCode.toReturnCode»">
 					«FOR mediaType : response.contentType»
 						<representation mediaType="«mediaType»" />
 					«ENDFOR»		
@@ -333,6 +354,15 @@ class ConcreteWADLGenerator {
 		val verb = if (bindingRESTProtocol.verb !== null) bindingRESTProtocol.verb else operation.verb
 		return verb.getName()
 	}
+    private def dispatch String toReturnCode (ReturnCode returnCode) {
+    	'''200'''
+    }
+    private def dispatch String toReturnCode (IntReturnCode returnCode) {
+        '''«returnCode.returnCode»'''
+    }
+    private def dispatch String toReturnCode (StringReturnCode returnCode) {
+        '''«returnCode.returnCode»'''
+    }
 	
 	private def isVoid(OperationRef opRef) {
 		val op = opRef.operation

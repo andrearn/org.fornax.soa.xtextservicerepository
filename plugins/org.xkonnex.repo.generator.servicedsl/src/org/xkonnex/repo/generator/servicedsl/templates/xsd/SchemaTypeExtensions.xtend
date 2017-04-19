@@ -33,6 +33,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef
 import org.xkonnex.repo.dsl.servicedsl.service.versioning.IVersionedTypeRefResolver
 import org.xkonnex.repo.dsl.servicedsl.service.namespace.ServiceNamespaceURIProvider
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 /**
  * Extension functions for 
@@ -85,7 +86,7 @@ class SchemaTypeExtensions {
 			var prefix = "tns";
 			if (! (t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
-			 	&& ! (t.getStatefulOwner() instanceof Service))
+			 	&& ! (t.getStatefulOwner() instanceof Service || t.getStatefulOwner() instanceof Resource))
 			) {
 			 	prefix = t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber();
 			}
@@ -114,7 +115,7 @@ class SchemaTypeExtensions {
 			var prefix = "tns";
 			if (!(t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t.getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
-				&& !(t.getStatefulOwner() instanceof Service))
+				&& !(t.getStatefulOwner() instanceof Service || t.getStatefulOwner() instanceof Resource))
 			)  {
 				prefix = t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber();
 			}
@@ -129,7 +130,7 @@ class SchemaTypeExtensions {
 			var prefix = "tns";
 			if (!(t.findTypeRefOwnerSubdomain() == t.type.findSubdomain()
 				&& t. getOwnerVersion().toMajorVersionNumber() == t.type.version.toMajorVersionNumber()
-				&& ! (t.getStatefulOwner() instanceof Service))
+				&& ! (t.getStatefulOwner() instanceof Service || t.getStatefulOwner() instanceof Resource))
 			) {
 				prefix = t.type.findSubdomain().toShortName() + t.type.version.toMajorVersionNumber();
 			}
@@ -144,7 +145,7 @@ class SchemaTypeExtensions {
 			var prefix = "tns";
 			if (!(exRef.findExceptionRefOwnerSubdomain() == exRef.exception.findSubdomain()
 			 && exRef.getOwnerVersion().toMajorVersionNumber() == exRef.exception.version.toMajorVersionNumber()
-			 && ! (exRef.getStatefulOwner() instanceof Service))
+			 && ! (exRef.getStatefulOwner() instanceof Service || exRef.getStatefulOwner() instanceof Resource))
 			) {
 				prefix = exRef.exception.findSubdomain().toShortName() + exRef.exception?.version?.toMajorVersionNumber()
 			}

@@ -33,6 +33,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.resource.BindingResourceRefMatcher
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ResourceBinding
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation
 
 /**
  * Lookup of Bindings for different criteria, e.g. find a binding for a module to an environment
@@ -257,12 +258,12 @@ class BindingLookup {
 		else
 			return null
 	}
-	def dispatch Binding getMostSpecificBinding (Resource service, ModuleBinding binding) {
+	def dispatch Binding getMostSpecificBinding (Resource resource, ModuleBinding binding) {
 		
 		if (!binding.resourceBindings.empty) {
-			for (svcBind : binding.resourceBindings) {
-				if (resourceRefMatcher.matches(service, svcBind.resource)) {
-					return svcBind
+			for (resBind : binding.resourceBindings) {
+				if (resourceRefMatcher.matches(resource, resBind.resource)) {
+					return resBind
 				}
 			}
 		}
@@ -292,7 +293,17 @@ class BindingLookup {
 			return null
 	}
 	
+	def dispatch AnyBinding getMostSpecificOperationBinding (AbstractOperation operation, ResourceBinding binding) {
+		if (binding.operation == operation)
+			return binding
+		else
+			return null
+	}
+	
 	def dispatch AnyBinding getMostSpecificOperationBinding (AbstractOperation operation, ModuleBinding binding) {
+		
+	}
+	def dispatch AnyBinding getMostSpecificOperationBinding (Operation operation, ModuleBinding binding) {
 		val service = EcoreUtil2.getContainerOfType(operation, typeof (Service))
 		if (!binding.serviceBindings.empty) {
 			for (svcBind : binding.serviceBindings) {
@@ -303,6 +314,22 @@ class BindingLookup {
 						}
 					}
 					return svcBind
+				}
+			}
+		}
+		return binding
+	}
+	def dispatch AnyBinding getMostSpecificOperationBinding (ResourceOperation operation, ModuleBinding binding) {
+		val resource = EcoreUtil2.getContainerOfType(operation, typeof (Resource))
+		if (!binding.resourceBindings.empty) {
+			for (resBind : binding.resourceBindings) {
+				if (resourceRefMatcher.matches(resource, resBind.resource)) {
+					for (opBind : resBind.operation) {
+						if (opBind.operation == operation) {
+							return opBind
+						}
+					}
+					return resBind
 				}
 			}
 		}
@@ -356,13 +383,48 @@ class BindingLookup {
 		}
 		return binding
 	}
+	def dispatch AnyBinding getMostSpecificOperationBinding (ResourceOperation operation, ModuleBinding binding, EndpointQualifierRef endpointQualifier) {
+		val resource = EcoreUtil2.getContainerOfType(operation, typeof (Resource))
+		if (!binding.resourceBindings.empty) {
+			for (resBind : binding.resourceBindings) {
+				if (resourceRefMatcher.matches(resource, resBind.resource)) {
+					for (opBind : resBind.operation) {
+						if (opBind.operation == operation) {
+							val bindEndpointQualifiers = opBind.getPotentialEffectiveEndpointQualifiers
+							if (endpointQualifier !== null && opBind !== null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
+								return opBind
+							} else if (endpointQualifier === null) {
+								return opBind
+							} else {
+								return null
+							}
+						}
+					}
+					val bindEndpointQualifiers = resBind.getPotentialEffectiveEndpointQualifiers
+					if (endpointQualifier !== null && resBind !== null && bindEndpointQualifiers.containsEndpointQualifier(endpointQualifier.endpointQualifier)) {
+						return resBind
+					} else if (endpointQualifier === null) {
+						return resBind
+					} else {
+						return null
+					}
+				}
+			}
+		}
+		return binding
+	}
 	
 	def List<AnyBinding> getBottomUpBindingHierarchy(Service service, ModuleBinding binding) {
 		val specBind = getMostSpecificBinding(service, binding);
 		var hierarchy = getBottomUpHierarchyForSpecificBinding(specBind)
 		hierarchy
 	}
-	def List<AnyBinding> getBottomUpBindingHierarchy(Operation operation, ModuleBinding binding) {
+	def List<AnyBinding> getBottomUpBindingHierarchy(Resource resource, ModuleBinding binding) {
+		val specBind = getMostSpecificBinding(resource, binding);
+		var hierarchy = getBottomUpHierarchyForSpecificBinding(specBind)
+		hierarchy
+	}
+	def List<AnyBinding> getBottomUpBindingHierarchy(AbstractOperation operation, ModuleBinding binding) {
 		val specBind = getMostSpecificOperationBinding(operation, binding);
 		var hierarchy = getBottomUpHierarchyForSpecificBinding(specBind)
 		hierarchy
@@ -373,6 +435,7 @@ class BindingLookup {
 		val opBind = EcoreUtil2.getContainerOfType(specBind, typeof(OperationBinding))
 		val channelBind = EcoreUtil2.getContainerOfType(specBind, typeof(ChannelBinding))
 		val svcBind = EcoreUtil2.getContainerOfType(specBind, typeof(ServiceBinding))
+		val resBind = EcoreUtil2.getContainerOfType(specBind, typeof(ResourceBinding))
 		val modBind = EcoreUtil2.getContainerOfType(specBind, typeof(ModuleBinding))
 		if (opBind !== null)
 			hierarchy+=opBind
@@ -380,6 +443,8 @@ class BindingLookup {
 			hierarchy+=channelBind
 		if (svcBind !== null)
 			hierarchy+=svcBind
+		if (resBind !== null)
+			hierarchy+=resBind
 		if (modBind !== null)
 			hierarchy+=modBind
 		hierarchy
@@ -391,6 +456,7 @@ class BindingLookup {
 	def getAllBindings (ResourceSet rs) {
 		var Set<IEObjectDescription> allBindingDescs = lookup.search("ModuleBinding ", Predicates::alwaysTrue, rs).toSet
 		allBindingDescs.addAll (lookup.search("ServiceBinding ", Predicates::alwaysTrue))
+		allBindingDescs.addAll (lookup.search("ResourceBinding ", Predicates::alwaysTrue))
 		allBindingDescs.addAll (lookup.search("OperationBinding ", Predicates::alwaysTrue))
 		var List<Binding> allBindings = newArrayList()
 		for (bindingDesc : allBindingDescs) {
@@ -410,14 +476,14 @@ class BindingLookup {
 		return allBindings
 	}
 	
-	/*
+	/**
 	 * Check, whether the given Binding applies to the given Service
 	 */
 	def dispatch isBindingApplicable (Binding bind, Service svc) {
 		return false
 	}
 	
-	/*
+	/**
 	 * Check, whether the given Binding applies to the given Module. The Binding is applicable,
 	 * if it references the given module or a later compatible version
 	 */
@@ -434,7 +500,7 @@ class BindingLookup {
 		}
 	}
 	
-	/*
+	/**
 	 * Check, whether the given Binding applies to the given Module and Service The Binding is applicable,
 	 * if it references the given module or a later compatible version and the module provides the service.
 	 */
@@ -451,7 +517,7 @@ class BindingLookup {
 		}
 	}
 	
-	/*
+	/**
 	 * Check, whether the given Binding applies to the given Service
 	 */
 	def dispatch isBindingApplicable (ModuleBinding bind, Service svc) {
@@ -468,15 +534,47 @@ class BindingLookup {
 		}
 		return false
 	}
+	/**
+	 * Check, whether the given Binding applies to the given Resource
+	 */
+	def dispatch isBindingApplicable (ModuleBinding bind, Resource res) {
+		var candModules = moduleLookup.findProvidingModules (res)
+		var versionFilter = versionFilterProvider.createVersionFilter (bind.module.versionRef)
+		for (mod : candModules) {
+			if (bind.module.module == mod || 
+				(nameProvider.getFullyQualifiedName (bind.module.module) == nameProvider.getFullyQualifiedName(mod)
+					&& versionFilter.matches (descBuilder.buildDescription (mod))
+				)
+			) {
+				return true
+			}
+		}
+		return false
+	}
 	
-	/*
+	/**
 	 * Check, whether the given Binding applies to the given Service
 	 */
-	def dispatch isBindingApplicable (ServiceBinding bind, Service svc) {
+	def dispatch isBindingApplicable (ServiceBinding bind, Service service) {
 		var versionFilter = versionFilterProvider.createVersionFilter (bind.service.versionRef)
-		if (bind.service.service == svc || 
-			(nameProvider.getFullyQualifiedName (bind.service.service) == nameProvider.getFullyQualifiedName (svc)
-				&& versionFilter.matches (descBuilder.buildDescription (svc))
+		if (bind.service.service == service || 
+			(nameProvider.getFullyQualifiedName (bind.service.service) == nameProvider.getFullyQualifiedName (service)
+				&& versionFilter.matches (descBuilder.buildDescription (service))
+			)
+		) {
+			return true
+		} else {
+			return false
+		}
+	}
+	/**
+	 * Check, whether the given Binding applies to the given Resource
+	 */
+	def dispatch isBindingApplicable (ResourceBinding bind, Resource resource) {
+		var versionFilter = versionFilterProvider.createVersionFilter (bind.resource.versionRef)
+		if (bind.resource.resource == resource || 
+			(nameProvider.getFullyQualifiedName (bind.resource.resource) == nameProvider.getFullyQualifiedName (resource)
+				&& versionFilter.matches (descBuilder.buildDescription (resource))
 			)
 		) {
 			return true

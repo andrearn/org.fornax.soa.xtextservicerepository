@@ -56,13 +56,24 @@ ModuleBinding:
 		('default-protocols' '{'
 			(protocol+=BindingProtocol)+
 		'}')?
+		('default-resource-protocols' '{'
+			(resourceProtocol+=BindingProtocol)+
+		'}')?
 		
 		('default-policies' '{'
 			(policies+=Policy)*
 		'}')?
+		('default-resource-policies' '{'
+			(resourcePolicies+=Policy)*
+		'}')?
+		
 		('default-assertions' '{'
 			(assertions+=Assertion)+
 		'}')?
+		('default-resource-assertions' '{'
+			(resourceAssertions+=Assertion)+
+		'}')?
+		
 		(serviceBindings+=ServiceBinding)*
 		(resourceBindings+=ResourceBinding)*
 	'}'

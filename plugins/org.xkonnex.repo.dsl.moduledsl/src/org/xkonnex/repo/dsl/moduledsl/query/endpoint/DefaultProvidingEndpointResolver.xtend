@@ -29,10 +29,13 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 	
 	
 	override getMostSpecificProvidingEndpointByType(Service service, Module module, IModuleEndpointProtocol protocol) {
-		for (ep : getServiceProvidingEndpoints(service, module)) {
-			val IModuleEndpointProtocol prot = componentInferrer.inferComponent(ep.endpointProtocol.type)
-			if (protocol.class.isAssignableFrom(prot.class)) {
-				return ep
+		val endpoints = getServiceProvidingEndpoints(service, module)
+		if (!endpoints.nullOrEmpty) {
+			for (ep : endpoints) {
+				val IModuleEndpointProtocol prot = componentInferrer.inferComponent(ep.endpointProtocol.type)
+				if (protocol.class.isAssignableFrom(prot.class)) {
+					return ep
+				}
 			}
 		}
 		return null
@@ -40,10 +43,19 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 	
 	override getMostSpecificProvidingEndpointByType(AbstractOperation operation, Module module, IModuleEndpointProtocol protocol) {
 		for (ep : getOperationProvidingEndpoints(operation, module)) {
-			val IModuleEndpointProtocol prot = componentInferrer.inferComponent(ep.endpointProtocol.type)
-			if (protocol.class.isAssignableFrom(prot.class)) {
-				return ep
+			if (ep.endpointProtocol?.type !== null) {
+				val IModuleEndpointProtocol prot = componentInferrer.inferComponent(ep.endpointProtocol.type)
+				if (protocol.class.isAssignableFrom(prot.class)) {
+					return ep
+				}
 			}
+		}
+		if (operation.eContainer instanceof Service) {
+			val Service svc = EcoreUtil2.getContainerOfType(operation, typeof(Service))
+			return getMostSpecificProvidingEndpointByType(svc, module, protocol)
+		} else if (operation.eContainer instanceof Resource) {
+			val Resource res = EcoreUtil2.getContainerOfType(operation, typeof(Resource))
+			return getMostSpecificProvidingEndpointByType(res, module, protocol)
 		}
 		return null
 	}
@@ -60,7 +72,12 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 			return opProvEndpoints
 		} else {
 			val svc = EcoreUtil2.getContainerOfType(operation, typeof(Service))
-			return svc.getServiceProvidingEndpoints(module)
+			if (svc !== null) {
+				return svc.getServiceProvidingEndpoints(module)
+			} else {
+				val res = EcoreUtil2.getContainerOfType(operation, typeof(Resource))
+				return res.getResourceProvidingEndpoints(module)
+			}
 		}
 	}
 	
@@ -78,7 +95,7 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 		val opRefs = operationResolver.getAllProvidedOperationRefs(module)
 		val selectedOpRefs = opRefs?.filter[it.operation == operation]
 		val opProvEndpointConfig = selectedOpRefs?.head
-		if (opProvEndpointConfig != null) {
+		if (opProvEndpointConfig !== null) {
 			return opProvEndpointConfig
 		} else if (operation.eContainer instanceof Service) {
 			val svc = EcoreUtil2.getContainerOfType(operation, typeof(Service))
@@ -101,7 +118,7 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 		val specEndpoint = endpointResolver.getMostSpecificProvidingEndpointByType(service, module, protocol)
 		var List<EObject> hierarchy = newArrayList()
 		val IModuleEndpointProtocol prot = componentInferrer.inferComponent(specEndpoint.endpointProtocol)
-		if (prot != null && protocol.class.isAssignableFrom(prot.class)) {
+		if (prot !== null && protocol.class.isAssignableFrom(prot.class)) {
 			hierarchy+=specEndpoint as EObject
 		}
 		return hierarchy
@@ -111,7 +128,7 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 		val specEndpoint = endpointResolver.getMostSpecificProvidingEndpointByType(operation, module, protocol)
 		var List<EObject> hierarchy = newArrayList()
 		val IModuleEndpointProtocol prot = componentInferrer.inferComponent(specEndpoint.endpointProtocol)
-		if (prot != null && protocol.class.isAssignableFrom(prot.class)) {
+		if (prot !== null && protocol.class.isAssignableFrom(prot.class)) {
 			hierarchy+=specEndpoint as EObject
 		}
 		if (operation.eContainer instanceof Service) {
@@ -133,7 +150,7 @@ class DefaultProvidingEndpointResolver implements IProvidingEndpointResolver {
 		val specEndpoint = endpointResolver.getMostSpecificProvidingEndpointByType(resource, module, protocol)
 		var List<EObject> hierarchy = newArrayList()
 		val IModuleEndpointProtocol prot = componentInferrer.inferComponent(specEndpoint.endpointProtocol)
-		if (prot != null && protocol.class.isAssignableFrom(prot.class)) {
+		if (prot !== null && protocol.class.isAssignableFrom(prot.class)) {
 			hierarchy+=specEndpoint as EObject
 		}
 		return hierarchy

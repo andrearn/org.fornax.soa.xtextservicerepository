@@ -68,10 +68,15 @@ class ServiceContractBuilder {
 	def void build (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, Profile enforcedProfile) {
 		for (protContractBuilder : protocolContractBuilders) {
 			try {
-				if (generateProvidedServices)
+				if (generateProvidedServices) {
 					protContractBuilder.buildProvidedServiceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, endpointQualifierRef, enforcedProfile);
-				if (generateUsedServices)
+					protContractBuilder.buildProvidedResourceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, endpointQualifierRef, enforcedProfile);
+					
+				}
+				if (generateUsedServices) {
 					protContractBuilder.buildUsedServiceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, endpointQualifierRef, enforcedProfile);
+					protContractBuilder.buildUsedResourceContracts (module, targetEnvironment, selectTypeVersionsByEnvironment, endpointQualifierRef, enforcedProfile);
+				}
 			} catch (Exception ex) {
 				log.log (Level::SEVERE, "Error generating contracts\n", ex)
 			}

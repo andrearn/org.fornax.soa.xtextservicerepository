@@ -4,6 +4,7 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 import org.eclipse.emf.ecore.EObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 class VersionQueries {
 	
@@ -26,6 +27,10 @@ class VersionQueries {
 	
 	def dispatch Version getOwnerVersion (Service service) {
 		service.version;
+	}
+	
+	def dispatch Version getOwnerVersion (Resource resource) {
+		resource.version;
 	}
 	
 }

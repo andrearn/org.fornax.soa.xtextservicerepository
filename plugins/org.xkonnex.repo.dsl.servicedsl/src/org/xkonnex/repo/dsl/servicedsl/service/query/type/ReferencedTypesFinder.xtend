@@ -21,6 +21,8 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Type
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.TypeRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation
 
 /*
  * Find type references of a model object
@@ -54,6 +56,10 @@ class ReferencedTypesFinder {
 		s.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingTypeVersion () as VersionedType).toList;
 	}
 	
+	def dispatch List<VersionedType>  allReferencedVersionedTypes (Resource s, LifecycleState minState) {
+		s.allReferencedTypeRefs().filter (typeof (AbstractVersionedTypeRef)).map (e|e.selectMatchingTypeVersion () as VersionedType).toList;
+	}
+	
 	
 	
 	def private dispatch List<TypeRef> allReferencedTypeRefs (Type t) {
@@ -79,6 +85,10 @@ class ReferencedTypesFinder {
 		newArrayList(p.type);
 	}
 	
+	def private dispatch List<TypeRef> allReferencedTypeRefs (AbstractOperation o) {
+		return new ArrayList<TypeRef>();
+	}
+	
 	def private dispatch List<TypeRef> allReferencedTypeRefs (Operation o) {
 		var refs = new HashSet<TypeRef>();
 		refs.addAll (o.parameters.map (p|p.allReferencedTypeRefs()).flatten.filter (typeof (TypeRef)));
@@ -86,7 +96,18 @@ class ReferencedTypesFinder {
 		refs.toList;
 	}
 	
+	def private dispatch List<TypeRef> allReferencedTypeRefs (ResourceOperation o) {
+		var refs = new HashSet<TypeRef>();
+		refs.addAll (o.parameters.map (p|p.allReferencedTypeRefs()).flatten.filter (typeof (TypeRef)));
+		refs.addAll (o.response.map[it.^return].flatten.map (r|r.allReferencedTypeRefs()).flatten.filter (typeof (TypeRef)));
+		refs.toList;
+	}
+	
 	def private dispatch List<TypeRef> allReferencedTypeRefs (Service s) {
+		s.operations.map(o|o.allReferencedTypeRefs()).flatten.map (e|e as TypeRef).toList;
+	}
+	
+	def private dispatch List<TypeRef> allReferencedTypeRefs (Resource s) {
 		s.operations.map(o|o.allReferencedTypeRefs()).flatten.map (e|e as TypeRef).toList;
 	}
 	

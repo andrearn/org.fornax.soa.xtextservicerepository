@@ -20,6 +20,7 @@ import org.xkonnex.repo.dsl.basedsl.version.VersionComparator
 import org.eclipse.xtext.naming.QualifiedName
 import org.eclipse.xtext.resource.IEObjectDescription
 import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 /**
  * This class provides operations to find {@link Module}s 
@@ -113,6 +114,18 @@ class ModuleLookup {
 		return providingModules
 	}
 	
+	/** 
+	 * Find all {@link Module}s that provide the given Resource
+	 * @param The {@link Resource} that must be provided by the {@link Module}
+	 */
+	def findProvidingModules (Resource resource) {
+		var Set<Module> allModules = findAllModules (resource.eResource?.resourceSet)
+		var providingModules = allModules.filter (m|m.providedResources.map (e|e.resource).exists (s|s == resource))
+		val nsProvidingModules = allModules.filter (m|m.providedNamespaces.map (e|e.namespace.resources).exists (s|s == resource))
+		providingModules.toSet.addAll (nsProvidingModules)
+		return providingModules
+	}
+	
 	/**
 	 * @deprecated
 	 */
@@ -133,11 +146,26 @@ class ModuleLookup {
 	}
 	
 	/** 
+	 * Find all modules that provide the given resource. from any of the candidate modules
+	 */
+	def findProvidingModules (Resource resource, Iterable<Module> candidateModules) {
+		candidateModules.filter (cand| resource.findProvidingModules.exists(m|m == cand))
+	}
+	
+	/** 
 	 * Find all modules that provide the given service, from any of the candidate modules, that 
 	 * declare the given qualifier
 	 */
 	def findProvidingModules (Service service, Iterable<Module> candidateModules, String qualifierName) {
 		service.findProvidingModules (candidateModules).filter (m|m.qualifiers.qualifiers.exists(q|q.name == qualifierName))
+	}
+	
+	/** 
+	 * Find all modules that provide the given resource, from any of the candidate modules, that 
+	 * declare the given qualifier
+	 */
+	def findProvidingModules (Resource resource, Iterable<Module> candidateModules, String qualifierName) {
+		resource.findProvidingModules (candidateModules).filter (m|m.qualifiers.qualifiers.exists(q|q.name == qualifierName))
 	}
 	
 	def findLatestModuleByNameAndMinState (Module module, LifecycleState minState) {

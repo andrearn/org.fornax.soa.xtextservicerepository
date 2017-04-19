@@ -784,7 +784,7 @@ Channel:
  * <ul>
  * 	<li>public:	usable by anyone, potentially remotely available </li>
  * 	<li>domain:	usable by all services in the same namespace or a subnamespace, potentially remotely available </li>
- * 	<li>private:	for internal use only, not remotely available on an ESB </li>
+ * 	<li>private:	for internal use only, not remotely available on an ESB or API Gateway </li>
  * </ul>
  */	
 enum Visibility : public | domain | private; 

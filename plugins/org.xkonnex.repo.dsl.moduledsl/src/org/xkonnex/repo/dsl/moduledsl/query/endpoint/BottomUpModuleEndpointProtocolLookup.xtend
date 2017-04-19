@@ -29,7 +29,7 @@ class BottomUpModuleEndpointProtocolLookup implements IModuleEndpointProtocolLoo
 		val specEndpoint = endpointResolver.getMostSpecificProvidingEndpointByType(service, module, protocol)
 		var List<IModuleEndpointProtocol> hierarchy = newArrayList()
 		val IModuleEndpointProtocol prot = componentInferrer.inferComponent(specEndpoint.endpointProtocol)
-		if (prot != null && protocol.class.isAssignableFrom(prot.class)) {
+		if (prot !== null && protocol.class.isAssignableFrom(prot.class)) {
 			hierarchy+=prot
 		}
 		return hierarchy
@@ -44,7 +44,7 @@ class BottomUpModuleEndpointProtocolLookup implements IModuleEndpointProtocolLoo
 		val specEndpoint = endpointResolver.getMostSpecificProvidingEndpointByType(operation, module, protocol)
 		var List<IModuleEndpointProtocol> hierarchy = newArrayList()
 		val IModuleEndpointProtocol prot = componentInferrer.inferComponent(specEndpoint.endpointProtocol)
-		if (prot != null && protocol.class.isAssignableFrom(prot.class)) {
+		if (prot !== null && protocol.class.isAssignableFrom(prot.class)) {
 			hierarchy+=prot
 		}
 		val svc = EcoreUtil2.getContainerOfType(operation, typeof(Service))
@@ -58,8 +58,8 @@ class BottomUpModuleEndpointProtocolLookup implements IModuleEndpointProtocolLoo
 		if (prot !== null && protocol.class.isAssignableFrom(prot.class)) {
 			hierarchy+=prot
 		}
-		val svc = EcoreUtil2.getContainerOfType(operation, typeof(Service))
-		hierarchy += collectEndpointProtocolHierarchyByType(svc, module, protocol)
+		val res = EcoreUtil2.getContainerOfType(operation, typeof(Resource))
+		hierarchy += collectEndpointProtocolHierarchyByType(res, module, protocol)
 		return hierarchy
 	}
 	

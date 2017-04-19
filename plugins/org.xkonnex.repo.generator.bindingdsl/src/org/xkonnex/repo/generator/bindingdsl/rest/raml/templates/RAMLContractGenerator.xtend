@@ -51,6 +51,9 @@ import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTypeExtensions
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Response
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ReturnCode
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.IntReturnCode
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.StringReturnCode
 
 class RAMLContractGenerator {
     
@@ -137,8 +140,6 @@ class RAMLContractGenerator {
         val effBind = bindingBuilder.createEffectiveBinding(resource, binding)
         val prot = effBind.protocol.filter(typeof(ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
         val ramlFile = resourceFilenameProvider.getResourceContractFileNameFragment(resource, effBind.moduleBinding, typeof(REST)) + ".raml";
-        val environment = environmentResolver.resolveEnvironment(binding)
-        val verbsToOperations = operationBindingQueries.getRESTOperationsByVerb(resource, effBind.moduleBinding)
         val content = '''
             #%RAML 1.0
             title: «resource.name» API
@@ -193,7 +194,7 @@ class RAMLContractGenerator {
             }
         }
         val basePath = operation.getOperationPath(binding)
-        val uri = if(restProt?.path !== null) restProt?.path else null
+        val uri = if(restProt?.path !== null) restProt?.path else operation.uri
         val params = resourceQueries.extractParametersFromURI(uri, operation).toList
         val content = '''
             
@@ -201,7 +202,7 @@ class RAMLContractGenerator {
                 «IF !params.nullOrEmpty»
                     uriParameters:
                         «FOR param : params»
-                            «param.name» : «param.toTypeNameRef»
+                            «param.name» : «param.type.toTypeNameRef»
                         «ENDFOR»
                 «ENDIF»
                 «operation.toRequestResponse(restProt, restModuleEndpoint)»
@@ -256,8 +257,8 @@ class RAMLContractGenerator {
             «verb.toRAMLVerb»:
                 responses:
                     «FOR response : op.response»
-                        «response.responseCode»:
-                            headers:
+                        «response.responseCode.toReturnCode»:
+«««                            headers:
 «««                                «FOR header : response.header»
 «««                                    «header.name»:
 «««                                        type:
@@ -321,6 +322,15 @@ class RAMLContractGenerator {
     
     private def toRAMLVerb (Verb verb) {
         verb.getName().toLowerCase
+    }
+    private def dispatch String toReturnCode (ReturnCode returnCode) {
+    	'''200'''
+    }
+    private def dispatch String toReturnCode (IntReturnCode returnCode) {
+        '''«returnCode.returnCode»'''
+    }
+    private def dispatch String toReturnCode (StringReturnCode returnCode) {
+        '''«returnCode.returnCode»'''
     }
     
     private def dispatch toReturnType (Response response) {
