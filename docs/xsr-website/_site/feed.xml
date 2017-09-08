@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>XKonneX Repository - DSL based archicture repository</title>
+    <description>XKonneX Repository ist an architecture repository that provides an overview of your domain model and services and governance of these assets. All assets are modeled XText based textual DSL. Therefore it provides all means of an IDE to create, find, link and validate your model. Code generators create technical service and model contracts such as XSDs, WSDLs or RAML resource descriptions.
+</description>
+    <link>http://www.xkonnex.org/XKonneXRepo/</link>
+    <atom:link href="http://www.xkonnex.org/XKonneXRepo/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Fri, 08 Sep 2017 21:51:56 +0200</pubDate>
+    <lastBuildDate>Fri, 08 Sep 2017 21:51:56 +0200</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
+    
+  </channel>
+</rss>

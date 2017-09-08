@@ -1,0 +1,58 @@
+# Site settings
+title: XKonneX Repository - DSL based archicture repository
+email: sven.efftinge@typefox.io
+description: > # this means to ignore newlines until "baseurl:"
+  XKonneX Repository ist an architecture repository that provides an overview of your domain model and services and
+  governance of these assets. All assets are modeled XText based textual DSL. Therefore it provides all means of an IDE to
+  create, find, link and validate your model. Code generators create technical service and model contracts such as XSDs, WSDLs or RAML
+  resource descriptions.
+baseurl: "/XKonneXRepo" # the subpath of your site, e.g. /blog/
+url: "http://www.xkonnex.org" # the base hostname & protocol for your site
+twitter_username: xkonnexrepo
+github_username:  xsr-dev
+encoding: UTF-8
+exclude:
+  - README.md
+  - Gemfile
+
+# Build settings
+markdown: kramdown
+
+kramdown:
+  input: GFM
+  #auto_ids:       true
+  footnote_nr:    1
+  entity_output:  as_char
+  toc_levels:     1..4
+  smart_quotes:   lsquo,rsquo,ldquo,rdquo
+  enable_coderay: false
+
+  coderay:
+    coderay_wrap:              div
+    coderay_line_numbers:      inline
+    coderay_line_number_start: 1
+    coderay_tab_width:         4
+    coderay_bold_every:        10
+    coderay_css:               style
+
+pygment_options:
+    tabsize: 4
+    
+src:
+  xtext: "https://github.com/eclipse/xtext/blob/v2.9.0"
+  mwe: "https://github.com/eclipse/mwe/blob/v2.7.1"
+  emf: "https://github.com/eclipse/emf/blob/R2_9_0"
+  gef: "https://github.com/eclipse/gef/blob/master"
+  sevenlang: "https://github.com/xtext/seven-languages-xtext/blob/master"
+
+javadoc:
+  xtext: "http://download.eclipse.org/modeling/tmf/xtext/javadoc/2.9"
+  eclipse-platform: "http://help.eclipse.org/luna/topic/org.eclipse.platform.doc.isv/reference/api"
+  eclipse-jdt: "http://help.eclipse.org/luna/topic/org.eclipse.jdt.doc.isv/reference/api"
+  java: "http://docs.oracle.com/javase/8/docs/api/"
+  javaee: "https://docs.oracle.com/javaee/7/api"
+  junit: "http://junit.sourceforge.net/javadoc"
+  guice: "https://google.github.io/guice/api-docs/latest/javadoc"
+  mongodb: "http://api.mongodb.org/java/2.6"
+
+edit-repo : "https://github.com/andrearn/xtextservicerepository/edit/master/docs/xsr-website/"

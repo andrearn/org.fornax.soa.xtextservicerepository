@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+	<meta charset="UTF-8">
+	<title>XKonneX Repository - DSL Reference</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description"
+		content="The website of XKonnex Repository, an open-source service repository based on domain-specific languages">
+	<meta name="author" content="André Arnold">
+	<!--  styles -->
+	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<!-- Le fav and touch icons -->
+	<link rel="shortcut icon" href="/XKonneXRepo/images/favicon.png">
+	
+	<link href="/XKonneXRepo/css/bootstrap.css" rel="stylesheet" type='text/css'>
+	<link href="/XKonneXRepo/css/bootstrap-responsive.css" rel="stylesheet" type='text/css'>
+	<link href="/XKonneXRepo/css/shield-responsive.css" rel="stylesheet" type='text/css'>
+	<link href='/XKonneXRepo/css/fonts.css' rel='stylesheet' type='text/css'>
+	<link href="/XKonneXRepo/css/prettyPhoto.css" rel="stylesheet" media="screen" type='text/css'>
+	<link href="/XKonneXRepo/css/prettify.css" type="text/css" rel="stylesheet"/>
+	<link href="/XKonneXRepo/css/style.css" rel="stylesheet" type='text/css'>
+	<!-- cover flow -->
+	<link href="/XKonneXRepo/css/coverflow.css" rel="stylesheet" type='text/css'>
+	<!--[if lt IE 9]>
+	  <link href="/css/iebugs.css" rel="stylesheet" type='text/css'>
+	<![endif]-->
+</head>
+
+
+  <body>
+  <!-- Google Tag Manager -->
+<noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TGDS5S"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TGDS5S');</script>
+<!-- End Google Tag Manager -->
+
+    <header class="site-header">
+
+  <!-- Navbar -->
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse"
+          data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+          class="icon-bar"></span> <span class="icon-bar"></span>
+        </a> <a class="brand" href="/XKonneXRepo/index.html"></a>
+        <div class="nav-collapse collapse" style="height: 0px;">
+          <ul class="nav">
+            <!--li ><a href="/XKonneXRepo/news.html">News</a></li-->
+            <li ><a href="/XKonneXRepo/download.html">Download</a></li>
+            <li ><a href="/XKonneXRepo/documentation/index.html">Documentation</a></li>
+            <li ><a href="/XKonneXRepo/community.html">Community</a></li>
+          </ul>
+          <!--div class="nav pull-right">
+            <li ><a><iframe src="https://ghbtns.com/github-btn.html?user=eclipse&repo=xtext&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe></a></li>
+          </div-->
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+  <!-- Navbar End -->
+
+</header>
+
+
+    <div class="page-content">
+  <script>
+    function startSearch(event) {
+        if (event.keyCode == 13) {
+            var q = 'site:eclipse.org/Xtext/documentation+' + event.target.value;
+            window.open('https://www.google.com/search?q=' + q, "_self");
+        }
+    }
+  </script>
+  <div class="wrapper">
+  	<div id="page">  
+      <div class="inner">
+        <div id="maincontainer" class="container">
+          <span class="edit-on-github pull-right">
+            <a href="https://github.com/andrearn/xtextservicerepository/edit/master/docs/xsr-website/documentation/10-langreference.md">Edit on Github</a>
+          </span>
+          <div class="span3" style="margin-left: 0px;">
+            <div class="search-bar">
+              <img src="/XKonneXRepo/images/search-gray.png"/>
+              <input type="search" id="google-search" onkeyup="startSearch(event);"/>
+            </div>
+            <ul id="nav-outline" style="margin-left: 0px;">
+	<li class="nav-part">Introduction</li>
+	<li><a href="01-Introduction.html">Introduction</li>
+
+	<li class="nav-part">Getting Started</li>
+	<li><a href="02-GettingStarted.html">Getting Started</a>
+	</li>
+
+	<li class="nav-part">Concepts</li>
+	<li><a href="03-Concepts.html">Concepts</a>
+	</li>
+	<li><a href="04-Governance.html">Governance</a>
+	</li>
+	<li><a href="05-IDESupport.html">IDE Support</a>
+	</li>
+
+	<li class="nav-part">Reference Documentation</li>
+	<li><a href="10-langreference.html">Modeling language reference</a>
+	</li>
+	<li><a href="20-generatorreference.html">Code generators</a>
+	</li>
+	<li class="nav-part">Additional Resources
+	<li><a href="http://download.eclipse.org/modeling/tmf/xtext/javadoc/2.9/">API Documentation (JavaDoc)</a>
+</ul>
+
+          </div>
+          <div class="span8 doc-contents">
+            <h1 id="DSLReference">DSL Reference</h1>
+
+<h2 id="GeneralRules">General syntax rules</h2>
+
+<h3 id="qualifiedNameRule">Qualified names</h3>
+
+<p>Asset names can be fully qualified. A <code>QualifiedName</code> is defined as:</p>
+
+<p>Definition:</p>
+<pre><code class="language-Xtext">    ID(.ID)*
+</code></pre>
+
+<p>Example:</p>
+<pre><code class="language-BaseDSL">    my.qualified.Name
+</code></pre>
+
+<h3 id="keywordEscapeRule">Keyword escape</h3>
+
+<p>If a name is already a keyword it can be escaped with the character e[^] as usual in Xtext<br />
+based languages.</p>
+
+<h3 id="versionDeclRule">Version declarations</h3>
+
+<p>Versioned assets declare their version with the following statement:</p>
+
+<p>Definition:</p>
+<pre><code class="language-xtext">    version INT('.'INT)*
+</code></pre>
+
+<p>Example:</p>
+<pre><code class="language-BaseDSL">    version 1.3.1
+</code></pre>
+
+<p>The first number is the major version number. Two elements with the same name and major version number are considered compatible.</p>
+
+<h3 id="lifecycleDeclRule">Lifecycle state declarations</h3>
+
+<p>Elements under the SOA governance lifecycle declare their current state with the following statement:</p>
+
+<p>Definition:</p>
+<pre><code class="language-ServiceDSL">    lifecycle-state lifecycleStateNameFromProfile
+</code></pre>
+
+<p>Example:</p>
+<pre><code class="language-ServiceDSL">    lifecycle-state productive
+</code></pre>
+
+<p>Possible lifecycle states are defined with Lifecycles in the profil DSL.</p>
+
+<h3 id="governance-approval-declarations-govapprovaldeclrule">Governance approval declarations {#govApprovalDeclRule}]</h3>
+
+<p>Assets under SOA governance declare their current approval state with the following section:</p>
+
+<p>Definition:</p>
+<pre><code class="language-ServiceDSL">    governance-approval {
+        yes | no | tolerated | temporarily-tolerated
+        (decision-on DATESTRING)?
+        (decision-by STRING)? 
+    }
+</code></pre>
+
+<p>Example:</p>
+<pre><code class="language-ServiceDSL">    governance-approval {
+        yes
+        decision-on "01.03.2011"
+        decision-by "Max Miller" 
+    }
+</code></pre>
+
+<p>In the example the asset has been approved on March 1st, 2011 by Max Miller.</p>
+
+<h2 id="BusinessDsl">Business DSL</h2>
+
+<h3 id="bizDslLangIntro">Introduction</h3>
+
+<p>The Business DSL defines and business capabilties and business functions as well as organizational structures that implements the business function. Business capabilities can be mapped to services, service operations or features of a solution. E.g. a service may declare that it realizes a certain capability. Capabilities can be grouped into e[capability-group]s and organized into e[domain]s. It is also possible to define variants of a capability.</p>
+
+<p>Example:</p>
+<pre><code class="language-BusinessDSL">domain company.shop {
+    
+    capability-group Invoicing {
+        description "Creating and managing invoices"
+        
+            
+        capability BillRun {
+            version 1.0
+            short-description "Start the monthly billrun"
+            automation-level automated
+            business-value "critical"
+        }
+        
+        capability InvoiceCreation {
+            version 1.0
+            short-description "Create an invoice document for the customer "
+            automation-level automated
+            business-value "medium"
+            inputs {
+                input "order"
+                input "customer"
+                input "customer address"
+            }
+            outcomes {
+                outcome "Invoice document created and archived"
+                outcome "Invoice document sent by email and postal mail to the customer"
+            }
+        }
+    }    
+}
+</code></pre>
+
+<p>The example defines a capability group <code>Invoicing</code> in the domain <code>company.shop</code>. <br />
+The capability group contains the fully automated capabilities <code>Billrun</code> and <code>InvoiceCreation</code>.<br />
+The latter one defines required inputs and expected results.</p>
+
+<p>Business capability models can be created by creating a new <em>Business DSL file</em>. A wizard is <br />
+available for that.</p>
+
+<h2 id="ServiceDSL">Service DSL</h2>
+
+<h3 id="language-overviewservicedslintro">Language overview{#ServiceDSLIntro}</h3>
+
+<h4 id="ServiceDslFile">Service DSL file structure</h4>
+
+<p>A Service DSL file defines namespace, business objects, services and exception. It has the following basic structure:</p>
+
+<pre><code class="language-ServiceDSL">org-namespace &lt;QualifiedName&gt; shortname "&lt;String&gt;" {
+                    
+    domain-namespace &lt;QualifiedName&gt; shortname "&lt;String&gt;" {
+        (
+        metadata {
+            &lt;business-domain&gt;?
+            &lt;owner&gt;?
+        }
+        )?
+        
+        /* business objects and enums */
+        businessObject AbstractProduct {
+            metadata {
+                version &lt;someversion.number&gt;
+                lifecycle-state &lt;a governance lifecycle state&gt;
+                governance-approval {
+                    ...
+                }
+            }
+            &lt;... attributes and weak-references ...&gt;
+        }
+        
+        
+        /* services ... */                
+        public service CustomerEntityService {
+            metadata {
+                version &lt;someversion.number&gt;
+                lifecycle-state &lt;a governance lifecycle state&gt;
+                governance-approval {
+                    ...
+                }
+                category entity
+                statefulness &amp;lt; idempodent | stateless | stateful &amp;gt;
+                persistence &lt;read | write | read/write&gt;
+            }
+            
+            // operations go here:
+            &lt;message exchange pattern: sync | async ..&gt; &lt;operationName&gt; (&lt;(optional)? parameters&gt; ) 
+                returns &lt;(optional)? return paramters&gt;
+                throws &lt;exceptions, ...&gt;
+            {
+                requires &lt;other version constrained service dependency&gt;
+            }
+        }
+        
+        // exceptions ... 
+        exception &lt;ExceptionName&gt; {
+            metadata {
+                version &lt;someversion.number&gt;
+                lifecycle-state &lt;a governance lifecycle state&gt;
+                governance-approval {
+                    ...
+                }
+            }
+            &lt;exception-attributes like in business objects&gt;
+        }
+    }
+}
+</code></pre>
+
+<h4 id="namespaceslangnamespaces">Namespaces{#langNamespaces}</h4>
+
+<h5 id="langOrgNamespace">Organization Namespace</h5>
+
+<p>Organization Namespaces are toplevel namespaces like e[com.example]. They reflect<br />
+a company, organization or top level unit of a company. Organization Namespaces are<br />
+used as host part in namespace URIs in reversed order, e.g. <em>http://example.com/</em><br />
+Organization Namespace should declare a short name which might be used as namespace prefix or<br />
+part of a file name.</p>
+
+<h5 id="langDomainNamespace">Domain Namespace</h5>
+
+<p>A Domain Namespace contains a canonical datamodel as well as related public services for a certain <br />
+logical subdomain. Usually a service DSL file declares a single Domain Namespace and no Domain Namespaces<br />
+are nested in that file within the declared Domain Namespace. Instead subnamespaces will be declared in<br />
+separate file having their namespace name prefixed with with the names of all their parnet Domain<br />
+Namespaces. Hence parent-child relationships of Domain Namespaces are built by apply this <br />
+naming convention. Dots are used as separators.</p>
+
+<p>Example:</p>
+
+<p>Be <code>product</code> the top level of all subnamespace related to customers. Then <code>customer.contract</code> would declare the subnamespace <code>contract</code> as subnamespace of <code>customer</code>. If <code>org.example</code> would be the top level Organization Namespace containing these Domain Namespaces, the full qualified name would be:</p>
+
+<p><code>org.example.customer.contract</code>. The resulting namespace URI would look like: <em>http://example.org/customer/contract</em></p>
+
+<p>The resp. declarations with Service DSL would look like:</p>
+
+<pre><code class="language-ServiceDSL">org-namespace com.example shortname "ex" {
+                    
+    domain-namespace customer shortname "cust" {
+        metadata {
+        }
+                        
+    }
+}
+</code></pre>
+
+<p>And it’s subdomain:</p>
+<pre><code class="language-ServiceDSL">org-namespace com.example shortname "ex" {
+                    
+    domain-namespace customer.contract shortname "ct" {
+        metadata {
+        }
+                    
+    }
+}
+</code></pre>
+
+<h5 id="langInternalNamespace">Internal Namespace</h5>
+
+<p>An internal namespace contains private services and the non canonical datamodel, i.e. internal parts <br />
+of the infrastructure the may change frequently. Datatypes declared in an internal namespace are being <br />
+considered noncanonical. Services defined in an internal namespace should be marked e[private]. An internal<br />
+namespace is declared like this:</p>
+
+<p>Example:</p>
+<pre><code class="language-ServiceDSL">org-namespace com.example shortname "ex" {
+                    
+    internal-namespace customer.contract.internal.backend shortname "ctback" {
+        metadata {
+        }
+                        
+    }
+}
+</code></pre>
+
+<h4 id="langBOs">BusinessObjects</h4>
+
+<p>BusinessObject are user defined complex datatypes capturing business data. BusinessObject are versioned <br />
+and have a lifecycle state. The actual data are represented by one or more properties, that have a name and a datatype.</p>
+
+<p>Example:</p>
+
+<pre><code class="language-ServiceDSL">businessObject AbstractProduct {
+    metadata {
+        version 1.0
+        lifecycle-state test
+        governance-approval {
+            yes
+            approval-date "20.04.2011"
+            approved-by "Anna Jacobson"
+        }
+    }
+    business-key productId : string
+    name : string
+    price : AbstractPrice majorVersion 1
+    category : string
+    optional vendor : string
+}
+</code></pre>
+
+<h5 id="langBOMetadata">Business object meta data</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Keyword</th>
+      <th style="text-align: left">Valid values</th>
+      <th style="text-align: left">Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code>version</code></td>
+      <td style="text-align: left"><code class="language-xtext">INT('.'INT)*</code></td>
+      <td style="text-align: left"><code class="language-ServiceDSL">version 1.2.1</code></td>
+      <td>The business object version.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>replaces</code></td>
+      <td style="text-align: left">Reference to old business object</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">replaces OldBusinessObject</code><br />    <code class="language-ServiceDSL"> majorVersion 1</code></td>
+      <td>Used to rename business objects or move them to another namespace. The reference to the previous business object is given here.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>lifecycle-state</code></td>
+      <td style="text-align: left">Reference to a lifecycle state by name</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">lifecycle-state defined</code></td>
+      <td>The lifecycle state of the business object with regard to SOA governance.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>governance-approval</code></td>
+      <td style="text-align: left">see definition of governance approval</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">governance-approval {</code><br />    <code class="language-ServiceDSL">    yes</code><br />    <code class="language-ServiceDSL">    decision-on "01.02.2011"</code><br />    <code class="language-ServiceDSL">    decision-by "John Miller"</code><br /><code class="language-ServiceDSL">}</code></td>
+      <td>The state of the governance decision on the business object.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>retirement-on</code></td>
+      <td style="text-align: left">DATE literal STRING literal with a date</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">retirement-on "01.06.2014"</code></td>
+      <td>The (planned) date of retirement of the business object.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>provided-definition-URL</code></td>
+      <td style="text-align: left">STRING with technical contract URL</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">provided-definition-URL</code><br />    <code class="language-ServiceDSL">"http://somehost:8080/some.xsd"</code></td>
+      <td>Only for business objects defined in internal namespaces. The location where the already existing definition of the business object can be found.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="langBoProperties">Properties</h5>
+
+<p>Properties are use by business and query objects. A property is defined as:</p>
+
+<pre><code class="language-xtext">Property:
+    (deprecated?='@deprecated')? 
+    (
+        (((optional?='optional')? (weak?='weak')?) | (isBusinessKey?='business-key')? | (isProvidedKey?='provided-key')?) 
+        (readonly?='read-only')?
+    )
+    ((historizingKey?='historizing-key') | (historized?='historized') | (versionIndependantKey?='version-independant-key'))? 
+    name=ID ':' type=TypeRef ;
+</code></pre>
+
+<p>Properties have a name and a type reference. Further cardinalities<br />
+and some qualifiers can be defined. If a property is optional, the keyword <code>optional</code><br />
+is being. If a property has multiple cardinality brackets are used in the type reference after the type<br />
+name, e.g.</p>
+
+<p>contract : <code class="language-ServiceDSL">Contract [] majorVersion 1</code></p>
+
+<p>If the collection type is a set instead of a list it can be expressed like this:</p>
+
+<p>contract : <code class="language-ServiceDSL">Contract [] as set] majorVersion 1</code></p>
+
+<p>Property qualifier keywords:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Keyword</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code>optional</code></td>
+      <td>The property is optional. It may be null.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>weak</code></td>
+      <td>Though the property is mandatory from a business point of view, it is not always set for technical reasons, such as query performance.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>business-key</code></td>
+      <td>The property is a business-key. All business keys together identify an object. Business keys must be always defined. However it is not necessary that a business object has a business key.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>provided-key</code></td>
+      <td>The property is a key generated or provided from somewhere else, as e.g. a    backend system. In contrast to a business key a provided key may not always be set.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>historized</code></td>
+      <td>The property is a historized relationship. Hence a set key attributes, the historizing keys are required on the referenced type to resolve the reference. All historized versions of a BO share the same version independant key</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>historing-key</code></td>
+      <td>The property is a key used to resolve historized references to this BO.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>version-independant-key</code></td>
+      <td>The property is a key shared by all versions of a historized BO.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h6 id="common-features-of-properties">Common features of Properties:</h6>
+
+<p>Property name and type:</p>
+
+<p>Each property has a name and a type. The name and the type are separated by <code>:</code>. Types may be<br />
+BusinessObjects, Enumerations or DataTypes, i.e. primitive types defined in the SOAProfile. As BusinessObjects and <br />
+Enumerations are versioned, the type reference of the attribute must declare a version constraint.</p>
+
+<p>Example:</p>
+<pre><code class="language-ServiceDSL">firstname : string
+contract : Contract majorVersion 1
+</code></pre>
+
+<p>Cardinality:</p>
+
+<p>Properties may be marked optional by using the keyword <code>optional</code> in front of the property name.</p>
+
+<p>firstname may be left empty / null:</p>
+<pre><code class="language-ServiceDSL">optional firstname : string
+</code></pre>
+
+<p>Properties may also have a collection type:</p>
+<pre><code class="language-ServiceDSL">contracts : Contract [] majorVersion 1
+</code></pre>
+<p>The BusinessObject has a collection of at least one Contract in major version 1.</p>
+
+<p>Property qualifier keywords:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Keyword</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code>optional</code></td>
+      <td>The property is optional. It may be null.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>weak</code></td>
+      <td>Though the property is mandatory from a business point of view, it is not always set for technical reasons, such as query performance.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>business-key</code></td>
+      <td>The property is a business-key. All business keys together identify an object. Business keys must be always defined. However it is not necessary that a business object has a business key.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>provided-key</code></td>
+      <td>The property is a key generated or provided from somewhere else, as e.g. a backend system. In contrast to a business key a provided key may not always be set.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>historized</code></td>
+      <td>The property is a historized relationship. Hence a set key attributes, the historizing keys are required on the referenced type to resolve the reference. All historized versions of a BO share the same version independant key</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>historing-key</code></td>
+      <td>The property is a key used to resolve historized references to this BO.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>version-independant-key</code></td>
+      <td>The property is a key shared by all versions of a historized BO.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Common features of Properties:</p>
+
+<p>Property name and type:</p>
+
+<p>Each property has a name and a type. The name and the type are separated by <code>:</code>. Types may be<br />
+BusinessObjects, Enumerations or DataTypes, i.e. primitive types defined in the SOAProfile. As BusinessObjects and <br />
+Enumerations are versioned, the type reference of the attribute must declare a version constraint.</p>
+
+<h4 id="langEnum">Enumerations</h4>
+
+<h5 id="langEnumMetadata">Enumeration meta data</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Keyword</th>
+      <th style="text-align: left">Valid values</th>
+      <th style="text-align: left">Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code>version</code></td>
+      <td style="text-align: left"><code>INT('.'INT)*</code></td>
+      <td style="text-align: left"><code class="language-ServiceDSL">version 1.2.1</code></td>
+      <td>The enumeration version.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>replaces</code></td>
+      <td style="text-align: left">Reference to old enumeration</td>
+      <td style="text-align: left"><code>replaces OldEnumeration</code><br />    <code class="language-ServiceDSL">majorVersion 1</code></td>
+      <td>Used to rename enumerations or move them to another namespace. The reference to the previous enumeration is given here.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>lifecycle-state</code></td>
+      <td style="text-align: left">Reference to a lifecycle state by name</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">lifecycle-state defined</code></td>
+      <td>The lifecycle state of the enumeration with regard to SOA governance.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>governance-approval</code></td>
+      <td style="text-align: left">see definition of governance approval</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">governance-approval {</code><br />    <code class="language-ServiceDSL">    yes</code><br />    <code class="language-ServiceDSL">    decision-on "01.02.2011"</code><br />    <code class="language-ServiceDSL">    decision-by "John Miller"</code><code class="language-ServiceDSL">}</code></td>
+      <td>The state of the governance decision on the enumeration.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>retirement-on</code></td>
+      <td style="text-align: left">DATE or STRING literal with a date</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">retirement-on "01.06.2014"</code></td>
+      <td>The (planned) date of retirement of the enumeration.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>provided-contract</code></td>
+      <td style="text-align: left">STRING with technical contract URL</td>
+      <td style="text-align: left"><code>provided-definition-URL</code><br />    <code class="language-ServiceDSL">"http://somehost:8080/some.xsd"</code></td>
+      <td>Only for enumerations defined in internal namespaces. The location where the already existing definition of the business object can be found.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="Services">Services</h4>
+
+<h5 id="langGeneralServiceProperties">General service properties</h5>
+
+<h6 id="public-services">Public services:</h6>
+
+<p>Public services comprice the official API and should be generally used. Public services<br />
+may depend, i.e. <code>require</code> a private service. Hence, such a public service would <br />
+wrap the e[require]d private service.</p>
+
+<p>Public services may only use the canonical datamodel to be reusable.</p>
+
+<h6 id="domain-services">Domain services:</h6>
+
+<p>Domain services are some more restricted in their usage. They can only be called from services defined<br />
+in the same namespace or one of it’s subnamespaces. Domain services may only use the canonical datamodel to be reusable.</p>
+
+<h6 id="private-services">Private services:</h6>
+
+<p>Private service are internal API that should be wrapped by public or domain services. Private services<br />
+can only be called from the wrapping public and domain service. While they can be called from other <br />
+private services as well, this is regarded bad design and should be refactored to call their wrapping <br />
+public services.</p>
+
+<p>Every service has a name, version, lifecycle state and governance approval state.</p>
+
+<h5 id="langServiceSyntax">Defining services</h5>
+
+<p>A service is defined in a domain namespace or internal namespace like this:</p>
+
+<pre><code class="language-ServiceDSL">/*
+    The CustomerEntityService loads, stores and find Customer instances
+*/
+public service CustomerEntityService {
+    metadata {
+        version 1.0
+        lifecycle-state proposed
+        governance-approval {
+            yes
+            approval-date "20.04.2011"
+            approved-by "Anna Jacobson"
+        }
+        category ^entity
+        statefulness stateful
+        persistence read/write
+    }
+    
+    // operations go here:
+    sync getCustomerByName (optional firstName : string, lastname : string) 
+        returns optional customers : Customer [] majorVersion 1
+        throws CustomerNotFoundException 
+    {
+        requires SomeBackendService majorVersion 1
+    }
+}
+</code></pre>
+
+<h5 id="ServiceMetadata">Service meta data</h5>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Keyword</th>
+      <th style="text-align: left">Valid values</th>
+      <th style="text-align: left">Example</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left"><code>version</code></td>
+      <td style="text-align: left"><code>INT('.'INT)*</code></td>
+      <td style="text-align: left"><code class="language-ServiceDSL">version 1.0.1</code></td>
+      <td>The service version.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>lifecycle-state</code></td>
+      <td style="text-align: left">Reference to a lifecycle state by name</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">lifecycle-state defined</code></td>
+      <td>The lifecycle state of the service with regard to SOA governance.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>governance-approval</code></td>
+      <td style="text-align: left">see definition of governance approval</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">governance-approval {</code><br />    <code class="language-ServiceDSL">    yes</code><br />    <code class="language-ServiceDSL">    decision-on "01.02.2011"</code><br />    <code class="language-ServiceDSL">    decision-by "John Miller"</code><br /><code class="language-ServiceDSL">}</code></td>
+      <td>The state of the governance decision on the service.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>category</code></td>
+      <td style="text-align: left">Reference to a service category by name as defined in the  ArchitecureProfile</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">category activity</code></td>
+      <td>The service category.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>statefulness</code></td>
+      <td style="text-align: left"><code>idempotend | stateless | stateful</code></td>
+      <td style="text-align: left"><code class="language-ServiceDSL">statefulness stateless</code></td>
+      <td>Whether the service can be repeatedly called with the same result (idempotend), is stateless or stateful.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>persistence</code></td>
+      <td style="text-align: left"><code>read | write | read/write | none</code></td>
+      <td style="text-align: left"><code class="language-ServiceDSL">persistence read/write</code></td>
+      <td>Whether data treaded by the service are persistent and read and/or written to a persistent store.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>realizes-capabilty</code></td>
+      <td style="text-align: left"><code>(QualifiedCapabilityName</code><br />    <code>VersionConstraint)+</code></td>
+      <td style="text-align: left"><code class="language-ServiceDSL">realizes-capabilty</code><br />    <code class="language-ServiceDSL">    InvoiceCustomer fixedVersion 1</code><br />    <code class="language-ServiceDSL">    InvoiceMail fixedVersion 2</code></td>
+      <td>Reference to one or more business capabilities that are fully realized by the service.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>supports-capabilty</code></td>
+      <td style="text-align: left"><code>(QualifiedCapabilityName</code><br />    <code>VersionConstraint)+</code></td>
+      <td style="text-align: left"><code class="language-ServiceDSL">supports-capability</code><br />    <code class="language-ServiceDSL">    InvoiceCustomer fixedVersion 1</code><br />    <code class="language-ServiceDSL">    InvoiceMail fixedVersion 2</code></td>
+      <td>Reference to one or more business capabilities that are supported, but not fully realized by the service.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>provided-contract</code></td>
+      <td style="text-align: left"><code>STRING</code></td>
+      <td style="text-align: left"><code>provided-Contract-URL</code><br />    <code class="language-ServiceDSL">"http://somehost:someport/some.wsdl"</code></td>
+      <td>Only for private services defined in internal namespaces. The location where the already existing contract of the service can be found.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>sourceURL</code></td>
+      <td style="text-align: left"><code>STRING</code> with the location URL of the source code repository</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">sourceURL "svn://somehost/somelocation"</code></td>
+      <td>Where the sources can be found.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>docURL</code></td>
+      <td style="text-align: left"><code>STRING</code> with the URL of the document</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">docURL "svn://somehost/somelocation"</code></td>
+      <td>Where the documentation or specification can be found.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>release-on</code></td>
+      <td style="text-align: left"><code>DATE</code> or <code>STRING</code> with the release date</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">release-on "01.06.2010"</code></td>
+      <td>The (planned) release date of the service.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>retirement-on</code></td>
+      <td style="text-align: left"><code>DATE</code> or <code>STRING</code> the date of retirement</td>
+      <td style="text-align: left"><code class="language-ServiceDSL">retirement-on "01.06.2014"</code></td>
+      <td>The (planned) date of retirement of the service.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>replaces</code></td>
+      <td style="text-align: left">Reference to old service</td>
+      <td style="text-align: left"><code>replaces OldServiceName</code><br />    <code class="language-ServiceDSL">majorVersion 1</code></td>
+      <td>Used to rename services or move them to another namespace. The reference to the previous service is given here.</td>
+    </tr>
+    <tr>
+      <td style="text-align: left"><code>messageHeader</code></td>
+      <td style="text-align: left">Reference to a MessageHeader definition</td>
+      <td style="text-align: left"><code>messageHeader MyHeader</code><br />    <code class="language-ServiceDSL">majorVersion 1</code></td>
+      <td>An alternative message header to be sent with each message. Usually a default message header has been defined in the profile which is being used when this attribute has not been defined, hence it is an override.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h4 id="langOperations">Operations</h4>
+
+<h6 id="langParameters">Operation parameters</h6>
+
+<h4 id="langExceptions">Exceptions</h4>
+
+<h2 id="langModuleDsl">Module DSL</h2>
+
+<h3 id="langDefModule">Defining modules</h3>
+
+<p>Modules aggregate services into a deployable unit. Modules<br />
+have a version and are subject to a lifecycle. The services provided by should be referenced with a fixed version<br />
+in order be to know what exactly the module provides. Hence, a version of a module contains a fixed set of <br />
+services with exactly defined versions.</p>
+
+<p>The following example shows, how modules are defined:</p>
+
+<pre><code class="language-ModuleDSL">module com.company.shop.invoicing {
+    version 1.4.3
+    lifecycle-state test
+    assembly-type SCA_EAR
+    provides {
+        InvoiceProcessService fixedVersion 1.4
+        InvoiceActivityService fixedVersion 1.2
+        InvoiceNotificationUtilityService fixedVersion 1.1.1
+    }
+    source-location "git://git.company.com/shop/invoicing"
+    revision-tag "Release_1.4.3_RC2"
+}
+</code></pre>
+
+<p>The example defines a module with the <code>QualifiedName</code> <code>com.company.shop.invoicing</code> in version <code>1.4.3</code><br />
+that provides three services. The module is available for acceptance test and has been packaged as an EAR containing<br />
+a SCA composite. The <code>source-location</code> and <code>revision</code> tag referring to the source commited to the version control system <br />
+are optional parameters. The version and lifecycle-state declaration comply to the common syntax rules for versions and <br />
+lifecycle status declarations being follow the general syntax rules for these used throughout the service repository.</p>
+
+<p>Modules are declared in <em>Module DSL files</em>. A wizard is available to create new <em>Module DSL files</em>.</p>
+
+<h2 id="langEnvironmentDsl">Environment DSL</h2>
+
+<h3 id="langDefEnv">Defining environments</h3>
+
+<p>The environment defines which servers are available and where they are hosted. Environments have a unique name and a type<br />
+such as e[development], <code>test</code> or <code>production</code>. To create a new environment create a <br />
+new <em>Environment DSL file</em>. A new file wizard is available for that. Then define an environment as in this example:</p>
+
+<pre><code class="language-EnvironmentDSL">environment CoreDevelopment of type Development-Environment {
+    host as4000 {
+        full-qualified-name "as4000.company.com"
+    }
+    host as4200 {
+        full-qualified-name "as4000.company.com"
+    }
+    host as4350 {
+        full-qualified-name "as4350.company.com"
+    }
+    appserver as4350Tomcat {
+        identifier "tomcat.as4350.core.dev"
+        host as4350
+        baseUrl "http://as4350.company.com:8080"
+        connectors {
+            HTTP {
+                port 8080
+                secured-port 8443
+            }
+            SOAPHTTP {
+                port 8080
+                secured-port 8443
+                context-root "ws"
+            }
+        }
+    }
+    
+    esb DevESB {
+        identifier "esb.as4200.core.dev"
+        host localhost
+        adminUrl "https://as4200.company.com:9443/ibm/console"
+        server-type "websphere"
+        server-version "7.5"
+        connectors {
+            SOAP/HTTP {
+                port 9080
+                secured-port 9443
+                security-protocol SSLv3
+                implementation "IBM"
+            }
+        }
+    }
+    
+    registry reg {
+        identifier "simplereg.as4000.core"
+        host as4000 
+        
+        baseUrl "http://registry.company.com"
+        
+        server-type "Apache"
+        server-version "2.2"
+        kind HTTP
+    }
+}
+</code></pre>
+
+<p>In this example three hosts <code>as4000</code> <code>as4200</code> and <code>as4350</code> have set up in the<br />
+development environment named <code>CoreDevelopment</code>. On host <code>as4000</code> an Apache has been installed<br />
+having the identifier <code>simplereg.as4000.core</code> in the Definitive Software Library within the Configuration<br />
+Database. On host <code>as4350</code> the Tomcat instance <code>as4350Tomcat</code> offers HTTP on port 8080 and HTTPS on port 8443<br />
+as outlined in the <code>connectors</code> section. The tomcat also offers a SOAP interface on the same ports, offering<br />
+SOAP services under the context root <code>ws</code>. Finally an ESB is running on host <code>as4200</code>, that <br />
+also offers SOAP on port 9080. The connectors are implicitely referenced from the binding when having the same type as <br />
+the <code>BindingProtocol</code> defined for a service or module in the binding of them to this environment.</p>
+
+<h2 id="langBindingDsl">Binding DSL</h2>
+
+<h3 id="langDefBind">Defining bindings</h3>
+
+<p>The binding creates the link between services / modules and a target environment where they get deployed. Hence they are<br />
+bound to that environment. Consequently a binding would be defined for each environment where the services / modules are deployed. <br />
+The following example shows how a binding can be defined for a module to a target environment.</p>
+
+<p>Example:</p>
+
+<pre><code class="language-BindingDSL">import CoreDevelopment
+
+bind-module com.company.shop.invoicing fixedVersion 1.4.3 
+    as com.company.shop.invoicing.dev to server CoreDevelopment.DevESB {
+    default-protocols {
+        SOAP {
+            style document/literal-wrapped
+        }
+    }
+}
+</code></pre>
+
+<p>The module <code>com.company.shop.invoicing</code> in version <code>1.4.3</code> is  bound to the development environment named<br />
+<code>CoreDevelopment</code>. The binding has the name <code>com.company.shop.invoicing.dev</code> to be easily referrable from<br />
+code generators. The binding definition ist pretty simple by stating, that the module will be deployed to the ESB <code>DevESB</code><br />
+in the target environment. All services provided by the module will be offered as SOAP services using the <em>document / literal-wrapped</em> style.<br />
+Note that the <code>BindingProtocol</code> <code class="language-BindingDSL">SOAP</code> links to the <code class="language-EnvironmentDSL">SOAPHTTP</code> connector of the ESB</p>
+
+<p>Bindings are declared in <em>Binding DSL files</em>. A wizard is available to create new <em>Binding DSL files</em>.</p>
+
+<h2 id="langSolutionDsl">Solution DSL</h2>
+
+<p>The solution DSL is used to model service based solutions, i.e. applications. With solutions you can<br />
+model service consumers that are not services themselves. This provides a means to find out which solutions / apps are the consumers of<br />
+a service and whether it is being used by any potential consumer at all.</p>
+
+<p>Example:</p>
+<pre><code class="language-SolutionDSL">import SampleArchitectureProfile.ExSOALifecycle.*
+import org.example.sales.*
+
+/**
+ * A CRM application
+ */
+solution CustomerManagementApp {
+    version 1.0
+    lifecycle-state productive
+    
+    additional-information {
+        location "file://W:\\CustomerManagement\\Requirements\\CustomerManagementApp-Requirements.doc"
+        location "file://W:\\CustomerManagement\\Design\\CustomerManagementApp-Design.doc"
+    }
+    requires CustomerManagerBAS majorVersion 1
+    
+    feature SomeFeature {
+        requires CustomerLookupBES majorVersion 1
+    }
+}
+</code></pre>
+
+<h2 id="langProfileDsl">Profile DSL</h2>
+
+<p>The profile DSL models the general architectural constraints, asset lifecycle and basic data types. A<br />
+profile model must always be created, to declare the basic types at least.</p>
+
+<p>Example:</p>
+
+<pre><code class="language-ProfileDSL">/*
+ * Define simple data types
+ */
+
+datatype int
+datatype string
+datatype date
+datatype datetime
+datatype boolean
+datatype char
+datatype long
+datatype float
+datatype double
+datatype decimal
+datatype base64Binary
+datatype anyType 
+/**
+  * A SOA architecture profile defines some basic rules for the whole company
+  */
+profile SampleArchitectureProfile {
+    scope "Example Org"
+    
+    /** Example Org default asset lifecycle */
+    lifecycle ExSOALifecycle {
+            
+        /**
+         * The asset is proposal that is only discussed
+         */
+        initial state proposed {
+            /*
+             * One can play with the proposal only in a local environment (the local PC)
+             */
+            qualifies-for Local-Environment
+            -&gt; development 
+        }
+        
+        /**
+         * The asset is under development
+         */
+        state development {
+            /*
+             * It becomes accesible in the development environment as well
+             */
+            qualifies-for Local-Environment, Development-Environment
+            -&gt; test
+            -&gt; proposed
+        }
+        
+        /*
+         * The asset is under test
+         */
+        state test {
+            //must have been approved by SOA governance
+            requires-approval
+            qualifies-for Local-Environment, Development-Environment, Test-Environment
+            -&gt; productive
+            -&gt; proposed
+        }
+       
+        /* 
+         * The is under productive use
+         */
+        state productive {
+            //must have been approved by SOA governance
+            requires-approval
+            /* changes are not allowed on this version of the asset, a new version need to be created
+            to incorporate changes */
+            freezes-asset
+            qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
+            -&gt; deprecated
+            -&gt; proposed
+        }
+        
+        /*
+         * The asset is deprecated and will be retired soon.
+         */
+        state deprecated {
+            //must have been approved by SOA governance
+            requires-approval
+            /* changes are not allowed on this version of the asset, a new version need to be created
+            to incorporate changes */
+            freezes-asset
+            qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
+            -&gt; productive
+            -&gt; proposed
+        }
+    }
+    
+    /**
+     * Categorize services based on a standard category
+     */
+    service-categories {
+        /**
+         * This is a &lt;b&gt;Business Activity Service&lt;/b&gt; (BAS) &lt;br/&gt;&lt;br/&gt;
+         * 
+         * A Service, that can execute an activity or function of the business logic.
+         */
+        ^activity base-category activity
+        
+        /* Categorizes a &lt;b&gt;Business Entity Service&lt;/b&gt; (BES) &lt;br/&gt;&lt;br/&gt;
+         * 
+         * The service accesses persistent data
+         */
+        ^entity base-category entity
+       
+        /** 
+         * Categorizes a &lt;b&gt;Business Process Service&lt;/b&gt; (BPS) &lt;br/&gt;&lt;br/&gt;
+         * 
+         * The service represents a business process
+         */
+        ^process base-category process
+        
+        /**
+         * Categorizes a &lt;b&gt;Business Rule Service&lt;/b&gt; (BRS) &lt;br/&gt;&lt;br/&gt;
+         * 
+         * The service represents a business rule
+         */
+        ^rule base-category rule
+        
+        /**
+         * Categorizes a &lt;b&gt;Utility Service&lt;/b&gt; (US)
+         * 
+         * A service that can be used for helper functions
+         */
+        ^utility base-category utility
+    }
+    
+    
+    /**
+     * Define general design rules and naming conventions
+     */
+    design-rules {
+        
+            
+        /* Rules for data types */
+        types {
+            /*
+             * Define how the evolution of backward compatible version is supported
+             */
+            version-evolution {
+                /* XSDs will need a placeholder element for response messages. By default a list of "any"-elements */
+                extendible-properties
+                /* 
+                 * And placeholders for XSD attributes is defined will be used as well
+                 */
+                extendible-XML-attributes    
+            }
+        }
+    }
+    
+    
+    /**
+     * Use a new namespace for every major version of BOs, Enums, Services oder Exception 
+     * e.g. an XSD-namespace 
+     */
+    versioning-strategy namespace-based 
+    
+}
+</code></pre>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <footer class="site-footer">
+  <div id="extra">
+    <div class="inner">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <h3 class="footer-links-header">Quick Links</h3>
+            <ul class="footer-links clearfix">
+              <li><a href="http://www.eclipse.org/legal/privacy.php">Privacy Policy</a></li>
+              <li><a href="http://www.eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
+              <li><a href="http://www.eclipse.org/legal/copyright.php">Copyright Agent</a></li>
+              <li><a href="http://www.eclipse.org/legal/">Legal</a></li>
+            </ul>
+            <ul class="footer-links clearfix">
+              <li><a href="http://www.eclipse.org">Eclipse Home</a></li>
+              <li><a href="http://marketplace.eclipse.org/">Market Place</a></li>
+              <li><a href="http://live.eclipse.org/">Eclipse Live</a></li>
+              <li><a href="http://www.planeteclipse.org/">Eclipse Planet</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" class="scrollup fadeOutRight animated" style="display: none;">ScrollUp</a>
+  <!-- Le javascript
+      ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  
+  <script src="/XKonneXRepo/js/jquery-1.11.3.min.js"></script>
+  <script src="/XKonneXRepo/js/bootstrap.min.js"></script>
+  <script src="/XKonneXRepo/js/jquery.easing.1.3.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/jquery.prettyPhoto.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/twitter.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/prettify.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-common.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/custom.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-BusinessDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-BindingDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-EnvironmentDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-ModuleDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-ServiceDSL.js" type="text/javascript"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!--script type="text/javascript">
+    var _gaq = _gaq || [];  
+      _gaq.push([ '_setAccount', 'UA-2429174-3' ]);
+    _gaq.push([ '_trackPageview' ]);
+    (function() {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+          : 'http://www')
+          + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+  </script-->
+  <script src="/XKonneXRepo/js/coverflow.min.js" type="text/javascript"></script>
+  <script>
+      $(function() {
+        $('#coverflow').coverflow({
+          active : 1,
+          visibleAside: 2,
+          overlap : 0.5,
+          scale : 0.9,
+          angle : 20,
+          trigger : {
+            "itemfocus" : true,
+            "swipe" : true,
+            "mousewheel" : false
+          }
+        });
+        $('#coverflow :hidden').toggle();
+        $(window).resize(function() {
+          $('#coverflow').coverflow();
+        });
+      });
+
+  </script>
+</footer>
+
+
+  </body>
+
+</html>
