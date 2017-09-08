@@ -1,7 +1,6 @@
 package org.xkonnex.repo.dsl.basedsl.namespace;
 
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Version;
 
 import com.google.inject.ImplementedBy;
 

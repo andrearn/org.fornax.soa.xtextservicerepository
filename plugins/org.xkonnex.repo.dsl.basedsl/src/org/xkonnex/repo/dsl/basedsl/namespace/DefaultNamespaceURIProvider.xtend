@@ -17,7 +17,7 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 	@Inject VersionQualifierExtensions verExt
 
 	override getHostPart(Namespace ns) {
-		if (ns.uri != null) {
+		if (ns.uri !== null) {
 			var hostPart = ns.uri
 			var protocolPart = ns.uri
 			val protocolSeparatorIndex = hostPart.indexOf(PROTOCOL_SEPARATOR) {
@@ -35,7 +35,7 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 	}
 
 	override getPathPart(Namespace ns) {
-		if (ns.uri != null) {
+		if (ns.uri !== null) {
 			var pathPart = ns.uri
 			val protocolSeparatorIndex = pathPart.indexOf(PROTOCOL_SEPARATOR) {
 			if (protocolSeparatorIndex > -1 && pathPart.length >= protocolSeparatorIndex + PROTOCOL_SEPARATOR.length)
@@ -64,7 +64,7 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 
 	override getNamespaceURI(Namespace ns) {
 		var nsURI = ""
-		if (ns.uri != null)
+		if (ns.uri !== null)
 			nsURI = ns.uri
 		else
 			nsURI = ns.hostPart + "/" + ns.pathPart
@@ -108,7 +108,7 @@ class DefaultNamespaceURIProvider implements NamespaceURIProvider {
 	}
 
 	override requiresTrailingSlash(Namespace ns) {
-		if (ns.uri != null)
+		if (ns.uri !== null)
 			ns.uri.endsWith("/")
 		else
 			true

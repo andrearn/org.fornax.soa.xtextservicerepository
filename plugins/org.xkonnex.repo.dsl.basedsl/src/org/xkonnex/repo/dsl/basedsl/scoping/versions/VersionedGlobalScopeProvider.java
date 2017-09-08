@@ -5,7 +5,6 @@ import org.eclipse.xtext.common.types.xtext.TypesAwareDefaultGlobalScopeProvider
 import org.eclipse.xtext.resource.IContainer;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
-import org.eclipse.xtext.scoping.impl.DefaultGlobalScopeProvider;
 
 import com.google.common.base.Predicate;
 

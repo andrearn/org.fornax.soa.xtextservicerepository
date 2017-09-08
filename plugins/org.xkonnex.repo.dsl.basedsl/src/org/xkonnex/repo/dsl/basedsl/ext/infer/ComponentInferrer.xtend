@@ -31,17 +31,6 @@ class ComponentInferrer implements IComponentInferrer {
 	@Inject
 	private Provider<ResourceSet> resourceSetProvider;
 	
-//	override <T> inferComponent(Component component) {
-//		var comp = component
-//		if (comp.eIsProxy) {
-//			EcoreUtil2.resolveAll(comp)
-//		}
-//		if (comp.assignment !== null)
-//			inferComponent(comp.type, comp.assignment)
-//		else
-//			inferComponent(comp.type)
-//	}
-
 	override <T> inferComponent(Component component) {
 		inferComponent(component, component.eResource.resourceSet)
 	}
@@ -83,7 +72,7 @@ class ComponentInferrer implements IComponentInferrer {
 			var Method setter = findSetter(type, assignment.getFeature().getSimpleName())
 			var Object value = getValue(assignment.value, assignment.feature)
 			try {
-				if (setter != null)
+				if (setter !== null)
 					setter.invoke(o, value)
 			} catch (IllegalAccessException e) {
 				// TODO Auto-generated catch block

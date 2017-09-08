@@ -1,7 +1,6 @@
 package org.xkonnex.repo.dsl.basedsl.scoping.versions.filter;
 
 import java.util.Collections;
-import java.util.HashMap;
 
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;

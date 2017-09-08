@@ -66,12 +66,8 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 				if (dataObject.getSuperObject() !== null && dataObject.getSuperObject().getType() !== null) {
 					val String propName = prop.getName()
 					for (DataObject superType : dataObjQuery.getAllSuperTypes(dataObject, null)) {
-						var Iterable<Property> props = Iterables::filter(superType.getProperties(),
-							([ Property curProp |
-								return curProp.getName().equals(propName)
-							] as Predicate<Property>))
-						var List<Property> opList = Lists::newArrayList(props)
-						if (opList.size() > 0) {
+						var overridesSuperTypeProp = superType.properties.exists[name == propName]
+						if (overridesSuperTypeProp) {
 							var StringBuilder errMsg = new StringBuilder("Property ")
 							errMsg.append(propName).append(" overrides an inherited property from ").append(
 								superType.getName()).append(" version ").append(dataObject.getVersion().getVersion())

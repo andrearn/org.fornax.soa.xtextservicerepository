@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2013 André Arnold and others.
+Copyright (c) 2010-2017 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -286,11 +286,34 @@ Resource:
 			('short-description' shortDescription=STRING)? 
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(
-				(lifecycleTrigger=LifecycleTrigger)?
-			&	('provided-contract' providedContractUrl=STRING)?
-			)
+			('service-category' category=[profileDsl::ServiceCategory | QualifiedName])?
+			/* To what extend is a service stateful or stateless */ 
+			('statefulness' statefulness=Statefulness)?
+			/* are data persisted by the service ? */ 
+			('persistence' persistence=Persistence )? 
 			(additionalInfo=AdditionalInformation)?
+			(
+				/* The business capabilities the service fully implements */
+				('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?
+				/* The business capabilities that are supported but not fully implemented by this service alone */	
+			&	('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?
+				/* 
+				 * A technical service contract to be used instead of the one generation from this service definition.
+				 * This should only be used with private services, as the technical contract might not meet the architectural
+				 * rules that apply to public and domain scoped services
+				 */	
+			&	('provided-contract' providedContractUrl=STRING )? 
+			&	(lifecycleTrigger=LifecycleTrigger)?
+				/*
+				 * The message header definition being used. Overrides the default from the architecture profile
+				 */
+			&	('message-headers' '{'
+					('request-message-header' requestMessageHeader = MessageHeaderRef )?
+					('response-message-header' responseMessageHeader = MessageHeaderRef )?
+					('publish-message-header' publishMessageHeader = MessageHeaderRef )?
+				'}')?
+
+			)
 			('contact-info' '{'
 				('owner' owner=[basedsl::User|QualifiedName])?
 				('responsible' responsible += [basedsl::User|QualifiedName])*

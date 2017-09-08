@@ -1,8 +1,6 @@
 package org.xkonnex.repo.dsl.basedsl.scoping.versions;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Delayed;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.naming.QualifiedName;

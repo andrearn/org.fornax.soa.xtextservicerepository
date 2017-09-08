@@ -1,11 +1,9 @@
 package org.xkonnex.repo.dsl.basedsl.namespace
 
-import org.xkonnex.repo.dsl.basedsl.namespace.NamespaceNameFragmentProvider
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
-import org.eclipse.xtext.naming.IQualifiedNameProvider
+import java.util.List
 import javax.inject.Inject
 import org.xkonnex.repo.dsl.basedsl.CommonStringExtensions
-import java.util.List
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Namespace
 
 class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvider {
 	
@@ -53,7 +51,7 @@ class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvi
 	}
 	
 	override getShortname(Namespace ns) {
-		if (ns.prefix != null) { 
+		if (ns.prefix !== null) { 
 			ns.prefix;
 		} else {
 			ns.namespaceFQN.segments.map (e|e.segmentToShortName).join
@@ -84,7 +82,7 @@ class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvi
 	}
 	
 	def dispatch String toPrefix (Namespace s) {
-		if (s.prefix != null) { 
+		if (s.prefix !== null) { 
 			s.prefix;
 		} else {
 			s.namespaceFQN.segments.map (e|e.substring(0,1)).join;
@@ -92,7 +90,7 @@ class DefaultNamespaceNameFragmentProvider implements NamespaceNameFragmentProvi
 	}
 	
 	def dispatch String toPrefix (VersionedNamespace s) {
-		if (s.shortName != null) {
+		if (s.shortName !== null) {
 			s.shortName
 		} else {
 			s.namespace.namespaceFQN.segments.map (e|e.substring(0,1)).join;

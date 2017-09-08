@@ -60,7 +60,7 @@ class JavaBeanMerger {
 								}
 								writeMethod.invoke (target, value);
 							} else if (isCollectionType (targetPd.propertyType) &&
-								value !== null && (targetValue === null || (targetValue as Collection).isEmpty())) {
+								value !== null && (targetValue === null || (targetValue as Collection<?>).isEmpty())) {
 								if (!Modifier.isPublic (writeMethod.getDeclaringClass().getModifiers())) {
 									writeMethod.setAccessible(true);
 								}

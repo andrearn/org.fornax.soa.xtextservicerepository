@@ -7,7 +7,6 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.MaxVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MinVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.LatestMajorVersionFilter;
-import org.xkonnex.repo.dsl.basedsl.scoping.versions.filter.VersionFilter;
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator;
 
 import com.google.inject.Singleton;

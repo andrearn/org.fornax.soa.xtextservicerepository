@@ -3,11 +3,18 @@ package org.xkonnex.repo.dsl.basedsl.ref;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.eclipse.xtext.resource.IEObjectDescription;
 
+/**
+ * Describes a dependency of a source object from a target object. 
+ * Source and target EObject are referenced by their {@link IEObjectDescription} <br/>
+ * 
+ * <code>source ==> target </code>
+ * @author aarnold
+ *
+ */
 public class DependencyDescription implements Iterable<DependencyDescription> {
 	
 	private IEObjectDescription source;
@@ -80,6 +87,13 @@ public class DependencyDescription implements Iterable<DependencyDescription> {
 		this.container = eContainer;
 	}
 
+	/**
+	 * The dependencies between the target of the <code>DependencyDescription</code>
+	 * and it's referrers. A DependencyDescription is dependency from this 
+	 * DependencyDescription if it's <code>source</code> matches the <code>target</code> of this description
+
+	 * @return
+	 */
 	public Deque<DependencyDescription> getDependencies() {
 		return dependencies;
 	}
@@ -110,7 +124,7 @@ public class DependencyDescription implements Iterable<DependencyDescription> {
 	 * 
 	 * @returns True, when the dependency is a backward reference
 	 * in the dependency graph, i.e. the target has already been visited from
-	 * a transitive upstream referrerin the graph
+	 * a transitive upstream referrer in the graph
 	 */
 	public boolean isBackRef() {
 		return isBackRef;

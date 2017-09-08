@@ -1,7 +1,5 @@
 package org.xkonnex.repo.dsl.basedsl.scoping.versions;
 
-import java.util.Collections;
-
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
