@@ -16,12 +16,31 @@
 		<workflow>src/XdocEclipseHelpGenerator.mwe2</workflow>
 	</properties>
 
-<!-- 	<build> -->
-<!-- 		<plugins> -->
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
+				<executions>
+					<execution>
+						<phase>process-resources</phase>
+						<configuration>
+							<tasks>
+								<ant antfile="${basedir}/gen_eclipse_help.xml"
+                     target="gen_eclipse_help"/>
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 <!-- 			<plugin> -->
 <!-- 				<groupId>org.fornax.toolsupport</groupId> -->
 <!-- 				<artifactId>fornax-oaw-m2-plugin</artifactId> -->
 <!-- 			</plugin> -->
-<!-- 		</plugins> -->
-<!-- 	</build> -->
+ 		</plugins>
+	</build>
+
 </project>

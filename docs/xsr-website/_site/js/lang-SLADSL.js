@@ -7,7 +7,7 @@
 
 /**
  * @fileoverview
- * Registers a language handler for Module DSL.
+ * Registers a language handler for SLA DSL.
  *
  * @author André Arnold
  */
@@ -30,8 +30,8 @@ PR['registerLangHandler'](
          // A character literal has single quotes on either side
          [PR['PR_STRING'],      /^'(?:[^\r\n\\']|\\(?:'|[^\r\n']+))'/],
          [PR['PR_LITERAL'],     /^'[a-zA-Z_$][\w$]*(?!['$\w])/],
-         [PR['PR_KEYWORD'],     /^(?:accepted|accepting-other-endpoints|additional-information|alternative-endpoint-protocols|artifactId|assembly-type|assembly-type-details|budgeting|channel|client|contact-info|decision-by|decision-date|decision-result|denied|deployment-module-name|effective-date|endpoint-protocol|endpoint-qualifier|excluding|external|fixedVersion|from-any-module-of|frozen|governance-decision|groupId|import|include-domain-sub-namespaces|include-sub-namespaces|including|justification-doc|lifecycle-state|location|majorVersion|maxVersion|minVersion|module|namespace|operations|owner|parameters|pending|provides|public|qualifier|reference|release-on|release-tag|resource|responsible|service|source-location|specific|specific-result|subject|subscriptions|tags|uses|version)\b/],
-         [PR['PR_LITERAL'],     /^(?:true|false|DLL|EAR|JAR|OSGi|OTHER|SCA-Composite|SCA-EAR|WAR|WebMethods|ZIP)\b/],
+         [PR['PR_KEYWORD'],     /^(?:Base64-encoded|STRING|accepted|accuracy|accuracy-assertion|additional-logging-requirements|additional-services|all|amount|applies-to|at-least-once|at-most-once|attachments|auth-tokens|authentication-procedure|availability-assertion|availability|best-effort|billed-per-unit|body|cancellation|capacity-assertion|capacity|cause|contents|costs|customer-party|data-security-and-protection|denied|description|duration|effective-date|effective-until|effort-accounting|email|encrypted-message-parts|encryption-policy|escalate-to|escalation|exactly-once|expression|extraordinary-cancellation|first-name|fixedVersion|frozen|general-security-terms|hash-algorithms|header|in-order-delivery|issuer|last-name|latency-assertion|latency|location|logging|majorVersion|max-downtime|max-downtime-assertion|max-error-rate|maxVersion|mean-time-between-failure|mean-time-to-repair|message-exchange-reliability|message-log-level|message-size|minVersion|none|num-of-requests|optional|org-unit|participation-role|penalty|pending|per|percentile|phone|preample|priority|procedure|provider-party|reference|regular-down-times|report-to|report|representative|requires-algorithm|responsibility|restrictions|scope|score-to-be-kept|security-guaranties|security-requirements|service-level-agreement|service-level-assertions|service-quality-assertions|service-quality-requirements|signed-message-parts|signing-policy|specific|subscriptions|supported-algorithms|tags|third-party|throughput-assertion|throughput|use-nonce|version)\b/],
+         [PR['PR_LITERAL'],     /^(?:true|false)\b/],
          [PR['PR_LITERAL'],     /^(?:(?:0(?:[0-7]+|X[0-9A-F]+))L?|(?:(?:0|[1-9][0-9]*)(?:(?:\.[0-9]+)?(?:E[+\-]?[0-9]+)?F?|L?))|\\.[0-9]+(?:E[+\-]?[0-9]+)?F?)/i],
          // Treat upper camel case identifiers as types.
          [PR['PR_TYPE'],        /^[$_]*[A-Z][_$A-Z0-9]*[a-z][\w$]*/],
@@ -41,4 +41,4 @@ PR['registerLangHandler'](
          [PR['PR_STRING'],      /^((\'\'\'|\u00BB)([\s\S]*?)(\'\'\'|\u00AB))/]
 
         ]),
-    ['ModuleDSL']);
+    ['SLADSL']);

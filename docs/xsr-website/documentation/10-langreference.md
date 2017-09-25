@@ -6,14 +6,14 @@ part: Reference
 # {{page.title}} {#DSLReference}
 
 
-## General syntax rules {#GeneralRules}
+## General syntax rules 
 
-### Qualified names {#qualifiedNameRule}
+### Qualified names 
 
 Asset names can be fully qualified. A <code>QualifiedName</code> is defined as:
 
 Definition:        
-```Xtext
+```xtext
     ID(.ID)*
 ```
 
@@ -25,11 +25,11 @@ Example:
 
 ### Keyword escape {#keywordEscapeRule}
 
-If a name is already a keyword it can be escaped with the character e[^] as usual in Xtext
+If a name is already a keyword it can be escaped with the character `^` as usual in Xtext
 based languages.
 
 
-### Version declarations {#versionDeclRule}
+### Version declarations 
 
 Versioned assets declare their version with the following statement:
 
@@ -46,7 +46,7 @@ Example:
 The first number is the major version number. Two elements with the same name and major version number are considered compatible.
 
 
-### Lifecycle state declarations {#lifecycleDeclRule}
+### Lifecycle state declarations 
 
 Elements under the SOA governance lifecycle declare their current state with the following statement:
 
@@ -63,7 +63,7 @@ Example:
 Possible lifecycle states are defined with Lifecycles in the profil DSL.
 
 
-### Governance approval declarations {#govApprovalDeclRule}]
+### Governance approval declarations 
 
 Assets under SOA governance declare their current approval state with the following section:
 
@@ -71,7 +71,7 @@ Definition:
 ```ServiceDSL
     governance-approval {
         yes | no | tolerated | temporarily-tolerated
-        (decision-on DATESTRING)?
+        (decision-date DATE|STRING)?
         (decision-by STRING)? 
     }
 ```
@@ -80,19 +80,19 @@ Example:
 ```ServiceDSL
     governance-approval {
         yes
-        decision-on "01.03.2011"
+        decision-date 2017-03-01
         decision-by "Max Miller" 
     }
 ```
 
-In the example the asset has been approved on March 1st, 2011 by Max Miller.
+In the example the asset has been approved on March 1st, 2017 by Max Miller.
     
 
-## Business DSL {#BusinessDsl}
+## Business DSL 
 
-### Introduction {#bizDslLangIntro} 
+### Introduction 
 
-The Business DSL defines and business capabilties and business functions as well as organizational structures that implements the business function. Business capabilities can be mapped to services, service operations or features of a solution. E.g. a service may declare that it realizes a certain capability. Capabilities can be grouped into e[capability-group]s and organized into e[domain]s. It is also possible to define variants of a capability.
+The Business DSL defines and business capabilties and business functions as well as organizational structures that implements the business function. Business capabilities can be mapped to services, service operations or features of a solution. E.g. a service may declare that it realizes a certain capability. Capabilities can be grouped into *capability-group*s and organized into *domain*s. It is also possible to define variants of a capability.
 
 Example:
 ```BusinessDSL
@@ -128,20 +128,17 @@ domain company.shop {
 }
 ```
 
-The example defines a capability group `Invoicing` in the domain `company.shop`. 
-The capability group contains the fully automated capabilities `Billrun` and `InvoiceCreation`.
-The latter one defines required inputs and expected results.
+The example defines a capability group `Invoicing` in the domain `company.shop`. The capability group contains the fully automated capabilities `Billrun` and `InvoiceCreation`. The latter one defines required inputs and expected results.
  
-Business capability models can be created by creating a new _Business DSL file_. A wizard is 
-available for that.
+Business capability models can be created by creating a new _Business DSL file_. A wizard is available for that.
 
 
-## Service DSL {#ServiceDSL}
+## Service DSL 
 
 
-### Language overview{#ServiceDSLIntro}
+### Language overview
 
-#### Service DSL file structure {#ServiceDslFile}
+#### Service DSL file structure 
 
 A Service DSL file defines namespace, business objects, services and exception. It has the following basic structure:
 
@@ -184,7 +181,7 @@ org-namespace <QualifiedName> shortname "<String>" {
             
             // operations go here:
             <message exchange pattern: sync | async ..> <operationName> (<(optional)? parameters> ) 
-                returns <(optional)? return paramters>
+                returns <(optional)? return parameters>
                 throws <exceptions, ...>
             {
                 requires <other version constrained service dependency>
@@ -207,24 +204,15 @@ org-namespace <QualifiedName> shortname "<String>" {
 ```
 
 
-#### Namespaces{#langNamespaces}
+#### Namespaces
 
-##### Organization Namespace {#langOrgNamespace}
+##### Organization Namespace 
 
-Organization Namespaces are toplevel namespaces like e[com.example]. They reflect
-a company, organization or top level unit of a company. Organization Namespaces are
-used as host part in namespace URIs in reversed order, e.g. _http://example.com/_
-Organization Namespace should declare a short name which might be used as namespace prefix or
-part of a file name.    
+Organization Namespaces are toplevel namespaces like `com.example`. They reflect a company, organization or top level unit of a company. Organization Namespaces are used as host part in namespace URIs in reversed order, e.g. _http://example.com/_ Organization Namespace should declare a short name which might be used as namespace prefix or part of a file name.    
 
-##### Domain Namespace {#langDomainNamespace}
+##### Domain Namespace 
 
-A Domain Namespace contains a canonical datamodel as well as related public services for a certain 
-logical subdomain. Usually a service DSL file declares a single Domain Namespace and no Domain Namespaces
-are nested in that file within the declared Domain Namespace. Instead subnamespaces will be declared in
-separate file having their namespace name prefixed with with the names of all their parnet Domain
-Namespaces. Hence parent-child relationships of Domain Namespaces are built by apply this 
-naming convention. Dots are used as separators.
+A Domain Namespace contains a canonical datamodel as well as related public services for a certain logical subdomain. Usually a service DSL file declares a single Domain Namespace and no Domain Namespaces are nested in that file within the declared Domain Namespace. Instead subnamespaces will be declared in separate file having their namespace name prefixed with with the names of all their parnet Domain Namespaces. Hence parent-child relationships of Domain Namespaces are built by apply this naming convention. Dots are used as separators.
 
 Example:
 
@@ -257,12 +245,9 @@ org-namespace com.example shortname "ex" {
 }
 ```
 
-##### Internal Namespace {#langInternalNamespace}
+##### Internal Namespace 
 
-An internal namespace contains private services and the non canonical datamodel, i.e. internal parts 
-of the infrastructure the may change frequently. Datatypes declared in an internal namespace are being 
-considered noncanonical. Services defined in an internal namespace should be marked e[private]. An internal
-namespace is declared like this:
+An internal namespace contains private services and the non canonical datamodel, i.e. internal parts of the infrastructure the may change frequently. Datatypes declared in an internal namespace are being considered noncanonical. Services defined in an internal namespace should be marked `private`. An internal namespace is declared like this:
 
 Example:
 ```ServiceDSL
@@ -278,10 +263,9 @@ org-namespace com.example shortname "ex" {
 
 
 
-#### BusinessObjects {#langBOs}
+#### BusinessObjects 
 
-BusinessObject are user defined complex datatypes capturing business data. BusinessObject are versioned 
-and have a lifecycle state. The actual data are represented by one or more properties, that have a name and a datatype.
+BusinessObject are user defined complex datatypes capturing business data. BusinessObject are versioned and have a lifecycle state. The actual data are represented by one or more properties, that have a name and a datatype.
                 
 Example:
 
@@ -292,8 +276,8 @@ businessObject AbstractProduct {
         lifecycle-state test
         governance-approval {
             yes
-            approval-date "20.04.2011"
-            approved-by "Anna Jacobson"
+            decision-date 2017-04-20
+            decision-by "Anna Jacobson"
         }
     }
     business-key productId : string
@@ -304,7 +288,7 @@ businessObject AbstractProduct {
 }
 ```
 
-##### Business object meta data {#langBOMetadata}
+##### Business object meta data 
 
  
 | Keyword                    | Valid values                              | Example                      | Description                                              |
@@ -312,12 +296,12 @@ businessObject AbstractProduct {
 | `version`                  | `INT('.'INT)*`{:.language-xtext}          | `version 1.2.1`{:.language-ServiceDSL}                                            | The business object version.                                                                                                                      |
 | `replaces`                 | Reference to old business object          | `replaces OldBusinessObject`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;` majorVersion 1`{:.language-ServiceDSL}               | Used to rename business objects or move them to another namespace. The reference to the previous business object is given here.                   |
 | `lifecycle-state`          | Reference to a lifecycle state by name    | `lifecycle-state defined`{:.language-ServiceDSL}                                 | The lifecycle state of the business object with regard to SOA governance.                                                                         |
-| `governance-approval`      | see definition of governance approval     | `governance-approval {`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    yes`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-on "01.02.2011"`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-by "John Miller"`{:.language-ServiceDSL}<br/>`}`{:.language-ServiceDSL}  | The state of the governance decision on the business object. |
-| `retirement-on`            | DATE literal STRING literal with a date   | `retirement-on "01.06.2014"`{:.language-ServiceDSL}                              | The (planned) date of retirement of the business object.                                                                                          |
+| `governance-approval`      | see definition of governance approval     | `governance-approval {`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    yes`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-on 2017-02-01`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-by "John Miller"`{:.language-ServiceDSL}<br/>`}`{:.language-ServiceDSL}  | The state of the governance decision on the business object. |
+| `retirement-on`            | DATE literal STRING literal with a date   | `retirement-on 2018-08-31`{:.language-ServiceDSL}                              | The (planned) date of retirement of the business object.                                                                                          |
 | `provided-definition-URL`  | STRING with technical contract URL          | `provided-definition-URL`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`"http://somehost:8080/some.xsd"`{:.language-ServiceDSL} | Only for business objects defined in internal namespaces. The location where the already existing definition of the business object can be found. |
 
 
-##### Properties {#langBoProperties}
+##### Properties 
 
 Properties are use by business and query objects. A property is defined as:
 
@@ -362,9 +346,7 @@ Property qualifier keywords:
 
 Property name and type:
 
-Each property has a name and a type. The name and the type are separated by <code>:</code>. Types may be
-BusinessObjects, Enumerations or DataTypes, i.e. primitive types defined in the SOAProfile. As BusinessObjects and 
-Enumerations are versioned, the type reference of the attribute must declare a version constraint.
+Each property has a name and a type. The name and the type are separated by <code>:</code>. Types may be BusinessObjects, Enumerations or DataTypes, i.e. primitive types defined in the SOAProfile. As BusinessObjects and Enumerations are versioned, the type reference of the attribute must declare a version constraint.
 
 Example:
 ```ServiceDSL
@@ -408,56 +390,48 @@ Common features of Properties:
 
 Property name and type:
 
-Each property has a name and a type. The name and the type are separated by `:`. Types may be
-BusinessObjects, Enumerations or DataTypes, i.e. primitive types defined in the SOAProfile. As BusinessObjects and 
-Enumerations are versioned, the type reference of the attribute must declare a version constraint.
+Each property has a name and a type. The name and the type are separated by `:`. Types may be BusinessObjects, Enumerations or DataTypes, i.e. primitive types defined in the SOAProfile. As BusinessObjects and Enumerations are versioned, the type reference of the attribute must declare a version constraint.
 
 
-#### Enumerations {#langEnum}
+#### Enumerations
 
-##### Enumeration meta data {#langEnumMetadata}
+##### Enumeration meta data
 
 | Keyword                | Valid values                             | Example                                          | Description |
 | :--------------------- | :-------------------------------------   | :--------------------------------------------- | ----------- |
 | `version`              | `INT('.'INT)*`                             | `version 1.2.1`{:.language-ServiceDSL}         | The enumeration version. |
 | `replaces`             | Reference to old enumeration             | `replaces OldEnumeration`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`majorVersion 1`{:.language-ServiceDSL} | Used to rename enumerations or move them to another namespace. The reference to the previous enumeration is given here. |
 | `lifecycle-state`      | Reference to a lifecycle state by name | `lifecycle-state defined`{:.language-ServiceDSL}               | The lifecycle state of the enumeration with regard to SOA governance. |
-| `governance-approval`  | see definition of governance approval    | `governance-approval {`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    yes`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-on "01.02.2011"`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-by "John Miller"`{:.language-ServiceDSL}`}`{:.language-ServiceDSL} | The state of the governance decision on the enumeration. |
-| `retirement-on`          | DATE or STRING literal with a date       | `retirement-on "01.06.2014"`{:.language-ServiceDSL}               | The (planned) date of retirement of the enumeration.    |
+| `governance-approval`  | see definition of governance approval    | `governance-approval {`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    yes`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-on 2017-02-01`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-by "John Miller"`{:.language-ServiceDSL}`}`{:.language-ServiceDSL} | The state of the governance decision on the enumeration. |
+| `retirement-on`          | DATE or STRING literal with a date       | `retirement-on 2017-08-31`{:.language-ServiceDSL}               | The (planned) date of retirement of the enumeration.    |
 | `provided-contract`     | STRING with technical contract URL       | `provided-definition-URL`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`"http://somehost:8080/some.xsd"`{:.language-ServiceDSL} | Only for enumerations defined in internal namespaces. The location where the already existing definition of the business object can be found. |
 
 
-#### Services {#Services}
+#### Services
 
-##### General service properties {#langGeneralServiceProperties}
+##### General service properties
 
 
 ###### Public services:
 
-Public services comprice the official API and should be generally used. Public services
-may depend, i.e. <code>require</code> a private service. Hence, such a public service would 
-wrap the e[require]d private service.
+Public services comprice the official API and should be generally used. Public services may depend, i.e. <code>require</code> a private service. Hence, such a public service would wrap the e[require]d private service.
 
 Public services may only use the canonical datamodel to be reusable.
 
 
 ###### Domain services:
 
-Domain services are some more restricted in their usage. They can only be called from services defined
-in the same namespace or one of it's subnamespaces. Domain services may only use the canonical datamodel to be reusable.
+Domain services are some more restricted in their usage. They can only be called from services defined in the same namespace or one of it's subnamespaces. Domain services may only use the canonical datamodel to be reusable.
 
 
 ###### Private services:
 
-Private service are internal API that should be wrapped by public or domain services. Private services
-can only be called from the wrapping public and domain service. While they can be called from other 
-private services as well, this is regarded bad design and should be refactored to call their wrapping 
-public services. 
+Private service are internal API that should be wrapped by public or domain services. Private services can only be called from the wrapping public and domain service. While they can be called from other private services as well, this is regarded bad design and should be refactored to call their wrapping public services. 
 
 Every service has a name, version, lifecycle state and governance approval state.                    
 
 
-##### Defining services {#langServiceSyntax} 
+##### Defining services
 
 A service is defined in a domain namespace or internal namespace like this:
 
@@ -471,7 +445,7 @@ public service CustomerEntityService {
         lifecycle-state proposed
         governance-approval {
             yes
-            approval-date "20.04.2011"
+            approval-date 2017-04-20
             approved-by "Anna Jacobson"
         }
         category ^entity
@@ -489,13 +463,13 @@ public service CustomerEntityService {
 }
 ```
 
-##### Service meta data {#ServiceMetadata}
+##### Service meta data
 
 | Keyword               | Valid values                              | Example                                        | Description                   |
 | :--------------------- | :---------------------------------------- | :------------------------------------------- | ------------------------------ |
 | `version`             | `INT('.'INT)*`                            | `version 1.0.1`{:.language-ServiceDSL}        | The service version.|
 | `lifecycle-state`     | Reference to a lifecycle state by name    | `lifecycle-state defined`{:.language-ServiceDSL}  | The lifecycle state of the service with regard to SOA governance. |
-| `governance-approval` | see definition of governance approval     | `governance-approval {`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    yes`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-on "01.02.2011"`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-by "John Miller"`{:.language-ServiceDSL}<br/>`}`{:.language-ServiceDSL} | The state of the governance decision on the service. |
+| `governance-approval` | see definition of governance approval     | `governance-approval {`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    yes`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-on 2017-02-01`{:.language-ServiceDSL}<br/>&nbsp;&nbsp;&nbsp;&nbsp;`    decision-by "John Miller"`{:.language-ServiceDSL}<br/>`}`{:.language-ServiceDSL} | The state of the governance decision on the service. |
 | `category`            | Reference to a service category by name as defined in the  ArchitecureProfile | `category activity`{:.language-ServiceDSL} | The service category. |
 | `statefulness`        | `idempotend | stateless | stateful`       | `statefulness stateless`{:.language-ServiceDSL}                     | Whether the service can be repeatedly called with the same result (idempotend), is stateless or stateful. |
 | `persistence`         | `read | write | read/write | none`        | `persistence read/write`{:.language-ServiceDSL}                      | Whether data treaded by the service are persistent and read and/or written to a persistent store. |
@@ -504,26 +478,23 @@ public service CustomerEntityService {
 | `provided-contract`   | `STRING`                                  | `provided-Contract-URL`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`"http://somehost:someport/some.wsdl"`{:.language-ServiceDSL} | Only for private services defined in internal namespaces. The location where the already existing contract of the service can be found. |
 | `sourceURL`           | `STRING` with the location URL of the source code repository | `sourceURL "svn://somehost/somelocation"`{:.language-ServiceDSL} | Where the sources can be found. |
 | `docURL`              | `STRING` with the URL of the document     | `docURL "svn://somehost/somelocation"`{:.language-ServiceDSL}     | Where the documentation or specification can be found. |
-| `release-on`          | `DATE` or `STRING` with the release date  | `release-on "01.06.2010"`{:.language-ServiceDSL}                  | The (planned) release date of the service. |
-| `retirement-on`       | `DATE` or `STRING` the date of retirement | `retirement-on "01.06.2014"`{:.language-ServiceDSL} | The (planned) date of retirement of the service. |
+| `release-on`          | `DATE` or `STRING` with the release date  | `release-on 2017-08-28`{:.language-ServiceDSL}                  | The (planned) release date of the service. |
+| `retirement-on`       | `DATE` or `STRING` the date of retirement | `retirement-on 2018-08-31`{:.language-ServiceDSL} | The (planned) date of retirement of the service. |
 | `replaces`            | Reference to old service                     | `replaces OldServiceName`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`majorVersion 1`{:.language-ServiceDSL}   | Used to rename services or move them to another namespace. The reference to the previous service is given here. |
 | `messageHeader`       | Reference to a MessageHeader definition   | `messageHeader MyHeader`<br/>&nbsp;&nbsp;&nbsp;&nbsp;`majorVersion 1`{:.language-ServiceDSL}     | An alternative message header to be sent with each message. Usually a default message header has been defined in the profile which is being used when this attribute has not been defined, hence it is an override. |
 
-#### Operations {#langOperations}
+#### Operations
 
-###### Operation parameters {#langParameters} 
+###### Operation parameters 
 
-#### Exceptions {#langExceptions}
+#### Exceptions
 
 
-## Module DSL {#langModuleDsl}
+## Module DSL
 
-### Defining modules {#langDefModule}
+### Defining modules
 
-Modules aggregate services into a deployable unit. Modules
-have a version and are subject to a lifecycle. The services provided by should be referenced with a fixed version
-in order be to know what exactly the module provides. Hence, a version of a module contains a fixed set of 
-services with exactly defined versions.
+Modules aggregate services into a deployable unit. Modules have a version and are subject to a lifecycle. The services provided by should be referenced with a fixed version in order be to know what exactly the module provides. Hence, a version of a module contains a fixed set of services with exactly defined versions.
 
 The following example shows, how modules are defined:
  
@@ -539,15 +510,12 @@ module com.company.shop.invoicing {
         InvoiceNotificationUtilityService fixedVersion 1.1.1
     }
     source-location "git://git.company.com/shop/invoicing"
-    revision-tag "Release_1.4.3_RC2"
+    release-tag "Release_1.4.3_RC2"
+    release-on 2017-08-28
 }
 ```
 
-The example defines a module with the `QualifiedName` `com.company.shop.invoicing` in version `1.4.3`
-that provides three services. The module is available for acceptance test and has been packaged as an EAR containing
-a SCA composite. The `source-location` and `revision` tag referring to the source commited to the version control system 
-are optional parameters. The version and lifecycle-state declaration comply to the common syntax rules for versions and 
-lifecycle status declarations being follow the general syntax rules for these used throughout the service repository.
+The example defines a module with the `QualifiedName` `com.company.shop.invoicing` in version `1.4.3` that provides three services. The module is available for acceptance test and has been packaged as an EAR containing a SCA composite. The `source-location` and `revision` tag referring to the source commited to the version control system are optional parameters. The version and lifecycle-state declaration comply to the common syntax rules for versions and lifecycle status declarations being follow the general syntax rules for these used throughout the service repository.
 
 Modules are declared in _Module DSL files_. A wizard is available to create new _Module DSL files_.
 
@@ -556,9 +524,7 @@ Modules are declared in _Module DSL files_. A wizard is available to create new 
 
 ### Defining environments {#langDefEnv}
 
-The environment defines which servers are available and where they are hosted. Environments have a unique name and a type
-such as e[development], `test` or `production`. To create a new environment create a 
-new _Environment DSL file_. A new file wizard is available for that. Then define an environment as in this example:
+The environment defines which servers are available and where they are hosted. Environments have a unique name and a type such as e[development], `test` or `production`. To create a new environment create a new _Environment DSL file_. A new file wizard is available for that. Then define an environment as in this example:
             
 
 ```EnvironmentDSL
@@ -581,7 +547,7 @@ environment CoreDevelopment of type Development-Environment {
                 port 8080
                 secured-port 8443
             }
-            SOAPHTTP {
+            SOAP/HTTP {
                 port 8080
                 secured-port 8443
                 context-root "ws"
@@ -618,14 +584,7 @@ environment CoreDevelopment of type Development-Environment {
 }
 ```
 
-In this example three hosts `as4000` `as4200` and `as4350` have set up in the
-development environment named `CoreDevelopment`. On host `as4000` an Apache has been installed
-having the identifier `simplereg.as4000.core` in the Definitive Software Library within the Configuration
-Database. On host `as4350` the Tomcat instance `as4350Tomcat` offers HTTP on port 8080 and HTTPS on port 8443
-as outlined in the `connectors` section. The tomcat also offers a SOAP interface on the same ports, offering
-SOAP services under the context root `ws`. Finally an ESB is running on host `as4200`, that 
-also offers SOAP on port 9080. The connectors are implicitely referenced from the binding when having the same type as 
-the `BindingProtocol` defined for a service or module in the binding of them to this environment.
+In this example three hosts `as4000` `as4200` and `as4350` have set up in the development environment named `CoreDevelopment`. On host `as4000` an Apache has been installed having the identifier `simplereg.as4000.core` in the Definitive Software Library within the Configuration Database. On host `as4350` the Tomcat instance `as4350Tomcat` offers HTTP on port 8080 and HTTPS on port 8443 as outlined in the `connectors` section. The tomcat also offers a SOAP interface on the same ports, offering SOAP services under the context root `ws`. Finally an ESB is running on host `as4200`, that also offers SOAP on port 9080. The connectors are implicitely referenced from the binding when having the same type as the `BindingProtocol` defined for a service or module in the binding of them to this environment.
 
 
 
@@ -633,8 +592,7 @@ the `BindingProtocol` defined for a service or module in the binding of them to 
 
 ### Defining bindings {#langDefBind}
 
-The binding creates the link between services / modules and a target environment where they get deployed. Hence they are
-bound to that environment. Consequently a binding would be defined for each environment where the services / modules are deployed. 
+The binding creates the link between services / modules and a target environment where they get deployed. Hence they are bound to that environment. Consequently a binding would be defined for each environment where the services / modules are deployed. 
 The following example shows how a binding can be defined for a module to a target environment.
 
 Example:
@@ -652,20 +610,14 @@ bind-module com.company.shop.invoicing fixedVersion 1.4.3
 }
 ```
 
-The module `com.company.shop.invoicing` in version `1.4.3` is  bound to the development environment named
-`CoreDevelopment`. The binding has the name `com.company.shop.invoicing.dev` to be easily referrable from
-code generators. The binding definition ist pretty simple by stating, that the module will be deployed to the ESB `DevESB`
-in the target environment. All services provided by the module will be offered as SOAP services using the _document / literal-wrapped_ style.
-Note that the `BindingProtocol` `SOAP`{:.language-BindingDSL} links to the `SOAPHTTP`{:.language-EnvironmentDSL} connector of the ESB
+The module `com.company.shop.invoicing` in version `1.4.3` is  bound to the development environment named `CoreDevelopment`. The binding has the name `com.company.shop.invoicing.dev` to be easily referrable from code generators. The binding definition ist pretty simple by stating, that the module will be deployed to the ESB `DevESB` in the target environment. All services provided by the module will be offered as SOAP services using the _document / literal-wrapped_ style. Note that the `BindingProtocol` `SOAP`{:.language-BindingDSL} links to the `SOAPHTTP`{:.language-EnvironmentDSL} connector of the ESB
 
 Bindings are declared in _Binding DSL files_. A wizard is available to create new _Binding DSL files_.
         
 
 ## Solution DSL {#langSolutionDsl}
 
-The solution DSL is used to model service based solutions, i.e. applications. With solutions you can
-model service consumers that are not services themselves. This provides a means to find out which solutions / apps are the consumers of
-a service and whether it is being used by any potential consumer at all.
+The solution DSL is used to model service based solutions, i.e. applications. With solutions you can model service consumers that are not services themselves. This provides a means to find out which solutions / apps are the consumers of a service and whether it is being used by any potential consumer at all.
 
 Example:
 ```SolutionDSL
@@ -680,8 +632,10 @@ solution CustomerManagementApp {
     lifecycle-state productive
     
     additional-information {
-        location "file://W:\\CustomerManagement\\Requirements\\CustomerManagementApp-Requirements.doc"
-        location "file://W:\\CustomerManagement\\Design\\CustomerManagementApp-Design.doc"
+        location 
+            "file://W:\\CustomerManagement\\Requirements\\CustomerManagementApp-Requirements.doc"
+        location 
+            "file://W:\\CustomerManagement\\Design\\CustomerManagementApp-Design.doc"
     }
     requires CustomerManagerBAS majorVersion 1
     
@@ -693,8 +647,7 @@ solution CustomerManagementApp {
 
 ## Profile DSL {#langProfileDsl}
 
-The profile DSL models the general architectural constraints, asset lifecycle and basic data types. A
-profile model must always be created, to declare the basic types at least.
+The profile DSL models the general architectural constraints, asset lifecycle and basic data types. A profile model must always be created, to declare the basic types at least.
 
 Example:
 
@@ -729,7 +682,8 @@ profile SampleArchitectureProfile {
          */
         initial state proposed {
             /*
-             * One can play with the proposal only in a local environment (the local PC)
+             * One can play with the proposal only in a 
+             * local environment (the local PC)
              */
             qualifies-for Local-Environment
             -> development 
@@ -753,7 +707,8 @@ profile SampleArchitectureProfile {
         state test {
             //must have been approved by SOA governance
             requires-approval
-            qualifies-for Local-Environment, Development-Environment, Test-Environment
+            qualifies-for 
+            	Local-Environment, Development-Environment, Test-Environment
             -> productive
             -> proposed
         }
@@ -764,10 +719,11 @@ profile SampleArchitectureProfile {
         state productive {
             //must have been approved by SOA governance
             requires-approval
-            /* changes are not allowed on this version of the asset, a new version need to be created
-            to incorporate changes */
+            /* changes are not allowed on this version of the asset, 
+             * new version need to be created to incorporate changes */
             freezes-asset
-            qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
+            qualifies-for Local-Environment, Development-Environment,
+            	Test-Environment, Staging-Environment, Production-Environment
             -> deprecated
             -> proposed
         }
@@ -778,10 +734,11 @@ profile SampleArchitectureProfile {
         state deprecated {
             //must have been approved by SOA governance
             requires-approval
-            /* changes are not allowed on this version of the asset, a new version need to be created
-            to incorporate changes */
+            /* changes are not allowed on this version of the asset, a 
+             * new version need to be created to incorporate changes */
             freezes-asset
-            qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
+            qualifies-for Local-Environment, Development-Environment,
+                Test-Environment, Staging-Environment, Production-Environment
             -> productive
             -> proposed
         }
@@ -839,11 +796,12 @@ profile SampleArchitectureProfile {
              * Define how the evolution of backward compatible version is supported
              */
             version-evolution {
-                /* XSDs will need a placeholder element for response messages. By default a list of "any"-elements */
+                /* XSDs will need a placeholder element for response 
+                 * messages. By default a list of "any"-elements */
                 extendible-properties
                 /* 
-                 * And placeholders for XSD attributes is defined will be used as well
-                 */
+                 * And placeholders for XSD attributes is defined will 
+                 * be used as well */
                 extendible-XML-attributes    
             }
         }
@@ -851,7 +809,8 @@ profile SampleArchitectureProfile {
     
     
     /**
-     * Use a new namespace for every major version of BOs, Enums, Services oder Exception 
+     * Use a new namespace for every major version of 
+     * BOs, Enums, Services oder Exception 
      * e.g. an XSD-namespace 
      */
     versioning-strategy namespace-based 

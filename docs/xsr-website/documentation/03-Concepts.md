@@ -15,33 +15,19 @@ The data model in a SOA approach may be separated into two major parts:
 
 ### Canonical data model
 
-The canonical data model defines data types that are standardized to some extent. 
-It is the "common language". Whenever data are exchanged between different systems, 
-the canonical data model should be used as it protects the user from frequent changes. 
-A canonical data model is scoped to a domain or subdomain. Namespace that belong to the 
-canonical data model are called e[domain namespace]s.
+The canonical data model defines data types that are standardized to some extent. It is the "common language". Whenever data are exchanged between different systems, the canonical data model should be used as it protects the user from frequent changes. A canonical data model is scoped to a domain or subdomain. Namespace that belong to the canonical data model are called *domain namespace*s.
 
 
 ### Non canonical data model
 
-The non canonical data model defines data types that are e[not] standardized. The canonical 
-data model is the "local language" of an application or system. Hence, it is considered 
-internal and should only be used internally by that system or application. The non canonical 
-data model enables frequent changes to the data model in a "safe" area, that does not affect 
-other systems or applications. Namespaces that belong to the non canonical data model are called 
-e[internal namespace]s.
+The non canonical data model defines data types that are _not_ standardized. The canonical data model is the "local language" of an application or system. Hence, it is considered internal and should only be used internally by that system or application. The non canonical data model enables frequent changes to the data model in a "safe" area, that does not affect other systems or applications. Namespaces that belong to the non canonical data model are called *internal namespace*s.
 
 
 ### Domains and namespaces
 
-The canonical and the non canonical datamodel are organized into domains which 
-are reflected by namespaces. For each subdomain there exists a respective domain-namespace.
-Domains and there subdomains are defined in the business model. Hence, domain namespaces 
-contain the respective subdomain of the canonical datamodel and their related public services.
+The canonical and the non canonical datamodel are organized into domains which are reflected by namespaces. For each subdomain there exists a respective domain-namespace. Domains and there subdomains are defined in the business model. Hence, domain namespaces contain the respective subdomain of the canonical datamodel and their related public services.
 
-Domain namespaces are complemented by internal namespaces that contain the non canonical datamodel
-and private services. Whatever is defined in an internal namespace should only be internally as 
-the name suggests. Internal namespaces contain fragile API.
+Domain namespaces are complemented by internal namespaces that contain the non canonical datamodel and private services. Whatever is defined in an internal namespace should only be internally as the name suggests. Internal namespaces contain fragile API.
 
 ![Namespace hierarchy](images/namespaces.png)
 

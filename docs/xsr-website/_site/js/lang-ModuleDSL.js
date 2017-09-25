@@ -7,9 +7,9 @@
 
 /**
  * @fileoverview
- * Registers a language handler for Xtend.
+ * Registers a language handler for Module DSL.
  *
- * @author Sebastian Zarnekow
+ * @author André Arnold
  */
 
 PR['registerLangHandler'](

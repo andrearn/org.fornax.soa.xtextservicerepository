@@ -11,10 +11,7 @@ XKonneX Repository supports two ways to find assets like services.
 
 ### Standard Xtext based search
 
-The first option is to use "Open Model Element" from the "Navigate" menu. This is the standard
-Xtext search facility which opens a pop-up dialog where can enter a name or name pattern
-of the model element you look for and additionally it's type e.g. Service.
-Another option is to use the "Service Repository Search" from the search dialog.
+The first option is to use "Open Model Element" from the "Navigate" menu. This is the standard Xtext search facility which opens a pop-up dialog where can enter a name or name pattern of the model element you look for and additionally it's type e.g. Service. Another option is to use the "Service Repository Search" from the search dialog.
 
 ### XKonneX Repository Search dialog
 
