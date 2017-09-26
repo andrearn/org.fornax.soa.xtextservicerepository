@@ -71,13 +71,13 @@ import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
  * on how and when to use it 
  */
 class ModuleDslScopeProvider extends ComponentAwareVersionedScopeProvider {
-	@Inject package Injector injector
-	@Inject package ModuleLookup modLookup
-	@Inject package IModuleServiceResolver modServiceResolver
-	@Inject package IQualifiedNameProvider nameProvider
-	@Inject package ILifecycleStateResolver defaultStateResolver
-	@Inject package StateAttributeLifecycleStateResolver staticStateResolver
-	@Inject package IEObjectLookup objLookup
+	@Inject Injector injector
+	@Inject ModuleLookup modLookup
+	@Inject IModuleServiceResolver modServiceResolver
+	@Inject IQualifiedNameProvider nameProvider
+	@Inject ILifecycleStateResolver defaultStateResolver
+	@Inject StateAttributeLifecycleStateResolver staticStateResolver
+	@Inject IEObjectLookup objLookup
 	@Inject extension ModelExtensions
 
 	override IScope getScope(EObject context, EReference reference) {

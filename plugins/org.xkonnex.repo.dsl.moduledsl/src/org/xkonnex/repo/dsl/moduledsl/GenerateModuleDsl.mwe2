@@ -122,7 +122,7 @@ Workflow {
 		    }
 		    fragment = scoping.ImportNamespacesScopingFragment2 {
 		    	generateStub = true
-		    	generateXtendStub = false
+		    	generateXtendStub = true
 		    }
 		    fragment = exporting.QualifiedNamesFragment2 {}
 		    fragment = builder.BuilderIntegrationFragment2 {}
