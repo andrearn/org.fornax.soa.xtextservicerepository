@@ -1,13 +1,40 @@
+<!DOCTYPE html>
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
-	<title>Modeling concepts</title>
-	<link href="book.css" rel="stylesheet" type="text/css">
-	<link href="code.css" rel="stylesheet" type="text/css">
-	<link rel="home" href="index.html" title="">
+
+  <head>
+	<meta charset="UTF-8">
+	<title>XKonneX Repository - Modeling concepts</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description"
+		content="The website of XKonnex Repository, an open-source service repository based on domain-specific languages">
+	<meta name="author" content="André Arnold">
+	<!--  styles -->
+	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<!-- Le fav and touch icons -->
+	<link rel="shortcut icon" href="/XKonneXRepo/images/favicon.png">
+	
+	<link href="/XKonneXRepo/css/bootstrap.css" rel="stylesheet" type='text/css'>
+	<link href="/XKonneXRepo/css/bootstrap-responsive.css" rel="stylesheet" type='text/css'>
+	<link href="/XKonneXRepo/css/shield-responsive.css" rel="stylesheet" type='text/css'>
+	<link href='/XKonneXRepo/css/fonts.css' rel='stylesheet' type='text/css'>
+	<link href="/XKonneXRepo/css/prettyPhoto.css" rel="stylesheet" media="screen" type='text/css'>
+	<link href="/XKonneXRepo/css/prettify.css" type="text/css" rel="stylesheet"/>
+	<link href="/XKonneXRepo/css/style.css" rel="stylesheet" type='text/css'>
+	<!-- cover flow -->
+	<link href="/XKonneXRepo/css/coverflow.css" rel="stylesheet" type='text/css'>
+	<!--[if lt IE 9]>
+	  <link href="/css/iebugs.css" rel="stylesheet" type='text/css'>
+	<![endif]-->
 </head>
-<body>
-<!-- Google Tag Manager -->
+
+
+  <body>
+  <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TGDS5S"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -17,7 +44,85 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TGDS5S');</script>
 <!-- End Google Tag Manager -->
 
-<h1 id="ModelingConcepts">Modeling concepts</h1>
+    <header class="site-header">
+
+  <!-- Navbar -->
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse"
+          data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+          class="icon-bar"></span> <span class="icon-bar"></span>
+        </a> <a class="brand" href="/XKonneXRepo/index.html"></a>
+        <div class="nav-collapse collapse" style="height: 0px;">
+          <ul class="nav">
+            <!--li ><a href="/XKonneXRepo/news.html">News</a></li-->
+            <li ><a href="/XKonneXRepo/download.html">Download</a></li>
+            <li ><a href="/XKonneXRepo/documentation/index.html">Documentation</a></li>
+            <li ><a href="/XKonneXRepo/community.html">Community</a></li>
+          </ul>
+          <!--div class="nav pull-right">
+            <li ><a><iframe src="https://ghbtns.com/github-btn.html?user=eclipse&repo=xtext&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe></a></li>
+          </div-->
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+  <!-- Navbar End -->
+
+</header>
+
+
+    <div class="page-content">
+  <script>
+    function startSearch(event) {
+        if (event.keyCode == 13) {
+            var q = 'site:eclipse.org/Xtext/documentation+' + event.target.value;
+            window.open('https://www.google.com/search?q=' + q, "_self");
+        }
+    }
+  </script>
+  <div class="wrapper">
+  	<div id="page">  
+      <div class="inner">
+        <div id="maincontainer" class="container">
+          <span class="edit-on-github pull-right">
+            <a href="https://github.com/andrearn/org.fornax.soa.xtextservicerepository/edit/master/docs/xsr-website/documentation/03-Concepts.md">Edit on Github</a>
+          </span>
+          <div class="span3" style="margin-left: 0px;">
+            <div class="search-bar">
+              <img src="/XKonneXRepo/images/search-gray.png"/>
+              <input type="search" id="google-search" onkeyup="startSearch(event);"/>
+            </div>
+            <ul id="nav-outline" style="margin-left: 0px;">
+	<li class="nav-part">Introduction</li>
+	<li><a href="01-Introduction.html">Introduction</li>
+
+	<li class="nav-part">Getting Started</li>
+	<li><a href="02-GettingStarted.html">Getting Started</a>
+	</li>
+
+	<li class="nav-part">Concepts</li>
+	<li><a href="03-Concepts.html">Concepts</a>
+	</li>
+	<li><a href="04-Governance.html">Governance</a>
+	</li>
+	<li><a href="05-IDESupport.html">IDE Support</a>
+	</li>
+
+	<li class="nav-part">Reference Documentation</li>
+	<li><a href="10-langreference.html">Modeling language reference</a>
+	</li>
+	<li><a href="20-generatorreference.html">Code generators</a>
+	</li>
+	<li class="nav-part">Additional Resources
+	<li><a href="http://download.eclipse.org/modeling/tmf/xtext/javadoc/2.9/">API Documentation (JavaDoc)</a>
+</ul>
+
+          </div>
+          <div class="span8 doc-contents">
+            <h1 id="ModelingConcepts">Modeling concepts</h1>
 
 <h2 id="the-data-model">The data model</h2>
 
@@ -43,7 +148,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <p><img src="images/namespaces.png" alt="Namespace hierarchy" /></p>
 
-<h2 id="EncapsulationOfServices">Encapsulation of services</h2>
+<h2 id="encapsulation-of-services">Encapsulation of services</h2>
 
 <p>Often, a SOA will be built from already existing systems and interfaces. However, the services already available will usually not suit very well with the larger scope of an enterprise wide IT architecture as they have been developed with specific usage scenarios in mind.</p>
 
@@ -52,17 +157,17 @@ as well as their interfaces.</p>
 
 <p><img src="images/PublicEncapsPrivateService.png" alt="A public service encapsulating a private service" /></p>
 
-<h2 id="ModelPerspectives">Perspectives in a SOA model</h2>
+<h2 id="perspectives-in-a-model">Perspectives in a model</h2>
 
 <p>In a SOA model you can take different perspectives, depending on the matter of interest.</p>
 
 <p><img src="images/AllModels.png" alt="Overview of all models" /></p>
 
-<h3 id="ServiceModelPerspective">Service model</h3>
+<h3 id="service-model">Service model</h3>
 
 <p>The service model let’s you look at service contracts and data types. The service model defines domain and internal namespaces, which in turn define business objects, enumerations, services and exception types.</p>
 
-<h4 id="VersionAndLifecycles">Versions and lifecycle states</h4>
+<h4 id="versions-and-lifecycle-states">Versions and lifecycle states</h4>
 
 <p>Different consumers	of a service may require a different version of the service. Hence, several different versions of a service and related business objects etc. may be deployed in the same runtime environment. <br />
 Generally the latest compatible version will be used when a dependency to a service or business object is being declared. Whether a newer version is compatible to it’s previous version or not is reflected by the version number increment. If the major version is incremented, the change is incompatible to the previous version. If only a minor version number has been incremented it is backward compatible to the previous minor version.</p>
@@ -76,38 +181,38 @@ Generally the latest compatible version will be used when a dependency to a serv
 <p>There may be a service <code>CustomerEntityService</code> in version <code>1.2</code> which has a service operation <code>getCustomer</code> that returns a list of <code>Customer</code>s in the latest minor version of major version <code>1</code>.<br />
 Be <code>Customer</code> available in version <code>1.0</code> in the lifecycle state <code>productive</code>, meaning it is ready for production use and let’s say we have a <code>Customer</code> in version <code>1.1</code> that is in state <code>development</code> meaning it is ready for development purposes. In a production environment the latter version would not yet be available. Hence, in the production environment the dependency to <code>Customer</code> in major version <code>1</code> would actually resolve to <code>Customer</code> version <code>1.0</code>, while in the the development environment it would resolve to version <code>1.1</code>.</p>
 
-<h4 id="Services">Services</h4>
+<h4 id="services">Services</h4>
 
 <p>A public service usually relates to a business capability in the business model. A service provides, i.e. implements capabilities as service operations. Services are foundational building blocks of a service oriented architecture.</p>
 
-<h4 id="BusinessObjects">Business Objects</h4>
+<h4 id="business-objects">Business Objects</h4>
 
 <p>Business objects are complex types with one ore more attributes. Attributes have a name, a type with a version constraint if it is a business object or enumeration, an optional many cardinality and some other optional flags.</p>
 
-<h4 id="Enumerations">Enumerations</h4>
+<h4 id="enumerations">Enumerations</h4>
 
 <p>Enumerations declare all possible values that an attribute or parameter of that type may have.</p>
 
-<h4 id="QueryObjects">Query Objects</h4>
+<h4 id="query-objects">Query Objects</h4>
 
 <p>Query objects are quite similar to business objects. They are used as template objects for query operations. Only some, of the attributes may be set. Generally all attributes are optional. Code generators support complex predicates inferred from the attribute types, such as generating a date range for date attributes. Query objects are rather technical objects.</p>
 
-<h4 id="Exceptions">Exceptions</h4>
+<h4 id="exceptions">Exceptions</h4>
 
 <p>As in many programming languages, exceptions describe an unexpected behavior or error condition. However, in contrast to many languages, they are first class citizens in the service DSL.</p>
 
-<h3 id="ModulePerspective">Modules</h3>
+<h3 id="modules">Modules</h3>
 
 <p>Modules assemble services into modules. The module has a unique version number and state. The module defines which services are provided by the module and which services or even whole modules are being used by the module.</p>
 
 <p>Provided services should always explicitly refer to the version of the service being provided using a <code>fixedVersion</code> constraint.<br />
 On the other hand used services or modules should be referred to with a weaker version constraint such as <code>majorVersion</code>.</p>
 
-<h3 id="EnvironmentPerspective">Runtime environment</h3>
+<h3 id="runtime-environment">Runtime environment</h3>
 
 <p>The environment defines, what makes up the IT infrastructure that hosts services and solutions. Typical parts of an environment are hosts, application servers, databases and so on. Typically a company has a production, test and a development environment.</p>
 
-<h3 id="BindingPerspective">Module and service bindings to the runtime</h3>
+<h3 id="module-and-service-bindings-to-the-runtime">Module and service bindings to the runtime</h3>
 
 <p>This perspective describes, where and how service modules are deployed to the runtime environment. The binding perspective wires services to an environment, where they are supposed to be hosted together. It defines protocols, servers hosting the services (and implicitly their endpoints) as well as policies like security policies or availability assertions.</p>
 
@@ -130,7 +235,7 @@ on several levels with regard to the service model:</p>
 
 <p>The perspective supports convention over configuration in that one would define a default binding configuration for a certain namespace. The defaults may the be overridden for a specific service or even a specific operation of a service.</p>
 
-<h4 id="UsedModuleBinding">Effective binding for modules consuming other modules</h4>
+<h4 id="effective-binding-for-modules-consuming-other-modules">Effective binding for modules consuming other modules</h4>
 
 <p>If you want to describe that a module uses another module, the consuming module needs to know how to access the providing module. To do that you need to specify an <code>endpoint-protocol</code>. Of<br />
 cause the providing module must have a binding supporting this protocol.</p>
@@ -141,18 +246,18 @@ cause the providing module must have a binding supporting this protocol.</p>
 
 <p><img src="images/UsedModuleBindingProd.png" alt="Binding and module version selection in production" /></p>
 
-<h3 id="SLAPerspective">Service level agreements</h3>
+<h3 id="service-level-agreements">Service level agreements</h3>
 
 <p>Service level agreements can be declared in a SLA model. They define a contract between a service consumer and a service provider. SLAs are defined by properties like service availability, maximum downtimes, responsible service owners and so on. The SLA identifies all involved parties and the assets, it applies<br />
 to.</p>
 
-<h3 id="Semantics">Describing semantics</h3>
+<h3 id="describing-semantics">Describing semantics</h3>
 
 <p>Finally, the Semantics DSL can be used to declare tags and qualifier. Tags simply have a name and can be referred from most other models in “tags” clause enumerating all tags that semantically describe an aspect of the tagged asset. Using tags you can relate different assets like services or business objects<br />
 to one another. The Service Repository Search dialog allows you to look for asset with one or more certain tags.<br />
 Qualifiers are used to qualify service endpoint. This is especially useful when you a migration scenario, where the same module is deployed to two different ESBs. You would mark the respective bindings with different endpoint-qualifiers. You can do this as well on the consuming side of a module to select between bindings and select the endpoint on the ESB you would like the module to access when calling the service.</p>
 
-<h3 id="BusinessModelPerspective">Business view</h3>
+<h3 id="business-view">Business view</h3>
 
 <p>The business view gives a perspective on what makes up the business of a company. It is typically organized into domains which may be reflected by the company’s organizational structure. The business model also defines business functions that are supported by the organization or certain organizational roles in order<br />
 to build solutions from business functions.</p>
@@ -160,17 +265,17 @@ to build solutions from business functions.</p>
 <p>Business capabilities are used to define what can be done in the business sense. They can be compared to use cases, yet they do not define actors as they are designed for reuse. A business capability might be e.g. <em>“Lookup a customer by her address”</em>. Business capabilities relate to services or service operations<br />
 defined in the service model.</p>
 
-<h3 id="SolutionPerspective">Solutions</h3>
+<h3 id="solutions">Solutions</h3>
 
 <p>Solutions support the business of a company. They are available as applications or bundles of applications that solve a certain problem, e.g. a customer self care solution. In SOA, solutions are based services that support the business capabilities required to compose a solution. Solutions are the end consumers of services.</p>
 
 <p><img src="images/Solutions.png" alt="Structure of a solution" /></p>
 
-<h3 id="BaseDSL">The base DSL for most models</h3>
+<h3 id="the-base-dsl-for-most-models">The base DSL for most models</h3>
 
 <p>Most models have a base DSL that describes common concepts like version or versioned reference or qualified names. This is the SOA Base DSL. However, you will not use this DSL to model any aspect of a SOA.</p>
 
-<h2 id="ModelingWithDSLs">Modeling with Domain Specific Languages</h2>
+<h2 id="modeling-with-domain-specific-languages">Modeling with Domain Specific Languages</h2>
 
 <p>Domain Specific Languages (short DSLs) are textual or graphical languages designed for a specific problem domain. XKonneX Repository describes the central assets of a SOA as explained in the [ModelPerspectives] <br />
 using a specific textual DSL for each perspective. The XKonneX Repository DSL editors will support with code completion.</p>
@@ -178,6 +283,101 @@ using a specific textual DSL for each perspective. The XKonneX Repository DSL ed
 <p>As services are the most important assets of a SOA, the Service DSL is the most important one. Create a new Service DSL file to define a namespace, business objects and services. After the services have been defined, the are being composed into modules. Create a new Module DSL file to define module. The runtime environment will be defined in an Environment DSL file. To finally declare, where the defines services run bind them with ModuleBinding, ServiceBinding or even OperationBinding to the environment or more specific, certain servers in the target environment. Create a new Binding DSL file to declare such a binding.</p>
 
 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <footer class="site-footer">
+  <div id="extra">
+    <div class="inner">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <h3 class="footer-links-header">Quick Links</h3>
+            <ul class="footer-links clearfix">
+              <li><a href="http://www.eclipse.org/legal/privacy.php">Privacy Policy</a></li>
+              <li><a href="http://www.eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
+              <li><a href="http://www.eclipse.org/legal/copyright.php">Copyright Agent</a></li>
+              <li><a href="http://www.eclipse.org/legal/">Legal</a></li>
+            </ul>
+            <ul class="footer-links clearfix">
+              <li><a href="http://www.eclipse.org">Eclipse Home</a></li>
+              <li><a href="http://marketplace.eclipse.org/">Market Place</a></li>
+              <li><a href="http://live.eclipse.org/">Eclipse Live</a></li>
+              <li><a href="http://www.planeteclipse.org/">Eclipse Planet</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" class="scrollup fadeOutRight animated" style="display: none;">ScrollUp</a>
+  <!-- Le javascript
+      ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  
+  <script src="/XKonneXRepo/js/jquery-1.11.3.min.js"></script>
+  <script src="/XKonneXRepo/js/bootstrap.min.js"></script>
+  <script src="/XKonneXRepo/js/jquery.easing.1.3.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/jquery.prettyPhoto.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/twitter.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/prettify.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-BaseDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-BusinessDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-BindingDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-EnvironmentDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-ModuleDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-ProfileDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-ServiceDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-SLADSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-SemanticsDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-SolutionDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-common.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/custom.js" type="text/javascript"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!--script type="text/javascript">
+    var _gaq = _gaq || [];  
+      _gaq.push([ '_setAccount', 'UA-2429174-3' ]);
+    _gaq.push([ '_trackPageview' ]);
+    (function() {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+          : 'http://www')
+          + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+  </script-->
+  <script src="/XKonneXRepo/js/coverflow.min.js" type="text/javascript"></script>
+  <script>
+      $(function() {
+        $('#coverflow').coverflow({
+          active : 1,
+          visibleAside: 2,
+          overlap : 0.5,
+          scale : 0.9,
+          angle : 20,
+          trigger : {
+            "itemfocus" : true,
+            "swipe" : true,
+            "mousewheel" : false
+          }
+        });
+        $('#coverflow :hidden').toggle();
+        $(window).resize(function() {
+          $('#coverflow').coverflow();
+        });
+      });
 
-</body>
+  </script>
+</footer>
+
+
+  </body>
+
 </html>

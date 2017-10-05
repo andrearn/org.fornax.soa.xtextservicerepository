@@ -55,4 +55,4 @@ javadoc:
   guice: "https://google.github.io/guice/api-docs/latest/javadoc"
   mongodb: "http://api.mongodb.org/java/2.6"
 
-edit-repo : "https://github.com/andrearn/xtextservicerepository/edit/master/docs/xsr-website/"
+edit-repo : "https://github.com/andrearn/org.fornax.soa.xtextservicerepository/edit/master/docs/xsr-website/"
