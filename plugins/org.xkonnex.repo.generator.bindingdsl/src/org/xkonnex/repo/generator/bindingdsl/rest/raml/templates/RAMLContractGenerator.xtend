@@ -298,31 +298,33 @@ class RAMLContractGenerator {
                         «ENDFOR»
                 «ENDIF»
                 «IF isVerbWithRequestBody(verb) && !op.parameters.nullOrEmpty»
-                     body:
+                    body:
                         «FOR contentType : requestContentTypes»
                             «contentType»:
-                                «op.toRequestWrapperType»
-                                «/* example:
+                                «op.toRequestBody»
+                                 «/* example:
 						            {
-						                "message" : "Hello World"
-						            } 
-						        */»
+						                 "message" : "Hello World"
+						             } 
+						         */»
                         «ENDFOR»
                         «IF requestContentTypes.isNullOrEmpty»
                             application/json:
-                                «op.toRequestWrapperType»
+                                «op.toRequestBody»
                         «ENDIF»                            
             	«ENDIF»
                 responses:
                     «FOR response : responses»
                         «response.statusCode»:
-                            headers:
-                                «FOR header : response.header»
-                                    «header.name»:
-                                        type:
-                                            - «IF (header.type !== null)»«header.type»«ELSE»string«ENDIF»
-                                            «/*default: «header.messageHeader*/»
-                                «ENDFOR»
+                            «IF !response.header.nullOrEmpty»
+                                headers:
+                                    «FOR header : response.header»
+                                        «header.name»:
+                                            type:
+                                                - «IF (header.type !== null)»«header.type»«ELSE»string«ENDIF»
+                                                «/*default: «header.messageHeader*/»
+                                    «ENDFOR»
+                            «ENDIF»
                             body:
                                 «FOR contentType : response.contentType»
                                     «contentType»:
@@ -363,24 +365,24 @@ class RAMLContractGenerator {
                 «ENDIF»
                 «IF isVerbWithRequestBody(verb) && !op.parameters.nullOrEmpty»
                      body:
-                        «FOR contentType : requestContentTypes»
-                            «contentType»:
-                                «op.toRequestWrapperType»
-                                «/* example:
-						            {
-						                "message" : "Hello World"
-						            } 
-						        */»
-                        «ENDFOR»                            
-                        «IF requestContentTypes.isNullOrEmpty»
-                            application/json:
-                                «op.toRequestWrapperType»
-                        «ENDIF»                            
-            	«ENDIF»
+                         «FOR contentType : requestContentTypes»
+                             «contentType»:
+                                 «op.toRequestBody»
+                                 «/* example:
+						             {
+						                 "message" : "Hello World"
+						             } 
+						         */»
+                         «ENDFOR»                            
+                         «IF requestContentTypes.isNullOrEmpty»
+                             application/json:
+                                 «op.toRequestBody»
+                         «ENDIF»                            
+                «ENDIF»
                 responses:
                     «FOR response : op.response»
                         «response.responseCode.toReturnCode»:
-                            «IF responseMessageHeaders !== null»
+                            «IF responseMessageHeaders !== null && !requestMessageHeaders.parameters.nullOrEmpty»
                                 headers:
                                     «FOR propEntry : responseMessageHeaders.toRequestHeaderMap.entrySet»
                                         «propEntry.key»:
@@ -469,11 +471,10 @@ class RAMLContractGenerator {
     private def dispatch toReturnType (Response response) {
         if (response.^return.size > 1) {
             '''
-                type: object
-                    properties: 
-                        «FOR param : response.^return»
-                            «param.name» «inlineTypeGenerator.toPropertyType(param.type)»
-                        «ENDFOR»
+                properties: 
+                    «FOR param : response.^return»
+                        «param.name» «inlineTypeGenerator.toPropertyType(param.type)»
+                    «ENDFOR»
             '''
         } else if(response.^return.size == 1) {
             '''
@@ -490,11 +491,10 @@ class RAMLContractGenerator {
     private def dispatch toReturnType (Operation op) {
         if (op.^return.size > 1) {
             '''
-                type: object
-                    properties: 
-                        «FOR param : op.^return»
-                            «param.name»: «inlineTypeGenerator.toPropertyType(param.type)»
-                        «ENDFOR»
+                properties: 
+                    «FOR param : op.^return»
+                        «param.name»: «inlineTypeGenerator.toPropertyType(param.type)»
+                    «ENDFOR»
             '''
         } else if(op.^return.size == 1) {
             '''
@@ -505,14 +505,13 @@ class RAMLContractGenerator {
         }
     }
     
-    private def toRequestWrapperType (AbstractOperation op) {
+    private def toRequestBody (AbstractOperation op) {
         if (op.parameters.size > 0) {
             '''
-                type: object
-                    properties: 
-                        «FOR param : op.parameters»
-                            «param.name»: «inlineTypeGenerator.toPropertyType(param.type)»
-                        «ENDFOR»
+                properties: 
+                    «FOR param : op.parameters»
+                        «param.name»: «inlineTypeGenerator.toPropertyType(param.type)»
+                    «ENDFOR»
             '''
         } else {
             ''''''
