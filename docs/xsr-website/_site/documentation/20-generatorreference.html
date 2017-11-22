@@ -129,10 +129,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <p>In general, all code generators use Xtend2 and can be executed with the MWE2, the new Modeling Workflow Engine, <br />
 that comes with Xtext. Code generation is usually done in three steps that should be defined in your workflow:</p>
 
-<pre><code>1. A model reader. Use the read that comes with Xtext
-1. Optionally, but recommended a DirectoryCleaner (comes with MWE)
-1. A GeneratorComponent having the generator setup of the respective generator registered
-</code></pre>
+<ol>
+  <li>A model reader. Use the read that comes with Xtext</li>
+  <li>Optionally, but recommended a DirectoryCleaner (comes with MWE)</li>
+  <li>A GeneratorComponent having the generator setup of the respective generator registered</li>
+</ol>
 
 <h3 id="configuration-of-the-model-reader">Configuration of the model reader</h3>
 
@@ -212,7 +213,7 @@ are generated. Everything is generated for the <code>Prod</code> environment.</p
       <th style="text-align: left">Type</th>
       <th style="text-align: right">Cardinality</th>
       <th style="text-align: right">Default</th>
-      <th style="text-align: center">Description</th>
+      <th style="text-align: left">Description</th>
     </tr>
   </thead>
   <tbody>
@@ -221,63 +222,63 @@ are generated. Everything is generated for the <code>Prod</code> environment.</p
       <td style="text-align: left">String</td>
       <td style="text-align: right">0..*</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">Generate service contracts for any e[ModuleBinding] whose name matches the given regular expression and binds to the given <em>targetNamespace</em>. ModuleBindings bind a Module to an Environment.</td>
+      <td style="text-align: left">Generate service contracts for any <em>ModuleBinding</em> whose name matches the given regular expression and binds to the given <em>targetNamespace</em>. ModuleBindings bind a Module to an Environment.</td>
     </tr>
     <tr>
       <td style="text-align: left">serviceModule</td>
       <td style="text-align: left">VersionedServiceModuleSelector</td>
       <td style="text-align: right">0..*</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">Generate service contracts for any service used or provided by the module. The generator looks up a <em>Binding</em> that provides the service and matches the version constraints and endpoint qualifiers if defined in the usage reference.</td>
+      <td style="text-align: left">Generate service contracts for any service used or provided by the module. The generator looks up a <em>Binding</em> that provides the service and matches the version constraints and endpoint qualifiers if defined in the usage reference.</td>
     </tr>
     <tr>
       <td style="text-align: left">domainNamespace</td>
       <td style="text-align: left">String</td>
       <td style="text-align: right">0..*</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">Generate XSDs for a <code>ServiceDSL domain-namespace</code> whose name matches the given regular expression.</td>
+      <td style="text-align: left">Generate XSDs for a <code>ServiceDSL domain-namespace</code> whose name matches the given regular expression.</td>
     </tr>
     <tr>
       <td style="text-align: left">internalNamespace</td>
       <td style="text-align: left">String</td>
       <td style="text-align: right">0..*</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">Generate XSDs for a <code>ServiceDSL internal-namespace</code> whose name matches the given regular expression.</td>
+      <td style="text-align: left">Generate XSDs for a <code>ServiceDSL internal-namespace</code> whose name matches the given regular expression.</td>
     </tr>
     <tr>
       <td style="text-align: left">namespace</td>
       <td style="text-align: left">String</td>
       <td style="text-align: right">0..*</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">Generate XSDs for a <em>SubNamespace</em> whose name matches the given regular expression.</td>
+      <td style="text-align: left">Generate XSDs for a <em>SubNamespace</em> whose name matches the given regular expression.</td>
     </tr>
     <tr>
       <td style="text-align: left">noDependecies</td>
       <td style="text-align: left">boolean</td>
       <td style="text-align: right">0..1</td>
       <td style="text-align: right">false</td>
-      <td style="text-align: center">Also generate artefacts imported by generated artefacts? If true, no imported artefacts are generated</td>
+      <td style="text-align: left">Also generate artefacts imported by generated artefacts? If true, no imported artefacts are generated</td>
     </tr>
     <tr>
       <td style="text-align: left">profileName</td>
       <td style="text-align: left">String</td>
       <td style="text-align: right">0..1</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">The name of the architecture profile, that defines the architectural rules to be applied on generation. If not set, the default profile as defined in the model, or the profile specifically declared on a subnamespace will	be used.</td>
+      <td style="text-align: left">The name of the architecture profile, that defines the architectural rules to be applied on generation. If not set, the default profile as defined in the model, or the profile specifically declared on a subnamespace will	be used.</td>
     </tr>
     <tr>
       <td style="text-align: left">targetEnvironmentName</td>
       <td style="text-align: left">String</td>
       <td style="text-align: right">1..1</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">The of the Environment to generate for. Bindings and used Modules Bindings are filtered by their targeted Environment, only selecting Bindings that bind to an Environment with the given targetEnvironmentName. For namespace generated XSDs will contain latest version of VersionedTypes that are supported in the given Environment as defined by the lifecycle state model.</td>
+      <td style="text-align: left">The of the Environment to generate for. Bindings and used Modules Bindings are filtered by their targeted Environment, only selecting Bindings that bind to an Environment with the given targetEnvironmentName. For namespace generated XSDs will contain latest version of VersionedTypes that are supported in the given Environment as defined by the lifecycle state model.</td>
     </tr>
     <tr>
       <td style="text-align: left">useRegistryBasedFilePaths</td>
       <td style="text-align: left">boolean</td>
       <td style="text-align: right">0..1</td>
       <td style="text-align: right">false</td>
-      <td style="text-align: center">Whether imported artefacts in generated contracts shall be resolved using absolute paths based on the location of the service registry. If true, absolute paths will be used. Otherwise relative paths will be used for location URLs such as XSD import location URLs</td>
+      <td style="text-align: left">Whether imported artefacts in generated contracts shall be resolved using absolute paths based on the location of the service registry. If true, absolute paths will be used. Otherwise relative paths will be used for location URLs such as XSD import location URLs</td>
     </tr>
   </tbody>
 </table>
@@ -291,7 +292,7 @@ are generated. Everything is generated for the <code>Prod</code> environment.</p
       <th style="text-align: left">Type</th>
       <th style="text-align: right">Cardinality</th>
       <th style="text-align: right">Default</th>
-      <th style="text-align: center">Description</th>
+      <th style="text-align: left">Description</th>
     </tr>
   </thead>
   <tbody>
@@ -300,61 +301,123 @@ are generated. Everything is generated for the <code>Prod</code> environment.</p
       <td style="text-align: left">String</td>
       <td style="text-align: right">1..1</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">The module name to generate assets for</td>
+      <td style="text-align: left">The module name to generate assets for</td>
     </tr>
     <tr>
       <td style="text-align: left">version</td>
       <td style="text-align: left">String</td>
       <td style="text-align: right">1..1</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">The module version to generate assets for</td>
+      <td style="text-align: left">The module version to generate assets for</td>
     </tr>
     <tr>
       <td style="text-align: left">selectTypeVersionsByEnvironment</td>
       <td style="text-align: left">String</td>
       <td style="text-align: right">0..1</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">If you select a module version, the types to be generated are selected based on the modules state. However, if you generate for several modules with different lifecycle states, this may yield inconsistent type definitions (XSDs etc.) where certain types may become unresolvable. If one module is productive already, types in state development may not have been generated, but might be required by another development module though. Hence, you should either select modules with the same state, or set this property to “true”, to select all types to be generated, based on the minimal state that supports the given target environment.</td>
+      <td style="text-align: left">If you select a module version, the types to be generated are selected based on the modules state. However, if you generate for several modules with different lifecycle states, this may yield inconsistent type definitions (XSDs etc.) where certain types may become unresolvable. If one module is productive already, types in state development may not have been generated, but might be required by another development module though. Hence, you should either select modules with the same state, or set this property to “true”, to select all types to be generated, based on the minimal state that supports the given target environment.</td>
     </tr>
     <tr>
-      <td style="text-align: left">generatedUsedServices</td>
+      <td style="text-align: left">generateUsedServices</td>
       <td style="text-align: left">boolean</td>
       <td style="text-align: right">1..1</td>
       <td style="text-align: right">false</td>
-      <td style="text-align: center">Whether services used by the module shall be generated</td>
+      <td style="text-align: left">Whether services used by the module shall be generated</td>
     </tr>
     <tr>
-      <td style="text-align: left">generatedProvidedServices</td>
+      <td style="text-align: left">generateProvidedServices</td>
       <td style="text-align: left">boolean</td>
       <td style="text-align: right">1..1</td>
       <td style="text-align: right">false</td>
-      <td style="text-align: center">Whether services provided by the module shall be generated</td>
+      <td style="text-align: left">Whether services provided by the module shall be generated</td>
     </tr>
     <tr>
       <td style="text-align: left">endpointQualifier</td>
       <td style="text-align: left">String</td>
       <td style="text-align: right">0..1</td>
       <td style="text-align: right"> </td>
-      <td style="text-align: center">The name of an endpoint qualifier to select a proper binding</td>
+      <td style="text-align: left">The name of an endpoint qualifier to select a proper binding</td>
     </tr>
     <tr>
       <td style="text-align: left">ignoreEndpointQualifierNames</td>
       <td style="text-align: left">String</td>
       <td style="text-align: right">0..1</td>
       <td style="text-align: right">false</td>
-      <td style="text-align: center">By default artifact names contain the name of an endpoint qualifier either defined in the selected binding for the module, if one has been defined. If “ignoreEndpointQualifier” is set to true, endpoint qualifier names will not be part of artifact names etc.</td>
+      <td style="text-align: left">By default artifact names contain the name of an endpoint qualifier either defined in the selected binding for the module, if one has been defined. If “ignoreEndpointQualifier” is set to true, endpoint qualifier names will not be part of artifact names etc.</td>
     </tr>
   </tbody>
 </table>
 
-<h3 id="mapping-of-the-model-to-wsdls">Mapping of the model to WSDLs</h3>
+<h4 id="mapping-of-the-model-to-wsdls">Mapping of the model to WSDLs</h4>
 
 <p>The following picture shows how the generator maps the modelled assets to a WSDL:</p>
 
 <p><img src="images/WSDLgeneration.png" alt="Mapping services to WSDLs" /></p>
 
+<h3 id="generate-rest-ful-service-contracts">Generate REST-ful service contracts</h3>
+
+<h4 id="raml-resource-specifications">RAML Resource specifications</h4>
+
+<h4 id="wadl-contracts">WADL contracts</h4>
+
+<h2 id="generate-esb-module-stubs">Generate ESB module stubs</h2>
+
+<h3 id="websphere-esb-sca-modules">Websphere ESB SCA modules</h3>
+
 <h2 id="generate-business-objects-for-a-platform">Generate business objects for a platform</h2>
 
+<h3 id="xsds">XSDs</h3>
+
+<h3 id="json-schemas">JSON schemas</h3>
+
+<h3 id="avro-schemas">Avro schemas</h3>
+
+<p>You can generate Avro schema files for a selected namespace. Use the ‘org.xkonnex.repo.generator.servicedsl.avro.AvroSchemaGeneratorSetup’ to generate Avro schema file. The following gives an example of a generator workflow.</p>
+
+<p>Workflow example:</p>
+<pre><code class="language-mwe2">module org.xkonnex.repo.simple.generator.AvroGenerator
+
+var modelPath = "../org.xkonnex.repo.simple.example/src"
+var profile = "SampleArchitectureProfile"
+
+var resSrcGenPath = "src-gen"
+
+Workflow {
+	component = org.eclipse.xtext.mwe.Reader {
+	    path = modelPath
+	    register = org.xkonnex.repo.dsl.servicedsl.ServiceDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.semanticsdsl.SemanticsDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.businessdsl.BusinessDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.sladsl.SLADslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.bindingdsl.BindingDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.environmentdsl.EnvironmentDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.basedsl.BaseDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.profiledsl.ProfileDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.moduledsl.ModuleDslStandaloneSetup {}
+	    loadResource = {
+	        slot = 'model'
+	    }
+	}
+	
+	component = org.eclipse.emf.mwe.utils.DirectoryCleaner {
+		directory = resSrcGenPath
+	}
+	
+	component = org.eclipse.xtext.generator.GeneratorComponent {
+		register = org.xkonnex.repo.generator.servicedsl.avro.AvroSchemaGeneratorSetup {
+			domainNamespace = "org.example.common"
+			useRegistryBasedFilePaths = false
+		}
+		slot = 'model'
+		outlet = {
+			path = "${resSrcGenPath}/contracts/"
+		}
+	}
+	
+}
+</code></pre>
+
+<h3 id="java-beans-jaxb-annotated">Java Beans (JAXB annotated)</h3>
 
           </div>
         </div>

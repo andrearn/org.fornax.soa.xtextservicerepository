@@ -1,13 +1,11 @@
 ---
 layout: documentation
-title: Archietcture and API governance
+title: SOA governance and API management
 part: Concepts
 ---
 # {{page.title}} {#Governance}
 
-## Introduction 
-
-### Purpose 
+## Purpose 
 
 SOA governance defines the basic rules to follow in building up a service oriented architecture by defining processes design rules and by granting authority to execute governance task to certain roles. The service repository is one of the main tools to communicate the architecture and design of a SOA landscape as well as executing change management, control an service portfolio planning.
 

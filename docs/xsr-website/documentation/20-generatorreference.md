@@ -10,9 +10,9 @@ part: Reference
 In general, all code generators use Xtend2 and can be executed with the MWE2, the new Modeling Workflow Engine, 
 that comes with Xtext. Code generation is usually done in three steps that should be defined in your workflow:
 
-    1. A model reader. Use the read that comes with Xtext
-	1. Optionally, but recommended a DirectoryCleaner (comes with MWE)
-	1. A GeneratorComponent having the generator setup of the respective generator registered
+ 1.		A model reader. Use the read that comes with Xtext
+ 1.		Optionally, but recommended a DirectoryCleaner (comes with MWE)
+ 1.		A GeneratorComponent having the generator setup of the respective generator registered
 
 
 ### Configuration of the model reader
@@ -89,8 +89,8 @@ The generator is configured using the `ISetup` implementation `org.fornax.soa.bi
 `DefaultBindingContractGeneratorSetup` supports the following configuration parameters:
 
 | Parameter name             | Type                           | Cardinality | Default | Description               |
-|:-------------------------- |:------------------------------ | -----------:| -------:|:-------------------------:|
-| moduleBindingName          | String                         | 0..*        |         | Generate service contracts for any e[ModuleBinding] whose name matches the given regular expression and binds to the given _targetNamespace_. ModuleBindings bind a Module to an Environment.|
+|:-------------------------- |:------------------------------ | -----------:| -------:|:------------------------- |
+| moduleBindingName          | String                         | 0..*        |         | Generate service contracts for any _ModuleBinding_ whose name matches the given regular expression and binds to the given _targetNamespace_. ModuleBindings bind a Module to an Environment.|
 | serviceModule              | VersionedServiceModuleSelector | 0..*        |         | Generate service contracts for any service used or provided by the module. The generator looks up a _Binding_ that provides the service and matches the version constraints and endpoint qualifiers if defined in the usage reference. |
 | domainNamespace            | String                         | 0..*        |         | Generate XSDs for a ```ServiceDSL domain-namespace``` whose name matches the given regular expression. |
 | internalNamespace          | String                         | 0..*        |         | Generate XSDs for a ```ServiceDSL internal-namespace``` whose name matches the given regular expression. |
@@ -104,24 +104,84 @@ The generator is configured using the `ISetup` implementation `org.fornax.soa.bi
 ##### Structure of a VersionedServiceModuleSelector:
 
 | Parameter name                  | Type       | Cardinality | Default | Description |
-|:------------------------------- |:---------- | -----------:| -------:|:-----------:|
+|:------------------------------- |:---------- | -----------:| -------:|:----------- |
 | name                            | String     | 1..1        |         | The module name to generate assets for|
 | version                         | String     | 1..1        |         | The module version to generate assets for |
 | selectTypeVersionsByEnvironment | String     | 0..1        |         | If you select a module version, the types to be generated are selected based on the modules state. However, if you generate for several modules with different lifecycle states, this may yield inconsistent type definitions (XSDs etc.) where certain types may become unresolvable. If one module is productive already, types in state development may not have been generated, but might be required by another development module though. Hence, you should either select modules with the same state, or set this property to "true", to select all types to be generated, based on the minimal state that supports the given target environment. |
-| generatedUsedServices           | boolean    | 1..1        | false   | Whether services used by the module shall be generated |
-| generatedProvidedServices       | boolean    | 1..1        | false   | Whether services provided by the module shall be generated |
+| generateUsedServices            | boolean    | 1..1        | false   | Whether services used by the module shall be generated |
+| generateProvidedServices        | boolean    | 1..1        | false   | Whether services provided by the module shall be generated |
 | endpointQualifier               | String     | 0..1        |         | The name of an endpoint qualifier to select a proper binding |
 | ignoreEndpointQualifierNames    | String     | 0..1        | false   | By default artifact names contain the name of an endpoint qualifier either defined in the selected binding for the module, if one has been defined. If "ignoreEndpointQualifier" is set to true, endpoint qualifier names will not be part of artifact names etc.|
 
 
-### Mapping of the model to WSDLs
+#### Mapping of the model to WSDLs
 
 The following picture shows how the generator maps the modelled assets to a WSDL:
 
 ![Mapping services to WSDLs](images/WSDLgeneration.png) 
 
+### Generate REST-ful service contracts
 
+#### RAML Resource specifications
+
+#### WADL contracts
+
+## Generate ESB module stubs
+
+### Websphere ESB SCA modules
 
 ## Generate business objects for a platform
 
+### XSDs
 
+### JSON schemas
+
+### Avro schemas
+
+You can generate Avro schema files for a selected namespace. Use the 'org.xkonnex.repo.generator.servicedsl.avro.AvroSchemaGeneratorSetup' to generate Avro schema file. The following gives an example of a generator workflow.
+ 
+Workflow example:
+```mwe2
+module org.xkonnex.repo.simple.generator.AvroGenerator
+
+var modelPath = "../org.xkonnex.repo.simple.example/src"
+var profile = "SampleArchitectureProfile"
+
+var resSrcGenPath = "src-gen"
+
+Workflow {
+	component = org.eclipse.xtext.mwe.Reader {
+	    path = modelPath
+	    register = org.xkonnex.repo.dsl.servicedsl.ServiceDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.semanticsdsl.SemanticsDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.businessdsl.BusinessDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.sladsl.SLADslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.bindingdsl.BindingDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.environmentdsl.EnvironmentDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.basedsl.BaseDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.profiledsl.ProfileDslStandaloneSetup {}
+	    register = org.xkonnex.repo.dsl.moduledsl.ModuleDslStandaloneSetup {}
+	    loadResource = {
+	        slot = 'model'
+	    }
+	}
+	
+	component = org.eclipse.emf.mwe.utils.DirectoryCleaner {
+		directory = resSrcGenPath
+	}
+	
+	component = org.eclipse.xtext.generator.GeneratorComponent {
+		register = org.xkonnex.repo.generator.servicedsl.avro.AvroSchemaGeneratorSetup {
+			domainNamespace = "org.example.common"
+			useRegistryBasedFilePaths = false
+		}
+		slot = 'model'
+		outlet = {
+			path = "${resSrcGenPath}/contracts/"
+		}
+	}
+	
+}
+```
+
+### Java Beans (JAXB annotated)
