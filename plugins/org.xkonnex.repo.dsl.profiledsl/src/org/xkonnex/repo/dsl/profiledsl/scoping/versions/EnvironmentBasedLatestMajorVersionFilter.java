@@ -10,6 +10,7 @@ import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
@@ -28,6 +29,9 @@ public class EnvironmentBasedLatestMajorVersionFilter<T> extends AbstractPredica
 	
 	@Inject
 	private	IStateMatcher stateMatcher;
+	
+	@Inject
+	private ProfileQueries profileQueries;
 	
 	public EnvironmentBasedLatestMajorVersionFilter (IScopeVersionResolver resolver, String majorVersion, String environmentName, EnvironmentType envType) {
 		this.majorVersion = majorVersion;

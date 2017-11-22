@@ -68,6 +68,10 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 		return serviceRefs
 	}
 	
+	override resolveModuleServiceRef(AbstractServiceRef svcRef) {
+		resolveModuleServiceRefInternal (svcRef)
+	}
+	
 	override Service resolveModuleServiceRef(AbstractServiceRef svcRef, LifecycleState minState) {
 		resolveModuleServiceRefInternal (svcRef, minState)
 	}
@@ -84,6 +88,13 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 	 * Get the latest version of the service referenced in the ServiceRef matching the given minimal LifecycleState 
 	 */
 	def dispatch  Service resolveModuleServiceRefInternal (ServiceRef s, LifecycleState minState) {
+		s.service
+	}
+	
+	/**
+	 * Get the latest version of the service referenced in the ServiceRef matching the given minimal LifecycleState 
+	 */
+	def dispatch  Service resolveModuleServiceRefInternal (ServiceRef s) {
 		s.service
 	}
 	
@@ -107,7 +118,11 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 	def dispatch  Service resolveModuleServiceRefInternal (ServiceRef svcRef, Environment env) {
 		val Module referringModule = objLookup.getOwnerByType (svcRef, typeof (Module))
 		val minState = referringModule.state
-		resolveModuleServiceRef (svcRef, minState)
+		if (minState !== null) {
+			resolveModuleServiceRef (svcRef, minState)
+		} else {
+			resolveModuleServiceRef (svcRef)
+		}
 	}
 
 	/**
@@ -116,7 +131,14 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 	def dispatch  Service resolveModuleServiceRefInternal (ImportServiceRef svcRef, Environment env) {
 		val Module referringModule = objLookup.getOwnerByType (svcRef, typeof (Module))
 		val minState = referringModule.state
-		resolveModuleServiceRef (svcRef, minState)
+		if (minState !== null) {
+			resolveModuleServiceRef (svcRef, minState)
+		} else {
+			resolveModuleServiceRef (svcRef)
+		}
+	}
+	def dispatch Service resolveModuleServiceRefInternal (ImportServiceRef svcRef) {
+		svcRef.service
 	}
 	
 	
@@ -130,8 +152,5 @@ class DefaultModuleServiceResolver implements IModuleServiceResolver {
 		serviceRef.setVersionRef(verRef)
 		return serviceRef
 	}
-	
-		
-
 	
 }

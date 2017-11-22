@@ -24,6 +24,14 @@ class DataObjectQueries {
 	def dispatch List<DataObject> getAllSuperTypes (DataObject bo, List<DataObject> vistitedBOs) {
 		DataObjectQueryInternal::getAllSuperTypes(bo, vistitedBOs)
 	}
+		
+	def dispatch List<DataObject> getAllSuperTypes (DataObject bo, LifecycleState minState) {
+		bo.collectAllSuperTypes (newArrayList(), minState);
+	}
+		
+	def List<DataObject> getAllSuperTypes (DataObject bo) {
+		bo.collectAllSuperTypes (newArrayList());
+	}
 	
 	def List<TreeNode<IEObjectDescription>> getAllSubTypes (DataObject bo, ResourceSet resourceSet) {
 		doQueryInt.getAllSubTypes (bo, resourceSet)
@@ -69,13 +77,13 @@ class DataObjectQueries {
 	def List<Property> getAllInheritedProperties (DataObject bo, LifecycleState minState) {
 		bo.getAllSuperTypes (minState).map (e|e.properties).flatten.toList;
 	}
-		
-	def dispatch List<DataObject> getAllSuperTypes (DataObject bo, LifecycleState minState) {
-		bo.collectAllSuperTypes (newArrayList(), minState);
-	}
 	
 	def private List<DataObject> collectAllSuperTypes (DataObject bo, List<DataObject> superTypes, LifecycleState minState) {
 		return doQueryInt.collectAllSuperTypes(bo, superTypes, minState);
+	}
+	
+	def private List<DataObject> collectAllSuperTypes (DataObject bo, List<DataObject> superTypes) {
+		return doQueryInt.collectAllSuperTypes(bo, superTypes);
 	}
 	
 	

@@ -13,7 +13,7 @@ class MessageHeaderQuery {
 		if (service.getRequestMessageHeader() !== null) {
 			return service.getRequestMessageHeader().getHeader()
 		} else {
-			return profile.getMessaging().getDefaultRequestHeader().getHeader()
+			return profile.getMessaging()?.getDefaultRequestHeader()?.getHeader()
 		}
 	}
 
@@ -21,7 +21,7 @@ class MessageHeaderQuery {
 		if (service.getRequestMessageHeader() !== null) {
 			return service.getRequestMessageHeader().getHeader()
 		} else {
-			return profile.getMessaging().getDefaultRequestHeader().getHeader()
+			return profile.getMessaging()?.getDefaultRequestHeader()?.getHeader()
 		}
 	}
 
@@ -45,7 +45,7 @@ class MessageHeaderQuery {
 		if (service.getResponseMessageHeader() !== null) {
 			return service.getResponseMessageHeader().getHeader()
 		} else {
-			return profile.getMessaging().getDefaultRequestHeader().getHeader()
+			return profile.getMessaging()?.getDefaultResponseHeader()?.getHeader()
 		}
 	}
 
@@ -53,7 +53,7 @@ class MessageHeaderQuery {
 		if (service.getResponseMessageHeader() !== null) {
 			return service.getResponseMessageHeader().getHeader()
 		} else {
-			return profile.getMessaging().getDefaultRequestHeader().getHeader()
+			return profile.getMessaging()?.getDefaultResponseHeader()?.getHeader()
 		}
 	}
 
@@ -61,7 +61,7 @@ class MessageHeaderQuery {
 		if (operation.getResponseMessageHeader() !== null) {
 			return operation.getResponseMessageHeader().getHeader()
 		} else {
-			return getRequestMessageHeader((operation.eContainer() as Service), profile)
+			return getResponseMessageHeader((operation.eContainer() as Service), profile)
 		}
 	}
 
@@ -69,7 +69,7 @@ class MessageHeaderQuery {
 		if (operation.getResponseMessageHeader() !== null) {
 			return operation.getResponseMessageHeader().getHeader()
 		} else {
-			return getRequestMessageHeader((operation.eContainer() as Resource), profile)
+			return getResponseMessageHeader((operation.eContainer() as Resource), profile)
 		}
 	}
 
@@ -77,7 +77,7 @@ class MessageHeaderQuery {
 		if (service.getPublishMessageHeader() !== null) {
 			return service.getPublishMessageHeader().getHeader()
 		} else {
-			return profile.getMessaging().getDefaultRequestHeader().getHeader()
+			return profile.getMessaging()?.defaultPublishHeader?.header
 		}
 	}
 
@@ -85,7 +85,7 @@ class MessageHeaderQuery {
 		if (service.getPublishMessageHeader() !== null) {
 			return service.getPublishMessageHeader().getHeader()
 		} else {
-			return profile.getMessaging().getDefaultRequestHeader().getHeader()
+			return profile.getMessaging()?.getDefaultPublishHeader()?.getHeader()
 		}
 	}
 
@@ -93,7 +93,7 @@ class MessageHeaderQuery {
 		if (operation.getPublishMessageHeader() !== null) {
 			return operation.getPublishMessageHeader().getHeader()
 		} else {
-			return getRequestMessageHeader((operation.eContainer() as Service), profile)
+			return getPublishMessageHeader((operation.eContainer() as Service), profile)
 		}
 	}
 
@@ -101,7 +101,7 @@ class MessageHeaderQuery {
 		if (operation.getPublishMessageHeader() !== null) {
 			return operation.getPublishMessageHeader().getHeader()
 		} else {
-			return getRequestMessageHeader((operation.eContainer() as Resource), profile)
+			return getPublishMessageHeader((operation.eContainer() as Resource), profile)
 		}
 	}
 }

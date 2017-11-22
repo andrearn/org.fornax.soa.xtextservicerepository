@@ -347,4 +347,14 @@ class DataObjectQueryInternal {
 			return superTypes
 		}
 	}
+
+	def List<DataObject> collectAllSuperTypes(DataObject bo, List<DataObject> superTypes) {
+		if (bo.getSuperObject() !== null) {
+			superTypes.add(
+				bo.getSuperObject().getType())
+			return superTypes
+		} else {
+			return superTypes
+		}
+	}
 }

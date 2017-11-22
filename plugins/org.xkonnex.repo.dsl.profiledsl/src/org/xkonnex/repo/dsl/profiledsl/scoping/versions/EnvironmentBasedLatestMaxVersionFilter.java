@@ -10,6 +10,8 @@ import org.xkonnex.repo.dsl.basedsl.version.IScopeVersionResolver;
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile;
+import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
@@ -19,6 +21,8 @@ public class EnvironmentBasedLatestMaxVersionFilter<T> extends
 		LatestMaxExclVersionFilter<T> {
 	@Inject
 	private ILifecycleStateResolver stateResolver;
+	@Inject
+	private ProfileQueries profileQueries;
 	private String environmentName;
 	private EnvironmentType environmentType;
 	private ResourceSet resSet;
@@ -74,8 +78,9 @@ public class EnvironmentBasedLatestMaxVersionFilter<T> extends
 	}
 	
 	public boolean stateMatches (IEObjectDescription description) {
+		final Profile profile = profileQueries.getApplicableProfile(description.getEObjectOrProxy());
 		final LifecycleState state = stateResolver.getLifecycleState(description, resSet);
-		return stateMatcher.supportsEnvironment (state, environmentName) || stateMatcher.supportsEnvironmentType (state, environmentType);
+		return stateMatcher.supportsEnvironment (state, environmentName, profile) || stateMatcher.supportsEnvironmentType (state, environmentType, profile);
 	}
 	
 

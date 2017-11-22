@@ -15,18 +15,21 @@ class ResourceQueries {
 	}
 	
 	def List<String> extractParametersFromURI (String uri) {
-		val matcher = pattern.matcher(uri)
 		val List<String> paramNames = newArrayList()
-		while (matcher.find) {
-			val count = matcher.groupCount
-			if (count > 0)
-				paramNames += matcher.group(1)
+		if (uri !== null) {
+			val matcher = pattern.matcher(uri)
+			while (matcher.find) {
+				val count = matcher.groupCount
+				if (count > 0)
+					paramNames += matcher.group(1)
+			}
+			
 		}
 		return paramNames
 	}
 	
 	def Iterable<Parameter> extractParametersFromURI (String uri, AbstractOperation op) {
-		val uriParamNames = uri.extractParametersFromURI.toSet
+		val uriParamNames = extractParametersFromURI(uri).toSet
 		op.parameters.filter(p|uriParamNames.contains(p.name))
 	}
 }

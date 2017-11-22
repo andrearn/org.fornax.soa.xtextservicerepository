@@ -157,7 +157,70 @@ class RAMLContractGenerator {
         '''
         fsa.generateFile(ramlFile, content)
     }
+
+//
+    def dispatch void toRAMLStateless (AnyBinding binding, Service svc, Profile profile) {
+        
+    }
     
+    def dispatch void toRAMLStateless (ModuleBinding binding, Service svc, Profile profile) {
+        svc.toRAMLStateless (binding, profile);
+    }
+
+    def dispatch void toRAMLStateless (EffectiveBinding binding, Service svc, Profile profile) {
+        svc.toRAMLStateless (binding.moduleBinding, profile);
+    }
+
+    def dispatch void toRAMLStateless (AnyBinding binding, Resource svc, Profile profile) {
+        
+    }
+    
+    def dispatch void toRAMLStateless (ModuleBinding binding, Resource svc, Profile profile) {
+        svc.toRAMLStateless (binding, profile);
+    }
+
+    def dispatch void toRAMLStateless (EffectiveBinding binding, Resource svc, Profile profile) {
+        svc.toRAMLStateless (binding.moduleBinding, profile);
+    }
+    
+    def dispatch void toRAMLStateless(Service service, ModuleBinding binding, Profile profile) {
+        log.info('''Generating RAML description for Service «service.fullyQualifiedName»'''.toString)
+        val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
+        val effBind = bindingBuilder.createEffectiveBinding(service, binding)
+        val prot = effBind.protocol.filter(typeof(ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
+        val ramlFile = service.getServiceContractFileNameFragment(effBind.moduleBinding, typeof(REST)) + ".raml";
+        val environment = environmentResolver.resolveEnvironment(binding)
+        wrapperTypesGenerator.toOperationWrappersStateless (service, service.findSubdomain(), profile, environment.getRegistryBaseUrl());
+        val verbsToOperations = operationBindingQueries.getRESTOperationsByVerb(service, effBind.moduleBinding)
+        val content = '''
+            #%RAML 1.0
+            title: «service.name» API
+            version: v«service.version.version»
+            baseUri: «service.toEndpointAddress (effBind.provServer, prot, effBind)»
+            «toTypesStateless (service, profile, headerImports, environment.registryBaseUrl)»
+            «service.operations.map[op | op.toOperation(bindingBuilder.createEffectiveBinding(op, binding), profile)].join»
+        '''
+        fsa.generateFile(ramlFile, content)
+    }
+    
+    def dispatch void toRAMLStateless(Resource resource, ModuleBinding binding, Profile profile) {
+        log.info('''Generating RAML description for Service «resource.fullyQualifiedName»'''.toString)
+        val Set<VersionedTechnicalNamespace> headerImports = resource.collectTechnicalVersionedNamespaceImports (profile)
+        val effBind = bindingBuilder.createEffectiveBinding(resource, binding)
+        val prot = effBind.protocol.filter(typeof(ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
+        val ramlFile = resourceFilenameProvider.getResourceContractFileNameFragment(resource, effBind.moduleBinding, typeof(REST)) + ".raml";
+        val content = '''
+            #%RAML 1.0
+            title: «resource.name» API
+            version: v«resource.version.version»
+            baseUri: «resource.toEndpointAddress (effBind.provServer, prot, effBind)»
+            «toTypesStateless (resource, profile, headerImports)»
+            «resource.operations.map[op | op.toOperation(bindingBuilder.createEffectiveBinding(op, binding), profile)].join»
+        '''
+        fsa.generateFile(ramlFile, content)
+    }
+
+//    
     def String toOperation(AbstractOperation operation, EffectiveBinding binding, Profile profile) {
         val restExtProt = binding.protocol.filter(typeof(EffectiveExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
         val REST restProt = restExtProt.inferComponent
@@ -221,11 +284,35 @@ class RAMLContractGenerator {
     }
     def dispatch toRequestResponse(Operation op, REST binding, org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST endpoint, Profile profile) {
         val verb = if (binding.verb !== null) binding.verb else if (endpoint?.verb !== null) endpoint.verb else Verb::POST
+        val requestContentTypes = if (!binding.requestContentType.nullOrEmpty) binding.requestContentType else (endpoint?.requestContentType)
         val responses = if (!binding.response.nullOrEmpty) binding.response else (endpoint?.response)
         val requestMessageHeaders = op.getRequestMessageHeader(profile)
         val responseMessageHeaders = op.getResponseMessageHeader(profile)
         '''
             «verb.toRAMLVerb»:
+                «IF requestMessageHeaders !== null && !requestMessageHeaders.toRequestHeaderMap.isEmpty»
+                    headers:
+                        «FOR propEntry : requestMessageHeaders.toRequestHeaderMap.entrySet»
+                            «propEntry.key»:
+                                type: «propEntry.value.toHeaderType(op.eResource.resourceSet)»
+                        «ENDFOR»
+                «ENDIF»
+                «IF isVerbWithRequestBody(verb) && !op.parameters.nullOrEmpty»
+                     body:
+                        «FOR contentType : requestContentTypes»
+                            «contentType»:
+                                «op.toRequestWrapperType»
+                                «/* example:
+						            {
+						                "message" : "Hello World"
+						            } 
+						        */»
+                        «ENDFOR»
+                        «IF requestContentTypes.isNullOrEmpty»
+                            application/json:
+                                «op.toRequestWrapperType»
+                        «ENDIF»                            
+            	«ENDIF»
                 responses:
                     «FOR response : responses»
                         «response.statusCode»:
@@ -261,18 +348,35 @@ class RAMLContractGenerator {
     }
     def dispatch toRequestResponse(ResourceOperation op, REST binding, org.xkonnex.repo.dsl.moduledsl.ext.protocol.REST endpoint, Profile profile) {
         val verb = if (binding.verb !== null) binding.verb else if (op.verb !== null) op.verb else Verb::POST
+        val requestContentTypes = if (!binding.requestContentType.nullOrEmpty) binding.requestContentType else (endpoint?.requestContentType)
         val responses = if (!binding.response.nullOrEmpty) binding.response else (op?.response)
         val requestMessageHeaders = op.getRequestMessageHeader(profile)
         val responseMessageHeaders = op.getResponseMessageHeader(profile)
         '''
             «verb.toRAMLVerb»:
-                «IF responseMessageHeaders !== null»
+                «IF requestMessageHeaders !== null && !requestMessageHeaders.toRequestHeaderMap.isEmpty»
                     headers:
                         «FOR propEntry : requestMessageHeaders.toRequestHeaderMap.entrySet»
                             «propEntry.key»:
                                 type: «propEntry.value.toHeaderType(op.eResource.resourceSet)»
                         «ENDFOR»
                 «ENDIF»
+                «IF isVerbWithRequestBody(verb) && !op.parameters.nullOrEmpty»
+                     body:
+                        «FOR contentType : requestContentTypes»
+                            «contentType»:
+                                «op.toRequestWrapperType»
+                                «/* example:
+						            {
+						                "message" : "Hello World"
+						            } 
+						        */»
+                        «ENDFOR»                            
+                        «IF requestContentTypes.isNullOrEmpty»
+                            application/json:
+                                «op.toRequestWrapperType»
+                        «ENDIF»                            
+            	«ENDIF»
                 responses:
                     «FOR response : op.response»
                         «response.responseCode.toReturnCode»:
@@ -306,9 +410,29 @@ class RAMLContractGenerator {
                 «allVerTypes.map(t|inlineTypeGenerator.toTypeDeclaration(t)).filterNull.map(t|t.toString).toSet.join("\n")»
         '''
     }
+
+    def String toTypesStateless (Service service, Profile profile, Set<VersionedTechnicalNamespace> namespaces, String registryBaseUrl) {
+        val allVerTypes = service.getAllReferencedVersionedTypes().toList.sortBy[name]
+        allVerTypes.filter(typeof(DataObject)).forEach(t|jsonSchemaGenerator.generateSchema(t, registryBaseUrl))
+        '''
+            types:
+                «allVerTypes.map(t|inlineTypeGenerator.toTypeDeclaration(t)).filterNull.map(t|t.toString).toSet.join("\n")»
+        '''
+    }
     
     
     def String toTypes(Resource resource, LifecycleState state, Profile profile, Set<VersionedTechnicalNamespace> namespaces) {
+        val typeRefs = resource.operations.map(op|op.parameters).flatten.map(p|p.type).toList
+        val respTypeRefs = resource.operations.map(op|op.response).flatten.map[it.^return].flatten.map(p|p.type)
+        typeRefs.addAll(respTypeRefs)
+        val types = typeRefs.filter(t| !(t instanceof DataTypeRef || t instanceof org.xkonnex.repo.dsl.profiledsl.profileDsl.DataTypeRef))
+        '''
+            types:
+                «types.map(t|inlineTypeGenerator.toTypeDeclaration(t)).filterNull.toSet.join("\n")»
+        '''
+    }
+    
+    def String toTypesStateless(Resource resource, Profile profile, Set<VersionedTechnicalNamespace> namespaces) {
         val typeRefs = resource.operations.map(op|op.parameters).flatten.map(p|p.type).toList
         val respTypeRefs = resource.operations.map(op|op.response).flatten.map[it.^return].flatten.map(p|p.type)
         typeRefs.addAll(respTypeRefs)
@@ -369,7 +493,7 @@ class RAMLContractGenerator {
                 type: object
                     properties: 
                         «FOR param : op.^return»
-                            «param.name» «inlineTypeGenerator.toPropertyType(param.type)»
+                            «param.name»: «inlineTypeGenerator.toPropertyType(param.type)»
                         «ENDFOR»
             '''
         } else if(op.^return.size == 1) {
@@ -381,11 +505,34 @@ class RAMLContractGenerator {
         }
     }
     
+    private def toRequestWrapperType (AbstractOperation op) {
+        if (op.parameters.size > 0) {
+            '''
+                type: object
+                    properties: 
+                        «FOR param : op.parameters»
+                            «param.name»: «inlineTypeGenerator.toPropertyType(param.type)»
+                        «ENDFOR»
+            '''
+        } else {
+            ''''''
+        }
+    }
+
     private def toHeaderType (IEObjectDescription propertyDescription, ResourceSet rs) {
     	val propObj = EcoreUtil2.resolve(propertyDescription.EObjectOrProxy, rs)
     	if (propObj instanceof org.xkonnex.repo.dsl.profiledsl.profileDsl.Property ) {
     		val prop = propObj as org.xkonnex.repo.dsl.profiledsl.profileDsl.Property
     		inlineTypeGenerator.toPropertyType(prop.type)
     	}
+    }
+    
+    private def isVerbWithRequestBody(Verb verb) {
+    	switch verb {
+    		case POST: return true
+    		case PUT: return true
+    		case null: return true
+    		default: return false 
+    	} 
     }
 }

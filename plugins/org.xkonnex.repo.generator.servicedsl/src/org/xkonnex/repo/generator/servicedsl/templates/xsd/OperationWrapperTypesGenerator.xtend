@@ -69,6 +69,10 @@ class OperationWrapperTypesGenerator {
 		namespace.services.forEach (s|s.toOperationWrappers (namespace, minState, profile, registryBaseUrl));
 	}
 	
+	def toOperationWrappersStateless (SubNamespace namespace, Profile profile, String registryBaseUrl) {
+		namespace.services.forEach (s|s.toOperationWrappersStateless (namespace, profile, registryBaseUrl));
+	}
+	
 	def dispatch Void toOperationWrappers (Service service, SubNamespace subDom, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		
 	}
@@ -164,9 +168,110 @@ class OperationWrapperTypesGenerator {
 		val xsdFileName = service.toOperationWrapperXSDFileName();
 		fsa .generateFile (xsdFileName, content);
 	}
+
+//
+	def dispatch Void toOperationWrappersStateless (Service service, SubNamespace subDom, Profile profile, String registryBaseUrl) {
+		
+	}
 	
+	def dispatch toOperationWrappersStateless (Service service, DomainNamespace subDom, Profile profile, String registryBaseUrl) {
+		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
+		var content = '''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		<xsd:schema targetNamespace="«service.toWrapperTargetNamespace()»"
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+			«FOR imp : service.allImportedVersionedNSStateless (service.version.toMajorVersionNumber())»
+				xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
+			«ENDFOR»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
+					xmlns:«profileNamespaceURIProvider.getVersionedNamespacePrefix(headerImp)»="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"
+				«ENDFOR»
+			«ENDIF»
+			elementFormDefault="qualified"
+			attributeFormDefault="unqualified"
+			>
+			
+			«FOR imp : service.allImportedVersionedNSStateless(service.version.toMajorVersionNumber())»
+				<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
+					namespace="«schemaNamespaceExt.toNamespace(imp)»"/>
+			«ENDFOR»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
+					<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
+						namespace="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"/>
+				«ENDFOR»
+			«ENDIF»
+			
+			<xsd:annotation>
+		   		<xsd:documentation>
+					<![CDATA[Version «service.version.toVersionNumber()»
+					Lifecycle state: «service.state.toStateName»
+					
+					«docProvider.getDocumentation (service)»]]>
+			   	</xsd:documentation>
+		   	</xsd:annotation>
+			
+			«service.toOperationWrapperMessagesStateless (profile)»
+		</xsd:schema>
+		''';
+		val xsdFileName = service.toOperationWrapperXSDFileName();
+		fsa.generateFile (xsdFileName, content);
+	}
+	
+	def dispatch toOperationWrappersStateless (Service service, InternalNamespace subDom, Profile profile, String registryBaseUrl) {
+		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
+		var content = '''
+		<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+		<xsd:schema targetNamespace="«service.toWrapperTargetNamespace()»"
+			xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+			«FOR imp : service.allImportedVersionedNSStateless(service.version.toMajorVersionNumber())»
+				xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
+			«ENDFOR»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
+					xmlns:«profileNamespaceURIProvider.getVersionedNamespacePrefix(headerImp)»="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"
+				«ENDFOR»
+			«ENDIF»
+			elementFormDefault="qualified"
+			attributeFormDefault="unqualified"
+			>
+			
+			«FOR imp : service.allImportedVersionedNSStateless (service.version.toMajorVersionNumber())»
+			<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
+				namespace="«imp.versionedNamespaceURI»"/>
+			«ENDFOR»
+			«IF !headerImports.empty»
+				«FOR headerImp : headerImports»
+					<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"
+						namespace="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"/>
+				«ENDFOR»
+			«ENDIF»
+			
+			<xsd:annotation>
+		    	<xsd:documentation>
+					<![CDATA[Version «service.version.toVersionNumber()»
+					Lifecycle state: «service.state.toStateName»
+					
+					«docProvider.getDocumentation (service)»]]>
+		    	</xsd:documentation>
+		    </xsd:annotation>
+			
+			«service.toOperationWrapperMessagesStateless (profile)»
+		</xsd:schema>
+		'''
+		
+		val xsdFileName = service.toOperationWrapperXSDFileName();
+		fsa .generateFile (xsdFileName, content);
+	}
+
+//	
 	
 	def toOperationWrapperMessages (Service service, LifecycleState minState, Profile profile) {
+		service.operations.map (e|e.toConcreteOperationWrapperTypes (profile)).join
+	}
+	def toOperationWrapperMessagesStateless (Service service, Profile profile) {
 		service.operations.map (e|e.toConcreteOperationWrapperTypes (profile)).join
 	}
 	

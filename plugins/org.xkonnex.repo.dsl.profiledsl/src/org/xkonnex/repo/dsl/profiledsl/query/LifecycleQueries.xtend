@@ -36,14 +36,18 @@ class LifecycleQueries {
 	 * Get the minimal state for an environment of type LOCAL based on a given lifecycle definition
 	 */
 	def LifecycleState getMinLocalState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::LOCAL)).sortWith (stateComparator).head
+		if (lifecycleDefinition !== null)
+			lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::LOCAL)).sortWith (stateComparator).head
+		else null
 	}
 	
 	/*
 	 * Get the minimal state for an environment of type DEV based on a given lifecycle definition
 	 */
 	def LifecycleState getMinDevState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::DEV)).sortWith (stateComparator).head
+		if (lifecycleDefinition !== null)
+			lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::DEV)).sortWith (stateComparator).head
+		else null
 	}
 
 
@@ -51,45 +55,63 @@ class LifecycleQueries {
 	 * Get the minimal state for an environment of type TEST based on a given lifecycle definition
 	 */
 	def LifecycleState getMinTestState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::TEST)).sortWith (stateComparator).head
+		if (lifecycleDefinition !== null)
+			lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::TEST)).sortWith (stateComparator).head
+		else null
 	}
 
 	/*
 	 * Get the minimal state for an environment of type STAGING based on a given lifecycle definition
 	 */
 	def LifecycleState getMinStagingState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::STAGING)).sortWith (stateComparator).head
+		if (lifecycleDefinition !== null)
+			lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::STAGING)).sortWith (stateComparator).head
+		else null
 	}
 
 	/*
 	 * Get the minimal state for an environment of type PROD based on a given lifecycle definition
 	 */
 	def LifecycleState getMinProdState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::PROD)).sortWith (stateComparator).head
+		if (lifecycleDefinition !== null)
+			lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::PROD)).sortWith (stateComparator).head
+		else null
 	}
 	
 	def LifecycleState getMinLifecycleState (Environment env, Lifecycle l) {
-		switch (env.type) {
-			case EnvironmentType::LOCAL : 		l.minLocalState
-			case EnvironmentType::DEV : 		l.minDevState
-			case EnvironmentType::TEST:			l.minTestState
-			case EnvironmentType::STAGING :		l.minStagingState
-			case EnvironmentType::PROD :		l.minProdState
-			default:							l.minDevState
+		if (l !== null) {
+			switch (env.type) {
+				case EnvironmentType::LOCAL : 		l.minLocalState
+				case EnvironmentType::DEV : 		l.minDevState
+				case EnvironmentType::TEST:			l.minTestState
+				case EnvironmentType::STAGING :		l.minStagingState
+				case EnvironmentType::PROD :		l.minProdState
+				default:							l.minDevState
+			}
+		} else {
+			return null
 		}
 	}
 	/*
 	 * Get the minimal state for an environment of type LOCAL based on a given lifecycle definition
 	 */
 	def LifecycleState getMaxLocalState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::LOCAL)).sortWith (stateComparator).last
+		if (lifecycleDefinition !== null) {
+			lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::LOCAL)).sortWith (stateComparator).last
+		} else {
+			return null
+		}
 	}
 	
 	/*
 	 * Get the minimal state for an environment of type DEV based on a given lifecycle definition
 	 */
 	def LifecycleState getMaxDevState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::DEV)).sortWith (stateComparator).last
+		if (lifecycleDefinition !== null) {
+			lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::DEV)).sortWith (stateComparator).last
+		} else {
+			return null
+		}
 	}
 
 
@@ -97,39 +119,56 @@ class LifecycleQueries {
 	 * Get the minimal state for an environment of type TEST based on a given lifecycle definition
 	 */
 	def LifecycleState getMaxTestState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::TEST)).sortWith (stateComparator).last
+		if (lifecycleDefinition !== null) {
+			lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::TEST)).sortWith (stateComparator).last
+		} else {
+			return null
+		}
 	}
 
 	/*
 	 * Get the minimal state for an environment of type STAGING based on a given lifecycle definition
 	 */
 	def LifecycleState getMaxStagingState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::STAGING)).sortWith (stateComparator).last
+		if (lifecycleDefinition !== null) {
+			lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::STAGING)).sortWith (stateComparator).last
+		} else {
+			return null
+		}
 	}
 
 	/*
 	 * Get the minimal state for an environment of type PROD based on a given lifecycle definition
 	 */
 	def LifecycleState getMaxProdState (Lifecycle lifecycleDefinition) {
-		lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::PROD)).sortWith (stateComparator).last
+		if (lifecycleDefinition !== null) {
+			lifecycleDefinition.states.filter (s | s.supportsEnvironmentType (EnvironmentType::PROD)).sortWith (stateComparator).last
+		} else {
+			return null
+		}
 	}
 	
 	def LifecycleState getMaxLifecycleState (Environment env, Lifecycle l) {
-		switch (env.type) {
-			case EnvironmentType::LOCAL : 		l.maxLocalState
-			case EnvironmentType::DEV : 		l.maxDevState
-			case EnvironmentType::TEST:			l.maxTestState
-			case EnvironmentType::STAGING :		l.maxStagingState
-			case EnvironmentType::PROD :		l.maxProdState
-			default:							l.maxDevState
+		if (l !== null) {
+			switch (env.type) {
+				case EnvironmentType::LOCAL : 		l.maxLocalState
+				case EnvironmentType::DEV : 		l.maxDevState
+				case EnvironmentType::TEST:			l.maxTestState
+				case EnvironmentType::STAGING :		l.maxStagingState
+				case EnvironmentType::PROD :		l.maxProdState
+				default:							l.maxDevState
+			}
+		} else {
+			return null
 		}
 	}
 	
 	def LifecycleState getInitialState (Profile profile, ResourceSet resourceSet) {
-		if (profile !== null) {
-			return profile.lifecycle.states.findFirst[isInitial]
+		val prof = if(profile !== null) profile else profileQuery.getDefaultProfile(resourceSet)
+		if (prof?.lifecycle !== null) {
+			return prof.lifecycle.states.findFirst[isInitial]
 		} else {
-			return profileQuery.getDefaultProfile(resourceSet)?.lifecycle.states.findFirst[isInitial]
+			return null
 		}
 	}
 	

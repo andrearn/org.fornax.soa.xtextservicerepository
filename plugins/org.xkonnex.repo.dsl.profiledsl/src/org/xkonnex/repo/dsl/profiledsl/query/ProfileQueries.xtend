@@ -12,6 +12,9 @@ import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileDslPackage
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.ProfileModel
 
+/**
+ * Find {@link Profile}s
+ */
 class ProfileQueries {
 	
 	@Inject IPredicateSearch search

@@ -4,6 +4,9 @@ import org.eclipse.emf.ecore.EObject
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.VersionedType
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 
+/**
+ * Find version of Profile DSL VersionedTypes
+ */
 class ProfileVersionQueries {
 		
 	def EObject getOwningType (VersionedType o) {

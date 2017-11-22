@@ -285,44 +285,46 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 					var boolean hasTransitImport = false
 					var boolean rootVisited = false
 					var List<String> foundPaths = new ArrayList<String>()
-					for (DependencyDescription dep : transDepsRoot) {
-						if (rootVisited) {
-							var VersionedType verType = dataObjQuery.toVersionedType(dep.getTarget(), p.eResource())
-							if (verType !== null) {
-								if (!nameProvider.getFullyQualifiedName(p.eContainer().eContainer()).equals(
-									dep.getContainer().getName())) {
-									hasTransitImport = true
-								}
-								var List<QualifiedName> otherTypeNsRefersToNs = dataObjQuery.
-									getOtherTypeNsRefsToNs(verType, (p.eContainer().eContainer() as SubNamespace))
-								if (hasTransitImport && !otherTypeNsRefersToNs.isEmpty()) {
-									var StringBuilder msg = new StringBuilder()
-									var String path = getReferrerDependencyPath(dep, new StringBuilder())
-									if (!foundPaths.contains(path)) {
-										foundPaths.add(path)
-										msg.append('''The property «p.getName()» references a type from another namespace that leads to an import cycle via:
-'''.toString)
-										msg.append(path)
-										if (otherTypeNsRefersToNs !== null && !otherTypeNsRefersToNs.isEmpty()) {
-											msg.append("\n for the following business object properties in namespace ")
-											msg.append(dep.getContainer().getName().toString())
-											msg.append(":\n")
-											var Iterator<QualifiedName> otherTypeNsRefersToNsIt = otherTypeNsRefersToNs.
-												iterator()
-											while (otherTypeNsRefersToNsIt.hasNext()) {
-												var QualifiedName name = otherTypeNsRefersToNsIt.next()
-												msg.append(getPropertyShortName(name))
-												if (otherTypeNsRefersToNsIt.hasNext()) {
-													msg.append(", ")
+					if (transDepsRoot !== null) {
+						for (DependencyDescription dep : transDepsRoot) {
+							if (rootVisited) {
+								var VersionedType verType = dataObjQuery.toVersionedType(dep.getTarget(), p.eResource())
+								if (verType !== null) {
+									if (!nameProvider.getFullyQualifiedName(p.eContainer().eContainer()).equals(
+										dep.getContainer().getName())) {
+										hasTransitImport = true
+									}
+									var List<QualifiedName> otherTypeNsRefersToNs = dataObjQuery.
+										getOtherTypeNsRefsToNs(verType, (p.eContainer().eContainer() as SubNamespace))
+									if (hasTransitImport && !otherTypeNsRefersToNs.isEmpty()) {
+										var StringBuilder msg = new StringBuilder()
+										var String path = getReferrerDependencyPath(dep, new StringBuilder())
+										if (!foundPaths.contains(path)) {
+											foundPaths.add(path)
+											msg.append('''The property «p.getName()» references a type from another namespace that leads to an import cycle via:
+	'''.toString)
+											msg.append(path)
+											if (otherTypeNsRefersToNs !== null && !otherTypeNsRefersToNs.isEmpty()) {
+												msg.append("\n for the following business object properties in namespace ")
+												msg.append(dep.getContainer().getName().toString())
+												msg.append(":\n")
+												var Iterator<QualifiedName> otherTypeNsRefersToNsIt = otherTypeNsRefersToNs.
+													iterator()
+												while (otherTypeNsRefersToNsIt.hasNext()) {
+													var QualifiedName name = otherTypeNsRefersToNsIt.next()
+													msg.append(getPropertyShortName(name))
+													if (otherTypeNsRefersToNsIt.hasNext()) {
+														msg.append(", ")
+													}
 												}
 											}
+											warning(msg.toString(), ServiceDslPackage.Literals::PROPERTY__TYPE)
 										}
-										warning(msg.toString(), ServiceDslPackage.Literals::PROPERTY__TYPE)
 									}
 								}
+							} else {
+								rootVisited = true
 							}
-						} else {
-							rootVisited = true
 						}
 					}
 				}

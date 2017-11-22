@@ -96,7 +96,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 						val typesMinState = lifecycleQueries.getMinLifecycleState (binding.resolveEnvironment, profile.lifecycle)
 						val minState = binding.module.module.state
 									
-						wadlBuilder.toWADL(binding, svc, minState, profile);
+						wadlBuilder.generateWADL(binding, svc, minState, profile);
 								
 						if ( ! noDependencies) {
 							val verNamespaces = svc.importedVersionedNS (typesMinState);
@@ -163,7 +163,7 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 //						if (!res.properties.isEmpty) {
 //							xsdGenerator.toXSD(res.versionedNamespace, minState, binding, enforcedProfile)
 //						}
-						wadlBuilder.toWADL(binding, res, minState, profile);
+						wadlBuilder.generateWADL(binding, res, minState, profile);
 								
 						if ( ! noDependencies) {
 							val verNamespaces = res.importedVersionedNS (typesMinState);
@@ -217,12 +217,20 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 											lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, minState.eContainer as Lifecycle)
 										else
 											minState
-					wadlBuilder.toWADL(specBinding, service, minState, profile);
+					if (minState === null && profile.lifecycle === null) {
+						wadlBuilder.generateWADLStateless(specBinding, service, profile);
+					} else {
+						wadlBuilder.generateWADL(specBinding, service, minState, profile);
+					}
 							
 					if ( ! noDependencies) {
-						val verNamespaces = service.importedVersionedNS (typesMinState);
-						verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile));
-								
+						if (minState === null && profile.lifecycle === null) {
+							val verNamespaces = service.importedVersionedNS ();
+							verNamespaces.forEach (n | xsdGenerator.toXSD(n, specBinding, profile));
+						} else {
+							val verNamespaces = service.importedVersionedNS (typesMinState);
+							verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile));
+						}		
 						val requestHeader = service.findBestMatchingRequestHeader (profile);
 						if (requestHeader !== null) {
 							if (useRegistryBasedFilePaths)
@@ -258,7 +266,11 @@ class DefaultWADLContractBuilder implements IProtocolContractBuilder {
 											lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, minState.eContainer as Lifecycle)
 										else
 											minState
-					wadlBuilder.toWADL(specBinding, resource, minState, profile);
+					if (minState === null && profile.lifecycle === null) {
+						wadlBuilder.generateWADLStateless(specBinding, resource, profile);
+					} else {
+						wadlBuilder.generateWADL(specBinding, resource, minState, profile);
+					}
 					if ( ! noDependencies) {
 						val verNamespaces = resource.importedVersionedNS (typesMinState);
 						verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile))

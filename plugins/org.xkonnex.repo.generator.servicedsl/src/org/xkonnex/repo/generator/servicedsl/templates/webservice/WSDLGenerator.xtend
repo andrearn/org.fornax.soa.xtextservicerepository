@@ -137,9 +137,15 @@ class WSDLGenerator {
 		<wsdl:types>
 			<xsd:schema targetNamespace="«s.toTargetNamespace()»"
 				xmlns:ref="http://ws-i.org/profiles/basic/1.1/xsd"
-				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber (s.version), minState) »
-					xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
-				«ENDFOR»
+				«IF minState !== null»
+					«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber (s.version), minState) »
+						xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
+					«ENDFOR»
+				«ELSE»
+					«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber (s.version)) »
+						xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
+					«ENDFOR»
+				«ENDIF»
 				«IF !headerImports.empty»
 					«FOR headerImp : headerImports»
 						xmlns:«profileNamespaceURIProvider.getVersionedNamespacePrefix(headerImp)»="«profileNamespaceURIProvider.getVersionedNamespaceURI(headerImp)»"
@@ -153,10 +159,17 @@ class WSDLGenerator {
 				«/*<xsd:import
 					namespace="http://ws-i.org/profiles/basic/1.1/xsd"
 					schemaLocation="http://ws-i.org/profiles/basic/1.1/xsd"/>*/»
-				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
-					<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
-						namespace="«imp.versionedNamespaceURI»"/>
-				«ENDFOR»
+				«IF minState !== null»
+					«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
+						<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
+							namespace="«imp.versionedNamespaceURI»"/>
+					«ENDFOR»
+				«ELSE»
+					«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version))»
+						<xsd:import schemaLocation="«imp.toSchemaAssetUrl (registryBaseUrl)».xsd"
+							namespace="«imp.versionedNamespaceURI»"/>
+					«ENDFOR»
+				«ENDIF»
 				«IF !headerImports.empty»
 					«FOR headerImp : headerImports»
 						<xsd:import schemaLocation="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, registryBaseUrl)».xsd"

@@ -9,6 +9,8 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType;
 import org.xkonnex.repo.dsl.environmentdsl.util.EnvironmentTypeComparator;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.Lifecycle;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
+import org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile;
+import org.xkonnex.repo.dsl.profiledsl.query.ProfileQueries;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -20,6 +22,9 @@ public class DefaultStateMatcher implements IStateMatcher {
 	
 	@Inject
 	private LifecycleStateComparator stateComparator;
+	
+	@Inject 
+	private ProfileQueries profileQueries;
 	
 	@Inject
 	private EnvironmentTypeComparator envTypeComparator;
@@ -46,6 +51,10 @@ public class DefaultStateMatcher implements IStateMatcher {
 	}
 	
 	public boolean supportsEnvironment(LifecycleState state, Environment env) {
+		Profile defaultProfile = profileQueries.getDefaultProfile(env.eResource().getResourceSet());
+		if (defaultProfile != null && defaultProfile.getLifecycle() == null) {
+			return true;
+		}
 		if (state != null && state.getQualifiesForEnvironment() != null) {
 			for (Environment curEnv : state.getQualifiesForEnvironment()) {
 				if (curEnv.equals(env))
@@ -55,7 +64,31 @@ public class DefaultStateMatcher implements IStateMatcher {
 		return false;
 	}
 
+	public boolean supportsEnvironment(LifecycleState state, Environment env, Profile profile) {
+		if (profile == null || profile.getLifecycle() == null) {
+			return true;
+		}
+		if (state != null && state.getQualifiesForEnvironment() != null) {
+			for (Environment curEnv : state.getQualifiesForEnvironment()) {
+				if (curEnv.equals(env))
+					return true;
+			}
+		}
+		return false;
+	}
+	
 	public boolean supportsEnvironment (LifecycleState state, String envName) {
+		if (state == null)
+			return true;
+		for (Environment env : state.getQualifiesForEnvironment ()) {
+			if (env.getName().equals (envName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean supportsEnvironment (LifecycleState state, String envName, Profile profile) {
 		if (state == null)
 			return true;
 		for (Environment env : state.getQualifiesForEnvironment ()) {
@@ -82,11 +115,46 @@ public class DefaultStateMatcher implements IStateMatcher {
 		return types.contains (envType);
 	}
 
+	public boolean supportsEnvironmentType (LifecycleState state,
+			EnvironmentType envType, Profile profile) {
+		if (profile != null && profile.getLifecycle() == null) {
+			return true;
+		}
+		List<EnvironmentType> types = new ArrayList<EnvironmentType> ();
+		if (state != null) {
+			types.addAll (state.getQualifiesFor ());
+			types.addAll (Lists.transform (state.getQualifiesForEnvironment (), new Function<Environment, EnvironmentType> () {
+				
+				public EnvironmentType apply (Environment env) {
+					return env.getType ();
+				}
+				
+			}));
+		}
+		return types.contains (envType);
+	}
+
 	public LifecycleState getLowestStateByEnvironment (Lifecycle cycle, final Environment env) {
+		final Profile profile = cycle != null ? (Profile)cycle.eContainer() : null; 
 		List<LifecycleState> eligibleStates = Lists.newArrayList (Iterables.filter (cycle.getStates(), new Predicate <LifecycleState> () {
 
 			public boolean apply (LifecycleState input) {
-				return supportsEnvironment(input, env);
+				return supportsEnvironment(input, env, profile);
+			}
+			
+		}));
+		Collections.sort (eligibleStates, stateComparator);
+		if (!eligibleStates.isEmpty())
+			return eligibleStates.get (0);
+		else 
+			return null;
+	}
+
+	public LifecycleState getLowestStateByEnvironment (Lifecycle cycle, final Environment env, Profile profile) {
+		List<LifecycleState> eligibleStates = Lists.newArrayList (Iterables.filter (cycle.getStates(), new Predicate <LifecycleState> () {
+
+			public boolean apply (LifecycleState input) {
+				return supportsEnvironment(input, env, profile);
 			}
 			
 		}));

@@ -31,7 +31,7 @@ class ServiceRepositoryNewProjectGenerator {
 			datatype binary
 			datatype anyType
 			
-			soa-profile ExampleOrgSOA {
+			profile ExampleOrgSOA {
 				scope "Example.org"
 				
 				lifecycle DefaultLifecycle {

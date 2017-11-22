@@ -24,6 +24,13 @@ public interface IExceptionResolver {
 	 *  @param majorVersion		The major version number to which minor versions should match
 	 */
 	public boolean isMatchingException (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception exc, Integer majorVersion, LifecycleState minState);
+	
+	/**
+	 *	Checks, whether the Exception is the latest minor version in a given major version
+	 *  @param exc				The Exception to checked
+	 *  @param majorVersion		The major version number to which minor versions should match
+	 */
+	public boolean isMatchingException (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception exc, Integer majorVersion);
 		
 
 }

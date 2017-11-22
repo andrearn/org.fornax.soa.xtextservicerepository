@@ -32,11 +32,17 @@ import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceImportQu
 import org.xkonnex.repo.dsl.servicedsl.service.query.namespace.NamespaceQuery
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataTypeRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ErrorResponse
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.IntReturnCode
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Response
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ReturnCode
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.StringReturnCode
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb
 import org.xkonnex.repo.generator.bindingdsl.rest.RESTEndpointAddressResolver
 import org.xkonnex.repo.generator.bindingdsl.templates.BindingExtensions
@@ -48,12 +54,6 @@ import org.xkonnex.repo.generator.servicedsl.templates.xsd.OperationWrapperTypes
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaNamespaceExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.SchemaTypeExtensions
 import org.xkonnex.repo.generator.servicedsl.templates.xsd.XSDGenerator
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ErrorResponse
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Response
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ReturnCode
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.IntReturnCode
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.StringReturnCode
 
 class ConcreteWADLGenerator {
 	
@@ -84,29 +84,46 @@ class ConcreteWADLGenerator {
 	@Inject IFileSystemAccess fsa
 	@Inject Logger log
 
-	def dispatch void toWADL (AnyBinding binding, Service svc, LifecycleState minState, Profile profile) {
-	}
-
-	def dispatch void toWADL (ModuleBinding binding, Service svc, LifecycleState minState, Profile profile) {
+	def dispatch void generateWADL (ModuleBinding binding, Service svc, LifecycleState minState, Profile profile) {
 		svc.toWADL (minState, binding, profile)
 	}
 
-	def dispatch void toWADL (EffectiveBinding binding, Service svc, LifecycleState minState, Profile profile) {
+	def dispatch void generateWADL (EffectiveBinding binding, Service svc, LifecycleState minState, Profile profile) {
 		svc.toWADL (minState, binding.moduleBinding, profile)
 	}
 	
-	def dispatch void toWADL (AnyBinding binding, Resource svc, LifecycleState minState, Profile profile) {
+	def dispatch void generateWADL (AnyBinding binding, Resource svc, LifecycleState minState, Profile profile) {
 	}
 
-	def dispatch void toWADL (ModuleBinding binding, Resource svc, LifecycleState minState, Profile profile) {
+	def dispatch void generateWADL (ModuleBinding binding, Resource svc, LifecycleState minState, Profile profile) {
 		svc.toWADL (minState, binding, profile)
 	}
 
-	def dispatch void toWADL (EffectiveBinding binding, Resource svc, LifecycleState minState, Profile profile) {
+	def dispatch void generateWADL (EffectiveBinding binding, Resource svc, LifecycleState minState, Profile profile) {
 		svc.toWADL (minState, binding.moduleBinding, profile)
 	}
+
+//
+	def dispatch void generateWADLStateless (ModuleBinding binding, Service svc, Profile profile) {
+		svc.toWADL (null, binding, profile)
+	}
+
+	def dispatch void generateWADLStateless (EffectiveBinding binding, Service svc, Profile profile) {
+		svc.toWADL (null, binding.moduleBinding, profile)
+	}
 	
-	def dispatch void toWADL(Service service, LifecycleState minState, ModuleBinding binding, Profile profile) {
+	def dispatch void generateWADLStateless (AnyBinding binding, Resource svc, Profile profile) {
+	}
+
+	def dispatch void generateWADLStateless (ModuleBinding binding, Resource svc, Profile profile) {
+		svc.toWADL (null, binding, profile)
+	}
+
+	def dispatch void generateWADLStateless (EffectiveBinding binding, Resource svc, Profile profile) {
+		svc.toWADL (null, binding.moduleBinding, profile)
+	}
+	
+	def void toWADL(Service service, LifecycleState minState, ModuleBinding binding, Profile profile) {
 		log.info('''Generating WADL for Service «service.fullyQualifiedName»'''.toString)
 		val Set<VersionedTechnicalNamespace> headerImports = service.collectTechnicalVersionedNamespaceImports (profile)
 		val effBind = bindingBuilder.createEffectiveBinding(service, binding)
@@ -115,13 +132,18 @@ class ConcreteWADLGenerator {
 		val environment = environmentResolver.resolveEnvironment(binding)
 		
 		wrapperTypesGenerator.toOperationWrappers (service, service.findSubdomain(), minState, profile, environment.getRegistryBaseUrl());
+		val allImportedNS = if (minState !== null || profile.lifecycle !== null) 
+				service.importedVersionedNS (versionQualifier.toMajorVersionNumber (service.version), minState)
+			else 
+				service.importedVersionedNS (versionQualifier.toMajorVersionNumber (service.version))
+			
 		val content = '''
 			<?xml version="1.0" encoding="UTF-8"?>
 			<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd"
 				xmlns:tns="«service.toTargetNamespace()»" 
 				xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-				«FOR imp : service.importedVersionedNS (versionQualifier.toMajorVersionNumber (service.version), minState) »
+				«FOR imp : allImportedNS »
 					xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
 				«ENDFOR»
 				«IF !headerImports.empty»
@@ -139,20 +161,24 @@ class ConcreteWADLGenerator {
 		fsa.generateFile(wadlFile, content)
 	}
 	
-	def dispatch void toWADL(Resource resource, LifecycleState minState, ModuleBinding binding, Profile profile) {
+	def void toWADL(Resource resource, LifecycleState minState, ModuleBinding binding, Profile profile) {
 		log.info('''Generating WADL for Resource «resource.fullyQualifiedName»'''.toString)
 		val Set<VersionedTechnicalNamespace> headerImports = resource.collectTechnicalVersionedNamespaceImports (profile)
 		val effBind = bindingBuilder.createEffectiveBinding(resource, binding)
 		val prot = effBind.protocol.filter(typeof(ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
 		val wadlFile = resourceFilenameProvider.getResourceContractFileNameFragment(resource, effBind.moduleBinding, typeof(REST)) + ".wadl";
 		val environment = environmentResolver.resolveEnvironment(binding)
+		val allImportedNS = if (minState !== null || profile.lifecycle !== null) 
+				resource.importedVersionedNS (versionQualifier.toMajorVersionNumber (resource.version), minState)
+			else 
+				resource.importedVersionedNS (versionQualifier.toMajorVersionNumber (resource.version))
 		val content = '''
 			<?xml version="1.0" encoding="UTF-8"?>
 			<application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 				xsi:schemaLocation="http://wadl.dev.java.net/2009/02 wadl.xsd"
 				xmlns:tns="«resource.toTargetNamespace()»" 
 				xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-				«FOR imp : resource.importedVersionedNS (versionQualifier.toMajorVersionNumber (resource.version), minState) »
+				«FOR imp : allImportedNS »
 					xmlns:«imp.versionedNamespacePrefix»="«imp.versionedNamespaceURI»"
 				«ENDFOR»
 				«IF !headerImports.empty»
@@ -171,9 +197,13 @@ class ConcreteWADLGenerator {
 	}
 	
 	def toGrammars(Service s, LifecycleState minState, Profile profile, Set<VersionedTechnicalNamespace> headerImports) {
+		val grammarImports = if (minState !== null || profile.lifecycle !== null ) 
+				s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)
+			else
+				s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version))
 		val content = '''
 			<grammars>
-				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
+				«FOR imp : grammarImports »
 					<include href="«imp.toSchemaAssetUrl (null)».xsd" />
 				«ENDFOR»
 				«IF !headerImports.empty»
@@ -186,9 +216,13 @@ class ConcreteWADLGenerator {
 	}
 	
 	def toGrammars(Resource s, LifecycleState minState, Profile profile, Set<VersionedTechnicalNamespace> headerImports) {
+		val grammarImports = if (minState !== null || profile.lifecycle !== null ) 
+				s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)
+			else
+				s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version))
 		val content = '''
 			<grammars>
-				«FOR imp : s.importedVersionedNS (versionQualifier.toMajorVersionNumber(s.version), minState)»
+				«FOR imp : grammarImports»
 					<include href="«imp.toSchemaAssetUrl (null)».xsd" />
 				«ENDFOR»
 				«IF !headerImports.empty»

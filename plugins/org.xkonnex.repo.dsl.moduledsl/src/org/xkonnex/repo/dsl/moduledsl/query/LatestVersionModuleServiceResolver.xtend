@@ -73,12 +73,34 @@ class LatestVersionModuleServiceResolver implements IModuleServiceResolver {
 		return serviceRefs
 	}
 	
+	override resolveModuleServiceRef(AbstractServiceRef svcRef) {
+		resolveModuleServiceRefInternal (svcRef)
+	}
+	
 	override Service resolveModuleServiceRef(AbstractServiceRef svcRef, LifecycleState minState) {
 		resolveModuleServiceRefInternal (svcRef, minState)
 	}
 	
 	override Service resolveModuleServiceRef(AbstractServiceRef svcRef, Environment env) {
 		resolveModuleServiceRefInternal (svcRef, env)
+	}
+	
+	def dispatch Service resolveModuleServiceRefInternal (AbstractServiceRef s) {
+		
+	}
+
+	/**
+	 * Get the latest version of the service referenced in the ServiceRef matching the given minimal LifecycleState 
+	 */
+	def dispatch  Service resolveModuleServiceRefInternal (ServiceRef s) {
+		s.service.findSubdomain().services.filter (e|e.name == s.service.name && e.version.versionMatches (s.versionRef)).sortBy(e|e.version.version).last();
+	}
+
+	/**
+	 * Get the latest version of the service referenced in the ImportServiceRef 
+	 */
+	def dispatch  Service resolveModuleServiceRefInternal (ImportServiceRef svcRef) {
+		resolveModuleServiceRef (svcRef)
 	}
 	
 	def dispatch Service resolveModuleServiceRefInternal (AbstractServiceRef s, LifecycleState minState) {
@@ -141,4 +163,5 @@ class LatestVersionModuleServiceResolver implements IModuleServiceResolver {
 		serviceRef.setVersionRef(verRef)
 		return serviceRef
 	}
+	
 }

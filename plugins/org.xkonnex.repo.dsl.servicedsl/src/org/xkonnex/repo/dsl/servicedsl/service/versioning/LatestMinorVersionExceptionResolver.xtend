@@ -49,9 +49,26 @@ class LatestMinorVersionExceptionResolver implements IExceptionResolver {
 			minState)
 		 == exc);
 	} 
+	
+	/**
+	 *	Checks, whether the Exception is the latest minor version in a given major version
+	 *  @param exc				The Exception to checked
+	 *  @param majorVersion		The major version number to which minor versions should match
+	 */
+	override boolean isMatchingException (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception exc, Integer majorVersion) { 
+		(findMatchingException( 
+			(exc.eContainer as SubNamespace).exceptions.filter (e|e.name == exc.name).toList, 
+			majorVersion)
+		 == exc);
+	} 
 		
 	def private org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception findMatchingException (List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> exceptions, Integer majorVersion, LifecycleState minState) { 
 		exceptions.filter (e|e.version.versionMatches (majorVersion) && e.state.matchesMinStateLevel (minState))
+			.sortBy (e|e.version.version).last();
+	}
+		
+	def private org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception findMatchingException (List<org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception> exceptions, Integer majorVersion) { 
+		exceptions.filter (e|e.version.versionMatches (majorVersion))
 			.sortBy (e|e.version.version).last();
 	}
 	

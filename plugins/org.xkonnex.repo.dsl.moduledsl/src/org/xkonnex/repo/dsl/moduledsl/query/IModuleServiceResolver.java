@@ -31,6 +31,12 @@ public interface IModuleServiceResolver {
 	
 	/**
 	 * Get the latest version of the service referenced in the imported or exported 
+	 * Service reference
+	 */
+	public Service resolveModuleServiceRef (AbstractServiceRef svcRef);
+	
+	/**
+	 * Get the latest version of the service referenced in the imported or exported 
 	 * Service reference matching the given minimal LifecycleState 
 	 */
 	public Service resolveModuleServiceRef (AbstractServiceRef svcRef, LifecycleState minState);

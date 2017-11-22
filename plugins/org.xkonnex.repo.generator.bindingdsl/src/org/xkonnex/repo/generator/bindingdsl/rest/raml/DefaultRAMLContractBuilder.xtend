@@ -45,7 +45,7 @@ class DefaultRAMLContractBuilder implements IProtocolContractBuilder {
 	@Inject extension HeaderFinder
 	@Inject extension EnvironmentBindingResolver		
 		
-d	@Inject XSDBuilder 					xsdGenerator
+	@Inject XSDBuilder 					xsdGenerator
 	@Inject MessageHeaderXSDTemplates 	msgHeaderGenerator
 	@Inject IModuleRefServiceBindingResolver				bindingResolver
 	@Inject IQualifiedNameProvider		nameProvider
@@ -216,12 +216,19 @@ d	@Inject XSDBuilder 					xsdGenerator
 											lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, minState.eContainer as Lifecycle)
 										else
 											minState
-					ramlBuilder.toRAML(specBinding, service, minState, profile);
-							
+					if (minState === null && profile.lifecycle === null) {
+						ramlBuilder.toRAMLStateless(specBinding, service, profile);
+					} else {
+						ramlBuilder.toRAML(specBinding, service, minState, profile);
+					}		
 					if ( ! noDependencies) {
-						val verNamespaces = service.importedVersionedNS (typesMinState);
-						verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile));
-								
+						if (minState === null && profile.lifecycle === null) {
+							val verNamespaces = service.importedVersionedNS ();
+							verNamespaces.forEach (n | xsdGenerator.toXSD(n, specBinding, profile));
+						} else {
+							val verNamespaces = service.importedVersionedNS (typesMinState);
+							verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile));
+						}					
 						val requestHeader = service.findBestMatchingRequestHeader (profile);
 						if (requestHeader !== null) {
 							if (useRegistryBasedFilePaths)
@@ -257,7 +264,11 @@ d	@Inject XSDBuilder 					xsdGenerator
 											lifecycleQueries.getMinLifecycleState (specBinding.resolveEnvironment, minState.eContainer as Lifecycle)
 										else
 											minState
-					ramlBuilder.toRAML(specBinding, resource, minState, profile);
+					if (minState === null && profile.lifecycle === null) {
+						ramlBuilder.toRAMLStateless(specBinding, resource, profile);
+					} else {
+						ramlBuilder.toRAML(specBinding, resource, minState, profile);
+					}
 					if ( ! noDependencies) {
 						val verNamespaces = resource.importedVersionedNS (typesMinState);
 						verNamespaces.forEach (n | xsdGenerator.toXSD(n, typesMinState, specBinding, profile))

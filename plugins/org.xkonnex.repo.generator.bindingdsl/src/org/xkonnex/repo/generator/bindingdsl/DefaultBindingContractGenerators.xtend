@@ -145,7 +145,7 @@ class DefaultBindingContractGenerators implements IGenerator {
 		val modelModules  = resource.allContents.toIterable.filter(Module)
 		for (module : modelModules) {
 			val resolvedModule = EcoreUtil2::resolve (module, resourceSet) as Module
-			val moduleLifecycle = resolvedModule.state.eContainer as Lifecycle
+			val moduleLifecycle = resolvedModule.state?.eContainer as Lifecycle
 			val minState = lifecycleQueries.getMinLifecycleState (env, moduleLifecycle)
 				
 			if (modules.exists(mod | mod.matches (resolvedModule, minState, modLookup, stateMatcher, nameProvider))) {

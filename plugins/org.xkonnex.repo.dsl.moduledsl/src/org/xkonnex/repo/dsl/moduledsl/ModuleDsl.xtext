@@ -38,7 +38,7 @@ Module:
 	'module' name = QualifiedName '{'
 		
 		version = Version
-		'lifecycle-state' state = [profileDsl::LifecycleState | QualifiedName]
+		('lifecycle-state' state = [profileDsl::LifecycleState | QualifiedName])?
 		(governanceDecisions+=GovernanceDecision)*
 		/* An additional named Qualifier of the module, may be referred to by bindings or other modules using this module */
 		(qualifiers=QualifierRefs)?

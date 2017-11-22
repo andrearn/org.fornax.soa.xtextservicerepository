@@ -106,6 +106,31 @@ class XSDGenerator {
 			}
 		}
 	}
+	/*
+		Generate an XSD for each VersionedDomainNamespace derived from the given SubNamespace 
+		applying splitting by major version of owned VersionedTypes and Exceptions in the 
+		given minimal LifecycleState.
+	*/
+	def dispatch void toXSD (SubNamespace ns, Profile enforcedProfile, String registryBaseUrl) {
+		val profile = ns.getApplicableProfile(enforcedProfile)
+		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
+		for (nsVer : nsVersions) {
+			nsVer.toXSDVersion (profile, registryBaseUrl);
+			if ( ! noDependencies ) {
+				nsVer.allImportedVersionedNS ().filter (typeof (VersionedDomainNamespace))
+					.filter (e| !(e.subdomain == nsVer.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(nsVer.version)))
+					.forEach (e|e.toXSDVersion (profile, registryBaseUrl));
+			}
+		}
+	}
+
+	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
+		ns.toXSDVersion (minState, profile, registryBaseUrl);
+		ns.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
+				.filter(e| !(e.subdomain == ns.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(ns.version)))
+				.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl));
+	}
+	
 	
 	/*
 	 * TODO: review for use as noDependencies flag is being injected already
@@ -122,14 +147,30 @@ class XSDGenerator {
 			}
 		}
 	}
-
-	def dispatch void toXSD (VersionedDomainNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
-		ns.toXSDVersion (minState, profile, registryBaseUrl);
-		ns.allImportedVersionedNS (minState).filter (typeof (VersionedDomainNamespace))
-				.filter(e| !(e.subdomain == ns.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(ns.version)))
-				.forEach (e|e.toXSDVersion (minState, profile, registryBaseUrl));
-	}
 	
+	/*
+	 * TODO: review for use as noDependencies flag is being injected already
+	 */
+	def dispatch void toXSD (SubNamespace ns, Profile enforcedProfile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+		val profile = ns.getApplicableProfile(enforcedProfile)
+		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
+		for (nsVer : nsVersions) {
+			nsVer.toXSDVersion (profile, registryBaseUrl, noDeps, includeSubNamespaces);
+			if ( !noDeps) {
+				nsVer.allImportedVersionedNS ().filter (typeof (VersionedDomainNamespace))
+					.filter (e|!(e.subdomain == nsVer.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(nsVer.version)))
+					.forEach (e|e.toXSDVersion (profile, registryBaseUrl, noDeps, includeSubNamespaces));
+			}
+		}
+	}
+
+	def dispatch void toXSD (VersionedDomainNamespace ns, Profile profile, String registryBaseUrl) {
+		ns.toXSDVersion (profile, registryBaseUrl);
+		ns.allImportedVersionedNS ().filter (typeof (VersionedDomainNamespace))
+				.filter(e| !(e.subdomain == ns.subdomain && versionQualifier.toMajorVersionNumber(e.version) == versionQualifier.toMajorVersionNumber(ns.version)))
+				.forEach (e|e.toXSDVersion (profile, registryBaseUrl));
+	}
+
 	/*
 		Generate XSDs for all VersionedDomainNamespaces derived from the given SubNamespace by applying
 		the major version splitting algorithm filtered by the given minimal LifecycleState
@@ -192,6 +233,55 @@ class XSDGenerator {
 			fsa.generateFile (fileName, content);
 		}
 	}
+	
+	/*
+		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
+		that match the given minimal LifecycleState.
+	*/
+	def toXSDVersion (VersionedDomainNamespace vns, Profile profile, String registryBaseUrl) {
+		val resSet = profile.eResource.resourceSet
+		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
+		val imports = vns.importedVersionedNS.filter (e|schemaNsExt.toNamespace(e) != schemaNsExt.toNamespace(vns));
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState === null || !b.lifecycleState.isEnd)
+			.filter (e|e.typeMatchesMajorVersion (namespaceMajorVersion));
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState=== null || !b.lifecycleState.isEnd)
+			.filter (e|e.typeMatchesMajorVersion (namespaceMajorVersion));
+		val enums = vns.types.filter (typeof (Enumeration))
+			.filter (en|en.typeMatchesMajorVersion (namespaceMajorVersion));
+		val exceptions = vns.exceptions.filter (typeof (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception))
+			.filter (ex|exceptionResolver.isMatchingException (ex, namespaceMajorVersion));
+
+		if (!bos.empty || !qos.empty || !enums.empty || !exceptions.empty) {
+			var content = '''
+			<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+			<xsd:schema xmlns:tns="«schemaNsExt.toNamespace(vns)»"
+				«vns.importedVersionedNS.map (e|e.toNamespaceDeclaration ()).join» 
+				xmlns="«schemaNsExt.toNamespace(vns)»"
+				xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+				xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+				«/*
+					xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+					jxb:version="2.0"
+				*/»
+				elementFormDefault="qualified"
+				attributeFormDefault="unqualified"
+				targetNamespace="«schemaNsExt.toNamespace(vns)»"
+				>
+				«imports.map (e|e.toImportDeclaration (registryBaseUrl)).join» 	
+				«IF (vns.subdomain instanceof SubNamespace)»
+					«bos.map (e|e.toComplexType (vns, profile, null)).join»
+					«qos.map (e|e.toComplexType (vns, profile, null)).join»
+					«enums.map (e|e.toSimpleType (null)).join»
+					«exceptions.map (e|e.toFaultType (vns, profile, null)).join»
+				«ELSEIF (vns.subdomain instanceof OrganizationNamespace)»
+					«/*»«EXPAND ComplexType FOREACH ((OrganizationNamespace) subdomain).types.typeSelect(BusinessObject)-»«ENDREM*/»
+				«ENDIF»
+			</xsd:schema>'''
+			
+			var fileName = vns.toFileNameFragment() + ".xsd";
+			fsa.generateFile (fileName, content);
+		}
+	}
 
 	/*
 		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
@@ -241,6 +331,53 @@ class XSDGenerator {
 		}
 	}
 	
+	/*
+		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
+		that match the given minimal LifecycleState.
+	*/
+	def toXSDVersion (VersionedDomainNamespace vns, Profile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
+		val imports = vns.importedVersionedNS.filter(e|schemaNsExt.toNamespace(e) != schemaNsExt.toNamespace(vns));
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
+			.filter (e|e.typeMatchesMajorVersion (namespaceMajorVersion));
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
+			.filter (e|e.typeMatchesMajorVersion (namespaceMajorVersion));
+		val enums = vns.types.filter (typeof (Enumeration))
+			.filter (en|en.typeMatchesMajorVersion (namespaceMajorVersion));
+		val exceptions = vns.exceptions.filter (typeof (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception))
+			.filter (e|exceptionResolver.isMatchingException (e, namespaceMajorVersion));
+
+		if (!bos.empty || !qos.empty || !enums.empty || !exceptions.empty) {
+			var content = '''
+			<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+			<xsd:schema xmlns:tns="«schemaNsExt.toNamespace(vns)»"
+				«vns.importedVersionedNS.map (e|e.toNamespaceDeclaration).join» 
+				xmlns="«schemaNsExt.toNamespace(vns)»"
+				xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+				xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+			«/*
+				xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+				jxb:version="2.0"
+			*/»
+				elementFormDefault="qualified"
+				attributeFormDefault="unqualified"
+				targetNamespace="«vns.versionedNamespaceURI»"
+				>
+				«imports.map (e|e.toImportDeclaration (registryBaseUrl)).join» 	
+				«IF (vns.subdomain instanceof SubNamespace)»
+					«bos.map (e|e.toComplexType (vns, profile, null)).join»
+					«qos.map (e|e.toComplexType (vns, profile, null)).join»
+					«enums.map (e|e.toSimpleType (null)).join»
+					«exceptions.map (e|e.toFaultType (vns, profile, null)).join»
+				«ELSEIF (vns.subdomain instanceof OrganizationNamespace)»
+					«/*«EXPAND ComplexType FOREACH ((OrganizationNamespace) subdomain).types.typeSelect(BusinessObject)-»*/»
+				«ENDIF»
+			</xsd:schema>'''
+	
+			var fileName = vns.toFileNameFragment() + ".xsd";
+			fsa.generateFile (fileName, content);
+		}
+	}
 	
 	def toNamespaceDeclaration (VersionedDomainNamespace vns) '''
 		xmlns:«vns.versionedNamespacePrefix»="«schemaNsExt.toNamespace(vns)»"
@@ -287,7 +424,7 @@ class XSDGenerator {
 						*/» 
 			</xsd:annotation>
 			
-			«IF bo.superObject != null»
+			«IF bo.superObject !== null»
 				<xsd:complexContent>
 					<xsd:extension base="«bo.superObject.toTypeNameRef(currNs)»">
 						«bo.toPropertySequence (currNs, profile, minState)»

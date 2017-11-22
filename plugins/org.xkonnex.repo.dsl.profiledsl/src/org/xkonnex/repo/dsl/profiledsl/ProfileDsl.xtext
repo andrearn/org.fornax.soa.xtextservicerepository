@@ -71,7 +71,7 @@ Lifecycle:
  * Defines an asset lifecycle state
  */
 LifecycleState:
-	(isInitial?='initial' | isEnd?='end')? 'state' name = ID '{'
+	(isInitial?='initial' | isDeprecating?='deprecating' | isEnd?='end')? 'state' name = ID '{'
 		/**
 		 * Is governance-approval required for this state?
 		 */
@@ -98,11 +98,11 @@ LifecycleState:
 		/*
 		 * Artifacts can be generated from assets in this state for environments with one of the given environment-types at runtime
 		 */
-		('qualifies-build-for' (qualifiesBuildFor+=EnvironmentType)(',' qualifiesBuildFor+=EnvironmentType)*)?
+		('can-build-for' (canBuildFor+=EnvironmentType)(',' qualifiesBuildFor+=EnvironmentType)*)?
 		/*
 		 * Artifacts can be generated from assets in this state for the given environments
 		 */
-		('qualifies-build-for-environment' (qualifiesBuildForEnvironment+=[environmentDsl::Environment])(',' qualifiesBuildForEnvironment+=[environmentDsl::Environment])*)?
+		('can-build-for-environment' (canBuildForEnvironment+=[environmentDsl::Environment])(',' qualifiesBuildForEnvironment+=[environmentDsl::Environment])*)?
 		(transitions+=Transition)*
 	'}';
 	
