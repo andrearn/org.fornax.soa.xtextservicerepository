@@ -1,0 +1,123 @@
+/*
+ * Define simple data types
+ */
+ 
+datatype int
+datatype string
+datatype date
+datatype datetime
+datatype boolean
+datatype char
+datatype long
+datatype float
+datatype double
+datatype decimal
+datatype base64Binary
+datatype anyType 
+
+/* 
+ * An architecture profile defines some basic rules
+ */
+default profile SampleArchitectureProfile {
+	
+	/** 
+	 * Example Org default asset lifecycle <br/><br/>
+	 * 
+	 * While the definition of a lifecycle is mandatory you may use a simpler lifecycle, 
+	 * even with only one state, which then must qualify assets for all environment types
+	 * that are being used
+	 */
+	lifecycle ExSOALifecycle {
+		/**
+		 * The asset is under development
+		 */
+		initial state development {
+			/*
+			 * It becomes accessible in the development environment as well
+			 */
+			qualifies-for Local-Environment, Development-Environment
+			-> test
+		}
+		
+		/*
+		 * The asset is under test
+		 */
+		state test {
+			qualifies-for Local-Environment, Development-Environment, Test-Environment
+			-> productive
+			-> development
+		}
+		
+		/**
+		 * The asset is under productive use
+		 */
+		state productive {
+			qualifies-for Local-Environment, Development-Environment, Test-Environment, Staging-Environment, Production-Environment
+			-> development
+		}
+	}
+	
+	
+	
+	/**
+	 * Define general design rules and naming conventions
+	 */
+	design-rules {
+		/* Rules for data types */
+		types {
+			
+			/*
+			 * Define how the evolution of backward compatible versions is supported
+			 */
+			version-evolution {
+				
+				/* XSDs will need a placeholder element for response messages. By default a list of "any"-elements */
+				extensible-properties
+				/* 
+				 * And placeholders for XSD attributes is defined will be used as well
+				 */
+				extensible-XML-attributes	
+			}
+			allow-enums allow-inheritance allow-polymorphism 
+		}
+	}
+	
+	
+	/**
+	 * Use a new namespace for every major version of BOs, Enums, Services oder Exception 
+	 * e.g. an XSD-namespace 
+	 */
+	versioning-strategy namespace-based	
+	
+	messaging {
+		message-headers msgCtx {
+			metadata {
+				version 1.0
+				lifecycle-state ExSOALifecycle.productive
+				for publish, request, response
+			}
+			msgCtx : org.example.soa.MessageContext majorVersion 1
+		}
+		default-request-header msgCtx majorVersion 1
+		default-response-header msgCtx majorVersion 1
+	}
+	
+	namespace org.example.soa {
+		class MessageContext {
+			metadata {
+				version 1.0
+				lifecycle-state ExSOALifecycle.productive
+			}
+			messageId : string
+			optional apiKey : string
+			optional from : string
+			optional ^to : string
+			optional requestId : string
+		}
+	}
+	
+	namespace-rules {
+		shorten org.example to ex
+	}	
+	
+}

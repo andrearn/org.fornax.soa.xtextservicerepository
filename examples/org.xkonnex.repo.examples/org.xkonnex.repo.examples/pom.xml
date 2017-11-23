@@ -37,6 +37,8 @@
 				
 				<zip_example name="org.xkonnex.repo.simple.example" />
 				<zip_example name="org.xkonnex.repo.simple.generator.example" />
+				<zip_example name="org.xkonnex.repo.rest.example" />
+				<zip_example name="org.xkonnex.repo.rest.generator.example" />
 				<zip_example name="org.xkonnex.repo.advanced.example" />
 				<zip_example name="org.xkonnex.repo.advanced.generator.example" />
 				

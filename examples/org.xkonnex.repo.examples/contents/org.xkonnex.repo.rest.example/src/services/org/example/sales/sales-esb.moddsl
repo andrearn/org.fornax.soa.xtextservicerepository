@@ -1,0 +1,24 @@
+import SampleArchitectureProfile.ExSOALifecycle.*
+
+import org.example.sales.*
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Verb
+
+/* 
+ * A module for services of the sales domain
+ */
+module org.example.sales.esb {
+	version 1.0
+	lifecycle-state development
+	
+	/*
+	 * Two services are provided by the module and we know exactly their versions
+	 */
+	provides {
+		service CustomerManagerBAS fixedVersion 1.0 {
+			endpoint-protocol REST 				
+		}
+		resource CustomerResource majorVersion 1 {
+			endpoint-protocol REST
+		}
+	}
+}

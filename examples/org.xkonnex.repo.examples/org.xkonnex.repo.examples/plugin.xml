@@ -18,6 +18,18 @@
 			<description>%simple.example.description</description>
 		</wizard>
 	</extension>
+
+	<!-- ========= org.xkonnex.repo.rest.example ========= -->
+	<extension point="org.eclipse.ui.newWizards">
+		<wizard	id="org.xkonnex.repo.NewRestExampleWizard" 
+			name="%rest.example.name" 
+			class="org.eclipse.emf.common.ui.wizard.ExampleInstallerWizard" 
+			category="org.eclipse.ui.Examples/org.xkonnex.repo.Examples"
+			icon="icons/genproject.gif" 
+			project="true">
+			<description>%rest.example.description</description>
+		</wizard>
+	</extension>
 	
 	<!-- ========= org.xkonnex.repo.advanced.example ========= -->
 	<extension point="org.eclipse.ui.newWizards">
@@ -35,6 +47,13 @@
 	    <example wizardID="org.xkonnex.repo.NewSimpleExampleWizard" pageImage="icons/genproject.gif">
 		 	<projectDescriptor name="org.xkonnex.repo.simple.example" contentURI="contents/org.xkonnex.repo.simple.example.zip" description="%simple.example.repoproject.description"/>
 		 	<projectDescriptor name="org.xkonnex.repo.simple.generator.example" contentURI="contents/org.xkonnex.repo.simple.generator.example.zip" description="%simple.example.generatorproject.description"/>
+	    </example>
+	</extension>
+
+	<extension point="org.eclipse.emf.common.ui.examples">
+	    <example wizardID="org.xkonnex.repo.NewRestExampleWizard" pageImage="icons/genproject.gif">
+		 	<projectDescriptor name="org.xkonnex.repo.rest.example" contentURI="contents/org.xkonnex.repo.rest.example.zip" description="%rest.example.repoproject.description"/>
+		 	<projectDescriptor name="org.xkonnex.repo.rest.generator.example" contentURI="contents/org.xkonnex.repo.rest.generator.example.zip" description="%rest.example.generatorproject.description"/>
 	    </example>
 	</extension>
 	

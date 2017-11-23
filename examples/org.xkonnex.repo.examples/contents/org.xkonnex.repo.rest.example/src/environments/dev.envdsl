@@ -1,0 +1,121 @@
+/*
+ * We define a development environment
+ */
+environment Dev of type Development-Environment {
+	
+	host lx1234 {
+		full-qualified-name "lx1234"
+		containers {
+			dev_airport
+		}
+	}
+	
+	/*
+	 * Host, that can host servers. This one is for the ESB
+	 */
+	container dev_airport {
+		image Name {
+			version 0.0.0
+			config-script " " type DockerFile 
+		}
+		full-qualified-name "airport-dev.example.org"
+		identifier "dhsCode"
+	}
+	
+	gateway zuul type Zuul {
+		host dev_airport
+		connectors {
+			HTTP Name {
+				port 8080
+				secured-port 8443
+			}
+		}
+		management-servers {
+			zookeeper
+		}
+	}
+	
+	cluster hadoop type Hadoop {
+		host dev_airport
+		
+		management-servers {
+			zookeeper
+			zookeeper2
+			zookeeper3
+		}
+	}
+	
+	/**
+	 * Leading zookeeper
+	 */
+	infrastructure-manager zookeeper type Zookeeper {
+		host dev_airport
+		connectors {
+			default HTTP http {
+				port 2181
+			}
+		}
+		configuration {
+			zookeeperPort = 2181
+		}
+	}
+	
+	infrastructure-manager zookeeper2 type Zookeeper {
+		host dev_airport
+		connectors {
+			default HTTP http {
+				port 2181
+			}
+		}
+		configuration {
+			zookeeperPort = 2181
+		}
+	}
+	
+	infrastructure-manager zookeeper3 type Zookeeper {
+		host dev_airport
+		connectors {
+			default HTTP http {
+				port 2181
+			}
+		}
+		configuration {
+			zookeeperPort = 2181
+		}
+	}
+	
+	
+	/*
+	 * We have an ESB on the dev_airport host
+	 */
+	esb DevESB type Mule {
+		host dev_airport
+		connectors {
+			default SOAP/HTTP defaultSoap {
+				endpoint-visibility public
+				port 8080
+				secured-port 8443
+				context-root "soap"
+			}
+			default REST defaultREST {
+				port 8080
+				secured-port 8443
+				context-root "rest"
+			}
+		}
+	}
+	
+	registry DevRegistry type Eureka {
+		host dev_airport
+		connectors {
+			default HTTP defaultHttp {
+				endpoint-visibility public
+				port 80
+				context-root "registry/dev"
+			}
+		}
+	}
+		
+	default Registry DevRegistry
+	default InfrastructureManager zookeeper
+}
