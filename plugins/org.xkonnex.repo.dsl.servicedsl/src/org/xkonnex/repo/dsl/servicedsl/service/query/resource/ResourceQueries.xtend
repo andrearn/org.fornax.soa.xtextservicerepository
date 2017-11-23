@@ -11,7 +11,7 @@ class ResourceQueries {
 	val Pattern pattern
 	
 	new() {
-		pattern = Pattern.compile("\\$\\{([a-z,A-Z,_]+[0-9]*?)\\}")
+		pattern = Pattern.compile("\\{([a-z,A-Z,_]+[0-9]*?)\\}")
 	}
 	
 	def List<String> extractParametersFromURI (String uri) {

@@ -243,7 +243,7 @@ class RAMLContractGenerator {
                 «IF !params.nullOrEmpty»
                     uriParameters:
                         «FOR param : params»
-                            «param.name» : «param.toTypeNameRef»
+                            «param.name» : «inlineTypeGenerator.toPropertyType(param.type)»
                         «ENDFOR»
                 «ENDIF»
                 «operation.toRequestResponse(restProt, restModuleEndpoint, profile)»
@@ -272,7 +272,7 @@ class RAMLContractGenerator {
                 «IF !params.nullOrEmpty»
                     uriParameters:
                         «FOR param : params»
-                            «param.name» : «param.type.toTypeNameRef»
+                            «param.name» : «inlineTypeGenerator.toPropertyType(param.type)»
                         «ENDFOR»
                 «ENDIF»
                 «operation.toRequestResponse(restProt, restModuleEndpoint, profile)»
