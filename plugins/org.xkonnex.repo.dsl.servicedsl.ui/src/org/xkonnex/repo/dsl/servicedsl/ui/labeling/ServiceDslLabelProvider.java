@@ -12,6 +12,7 @@ import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.BusinessObject;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ComplexConsiderationPropertyRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ConsiderationParameterRef;
@@ -29,7 +30,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OperationRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.QueryObject;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredServiceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredInterfaceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Response;
@@ -106,15 +107,35 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 	String image (ServiceRef ele) {
 		return "full/obj16/ServiceRef.gif";
 	}
-	Object text (RequiredServiceRef ele) {
-		StyledString name = new StyledString(ele.getService ().getName());
-		if (ele.getService().isDeprecated()) {
-			name.setStyle(0, name.length(), STRIKETHROUGH);
+	Object text (RequiredInterfaceRef ele) {
+		if (ele.getInterfaceRef() instanceof Service) {
+			Service service = (Service)ele.getInterfaceRef ();
+			StyledString name = new StyledString(service.getName());
+			if (service.isDeprecated()) {
+				name.setStyle(0, name.length(), STRIKETHROUGH);
+			}
+			return name;
 		}
-		return name;
+		if (ele.getInterfaceRef() instanceof Resource) {
+			Resource resource = (Resource)ele.getInterfaceRef ();
+			StyledString name = new StyledString(resource.getName());
+			if (resource.isDeprecated()) {
+				name.setStyle(0, name.length(), STRIKETHROUGH);
+			}
+			return name;
+		}
+		if (ele.getInterfaceRef() instanceof Aggregate) {
+			Aggregate aggregate = (Aggregate)ele.getInterfaceRef ();
+			StyledString name = new StyledString(aggregate.getName());
+			if (aggregate.isDeprecated()) {
+				name.setStyle(0, name.length(), STRIKETHROUGH);
+			}
+			return name;
+		}
+		return "";
 	}
 	
-	String image (RequiredServiceRef ele) {
+	String image (RequiredInterfaceRef ele) {
 		return "full/obj16/ServiceRef.gif";
 	}
 	

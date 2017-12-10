@@ -211,7 +211,7 @@ class ConcreteWADLGenerator {
 						<include href="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, null)».xsd"/>
 					«ENDFOR»
 				«ENDIF»
-			</grammars>		'''
+			</grammars>'''
 		return content
 	}
 	
@@ -230,7 +230,7 @@ class ConcreteWADLGenerator {
 						<include href="«profileSchemaNamespaceExt.toRegistryAssetUrl (headerImp, null)».xsd"/>
 					«ENDFOR»
 				«ENDIF»
-			</grammars>		'''
+			</grammars>'''
 		return content
 	}
 	
@@ -248,7 +248,7 @@ class ConcreteWADLGenerator {
 					</request>
 					«toResponses(operation, restProt, effProvEndpoint)»
 				</method>
-			</resource>		
+			</resource>
 		'''
 		return content
 	}
@@ -266,7 +266,7 @@ class ConcreteWADLGenerator {
 					</request>
 					«toResponses(operation, restProt, effProvEndpoint)»
 				</method>
-			</resource>		
+			</resource>
 		'''
 		return content
 	}
@@ -283,7 +283,7 @@ class ConcreteWADLGenerator {
 	def toResponses(Operation op, REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint) {
 		val responses = getResponses(bindingRESTProtocol, endpoint)
 		'''
-			«responses.filter[statusCode === null || statusCode < 400].map[toResponse(op.^return.head)].join»
+			«responses.filter[statusCode === null || statusCode < 400].map[toResponse(op.^return.head)].filterNull.join»
 			«responses.filter[statusCode !== null && statusCode >= 400].map[toErrorResponse(op.throws)].join»		'''
 	}
 	def toResponses(ResourceOperation op, REST bindingRESTProtocol, EffectiveProvidingEndpoint endpoint) {

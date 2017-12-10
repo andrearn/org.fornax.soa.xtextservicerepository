@@ -57,11 +57,13 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObjectRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EnumTypeRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.EventRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ExceptionRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Interface;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.MessageHeaderRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.OperationRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredServiceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredInterfaceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceOperation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ResourceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Response;
@@ -111,13 +113,21 @@ public class ServiceDslScopeProvider extends ComponentAwareVersionedScopeProvide
 	@Override
 	public IScope getScope(EObject context, EReference reference) {
 		if (reference == ServiceDslPackage.Literals.CALL_OPERATION_REF__OPERATION) {
-			RequiredServiceRef requiredServiceRef = EcoreUtil2.getContainerOfType(context, RequiredServiceRef.class);
-			if (requiredServiceRef != null && requiredServiceRef.getService() != null) {
-				Service service = requiredServiceRef.getService();
-				EList<Operation> operations = service.getOperations();
+			RequiredInterfaceRef requiredServiceRef = EcoreUtil2.getContainerOfType(context, RequiredInterfaceRef.class);
+			if (requiredServiceRef != null && requiredServiceRef.getInterfaceRef() != null) {
+				Interface service = requiredServiceRef.getInterfaceRef();
 				Map<QualifiedName, EObject> opsMap = Maps.newHashMap();
-				for (Operation operation : operations) {
-					opsMap.put(QualifiedName.create(operation.getName()), operation);
+				if (service instanceof Service) {
+					EList<Operation> operations = ((Service)service).getOperations();
+					for (AbstractOperation operation : operations) {
+						opsMap.put(QualifiedName.create(operation.getName()), operation);
+					}
+				}
+				if (service instanceof Resource) {
+					EList<ResourceOperation> operations = ((Resource)service).getOperations();
+					for (AbstractOperation operation : operations) {
+						opsMap.put(QualifiedName.create(operation.getName()), operation);
+					}
 				}
 				MapBasedScope scope = new MapBasedScope(opsMap);
 				return scope;
@@ -283,9 +293,9 @@ public class ServiceDslScopeProvider extends ComponentAwareVersionedScopeProvide
 
 	private AbstractPredicateVersionFilter<IEObjectDescription> createFilterForOperationRef(
 			EObject ctx) {
-		RequiredServiceRef requiredServiceRef =	(RequiredServiceRef) ctx;
+		RequiredInterfaceRef requiredServiceRef =	(RequiredInterfaceRef) ctx;
 		final VersionRef v = requiredServiceRef.getVersionRef();
-		final QualifiedName serviceName = nameProvider.getFullyQualifiedName(requiredServiceRef.getService());
+		final QualifiedName serviceName = nameProvider.getFullyQualifiedName(requiredServiceRef.getInterfaceRef());
 		AbstractPredicateVersionFilter<IEObjectDescription> versionFilter = createEContainerVersionFilter(v, objLookup.getVersionedOwner(ctx));
 		versionFilter.setPreFilterPredicate(new Predicate<IEObjectDescription>() {
 

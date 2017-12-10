@@ -3,9 +3,12 @@
  */
 package org.xkonnex.repo.dsl.servicedsl.ui.outline
 
+import com.google.inject.Inject
+import org.eclipse.xtext.ui.IImageHelper
 import org.eclipse.xtext.ui.editor.outline.IOutlineNode
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider
 import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Command
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
@@ -15,16 +18,13 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Event
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredServiceRef
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Parameter
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredInterfaceRef
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage
-import org.eclipse.xtext.ui.IImageHelper
-import com.google.inject.Inject
-import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceModel
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 
 /**
  * Customization of the default outline structure.
@@ -37,7 +37,7 @@ class ServiceDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	private IImageHelper imageHelper;
 	@Inject extension ModelExtensions
 
-	def _isLeaf(RequiredServiceRef svcRef) {
+	def _isLeaf(RequiredInterfaceRef svcRef) {
 		true
 	}
 	

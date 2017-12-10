@@ -32,7 +32,7 @@ Many assets have a <code>tags</code> property where you can name tags you previo
 
 ## Graphical model views
 
-For some models a diagram can be displayed. These views are dynamically created using a script that maps a selected model element and it's child elements to a diagram. So you can have look at how the object of a service data model relate to one another or how a solution is structured. Starting with an initial diagram you can discover further parts of the model when you click at the "+" sign on a model elements border.
+For some models a diagram can be displayed. These diagrams are created dynamically using a script that maps a selected model element and it's related elements to a diagram. So you can have look at how the object of a service data model relate to one another or how a solution is structured. Starting with an initial diagram you can discover further parts of the model when you click at the "+" sign on a model elements border.
 To view any of the supported diagrams you need to have the Generic Graph Views feature installed and the "Xtext generic graph view" opened. You can find it in the Xtext view category.
 
 ### Business object diagram

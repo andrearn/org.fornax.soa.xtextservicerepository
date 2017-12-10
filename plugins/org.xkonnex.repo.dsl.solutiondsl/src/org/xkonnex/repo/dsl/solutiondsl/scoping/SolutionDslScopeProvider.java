@@ -9,16 +9,11 @@ import org.apache.log4j.Logger;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
-import org.eclipse.xtext.resource.IResourceDescription;
-import org.eclipse.xtext.resource.IResourceServiceProvider;
-import org.eclipse.xtext.scoping.IGlobalScopeProvider;
 import org.eclipse.xtext.scoping.IScope;
-import org.eclipse.xtext.util.IResourceScopeCache;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
@@ -47,10 +42,11 @@ import org.xkonnex.repo.dsl.profiledsl.scoping.versions.StateAttributeLifecycleS
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.CapabilityRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.EventRef;
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.InterfaceRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.OperationRef;
-import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.ServiceRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.SolutionDslPackage;
 
 import com.google.common.collect.Maps;
@@ -108,8 +104,8 @@ public class SolutionDslScopeProvider extends ComponentAwareVersionedScopeProvid
 	@Override
 	protected AbstractPredicateVersionFilter<IEObjectDescription> getVersionFilterFromContext(
 			EObject ctx, EReference reference) {
-		if (reference == SolutionDslPackage.Literals.SERVICE_REF__SERVICE && ctx instanceof ServiceRef) {
-			final VersionRef v = ((ServiceRef) ctx).getVersionRef();
+		if (reference == SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE && ctx instanceof ServiceRef) {
+			final VersionRef v = ((InterfaceRef) ctx).getVersionRef();
 			return createVersionFilter(v, ctx);
 		}
 		if (reference == ServiceDslPackage.Literals.OPERATION_REF__OPERATION && ctx instanceof OperationRef) {

@@ -9,9 +9,9 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.Import
 import org.xkonnex.repo.dsl.basedsl.formatting2.BaseDslFormatter
 import org.xkonnex.repo.dsl.solutiondsl.services.SolutionDslGrammarAccess
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.Feature
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.InterfaceRef
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.Model
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.Module
-import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.ServiceRef
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.Solution
 
 class SolutionDslFormatter extends BaseDslFormatter {
@@ -33,7 +33,7 @@ class SolutionDslFormatter extends BaseDslFormatter {
 		solution.getVersion.format;
 		solution.getProductVersion.format;
 		solution.getAdditionalInfo.format;
-		for (ServiceRef requires : solution.getRequires()) {
+		for (InterfaceRef requires : solution.getRequires()) {
 			requires.format;
 		}
 		for (Feature features : solution.getFeatures()) {

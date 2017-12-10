@@ -1,0 +1,243 @@
+/*******************************************************************************
+ * Copyright (c) 2012 developers of XtextServiceRepository and others.
+ * All rights reserved. This script and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * initial contribution:	André Arnold
+ *******************************************************************************/
+import org.eclipse.xtext.graphview.lib.shape.*
+import org.eclipse.xtext.graphview.lib.layout.*
+import org.eclipse.draw2d.*
+import org.eclipse.swt.SWT
+import BusinessObjectDiagram.*
+
+stylesheet BusinessObjectDiagram for BusinessObjectDiagram
+
+style BusinessObjectDiagram {
+	autoLayoutManager = new KielerAutoLayout()
+}
+
+style BusinessObjectNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#d8e8f8)
+}
+
+
+style BusinessObjectNode { 
+	this.font = font("Helvetica", 10, SWT::LEFT + 
+		(if (element.abstract) SWT::ITALIC else SWT::NONE)
+	)
+}
+style BusinessObjectDiagram.BusinessObjectNode.Name { 
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD	)
+}
+style BusinessObjectDiagram.BusinessObjectNode.Version { 
+	this.font = font("Helvetica", 10, SWT::CENTER 
+	)
+}
+
+style BusinessObjectDiagram.BusinessObjectNode.PropertiesNode as RoundedRectangleShape {
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 10, SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
+
+style BusinessObjectDiagram.BusinessObjectNode.EnumReferenceEdge {
+	this.lineStyle = SWT::LINE_DASH
+	this.foregroundColor = color(#cccccc)
+}
+
+
+//Q
+style QueryObjectNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#eeeeee)
+}
+
+
+style QueryObjectNode { 
+	this.font = font("Helvetica", 10, SWT::LEFT 
+	)
+}
+style BusinessObjectDiagram.QueryObjectNode.Name { 
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD	)
+}
+style BusinessObjectDiagram.QueryObjectNode.Version { 
+	this.font = font("Helvetica", 10, SWT::CENTER 
+	)
+}
+
+style BusinessObjectDiagram.QueryObjectNode.PropertiesNode as RoundedRectangleShape {
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 10, SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
+
+style BusinessObjectDiagram.QueryObjectNode.EnumReferenceEdge {
+	this.lineStyle = SWT::LINE_DASH
+	this.foregroundColor = color(#cccccc)
+}
+
+style HiddenQueryObjectNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#eeeeee)
+}
+style HiddenQueryObjectNode { 
+	this.font = font("Helvetica", 10, SWT::LEFT 
+	)
+}
+style BusinessObjectDiagram.HiddenQueryObjectNode.Name { 
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD	)
+}
+style BusinessObjectDiagram.HiddenQueryObjectNode.Version { 
+	this.font = font("Helvetica", 10, SWT::CENTER 
+	)
+}
+
+style BusinessObjectDiagram.HiddenQueryObjectNode.PropertiesNode as RoundedRectangleShape {
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 10, SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
+
+
+
+
+
+style HiddenBusinessObjectNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#d8e8f8)
+}
+style HiddenBusinessObjectNode { 
+	this.font = font("Helvetica", 10, SWT::CENTER +
+		(if (element.abstract) SWT::ITALIC else SWT::NONE)
+	)
+}
+style BusinessObjectDiagram.HiddenBusinessObjectNode.Name { 
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
+	)
+}
+
+style BusinessObjectDiagram.HiddenBusinessObjectNode.PropertiesNode as RoundedRectangleShape {
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
+
+
+style BusinessObjectDiagram.BusinessObjectNode.HiddenReferenceEdge.HiddenEdgeLabel {
+	this.connectionAlignment = ConnectionLocator::TARGET
+}
+style BusinessObjectDiagram.HiddenBusinessObjectNode.HiddenEnumReferenceEdge {
+	this.lineStyle = SWT::LINE_DASH
+	this.foregroundColor = color(#cccccc)
+}
+
+style BusinessObjectDiagram.BusinessObjectNode.InhertanceEdge as ConnectionShape  {
+	var arrow = new PolygonDecoration()
+	arrow.setScale(8,8)
+	arrow.backgroundColor = color(#ffffff)
+	arrow.lineWidth = 2
+	this.targetDecoration = arrow 
+}
+style BusinessObjectDiagram.BusinessObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+	var hiddenarrow = new PolygonDecoration()
+	hiddenarrow.setScale(8,8)
+	hiddenarrow.backgroundColor = color(#ffffff)
+	hiddenarrow.lineWidth = 2
+	this.targetDecoration = hiddenarrow 
+}
+style BusinessObjectDiagram.HiddenQueryObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+	var hiddenQueryArrow = new PolygonDecoration()
+	hiddenQueryArrow.setScale(8,8)
+	hiddenQueryArrow.backgroundColor = color(#ffffff)
+	hiddenQueryArrow.lineWidth = 2
+	this.targetDecoration = hiddenQueryArrow 
+}
+
+
+style BusinessObjectDiagram.BusinessObjectNode.HiddenReferenceEdge.HiddenEdgeLabel {
+	this.connectionAlignment = ConnectionLocator::TARGET
+}
+style BusinessObjectDiagram.HiddenBusinessObjectNode.HiddenEnumReferenceEdge {
+	this.lineStyle = SWT::LINE_DASH
+	this.foregroundColor = color(#cccccc)
+}
+
+style BusinessObjectDiagram.QueryObjectNode.InhertanceEdge as ConnectionShape  {
+	var queryArrow = new PolygonDecoration()
+	queryArrow.setScale(8,8)
+	queryArrow.backgroundColor = color(#ffffff)
+	queryArrow.lineWidth = 2
+	this.targetDecoration = queryArrow 
+}
+style BusinessObjectDiagram.QueryObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+	var hiddenQueryArrow2 = new PolygonDecoration()
+	hiddenQueryArrow2.setScale(8,8)
+	hiddenQueryArrow2.backgroundColor = color(#ffffff)
+	hiddenQueryArrow2.lineWidth = 2
+	this.targetDecoration = hiddenQueryArrow2 
+}
+style BusinessObjectDiagram.HiddenQueryObjectNode.HiddenInhertanceEdge as ConnectionShape  {
+	var hiddenArrow2 = new PolygonDecoration()
+	hiddenArrow2.setScale(8,8)
+	hiddenArrow2.backgroundColor = color(#ffffff)
+	hiddenArrow2.lineWidth = 2
+	this.targetDecoration = hiddenArrow2 
+}
+
+
+style EnumNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#f8e8a8)
+}
+style EnumNode { 
+	this.font = font("Helvetica", 10, SWT::CENTER + 
+		 SWT::NONE
+	)
+}
+style BusinessObjectDiagram.EnumNode.Name { 
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + 
+		 SWT::NONE
+	)
+}
+style BusinessObjectDiagram.EnumNode.EnumLabel { 
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + 
+		 SWT::NONE
+	)
+}
+style BusinessObjectDiagram.EnumNode.EnumLiteralNode as RoundedRectangleShape {
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
+
+style ExceptionNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#f8e8d8)
+}
+style ExceptionNode { 
+	this.font = font("Helvetica", 10, SWT::CENTER 
+	)
+}
+style BusinessObjectDiagram.ExceptionNode.ExceptionLabel { 
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
+	)
+}
+style BusinessObjectDiagram.ExceptionNode.Name { 
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD 
+	)
+}
+style BusinessObjectDiagram.ExceptionNode.PropertiesNode as RoundedRectangleShape {
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}

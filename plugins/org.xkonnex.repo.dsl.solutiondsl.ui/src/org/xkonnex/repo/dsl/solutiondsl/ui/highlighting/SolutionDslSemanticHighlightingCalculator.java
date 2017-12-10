@@ -9,7 +9,10 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 import org.xkonnex.repo.dsl.basedsl.ui.highlighting.BaseDslHighLightingConfiguration;
-import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.ServiceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.InterfaceRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.SolutionDslPackage;
 
 import com.google.inject.Inject;
@@ -25,11 +28,28 @@ public class SolutionDslSemanticHighlightingCalculator implements
 		if (resource != null && !resource.getContents().isEmpty()) {
 			for (TreeIterator<EObject> eObjIt = resource.getAllContents(); eObjIt.hasNext();) {
 				EObject eObject = eObjIt.next();
-				if (eObject instanceof ServiceRef && ((ServiceRef)eObject).getService().isDeprecated()) {
-					for (INode crossRefNode : NodeModelUtils.findNodesForFeature(eObject,
-							SolutionDslPackage.Literals.SERVICE_REF__SERVICE)) {
-						acceptor.addPosition(crossRefNode.getOffset(), crossRefNode.getLength(),
-								BaseDslHighLightingConfiguration.DEPRECATED);
+				if (eObject instanceof InterfaceRef) {
+					InterfaceRef ref = (InterfaceRef)eObject;
+					if (ref.getInterface() instanceof Service && ((Service)ref.getInterface()).isDeprecated()) {
+						for (INode crossRefNode : NodeModelUtils.findNodesForFeature(eObject,
+								SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE)) {
+							acceptor.addPosition(crossRefNode.getOffset(), crossRefNode.getLength(),
+									BaseDslHighLightingConfiguration.DEPRECATED);
+						}
+					}
+					if (ref.getInterface() instanceof Resource && ((Resource)ref.getInterface()).isDeprecated()) {
+						for (INode crossRefNode : NodeModelUtils.findNodesForFeature(eObject,
+								SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE)) {
+							acceptor.addPosition(crossRefNode.getOffset(), crossRefNode.getLength(),
+									BaseDslHighLightingConfiguration.DEPRECATED);
+						}
+					}
+					if (ref.getInterface() instanceof Aggregate && ((Aggregate)ref.getInterface()).isDeprecated()) {
+						for (INode crossRefNode : NodeModelUtils.findNodesForFeature(eObject,
+								SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE)) {
+							acceptor.addPosition(crossRefNode.getOffset(), crossRefNode.getLength(),
+									BaseDslHighLightingConfiguration.DEPRECATED);
+						}
 					}
 				}
 			}

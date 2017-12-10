@@ -276,7 +276,7 @@ based languages.</p>
                     ...
                 }
                 category entity
-                statefulness &amp;lt; idempodent | stateless | stateful &amp;gt;
+                statefulness &lt; idempotent | stateless | stateful &gt;;
                 persistence &lt;read | write | read/write&gt;
             }
             
@@ -286,6 +286,44 @@ based languages.</p>
                 throws &lt;exceptions, ...&gt;
             {
                 requires &lt;other version constrained service dependency&gt;
+            }
+        }
+        
+        // RESTful resources
+        public resource CustomerResource {
+            metadata {
+                version &lt;someversion.number&gt;
+                lifecycle-state &lt;a governance lifecycle state&gt;
+                governance-approval {
+                    ...
+                }
+                category entity
+                statefulness &lt; idempotent | stateless | stateful &gt;;
+                persistence &lt;read | write | read/write&gt;
+            }
+            base-URI "/customer"
+			
+            GET "/{customerId}" 
+                &lt;operationName&gt; (customerId : long)
+                &lt;operationName&gt; (&lt;(optional)? parameters&gt; ) 
+                returns &lt;(optional)? return parameters&gt;
+                throws &lt;exceptions, ...&gt;
+                {
+                    requires &lt;other version constrained service dependency&gt;
+                }
+                returns {
+                    response-code &lt;HTTP status code&gt; {
+                        &lt;(optional)? return parameters&gt;
+                        content-type &lt;content type name&gt;
+                    }
+                }
+                throws {
+                    response-code &lt;HTTP status code&gt; {
+                        &lt;exception type with version&gt;
+                        content-type "application/json"
+                    }
+                }
+            {		
             }
         }
         

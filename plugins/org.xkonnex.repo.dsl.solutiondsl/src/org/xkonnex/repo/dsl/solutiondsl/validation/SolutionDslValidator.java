@@ -11,8 +11,10 @@ import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Visibility;
-import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.ServiceRef;
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.InterfaceRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.SolutionDslPackage;
 
 import com.google.inject.Inject;
@@ -28,16 +30,22 @@ public class SolutionDslValidator extends AbstractSolutionDslValidator {
 	@Inject IEObjectLookup objLookup;
 
 	@Check
-	public void checkDontCallPrivateServices (ServiceRef svc) {
-		if (svc.getService() != null && svc.getService().getVisibility() == Visibility.PRIVATE) {
-			warning ("Solutions should not call private services!", SolutionDslPackage.Literals.SERVICE_REF__SERVICE);
+	public void checkDontCallPrivateServices (InterfaceRef svc) {
+		if (svc instanceof Service) {
+			Service service = (Service)svc.getInterface();
+			if (service != null && service.getVisibility() == Visibility.PRIVATE) {
+				warning ("Solutions should not call private services!", SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE);
+			}
 		}
 	}
 	
 	@Check
-	public void checkDontCallInternalServices (ServiceRef svc) {
-		if (svc.getService() != null && svc.getService().eContainer() instanceof InternalNamespace) {
-			warning ("Solutions should not call internal services!", SolutionDslPackage.Literals.SERVICE_REF__SERVICE);
+	public void checkDontCallInternalServices (InterfaceRef svc) {
+		if (svc instanceof Service) {
+			Service service = (Service)svc.getInterface();
+			if (service != null && service.eContainer() instanceof InternalNamespace) {
+				warning ("Solutions should not call internal services!", SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE);
+			}
 		}
 	}
 
@@ -47,7 +55,7 @@ public class SolutionDslValidator extends AbstractSolutionDslValidator {
 		LifecycleState ownerState = stateResolver.getLifecycleState(owner);
 		if (owner != null && stateResolver.definesState (owner)) {
 			if (stateComparator.compare (ownerState, svcRef.getService().getState()) > 0 && !(ownerState != null && ownerState.isIsEnd()))
-				warning ("A service with a lower lifecycle-state is being used. You should review the used service and adjust it's lifecycle-state.", SolutionDslPackage.Literals.SERVICE_REF__SERVICE);
+				warning ("An interface with a lower lifecycle-state is being used. You should review the used service and adjust it's lifecycle-state.", SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE);
 		}
 	}
 

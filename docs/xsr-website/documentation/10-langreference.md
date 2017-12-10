@@ -175,7 +175,7 @@ org-namespace <QualifiedName> shortname "<String>" {
                     ...
                 }
                 category entity
-                statefulness &lt; idempodent | stateless | stateful &gt;
+                statefulness < idempotent | stateless | stateful >;
                 persistence <read | write | read/write>
             }
             
@@ -185,6 +185,44 @@ org-namespace <QualifiedName> shortname "<String>" {
                 throws <exceptions, ...>
             {
                 requires <other version constrained service dependency>
+            }
+        }
+        
+        // RESTful resources
+        public resource CustomerResource {
+            metadata {
+                version <someversion.number>
+                lifecycle-state <a governance lifecycle state>
+                governance-approval {
+                    ...
+                }
+                category entity
+                statefulness < idempotent | stateless | stateful >;
+                persistence <read | write | read/write>
+            }
+            base-URI "/customer"
+			
+            GET "/{customerId}" 
+                <operationName> (customerId : long)
+                <operationName> (<(optional)? parameters> ) 
+                returns <(optional)? return parameters>
+                throws <exceptions, ...>
+                {
+                    requires <other version constrained service dependency>
+                }
+                returns {
+                    response-code <HTTP status code> {
+                        <(optional)? return parameters>
+                        content-type <content type name>
+                    }
+                }
+                throws {
+                    response-code <HTTP status code> {
+                        <exception type with version>
+                        content-type "application/json"
+                    }
+                }
+            {		
             }
         }
         

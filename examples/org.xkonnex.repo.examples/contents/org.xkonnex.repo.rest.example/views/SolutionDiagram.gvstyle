@@ -1,0 +1,38 @@
+import org.eclipse.xtext.graphview.lib.shape.*
+import org.eclipse.xtext.graphview.lib.layout.*
+import org.eclipse.draw2d.*
+import org.eclipse.swt.SWT
+import SolutionDiagram.*
+
+stylesheet SolutionDiagram for SolutionDiagram
+
+style SolutionDiagram {
+	this.autoLayoutManager = new KielerAutoLayout() 
+}
+
+style ModuleNode as RectangleShape { 
+	this.backgroundColor = color(#fff8b8)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
+}
+style FeatureNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#c8f8b8)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
+}
+style NestedFeatureNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#d8ffc8)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
+}
+
+style RequiredServiceNode as RoundedRectangleShape {
+	this.backgroundColor = color(#eeeeee)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
+}
+style HiddenRequiredServiceNode as RoundedRectangleShape {
+	this.backgroundColor = color(#eeeeee)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
+}

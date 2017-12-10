@@ -6,7 +6,10 @@ package org.xkonnex.repo.dsl.solutiondsl.ui.labeling;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider;
-import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.ServiceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Aggregate;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.InterfaceRef;
 
 import com.google.inject.Inject;
 
@@ -22,12 +25,26 @@ public class SolutionDslLabelProvider extends DefaultEObjectLabelProvider {
 		super(delegate);
 	}
 
-	Object text (ServiceRef ele) {
-		StyledString name = new StyledString(ele.getService ().getName());
-		return name;
+	Object text (InterfaceRef ele) {
+		if (ele.getInterface () instanceof Service) {
+			Service service = (Service)ele.getInterface ();
+			StyledString name = new StyledString(service.getName());
+			return name;
+		}
+		if (ele.getInterface () instanceof Resource) {
+			Resource resource = (Resource)ele.getInterface ();
+			StyledString name = new StyledString(resource.getName());
+			return name;
+		}
+		if (ele.getInterface () instanceof Aggregate) {
+			Aggregate aggregate = (Aggregate)ele.getInterface ();
+			StyledString name = new StyledString(aggregate.getName());
+			return name;
+		}
+		return "";
 	}
 	
-	String image (ServiceRef ele) {
+	String image (InterfaceRef ele) {
 		return "full/obj16/ServiceRef.gif";
 	}
 

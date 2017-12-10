@@ -18,7 +18,7 @@ public class REST implements IProtocol {
 	
 	private String path;
 	private Verb verb;
-	private RESTParameterStyle style;
+	private RESTParameterStyle parameterStyle;
 	private List<String> requestContentType = Lists.newArrayList();
 	private List<HttpResponse> response = Lists.newArrayList();
 	private List<Header> header = Lists.newArrayList();
@@ -42,6 +42,10 @@ public class REST implements IProtocol {
 		return path;
 	}
 
+	/**
+	 * URL path part
+	 * @param path URL path part
+	 */
 	public void setPath(String path) {
 		this.path = path;
 	}
@@ -50,16 +54,24 @@ public class REST implements IProtocol {
 		return verb;
 	}
 
+	/**
+	 * HTTP operation verb
+	 * @param verb
+	 */
 	public void setVerb(Verb verb) {
 		this.verb = verb;
 	}
 
-	public RESTParameterStyle getStyle() {
-		return style;
+	public RESTParameterStyle getParameterStyle() {
+		return parameterStyle;
 	}
 
-	public void setStyle(RESTParameterStyle style) {
-		this.style = style;
+	/**
+	 * Defines how request parameters will be transferred (body, header, URL path or query string...) 
+	 * @param parameterStyle
+	 */
+	public void setParameterStyle(RESTParameterStyle parameterStyle) {
+		this.parameterStyle = parameterStyle;
 	}
 
 	public List<String> getRequestContentType() {
@@ -70,6 +82,10 @@ public class REST implements IProtocol {
 		this.requestContentType = requestContentType;
 	}
 
+	/**
+	 * Content type of a request body part
+	 * @param requestContentType
+	 */
 	public void addRequestContentType(String requestContentType) {
 		this.requestContentType.add(requestContentType);
 	}
@@ -82,6 +98,10 @@ public class REST implements IProtocol {
 		this.response = response;
 	}
 
+	/**
+	 * Defines a response with response code and content
+	 * @param response
+	 */
 	public void addResponse(HttpResponse response) {
 		this.response.add(response);
 	}

@@ -2,6 +2,9 @@ package org.xkonnex.repo.dsl.moduledsl.ext.protocol;
 
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SapClient;
 
+/**
+ * SAP protocol (RFC, IDoc etc.)
+ */
 public class SAP implements IModuleEndpointProtocol {
 	
 	protected SAPTransport transport;

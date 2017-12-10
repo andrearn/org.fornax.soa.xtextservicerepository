@@ -1,5 +1,8 @@
 package org.xkonnex.repo.dsl.moduledsl.ext.protocol;
 
+/**
+ * Direct SCA (Service Component Architecture) call
+ */
 public class SCA implements IModuleEndpointProtocol {
 	
 	protected String promote;

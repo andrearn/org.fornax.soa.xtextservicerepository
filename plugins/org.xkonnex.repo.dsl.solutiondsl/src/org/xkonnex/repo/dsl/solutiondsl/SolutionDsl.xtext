@@ -31,7 +31,7 @@ Solution:
 		'lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName]
 		(productVersion=ProductVersion)?
 		(additionalInfo=AdditionalInformation)?
-		('requires' requires+=ServiceRef )*
+		('requires' requires+=InterfaceRef )*
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		(features+=Feature)*
 		(modules+=Module)*
@@ -51,7 +51,7 @@ Module:
 		'kind' kind=ModuleKind 
 		(version=Version)?
 		(additionalInfo=AdditionalInformation)?
-		('requires' requires+=ServiceRef )*
+		('requires' requires+=InterfaceRef )*
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		(features+=Feature)*
 		(modules+=Module)*
@@ -76,7 +76,7 @@ Feature:
 		('uses-capabilities' '{'
 			(usesCapabilities+=CapabilityRef)+ 
 		'}')?
-		('requires' requires+=ServiceRef )*
+		('requires' requires+=InterfaceRef )*
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		('contact-info' '{'
 			('owner' owner=[basedsl::User|QualifiedName])?
@@ -90,8 +90,8 @@ Feature:
 		'}')?
 	'}';
 	
-ServiceRef:
-	service=[serviceDsl::Service|QualifiedName] versionRef=VersionRef (ServiceRefCallFragment)?;
+InterfaceRef:
+	interface=[serviceDsl::Interface|QualifiedName] versionRef=VersionRef (ServiceRefCallFragment)?;
 
 fragment ServiceRefCallFragment: '{'
 		'calling' '{'
@@ -100,7 +100,7 @@ fragment ServiceRefCallFragment: '{'
 	'}'
 ;
 
-CallOperationRef: operation=[serviceDsl::Operation|QualifiedName] ('handle-response-with' responseHandler=OperationRef)?;
+CallOperationRef: operation=[serviceDsl::AbstractOperation|QualifiedName] ('handle-response-with' responseHandler=OperationRef)?;
 
 
 /*

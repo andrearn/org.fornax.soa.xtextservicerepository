@@ -3,12 +3,12 @@
  */
 package org.xkonnex.repo.dsl.solutiondsl.ui.outline
 
-import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider
-import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.ServiceRef
-import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.Model
-import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode
 import com.google.inject.Inject
 import org.eclipse.xtext.ui.IImageHelper
+import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider
+import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.InterfaceRef
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.Model
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.SolutionDslPackage
 
 /**
@@ -21,7 +21,7 @@ class SolutionDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	@Inject
 	private IImageHelper imageHelper;
 	
-	def protected _isLeaf(ServiceRef modelElement) {
+	def protected _isLeaf(InterfaceRef modelElement) {
 		true
 	}
 	

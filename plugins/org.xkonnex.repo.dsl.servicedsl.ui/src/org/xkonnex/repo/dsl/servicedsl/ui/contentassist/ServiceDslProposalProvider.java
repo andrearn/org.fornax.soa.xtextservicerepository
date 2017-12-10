@@ -308,10 +308,28 @@ public class ServiceDslProposalProvider extends
 					}
 					String className = ServiceDslPackage.Literals.SERVICE
 							.getName();
-					Iterable<String> canditateVersions = getCanditateVersions(
+					Iterable<String> serviceCanditateVersions = getCanditateVersions(
 							typeName, className, importedNamespaces,
 							majorVersionsOnly);
-					for (String version : canditateVersions) {
+					for (String version : serviceCanditateVersions) {
+						acceptor.accept(createCompletionProposal(version,
+								context));
+					}
+					className = ServiceDslPackage.Literals.RESOURCE
+							.getName();
+					Iterable<String> resourceCanditateVersions = getCanditateVersions(
+							typeName, className, importedNamespaces,
+							majorVersionsOnly);
+					for (String version : resourceCanditateVersions) {
+						acceptor.accept(createCompletionProposal(version,
+								context));
+					}
+					className = ServiceDslPackage.Literals.AGGREGATE
+							.getName();
+					Iterable<String> aggregateCanditateVersions = getCanditateVersions(
+							typeName, className, importedNamespaces,
+							majorVersionsOnly);
+					for (String version : aggregateCanditateVersions) {
 						acceptor.accept(createCompletionProposal(version,
 								context));
 					}

@@ -9,7 +9,7 @@ import org.eclipse.xtext.resource.IReferenceDescription;
 import org.eclipse.xtext.util.IAcceptor;
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup;
 import org.xkonnex.repo.dsl.basedsl.search.IReferenceSearch;
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredServiceRef;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.RequiredInterfaceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 
@@ -30,7 +30,7 @@ class ServiceQueriesInternal {
 				if (input.getContainerEObjectURI () != null) {
 					EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
 					if (sourceObj != null && (
-							sourceObj instanceof RequiredServiceRef ||
+							sourceObj instanceof RequiredInterfaceRef ||
 							("ServiceRef".equals(sourceObj.eClass().getName()) && 
 									"http://www.fornax.org/soa/SolutionDsl".equals (sourceObj.eClass().getEPackage().getNsURI())
 							)
@@ -97,7 +97,7 @@ class ServiceQueriesInternal {
 				if (input.getContainerEObjectURI () != null) {
 					EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
 					if (sourceObj != null && (
-							sourceObj instanceof RequiredServiceRef ||
+							sourceObj instanceof RequiredInterfaceRef ||
 							("ResourceRef".equals(sourceObj.eClass().getName()) && 
 									"http://www.fornax.org/soa/SolutionDsl".equals (sourceObj.eClass().getEPackage().getNsURI())
 							)

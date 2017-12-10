@@ -413,7 +413,7 @@ EnumLiteral:
 // -- Technical eternal entities
 
 
-
+Interface: Aggregate|Service|Resource;
 Service:
 	(deprecated?='@deprecated')? 
 	visibility=Visibility 'service' name=ID '{'
@@ -500,7 +500,7 @@ Operation:
 		/*
 		 * Services used by this service
 		 */
-		('requires' requires+=RequiredServiceRef )*
+		('requires' requires+=RequiredInterfaceRef )*
 		('requires-channel' requiresChannel+=[Channel|QualifiedName] )*
 		('links' '{'
 			links+=Link+
@@ -544,7 +544,7 @@ ResourceOperation:
 		/*
 		 * Services used by this service
 		 */
-		('requires' requires+=RequiredServiceRef )*
+		('requires' requires+=RequiredInterfaceRef )*
 		('requires-channel' requiresChannel+=[Channel|QualifiedName] )*
 		('links' '{'
 			links+=Link+
@@ -647,9 +647,8 @@ ServiceRef:
 /*
  * reference to a required service in order to fulfill a service capability
  */
-RequiredServiceRef:
-	service=[Service|QualifiedName] versionRef=VersionRef (RequiredServiceCallFragment)?;
-
+RequiredInterfaceRef:
+	interfaceRef=[Interface|QualifiedName] versionRef=VersionRef (RequiredTraitCallFragment)?;
 /*
  * A reference to a service operation with a version constraint
  */	
@@ -663,7 +662,7 @@ OperationRef:
 SimpleOperationRef: 
 	operation=[AbstractOperation|QualifiedName];
 
-fragment RequiredServiceCallFragment: '{'
+fragment RequiredTraitCallFragment: '{'
 		'calling' '{'
 			(calledOperations+=CallOperationRef) (',' calledOperations+=CallOperationRef)* 
 		'}'

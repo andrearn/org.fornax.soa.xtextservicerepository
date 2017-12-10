@@ -22,9 +22,9 @@ import org.xkonnex.repo.dsl.businessdsl.businessDsl.BusinessDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.CapabilityRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.EventRef;
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.InterfaceRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.Model;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.OperationRef;
-import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.ServiceRef;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
@@ -98,8 +98,8 @@ public class SolutionDslProposalProvider extends AbstractSolutionDslProposalProv
 				for (String version : canditateVersions) {
 					acceptor.accept (createCompletionProposal (version, context));
 				}
-			} else if (model.eContainer() instanceof ServiceRef) { 
-				ServiceRef capRef = (ServiceRef) model.eContainer();
+			} else if (model.eContainer() instanceof InterfaceRef) { 
+				InterfaceRef intfRef = (InterfaceRef) model.eContainer();
 				boolean versionConstraintFound = false;
 				StringBuilder nameParts = new StringBuilder();
 				while (leafIt.hasNext() && !versionConstraintFound) {
@@ -112,6 +112,14 @@ public class SolutionDslProposalProvider extends AbstractSolutionDslProposalProv
 				String typeName = nameParts.toString().trim().replaceAll("\\[\\]", "").trim();
 				Iterable<String> canditateVersions = getCanditateVersions (typeName, ServiceDslPackage.Literals.SERVICE.getName(), importedNamespaces, majorVersionsOnly);
 				for (String version : canditateVersions) {
+					acceptor.accept (createCompletionProposal (version, context));
+				}
+				Iterable<String> resourceCanditateVersions = getCanditateVersions (typeName, ServiceDslPackage.Literals.RESOURCE.getName(), importedNamespaces, majorVersionsOnly);
+				for (String version : resourceCanditateVersions) {
+					acceptor.accept (createCompletionProposal (version, context));
+				}
+				Iterable<String> aggregateCanditateVersions = getCanditateVersions (typeName, ServiceDslPackage.Literals.AGGREGATE.getName(), importedNamespaces, majorVersionsOnly);
+				for (String version : aggregateCanditateVersions) {
 					acceptor.accept (createCompletionProposal (version, context));
 				}
 			} else if (model.eContainer() instanceof EventRef) { 

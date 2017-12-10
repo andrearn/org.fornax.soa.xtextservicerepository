@@ -9,20 +9,20 @@ code.prettyprint {
 	border: none;
 }
 /* 	here starts original */
-.com { color: #8e908c; }
-.lit { color: #f5871f; }
+.com { color: #3f7f5f; }
+.lit { color: #888a85; }
 .pun { color: #4d4d4c; }
 .opn { color: #4d4d4c; } 
 .clo { color: #4d4d4c; }
 .fun { color: #4271ae; }
-.str { color: #718c00; } 
+.str { color: #2a00ff; } 
 .atv { color: #3e999f; }
-.kwd { color: #8959a8; font-weight:bold;}
+.kwd { color: #750055; font-weight:bold;}
 .linenums .tag { color: #c82829; }
-.typ { color: #4271ae; }
+.typ { color: #48484c; }
 .atn { color: #f5871f; } 
 .dec { color: #f5871f; } 
-.var { color: #c82829; }
+.var { color: #6a3e3e; }
 .pln { color: #48484c; }
 
 .prettyprint {
