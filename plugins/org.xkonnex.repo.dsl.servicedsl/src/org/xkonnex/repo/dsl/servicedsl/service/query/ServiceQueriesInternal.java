@@ -31,7 +31,7 @@ class ServiceQueriesInternal {
 					EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
 					if (sourceObj != null && (
 							sourceObj instanceof RequiredInterfaceRef ||
-							("ServiceRef".equals(sourceObj.eClass().getName()) && 
+							("InterfaceRef".equals(sourceObj.eClass().getName()) && 
 									"http://www.fornax.org/soa/SolutionDsl".equals (sourceObj.eClass().getEPackage().getNsURI())
 							)
 						))
@@ -98,7 +98,7 @@ class ServiceQueriesInternal {
 					EObject sourceObj = objLookup.getModelElementByURI (input.getSourceEObjectUri (), resourceSet);
 					if (sourceObj != null && (
 							sourceObj instanceof RequiredInterfaceRef ||
-							("ResourceRef".equals(sourceObj.eClass().getName()) && 
+							("InterfaceRef".equals(sourceObj.eClass().getName()) && 
 									"http://www.fornax.org/soa/SolutionDsl".equals (sourceObj.eClass().getEPackage().getNsURI())
 							)
 						))

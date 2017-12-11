@@ -24,7 +24,7 @@ public class ServiceUsageValidator extends AbstractServiceDslVersionValidator {
 	public void checkServiceIsUsed (Service service) {
 		List<EObject> allConsumers = svcQueries.findAllServiceConsumers(service);
 		if (allConsumers.isEmpty()) {
-			warning("The service " + nameProvider.getFullyQualifiedName(service) + " version " +service.getVersion().getVersion() +" is not being used by a service or solution.", ServiceDslPackage.Literals.SERVICE__NAME);
+			warning("The service " + nameProvider.getFullyQualifiedName(service) + " version " +service.getVersion().getVersion() +" is not being used by a service, resource or solution.", ServiceDslPackage.Literals.SERVICE__NAME);
 		}
 	}
 
@@ -32,7 +32,7 @@ public class ServiceUsageValidator extends AbstractServiceDslVersionValidator {
 	public void checkResourceIsUsed (Resource service) {
 		List<EObject> allConsumers = svcQueries.findAllResourceConsumers(service);
 		if (allConsumers.isEmpty()) {
-			warning("The resource " + nameProvider.getFullyQualifiedName(service) + " version " +service.getVersion().getVersion() +" is not being used by a service or solution.", ServiceDslPackage.Literals.SERVICE__NAME);
+			warning("The resource " + nameProvider.getFullyQualifiedName(service) + " version " +service.getVersion().getVersion() +" is not being used by a service, resource or solution.", ServiceDslPackage.Literals.RESOURCE__NAME);
 		}
 	}
 }
