@@ -202,24 +202,16 @@ org-namespace <QualifiedName> shortname "<String>" {
             }
             base-URI "/customer"
 			
-            GET "/{customerId}" 
-                <operationName> (customerId : long)
+            GET <"/{<path variable}" | "<some path>"> 
                 <operationName> (<(optional)? parameters> ) 
-                returns <(optional)? return parameters>
-                throws <exceptions, ...>
-                {
-                    requires <other version constrained service dependency>
-                }
                 returns {
-                    response-code <HTTP status code> {
+                    <HTTP status code> (content-type <content type name>)? {
                         <(optional)? return parameters>
-                        content-type <content type name>
                     }
                 }
                 throws {
-                    response-code <HTTP status code> {
+                    response-code <HTTP status code> (content-type <content type name>)? {
                         <exception type with version>
-                        content-type "application/json"
                     }
                 }
             {		

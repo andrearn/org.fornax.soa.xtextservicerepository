@@ -11,7 +11,7 @@
 	<packaging>war</packaging>
 	
 	<properties>
-		<xtextVersion>2.11.0</xtextVersion>
+		<xtextVersion>2.13.0</xtextVersion>
 	</properties>
 
 	<build>

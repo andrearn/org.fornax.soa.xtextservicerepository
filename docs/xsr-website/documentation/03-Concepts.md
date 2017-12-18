@@ -25,9 +25,9 @@ The non canonical data model defines data types that are _not_ standardized. The
 
 ### Domains and namespaces
 
-The canonical and the non canonical datamodel are organized into domains which are reflected by namespaces. For each subdomain there exists a respective domain-namespace. Domains and there subdomains are defined in the business model. Hence, domain namespaces contain the respective subdomain of the canonical datamodel and their related public services.
+The canonical and the non canonical datamodel are organized into domains which are reflected by namespaces. For each subdomain there exists a respective domain-namespace. Domains and there subdomains are defined in the business model. Hence, domain namespaces contain the respective subdomain of the canonical datamodel and their related public services and API.
 
-Domain namespaces are complemented by internal namespaces that contain the non canonical datamodel and private services. Whatever is defined in an internal namespace should only be internally as the name suggests. Internal namespaces contain fragile API.
+Domain namespaces are complemented by internal namespaces that contain the non canonical datamodel and private services. Whatever is defined in an internal namespace should only be internally as the name suggests. Internal namespaces contain potentially fragile API.
 
 ![Namespace hierarchy](images/namespaces.png)
 
@@ -35,9 +35,9 @@ Domain namespaces are complemented by internal namespaces that contain the non c
 
 ## Encapsulation of services
 
-Often, a SOA will be built from already existing systems and interfaces. However, the services already available will usually not suit very well with the larger scope of an enterprise wide IT architecture as they have been developed with specific usage scenarios in mind.
+Often, a system will be built from already existing systems and interfaces. However, the services already available will usually not suit very well with the larger scope of an enterprise wide IT architecture as they have been developed with specific usage scenarios in mind.
 
-A good approach to provide more suitable services, would be to define new standard service contracts which hide the technical details of the service implementation provided by a certain system. The new service contract would be a `public` service, while the already available technical service implementation will be considered `private`. This will shield consumers of the public service from rather frequent changes of the technical service implementations 
+A good approach to provide more suitable services, would be to define new standard service contracts that hide the technical details of the service implementation. The new service contract would be a `public` service, while the already available technical service implementation will be considered `private`. This will shield consumers of the public service from rather frequent changes of the technical service implementations 
 as well as their interfaces.
 				
 ![A public service encapsulating a private service](images/PublicEncapsPrivateService.png)
@@ -47,7 +47,26 @@ as well as their interfaces.
 
 ## Perspectives in a model
 
-In a SOA model you can take different perspectives, depending on the matter of interest.
+You can take different perspectives on an API model, depending on the matter of interest. You might be interested in
+
+1. *API* like _services_, RESTful _resources_, _business objects_ 
+--> **Service DSL** 
+1. What functional capabilities are available? (business capability model) 
+--> **Business DSL** (optional)
+1. _Modules_ and what services they offer and require 
+--> **Module DSL** 
+1. _Where_ does it run? Which technical protocols are being used? Which SLAs apply? 
+--> **Binding DSL** 
+1. How looks the *technical environment*, i.e. hosts, servers, containers etc.? 
+--> **Environment DSL**
+1. What makes up the _SLA_? 
+--> **SLA DSL** (optional)
+1. What *apps/solutions* exits and which services do they use? 
+--> **Solution DSL** (optional, but recommended in order to reflect dependencies to services/resources)
+1. General architectural and governance _rules_ as well as definition of primitive types
+--> **Profile DSL** 
+1. Ontologies for classification of model elements 
+--> **Semantics DSL** (optional)
 
 ![Overview of all models](images/AllModels.png)
 

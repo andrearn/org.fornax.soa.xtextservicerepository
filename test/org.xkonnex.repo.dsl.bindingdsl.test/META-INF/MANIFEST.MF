@@ -8,9 +8,9 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.junit;bundle-version="4.8.1",
  org.eclipse.emf.ecore;bundle-version="2.6.0",
- org.eclipse.xtext;bundle-version="2.11.0",
+ org.eclipse.xtext;bundle-version="2.13.0",
  org.eclipse.xtext.junit4,
- org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtext.xbase.lib;bundle-version="2.13.0",
  org.xkonnex.repo.test;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.bindingdsl;bundle-version="2.0.0",
  org.xkonnex.repo.dsl.bindingdsl.ui,
@@ -28,13 +28,13 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.testing,
  org.eclipse.xtext.xbase.testing
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
-Import-Package:  org.junit.runner;version="4.5.0",
+Import-Package: org.junit.runner;version="4.5.0",
  org.junit.runner.manipulation;version="4.5.0",
  org.junit.runner.notification;version="4.5.0",
  org.junit.runners;version="4.5.0",
  org.junit.runners.model;version="4.5.0",
  org.hamcrest.core,
  org.junit;version="4.5.0"
-Export-Package:  org.xkonnex.repo.dsl.bindingdsl.tests;x-internal=true
+Export-Package: org.xkonnex.repo.dsl.bindingdsl.tests;x-internal=true
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.xkonnex.repo.dsl.bindingdsl.test.Activator

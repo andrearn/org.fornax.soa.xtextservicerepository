@@ -55,16 +55,13 @@ org-namespace org.example shortname "ex" {
 			GET "/{customerId}" 
 				getCustomerDetails (customerId : long)
 				returns {
-					response-code 200 {
+					200 content-type "application/json" {
 						Address majorVersion 1
-						content-type "application/json"
-						
 					}
 				}
 				throws {
-					response-code 404 {
+					404 content-type "application/json" {
 						NoSuchCustomerException maxVersion 1.1
-						content-type "application/json"
 					}
 				}
 			{		

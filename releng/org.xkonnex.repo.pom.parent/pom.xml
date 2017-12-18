@@ -330,7 +330,7 @@
 		<profile>
 			<id>xtext-latest</id>
 			<properties>
-				<xtext-version>2.11.0</xtext-version>
+				<xtext-version>2.13.0</xtext-version>
 				<xtext-version-bound>3.0.0</xtext-version-bound>
 			</properties>
 			<activation>

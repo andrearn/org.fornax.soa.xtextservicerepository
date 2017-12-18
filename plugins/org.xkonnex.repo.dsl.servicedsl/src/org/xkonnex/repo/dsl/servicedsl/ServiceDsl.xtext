@@ -558,14 +558,14 @@ ResourceOperation:
 		('tags' (tags+=[semanticsDsl::Tag])+)*
 	'}';
 
-Response: 'response-code' responseCode = ReturnCode '{'
-	(((return+=Parameter) (',' return+=Parameter)*) | (return+=SingleReturnParameter))?
-	('content-type' (contentType += STRING)(',' contentType += STRING)*)?
+Response: 
+	('response-code')? responseCode = ReturnCode ('content-type' (contentType += STRING)(',' contentType += STRING)*)? '{'
+		(((return+=Parameter) (',' return+=Parameter)*) | (return+=SingleReturnParameter))?
 	'}'
 ;
-ErrorResponse: 'response-code' responseCode = ReturnCode ('{' 
-	(exception+=ExceptionRef)?(',' exception+=ExceptionRef)*
-	'content-type' (contentType += STRING)(',' contentType += STRING)*
+ErrorResponse: 
+	('response-code')? responseCode = ReturnCode ('content-type' (contentType += STRING)(',' contentType += STRING)*)? ('{' 
+		(exception+=ExceptionRef)?(',' exception+=ExceptionRef)*
 	'}')?
 ;
 

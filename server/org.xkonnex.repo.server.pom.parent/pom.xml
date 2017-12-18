@@ -70,7 +70,7 @@
 		<jgit.version>3.1.0.201310021548-r</jgit.version>
 		<guava.version>10.0.1</guava.version>
 		<guice.version>3.0</guice.version>
-		<xtext.version>2.11.0</xtext.version>
+		<xtext.version>2.13.0</xtext.version>
 		<xkonnex.repo.version>2.0.0-SNAPSHOT</xkonnex.repo.version>
 		<hibernate.version>4.3.6.Final</hibernate.version>
 	</properties>

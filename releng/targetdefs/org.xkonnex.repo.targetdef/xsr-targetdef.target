@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?pde version="3.8"?><target name="xsr.target" sequenceNumber="2">
+<?pde version="3.8"?><target name="xsr.target" sequenceNumber="3">
 <locations>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.jdt.feature.group" version="0.0.0"/>
@@ -13,22 +13,14 @@
 <unit id="org.eclipse.zest.sdk.feature.group" version="0.0.0"/>
 <unit id="org.eclipse.gef.sdk.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/releases/neon/201606221000/"/>
-<!--repository location="http://download.eclipse.org/releases/mars/201506241002/"/-->
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.emf.mwe2.launcher.feature.group" version="0.0.0"/>
 <repository location="http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.9.0/"/>
-<!--repository location="http://download.eclipse.org/modeling/emft/mwe/updates/releases/2.8.3/"/-->
-</location>
-<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
-<unit id="org.eclipse.xtext.sdk.feature.group" version="0.0.0"/>
-<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.11.0/"/>
-<!--repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.9.2/"/-->
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="org.eclipse.xtext.graphview.feature.feature.group" version="0.0.0"/>
 <repository location="https://dl.bintray.com/andrearn/GenericGraphView/org.eclipse.xtext.graphview.p2.repository/"/>
-<!--repository location="https://dl.bintray.com/andrearn/GenericGraphView/1.0.5/"/-->
 </location>
 <location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
 <unit id="de.cau.cs.kieler.kiml.ogdf.feature.feature.group" version="0.5.1.201303011228"/>
@@ -36,6 +28,10 @@
 <unit id="de.cau.cs.kieler.kiml.graphviz.feature.feature.group" version="0.7.1.201303011228"/>
 <unit id="de.cau.cs.kieler.kiml.gmf.feature.feature.group" version="0.8.0.201303011228"/>
 <repository location="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_0.8/"/>
+</location>
+<location includeAllPlatforms="false" includeConfigurePhase="false" includeMode="planner" includeSource="false" type="InstallableUnit">
+<unit id="org.eclipse.xtext.sdk.feature.group" version="2.13.0.v20171020-0920"/>
+<repository location="http://download.eclipse.org/modeling/tmf/xtext/updates/releases/2.13.0/"/>
 </location>
 </locations>
 <targetJRE path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>

@@ -6,7 +6,7 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-SymbolicName: org.xkonnex.repo.generator.semanticsdsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.xkonnex.repo.dsl.semanticsdsl;bundle-version="2.0.0";visibility:=reexport,
- org.eclipse.xtext;bundle-version="2.11.0";visibility:=reexport,
+ org.eclipse.xtext;bundle-version="2.13.0";visibility:=reexport,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.mwe.utils;visibility:=reexport,
  org.eclipse.xtend.lib

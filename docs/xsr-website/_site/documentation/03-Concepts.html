@@ -142,24 +142,45 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <h3 id="domains-and-namespaces">Domains and namespaces</h3>
 
-<p>The canonical and the non canonical datamodel are organized into domains which are reflected by namespaces. For each subdomain there exists a respective domain-namespace. Domains and there subdomains are defined in the business model. Hence, domain namespaces contain the respective subdomain of the canonical datamodel and their related public services.</p>
+<p>The canonical and the non canonical datamodel are organized into domains which are reflected by namespaces. For each subdomain there exists a respective domain-namespace. Domains and there subdomains are defined in the business model. Hence, domain namespaces contain the respective subdomain of the canonical datamodel and their related public services and API.</p>
 
-<p>Domain namespaces are complemented by internal namespaces that contain the non canonical datamodel and private services. Whatever is defined in an internal namespace should only be internally as the name suggests. Internal namespaces contain fragile API.</p>
+<p>Domain namespaces are complemented by internal namespaces that contain the non canonical datamodel and private services. Whatever is defined in an internal namespace should only be internally as the name suggests. Internal namespaces contain potentially fragile API.</p>
 
 <p><img src="images/namespaces.png" alt="Namespace hierarchy" /></p>
 
 <h2 id="encapsulation-of-services">Encapsulation of services</h2>
 
-<p>Often, a SOA will be built from already existing systems and interfaces. However, the services already available will usually not suit very well with the larger scope of an enterprise wide IT architecture as they have been developed with specific usage scenarios in mind.</p>
+<p>Often, a system will be built from already existing systems and interfaces. However, the services already available will usually not suit very well with the larger scope of an enterprise wide IT architecture as they have been developed with specific usage scenarios in mind.</p>
 
-<p>A good approach to provide more suitable services, would be to define new standard service contracts which hide the technical details of the service implementation provided by a certain system. The new service contract would be a <code>public</code> service, while the already available technical service implementation will be considered <code>private</code>. This will shield consumers of the public service from rather frequent changes of the technical service implementations <br />
+<p>A good approach to provide more suitable services, would be to define new standard service contracts that hide the technical details of the service implementation. The new service contract would be a <code>public</code> service, while the already available technical service implementation will be considered <code>private</code>. This will shield consumers of the public service from rather frequent changes of the technical service implementations <br />
 as well as their interfaces.</p>
 
 <p><img src="images/PublicEncapsPrivateService.png" alt="A public service encapsulating a private service" /></p>
 
 <h2 id="perspectives-in-a-model">Perspectives in a model</h2>
 
-<p>In a SOA model you can take different perspectives, depending on the matter of interest.</p>
+<p>You can take different perspectives on an API model, depending on the matter of interest. You might be interested in</p>
+
+<ol>
+  <li><em>API</em> like <em>services</em>, RESTful <em>resources</em>, <em>business objects</em> <br />
+–&gt; <strong>Service DSL</strong></li>
+  <li>What functional capabilities are available? (business capability model) <br />
+–&gt; <strong>Business DSL</strong> (optional)</li>
+  <li><em>Modules</em> and what services they offer and require <br />
+–&gt; <strong>Module DSL</strong></li>
+  <li><em>Where</em> does it run? Which technical protocols are being used? Which SLAs apply? <br />
+–&gt; <strong>Binding DSL</strong></li>
+  <li>How looks the <em>technical environment</em>, i.e. hosts, servers, containers etc.? <br />
+–&gt; <strong>Environment DSL</strong></li>
+  <li>What makes up the <em>SLA</em>? <br />
+–&gt; <strong>SLA DSL</strong> (optional)</li>
+  <li>What <em>apps/solutions</em> exits and which services do they use? <br />
+–&gt; <strong>Solution DSL</strong> (optional, but recommended in order to reflect dependencies to services/resources)</li>
+  <li>General architectural and governance <em>rules</em> as well as definition of primitive types<br />
+–&gt; <strong>Profile DSL</strong></li>
+  <li>Ontologies for classification of model elements <br />
+–&gt; <strong>Semantics DSL</strong> (optional)</li>
+</ol>
 
 <p><img src="images/AllModels.png" alt="Overview of all models" /></p>
 
