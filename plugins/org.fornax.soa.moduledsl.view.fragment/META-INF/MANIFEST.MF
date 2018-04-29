@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Module DSL Graph View Fragment
 Bundle-SymbolicName: org.fornax.soa.moduledsl.view.fragment
-Bundle-Version: 1.6.2.qualifier
+Bundle-Version: 1.6.3.qualifier
 Bundle-Vendor: Fornax Platform
 Fragment-Host: org.fornax.soa.moduledsl.ui;bundle-version="1.6.2"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.xtext.graphview;bundle-version="1.0.3",
  org.eclipse.xtext.graphview.providers;bundle-version="1.0.3"

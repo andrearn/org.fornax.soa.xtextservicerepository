@@ -9,7 +9,7 @@
 
 	<groupId>org.fornax.soa.servicerepo.pom</groupId>
 	<artifactId>parent</artifactId>
-	<version>1.6.2-SNAPSHOT</version>
+	<version>1.6.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 
@@ -35,6 +35,7 @@
 	</developers>
 
 	<properties>
+		<java.version>1.7</java.version>
 		<tycho-version>0.20.0</tycho-version>
 		<!-- See profiles for xtext version -->
 		<!-- <xtext-version>2.4.0</xtext-version> -->
@@ -42,6 +43,8 @@
 	</properties>
 
 	<modules>
+		<module>../../releng/targetdefs/xsr-targetdef</module>
+
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.dsl-parent</module>
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.generator-parent</module>
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.ui-parent</module>
@@ -67,6 +70,10 @@
 
 		<plugins>
 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-toolchains-plugin</artifactId>
+			</plugin>
+			<plugin>
 				<groupId>org.eclipse.tycho</groupId>
 				<artifactId>tycho-maven-plugin</artifactId>
 				<version>${tycho-version}</version>
@@ -80,6 +87,13 @@
 				<configuration>
 					<resolver>p2</resolver>
 					<pomDependencies>consider</pomDependencies>
+					<target>
+						<artifact>
+							<groupId>org.fornax.soa.servicerepo.pom</groupId>
+							<artifactId>xsr-targetdef</artifactId>
+							<version>1.6.3-SNAPSHOT</version>
+						</artifact>
+					</target>
 					<environments>
 						<environment>
 							<os>win32</os>
@@ -183,15 +197,35 @@
 
 		<pluginManagement>
 			<plugins>
-				<!-- TYCHO -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-toolchains-plugin</artifactId>
+					<version>1.1</version>
+					<executions>
+						<execution>
+							<goals>
+								<goal>toolchain</goal>
+							</goals>
+						</execution>
+					</executions>
+					<configuration>
+						<toolchains>
+							<jdk>
+								<version>${java.version}</version>
+								<vendor>sun</vendor>
+							</jdk>
+						</toolchains>
+					</configuration>
+				</plugin>
+  				<!-- TYCHO -->
 				<plugin>
 					<groupId>org.eclipse.tycho</groupId>
 					<artifactId>tycho-compiler-plugin</artifactId>
 					<version>${tycho-version}</version>
 					<configuration>
 						<encoding>${project.build.sourceEncoding}</encoding>
-						<source>5.0</source>
-						<target>5.0</target>
+						<source>${java.version}</source>
+						<target>${java.version}</target>
 						<excludeResources>
 							<exludeResource>**/*.xtend</exludeResource>
 						</excludeResources>
@@ -305,6 +339,37 @@
 					<artifactId>eclipse-signing-maven-plugin</artifactId>
 					<version>1.0.2</version>
 				</plugin>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.apache.maven.plugins
+										</groupId>
+										<artifactId>
+											maven-toolchains-plugin
+										</artifactId>
+										<versionRange>
+											[1.1,)
+										</versionRange>
+										<goals>
+											<goal>toolchain</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -380,8 +445,8 @@
 		<profile>
 			<id>xtext-latest</id>
 			<properties>
-				<xtext-version>2.6.2</xtext-version>
-				<xtext-version-bound>2.7.0</xtext-version-bound>
+				<xtext-version>2.8.4</xtext-version>
+				<xtext-version-bound>2.9.0</xtext-version-bound>
 			</properties>
 			<repositories>
 				<repository>

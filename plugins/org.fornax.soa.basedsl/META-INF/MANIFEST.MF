@@ -2,24 +2,24 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.basedsl
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.6.2.qualifier
+Bundle-Version: 1.6.3.qualifier
 Bundle-SymbolicName: org.fornax.soa.basedsl; singleton:=true
 Bundle-ActivationPolicy: lazy
-Require-Bundle: org.eclipse.xtext;bundle-version="2.6.2";visibility:=reexport,
- org.eclipse.xtext.generator;bundle-version="2.6.2";resolution:=optional,
+Require-Bundle: org.eclipse.xtext;bundle-version="2.8.4";visibility:=reexport,
+ org.eclipse.xtext.generator;bundle-version="2.8.4";resolution:=optional,
  org.apache.commons.logging;resolution:=optional,
  org.eclipse.emf.codegen.ecore;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.mwe2.language,
  com.ibm.icu;resolution:=optional,
- org.eclipse.xtext.util;bundle-version="2.6.2",
+ org.eclipse.xtext.util;bundle-version="2.8.4",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- org.eclipse.xtext.xbase;bundle-version="2.6.2";visibility:=reexport
+ org.eclipse.xtext.xbase;bundle-version="2.8.4";visibility:=reexport
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.fornax.soa.basedsl,
  org.fornax.soa.basedsl.documentation,
  org.fornax.soa.basedsl.formatting,

@@ -23,7 +23,7 @@ Require-Bundle: org.eclipse.ui,
  org.fornax.soa.servicedsl.generator;bundle-version="1.6.0",
  org.fornax.soa.servicerepo;bundle-version="1.6.0",
  org.fornax.soa.solutiondsl;bundle-version="1.6.0"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Import-Package: org.apache.commons.logging,
  org.apache.log4j
 

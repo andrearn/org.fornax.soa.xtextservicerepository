@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %Bundle-Name
 Bundle-SymbolicName: org.fornax.soa.servicerepo.examples;singleton:=true
-Bundle-Version: 1.6.2.qualifier
+Bundle-Version: 1.6.3.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.emf.common.ui,
@@ -26,4 +26,4 @@ Require-Bundle: org.eclipse.ui,
  org.fornax.soa.solutiondsl.generator;bundle-version="1.6.2";resolution:=optional,
  org.fornax.soa.xtextservicerepo.generator;bundle-version="1.6.2";resolution:=optional
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7

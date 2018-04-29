@@ -1,0 +1,21 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.fornax.soa.servicerepo.pom</groupId>
+	<artifactId>xsr-targetdef</artifactId>
+	<version>1.6.3-SNAPSHOT</version>
+	<packaging>eclipse-target-definition</packaging>
+
+	<parent>
+		<groupId>org.fornax.soa.servicerepo.pom</groupId>
+		<artifactId>parent</artifactId>
+		<version>1.6.3-SNAPSHOT</version>
+		<relativePath>../org.fornax.soa.xtextservicerepository.pom.parent/pom.xml</relativePath>
+	</parent>
+	
+	<properties>
+		<tycho-version>0.20.0</tycho-version>
+	</properties>
+	
+</project>

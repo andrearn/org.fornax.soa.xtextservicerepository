@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.servicedsl
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.6.2.qualifier
+Bundle-Version: 1.6.3.qualifier
 Bundle-SymbolicName: org.fornax.soa.servicedsl;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
@@ -11,7 +11,7 @@ Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
  org.eclipse.emf.mwe.utils;resolution:=optional,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  com.ibm.icu;resolution:=optional,
- org.eclipse.xtext.util;bundle-version="2.6.2",
+ org.eclipse.xtext.util;bundle-version="2.8.4",
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
@@ -22,10 +22,10 @@ Require-Bundle: org.eclipse.xtext.generator;resolution:=optional,
  org.eclipse.osgi,
  org.eclipse.equinox.registry;bundle-version="3.5.0",
  org.fornax.soa.environmentdsl;bundle-version="1.6.2",
- org.eclipse.xtend.lib;bundle-version="2.6.2",
- org.eclipse.xtext;bundle-version="2.6.2"
+ org.eclipse.xtend.lib;bundle-version="2.8.4",
+ org.eclipse.xtext;bundle-version="2.8.4"
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.fornax.soa,
  org.fornax.soa.formatting,
  org.fornax.soa.parser.antlr,

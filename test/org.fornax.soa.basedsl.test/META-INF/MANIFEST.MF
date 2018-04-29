@@ -2,11 +2,11 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SOA BaseDSL Tests
 Bundle-SymbolicName: org.fornax.soa.basedsl.test
-Bundle-Version: 1.6.2.qualifier
+Bundle-Version: 1.6.3.qualifier
 Bundle-Activator: org.fornax.soa.basedsl.test.Activator
 Bundle-Vendor: Fornax Platform
 Require-Bundle: org.eclipse.core.runtime,
  org.junit,
  org.fornax.soa.basedsl;bundle-version="1.6.2"
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy

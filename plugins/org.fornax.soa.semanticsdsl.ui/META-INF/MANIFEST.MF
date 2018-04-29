@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.semanticsdsl.ui
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.6.2.qualifier
+Bundle-Version: 1.6.3.qualifier
 Bundle-SymbolicName: org.fornax.soa.semanticsdsl.ui; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.fornax.soa.semanticsdsl;bundle-version="1.6.2";visibility:=reexport,
@@ -21,7 +21,7 @@ Require-Bundle: org.fornax.soa.semanticsdsl;bundle-version="1.6.2";visibility:=r
  org.eclipse.xtext.ui.shared,
  org.eclipse.xtext.builder
 Import-Package: org.apache.log4j
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: org.fornax.soa.ui.contentassist.antlr,
  org.fornax.soa.ui.contentassist,
  org.fornax.soa.ui.quickfix
