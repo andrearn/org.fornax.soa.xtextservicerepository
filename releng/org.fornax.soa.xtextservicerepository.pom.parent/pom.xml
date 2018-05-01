@@ -36,7 +36,7 @@
 
 	<properties>
 		<java.version>1.7</java.version>
-		<tycho-version>0.22.0</tycho-version>
+		<tycho-version>0.20.0</tycho-version>
 		<!-- See profiles for xtext version -->
 		<!-- <xtext-version>2.4.0</xtext-version> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
