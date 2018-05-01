@@ -52,6 +52,8 @@
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.view-parent</module>
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.fragment-parent</module>
 		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.test-parent</module>
+		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.java-parent</module>
+		<module>../../releng/org.fornax.soa.xtextservicerepository.pom.doc-parent</module>
 
 		
 		<module>../../docs/org.fornax.soa.servicerepo.doc</module>
