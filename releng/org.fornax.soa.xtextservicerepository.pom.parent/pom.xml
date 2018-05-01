@@ -416,37 +416,16 @@
 	</pluginRepositories>
 
 	<repositories>
-		<!-- <repository>
-			<id>itemis</id>
-			<layout>p2</layout>
-			<url>http://download.itemis.com/updates/releases</url>
-		</repository> -->
-		<!-- See profile for main repository -->
-		<!-- <repository> -->
-		<!-- <id>indigo</id> -->
-		<!-- <layout>p2</layout> -->
-		<!-- <url>http://download.eclipse.org/releases/juno</url> -->
-		<!-- </repository> -->
 		<repository>
 			<id>graphview</id>
 			<layout>p2</layout>
 			<url>http://dl.bintray.com/andrearn/GenericGraphView </url>
-			<!-- url>http://download.anderscore.com/graphview/updates</url-->
 		</repository>
 		<repository>
 			<id>kieler</id>
 			<layout>p2</layout>
 			<url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/release_0.8</url>
 		</repository>
-		<!--repository>
-			<id>xdoc</id>
-			<layout>p2</layout>
-			<url>file:/C:/Development/Workspace/xDoc/org.eclipse.xtext.xdoc.releng/target/site</url>
-		</repository-->
-		<!-- <repository>
-			<id>xtend</id>
-			<url>http://build.eclipse.org/common/xtend/maven/</url>
-		</repository> -->
 	</repositories>
 
 	<profiles>
