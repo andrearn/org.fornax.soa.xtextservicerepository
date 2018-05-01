@@ -36,7 +36,7 @@
 
 	<properties>
 		<java.version>1.7</java.version>
-		<tycho-version>0.20.0</tycho-version>
+		<tycho-version>0.22.0</tycho-version>
 		<!-- See profiles for xtext version -->
 		<!-- <xtext-version>2.4.0</xtext-version> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -136,7 +136,21 @@
 						</filter>
 						<filter>
 							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.common.types</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
 							<id>org.eclipse.xtext.generator</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.xbase</id>
 							<restrictTo>
 								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
 							</restrictTo>
@@ -164,6 +178,13 @@
 						</filter>
 						<filter>
 							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.junit4</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
 							<id>org.eclipse.xtext.smap</id>
 							<restrictTo>
 								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
@@ -179,6 +200,13 @@
 						<filter>
 							<type>eclipse-plugin</type>
 							<id>org.eclipse.xtend.lib</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtend.lib.macro</id>
 							<restrictTo>
 								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
 							</restrictTo>
@@ -386,11 +414,11 @@
 	</pluginRepositories>
 
 	<repositories>
-		<repository>
+		<!-- <repository>
 			<id>itemis</id>
 			<layout>p2</layout>
 			<url>http://download.itemis.com/updates/releases</url>
-		</repository>
+		</repository> -->
 		<!-- See profile for main repository -->
 		<!-- <repository> -->
 		<!-- <id>indigo</id> -->
@@ -413,10 +441,10 @@
 			<layout>p2</layout>
 			<url>file:/C:/Development/Workspace/xDoc/org.eclipse.xtext.xdoc.releng/target/site</url>
 		</repository-->
-		<repository>
+		<!-- <repository>
 			<id>xtend</id>
 			<url>http://build.eclipse.org/common/xtend/maven/</url>
-		</repository>
+		</repository> -->
 	</repositories>
 
 	<profiles>
@@ -428,7 +456,7 @@
 						<groupId>org.sonatype.tycho</groupId>
 						<artifactId>maven-osgi-packaging-plugin</artifactId>
 						<configuration>
-							<strictVersions>false</strictVersions>
+							<strictVersions>true</strictVersions>
 						</configuration>
 					</plugin>
 					<plugin>

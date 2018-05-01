@@ -21,7 +21,7 @@
     </modules>
 
     <properties>
-        <java.version>1.6</java.version>
+        <java.version>1.7</java.version>
         <github.global.server>github</github.global.server>
 
         <bootstrap.version>2.3.2</bootstrap.version>

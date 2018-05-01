@@ -13,9 +13,5 @@
 		<version>1.6.3-SNAPSHOT</version>
 		<relativePath>../org.fornax.soa.xtextservicerepository.pom.parent/pom.xml</relativePath>
 	</parent>
-	
-	<properties>
-		<tycho-version>0.20.0</tycho-version>
-	</properties>
-	
+		
 </project>

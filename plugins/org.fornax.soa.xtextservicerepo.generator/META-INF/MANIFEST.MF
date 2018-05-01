@@ -5,7 +5,7 @@ Bundle-SymbolicName: org.fornax.soa.xtextservicerepo.generator
 Bundle-Version: 1.6.3.qualifier
 Bundle-Activator: org.fornax.soa.xtextservicerepo.generator.Activator
 Require-Bundle: org.eclipse.core.runtime,
- org.fornax.soa.servicerepo;bundle-version="1.6.2",
+ org.fornax.soa.servicerepo;bundle-version="1.6.3",
  org.eclipse.xtext,
  org.eclipse.xtend.lib;bundle-version="2.8.4"
 Bundle-ActivationPolicy: lazy

@@ -2,7 +2,7 @@ package org.fornax.soa.servicedsl.test;
 
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.xtext.junit.AbstractXtextTests;
+import org.eclipse.xtext.junit4.AbstractXtextTests;
 import org.eclipse.xtext.resource.XtextResource;
 import org.fornax.soa.ServiceDslStandaloneSetup;
 import org.fornax.soa.basedsl.sOABaseDsl.MajorVersionRef;

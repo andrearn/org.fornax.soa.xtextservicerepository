@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: SOA Service DSL view Fragment
 Bundle-SymbolicName: org.fornax.soa.servicedsl.view.fragment;singleton:=true
 Bundle-Version: 1.6.3.qualifier
-Fragment-Host: org.fornax.soa.servicedsl.ui;bundle-version="1.6.2"
+Fragment-Host: org.fornax.soa.servicedsl.ui;bundle-version="1.6.3"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Require-Bundle: org.eclipse.xtext.graphview;bundle-version="1.0.3",
  org.eclipse.xtext.graphview.providers;bundle-version="1.0.3"
