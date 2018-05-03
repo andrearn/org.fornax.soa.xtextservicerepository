@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: org.fornax.soa.businessdsl.generator
 Bundle-Vendor: Fornax Platform
-Bundle-Version: 1.6.3.qualifier
+Bundle-Version: 1.6.3
 Bundle-SymbolicName: org.fornax.soa.businessdsl.generator; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.fornax.soa.businessdsl;bundle-version="1.6.3";visibility:=reexport,

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.fornax.soa.servicerepo.view.sdk-feature_1.6.3.qualifier.jar" id="org.fornax.soa.servicerepo.view.sdk-feature" version="1.6.3.qualifier">
+   <feature url="features/org.fornax.soa.servicerepo.view.sdk-feature_1.6.3.jar" id="org.fornax.soa.servicerepo.view.sdk-feature" version="1.6.3">
       <category name="org.fornax.soa.xtextservicerepo"/>
    </feature>
-   <feature url="features/org.fornax.soa.xtextservicerepo.dsl.sdk-feature_1.6.3.qualifier.jar" id="org.fornax.soa.xtextservicerepo.dsl.sdk-feature" version="1.6.3.qualifier">
+   <feature url="features/org.fornax.soa.xtextservicerepo.dsl.sdk-feature_1.6.3.jar" id="org.fornax.soa.xtextservicerepo.dsl.sdk-feature" version="1.6.3">
       <category name="org.fornax.soa.xtextservicerepo"/>
    </feature>
-   <feature url="features/org.fornax.soa.xtextservicerepo.generators.sdk-feature_1.6.3.qualifier.jar" id="org.fornax.soa.xtextservicerepo.generators.sdk-feature" version="1.6.3.qualifier">
+   <feature url="features/org.fornax.soa.xtextservicerepo.generators.sdk-feature_1.6.3.jar" id="org.fornax.soa.xtextservicerepo.generators.sdk-feature" version="1.6.3">
       <category name="org.fornax.soa.xtextservicerepo"/>
    </feature>
    <category-def name="org.fornax.soa.xtextservicerepo" label="Xtext Service Repository">

@@ -9,7 +9,7 @@
 
 	<groupId>org.fornax.soa.servicerepo.pom</groupId>
 	<artifactId>parent</artifactId>
-	<version>1.6.3-SNAPSHOT</version>
+	<version>1.6.3</version>
 	<packaging>pom</packaging>
 
 
@@ -93,7 +93,7 @@
 						<artifact>
 							<groupId>org.fornax.soa.servicerepo.pom</groupId>
 							<artifactId>xsr-targetdef</artifactId>
-							<version>1.6.3-SNAPSHOT</version>
+							<version>1.6.3</version>
 						</artifact>
 					</target>
 					<environments>

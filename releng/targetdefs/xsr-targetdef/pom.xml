@@ -4,13 +4,13 @@
 
 	<groupId>org.fornax.soa.servicerepo.pom</groupId>
 	<artifactId>xsr-targetdef</artifactId>
-	<version>1.6.3-SNAPSHOT</version>
+	<version>1.6.3</version>
 	<packaging>eclipse-target-definition</packaging>
 
 	<parent>
 		<groupId>org.fornax.soa.servicerepo.pom</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.6.3-SNAPSHOT</version>
+		<version>1.6.3</version>
 		<relativePath>../org.fornax.soa.xtextservicerepository.pom.parent/pom.xml</relativePath>
 	</parent>
 	

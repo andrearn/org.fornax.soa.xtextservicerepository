@@ -141,57 +141,57 @@
 		<dependency>
 			<groupId>org.fornax.soa.basedsl</groupId>
 			<artifactId>org.fornax.soa.basedsl</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fornax.soa.bindingdsl</groupId>
 			<artifactId>org.fornax.soa.bindingdsl</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fornax.soa.businessdsl</groupId>
 			<artifactId>org.fornax.soa.businessdsl</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fornax.soa.environmentdsl</groupId>
 			<artifactId>org.fornax.soa.environmentdsl</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fornax.soa.moduledsl</groupId>
 			<artifactId>org.fornax.soa.moduledsl</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fornax.soa.profiledsl</groupId>
 			<artifactId>org.fornax.soa.profiledsl</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fornax.soa.semanticsdsl</groupId>
 			<artifactId>org.fornax.soa.semanticsdsl</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fornax.soa.servicedsl</groupId>
 			<artifactId>org.fornax.soa.servicedsl</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fornax.soa.sladsl</groupId>
 			<artifactId>org.fornax.soa.sladsl</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fornax.soa.solutiondsl</groupId>
 			<artifactId>org.fornax.soa.solutiondsl</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.fornax.soa.servicerepo</groupId>
 			<artifactId>org.fornax.soa.servicerepo</artifactId>
-			<version>1.6.3-SNAPSHOT</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.jgit</groupId>

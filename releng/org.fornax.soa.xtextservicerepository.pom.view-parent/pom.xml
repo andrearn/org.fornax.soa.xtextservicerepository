@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.fornax.soa.servicerepo.pom</groupId>
 		<artifactId>generator-parent</artifactId>
-		<version>1.6.3-SNAPSHOT</version>
+		<version>1.6.3</version>
 		<relativePath>../org.fornax.soa.xtextservicerepository.pom.generator-parent/pom.xml</relativePath>
 	</parent>
 

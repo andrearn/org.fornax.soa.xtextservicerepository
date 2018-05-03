@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Profile DSL Test
 Bundle-SymbolicName: org.fornax.soa.profiledsl.test
-Bundle-Version: 1.6.3.qualifier
+Bundle-Version: 1.6.3
 Bundle-Activator: org.fornax.soa.profiledsl.test.Activator
 Bundle-Vendor: Fornax Platform
 Require-Bundle: org.eclipse.ui,

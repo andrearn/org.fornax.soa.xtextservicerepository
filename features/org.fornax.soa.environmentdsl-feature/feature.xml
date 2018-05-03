@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.environmentdsl-feature"
       label="SOA Runtime Environment DSL"
-      version="1.6.3.qualifier"
+      version="1.6.3"
       provider-name="Fornax Platform">
 
    <description url="http://www.eclipse.org/modeling/m2t">

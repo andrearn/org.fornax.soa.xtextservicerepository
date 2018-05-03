@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SOA Xtext Service Repository Docs
 Bundle-SymbolicName: org.fornax.soa.servicerepo.doc;singleton:=true
-Bundle-Version: 1.6.3.qualifier
+Bundle-Version: 1.6.3
 Bundle-Vendor: Fornax Platform
 Require-Bundle: org.eclipse.help
 Export-Package: images

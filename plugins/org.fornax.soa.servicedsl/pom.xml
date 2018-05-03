@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.fornax.soa.servicerepo.pom</groupId>
 		<artifactId>dsl-parent</artifactId>
-		<version>1.6.3-SNAPSHOT</version>
+		<version>1.6.3</version>
 		<relativePath>../../releng/org.fornax.soa.xtextservicerepository.pom.dsl-parent/pom.xml</relativePath>
 	</parent>
 

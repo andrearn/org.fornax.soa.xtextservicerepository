@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.servicerepo.doc-feature"
       label="SOA Xtext Service Repository Docs feature"
-      version="1.6.3.qualifier"
+      version="1.6.3"
       provider-name="Fornax Platform">
 
    <description url="http://www.example.com/description">

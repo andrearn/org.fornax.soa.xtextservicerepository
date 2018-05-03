@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.xtextservicerepo.dsl.sdk-feature"
       label="SOA Xtext Service Repository DSL SDK"
-      version="1.6.3.qualifier"
+      version="1.6.3"
       provider-name="Fornax Platform">
 
    <description url="http://www.eclipse.org/modeling/m2t">

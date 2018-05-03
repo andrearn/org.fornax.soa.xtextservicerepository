@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SOA Service DSL graph view
 Bundle-SymbolicName: org.fornax.soa.servicedsl.view
-Bundle-Version: 1.6.3.qualifier
+Bundle-Version: 1.6.3
 Bundle-Activator: org.fornax.soa.servicedsl.view.Activator
 Bundle-Vendor: Fornax Platform
 Require-Bundle: org.eclipse.core.runtime,
