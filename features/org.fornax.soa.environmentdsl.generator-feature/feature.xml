@@ -2,7 +2,7 @@
 <feature
       id="org.fornax.soa.environmentdsl.generator-feature"
       label="SOA Runtime Environment DSL generator"
-      version="1.6.3"
+      version="1.6.4.qualifier"
       provider-name="Fornax Platform">
 
    <description>
