@@ -63,6 +63,8 @@
 		<module>../../releng/org.xkonnex.repo.pom.view-parent</module>
 		<module>../../releng/org.xkonnex.repo.pom.fragment-parent</module>
 		<module>../../releng/org.xkonnex.repo.pom.test-parent</module>
+		<module>../../releng/org.xkonnex.repo.pom.java-parent</module>
+		<module>../../releng/org.xkonnex.repo.pom.doc-parent</module>
 
 
 		<module>../../docs/org.xkonnex.repo.doc</module>
@@ -127,6 +129,99 @@
 							<arch>x86_64</arch>
 						</environment>
 					</environments>
+					<filters>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.common.types</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.generator</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.xbase</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.xbase.lib</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtend.core</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.junit</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.junit4</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.smap</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtext.util</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtend.lib</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.eclipse.xtend.lib.macro</id>
+							<restrictTo>
+								<versionRange>[${xtext-version},${xtext-version-bound})</versionRange>
+							</restrictTo>
+						</filter>
+						<filter>
+							<type>eclipse-plugin</type>
+							<id>org.apache.log4j</id>
+							<restrictTo>
+								<versionRange>[1.2.15.v201012070815,2.0)</versionRange>
+							</restrictTo>
+						</filter>
+					</filters>
 				</configuration>
 			</plugin>
 			<plugin>

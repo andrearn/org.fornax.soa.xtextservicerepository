@@ -39,7 +39,7 @@ Environment:
 		('default' 'InfrastructureManager' defaultManager=[InfrastructureManager|QualifiedName])? 
 	'}';
 	
-enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | InfrastructureLibrary="Infrastructure-Library" |Other="Other-Environment";
+enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Integration="Integration-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | InfrastructureLibrary="Infrastructure-Library" | Other="Other-Environment";
 
 EnvironmentComponent returns baseDsl::Component: Connector|AbstractExecutable|SecurityProtocol|Host|ConfigurationScript|Database;
 
