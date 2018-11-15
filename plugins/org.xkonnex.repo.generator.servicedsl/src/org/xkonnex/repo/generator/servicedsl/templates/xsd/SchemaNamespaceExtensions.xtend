@@ -166,6 +166,9 @@ class SchemaNamespaceExtensions {
 	
 	/**
 	 * @deprecated Use NamespaceQuery#getSubNamespacePath(SubNamespace)
+	 * 
+	 * @param domList list of nested namespaces
+	 * @return the deepest nested namespace (single element list)
 	 */
 	@Deprecated
 	def List<SubNamespace> toSubNamespacePath (List<SubNamespace> domList) {

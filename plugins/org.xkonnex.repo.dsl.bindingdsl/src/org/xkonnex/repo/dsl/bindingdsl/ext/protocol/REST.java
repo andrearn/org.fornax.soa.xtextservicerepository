@@ -56,7 +56,7 @@ public class REST implements IProtocol {
 
 	/**
 	 * HTTP operation verb
-	 * @param verb
+	 * @param verb HTTP operation
 	 */
 	public void setVerb(Verb verb) {
 		this.verb = verb;
@@ -68,7 +68,7 @@ public class REST implements IProtocol {
 
 	/**
 	 * Defines how request parameters will be transferred (body, header, URL path or query string...) 
-	 * @param parameterStyle
+	 * @param parameterStyle parameter mapping style
 	 */
 	public void setParameterStyle(RESTParameterStyle parameterStyle) {
 		this.parameterStyle = parameterStyle;
@@ -84,7 +84,7 @@ public class REST implements IProtocol {
 
 	/**
 	 * Content type of a request body part
-	 * @param requestContentType
+	 * @param requestContentType content-type of the request
 	 */
 	public void addRequestContentType(String requestContentType) {
 		this.requestContentType.add(requestContentType);
@@ -100,7 +100,7 @@ public class REST implements IProtocol {
 
 	/**
 	 * Defines a response with response code and content
-	 * @param response
+	 * @param response HTTP response code and content
 	 */
 	public void addResponse(HttpResponse response) {
 		this.response.add(response);

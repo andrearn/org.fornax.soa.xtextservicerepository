@@ -56,9 +56,9 @@ class DataObjectQueryInternal {
 
 	/** 
 	 * Get all super types of the business object in upward order
-	 * @param do The business object
+	 * @param bo The business object
 	 * @param vistitedBOs	already visited business objects
-	 * @return
+	 * @return all supertypes of bo
 	 */
 	def static List<DataObject> getAllSuperTypes(DataObject bo, List<DataObject> vistitedBOs) {
 		var vistitedBOsVar = vistitedBOs
@@ -118,12 +118,14 @@ class DataObjectQueryInternal {
 
 	/** 
 	 * Find all transitive dependencies of the Property. The dependency graph is build from all properties transitively 
-	 * referenced via the properties' type references if these have properties themselves, i.e. they are DataObjects 
+	 * referenced via the properties' type references if these have properties themselves, i.e. they are DataObjects
+	 *  
 	 * @param prop Property from which to start the traversal of the dependency graph
-	 * @param includeInheritedProperties
-	 * @param includeCycleTypes include the BO in the result even if it already was visited. 
-	 * However traversal of this path stops here
-	 * @return {@link DependencyDescription} keyed with the {@link IEObjectDesription} of the referring property 
+	 * @param includeInheritedProperties whether inherited properties shall be included in the search
+	 * @param includeCycleTypes include the BO in the result even if it already was visited. However traversal of this path stops here
+	 * @param visitedDependendies the dependencies that have already been visited, initially empty
+	 * @param referrer The DependencyDescription that refers to the DependencyDescriptions to be created
+	 * @return {@link DependencyDescription} keyed with the {@link IEObjectDescription} of the referring property 
 	 */
 	def DependencyDescription getTransitiveDependencies(Property prop, boolean includeInheritedProperties,
 		boolean includeCycleTypes, List<IEObjectDescription> visitedDependendies, DependencyDescription referrer) {
@@ -145,7 +147,7 @@ class DataObjectQueryInternal {
 	 * @param includeSuperTypes Look for references to super types as well?
 	 * @param visited	Contains all transitively found references so far. References include VersionedTypes and Operation Parameters.
 	 * @param resourceSet	The {@link ResourceSet} used to materialize found references from.
-	 * @return
+	 * @return all objects with transitive references to  {@code type}
 	 */
 	def List<IEObjectDescription> getAllTransitiveReferrers(EObject type, boolean includeSuperTypes,
 		List<IEObjectDescription> visited, ResourceSet resourceSet) {

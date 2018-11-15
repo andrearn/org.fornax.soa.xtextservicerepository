@@ -94,8 +94,9 @@ public class StringMatcher {
     }
 
     /**
-     * Find the first occurrence of the pattern between <code>start</code)(inclusive) 
+     * Find the first occurrence of the pattern between <code>start</code>)(inclusive) 
      * and <code>end</code>(exclusive).  
+     * 
      * @param text the String object to search in 
      * @param start the starting index of the search range, inclusive
      * @param end the ending index of the search range, exclusive
@@ -273,7 +274,6 @@ public class StringMatcher {
 
     /**
      * Parses the given pattern into segments seperated by wildcard '*' characters.
-     * @param p, a String object that is a simple regular expression with '*' and/or '?'
      */
     private void parseWildCards() {
         if (fPattern.startsWith("*")) { //$NON-NLS-1$
@@ -381,13 +381,13 @@ public class StringMatcher {
     }
 
     /**
-     * 
-     * @return boolean
+     * match text regions with a pattern
      * @param text a String to match
-     * @param start int that indicates the starting index of match, inclusive
-     * @param end</code> int that indicates the ending index of match, exclusive
-     * @param p String,  String, a simple regular expression that may contain '?'
-     * @param ignoreCase boolean indicating wether code>p</code> is case sensitive
+     * @param tStart int that indicates the starting index position of match, inclusive
+     * @param p a simple regular expression that may contain '?'
+     * @param pStart int that indicates the starting index position of pattern
+     * @param plen length of the pattern
+     * @return true, if region inside text matches p
      */
     protected boolean regExpRegionMatches(String text, int tStart, String p,
             int pStart, int plen) {

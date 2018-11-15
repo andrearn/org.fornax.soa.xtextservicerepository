@@ -32,8 +32,11 @@ class LifecycleQueries {
 		lookup.getModelElementByName (state, res, "LifecycleState");
 	}
 	
-	/*
+	/**
 	 * Get the minimal state for an environment of type LOCAL based on a given lifecycle definition
+	 * 
+	 * @param lifecycleDefinition a lifecycle
+	 * @return the minimal state required for a local environment
 	 */
 	def LifecycleState getMinLocalState (Lifecycle lifecycleDefinition) {
 		if (lifecycleDefinition !== null)
@@ -41,8 +44,11 @@ class LifecycleQueries {
 		else null
 	}
 	
-	/*
+	/**
 	 * Get the minimal state for an environment of type DEV based on a given lifecycle definition
+	 * 
+	 * @param lifecycleDefinition a lifecycle
+	 * @return the minimal state required for a development environment
 	 */
 	def LifecycleState getMinDevState (Lifecycle lifecycleDefinition) {
 		if (lifecycleDefinition !== null)
@@ -51,8 +57,11 @@ class LifecycleQueries {
 	}
 
 
-	/*
+	/**
 	 * Get the minimal state for an environment of type TEST based on a given lifecycle definition
+	 * 
+	 * @param lifecycleDefinition a lifecycle
+	 * @return the minimal state required for a test environment
 	 */
 	def LifecycleState getMinTestState (Lifecycle lifecycleDefinition) {
 		if (lifecycleDefinition !== null)
@@ -60,8 +69,11 @@ class LifecycleQueries {
 		else null
 	}
 
-	/*
+	/**
 	 * Get the minimal state for an environment of type STAGING based on a given lifecycle definition
+	 * 
+	 * @param lifecycleDefinition a lifecycle
+	 * @return the minimal state required for a staging environment
 	 */
 	def LifecycleState getMinStagingState (Lifecycle lifecycleDefinition) {
 		if (lifecycleDefinition !== null)
@@ -69,8 +81,11 @@ class LifecycleQueries {
 		else null
 	}
 
-	/*
+	/**
 	 * Get the minimal state for an environment of type PROD based on a given lifecycle definition
+	 * 
+	 * @param lifecycleDefinition a lifecycle
+	 * @return the minimal state required for a production environment
 	 */
 	def LifecycleState getMinProdState (Lifecycle lifecycleDefinition) {
 		if (lifecycleDefinition !== null)
@@ -92,8 +107,12 @@ class LifecycleQueries {
 			return null
 		}
 	}
-	/*
+	
+	/**
 	 * Get the minimal state for an environment of type LOCAL based on a given lifecycle definition
+	 * 
+	 * @param lifecycleDefinition a lifecycle
+	 * @return the maximum state required for a local environment
 	 */
 	def LifecycleState getMaxLocalState (Lifecycle lifecycleDefinition) {
 		if (lifecycleDefinition !== null) {
@@ -103,8 +122,11 @@ class LifecycleQueries {
 		}
 	}
 	
-	/*
+	/**
 	 * Get the minimal state for an environment of type DEV based on a given lifecycle definition
+	 * 
+	 * @param lifecycleDefinition a lifecycle
+	 * @return the maximum state required for a development environment
 	 */
 	def LifecycleState getMaxDevState (Lifecycle lifecycleDefinition) {
 		if (lifecycleDefinition !== null) {
@@ -115,8 +137,11 @@ class LifecycleQueries {
 	}
 
 
-	/*
+	/**
 	 * Get the minimal state for an environment of type TEST based on a given lifecycle definition
+	 * 
+	 * @param lifecycleDefinition a lifecycle
+	 * @return the maximum state required for a test environment
 	 */
 	def LifecycleState getMaxTestState (Lifecycle lifecycleDefinition) {
 		if (lifecycleDefinition !== null) {
@@ -126,8 +151,11 @@ class LifecycleQueries {
 		}
 	}
 
-	/*
+	/**
 	 * Get the minimal state for an environment of type STAGING based on a given lifecycle definition
+	 * 
+	 * @param lifecycleDefinition a lifecycle
+	 * @return the maximum state required for a staging environment
 	 */
 	def LifecycleState getMaxStagingState (Lifecycle lifecycleDefinition) {
 		if (lifecycleDefinition !== null) {
@@ -137,8 +165,11 @@ class LifecycleQueries {
 		}
 	}
 
-	/*
+	/**
 	 * Get the minimal state for an environment of type PROD based on a given lifecycle definition
+	 * 
+	 * @param lifecycleDefinition a lifecycle
+	 * @return the maximum state required for a production environment
 	 */
 	def LifecycleState getMaxProdState (Lifecycle lifecycleDefinition) {
 		if (lifecycleDefinition !== null) {

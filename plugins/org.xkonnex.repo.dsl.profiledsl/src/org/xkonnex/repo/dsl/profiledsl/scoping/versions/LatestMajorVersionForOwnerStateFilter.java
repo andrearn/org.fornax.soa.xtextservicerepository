@@ -115,6 +115,7 @@ public class LatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateV
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -123,7 +124,7 @@ public class LatestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateV
 			return false;
 		if (!(obj instanceof LatestMajorVersionForOwnerStateFilter))
 			return false;
-		LatestMajorVersionForOwnerStateFilter other = (LatestMajorVersionForOwnerStateFilter) obj;
+		LatestMajorVersionForOwnerStateFilter<T> other = (LatestMajorVersionForOwnerStateFilter<T>) obj;
 		if (majorVersion == null) {
 			if (other.majorVersion != null)
 				return false;

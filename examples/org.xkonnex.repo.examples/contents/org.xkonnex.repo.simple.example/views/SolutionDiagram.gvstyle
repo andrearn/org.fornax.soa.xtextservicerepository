@@ -31,7 +31,17 @@ style RequiredServiceNode as RoundedRectangleShape {
 	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 	)
 }
+style RequiredResourceNode as RoundedRectangleShape {
+	this.backgroundColor = color(#eeeeee)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
+}
 style HiddenRequiredServiceNode as RoundedRectangleShape {
+	this.backgroundColor = color(#eeeeee)
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
+}
+style HiddenRequiredResourceNode as RoundedRectangleShape {
 	this.backgroundColor = color(#eeeeee)
 	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 	)

@@ -63,14 +63,14 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedTypeRef
 		@Check def void checkNoPropertyOverrides(Property prop) {
 			if (prop.eContainer() instanceof DataObject) {
 				var DataObject dataObject = (prop.eContainer() as DataObject)
-				if (dataObject.getSuperObject() !== null && dataObject.getSuperObject().getType() !== null) {
+				if (dataObject.superObject !== null && dataObject.superObject.getType() !== null) {
 					val String propName = prop.getName()
 					for (DataObject superType : dataObjQuery.getAllSuperTypes(dataObject, null)) {
 						var overridesSuperTypeProp = superType.properties.exists[name == propName]
 						if (overridesSuperTypeProp) {
 							var StringBuilder errMsg = new StringBuilder("Property ")
 							errMsg.append(propName).append(" overrides an inherited property from ").append(
-								superType.getName()).append(" version ").append(dataObject.getVersion().getVersion())
+								superType.name).append(" version ").append(dataObject.version.getVersion())
 							error(errMsg.toString(), ServiceDslPackage.Literals::PROPERTY__NAME)
 						}
 					}

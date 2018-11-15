@@ -51,7 +51,6 @@ class ServiceContractBuilder {
 	 * <b>Lookup of bindings for provided services:</b> <br/>
 	 * Looks for a binding that binds the module (or a compatible newer version of it) to the given target environment.
 	 * 
-	 * <br/><br/>
 	 * <b>Lookup of bindings for used services:</b> <br/>
 	 * Looks for a binding that binds the used module, either defined as direct reference of via a service reference with 
 	 * providing module in the module definition, to the given target environment.
@@ -60,10 +59,11 @@ class ServiceContractBuilder {
 	 * 
 	 * @param module The module, for which to build service contracts for provided and/or used services
 	 * @param targetEnvironment The environment to build service contracts for.
+	 * @param selectTypeVersionsByEnvironment whether version shall be selected based on the required LifecycleState for the environment
 	 * @param generateProvidedServices If true, contracts for services provided by the module will be generated
 	 * @param generateUsedServices If true, contracts for services provided by the module will be generated
 	 * @param endpointQualifierRef Only generate for looked up bindings that are tagged with this endpoint qualifier
-	 * @param profile The architecture profile defining the architectural rules, generated service contracts must be compliant to 
+	 * @param enforcedProfile The architecture profile defining the architectural rules, generated service contracts must be compliant to 
 	 */
 	def void build (Module module, Environment targetEnvironment, boolean selectTypeVersionsByEnvironment, boolean generateProvidedServices, boolean generateUsedServices, EndpointQualifierRef endpointQualifierRef, Profile enforcedProfile) {
 		for (protContractBuilder : protocolContractBuilders) {

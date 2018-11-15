@@ -120,8 +120,11 @@ class EnvironmentBindingResolver {
 		modBind.resolveEnvironment
 	}
 	
-	/*
+	/**
 	 * Get all environments to which the module is not bound
+	 * 
+	 * @param module the Module to find unbound {@link Environment}s for
+	 * @return all {@link Environment}s where the module is  not available/bound
 	 */
 	def Set<Environment> findUnboundEnvironmentForCompatibleModule (Module module) {
 		val allBindings = bindingLookup.getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))

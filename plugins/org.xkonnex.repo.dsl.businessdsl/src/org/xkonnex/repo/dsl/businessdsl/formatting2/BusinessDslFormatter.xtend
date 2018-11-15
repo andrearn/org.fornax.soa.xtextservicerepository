@@ -6,9 +6,6 @@ package org.xkonnex.repo.dsl.businessdsl.formatting2
 import com.google.inject.Inject
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Import
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Privilege
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Role
-import org.xkonnex.repo.dsl.basedsl.baseDsl.User
 import org.xkonnex.repo.dsl.basedsl.formatting2.BaseDslFormatter
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.BusinessFunction
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.BusinessModel
@@ -30,15 +27,6 @@ class BusinessDslFormatter extends BaseDslFormatter {
 		}
 		for (Organization organizations : businessModel.getOrganizations()) {
 			organizations.format;
-		}
-		for (Role roles : businessModel.getRoles()) {
-			roles.format;
-		}
-		for (User users : businessModel.getUsers()) {
-			users.format;
-		}
-		for (Privilege privileges : businessModel.getPrivileges()) {
-			privileges.format;
 		}
 	}
 

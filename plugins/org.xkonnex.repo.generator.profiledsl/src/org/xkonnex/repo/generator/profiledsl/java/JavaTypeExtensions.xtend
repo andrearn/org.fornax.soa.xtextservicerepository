@@ -58,8 +58,11 @@ class JavaTypeExtensions {
 		typeRef.type.toQualifiedJavaTypeName(optionalField)
 	}
 	
-	/*
+	/**
 	 * returns the Java type name of the property's type
+	 * 
+	 * @param property a {@link Property}
+	 * @return the Java type name
 	 */
 	def toQualifiedJavaTypeName (Property property) {
 		property.type.toQualifiedJavaTypeName(property.optional)
@@ -107,8 +110,11 @@ class JavaTypeExtensions {
 		typeRef.type.toQualifiedJavaTypeName(optionalField)
 	}
 	
-	/*
+	/**
 	 * returns the Java type name of the property's type
+	 * 
+	 * @param property a {@link Property}
+	 * @return the Java type name
 	 */
 	def toJavaTypeName (Property property) {
 		property.type.toJavaTypeName(property.optional)

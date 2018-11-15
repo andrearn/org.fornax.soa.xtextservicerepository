@@ -73,14 +73,17 @@ public class BusinessObjectVersionValidator extends AbstractServiceDslVersionVal
 
 	/**
 	 * Is the property backward compatible with the previous version of the BO? Backward compatibility is maintaines
-	 * when the property: <br/>
+	 * when the property: 
+	 * 
 	 * <ul>
 	 * 		<li>has the same name as the property in the same position of the previous version</li>
 	 * 		<li>has the same type or compatible type as the property in the same position of the previous version</li>
-	 * </u> <br/><br/>
+	 * </ul> 
 	 * 
 	 * Types are compatible if is the current type is the same or a super type of the previous one or the new type can 
 	 * generally represent the old one, i.e. is convertible
+	 * 
+	 * @param prop the Property to validate
 	 */
 	@Check
 	public void checkPropertyBackwardCompatibility (final Property prop) {

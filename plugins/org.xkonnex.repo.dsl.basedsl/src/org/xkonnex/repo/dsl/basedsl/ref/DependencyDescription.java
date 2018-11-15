@@ -9,9 +9,9 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 
 /**
  * Describes a dependency of a source object from a target object. 
- * Source and target EObject are referenced by their {@link IEObjectDescription} <br/>
+ * Source and target EObject are referenced by their {@link IEObjectDescription} 
  * 
- * <code>source ==> target </code>
+ * <code>source ==&gt; target </code>
  * @author aarnold
  *
  */
@@ -92,7 +92,7 @@ public class DependencyDescription implements Iterable<DependencyDescription> {
 	 * and it's referrers. A DependencyDescription is dependency from this 
 	 * DependencyDescription if it's <code>source</code> matches the <code>target</code> of this description
 
-	 * @return
+	 * @return the dependencies
 	 */
 	public Deque<DependencyDescription> getDependencies() {
 		return dependencies;
@@ -109,7 +109,7 @@ public class DependencyDescription implements Iterable<DependencyDescription> {
 	/**
 	 * The referrer to this dependency. A DependencyDescription is referrer to this 
 	 * DependencyDescription if it's target matches the source of this description
-	 * @return
+	 * @return the referring DependencyDescription
 	 */
 	public DependencyDescription getReferrer() {
 		return referrer;
@@ -122,7 +122,7 @@ public class DependencyDescription implements Iterable<DependencyDescription> {
 	/**
 	 * Denotes a backward reference in the dependency graph
 	 * 
-	 * @returns True, when the dependency is a backward reference
+	 * @return True, when the dependency is a backward reference
 	 * in the dependency graph, i.e. the target has already been visited from
 	 * a transitive upstream referrer in the graph
 	 */

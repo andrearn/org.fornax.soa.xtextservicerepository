@@ -122,7 +122,7 @@ class ServiceRepositoryNewProjectGenerator {
 	def generateServiceViewMap (IFileSystemAccess fsa) {
 		val content='''
 			/*******************************************************************************
-			 * Copyright (c) 2012 developers of XtextServiceRepository and others.
+			 * Copyright (c) 2018 developers of XKonneX Repository and others.
 			 * All rights reserved. This script and the accompanying materials
 			 * are made available under the terms of the Eclipse Public License v1.0
 			 * which accompanies this distribution, and is available at
@@ -134,17 +134,17 @@ class ServiceRepositoryNewProjectGenerator {
 			
 			diagram ServiceDiagram type SubNamespace {
 				
-				node ServiceNode for each services {
+				node ServiceNode for each objects.filter (typeof (Service)) {
 					label Name for name
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					
 					node OperationNode for operations {
 						label Name for each map (op|op.name + "(" + {if (op.parameters?.size < 4) {op.parameters.map(p|p.name).join(",")} else "..."} + ")")
 					}
 					hidden edge BOEdge for each 
 						operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
-						=> call BusinessObjectNode for (this as BusinessObject)
+							(p.^type as VersionedTypeRef).^type instanceof AbstractBusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+						=> call BusinessObjectNode for (this as AbstractBusinessObject)
 					}
 					hidden edge QOEdge for each 
 						operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
@@ -159,7 +159,7 @@ class ServiceRepositoryNewProjectGenerator {
 					
 					hidden edge BOReturnEdge for each 
 						operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+							(p.^type as VersionedTypeRef).^type instanceof AbstractBusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
 						=> call BusinessObjectNode for (this as BusinessObject)
 					}
 					hidden edge QOReturnEdge for each 
@@ -181,15 +181,68 @@ class ServiceRepositoryNewProjectGenerator {
 						=> call HiddenExceptionNode for this
 					}
 					
-					hidden edge RequiredServiceEdge for each operations.map(op | op.requires).flatten.map(req|req.service) {
+					hidden edge RequiredServiceEdge for each operations.map(op | op.requires).flatten.map(req|req.interfaceRef) {
 						=> call ServiceNode for this
 						label RequiresLabel for "requires"
 					}
 				}
 			
-				node BusinessObjectNode for this as BusinessObject {
+				node ResourceNode for each objects.filter (typeof (Resource)) {
 					label Name for name
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
+					
+					node OperationNode for operations {
+						label Name for each map (op|op.name + "(" + {if (op.parameters?.size < 4) {op.parameters.map(p|p.name).join(",")} else "..."} + ")")
+					}
+					hidden edge BOEdge for each 
+						operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef).^type instanceof AbstractBusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+						=> call BusinessObjectNode for (this as AbstractBusinessObject)
+					}
+					hidden edge QOEdge for each 
+						operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef).^type instanceof QueryObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+						=> call QueryObjectNode for (this as QueryObject)
+					}
+					hidden edge EnumEdge for each 
+						operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
+							(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+						=> call EnumNode for (this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
+					}
+					
+					hidden edge BOReturnEdge for each 
+						operations.map(op | op.response.map[^return]).flatten.filter (p | (p.map[^type] instanceof VersionedTypeRef && 
+							(p.map[^type] as VersionedTypeRef).^type instanceof AbstractBusinessObject)).map (r|(r.map[^type] as VersionedTypeRef).^type).toSet {
+						=> call BusinessObjectNode for (this as BusinessObject)
+					}
+					hidden edge QOReturnEdge for each 
+						operations.map(op | op.response.map[^return]).flatten.filter (p | (p.map[^type] instanceof VersionedTypeRef && 
+							(p.map[^type] as VersionedTypeRef).^type instanceof QueryObject)).map (r|(r.map[^type] as VersionedTypeRef).^type).toSet {
+						=> call QueryObjectNode for (this as QueryObject)
+					}
+					hidden edge EnumReturnEdge for each 
+						operations.map(op | op.response.map[^return]).flatten.filter (p | (p.map[^type] instanceof VersionedTypeRef && 
+							(p.map[^type] as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)).map (r|(r.map[^type] as VersionedTypeRef).^type).toSet {
+						=> call EnumNode for (this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
+					}
+					edge ExceptionEdge for each 
+						operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer == t.exception.map[eContainer]).map(e|e.exception).toSet {
+						=> ref HiddenExceptionNode for this
+					}
+					hidden edge HiddenExceptionEdge for each
+						operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer != t.exception.map[eContainer]).map(e|e.exception).toSet {
+						=> call HiddenExceptionNode for this
+					}
+					
+					hidden edge RequiredServiceEdge for each operations.map(op | op.requires).flatten.map(req|req.interfaceRef) {
+						=> call ServiceNode for this
+						label RequiresLabel for "requires"
+					}
+				}
+			
+				node BusinessObjectNode for this as AbstractBusinessObject {
+					label Name for name
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
@@ -198,9 +251,9 @@ class ServiceRepositoryNewProjectGenerator {
 					
 					hidden edge HiddenReferenceEdge for each 
 						properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-							(p.^type as VersionedTypeRef)?.^type instanceof BusinessObject) &&
+							(p.^type as VersionedTypeRef)?.^type instanceof AbstractBusinessObject) &&
 							eContainer == p.eContainer?.eContainer) {
-						=> call BusinessObjectNode for ((^type as VersionedTypeRef)?.^type as BusinessObject)
+						=> call BusinessObjectNode for ((^type as VersionedTypeRef)?.^type as AbstractBusinessObject)
 						label HiddenEdgeLabel for name
 					} 
 					hidden edge HiddenEnumReferenceEdge for each 
@@ -213,14 +266,14 @@ class ServiceRepositoryNewProjectGenerator {
 					
 					hidden edge InhertanceEdge for superObject?.^type {
 						=> call BusinessObjectNode for this
-					} unless superObject == null
+					} unless superObject === null
 					
 					
-				} unless !(this instanceof BusinessObject)
+				} unless !(this instanceof AbstractBusinessObject)
 				
 				node QueryObjectNode for this as QueryObject {
 					label Name for name
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
@@ -244,7 +297,7 @@ class ServiceRepositoryNewProjectGenerator {
 					
 					hidden edge InhertanceEdge for superObject?.^type {
 						=> call QueryObjectNode for this
-					} unless superObject == null
+					} unless superObject === null
 					
 					
 				} unless !(this instanceof BusinessObject)
@@ -253,7 +306,7 @@ class ServiceRepositoryNewProjectGenerator {
 				node EnumNode for this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration {
 					label EnumLabel  for "<<Enum>>"
 					label Name for name
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					hidden node EnumLiteralNode for literals {
 						label Label for each map(lit|lit.name)
 					} unless literals.empty
@@ -262,7 +315,7 @@ class ServiceRepositoryNewProjectGenerator {
 				node HiddenExceptionNode for this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception {
 					label ExceptionLabel for "<<Exception>>"
 					label Name for name	
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
@@ -294,7 +347,7 @@ class ServiceRepositoryNewProjectGenerator {
 					 
 					edge InhertanceEdge for superException?.^exception {
 						=> call HiddenExceptionNode for this
-					} unless superException == null
+					} unless superException === null
 				} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception)
 			}
 		'''
@@ -304,7 +357,7 @@ class ServiceRepositoryNewProjectGenerator {
 	def generateServiceViewStyle (IFileSystemAccess fsa) {
 		val content = '''
 			/*******************************************************************************
-			 * Copyright (c) 2012 developers of XtextServiceRepository and others.
+			 * Copyright (c) 2018 developers of XtextServiceRepository and others.
 			 * All rights reserved. This style sheet and the accompanying materials
 			 * are made available under the terms of the Eclipse Public License v1.0
 			 * which accompanies this distribution, and is available at
@@ -347,6 +400,34 @@ class ServiceRepositoryNewProjectGenerator {
 			}
 			
 			style ServiceDiagram.ServiceNode.RequiredServiceEdge {
+				this.lineStyle = SWT::LINE_DASH
+				this.foregroundColor = color(#cccccc)
+			}
+			
+			
+			style ServiceNode as RoundedRectangleShape { 
+				this.backgroundColor = color(#d8ffd8)
+			}
+			
+			
+			style ResourceNode { 
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+				)
+			}
+			style ServiceDiagram.ResourceNode.Version { 
+				this.font = font("Helvetica", 10, SWT::CENTER 
+				)
+			}
+			
+			style ServiceDiagram.ResourceNode.OperationNode as RoundedRectangleShape {
+				this.outline = false
+				this.backgroundColor = color(#ffffff)
+				this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
+					(SWT::NONE)
+				)
+			}
+			
+			style ServiceDiagram.ResourceNode.RequiredServiceEdge {
 				this.lineStyle = SWT::LINE_DASH
 				this.foregroundColor = color(#cccccc)
 			}
@@ -458,7 +539,7 @@ class ServiceRepositoryNewProjectGenerator {
 	def generateBusinessObjectViewMap (IFileSystemAccess fsa) {
 		val content = '''
 			/*******************************************************************************
-			 * Copyright (c) 2012 developers of XtextServiceRepository and others.
+			 * Copyright (c) 2018 developers of XKonneX Repository and others.
 			 * All rights reserved. This style sheet and the accompanying materials
 			 * are made available under the terms of the Eclipse Public License v1.0
 			 * which accompanies this distribution, and is available at
@@ -470,9 +551,9 @@ class ServiceRepositoryNewProjectGenerator {
 			
 			diagram BusinessObjectDiagram type SubNamespace {
 				
-				node BusinessObjectNode for each types.filter (typeof (BusinessObject)) {
+				node BusinessObjectNode for each objects.filter (typeof (AbstractBusinessObject)) {
 					label Name for name
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type?.name + " {" +
@@ -516,25 +597,25 @@ class ServiceRepositoryNewProjectGenerator {
 					 
 					edge InhertanceEdge for superObject?.^type {
 						=> ref BusinessObjectNode for this
-					} unless superObject == null || superObject?.^type.eContainer != eContainer
+					} unless superObject === null || superObject?.^type.eContainer != eContainer
 					
 					hidden edge HiddenInhertanceEdge for superObject?.^type {
 						=> call HiddenBusinessObjectNode for this
-					} unless superObject == null || superObject?.^type.eContainer == eContainer
+					} unless superObject === null || superObject?.^type.eContainer == eContainer
 				}
 				
 				 
 				node HiddenBusinessObjectNode for this as BusinessObject {
 					label Name for name
 					label PackageName for "from " + if (eContainer.eContainer instanceof OrganizationNamespace) {
-						if ((eContainer.eContainer as OrganizationNamespace).prefix != null)
+						if ((eContainer.eContainer as OrganizationNamespace).prefix !== null)
 							(eContainer.eContainer as OrganizationNamespace).prefix + "." + (eContainer as SubNamespace).name
 						else
 							(eContainer.eContainer as OrganizationNamespace).name + "." + (eContainer as SubNamespace).name
 					} else {
 						(eContainer as SubNamespace).name
 					}
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name + " {" +
@@ -565,14 +646,14 @@ class ServiceRepositoryNewProjectGenerator {
 					
 					hidden edge HiddenInhertanceEdge for superObject?.^type {
 						=> call BusinessObjectNode for this
-					} unless superObject == null
-				} unless !(this instanceof BusinessObject)
+					} unless superObject === null
+				} unless !(this instanceof AbstractBusinessObject)
 			
 			
 				
-				node QueryObjectNode for each types.filter (typeof (QueryObject)) {
+				node QueryObjectNode for each objects.filter (typeof (QueryObject)) {
 					label Name for name
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type?.name + " {" +
@@ -616,24 +697,24 @@ class ServiceRepositoryNewProjectGenerator {
 					 
 					edge InhertanceEdge for superObject?.^type {
 						=> ref QueryObjectNode for this
-					} unless superObject == null || superObject?.^type.eContainer != eContainer
+					} unless superObject === null || superObject?.^type.eContainer != eContainer
 					
 					hidden edge HiddenInhertanceEdge for superObject?.^type {
 						=> call HiddenQueryObjectNode for this
-					} unless superObject == null || superObject?.^type.eContainer == eContainer
+					} unless superObject === null || superObject?.^type.eContainer == eContainer
 				}
 				 
 				node HiddenQueryObjectNode for this as QueryObject {
 					label Name for name
 					label PackageName for "from " + if (eContainer.eContainer instanceof OrganizationNamespace) {
-						if ((eContainer.eContainer as OrganizationNamespace).prefix != null)
+						if ((eContainer.eContainer as OrganizationNamespace).prefix !== null)
 							(eContainer.eContainer as OrganizationNamespace).prefix + "." + (eContainer as SubNamespace).name
 						else
 							(eContainer.eContainer as OrganizationNamespace).name + "." + (eContainer as SubNamespace).name
 					} else {
 						(eContainer as SubNamespace).name
 					}
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name + " {" +
@@ -664,14 +745,14 @@ class ServiceRepositoryNewProjectGenerator {
 					
 					hidden edge HiddenInhertanceEdge for superObject?.^type {
 						=> call QueryObjectNode for this
-					} unless superObject == null
+					} unless superObject === null
 				} unless !(this instanceof QueryObject)
 			
 			
-				node ExceptionNode for each exceptions {
+				node ExceptionNode for each objects.filter (typeof (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception)) {
 					label ExceptionLabel for "<<Exception>>"
 					label Name for name	
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					
 					hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 						label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type?.name)
@@ -715,14 +796,14 @@ class ServiceRepositoryNewProjectGenerator {
 					 
 					edge InhertanceEdge for superException?.^exception {
 						=> call ExceptionNode for this
-					} unless superException == null
+					} unless superException === null
 				}
 				
 				
-				node EnumNode for each types.filter(typeof (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)) {
+				node EnumNode for each objects.filter(typeof (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)) {
 					label EnumLabel  for "<<Enum>>"
 					label Name for name
-					label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+					label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 					hidden node EnumLiteralNode for literals {
 						label Label for each map(lit|lit?.name)
 					} unless literals.empty
@@ -982,9 +1063,18 @@ class ServiceRepositoryNewProjectGenerator {
 	
 	def generateSolutionViewMap (IFileSystemAccess fsa) {
 		val content='''
+			/*******************************************************************************
+			 * Copyright (c) 2018 developers of XKonneX Repository and others.
+			 * All rights reserved. This style sheet and the accompanying materials
+			 * are made available under the terms of the Eclipse Public License v1.0
+			 * which accompanies this distribution, and is available at
+			 * http://www.eclipse.org/legal/epl-v10.html
+			 * 
+			 * initial contribution:	André Arnold
+			 *******************************************************************************/
 			import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.*
 			import org.xkonnex.repo.dsl.servicedsl.serviceDsl.*
-			import org.xkonnex.repo.dsl.profiledsl.profileDsl.*
+			import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.*
 			
 			diagram SolutionDiagram type Solution {
 				
@@ -995,7 +1085,7 @@ class ServiceRepositoryNewProjectGenerator {
 						=> call NestedFeatureNode for this 
 					} 
 					edge RequiredServiceEdge for each requires {
-						=> ref RequiredServiceNode for this.service 
+						=> ref RequiredServiceNode for this.interface 
 						label RequiresEdgeLabel for "requires"
 					} 
 				}
@@ -1019,17 +1109,21 @@ class ServiceRepositoryNewProjectGenerator {
 					hidden edge NestedFeatureEdge for each features {
 						=> call NestedFeatureNode for this 
 					} 
-					hidden edge RequiredServiceEdge for each requires.map (r|r.service) {
+					hidden edge RequiredServiceEdge for each requires.map (r|r.interface) {
 						=> call HiddenRequiredServiceNode for this
 						label RequiresEdgeLabel for "requires"
 					} 
 				} unless !(this instanceof Feature)
 				
-				node RequiredServiceNode for each requires.map(r|r.service) {
+				node RequiredServiceNode for each requires.map(r|r.interface).filter(typeof (Service)) {
 					label ServiceLabel for "<<Service>>"
 					label ServiceNameLabel for name
-					label Version for "[v" + version?.version+"]"
-					
+					label Version for "[v" + version?.version+"]"		
+				}
+				node RequiredResourceNode for each requires.map(r|r.interface).filter(typeof (Resource)) {
+					label ServiceLabel for "<<Resource>>"
+					label ServiceNameLabel for name
+					label Version for "[v" + version?.version+"]"		
 				}
 				
 				hidden node HiddenRequiredServiceNode for this  as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service {
@@ -1038,6 +1132,12 @@ class ServiceRepositoryNewProjectGenerator {
 					label Version for "[v" + this.version?.version+"]"
 					
 				} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service)
+				hidden node HiddenRequiredResourceNode for this  as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service {
+					label ServiceLabel for "<<Resource>>"
+					label ServiceNameLabel for this.name
+					label Version for "[v" + this.version?.version+"]"
+					
+				} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource)
 			}
 		'''
 		fsa.generateFile("view/SolutionView.gvmap", content)
@@ -1078,7 +1178,17 @@ class ServiceRepositoryNewProjectGenerator {
 				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 				)
 			}
+			style RequiredResourceNode as RoundedRectangleShape {
+				this.backgroundColor = color(#eeeeee)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+				)
+			}
 			style HiddenRequiredServiceNode as RoundedRectangleShape {
+				this.backgroundColor = color(#eeeeee)
+				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+				)
+			}
+			style HiddenRequiredResourceNode as RoundedRectangleShape {
 				this.backgroundColor = color(#eeeeee)
 				this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
 				)

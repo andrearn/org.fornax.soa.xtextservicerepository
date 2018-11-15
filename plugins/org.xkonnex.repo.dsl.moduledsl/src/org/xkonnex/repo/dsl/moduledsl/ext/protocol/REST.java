@@ -23,7 +23,8 @@ public class REST implements IModuleEndpointProtocol {
 	}
 
 	/**
-	 * URL path part
+	 * Set the URL path part
+	 * @param path URL path part
 	 */
 	public void setPath(String path) {
 		this.path = path;
@@ -34,7 +35,9 @@ public class REST implements IModuleEndpointProtocol {
 	}
 
 	/**
-	 * HTTP operation verb
+	 * Set the HTTP operation verb
+	 * 
+	 * @param verb the HTTP verb
 	 */
 	public void setVerb(Verb verb) {
 		this.verb = verb;
@@ -46,6 +49,8 @@ public class REST implements IModuleEndpointProtocol {
 
 	/**
 	 * Defines how request parameters will be transferred (body, header, URL path or query string...) 
+	 * 
+	 * @param style the request parameter representation stayle to use
 	 */
 	public void setParameterStyle(RESTParameterStyle style) {
 		this.parameterStyle = style;
@@ -61,6 +66,8 @@ public class REST implements IModuleEndpointProtocol {
 
 	/**
 	 * Content type of a request body part
+	 * 
+	 * @param requestContentType the content-type of the request
 	 */
 	public void addRequestContentType(String requestContentType) {
 		this.requestContentType.add(requestContentType);
@@ -76,6 +83,8 @@ public class REST implements IModuleEndpointProtocol {
 
 	/**
 	 * Defines a response with response code and content
+	 * 
+	 * @param response HTTP response
 	 */
 	public void addResponse(HttpResponse response) {
 		this.response.add(response);

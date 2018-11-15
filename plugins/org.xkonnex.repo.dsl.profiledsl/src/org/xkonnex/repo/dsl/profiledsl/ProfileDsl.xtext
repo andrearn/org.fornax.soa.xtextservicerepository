@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2017 André Arnold and others.
+Copyright (c) 2010-2018 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -50,12 +50,12 @@ Profile:
 		(scopedBasicTypes+=BasicTypes)*
 		(governanceDecisions+=GovernanceDecision)*
 		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('owner' owner=EmailOrUsername)?
+			('responsible' responsible += EmailOrUsername)*
+			('budgeting' budgeting = EmailOrUsername)?
 		'}')?
 		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
+			subscriptions += EmailOrUsername*
 		'}')?
 	'}';
 
@@ -106,7 +106,7 @@ LifecycleState:
 		(transitions+=Transition)*
 	'}';
 	
-Transition: '->' targetState = [LifecycleState | QualifiedName] ('by' (roles+=RoleRef)(',' roles+=RoleRef)*)?;
+Transition: '->' targetState = [LifecycleState | QualifiedName] ('by' (roles+=STRING)(',' roles+=STRING)*)?;
 
 /* 
  * Defines a service category
@@ -200,12 +200,12 @@ OrganizationNamespace:
 	'org-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		('meta-data' '{'
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}')?
 		(subNamespaces+=TechnicalNamespace)*
@@ -225,12 +225,12 @@ TechnicalNamespace:
 			 */	
 			(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}')?
 		(types+=Type)*

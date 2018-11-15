@@ -25,35 +25,39 @@ public interface IComponentInferrer {
 	
 	/**
 	 * infer a new instance of the referenced JvmType. 
+	 * @param <T> the component type
 	 * 
-	 * @param compnent
-	 *            The component to infer a Java Bean of it's referenced type with all assignments applied.
-	 * @return
+	 * @param component The component to infer a Java Bean of it's referenced type with all assignments applied.
+	 * @return the inferred new JvmType instance
 	 */
 	public <T> T inferComponent(Component component);
 	
 	/**
 	 * infer a new instance of the referenced JvmType. 
+	 * @param <T> The type of the Component
 	 * 
-	 * @param compnent
+	 * @param component
 	 *            The component to infer a Java Bean of it's referenced type with all assignments applied.
-	 * @return
+	 * @param resourceSet The ResourceSet of the model
+	 * @return the inferred new JvmType instance
 	 */
 	public <T> T inferComponent(Component component, ResourceSet resourceSet);
 
 	/**
 	 * infer a new instance of the referenced JvmType. 
+	 * @param <T> The type of the Component
 	 * 
 	 * @param type
 	 *            The referenced Java type. Should be acquired from the
 	 *            extensible model element.
-	 * @return
+	 * @return the inferred new JvmType instance
 	 */
 	public <T> T inferComponent(JvmType type);
 
 	/**
 	 * infer a new instance of the referenced JvmType with all assignments
 	 * applied. Nested component instances will also be inferred recursively. 
+	 * @param <T> The type of the Component
 	 * 
 	 * @param type
 	 *            The referenced Java type. Should be acquired from the
@@ -62,7 +66,7 @@ public interface IComponentInferrer {
 	 *            The value {@link Assignment}s from the model element. Should
 	 *            be acquired from the extensible model element that provides
 	 *            the type.
-	 * @return
+	 * @return the inferred new JvmType instance
 	 */
 	public <T> T inferComponent(JvmType type, List<Assignment> assignments);
 

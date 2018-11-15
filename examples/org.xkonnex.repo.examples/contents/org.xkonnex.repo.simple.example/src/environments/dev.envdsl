@@ -1,21 +1,13 @@
 /*
  * We define a development environment
  */
-environment Dev of type Development-Environment {
-	
-	/*
-	 * Host, that can host servers. This one is for the ESB
-	 */
-	host dev_airport {
-		full-qualified-name "airport-dev.example.org"
-	}
-	
-	
+Development-Environment Dev {
+		
 	/*
 	 * We have an ESB on the dev_airport host
 	 */
 	esb DevESB {
-		host dev_airport
+		host "airport-dev.example.org"
 		connectors {
 			default SOAP/HTTP defaultSoap {
 				endpoint-visibility public

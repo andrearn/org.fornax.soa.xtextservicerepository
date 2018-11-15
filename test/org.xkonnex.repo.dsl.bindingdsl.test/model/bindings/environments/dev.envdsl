@@ -1,7 +1,7 @@
 /*
  * We define a development environment
  */
-environment Dev of type Development-Environment {
+Development-Environment Dev {
 	
 	/*
 	 * Host, that can host servers. This one is for the ESB

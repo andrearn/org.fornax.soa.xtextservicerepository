@@ -120,7 +120,7 @@ public class SearchPattern {
 	 * It can be exact match, prefix match, pattern match or camelCase match.
 	 * Rule can also be combined with a case sensitivity flag.
 	 * 
-	 * @param allowedRules
+	 * @param allowedRules matchin rules
 	 *            one of {@link #RULE_EXACT_MATCH}, {@link #RULE_PREFIX_MATCH},
 	 *            {@link #RULE_PATTERN_MATCH}, {@link #RULE_CASE_SENSITIVE},
 	 *            {@link #RULE_CAMELCASE_MATCH} combined with one of following
@@ -148,8 +148,7 @@ public class SearchPattern {
 	}
 
 	/**
-	 * @param stringPattern
-	 *            The stringPattern to set.
+	 * @param stringPattern The stringPattern to set.
 	 */
 	public void setPattern(String stringPattern) {
 		this.initialPattern = stringPattern;
@@ -162,9 +161,9 @@ public class SearchPattern {
 	}
 
 	/**
-	 * Matches text with pattern. matching is determine by matchKind.
+	 * Matches text with pattern. Matching is determined by matchKind.
 	 * 
-	 * @param text
+	 * @param text the text to match against the pattern
 	 * @return true if search pattern was matched with text false in other way
 	 */
 	public boolean matches(String text) {
@@ -228,8 +227,8 @@ public class SearchPattern {
 	}
 
 	/**
-	 * @param text
-	 * @param prefix
+	 * @param text the text to match against the pattern
+	 * @param prefix a prefix to text
 	 * @return true if text starts with given prefix, ignoring case false in
 	 *         other way
 	 */
@@ -296,10 +295,8 @@ public class SearchPattern {
 	 * </li>
 	 * </ol>
 	 * 
-	 * @param pattern
-	 *            the given pattern
-	 * @param name
-	 *            the given name
+	 * @param pattern the given pattern
+	 * @param name the name to match
 	 * @return true if the pattern matches the given name, false otherwise
 	 * 
 	 */
@@ -404,18 +401,12 @@ public class SearchPattern {
 	 * </li>
 	 * </ol>
 	 * 
-	 * @param pattern
-	 *            the given pattern
-	 * @param patternStart
-	 *            the start index of the pattern, inclusive
-	 * @param patternEnd
-	 *            the end index of the pattern, exclusive
-	 * @param name
-	 *            the given name
-	 * @param nameStart
-	 *            the start index of the name, inclusive
-	 * @param nameEnd
-	 *            the end index of the name, exclusive
+	 * @param pattern the given pattern
+	 * @param patternStart the start index of the pattern, inclusive
+	 * @param patternEnd the end index of the pattern, exclusive
+	 * @param name the element name
+	 * @param nameStart the start index of the name, inclusive
+	 * @param nameEnd the end index of the name, exclusive
 	 * @return true if a sub-pattern matches the subpart of the given name,
 	 *         false otherwise
 	 */
@@ -526,7 +517,7 @@ public class SearchPattern {
 	 * Checks pattern's character is allowed for specified set. It could be
 	 * override if you want change logic of camelCaseMatch methods.
 	 * 
-	 * @param patternChar
+	 * @param patternChar character in the search pattern
 	 * @return true if patternChar is in set of allowed characters for pattern
 	 */
 	protected boolean isPatternCharAllowed(char patternChar) {
@@ -538,8 +529,7 @@ public class SearchPattern {
 	 * Checks character of element's name is allowed for specified set. It could
 	 * be override if you want change logic of camelCaseMatch methods.
 	 * 
-	 * @param nameChar -
-	 *            name of searched element
+	 * @param nameChar name of searched element
 	 * @return if nameChar is in set of allowed characters for name of element
 	 */
 	protected boolean isNameCharAllowed(char nameChar) {
@@ -638,8 +628,7 @@ public class SearchPattern {
 	/**
 	 * Check if character is valid camelCase character
 	 * 
-	 * @param ch
-	 *            character to be validated
+	 * @param ch  character to be validated
 	 * @return true if character is valid
 	 */
 	protected boolean isValidCamelCaseChar(char ch) {
@@ -680,8 +669,7 @@ public class SearchPattern {
 	/**
 	 * Trims sequences of '*' characters
 	 * 
-	 * @param pattern
-	 *            string to be trimmed
+	 * @param pattern string to be trimmed
 	 * @return trimmed pattern
 	 */
 	private static String trimWildcardCharacters(String pattern) {

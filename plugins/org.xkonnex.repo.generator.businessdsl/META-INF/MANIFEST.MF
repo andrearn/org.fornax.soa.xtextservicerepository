@@ -6,7 +6,7 @@ Bundle-Version: 2.0.0.qualifier
 Bundle-SymbolicName: org.xkonnex.repo.generator.businessdsl; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.xkonnex.repo.dsl.businessdsl;bundle-version="2.0.0";visibility:=reexport,
- org.eclipse.xtext;bundle-version="2.13.0";visibility:=reexport,
+ org.eclipse.xtext;bundle-version="2.15.0";visibility:=reexport,
  org.eclipse.emf.mwe2.launch;resolution:=optional,
  org.eclipse.emf.mwe.utils;visibility:=reexport,
  org.xkonnex.repo.dsl.basedsl;bundle-version="2.0.0"

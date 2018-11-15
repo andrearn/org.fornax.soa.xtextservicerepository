@@ -50,8 +50,8 @@ class VersionQualifierExtensions {
 		"1";
 	}
 	
-	/*
-	 * returns the default version string 1.0
+	/**
+	 * @return the default version string 1.0
 	 */
 	def String toDefaultVersion () {
 		"1.0";

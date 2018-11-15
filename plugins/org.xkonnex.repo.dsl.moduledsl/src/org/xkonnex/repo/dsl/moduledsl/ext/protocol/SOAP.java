@@ -16,6 +16,8 @@ public class SOAP implements IModuleEndpointProtocol {
 
 	/**
 	 * SOAP encoding style. Use document/literal-wrapped by default
+	 * 
+	 * @param style SOAP message encoding style
 	 */
 	public void setStyle(SOAPStyle style) {
 		this.style = style;
@@ -27,6 +29,8 @@ public class SOAP implements IModuleEndpointProtocol {
 
 	/**
 	 * SOAP protocol version
+	 * 
+	 * @param version the SOAP protocol version
 	 */
 	public void setVersion(String version) {
 		this.version = version;
@@ -38,6 +42,8 @@ public class SOAP implements IModuleEndpointProtocol {
 
 	/**
 	 * URL path to context root
+	 * 
+	 * @param contextRoot the URL path part below which all SOAP requests are handled
 	 */
 	public void setContextRoot(String contextRoot) {
 		this.contextRoot = contextRoot;
@@ -49,6 +55,8 @@ public class SOAP implements IModuleEndpointProtocol {
 
 	/**
 	 * SOAP transport layer protocol
+	 * 
+	 * @param transportProtocol the SOAP transport protocol to use
 	 */
 	public void setTransportProtocol(SOAPTransport transportProtocol) {
 		this.transportProtocol = transportProtocol;

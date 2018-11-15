@@ -15,7 +15,10 @@ public class Header {
 		this.name = name;
 	}
 	
-	/** The message header field represented by this header */
+	/** 
+	 * The message header field represented by this header 
+	 * @return the message header
+	 */
 	public String getMessageHeader() {
 		return messageHeader;
 	}
@@ -30,7 +33,11 @@ public class Header {
 		this.description = description;
 	}
 	
-	/** Data type of the header field, defaults to string */
+	/** 
+	 * Data type of the header field, defaults to string 
+	 * 
+	 * @return the type name of the header field
+	 */
 	public String getType() {
 		return type;
 	}

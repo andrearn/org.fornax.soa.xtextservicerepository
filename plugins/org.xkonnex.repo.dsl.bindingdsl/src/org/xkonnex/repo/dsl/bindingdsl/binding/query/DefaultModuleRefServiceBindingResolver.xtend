@@ -114,7 +114,7 @@ class DefaultModuleRefServiceBindingResolver implements IModuleRefServiceBinding
 	 * 
 	 * @param module 				the module, for which ServiceBindingDescriptions are to be build for all used services
 	 * @param targetEnvironment 	the environment a binding applicable for the used service must bind to 
-	 * @param endpointQualifier 	selects an endpoint of a service by selecting the most specific binding for 
+	 * @param endpointQualifierRef 	selects an endpoint of a service by selecting the most specific binding for 
 	 * 								that service having	this effective endpoint qualifier. If, null applicable bindings may
 	 * 								have any or no potentially effective endpoint qualifier
 	 */

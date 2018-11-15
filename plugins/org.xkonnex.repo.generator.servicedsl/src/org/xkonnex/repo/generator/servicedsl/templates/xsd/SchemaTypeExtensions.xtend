@@ -359,6 +359,9 @@ class SchemaTypeExtensions {
 	 * 	<li><b>weak</b> 			- optional for technical reasons, such as not loaded under some conditions</li>
 	 * 	<li><b>provided-key</b> 	- a key generated in the backend, that is not always set, such as when the object has just been created, but not yet persisted</li>
 	 * </ul>
+	 * 
+	 * @param p a {@link Property}
+	 * @return true if the resulting XSD element for the property p is optional
 	 */
 	def boolean isOptionalElement (Property p) {
 		return p.optional || p.weak || p.isProvidedKey;
@@ -455,6 +458,9 @@ class SchemaTypeExtensions {
 	/**
 	 * Determine, whether XSD type definitions should be made extensible for unknown elements in
 	 * the complexType  
+	 * 
+	 * @param p the architecture profile
+	 * @return true, if the profile allows extensible XSD properties
 	 */
 	def boolean typesUseExtensibleProperties (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules !== null 
@@ -469,6 +475,9 @@ class SchemaTypeExtensions {
 	
 	/**
 	 * Determine, whether XSD type definitions should be made extensible for unknown XML attributes 
+	 * 
+	 * @param p the architecture profile
+	 * @return true, if the profile allows extensible XSD attributes
 	 */
 	def boolean typesUseExtensibleXMLAttributes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules !== null 
@@ -483,6 +492,9 @@ class SchemaTypeExtensions {
 	/**
 	 * Determine, whether XSD type definitions, that subtype another type definition, 
 	 * should be made extensible for unknown XML elements or attributes 
+	 * 
+	 * @param p the architecture profile
+	 * @return true, if the profile allows extensible XSD subtypes
 	 */
 	def boolean useExtensibleSubtypes (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.designRules !== null 
@@ -498,6 +510,9 @@ class SchemaTypeExtensions {
 	/**
 	 * Get the XSD any clause that makes complexTypes backward compatible allowing additional 
 	 * optional elements
+	 * 
+	 * @param p the architecture profile
+	 * @return custom XSD any clause defined in the profile p
 	 */
 	def String getTypesExtensiblePropertiesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.typesUseExtensibleProperties) {
@@ -519,6 +534,9 @@ class SchemaTypeExtensions {
 	/**
 	 * Get the XSD anyAttribute clause that makes complexTypes backward compatible allowing additional 
 	 * optional XML attributes in the type
+	 * 
+	 * @param p the architecture profile
+	 * @return custom XSD anyAttribute clause defined in the profile p
 	 */
 	def String getTypesExtensibleXMLAttributesClause (org.xkonnex.repo.dsl.profiledsl.profileDsl.Profile p) {
 		if (p.typesUseExtensibleXMLAttributes) {

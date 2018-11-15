@@ -18,8 +18,11 @@ class EnvironmentLookup {
 	private IPredicateSearch lookup
 	
 	
-	/*
-	 * find all defined Environments and initialize EMF proxies 
+	/**
+	 * find all defined Environments and initialize EMF proxies
+	 *  
+	 * @param resourceSet the {@link ResourceSet} that contains the model
+	 * @return all {@link Environment}s in the model 
 	 */
 	def Set<Environment> findAllEnvironments (ResourceSet resourceSet) {
 		var envDescs = lookup.search("Environment ", Predicates::alwaysTrue)
@@ -41,18 +44,25 @@ class EnvironmentLookup {
 		return allEnvironments.toSet
 	}
 	
-	/*
+	/**
 	 * Collect all used EnvironmentTypes from all Environments define in the model
+	 *  
+	 * @param resourceSet the {@link ResourceSet} that contains the model
+	 * @return all {@link EnvironmentType}s in the model 
 	 */
 	def Set<EnvironmentType> getAllUsedEnvironmentTypes (ResourceSet resourceSet) {
 		val allEnvs = findAllEnvironments (resourceSet)
 		return allEnvs.map (e | e.type).toSet
 	}
 	
-	/*
+	/**
 	 * Filters a collection of EnvironmentTypes in such a way, that it only
 	 * contains the overall used EnvironmentTypes from Environments defined in
-	 * themodel
+	 * the model
+	 *  
+	 * @param environmentTypes a list of {@link EnvironmentType}s
+	 * @param resourceSet the {@link ResourceSet} that contains the model
+	 * @return all used {@link EnvironmentType}s in the model 
 	 */
 	def List<EnvironmentType> filterByUsedEnvironmentTypes (List<EnvironmentType> environmentTypes, ResourceSet resourceSet) {
 		val allDefEnvs = getAllUsedEnvironmentTypes (resourceSet)

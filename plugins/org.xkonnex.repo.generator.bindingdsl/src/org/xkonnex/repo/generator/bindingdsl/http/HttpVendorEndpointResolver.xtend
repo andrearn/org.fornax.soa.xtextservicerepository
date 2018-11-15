@@ -330,8 +330,8 @@ class HttpVendorEndpointResolver {
 	
 	def String toBaseURI (Resource resource) {
 		var String baseURI = null
-		if (resource.uri !== null) {
-			baseURI = resource.uri 
+		if (resource.basePath !== null) {
+			baseURI = resource.basePath 
 		} else {
 			baseURI = resource.name + "/" + resource.version.toVersionPostfix()
 		}

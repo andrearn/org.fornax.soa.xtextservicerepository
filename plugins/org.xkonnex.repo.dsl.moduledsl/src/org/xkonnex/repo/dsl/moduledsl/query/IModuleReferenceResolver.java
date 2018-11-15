@@ -27,7 +27,7 @@ public interface IModuleReferenceResolver {
 	 * 
 	 * @param moduleRef Reference to the Module
 	 * @param minState The minimal required {@link LifecycleState}
-	 * @return
+	 * @return latest version of the referenced {@link Module}
 	 */
 	public Module resolveModuleRef (ModuleRef moduleRef, LifecycleState minState);
 	
@@ -37,7 +37,7 @@ public interface IModuleReferenceResolver {
 	 * @param moduleRef Reference to the Module
 	 * @param targetEnvironment The {@link Environment} the Module must be ready to run in
 	 * @param lifecycle The applicable {@link Lifecycle} for the Module
-	 * @return
+	 * @return latest version of the referenced {@link Module}
 	 */
 	public Module resolveModuleRef (ModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle);
 
@@ -49,7 +49,7 @@ public interface IModuleReferenceResolver {
 	 * @param lifecycle The applicable {@link Lifecycle} for the Module
 	 * @param endpointQualifierRef The endpoint qualifier to filter for
 	 * @param usedProtocol The protocol, the Module must support
-	 * @return
+	 * @return latest version of the referenced {@link Module}
 	 */
 	public Module resolveModuleRef (ModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, EndpointProtocol usedProtocol);
 	
@@ -58,7 +58,7 @@ public interface IModuleReferenceResolver {
 	 * 
 	 * @param moduleRef Reference to the Module
 	 * @param minState The minimal required {@link LifecycleState}
-	 * @return
+	 * @return latest version of the referenced {@link Module}
 	 */
 	public Module resolveModuleServiceRef (ServiceModuleRef moduleRef, LifecycleState minState);
 	
@@ -68,7 +68,7 @@ public interface IModuleReferenceResolver {
 	 * @param moduleRef Reference to the Module
 	 * @param targetEnvironment The {@link Environment} the Module must be ready to run in
 	 * @param lifecycle The applicable {@link Lifecycle} for the Module
-	 * @return
+	 * @return latest version of the referenced {@link Module}
 	 */
 	public Module resolveModuleServiceRef (ServiceModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle);
 	
@@ -80,7 +80,7 @@ public interface IModuleReferenceResolver {
 	 * @param lifecycle The applicable {@link Lifecycle} for the Module
 	 * @param endpointQualifierRef The endpoint qualifier to filter for
 	 * @param usedProtocol The protocol, the Module must support
-	 * @return
+	 * @return latest version of the referenced {@link Module}
 	 */
 	public Module resolveModuleServiceRef (ServiceModuleRef moduleRef, Environment targetEnvironment, Lifecycle lifecycle, EndpointQualifierRef endpointQualifierRef, EndpointProtocol usedProtocol);
 

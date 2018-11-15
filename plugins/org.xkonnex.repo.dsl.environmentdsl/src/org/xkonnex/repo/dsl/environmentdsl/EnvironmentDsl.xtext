@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2017 André Arnold and others.
+Copyright (c) 2010-2018 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -17,7 +17,6 @@ import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 EnvModel:
 	(imports+=EnvImport)*
-	(users+=User)*
 	(environments+=Environment)*;
 	
 EnvImport :
@@ -27,7 +26,7 @@ EnvFileImport:
 	'import' importURI=STRING ;
 	
 Environment:
-	'environment' name=ID 'of type' (type=EnvironmentType) '{'
+	(type=EnvironmentType) name=ID '{'
 		(hosts+=Host)*
 		(executables+=AbstractExecutable)*
 		
@@ -39,7 +38,7 @@ Environment:
 		('default' 'InfrastructureManager' defaultManager=[InfrastructureManager|QualifiedName])? 
 	'}';
 	
-enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Integration="Integration-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | InfrastructureLibrary="Infrastructure-Library" | Other="Other-Environment";
+enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Integration="Integration-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | InfrastructureLibrary="Infrastructure-Library" | Other="Environment";
 
 EnvironmentComponent returns baseDsl::Component: Connector|AbstractExecutable|SecurityProtocol|Host|ConfigurationScript|Database;
 
@@ -53,8 +52,8 @@ Server: ESB | Registry | ProcessServer | AppServer | Broker | WebServer | Databa
 ExtensibleServer:
 	(isDefault?='default')? 'server' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
 		('identifier' dslCode=STRING )?
-		('admins' admins+=[baseDsl::User|QualifiedName] )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' admins+=EmailOrUsername )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
 		(
@@ -76,14 +75,14 @@ ExtensibleServer:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}'
 ;/* An Enterprise Service Bus */
 ESB: 
 	'esb' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
-		('admins' admins+=[baseDsl::User|QualifiedName] )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' admins+=EmailOrUsername )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING )?
 		('adminUrl' adminUrl=STRING )?
@@ -108,14 +107,14 @@ ESB:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 
 Gateway: 
 	(isDefault?='default')? 'gateway' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
 		('identifier' dslCode=STRING )?
-		('admins' admins+=[baseDsl::User|QualifiedName] )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' admins+=EmailOrUsername )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING )?
 		('adminUrl' adminUrl=STRING )?
@@ -138,15 +137,15 @@ Gateway:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 
 /* A service registry */
 Registry:
 	'registry' name=ID  ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
-		('admins' admins+=[baseDsl::User|QualifiedName] )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' admins+=EmailOrUsername )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING )?
 		('server-type' serverType=STRING )?
@@ -167,15 +166,15 @@ Registry:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 	
 //Configuration servers like Zookeeper, Deployment automation server, monitoring system
 InfrastructureManager:
 	'infrastructure-manager' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
 		('identifier' dslCode=STRING )?
-		('admins' admins+=[baseDsl::User|QualifiedName] )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' admins+=EmailOrUsername )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
 		(
@@ -187,7 +186,7 @@ InfrastructureManager:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}'
 ;
 enum RegistryKind : UDDI | HTTP | File | Native;
@@ -242,8 +241,8 @@ UDDIRegistry:
 AppServer: 
 	'appserver' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
-		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' (admins+=EmailOrUsername)+ )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING  )?
 		('adminUrl' adminUrl=STRING  )?
@@ -269,15 +268,15 @@ AppServer:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 
 /* A HTTP webserver, e.g. Apache */
 WebServer: 
 	'webserver' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
-		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' (admins+=EmailOrUsername)+ )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING  )?
 		('baseUrl' baseUrl=STRING  )?
@@ -297,18 +296,18 @@ WebServer:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 	
 /* A business process server */
 ProcessServer:
 	'processserver'  name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
-		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' (admins+=EmailOrUsername)+ )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('dir' home=STRING )?
 		('deployDir' deployDir=STRING  )?
-		('deployUser' deployUser=[baseDsl::User|QualifiedName] )?
+		('deployUser' deployUser=EmailOrUsername )?
 		('adminUrl' adminUrl=STRING  )?
 		('server-type' serverType=STRING )?
 		('server-version' serverVersion=STRING )?
@@ -331,15 +330,16 @@ ProcessServer:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 
 /* A message broker */
 Broker: 
 	'broker' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )? 
-		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
-		'host' host=[Host|QualifiedName] 'dir' home=STRING 
+		('admins' (admins+=EmailOrUsername)+ )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
+		('dir' home=STRING)? 
 		('deployDir' deployDir=STRING )?
 		('adminUrl' adminUrl=STRING )?
 		('server-type' serverType=STRING )?
@@ -360,14 +360,14 @@ Broker:
 			'}'
 		)?
 		(iam=IAMReference)?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}'; 
 
 Database:  
 	'database' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
-		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
-		'host' host=[Host|QualifiedName]  
+		('admins' (admins+=EmailOrUsername)+ )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('dir' home=STRING )? 
 		('dataDir' dataDir=STRING )? 
 		('adminUrl' adminUrl=STRING  )?
@@ -389,15 +389,15 @@ Database:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 
 /* A SAP system */
 SAP:  
 	'sap' name=ID '{'
 		('identifier' dslCode=STRING )?
-		('admins' (admins+=[baseDsl::User|QualifiedName])+ )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' (admins+=EmailOrUsername)+ )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		'system-id' systemId = INT 
 		('dir' home=STRING )?
 		('dataDir' dataDir=STRING )?
@@ -414,7 +414,7 @@ SAP:
 			'}'
 		)?
 		(iam=IAMReference)?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 	
 SapClient: 
@@ -434,7 +434,7 @@ Executable:
 	'executable' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		(version=Version)?
 		('identifier' dslCode=STRING )?
-		'host' host=[Host|QualifiedName] 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('dir' home=STRING )?
 		('baseUrl' baseUrl=STRING  )?
 		(
@@ -451,7 +451,7 @@ Executable:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 	
 /** @deprecated */	
@@ -692,7 +692,7 @@ BareHost:
 		'full-qualified-name' fqn=STRING 
 		('ip-address' ip=STRING)? 
 		('identifier' dhsCode=STRING )?
-		('admins' admins+=[baseDsl::User|QualifiedName])?
+		('admins' admins+=EmailOrUsername)?
 		('virtual-machines' '{'
 			vm+=[VM|QualifiedName]+
 		'}')?
@@ -704,8 +704,8 @@ BareHost:
 Cluster:
 	(isDefault?='default')? 'cluster' name=ID ('type' type=[jvmTypes::JvmType|QualifiedName])? '{'
 		('identifier' dslCode=STRING )?
-		('admins' admins+=[baseDsl::User|QualifiedName] )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' admins+=EmailOrUsername )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		('server-type' serverType=STRING )?
 		(
 			'connectors' '{'
@@ -734,7 +734,7 @@ VM:
 		'full-qualified-name' fqn=STRING 
 		('ip-address' ip=STRING)? 
 		('identifier' dhsCode=STRING )?
-		('admins' admins+=[baseDsl::User|QualifiedName])?
+		('admins' admins+=EmailOrUsername)?
 		('containers' '{'
 			container+=[Container|QualifiedName]+
 		'}')?
@@ -767,8 +767,8 @@ ConfigurationScript:
 IdentityAccessManager:
 	'identity-access-manager' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
 		('identifier' dslCode=STRING )?
-		('admins' admins+=[baseDsl::User|QualifiedName] )? 
-		'host' host=[Host|QualifiedName] 
+		('admins' admins+=EmailOrUsername )? 
+		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		(
 			'connectors' '{'
 				(connectors+=Connector)+
@@ -777,21 +777,12 @@ IdentityAccessManager:
 		('configuration' '{'
 			(assignment+=Assignment)+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])+ )*
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}'
 ;
 
 IAMReference: 'use-IAM' identityAccessManager=[IdentityAccessManager|QualifiedName] 
 ;
-
-	
-/* A system user */	
-User returns baseDsl::User: 
-	'user' name=ID '{'
-		('firstname' firstname=STRING 'lastname' lastname=STRING )? 
-		'email' email=STRING 
-		('phone' phone=STRING )?
-	'}';
 	
 SecurityProtocol: type = [jvmTypes::JvmType|QualifiedName];
 

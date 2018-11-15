@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2017 André Arnold and others.
+Copyright (c) 2010-2018 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -20,11 +20,11 @@ Import:
 	'import' importedNamespace=QualifiedNameWithWildCard;
 
 /* 
- * Version numbers, some postfixes are treated in a special way:
+ * Version numbers, some post-fixes are treated in a special way:
  * <ul>
  * 	<li>Final:		treated as if the version number ends with ".0"</li>
  * 	<li>RC:			release candidate, may end with a number</li>
- * 	<li>CR:			release candidate (snynonym for RC), may end with a number</li></li>
+ * 	<li>CR:			release candidate (synonym for RC), may end with a number</li></li>
  * 	<li>Beta:		beta, may end with a number</li>
  * 	<li>Alpha:		alpha, may end with a number</li>
  * 	<li>Milestone:	milestone release, may end with a number</li>
@@ -71,7 +71,7 @@ MajorVersionRef:
 	'majorVersion' majorVersion=INT;
 
 /*
- * Constraint that matches an asset version  explicitely
+ * Constraint that matches an asset version  explicitly
  */
 FixedVersionRef:
 	'fixedVersion' fixedVersion=VersionId;
@@ -80,11 +80,18 @@ QualifiedNameWithWildCard:
 	QualifiedName '.*'?;
 
 QualifiedName:
-	ID (('.'|'@') ID)*;
+	ID (('.') ID)*;
+	
+TagName: ('#')? QualifiedName;
+	
+
+Email returns ecore::EString: ID (('.') ID)* '@' ID (('.') ID)*;
+
+EmailOrUsername returns ecore::EString: STRING|Email;
 
 /*
  * Expresses SOA governance decisions
- * voteing until date will be part of the review ballots captured in the side store
+ * voting until date will be part of the review ballots captured in the side store
  */
 GovernanceDecision:
 	'governance-decision' '{'
@@ -93,9 +100,22 @@ GovernanceDecision:
 		('specific-result' specificResult=STRING)?
 		('justification-doc' justificationOrDocURL=STRING )?
 		('decision-date' approvalDate=(STRING|DATE) )? 
-		('decision-by' approvedBy=STRING )?
+		('decision-by' approvedBy=EmailOrUsername)?
 		('effective-date' effectiveDate=(STRING|DATE))?
 	'}'
+;
+
+fragment ContactInfo:
+			('contact-info' '{'
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
+			'}');
+
+fragment Subscriptions:
+			('subscriptions' '{'
+				subscriptions += EmailOrUsername+
+			'}')
 ;
 
 enum GovernanceDecisionResult:
@@ -115,37 +135,6 @@ AdditionalInformation:
 InfoItem:
 	'location' documentLocation=STRING ('reference' reference=STRING)?
 ;
-
-User:
-	name = QualifiedName
-	(firstname = STRING)?
-	(lastname = STRING)?
-	(org = STRING)?
-	(orgUnit = STRING)?
-	(email = STRING)?
-	(phone = STRING)?
-	(roles += RoleRef)*
-;
-
-RoleRef:
-	role = [Role|STRING]
-;
-
-Role:
-	name = STRING
-	grants += PrivilegeRef*
-;
-
-PrivilegeRef:
-	privilege = [Privilege|QualifiedName]
-;
-
-Privilege:
-	name=QualifiedName
-		(readACL += QualifiedName)*
-		(writeACL += QualifiedName)*
-		(executeACL += QualifiedName)*
-	;
 	
 AssetRef: asset = [ecore::EObject|QualifiedName] (versionRef=VersionRef)?;
 
@@ -227,6 +216,12 @@ CipherAlgorithmKind: type=[jvmTypes::JvmType|QualifiedName] ('{'
 	'}')?;
 
 AnyBaseDslComponent returns Component: HashAlgorithmKind | SigningAlgorithm | CipherAlgorithmKind | AuthTokenKind;
+
+License: 
+	'license' name=STRING ('{'
+		'license-url' licenseUrl=STRING
+	'}')?
+;
 
 fragment DefaultValue: 'default' defaultValue=STRING;
 

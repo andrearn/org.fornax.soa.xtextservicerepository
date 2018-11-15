@@ -141,7 +141,7 @@ public class AbstractPluggableDeclarativeValidator extends AbstractInjectableVal
 	
 	/**
 	 * Override to register other {@link AbstractPluggableDeclarativeValidator}s
-	 * @return
+	 * @return registered validators
 	 */
 	protected Set<AbstractPluggableDeclarativeValidator> getRegisteredValidators () {
 		Set<AbstractPluggableDeclarativeValidator> regValidators = new HashSet<AbstractPluggableDeclarativeValidator>();

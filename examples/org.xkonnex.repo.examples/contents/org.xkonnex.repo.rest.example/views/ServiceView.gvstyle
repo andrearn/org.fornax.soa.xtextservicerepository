@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 developers of XtextServiceRepository and others.
+ * Copyright (c) 2018 developers of XtextServiceRepository and others.
  * All rights reserved. This style sheet and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -42,6 +42,34 @@ style ServiceDiagram.ServiceNode.OperationNode as RoundedRectangleShape {
 }
 
 style ServiceDiagram.ServiceNode.RequiredServiceEdge {
+	this.lineStyle = SWT::LINE_DASH
+	this.foregroundColor = color(#cccccc)
+}
+
+
+style ServiceNode as RoundedRectangleShape { 
+	this.backgroundColor = color(#d8ffd8)
+}
+
+
+style ResourceNode { 
+	this.font = font("Helvetica", 10, SWT::CENTER + SWT::BOLD + SWT::NONE
+	)
+}
+style ServiceDiagram.ResourceNode.Version { 
+	this.font = font("Helvetica", 10, SWT::CENTER 
+	)
+}
+
+style ServiceDiagram.ResourceNode.OperationNode as RoundedRectangleShape {
+	this.outline = false
+	this.backgroundColor = color(#ffffff)
+	this.font = font("Helvetica", 10, SWT::LEAD + SWT::LEFT+ 
+		(SWT::NONE)
+	)
+}
+
+style ServiceDiagram.ResourceNode.RequiredServiceEdge {
 	this.lineStyle = SWT::LINE_DASH
 	this.foregroundColor = color(#cccccc)
 }

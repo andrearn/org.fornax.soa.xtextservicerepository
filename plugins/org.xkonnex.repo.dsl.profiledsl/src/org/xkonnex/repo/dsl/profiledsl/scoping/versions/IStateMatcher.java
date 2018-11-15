@@ -10,8 +10,8 @@ public interface IStateMatcher {
 
 	/**
 	 * 
-	 * @param sourceState
-	 * @param targetState
+	 * @param sourceState state to verify
+	 * @param targetState state to verify against
 	 * @return true, when asset with targetState is reachable from asset with sourceState
 	 */
 	public boolean matches(LifecycleState sourceState,

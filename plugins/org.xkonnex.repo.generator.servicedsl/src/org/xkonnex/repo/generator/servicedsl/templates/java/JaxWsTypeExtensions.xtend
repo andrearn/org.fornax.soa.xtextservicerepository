@@ -19,12 +19,19 @@ class JaxWsTypeExtensions {
 	
 	/**
 	 * Returns the fully qualified JAX-WS-style java class name for a Service.
+	 * 
+	 * @param service a service
+	 * @return the fully qualified JAX-WS-style java class name
 	 */
 	def String toJaxWsQualifiedTypeName (Service service) {
 		service.toJaxWsServicePackageName + "." + service.name
 	}
 	/**
 	 * Returns the fully qualified JAX-WS-style java class name for an Exception.
+	 * 
+	 * @param exception an exception
+	 * @param throwingOperation the operation that throws throws exceptione
+	 * @return the fully qualified JAX-WS-style java class name
 	 */
 	def String toJaxWsQualifiedTypeName (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception exception, Operation throwingOperation) {
 		val service = throwingOperation.eContainer as Service
@@ -34,12 +41,20 @@ class JaxWsTypeExtensions {
 	
 	/**
 	 * Returns the simple JAX-WS-style java class name for a Service.
+	 * 
+	 * @param service a service
+	 * @param optionalField whether the field is optional
+	 * @return the simple JAX-WS-style java class name
 	 */
 	def String toJaxWsTypeName (Service service, boolean optionalField) {
 		service.name
 	}
+	
 	/**
 	 * Returns the simple JAX-WS-style java class name for an Exception.
+	 * 
+	 * @param exception an exception
+	 * @return the simple JAX-WS-style java class name
 	 */
 	def String toJaxWsTypeName (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception exception) {
 		exception.name
@@ -47,6 +62,9 @@ class JaxWsTypeExtensions {
 	
 	/**
 	 * Returns the simple JAX-WS-style java class name for the Exception referenced by an ExceptionRef .
+	 * 
+	 * @param exRef a reference to an exception
+	 * @return the simple JAX-WS-style java class name
 	 */
 	def String toJaxWsTypeName (ExceptionRef exRef) {
 		exRef.exception.toJaxWsTypeName
@@ -54,6 +72,9 @@ class JaxWsTypeExtensions {
 
 	/**
 	 * Get the simple class name JAX-WS-style operation request parameter wrapper type
+	 * 
+	 * @param operation an operation
+	 * @return the simple JAX-WS-style java class name
 	 */
 	def String toJaxWsOperationRequestTypeName (Operation operation) {
 		operation.name.toFirstUpper
@@ -61,6 +82,9 @@ class JaxWsTypeExtensions {
 	
 	/**
 	 * Get the simple class name JAX-WS-style operation response parameter wrapper type
+	 * 
+	 * @param operation an operation
+	 * @return the simple JAX-WS-style java class name
 	 */
 	def String toJaxWsOperationResponseTypeName (Operation operation) {
 		operation.name.toFirstUpper + "Response"
@@ -68,6 +92,9 @@ class JaxWsTypeExtensions {
 
 	/**
 	 * Get the fully qualified class name JAX-WS-style operation request parameter wrapper type
+	 * 
+	 * @param operation an operation
+	 * @return the simple JAX-WS-style java class name
 	 */
 	def String toJaxWsQualifiedOperationRequestTypeName (Operation operation) {
 		val Service service = objLookup.getOwnerByType(operation, typeof (Service))
@@ -76,6 +103,9 @@ class JaxWsTypeExtensions {
 	
 	/**
 	 * Get the fully qualified class name JAX-WS-style operation response parameter wrapper type
+	 * 
+	 * @param operation an operation
+	 * @return the fully qualified JAX-WS-style java class name
 	 */
 	def String toJaxWsQualifiedOperationResponseTypeName (Operation operation) {
 		val Service service = objLookup.getOwnerByType(operation, typeof (Service))
@@ -88,6 +118,9 @@ class JaxWsTypeExtensions {
 	
 	/**
 	 * Get the JAX-WS-style Java package name of a Service
+	 * 
+	 * @param service a service
+	 * @return the fully qualified JAX-WS-style package name
 	 */
 	def String toJaxWsServicePackageName (Service service) {
 		nameProvider.getFullyQualifiedName(service.eContainer).toString + "." + service.name.toLowerCase + "." + service.version.toVersionPostfix
@@ -95,6 +128,9 @@ class JaxWsTypeExtensions {
 	
 	/**
 	 * Get the JAX-WS-style Java package name of a Service Operation
+	 * 
+	 * @param operation an operation
+	 * @return the fully qualified JAX-WS-style package name
 	 */
 	def String toJaxWsServiceOperationPackageName (Operation operation) {
 		val Service service = objLookup.getOwnerByType(operation, typeof (Service))
@@ -107,6 +143,9 @@ class JaxWsTypeExtensions {
 	
 	/**
 	 * Get the JAX-WS-style Java package name of a Service Exception
+	 * 
+	 * @param exceptionRef a reference to an exception
+	 * @return the fully qualified JAX-WS-style package name
 	 */
 	def String toJaxWsServiceExceptionPackageName (ExceptionRef exceptionRef) {
 		val Service service = objLookup.getOwnerByType(exceptionRef, typeof (Service))

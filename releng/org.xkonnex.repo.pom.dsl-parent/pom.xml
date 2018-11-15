@@ -62,11 +62,17 @@
 						<artifactId>org.eclipse.xtend.lib</artifactId>
 						<version>${xtext-version}</version>
 						<type>pom</type>
+						<exclusions>
+							<exclusion>
+							    <groupId>com.google.guava</groupId>
+							    <artifactId>guava</artifactId>
+							</exclusion>
+						</exclusions>
 					</dependency>
 					<dependency>
-					    <groupId>org.eclipse.platform</groupId>
-					    <artifactId>org.eclipse.equinox.common</artifactId>
-					    <version>3.10.0</version>
+					    <groupId>com.google.guava</groupId>
+					    <artifactId>guava</artifactId>
+					    <version>21.0</version>
 					</dependency>
 				</dependencies>
 			</plugin>
@@ -101,7 +107,79 @@
 					</execution>
 				</executions>
 			</plugin>
-      	</plugins>
+ 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<tags>
+						<tag>
+							<name>generated</name>
+							<placement>X</placement>
+							<head></head>
+						</tag>
+						<tag>
+							<name>ordered</name>
+							<placement>X</placement>
+							<head></head>
+						</tag>
+						<tag>
+							<name>model</name>
+							<placement>X</placement>
+							<head></head>
+						</tag>
+					</tags>
+					<doclint>all,-missing</doclint>
+					<excludePackageNames>
+						org.xkonnex.repo.dsl.basedsl.baseDsl.impl,
+						org.xkonnex.repo.dsl.bindingdsl.bindingDsl.impl,
+						org.xkonnex.repo.dsl.businessdsl.businessDsl.impl,
+						org.xkonnex.repo.dsl.environmentdsl.environmentDsl.impl,
+						org.xkonnex.repo.dsl.moduledsl.moduleDsl.impl,
+						org.xkonnex.repo.dsl.profiledsl.profileDsl.impl,
+						org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.impl,
+						org.xkonnex.repo.dsl.servicedsl.serviceDsl.impl,
+						org.xkonnex.repo.dsl.sladsl.sLADsl.impl,
+						org.xkonnex.repo.dsl.solutiondsl.solutionDsl.impl,
+						org.xkonnex.repo.dsl.basedsl.baseDsl.util,
+						org.xkonnex.repo.dsl.bindingdsl.bindingDsl.util,
+						org.xkonnex.repo.dsl.businessdsl.businessDsl.util,
+						org.xkonnex.repo.dsl.environmentdsl.environmentDsl.util,
+						org.xkonnex.repo.dsl.moduledsl.moduleDsl.util,
+						org.xkonnex.repo.dsl.profiledsl.profileDsl.util,
+						org.xkonnex.repo.dsl.semanticsdsl.semanticsDsl.util,
+						org.xkonnex.repo.dsl.servicedsl.serviceDsl.util,
+						org.xkonnex.repo.dsl.sladsl.sLADsl.util,
+						org.xkonnex.repo.dsl.solutiondsl.solutionDsl.util
+					</excludePackageNames>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+			</plugin>
+     	</plugins>
+     	
 		<pluginManagement>
 			<plugins>
 				<plugin>

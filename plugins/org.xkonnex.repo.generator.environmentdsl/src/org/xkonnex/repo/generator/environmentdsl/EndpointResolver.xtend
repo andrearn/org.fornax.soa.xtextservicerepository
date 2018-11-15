@@ -11,6 +11,7 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.REST
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SOAPHTTP
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.environmentdsl.ext.connector.IConnector
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.AbstractExecutable
 
 class EndpointResolver {
 	
@@ -75,34 +76,37 @@ class EndpointResolver {
 	
 	private def dispatch String getHttpEndpointUrl(SOAPHTTP con) {
 		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
-		getEndpointUrl("http", s.host.fqn, con.port.toString(), con.contextRoot?.toContextRootPath)
+		getEndpointUrl("http", s.hostname, con.port.toString(), con.contextRoot?.toContextRootPath)
 	}
 	private def dispatch String getHttpEndpointUrl(HTTP con) {
 		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
-		getEndpointUrl("http", s.host.fqn, con.port.toString(), con.contextRoot?.toContextRootPath)
+		getEndpointUrl("http", s.hostname, con.port.toString(), con.contextRoot?.toContextRootPath)
 	}
 	private def dispatch String getHttpEndpointUrl(REST con) {
 		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
-		getEndpointUrl("http", s.host.fqn, con.port.toString(), con.contextRoot?.toContextRootPath)
+		getEndpointUrl("http", s.hostname, con.port.toString(), con.contextRoot?.toContextRootPath)
 	}
 	
 	
 	private def dispatch String getSecuredHttpEndpointUrl(SOAPHTTP con) {
 		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
-		getEndpointUrl("https", s.host.fqn, con.securedPort.toString(), con.contextRoot?.toContextRootPath)
+		getEndpointUrl("https", s.hostname, con.securedPort.toString(), con.contextRoot?.toContextRootPath)
 	}
 	private def dispatch String getSecuredHttpEndpointUrl(HTTP con) {
 		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
-		getEndpointUrl("https", s.host.fqn, con.securedPort.toString(), con.contextRoot?.toContextRootPath)
+		getEndpointUrl("https", s.hostname, con.securedPort.toString(), con.contextRoot?.toContextRootPath)
 	}
 	private def dispatch String getSecuredHttpEndpointUrl(REST con) {
 		val s = EcoreUtil2::getContainerOfType(con, typeof(Server))
-		getEndpointUrl("https", s.host.fqn, con.securedPort.toString(), con.contextRoot?.toContextRootPath)
+		getEndpointUrl("https", s.hostname, con.securedPort.toString(), con.contextRoot?.toContextRootPath)
 	}
 	
 	def private toContextRootPath (String path) {
 		return if (path.startsWith("/")) path else '''/«path»''' 
 	}
 	
+	private def hostname(AbstractExecutable exe) {
+		if (exe.host !== null) exe.host.fqn else exe.hostAddress
+	}
 		
 }

@@ -12,7 +12,7 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<xtextVersion>2.13.0</xtextVersion>
+		<xtextVersion>2.15.0</xtextVersion>
 	</properties>
 
 	<modules>
@@ -56,16 +56,6 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>org.eclipse.xtend.lib</artifactId>
-				<version>${xtextVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.xtext</groupId>
-				<artifactId>org.eclipse.xtext.xbase.lib</artifactId>
-				<version>${xtextVersion}</version>
-			</dependency>
-			<dependency>
 				<groupId>org.eclipse.xtext</groupId>
 				<artifactId>org.eclipse.xtext.xbase.web</artifactId>
 				<version>${xtextVersion}</version>
@@ -73,11 +63,6 @@
 			<dependency>
 				<groupId>org.eclipse.xtext</groupId>
 				<artifactId>org.eclipse.xtext.web.servlet</artifactId>
-				<version>${xtextVersion}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.eclipse.xtend</groupId>
-				<artifactId>org.eclipse.xtend.lib</artifactId>
 				<version>${xtextVersion}</version>
 			</dependency>
 			<dependency>

@@ -75,6 +75,7 @@ class BindingLookup {
 	 * @param targetEnvironment	The environment the bindings must bind to.
 	 * @param endpointQualifier	Endpoint qualifier that must be effective in the binding. When null, endpoint qualifiers are ignored,
 	 * 							i.e. all bindings that match the other criteria will be returned	 
+	 * @return applicable bindings
 	 */
 	def Set<ModuleBinding> findApplicableBindingsToModuleByEnvAndQualifier (Module module, Environment targetEnvironment, Qualifier endpointQualifier) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
@@ -99,6 +100,7 @@ class BindingLookup {
 	 * @param module 			The module to find a ModuleBinding for. Bindings referring to this module version 
 	 * 							are concerning the version constraint from the binding are considered
 	 * @param targetEnvironment	The environment the bindings must bind to.
+	 * @return applicable bindings
 	 */
 	def Set<ModuleBinding> findApplicableBindingsToModuleByEnv (Module module, Environment targetEnvironment) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
@@ -122,6 +124,7 @@ class BindingLookup {
 	 * 
 	 * @param module 			The module to find a ModuleBinding for. Bindings referring to this module version 
 	 * 							are concerning the version constraint from the binding are considered
+	 * @return applicable bindings
 	 */
 	def Set<ModuleBinding> findAllApplicableBindingsToModule (Module module) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
@@ -146,6 +149,7 @@ class BindingLookup {
 	 * 
 	 * @param module 			The module to find bindings for
 	 * @param endpointQualifier The endpointQualifier with which the Bindings must be tagged
+	 * @return applicable bindings
 	 */
 	def Set<ModuleBinding> findAllApplicableBindingsToModuleByQualifier (Module module, Qualifier endpointQualifier) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
@@ -168,6 +172,7 @@ class BindingLookup {
 	 * target environment.
 	 * 
 	 * @param module The module to find bindings for
+	 * @return applicable bindings
 	 */
 	def Set<ModuleBinding> findAllExplicitBindingsToModule (Module module) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
@@ -191,6 +196,7 @@ class BindingLookup {
 	 * 
 	 * @param module The module to find bindings for
 	 * @param endpointQualifier The endpointQualifier with which the Bindings must be tagged
+	 * @return explicitly matching bindings
 	 */
 	def Set<ModuleBinding> findAllExplicitBindingsToModuleByQualifier (Module module, Qualifier endpointQualifier) {
 		val allBindings = getAllBindings(module.eResource?.resourceSet).filter (typeof (ModuleBinding))
@@ -212,6 +218,11 @@ class BindingLookup {
 	 * Get the most specific binding for the service matching that is tagged with the given endpoint qualifier. 
 	 * The most specific binding is by default the top level binding. This might be overridden in a nested binding 
 	 * declaration. If such an override is defined, it will be returned instead.
+	 * 
+	 * @param service The {@link Service} to find a binding for
+	 * @param binding A {@link Binding} on a higher/more generic level
+	 * @param endpointQualifier A narrowing qualifier that selects an endpoint/type of binding
+	 * @return the most specific {@link Binding} for this {@link Service} 
 	 */
 	def Binding getMostSpecificBinding (Service service, Binding binding, EndpointQualifierRef endpointQualifier) {
 		val candBind = service.getMostSpecificBinding (binding)
@@ -228,6 +239,11 @@ class BindingLookup {
 	 * Get the most specific binding for the service matching that is tagged with the given endpoint qualifier. 
 	 * The most specific binding is by default the top level binding. This might be overridden in a nested binding 
 	 * declaration. If such an override is defined, it will be returned instead.
+
+	 * @param resource The {@link Resource} to find a binding for
+	 * @param binding A {@link Binding} on a higher/more generic level
+	 * @param endpointQualifier A narrowing qualifier that selects an endpoint/type of binding
+	 * @return the most specific {@link Binding} for this {@link Service} 
 	 */
 	def Binding getMostSpecificBinding (Resource resource, Binding binding, EndpointQualifierRef endpointQualifier) {
 		val candBind = resource.getMostSpecificBinding (binding)
@@ -452,10 +468,14 @@ class BindingLookup {
 	
 	/**
 	 * Get all Bindings defined in the model. This includes ModuleBindings, ServiceBindings and OperationBindings
+	 * 
+	 * @param rs The {@link ResourceSet} that loads the model
+	 * @return all {@link Binding}s defined in the model loaded by the {@link ResourceSet}
 	 */
 	def getAllBindings (ResourceSet rs) {
 		var Set<IEObjectDescription> allBindingDescs = lookup.search("ModuleBinding ", Predicates::alwaysTrue, rs).toSet
 		allBindingDescs.addAll (lookup.search("ServiceBinding ", Predicates::alwaysTrue))
+		allBindingDescs.addAll (lookup.search("ResourceBinding ", Predicates::alwaysTrue))
 		allBindingDescs.addAll (lookup.search("ResourceBinding ", Predicates::alwaysTrue))
 		allBindingDescs.addAll (lookup.search("OperationBinding ", Predicates::alwaysTrue))
 		var List<Binding> allBindings = newArrayList()
@@ -503,6 +523,12 @@ class BindingLookup {
 	/**
 	 * Check, whether the given Binding applies to the given Module and Service The Binding is applicable,
 	 * if it references the given module or a later compatible version and the module provides the service.
+	 * 
+	 * @param bind a {@link ModuleBinding} to check
+	 * @param mod the suspect Module that should be bound
+	 * @param svc a {@link Service} in the Module mod
+	 * 
+	 * @return true, if the  ModuloeBinding bind binds the Service inside the Module mod
 	 */
 	def isBindingApplicable (ModuleBinding bind, Module mod, Service svc) {
 		var versionFilter = versionFilterProvider.createVersionFilter (bind.module.versionRef)

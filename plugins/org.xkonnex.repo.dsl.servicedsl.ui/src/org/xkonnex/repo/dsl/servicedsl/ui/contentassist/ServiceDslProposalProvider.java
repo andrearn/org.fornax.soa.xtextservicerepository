@@ -77,6 +77,15 @@ public class ServiceDslProposalProvider extends
 			super.complete_INT(model, ruleCall, context, acceptor);
 		}
 	}
+	
+	@Override
+	public void complete_EmailOrUsername(EObject model, RuleCall ruleCall,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("\"email or username\"",
+				context));
+		acceptor.accept(createCompletionProposal("user.name@example.org",
+				context));
+	}
 
 	// public void complete_Operation (EObject model, RuleCall ruleCall,
 	// ContentAssistContext context,
@@ -150,6 +159,21 @@ public class ServiceDslProposalProvider extends
 					if (!canditateVersions.iterator().hasNext())
 						canditateVersions = getCanditateVersions(typeName,
 								ServiceDslPackage.Literals.ENUMERATION
+										.getName(), importedNamespaces,
+								majorVersionsOnly);
+					if (!canditateVersions.iterator().hasNext())
+						canditateVersions = getCanditateVersions(typeName,
+								ServiceDslPackage.Literals.ENTITY
+										.getName(), importedNamespaces,
+								majorVersionsOnly);
+					if (!canditateVersions.iterator().hasNext())
+						canditateVersions = getCanditateVersions(typeName,
+								ServiceDslPackage.Literals.AGGREGATE
+										.getName(), importedNamespaces,
+								majorVersionsOnly);
+					if (!canditateVersions.iterator().hasNext())
+						canditateVersions = getCanditateVersions(typeName,
+								ServiceDslPackage.Literals.VALUE_OBJECT
 										.getName(), importedNamespaces,
 								majorVersionsOnly);
 					for (String version : canditateVersions) {

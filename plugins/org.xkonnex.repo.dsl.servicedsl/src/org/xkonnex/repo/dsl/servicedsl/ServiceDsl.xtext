@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2017 André Arnold and others.
+Copyright (c) 2010-2018 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -48,30 +48,23 @@ DomainNamespace:
 	'domain-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
 		('metadata' '{'
 			('domain' domain=[businessDsl::Domain|QualifiedName])?
-			(version=Version  )?
+			(version=Version)?
 			('URI' uri=STRING)?
 			('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
+			(license=License)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}')?
 		
 		objects += ServiceObject*
 
-//		(types+=Type)*
-//		(resources += Resource)*
-//		(services+=Service)*
-//		(exceptions+=Exception)*
-//		(commands+=Command)*
-//		(events+=Event)*
-//		(channels+=Channel)*
-		
 		(interalNamespaces += InternalNamespace)*
 	'}';
 
@@ -82,27 +75,20 @@ InternalNamespace:
 			(version=Version)?
 			('URI' uri=STRING)?
 			('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
-//			('namespace-url' namespaceUrl = STRING)?
+			(license=License)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}')?
 		
 		objects += ServiceObject*
 
-//		(types+=Type)*
-//		(resources += Resource)*
-//		(services+=Service)*
-//		(exceptions+=Exception)*
-//		(commands+=Command)*
-//		(events+=Event)*
-//		(channels+=Channel)*
 		(interalNamespaces+=InternalNamespace)*
 		
 	'}';
@@ -113,11 +99,13 @@ Type:
 VersionedType:
 	Enumeration | DataObject ;		
 
+Interface: Aggregate|Service|Resource;
+
 DataObject: AbstractBusinessObject | QueryObject;
 
 AbstractBusinessObject: BusinessObject | Aggregate | Entity | ValueObject;
 
-ServiceObject: Type | Resource | Service | Exception | Command | Event | Channel;
+ServiceObject: Type | Service | Resource | Exception | Command | Event | Channel ;
 
 /*
  * A complex datatype representing a business entity of the domain model. 
@@ -132,19 +120,20 @@ BusinessObject:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
+			(additionalInfo=AdditionalInformation)?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
-			)
-			(additionalInfo=AdditionalInformation)?
+			&	(license=License)?
+			)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
 		(properties+=Property)*
@@ -163,19 +152,20 @@ ValueObject:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
+			(additionalInfo=AdditionalInformation)?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
-			)
-			(additionalInfo=AdditionalInformation)?
+			&	(license=License)?
+			)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
 		(properties+=Property)*
@@ -194,19 +184,20 @@ Aggregate:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
+			(additionalInfo=AdditionalInformation)?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
-			)
-			(additionalInfo=AdditionalInformation)?
+			&	(license=License)?
+			)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
 		(properties+=Property)*
@@ -226,19 +217,20 @@ Entity:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
+			(additionalInfo=AdditionalInformation)?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
-			)
-			(additionalInfo=AdditionalInformation)?
+			&	(license=License)?
+			)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
 		(properties+=Property)*
@@ -256,18 +248,20 @@ QueryObject:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
+			(additionalInfo=AdditionalInformation)?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
-			)
+			&	(license=License)?
+			)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
 		(properties+=Property)*
@@ -304,6 +298,7 @@ Resource:
 				 */	
 			&	('provided-contract' providedContractUrl=STRING )? 
 			&	(lifecycleTrigger=LifecycleTrigger)?
+			&	(license=License)?
 				/*
 				 * The message header definition being used. Overrides the default from the architecture profile
 				 */
@@ -312,19 +307,18 @@ Resource:
 					('response-message-header' responseMessageHeader = MessageHeaderRef )?
 					('publish-message-header' publishMessageHeader = MessageHeaderRef )?
 				'}')?
-
-			)
+			)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
-		('base-URI' uri=STRING)?
+		('base-path' basePath=STRING)?
 		(operations+=ResourceOperation)+
 		(resources+=Resource)*
 	'}';
@@ -392,16 +386,17 @@ Enumeration:
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
-			)
+			&	(license=License)?
+			)?
 			(additionalInfo=AdditionalInformation)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+ )?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
 		(literals+=EnumLiteral )*
@@ -413,7 +408,6 @@ EnumLiteral:
 // -- Technical eternal entities
 
 
-Interface: Aggregate|Service|Resource;
 Service:
 	(deprecated?='@deprecated')? 
 	visibility=Visibility 'service' name=ID '{'
@@ -444,6 +438,7 @@ Service:
 				 */	
 			&	('provided-contract' providedContractUrl=STRING )? 
 			&	(lifecycleTrigger=LifecycleTrigger)?
+			&	(license=License)?
 				/*
 				 * The message header definition being used. Overrides the default from the architecture profile
 				 */
@@ -452,19 +447,18 @@ Service:
 					('response-message-header' responseMessageHeader = MessageHeaderRef )?
 					('publish-message-header' publishMessageHeader = MessageHeaderRef )?
 				'}')?
-
-			)
+			)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
 			/*
 			 * Semantic tagging
 			 */
-			('tags' (tags+=[semanticsDsl::Tag])+)?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
 		/*
@@ -480,7 +474,7 @@ AbstractOperation: Operation | ResourceOperation;
 Operation:
 	(deprecated?='@deprecated')? verb=Verb? (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' 
 	('returns' (return+=Parameter) (',' return+=Parameter)*|('returns' return+=SingleReturnParameter))? 
-	('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? '{'
+	('throws' (throws+=ExceptionRef)?(',' throws+=ExceptionRef)*)? ('{'
 		('accepts-content-type' (contentType += STRING)(',' contentType += STRING)*)?
 		(considerationSpec=ConsiderationSpec)?
 		('statefulness' statefulness=Statefulness (updating?='updating')? )?
@@ -511,12 +505,12 @@ Operation:
 		('compensated-by' compensatedBy+=OperationRef )?
 		('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?	
 		('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?	
-		('tags' (tags+=[semanticsDsl::Tag])+)*
-	'}';
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+)*
+	'}');
 	/*Callback is used optionally. In case of callback patterns, either the explicitly defined callback is used or the callback operation derived by convention. The convention is based on the name of the operation + "Callback" */
 
 ResourceOperation:
-	(deprecated?='@deprecated')? verb=Verb uri=STRING (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' 
+	(deprecated?='@deprecated')? verb=Verb path=STRING (mep=MEP)? (transactional?='transactional')? name=ID '(' (parameters+=Parameter)?(',' parameters+=Parameter)* ')' 
 	('returns' '{'
 		(response+=Response) (response+=Response)*
 	'}'
@@ -524,7 +518,7 @@ ResourceOperation:
 	('throws' '{'
 		(throws+=ErrorResponse)? (throws+=ErrorResponse)*
 	'}'
-	)? '{'
+	)? ('{'
 		('accepts-content-type' (contentType += STRING)(',' contentType += STRING)*)?
 		(considerationSpec=ConsiderationSpec)?
 		('statefulness' statefulness=Statefulness (updating?='updating')? )?
@@ -555,8 +549,8 @@ ResourceOperation:
 		('compensated-by' compensatedBy+=OperationRef )?
 		('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?	
 		('supports-capability' '{'(supportedCapabilities+=CapabilityRef)+ '}')?	
-		('tags' (tags+=[semanticsDsl::Tag])+)*
-	'}';
+		('tags' (tags+=[semanticsDsl::Tag|TagName])+)*
+	'}')?;
 
 Response: 
 	('response-code')? responseCode = ReturnCode ('content-type' (contentType += STRING)(',' contentType += STRING)*)? '{'
@@ -596,16 +590,20 @@ Exception:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(lifecycleTrigger=LifecycleTrigger)?
-			('provided-contract' providedContractUrl=STRING)?
+			(additionalInfo=AdditionalInformation)?
+			(
+				(lifecycleTrigger=LifecycleTrigger)?
+			&	('provided-contract' providedContractUrl=STRING)?
+			&	(license=License)?
+			)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
 		(properties+=SimpleAttribute)*
@@ -729,17 +727,20 @@ Event:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(lifecycleTrigger=LifecycleTrigger)?
-			('provided-contract' providedContractUrl=STRING)?
 			(additionalInfo=AdditionalInformation)?
+			(
+				(lifecycleTrigger=LifecycleTrigger)?
+			&	('provided-contract' providedContractUrl=STRING)?
+			&	(license=License)?
+			)?
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
 		(parameter+=Parameter )*
@@ -759,17 +760,20 @@ Command:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(lifecycleTrigger=LifecycleTrigger)?
-			('provided-contract' providedContractUrl=STRING)?
 			(additionalInfo=AdditionalInformation)?
+			(
+				(lifecycleTrigger=LifecycleTrigger)?
+			&	('provided-contract' providedContractUrl=STRING)?
+			&	(license=License)?
+			)
 			('contact-info' '{'
-				('owner' owner=[basedsl::User|QualifiedName])?
-				('responsible' responsible += [basedsl::User|QualifiedName])*
-				('budgeting' budgeting = [basedsl::User|QualifiedName])?
+				('owner' owner=EmailOrUsername)?
+				('responsible' responsible += EmailOrUsername)*
+				('budgeting' budgeting = EmailOrUsername)?
 			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
+				subscriptions += EmailOrUsername*
 			'}')?
 		'}'
 		(parameter+=Parameter )*

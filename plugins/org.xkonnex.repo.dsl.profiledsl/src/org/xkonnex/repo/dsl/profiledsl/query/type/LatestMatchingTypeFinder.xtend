@@ -22,9 +22,13 @@ class LatestMatchingTypeFinder {
 		ref.type;
 	}
 
-	/*
-	 *		Checks if type declaration is the latest version matching the following constraint
+	/**
+	 *	Checks if type declaration is the latest version matching the following constraint
 	 *		- same major version
+	 * 
+	 * @param t a versioned type
+	 * @param majorVersion the required major version of the type
+	 * @return the latest version of the type with the given major version
 	 */
 	def boolean isLatestMatchingType (VersionedType t, Integer majorVersion) { 
 		(findLatestMatchingVersionedTypeFromProfile ( 

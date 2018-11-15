@@ -46,12 +46,18 @@ class RESTEndpointAddressResolver {
 	def dispatch String getOperationPath(ResourceOperation operation, EffectiveBinding binding) {
 		val prot = binding.protocol.filter (typeof (ExtensibleProtocol)).filter[type.identifier == typeof(REST).canonicalName].head
 		val REST restProt = prot.inferComponent
-		if (!restProt.path.nullOrEmpty) restProt.path else operation.uri
+		if (!restProt.path.nullOrEmpty) restProt.path else operation.path
 	}
 
-	/*
+	/**
 	 * Calculate the endpoint address assuming, that it is a public endpoint. 
-	 * Public endpoints are usually located on an ESB
+	 * Public endpoints are usually located on an ESB or API gateway
+	 * 
+	 * @param service a Service
+	 * @param server the server where Service is deployed
+	 * @param prot the protocol specification
+	 * @param bind the efective binding
+	 * @return the endpoint address
 	 */
 	def String toEndpointAddress (Service service, Server server, ExtensibleProtocol prot, EffectiveBinding bind) {
 		val connector = connectorResolver.resolveConnector(server, bind, prot);
@@ -59,14 +65,20 @@ class RESTEndpointAddressResolver {
 		+ vendorEndpointResolver.toEndpointAddressPath (bind, prot, service, server);
 	}
 
-	/*
+	/**
 	 * Calculate the endpoint address assuming, that it is a public endpoint. 
-	 * Public endpoints are usually located on an ESB
+	 * Public endpoints are usually located on an ESB or API gateway
+	 * 
+	 * @param resource a Resource
+	 * @param server the server where Resource is deployed
+	 * @param prot the protocol specification
+	 * @param bind the efective binding
+	 * @return the endpoint address
 	 */
-	def String toEndpointAddress (Resource service, Server server, ExtensibleProtocol prot, EffectiveBinding bind) {
+	def String toEndpointAddress (Resource resource, Server server, ExtensibleProtocol prot, EffectiveBinding bind) {
 		val connector = connectorResolver.resolveConnector(server, bind, prot);
 		connector.getEndpointUrl()
-		+ vendorEndpointResolver.toEndpointAddressPath (bind, prot, service, server);
+		+ vendorEndpointResolver.toEndpointAddressPath (bind, prot, resource, server);
 	}
 	
 }

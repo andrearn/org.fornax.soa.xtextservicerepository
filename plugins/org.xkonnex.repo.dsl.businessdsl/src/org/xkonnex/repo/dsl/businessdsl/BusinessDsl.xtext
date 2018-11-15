@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2017 André Arnold and others.
+Copyright (c) 2010-2018 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -20,15 +20,12 @@ import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as  semantics
 BusinessModel :
 	(imports+=Import)*
 	(domains+=Domain)*
-	(organizations+=Organization)*
-	(roles+=Role)*
-	(users+=User)*
-	(privileges+=Privilege)*;
+	(organizations+=Organization)*;
 		
 Organization :
 	'org' name=QualifiedName '{'
 		('competence' competence=STRING)?
-		('head' bizLead=[basedsl::User|QualifiedName])?
+		('head' bizLead=EmailOrUsername)?
 		(businessFunctions+=BusinessFunction)*
 		(subOrganizations+=[Organization|QualifiedName])*
 	'}';
@@ -37,18 +34,18 @@ Domain :
 	'domain' name=QualifiedName '{'
 		('competence' competence=STRING)?
 		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('owner' owner=EmailOrUsername)?
+			('responsible' responsible += EmailOrUsername)*
+			('budgeting' budgeting = EmailOrUsername)?
 		'}')?
-		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
+		('tags' (tags+=[semantics::Tag|TagName])*)?
 
 		(domains+=Domain)*
 		(capabilityGroups+=CapabilityGroup)*
 		(capabilites+=Capability)*
 		
 		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
+			subscriptions += EmailOrUsername*
 		'}')?
 	'}';
 	
@@ -60,9 +57,9 @@ BusinessFunction :
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
 		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('owner' owner=EmailOrUsername)?
+			('responsible' responsible += EmailOrUsername)*
+			('budgeting' budgeting = EmailOrUsername)?
 		'}')?
 		(additionalInfo=AdditionalInformation)?
 
@@ -72,7 +69,7 @@ BusinessFunction :
 
 		('tags' (tags+=[semantics::Tag])+)?
 		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
+			subscriptions += EmailOrUsername*
 		'}')?
 	'}' ; 
 	
@@ -83,15 +80,15 @@ CapabilityGroup :
 	'capability-group' name=ID '{'
 		'description' description = STRING
 		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('owner' owner=EmailOrUsername)?
+			('responsible' responsible += EmailOrUsername)*
+			('budgeting' budgeting = EmailOrUsername)?
 		'}')?
 		(additionalInfo=AdditionalInformation)?
 		(capabilities+=Capability)*
 		(capabilityGroups+=CapabilityGroup)*
 		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
+			subscriptions += EmailOrUsername*
 		'}')?
 	'}'
 ;
@@ -114,8 +111,6 @@ SimpleCapability :
 		version=Version
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
-		('responsible' responsible += [basedsl::User|QualifiedName])*
-		('budgeting' budgeting = [basedsl::User|QualifiedName])?
 		'automation-level' automationLevel=CapabilityAutomationLevel
 		('business-value' businessValue=STRING)
 		(additionalInfo=AdditionalInformation)?
@@ -134,13 +129,13 @@ SimpleCapability :
 		'}'
 		)? 
 		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('owner' owner=EmailOrUsername)?
+			('responsible' responsible += EmailOrUsername)*
+			('budgeting' budgeting = EmailOrUsername)?
 		'}')?
-		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
+		('tags' (tags+=[semantics::Tag|TagName])*)?
 		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
+			subscriptions += EmailOrUsername*
 		'}')?
 	'}';
 
@@ -179,13 +174,13 @@ CapabilityVariant:
 		'}'
 		)? 
 		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('owner' owner=EmailOrUsername)?
+			('responsible' responsible += EmailOrUsername)*
+			('budgeting' budgeting = EmailOrUsername)?
 		'}')?
-		('tags' (tags+=[semantics::Tag|QualifiedName])*)?
+		('tags' (tags+=[semantics::Tag|TagName])*)?
 		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
+			subscriptions += EmailOrUsername*
 		'}')?
 	'}';
 
@@ -218,37 +213,4 @@ Input:
  */
 Outcome:
 	'outcome' description=STRING
-;
-
-	
-User returns basedsl::User:
-	'user' name=QualifiedName '{'
-		('firstname' firstname = STRING)?
-		('lastname' lastname = STRING)?
-		('org' org = STRING)?
-		('org-unit' orgUnit = STRING)?
-		('email' email = STRING)?
-		('phone' phone = STRING)?
-		('roles' (roles += RoleRef)+)?
-	'}';
-
-Role returns basedsl::Role:
-	'role' name=QualifiedName '{'
-		'grant' '{'
-			grants += PrivilegeRef*
-		'}'
-	'}';
-		
-Privilege returns basedsl::Privilege: 
-	'privilege' name=QualifiedName '{'
-		'read' '{'
-			(readACL += QualifiedName)*
-		'}'
-		'write'  '{'
-			(writeACL += QualifiedName)*
-		'}'
-		'execute'  '{'
-			(executeACL += QualifiedName)*
-		'}'
-	'}'
 ;

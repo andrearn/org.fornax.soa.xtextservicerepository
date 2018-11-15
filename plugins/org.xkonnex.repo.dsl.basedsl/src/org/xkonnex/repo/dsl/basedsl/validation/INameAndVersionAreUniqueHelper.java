@@ -14,6 +14,9 @@ public interface INameAndVersionAreUniqueHelper {
 	 * Create errors for objects that have the same name. Objects, that do not belong to
 	 * the same cluster will not get any errors.
 	 * @see INamesAreUniqueValidationHelper#checkUniqueNames(Iterable, CancelIndicator, ValidationMessageAcceptor)
+	 * 
+	 * @param descriptions indexed object descriptions to validate
+	 * @param acceptor accepts ValidationMessages
 	 */
 	void checkUniqueNames(Iterable<IEObjectDescription> descriptions,  ValidationMessageAcceptor acceptor);
 	
@@ -21,6 +24,10 @@ public interface INameAndVersionAreUniqueHelper {
 	 * Create errors for objects that have the same name. Objects, that do not belong to
 	 * the same cluster will not get any errors. The cancel indicator may be used to interrupt 
 	 * the validation.
+	 * 
+	 * @param descriptions indexed object descriptions to validate
+	 * @param cancelIndicator indicator to cancel validation
+	 * @param acceptor accepts ValidationMessages 
 	 */
 	void checkUniqueNames(Iterable<IEObjectDescription> descriptions, CancelIndicator cancelIndicator, ValidationMessageAcceptor acceptor);
 

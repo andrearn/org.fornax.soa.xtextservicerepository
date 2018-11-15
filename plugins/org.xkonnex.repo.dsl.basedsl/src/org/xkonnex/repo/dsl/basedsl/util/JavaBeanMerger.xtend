@@ -27,9 +27,11 @@ class JavaBeanMerger {
 	 * properties value is not null. Otherwise the values in the target bean will be 
 	 * overwritten.
 	 * 
+	 * @param <T> the type of the bean to merge
+	 * 
 	 * @param source Source object
 	 * @param target Target object into which the values from source object will be merged
-	 * @returns the merged target object 
+	 * @return the merged target object 
 	 */
 	def <T> T merge(T source, T target) {
 		val actualEditable = target.getClass();

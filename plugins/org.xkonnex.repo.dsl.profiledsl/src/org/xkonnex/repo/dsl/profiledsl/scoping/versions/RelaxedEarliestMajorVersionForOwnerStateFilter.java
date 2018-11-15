@@ -23,7 +23,9 @@ import com.google.inject.Inject;
  * version constraint only and no object with the same name has a full match it
  * will not be filtered though.
  * 
- * @author aarnold
+ * @author André Arnold
+ * 
+ * @param <T> type of a stateful object
  * 
  */
 public class RelaxedEarliestMajorVersionForOwnerStateFilter<T> extends AbstractPredicateVersionFilter<T> {
@@ -154,6 +156,7 @@ public class RelaxedEarliestMajorVersionForOwnerStateFilter<T> extends AbstractP
 		return result;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

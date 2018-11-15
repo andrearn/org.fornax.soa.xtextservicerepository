@@ -264,7 +264,7 @@ class RAMLContractGenerator {
             }
         }
         val basePath = operation.getOperationPath(binding)
-        val uri = if(restProt?.path !== null) restProt?.path else operation.uri
+        val uri = if(restProt?.path !== null) restProt?.path else operation.path
         val params = resourceQueries.extractParametersFromURI(uri, operation).toList
         val content = '''
             

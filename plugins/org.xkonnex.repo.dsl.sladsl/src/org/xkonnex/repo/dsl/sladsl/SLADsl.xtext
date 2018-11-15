@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2017 André Arnold and others.
+Copyright (c) 2010-2018 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -51,10 +51,8 @@ SLA:
 			('cancellation' cancellation = STRING )?
 			('extraordinary-cancellation' extraordinaryCancellation = STRING )?
 			(reports+=Report)*
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			Subscriptions?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 	
 Assertion:
@@ -70,10 +68,8 @@ Assertion:
 					'}')
 				'}'
 			)?
-			('subscriptions' '{'
-				subscriptions += [basedsl::User|QualifiedName]*
-			'}')?
-			('tags' (tags+=[semanticsDsl::Tag])+ )*
+			Subscriptions?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 	'}';
 
 
@@ -220,7 +216,7 @@ Escalation :
 	'escalation' '{'
 		('cause' cause=STRING )?
 		'escalate-to' '{'
-			(escalationTargets+=[basedsl::User|QualifiedName])+
+			(escalationTargets+=EmailOrUsername)+
 		'}'
 		('procedure' procedure=STRING )?
 	'}';
@@ -248,7 +244,7 @@ ThirdParty:
 
 Representative: UserRef | InlineRepresentative;
 
-UserRef: representative = [basedsl::User|QualifiedName];
+UserRef: representative = EmailOrUsername;
 
 InlineRepresentative:
 	{InlineRepresentative}
@@ -268,7 +264,7 @@ Responsibility:
 
 Report:
 	'report' name=ID '{'
-		'report-to' reportTo=[basedsl::User|QualifiedName]
+		'report-to' reportTo=EmailOrUsername
 		'contents' content=STRING
 	'}';
 	

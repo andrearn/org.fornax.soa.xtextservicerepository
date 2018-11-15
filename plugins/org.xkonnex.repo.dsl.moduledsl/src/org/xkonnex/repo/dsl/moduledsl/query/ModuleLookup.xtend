@@ -13,7 +13,6 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleRef
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
-import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.basedsl.version.VersionComparator
@@ -23,7 +22,7 @@ import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 
 /**
- * This class provides operations to find {@link Module}s 
+ * This class provides operations to find Modules 
  */
 class ModuleLookup {
 	
@@ -33,7 +32,10 @@ class ModuleLookup {
 	@Inject extension ModelExtensions
 	
 	/**
-	 * Find all available {@link Module}s (defined by the model represented by the given {@link ResourceSet})
+	 * Find all available Modules (defined by the model represented by the given {@link ResourceSet})
+	 * 
+	 * @param resourceSet the {@link ResourceSet} containing the model
+	 * @return all modules in the model
 	 */
 	def findAllModules (ResourceSet resourceSet) {
 		var Iterable<IEObjectDescription> moduleDescs = null
@@ -60,7 +62,11 @@ class ModuleLookup {
 	}
 	
 	/**
-	 * Find all {@link Module}s of any version having the given Module name.
+	 * Find all Modules of any version having the given Module name.
+	 * 
+	 * @param moduleName the name of the module to look for
+	 * @param resourceSet the {@link ResourceSet} containing the model
+	 * @return all versions of the module with the name moduleName 
 	 */
 	def findAllModuleVersionsByName (String moduleName, ResourceSet resourceSet) {
 		var Iterable<IEObjectDescription> moduleDescs = null
@@ -92,10 +98,11 @@ class ModuleLookup {
 	}
 	
 	/**
-	 * Find all {@link Module} versions of Modules with given qualified Module name that match the given version constraint
+	 * Find all Module versions of Modules with given qualified Module name that match the given version constraint
 	 * @param moduleName The name of the Module
 	 * @param versionConstraint The version of the Module must match this constraint
 	 * @param resourceSet The ResourceSet of model files containing the Modules 
+	 * @return all effectively referenced modules
 	 */
 	def findAllEffectivelyReferencedModules (QualifiedName moduleName, VersionRef versionConstraint, ResourceSet resourceSet) {
 		val allModules = findAllModules (resourceSet)
@@ -103,8 +110,10 @@ class ModuleLookup {
 	}
 	
 	/** 
-	 * Find all {@link Module}s that provide the given service
-	 * @param The {@link Service} that must be provided by the {@link Module}
+	 * Find all Modules that provide the given service
+	 * 
+	 * @param service The {@link Service} that must be provided by the Module
+	 * @return all modules that provide the {@link Service} service
 	 */
 	def findProvidingModules (Service service) {
 		var Set<Module> allModules = findAllModules (service.eResource?.resourceSet)
@@ -115,8 +124,10 @@ class ModuleLookup {
 	}
 	
 	/** 
-	 * Find all {@link Module}s that provide the given Resource
-	 * @param The {@link Resource} that must be provided by the {@link Module}
+	 * Find all Modules that provide the given Resource
+	 * 
+	 * @param resource The {@link Resource} that must be provided by the Module
+	 * @return all modules that provide the {@link Resource} resource
 	 */
 	def findProvidingModules (Resource resource) {
 		var Set<Module> allModules = findAllModules (resource.eResource?.resourceSet)
@@ -125,21 +136,13 @@ class ModuleLookup {
 		providingModules.toSet.addAll (nsProvidingModules)
 		return providingModules
 	}
-	
-	/**
-	 * @deprecated
-	 */
-	@Deprecated
-	def findProvidingModules (Service service, VersionRef versionRef) {
-		var Set<Module> allModules = findAllModules (service.eResource?.resourceSet)
-		var providingModules = allModules.filter (m|m.providedServices.map (e|e.service).exists(s|s == service))
-		val nsProvidingModules = allModules.filter (m|m.providedNamespaces.map (e|e.namespace.services).exists(s|s == service))
-		providingModules.toSet.addAll (nsProvidingModules)
-		return providingModules
-	}
-	
+		
 	/** 
 	 * Find all modules that provide the given service. from any of the candidate modules
+	 * 
+	 * @param service The {@link Service} that must be provided by the Module
+	 * @param candidateModules candidate modules to choose from
+	 * @return all modules from the candidate list, that provide the {@link Service} service
 	 */
 	def findProvidingModules (Service service, Iterable<Module> candidateModules) {
 		candidateModules.filter (cand| service.findProvidingModules.exists(m|m == cand))
@@ -147,6 +150,10 @@ class ModuleLookup {
 	
 	/** 
 	 * Find all modules that provide the given resource. from any of the candidate modules
+	 * 
+	 * @param resource The {@link Resource} that must be provided by the Module
+	 * @param candidateModules candidate modules to choose from
+	 * @return all modules from the candidate list, that provide the {@link Resource} resource
 	 */
 	def findProvidingModules (Resource resource, Iterable<Module> candidateModules) {
 		candidateModules.filter (cand| resource.findProvidingModules.exists(m|m == cand))
@@ -155,6 +162,11 @@ class ModuleLookup {
 	/** 
 	 * Find all modules that provide the given service, from any of the candidate modules, that 
 	 * declare the given qualifier
+	 * 
+	 * @param service The {@link Service} that must be provided by the Module
+	 * @param candidateModules candidate modules to choose from
+	 * @param qualifierName name of the endpoint qualifier
+	 * @return all modules from the candidate list, that provide the {@link Service} service
 	 */
 	def findProvidingModules (Service service, Iterable<Module> candidateModules, String qualifierName) {
 		service.findProvidingModules (candidateModules).filter (m|m.qualifiers.qualifiers.exists(q|q.name == qualifierName))
@@ -163,6 +175,11 @@ class ModuleLookup {
 	/** 
 	 * Find all modules that provide the given resource, from any of the candidate modules, that 
 	 * declare the given qualifier
+	 * 
+	 * @param resource The {@link Resource} that must be provided by the Module
+	 * @param candidateModules candidate modules to choose from
+	 * @param qualifierName name of the endpoint qualifier
+	 * @return all modules from the candidate list, that provide the {@link Resource} resource
 	 */
 	def findProvidingModules (Resource resource, Iterable<Module> candidateModules, String qualifierName) {
 		resource.findProvidingModules (candidateModules).filter (m|m.qualifiers.qualifiers.exists(q|q.name == qualifierName))
@@ -185,6 +202,9 @@ class ModuleLookup {
 		
 	/**
 	 * Get the endpoint qualifier
+	 * 
+	 * @param module the module
+	 * @return the name of the endpoint qualifier
 	 */	
 	def dispatch String getQualifier (Module module) {
 		module.endpointQualifierRef?.endpointQualifier.name
@@ -192,6 +212,9 @@ class ModuleLookup {
 	
 	/**
 	 * Get the endpoint qualifier
+	 * 
+	 * @param moduleRef the reference to a module
+	 * @return the name of the endpoint qualifier
 	 */	
 	def dispatch String getQualifier (ModuleRef moduleRef) {
 		if (moduleRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier !== null)
@@ -202,6 +225,9 @@ class ModuleLookup {
 	
 	/**
 	 * Get the endpoint qualifier
+	 * 
+	 * @param impServiceRef reference to a service imported by a module
+	 * @return the name of the endpoint qualifier
 	 */	
 	def dispatch String getQualifier (ImportServiceRef impServiceRef) {
 		if (impServiceRef.usingEndpoint?.endpointQualifierRef?.endpointQualifier !== null)
@@ -230,6 +256,9 @@ class ModuleLookup {
 	
 	/**
 	 * Get the module that contains the model element.
+	 * 
+	 * @param modelElement a model element
+	 * @return the module that contains the model element
 	 */
 	def dispatch getOwningModule (EObject modelElement) {
 		if (modelElement?.eContainer !== null)
@@ -240,6 +269,8 @@ class ModuleLookup {
 	
 	/**
 	 * Get the module that contains the model element. I.n this case the Module itself
+	 * @param modelElement a (nested) module
+	 * @return the module that contains the model element
 	 */
 	def dispatch getOwningModule (Module modelElement) {
 		return modelElement

@@ -13,8 +13,6 @@ import org.eclipse.xtext.util.Pair;
  * 
  * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#formatting
  * on how and when to use it 
- * 
- * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
 public class BusinessDslFormatter extends AbstractDeclarativeFormatter {
 	
@@ -30,7 +28,6 @@ public class BusinessDslFormatter extends AbstractDeclarativeFormatter {
 
 		c.setLinewrap(1, 1, 1).after(f.getImportRule());
 		c.setLinewrap(1, 2, 3).after(f.getDomainRule());
-		c.setLinewrap(1, 1, 1).after(f.getUserRule());
 		c.setLinewrap(1, 1, 1).after(f.getDomainAccess().getCompetenceAssignment_3_1());
 
 		for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("{", "}")) {

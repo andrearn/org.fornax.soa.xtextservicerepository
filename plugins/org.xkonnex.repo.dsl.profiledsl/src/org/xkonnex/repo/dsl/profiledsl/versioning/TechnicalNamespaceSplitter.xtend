@@ -19,12 +19,15 @@ class TechnicalNamespaceSplitter {
 	@Inject extension CommonEObjectExtensions
 	
 	
-	/* 
+	/** 
 	 * Split into VersionedDomainNamespace per accounted major version of contained versioned elements
+	 * 
+	 * @param ns the namspace to split by major version
+	 * @return the splitted namespaces, one for each major version
 	 */
-	def Set<VersionedTechnicalNamespace> toVersionedTechnicalNamespaces (TechnicalNamespace s) {
-		 if (s.types.size > 0 )
-		 	s.types.map (t|t.createVersionedTechnicalNamespace()).toSet()
+	def Set<VersionedTechnicalNamespace> toVersionedTechnicalNamespaces (TechnicalNamespace ns) {
+		 if (ns.types.size > 0 )
+		 	ns.types.map (t|t.createVersionedTechnicalNamespace()).toSet()
 		 else 
 		 	newHashSet();
 	}

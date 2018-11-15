@@ -23,6 +23,7 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ImportServiceRef
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
 
 class EndpointQualifierQueries {
 	
@@ -94,6 +95,9 @@ class EndpointQualifierQueries {
 	 * An endpoint qualifier on a more specific binding  overrides an endpoint qualifier from a higher level 
 	 * more general binding definition. 
 	 * Endpoint qualifiers on the protocols defined inside the binding are added at end of the list.
+	 * 
+	 * @param binding some Binding
+	 * @return the effective {@link EndpointQualifierRef}s
 	 */
 	def EndpointQualifierDescriptor getPotentialEffectiveEndpointQualifiers (AnyBinding binding) {
 		var qualifierDesc = new EndpointQualifierDescriptor()

@@ -1,6 +1,15 @@
-import org.fornax.soa.solutionDsl.*
-import org.fornax.soa.serviceDsl.*
-import org.fornax.soa.profiledsl.sOAProfileDsl.*
+/*******************************************************************************
+ * Copyright (c) 2018 developers of XKonneX Repository and others.
+ * All rights reserved. This style sheet and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * initial contribution:	André Arnold
+ *******************************************************************************/
+import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.*
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.*
+import org.xkonnex.repo.dsl.profiledsl.sOAProfileDsl.*
 
 diagram SolutionDiagram type Solution {
 	
@@ -11,7 +20,7 @@ diagram SolutionDiagram type Solution {
 			=> call NestedFeatureNode for this 
 		} 
 		edge RequiredServiceEdge for each requires {
-			=> ref RequiredServiceNode for this.service 
+			=> ref RequiredServiceNode for this.interface 
 			label RequiresEdgeLabel for "requires"
 		} 
 	}
@@ -35,23 +44,33 @@ diagram SolutionDiagram type Solution {
 		hidden edge NestedFeatureEdge for each features {
 			=> call NestedFeatureNode for this 
 		} 
-		hidden edge RequiredServiceEdge for each requires.map (r|r.service) {
+		hidden edge RequiredServiceEdge for each requires.map (r|r.interface) {
 			=> call HiddenRequiredServiceNode for this
 			label RequiresEdgeLabel for "requires"
 		} 
 	} unless !(this instanceof Feature)
 	
-	node RequiredServiceNode for each requires.map(r|r.service) {
+	node RequiredServiceNode for each requires.map(r|r.interface).filter(typeof (Service)) {
 		label ServiceLabel for "<<Service>>"
 		label ServiceNameLabel for name
-		label Version for "[v" + version?.version+"]"
-		
+		label Version for "[v" + version?.version+"]"		
+	}
+	node RequiredResourceNode for each requires.map(r|r.interface).filter(typeof (Resource)) {
+		label ServiceLabel for "<<Resource>>"
+		label ServiceNameLabel for name
+		label Version for "[v" + version?.version+"]"		
 	}
 	
-	hidden node HiddenRequiredServiceNode for this  as org.fornax.soa.serviceDsl.Service {
+	hidden node HiddenRequiredServiceNode for this  as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service {
 		label ServiceLabel for "<<Service>>"
 		label ServiceNameLabel for this.name
 		label Version for "[v" + this.version?.version+"]"
 		
-	} unless !(this instanceof org.fornax.soa.serviceDsl.Service)
+	} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service)
+	hidden node HiddenRequiredResourceNode for this  as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service {
+		label ServiceLabel for "<<Resource>>"
+		label ServiceNameLabel for this.name
+		label Version for "[v" + this.version?.version+"]"
+		
+	} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource)
 }

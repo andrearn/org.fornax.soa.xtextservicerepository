@@ -80,8 +80,12 @@ class NamespaceSplitter {
 	def dispatch VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (Type type) {
 	}
 	
-	/* 
+	/** 
 	 * Create a VersionedDomainNamespace for a Service
+	 * 
+	 * @param ns a namespace
+	 * @param v the version to create for
+	 * @return new VersionedDomainNamespace
 	 */
 	def VersionedDomainNamespace create new VersionedDomainNamespace() createVersionedDomainNamespace (SubNamespace ns, Version v) {
 		if (ns.eContainer   instanceof SubNamespace ) {

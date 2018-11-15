@@ -49,9 +49,9 @@ class ClassQueries {
 
 	/** 
 	 * Get all super types of the business object in upward order
-	 * @param do The business object
+	 * @param bo The business object
 	 * @param vistitedBOs	already visited business objects
-	 * @return
+	 * @return list of all supertypes of bo
 	 */
 	def static List<Class> getAllSuperTypes(Class bo, List<Class> vistitedBOs) {
 		var vistitedBOsVar = vistitedBOs
@@ -113,10 +113,10 @@ class ClassQueries {
 	 * Find all transitive dependencies of the Property. The dependency graph is build from all properties transitively 
 	 * referenced via the properties' type references if these have properties themselves, i.e. they are ProfileDSL Classes 
 	 * @param prop Property from which to start the traversal of the dependency graph
-	 * @param includeInheritedProperties
+	 * @param includeInheritedProperties include inherited properties in search
 	 * @param includeCycleTypes include the BO in the result even if it already was visited. 
 	 * However traversal of this path stops here
-	 * @return {@link DependencyDescription} keyed with the {@link IEObjectDesription} of the referring property 
+	 * @return {@link DependencyDescription} keyed with the {@link IEObjectDescription} of the referring property 
 	 */
 	def DependencyDescription getTransitiveDependencies(Property prop, boolean includeInheritedProperties,
 		boolean includeCycleTypes) {
@@ -127,12 +127,12 @@ class ClassQueries {
 	 * Find all transitive dependencies of the Property. The dependency graph is build from all properties transitively 
 	 * referenced via the properties' type references if these have properties themselves, i.e. they are ProfileDSL Classes 
 	 * @param prop Property from which to start the traversal of the dependency graph
-	 * @param includeInheritedProperties
+	 * @param includeInheritedProperties include inherited properties in search
 	 * @param includeCycleTypes include the BO in the result even if it already was visited. 
 	 * However traversal of this path stops here
 	 * @param visitedDependendies List of dependencies, that already have been visited
 	 * @param referrer The {@link DependencyDescription} referencing this one
-	 * @return {@link DependencyDescription} keyed with the {@link IEObjectDesription} of the referring property 
+	 * @return {@link DependencyDescription} keyed with the {@link IEObjectDescription} of the referring property 
 	 */
 	def DependencyDescription getTransitiveDependencies(Property prop, boolean includeInheritedProperties,
 		boolean includeCycleTypes, List<IEObjectDescription> visitedDependendies, DependencyDescription referrer) {
@@ -154,7 +154,7 @@ class ClassQueries {
 	 * @param includeSuperTypes Look for references to super types as well?
 	 * @param visited	Contains all transitively found references so far. References include VersionedTypes and Operation Parameters.
 	 * @param resourceSet	The {@link ResourceSet} used to materialize references, that have been found.
-	 * @return
+	 * @return all {@link EObject}s that have a transitive reference to the given {@code type}
 	 */
 	def List<IEObjectDescription> getAllTransitiveReferrers(EObject type, boolean includeSuperTypes,
 		List<IEObjectDescription> visited, ResourceSet resourceSet) {
@@ -223,8 +223,8 @@ class ClassQueries {
 	}
 
 	/** 
-	 * Get the {@link QualifiedName}s of all Properties of all types  declared in the same {@link SubNamespace} as
-	 * the given {@code type}, that refer transitively to types in the given {@link SubNamespace} {@code ns}
+	 * Get the {@link QualifiedName}s of all Properties of all types  declared in the same {@link TechnicalNamespace} as
+	 * the given {@code type}, that refer transitively to types in the given {@link TechnicalNamespace} {@code ns}
 	 * @param type The type who's namespace and all properties declared therein are to be examined
 	 * @param ns The target namespace potentially being referenced
 	 * @return The {@link QualifiedName}s of all properties that have such transitive references

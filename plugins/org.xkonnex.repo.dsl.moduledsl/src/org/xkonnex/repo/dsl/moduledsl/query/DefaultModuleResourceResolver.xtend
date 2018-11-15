@@ -27,7 +27,7 @@ class DefaultModuleResourceResolver implements IModuleResourceResolver {
 	private IEObjectLookup objLookup
 	
 	
-	override getAllUsedServiceRefs(Module module) {
+	override getAllUsedResourceRefs(Module module) {
 		var Set<AbstractResourceRef> resourceRefs = newHashSet
 		resourceRefs.addAll (module.usedModules.map (usedMod | usedMod.includedResources).flatten)
 		for (usedMod : module.usedModules) {
@@ -49,15 +49,15 @@ class DefaultModuleResourceResolver implements IModuleResourceResolver {
 	override Set<AbstractResourceRef> getAllProvidedResourceRefs (Module module) {
 		var Set<AbstractResourceRef> resourceRefs = newHashSet()
 		if (!module.providedNamespaces.empty) {
-			val inclSvcs = module.providedNamespaces.map (n|n.includedResources).flatten
-			val exclSvcs = module.providedNamespaces.map (n|n.excludedResources).flatten
-			if (!inclSvcs.empty) {
-				resourceRefs.addAll(inclSvcs.toSet)
+			val inclResources = module.providedNamespaces.map (n|n.includedResources).flatten
+			val exclResources = module.providedNamespaces.map (n|n.excludedResources).flatten
+			if (!inclResources.empty) {
+				resourceRefs.addAll(inclResources.toSet)
 			} else {
 				resourceRefs.addAll(module.providedNamespaces.map (n|n.namespace.types).flatten.filter(typeof(Resource)).map(s | s.toResourceRef).toSet)
 			}
-			if (!exclSvcs.empty) {
-				resourceRefs = resourceRefs.filter(r | !exclSvcs.toSet.contains(r)).toSet
+			if (!exclResources.empty) {
+				resourceRefs = resourceRefs.filter(r | !exclResources.toSet.contains(r)).toSet
 			}
 		}
 		resourceRefs.addAll(module.providedResources.toSet)

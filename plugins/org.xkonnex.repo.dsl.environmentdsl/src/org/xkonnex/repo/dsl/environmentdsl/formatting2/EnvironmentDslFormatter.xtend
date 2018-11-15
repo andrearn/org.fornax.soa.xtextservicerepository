@@ -5,7 +5,6 @@ package org.xkonnex.repo.dsl.environmentdsl.formatting2
 
 import com.google.inject.Inject
 import org.eclipse.xtext.formatting2.IFormattableDocument
-import org.xkonnex.repo.dsl.basedsl.baseDsl.User
 import org.xkonnex.repo.dsl.basedsl.formatting2.BaseDslFormatter
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvImport
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvModel
@@ -22,9 +21,6 @@ class EnvironmentDslFormatter extends BaseDslFormatter {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
 		for (EnvImport imports : envModel.getImports()) {
 			imports.format;
-		}
-		for (User users : envModel.getUsers()) {
-			users.format;
 		}
 		for (Environment environments : envModel.getEnvironments()) {
 			environments.format;

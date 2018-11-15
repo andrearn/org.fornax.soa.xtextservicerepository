@@ -53,15 +53,21 @@ class WrappedWsdlGenerator {
 	Boolean noDependencies
 	
 	
-	/*
-		CARTRIDGE ENTRYPOINT for generation of abstract wrapped  WSDLs
-		Abstract WSDLs only define the abstract interface of a service. The binding is declared
-		in a separate WSDL that imports this abstract WSDL
+	/**
+	 *	CARTRIDGE ENTRYPOINT for generation of abstract wrapped  WSDLs
+	 *	Abstract WSDLs only define the abstract interface of a service. The binding is declared
+	 *	in a separate WSDL that imports this abstract WSDL
 		
-		A WSDL for each Service in the given SubNamespace matching the given minimal LifecycleState
-		will be generated. For each major version of a service WSDL is generated for the latest minor
-		version in that major version matching the minimal Lifecycle constraint is be generated
-	*/
+	 *	A WSDL for each Service in the given SubNamespace matching the given minimal LifecycleState
+	 *	will be generated. For each major version of a service WSDL is generated for the latest minor
+	 * version in that major version matching the minimal Lifecycle constraint is be generated
+	 * 
+	 * @param svc a service to generate for
+	 * @param minState the minimal required {@link LifecycleState}
+	 * @param profile the architecture profile to use
+	 * @param registryBaseUrl the base URL of the service registry
+	 * 
+	 */
 	def void toWrappedWSDL(Service svc, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		svc.toWrappedWSDL (svc.findSubdomain(), minState, profile, registryBaseUrl);
 	}

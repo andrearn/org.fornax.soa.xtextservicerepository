@@ -14,11 +14,12 @@ import org.xkonnex.repo.dsl.moduledsl.moduleDsl.Module
 
 /**
  * Provide context root paths based on  
+ * 
  * <ul>
  * 	<li>module name</li>
  * 	<li>server type</li> 
  * 	<li>and the assembly type (only relevant for WebSphere's SCA modules)</li>
- * <ul>
+ * </ul>
  */
 class ModuleContextRootProvider implements IContextRootProvider {
 	

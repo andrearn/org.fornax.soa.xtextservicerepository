@@ -215,7 +215,7 @@ public class ServiceDslLabelProvider extends DefaultEObjectLabelProvider {
 		return name;
 	}
 	Object text (ResourceOperation ele) {
-		StyledString uri = new StyledString(ele.getUri());
+		StyledString uri = new StyledString(ele.getPath());
 		if (ele.isDeprecated()) {
 			uri.setStyle(0, uri.length(), STRIKETHROUGH);
 		}

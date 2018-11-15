@@ -91,7 +91,7 @@ public abstract class TypeHierarchyViewer extends TreeViewer {
 
 	/**
 	 * Set the member filter
-	 * @param memberFilter the member filters to set
+	 * @param filter the member filters to set
 	 */
 	public void setMemberFilter(Predicate<IEObjectDescription> filter) {
 		TypeHierarchyContentProvider contentProvider= getHierarchyContentProvider();

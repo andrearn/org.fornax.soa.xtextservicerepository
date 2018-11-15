@@ -27,18 +27,21 @@ class TechnicalNamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
 	 *	VersionedDomainNamespace. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param ns the technical namespace to investigate
+	 * @return all imported technical namespaces
 	 */
-	def Set<VersionedTechnicalNamespace> allImportedVersionedNS (VersionedTechnicalNamespace s) { 
-		s.allImportedVersionedNS (new HashSet<VersionedTechnicalNamespace>() ).filter (typeof (VersionedTechnicalNamespace)).toSet;
+	def Set<VersionedTechnicalNamespace> allImportedVersionedNS (VersionedTechnicalNamespace ns) { 
+		ns.allImportedVersionedNS (new HashSet<VersionedTechnicalNamespace>() ).filter (typeof (VersionedTechnicalNamespace)).toSet;
 	}
 	
 	def dispatch Set<VersionedTechnicalNamespace> allImportedVersionedNS (
-		VersionedTechnicalNamespace s, 
+		VersionedTechnicalNamespace ns, 
 		Set<VersionedTechnicalNamespace> visited
 		) {
-		if (! visited.contains(s) ) { 
-			visited.add(s);
-			s.namespace.allImportedVersionedNS (s.version).map (vns |vns.allImportedVersionedNS (visited)).flatten.filter (typeof (VersionedTechnicalNamespace)).toSet;
+		if (! visited.contains(ns) ) { 
+			visited.add(ns);
+			ns.namespace.allImportedVersionedNS (ns.version).map (vns |vns.allImportedVersionedNS (visited)).flatten.filter (typeof (VersionedTechnicalNamespace)).toSet;
 		} else {
 			visited.filter (typeof (VersionedTechnicalNamespace)).toSet;
 		}
@@ -70,9 +73,13 @@ class TechnicalNamespaceImportQueries {
 	 *	are derived from the versioned dependencies of all owned VersiondTypes in the given 
 	 *	TechnicalNamespace matching the given major version. The owning VersiondDomainNamespace 
 	 *	of the found dependencies are returned.
+	 * 
+	 * @param ns the technical namespace to investigate
+	 * @param nameSpaceMajorVersion the required namespace version
+	 * @return all imported technical namespaces
 	 */
-	def Set<VersionedTechnicalNamespace> importedVersionedNS (TechnicalNamespace s, String nameSpaceMajorVersion) {
-		s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (Class))
+	def Set<VersionedTechnicalNamespace> importedVersionedNS (TechnicalNamespace ns, String nameSpaceMajorVersion) {
+		ns.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (Class))
 		.map (e|e.allReferencedVersionedTypes()).flatten.map (v|v.createVersionedTechnicalNamespace()).toSet;
 	}
 	

@@ -18,6 +18,10 @@ public class VersionRefMatcher {
 	/**
 	 * tests, whether the version constraint ref1 matches that of ref2, i.e. ref1 is fully 
 	 * covered by the version constraint ref2
+	 * 
+	 * @param ref1 a version constraint
+	 * @param ref2 another version constraint to check against
+	 * @return true, if version constraint ref1 matches that of ref2
 	 */
 	public boolean matches (VersionRef ref1, VersionRef ref2) {
 		if (ref1 instanceof MajorVersionRef) {
@@ -114,6 +118,10 @@ public class VersionRefMatcher {
 	
 	/**
 	 * tests, whether the version constraint ref1 matches exactly the version constraint ref2
+	 * 
+	 * @param ref1 a version constraint
+	 * @param ref2 another version constraint to check against
+	 * @return true, if version constraint ref1 matches exactly that of ref2
 	 */
 	public boolean matchesExactly (VersionRef ref1, VersionRef ref2) {
 		if (ref1 instanceof MajorVersionRef) {

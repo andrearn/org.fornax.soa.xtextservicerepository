@@ -35,8 +35,12 @@ class ModuleBindingLookup {
 //		return null
 //	}
 	
-	/*
+	/**
 	 * Find a binding to the target environment that is applicable for the module 
+	 * 
+	 * @param targetEnvironment The {@link Environment} to bind to
+	 * @param module The  Module to be bound
+	 * @return {@link ModuleBinding}s of module to the {@link Environment} targetEnvironment
 	 */
 	def List<ModuleBinding> findBindingForProvidingModuleAndEnv (Environment targetEnvironment, Module module) {
 		 if (stateMatcher.supportsEnvironment(module.state, targetEnvironment.name)) {
@@ -44,15 +48,17 @@ class ModuleBindingLookup {
 			 return candBindings.filter (b | versionFilterProvider.createVersionFilter (b.module.versionRef)
 			 									.matches (descBuilder.buildDescription(module))
 			 ).toList
-			 
-		 
 		 }
 		 return newArrayList()
 	}
 	
-	/*
+	/**
 	 * Find all Bindings of any version of a module with the given name to the given target environment. Returns an empty set 
 	 * if no such ModuleBinding exists
+	 *
+	 * @param targetEnvironment The {@link Environment} to bind to
+	 * @param providingModuleName The name of the Module to be bound
+	 * @return {@link ModuleBinding}s of module to the {@link Environment} targetEnvironment
 	 */
 	def Set<ModuleBinding> findAllBindingsByModuleAndEnvironment (Environment targetEnvironment, String providingModuleName) {
 		var candBindings= lookup.search("ModuleBinding ", Predicates::alwaysTrue)

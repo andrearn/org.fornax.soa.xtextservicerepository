@@ -77,6 +77,7 @@ public class VersionComparator {
 	 * Compares two version numbers
 	 * @param eObjDesc1 IEObjectDescription of a versioned object 
 	 * @param eObjDesc2 another IEObjectDescription of a versioned object
+	 * @param resolver version resolver to use, to resolve the object version of the Xtext index entry
 	 * @return	<ul>
 	 * 		<li>0, if the version numbers of eObjDesc1 and eObjDesc2 are equal</li>
 	 * 		<li>1, if the version of eObjDesc1 is higher than version of eObjDesc2</li>

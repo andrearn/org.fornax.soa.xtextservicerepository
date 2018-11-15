@@ -13,8 +13,6 @@ import org.eclipse.xtext.util.Pair;
  * 
  * see : http://www.eclipse.org/Xtext/documentation/latest/xtext.html#formatting
  * on how and when to use it 
- * 
- * Also see {@link org.eclipse.xtext.xtext.XtextFormattingTokenSerializer} as an example
  */
 public class SLADslFormatter extends AbstractDeclarativeFormatter {
 	

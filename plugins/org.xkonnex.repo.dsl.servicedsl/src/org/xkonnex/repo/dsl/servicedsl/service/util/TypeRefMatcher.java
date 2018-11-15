@@ -16,9 +16,9 @@ public class TypeRefMatcher {
 	
 	/**
 	 * tests whether the type reference in the version range of ref1 complies to types in the version range of ref2
-	 * @param ref1
-	 * @param ref2
-	 * @return
+	 * @param ref1 the type reference to check
+	 * @param ref2 the type reference to check against
+	 * @return to what extend ref1 and ref2 comply regarding their version
 	 */
 	public TypeRefMatchResult matches (TypeRef ref1, TypeRef ref2) {
 		if (ref1 instanceof VersionedTypeRef && ref2 instanceof VersionedTypeRef) {

@@ -17,7 +17,7 @@ import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef
 import org.xkonnex.repo.dsl.basedsl.version.VersionMatcher
 
 /**
- * Checks, whether to two module versions are compatible.<br/>
+ * Checks, whether to two module versions are compatible.
  * 
  * A Module is considered compatible, if it has
  * <ol>

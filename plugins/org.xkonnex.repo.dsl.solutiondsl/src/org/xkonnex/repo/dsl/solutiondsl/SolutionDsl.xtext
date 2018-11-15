@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2017 André Arnold and others.
+Copyright (c) 2010-2018 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -36,13 +36,13 @@ Solution:
 		(features+=Feature)*
 		(modules+=Module)*
 		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('owner' owner=EmailOrUsername)?
+			('responsible' responsible += EmailOrUsername)*
+			('budgeting' budgeting = EmailOrUsername)?
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])*)?
+		('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
 		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
+			subscriptions += EmailOrUsername*
 		'}')?
 	'}';
 
@@ -50,19 +50,20 @@ Module:
 	'module' name=ID '{'
 		'kind' kind=ModuleKind 
 		(version=Version)?
+		(license=License)?
 		(additionalInfo=AdditionalInformation)?
 		('requires' requires+=InterfaceRef )*
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		(features+=Feature)*
 		(modules+=Module)*
 		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('owner' owner=EmailOrUsername)?
+			('responsible' responsible += EmailOrUsername)*
+			('budgeting' budgeting = EmailOrUsername)?
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])*)?
+		('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
 		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
+			subscriptions += EmailOrUsername*
 		'}')?
 	'}';
 	
@@ -79,14 +80,14 @@ Feature:
 		('requires' requires+=InterfaceRef )*
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		('contact-info' '{'
-			('owner' owner=[basedsl::User|QualifiedName])?
-			('responsible' responsible += [basedsl::User|QualifiedName])*
-			('budgeting' budgeting = [basedsl::User|QualifiedName])?
+			('owner' owner=EmailOrUsername)?
+			('responsible' responsible += EmailOrUsername)*
+			('budgeting' budgeting = EmailOrUsername)?
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|QualifiedName])*)?
+		('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
 		(features+=Feature)*
 		('subscriptions' '{'
-			subscriptions += [basedsl::User|QualifiedName]*
+			subscriptions += EmailOrUsername*
 		'}')?
 	'}';
 	

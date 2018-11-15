@@ -8,8 +8,6 @@ import org.eclipse.xtext.formatting2.AbstractFormatter2
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.xkonnex.repo.dsl.basedsl.baseDsl.AdditionalInformation
 import org.xkonnex.repo.dsl.basedsl.baseDsl.InfoItem
-import org.xkonnex.repo.dsl.basedsl.baseDsl.RoleRef
-import org.xkonnex.repo.dsl.basedsl.baseDsl.User
 import org.xkonnex.repo.dsl.basedsl.services.BaseDslGrammarAccess
 
 class BaseDslFormatter extends AbstractFormatter2 {
@@ -23,12 +21,5 @@ class BaseDslFormatter extends AbstractFormatter2 {
 		}
 	}
 
-	def dispatch void format(User user, extension IFormattableDocument document) {
-		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (RoleRef roles : user.getRoles()) {
-			roles.format;
-		}
-	}
-	
 	// TODO: implement for Role, AssetRef, Assignment, Component, AuthToken, HashAlgorithm, HashAlgorithmKind, SigningAlgorithm, CipherAlgorithmKind
 }

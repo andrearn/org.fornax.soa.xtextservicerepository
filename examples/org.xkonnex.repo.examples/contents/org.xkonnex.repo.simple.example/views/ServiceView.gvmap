@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2012 developers of XtextServiceRepository and others.
+ * Copyright (c) 2018 developers of XKonneX Repository and others.
  * All rights reserved. This script and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,21 +7,21 @@
  * 
  * initial contribution:	André Arnold
  *******************************************************************************/
-import org.fornax.soa.serviceDsl.*
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.*
 
 diagram ServiceDiagram type SubNamespace {
 	
-	node ServiceNode for each services {
+	node ServiceNode for each objects.filter (typeof (Service)) {
 		label Name for name
-		label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+		label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 		
 		node OperationNode for operations {
 			label Name for each map (op|op.name + "(" + {if (op.parameters?.size < 4) {op.parameters.map(p|p.name).join(",")} else "..."} + ")")
 		}
 		hidden edge BOEdge for each 
 			operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
-			=> call BusinessObjectNode for (this as BusinessObject)
+				(p.^type as VersionedTypeRef).^type instanceof AbstractBusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+			=> call BusinessObjectNode for (this as AbstractBusinessObject)
 		}
 		hidden edge QOEdge for each 
 			operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
@@ -30,13 +30,13 @@ diagram ServiceDiagram type SubNamespace {
 		}
 		hidden edge EnumEdge for each 
 			operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
-			=> call EnumNode for (this as org.fornax.soa.serviceDsl.Enumeration)
+				(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+			=> call EnumNode for (this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 		}
 		
 		hidden edge BOReturnEdge for each 
 			operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof BusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+				(p.^type as VersionedTypeRef).^type instanceof AbstractBusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
 			=> call BusinessObjectNode for (this as BusinessObject)
 		}
 		hidden edge QOReturnEdge for each 
@@ -46,8 +46,8 @@ diagram ServiceDiagram type SubNamespace {
 		}
 		hidden edge EnumReturnEdge for each 
 			operations.map(op | op.^return).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef).^type instanceof org.fornax.soa.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
-			=> call EnumNode for (this as org.fornax.soa.serviceDsl.Enumeration)
+				(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+			=> call EnumNode for (this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 		}
 		edge ExceptionEdge for each 
 			operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer == t.exception.eContainer).map(e|e.exception).toSet {
@@ -58,15 +58,68 @@ diagram ServiceDiagram type SubNamespace {
 			=> call HiddenExceptionNode for this
 		}
 		
-		hidden edge RequiredServiceEdge for each operations.map(op | op.requires).flatten.map(req|req.service) {
+		hidden edge RequiredServiceEdge for each operations.map(op | op.requires).flatten.map(req|req.interfaceRef) {
 			=> call ServiceNode for this
 			label RequiresLabel for "requires"
 		}
 	}
 
-	node BusinessObjectNode for this as BusinessObject {
+	node ResourceNode for each objects.filter (typeof (Resource)) {
 		label Name for name
-		label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+		label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
+		
+		node OperationNode for operations {
+			label Name for each map (op|op.name + "(" + {if (op.parameters?.size < 4) {op.parameters.map(p|p.name).join(",")} else "..."} + ")")
+		}
+		hidden edge BOEdge for each 
+			operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
+				(p.^type as VersionedTypeRef).^type instanceof AbstractBusinessObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+			=> call BusinessObjectNode for (this as AbstractBusinessObject)
+		}
+		hidden edge QOEdge for each 
+			operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
+				(p.^type as VersionedTypeRef).^type instanceof QueryObject)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+			=> call QueryObjectNode for (this as QueryObject)
+		}
+		hidden edge EnumEdge for each 
+			operations.map(op | op.parameters).flatten.filter (p | (p.^type instanceof VersionedTypeRef && 
+				(p.^type as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)).map (r|(r.^type as VersionedTypeRef).^type).toSet {
+			=> call EnumNode for (this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
+		}
+		
+		hidden edge BOReturnEdge for each 
+			operations.map(op | op.response.map[^return]).flatten.filter (p | (p.map[^type] instanceof VersionedTypeRef && 
+				(p.map[^type] as VersionedTypeRef).^type instanceof AbstractBusinessObject)).map (r|(r.map[^type] as VersionedTypeRef).^type).toSet {
+			=> call BusinessObjectNode for (this as BusinessObject)
+		}
+		hidden edge QOReturnEdge for each 
+			operations.map(op | op.response.map[^return]).flatten.filter (p | (p.map[^type] instanceof VersionedTypeRef && 
+				(p.map[^type] as VersionedTypeRef).^type instanceof QueryObject)).map (r|(r.map[^type] as VersionedTypeRef).^type).toSet {
+			=> call QueryObjectNode for (this as QueryObject)
+		}
+		hidden edge EnumReturnEdge for each 
+			operations.map(op | op.response.map[^return]).flatten.filter (p | (p.map[^type] instanceof VersionedTypeRef && 
+				(p.map[^type] as VersionedTypeRef).^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)).map (r|(r.map[^type] as VersionedTypeRef).^type).toSet {
+			=> call EnumNode for (this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
+		}
+		edge ExceptionEdge for each 
+			operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer == t.exception.map[eContainer]).map(e|e.exception).toSet {
+			=> ref HiddenExceptionNode for this
+		}
+		hidden edge HiddenExceptionEdge for each
+			operations.map(op | op.^throws).flatten.filter(t|t.eContainer.eContainer.eContainer.eContainer != t.exception.map[eContainer]).map(e|e.exception).toSet {
+			=> call HiddenExceptionNode for this
+		}
+		
+		hidden edge RequiredServiceEdge for each operations.map(op | op.requires).flatten.map(req|req.interfaceRef) {
+			=> call ServiceNode for this
+			label RequiresLabel for "requires"
+		}
+	}
+
+	node BusinessObjectNode for this as AbstractBusinessObject {
+		label Name for name
+		label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 		
 		hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 			label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
@@ -75,29 +128,29 @@ diagram ServiceDiagram type SubNamespace {
 		
 		hidden edge HiddenReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef)?.^type instanceof BusinessObject) &&
+				(p.^type as VersionedTypeRef)?.^type instanceof AbstractBusinessObject) &&
 				eContainer == p.eContainer?.eContainer) {
-			=> call BusinessObjectNode for ((^type as VersionedTypeRef)?.^type as BusinessObject)
+			=> call BusinessObjectNode for ((^type as VersionedTypeRef)?.^type as AbstractBusinessObject)
 			label HiddenEdgeLabel for name
 		} 
 		hidden edge HiddenEnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
+				(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
 				eContainer == p.eContainer.eContainer) {
-			=> call EnumNode for ((^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)
+			=> call EnumNode for ((^type as VersionedTypeRef).^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 			label EdgeLabel for name
 		}
 		
 		hidden edge InhertanceEdge for superObject?.^type {
 			=> call BusinessObjectNode for this
-		} unless superObject == null
+		} unless superObject === null
 		
 		
-	} unless !(this instanceof BusinessObject)
+	} unless !(this instanceof AbstractBusinessObject)
 	
 	node QueryObjectNode for this as QueryObject {
 		label Name for name
-		label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+		label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 		
 		hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 			label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
@@ -113,33 +166,33 @@ diagram ServiceDiagram type SubNamespace {
 		} 
 		hidden edge HiddenEnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
+				(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
 				eContainer == p.eContainer.eContainer) {
-			=> call EnumNode for ((^type as VersionedTypeRef).^type as org.fornax.soa.serviceDsl.Enumeration)
+			=> call EnumNode for ((^type as VersionedTypeRef).^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 			label EdgeLabel for name
 		}
 		
 		hidden edge InhertanceEdge for superObject?.^type {
 			=> call QueryObjectNode for this
-		} unless superObject == null
+		} unless superObject === null
 		
 		
 	} unless !(this instanceof BusinessObject)
 
 
-	node EnumNode for this as org.fornax.soa.serviceDsl.Enumeration {
+	node EnumNode for this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration {
 		label EnumLabel  for "<<Enum>>"
 		label Name for name
-		label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+		label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 		hidden node EnumLiteralNode for literals {
 			label Label for each map(lit|lit.name)
 		} unless literals.empty
-	} unless !(this instanceof org.fornax.soa.serviceDsl.Enumeration)
+	} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 	
-	node HiddenExceptionNode for this as org.fornax.soa.serviceDsl.Exception {
+	node HiddenExceptionNode for this as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception {
 		label ExceptionLabel for "<<Exception>>"
 		label Name for name	
-		label Version for "[v" + version?.version + {if (state != null) {", " +  state.name} else ""} + "]"
+		label Version for "[v" + version?.version + {if (state !== null) {", " +  state.name} else ""} + "]"
 		
 		hidden node PropertiesNode for properties.filter (p | p.^type instanceof DataTypeRef) {
 			label Label for each map(p|p.name + " : " + (p.^type as DataTypeRef)?.^type.name)
@@ -154,10 +207,10 @@ diagram ServiceDiagram type SubNamespace {
 		}
 		hidden edge EnumReferenceEdge for each 
 			properties.filter (p | (p.^type instanceof VersionedTypeRef && 
-				(p.^type as VersionedTypeRef)?.^type instanceof org.fornax.soa.serviceDsl.Enumeration) && 
-				((p.^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
+				(p.^type as VersionedTypeRef)?.^type instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration) && 
+				((p.^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration).eContainer == p.eContainer?.eContainer && 
 				eContainer == p.eContainer?.eContainer) {
-			=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.fornax.soa.serviceDsl.Enumeration)
+			=> call EnumNode for ((^type as VersionedTypeRef)?.^type as org.xkonnex.repo.dsl.servicedsl.serviceDsl.Enumeration)
 			label EdgeLabel for name
 		}
 		
@@ -171,6 +224,6 @@ diagram ServiceDiagram type SubNamespace {
 		 
 		edge InhertanceEdge for superException?.^exception {
 			=> call HiddenExceptionNode for this
-		} unless superException == null
-	} unless !(this instanceof org.fornax.soa.serviceDsl.Exception)
+		} unless superException === null
+	} unless !(this instanceof org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception)
 }

@@ -76,6 +76,9 @@ class NamespaceQuery {
 	
 	/**
 	 *	Find the owning namespace of the owner of the exception reference
+	 * 
+	 * @param e versioned reference to an exception
+	 * @return namespace of thrower of the exception
 	 */
 	def SubNamespace findExceptionRefOwnerSubdomain (ExceptionRef e) {
 		e?.getStatefulOwner()?.eContainer as SubNamespace;
@@ -83,13 +86,19 @@ class NamespaceQuery {
 	
 	/**
 	 *	Find the owning namespace of the owner of the service reference
+	 * 
+	 * @param s a versioned reference to a service
+	 * @return namespace of the service
 	 */
 	def SubNamespace findServiceRefOwnerSubdomain (ServiceRef s) {
 		s?.getStatefulOwner()?.eContainer as SubNamespace;
 	}
 	
 	/**
-	 *	Find the owning namespace of the owner of the service reference
+	 *	Find the owning namespace of the owner of the resource reference
+	 * 
+	 * @param s a versioned reference to a resource
+	 * @return namespace of the resource
 	 */
 	def SubNamespace findResourceRefOwnerSubdomain (ResourceRef s) {
 		s?.getStatefulOwner()?.eContainer as SubNamespace;

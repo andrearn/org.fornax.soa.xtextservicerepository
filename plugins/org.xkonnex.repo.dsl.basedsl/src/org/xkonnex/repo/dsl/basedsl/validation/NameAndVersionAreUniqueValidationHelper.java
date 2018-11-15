@@ -133,6 +133,12 @@ public class NameAndVersionAreUniqueValidationHelper implements INameAndVersionA
 	 * If the container information will be helpful to locate the error or to understand the error
 	 * it will be used, otherwise only the simple format will be build. Clients may override different
 	 * methods that influence the error message.
+	 * 
+	 * @param description indexed object description to validate
+	 * @param clusterType the type to cluster messages for
+	 * @param feature the feature to validate
+	 * @return error message text
+	 * 
 	 * @see #getNameFeature(EObject)
 	 * @see #getTypeLabel(EClass)
 	 * @see #getContainerForErrorMessage(EObject)

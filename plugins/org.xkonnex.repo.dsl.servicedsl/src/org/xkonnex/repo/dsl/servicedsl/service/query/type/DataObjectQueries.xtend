@@ -15,6 +15,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.DataObject
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Property
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.VersionedType
+import org.eclipse.xtext.documentation.IEObjectDocumentationProvider
 
 class DataObjectQueries {
 	@Inject
@@ -38,7 +39,10 @@ class DataObjectQueries {
 	}
 	
 	/**
-	 * Get the root business object of the type hierarchy of the given BO
+	 * Get the root data object of the type hierarchy of the given BO
+	 * 
+	 * @param bo a DataObject
+	 * @return the root data object of the type hierarchy
 	 */
 	def DataObject getRootDataObject (DataObject bo) {
 		doQueryInt.getRootDataObject(bo) as DataObject
@@ -96,6 +100,7 @@ class DataObjectQueries {
 	 * @param includeCycleTypes include the BO in the result even if it already was visited. 
 	 * 		However traversal of this path stops here
 	 * @param referrer The DependencyDescription that refers to the DependencyDescriptions to be created
+	 * @param visitedDependendies the dependencies that have already been visited, initially empty
 	 * @return {@link DependencyDescription} keyed with the {@link IEObjectDescription} of the referring property 
 	 */
 	def DependencyDescription getTransitiveDependencies (Property prop, boolean includeInheritedProperties, boolean includeCycleTypes, List<IEObjectDescription> visitedDependendies, DependencyDescription referrer) {
@@ -110,7 +115,7 @@ class DataObjectQueries {
 	 * @param includeSuperTypes Look for references to super types as well?
 	 * @param visited	Contains all transitively found references so far.
 	 * @param resourceSet	The {@link ResourceSet} used to materialize found references from.
-	 * @return
+	 * @return all objects with transitive references to type as {@link IEObjectDescription}s of
 	 */
 	def List<IEObjectDescription> getAllTransitiveReferrers (EObject type, boolean includeSuperTypes, List<IEObjectDescription> visited, ResourceSet resourceSet) {
 		doQueryInt.getAllTransitiveReferrers(type, includeSuperTypes, visited, resourceSet)

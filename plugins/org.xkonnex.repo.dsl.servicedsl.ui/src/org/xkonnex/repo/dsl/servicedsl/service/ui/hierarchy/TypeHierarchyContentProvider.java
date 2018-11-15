@@ -79,7 +79,7 @@ public abstract class TypeHierarchyContentProvider implements ITreeContentProvid
 	 * When member filtering is enabled, the hierarchy contains only types that contain
 	 * an implementation of one of the filter members and the members themself.
 	 * The hierarchy can be empty as well.
-	 * @param memberFilter the new member filter
+	 * @param filter the new member filter
 	 */
 	public final void setMemberFilter(Predicate<IEObjectDescription> filter) {
 		fMemberFilter= filter;

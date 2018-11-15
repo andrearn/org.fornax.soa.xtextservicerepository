@@ -249,8 +249,11 @@ class JavaTypeExtensions {
 			return typeRef.type.toJavaTypeName(optionalField)
 	}
 	
-	/*
+	/**
 	 * returns the Java type name of the property's type
+	 * 
+	 * @param property a  property
+	 * @return the type name of the property
 	 */
 	def String toJavaTypeName (Property property) {
 		property.type.toJavaTypeName(property.optional)
@@ -286,6 +289,9 @@ class JavaTypeExtensions {
 	
 	/**
 	 * Convert a fully qualified class name to the Java file name
+	 * 
+	 * @param qualifiedClassName qualified name of a Java class
+	 * @return name of the Java class file (qualified)
 	 */
 	def String toJavaFileName (String qualifiedClassName) {
 		qualifiedClassName.replaceAll("\\.", "/") + ".java"
@@ -293,6 +299,9 @@ class JavaTypeExtensions {
 	
 	/**
 	 * Get the java file name of a class representing a Type
+	 * 
+	 * @param type a type
+	 * @return name of the Java class file (qualified)
 	 */
 	def String toJavaFileName (Type type) {
 		type.toQualifiedJavaTypeName (false).toJavaFileName
@@ -300,13 +309,20 @@ class JavaTypeExtensions {
 	
 	/**
 	 * Get the java file name of a class representing a Service
+	 * 
+	 * @param service a service
+	 * @return name of the Java class file (qualified)
 	 */
-	def String toJavaFileName (Service type) {
-		type.toQualifiedJavaTypeName (false).toJavaFileName
+	def String toJavaFileName (Service service) {
+		service.toQualifiedJavaTypeName (false).toJavaFileName
 	}
 	
 	/**
 	 * Get the java file name of a class representing the referenced Type
+	 * 
+	 * @param typeRef a type reference
+	 * @param isOptional whether the type must be nullable, or the property/parameter is optional
+	 * @return name of the Java class file (qualified)
 	 */
 	def String toJavaFileName (TypeRef typeRef, boolean isOptional) {
 		typeRef.toQualifiedJavaTypeName (isOptional).toJavaFileName
@@ -314,9 +330,12 @@ class JavaTypeExtensions {
 	
 	/**
 	 * Get the java file name of the exception wrapper class representing the referenced Exception 
+	 * 
+	 * @param exRef a exception reference
+	 * @return name of the Java class file (qualified)
 	 */
-	def String toJavaFileName (ExceptionRef typeRef) {
-		typeRef.toQualifiedJavaTypeName (false).toJavaFileName
+	def String toJavaFileName (ExceptionRef exRef) {
+		exRef.toQualifiedJavaTypeName (false).toJavaFileName
 	}
 	
 }

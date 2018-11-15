@@ -35,10 +35,11 @@ class NamespaceImportQueries {
 	@Inject NamespaceSplitter namespaceSplitter
 	
 	/**
-	 *	Calculate all dependencies of the given Service version
+	 *	Calculate all dependencies of the given Service version and return their namespaces
 	 *	@deprecated ?
 	 *
 	 *	@param svc	The Service with it's version to calculate the imports for
+	 * @return all imported namespaces
 	 */
 	def Set<VersionedDomainNamespace> findImportedSubdomains (Service svc) { 
 		var imports = svc.operations.map (o|o.parameters).flatten.map (p|p.type).filter(typeof (AbstractVersionedTypeRef))
@@ -50,14 +51,16 @@ class NamespaceImportQueries {
 	}
 	
 	/**
-	 *	Calculate all dependencies of the given Service version and LifecycleState. Dependencies must match
+	 *	Calculate all dependencies of the given Type version and LifecycleState and return their namespaces. Dependencies must match
 	 *	the given minimal LifecycleState
 	 *	@deprecated ?
 	 *
-	 *	@param svc	The Service with it's version to calculate the imports for
+	 *	@param type	The Type with it's version to calculate the imports for
+	 * @param minState minimal required {@link LifecycleState}
+	 * @return all imported namespaces
 	 */
-	def Set<SubNamespace> allImportedSubNamespaces (Type t, LifecycleState minState) { 
-		t.allReferencedVersionedTypes (minState).map (e|e.findSubdomain()).toSet();
+	def Set<SubNamespace> allImportedSubNamespaces (Type type, LifecycleState minState) { 
+		type.allReferencedVersionedTypes (minState).map (e|e.findSubdomain()).toSet();
 	}
 	
 	
@@ -65,6 +68,10 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Type considering the minimal LifecycleState required by the 
 	 *	given Type. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 *	@param t	The Type with it's version to calculate the imports for
+	 * @param minState minimal required {@link LifecycleState}
+	 * @return all imported namespaces with their major version
 	 */
 	def Set<VersionedDomainNamespace> allImportedVersionedNS (Type t, LifecycleState minState) {
 		t.allReferencedVersionedTypes(minState).map (e|namespaceSplitter.createVersionedDomainNamespace(e)).toSet();
@@ -75,9 +82,13 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Type considering the minimal LifecycleState required by the 
 	 *	given Type. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 *	@param ns a versioned namespace
+	 * @param minState minimal required {@link LifecycleState}
+	 * @return all imported namespaces
 	 */
-	def  Set<VersionedDomainNamespace> allImportedVersionedNS (VersionedDomainNamespace s, LifecycleState minState) { 
-		s.allImportedVersionedNS (minState, (new HashSet<VersionedDomainNamespace>())).toSet();
+	def  Set<VersionedDomainNamespace> allImportedVersionedNS (VersionedDomainNamespace ns, LifecycleState minState) { 
+		ns.allImportedVersionedNS (minState, (new HashSet<VersionedDomainNamespace>())).toSet();
 	}
 
 	def Set<VersionedDomainNamespace> allImportedVersionedNS (
@@ -98,9 +109,12 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
 	 *	VersionedDomainNamespace. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 *	@param ns a versioned namespace
+	 * @return all imported namespaces (versioned)
 	 */
-	def Set<VersionedDomainNamespace> allImportedVersionedNS (VersionedDomainNamespace s) { 
-		s.allImportedVersionedNSStateless (new HashSet<VersionedDomainNamespace>() ).filter (typeof (VersionedDomainNamespace)).toSet;
+	def Set<VersionedDomainNamespace> allImportedVersionedNS (VersionedDomainNamespace ns) { 
+		ns.allImportedVersionedNSStateless (new HashSet<VersionedDomainNamespace>() ).filter (typeof (VersionedDomainNamespace)).toSet;
 	}
 	
 	private def Set<VersionedDomainNamespace> allImportedVersionedNSStateless (
@@ -120,6 +134,10 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
 	 *	SubNamespace matching the given major version. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 	
+	 * 	@param s	a namespace
+	 * @param nameSpaceMajorVersion major version of the namespace
+	 * @return all imported namespaces with their major version
 	 */
 	def Set<VersionedDomainNamespace> allImportedVersionedNS (SubNamespace s, String nameSpaceMajorVersion) {
 		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (BusinessObject))
@@ -136,10 +154,11 @@ class NamespaceImportQueries {
 	 *	the given minimal LifecycleState
 	 *	@deprecated ?
 	 *
-	 *	@param svc	The Service with it's version to calculate the imports for
+	 *	@param type	The Type with it's version to calculate the imports for
+	 * @return all imported namespaces
 	 */
-	def Set<SubNamespace> allImportedSubNamespaces (Type t) { 
-		t.allReferencedVersionedTypes ().map (e|e.findSubdomain()).toSet();
+	def Set<SubNamespace> allImportedSubNamespaces (Type type) { 
+		type.allReferencedVersionedTypes ().map (e|e.findSubdomain()).toSet();
 	}	
 	
 //	def dispatch Set<VersionedDomainNamespace> allImportedVersionedNS (Object s, String nameSpaceMajorVersion, LifecycleState minState) {}
@@ -149,6 +168,11 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
 	 *	SubNamespace matching the given major version. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s {@link SubNamespace} to find imports for
+	 * @param nameSpaceMajorVersion major version of the namespace
+	 * @param minState minimal required {@link LifecycleState}
+	 * @return all imported namespaces with their major version
 	 */
 	def Set<VersionedDomainNamespace> allImportedVersionedNS (SubNamespace s, String nameSpaceMajorVersion, LifecycleState minState) {
 		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (BusinessObject))
@@ -164,6 +188,11 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s {@link Service} to find imports for
+	 * @param nameSpaceMajorVersion major version of the namespace
+	 * @param minState minimal required {@link LifecycleState}
+	 * @return all imported namespaces with their major version
 	 */
 	def Set<VersionedDomainNamespace> allImportedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) {
 		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (DataObject))
@@ -181,17 +210,22 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param res {@link Resource} to find imports for
+	 * @param nameSpaceMajorVersion major version of the namespace
+	 * @param minState minimal required {@link LifecycleState}
+	 * @return all imported namespaces with their major version
 	 */
-	def Set<VersionedDomainNamespace> allImportedVersionedNS (Resource s, String nameSpaceMajorVersion, LifecycleState minState) {
-		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (DataObject))
+	def Set<VersionedDomainNamespace> allImportedVersionedNS (Resource res, String nameSpaceMajorVersion, LifecycleState minState) {
+		var imports = res.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (DataObject))
 			.map (b|b.allReferencedVersionedTypes (minState)).flatten.map (r|namespaceSplitter.createVersionedDomainNamespace(r)).toSet;
-		imports.addAll (s.allReferencedVersionedTypes (minState).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
-		imports.addAll (serviceFinder.allReferencedExceptions (s).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
+		imports.addAll (res.allReferencedVersionedTypes (minState).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
+		imports.addAll (serviceFinder.allReferencedExceptions (res).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 
-		val exByMajor = serviceFinder.allExceptionsByMajorVersion (s, nameSpaceMajorVersion);
+		val exByMajor = serviceFinder.allExceptionsByMajorVersion (res, nameSpaceMajorVersion);
 		imports.addAll (exByMajor.map (e|e.allReferencedVersionedTypes (minState)).flatten.map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		imports.addAll (exByMajor.map (ex|ex.superException).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace (excResolver.findMatchingException(e))));
-		imports.add (namespaceSplitter.createVersionedDomainNamespace(s));
+		imports.add (namespaceSplitter.createVersionedDomainNamespace(res));
 		return imports;
 	}
 		
@@ -200,6 +234,10 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
 	 *	SubNamespace matching the given major version. The owning VersiondDomainNamespace of the found dependencies are returned.
+
+	 * @param s {@link SubNamespace} to find imports for
+	 * @param nameSpaceMajorVersion major version of the namespace
+	 * @return all imported namespaces with their major version
 	 */
 	def Set<VersionedDomainNamespace> allImportedVersionedNSStateless (SubNamespace s, String nameSpaceMajorVersion) {
 		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (BusinessObject))
@@ -215,6 +253,10 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s {@link Service} to find imports for
+	 * @param nameSpaceMajorVersion major version of the namespace
+	 * @return all imported namespaces with their major version
 	 */
 	def Set<VersionedDomainNamespace> allImportedVersionedNSStateless (Service s, String nameSpaceMajorVersion) {
 		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (DataObject))
@@ -228,21 +270,26 @@ class NamespaceImportQueries {
 		imports.add (namespaceSplitter.createVersionedDomainNamespace(s));
 		return imports;
 	}
+	
 	/**
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
-	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
+	 *	are derived from the versioned dependencies of the given {@link Resource} (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param res {@link Resource} to find imports for
+	 * @param nameSpaceMajorVersion major version of the namespace
+	 * @return all imported namespaces with their major version
 	 */
-	def Set<VersionedDomainNamespace> allImportedVersionedNSStateless (Resource s, String nameSpaceMajorVersion) {
-		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (DataObject))
+	def Set<VersionedDomainNamespace> allImportedVersionedNSStateless (Resource res, String nameSpaceMajorVersion) {
+		var imports = res.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (DataObject))
 			.map (b|b.allReferencedVersionedTypes ()).flatten.map (r|namespaceSplitter.createVersionedDomainNamespace(r)).toSet;
-		imports.addAll (s.allReferencedVersionedTypes ().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
-		imports.addAll (serviceFinder.allReferencedExceptions (s).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
+		imports.addAll (res.allReferencedVersionedTypes ().map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
+		imports.addAll (serviceFinder.allReferencedExceptions (res).map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 
-		val exByMajor = serviceFinder.allExceptionsByMajorVersion (s, nameSpaceMajorVersion);
+		val exByMajor = serviceFinder.allExceptionsByMajorVersion (res, nameSpaceMajorVersion);
 		imports.addAll (exByMajor.map (e|e.allReferencedVersionedTypes ()).flatten.map (e|namespaceSplitter.createVersionedDomainNamespace(e)));
 		imports.addAll (exByMajor.map (ex|ex.superException).filterNull().map (e|namespaceSplitter.createVersionedDomainNamespace (excResolver.findMatchingException(e))));
-		imports.add (namespaceSplitter.createVersionedDomainNamespace(s));
+		imports.add (namespaceSplitter.createVersionedDomainNamespace(res));
 		return imports;
 	}
 //
@@ -256,16 +303,22 @@ class NamespaceImportQueries {
 	 *	the given minimal LifecycleState
 	 *	@deprecated ?
 	 *
-	 *	@param svc	The Service with it's version to calculate the imports for
+	 *	@param type	The Type with it's version to calculate the imports for
+	 * @param minState minimal required {@link LifecycleState}
+	 * @return all imported namespaces required by type
 	 */
-	def Set<SubNamespace> importedSubNamespaces (Type t, LifecycleState minState) {
-		t.allReferencedVersionedTypes (minState).map (e|e.findSubdomain()).toSet();
+	def Set<SubNamespace> importedSubNamespaces (Type type, LifecycleState minState) {
+		type.allReferencedVersionedTypes (minState).map (e|e.findSubdomain()).toSet();
 	}
 	
 	/**
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Type considering the minimal LifecycleState required by the 
 	 *	given Type. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param t {@link Type} to find imports for
+	 * @param minState minimal required {@link LifecycleState}
+	 * @return all imported namespaces with their major version
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (Type t, LifecycleState minState) {
 		t.allReferencedVersionedTypes (minState).map (e|namespaceSplitter.createVersionedDomainNamespace(e)).toSet();
@@ -276,12 +329,23 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Type considering the minimal LifecycleState required by the 
 	 *	given Type. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s {@link VersionedDomainNamespace} to find imports for
+	 * @param minState minimal required {@link LifecycleState}
+	 * @return all imported namespaces with their major version
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (VersionedDomainNamespace s, LifecycleState minState) { 
 		s.importedVersionedNS (minState, new HashSet<VersionedDomainNamespace>()).toSet();
 	}
 	
 			/*called this????*/
+	/**
+	 * Find all imported namespace of a versioned namespace
+	 * @param s namespace (versioned)
+	 * @param minState minimal required {@link LifecycleState}
+	 * @param visited set of allready visited namespace (initially empty)
+	 * @return imported versioned namespaces
+	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (
 		VersionedDomainNamespace s, 
 		LifecycleState minState, 
@@ -295,6 +359,9 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
 	 *	VersionedDomainNamespace. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the namespace
+	 * @return all import versioned namespaces
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (VersionedDomainNamespace s) {
 		s.importedVersionedNSStateless (new HashSet<VersionedDomainNamespace>()).toSet();
@@ -315,6 +382,11 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
 	 *	SubNamespace matching the given major version. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the namespace to investigate
+	 * @param nameSpaceMajorVersion major version of the namespace ns
+	 * @param minState minimal required state of dependencies
+	 * @return all imported namespaces (versioned)
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (SubNamespace s, String nameSpaceMajorVersion, LifecycleState minState) {
 		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion, minState).filter (typeof (BusinessObject))
@@ -329,6 +401,10 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the service to investigate for imports
+	 * @param minState minimal required state of dependencies
+	 * @return all imported namespaces (versioned)
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (Service s, LifecycleState minState) {
 		var imports = new HashSet<VersionedDomainNamespace>();
@@ -347,6 +423,10 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the resource to investigate for imports
+	 * @param minState minimal required state of dependencies
+	 * @return all imported namespaces (versioned)
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (Resource s, LifecycleState minState) {
 		var imports = new HashSet<VersionedDomainNamespace>();
@@ -365,6 +445,11 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the service to investigate for imports
+	 * @param nameSpaceMajorVersion major version of the namespace
+	 * @param minState minimal required state of dependencies
+	 * @return all imported namespaces (versioned)
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (Service s, String nameSpaceMajorVersion, LifecycleState minState) {
 		var imports = new HashSet<VersionedDomainNamespace>();
@@ -382,6 +467,11 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the resource to investigate for imports
+	 * @param nameSpaceMajorVersion major version of the namespace
+	 * @param minState minimal required state of dependencies
+	 * @return all imported namespaces (versioned)
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (Resource s, String nameSpaceMajorVersion, LifecycleState minState) {
 		var imports = new HashSet<VersionedDomainNamespace>();
@@ -404,6 +494,10 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of all owned VersiondTypes, Exceptions and Service in the given 
 	 *	SubNamespace matching the given major version. The owning VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the namespace to investigate for imports
+	 * @param nameSpaceMajorVersion major version of the namespace 
+	 * @return all imported namespaces (versioned)
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (SubNamespace s, String nameSpaceMajorVersion) {
 		var imports = s.allTypesByMajorVersion (nameSpaceMajorVersion).filter (typeof (BusinessObject))
@@ -418,6 +512,9 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the service to find imports for
+	 * @return all imported namespaces (versioned)
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (Service s) {
 		var imports = new HashSet<VersionedDomainNamespace>();
@@ -436,6 +533,9 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the resource to find imports for
+	 * @return all imported namespaces (versioned)
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (Resource s) {
 		var imports = new HashSet<VersionedDomainNamespace>();
@@ -454,6 +554,10 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the service to find imports for
+	 * @param nameSpaceMajorVersion major version of the namespace 
+	 * @return all imported namespaces (versioned)
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (Service s, String nameSpaceMajorVersion) {
 		var imports = new HashSet<VersionedDomainNamespace>();
@@ -471,6 +575,10 @@ class NamespaceImportQueries {
 	 *	Find all imported VersionedDomainSpaces, i.e. major version filtered slices of SubNamespaces. VersionedDomainNamespaces
 	 *	are derived from the versioned dependencies of the given Service (versioned). The owning 
 	 *	VersiondDomainNamespace of the found dependencies are returned.
+	 * 
+	 * @param s the resource to find imports for
+	 * @param nameSpaceMajorVersion major version of the namespace 
+	 * @return all imported namespaces (versioned)
 	 */
 	def Set<VersionedDomainNamespace> importedVersionedNS (Resource s, String nameSpaceMajorVersion) {
 		var imports = new HashSet<VersionedDomainNamespace>();

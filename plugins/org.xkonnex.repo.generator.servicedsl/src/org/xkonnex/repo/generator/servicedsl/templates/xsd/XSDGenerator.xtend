@@ -106,6 +106,7 @@ class XSDGenerator {
 			}
 		}
 	}
+	
 	/*
 		Generate an XSD for each VersionedDomainNamespace derived from the given SubNamespace 
 		applying splitting by major version of owned VersionedTypes and Exceptions in the 
@@ -132,8 +133,15 @@ class XSDGenerator {
 	}
 	
 	
-	/*
+	/**
 	 * TODO: review for use as noDependencies flag is being injected already
+	 * 
+	 * @param ns the namespace to generate for
+	 * @param minState the required minimal asset LifecycleState
+	 * @param enforcedProfile the architecture profile to use
+	 * @param registryBaseUrl the base URL of the registry
+	 * @param noDeps whether dependencies are to be ignored / not to be generated
+	 * @param includeSubNamespaces whether subnamespaces are to be generated
 	 */
 	def dispatch void toXSD (SubNamespace ns, LifecycleState minState, Profile enforcedProfile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val profile = ns.getApplicableProfile(enforcedProfile)
@@ -148,10 +156,16 @@ class XSDGenerator {
 		}
 	}
 	
-	/*
+	/**
 	 * TODO: review for use as noDependencies flag is being injected already
+	 * 
+	 * @param ns the namespace to generate for
+	 * @param enforcedProfile the architecture profile to use
+	 * @param registryBaseUrl the base URL of the registry
+	 * @param noDeps whether dependencies are to be ignored / not to be generated
+	 * @param includeSubNamespaces whether subnamespaces are to be generated
 	 */
-	def dispatch void toXSD (SubNamespace ns, Profile enforcedProfile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
+	def void toXSD (SubNamespace ns, Profile enforcedProfile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val profile = ns.getApplicableProfile(enforcedProfile)
 		var nsVersions = ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion();
 		for (nsVer : nsVersions) {
@@ -171,10 +185,15 @@ class XSDGenerator {
 				.forEach (e|e.toXSDVersion (profile, registryBaseUrl));
 	}
 
-	/*
-		Generate XSDs for all VersionedDomainNamespaces derived from the given SubNamespace by applying
-		the major version splitting algorithm filtered by the given minimal LifecycleState
-	*/
+	/**
+	 * Generate XSDs for all VersionedDomainNamespaces derived from the given SubNamespace by applying
+	 * the major version splitting algorithm filtered by the given minimal LifecycleState
+	 * 
+	 * @param ns the namespace to generate for
+	 * @param minState the required minimal asset LifecycleState
+	 * @param profile the architecture profile to use
+	 * @param registryBaseUrl the base URL of the registry
+	 */
 	def toXSDForImports (SubNamespace ns, LifecycleState minState, Profile profile, String registryBaseUrl) {
 		for (nsVer : ns.splitNamespaceByMajorVersion().getAllLatestSubNamespacesByMajorVersion()) {
 			nsVer.toXSDVersion (minState, profile, registryBaseUrl);
@@ -185,17 +204,21 @@ class XSDGenerator {
 	}
 	
 	
-	/*
-		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
-		that match the given minimal LifecycleState.
+	/**
+	 *	Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
+	 * that match the given minimal LifecycleState.
+	 * 
+	 * @param vns the versioned namespace to generate for
+	 * @param minState the required minimal asset LifecycleState
+	 * @param profile the architecture profile to use
+	 * @param registryBaseUrl the base URL of the registry
 	*/
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, Profile profile, String registryBaseUrl) {
-		val resSet = profile.eResource.resourceSet
 		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
 		val imports = vns.importedVersionedNS (minState).filter (e|schemaNsExt.toNamespace(e) != schemaNsExt.toNamespace(vns));
-		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState ==null || !b.lifecycleState.isEnd)
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState === null || !b.lifecycleState.isEnd)
 			.filter (e|minState.matches (e.lifecycleState) && e.typeMatchesMajorVersion (namespaceMajorVersion,  minState));
-		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState === null || !b.lifecycleState.isEnd)
 			.filter (e|minState.matches (e.lifecycleState) && e.typeMatchesMajorVersion (namespaceMajorVersion,  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
 			.filter (en|minState.matches (en.lifecycleState) && en.typeMatchesMajorVersion (namespaceMajorVersion, minState));
@@ -234,12 +257,15 @@ class XSDGenerator {
 		}
 	}
 	
-	/*
-		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
-		that match the given minimal LifecycleState.
-	*/
+	/**
+	 * Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
+	 * that match the given minimal LifecycleState.
+     *
+	 * @param vns the versioned namespace to generate for
+	 * @param profile the architecture profile to use
+	 * @param registryBaseUrl the base URL of the registry
+	 */
 	def toXSDVersion (VersionedDomainNamespace vns, Profile profile, String registryBaseUrl) {
-		val resSet = profile.eResource.resourceSet
 		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
 		val imports = vns.importedVersionedNS.filter (e|schemaNsExt.toNamespace(e) != schemaNsExt.toNamespace(vns));
 		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState === null || !b.lifecycleState.isEnd)
@@ -283,16 +309,23 @@ class XSDGenerator {
 		}
 	}
 
-	/*
-		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
-		that match the given minimal LifecycleState.
-	*/
+	/**
+	 * Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
+	 * that match the given minimal LifecycleState.
+	 * 
+	 * @param vns the versioned namespace to generate for
+	 * @param minState the required minimal asset LifecycleState
+	 * @param profile the architecture profile to use
+	 * @param registryBaseUrl the base URL of the registry
+	 * @param noDeps whether dependencies are to be ignored / not to be generated
+	 * @param includeSubNamespaces whether subnamespaces are to be generated
+	 */
 	def toXSDVersion (VersionedDomainNamespace vns, LifecycleState minState, Profile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
 		val imports = vns.importedVersionedNS(minState).filter(e|schemaNsExt.toNamespace(e) != schemaNsExt.toNamespace(vns));
-		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState===null || !b.lifecycleState.isEnd)
 			.filter (e|minState.matches (e.lifecycleState) && e.typeMatchesMajorVersion (namespaceMajorVersion,  minState));
-		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState===null || !b.lifecycleState.isEnd)
 			.filter (e|minState.matches (e.lifecycleState) && e.typeMatchesMajorVersion (namespaceMajorVersion,  minState));
 		val enums = vns.types.filter (typeof (Enumeration))
 			.filter (en|minState.matches (en.lifecycleState) && en.typeMatchesMajorVersion (namespaceMajorVersion, minState));
@@ -331,16 +364,22 @@ class XSDGenerator {
 		}
 	}
 	
-	/*
-		Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
-		that match the given minimal LifecycleState.
-	*/
+	/**
+	 * Generate the XSD for the given VersionedDomainNamespace. Only consider VersionedTypes and Exceptions
+	 * that match the given minimal LifecycleState.
+	 * 
+	 * @param vns the versioned namespace to generate for
+	 * @param profile the architecture profile to use
+	 * @param registryBaseUrl the base URL of the registry
+	 * @param noDeps whether dependencies are to be ignored / not to be generated
+	 * @param includeSubNamespaces whether subnamespaces are to be generated
+	 */
 	def toXSDVersion (VersionedDomainNamespace vns, Profile profile, String registryBaseUrl, boolean noDeps, boolean includeSubNamespaces) {
 		val namespaceMajorVersion = versionQualifier.toMajorVersionNumber(vns.version).asInteger()
 		val imports = vns.importedVersionedNS.filter(e|schemaNsExt.toNamespace(e) != schemaNsExt.toNamespace(vns));
-		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
+		val bos = vns.types.filter (typeof (BusinessObject)).filter (b|b.lifecycleState === null || !b.lifecycleState.isEnd)
 			.filter (e|e.typeMatchesMajorVersion (namespaceMajorVersion));
-		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState==null || !b.lifecycleState.isEnd)
+		val qos = vns.types.filter (typeof (QueryObject)).filter (b|b.lifecycleState === null || !b.lifecycleState.isEnd)
 			.filter (e|e.typeMatchesMajorVersion (namespaceMajorVersion));
 		val enums = vns.types.filter (typeof (Enumeration))
 			.filter (en|en.typeMatchesMajorVersion (namespaceMajorVersion));
@@ -389,13 +428,16 @@ class XSDGenerator {
 	'''
 	
 	/**
-		Generate a ComplexType for a BusinessObject respecting the major version of the containing 
-		XSD. Hence, the same VersionedDomainNamespace as for the containing XSD must be used.
-		
-		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
-							XSD being generated
-		@param		profile	The Profile defining the governing architecture rules.
-	*/
+	 * Generate a ComplexType for a BusinessObject respecting the major version of the containing 
+	 * XSD. Hence, the same VersionedDomainNamespace as for the containing XSD must be used.
+	 * 
+	 * @param bo a DataObject to generate for
+	 * @param currNs	The VersionedDomainNamespace currently in use for the containing 
+	 * 					XSD being generated
+	 * @param	profile	The Profile defining the governing architecture rules.
+	 * @param minState the required minimal asset LifecycleState
+	 * @return the generated XSD complexType
+	 */
 	def toComplexType(DataObject bo, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 
 		<xsd:complexType name="«bo.name»"«IF isAbstract(bo)» abstract="true"«ENDIF»>
@@ -544,14 +586,18 @@ class XSDGenerator {
 		</xsd:simpleType>
 	'''
 	
-	/*
-		Generate a ComplexType for a given Exception. The ComplextType is being genereated for a containing
-		versioned XSD. Hence, the VersionedDomainNamespace on which the XSD is based is required.
-		
-		@param 		currNs	The VersionedDomainNamespace currently in use for the containing 
-							XSD being generated
-		@param		profile	The Profile defining the governing architecture rules.
-	*/
+	/**
+	 * Generate a ComplexType for a given Exception. The ComplextType is being genereated for a containing
+	 * versioned XSD. Hence, the VersionedDomainNamespace on which the XSD is based is required.
+	 * 
+	 *  
+	 * @param ex the exception to generate a complexType for
+	 * @param currNs	The VersionedDomainNamespace currently in use for the containing 
+	 * 					XSD being generated
+	 * @param	profile	The Profile defining the governing architecture rules.
+	 * @param minState the required minimal asset LifecycleState
+	 * @return the generated XSD complexType
+	 */
 	def toFaultType (org.xkonnex.repo.dsl.servicedsl.serviceDsl.Exception ex, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
 
 		<xsd:complexType name="«ex.name»">
@@ -580,7 +626,7 @@ class XSDGenerator {
 			*/»
 			</xsd:annotation>
 
-			«IF ex.superException != null»
+			«IF ex.superException !== null»
 				<xsd:complexContent>
 					<xsd:extension base="«ex.superException.toExceptionNameRef(currNs)»">
 						«ex.toPropertySequence (currNs, profile, minState)»
@@ -597,7 +643,7 @@ class XSDGenerator {
 	
 	
 	def dispatch toProperty (Property attr, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
-		«IF docProvider.getDocumentation (attr) != null»
+		«IF docProvider.getDocumentation (attr) !== null»
 			<xsd:element name="«attr.name»" «attr.toElementCardinality» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isMimeContent()»«attr.type.toMimeFragment()»«ENDIF» >
 				<xsd:annotation>
 					<xsd:documentation>
@@ -620,7 +666,7 @@ class XSDGenerator {
 	'''
 	
 	def dispatch toProperty (SimpleAttribute attr, VersionedDomainNamespace currNs, Profile profile, LifecycleState minState) '''
-		«IF docProvider.getDocumentation (attr) == null»
+		«IF docProvider.getDocumentation (attr) === null»
 			<xsd:element name="«attr.name»" «attr.toElementCardinality» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isMimeContent()»«attr.type.toMimeFragment ()»«ENDIF»/>
 		«ELSE»
 			<xsd:element name="«attr.name»" «attr.toElementCardinality» type="«attr.type.toTypeNameRef(currNs)»" «IF attr.type.isMimeContent()»«attr.type.toMimeFragment () »«ENDIF»>
@@ -661,7 +707,7 @@ class XSDGenerator {
 	
 	def dispatch toMimeFragment (DataTypeRef t) {
 	'''
-		«IF t.contentType != null»
+		«IF t.contentType !== null»
 		xmime:expectedContentTypes="«t.contentType»"
 		«ELSE»
 		xmime:expectedContentTypes="application/octet-stream"

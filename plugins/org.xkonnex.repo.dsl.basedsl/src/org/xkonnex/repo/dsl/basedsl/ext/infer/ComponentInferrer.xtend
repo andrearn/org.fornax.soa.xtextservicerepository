@@ -1,7 +1,6 @@
 package org.xkonnex.repo.dsl.basedsl.ext.infer
 
 import com.google.inject.Inject
-import com.google.inject.Provider
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 import java.util.List
@@ -28,8 +27,6 @@ class ComponentInferrer implements IComponentInferrer {
 	
 	@Inject JavaReflectAccess reflectAccess
 	@Inject extension ComponentExtensions
-	@Inject
-	private Provider<ResourceSet> resourceSetProvider;
 	
 	override <T> inferComponent(Component component) {
 		inferComponent(component, component.eResource.resourceSet)
@@ -38,7 +35,6 @@ class ComponentInferrer implements IComponentInferrer {
 	override <T> inferComponent(Component component, ResourceSet resourceSet) {
 		var comp = component
 		EcoreUtil2.resolveAll(resourceSet)
-		val res = resourceSet.resources
 		if (comp.eIsProxy) {
 			EcoreUtil2.resolveAll(resourceSet)
 		}

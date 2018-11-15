@@ -4,9 +4,7 @@ import com.google.inject.Inject
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.IStateMatcher
 import org.xkonnex.repo.dsl.profiledsl.profileDsl.LifecycleState
 
-/*
- * @deprecated
- */
+ @Deprecated
 class StateMatcher {
 	
 	@Inject IStateMatcher stateMatcher

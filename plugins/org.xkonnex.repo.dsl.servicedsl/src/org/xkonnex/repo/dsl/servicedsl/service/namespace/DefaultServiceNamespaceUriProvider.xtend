@@ -13,6 +13,7 @@ import org.xkonnex.repo.dsl.servicedsl.serviceDsl.SubNamespace
 import org.xkonnex.repo.dsl.basedsl.namespace.VersionedNamespace
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.basedsl.search.IEObjectLookup
+import org.xkonnex.repo.dsl.servicedsl.service.ModelExtensions
 
 class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider {
 	
@@ -20,6 +21,7 @@ class DefaultServiceNamespaceUriProvider implements ServiceNamespaceURIProvider 
 	@Inject extension NamespaceQuery
 	@Inject extension ServiceNamespaceNameFragmentProvider
 	@Inject extension IEObjectLookup
+	@Inject extension ModelExtensions
 	@Inject VersionQualifierExtensions versionQualifier	
 	@Inject NamespaceURIProvider namespaceURIProvider
 
