@@ -78,15 +78,6 @@ public class ServiceDslProposalProvider extends
 		}
 	}
 	
-	@Override
-	public void complete_EmailOrUsername(EObject model, RuleCall ruleCall,
-			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
-		acceptor.accept(createCompletionProposal("\"email or username\"",
-				context));
-		acceptor.accept(createCompletionProposal("user.name@example.org",
-				context));
-	}
-
 	// public void complete_Operation (EObject model, RuleCall ruleCall,
 	// ContentAssistContext context,
 	// ICompletionProposalAcceptor acceptor) {

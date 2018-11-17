@@ -13,6 +13,7 @@ import org.eclipse.xtext.common.types.xtext.ui.TypeMatchFilters;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ApiGateway;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.AppServer;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Broker;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Cluster;
@@ -22,7 +23,6 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Container;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ESB;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Executable;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector;
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Gateway;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.IdentityAccessManager;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.InfrastructureManager;
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ProcessServer;
@@ -188,14 +188,14 @@ public class EnvironmentDslProposalProvider extends AbstractEnvironmentDslPropos
 	}
 	
 	@Override
-	public void completeGateway_Type(EObject model, Assignment assignment, ContentAssistContext context,
+	public void completeApiGateway_Type(EObject model, Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof Gateway) {
+		if (model instanceof ApiGateway) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType gateway = typeProvider.findTypeByName(IGateway.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(gateway, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 		} else {
-			super.completeGateway_Type(model, assignment, context, acceptor);
+			super.completeApiGateway_Type(model, assignment, context, acceptor);
 		}
 	}
 

@@ -50,32 +50,32 @@ ModuleBinding:
 		 ('server' provServer = [environmentDsl::Server|QualifiedName]  '{' ) |
 		 ('executable' provExecutable = [environmentDsl::Executable|QualifiedName]  '{' )
 		)
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(governanceDecisions+=GovernanceDecision)*
+		endpointQualifierRef=EndpointQualifierRef?
+		governanceDecisions+=GovernanceDecision*
 		/* The default endpoint protocols to be used by default. The protocols respective connector on the server is used to expose the service */
 		('default-protocols' '{'
-			(protocol+=BindingProtocol)+
+			protocol+=BindingProtocol+
 		'}')?
 		('default-resource-protocols' '{'
-			(resourceProtocol+=BindingProtocol)+
+			resourceProtocol+=BindingProtocol+
 		'}')?
 		
 		('default-policies' '{'
-			(policies+=Policy)*
+			policies+=Policy*
 		'}')?
 		('default-resource-policies' '{'
-			(resourcePolicies+=Policy)*
+			resourcePolicies+=Policy*
 		'}')?
 		
 		('default-assertions' '{'
-			(assertions+=Assertion)+
+			assertions+=Assertion+
 		'}')?
 		('default-resource-assertions' '{'
-			(resourceAssertions+=Assertion)+
+			resourceAssertions+=Assertion+
 		'}')?
 		
-		(serviceBindings+=ServiceBinding)*
-		(resourceBindings+=ResourceBinding)*
+		serviceBindings+=ServiceBinding*
+		resourceBindings+=ResourceBinding*
 	'}'
 ;
 
@@ -89,20 +89,20 @@ ServiceBinding:
 		(('environment' environment=[environmentDsl::Environment|QualifiedName]) | 
 		 ('server' provServer = [environmentDsl::Server|QualifiedName])
 		))? '{'
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(governanceDecisions+=GovernanceDecision)*
+		endpointQualifierRef=EndpointQualifierRef?
+		governanceDecisions+=GovernanceDecision*
 		('provided-contract' providedContract=STRING)?
 		'protocols' '{'
-			(protocol+=BindingProtocol)+
+			protocol+=BindingProtocol+
 		'}'
 		('policies' '{'
-			(policies+=Policy)*
+			policies+=Policy*
 		'}')?
 		('assertions' '{'
-			(assertions+=Assertion)+
+			assertions+=Assertion+
 		'}')?
 //		('references-module' referencedModule = ModuleRef)?
-		(operation+=OperationBinding)*
+		operation+=OperationBinding*
 	'}';
 
 /*
@@ -119,20 +119,20 @@ ResourceBinding:
 		(('environment' environment=[environmentDsl::Environment|QualifiedName]) | 
 		 ('server' provServer = [environmentDsl::Server|QualifiedName])
 		))? '{'
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(governanceDecisions+=GovernanceDecision)*
+		endpointQualifierRef=EndpointQualifierRef?
+		governanceDecisions+=GovernanceDecision*
 		('provided-contract' providedContract=STRING)?
 		'protocols' '{'
-			(protocol+=BindingProtocol)+
+			protocol+=BindingProtocol+
 		'}'
 		('policies' '{'
-			(policies+=Policy)*
+			policies+=Policy*
 		'}')?
 		('assertions' '{'
-			(assertions+=Assertion)+
+			assertions+=Assertion+
 		'}')?
 //		('references-module' referencedModule = ModuleRef)?
-		(operation+=OperationBinding)*
+		operation+=OperationBinding*
 	'}';
 
 /*
@@ -149,16 +149,16 @@ ChannelBinding:
 		(('environment' environment=[environmentDsl::Environment|QualifiedName]) | 
 		 ('server' provServer = [environmentDsl::Server|QualifiedName])
 		))? '{'
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(governanceDecisions+=GovernanceDecision)*
+		endpointQualifierRef=EndpointQualifierRef?
+		governanceDecisions+=GovernanceDecision*
 		'protocols' '{'
-			(protocol+=BindingProtocol)+
+			protocol+=BindingProtocol+
 		'}'
 		('policies' '{'
-			(policies+=Policy)*
+			policies+=Policy*
 		'}')?
 		('assertions' '{'
-			(assertions+=Assertion)+
+			assertions+=Assertion+
 		'}')?
 		('references-module' referencedModule = ModuleRef)?
 	'}';
@@ -184,19 +184,19 @@ OperationBinding:
 		 * i.e. the protocol of the actual service provider 
 		 to which the call is delegated*/ 
 		('provider-protocols' '{'
-			(providerProtocol+=BindingProtocol)+
+			providerProtocol+=BindingProtocol+
 		'}')?
 		('policies' '{'
-			(policies+=Policy)*
+			policies+=Policy*
 		'}')?
 		/** policies on the outbound endpoint of a channel on a bus, 
 		 * i.e. the protocol of the actual service provider 
 		 to which the call is delegated*/ 
 		('provider-policies' '{'
-			(providerPolicies+=Policy)*
+			providerPolicies+=Policy*
 		'}')?
 		('assertions' '{'
-			(assertions+=Assertion)+
+			assertions+=Assertion+
 		'}')?
 	'}';
 
@@ -217,8 +217,8 @@ ExtensibleProtocol: type=[jvmTypes::JvmType|QualifiedName] '{'
 SOAP: 
 	'SOAP' '{'
 		{SOAP}
-		(endpointQualifierRef=EndpointQualifierRef)?
-		(endpointConnector=ConnectorQualifier)?
+		endpointQualifierRef=EndpointQualifierRef?
+		endpointConnector=ConnectorQualifier?
 		('style' style=SOAPStyle )?
 		('protocol-version' protocolVersion = SOAPProtocolVersion)?
 		('transport' transport=SOAPTransport)?
@@ -247,12 +247,12 @@ AuthenticationPolicy :
 	{AuthenticationPolicy}
 	'authn-policy' (name=ID)? (optional?='optional')? '{'
 		'auth-tokens' '{'
-			(authTokens+=AuthToken)+
+			authTokens+=AuthToken+
 		'}'
 		'hash-algorithms' '{'
-			(hashAlgorithms+=HashAlgorithm)*
+			hashAlgorithms+=HashAlgorithm*
 		'}'
-		(useNonce?='use-nonce')?
+		useNonce?='use-nonce'?
 		('issuer' issuer = STRING)?
 	'}';
 	
@@ -299,7 +299,7 @@ AvailabilityAssertion:
 ;
 
 LatencyAssertion:
-	'latency' latency="STRING" 'percentile' percentile=Percentile
+	'latency' latency=STRING 'percentile' percentile=Percentile
 ;
 
 CapacityAssertion:
@@ -313,7 +313,7 @@ CapacityAssertion:
 ReliabilityAssertion:
 	'reliability-assertion' '{'
 		'message-exchange-reliability' reliability=ReliabilityKind
-		(inOrderDelivery ?= 'in-order-delivery')?
+		inOrderDelivery ?= 'in-order-delivery'?
 	'}'
 ;
 
@@ -331,8 +331,6 @@ AccuracyAssertion:
 	'}'
 ;
 
-
-Percentile hidden(): percentile=INT('.'INT)?'%';
 
 EndpointQualifierRef:
 	'endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName]

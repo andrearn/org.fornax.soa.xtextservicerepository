@@ -27,36 +27,31 @@
     <genClasses ecoreClass="BusinessDsl.ecore#//Domain">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Domain/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Domain/competence"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Domain/owner"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Domain/responsible"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Domain/budgeting"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/tags"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/domains"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/capabilityGroups"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/capabilites"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/contactInfo"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Domain/tags"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Domain/subscriptions"/>
     </genClasses>
     <genClasses ecoreClass="BusinessDsl.ecore#//BusinessFunction">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//BusinessFunction/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//BusinessFunction/shortDescription"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//BusinessFunction/description"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//BusinessFunction/owner"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//BusinessFunction/responsible"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//BusinessFunction/budgeting"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/additionalInfo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/capabilties"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/contactInfo"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//BusinessFunction/tags"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//BusinessFunction/subscriptions"/>
     </genClasses>
     <genClasses ecoreClass="BusinessDsl.ecore#//CapabilityGroup">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//CapabilityGroup/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//CapabilityGroup/description"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//CapabilityGroup/owner"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//CapabilityGroup/responsible"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//CapabilityGroup/budgeting"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/additionalInfo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/capabilities"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/capabilityGroups"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/contactInfo"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//CapabilityGroup/tags"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//CapabilityGroup/subscriptions"/>
     </genClasses>
     <genClasses ecoreClass="BusinessDsl.ecore#//Capability">
@@ -70,9 +65,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/inputs"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/outcomes"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/uses"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Capability/owner"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Capability/responsible"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Capability/budgeting"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/contactInfo"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BusinessDsl.ecore#//Capability/tags"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BusinessDsl.ecore#//Capability/subscriptions"/>
     </genClasses>

@@ -15,6 +15,7 @@ generate profileDsl "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl"
 
 import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as basedsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as  environmentDsl
+import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsDsl
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 ProfileModel:
@@ -29,7 +30,7 @@ ProfileModel:
  * are defined as well in the profile. Usually scoped to an organization
  */	
 Profile:
-	(default?='default')? ('profile'|'soa-profile') name=QualifiedName '{'
+	(default?='default')? ('profile') name=QualifiedName '{'
 		/* The scope, where the architecture profile applies to */
 		('scope' scope = STRING)?
 		/* The asset lifecycle states */
@@ -38,22 +39,20 @@ Profile:
 		('service-categories' '{'
 			serviceCategory+=ServiceCategory+
 		'}')?
-		(designRules=DesignRules)?
+		designRules=DesignRules?
 		(versioningRule = VersioningStrategy)
 		/* 
 		 * basic message principles, e.g. message headers that have to be set in every service message
 		 * if not stated otherwise in the service definition
 		 */
-		(messaging=Messaging)?
-		(namespaces += ProfileNamespace)*
-		(namespaceRules = NamespaceRules)?
-		(scopedBasicTypes+=BasicTypes)*
-		(governanceDecisions+=GovernanceDecision)*
-		('contact-info' '{'
-			('owner' owner=EmailOrUsername)?
-			('responsible' responsible += EmailOrUsername)*
-			('budgeting' budgeting = EmailOrUsername)?
-		'}')?
+		messaging=Messaging?
+		namespaces += ProfileNamespace*
+		namespaceRules = NamespaceRules?
+		scopedBasicTypes+=BasicTypes*
+		governanceDecisions+=GovernanceDecision*
+
+		contactInfo=ContactInfo?
+		('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
 		('subscriptions' '{'
 			subscriptions += EmailOrUsername*
 		'}')?
@@ -75,16 +74,16 @@ LifecycleState:
 		/**
 		 * Is governance-approval required for this state?
 		 */
-		(requiresApproval?='requires-approval')?
+		requiresApproval?='requires-approval'?
 		/**
 		 * An asset in this state is frozen, i.e. changes that change it's semantics are no longer allowed.
 		 * This should be set in states, that mark use in a production environment
 		 */
-		(freezesAsset?='freezes-asset')?
+		freezesAsset?='freezes-asset'?
 		/**
 		 * Checks, yielding warnings by default will yield errors instead
 		 */
-		(strictChecks?='strict-checks')?
+		strictChecks?='strict-checks'?
 		//Runtime view
 		/*
 		 * Assets in this state can be used in environments with one of the given environment-types at runtime
@@ -103,7 +102,7 @@ LifecycleState:
 		 * Artifacts can be generated from assets in this state for the given environments
 		 */
 		('can-build-for-environment' (canBuildForEnvironment+=[environmentDsl::Environment])(',' qualifiesBuildForEnvironment+=[environmentDsl::Environment])*)?
-		(transitions+=Transition)*
+		transitions+=Transition*
 	'}';
 	
 Transition: '->' targetState = [LifecycleState | QualifiedName] ('by' (roles+=STRING)(',' roles+=STRING)*)?;
@@ -112,7 +111,7 @@ Transition: '->' targetState = [LifecycleState | QualifiedName] ('by' (roles+=ST
  * Defines a service category
  */	
 ServiceCategory:
-	name = ID ('parent' p = [ServiceCategory|QualifiedName])? ('base-category' baseCategory = ServiceBaseCategory)?
+	name = ID (('parent' p = [ServiceCategory|QualifiedName]) | ('base-category' baseCategory = ServiceBaseCategory))?
 ;
 
 /**
@@ -120,7 +119,7 @@ ServiceCategory:
  */
 enum ServiceBaseCategory: process | rule | activity | entity | utility | other;
 
-enum EnvironmentType returns environmentDsl::EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | Other="Other-Environment";
+enum EnvironmentType returns environmentDsl::EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environment" | Integration="Integration-Environment" | Test="Test-Environment" | Dev="Development-Environment" | Local="Local-Environment" | InfrastructureLibrary="Infrastructure-Library" | Other="Environment";
 
 /* 
  * Defines basic messaging principles, e.g. message headers that have to be set in every service message
@@ -128,7 +127,7 @@ enum EnvironmentType returns environmentDsl::EnvironmentType: Prod = "Production
  */
 Messaging :
 	{Messaging} 'messaging' '{'
-		(messageHeaders+=MessageHeader)*
+		messageHeaders+=MessageHeader*
 		('default-request-header' defaultRequestHeader=MessageHeaderRef )?
 		('default-response-header' defaultResponseHeader=MessageHeaderRef )?
 		('default-publish-header' defaultPublishHeader=MessageHeaderRef )?
@@ -139,10 +138,10 @@ Messaging :
  */	
 DesignRules:
 	{DesignRules} 'design-rules' '{'
-		(internalNamespaceRules+=InternalNamespaceRule)*
-		(typeDefPolicy=TypeDefPolicy)?
-		(serviceDefPolicy=ServiceDefPolicy)?
-		(designRules+=CustomDesignRule)*
+		internalNamespaceRules+=InternalNamespaceRule*
+		typeDefPolicy=TypeDefPolicy?
+		serviceDefPolicy=ServiceDefPolicy?
+		designRules+=CustomDesignRule*
 	'}';
 
 /*
@@ -152,13 +151,14 @@ NamespaceRules:
 	{NamespaceRules}
 	'namespace-rules' '{'
 		(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
-		(aliases+=BaseNamespaceAlias)*
-		(namespaceRules+=CustomNamespaceRule)*
+		aliases+=BaseNamespaceAlias*
+		namespaceRules+=CustomNamespaceRule*
 	'}';
 	
-CustomNamespaceRule: 'namespace-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
-			(assignment+=Assignment)+ 
-		'}')?;
+CustomNamespaceRule: 
+	'namespace-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
+		(assignment+=Assignment)+ 
+	'}')?;
 
 /*
  * How technical assets with the same name declare a version
@@ -198,12 +198,9 @@ BaseNamespaceAlias :
  */
 OrganizationNamespace:
 	'org-namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
-		('meta-data' '{'
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+		('metadata' '{'
+			contactInfo=ContactInfo?
+			('tags' (tags+=[semanticsDsl::Tag])+)?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
 			'}')?
@@ -218,17 +215,14 @@ ProfileNamespace returns basedsl::Namespace: TechnicalNamespace | OrganizationNa
  */	
 TechnicalNamespace: 
 	'namespace' name=QualifiedName ('shortname' prefix=STRING)? '{'
-		('meta-data' '{'
+		('metadata' '{'
 			('URI' uri=STRING)?
 			/**
 			 * @deprecated may be removed in a later release, should be implemented as validation rule
 			 */	
 			(noTrailingSlash?='no-trailing-slash-in-namespace-uri')?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
 			'}')?
@@ -365,32 +359,35 @@ TypeDefPolicy:
 /**
  * Custom design rule for types implemented in Java
  */	
-TypeRule: 'type-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
-			(assignment+=Assignment)+ 
-		'}')?;
+TypeRule: 
+	'type-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
+		(assignment+=Assignment)+ 
+	'}')?;
 		
 /**
  * Custom design rules for services implemented in Java
  */
-ServiceRule: 'service-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
-			(assignment+=Assignment)+ 
-		'}')?;
+ServiceRule: 
+	'service-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
+		(assignment+=Assignment)+ 
+	'}')?;
 
 /**
  * General custom design rule implemented in Java
  */		
-CustomDesignRule: 'design-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
-			(assignment+=Assignment)+ 
-		'}')?;
+CustomDesignRule: 
+	'design-rule' type=[jvmTypes::JvmType|QualifiedName] ('{'
+		(assignment+=Assignment)+ 
+	'}')?;
 	
 TypeVersionEvolution:
 	{TypeVersionEvolution}
 	'version-evolution' '{'
-		(extensibleProperties?=('extensible-properties'|'extendible-properties') )?
-		(('extensible-XML-clause'|'extendible-XML-clause') extensibleXMLClause = STRING )?
-		(extensibleXMLAttributes?=('extensible-XML-attributes'|'extendible-XML-attributes') )?
-		(('extensible-XML-attribute-clause'|'extendible-XML-attribute-clause') extensibleXMLAttributeClause = STRING)?
-		(extensibleSubTypes?=('extensible-sub-types'|'extendible-sub-types'))?
+		(extensibleProperties?=('extensible-properties') )?
+		(('extensible-XML-clause') extensibleXMLClause = STRING )?
+		(extensibleXMLAttributes?=('extensible-XML-attributes') )?
+		(('extensible-XML-attribute-clause') extensibleXMLAttributeClause = STRING)?
+		(extensibleSubTypes?=('extensible-sub-types'))?
 		policies+=VersionEvolutionPolicy*
 	'}'
 ;
@@ -401,8 +398,8 @@ TypeVersionEvolution:
 ServiceDefPolicy:
 	{ServiceDefPolicy}
 	'services' '{'
-		(operationRules=OperationDefPolicy)?
-		(serviceRules+=ServiceRule)*
+		operationRules=OperationDefPolicy?
+		serviceRules+=ServiceRule*
 	'}';
 
 /**
@@ -415,8 +412,8 @@ ServiceDefPolicy:
 OperationDefPolicy:
 	{OperationDefPolicy}
 	'operations' '{'
-		(versionEvolution=ServiceVersionEvolution)?
-		(allowPolymorphism?='allow-polymorphism' )?
+		versionEvolution=ServiceVersionEvolution?
+		allowPolymorphism?='allow-polymorphism'?
 	'}'
 ;
 

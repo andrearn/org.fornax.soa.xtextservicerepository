@@ -1,5 +1,5 @@
 define([], function() {
-	var keywords = "URI|accepted|activity|as|attr|budgeting|by|class|datatype|default|denied|deprecating|end|entity|enum|extends|false|fixedVersion|for|frozen|import|initial|license|lifecycle|location|majorVersion|maxVersion|messaging|metadata|minVersion|namespace|operations|optional|other|owner|parent|pending|process|profile|publish|reference|replaces|request|response|responsible|rule|scope|services|set|shorten|shortname|specific|state|subject|subscriptions|to|true|type|types|utility|version";
+	var keywords = "Environment|URI|accepted|activity|as|attr|budgeting|by|class|datatype|default|denied|deprecating|end|entity|enum|extends|false|fixedVersion|for|frozen|import|initial|license|lifecycle|location|majorVersion|maxVersion|messaging|metadata|minVersion|namespace|operations|optional|other|owner|page|parent|pending|process|profile|publish|replaces|request|response|responsible|rule|scope|section|services|set|shorten|shortname|specific|state|subject|subscriptions|tags|to|true|type|types|utility|version";
 	return {
 		id: "xtext.profdsl",
 		contentTypes: ["xtext/profdsl"],

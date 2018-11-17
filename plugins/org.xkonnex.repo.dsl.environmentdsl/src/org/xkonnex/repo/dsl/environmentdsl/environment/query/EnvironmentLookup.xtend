@@ -15,7 +15,7 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentType
  */
 class EnvironmentLookup {
 	@Inject
-	private IPredicateSearch lookup
+	IPredicateSearch lookup
 	
 	
 	/**

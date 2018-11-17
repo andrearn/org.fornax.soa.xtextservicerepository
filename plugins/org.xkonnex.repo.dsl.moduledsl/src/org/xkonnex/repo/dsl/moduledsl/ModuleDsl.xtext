@@ -29,11 +29,11 @@ ModuleModel:
  */	
 Module:
 	/* an externally provided module */
-	(external?='external')? 
+	external?='external'? 
 	/* The contains service clients only */
-	(client?='client')? 
+	client?='client'? 
 	/* the module is publically accessible */
-	(public?='public')?
+	public?='public'?
 	 
 	'module' name = QualifiedName '{'
 		
@@ -56,28 +56,28 @@ Module:
 			('release-tag' releaseTag = STRING)? &		// Tag in VCS
 			('source-location' source=STRING )? 		// Where can I get the sources? 
 		)
-		(additionalInfo=AdditionalInformation)?
-		(license=License)?
+		additionalInfo=AdditionalInformation?
+		license=License?
 		
 		/* Declares services provided by the module */
 		('provides' '{'
 			/*
 			 * Services that the module provides
 			 */
-			(providedServices += ServiceRef)*
+			providedServices += ServiceRef*
 			/*
 			 * Services that the module provides
 			 */
-			(providedResources += ResourceRef)*
+			providedResources += ResourceRef*
 			/*
 			 * Channels that the module provides
 			 */
-			(providedChannels += ChannelRef)*
+			providedChannels += ChannelRef*
 			/*
 			 * A namespace to provide all it's services, that match the modules state
 			 */
-			(providedNamespaces += NamespaceRef)*
-			(defaultProvidingEndpoint = ProvidingEndpoint)?
+			providedNamespaces += NamespaceRef*
+			defaultProvidingEndpoint = ProvidingEndpoint?
 		'}')?
 		
 		/* Declares services that are being used by this module. Services can be 
@@ -93,11 +93,7 @@ Module:
 //			(endpointQualifierRef=EndpointQualifierRef)?
 		'}')?
 
-		('contact-info' '{'
-			('owner' owner=EmailOrUsername)?
-			('responsible' responsible += EmailOrUsername)*
-			('budgeting' budgeting = EmailOrUsername)?
-		'}')?
+		contactInfo=ContactInfo?
 		
 		('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
 		
@@ -137,13 +133,13 @@ UsingEndpoint:
 	{UsingEndpoint}
 		'endpoint-protocol' endpointProtocol=UsingEndpointProtocol
 		/* fall back to other supported protocols, if necessary */
-		('alternative-endpoint-protocols ' (alternativeEndpointProtocols+=UsingEndpointProtocol) (',' alternativeEndpointProtocols+=UsingEndpointProtocol)*)?
+		('alternative-endpoint-protocols' (alternativeEndpointProtocols+=UsingEndpointProtocol) (',' alternativeEndpointProtocols+=UsingEndpointProtocol)*)?
 		(endpointQualifierRef=EndpointQualifierRef)?
 ;
 
 fragment UsingEndpointFragment:
 		('endpoint-protocol' usesEndpointProtocol=UsingEndpointProtocol)?
-		('alternative-endpoint-protocols ' (usesAlternativeEndpointProtocols+=UsingEndpointProtocol) (',' usesAlternativeEndpointProtocols+=UsingEndpointProtocol)*)?
+		('alternative-endpoint-protocols' (usesAlternativeEndpointProtocols+=UsingEndpointProtocol) (',' usesAlternativeEndpointProtocols+=UsingEndpointProtocol)*)?
 		(endpointQualifierRef=EndpointQualifierRef)?
 ;
 
@@ -266,19 +262,15 @@ NamespaceRef:
 	'}')?
 ;
 
-/*
- *	How the module is packaged 
- */
-
-//enum AssemblyType:
-//	OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL
-//;
 
 /**
  * Defines the type of an assembly / module. 
  */
 AssemblyType: typeEnum=AssemblyTypeEnum | ExtensibleAssemblyType;
 
+/*
+ *	How the module is packaged 
+ */
 enum AssemblyTypeEnum: OTHER | JAR | WAR | EAR | OSGi | SCAComposite = 'SCA-Composite'| SCA_EAR = 'SCA-EAR' | WebMethods | dotNet = '.Net' | ZIP | DLL;
 
 /**

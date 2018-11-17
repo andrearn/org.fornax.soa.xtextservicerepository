@@ -3,14 +3,18 @@
  */
 package org.xkonnex.repo.dsl.environmentdsl.ui.labeling
 
+import com.google.inject.Inject
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider
+import org.eclipse.xtext.common.types.JvmIdentifiableElement
 import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Import
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.AppServer
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Database
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EJB
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ESB
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvImport
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
+import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleServer
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Host
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.JMS
@@ -20,10 +24,6 @@ import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SAP
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SOAPHTTP
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.SOAPJMS
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.TCP
-import com.google.inject.Inject
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.ExtensibleConnector
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment
-import org.eclipse.xtext.common.types.JvmIdentifiableElement
 
 /** 
  * Provides labels for a EObjects.
@@ -66,7 +66,7 @@ class EnvironmentDslLabelProvider extends DefaultEObjectLabelProvider {
 		return '''=> «con.type.simpleName»'''
 	}
 
-	def String image(EnvImport ele) {
+	def String image(Import ele) {
 		return "full/obj16/imp_obj.gif"
 	}
 

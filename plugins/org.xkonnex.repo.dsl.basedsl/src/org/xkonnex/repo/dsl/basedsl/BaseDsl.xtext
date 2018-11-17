@@ -105,18 +105,12 @@ GovernanceDecision:
 	'}'
 ;
 
-fragment ContactInfo:
-			('contact-info' '{'
+ContactInfo:
+			{ContactInfo} 'contact-info' '{'
 				('owner' owner=EmailOrUsername)?
 				('responsible' responsible += EmailOrUsername)*
 				('budgeting' budgeting = EmailOrUsername)?
-			'}');
-
-fragment Subscriptions:
-			('subscriptions' '{'
-				subscriptions += EmailOrUsername+
-			'}')
-;
+			'}';
 
 enum GovernanceDecisionResult:
 	pending | accepted | denied | specific
@@ -133,7 +127,7 @@ AdditionalInformation:
 ;
 	
 InfoItem:
-	'location' documentLocation=STRING ('reference' reference=STRING)?
+	'location' documentLocation=STRING ('section' section=STRING)? ('page' page=STRING)?
 ;
 	
 AssetRef: asset = [ecore::EObject|QualifiedName] (versionRef=VersionRef)?;
@@ -223,10 +217,15 @@ License:
 	'}')?
 ;
 
+Percentile: {Percentile} value=(Double|IntAsDouble) '%';
+
+Double returns ecore::EDouble: INT'.'INT;
+IntAsDouble returns ecore::EDouble: INT;
+
 fragment DefaultValue: 'default' defaultValue=STRING;
 
 terminal DATE: ('0'..'9')('0'..'9')('0'..'9')('0'..'9')'-'('0'..'1')('0'..'9')'-'('0'..'3')('0'..'9');
 terminal DATETIME: ('0'..'9')('0'..'9')('0'..'9')('0'..'9')'-'('0'..'1')('0'..'9')'-'('0'..'3')('0'..'9')'T'('0'..'2')('0'..'9')':'('0'..'5')('0'..'9')':'('0'..'5')('0'..'9');
 terminal TIME: ('0'..'2')('0'..'9')':'('0'..'5')('0'..'9')':'('0'..'5')('0'..'9');
-
+//terminal DOUBLE returns ecore::EDouble: ('-')?('0'..'9')+(('.')('0'..'9')+)?;
 	

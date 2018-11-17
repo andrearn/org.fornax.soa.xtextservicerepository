@@ -20,8 +20,8 @@ import "http://www.xkonnex.org/repo/dsl/businessdsl/BusinessDsl" as businessDsl
 import "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" as profileDsl
 
 Model:
-	(imports+=Import)*
-	(solution+=Solution)*;
+	imports+=Import*
+	solution+=Solution*;
 	
 	
 Solution:
@@ -35,11 +35,7 @@ Solution:
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		(features+=Feature)*
 		(modules+=Module)*
-		('contact-info' '{'
-			('owner' owner=EmailOrUsername)?
-			('responsible' responsible += EmailOrUsername)*
-			('budgeting' budgeting = EmailOrUsername)?
-		'}')?
+		contactInfo=ContactInfo?
 		('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
 		('subscriptions' '{'
 			subscriptions += EmailOrUsername*
@@ -56,11 +52,8 @@ Module:
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
 		(features+=Feature)*
 		(modules+=Module)*
-		('contact-info' '{'
-			('owner' owner=EmailOrUsername)?
-			('responsible' responsible += EmailOrUsername)*
-			('budgeting' budgeting = EmailOrUsername)?
-		'}')?
+		
+		contactInfo=ContactInfo?
 		('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
 		('subscriptions' '{'
 			subscriptions += EmailOrUsername*
@@ -79,13 +72,10 @@ Feature:
 		'}')?
 		('requires' requires+=InterfaceRef )*
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*
-		('contact-info' '{'
-			('owner' owner=EmailOrUsername)?
-			('responsible' responsible += EmailOrUsername)*
-			('budgeting' budgeting = EmailOrUsername)?
-		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
 		(features+=Feature)*
+		
+		contactInfo=ContactInfo?
+		('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
 		('subscriptions' '{'
 			subscriptions += EmailOrUsername*
 		'}')?

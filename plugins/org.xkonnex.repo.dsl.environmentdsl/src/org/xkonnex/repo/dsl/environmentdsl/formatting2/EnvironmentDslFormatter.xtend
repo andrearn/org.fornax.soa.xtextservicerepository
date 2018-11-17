@@ -6,12 +6,10 @@ package org.xkonnex.repo.dsl.environmentdsl.formatting2
 import com.google.inject.Inject
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.xkonnex.repo.dsl.basedsl.formatting2.BaseDslFormatter
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvImport
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvModel
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Host
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.environmentdsl.services.EnvironmentDslGrammarAccess
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Import
 
 class EnvironmentDslFormatter extends BaseDslFormatter {
 	
@@ -19,7 +17,7 @@ class EnvironmentDslFormatter extends BaseDslFormatter {
 
 	def dispatch void format(EnvModel envModel, extension IFormattableDocument document) {
 		// TODO: format HiddenRegions around keywords, attributes, cross references, etc. 
-		for (EnvImport imports : envModel.getImports()) {
+		for (Import imports : envModel.getImports()) {
 			imports.format;
 		}
 		for (Environment environments : envModel.getEnvironments()) {

@@ -25,34 +25,39 @@ SLA:
 	'service-level-agreement' name=QualifiedName (version=Version)? '{'
 			'effective-date' effectiveDate = (STRING|DATE) 
 			('effective-until' effectiveUntil = (STRING|DATE) )?
-			(parties+=Party)*
+			parties+=Party*
 			('scope' scope = STRING)?
 			('preample' preample = STRING )?
 			('description' description = STRING )?
 			('restrictions' restrictions=STRING )?
-			(priorities+=PriorityDeclaration)*
+			priorities+=PriorityDeclaration*
 			('applies-to' '{'
 				appliesTo += AssetRef* 
 			'}')?
-			(costs = Cost )?
-			('service-quality-requirements' '{'
+			costs = Cost?
+			('service-quality' '{'
 				(serviceQualityProperties += ServiceQualityProperty)*
 			'}'
 			)
-			('data-security-and-protection' '{'
-					('general-security-terms' dataSecProtClause = STRING)?
-					('security-requirements' '{' 
-						securityRequirements += SecurityRequirement*
-					'}')
-				'}'
+			('data-security' '{'
+				('general-terms' dataSecProtClause = STRING)?
+				('security-requirements' '{' 
+					securityRequirements += SecurityRequirement*
+				'}')
+			'}'
 			)?
-			('additional-services' additionalServices = STRING )?
-			(escalationProcedure=Escalation )?
+			('additional-services' '{'
+				additionalServices = STRING
+			'}')?
+			escalationProcedure=Escalation?
 			('cancellation' cancellation = STRING )?
 			('extraordinary-cancellation' extraordinaryCancellation = STRING )?
-			(reports+=Report)*
-			Subscriptions?
-			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+			reports+=Report*
+			additionalInfo=AdditionalInformation?
+			('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
+			('subscriptions' '{'
+				subscriptions += EmailOrUsername*
+			'}')?
 	'}';
 	
 Assertion:
@@ -68,8 +73,10 @@ Assertion:
 					'}')
 				'}'
 			)?
-			Subscriptions?
-			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+			('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
+			('subscriptions' '{'
+				subscriptions += EmailOrUsername*
+			'}')?
 	'}';
 
 
@@ -97,13 +104,13 @@ Throughput:
 	'throughput' '{'
 		'throughput' definition = STRING 
 		'score-to-be-kept' score = STRING 
-		(escalation = Escalation)?
+		escalation = Escalation?
 		('penalty' penalty = STRING )?
 	'}';
 
 Latency:
 	'latency' '{'
-		'latency' latency="STRING"
+		'latency' latency=STRING
 		'percentile' percentile=Percentile
 		(escalation = Escalation)?
 		('penalty' penalty = STRING )?
@@ -122,7 +129,7 @@ CapacityRequirement:
 		{CapacityRequirement}
 		('num-of-requests' requestNum=STRING 'per' timeUnit=STRING)?
 		('message-size' messageSize=STRING)?
-		(escalation = Escalation)?
+		escalation = Escalation?
 		('penalty' penalty = STRING )?
 	'}'
 ;
@@ -138,7 +145,7 @@ ReliablityRequirement:
 AccuracyRequirement:
 	'accuracy' '{'
 		'max-error-rate' maxErrorRate=STRING
-		(escalation = Escalation)?
+		escalation = Escalation?
 		('penalty' penalty = STRING )?
 	'}'
 ;
@@ -148,8 +155,6 @@ LogRequirement: 'logging' '{'
 	'additional-logging-requirements' additionalLoggingRequirement=STRING
 ;
 
-Percentile: percentile=INT('.'INT)*'%';
-	
 /* Security policy to be applied to the services */
 SecurityRequirement : AuthenticationRequirement | SigningRequirement | EncryptionRequirement;
 
@@ -158,12 +163,12 @@ AuthenticationRequirement :
 	{AuthenticationRequirement}
 	'authentication-procedure' (optional?='optional')? '{'
 		'auth-tokens' '{'
-			(authTokens+=AuthToken)+
+			authTokens+=AuthToken+
 		'}'
 		'hash-algorithms' '{'
-			(hashAlgorithms+=HashAlgorithm)*
+			hashAlgorithms+=HashAlgorithm*
 		'}'
-		(useNonce?='use-nonce')?
+		useNonce?='use-nonce'?
 		('issuer' issuer = STRING)?
 	'}';
 	
@@ -187,8 +192,6 @@ MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpress
 
 enum MessagePartRefKind: header | body | attachments | all | expression;
 
-//enum SigningAlgothm: NONE | SHA1 | SHA256 | MD5 | RSA_1_5 | AES128 | AES192 | AES256;
-
 /* How messages are encrypted */
 EncryptionRequirement : 
 	{EncryptionRequirement} 
@@ -199,16 +202,9 @@ EncryptionRequirement :
 	'}'
 ;
 
-//enum CipherAlgorithmKind: NONE | Basic128 | Basic192 | Basic256 | DES | TRIPLE_DES='3DES' | AES128 | AES256;
-
-//enum AuthTokenKind: UsernamePassword | SAML | SAML2 | Kerberos | SPNEGO | RELToken | X509Certificate | OAuth | OAuth2;
-
 enum LogRequirementKind: none | header | all;
 
-
-
 enum ReliablilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
-
 
 PriorityDeclaration: 'priority' name=ID 'description' description=STRING ;
 
@@ -216,7 +212,7 @@ Escalation :
 	'escalation' '{'
 		('cause' cause=STRING )?
 		'escalate-to' '{'
-			(escalationTargets+=EmailOrUsername)+
+			escalationTargets+=EmailOrUsername+
 		'}'
 		('procedure' procedure=STRING )?
 	'}';
@@ -225,21 +221,21 @@ Party: CustomerParty | ProviderParty | ThirdParty;
 
 CustomerParty:
 	'customer-party' name=QualifiedName '{'
-		(representatives+=Representative)+
-		(responsibilities+=Responsibility)+
+		representatives+=Representative+
+		responsibilities+=Responsibility+
 	'}'; 
 	
 ProviderParty:
 	'provider-party' name=QualifiedName '{'
-		(representatives+=Representative)+
-		(responsibilities+=Responsibility)+
+		representatives+=Representative+
+		responsibilities+=Responsibility+
 	'}';
 	
 ThirdParty:
 	'third-party' name=QualifiedName '{'
 		'participation-role' role=STRING 
-		(representatives+=Representative)+
-		(responsibilities+=Responsibility)+
+		representatives+=Representative+
+		responsibilities+=Responsibility+
 	'}';
 
 Representative: UserRef | InlineRepresentative;
@@ -270,7 +266,7 @@ Report:
 	
 	
 	
-ServiceQualityAssertionProperty : AvailabilityAssertion | ThroughputAssertion | LatencyAssertion  | MaxDownTimeAssertion | CapacityAssertion | AccuracyAssertion | ReliablityRequirement;
+ServiceQualityAssertionProperty : AvailabilityAssertion | ThroughputAssertion | LatencyAssertion  | MaxDownTimeAssertion | CapacityAssertion | AccuracyAssertion | LogAssertion;
 
 AvailabilityAssertion : 
 	'availability-assertion' '{'
@@ -288,7 +284,7 @@ ThroughputAssertion:
 
 LatencyAssertion:
 	'latency-assertion' '{'
-		'latency' latency="STRING"
+		'latency' latency=STRING
 		'percentile' percentile=Percentile
 	'}';
 	

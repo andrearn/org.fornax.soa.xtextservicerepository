@@ -111,6 +111,8 @@ Workflow {
 		    		backtrack = true
 					classSplitting = true
 				}
+				antlrParam = "-Xmaxinlinedfastates"
+				antlrParam = "30"
 		    }
 		    fragment = validation.ValidatorFragment2 {
 		    	generateStub = true
@@ -153,6 +155,8 @@ Workflow {
 		    		backtrack = true
 					classSplitting = true
 				}
+				antlrParam = "-Xmaxinlinedfastates"
+				antlrParam = "30"
 		    }
 //		    fragment = idea.IdeaPluginGenerator {}
 		    fragment = web.WebIntegrationFragment {

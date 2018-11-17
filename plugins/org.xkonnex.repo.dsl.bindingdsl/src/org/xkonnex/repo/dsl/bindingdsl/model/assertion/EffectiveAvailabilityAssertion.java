@@ -1,8 +1,8 @@
 package org.xkonnex.repo.dsl.bindingdsl.model.assertion;
 
 import org.eclipse.emf.ecore.EObject;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Percentile;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AvailabilityAssertion;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Percentile;
 
 public class EffectiveAvailabilityAssertion extends EffectiveAssertion
 		implements AvailabilityAssertion {

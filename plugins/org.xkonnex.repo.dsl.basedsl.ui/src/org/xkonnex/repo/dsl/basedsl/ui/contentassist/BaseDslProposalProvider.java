@@ -332,5 +332,14 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 		String proposal = dateFormat.format(new Date());
 		acceptor.accept(createCompletionProposal(proposal , context));
 	}
+	
+	@Override
+	public void complete_EmailOrUsername(EObject model, RuleCall ruleCall,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("\"email or username\"",
+				context));
+		acceptor.accept(createCompletionProposal("user.name@example.org",
+				context));
+	}
 
 }

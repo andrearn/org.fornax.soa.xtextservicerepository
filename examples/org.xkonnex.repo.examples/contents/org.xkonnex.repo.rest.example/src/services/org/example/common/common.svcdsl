@@ -4,7 +4,7 @@ import SampleArchitectureProfile.ExSOALifecycle.*
  * The canonical shared common namespace of domain 
  * (canonical data model and services)
  */
-domain-namespace common shortname "cmn" {
+domain-namespace org.example.common shortname "cmn" {
 	
 	businessObject Address {
 		metadata {

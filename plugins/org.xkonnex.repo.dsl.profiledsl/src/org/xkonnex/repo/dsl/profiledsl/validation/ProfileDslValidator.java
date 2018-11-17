@@ -24,7 +24,7 @@ public class ProfileDslValidator extends AbstractProfileDslValidator {
 		ResourceSet rs = profile.eResource().getResourceSet();
 		Profile defaultProfile = profileQueries.getDefaultProfile(rs);
 		if (defaultProfile == null) {
-			warning ("You should declare one profile as default like this: \"default soa-profile ...\"", ProfileDslPackage.Literals.PROFILE__NAME);
+			warning ("You should declare one profile as default like this: \"default profile ...\"", ProfileDslPackage.Literals.PROFILE__NAME);
 		}
 	}
 	

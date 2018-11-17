@@ -16,14 +16,8 @@ import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as  semantics
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 EnvModel:
-	(imports+=EnvImport)*
+	(imports+=Import)*
 	(environments+=Environment)*;
-	
-EnvImport :
-	'import' importedNamespace=QualifiedNameWithWildCard ; 
-	
-EnvFileImport:
-	'import' importURI=STRING ;
 	
 Environment:
 	(type=EnvironmentType) name=ID '{'
@@ -43,7 +37,7 @@ enum EnvironmentType: Prod = "Production-Environment" | Staging="Staging-Environ
 EnvironmentComponent returns baseDsl::Component: Connector|AbstractExecutable|SecurityProtocol|Host|ConfigurationScript|Database;
 
 Host: BareHost|VM|Container;
-AbstractExecutable: Server | Cluster | Executable | Gateway | IdentityAccessManager;
+AbstractExecutable: Server | Cluster | Executable | ApiGateway | IdentityAccessManager;
 
 	
 
@@ -58,12 +52,12 @@ ExtensibleServer:
 		('server-version' serverVersion=STRING )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
 			'registries' '{'
-				(registries+=RegistryService)+
+				registries+=RegistryService+
 			'}'
 		)?
 		(
@@ -71,11 +65,11 @@ ExtensibleServer:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}'
 ;/* An Enterprise Service Bus */
 ESB: 
@@ -90,12 +84,12 @@ ESB:
 		('server-version' serverVersion=STRING )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
 			'registries' '{'
-				(registries+=RegistryService)+
+				registries+=RegistryService+
 			'}'
 		)?
 		(
@@ -103,15 +97,15 @@ ESB:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}';
 
-Gateway: 
-	(isDefault?='default')? 'gateway' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
+ApiGateway: 
+	(isDefault?='default')? 'api-gateway' name=ID 'type' type=[jvmTypes::JvmType|QualifiedName] '{'
 		('identifier' dslCode=STRING )?
 		('admins' admins+=EmailOrUsername )? 
 		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
@@ -120,24 +114,24 @@ Gateway:
 		('adminUrl' adminUrl=STRING )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
 			'registries' '{'
-				(registries+=RegistryService)+
+				registries+=RegistryService+
 			'}'
 		)?
 		(
 			'management-servers' '{'
-				(managementServers+=[InfrastructureManager|QualifiedName])+
+				managementServers+=[InfrastructureManager|QualifiedName]+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}';
 
 /* A service registry */
@@ -154,7 +148,7 @@ Registry:
 		('kind' kind=RegistryKind )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
@@ -162,11 +156,11 @@ Registry:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}';
 	
 //Configuration servers like Zookeeper, Deployment automation server, monitoring system
@@ -179,14 +173,14 @@ InfrastructureManager:
 		('server-version' serverVersion=STRING )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}'
 ;
 enum RegistryKind : UDDI | HTTP | File | Native;
@@ -251,12 +245,12 @@ AppServer:
 		('server-version' serverVersion=STRING )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
 			'registries' '{'
-				(registries+=RegistryService)+
+				registries+=RegistryService+
 			'}'
 		)?
 		(
@@ -264,11 +258,11 @@ AppServer:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}';
 
 /* A HTTP webserver, e.g. Apache */
@@ -284,7 +278,7 @@ WebServer:
 		('server-version' serverVersion=STRING )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
@@ -292,11 +286,11 @@ WebServer:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}';
 	
 /* A business process server */
@@ -313,12 +307,12 @@ ProcessServer:
 		('server-version' serverVersion=STRING )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
 			'registries' '{'
-				(registries+=RegistryService)+
+				registries+=RegistryService+
 			'}'
 		)?
 		(
@@ -326,11 +320,11 @@ ProcessServer:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}';
 
 /* A message broker */
@@ -346,12 +340,12 @@ Broker:
 		('server-version' serverVersion=STRING )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
 			'registries' '{'
-				(registries+=RegistryService)+
+				registries+=RegistryService+
 			'}'
 		)?
 		(
@@ -359,8 +353,8 @@ Broker:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		iam=IAMReference?
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}'; 
 
 Database:  
@@ -377,7 +371,7 @@ Database:
 		('{' (schema+=DatabaseSchema)+ '}')? 
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
@@ -385,11 +379,11 @@ Database:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}';
 
 /* A SAP system */
@@ -402,10 +396,10 @@ SAP:
 		('dir' home=STRING )?
 		('dataDir' dataDir=STRING )?
 		('adminUrl' adminUrl=STRING )? 
-		('{' (client+=SapClient)+ '}')? 
+		client+=SapClient* 
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
@@ -413,8 +407,8 @@ SAP:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		iam=IAMReference?
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}';
 	
 SapClient: 
@@ -439,7 +433,7 @@ Executable:
 		('baseUrl' baseUrl=STRING  )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
@@ -447,16 +441,13 @@ Executable:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}';
 	
-/** @deprecated */	
-enum DatabaseKind : Other | Oracle | DB2 | MSSQL | MySQL | Postgres | Sybase | HyperSonic | Ingres | Adabas | Derby | MongoDB | Hadoop | CouchDB | Neo4J;
-
 DatabaseSchema: 
 	'schema' name=ID 'owner' owner=STRING;
 
@@ -472,7 +463,7 @@ ExtensibleConnector:
 		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('protocol-versions' (version+=STRING)+)?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
 	'}'
 ;
@@ -488,7 +479,7 @@ SOAPHTTP:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 		('context-root' contextRoot=STRING)?
 		('implementation' implementation=STRING)?
 	'}';
@@ -500,7 +491,7 @@ SOAPJMS:
 		('versions' (version+=STRING)+)?
 		'port' port=INT
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 		connectionSpec=JCAConnectionSpec
 		('implementation' implementation=STRING)?
 	'}';
@@ -513,7 +504,7 @@ REST:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 		('context-root' contextRoot=STRING)?
 	'}';
 
@@ -526,7 +517,7 @@ EJB:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 	'}'
 ;
 
@@ -539,8 +530,8 @@ IIOP:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
-		(connectionSpec=JCAConnectionSpec)?
+		requiresAuth ?= 'requires-auth'?
+		connectionSpec=JCAConnectionSpec?
 	'}'
 ;
 
@@ -553,7 +544,7 @@ RMI:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(connectionSpec=JCAConnectionSpec)?
+		connectionSpec=JCAConnectionSpec?
 	'}'
 ;
 
@@ -566,7 +557,7 @@ Tuxedo:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 	'}'
 ;
 
@@ -578,7 +569,7 @@ JMS:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 		connectionSpec=JCAConnectionSpec
 		('implementation' implementation=STRING)?
 	'}';
@@ -591,9 +582,9 @@ AMQP:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
-		(connectionSpec=JCAConnectionSpec)?
-		('implementation' implementation=STRING)?
+		requiresAuth ?= 'requires-auth'?
+		(connectionSpec=JCAConnectionSpec?
+		'implementation' implementation=STRING)?
 	'}'
 ;
 
@@ -604,7 +595,7 @@ RFC:
 		('endpoint-visibility' endpointVisibility=EndpointVisibility)?
 		('port' port=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(connectionSpec=JCAConnectionSpec)?
+		connectionSpec=JCAConnectionSpec?
 	'}';
 
 /* A FTP file transfer connector */
@@ -615,7 +606,7 @@ FTP:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 	'}';
 
 /* An IMAP mail connector */
@@ -626,7 +617,7 @@ IMAP:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 	'}';
 
 /*
@@ -639,7 +630,7 @@ POP3:
 		('port' port=INT)?
 		('secured-port' securedPort=INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 	'}';
 
 JCAConnectionSpec:
@@ -658,7 +649,7 @@ SMTP:
 		('port' port=INT)?
 		('secured-port' securedPort = INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 	'}';
 
 /*
@@ -672,7 +663,7 @@ HTTP:
 		('secured-port' securedPort = INT)?
 		('security-protocol' securityProtocol=SecurityProtocol)?
 		('context-root' contextRoot = STRING)?
-		(requiresAuth ?= 'requires-auth' )?
+		requiresAuth ?= 'requires-auth'?
 	'}';
 	
 /*
@@ -709,12 +700,12 @@ Cluster:
 		('server-type' serverType=STRING )?
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		(
 			'registries' '{'
-				(registries+=RegistryService)+
+				registries+=RegistryService+
 			'}'
 		)?
 		(
@@ -722,9 +713,9 @@ Cluster:
 				(managementServers+=[InfrastructureManager|QualifiedName])+
 			'}'
 		)?
-		(iam=IAMReference)?
+		iam=IAMReference?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
 	'}';
 
@@ -756,7 +747,7 @@ Image:
 	'image' name=ID '{'
 		version=Version
 		("URL" url = STRING)?
-		(script = ConfigurationScript)?
+		script = ConfigurationScript?
 	'}'
 ;
 
@@ -771,13 +762,13 @@ IdentityAccessManager:
 		'host' (host=[Host|QualifiedName] | hostAddress=STRING)
 		(
 			'connectors' '{'
-				(connectors+=Connector)+
+				connectors+=Connector+
 			'}'
 		)?
 		('configuration' '{'
-			(assignment+=Assignment)+ 
+			assignment+=Assignment+ 
 		'}')?
-		('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
+		('tags' tags+=[semanticsDsl::Tag|TagName]+ )*
 	'}'
 ;
 

@@ -25,6 +25,9 @@ public class EnvironmentTypeComparator implements Comparator<EnvironmentType> {
 		if  (EnvironmentType.DEV.equals (o1) && EnvironmentType.OTHER.equals (o2)) 
 			return 1;
 		if (EnvironmentType.TEST.equals (o1) && 
+				! (EnvironmentType.PROD.equals (o2) || EnvironmentType.STAGING.equals (o2) || EnvironmentType.INTEGRATION.equals (o2)))
+			return 1;
+		if (EnvironmentType.INTEGRATION.equals (o1) && 
 				! (EnvironmentType.PROD.equals (o2) || EnvironmentType.STAGING.equals (o2)))
 			return 1;
 		if (EnvironmentType.STAGING.equals (o1) && 

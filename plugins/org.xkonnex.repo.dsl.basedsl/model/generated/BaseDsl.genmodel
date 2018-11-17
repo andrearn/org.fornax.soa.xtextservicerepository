@@ -53,9 +53,6 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//ContactInfo/responsible"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//ContactInfo/budgeting"/>
     </genClasses>
-    <genClasses ecoreClass="BaseDsl.ecore#//Subscriptions">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//Subscriptions/subscriptions"/>
-    </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//AbstractType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//AbstractType/name"/>
     </genClasses>
@@ -64,7 +61,8 @@
     </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//InfoItem">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//InfoItem/documentLocation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//InfoItem/reference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//InfoItem/section"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//InfoItem/page"/>
     </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//AssetRef">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference BaseDsl.ecore#//AssetRef/asset"/>
@@ -127,6 +125,9 @@
     <genClasses ecoreClass="BaseDsl.ecore#//License">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//License/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//License/licenseUrl"/>
+    </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//Percentile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//Percentile/value"/>
     </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//DefaultValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//DefaultValue/defaultValue"/>

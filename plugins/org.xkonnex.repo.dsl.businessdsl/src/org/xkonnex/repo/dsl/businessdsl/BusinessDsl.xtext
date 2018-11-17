@@ -33,17 +33,13 @@ Organization :
 Domain :
 	'domain' name=QualifiedName '{'
 		('competence' competence=STRING)?
-		('contact-info' '{'
-			('owner' owner=EmailOrUsername)?
-			('responsible' responsible += EmailOrUsername)*
-			('budgeting' budgeting = EmailOrUsername)?
-		'}')?
-		('tags' (tags+=[semantics::Tag|TagName])*)?
 
 		(domains+=Domain)*
 		(capabilityGroups+=CapabilityGroup)*
 		(capabilites+=Capability)*
 		
+		contactInfo=ContactInfo?
+		('tags' (tags+=[semantics::Tag|TagName])*)?
 		('subscriptions' '{'
 			subscriptions += EmailOrUsername*
 		'}')?
@@ -56,17 +52,13 @@ BusinessFunction :
 	'business-function' name=ID '{' 
 		'short-description' shortDescription=STRING
 		('description' description=STRING)?
-		('contact-info' '{'
-			('owner' owner=EmailOrUsername)?
-			('responsible' responsible += EmailOrUsername)*
-			('budgeting' budgeting = EmailOrUsername)?
-		'}')?
-		(additionalInfo=AdditionalInformation)?
+		additionalInfo=AdditionalInformation?
 
 		('uses-capability' '{'
-			(capabilties+=CapabilityRef)+
+			capabilties+=CapabilityRef+
 		'}')?
 
+		contactInfo=ContactInfo?
 		('tags' (tags+=[semantics::Tag])+)?
 		('subscriptions' '{'
 			subscriptions += EmailOrUsername*
@@ -79,14 +71,12 @@ BusinessFunction :
 CapabilityGroup :
 	'capability-group' name=ID '{'
 		'description' description = STRING
-		('contact-info' '{'
-			('owner' owner=EmailOrUsername)?
-			('responsible' responsible += EmailOrUsername)*
-			('budgeting' budgeting = EmailOrUsername)?
-		'}')?
-		(additionalInfo=AdditionalInformation)?
+		additionalInfo=AdditionalInformation?
 		(capabilities+=Capability)*
 		(capabilityGroups+=CapabilityGroup)*
+		
+		contactInfo=ContactInfo?
+		('tags' (tags+=[semantics::Tag])+)?
 		('subscriptions' '{'
 			subscriptions += EmailOrUsername*
 		'}')?
@@ -113,7 +103,7 @@ SimpleCapability :
 		('description' description=STRING)?
 		'automation-level' automationLevel=CapabilityAutomationLevel
 		('business-value' businessValue=STRING)
-		(additionalInfo=AdditionalInformation)?
+		additionalInfo=AdditionalInformation?
 		(	
 			'inputs' '{'
 				(inputs+=Input)*
@@ -128,11 +118,8 @@ SimpleCapability :
 			(uses+=CapabilityRef)+
 		'}'
 		)? 
-		('contact-info' '{'
-			('owner' owner=EmailOrUsername)?
-			('responsible' responsible += EmailOrUsername)*
-			('budgeting' budgeting = EmailOrUsername)?
-		'}')?
+		
+		contactInfo=ContactInfo?
 		('tags' (tags+=[semantics::Tag|TagName])*)?
 		('subscriptions' '{'
 			subscriptions += EmailOrUsername*
@@ -149,7 +136,7 @@ CapabilityVariant:
 		('description' description=STRING)?
 		'automation-level' automationLevel+=CapabilityAutomationLevel
 		('business-value' businessValue=STRING)
-		(additionalInfo=AdditionalInformation)?
+		additionalInfo=AdditionalInformation?
 		('adding' '{'
 			(additions += CapabilityVariation)+
 		'}')?
@@ -173,11 +160,8 @@ CapabilityVariant:
 			(uses+=CapabilityRef)+
 		'}'
 		)? 
-		('contact-info' '{'
-			('owner' owner=EmailOrUsername)?
-			('responsible' responsible += EmailOrUsername)*
-			('budgeting' budgeting = EmailOrUsername)?
-		'}')?
+		
+		contactInfo=ContactInfo?
 		('tags' (tags+=[semantics::Tag|TagName])*)?
 		('subscriptions' '{'
 			subscriptions += EmailOrUsername*

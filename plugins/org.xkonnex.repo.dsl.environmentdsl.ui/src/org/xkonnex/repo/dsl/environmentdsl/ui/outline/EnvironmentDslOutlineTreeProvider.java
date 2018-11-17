@@ -15,8 +15,8 @@ import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode;
 import org.eclipse.xtext.ui.editor.utils.TextStyle;
 import org.eclipse.xtext.ui.label.StylerFactory;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Component;
-import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.EnvironmentDslPackage;
 
 /**
  * customization of the default outline structure
@@ -33,7 +33,7 @@ public class EnvironmentDslOutlineTreeProvider extends DefaultOutlineTreeProvide
 	private IImageHelper imageHelper;
 
 	protected void _createChildren(DocumentRootNode parentNode, Component component) {
-		createEStructuralFeatureNode(parentNode, component, EnvironmentDslPackage.Literals.ENV_IMPORT__IMPORTED_NAMESPACE,
+		createEStructuralFeatureNode(parentNode, component, BaseDslPackage.Literals.IMPORT__IMPORTED_NAMESPACE,
 				imageHelper.getImage("impc_obj.gif"), "import declarations", false);
 		if (component != null)
 			createNode(parentNode, component);

@@ -52,11 +52,7 @@ DomainNamespace:
 			('URI' uri=STRING)?
 			('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
 			(license=License)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -76,11 +72,7 @@ InternalNamespace:
 			('URI' uri=STRING)?
 			('architecture-profile' profile = [profileDsl::Profile|QualifiedName])?
 			(license=License)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -120,17 +112,13 @@ BusinessObject:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(additionalInfo=AdditionalInformation)?
+			additionalInfo=AdditionalInformation?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			&	(license=License)?
 			)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -152,17 +140,13 @@ ValueObject:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(additionalInfo=AdditionalInformation)?
+			additionalInfo=AdditionalInformation?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			&	(license=License)?
 			)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -184,17 +168,13 @@ Aggregate:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(additionalInfo=AdditionalInformation)?
+			additionalInfo=AdditionalInformation?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			&	(license=License)?
 			)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -217,17 +197,13 @@ Entity:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(additionalInfo=AdditionalInformation)?
+			additionalInfo=AdditionalInformation?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			&	(license=License)?
 			)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -248,17 +224,13 @@ QueryObject:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName])?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(additionalInfo=AdditionalInformation)?
+			additionalInfo=AdditionalInformation?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			&	(license=License)?
 			)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -285,7 +257,7 @@ Resource:
 			('statefulness' statefulness=Statefulness)?
 			/* are data persisted by the service ? */ 
 			('persistence' persistence=Persistence )? 
-			(additionalInfo=AdditionalInformation)?
+			additionalInfo=AdditionalInformation?
 			(
 				/* The business capabilities the service fully implements */
 				('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?
@@ -297,8 +269,8 @@ Resource:
 				 * rules that apply to public and domain scoped services
 				 */	
 			&	('provided-contract' providedContractUrl=STRING )? 
-			&	(lifecycleTrigger=LifecycleTrigger)?
-			&	(license=License)?
+			&	lifecycleTrigger=LifecycleTrigger?
+			&	license=License?
 				/*
 				 * The message header definition being used. Overrides the default from the architecture profile
 				 */
@@ -308,11 +280,7 @@ Resource:
 					('publish-message-header' publishMessageHeader = MessageHeaderRef )?
 				'}')?
 			)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+)?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -388,12 +356,8 @@ Enumeration:
 			&	('provided-contract' providedContractUrl=STRING)?
 			&	(license=License)?
 			)?
-			(additionalInfo=AdditionalInformation)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			additionalInfo=AdditionalInformation?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )?
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -425,7 +389,7 @@ Service:
 			('statefulness' statefulness=Statefulness)?
 			/* are data persisted by the service ? */ 
 			('persistence' persistence=Persistence )? 
-			(additionalInfo=AdditionalInformation)?
+			additionalInfo=AdditionalInformation?
 			(
 				/* The business capabilities the service fully implements */
 				('realizes-capability' '{'(realizedCapabilities+=CapabilityRef)+ '}')?
@@ -437,8 +401,8 @@ Service:
 				 * rules that apply to public and domain scoped services
 				 */	
 			&	('provided-contract' providedContractUrl=STRING )? 
-			&	(lifecycleTrigger=LifecycleTrigger)?
-			&	(license=License)?
+			&	lifecycleTrigger=LifecycleTrigger?
+			&	license=License?
 				/*
 				 * The message header definition being used. Overrides the default from the architecture profile
 				 */
@@ -448,11 +412,7 @@ Service:
 					('publish-message-header' publishMessageHeader = MessageHeaderRef )?
 				'}')?
 			)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			/*
 			 * Semantic tagging
 			 */
@@ -590,17 +550,13 @@ Exception:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(additionalInfo=AdditionalInformation)?
+			additionalInfo=AdditionalInformation?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			&	(license=License)?
 			)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -727,17 +683,13 @@ Event:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(additionalInfo=AdditionalInformation)?
+			additionalInfo=AdditionalInformation?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			&	(license=License)?
 			)?
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
@@ -760,17 +712,13 @@ Command:
 			('lifecycle-state' state=[profileDsl::LifecycleState | QualifiedName] )?
 			(governanceApproval=GovernanceApproval)?
 			(governanceDecisions+=GovernanceDecision)*
-			(additionalInfo=AdditionalInformation)?
+			additionalInfo=AdditionalInformation?
 			(
 				(lifecycleTrigger=LifecycleTrigger)?
 			&	('provided-contract' providedContractUrl=STRING)?
 			&	(license=License)?
 			)
-			('contact-info' '{'
-				('owner' owner=EmailOrUsername)?
-				('responsible' responsible += EmailOrUsername)*
-				('budgeting' budgeting = EmailOrUsername)?
-			'}')?
+			contactInfo=ContactInfo?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])+ )*
 			('subscriptions' '{'
 				subscriptions += EmailOrUsername*
