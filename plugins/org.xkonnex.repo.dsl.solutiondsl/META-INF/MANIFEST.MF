@@ -29,15 +29,16 @@ Require-Bundle: org.eclipse.xtext,
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.xkonnex.repo.dsl.solutiondsl,
+ org.xkonnex.repo.dsl.solutiondsl.ext.module,
+ org.xkonnex.repo.dsl.solutiondsl.formatting,
+ org.xkonnex.repo.dsl.solutiondsl.formatting2,
+ org.xkonnex.repo.dsl.solutiondsl.parser.antlr,
+ org.xkonnex.repo.dsl.solutiondsl.parser.antlr.internal,
+ org.xkonnex.repo.dsl.solutiondsl.scoping,
+ org.xkonnex.repo.dsl.solutiondsl.serializer,
  org.xkonnex.repo.dsl.solutiondsl.services,
  org.xkonnex.repo.dsl.solutiondsl.solutionDsl,
  org.xkonnex.repo.dsl.solutiondsl.solutionDsl.impl,
  org.xkonnex.repo.dsl.solutiondsl.solutionDsl.util,
- org.xkonnex.repo.dsl.solutiondsl.parser.antlr,
- org.xkonnex.repo.dsl.solutiondsl.parser.antlr.internal,
- org.xkonnex.repo.dsl.solutiondsl.validation,
- org.xkonnex.repo.dsl.solutiondsl.scoping,
- org.xkonnex.repo.dsl.solutiondsl.formatting,
- org.xkonnex.repo.dsl.solutiondsl.serializer,
- org.xkonnex.repo.dsl.solutiondsl.formatting2
+ org.xkonnex.repo.dsl.solutiondsl.validation
 

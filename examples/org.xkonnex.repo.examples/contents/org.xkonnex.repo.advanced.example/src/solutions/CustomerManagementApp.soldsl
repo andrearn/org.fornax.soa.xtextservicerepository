@@ -18,9 +18,7 @@ solution CustomerManagementApp {
 		requires CustomerLookupBES majorVersion 1
 	}
 	
-	module Webapp {
-		
-		kind UI
+	UI module Webapp {
 		
 		/**
 		 * The app has a feature to create a customer from B2B messages

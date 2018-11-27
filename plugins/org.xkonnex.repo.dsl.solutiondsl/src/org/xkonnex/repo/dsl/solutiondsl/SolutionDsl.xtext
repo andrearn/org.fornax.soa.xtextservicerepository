@@ -18,10 +18,13 @@ import "http://www.xkonnex.org/repo/dsl/semanticsdsl/SemanticsDsl" as semanticsD
 import "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" as serviceDsl
 import "http://www.xkonnex.org/repo/dsl/businessdsl/BusinessDsl" as businessDsl
 import "http://www.xkonnex.org/repo/dsl/profiledsl/ProfileDsl" as profileDsl
+import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 Model:
 	imports+=Import*
 	solution+=Solution*;
+
+SolutionComponent returns basedsl::Component: ModuleKind;
 	
 	
 Solution:
@@ -43,8 +46,7 @@ Solution:
 	'}';
 
 Module:
-	'module' name=ID '{'
-		'kind' kind=ModuleKind 
+	kind=ModuleKind? 'module' name=ID '{'
 		(version=Version)?
 		(license=License)?
 		(additionalInfo=AdditionalInformation)?
@@ -60,15 +62,21 @@ Module:
 		'}')?
 	'}';
 	
-enum ModuleKind : UI | BusinessLogic | Persistence | Security | Batch | OTHER;
+ModuleKind : type=[jvmTypes::JvmType|QualifiedName];
 
 Feature:
 	(nonFunctional?='non-functional')? 'feature' name=ID '{'
 		('use-cases' (useCase+=STRING)+ )?
 		('description' description=STRING )?
 		(additionalInfo=AdditionalInformation)?
-		('uses-capabilities' '{'
-			(usesCapabilities+=CapabilityRef)+ 
+		('uses-capability' '{'
+			(usedCapabilities+=CapabilityRef)+ 
+		'}')?
+		('realizes-capability' '{'
+			(supportedCapabilities+=CapabilityRef)+ 
+		'}')?
+		('supports-capability' '{'
+			(realizedCapabilities+=CapabilityRef)+ 
 		'}')?
 		('requires' requires+=InterfaceRef )*
 		('requires-channel' requiresChannel+=[serviceDsl::Channel|QualifiedName] )*

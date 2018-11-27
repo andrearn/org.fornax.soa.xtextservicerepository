@@ -3,6 +3,9 @@
  */
 package org.xkonnex.repo.dsl.solutiondsl.scoping;
 
+import static com.google.common.collect.Lists.newArrayList;
+
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
@@ -14,6 +17,7 @@ import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
+import org.eclipse.xtext.scoping.impl.ImportNormalizer;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.FixedVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.LowerBoundRangeVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
@@ -179,6 +183,13 @@ public class SolutionDslScopeProvider extends ComponentAwareVersionedScopeProvid
 				return new FixedVersionFilter<IEObjectDescription>(verResolver, ((FixedVersionRef) v).getFixedVersion());
 		}
 		return filter;
+	}
+	
+	@Override
+	protected List<ImportNormalizer> getImplicitImports(boolean ignoreCase) {
+		List<ImportNormalizer> result = newArrayList();
+		result.add(createImportedNamespaceResolver("org.xkonnex.repo.dsl.solutiondsl.ext.module.*", ignoreCase));
+		return result;
 	}
 
 }

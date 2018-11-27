@@ -8,18 +8,26 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.RuleCall;
+import org.eclipse.xtext.common.types.JvmType;
+import org.eclipse.xtext.common.types.access.IJvmTypeProvider;
+import org.eclipse.xtext.common.types.xtext.AbstractTypeScopeProvider;
+import org.eclipse.xtext.common.types.xtext.ui.ITypesProposalProvider;
+import org.eclipse.xtext.common.types.xtext.ui.TypeMatchFilters;
 import org.eclipse.xtext.naming.IQualifiedNameProvider;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.ILeafNode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Import;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.MajorVersionRef;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.VersionRef;
 import org.xkonnex.repo.dsl.businessdsl.businessDsl.BusinessDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
+import org.xkonnex.repo.dsl.solutiondsl.ext.module.IModuleKind;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.CapabilityRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.EventRef;
 import org.xkonnex.repo.dsl.solutiondsl.solutionDsl.InterfaceRef;
@@ -38,6 +46,12 @@ public class SolutionDslProposalProvider extends AbstractSolutionDslProposalProv
 
 	@Inject
 	protected IQualifiedNameProvider nameProvider;
+	
+	@Inject
+	private ITypesProposalProvider typeProposalProvider;
+	
+	@Inject
+	private AbstractTypeScopeProvider typeScopeProvider;
 
 	public void complete_VersionId (EObject model, RuleCall ruleCall, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		calculateVersionProposals(model, context, acceptor, false);
@@ -173,16 +187,12 @@ public class SolutionDslProposalProvider extends AbstractSolutionDslProposalProv
 		}
 	}
 	
-	private EObject getNamedEObject	(EObject model) {
-		EObject curObj = model;
-		while (curObj.eContainer() != null) {
-			if (curObj.eClass().getEStructuralFeature("name") != null) {
-				return model;
-			} else {
-				curObj = curObj.eContainer();
-			}
-		}
-		return null;
+	@Override
+	public void completeModuleKind_Type(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
+		JvmType moduleType = typeProvider.findTypeByName(IModuleKind.class.getCanonicalName());
+		typeProposalProvider.createSubTypeProposals(moduleType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 	}
-
+	
 }

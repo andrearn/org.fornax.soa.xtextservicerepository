@@ -1,5 +1,5 @@
 define([], function() {
-	var keywords = "Batch|BusinessLogic|OTHER|Persistence|Security|UI|accepted|budgeting|calling|default|denied|description|domain|false|feature|fixedVersion|frozen|import|kind|license|location|majorVersion|maxVersion|minVersion|module|optional|owner|page|pending|requires|responsible|section|solution|specific|subject|subscriptions|tags|true|type|version";
+	var keywords = "accepted|budgeting|calling|default|denied|description|domain|false|feature|fixedVersion|frozen|import|license|location|majorVersion|maxVersion|minVersion|module|optional|owner|page|pending|requires|responsible|section|solution|specific|subject|subscriptions|tags|true|type|version";
 	return {
 		id: "xtext.soldsl",
 		contentTypes: ["xtext/soldsl"],

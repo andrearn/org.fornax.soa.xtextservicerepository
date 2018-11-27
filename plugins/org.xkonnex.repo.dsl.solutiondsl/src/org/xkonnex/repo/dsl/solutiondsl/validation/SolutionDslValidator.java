@@ -11,6 +11,7 @@ import org.xkonnex.repo.dsl.profiledsl.query.LifecycleQueries;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.ILifecycleStateResolver;
 import org.xkonnex.repo.dsl.profiledsl.scoping.versions.LifecycleStateComparator;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.InternalNamespace;
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceRef;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Visibility;
@@ -31,20 +32,40 @@ public class SolutionDslValidator extends AbstractSolutionDslValidator {
 
 	@Check
 	public void checkDontCallPrivateServices (InterfaceRef svc) {
-		if (svc instanceof Service) {
+		if (svc.getInterface() instanceof Service) {
 			Service service = (Service)svc.getInterface();
 			if (service != null && service.getVisibility() == Visibility.PRIVATE) {
 				warning ("Solutions should not call private services!", SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE);
+			}
+		} 
+	}
+	
+	@Check
+	public void checkDontCallPrivateResources (InterfaceRef svc) {
+		if (svc.getInterface() instanceof Resource) {
+			Resource service = (Resource)svc.getInterface();
+			if (service != null && service.getVisibility() == Visibility.PRIVATE) {
+				warning ("Solutions should not call private resources!", SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE);
+			}
+		} 
+	}
+	
+	@Check
+	public void checkDontCallInternalServices (InterfaceRef svc) {
+		if (svc.getInterface() instanceof Service) {
+			Service service = (Service)svc.getInterface();
+			if (service != null && service.eContainer() instanceof InternalNamespace) {
+				warning ("Solutions should not call internal services!", SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE);
 			}
 		}
 	}
 	
 	@Check
-	public void checkDontCallInternalServices (InterfaceRef svc) {
-		if (svc instanceof Service) {
-			Service service = (Service)svc.getInterface();
+	public void checkDontCallInternalResources (InterfaceRef svc) {
+		if (svc.getInterface() instanceof Resource) {
+			Resource service = (Resource)svc.getInterface();
 			if (service != null && service.eContainer() instanceof InternalNamespace) {
-				warning ("Solutions should not call internal services!", SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE);
+				warning ("Solutions should not call internal resources!", SolutionDslPackage.Literals.INTERFACE_REF__INTERFACE);
 			}
 		}
 	}
