@@ -219,7 +219,7 @@ License:
 
 Double returns ecore::EDouble: INT'.'INT;
 IntAsDouble returns ecore::EDouble: INT;
-Percentile returns ecore::EDouble: (Double|IntAsDouble) '%';
+Percent: value=(IntAsDouble|Double) '%';
 Duration: duration=(IntAsDouble|Double) unit=TimeUnit;
 
 enum TimeUnit returns TimeUnit: years|months|weeks|days|h|min|s|ms;

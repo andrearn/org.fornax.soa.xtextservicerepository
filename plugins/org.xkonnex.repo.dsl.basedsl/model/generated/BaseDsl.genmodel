@@ -144,6 +144,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//License/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//License/licenseUrl"/>
     </genClasses>
+    <genClasses ecoreClass="BaseDsl.ecore#//Percent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//Percent/value"/>
+    </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//Duration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//Duration/duration"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//Duration/unit"/>

@@ -2,15 +2,16 @@ package org.xkonnex.repo.dsl.bindingdsl.model.assertion;
 
 import org.eclipse.emf.ecore.EObject;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Duration;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Percent;
 import org.xkonnex.repo.dsl.sladsl.sLADsl.Availability;
 
 public class EffectiveAvailability extends EffectiveAssertion
 		implements Availability {
 
-	private double percentage;
+	private Percent percentage;
 	private Duration mtbf;
 	private Duration mttr;
-	private double mttrPercentile;
+	private Percent mttrPercentile;
 	private String regularDownTimes;
 
 	public EffectiveAvailability(EObject delegate) {
@@ -18,12 +19,12 @@ public class EffectiveAvailability extends EffectiveAssertion
 	}
 
 	@Override
-	public double getPercentage() {
+	public Percent getPercentage() {
 		return percentage;
 	}
 
 	@Override
-	public void setPercentage(double value) {
+	public void setPercentage(Percent value) {
 		this.percentage = value;
 	}
 
@@ -48,12 +49,12 @@ public class EffectiveAvailability extends EffectiveAssertion
 	}
 
 	@Override
-	public double getMttrPercentile() {
+	public Percent getMttrPercentile() {
 		return mttrPercentile;
 	}
 
 	@Override
-	public void setMttrPercentile(double value) {
+	public void setMttrPercentile(Percent value) {
 		this.mttrPercentile = value;
 	}
 

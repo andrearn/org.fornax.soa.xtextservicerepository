@@ -101,12 +101,14 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Availability" eSuperTypes="#//ServiceQualityKPI">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="percentage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="percentage" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percent"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mtbf" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Duration"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mttr" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Duration"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mttrPercentile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mttrPercentile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percent"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="regularDownTimes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Throughput" eSuperTypes="#//ServiceQualityKPI">
@@ -117,7 +119,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="Latency" eSuperTypes="#//ServiceQualityKPI">
     <eStructuralFeatures xsi:type="ecore:EReference" name="latency" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Duration"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="percentile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="percentile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percent"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MaxDownTime" eSuperTypes="#//ServiceQualityKPI">
     <eStructuralFeatures xsi:type="ecore:EReference" name="duration" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Duration"

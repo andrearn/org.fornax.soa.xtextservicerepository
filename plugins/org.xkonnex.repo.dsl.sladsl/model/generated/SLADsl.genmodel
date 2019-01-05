@@ -97,10 +97,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//ServiceQualityKPI/penalty"/>
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//Availability">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/percentage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Availability/percentage"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Availability/mtbf"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Availability/mttr"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/mttrPercentile"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Availability/mttrPercentile"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/regularDownTimes"/>
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//Throughput">
@@ -110,7 +110,7 @@
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//Latency">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Latency/latency"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Latency/percentile"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Latency/percentile"/>
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//MaxDownTime">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//MaxDownTime/duration"/>
