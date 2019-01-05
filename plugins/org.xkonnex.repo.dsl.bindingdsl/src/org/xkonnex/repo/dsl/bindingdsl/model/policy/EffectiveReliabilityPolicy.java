@@ -1,17 +1,16 @@
-package org.xkonnex.repo.dsl.bindingdsl.model.assertion;
+package org.xkonnex.repo.dsl.bindingdsl.model.policy;
 
 import org.eclipse.emf.ecore.EObject;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ReliabilityAssertion;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ReliabilityKind;
-import org.xkonnex.repo.dsl.sladsl.sLADsl.ReliablilityKind;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.ReliabilityPolicy;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.ReliabilityKind;;
 
-public class EffectiveReliabilityAssertion extends EffectiveAssertion implements
-		ReliabilityAssertion {
+public class EffectiveReliabilityPolicy extends EffectivePolicy implements
+		ReliabilityPolicy {
 
 	private ReliabilityKind reliability;
 	private boolean inOrderDelivery;
 
-	public EffectiveReliabilityAssertion(EObject delegate) {
+	public EffectiveReliabilityPolicy(EObject delegate) {
 		super(delegate);
 	}
 

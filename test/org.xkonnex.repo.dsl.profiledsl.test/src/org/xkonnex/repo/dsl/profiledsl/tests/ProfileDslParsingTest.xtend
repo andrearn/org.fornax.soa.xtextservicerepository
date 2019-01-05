@@ -34,7 +34,7 @@ class ProfileDslParsingTest{
 			datatype binary
 			datatype base64Binary
 			
-			default soa-profile test {
+			default profile test {
 				scope "JUnit tests"
 			
 				lifecycle TestLifecycle {

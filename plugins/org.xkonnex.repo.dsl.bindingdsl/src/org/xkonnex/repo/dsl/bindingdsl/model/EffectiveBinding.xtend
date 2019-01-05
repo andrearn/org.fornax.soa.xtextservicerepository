@@ -7,33 +7,37 @@ import org.eclipse.xtext.EcoreUtil2
 import org.xkonnex.repo.dsl.basedsl.baseDsl.GovernanceDecision
 import org.xkonnex.repo.dsl.basedsl.model.DelegatingEObject
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Assertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ChannelBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EndpointQualifierRef
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.OperationBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Policy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Environment
 import org.xkonnex.repo.dsl.environmentdsl.environmentDsl.Server
 import org.xkonnex.repo.dsl.moduledsl.model.EffectiveProvidingEndpoint
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Policy
+import org.xkonnex.repo.dsl.sladsl.sLADsl.ServiceQualityKPI
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Costs
 
 class EffectiveBinding extends DelegatingEObject implements AnyBinding {
 	
-	private Environment environment
-	private Server provServer
-	private EndpointQualifierRef endpointQualifierRef
-	private EList<GovernanceDecision> governanceDecisions = new BasicEList<GovernanceDecision>()
-	private EList<BindingProtocol> protocol = new BasicEList<BindingProtocol>()
-	private EList<Policy> policies = new BasicEList<Policy>()
-	private EList<Assertion> assertions = new BasicEList<Assertion>()
-	private ServiceBinding serviceBinding
-	private OperationBinding operationBinding
-	private ChannelBinding channelBinding
+	Environment environment
+	Server provServer
+	EndpointQualifierRef endpointQualifierRef
+	EList<GovernanceDecision> governanceDecisions = new BasicEList<GovernanceDecision>()
+	EList<BindingProtocol> protocol = new BasicEList<BindingProtocol>()
+	EList<Policy> policies = new BasicEList<Policy>()
+	EList<ServiceQualityKPI> assertions = new BasicEList<ServiceQualityKPI>()
+	EList<ServiceQualityKPI> inlineAssertions = new BasicEList<ServiceQualityKPI>()
+	ServiceBinding serviceBinding
+	OperationBinding operationBinding
+	ChannelBinding channelBinding
+	Costs costs
+	Costs inlineCosts
 	
-	private List<EffectiveProvidingEndpoint> providingEndpoints = newArrayList()
+	List<EffectiveProvidingEndpoint> providingEndpoints = newArrayList()
 	
 	ModuleBinding moduleBinding
 	
@@ -83,7 +87,7 @@ class EffectiveBinding extends DelegatingEObject implements AnyBinding {
 		return policies
 	}
 
-	override EList<Assertion> getAssertions() {
+	override EList<ServiceQualityKPI> getAssertions() {
 		return assertions
 	}
 
@@ -98,4 +102,25 @@ class EffectiveBinding extends DelegatingEObject implements AnyBinding {
 	def List<EffectiveProvidingEndpoint> getProvidingEndpoints() {
 		providingEndpoints
 	}
+	
+	override getCosts() {
+		costs
+	}
+	
+	override setCosts(Costs value) {
+		this.costs = value
+	}
+	
+	override getInlineAssertions() {
+		inlineAssertions
+	}
+	
+	override getInlineCosts() {
+		inlineCosts
+	}
+	
+	override setInlineCosts(Costs value) {
+		inlineCosts = value
+	}
+	
 }

@@ -6,12 +6,10 @@ package org.xkonnex.repo.dsl.bindingdsl.ui.outline
 import org.eclipse.xtext.ui.editor.outline.IOutlineNode
 import org.eclipse.xtext.ui.editor.outline.impl.DefaultOutlineTreeProvider
 import org.eclipse.xtext.ui.editor.outline.impl.DocumentRootNode
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Assertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingModel
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ChannelBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.OperationBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Policy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingDslPackage
 import com.google.inject.Inject
@@ -23,7 +21,7 @@ import org.eclipse.xtext.ui.IImageHelper
 class BindingDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 	
 	@Inject
-	private IImageHelper imageHelper;
+	IImageHelper imageHelper;
 	
 	def protected _createChildren(DocumentRootNode parentNode, BindingModel model) {
 		parentNode.createEStructuralFeatureNode(model, BindingDslPackage.Literals.BINDING_MODEL__IMPORTS,
@@ -86,13 +84,4 @@ class BindingDslOutlineTreeProvider extends DefaultOutlineTreeProvider {
 			parentNode.createNode(assertion)
 		}
 	}
-	
-	def protected _isLeaf(Assertion assertion) {
-		true
-	}
-	
-	def protected _isLeaf(Policy assertion) {
-		true
-	}
-	
 }

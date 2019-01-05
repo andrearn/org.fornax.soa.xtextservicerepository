@@ -131,8 +131,27 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="licenseUrl" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Percentile">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  <eClassifiers xsi:type="ecore:EClass" name="TimeSpan">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="duration" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" eType="#//TimeUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TimeUnit">
+    <eLiterals name="years" literal="years"/>
+    <eLiterals name="months" value="1" literal="months"/>
+    <eLiterals name="weeks" value="2" literal="weeks"/>
+    <eLiterals name="days" value="3" literal="days"/>
+    <eLiterals name="h" value="4" literal="h"/>
+    <eLiterals name="min" value="5" literal="min"/>
+    <eLiterals name="s" value="6" literal="s"/>
+    <eLiterals name="ms" value="7" literal="ms"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="BytesEnum">
+    <eLiterals name="B" literal="B"/>
+    <eLiterals name="kB" value="1" literal="kB"/>
+    <eLiterals name="MB" value="2" literal="MB"/>
+    <eLiterals name="GB" value="3" literal="GB"/>
+    <eLiterals name="TB" value="4" literal="TB"/>
+    <eLiterals name="PB" value="5" literal="PB"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DefaultValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

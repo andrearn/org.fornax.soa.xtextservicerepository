@@ -3,8 +3,8 @@ package org.xkonnex.repo.dsl.bindingdsl.model.policy;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.CipherAlgorithmKind;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EncryptionPolicy;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.MessagePartRef;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.EncryptionPolicy;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.MessagePartRef;
 
 public class EffectiveEncryptionPolicy extends EffectivePolicy implements
 		EncryptionPolicy {

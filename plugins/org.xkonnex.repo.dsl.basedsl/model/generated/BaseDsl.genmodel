@@ -12,6 +12,24 @@
       <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//GovernanceDecisionResult/denied"/>
       <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//GovernanceDecisionResult/specific"/>
     </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BaseDsl.ecore#//TimeUnit">
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//TimeUnit/years"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//TimeUnit/months"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//TimeUnit/weeks"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//TimeUnit/days"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//TimeUnit/h"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//TimeUnit/min"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//TimeUnit/s"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//TimeUnit/ms"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="BaseDsl.ecore#//BytesEnum">
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//BytesEnum/B"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//BytesEnum/kB"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//BytesEnum/MB"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//BytesEnum/GB"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//BytesEnum/TB"/>
+      <genEnumLiterals ecoreEnumLiteral="BaseDsl.ecore#//BytesEnum/PB"/>
+    </genEnums>
     <genClasses ecoreClass="BaseDsl.ecore#//Import">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//Import/importedNamespace"/>
     </genClasses>
@@ -126,8 +144,9 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//License/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//License/licenseUrl"/>
     </genClasses>
-    <genClasses ecoreClass="BaseDsl.ecore#//Percentile">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//Percentile/value"/>
+    <genClasses ecoreClass="BaseDsl.ecore#//TimeSpan">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//TimeSpan/duration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//TimeSpan/unit"/>
     </genClasses>
     <genClasses ecoreClass="BaseDsl.ecore#//DefaultValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute BaseDsl.ecore#//DefaultValue/defaultValue"/>

@@ -11,25 +11,14 @@ import org.eclipse.xtext.ui.label.DefaultEObjectLabelProvider
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Assignment
 import org.xkonnex.repo.dsl.basedsl.ui.labeling.BaseDslLabelHelper
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.environment.EnvironmentBindingResolver
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AccuracyAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AuthenticationPolicy
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AvailabilityAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.CapacityAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ChannelBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.CostAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EncryptionPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.LatencyAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.LogPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.OperationBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.PredefinedAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ReliabilityAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SigningPolicy
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.AMQP
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.EJB
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.FILE
@@ -160,48 +149,6 @@ class BindingDslLabelProvider extends DefaultEObjectLabelProvider {
 		} else {
 			return "Unnamed"
 		}
-	}
-	
-	def Object text(LogPolicy ele) {
-		return '''Log policy «ele.logPolicy.literal»'''
-	}
-	
-	def Object text(AuthenticationPolicy ele) {
-		if (ele.name !== null) {
-			return ele.name			
-		} else {
-			return "Authentication policy"
-		}
-	}
-	
-	def Object text(SigningPolicy ele) {
-		return '''Signing policy «ele.requiredSigningAlgorithm?.name»'''
-	}
-	
-	def Object text(EncryptionPolicy ele) {
-		return '''Encryption policy «ele.requiredCipherAlgorithm?.name»'''
-	}
-
-	def Object text(AvailabilityAssertion ele) {
-		return "Availability assertion"
-	}
-	def Object text(LatencyAssertion ele) {
-		return "Latency assertion"
-	}
-	def Object text(CapacityAssertion ele) {
-		return "Encryption assertion"
-	}
-	def Object text(ReliabilityAssertion ele) {
-		return "Capacity assertion"
-	}
-	def Object text(CostAssertion ele) {
-		return "Costs assertion"
-	}
-	def Object text(AccuracyAssertion ele) {
-		return "Accuracy assertion"
-	}
-	def Object text(PredefinedAssertion ele) {
-		return ele.assertion?.name
 	}
 	
 	def package String image(ServiceBinding ele) {

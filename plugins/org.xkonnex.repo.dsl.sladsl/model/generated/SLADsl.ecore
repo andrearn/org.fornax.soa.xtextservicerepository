@@ -3,10 +3,14 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sLADsl" nsURI="http://www.xkonnex.org/repo/dsl/sladsl/SLADsl"
     nsPrefix="sLADsl">
   <eClassifiers xsi:type="ecore:EClass" name="SlaModel">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Import"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="agreements" upperBound="-1"
         eType="#//SLA" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="assertions" upperBound="-1"
-        eType="#//Assertion" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceQualityProperties"
+        upperBound="-1" eType="#//ServiceQualityProperty" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SLA">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -25,13 +29,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="appliesTo" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//AssetRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="costs" eType="#//Cost"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="costs" eType="#//Costs"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceQualityProperties"
-        upperBound="-1" eType="#//ServiceQualityProperty" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceQualityKPIs" unique="false"
+        upperBound="-1" eType="#//ServiceQualityKPI"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataSecProtClause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="securityRequirements" upperBound="-1"
-        eType="#//SecurityRequirement" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="securityRequirements" unique="false"
+        upperBound="-1" eType="#//SecurityPolicy"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="additionalServices" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="escalationProcedure" eType="#//Escalation"
         containment="true"/>
@@ -46,134 +50,6 @@
         eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore#//Tag"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="subscriptions" unique="false"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Assertion">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="restrictions" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceQualityProperties"
-        upperBound="-1" eType="#//ServiceQualityAssertionProperty" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="securityRequirements" upperBound="-1"
-        eType="#//SecurityRequirement" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="tags" unique="false" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.semanticsdsl/model/generated/SemanticsDsl.ecore#//Tag"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="subscriptions" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Cost">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="costsAmount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="billedUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="effortAccounting" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="escalation" eType="#//Escalation"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ServiceQualityProperty"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Availability" eSuperTypes="#//ServiceQualityProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="availability" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mtbf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mttr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="mttrPercentile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percentile"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="regularDownTimes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Throughput" eSuperTypes="#//ServiceQualityProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="definition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="score" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="escalation" eType="#//Escalation"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Latency" eSuperTypes="#//ServiceQualityProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="latency" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="percentile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percentile"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="escalation" eType="#//Escalation"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MaxDownTime" eSuperTypes="#//ServiceQualityProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="definition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="escalation" eType="#//Escalation"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CapacityRequirement" eSuperTypes="#//ServiceQualityProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requestNum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="escalation" eType="#//Escalation"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ReliablityRequirement" eSuperTypes="#//ServiceQualityProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reliability" eType="#//ReliablilityKind"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inOrderDelivery" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AccuracyRequirement" eSuperTypes="#//ServiceQualityProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxErrorRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="escalation" eType="#//Escalation"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LogRequirement" eSuperTypes="#//ServiceQualityProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="logLevel" eType="#//LogRequirementKind"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="additionalLoggingRequirement"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SecurityRequirement"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AuthenticationRequirement" eSuperTypes="#//SecurityRequirement #//SecurityAssertion">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="authTokens" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//AuthToken"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="hashAlgorithms" upperBound="-1"
-        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//HashAlgorithm"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="useNonce" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="issuer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SigningRequirement" eSuperTypes="#//SecurityRequirement #//SecurityAssertion">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="supportedSigningAlgorithms"
-        upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//SigningAlgorithm"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="requiredSigningAlgorithm"
-        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//SigningAlgorithm"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="signedParts" upperBound="-1"
-        eType="#//MessagePartRef" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MessagePartRef">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messagePartRef" eType="#//MessagePartRefKind"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="partRefExpression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="MessagePartRefKind">
-    <eLiterals name="header" literal="header"/>
-    <eLiterals name="body" value="1" literal="body"/>
-    <eLiterals name="attachments" value="2" literal="attachments"/>
-    <eLiterals name="all" value="3" literal="all"/>
-    <eLiterals name="expression" value="4" literal="expression"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EncryptionRequirement" eSuperTypes="#//SecurityRequirement #//SecurityAssertion">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCipherAlgorithms"
-        upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//CipherAlgorithmKind"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="requiredCipherAlgorithm"
-        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//CipherAlgorithmKind"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="encryptedParts" upperBound="-1"
-        eType="#//MessagePartRef" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="LogRequirementKind">
-    <eLiterals name="none" literal="none"/>
-    <eLiterals name="header" value="1" literal="header"/>
-    <eLiterals name="all" value="2" literal="all"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="ReliablilityKind">
-    <eLiterals name="EXACTLY_ONCE" literal="exactly-once"/>
-    <eLiterals name="AT_MOST_ONCE" value="1" literal="at-most-once"/>
-    <eLiterals name="AT_LEAST_ONCE" value="2" literal="at-least-once"/>
-    <eLiterals name="BEST_EFFORT" value="3" literal="best-effort"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PriorityDeclaration">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -216,39 +92,114 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reportTo" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="content" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ServiceQualityAssertionProperty"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AvailabilityAssertion" eSuperTypes="#//ServiceQualityAssertionProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="availability" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mtbf" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mttr" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="mttrPercentile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percentile"
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceQualityProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ServiceQualityKPI" eSuperTypes="#//ServiceQualityProperty">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="escalation" eType="#//Escalation"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Availability" eSuperTypes="#//ServiceQualityKPI">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="percentage" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mtbf" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//TimeSpan"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mttr" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//TimeSpan"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="mttrPercentile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="regularDownTimes" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ThroughputAssertion" eSuperTypes="#//ServiceQualityAssertionProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="definition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Throughput" eSuperTypes="#//ServiceQualityKPI">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="throughput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="ecore:EEnum platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//TimeUnit"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="score" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LatencyAssertion" eSuperTypes="#//ServiceQualityAssertionProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="latency" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="percentile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percentile"
+  <eClassifiers xsi:type="ecore:EClass" name="Latency" eSuperTypes="#//ServiceQualityKPI">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="latency" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//TimeSpan"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="percentile" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MaxDownTime" eSuperTypes="#//ServiceQualityKPI">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="duration" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//TimeSpan"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MaxDownTimeAssertion" eSuperTypes="#//ServiceQualityAssertionProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="definition" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Capacity" eSuperTypes="#//ServiceQualityKPI">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requestNum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="ecore:EEnum platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//TimeUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="byteUnit" eType="ecore:EEnum platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//BytesEnum"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CapacityAssertion" eSuperTypes="#//ServiceQualityAssertionProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requestNum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Accuracy" eSuperTypes="#//ServiceQualityKPI">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxErrorRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxErrorRateTimeUnit" eType="ecore:EEnum platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//TimeUnit"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="AccuracyAssertion" eSuperTypes="#//ServiceQualityAssertionProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxErrorRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Costs" eSuperTypes="#//ServiceQualityProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="costsAmount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="billedUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="effortAccounting" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="escalation" eType="#//Escalation"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="penalty" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LogAssertion" eSuperTypes="#//ServiceQualityAssertionProperty">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="logLevel" eType="#//LogRequirementKind"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Policy" eSuperTypes="#//ServiceQualityProperty"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LogPolicy" eSuperTypes="#//Policy">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="loggedMessageParts" upperBound="-1"
+        eType="#//MessagePartRef" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="additionalLoggingRequirement"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SecurityAssertion"/>
+  <eClassifiers xsi:type="ecore:EClass" name="SecurityPolicy" eSuperTypes="#//Policy"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AuthenticationPolicy" eSuperTypes="#//SecurityPolicy">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="authTokens" upperBound="-1"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//AuthToken"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="hashAlgorithms" upperBound="-1"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//HashAlgorithm"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="useNonce" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="issuer" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SigningPolicy" eSuperTypes="#//SecurityPolicy">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="supportedSigningAlgorithms"
+        upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//SigningAlgorithm"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiredSigningAlgorithm"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//SigningAlgorithm"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="signedParts" upperBound="-1"
+        eType="#//MessagePartRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MessagePartRef">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messagePartRef" eType="#//MessagePartRefKind"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="partRefExpression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MessagePartRefKind">
+    <eLiterals name="none" literal="none"/>
+    <eLiterals name="header" value="1" literal="header"/>
+    <eLiterals name="body" value="2" literal="body"/>
+    <eLiterals name="attachments" value="3" literal="attachments"/>
+    <eLiterals name="all" value="4" literal="all"/>
+    <eLiterals name="expression" value="5" literal="expression"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EncryptionPolicy" eSuperTypes="#//SecurityPolicy">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="supportedCipherAlgorithms"
+        upperBound="-1" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//CipherAlgorithmKind"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiredCipherAlgorithm"
+        eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//CipherAlgorithmKind"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="encryptedParts" upperBound="-1"
+        eType="#//MessagePartRef" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReliabilityPolicy" eSuperTypes="#//Policy">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reliability" eType="#//ReliabilityKind"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="inOrderDelivery" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="ReliabilityKind">
+    <eLiterals name="EXACTLY_ONCE" literal="exactly-once"/>
+    <eLiterals name="AT_MOST_ONCE" value="1" literal="at-most-once"/>
+    <eLiterals name="AT_LEAST_ONCE" value="2" literal="at-least-once"/>
+    <eLiterals name="BEST_EFFORT" value="3" literal="best-effort"/>
+  </eClassifiers>
 </ecore:EPackage>

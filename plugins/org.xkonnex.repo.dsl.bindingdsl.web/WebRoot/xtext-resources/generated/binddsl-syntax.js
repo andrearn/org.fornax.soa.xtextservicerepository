@@ -1,5 +1,5 @@
 define([], function() {
-	var keywords = "HTTP|JMS|SMTP|SOAP|accepted|all|as|assertions|attachments|availability|body|budgeting|costs|default|denied|environment|executable|expression|false|fixedVersion|frozen|header|import|issuer|latency|license|location|majorVersion|maxVersion|minVersion|none|optional|owner|page|pending|per|percentile|policies|protocols|responsible|section|server|specific|style|subject|to|transport|true|type|version";
+	var keywords = "B|GB|HTTP|JMS|MB|PB|SMTP|SOAP|TB|accepted|accuracy|all|amount|as|attachments|availability|body|budgeting|capacity|cause|costs|days|default|denied|duration|environment|escalation|executable|expression|false|fixedVersion|frozen|h|header|import|kB|latency|license|location|majorVersion|maxVersion|min|minVersion|months|ms|optional|owner|page|penalty|pending|per|percentage|percentile|policies|procedure|protocols|requests|responsible|s|section|server|specific|style|subject|throughput|to|transactions|transport|true|type|version|weeks|years";
 	return {
 		id: "xtext.binddsl",
 		contentTypes: ["xtext/binddsl"],

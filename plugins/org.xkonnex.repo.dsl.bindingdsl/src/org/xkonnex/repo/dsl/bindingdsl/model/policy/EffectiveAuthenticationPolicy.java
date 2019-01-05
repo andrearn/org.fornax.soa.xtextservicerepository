@@ -5,7 +5,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.AuthToken;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.HashAlgorithm;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AuthenticationPolicy;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.AuthenticationPolicy;
 
 public class EffectiveAuthenticationPolicy extends EffectivePolicy implements
 		AuthenticationPolicy {

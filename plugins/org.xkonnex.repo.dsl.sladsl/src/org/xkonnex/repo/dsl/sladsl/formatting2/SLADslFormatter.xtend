@@ -7,15 +7,15 @@ import com.google.inject.Inject
 import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.xkonnex.repo.dsl.basedsl.baseDsl.AssetRef
 import org.xkonnex.repo.dsl.basedsl.formatting2.BaseDslFormatter
-import org.xkonnex.repo.dsl.sladsl.sLADsl.Assertion
 import org.xkonnex.repo.dsl.sladsl.sLADsl.Party
 import org.xkonnex.repo.dsl.sladsl.sLADsl.PriorityDeclaration
 import org.xkonnex.repo.dsl.sladsl.sLADsl.Report
 import org.xkonnex.repo.dsl.sladsl.sLADsl.SLA
-import org.xkonnex.repo.dsl.sladsl.sLADsl.SecurityRequirement
 import org.xkonnex.repo.dsl.sladsl.sLADsl.ServiceQualityProperty
 import org.xkonnex.repo.dsl.sladsl.sLADsl.SlaModel
 import org.xkonnex.repo.dsl.sladsl.services.SLADslGrammarAccess
+import org.xkonnex.repo.dsl.sladsl.sLADsl.SecurityPolicy
+import org.xkonnex.repo.dsl.sladsl.sLADsl.ServiceQualityKPI
 
 class SLADslFormatter extends BaseDslFormatter {
 	
@@ -26,7 +26,7 @@ class SLADslFormatter extends BaseDslFormatter {
 		for (SLA agreements : slaModel.getAgreements()) {
 			agreements.format;
 		}
-		for (Assertion assertions : slaModel.getAssertions()) {
+		for (ServiceQualityProperty assertions : slaModel.serviceQualityProperties) {
 			assertions.format;
 		}
 	}
@@ -44,10 +44,10 @@ class SLADslFormatter extends BaseDslFormatter {
 			appliesTo.format;
 		}
 		sLA.getCosts.format;
-		for (ServiceQualityProperty serviceQualityProperties : sLA.getServiceQualityProperties()) {
-			serviceQualityProperties.format;
+		for (ServiceQualityKPI serviceQualityKPIs : sLA.serviceQualityKPIs) {
+			serviceQualityKPIs.format;
 		}
-		for (SecurityRequirement securityRequirements : sLA.getSecurityRequirements()) {
+		for (SecurityPolicy securityRequirements : sLA.getSecurityRequirements()) {
 			securityRequirements.format;
 		}
 		sLA.getEscalationProcedure.format;

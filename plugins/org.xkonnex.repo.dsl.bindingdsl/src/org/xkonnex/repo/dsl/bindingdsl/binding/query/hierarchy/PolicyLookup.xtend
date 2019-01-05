@@ -1,9 +1,9 @@
 package org.xkonnex.repo.dsl.bindingdsl.binding.query.hierarchy
 
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Policy
+import java.util.List
 import org.eclipse.xtext.EcoreUtil2
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
-import java.util.List
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Policy
 
 class PolicyLookup {
 	

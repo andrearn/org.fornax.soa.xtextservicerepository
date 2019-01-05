@@ -1,6 +1,5 @@
 package org.xkonnex.repo.dsl.basedsl.version
 
-import com.google.inject.Inject
 import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslFactory
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Version
 
@@ -23,11 +22,11 @@ class VersionQualifierExtensions {
 	}
 	
 	def dispatch String toMajorVersionNumber (String v) { 
-		if  (v != null && v != "" ) v.toVersionNumber().split("\\.").head() else "1";
+		if  (v !== null && v !== "" ) v.toVersionNumber().split("\\.").head() else "1";
 	}
 	
 	def dispatch String toMajorVersionNumber (Version v) { 
-		if (v != null) v.toVersionNumber().split("\\.").head() else "1";
+		if (v !== null) v.toVersionNumber().split("\\.").head() else "1";
 	}
 	
 	def dispatch String toVersionPostfix (String v) {

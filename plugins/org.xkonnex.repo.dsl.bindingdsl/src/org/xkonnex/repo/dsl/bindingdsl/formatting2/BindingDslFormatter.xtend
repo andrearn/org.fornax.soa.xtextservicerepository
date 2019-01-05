@@ -8,14 +8,14 @@ import org.eclipse.xtext.formatting2.IFormattableDocument
 import org.xkonnex.repo.dsl.basedsl.baseDsl.GovernanceDecision
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Import
 import org.xkonnex.repo.dsl.basedsl.formatting2.BaseDslFormatter
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Assertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingModel
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Policy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceBinding
 import org.xkonnex.repo.dsl.bindingdsl.services.BindingDslGrammarAccess
+import org.xkonnex.repo.dsl.sladsl.sLADsl.ServiceQualityKPI
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Policy
 
 class BindingDslFormatter extends BaseDslFormatter {
 	
@@ -44,7 +44,7 @@ class BindingDslFormatter extends BaseDslFormatter {
 		for (Policy policies : moduleBinding.getPolicies()) {
 			policies.format;
 		}
-		for (Assertion assertions : moduleBinding.getAssertions()) {
+		for (ServiceQualityKPI assertions : moduleBinding.assertions) {
 			assertions.format;
 		}
 		for (ServiceBinding serviceBindings : moduleBinding.getServiceBindings()) {

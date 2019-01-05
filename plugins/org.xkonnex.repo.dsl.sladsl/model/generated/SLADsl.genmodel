@@ -7,26 +7,24 @@
   <genPackages prefix="SLADsl" basePackage="org.xkonnex.repo.dsl.sladsl" disposableProviderFactory="true"
       fileExtensions="sladsl" ecorePackage="SLADsl.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="SLADsl.ecore#//MessagePartRefKind">
+      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//MessagePartRefKind/none"/>
       <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//MessagePartRefKind/header"/>
       <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//MessagePartRefKind/body"/>
       <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//MessagePartRefKind/attachments"/>
       <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//MessagePartRefKind/all"/>
       <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//MessagePartRefKind/expression"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SLADsl.ecore#//LogRequirementKind">
-      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//LogRequirementKind/none"/>
-      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//LogRequirementKind/header"/>
-      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//LogRequirementKind/all"/>
-    </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SLADsl.ecore#//ReliablilityKind">
-      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//ReliablilityKind/EXACTLY_ONCE"/>
-      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//ReliablilityKind/AT_MOST_ONCE"/>
-      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//ReliablilityKind/AT_LEAST_ONCE"/>
-      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//ReliablilityKind/BEST_EFFORT"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="SLADsl.ecore#//ReliabilityKind">
+      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//ReliabilityKind/EXACTLY_ONCE"/>
+      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//ReliabilityKind/AT_MOST_ONCE"/>
+      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//ReliabilityKind/AT_LEAST_ONCE"/>
+      <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//ReliabilityKind/BEST_EFFORT"/>
     </genEnums>
     <genClasses ecoreClass="SLADsl.ecore#//SlaModel">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SlaModel/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SlaModel/imports"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SlaModel/agreements"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SlaModel/assertions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SlaModel/serviceQualityProperties"/>
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//SLA">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/name"/>
@@ -41,9 +39,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/priorities"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/appliesTo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/costs"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/serviceQualityProperties"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/serviceQualityKPIs"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/dataSecProtClause"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/securityRequirements"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/securityRequirements"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/additionalServices"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/escalationProcedure"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/cancellation"/>
@@ -52,89 +50,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/additionalInfo"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/tags"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/subscriptions"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//Assertion">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Assertion/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Assertion/description"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Assertion/restrictions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Assertion/serviceQualityProperties"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Assertion/securityRequirements"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Assertion/tags"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Assertion/subscriptions"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//Cost">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Cost/costsAmount"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Cost/billedUnit"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Cost/effortAccounting"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Cost/escalation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Cost/penalty"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//ServiceQualityProperty"/>
-    <genClasses ecoreClass="SLADsl.ecore#//Availability">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/availability"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/mtbf"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/mttr"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Availability/mttrPercentile"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/regularDownTimes"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//Throughput">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Throughput/definition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Throughput/score"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Throughput/escalation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Throughput/penalty"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//Latency">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Latency/latency"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Latency/percentile"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Latency/escalation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Latency/penalty"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//MaxDownTime">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//MaxDownTime/definition"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//MaxDownTime/escalation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//MaxDownTime/penalty"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//CapacityRequirement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//CapacityRequirement/requestNum"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//CapacityRequirement/timeUnit"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//CapacityRequirement/messageSize"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//CapacityRequirement/escalation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//CapacityRequirement/penalty"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//ReliablityRequirement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//ReliablityRequirement/reliability"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//ReliablityRequirement/inOrderDelivery"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//AccuracyRequirement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AccuracyRequirement/maxErrorRate"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//AccuracyRequirement/escalation"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AccuracyRequirement/penalty"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//LogRequirement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//LogRequirement/logLevel"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//LogRequirement/additionalLoggingRequirement"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//SecurityRequirement"/>
-    <genClasses ecoreClass="SLADsl.ecore#//AuthenticationRequirement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AuthenticationRequirement/optional"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//AuthenticationRequirement/authTokens"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//AuthenticationRequirement/hashAlgorithms"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AuthenticationRequirement/useNonce"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AuthenticationRequirement/issuer"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//SigningRequirement">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SigningRequirement/supportedSigningAlgorithms"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SigningRequirement/requiredSigningAlgorithm"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SigningRequirement/signedParts"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//MessagePartRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//MessagePartRef/messagePartRef"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//MessagePartRef/partRefExpression"/>
-    </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//EncryptionRequirement">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//EncryptionRequirement/supportedCipherAlgorithms"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//EncryptionRequirement/requiredCipherAlgorithm"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//EncryptionRequirement/encryptedParts"/>
     </genClasses>
     <genClasses ecoreClass="SLADsl.ecore#//PriorityDeclaration">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//PriorityDeclaration/name"/>
@@ -174,37 +89,79 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Report/reportTo"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Report/content"/>
     </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//ServiceQualityAssertionProperty"/>
-    <genClasses ecoreClass="SLADsl.ecore#//AvailabilityAssertion">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AvailabilityAssertion/availability"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AvailabilityAssertion/mtbf"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AvailabilityAssertion/mttr"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//AvailabilityAssertion/mttrPercentile"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AvailabilityAssertion/regularDownTimes"/>
+    <genClasses ecoreClass="SLADsl.ecore#//ServiceQualityProperty">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//ServiceQualityProperty/name"/>
     </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//ThroughputAssertion">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//ThroughputAssertion/definition"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//ThroughputAssertion/score"/>
+    <genClasses ecoreClass="SLADsl.ecore#//ServiceQualityKPI">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//ServiceQualityKPI/escalation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//ServiceQualityKPI/penalty"/>
     </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//LatencyAssertion">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//LatencyAssertion/latency"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//LatencyAssertion/percentile"/>
+    <genClasses ecoreClass="SLADsl.ecore#//Availability">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/percentage"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Availability/mtbf"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Availability/mttr"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/mttrPercentile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Availability/regularDownTimes"/>
     </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//MaxDownTimeAssertion">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//MaxDownTimeAssertion/definition"/>
+    <genClasses ecoreClass="SLADsl.ecore#//Throughput">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Throughput/throughput"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Throughput/timeUnit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Throughput/score"/>
     </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//CapacityAssertion">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//CapacityAssertion/requestNum"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//CapacityAssertion/timeUnit"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//CapacityAssertion/messageSize"/>
+    <genClasses ecoreClass="SLADsl.ecore#//Latency">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Latency/latency"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Latency/percentile"/>
     </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//AccuracyAssertion">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AccuracyAssertion/maxErrorRate"/>
+    <genClasses ecoreClass="SLADsl.ecore#//MaxDownTime">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//MaxDownTime/duration"/>
     </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//LogAssertion">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//LogAssertion/logLevel"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//LogAssertion/additionalLoggingRequirement"/>
+    <genClasses ecoreClass="SLADsl.ecore#//Capacity">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Capacity/requestNum"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Capacity/timeUnit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Capacity/messageSize"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Capacity/byteUnit"/>
     </genClasses>
-    <genClasses ecoreClass="SLADsl.ecore#//SecurityAssertion"/>
+    <genClasses ecoreClass="SLADsl.ecore#//Accuracy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Accuracy/maxErrorRate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Accuracy/maxErrorRateTimeUnit"/>
+    </genClasses>
+    <genClasses ecoreClass="SLADsl.ecore#//Costs">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Costs/costsAmount"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Costs/billedUnit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Costs/effortAccounting"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//Costs/escalation"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//Costs/penalty"/>
+    </genClasses>
+    <genClasses ecoreClass="SLADsl.ecore#//Policy"/>
+    <genClasses ecoreClass="SLADsl.ecore#//LogPolicy">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//LogPolicy/loggedMessageParts"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//LogPolicy/additionalLoggingRequirement"/>
+    </genClasses>
+    <genClasses ecoreClass="SLADsl.ecore#//SecurityPolicy"/>
+    <genClasses ecoreClass="SLADsl.ecore#//AuthenticationPolicy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AuthenticationPolicy/optional"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//AuthenticationPolicy/authTokens"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//AuthenticationPolicy/hashAlgorithms"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AuthenticationPolicy/useNonce"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//AuthenticationPolicy/issuer"/>
+    </genClasses>
+    <genClasses ecoreClass="SLADsl.ecore#//SigningPolicy">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SigningPolicy/supportedSigningAlgorithms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SigningPolicy/requiredSigningAlgorithm"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SigningPolicy/signedParts"/>
+    </genClasses>
+    <genClasses ecoreClass="SLADsl.ecore#//MessagePartRef">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//MessagePartRef/messagePartRef"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//MessagePartRef/partRefExpression"/>
+    </genClasses>
+    <genClasses ecoreClass="SLADsl.ecore#//EncryptionPolicy">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//EncryptionPolicy/supportedCipherAlgorithms"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//EncryptionPolicy/requiredCipherAlgorithm"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//EncryptionPolicy/encryptedParts"/>
+    </genClasses>
+    <genClasses ecoreClass="SLADsl.ecore#//ReliabilityPolicy">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//ReliabilityPolicy/reliability"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//ReliabilityPolicy/inOrderDelivery"/>
+    </genClasses>
   </genPackages>
 </genmodel:GenModel>

@@ -29,14 +29,11 @@ import org.xkonnex.repo.dsl.basedsl.ext.crypto.ICipherAlgoritm;
 import org.xkonnex.repo.dsl.basedsl.ext.crypto.IHashAlgorithm;
 import org.xkonnex.repo.dsl.basedsl.ext.crypto.ISigningAlgorithm;
 import org.xkonnex.repo.dsl.basedsl.ext.token.IAuthTokenKind;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AuthenticationPolicy;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingDslPackage;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingModel;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EncryptionPolicy;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ModuleRef;
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ServiceRef;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SigningPolicy;
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol;
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.ModuleDslPackage;
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.ServiceDslPackage;
@@ -138,72 +135,6 @@ public class BindingDslProposalProvider extends AbstractBindingDslProposalProvid
 		IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 		JvmType protocolType = typeProvider.findTypeByName(IProtocol.class.getCanonicalName());
 		typeProposalProvider.createSubTypeProposals(protocolType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
-	}
-	
-	@Override
-	public void completeAuthenticationPolicy_AuthTokens(EObject model,
-			Assignment assignment, ContentAssistContext context,
-			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof AuthenticationPolicy) {
-			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
-			JvmType protocolType = typeProvider.findTypeByName(IAuthTokenKind.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(protocolType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
-		}
-	}
-	
-	@Override
-	public void completeAuthenticationPolicy_HashAlgorithms(EObject model,
-			Assignment assignment, ContentAssistContext context,
-			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof AuthenticationPolicy) {
-			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
-			JvmType hashType = typeProvider.findTypeByName(IHashAlgorithm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(hashType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
-		}
-	}
-	
-	@Override
-	public void completeEncryptionPolicy_RequiredCipherAlgorithm(EObject model,
-			Assignment assignment, ContentAssistContext context,
-			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof EncryptionPolicy) {
-			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
-			JvmType cipherType = typeProvider.findTypeByName(ICipherAlgoritm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(cipherType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
-		}
-	}
-	
-	@Override
-	public void completeEncryptionPolicy_SupportedCipherAlgorithms(
-			EObject model, Assignment assignment, ContentAssistContext context,
-			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof EncryptionPolicy) {
-			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
-			JvmType cipherType = typeProvider.findTypeByName(ICipherAlgoritm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(cipherType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
-		}
-	}
-	
-	@Override
-	public void completeSigningPolicy_RequiredSigningAlgorithm(EObject model,
-			Assignment assignment, ContentAssistContext context,
-			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof SigningPolicy) {
-			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
-			JvmType signingType = typeProvider.findTypeByName(ISigningAlgorithm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(signingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
-		}
-	}
-		
-	@Override
-	public void completeSigningPolicy_SupportedSigningAlgorithms(EObject model,
-			Assignment assignment, ContentAssistContext context,
-			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof SigningPolicy) {
-			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
-			JvmType signingType = typeProvider.findTypeByName(ISigningAlgorithm.class.getCanonicalName());
-			typeProposalProvider.createSubTypeProposals(signingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
-		}
 	}
 		
 }

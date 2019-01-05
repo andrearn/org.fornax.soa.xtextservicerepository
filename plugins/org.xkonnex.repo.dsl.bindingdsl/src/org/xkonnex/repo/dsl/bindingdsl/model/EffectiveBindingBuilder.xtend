@@ -4,6 +4,7 @@ import com.google.inject.Inject
 import java.util.List
 import java.util.Set
 import org.eclipse.emf.ecore.EObject
+import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage
 import org.xkonnex.repo.dsl.basedsl.baseDsl.GovernanceDecision
 import org.xkonnex.repo.dsl.basedsl.ext.infer.IComponentInferrer
 import org.xkonnex.repo.dsl.basedsl.model.IEffectiveFeatureInferrer
@@ -12,48 +13,46 @@ import org.xkonnex.repo.dsl.bindingdsl.binding.query.BindingLookup
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.hierarchy.AssertionLookup
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.hierarchy.BindingProtocolLookup
 import org.xkonnex.repo.dsl.bindingdsl.binding.query.hierarchy.PolicyLookup
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AccuracyAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AnyBinding
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Assertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AuthenticationPolicy
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.AvailabilityAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Binding
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingDslPackage
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.BindingProtocol
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.CapacityAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.CostAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.EncryptionPolicy
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ExtensibleProtocol
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.LatencyAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.LogPolicy
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Policy
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.PredefinedAssertion
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.ReliabilityAssertion
 import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SOAP
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SigningPolicy
 import org.xkonnex.repo.dsl.bindingdsl.ext.protocol.IProtocol
-import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveAccuracyAssertion
+import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveAccuracy
 import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveAssertion
-import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveAvailabilityAssertion
-import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveCapacityAssertion
-import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveCostAssertion
-import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveLatencyAssertion
-import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectivePredefinedAssertion
-import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveReliabilityAssertion
+import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveAvailability
+import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveCapacity
+import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveCost
+import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveLatency
 import org.xkonnex.repo.dsl.bindingdsl.model.policy.EffectiveAuthenticationPolicy
 import org.xkonnex.repo.dsl.bindingdsl.model.policy.EffectiveEncryptionPolicy
 import org.xkonnex.repo.dsl.bindingdsl.model.policy.EffectiveLogPolicy
 import org.xkonnex.repo.dsl.bindingdsl.model.policy.EffectivePolicy
+import org.xkonnex.repo.dsl.bindingdsl.model.policy.EffectiveReliabilityPolicy
 import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveBindingProtocol
 import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveExtensibleProtocol
 import org.xkonnex.repo.dsl.bindingdsl.model.protocol.EffectiveSOAPProtocol
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Operation
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
 import org.xkonnex.repo.dsl.moduledsl.model.IEffectiveProvidingEndpointBuilder
 import org.xkonnex.repo.dsl.moduledsl.moduleDsl.EndpointQualifierRef
-import org.xkonnex.repo.dsl.basedsl.baseDsl.BaseDslPackage
-import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
 import org.xkonnex.repo.dsl.servicedsl.serviceDsl.AbstractOperation
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Resource
+import org.xkonnex.repo.dsl.servicedsl.serviceDsl.Service
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Accuracy
+import org.xkonnex.repo.dsl.sladsl.sLADsl.AuthenticationPolicy
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Availability
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Capacity
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Costs
+import org.xkonnex.repo.dsl.sladsl.sLADsl.EncryptionPolicy
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Latency
+import org.xkonnex.repo.dsl.sladsl.sLADsl.LogPolicy
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Policy
+import org.xkonnex.repo.dsl.sladsl.sLADsl.ReliabilityPolicy
+import org.xkonnex.repo.dsl.sladsl.sLADsl.ServiceQualityKPI
+import org.xkonnex.repo.dsl.sladsl.sLADsl.SigningPolicy
+import org.xkonnex.repo.dsl.sladsl.sLADsl.MaxDownTime
+import org.xkonnex.repo.dsl.bindingdsl.model.assertion.EffectiveMaxDownTime
 
 class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 	
@@ -86,6 +85,9 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		effBind.protocol += createEffectiveBindingProtocol(bindingHierarchy)
 		effBind.policies += createEffectivePolicies(bindingHierarchy)
 		effBind.assertions += createEffectiveAssertions(bindingHierarchy)
+		effBind.inlineAssertions += createEffectiveInlineAssertions(bindingHierarchy)
+		effBind.costs = createEffectiveCosts(bindingHierarchy)
+		effBind.inlineCosts = createEffectiveInlineCosts(bindingHierarchy)
 		effBind.environment = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__ENVIRONMENT)
 		effBind.provServer = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__PROV_SERVER)
 		effBind.governanceDecisions += createEffectiveGovernanceDecisions(bindingHierarchy)
@@ -109,6 +111,9 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		effBind.protocol += createEffectiveBindingProtocol(bindingHierarchy)
 		effBind.policies += createEffectivePolicies(bindingHierarchy)
 		effBind.assertions += createEffectiveAssertions(bindingHierarchy)
+		effBind.inlineAssertions += createEffectiveInlineAssertions(bindingHierarchy)
+		effBind.costs = createEffectiveCosts(bindingHierarchy)
+		effBind.inlineCosts = createEffectiveInlineCosts(bindingHierarchy)
 		effBind.environment = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__ENVIRONMENT)
 		effBind.provServer = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__PROV_SERVER)
 		effBind.governanceDecisions += createEffectiveGovernanceDecisions(bindingHierarchy)
@@ -124,6 +129,9 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		effBind.protocol += createEffectiveBindingProtocol(bindingHierarchy)
 		effBind.policies += createEffectivePolicies(bindingHierarchy)
 		effBind.assertions += createEffectiveAssertions(bindingHierarchy)
+		effBind.inlineAssertions += createEffectiveInlineAssertions(bindingHierarchy)
+		effBind.costs = createEffectiveCosts(bindingHierarchy)
+		effBind.inlineCosts = createEffectiveInlineCosts(bindingHierarchy)
 		effBind.environment = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__ENVIRONMENT)
 		effBind.provServer = featureInferrer.inferFeatureValue(hierarchyEObjects, BindingDslPackage.Literals.BINDING__PROV_SERVER)
 		effBind.governanceDecisions += createEffectiveGovernanceDecisions(bindingHierarchy)
@@ -187,6 +195,39 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 		return effAssertions
 	}
 	
+	def List<EffectiveAssertion> createEffectiveInlineAssertions (List<AnyBinding> bindingsBottomUp) {
+		var List<EffectiveAssertion> effAssertions = newArrayList()
+		var Set<Class<?>> assertTypes = newHashSet
+		for (bind : bindingsBottomUp) {
+			val specAssertions = bind.inlineAssertions
+			for (specAssert : specAssertions) {
+				val assertType = specAssert.class
+				if (!assertTypes.contains(assertType)) {
+					assertTypes += assertType
+					effAssertions += createAssertionEObject(bindingsBottomUp, specAssert)
+				}
+			}
+		}
+		return effAssertions
+	}
+	
+	def EffectiveCost createEffectiveCosts (List<AnyBinding> bindingsBottomUp) {
+		for (bind : bindingsBottomUp) {
+			val specCosts = bind.costs
+			if (specCosts !== null)
+				return new EffectiveCost(specCosts)
+		}
+		return null
+	}
+	
+	def EffectiveCost createEffectiveInlineCosts (List<AnyBinding> bindingsBottomUp) {
+		for (bind : bindingsBottomUp) {
+			val specCosts = bind.inlineCosts
+			if (specCosts !== null)
+				return new EffectiveCost(specCosts)
+		}
+		return null
+	}
 	private def createSOAP (List<AnyBinding> bindings, SOAP soap) {
 		val effSoap = new EffectiveSOAPProtocol(soap)
 		var List<EObject> soapDefs = protocolLookup.collectCorrespondingProtocolsFromHierarchy(bindings, soap).map[it as EObject]
@@ -238,27 +279,31 @@ class EffectiveBindingBuilder implements IEffectiveBindingBuilder {
 			case EncryptionPolicy: 		effPol = new EffectiveEncryptionPolicy(policy)
 			case LogPolicy: 			effPol = new EffectiveLogPolicy(policy)
 			case SigningPolicy: 		effPol = new EffectiveEncryptionPolicy(policy)
+			case ReliabilityPolicy: 	 effPol = new EffectiveReliabilityPolicy(policy)
 			default: 					effPol = new EffectivePolicy(policy)
 		}
 		effPol = featureInferrer.inferFeatureValues(polDefs.map[it as EObject], effPol) as EffectivePolicy
 		effPol
 	}
 	
-	private def EffectiveAssertion createAssertionEObject(List<AnyBinding> bindings, Assertion assertion) {
-		val List<Assertion> polDefs = assertionLookup.collectCorrespondingAssertionsFromHierarchy(bindings, assertion)
+	private def EffectiveAssertion createAssertionEObject(List<AnyBinding> bindings, ServiceQualityKPI assertion) {
+		val List<ServiceQualityKPI> polDefs = assertionLookup.collectCorrespondingAssertionsFromHierarchy(bindings, assertion)
 		var EffectiveAssertion effAssertion = null 
 		switch (assertion) {
-			case AccuracyAssertion: 	effAssertion = new EffectiveAccuracyAssertion(assertion)
-			case AvailabilityAssertion: effAssertion = new EffectiveAvailabilityAssertion(assertion)
-			case CapacityAssertion: 	effAssertion = new EffectiveCapacityAssertion(assertion)
-			case CostAssertion: 		effAssertion = new EffectiveCostAssertion(assertion)
-			case LatencyAssertion: 		effAssertion = new EffectiveLatencyAssertion(assertion)
-			case PredefinedAssertion: 	effAssertion = new EffectivePredefinedAssertion(assertion)
-			case ReliabilityAssertion: 	effAssertion = new EffectiveReliabilityAssertion(assertion)
-			default: 					effAssertion = new EffectiveAssertion(assertion)
+			case Accuracy: 	 effAssertion = new EffectiveAccuracy(assertion)
+			case Availability: effAssertion = new EffectiveAvailability(assertion)
+			case Capacity: 	 effAssertion = new EffectiveCapacity(assertion)
+			case Latency: 	 effAssertion = new EffectiveLatency(assertion)
+			case MaxDownTime: effAssertion = new EffectiveMaxDownTime(assertion)
+			case org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Accuracy: 	 effAssertion = new EffectiveAccuracy(assertion)
+			case org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Availability: effAssertion = new EffectiveAvailability(assertion)
+			case org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Capacity: 	 effAssertion = new EffectiveCapacity(assertion)
+			case org.xkonnex.repo.dsl.bindingdsl.bindingDsl.Latency: 	 effAssertion = new EffectiveLatency(assertion)
+			case org.xkonnex.repo.dsl.bindingdsl.bindingDsl.MaxDownTime: effAssertion = new EffectiveMaxDownTime(assertion)
+			default: 				 effAssertion = new EffectiveAssertion(assertion)
 		}
 		effAssertion = featureInferrer.inferFeatureValues(polDefs.map[it as EObject], effAssertion) as EffectiveAssertion
 		effAssertion
 	}
-	
+		
 }

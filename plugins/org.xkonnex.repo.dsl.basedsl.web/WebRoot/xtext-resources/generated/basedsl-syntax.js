@@ -1,5 +1,5 @@
 define([], function() {
-	var keywords = "accepted|budgeting|default|denied|false|fixedVersion|frozen|import|license|location|majorVersion|maxVersion|minVersion|optional|owner|page|pending|responsible|section|specific|subject|true|type|version";
+	var keywords = "B|GB|MB|PB|TB|accepted|budgeting|days|default|denied|false|fixedVersion|frozen|h|import|kB|license|location|majorVersion|maxVersion|min|minVersion|months|ms|optional|owner|page|pending|responsible|s|section|specific|subject|true|type|version|weeks|years";
 	return {
 		id: "xtext.basedsl",
 		contentTypes: ["xtext/basedsl"],

@@ -13,7 +13,7 @@ grammar org.xkonnex.repo.dsl.bindingdsl.BindingDsl with org.xkonnex.repo.dsl.bas
 
 generate bindingDsl "http://www.xkonnex.org/repo/dsl/bindingdsl/BindingDsl"
 
-import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as  baseDsl
+import "http://www.xkonnex.org/repo/dsl/basedsl/BaseDsl" as baseDsl
 import "http://www.xkonnex.org/repo/dsl/servicedsl/ServiceDsl" as serviceDsl
 import "http://www.xkonnex.org/repo/dsl/moduledsl/ModuleDsl" as moduleDsl
 import "http://www.xkonnex.org/repo/dsl/environmentdsl/EnvironmentDsl" as environmentDsl
@@ -60,20 +60,16 @@ ModuleBinding:
 			resourceProtocol+=BindingProtocol+
 		'}')?
 		
-		('default-policies' '{'
-			policies+=Policy*
+		('policies' '{'
+			policies+=[slaDsl::Policy|QualifiedName]+
 		'}')?
-		('default-resource-policies' '{'
-			resourcePolicies+=Policy*
+		('service-quality-assertions' '{'
+			assertions+=[slaDsl::ServiceQualityKPI|QualifiedName]*
+			inlineAssertions+=ServiceQualityKPI*
 		'}')?
-		
-		('default-assertions' '{'
-			assertions+=Assertion+
-		'}')?
-		('default-resource-assertions' '{'
-			resourceAssertions+=Assertion+
-		'}')?
-		
+		(('costs' '{'
+			costs=[slaDsl::Costs|QualifiedName]
+		'}') | (inlineCosts = Costs))?
 		serviceBindings+=ServiceBinding*
 		resourceBindings+=ResourceBinding*
 	'}'
@@ -96,11 +92,15 @@ ServiceBinding:
 			protocol+=BindingProtocol+
 		'}'
 		('policies' '{'
-			policies+=Policy*
+			policies+=[slaDsl::Policy|QualifiedName]*
 		'}')?
-		('assertions' '{'
-			assertions+=Assertion+
+		('service-quality-assertions' '{'
+			assertions+=[slaDsl::ServiceQualityKPI|QualifiedName]*
+			inlineAssertions+=ServiceQualityKPI*
 		'}')?
+		(('costs' '{'
+			costs=[slaDsl::Costs|QualifiedName]
+		'}') | (inlineCosts = Costs))?
 //		('references-module' referencedModule = ModuleRef)?
 		operation+=OperationBinding*
 	'}';
@@ -126,11 +126,15 @@ ResourceBinding:
 			protocol+=BindingProtocol+
 		'}'
 		('policies' '{'
-			policies+=Policy*
+			policies+=[slaDsl::Policy|QualifiedName]*
 		'}')?
-		('assertions' '{'
-			assertions+=Assertion+
+		('service-quality-assertions' '{'
+			assertions+=[slaDsl::ServiceQualityKPI|QualifiedName]*
+			inlineAssertions+=ServiceQualityKPI*
 		'}')?
+		(('costs' '{'
+			costs=[slaDsl::Costs|QualifiedName]
+		'}') | (inlineCosts = Costs))?
 //		('references-module' referencedModule = ModuleRef)?
 		operation+=OperationBinding*
 	'}';
@@ -155,12 +159,16 @@ ChannelBinding:
 			protocol+=BindingProtocol+
 		'}'
 		('policies' '{'
-			policies+=Policy*
+			policies+=[slaDsl::Policy|QualifiedName]*
 		'}')?
-		('assertions' '{'
-			assertions+=Assertion+
+		('service-quality-assertions' '{'
+			assertions+=[slaDsl::ServiceQualityKPI|QualifiedName]*
+			inlineAssertions+=ServiceQualityKPI*
 		'}')?
-		('references-module' referencedModule = ModuleRef)?
+		(('costs' '{'
+			costs=[slaDsl::Costs|QualifiedName]
+		'}') | (inlineCosts = Costs))?
+//		('references-module' referencedModule = ModuleRef)?
 	'}';
 
 
@@ -187,16 +195,21 @@ OperationBinding:
 			providerProtocol+=BindingProtocol+
 		'}')?
 		('policies' '{'
-			policies+=Policy*
+			policies+=[slaDsl::Policy|QualifiedName]*
 		'}')?
 		/** policies on the outbound endpoint of a channel on a bus, 
 		 * i.e. the protocol of the actual service provider 
 		 to which the call is delegated*/ 
 		('provider-policies' '{'
-			providerPolicies+=Policy*
+			providerPolicies+=[slaDsl::Policy|QualifiedName]*
 		'}')?
-		('assertions' '{'
-			assertions+=Assertion+
+		('service-quality-assertions' '{'
+			assertions+=[slaDsl::ServiceQualityKPI|QualifiedName]*
+			inlineAssertions+=ServiceQualityKPI*
+		'}')?
+		('costs' '{'
+			(costs=[slaDsl::Costs|QualifiedName])|
+			(inlineCosts=Costs)
 		'}')?
 	'}';
 
@@ -228,111 +241,87 @@ SOAP:
 	
 enum SOAPStyle: doclitwrap='document/literal-wrapped' | rpclit = 'rpc/literal' | rpcenc='rpc/encoded';
 enum SOAPTransport: HTTP | JMS | SMTP;
-enum SOAPProtocolVersion: SOAP11='SOAP-v1.1' | SOAP12 = 'SOAP-v1.2';
-
-
-// Policies
-
-/* Service policies */
-Policy: LogPolicy | SecurityPolicy;
-
-/* Logging policy to be applied to the services */
-LogPolicy: 'logging-policy' logPolicy=LogPolicyKind ;
-
-/* Security policy to be applied to the services */
-SecurityPolicy : AuthenticationPolicy | SigningPolicy | EncryptionPolicy;
-
-/* Policy, that defines how consumer are authenticated */
-AuthenticationPolicy : 
-	{AuthenticationPolicy}
-	'authn-policy' (name=ID)? (optional?='optional')? '{'
-		'auth-tokens' '{'
-			authTokens+=AuthToken+
-		'}'
-		'hash-algorithms' '{'
-			hashAlgorithms+=HashAlgorithm*
-		'}'
-		useNonce?='use-nonce'?
-		('issuer' issuer = STRING)?
-	'}';
-	
-/* How messages are signed, to verify their authenticity */
-SigningPolicy : 
-	{SigningPolicy} 
-	'signing-policy' '{'
-		('supported-algorithms' supportedSigningAlgorithms+=SigningAlgorithm+)?
-		('requires-algorithm' requiredSigningAlgorithm=SigningAlgorithm)?
-		('signed-message-parts' (signedParts+=MessagePartRef)(',' signedParts+=MessagePartRef)*)?
-	'}'
-;
+enum SOAPProtocolVersion: SOAP11='SOAP-v1.1' | SOAP12 = 'SOAP-v1.2';	
 
 MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpression=STRING)?;
 
 enum MessagePartRefKind: header | body | attachments | all | expression;
 
-
-/* How messages are encrypted */
-EncryptionPolicy : 
-	{EncryptionPolicy} 
-	'encryption-policy' '{'
-		('supported-algorithms' supportedCipherAlgorithms+=CipherAlgorithmKind+)?
-		('requires-algorithm' requiredCipherAlgorithm=CipherAlgorithmKind)?
-		('encrypted-message-parts' (encryptedParts+=MessagePartRef)(',' encryptedParts+=MessagePartRef)*)?
-	'}'
-;
-
-enum LogPolicyKind: none | header | all;
-
-/** A nonfunctional requirement claimed to be met */
-Assertion: AvailabilityAssertion | LatencyAssertion | CapacityAssertion | ReliabilityAssertion | CostAssertion | AccuracyAssertion | PredefinedAssertion;
-
-PredefinedAssertion: 'predefined-assertion' assertion=[slaDsl::Assertion|QualifiedName];
-
-AvailabilityAssertion:
-	{AvailabilityAssertion}
-	'availability-assertion' '{'
-		('availability' availability=STRING)? 
-		('mean-time-between-failure' mtbf=STRING)?
-		('mean-time-to-repair' mttr=STRING ('percentile' mttrPercentile=Percentile)?)?
-		('regular-down-times' regularDownTimes = STRING)?
-	'}'
-;
-
-LatencyAssertion:
-	'latency' latency=STRING 'percentile' percentile=Percentile
-;
-
-CapacityAssertion:
-	{CapacityAssertion}
-	'capacity-assertion' '{' 
-		('num-of-requests' requestNum=STRING 'per' timeUnit=STRING)?
-		('message-size' messageSize=STRING)?
-	'}'
-;
-
-ReliabilityAssertion:
-	'reliability-assertion' '{'
-		'message-exchange-reliability' reliability=ReliabilityKind
-		inOrderDelivery ?= 'in-order-delivery'?
-	'}'
-;
-
-enum ReliabilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
-CostAssertion:
-	'costs-assertion' '{'
-		'costs' costsAmount=STRING
-		'billed-per-unit' billedUnit=STRING
-	'}'
-;
-
-AccuracyAssertion:
-	'accuracy-assertion' '{'
-		'max-error-rate' maxErrorRate=STRING
-	'}'
-;
-
-
 EndpointQualifierRef:
 	'endpoint-qualifier' endpointQualifier=[semanticsDsl::Qualifier|QualifiedName]
 ;
+
+// for inlining of Service Quality KPIs
+
+ServiceQualityKPI returns slaDsl::ServiceQualityKPI: Availability | Throughput | Latency  | MaxDownTime | Capacity | Accuracy ;
+
+Availability : 
+	'availability' '{'
+		'percentage' percentage=Percentile
+		('mean-time-between-failure' mtbf=TimeSpan)?
+		('mean-time-to-repair' mttr=TimeSpan (mttrPercentile=Percentile)?)?
+		('regular-down-times' regularDownTimes = STRING)?
+		escalation = Escalation?
+		('penalty' penalty = STRING )?
+	'}';
+	
+Throughput:
+	'throughput' '{'
+		('requests'|'transactions') throughput = INT 'per' timeUnit=TimeUnit
+		('score-to-be-kept' score = STRING) 
+		escalation = Escalation?
+		('penalty' penalty = STRING )?
+	'}';
+
+Latency:
+	'latency' '{'
+		'max-call-latency' latency = TimeSpan
+		'percentile' percentile=Percentile
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}';
+	
+
+MaxDownTime:
+	'max-downtime' '{'
+		'duration' duration = TimeSpan 
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}';
+	
+Capacity:
+	{Capacity} 'capacity' '{'
+		('num-of-requests' requestNum=INT 'per' timeUnit=TimeUnit)?
+		('message-size' messageSize=INT byteUnit=BytesEnum)?
+		escalation = Escalation?
+		('penalty' penalty = STRING )?
+	'}'
+;
+
+Accuracy:
+	'accuracy' '{'
+		'max-error-rate' maxErrorRate=INT 'per' maxErrorRateTimeUnit=TimeUnit
+		escalation = Escalation?
+		('penalty' penalty = STRING )?
+	'}'
+;
+
+Costs returns slaDsl::Costs:
+	'costs' '{'
+		'amount' costsAmount=STRING
+		'billed-per-unit' billedUnit=STRING
+		('effort-accounting' effortAccounting = STRING )?
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}'
+;
+
+Escalation returns slaDsl::Escalation: 
+	'escalation' '{'
+		('cause' cause=STRING )?
+		'escalate-to' '{'
+			escalationTargets+=EmailOrUsername+
+		'}'
+		('procedure' procedure=STRING )?
+	'}';
 

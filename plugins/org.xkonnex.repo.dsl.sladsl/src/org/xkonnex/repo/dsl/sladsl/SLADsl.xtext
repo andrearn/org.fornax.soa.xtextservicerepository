@@ -18,11 +18,14 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 SlaModel:
-	agreements+=SLA*
-	assertions+=Assertion*;
+	'sla-namespace' name=QualifiedName '{'
+		imports += Import*
+		agreements += SLA*
+		serviceQualityProperties += ServiceQualityProperty*
+	'}';
 	
 SLA:
-	'service-level-agreement' name=QualifiedName (version=Version)? '{'
+	'service-level-agreement' name=ID (version=Version)? '{'
 			'effective-date' effectiveDate = (STRING|DATE) 
 			('effective-until' effectiveUntil = (STRING|DATE) )?
 			parties+=Party*
@@ -34,15 +37,15 @@ SLA:
 			('applies-to' '{'
 				appliesTo += AssetRef* 
 			'}')?
-			costs = Cost?
+			costs = Costs?
 			('service-quality' '{'
-				(serviceQualityProperties += ServiceQualityProperty)*
+				(serviceQualityKPIs += [ServiceQualityKPI|QualifiedName])*
 			'}'
-			)
+			)?
 			('data-security' '{'
 				('general-terms' dataSecProtClause = STRING)?
 				('security-requirements' '{' 
-					securityRequirements += SecurityRequirement*
+					securityRequirements += [SecurityPolicy|QualifiedName]*
 				'}')
 			'}'
 			)?
@@ -59,152 +62,7 @@ SLA:
 				subscriptions += EmailOrUsername*
 			'}')?
 	'}';
-	
-Assertion:
-	'service-level-assertions' name=QualifiedName '{'
-			('description' description = STRING )?
-			('restrictions' restrictions=STRING )?
-			'service-quality-assertions' '{'
-				(serviceQualityProperties += ServiceQualityAssertionProperty)*
-			'}'
-			('data-security-and-protection' '{'
-					('security-guaranties' '{' 
-						securityRequirements += SecurityRequirement*
-					'}')
-				'}'
-			)?
-			('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
-			('subscriptions' '{'
-				subscriptions += EmailOrUsername*
-			'}')?
-	'}';
 
-
-Cost:
-	'costs' '{'
-		'amount' costsAmount=STRING
-		'billed-per-unit' billedUnit=STRING
-		('effort-accounting' effortAccounting = STRING )?
-		(escalation = Escalation)?
-		('penalty' penalty = STRING )?
-	'}'
-;
-	
-ServiceQualityProperty : Availability | Throughput | Latency  | MaxDownTime | CapacityRequirement | AccuracyRequirement | ReliablityRequirement | LogRequirement;
-
-Availability : 
-	'availability' '{'
-		'availability' availability=STRING
-		('mean-time-between-failure' mtbf=STRING)?
-		('mean-time-to-repair' mttr=STRING (mttrPercentile=Percentile)?)?
-		('regular-down-times' regularDownTimes = STRING)?
-	'}';
-	
-Throughput:
-	'throughput' '{'
-		'throughput' definition = STRING 
-		'score-to-be-kept' score = STRING 
-		escalation = Escalation?
-		('penalty' penalty = STRING )?
-	'}';
-
-Latency:
-	'latency' '{'
-		'latency' latency=STRING
-		'percentile' percentile=Percentile
-		(escalation = Escalation)?
-		('penalty' penalty = STRING )?
-	'}';
-	
-	
-MaxDownTime:
-	'max-downtime' '{'
-		'duration' definition = STRING 
-		(escalation = Escalation)?
-		('penalty' penalty = STRING )?
-	'}';
-	
-CapacityRequirement:
-	'capacity' '{'
-		{CapacityRequirement}
-		('num-of-requests' requestNum=STRING 'per' timeUnit=STRING)?
-		('message-size' messageSize=STRING)?
-		escalation = Escalation?
-		('penalty' penalty = STRING )?
-	'}'
-;
-
-ReliablityRequirement:
-	
-	'message-exchange-reliability' '{' 
-		reliability=ReliablilityKind
-		(inOrderDelivery ?= 'in-order-delivery')?
-	'}'
-;
-
-AccuracyRequirement:
-	'accuracy' '{'
-		'max-error-rate' maxErrorRate=STRING
-		escalation = Escalation?
-		('penalty' penalty = STRING )?
-	'}'
-;
-
-LogRequirement: 'logging' '{'
-	'message-log-level' logLevel=LogRequirementKind
-	'additional-logging-requirements' additionalLoggingRequirement=STRING
-;
-
-/* Security policy to be applied to the services */
-SecurityRequirement : AuthenticationRequirement | SigningRequirement | EncryptionRequirement;
-
-/* Requirement, that defines how consumer are authenticated */
-AuthenticationRequirement : 
-	{AuthenticationRequirement}
-	'authentication-procedure' (optional?='optional')? '{'
-		'auth-tokens' '{'
-			authTokens+=AuthToken+
-		'}'
-		'hash-algorithms' '{'
-			hashAlgorithms+=HashAlgorithm*
-		'}'
-		useNonce?='use-nonce'?
-		('issuer' issuer = STRING)?
-	'}';
-	
-//AuthToken : (optional?='optional')? kind=AuthTokenKind ;
-
-//HashAlgorithm : (optional?='optional')? (useBase64?="Base64-encoded")? kind=HashAlgKind ;
-
-//enum HashAlgKind : MD5 | SHA1 | SHA256 | RSA | PlainText;
-
-/* How messages are signed, to verify their authenticity */
-SigningRequirement : 
-	{SigningRequirement} 
-	'signing-policy' '{'
-		('supported-algorithms' supportedSigningAlgorithms+=SigningAlgorithm+)?
-		('requires-algorithm' requiredSigningAlgorithm=SigningAlgorithm)?
-		('signed-message-parts' (signedParts+=MessagePartRef)(',' signedParts+=MessagePartRef)*)?
-	'}'
-;
-
-MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpression=STRING)?;
-
-enum MessagePartRefKind: header | body | attachments | all | expression;
-
-/* How messages are encrypted */
-EncryptionRequirement : 
-	{EncryptionRequirement} 
-	'encryption-policy' '{'
-		('supported-algorithms' supportedCipherAlgorithms+=CipherAlgorithmKind+)?
-		('requires-algorithm' requiredCipherAlgorithm=CipherAlgorithmKind)?
-		('encrypted-message-parts' (encryptedParts+=MessagePartRef)(',' encryptedParts+=MessagePartRef)*)?
-	'}'
-;
-
-enum LogRequirementKind: none | header | all;
-
-enum ReliablilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
 
 PriorityDeclaration: 'priority' name=ID 'description' description=STRING ;
 
@@ -265,54 +123,128 @@ Report:
 	'}';
 	
 	
-	
-ServiceQualityAssertionProperty : AvailabilityAssertion | ThroughputAssertion | LatencyAssertion  | MaxDownTimeAssertion | CapacityAssertion | AccuracyAssertion | LogAssertion;
+ServiceQualityProperty :  ServiceQualityKPI | Policy | Costs;
 
-AvailabilityAssertion : 
-	'availability-assertion' '{'
-		'availability' availability=STRING
-		('mean-time-between-failure' mtbf=STRING)?
-		('mean-time-to-repair' mttr=STRING (mttrPercentile=Percentile)?)?
+ServiceQualityKPI : Availability | Throughput | Latency  | MaxDownTime | Capacity | Accuracy ;
+
+Availability : 
+	'availability' name=ID '{'
+		'percentage' percentage=Percentile
+		('mean-time-between-failure' mtbf=TimeSpan)?
+		('mean-time-to-repair' mttr=TimeSpan (mttrPercentile=Percentile)?)?
 		('regular-down-times' regularDownTimes = STRING)?
+		escalation = Escalation?
+		('penalty' penalty = STRING )?
 	'}';
 	
-ThroughputAssertion:
-	'throughput-assertion' '{'
-		'throughput' definition = STRING 
-		'score-to-be-kept' score = STRING 
+Throughput:
+	'throughput' name=ID '{'
+		('requests'|'transactions') throughput = INT 'per' timeUnit=TimeUnit
+		('score-to-be-kept' score = STRING) 
+		escalation = Escalation?
+		('penalty' penalty = STRING )?
 	'}';
 
-LatencyAssertion:
-	'latency-assertion' '{'
-		'latency' latency=STRING
+Latency:
+	'latency' name=ID '{'
+		'max-call-latency' latency = TimeSpan
 		'percentile' percentile=Percentile
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
 	'}';
 	
 	
-MaxDownTimeAssertion:
-	'max-downtime-assertion' '{'
-		'duration' definition = STRING 
+MaxDownTime:
+	'max-downtime' name=ID '{'
+		'duration' duration = TimeSpan 
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
 	'}';
 	
-CapacityAssertion:
-	'capacity-assertion' '{'
-		{CapacityAssertion}
-		('num-of-requests' requestNum=STRING 'per' timeUnit=STRING)?
-		('message-size' messageSize=STRING)?
+Capacity:
+	'capacity' name=ID '{'
+		('num-of-requests' requestNum=INT 'per' timeUnit=TimeUnit)?
+		('message-size' messageSize=INT byteUnit=BytesEnum)?
+		escalation = Escalation?
+		('penalty' penalty = STRING )?
 	'}'
 ;
 
-AccuracyAssertion:
-	'accuracy-assertion' '{'
-		'max-error-rate' maxErrorRate=STRING
+Accuracy:
+	'accuracy' name=ID '{'
+		'max-error-rate' maxErrorRate=INT 'per' maxErrorRateTimeUnit=TimeUnit
+		escalation = Escalation?
+		('penalty' penalty = STRING )?
 	'}'
 ;
 
-LogAssertion: 'logging' '{'
-	'message-log-level' logLevel=LogRequirementKind
-	'additional-logging-requirements' additionalLoggingRequirement=STRING
+Costs:
+	'costs' name=ID '{'
+		'amount' costsAmount=STRING
+		'billed-per-unit' billedUnit=STRING
+		('effort-accounting' effortAccounting = STRING )?
+		(escalation = Escalation)?
+		('penalty' penalty = STRING )?
+	'}'
+;
+
+// Policies
+
+/* Service policies */
+Policy: LogPolicy | SecurityPolicy | ReliabilityPolicy;
+
+LogPolicy: 'logging-policy' name=ID '{'
+	'logged-message-parts' loggedMessageParts+=MessagePartRef+
+	('additional-logging-requirements' additionalLoggingRequirement=STRING)?
+'}'	
 ;
 
 /* Security policy to be applied to the services */
-SecurityAssertion : AuthenticationRequirement | SigningRequirement | EncryptionRequirement;
+SecurityPolicy : AuthenticationPolicy | SigningPolicy | EncryptionPolicy;
 
+/* Policy, that defines how consumer are authenticated */
+AuthenticationPolicy : 
+	'authn-policy' name=ID (optional?='optional')? '{'
+		'auth-tokens' '{'
+			authTokens+=AuthToken+
+		'}'
+		'hash-algorithms' '{'
+			hashAlgorithms+=HashAlgorithm*
+		'}'
+		useNonce?='use-nonce'?
+		('issuer' issuer = STRING)?
+	'}';
+	
+/* How messages are signed, to verify their authenticity */
+SigningPolicy : 
+	'signing-policy' name=ID '{'
+		('supported-algorithms' supportedSigningAlgorithms+=SigningAlgorithm+)?
+		('requires-algorithm' requiredSigningAlgorithm=SigningAlgorithm)?
+		('signed-message-parts' (signedParts+=MessagePartRef)(',' signedParts+=MessagePartRef)*)?
+	'}'
+;
+
+MessagePartRef: messagePartRef = MessagePartRefKind ('expression' partRefExpression=STRING)?;
+
+enum MessagePartRefKind: none | header | body | attachments | all | expression;
+
+/* How messages are encrypted */
+EncryptionPolicy : 
+	'encryption-policy' name=ID '{'
+		('supported-algorithms' supportedCipherAlgorithms+=CipherAlgorithmKind+)?
+		('requires-algorithm' requiredCipherAlgorithm=CipherAlgorithmKind)?
+		('encrypted-message-parts' (encryptedParts+=MessagePartRef)(',' encryptedParts+=MessagePartRef)*)?
+	'}'
+;
+
+ReliabilityPolicy:
+	
+	'message-exchange-reliability' name=ID '{' 
+		reliability=ReliabilityKind
+		(inOrderDelivery ?= 'in-order-delivery')?
+	'}'
+;
+enum ReliabilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
+	
+	
+	

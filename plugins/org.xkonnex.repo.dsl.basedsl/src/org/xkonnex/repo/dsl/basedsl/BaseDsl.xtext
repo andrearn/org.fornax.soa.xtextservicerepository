@@ -217,11 +217,13 @@ License:
 	'}')?
 ;
 
-Percentile: {Percentile} value=(Double|IntAsDouble) '%';
-
 Double returns ecore::EDouble: INT'.'INT;
 IntAsDouble returns ecore::EDouble: INT;
+Percentile returns ecore::EDouble: Double|IntAsDouble '%';
+TimeSpan: duration=IntAsDouble|Double unit=TimeUnit;
 
+enum TimeUnit returns TimeUnit: years|months|weeks|days|h|min|s|ms;
+enum BytesEnum returns BytesEnum: B|kB|MB|GB|TB|PB;
 fragment DefaultValue: 'default' defaultValue=STRING;
 
 terminal DATE: ('0'..'9')('0'..'9')('0'..'9')('0'..'9')'-'('0'..'1')('0'..'9')'-'('0'..'3')('0'..'9');

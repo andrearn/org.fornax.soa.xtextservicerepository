@@ -21,10 +21,9 @@ import org.xkonnex.repo.dsl.basedsl.ext.crypto.ICipherAlgoritm;
 import org.xkonnex.repo.dsl.basedsl.ext.crypto.IHashAlgorithm;
 import org.xkonnex.repo.dsl.basedsl.ext.crypto.ISigningAlgorithm;
 import org.xkonnex.repo.dsl.basedsl.ext.token.IAuthTokenKind;
-import org.xkonnex.repo.dsl.sladsl.sLADsl.AuthenticationRequirement;
-import org.xkonnex.repo.dsl.sladsl.sLADsl.EncryptionRequirement;
-import org.xkonnex.repo.dsl.sladsl.sLADsl.SigningRequirement;
-import org.xkonnex.repo.dsl.sladsl.ui.contentassist.AbstractSLADslProposalProvider;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.AuthenticationPolicy;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.EncryptionPolicy;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.SigningPolicy;
 
 import com.google.inject.Inject;
 /**
@@ -42,10 +41,10 @@ public class SLADslProposalProvider extends AbstractSLADslProposalProvider {
 	private DateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
 	
 	@Override
-	public void completeAuthenticationRequirement_AuthTokens(EObject model,
+	public void completeAuthenticationPolicy_AuthTokens(EObject model,
 			Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof AuthenticationRequirement) {
+		if (model instanceof AuthenticationPolicy) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType protocolType = typeProvider.findTypeByName(IAuthTokenKind.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(protocolType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
@@ -53,10 +52,10 @@ public class SLADslProposalProvider extends AbstractSLADslProposalProvider {
 	}
 	
 	@Override
-	public void completeAuthenticationRequirement_HashAlgorithms(EObject model,
+	public void completeAuthenticationPolicy_HashAlgorithms(EObject model,
 			Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof AuthenticationRequirement) {
+		if (model instanceof AuthenticationPolicy) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType hashType = typeProvider.findTypeByName(IHashAlgorithm.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(hashType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
@@ -64,10 +63,10 @@ public class SLADslProposalProvider extends AbstractSLADslProposalProvider {
 	}
 	
 	@Override
-	public void completeEncryptionRequirement_RequiredCipherAlgorithm(
+	public void completeEncryptionPolicy_RequiredCipherAlgorithm(
 			EObject model, Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof EncryptionRequirement) {
+		if (model instanceof EncryptionPolicy) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType cipherType = typeProvider.findTypeByName(ICipherAlgoritm.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(cipherType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
@@ -75,10 +74,10 @@ public class SLADslProposalProvider extends AbstractSLADslProposalProvider {
 	}
 	
 	@Override
-	public void completeEncryptionRequirement_SupportedCipherAlgorithms(
+	public void completeEncryptionPolicy_SupportedCipherAlgorithms(
 			EObject model, Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof EncryptionRequirement) {
+		if (model instanceof EncryptionPolicy) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType cipherType = typeProvider.findTypeByName(ICipherAlgoritm.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(cipherType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
@@ -86,10 +85,10 @@ public class SLADslProposalProvider extends AbstractSLADslProposalProvider {
 	}
 
 	@Override
-	public void completeSigningRequirement_RequiredSigningAlgorithm(
+	public void completeSigningPolicy_RequiredSigningAlgorithm(
 			EObject model, Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof SigningRequirement) {
+		if (model instanceof SigningPolicy) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType signingType = typeProvider.findTypeByName(ISigningAlgorithm.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(signingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
@@ -97,10 +96,10 @@ public class SLADslProposalProvider extends AbstractSLADslProposalProvider {
 	}
 	
 	@Override
-	public void completeSigningRequirement_SupportedSigningAlgorithms(
+	public void completeSigningPolicy_SupportedSigningAlgorithms(
 			EObject model, Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
-		if (model instanceof SigningRequirement) {
+		if (model instanceof SigningPolicy) {
 			IJvmTypeProvider typeProvider = typeScopeProvider.getTypeProvider(model.eResource().getResourceSet());
 			JvmType signingType = typeProvider.findTypeByName(ISigningAlgorithm.class.getCanonicalName());
 			typeProposalProvider.createSubTypeProposals(signingType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);

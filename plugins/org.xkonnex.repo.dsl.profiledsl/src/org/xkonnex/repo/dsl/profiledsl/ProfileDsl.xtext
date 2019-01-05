@@ -306,7 +306,7 @@ Class:
 	'class' name=ID ('extends' superClass=ClassRef)? '{'
 		'metadata' '{'
 			version=Version  
-			('replaces' replaces=EnumRef )?
+			('replaces' replaces=ClassRef )?
 			'lifecycle-state' state=[LifecycleState | QualifiedName]
 			(governanceDecisions+=GovernanceDecision)*
 		'}'

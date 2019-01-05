@@ -3,8 +3,8 @@ package org.xkonnex.repo.dsl.bindingdsl.model.policy;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.SigningAlgorithm;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.MessagePartRef;
-import org.xkonnex.repo.dsl.bindingdsl.bindingDsl.SigningPolicy;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.MessagePartRef;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.SigningPolicy;
 
 public class EffectiveSigningPolicy extends EffectivePolicy implements
 		SigningPolicy {
@@ -36,6 +36,18 @@ public class EffectiveSigningPolicy extends EffectivePolicy implements
 	public EList<MessagePartRef> getSignedParts() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String getName() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setName(String value) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
