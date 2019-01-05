@@ -130,8 +130,8 @@ ServiceQualityKPI : Availability | Throughput | Latency  | MaxDownTime | Capacit
 Availability : 
 	'availability' name=ID '{'
 		'percentage' percentage=Percentile
-		('mean-time-between-failure' mtbf=TimeSpan)?
-		('mean-time-to-repair' mttr=TimeSpan (mttrPercentile=Percentile)?)?
+		('mean-time-between-failure' mtbf=Duration)?
+		('mean-time-to-repair' mttr=Duration (mttrPercentile=Percentile)?)?
 		('regular-down-times' regularDownTimes = STRING)?
 		escalation = Escalation?
 		('penalty' penalty = STRING )?
@@ -147,7 +147,7 @@ Throughput:
 
 Latency:
 	'latency' name=ID '{'
-		'max-call-latency' latency = TimeSpan
+		'max-call-latency' latency = Duration
 		'percentile' percentile=Percentile
 		(escalation = Escalation)?
 		('penalty' penalty = STRING )?
@@ -156,7 +156,7 @@ Latency:
 	
 MaxDownTime:
 	'max-downtime' name=ID '{'
-		'duration' duration = TimeSpan 
+		'duration' duration = Duration 
 		(escalation = Escalation)?
 		('penalty' penalty = STRING )?
 	'}';

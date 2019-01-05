@@ -1,15 +1,15 @@
 package org.xkonnex.repo.dsl.bindingdsl.model.assertion;
 
 import org.eclipse.emf.ecore.EObject;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.TimeSpan;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Duration;
 import org.xkonnex.repo.dsl.sladsl.sLADsl.Availability;
 
 public class EffectiveAvailability extends EffectiveAssertion
 		implements Availability {
 
 	private double percentage;
-	private TimeSpan mtbf;
-	private TimeSpan mttr;
+	private Duration mtbf;
+	private Duration mttr;
 	private double mttrPercentile;
 	private String regularDownTimes;
 
@@ -28,22 +28,22 @@ public class EffectiveAvailability extends EffectiveAssertion
 	}
 
 	@Override
-	public TimeSpan getMtbf() {
+	public Duration getMtbf() {
 		return mtbf;
 	}
 
 	@Override
-	public void setMtbf(TimeSpan value) {
+	public void setMtbf(Duration value) {
 		this.mtbf = value;
 	}
 
 	@Override
-	public TimeSpan getMttr() {
+	public Duration getMttr() {
 		return mttr;
 	}
 
 	@Override
-	public void setMttr(TimeSpan value) {
+	public void setMttr(Duration value) {
 		this.mttr = value;
 	}
 

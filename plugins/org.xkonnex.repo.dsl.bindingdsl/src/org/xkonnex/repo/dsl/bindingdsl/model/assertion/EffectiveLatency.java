@@ -1,14 +1,14 @@
 package org.xkonnex.repo.dsl.bindingdsl.model.assertion;
 
 import org.eclipse.emf.ecore.EObject;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.TimeSpan;
+import org.xkonnex.repo.dsl.basedsl.baseDsl.Duration;
 import org.xkonnex.repo.dsl.sladsl.sLADsl.Escalation;
 import org.xkonnex.repo.dsl.sladsl.sLADsl.Latency;
 
 public class EffectiveLatency extends EffectiveAssertion implements
 		Latency {
 
-	private TimeSpan latency;
+	private Duration latency;
 	private double percentile;
 	private Escalation escalation;
 	private String penalty;
@@ -18,12 +18,12 @@ public class EffectiveLatency extends EffectiveAssertion implements
 	}
 
 	@Override
-	public TimeSpan getLatency() {
+	public Duration getLatency() {
 		return latency;
 	}
 
 	@Override
-	public void setLatency(TimeSpan value) {
+	public void setLatency(Duration value) {
 		this.latency = value;
 	}
 
@@ -35,26 +35,6 @@ public class EffectiveLatency extends EffectiveAssertion implements
 	@Override
 	public void setPercentile(double value) {
 		this.percentile = value;
-	}
-
-	@Override
-	public Escalation getEscalation() {
-		return escalation;
-	}
-
-	@Override
-	public void setEscalation(Escalation value) {
-		this.escalation = value;
-	}
-
-	@Override
-	public String getPenalty() {
-		return penalty;
-	}
-
-	@Override
-	public void setPenalty(String value) {
-		this.penalty = value;
 	}
 
 }

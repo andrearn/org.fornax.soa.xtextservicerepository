@@ -219,8 +219,8 @@ License:
 
 Double returns ecore::EDouble: INT'.'INT;
 IntAsDouble returns ecore::EDouble: INT;
-Percentile returns ecore::EDouble: Double|IntAsDouble '%';
-TimeSpan: duration=IntAsDouble|Double unit=TimeUnit;
+Percentile returns ecore::EDouble: (Double|IntAsDouble) '%';
+Duration: duration=(IntAsDouble|Double) unit=TimeUnit;
 
 enum TimeUnit returns TimeUnit: years|months|weeks|days|h|min|s|ms;
 enum BytesEnum returns BytesEnum: B|kB|MB|GB|TB|PB;

@@ -258,8 +258,8 @@ ServiceQualityKPI returns slaDsl::ServiceQualityKPI: Availability | Throughput |
 Availability : 
 	'availability' '{'
 		'percentage' percentage=Percentile
-		('mean-time-between-failure' mtbf=TimeSpan)?
-		('mean-time-to-repair' mttr=TimeSpan (mttrPercentile=Percentile)?)?
+		('mean-time-between-failure' mtbf=Duration)?
+		('mean-time-to-repair' mttr=Duration (mttrPercentile=Percentile)?)?
 		('regular-down-times' regularDownTimes = STRING)?
 		escalation = Escalation?
 		('penalty' penalty = STRING )?
@@ -275,7 +275,7 @@ Throughput:
 
 Latency:
 	'latency' '{'
-		'max-call-latency' latency = TimeSpan
+		'max-call-latency' latency = Duration
 		'percentile' percentile=Percentile
 		(escalation = Escalation)?
 		('penalty' penalty = STRING )?
@@ -284,7 +284,7 @@ Latency:
 
 MaxDownTime:
 	'max-downtime' '{'
-		'duration' duration = TimeSpan 
+		'duration' duration = Duration 
 		(escalation = Escalation)?
 		('penalty' penalty = STRING )?
 	'}';
