@@ -3,9 +3,9 @@
  */
 package org.xkonnex.repo.dsl.basedsl.ide
 
-
 /**
  * Use this class to register ide components.
  */
 class BaseDslIdeModule extends AbstractBaseDslIdeModule {
+
 }

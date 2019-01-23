@@ -21,8 +21,8 @@
       <genEnumLiterals ecoreEnumLiteral="SLADsl.ecore#//ReliabilityKind/BEST_EFFORT"/>
     </genEnums>
     <genClasses ecoreClass="SLADsl.ecore#//SlaModel">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SlaModel/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SlaModel/imports"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SlaModel/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SlaModel/agreements"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SlaModel/serviceQualityProperties"/>
     </genClasses>
@@ -39,7 +39,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/priorities"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/appliesTo"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/costs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/inlineCosts"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/serviceQualityKPIs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/inlineServiceQualityKPIs"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/dataSecProtClause"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference SLADsl.ecore#//SLA/securityRequirements"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute SLADsl.ecore#//SLA/additionalServices"/>

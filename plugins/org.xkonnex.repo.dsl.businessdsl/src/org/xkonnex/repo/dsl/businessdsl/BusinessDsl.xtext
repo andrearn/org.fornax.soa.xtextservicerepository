@@ -24,7 +24,7 @@ BusinessModel :
 		
 Organization :
 	'org' name=QualifiedName '{'
-		('competence' competence=STRING)?
+		('competence' competence=(TEXT|STRING))?
 		('head' bizLead=EmailOrUsername)?
 		(businessFunctions+=BusinessFunction)*
 		(subOrganizations+=[Organization|QualifiedName])*
@@ -50,8 +50,8 @@ Domain :
  */
 BusinessFunction :
 	'business-function' name=ID '{' 
-		'short-description' shortDescription=STRING
-		('description' description=STRING)?
+		'short-description' shortDescription=(TEXT|STRING)
+		('description' description=(TEXT|STRING))?
 		additionalInfo=AdditionalInformation?
 
 		('uses-capability' '{'
@@ -70,7 +70,7 @@ BusinessFunction :
  */
 CapabilityGroup :
 	'capability-group' name=ID '{'
-		'description' description = STRING
+		'description' description = (TEXT|STRING)
 		additionalInfo=AdditionalInformation?
 		(capabilities+=Capability)*
 		(capabilityGroups+=CapabilityGroup)*
@@ -99,10 +99,10 @@ Capability: SimpleCapability | CapabilityVariant;
 SimpleCapability :
 	(external?='external')? 'capability' name=ID '{'
 		version=Version
-		'short-description' shortDescription=STRING
-		('description' description=STRING)?
+		'short-description' shortDescription=(TEXT|STRING)
+		('description' description=(TEXT|STRING))?
 		'automation-level' automationLevel=CapabilityAutomationLevel
-		('business-value' businessValue=STRING)
+		('business-value' businessValue=(TEXT|STRING))
 		additionalInfo=AdditionalInformation?
 		(	
 			'inputs' '{'
@@ -132,10 +132,10 @@ SimpleCapability :
 CapabilityVariant:
 	(external?='external')? 'capability-variant' name=ID 'based-on' basedOnCapabilty=[Capability|QualifiedName] '{'
 		version=Version
-		'short-description' shortDescription=STRING
-		('description' description=STRING)?
+		'short-description' shortDescription=(TEXT|STRING)
+		('description' description=(TEXT|STRING))?
 		'automation-level' automationLevel+=CapabilityAutomationLevel
-		('business-value' businessValue=STRING)
+		('business-value' businessValue=(TEXT|STRING))
 		additionalInfo=AdditionalInformation?
 		('adding' '{'
 			(additions += CapabilityVariation)+
@@ -170,13 +170,13 @@ CapabilityVariant:
 
 CapabilityVariation:
  	varying=CapabilityRef ('{'
-		'context' context=STRING
+		'context' context=(TEXT|STRING)
 	'}')?
  	;
  	
 CapabilityReplacement:
  	varying=CapabilityRef 'with' replacement=CapabilityRef ('{'
-		'context' context=STRING
+		'context' context=(TEXT|STRING)
 	'}')?
  	;
  	
@@ -189,12 +189,12 @@ enum CapabilityAutomationLevel: automated | semiAutomated = 'semi-automated' | h
  * The input of a capability
  */
 Input: 
-	'input' description=STRING
+	'input' description=(TEXT|STRING)
 ;
 
 /**
  * The outcome of a capability
  */
 Outcome:
-	'outcome' description=STRING
+	'outcome' description=(TEXT|STRING)
 ;

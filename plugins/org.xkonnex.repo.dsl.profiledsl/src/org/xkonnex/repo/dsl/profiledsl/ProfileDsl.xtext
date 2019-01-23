@@ -384,9 +384,9 @@ TypeVersionEvolution:
 	{TypeVersionEvolution}
 	'version-evolution' '{'
 		(extensibleProperties?=('extensible-properties') )?
-		(('extensible-XML-clause') extensibleXMLClause = STRING )?
+		(('extensible-XML-clause') extensibleXMLClause = (TEXT|STRING) )?
 		(extensibleXMLAttributes?=('extensible-XML-attributes') )?
-		(('extensible-XML-attribute-clause') extensibleXMLAttributeClause = STRING)?
+		(('extensible-XML-attribute-clause') extensibleXMLAttributeClause = (TEXT|STRING))?
 		(extensibleSubTypes?=('extensible-sub-types'))?
 		policies+=VersionEvolutionPolicy*
 	'}'
@@ -424,9 +424,9 @@ ServiceVersionEvolution:
 	{ServiceVersionEvolution}
 	'version-evolution' '{'
 		(extensibleParameters?=('extensible-parameters'|'extendible-parameters') )?
-		(('extensible-XML-clause'|'extendible-XML-clause') extensibleXMLClause = STRING )?
+		(('extensible-XML-clause'|'extendible-XML-clause') extensibleXMLClause = (TEXT|STRING) )?
 		(extensibleXMLAttributes?=('extensible-XML-attributes'|'extendible-XML-attributes') )?
-		(('extensible-XML-attribute-clause'|'extendible-XML-attribute-clause') extensibleXMLAttributeClause = STRING)?
+		(('extensible-XML-attribute-clause'|'extendible-XML-attribute-clause') extensibleXMLAttributeClause = (TEXT|STRING))?
 		policies+=VersionEvolutionPolicy*
 	'}'
 ;

@@ -257,20 +257,20 @@ ServiceQualityKPI returns slaDsl::ServiceQualityKPI: Availability | Throughput |
 
 Availability : 
 	'availability' '{'
-		'percentage' percentage=Percent
+		percentage=Percent
 		('mean-time-between-failure' mtbf=Duration)?
 		('mean-time-to-repair' mttr=Duration (mttrPercentile=Percent)?)?
-		('regular-down-times' regularDownTimes = STRING)?
+		('regular-down-times' regularDownTimes = (TEXT|STRING))?
 		escalation = Escalation?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}';
 	
 Throughput:
 	'throughput' '{'
 		('requests'|'transactions') throughput = INT 'per' timeUnit=TimeUnit
-		('score-to-be-kept' score = STRING) 
+		('score-to-be-kept' score = (TEXT|STRING)) 
 		escalation = Escalation?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}';
 
 Latency:
@@ -278,7 +278,7 @@ Latency:
 		'max-call-latency' latency = Duration
 		'percentile' percentile=Percent
 		(escalation = Escalation)?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}';
 	
 
@@ -286,7 +286,7 @@ MaxDownTime:
 	'max-downtime' '{'
 		'duration' duration = Duration 
 		(escalation = Escalation)?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}';
 	
 Capacity:
@@ -294,7 +294,7 @@ Capacity:
 		('num-of-requests' requestNum=INT 'per' timeUnit=TimeUnit)?
 		('message-size' messageSize=INT byteUnit=BytesEnum)?
 		escalation = Escalation?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}'
 ;
 
@@ -302,26 +302,26 @@ Accuracy:
 	'accuracy' '{'
 		'max-error-rate' maxErrorRate=INT 'per' maxErrorRateTimeUnit=TimeUnit
 		escalation = Escalation?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}'
 ;
 
 Costs returns slaDsl::Costs:
 	'costs' '{'
-		'amount' costsAmount=STRING
-		'billed-per-unit' billedUnit=STRING
-		('effort-accounting' effortAccounting = STRING )?
+		'amount' costsAmount=(TEXT|STRING)
+		'billed-per-unit' billedUnit=(TEXT|STRING)
+		('effort-accounting' effortAccounting = (TEXT|STRING) )?
 		(escalation = Escalation)?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}'
 ;
 
 Escalation returns slaDsl::Escalation: 
 	'escalation' '{'
-		('cause' cause=STRING )?
+		('cause' cause=(TEXT|STRING) )?
 		'escalate-to' '{'
 			escalationTargets+=EmailOrUsername+
 		'}'
-		('procedure' procedure=STRING )?
+		('procedure' procedure=(TEXT|STRING) )?
 	'}';
 

@@ -67,7 +67,7 @@ ModuleKind : type=[jvmTypes::JvmType|QualifiedName];
 Feature:
 	(nonFunctional?='non-functional')? 'feature' name=ID '{'
 		('use-cases' (useCase+=STRING)+ )?
-		('description' description=STRING )?
+		('description' description=(TEXT|STRING) )?
 		(additionalInfo=AdditionalInformation)?
 		('uses-capability' '{'
 			(usedCapabilities+=CapabilityRef)+ 

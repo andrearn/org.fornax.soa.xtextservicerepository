@@ -311,10 +311,28 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 	}
 	
 	@Override
+	public void complete_TEXT(EObject model, RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("`Multiline text`" , context));
+	}
+	
+	@Override
 	public void complete_DATE(EObject model, RuleCall ruleCall,
 			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		String proposal = dateFormat.format(new Date());
 		acceptor.accept(createCompletionProposal(proposal , context));
+	}
+	
+	@Override
+	public void completePercent_Value(EObject model, org.eclipse.xtext.Assignment assignment,
+			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("99.9" , context));
+	}
+	
+	@Override
+	public void complete_Percent(EObject model, RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("99.9%" , context));
 	}
 	
 	@Override

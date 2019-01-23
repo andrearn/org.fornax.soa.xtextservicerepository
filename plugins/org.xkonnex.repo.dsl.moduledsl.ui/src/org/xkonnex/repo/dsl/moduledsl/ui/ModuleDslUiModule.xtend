@@ -5,9 +5,9 @@ package org.xkonnex.repo.dsl.moduledsl.ui
 
 import org.eclipse.ui.plugin.AbstractUIPlugin
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration
-import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator
-import org.xkonnex.repo.dsl.basedsl.ui.highlighting.BaseDslHighLightingConfiguration
-import org.xkonnex.repo.dsl.moduledsl.ui.highlighting.ModuleDslSemanticHighlightingCalculator
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator
+import org.xkonnex.repo.dsl.basedsl.ui.highlighting.BaseDslHighlightingConfiguration
+import org.xkonnex.repo.dsl.moduledsl.ide.highlighting.ModuleDslSemanticHighlightingCalculator
 
 /** 
  * Use this class to register components to be used within the IDE.
@@ -17,11 +17,11 @@ class ModuleDslUiModule extends org.xkonnex.repo.dsl.moduledsl.ui.AbstractModule
 		super(plugin)
 	}
 
-	def Class<? extends ISemanticHighlightingCalculator> bindSemanticHighlightingCalculator() {
+	def Class<? extends ISemanticHighlightingCalculator> bindIdeSemanticHighlightingCalculator() {
 		return ModuleDslSemanticHighlightingCalculator
 	}
 
-	def Class<? extends IHighlightingConfiguration> bindSemanticConfig() {
-		return BaseDslHighLightingConfiguration
+	def Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration () {
+		return typeof(BaseDslHighlightingConfiguration)	
 	}
 }

@@ -4,15 +4,17 @@
 package org.xkonnex.repo.dsl.solutiondsl.ui
 
 import org.eclipse.ui.plugin.AbstractUIPlugin
+import org.eclipse.xtext.ide.editor.syntaxcoloring.ISemanticHighlightingCalculator
+import org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration
-import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator
-import org.xkonnex.repo.dsl.basedsl.ui.highlighting.BaseDslHighLightingConfiguration
-import org.xkonnex.repo.dsl.solutiondsl.ui.highlighting.SolutionDslSemanticHighlightingCalculator
+import org.xkonnex.repo.dsl.basedsl.ui.highlighting.BaseDslAntlrTokenToAttributeIdMapper
+import org.xkonnex.repo.dsl.basedsl.ui.highlighting.BaseDslHighlightingConfiguration
+import org.xkonnex.repo.dsl.solutiondsl.ide.highlighting.SolutionDslSemanticHighlightingCalculator
 
 /** 
  * Use this class to register components to be used within the IDE.
  */
-class SolutionDslUiModule extends org.xkonnex.repo.dsl.solutiondsl.ui.AbstractSolutionDslUiModule {
+class SolutionDslUiModule extends AbstractSolutionDslUiModule {
 	new(AbstractUIPlugin plugin) {
 		super(plugin)
 	}
@@ -20,8 +22,12 @@ class SolutionDslUiModule extends org.xkonnex.repo.dsl.solutiondsl.ui.AbstractSo
 	def Class<? extends ISemanticHighlightingCalculator> bindSemanticHighlightingCalculator() {
 		return SolutionDslSemanticHighlightingCalculator
 	}
-
-	def Class<? extends IHighlightingConfiguration> bindSemanticConfig() {
-		return BaseDslHighLightingConfiguration
+	
+	def Class<? extends AbstractAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
+		return typeof(BaseDslAntlrTokenToAttributeIdMapper)
+	}
+	
+	def Class<? extends IHighlightingConfiguration> bindIHighlightingConfiguration () {
+		return typeof(BaseDslHighlightingConfiguration)	
 	}
 }

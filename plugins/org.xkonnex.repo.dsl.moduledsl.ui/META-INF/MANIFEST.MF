@@ -31,7 +31,6 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Export-Package: org.xkonnex.repo.dsl.moduledsl.ui,
  org.xkonnex.repo.dsl.moduledsl.ui.contentassist,
- org.xkonnex.repo.dsl.moduledsl.ui.highlighting,
  org.xkonnex.repo.dsl.moduledsl.ui.internal;uses:="org.osgi.framework,com.google.inject,org.eclipse.ui.plugin",
  org.xkonnex.repo.dsl.moduledsl.ui.labeling,
  org.xkonnex.repo.dsl.moduledsl.ui.outline,

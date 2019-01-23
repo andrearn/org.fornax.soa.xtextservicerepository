@@ -18,8 +18,8 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 SlaModel:
+	imports += Import*
 	'sla-namespace' name=QualifiedName '{'
-		imports += Import*
 		agreements += SLA*
 		serviceQualityProperties += ServiceQualityProperty*
 	'}';
@@ -29,32 +29,34 @@ SLA:
 			'effective-date' effectiveDate = (STRING|DATE) 
 			('effective-until' effectiveUntil = (STRING|DATE) )?
 			parties+=Party*
-			('scope' scope = STRING)?
-			('preample' preample = STRING )?
-			('description' description = STRING )?
-			('restrictions' restrictions=STRING )?
+			('scope' scope = (TEXT|STRING))?
+			('preample' preample = (TEXT|STRING) )?
+			('description' description = (TEXT|STRING))?
+			('restrictions' restrictions=(TEXT|STRING) )?
 			priorities+=PriorityDeclaration*
 			('applies-to' '{'
 				appliesTo += AssetRef* 
 			'}')?
 			costs = Costs?
+			inlineCosts = InlineCosts?
 			('service-quality' '{'
 				(serviceQualityKPIs += [ServiceQualityKPI|QualifiedName])*
+				(inlineServiceQualityKPIs += InlineServiceQualityKPI)*
 			'}'
 			)?
 			('data-security' '{'
-				('general-terms' dataSecProtClause = STRING)?
+				('general-terms' dataSecProtClause = (TEXT|STRING))?
 				('security-requirements' '{' 
 					securityRequirements += [SecurityPolicy|QualifiedName]*
 				'}')
 			'}'
 			)?
 			('additional-services' '{'
-				additionalServices = STRING
+				additionalServices = (TEXT|STRING)
 			'}')?
 			escalationProcedure=Escalation?
-			('cancellation' cancellation = STRING )?
-			('extraordinary-cancellation' extraordinaryCancellation = STRING )?
+			('cancellation' cancellation = (TEXT|STRING) )?
+			('extraordinary-cancellation' extraordinaryCancellation = (TEXT|STRING) )?
 			reports+=Report*
 			additionalInfo=AdditionalInformation?
 			('tags' (tags+=[semanticsDsl::Tag|TagName])*)?
@@ -64,15 +66,15 @@ SLA:
 	'}';
 
 
-PriorityDeclaration: 'priority' name=ID 'description' description=STRING ;
+PriorityDeclaration: 'priority' name=ID 'description' description=(TEXT|STRING) ;
 
 Escalation : 
 	'escalation' '{'
-		('cause' cause=STRING )?
+		('cause' cause=(TEXT|STRING) )?
 		'escalate-to' '{'
 			escalationTargets+=EmailOrUsername+
 		'}'
-		('procedure' procedure=STRING )?
+		('procedure' procedure=(TEXT|STRING) )?
 	'}';
 				
 Party: CustomerParty | ProviderParty | ThirdParty;
@@ -91,7 +93,7 @@ ProviderParty:
 	
 ThirdParty:
 	'third-party' name=QualifiedName '{'
-		'participation-role' role=STRING 
+		'participation-role' role=(TEXT|STRING) 
 		representatives+=Representative+
 		responsibilities+=Responsibility+
 	'}';
@@ -112,37 +114,38 @@ InlineRepresentative:
 
 
 Responsibility:
-	'responsibility' description=STRING 
+	'responsibility' description=(TEXT|STRING) 
 ;
 	
 
 Report:
 	'report' name=ID '{'
 		'report-to' reportTo=EmailOrUsername
-		'contents' content=STRING
+		'contents' content=(TEXT|STRING)
 	'}';
 	
 	
 ServiceQualityProperty :  ServiceQualityKPI | Policy | Costs;
 
 ServiceQualityKPI : Availability | Throughput | Latency  | MaxDownTime | Capacity | Accuracy ;
+InlineServiceQualityKPI returns ServiceQualityKPI: InlineAvailability | InlineThroughput | InlineLatency  | InlineMaxDownTime | InlineCapacity | InlineAccuracy ;
 
 Availability : 
 	'availability' name=ID '{'
-		'percentage' percentage=Percent
+		percentage=Percent
 		('mean-time-between-failure' mtbf=Duration)?
 		('mean-time-to-repair' mttr=Duration (mttrPercentile=Percent)?)?
-		('regular-down-times' regularDownTimes = STRING)?
+		('regular-down-times' regularDownTimes = (TEXT|STRING))?
 		escalation = Escalation?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}';
 	
 Throughput:
 	'throughput' name=ID '{'
 		('requests'|'transactions') throughput = INT 'per' timeUnit=TimeUnit
-		('score-to-be-kept' score = STRING) 
+		('score-to-be-kept' score = (TEXT|STRING)) 
 		escalation = Escalation?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}';
 
 Latency:
@@ -150,7 +153,7 @@ Latency:
 		'max-call-latency' latency = Duration
 		'percentile' percentile=Percent
 		(escalation = Escalation)?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}';
 	
 	
@@ -158,7 +161,7 @@ MaxDownTime:
 	'max-downtime' name=ID '{'
 		'duration' duration = Duration 
 		(escalation = Escalation)?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}';
 	
 Capacity:
@@ -166,7 +169,7 @@ Capacity:
 		('num-of-requests' requestNum=INT 'per' timeUnit=TimeUnit)?
 		('message-size' messageSize=INT byteUnit=BytesEnum)?
 		escalation = Escalation?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}'
 ;
 
@@ -174,17 +177,77 @@ Accuracy:
 	'accuracy' name=ID '{'
 		'max-error-rate' maxErrorRate=INT 'per' maxErrorRateTimeUnit=TimeUnit
 		escalation = Escalation?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}'
 ;
 
 Costs:
 	'costs' name=ID '{'
-		'amount' costsAmount=STRING
-		'billed-per-unit' billedUnit=STRING
-		('effort-accounting' effortAccounting = STRING )?
+		'amount' costsAmount=(TEXT|STRING)
+		'billed-per-unit' billedUnit=(TEXT|STRING)
+		('effort-accounting' effortAccounting = (TEXT|STRING) )?
 		(escalation = Escalation)?
-		('penalty' penalty = STRING )?
+		('penalty' penalty = (TEXT|STRING) )?
+	'}'
+;
+InlineAvailability returns Availability: 
+	'availability' name=ID '{'
+		percentage=Percent
+		('mean-time-between-failure' mtbf=Duration)?
+		('mean-time-to-repair' mttr=Duration (mttrPercentile=Percent)?)?
+		('regular-down-times' regularDownTimes = (TEXT|STRING))?
+		escalation = Escalation?
+		('penalty' penalty = (TEXT|STRING) )?
+	'}';
+	
+InlineThroughput returns Throughput:
+	'throughput' '{'
+		('requests'|'transactions') throughput = INT 'per' timeUnit=TimeUnit
+		('score-to-be-kept' score = (TEXT|STRING)) 
+		escalation = Escalation?
+		('penalty' penalty = (TEXT|STRING) )?
+	'}';
+
+InlineLatency returns Latency:
+	'latency' '{'
+		'max-call-latency' latency = Duration
+		'percentile' percentile=Percent
+		(escalation = Escalation)?
+		('penalty' penalty = (TEXT|STRING) )?
+	'}';
+	
+	
+InlineMaxDownTime returns MaxDownTime:
+	'max-downtime' '{'
+		'duration' duration = Duration 
+		(escalation = Escalation)?
+		('penalty' penalty = (TEXT|STRING) )?
+	'}';
+	
+InlineCapacity returns Capacity:
+	{Capacity} 'capacity' '{'
+		('num-of-requests' requestNum=INT 'per' timeUnit=TimeUnit)?
+		('message-size' messageSize=INT byteUnit=BytesEnum)?
+		escalation = Escalation?
+		('penalty' penalty = (TEXT|STRING) )?
+	'}'
+;
+
+InlineAccuracy returns Accuracy:
+	'accuracy' '{'
+		'max-error-rate' maxErrorRate=INT 'per' maxErrorRateTimeUnit=TimeUnit
+		escalation = Escalation?
+		('penalty' penalty = (TEXT|STRING) )?
+	'}'
+;
+
+InlineCosts returns Costs:
+	'costs' '{'
+		'amount' costsAmount=(TEXT|STRING)
+		'billed-per-unit' billedUnit=(TEXT|STRING)
+		('effort-accounting' effortAccounting = (TEXT|STRING) )?
+		(escalation = Escalation)?
+		('penalty' penalty = (TEXT|STRING) )?
 	'}'
 ;
 
@@ -195,7 +258,7 @@ Policy: LogPolicy | SecurityPolicy | ReliabilityPolicy;
 
 LogPolicy: 'logging-policy' name=ID '{'
 	'logged-message-parts' loggedMessageParts+=MessagePartRef+
-	('additional-logging-requirements' additionalLoggingRequirement=STRING)?
+	('additional-logging-requirements' additionalLoggingRequirement=(TEXT|STRING))?
 '}'	
 ;
 

@@ -3,10 +3,10 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="sLADsl" nsURI="http://www.xkonnex.org/repo/dsl/sladsl/SLADsl"
     nsPrefix="sLADsl">
   <eClassifiers xsi:type="ecore:EClass" name="SlaModel">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Import"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="agreements" upperBound="-1"
         eType="#//SLA" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serviceQualityProperties"
@@ -31,8 +31,12 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="costs" eType="#//Costs"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inlineCosts" eType="#//Costs"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serviceQualityKPIs" unique="false"
         upperBound="-1" eType="#//ServiceQualityKPI"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inlineServiceQualityKPIs"
+        upperBound="-1" eType="#//ServiceQualityKPI" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataSecProtClause" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="securityRequirements" unique="false"
         upperBound="-1" eType="#//SecurityPolicy"/>
