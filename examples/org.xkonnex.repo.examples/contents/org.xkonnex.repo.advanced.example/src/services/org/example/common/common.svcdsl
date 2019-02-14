@@ -61,7 +61,9 @@ org-namespace org.example shortname "ex" {
 					no
 				}
 			}
-			
+			optional street : string
+			optional city : string
+			optional zipcode : string
 		}
 		
 	}

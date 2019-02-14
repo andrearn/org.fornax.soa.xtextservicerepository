@@ -82,7 +82,7 @@ org-namespace org.example shortname "ex" {
 				service-category Entity
 				statefulness idempotent
 				additional-information {
-					location "file://W:\\Desgin\\CustomerManagementServicesSpec_v1.0.doc" reference "3.1.1"
+					location "file://W:\\Desgin\\CustomerManagementServicesSpec_v1.0.doc" section "3.1.1"
 				}
 				tags Customer
 			}
@@ -94,7 +94,13 @@ org-namespace org.example shortname "ex" {
 			sync findByQueryTemplate(customerQueryTemplate : CustomerQueryTemplate majorVersion 1) 
 				returns optional customers : Customer [] majorVersion 1
 			{
-				
+				considers {
+					parameter customerQueryTemplate -> {
+						CustomerQueryTemplate.addressTemplate flat-only
+						CustomerQueryTemplate.birthDate
+						CustomerQueryTemplate.customerId
+					}
+				}
 			}
 			
 			/*
@@ -195,9 +201,6 @@ org-namespace org.example shortname "ex" {
 			
 			sync deactivateCustomer (customerId : string) 
 				throws NoSuchCustomerException majorVersion 1
-			{
-				
-			}
 		}
 		
 

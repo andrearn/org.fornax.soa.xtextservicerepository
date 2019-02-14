@@ -1,5 +1,5 @@
 define([], function() {
-	var keywords = "B|GB|MB|PB|TB|accepted|adding|automated|budgeting|capability|competence|context|days|default|denied|description|domain|external|false|fixedVersion|frozen|h|head|import|input|inputs|kB|license|location|majorVersion|manual|maxVersion|min|minVersion|months|ms|optional|org|outcome|outcomes|owner|page|pending|removing|replacing|responsible|s|section|specific|subject|subscriptions|tags|true|type|uses|version|weeks|with|years";
+	var keywords = "accepted|adding|automated|budgeting|capability|competence|context|default|denied|description|domain|external|false|fixedVersion|frozen|head|import|input|inputs|license|location|majorVersion|manual|maxVersion|minVersion|optional|org|outcome|outcomes|owner|page|pending|removing|replacing|responsible|section|specific|subject|subscriptions|tags|true|type|uses|version|with";
 	return {
 		id: "xtext.bizdsl",
 		contentTypes: ["xtext/bizdsl"],

@@ -1,8 +1,8 @@
 package org.xkonnex.repo.dsl.bindingdsl.model.assertion;
 
 import org.eclipse.emf.ecore.EObject;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Duration;
 import org.xkonnex.repo.dsl.basedsl.baseDsl.Percent;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Duration;
 import org.xkonnex.repo.dsl.sladsl.sLADsl.Escalation;
 import org.xkonnex.repo.dsl.sladsl.sLADsl.Latency;
 

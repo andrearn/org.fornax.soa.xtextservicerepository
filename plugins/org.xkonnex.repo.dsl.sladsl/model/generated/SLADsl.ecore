@@ -6,6 +6,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Import"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="namespaces" upperBound="-1"
+        eType="#//SlaNamespace" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="agreements" upperBound="-1"
+        eType="#//SLA" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="serviceQualityProperties"
+        upperBound="-1" eType="#//ServiceQualityProperty" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SlaNamespace">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="agreements" upperBound="-1"
         eType="#//SLA" containment="true"/>
@@ -29,10 +37,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="appliesTo" upperBound="-1"
         eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//AssetRef"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="costs" eType="#//Costs"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="inlineCosts" eType="#//Costs"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="costs" unique="false" upperBound="-1"
+        eType="#//Costs"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="inlineCosts" upperBound="-1"
+        eType="#//Costs" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="serviceQualityKPIs" unique="false"
         upperBound="-1" eType="#//ServiceQualityKPI"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inlineServiceQualityKPIs"
@@ -107,9 +115,9 @@
   <eClassifiers xsi:type="ecore:EClass" name="Availability" eSuperTypes="#//ServiceQualityKPI">
     <eStructuralFeatures xsi:type="ecore:EReference" name="percentage" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percent"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="mtbf" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Duration"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mtbf" eType="#//Duration"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="mttr" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Duration"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mttr" eType="#//Duration"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="mttrPercentile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percent"
         containment="true"/>
@@ -117,30 +125,32 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Throughput" eSuperTypes="#//ServiceQualityKPI">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="throughput" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="ecore:EEnum platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//TimeUnit"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="score" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="#//TimeUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="percentile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percent"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Latency" eSuperTypes="#//ServiceQualityKPI">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="latency" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Duration"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="latency" eType="#//Duration"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="percentile" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Percent"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MaxDownTime" eSuperTypes="#//ServiceQualityKPI">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="duration" eType="ecore:EClass platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//Duration"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="duration" eType="#//Duration"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Capacity" eSuperTypes="#//ServiceQualityKPI">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="requestNum" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="ecore:EEnum platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//TimeUnit"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="messageSize" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="byteUnit" eType="ecore:EEnum platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//BytesEnum"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="timeUnit" eType="#//TimeUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="messageSize" eType="#//BinarySize"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Accuracy" eSuperTypes="#//ServiceQualityKPI">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxErrorRate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxErrorRateTimeUnit" eType="ecore:EEnum platform:/resource/org.xkonnex.repo.dsl.basedsl/model/generated/BaseDsl.ecore#//TimeUnit"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="maxErrorRateTimeUnit" eType="#//TimeUnit"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Costs" eSuperTypes="#//ServiceQualityProperty">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="serviceItem" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="costsAmount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="billedUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="effortAccounting" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -208,5 +218,31 @@
     <eLiterals name="AT_MOST_ONCE" value="1" literal="at-most-once"/>
     <eLiterals name="AT_LEAST_ONCE" value="2" literal="at-least-once"/>
     <eLiterals name="BEST_EFFORT" value="3" literal="best-effort"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Duration">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="duration" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" eType="#//TimeUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BinarySize">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="size" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EDouble"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unit" eType="#//BytesUnit"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TimeUnit">
+    <eLiterals name="years" literal="years"/>
+    <eLiterals name="months" value="1" literal="months"/>
+    <eLiterals name="weeks" value="2" literal="weeks"/>
+    <eLiterals name="days" value="3" literal="days"/>
+    <eLiterals name="h" value="4" literal="h"/>
+    <eLiterals name="min" value="5" literal="min"/>
+    <eLiterals name="s" value="6" literal="s"/>
+    <eLiterals name="ms" value="7" literal="ms"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="BytesUnit">
+    <eLiterals name="B" literal="B"/>
+    <eLiterals name="kB" value="1" literal="kB"/>
+    <eLiterals name="MB" value="2" literal="MB"/>
+    <eLiterals name="GB" value="3" literal="GB"/>
+    <eLiterals name="TB" value="4" literal="TB"/>
+    <eLiterals name="PB" value="5" literal="PB"/>
   </eClassifiers>
 </ecore:EPackage>

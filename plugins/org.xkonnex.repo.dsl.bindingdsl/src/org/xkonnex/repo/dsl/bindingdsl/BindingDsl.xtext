@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2018 André Arnold and others.
+Copyright (c) 2010-2019 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -268,7 +268,7 @@ Availability :
 Throughput:
 	'throughput' '{'
 		('requests'|'transactions') throughput = INT 'per' timeUnit=TimeUnit
-		('score-to-be-kept' score = (TEXT|STRING)) 
+		('percentile' percentile=Percent)?
 		escalation = Escalation?
 		('penalty' penalty = (TEXT|STRING) )?
 	'}';
@@ -292,7 +292,7 @@ MaxDownTime:
 Capacity:
 	{Capacity} 'capacity' '{'
 		('num-of-requests' requestNum=INT 'per' timeUnit=TimeUnit)?
-		('message-size' messageSize=INT byteUnit=BytesEnum)?
+		('message-size' messageSize=BinarySize)?
 		escalation = Escalation?
 		('penalty' penalty = (TEXT|STRING) )?
 	'}'
@@ -324,4 +324,10 @@ Escalation returns slaDsl::Escalation:
 		'}'
 		('procedure' procedure=(TEXT|STRING) )?
 	'}';
+
+Duration returns slaDsl::Duration: (duration=IntAsDouble unit=TimeUnit)|(duration=Double unit=TimeUnit);
+BinarySize returns slaDsl::BinarySize: (size=IntAsDouble unit=BytesUnit)|(size=Double unit=BytesUnit);
+
+enum TimeUnit returns slaDsl::TimeUnit: years|months|weeks|days|h|min|s|ms;
+enum BytesUnit returns slaDsl::BytesUnit: B|kB|MB|GB|TB|PB;
 

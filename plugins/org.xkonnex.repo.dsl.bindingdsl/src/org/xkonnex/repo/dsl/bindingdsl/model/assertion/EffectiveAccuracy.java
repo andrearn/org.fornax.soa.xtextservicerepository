@@ -1,9 +1,8 @@
 package org.xkonnex.repo.dsl.bindingdsl.model.assertion;
 
 import org.eclipse.emf.ecore.EObject;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.TimeUnit;
 import org.xkonnex.repo.dsl.sladsl.sLADsl.Accuracy;
-import org.xkonnex.repo.dsl.sladsl.sLADsl.Escalation;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.TimeUnit;
 
 public class EffectiveAccuracy extends EffectiveAssertion implements Accuracy {
 

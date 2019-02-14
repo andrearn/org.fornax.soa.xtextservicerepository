@@ -1,5 +1,5 @@
 define([], function() {
-	var keywords = "B|DLL|EAR|GB|JAR|MB|OSGi|OTHER|PB|TB|WAR|WebMethods|ZIP|accepted|artifactId|budgeting|channel|client|days|default|denied|excluding|external|false|fixedVersion|frozen|groupId|h|import|including|kB|license|location|majorVersion|maxVersion|min|minVersion|module|months|ms|namespace|operations|optional|owner|page|parameters|pending|provides|public|qualifier|resource|responsible|s|section|service|specific|subject|subscriptions|tags|true|type|uses|version|weeks|years";
+	var keywords = "DLL|EAR|JAR|OSGi|OTHER|WAR|WebMethods|ZIP|accepted|artifactId|budgeting|channel|client|default|denied|excluding|external|false|fixedVersion|frozen|groupId|import|including|license|location|majorVersion|maxVersion|minVersion|module|namespace|operations|optional|owner|page|parameters|pending|provides|public|qualifier|resource|responsible|section|service|specific|subject|subscriptions|tags|true|type|uses|version";
 	return {
 		id: "xtext.moddsl",
 		contentTypes: ["xtext/moddsl"],

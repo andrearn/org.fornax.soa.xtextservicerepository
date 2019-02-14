@@ -9,6 +9,7 @@ import java.util.Date;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.common.types.JvmType;
 import org.eclipse.xtext.common.types.access.IJvmTypeProvider;
 import org.eclipse.xtext.common.types.xtext.AbstractTypeScopeProvider;
@@ -120,4 +121,29 @@ public class SLADslProposalProvider extends AbstractSLADslProposalProvider {
 		String proposal = dateFormat.format(new Date());
 		acceptor.accept(createCompletionProposal(proposal , context));
 	}
+	
+	@Override
+	public void complete_Duration(EObject model, RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("1 s", context));
+	}
+	
+	@Override
+	public void complete_BinarySize(EObject model, RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("1 MB", context));
+	}
+	
+	@Override
+	public void completeDuration_Duration(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("1", context));
+	}
+		
+	@Override
+	public void completeBinarySize_Size(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("1", context));
+	}
+	
 }

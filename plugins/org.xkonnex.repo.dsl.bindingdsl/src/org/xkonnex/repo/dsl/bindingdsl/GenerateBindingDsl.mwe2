@@ -128,8 +128,11 @@ Workflow {
 		    fragment = resourceFactory.ResourceFactoryFragment2 {}
 		    fragment = parser.antlr.XtextAntlrGeneratorFragment2 {
 		    	options = {
+		    		backtrack = true
 					classSplitting = true
 				}
+				antlrParam = "-Xmaxinlinedfastates"
+				antlrParam = "30"
 		    }
 		    fragment = validation.ValidatorFragment2 {
 		    	generateStub = true
@@ -170,8 +173,11 @@ Workflow {
 		    fragment = ui.compare.CompareFragment2 {}
 		    fragment = idea.parser.antlr.XtextAntlrIDEAGeneratorFragment {
 		    	options = {
+		    		backtrack = true
 					classSplitting = true
 				}
+				antlrParam = "-Xmaxinlinedfastates"
+				antlrParam = "30"
 		    }
 //		    fragment = idea.IdeaPluginGenerator {}
 		    fragment = web.WebIntegrationFragment {

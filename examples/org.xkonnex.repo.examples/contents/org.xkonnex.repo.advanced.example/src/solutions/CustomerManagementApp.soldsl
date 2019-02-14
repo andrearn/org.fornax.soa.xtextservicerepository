@@ -45,7 +45,7 @@ solution CustomerManagementApp {
 			// The feature uses a specific operation of this service to identify a customer i
 			requires CustomerLookupBES majorVersion 1 {
 				calling {
-					findByQueryTemplate
+					CustomerLookupBES.findByQueryTemplate
 				}
 			}
 		}

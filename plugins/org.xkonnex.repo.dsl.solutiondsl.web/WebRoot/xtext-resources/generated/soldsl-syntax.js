@@ -1,5 +1,5 @@
 define([], function() {
-	var keywords = "B|GB|MB|PB|TB|accepted|budgeting|calling|days|default|denied|description|domain|false|feature|fixedVersion|frozen|h|import|kB|license|location|majorVersion|maxVersion|min|minVersion|module|months|ms|optional|owner|page|pending|requires|responsible|s|section|solution|specific|subject|subscriptions|tags|true|type|version|weeks|years";
+	var keywords = "accepted|budgeting|calling|default|denied|description|domain|false|feature|fixedVersion|frozen|import|license|location|majorVersion|maxVersion|minVersion|module|optional|owner|page|pending|requires|responsible|section|solution|specific|subject|subscriptions|tags|true|type|version";
 	return {
 		id: "xtext.soldsl",
 		contentTypes: ["xtext/soldsl"],

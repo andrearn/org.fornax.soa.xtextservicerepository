@@ -22,7 +22,7 @@ Development-Environment Dev {
 		identifier "dhsCode"
 	}
 	
-	gateway zuul type Zuul {
+	api-gateway zuul type Zuul {
 		host dev_airport
 		connectors {
 			HTTP Name {

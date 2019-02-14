@@ -11,6 +11,10 @@ public class EffectiveCost extends  DelegatingEObject  implements
 	private String name;
 	private String costsAmount;
 	private String billedUnit;
+	private String effortAccounting;
+	private Escalation escalation;
+	private String serviceItem;
+	private String penalty;
 
 	public EffectiveCost(EObject delegate) {
 		super(delegate);
@@ -48,38 +52,42 @@ public class EffectiveCost extends  DelegatingEObject  implements
 
 	@Override
 	public String getEffortAccounting() {
-		// TODO Auto-generated method stub
-		return null;
+		return effortAccounting;
 	}
 
 	@Override
 	public void setEffortAccounting(String value) {
-		// TODO Auto-generated method stub
-		
+		this.effortAccounting = value;
 	}
 
 	@Override
 	public Escalation getEscalation() {
-		// TODO Auto-generated method stub
-		return null;
+		return escalation;
 	}
 
 	@Override
 	public void setEscalation(Escalation value) {
-		// TODO Auto-generated method stub
-		
+		this.escalation = value;
 	}
 
 	@Override
 	public String getPenalty() {
-		// TODO Auto-generated method stub
-		return null;
+		return penalty;
 	}
 
 	@Override
 	public void setPenalty(String value) {
-		// TODO Auto-generated method stub
-		
+		this.penalty = value;
+	}
+
+	@Override
+	public String getServiceItem() {
+		return serviceItem;
+	}
+
+	@Override
+	public void setServiceItem(String value) {
+		this.serviceItem = value;
 	}
 
 }

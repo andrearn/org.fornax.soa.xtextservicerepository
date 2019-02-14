@@ -13,7 +13,7 @@ public class ModuleDslSemanticHighlightingCalculator extends BaseDslSemanticHigh
 	protected boolean highlightElement(EObject object, IHighlightedPositionAcceptor acceptor,
 			CancelIndicator cancelIndicator) {
 		if (object instanceof AbstractServiceRef) {
-			return highlightElement(object, acceptor, cancelIndicator);
+			return highlightElement((AbstractServiceRef)object, acceptor, cancelIndicator);
 		} else {
 			return super.highlightElement(object, acceptor, cancelIndicator);
 		}

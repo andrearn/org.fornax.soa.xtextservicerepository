@@ -1,7 +1,7 @@
 package org.xkonnex.repo.dsl.bindingdsl.model.assertion;
 
 import org.eclipse.emf.ecore.EObject;
-import org.xkonnex.repo.dsl.basedsl.baseDsl.Duration;
+import org.xkonnex.repo.dsl.sladsl.sLADsl.Duration;
 import org.xkonnex.repo.dsl.sladsl.sLADsl.MaxDownTime;
 
 public class EffectiveMaxDownTime extends EffectiveAssertion implements MaxDownTime {

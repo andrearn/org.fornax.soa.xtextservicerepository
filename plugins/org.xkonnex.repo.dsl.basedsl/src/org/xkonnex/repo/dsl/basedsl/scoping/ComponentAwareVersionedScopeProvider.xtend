@@ -36,7 +36,7 @@ abstract class ComponentAwareVersionedScopeProvider extends VersionedImportedNam
 	@Inject IInjectableFeatureLookup featureLookup
 	@Inject Provider<NameComputation> nameComputationProvider
 	
-	def override IScope getScope(EObject context, EReference reference) {
+	override IScope getScope(EObject context, EReference reference) {
 		if (context instanceof Assignment && reference == BaseDslPackage.Literals.ASSIGNMENT__FEATURE) {
 			if (context.eContainer() === null)
 				throw new IllegalStateException("context.eContainer may not be null");

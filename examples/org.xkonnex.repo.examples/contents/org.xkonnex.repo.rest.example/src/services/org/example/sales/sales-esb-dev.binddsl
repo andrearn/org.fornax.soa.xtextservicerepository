@@ -32,11 +32,11 @@ bind-module org.example.sales.esb majorVersion 1 as org.example.sales.esb.dev
 		}
 	}
 	
-//	bind-resource org.example.sales.CustomerResource majorVersion 1 {
-//		protocols {
-//			REST {
-//				
-//			}
-//		}
-//	}
+	bind-resource org.example.sales.CustomerResource majorVersion 1 {
+		protocols {
+			REST {
+				
+			}
+		}
+	}
 }

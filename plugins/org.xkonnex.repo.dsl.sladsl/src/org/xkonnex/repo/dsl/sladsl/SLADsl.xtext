@@ -1,5 +1,5 @@
 /*
-Copyright (c) 2010-2018 André Arnold and others.
+Copyright (c) 2010-2019 André Arnold and others.
 All rights reserved. This program and the accompanying materials
 are made available under the terms of the Eclipse Public License v1.0
 which accompanies this distribution, and is available at
@@ -19,7 +19,12 @@ import "http://www.eclipse.org/xtext/common/JavaVMTypes" as jvmTypes
 
 SlaModel:
 	imports += Import*
-	'sla-namespace' name=QualifiedName '{'
+	namespaces += SlaNamespace*
+	agreements += SLA*
+	serviceQualityProperties += ServiceQualityProperty*
+	;
+	
+SlaNamespace: 'sla-namespace' name=QualifiedName '{'
 		agreements += SLA*
 		serviceQualityProperties += ServiceQualityProperty*
 	'}';
@@ -37,8 +42,8 @@ SLA:
 			('applies-to' '{'
 				appliesTo += AssetRef* 
 			'}')?
-			costs = Costs?
-			inlineCosts = InlineCosts?
+			costs += [Costs|QualifiedName]*
+			inlineCosts += InlineCosts*
 			('service-quality' '{'
 				(serviceQualityKPIs += [ServiceQualityKPI|QualifiedName])*
 				(inlineServiceQualityKPIs += InlineServiceQualityKPI)*
@@ -142,8 +147,8 @@ Availability :
 	
 Throughput:
 	'throughput' name=ID '{'
-		('requests'|'transactions') throughput = INT 'per' timeUnit=TimeUnit
-		('score-to-be-kept' score = (TEXT|STRING)) 
+		throughput = INT ('requests'|'transactions') 'per' timeUnit=TimeUnit
+		('percentile' percentile=Percent)?
 		escalation = Escalation?
 		('penalty' penalty = (TEXT|STRING) )?
 	'}';
@@ -167,7 +172,7 @@ MaxDownTime:
 Capacity:
 	'capacity' name=ID '{'
 		('num-of-requests' requestNum=INT 'per' timeUnit=TimeUnit)?
-		('message-size' messageSize=INT byteUnit=BytesEnum)?
+		('message-size' messageSize=BinarySize)?
 		escalation = Escalation?
 		('penalty' penalty = (TEXT|STRING) )?
 	'}'
@@ -183,15 +188,17 @@ Accuracy:
 
 Costs:
 	'costs' name=ID '{'
+		('service-item' serviceItem = (TEXT|STRING))?
 		'amount' costsAmount=(TEXT|STRING)
 		'billed-per-unit' billedUnit=(TEXT|STRING)
+		//How costs are determined, i.e. the number billed units
 		('effort-accounting' effortAccounting = (TEXT|STRING) )?
 		(escalation = Escalation)?
 		('penalty' penalty = (TEXT|STRING) )?
 	'}'
 ;
 InlineAvailability returns Availability: 
-	'availability' name=ID '{'
+	'availability' '{'
 		percentage=Percent
 		('mean-time-between-failure' mtbf=Duration)?
 		('mean-time-to-repair' mttr=Duration (mttrPercentile=Percent)?)?
@@ -202,8 +209,8 @@ InlineAvailability returns Availability:
 	
 InlineThroughput returns Throughput:
 	'throughput' '{'
-		('requests'|'transactions') throughput = INT 'per' timeUnit=TimeUnit
-		('score-to-be-kept' score = (TEXT|STRING)) 
+		throughput = INT ('requests'|'transactions') 'per' timeUnit=TimeUnit
+		('percentile' percentile=Percent)?
 		escalation = Escalation?
 		('penalty' penalty = (TEXT|STRING) )?
 	'}';
@@ -227,7 +234,7 @@ InlineMaxDownTime returns MaxDownTime:
 InlineCapacity returns Capacity:
 	{Capacity} 'capacity' '{'
 		('num-of-requests' requestNum=INT 'per' timeUnit=TimeUnit)?
-		('message-size' messageSize=INT byteUnit=BytesEnum)?
+		('message-size' messageSize=BinarySize)?
 		escalation = Escalation?
 		('penalty' penalty = (TEXT|STRING) )?
 	'}'
@@ -243,6 +250,7 @@ InlineAccuracy returns Accuracy:
 
 InlineCosts returns Costs:
 	'costs' '{'
+		('service-item' serviceItem = (TEXT|STRING))?
 		'amount' costsAmount=(TEXT|STRING)
 		'billed-per-unit' billedUnit=(TEXT|STRING)
 		('effort-accounting' effortAccounting = (TEXT|STRING) )?
@@ -309,5 +317,10 @@ ReliabilityPolicy:
 ;
 enum ReliabilityKind: EXACTLY_ONCE = 'exactly-once' | AT_MOST_ONCE = 'at-most-once' | AT_LEAST_ONCE = 'at-least-once' | BEST_EFFORT = 'best-effort';
 	
+Duration: (duration=IntAsDouble unit=TimeUnit)|(duration=Double unit=TimeUnit);
+BinarySize: (size=IntAsDouble unit=BytesUnit)|(size=Double unit=BytesUnit);
+
+enum TimeUnit: years|months|weeks|days|h|min|s|ms;
+enum BytesUnit: B|kB|MB|GB|TB|PB;
 	
 	

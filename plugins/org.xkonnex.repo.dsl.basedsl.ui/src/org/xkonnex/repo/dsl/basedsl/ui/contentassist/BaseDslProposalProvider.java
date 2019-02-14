@@ -336,6 +336,12 @@ public class BaseDslProposalProvider extends AbstractBaseDslProposalProvider {
 	}
 	
 	@Override
+	public void complete_Double(EObject model, RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("1.0" , context));
+	}
+	
+	@Override
 	public void completeGovernanceDecision_ApprovalDate(EObject model,
 			org.eclipse.xtext.Assignment assignment,
 			ContentAssistContext context, ICompletionProposalAcceptor acceptor) {

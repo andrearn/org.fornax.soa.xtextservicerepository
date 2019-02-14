@@ -1,0 +1,71 @@
+import org.example.*
+
+sla-namespace org.example {
+	
+	service-level-agreement ExampleOrgDefaultSLA version 1.0 frozen {
+		effective-date 2019-01-24 
+		
+		customer-party InternalOrgs {
+			info@example.org
+			responsibility `uses services of Example Inc.`
+		}
+		
+		provider-party ExampleOrgIT {
+			it@example.org
+			responsibility `provides services of Example Inc.`
+		}
+		
+		preample `This is the standard SLA of Example Inc. for commonly 
+		available IT services. The SLA defines the standard service KPIs 
+		and policies for SOA services and REST APIs`
+		
+		costs {
+			service-item "service calls"
+			amount "0.001 €"
+			billed-per-unit "call"
+		}
+		costs {
+			service-item "application deployment"
+			amount "100 €"
+			billed-per-unit "deployed service container"
+		}
+		costs {
+			service-item "Incident"
+			amount "100 €"
+			billed-per-unit "service hour"
+		}
+		service-quality {
+			availability {
+				99.9%
+				regular-down-times `
+				First Saturday of January 22:00 until Sunday 8:00
+				First Saturday of April 22:00 until Sunday 8:00
+				First Saturday of January 22:00 until Sunday 8:00
+				First Saturday of Oktober 22:00 until Sunday 8:00`
+				penalty `Fines: 100€ per hour downtime 
+				exceeding 0.1% of allowed unavailability except regular downtimes`
+			}
+			capacity {
+				message-size 1 MB 
+			}
+			latency {
+				max-call-latency 200 ms 
+				percentile 99%
+			}
+			throughput {
+				20 transactions per s 
+			}
+			max-downtime {
+				duration 5 min
+			}
+		}
+		data-security {
+			security-requirements {
+				UsernamePasswordAuth
+			}
+		}
+		cancellation `The SLA can be cancelled by both parties 
+		with 1 month notice ahead to the end of the month.`
+		
+	}
+}

@@ -1,0 +1,33 @@
+sla-namespace org.example {
+	
+	authn-policy UsernamePasswordAuth {
+		auth-tokens {
+			/* We support user/password authentication */
+			UsernamePassword
+		}
+		hash-algorithms {
+			/** The password is being hashed with MD5 encoded with Base64*/
+			Base64-encoded
+			SHA256
+		}
+	}
+	
+	encryption-policy DefaultEncryption {
+		supported-algorithms AES128 AES256 RSA 
+		encrypted-message-parts body , attachments
+	}
+	
+	signing-policy DefaultSigning {
+		supported-algorithms SHA256 MD5
+		signed-message-parts body , attachments
+	}
+		
+	logging-policy DefaultMessageLogging {
+		logged-message-parts header
+	}
+	
+	message-exchange-reliability ExactlyOnceMessaging {
+		exactly-once
+		in-order-delivery
+	}
+}

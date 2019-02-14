@@ -136,5 +136,30 @@ public class BindingDslProposalProvider extends AbstractBindingDslProposalProvid
 		JvmType protocolType = typeProvider.findTypeByName(IProtocol.class.getCanonicalName());
 		typeProposalProvider.createSubTypeProposals(protocolType, this, context, BaseDslPackage.Literals.COMPONENT__TYPE, TypeMatchFilters.canInstantiate(), acceptor);
 	}
-		
+
+	
+	@Override
+	public void complete_Duration(EObject model, RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("1 s", context));
+	}
+	
+	@Override
+	public void complete_BinarySize(EObject model, RuleCall ruleCall, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("1 MB", context));
+	}
+	
+	@Override
+	public void completeDuration_Duration(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("1", context));
+	}
+	
+	@Override
+	public void completeBinarySize_Size(EObject model, Assignment assignment, ContentAssistContext context,
+			ICompletionProposalAcceptor acceptor) {
+		acceptor.accept(createCompletionProposal("1", context));
+	}
+
 }

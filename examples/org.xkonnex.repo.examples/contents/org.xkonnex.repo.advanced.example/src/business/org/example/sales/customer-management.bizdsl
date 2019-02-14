@@ -7,15 +7,15 @@ domain Org.Example.Sales {
 	 * A group of business capabilities similar to a use case package dealing with management of customers
 	 */
 	capability-group CustomerManagement {
-		description "Capabilities for operational customer management"
-		
+		description `Capabilities for operational customer management`		
 		/**
 		 * A capability to acquire an create customers
 		 */
 		capability AquireCustomer {
 			version 1.0
 			// A short description what it does
-			short-description "Acquire a customer from raw data setting her up as a legal customer"
+			short-description `Acquire a customer from raw data setting her up 
+			as a legal customer`
 			// the capability has been automated, i.e. it is supported from IT with a service
 			automation-level automated
 			// A capability of high value for the business of Example Org - we need customers of cause
@@ -27,8 +27,10 @@ domain Org.Example.Sales {
 		 */
 		capability DeactivateCustomer {
 			version 1.0
-			short-description "Deactivate the customer."
-			description "Deactivate the customer. The customer will have no more active contracts. The customer will not be deleted however."
+			short-description `Deactivate the customer.`
+			description `Deactivate the customer. 
+			The customer will have no more active contracts. 
+			The customer will not be deleted however.`
 			automation-level automated
 			business-value "low"
 		}
