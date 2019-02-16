@@ -42,10 +42,123 @@ Select the XKonneX Repo update site list and select all XKonneX Repo SDKs. Then 
 
 First, let's create a new XKonneX repository project:
 
+![Choose XKonneX Repository project wird](images/service-repo-project-wizard1.png "Select XKonneX repository project wizard") 
+
+Give the project a name.
+![Project wizard](images/service-repo-project-wizard2.png "Project wizard") 
+
 ### Model services
-To model service start by creating a new Service DSL file. Let's call it _shop.svcdsl_
+To model service start by creating a new Service DSL file. 
+
+![Service DSL file wizard](images/repo-dsl-file-wizard.png "XKonneX Repo new file wizards") 
+
+Let's call it _catalog.svcdsl_
+
+![New catalog service DSL file](images/shop-catalog-servicedsl.png "New shop catalog service DSL file") 
 
 #### Define the namespace of the services.
+We start with a namespace for a catalog. The namespace represents a logical domain that can be accessed via services. Hence, the namespape is a _domain-namespace_ called _com.shop.catalog_.
+
+```ServiceDSL
+domain-namespace com.shop.catalog {
+	
+}
+```
+
+##### Defining business objects
+Now we need to define some objects: we have articles in our catalog:
+
+```ServiceDSL
+domain-namespace com.shop.catalog {
+	
+	businessObject Article {
+		metadata {
+			version 1.0
+		}
+		name : string
+		productCategory : string
+		articleNumber : long
+		price : double
+		timeToDeliver :	int
+	}
+	
+}
+```
+
+##### Defining a catalog service
+
+We need a service to find arcticles. It will provide two  operations that arcticles by their name or their category
+
+```ServiceDSL
+domain-namespace com.shop.catalog {
+	
+	businessObject Article {
+		metadata {
+			version 1.0
+		}
+		name : string
+		productCategory : string
+		articleNumber : long
+		price : double
+		timeToDeliver :	int
+	}
+	
+	public service ArticleLookupService {
+		metadata {
+			version 1.0
+		}
+		
+		findByName (name : string) 
+			returns Article [] majorVersion 1
+
+		findByCategory (category : string) 
+			returns Article [] majorVersion 1
+	}
+	
+}
+```
+
+#### Another domain for the actual shopping
+```ServiceDSL
+domain-namespace com.shop.sales {
+}
+```
+
+The namespace will use services and objects from the catalog domain. Therfore we import that namespace:
+
+```ServiceDSL
+import com.shop.catalog.*
+
+domain-namespace com.shop.sales {
+}
+```
+
+And of cause, we need a basket to collect items.
+
+```ServiceDSL
+import com.shop.catalog.*
+
+domain-namespace com.shop.sales {
+
+	businessObject Basket {
+		metadata {
+			version 1.0
+		}
+		optional items : Item [] majorVersion 1		
+		shipmentFee : double
+	}
+	
+	businessObject Item {
+		metadata {
+			version 1.0
+		}
+		article : Article majorVersion 1
+		numberOfItems : int
+	}
+}
+```
+
+
 
 ### Bundle services in a module
 

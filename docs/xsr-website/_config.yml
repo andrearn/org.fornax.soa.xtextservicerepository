@@ -1,6 +1,6 @@
 # Site settings
 title: XKonneX Repository - DSL based archicture repository
-email: sven.efftinge@typefox.io
+email: andre.arnold@xkonnex.org
 description: > # this means to ignore newlines until "baseurl:"
   XKonneX Repository ist an architecture repository that provides an overview of your domain model and services and
   governance of these assets. All assets are modeled XText based textual DSL. Therefore it provides all means of an IDE to

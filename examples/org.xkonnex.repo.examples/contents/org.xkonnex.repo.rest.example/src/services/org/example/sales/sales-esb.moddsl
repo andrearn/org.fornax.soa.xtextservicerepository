@@ -21,4 +21,6 @@ module org.example.sales.esb {
 			endpoint-protocol REST
 		}
 	}
+	
+	tags customer
 }

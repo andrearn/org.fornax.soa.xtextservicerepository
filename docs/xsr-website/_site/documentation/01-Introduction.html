@@ -1,13 +1,40 @@
+<!DOCTYPE html>
 <html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" >
-	<title>Introduction</title>
-	<link href="book.css" rel="stylesheet" type="text/css">
-	<link href="code.css" rel="stylesheet" type="text/css">
-	<link rel="home" href="index.html" title="">
+
+  <head>
+	<meta charset="UTF-8">
+	<title>XKonneX Repository - Introduction</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description"
+		content="The website of XKonnex Repository, an open-source service repository based on domain-specific languages">
+	<meta name="author" content="André Arnold">
+	<!--  styles -->
+	<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+	<!--[if lt IE 9]>
+	  <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	<!-- Le fav and touch icons -->
+	<link rel="shortcut icon" href="/XKonneXRepo/images/favicon.png">
+	
+	<link href="/XKonneXRepo/css/bootstrap.css" rel="stylesheet" type='text/css'>
+	<link href="/XKonneXRepo/css/bootstrap-responsive.css" rel="stylesheet" type='text/css'>
+	<link href="/XKonneXRepo/css/shield-responsive.css" rel="stylesheet" type='text/css'>
+	<link href='/XKonneXRepo/css/fonts.css' rel='stylesheet' type='text/css'>
+	<link href="/XKonneXRepo/css/prettyPhoto.css" rel="stylesheet" media="screen" type='text/css'>
+	<link href="/XKonneXRepo/css/prettify.css" type="text/css" rel="stylesheet"/>
+	<link href="/XKonneXRepo/css/style.css" rel="stylesheet" type='text/css'>
+	<!-- cover flow -->
+	<link href="/XKonneXRepo/css/coverflow.css" rel="stylesheet" type='text/css'>
+	<!--[if lt IE 9]>
+	  <link href="/css/iebugs.css" rel="stylesheet" type='text/css'>
+	<![endif]-->
 </head>
-<body>
-<!-- Google Tag Manager -->
+
+
+  <body>
+  <!-- Google Tag Manager -->
 <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-TGDS5S"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -17,7 +44,85 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TGDS5S');</script>
 <!-- End Google Tag Manager -->
 
-<h1 id="Introduction">Introduction</h1>
+    <header class="site-header">
+
+  <!-- Navbar -->
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse"
+          data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+          class="icon-bar"></span> <span class="icon-bar"></span>
+        </a> <a class="brand" href="/XKonneXRepo/index.html"></a>
+        <div class="nav-collapse collapse" style="height: 0px;">
+          <ul class="nav">
+            <!--li ><a href="/XKonneXRepo/news.html">News</a></li-->
+            <li ><a href="/XKonneXRepo/download.html">Download</a></li>
+            <li ><a href="/XKonneXRepo/documentation/index.html">Documentation</a></li>
+            <li ><a href="/XKonneXRepo/community.html">Community</a></li>
+          </ul>
+          <!--div class="nav pull-right">
+            <li ><a><iframe src="https://ghbtns.com/github-btn.html?user=eclipse&repo=xtext&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe></a></li>
+          </div-->
+        </div>
+        <!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+  <!-- Navbar End -->
+
+</header>
+
+
+    <div class="page-content">
+  <script>
+    function startSearch(event) {
+        if (event.keyCode == 13) {
+            var q = 'site:eclipse.org/Xtext/documentation+' + event.target.value;
+            window.open('https://www.google.com/search?q=' + q, "_self");
+        }
+    }
+  </script>
+  <div class="wrapper">
+  	<div id="page">  
+      <div class="inner">
+        <div id="maincontainer" class="container">
+          <span class="edit-on-github pull-right">
+            <a href="https://github.com/andrearn/org.fornax.soa.xtextservicerepository/edit/master/docs/xsr-website/documentation/01-Introduction.md">Edit on Github</a>
+          </span>
+          <div class="span3" style="margin-left: 0px;">
+            <div class="search-bar">
+              <img src="/XKonneXRepo/images/search-gray.png"/>
+              <input type="search" id="google-search" onkeyup="startSearch(event);"/>
+            </div>
+            <ul id="nav-outline" style="margin-left: 0px;">
+	<li class="nav-part">Introduction</li>
+	<li><a href="01-Introduction.html">Introduction</li>
+
+	<li class="nav-part">Getting Started</li>
+	<li><a href="02-GettingStarted.html">Getting Started</a>
+	</li>
+
+	<li class="nav-part">Concepts</li>
+	<li><a href="03-Concepts.html">Concepts</a>
+	</li>
+	<li><a href="04-Governance.html">Governance</a>
+	</li>
+	<li><a href="05-IDESupport.html">IDE Support</a>
+	</li>
+
+	<li class="nav-part">Reference Documentation</li>
+	<li><a href="10-langreference.html">Modeling language reference</a>
+	</li>
+	<li><a href="20-generatorreference.html">Code generators</a>
+	</li>
+	<li class="nav-part">Additional Resources
+	<li><a href="http://download.eclipse.org/modeling/tmf/xtext/javadoc/2.9/">API Documentation (JavaDoc)</a>
+</ul>
+
+          </div>
+          <div class="span8 doc-contents">
+            <h1 id="Introduction">Introduction</h1>
 
 <p>XKonneX Repository captures central assets of a software architecture using domain specific languages based on the concepts of domain driven design as well as service based architectures such as micro services and SOA. Use it to define the ubiquitous language of your domain and the service contracts of the services to access these domains.</p>
 
@@ -47,6 +152,101 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   <li>Use code generation to apply technical rules implicitly, e.g. all webservices use document/literal-wrapped SOAP style and schema centralization</li>
 </ol>
 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    <footer class="site-footer">
+  <div id="extra">
+    <div class="inner">
+      <div class="container">
+        <div class="row">
+          <div class="span6">
+            <h3 class="footer-links-header">Quick Links</h3>
+            <ul class="footer-links clearfix">
+              <li><a href="http://www.eclipse.org/legal/privacy.php">Privacy Policy</a></li>
+              <li><a href="http://www.eclipse.org/legal/termsofuse.php">Terms of Use</a></li>
+              <li><a href="http://www.eclipse.org/legal/copyright.php">Copyright Agent</a></li>
+              <li><a href="http://www.eclipse.org/legal/">Legal</a></li>
+            </ul>
+            <ul class="footer-links clearfix">
+              <li><a href="http://www.eclipse.org">Eclipse Home</a></li>
+              <li><a href="http://marketplace.eclipse.org/">Market Place</a></li>
+              <li><a href="http://live.eclipse.org/">Eclipse Live</a></li>
+              <li><a href="http://www.planeteclipse.org/">Eclipse Planet</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <a href="#" class="scrollup fadeOutRight animated" style="display: none;">ScrollUp</a>
+  <!-- Le javascript
+      ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  
+  <script src="/XKonneXRepo/js/jquery-1.11.3.min.js"></script>
+  <script src="/XKonneXRepo/js/bootstrap.min.js"></script>
+  <script src="/XKonneXRepo/js/jquery.easing.1.3.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/jquery.prettyPhoto.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/twitter.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/prettify.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-BaseDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-BusinessDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-BindingDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-EnvironmentDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-ModuleDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-ProfileDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-ServiceDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-SLADSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-SemanticsDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-SolutionDSL.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/lang-common.js" type="text/javascript"></script>
+  <script src="/XKonneXRepo/js/custom.js" type="text/javascript"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <!--script type="text/javascript">
+    var _gaq = _gaq || [];  
+      _gaq.push([ '_setAccount', 'UA-2429174-3' ]);
+    _gaq.push([ '_trackPageview' ]);
+    (function() {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+          : 'http://www')
+          + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+  </script-->
+  <script src="/XKonneXRepo/js/coverflow.min.js" type="text/javascript"></script>
+  <script>
+      $(function() {
+        $('#coverflow').coverflow({
+          active : 1,
+          visibleAside: 2,
+          overlap : 0.5,
+          scale : 0.9,
+          angle : 20,
+          trigger : {
+            "itemfocus" : true,
+            "swipe" : true,
+            "mousewheel" : false
+          }
+        });
+        $('#coverflow :hidden').toggle();
+        $(window).resize(function() {
+          $('#coverflow').coverflow();
+        });
+      });
 
-</body>
+  </script>
+</footer>
+
+
+  </body>
+
 </html>
